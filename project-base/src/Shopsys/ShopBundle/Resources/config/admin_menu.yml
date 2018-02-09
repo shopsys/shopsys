@@ -154,6 +154,8 @@
       items:
         - label: 'Legal conditions'
           route: admin_legalconditions_setting
+        - label: 'GDPR'
+          route: admin_gdpr_settings
 
     - label: 'Cookies information'
       route: admin_cookies_setting
