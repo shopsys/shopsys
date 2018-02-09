@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 class Setting
 {
     const ORDER_SENT_PAGE_CONTENT = 'orderSubmittedText';
+    const GDPR_SITE_CONTENT = 'gdprContentText';
     const DEFAULT_PRICING_GROUP = 'defaultPricingGroupId';
     const DEFAULT_AVAILABILITY_IN_STOCK = 'defaultAvailabilityInStockId';
     const TERMS_AND_CONDITIONS_ARTICLE_ID = 'termsAndConditionsArticleId';

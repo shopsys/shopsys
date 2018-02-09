@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Newsletter subscriber is distinguished by domain (@stanoMilan)
     - Admin: E-mail newsletter now exports e-mails to csv for each domain separatedly
     - emails are exported by domain
+- Admin - Legal conditions: added GDPR settings (@stanoMilan) 
 - DatabaseSearching: added getFullTextLikeSearchString() (@MattCzerner)
 - admin: E-mail newsletter: now contains list of registered e-mails with ability to delete them
 
