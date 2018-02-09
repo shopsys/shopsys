@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [docker-common-problems.md](docs/docker/docker-common-problems.md): added to help developers with common problems that occurs using docker for development(@MattCzerner)
 - Newsletter subscriber is distinguished by domain (@stanoMilan)
     - Admin: E-mail newsletter now exports e-mails to csv for each domain separatedly
+- Admin - Legal conditions: added GDPR settings (@stanoMilan) 
 - DatabaseSearching: added getFullTextLikeSearchString() (@MattCzerner)
 - admin: E-mail newsletter: now contains list of registered e-mails with ability to delete them
 
@@ -58,10 +59,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - updated presta/sitemap-bundle to version 1.5.2 in order to avoid deprecated calls (@TomasLudvik)
  - updated SitemapListener to avoid using of deprecated SitemapListenerInterface
 - updated symfony/swiftmailer-bundle to version 3.2.0 in order to fix deprecated calls (@TomasLudvik)
+- NewsletterFacadeTest: renamed properties to match class name (@MattCzerner)
 - all calls of Form::isValid() are called only on submitted forms in order to prevent deprecated call (@TomasLudvik)
 - symlink so root/bin acts like root/project-base/bin (@TomasLudvik) 
 - all commands are now services, that are lazy loaded with autowired dependencies (@TomasLudvik) 
-- NewsletterFacadeTest: renamed properties to match class name (@MattCzerner)
 
 ### Fixed
 - `BrandFacade::create()` now generates friendly URL for all domains (@sspooky13)
