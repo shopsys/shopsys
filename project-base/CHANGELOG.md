@@ -23,8 +23,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [docker-troubleshooting.md](docs/docker/docker-troubleshooting.md): added to help developers with common problems that occurs using docker for development(@MattCzerner)
 - Newsletter subscriber is distinguished by domain (@stanoMilan)
     - Admin: E-mail newsletter now exports e-mails to csv for each domain separatedly
+- Admin - Legal conditions: added GDPR settings (@stanoMilan) 
 - DatabaseSearching: added getFullTextLikeSearchString() (@MattCzerner)
 - admin: E-mail newsletter: now contains list of registered e-mails with ability to delete them
+- Frontend site for requesting GDPR information (@stanoMilan) 
 
 ### Changed
 - cache is cleared before PHPUnit tests only when run via [Phing targets](docs/introduction/phing-targets.md), not when run using `phpunit` directly (@PetrHeinz)

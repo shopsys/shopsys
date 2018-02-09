@@ -59,6 +59,13 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
         );
         $setting->setForDomain(SeoSettingFacade::SEO_TITLE_MAIN_PAGE, 'ShopSys Framework - Titulní strana', 2);
         $setting->setForDomain(SeoSettingFacade::SEO_TITLE_ADD_ON, '| Demo obchod', 2);
+
+        $gdpr = 'Zadáním e-mailu níže si můžete nechat zobrazit vaše osobní údaje, která evidujeme v našem
+         internetovém obchodu. Pro ověření vaší totožnosti vám po zadání e-mailové adresy bude
+         zaslán e-mail s odkazem. Klikem na odkaz se dostanete na stránku s přehledem těchto 
+         osobních údajů - půjde o všechny údaje evidované k dané e-mailové adrese.';
+
+        $setting->setForDomain(Setting::GDPR_SITE_CONTENT, $gdpr, 2);
     }
 
     /**
