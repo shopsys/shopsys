@@ -5,6 +5,28 @@
 
 {% block main_content %}
     {{ render(controller('ShopsysShopBundle:Admin/Domain:domainTabs')) }}
+
+    <div class="form-group margin-bottom-20">
+        <h2 class="form-group__title">
+            {{ 'Link to the GDPR'|trans }}
+        </h2>
+        <div class="form-line">
+            <div class="form-line__line">
+                <div class="form-line__label">
+                    {{ getDomainName(domainId) }}
+                    {% if isMultidomain() %}
+                        {{ domainIcon(domainId) }}
+                    {% endif %}
+                </div>
+                <div class="form-line__item form-line__item--text">
+                    <a href="{{ findUrlByDomainId('front_gdpr', {}, domainId) }}" target="_blank">
+                        {{ findUrlByDomainId('front_gdpr', {}, domainId) }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="form-group">
         <div class="form-group__title">
             {{ 'Gdpr'|trans }}
@@ -15,7 +37,7 @@
                 {% block fixed_bar_content %}
                     {{ form_widget(form.save, { label: 'Save changes'|trans }) }}
                 {% endblock %}
-           {% endembed %}
+            {% endembed %}
         {{ form_end(form) }}
     </div>
 {% endblock %}

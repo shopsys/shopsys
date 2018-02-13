@@ -17,7 +17,7 @@ class GdprController extends AdminBaseController
     private $adminDomainTabsFacade;
 
     /**
-     * @var \ShopSys\ShopBundle\Component\Setting\Setting
+     * @var \Shopsys\ShopBundle\Component\Setting\Setting
      */
     private $setting;
 
@@ -46,6 +46,7 @@ class GdprController extends AdminBaseController
 
         return $this->render('@ShopsysShop/Admin/Content/Gdpr/gdpr.html.twig', [
             'form' => $form->createView(),
+            'domainId' => $domainId,
         ]);
     }
 }

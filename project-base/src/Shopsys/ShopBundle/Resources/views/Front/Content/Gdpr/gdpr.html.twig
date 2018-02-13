@@ -1,0 +1,24 @@
+{% extends '@ShopsysShop/Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block title %}
+    {{ 'GDPR'|trans }}
+{% endblock %}
+
+{% block meta_description %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main_content %}
+    <div class="in-user-text">
+        <h1>{{ 'GDPR'|trans }}</h1>
+
+        {{ gdprSiteContent|raw }}
+
+        <div class="padding-20">
+            {{ form_start(form) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.send) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
