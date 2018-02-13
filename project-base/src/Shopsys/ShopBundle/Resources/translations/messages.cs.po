@@ -1984,6 +1984,8 @@ msgstr "Celé jméno"
 
 #: src/Shopsys/ShopBundle/Resources/config/admin_menu.yml:
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:3
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/gdpr.html.twig:4
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/gdpr.html.twig:13
 msgid "GDPR"
 msgstr ""
 
@@ -1991,7 +1993,7 @@ msgstr ""
 msgid "GDPR settings"
 msgstr "Nastavení GDPR"
 
-#: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:10
+#: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:32
 msgid "Gdpr"
 msgstr ""
 
@@ -2496,6 +2498,10 @@ msgstr "Odkaz"
 #: CustomerPasswordController.php:53
 msgid "Link to password reset sent to e-mail <strong>{{ email }}</strong>."
 msgstr "Odkaz pro vyresetování hesla byl zaslán na email <strong>{{ email }}</strong>."
+
+#: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:11
+msgid "Link to the GDPR"
+msgstr "Odkaz na GDPR"
 
 #: MailController.php:111
 msgid "Link to the log in page"
@@ -3788,7 +3794,7 @@ msgstr "Uložit"
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Availability/setting.html.twig:16
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Cookies/setting.html.twig:20
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Currency/currencySettings.html.twig:14
-#: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:16
+#: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:38
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Heureka/setting.html.twig:18
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/LegalConditions/setting.html.twig:21
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Mail/setting.html.twig:20

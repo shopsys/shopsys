@@ -1984,6 +1984,8 @@ msgstr ""
 
 #: src/Shopsys/ShopBundle/Resources/config/admin_menu.yml:
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:3
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/gdpr.html.twig:4
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/gdpr.html.twig:13
 msgid "GDPR"
 msgstr ""
 
@@ -1991,7 +1993,7 @@ msgstr ""
 msgid "GDPR settings"
 msgstr ""
 
-#: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:10
+#: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:32
 msgid "Gdpr"
 msgstr ""
 
@@ -2495,6 +2497,10 @@ msgstr ""
 
 #: CustomerPasswordController.php:53
 msgid "Link to password reset sent to e-mail <strong>{{ email }}</strong>."
+msgstr ""
+
+#: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:11
+msgid "Link to the GDPR"
 msgstr ""
 
 #: MailController.php:111
@@ -3788,7 +3794,7 @@ msgstr ""
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Availability/setting.html.twig:16
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Cookies/setting.html.twig:20
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Currency/currencySettings.html.twig:14
-#: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:16
+#: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Gdpr/gdpr.html.twig:38
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Heureka/setting.html.twig:18
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/LegalConditions/setting.html.twig:21
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Mail/setting.html.twig:20
