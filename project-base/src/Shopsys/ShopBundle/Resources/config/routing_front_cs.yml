@@ -53,3 +53,8 @@ front_registration_set_new_password:
 front_brand_list:
   path: /prehled-znacek/
   defaults: { _controller: ShopsysShopBundle:Front\Brand:list }
+
+front_gdpr:
+  path: /gdpr/
+  defaults: { _controller: ShopsysShopBundle:Front\Gdpr:index }
+  

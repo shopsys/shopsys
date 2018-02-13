@@ -121,3 +121,8 @@ front_registration_exists_email:
   path: /registration/exists-email
   defaults: { _controller: ShopsysShopBundle:Front\Registration:existsEmail }
   methods: [POST]
+
+front_gdpr_list:
+  path: /gdpr/list/
+  defaults: { _controller: ShopsysShopBundle:Front\Gdpr:list }
+  methods: [POST]

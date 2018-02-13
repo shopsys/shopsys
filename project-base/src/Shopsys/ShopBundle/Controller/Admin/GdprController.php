@@ -17,7 +17,7 @@ class GdprController extends AdminBaseController
     private $adminDomainTabsFacade;
 
     /**
-     * @var \ShopSys\ShopBundle\Component\Setting\Setting
+     * @var \Shopsys\ShopBundle\Component\Setting\Setting
      */
     private $setting;
 

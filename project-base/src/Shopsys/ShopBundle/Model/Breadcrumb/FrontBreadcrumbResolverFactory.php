@@ -5,6 +5,7 @@ namespace Shopsys\ShopBundle\Model\Breadcrumb;
 use Shopsys\ShopBundle\Component\Breadcrumb\BreadcrumbResolver;
 use Shopsys\ShopBundle\Model\Article\ArticleBreadcrumbGenerator;
 use Shopsys\ShopBundle\Model\Category\CategoryBreadcrumbGenerator;
+use Shopsys\ShopBundle\Model\Gdpr\GdprBreadcrumbResolverFactory;
 use Shopsys\ShopBundle\Model\Product\Brand\BrandBreadcrumbGenerator;
 use Shopsys\ShopBundle\Model\Product\ProductBreadcrumbGenerator;
 
@@ -21,7 +22,8 @@ class FrontBreadcrumbResolverFactory
         ProductBreadcrumbGenerator $productBreadcrumbGenerator,
         SimpleBreadcrumbGenerator $frontBreadcrumbGenerator,
         BrandBreadcrumbGenerator $brandBreadcrumbGenerator,
-        ErrorPageBreadcrumbGenerator $errorPageBreadcrumbGenerator
+        ErrorPageBreadcrumbGenerator $errorPageBreadcrumbGenerator,
+        GdprBreadcrumbResolverFactory $gdprBreadcrumbResolverFactory
     ) {
         $this->breadcrumbGenerators = [
             $articleBreadcrumbGenerator,
@@ -30,6 +32,7 @@ class FrontBreadcrumbResolverFactory
             $frontBreadcrumbGenerator,
             $brandBreadcrumbGenerator,
             $errorPageBreadcrumbGenerator,
+            $gdprBreadcrumbResolverFactory,
         ];
     }
 
@@ -42,7 +45,6 @@ class FrontBreadcrumbResolverFactory
         foreach ($this->breadcrumbGenerators as $breadcrumbGenerator) {
             $frontBreadcrumbResolver->registerGenerator($breadcrumbGenerator);
         }
-
         return $frontBreadcrumbResolver;
     }
 }
