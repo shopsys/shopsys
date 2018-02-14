@@ -153,20 +153,60 @@ class OrderRepository
     }
 
     /**
-     * @param \Shopsys\ShopBundle\Model\Customer\User
-     * @return \Shopsys\ShopBundle\Model\Order\Order[]
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getCustomerOrderList(User $user)
+    public function getOrderList()
     {
         return $this->createOrderQueryBuilder()
             ->select('o, oi, os, ost, c')
             ->join('o.items', 'oi')
             ->join('o.status', 'os')
             ->join('os.translations', 'ost')
-            ->join('o.currency', 'c')
+            ->join('o.currency', 'c');
+    }
+
+    /**
+     * @param \Shopsys\ShopBundle\Model\Customer\User
+     * @return \Shopsys\ShopBundle\Model\Order\Order[]
+     */
+    public function getCustomerOrderList(User $user)
+    {
+        return $this->getOrderList()
             ->andWhere('o.customer = :customer')
             ->orderBy('o.createdAt', 'DESC')
             ->setParameter('customer', $user)
+            ->getQuery()->execute();
+    }
+
+    /**
+     * @param \Shopsys\ShopBundle\Model\Customer\User
+     * @return \Shopsys\ShopBundle\Model\Order\Order[]
+     */
+    public function getCustomerOrderListByDomain(User $user, $domainId)
+    {
+        return $this->getOrderList()
+            ->andWhere('o.customer = :customer')
+            ->andWhere('o.domainId = :domain')
+            ->orderBy('o.createdAt', 'DESC')
+            ->setParameter('customer', $user)
+            ->setParameter('domain', $domainId)
+            ->getQuery()->execute();
+    }
+
+    /**
+     * @param $email
+     * @return \Shopsys\ShopBundle\Model\Order\Order[]
+     */
+    public function getEmailOrderListByDomain($email, $domainId)
+    {
+        return $this->createOrderQueryBuilder()
+            ->select('o')
+            ->andWhere('o.customer IS NULL')
+            ->andWhere('o.email = :email')
+            ->setParameter('email', $email)
+            ->orderBy('o.createdAt', 'DESC')
+            ->andWhere('o.domainId = :domain')
+            ->setParameter('domain', $domainId)
             ->getQuery()->execute();
     }
 

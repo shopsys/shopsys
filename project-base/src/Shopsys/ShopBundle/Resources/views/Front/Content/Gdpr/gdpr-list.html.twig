@@ -19,7 +19,7 @@
             {{ form_end(form) }}
         </div>
     </div>
-{% if user is null %}
+{% if user is null and orders|length == 0 %}
     <h2>{{ 'No results matching'|trans }}</h2>
 {% else %}
     {% if user %}
@@ -110,5 +110,6 @@
             </div>
         </div>
     {% endif %}
+    {% include '@ShopsysShop/Front/Content/Gdpr/gdpr-order.html.twig' with {'orders': orders} %}
 {% endif %}
 {% endblock %}
