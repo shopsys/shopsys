@@ -13,7 +13,8 @@
         <h1>{{ 'GDPR'|trans }}</h1>
         {{ gdprContent|raw }}
         <div class="padding-20">
-            {{ form_start(form) }}
+            {% set url = url('front_gdpr_list') %}
+            {{ form_start(form, { action: url, method: 'POST'  }) }}
             {{ form_row(form.email) }}
             {{ form_row(form.send) }}
             {{ form_end(form) }}

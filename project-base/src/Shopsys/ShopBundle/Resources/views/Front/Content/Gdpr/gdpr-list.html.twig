@@ -19,4 +19,96 @@
             {{ form_end(form) }}
         </div>
     </div>
+{% if user is null %}
+    <h2>{{ 'No results matching'|trans }}</h2>
+{% else %}
+    {% if user %}
+        <div class="wrap-box">
+            <h2 class="wrap-box__title">{{ 'Personal data'|trans }}</h2>
+            <div class="wrap-box__in">
+                <table class="table-params">
+                    <tr>
+                        <th>{{ 'Name'|trans }}:</th>
+                        <td>{{ user.firstName }} </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Surname'|trans }}:</th>
+                        <td>{{ user.lastName }} </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Phone number'|trans }}:</th>
+                        <td>{{ user.billingAddress.telephone }} </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Email'|trans }}:</th>
+                        <td>{{ user.email }} </td>
+                    </tr>
+                    {% if user.billingAddress %}
+                        <tr>
+                            <th>{{ 'Billing address'|trans }}</th>
+                            <td>
+                                {% if user.billingAddress.street %}
+                                    {{ user.billingAddress.street }},
+                                {% endif %}
+                                {% if user.billingAddress.city %}
+                                    {{ user.billingAddress.city }},
+                                {% endif %}
+                                {% if user.billingAddress.postcode %}
+                                    {{ user.billingAddress.postcode }},
+                                {% endif %}
+                                {% if user.billingAddress.country %}
+                                    {{ user.billingAddress.country.name }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if user.deliveryAddress %}
+                        <tr>
+                            <th>{{ 'Delivery address'|trans }}</th>
+                            <td>
+                                {% if user.deliveryAddress.firstName %}
+                                    {{ user.deliveryAddress.firstName }},
+                                {% endif %}
+                                {% if user.deliveryAddress.lastName %}
+                                    {{ user.deliveryAddress.lastName }},
+                                {% endif %}
+                                {% if user.deliveryAddress.companyName %}
+                                    {{ user.deliveryAddress.companyName }},
+                                {% endif %}
+                                {% if user.deliveryAddress.street %}
+                                    {{ user.deliveryAddress.street }},
+                                {% endif %}
+                                {% if user.deliveryAddress.city %}
+                                    {{ user.deliveryAddress.city }},
+                                {% endif %}
+                                {% if user.deliveryAddress.postcode %}
+                                    {{ user.deliveryAddress.postcode }},
+                                {% endif %}
+                                {% if user.deliveryAddress.country %}
+                                    {{ user.deliveryAddress.country.name }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if user.billingAddress.companyTaxNumber or user.billingAddress.companyNumber or user.billingAddress.companyName %}
+                        <tr>
+                            <th>{{ 'Company'|trans }}</th>
+                            <td>
+                                {% if user.billingAddress.companyName %}
+                                    {{ user.billingAddress.companyName }},
+                                {% endif %}
+                                {% if user.billingAddress.companyNumber %}
+                                    {{ user.billingAddress.companyNumber }},
+                                {% endif %}
+                                {% if  user.billingAddress.companyTaxNumber %}
+                                    {{ user.billingAddress.companyTaxNumber }},
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}
 {% endblock %}
