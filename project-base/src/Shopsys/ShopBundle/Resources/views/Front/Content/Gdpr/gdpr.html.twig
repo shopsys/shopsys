@@ -1,7 +1,7 @@
 {% extends '@ShopsysShop/Front/Layout/layoutWithoutPanel.html.twig' %}
 
 {% block title %}
-    {{ 'GDPR'|trans }}
+ {{ 'GDPR'|trans }}
 {% endblock %}
 
 {% block meta_description %}
@@ -13,10 +13,98 @@
         <h1>{{ 'GDPR'|trans }}</h1>
         {{ gdprContent|raw }}
         <div class="padding-20">
-            {{ form_start(form) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.send) }}
-            {{ form_end(form) }}
+        {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.send) }}
+        {{ form_end(form) }}
         </div>
+        {% if customerData %}
+            <div class="wrap-box">
+                <h2 class="wrap-box__title">{{ 'Personal data'|trans }}</h2>
+                <div class="wrap-box__in">
+                    <table class="table-params">
+                        <tr>
+                            <th>{{ 'Name'|trans }}:</th>
+                            <td>{{ customerData.firstName }} </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'Surname'|trans }}:</th>
+                            <td>{{ customerData.lastName }} </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'Phone number'|trans }}:</th>
+                            <td>{{ customerData.billingAddress.telephone }} </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'Email'|trans }}:</th>
+                            <td>{{ customerData.email }} </td>
+                        </tr>
+                        {% if customerData.billingAddress %}
+                            <tr>
+                                <th>{{ 'Billing address'|trans }}</th>
+                                <td>
+                                    {% if customerData.billingAddress.street %}
+                                        {{ customerData.billingAddress.street }},
+                                    {% endif %}
+                                    {% if customerData.billingAddress.city %}
+                                        {{ customerData.billingAddress.city }},
+                                    {% endif %}
+                                    {% if customerData.billingAddress.postcode %}
+                                        {{ customerData.billingAddress.postcode }},
+                                    {% endif %}
+                                    {% if customerData.billingAddress.country %}
+                                        {{ customerData.billingAddress.country.name }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if customerData.deliveryAddress %}
+                        <tr>
+                            <th>{{ 'Delivery address'|trans }}</th>
+                            <td>
+                                {% if customerData.deliveryAddress.firstName %}
+                                    {{ customerData.deliveryAddress.firstName }},
+                                {% endif %}
+                                {% if customerData.deliveryAddress.lastName %}
+                                    {{ customerData.deliveryAddress.lastName }},
+                                {% endif %}
+                                {% if customerData.deliveryAddress.companyName %}
+                                    {{ customerData.deliveryAddress.companyName }},
+                                {% endif %}
+                            {% if customerData.deliveryAddress.street %}
+                                {{ customerData.deliveryAddress.street }},
+                            {% endif %}
+                            {% if customerData.deliveryAddress.city %}
+                                {{ customerData.deliveryAddress.city }},
+                            {% endif %}
+                            {% if customerData.deliveryAddress.postcode %}
+                                {{ customerData.deliveryAddress.postcode }},
+                            {% endif %}
+                            {% if customerData.deliveryAddress.country %}
+                                {{ customerData.deliveryAddress.country.name }}
+                            {% endif %}
+                            </td>
+                        </tr>
+                            {% endif %}
+                            {% if customerData.billingAddress.companyTaxNumber or customerData.billingAddress.companyNumber or customerData.billingAddress.companyName %}
+                        <tr>
+                            <th>{{ 'Company'|trans }}</th>
+                            <td>
+                                {% if customerData.billingAddress.companyName %}
+                                    {{ customerData.billingAddress.companyName }},
+                                {% endif %}
+                                {% if customerData.billingAddress.companyNumber %}
+                                    {{ customerData.billingAddress.companyNumber }},
+                                {% endif %}
+                                {% if  customerData.billingAddress.companyTaxNumber %}
+                                    {{ customerData.billingAddress.companyTaxNumber }},
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
