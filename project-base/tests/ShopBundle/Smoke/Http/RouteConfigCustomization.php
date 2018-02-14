@@ -355,6 +355,10 @@ class RouteConfigCustomization
                 $config->addExtraRequestDataSet('Expect redirect when the hash is invalid.')
                     ->setParameter('hash', 'invalidHash')
                     ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('front_gdpr_detail', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Check gdpr site')
+                    ->setParameter('email', 'vitek@netdevelo.cz');
             });
     }
 
