@@ -106,5 +106,7 @@
                 </div>
             </div>
         {% endif %}
+        {% include '@ShopsysShop/Front/Content/Gdpr/gdpr-order.html.twig' with {'orders': userOrders} %}
+        {% include '@ShopsysShop/Front/Content/Gdpr/gdpr-order.html.twig' with {'orders': emailOrders} %}
     </div>
 {% endblock %}
