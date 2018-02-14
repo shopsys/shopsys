@@ -24,6 +24,7 @@ class GdprBreadcrumbResolverFactory implements BreadcrumbGeneratorInterface
     {
         return [
             'front_gdpr',
+            'front_gdpr_detail',
         ];
     }
 }

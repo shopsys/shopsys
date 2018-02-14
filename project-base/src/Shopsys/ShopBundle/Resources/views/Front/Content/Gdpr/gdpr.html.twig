@@ -15,10 +15,15 @@
         {{ gdprSiteContent|raw }}
 
         <div class="padding-20">
-            {{ form_start(form) }}
+            {{ form_start(form, { action: url('front_gdpr'), method: 'POST' }) }}
                 {{ form_row(form.email) }}
                 {{ form_row(form.send) }}
             {{ form_end(form) }}
         </div>
     </div>
+
+    {% if user is defined %}
+        {{ include('@ShopsysShop/Front/Content/Gdpr/detail.html.twig') }}
+    {% endif %}
+
 {% endblock %}
