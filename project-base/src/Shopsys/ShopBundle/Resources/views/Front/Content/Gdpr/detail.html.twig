@@ -1,6 +1,7 @@
-{% if user is null %}
+{% if user is null and orders|length == 0 %}
     <h2>{{ 'No results matching'|trans }}</h2>
 {% else %}
+    {% if user is not null %}
     <div class="wrap-box">
         <h2 class="wrap-box__title">{{ 'Personal data of registered customer'|trans }}</h2>
         <div class="wrap-box__in">
@@ -68,4 +69,10 @@
             </table>
         </div>
     </div>
+    {% endif %}
+
+    {% if orders|length != 0 %}
+        {% include '@ShopsysShop/Front/Content/Gdpr/order.html.twig' with { 'orders': orders } %}
+    {% endif %}
+
 {% endif %}
