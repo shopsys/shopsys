@@ -1,4 +1,4 @@
-{% if user is null and orders|length == 0 %}
+{% if user is null and orders|length == 0 and newsletterSubscriber is null %}
     <h2>{{ 'No results matching'|trans }}</h2>
 {% else %}
     {% if user is not null %}
@@ -75,4 +75,21 @@
         {% include '@ShopsysShop/Front/Content/Gdpr/order.html.twig' with { 'orders': orders } %}
     {% endif %}
 
+    {% if newsletterSubscriber %}
+        <div class="wrap-box">
+        <h2 class="wrap-box__title">{{ 'Subscription to email newsletter'|trans }}</h2>
+        <div class="wrap-box__in">
+        <table class="table-params">
+            <tr>
+                <th>{{ 'E-mail'|trans }}</th>
+                <td>{{ newsletterSubscriber.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Date of subscription'|trans }}</th>
+                <td>{{ newsletterSubscriber.createdAt|formatDateTime }}</td>
+            </tr>
+        </table>
+        </div>
+        </div>
+    {% endif %}
 {% endif %}
