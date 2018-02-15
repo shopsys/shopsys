@@ -7,6 +7,7 @@ use Shopsys\ShopBundle\Component\Domain\Domain;
 use Shopsys\ShopBundle\Component\Setting\Setting;
 use Shopsys\ShopBundle\Form\Front\Gdpr\GdprFormType;
 use Shopsys\ShopBundle\Model\Customer\CustomerFacade;
+use Shopsys\ShopBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\ShopBundle\Model\Order\OrderFacade;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,21 +34,29 @@ class GdprController extends FrontBaseController
     private $orderFacade;
 
     /**
+     * @var \Shopsys\ShopBundle\Model\Newsletter\NewsletterFacade
+     */
+    private $newsletterFacade;
+
+    /**
      * @param \Shopsys\ShopBundle\Component\Setting\Setting $setting
      * @param \Shopsys\ShopBundle\Component\Domain\Domain $domain
      * @param \Shopsys\ShopBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\ShopBundle\Model\Order\OrderFacade $orderFacade
+     * @param \Shopsys\ShopBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      */
     public function __construct(
         Setting $setting,
         Domain $domain,
         CustomerFacade $customerFacade,
-        OrderFacade $orderFacade
+        OrderFacade $orderFacade,
+        NewsletterFacade $newsletterFacade
     ) {
         $this->setting = $setting;
         $this->domain = $domain;
         $this->customerFacade = $customerFacade;
         $this->orderFacade = $orderFacade;
+        $this->newsletterFacade = $newsletterFacade;
     }
 
     public function indexAction(Request $request)
@@ -71,11 +80,16 @@ class GdprController extends FrontBaseController
         $form = $this->createForm(GdprFormType::class, ['email' => $email]);
         $user = $this->customerFacade->findUserByEmailAndDomain($email, $this->domain->getId());
         $orders = $this->orderFacade->getOrderListForEmailByDomainId($email, $this->domain->getId());
+        $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomain(
+            $email,
+            $this->domain->getId()
+        );
         return $this->render('@ShopsysShop/Front/Content/Gdpr/gdpr.html.twig', [
                 'gdprSiteContent' => $this->getGdpirSiteContent(),
                 'form' => $form->createView(),
                 'orders' => $orders,
                 'user' => $user,
+                'newsletterSubscriber' => $newsletterSubscriber,
             ]);
     }
 

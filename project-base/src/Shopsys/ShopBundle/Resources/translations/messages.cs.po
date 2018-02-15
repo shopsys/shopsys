@@ -538,7 +538,7 @@ msgstr "Nejprodávanější zboží kategorie"
 
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Customer/orderList.html.twig:11
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/orderDetail.html.twig:33
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:36
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:31
 msgid "Billing address"
 msgstr "Fakturační adresa"
 
@@ -546,7 +546,7 @@ msgstr "Fakturační adresa"
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
 msgstr "Fakturační adresa - jméno, příjmení, firma, ič, dič a fakt. adresa"
 
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:35
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:26
 msgid "Billing adress"
 msgstr "Fakturační adresa"
 
@@ -844,8 +844,8 @@ msgstr "Komunikace se zákazníkem"
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/edit.html.twig:56
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/edit.html.twig:83
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/orderDetail.html.twig:109
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:66
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:53
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:62
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:43
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step3.html.twig:50
 #: src/Shopsys/ShopBundle/Resources/views/Mail/Order/billingAddress.html.twig:5
 #: src/Shopsys/ShopBundle/Resources/views/Mail/Order/deliveryAddress.html.twig:5
@@ -1196,6 +1196,10 @@ msgstr "Datum vytvoření a dohody o ochraně osobních údajů"
 msgid "Date of registration and privacy policy agreement"
 msgstr "Datum registrace a dohody o ochraně soukromí"
 
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:88
+msgid "Date of subscription"
+msgstr "Dátum přihlášení"
+
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Vat/vatSettings.html.twig:6
 msgid "Default VAT rate"
 msgstr "Výchozí sazba DPH"
@@ -1248,11 +1252,11 @@ msgid "Delete and set"
 msgstr "Smazat a nastavit"
 
 #: MailController.php:90
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:50
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:47
 msgid "Delivery address"
 msgstr "Dodací adresa"
 
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:43
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:33
 msgid "Delivery adress"
 msgstr "Doručovací adresa"
 
@@ -1505,8 +1509,9 @@ msgstr "Zde přetáhněte soubor"
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/ContactForm/contactForm.html.twig:7
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/edit.html.twig:24
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/orderDetail.html.twig:45
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:29
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:23
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:24
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:84
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:22
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Login/loginForm.html.twig:18
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Login/windowForm.html.twig:10
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step3.html.twig:15
@@ -1886,6 +1891,8 @@ msgstr "Dokončit objednávku"
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/edit.html.twig:84
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/orderDetail.html.twig:37
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/orderDetail.html.twig:97
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:10
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:8
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step3.html.twig:13
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step3.html.twig:48
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Registration/register.html.twig:14
@@ -2474,6 +2481,8 @@ msgstr "Poslední přihlášení"
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/edit.html.twig:85
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/orderDetail.html.twig:41
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/orderDetail.html.twig:103
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:14
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:12
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step3.html.twig:14
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step3.html.twig:49
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Registration/register.html.twig:15
@@ -3124,7 +3133,7 @@ msgstr "Objednávka - osobní údaje"
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Order/edit.html.twig:6
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Content/Order/edit.html.twig:16
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/orderDetail.html.twig:12
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:6
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:4
 msgid "Order Nr."
 msgstr "Objednávka č."
 
@@ -3229,7 +3238,6 @@ msgstr "Přehled stavů objednávek"
 
 #: SimpleBreadcrumbGenerator.php:46
 #: src/Shopsys/ShopBundle/Resources/config/admin_menu.yml:
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:1
 #: src/Shopsys/ShopBundle/Resources/views/Front/Layout/header.html.twig:66
 msgid "Orders"
 msgstr "Objednávky"
@@ -3380,7 +3388,7 @@ msgstr "Procent"
 msgid "Personal data"
 msgstr "Osobní údaje"
 
-#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:5
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:6
 msgid "Personal data of registered customer"
 msgstr "Osobní údaje registrovaného zákazníka"
 
@@ -4301,6 +4309,10 @@ msgstr "Ulice"
 msgid "Subject"
 msgstr "Předmět"
 
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:80
+msgid "Subscription to email newsletter"
+msgstr "Přihlášení do zpravodaje"
+
 #: fileUpload.js:116
 #: src/Shopsys/ShopBundle/Resources/views/Admin/Form/fileuploadFields.html.twig:51
 msgid "Successfully uploaded"
@@ -4494,6 +4506,8 @@ msgstr "Technické parametry"
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/edit.html.twig:86
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/orderDetail.html.twig:49
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Customer/orderDetail.html.twig:115
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/detail.html.twig:19
+#: src/Shopsys/ShopBundle/Resources/views/Front/Content/Gdpr/order.html.twig:17
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step3.html.twig:16
 #: src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step3.html.twig:51
 #: src/Shopsys/ShopBundle/Resources/views/Mail/Order/deliveryAddress.html.twig:6
