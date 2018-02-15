@@ -82,4 +82,15 @@ class NewsletterRepository
     {
         return $this->getNewsletterSubscriberRepository()->find($id);
     }
+
+    /**
+     * @param string $email
+     * @param int $domainId
+     * @return \Shopsys\ShopBundle\Model\Newsletter\NewsletterSubscriber|null
+     */
+    public function findNewsletterSubscribeByEmailAndDomain($email, $domainId)
+    {
+        return $this->getNewsletterSubscriberRepository()
+            ->findOneBy(['email' => $email, 'domainId' => $domainId]);
+    }
 }
