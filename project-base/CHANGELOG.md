@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - gdpr site now shows (@stanoMilan) 
     - personal data 
     - orders  
+    - newsletter subscirbtion
 
 ### Changed
 - cache is cleared before PHPUnit tests only when run via [Phing targets](docs/introduction/phing-targets.md), not when run using `phpunit` directly (@PetrHeinz)

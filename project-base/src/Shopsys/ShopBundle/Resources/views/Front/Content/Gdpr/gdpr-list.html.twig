@@ -19,7 +19,7 @@
             {{ form_end(form) }}
         </div>
     </div>
-{% if user is null and orders|length == 0 %}
+{% if user is null and orders|length == 0 and subscribeNewsletter is null %}
     <h2>{{ 'No results matching'|trans }}</h2>
 {% else %}
     {% if user %}
@@ -111,5 +111,10 @@
         </div>
     {% endif %}
     {% include '@ShopsysShop/Front/Content/Gdpr/gdpr-order.html.twig' with {'orders': orders} %}
+    {% if subscribeNewsletter %}
+        <div class="h3">
+            {{ 'Subscriber %email% to newsletter  from %date%'|trans({ '%email%': subscribeNewsletter.email, '%date%': subscribeNewsletter.createdAt|date }) }}
+        </div>
+    {% endif %}
 {% endif %}
 {% endblock %}
