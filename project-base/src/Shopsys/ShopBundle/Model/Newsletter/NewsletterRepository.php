@@ -46,4 +46,14 @@ class NewsletterRepository
 
         return $query->iterate(null, AbstractQuery::HYDRATE_SCALAR);
     }
+
+    /**
+     * @param $email
+     * @return \Shopsys\ShopBundle\Model\Newsletter\NewsletterSubscriber
+     */
+    public function getNewsletterSubscribeByEmail($email)
+    {
+        return $this->getNewsletterSubscriberRepository()
+            ->findOneBy(['email' => $email]);
+    }
 }

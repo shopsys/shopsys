@@ -7,6 +7,7 @@ use Shopsys\ShopBundle\Component\Domain\Domain;
 use Shopsys\ShopBundle\Component\Setting\Setting;
 use Shopsys\ShopBundle\Form\Front\Gdpr\GdprFormType;
 use Shopsys\ShopBundle\Model\Customer\CustomerFacade;
+use Shopsys\ShopBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\ShopBundle\Model\Order\OrderFacade;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,7 +24,7 @@ class GdprController extends FrontBaseController
     private $domain;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Customer\CustomerFacade
+     * @var \ShopSys\ShopBundle\Model\Customer\CustomerFacade
      */
     private $customerFacade;
 
@@ -32,16 +33,23 @@ class GdprController extends FrontBaseController
      */
     private $orderFacade;
 
+    /**
+     * @var \Shopsys\ShopBundle\Model\Newsletter\NewsletterFacade
+     */
+    private $newsletterFacade;
+
     public function __construct(
         Setting $setting,
         Domain $domain,
         CustomerFacade $customerFacade,
-        OrderFacade $orderFacade
+        OrderFacade $orderFacade,
+        NewsletterFacade $newsletterFacade
     ) {
         $this->setting = $setting;
         $this->domain = $domain;
         $this->customerFacade = $customerFacade;
         $this->orderFacade = $orderFacade;
+        $this->newsletterFacade = $newsletterFacade;
     }
 
     public function indexAction(Request $request)
@@ -51,6 +59,7 @@ class GdprController extends FrontBaseController
         $form->handleRequest($request);
         $userOrders = null;
         $emailOrders = null;
+        $newsletterSubscribe = null;
         $user = null;
 
         if ($form->isValid()) {
@@ -60,6 +69,7 @@ class GdprController extends FrontBaseController
             }
 
             $emailOrders = $this->orderFacade->getEmailOrderListByDomain($form->getData()['email'], $this->domain->getId());
+            $newsletterSubscribe = $this->newsletterFacade->getNewsletterSubscriberByEmail($form->getData()['email']);
         }
 
         return $this->render('@ShopsysShop/Front/Content/Gdpr/gdpr.html.twig', [
@@ -68,6 +78,7 @@ class GdprController extends FrontBaseController
             'userOrders' => $userOrders,
             'emailOrders' => $emailOrders,
             'customerData' => $user,
+            'subscribeNewsletter' => $newsletterSubscribe,
         ]);
     }
 }

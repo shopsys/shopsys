@@ -44,4 +44,13 @@ class NewsletterFacade
     {
         return $this->newsletterRepository->getAllEmailsDataIterator();
     }
+
+    /**
+     * @param $email
+     * @return \Shopsys\ShopBundle\Model\Newsletter\NewsletterSubscriber
+     */
+    public function getNewsletterSubscriberByEmail($email)
+    {
+        return $this->newsletterRepository->getNewsletterSubscribeByEmail($email);
+    }
 }
