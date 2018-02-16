@@ -31,7 +31,7 @@ class NewsletterFacade
      */
     public function addSubscribedEmail($email, $domainId)
     {
-        if (!$this->newsletterRepository->existsSubscribedEmail($email, $domainId)) {
+        if (!$this->newsletterRepository->existsSubscribedEmailByDomainId($email, $domainId)) {
             $newsletterSubscriber = new NewsletterSubscriber($email, new DateTimeImmutable(), $domainId);
             $this->em->persist($newsletterSubscriber);
             $this->em->flush($newsletterSubscriber);
@@ -39,11 +39,12 @@ class NewsletterFacade
     }
 
     /**
+     * @param int DomainId
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult
      */
-    public function getAllEmailsDataIterator()
+    public function getAllEmailsDataIteratorByDomainId($domainId)
     {
-        return $this->newsletterRepository->getAllEmailsDataIterator();
+        return $this->newsletterRepository->getAllEmailsDataIteratorByDomain($domainId);
     }
 
     /**

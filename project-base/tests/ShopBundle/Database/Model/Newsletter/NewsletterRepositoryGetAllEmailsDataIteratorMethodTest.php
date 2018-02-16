@@ -23,7 +23,7 @@ class NewsletterRepositoryGetAllEmailsDataIteratorMethodTest extends DatabaseTes
 
     public function testEmpty(): void
     {
-        $iterator = $this->repository->getAllEmailsDataIterator();
+        $iterator = $this->repository->getAllEmailsDataIteratorByDomain(1);
         Assert::assertFalse($iterator->next());
     }
 
@@ -31,7 +31,7 @@ class NewsletterRepositoryGetAllEmailsDataIteratorMethodTest extends DatabaseTes
     {
         $this->createNewsletterSubscriber('no-reply@shopsys.com', '2018-02-05 16:14:28', 1);
 
-        $iterator = $this->repository->getAllEmailsDataIterator();
+        $iterator = $this->repository->getAllEmailsDataIteratorByDomain(1);
         $firstRow = $iterator->next()[0];
 
         $expected = [
