@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [docker-common-problems.md](docs/docker/docker-common-problems.md): added to help developers with common problems that occurs using docker for development(@MattCzerner)
 - Newsletter subscriber is distinguished by domain (@stanoMilan)
     - Admin: E-mail newsletter now exports e-mails to csv for each domain separatedly
+    - emails are exported by domain
 - DatabaseSearching: added getFullTextLikeSearchString() (@MattCzerner)
 - admin: E-mail newsletter: now contains list of registered e-mails with ability to delete them
 
