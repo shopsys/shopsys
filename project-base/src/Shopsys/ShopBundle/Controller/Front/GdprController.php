@@ -78,7 +78,7 @@ class GdprController extends FrontBaseController
 
             $emailOrders = $this->orderFacade->getEmailOrderListByDomain($form->getData()['email'], $this->domain->getId());
             $orders = array_merge($userOrders, $emailOrders);
-            $newsletterSubscribe = $this->newsletterFacade->getNewsletterSubscriberByEmail($form->getData()['email']);
+            $newsletterSubscribe = $this->newsletterFacade->getNewsletterSubscriberByEmailAndDomain($form->getData()['email'], $this->domain->getId());
         }
 
         return $this->render('@ShopsysShop/Front/Content/Gdpr/gdpr-list.html.twig', [
