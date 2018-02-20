@@ -6,17 +6,36 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="newsletter_subscribers")
+ * @ORM\Table(
+ *     name="newsletter_subscribers",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="newsletter_subscribers_uni",columns={"email", "domain_id"})
+ *     }
+ * )
  * @ORM\Entity
  */
 class NewsletterSubscriber
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=255)
-     * @ORM\Id
      */
     private $email;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    private $domainId;
 
     /**
      * @var DateTimeImmutable
@@ -27,12 +46,22 @@ class NewsletterSubscriber
 
     /**
      * @param string $email
+     * @param int $domainId
      * @param \DateTimeImmutable $createdAt
      */
-    public function __construct(string $email, DateTimeImmutable $createdAt)
+    public function __construct(string $email, DateTimeImmutable $createdAt, $domainId)
     {
         $this->email = $email;
         $this->createdAt = $createdAt;
+        $this->domainId = $domainId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**

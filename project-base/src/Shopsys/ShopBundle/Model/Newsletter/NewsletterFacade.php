@@ -27,30 +27,32 @@ class NewsletterFacade
 
     /**
      * @param string $email
+     * @param int $domainId
      */
-    public function addSubscribedEmail($email)
+    public function addSubscribedEmail($email, $domainId)
     {
-        if (!$this->newsletterRepository->existsSubscribedEmail($email)) {
-            $newsletterSubscriber = new NewsletterSubscriber($email, new DateTimeImmutable());
+        if (!$this->newsletterRepository->existsSubscribedEmailByDomainId($email, $domainId)) {
+            $newsletterSubscriber = new NewsletterSubscriber($email, new DateTimeImmutable(), $domainId);
             $this->em->persist($newsletterSubscriber);
             $this->em->flush($newsletterSubscriber);
         }
     }
 
     /**
+     * @param int DomainId
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult
      */
-    public function getAllEmailsDataIterator()
+    public function getAllEmailsDataIteratorByDomainId($domainId)
     {
-        return $this->newsletterRepository->getAllEmailsDataIterator();
+        return $this->newsletterRepository->getAllEmailsDataIteratorByDomain($domainId);
     }
 
     /**
      * @param $email
      * @return \Shopsys\ShopBundle\Model\Newsletter\NewsletterSubscriber
      */
-    public function getNewsletterSubscriberByEmail($email)
+    public function getNewsletterSubscriberByEmailAndDomain($email, $domainId)
     {
-        return $this->newsletterRepository->getNewsletterSubscribeByEmail($email);
+        return $this->newsletterRepository->getNewsletterSubscribeByEmailAndDomain($email, $domainId);
     }
 }
