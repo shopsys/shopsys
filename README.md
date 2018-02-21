@@ -3,9 +3,7 @@
 This document provides basic information about development in monorepo to make the work with packages and project-base repository as easy as possible.
 
 ## Problem
-Because there is an intention for more extensive changes to framework architecture,
-there will be more situations where the developer is trying to reflect the same change
-into several separated packages.In the current situation, a developer had to implement
+Due to the growing number of new repositories there will be more situations where the developer is trying to reflect the same change into several separated packages. In the current situation, a developer had to implement
 this change individually in the separated repository of each package.
 This approach would be inefficient and at the same time, the repeated process always
 brings increased errors rate.
