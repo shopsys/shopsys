@@ -3,6 +3,7 @@
 namespace Shopsys\ShopBundle\Twig;
 
 use DateTime;
+use DateTimeImmutable;
 use IntlDateFormatter;
 use Shopsys\ShopBundle\Component\Localization\DateTimeFormatter;
 use Shopsys\ShopBundle\Model\Localization\Localization;
@@ -149,6 +150,8 @@ class DateTimeFormatterExtension extends Twig_Extension
     {
         if ($value instanceof DateTime) {
             return $value;
+        } elseif ($value instanceof DateTimeImmutable) {
+            return new DateTime($value->format(DATE_ISO8601));
         } else {
             return new DateTime($value);
         }
