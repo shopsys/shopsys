@@ -133,6 +133,14 @@
                 resetPasswordRequiredVariables,
                 resetPasswordVariablesLabels
             ) }}
+            {{ _self.mailTemplate(
+                'Personal data request'|trans,
+                personalDataAccessTemplate,
+                form.personalDataAccessTemplate,
+                personalDataAccessVariables,
+                personalDataAccessRequiredVariablesLabels,
+                personalDataAccessVariablesLabels
+            ) }}
 
             {% embed '@ShopsysShop/Admin/Inline/FixedBar/fixedBar.html.twig' %}
                 {% block fixed_bar_content %}

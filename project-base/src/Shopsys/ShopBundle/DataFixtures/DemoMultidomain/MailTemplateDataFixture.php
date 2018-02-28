@@ -4,6 +4,7 @@ namespace Shopsys\ShopBundle\DataFixtures\DemoMultidomain;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\ShopBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\ShopBundle\Model\Mail\MailTemplate;
 use Shopsys\ShopBundle\Model\Mail\MailTemplateData;
 use Shopsys\ShopBundle\Model\Mail\MailTemplateFacade;
 
@@ -84,6 +85,23 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
             . 'E-mail: {email}<br />'
             . 'Adresa e-shopu: {url}<br />'
             . 'Přihlašovací stránka: {login_page}';
+
+        $this->updateMailTemplate($mailTemplateData);
+
+        $mailTemplateData = new MailTemplateData();
+        $mailTemplateData->name = MailTemplate::PERSONAL_DATA_ACCESS_NAME;
+        $mailTemplateData->sendMail = true;
+        $mailTemplateData->subject = 'Zobrazení osobních údajů -  {domain}';
+        $mailTemplateData->body = 'Vážený zákazníku, <br /><br />'
+            . '<br />
+            na základě vašeho zadaného emailu {e-mail}, Vám zasíláme odkaz na zobrazení osobních  <br/> 
+            údajů. Klikem na odkaz níže se dostanete na stránku s přehledem všech osobních údajů,  <br/> 
+           které k Vašemu e-mailu evidujeme na našem e-shopu {domain}.<br/>
+           <br/>
+           Pro zobrazení osobních údajů klikněte zde - {url}<br/>
+            <br/>
+           S pozdravem<br/>
+            tým {domain}<br/>';
 
         $this->updateMailTemplate($mailTemplateData);
     }
