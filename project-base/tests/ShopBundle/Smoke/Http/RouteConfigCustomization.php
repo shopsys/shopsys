@@ -15,6 +15,7 @@ use Shopsys\ShopBundle\Controller\Front\ProductController;
 use Shopsys\ShopBundle\DataFixtures\Base\PricingGroupDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Base\UnitDataFixture as BaseUnitDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Base\VatDataFixture;
+use Shopsys\ShopBundle\DataFixtures\Demo\GdprDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\OrderDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\UnitDataFixture as DemoUnitDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\UserDataFixture;
@@ -357,8 +358,14 @@ class RouteConfigCustomization
                     ->setExpectedStatusCode(302);
             })
             ->customizeByRouteName('front_gdpr_detail', function (RouteConfig $config) {
+                $gdpr = $this->getPersistentReference(GdprDataFixture::PERSONAL_DATA_ACCESS_REQUEST);
+                /** @var $gdpr \Shopsys\ShopBundle\Model\Gdpr\PersonalDataAccessRequest */
                 $config->changeDefaultRequestDataSet('Check gdpr site')
-                    ->setParameter('email', 'vitek@netdevelo.cz');
+                    ->setParameter('hash', 'invalidHash')
+                    ->setExpectedStatusCode(404);
+                $config->addExtraRequestDataSet('Check gdpr site for right token')
+                    ->setParameter('hash', $gdpr->getHash())
+                    ->setExpectedStatusCode(200);
             });
     }
 
