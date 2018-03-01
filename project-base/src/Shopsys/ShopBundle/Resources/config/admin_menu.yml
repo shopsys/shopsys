@@ -112,7 +112,7 @@
           route: admin_bestsellingproduct_detail
           visible: false
     - label: 'E-mail newsletter'
-      route: admin_newsletter_index
+      route: admin_newsletter_list
 
 - label: 'Administrators'
   route: admin_administrator_list
@@ -154,6 +154,8 @@
       items:
         - label: 'Legal conditions'
           route: admin_legalconditions_setting
+        - label: 'GDPR'
+          route: admin_gdpr_setting
 
     - label: 'Cookies information'
       route: admin_cookies_setting

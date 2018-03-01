@@ -4,6 +4,8 @@ namespace Shopsys\ShopBundle\Model\Newsletter;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManager;
+use Shopsys\ShopBundle\Component\String\DatabaseSearching;
+use Shopsys\ShopBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class NewsletterRepository
 {
@@ -30,7 +32,7 @@ class NewsletterRepository
      * @param int $domainId
      * @return bool
      */
-    public function existsSubscribedEmail($email, $domainId)
+    public function existsSubscribedEmailByDomainId($email, $domainId)
     {
         return $this->getNewsletterSubscriberRepository()->findOneBy(['email' => $email, 'domainId' => $domainId]) !== null;
     }
@@ -49,5 +51,46 @@ class NewsletterRepository
             ->getQuery();
 
         return $query->iterate(null, AbstractQuery::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\ShopBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getQueryBuilderForQuickSearch(int $domainId, QuickSearchFormData $searchData)
+    {
+        $queryBuilder = $this->getNewsletterSubscriberRepository()
+            ->createQueryBuilder('ns')
+            ->select('ns.id, ns.email, ns.createdAt')
+            ->where('ns.domainId = :domainId')
+            ->setParameter('domainId', $domainId);
+
+        if ($searchData->text !== null && $searchData->text !== '') {
+            $queryBuilder->andWhere('NORMALIZE(ns.email) LIKE NORMALIZE(:searchData)')
+                ->setParameter('searchData', DatabaseSearching::getFullTextLikeSearchString($searchData->text));
+        }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param int $id
+     * @return \Shopsys\ShopBundle\Model\Newsletter\NewsletterSubscriber
+     */
+    public function getNewsletterSubscriberById(int $id)
+    {
+        return $this->getNewsletterSubscriberRepository()->find($id);
+    }
+
+    /**
+     * @param string $email
+     * @param int $domainId
+     * @return \Shopsys\ShopBundle\Model\Newsletter\NewsletterSubscriber|null
+     */
+    public function findNewsletterSubscribeByEmailAndDomain($email, $domainId)
+    {
+        return $this->getNewsletterSubscriberRepository()
+            ->findOneBy(['email' => $email, 'domainId' => $domainId]);
     }
 }

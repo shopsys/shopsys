@@ -145,11 +145,24 @@ class OrderRepository
                         OR
                         NORMALIZE(u.email) LIKE NORMALIZE(:text)
                     )');
-            $querySearchText = '%' . DatabaseSearching::getLikeSearchString($quickSearchData->text) . '%';
+            $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
         }
 
         return $queryBuilder;
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getOrderListQueryBuilder()
+    {
+        return $this->createOrderQueryBuilder()
+            ->select('o, oi, os, ost, c')
+            ->join('o.items', 'oi')
+            ->join('o.status', 'os')
+            ->join('os.translations', 'ost')
+            ->join('o.currency', 'c');
     }
 
     /**
@@ -158,15 +171,33 @@ class OrderRepository
      */
     public function getCustomerOrderList(User $user)
     {
-        return $this->createOrderQueryBuilder()
+        return $this->getOrderListQueryBuilder()
+            ->andWhere('o.customer = :customer')
+            ->orderBy('o.createdAt', 'DESC')
+            ->setParameter('customer', $user)
+            ->getQuery()->execute();
+    }
+
+    /**
+     * @param string $email
+     * @param int $domainId
+     * @return \Shopsys\ShopBundle\Model\Order\Order[]
+     */
+    public function getEmailOrderListByDomainId($email, $domainId)
+    {
+        return $this->em->createQueryBuilder()
             ->select('o, oi, os, ost, c')
+            ->from(Order::class, 'o')
             ->join('o.items', 'oi')
             ->join('o.status', 'os')
             ->join('os.translations', 'ost')
             ->join('o.currency', 'c')
-            ->andWhere('o.customer = :customer')
+            ->leftJoin('o.customer', 'cu')
+            ->andWhere('o.domainId = :domain')
+            ->andWhere('o.email = :email OR cu.email = :email')
             ->orderBy('o.createdAt', 'DESC')
-            ->setParameter('customer', $user)
+            ->setParameter('email', $email)
+            ->setParameter('domain', $domainId)
             ->getQuery()->execute();
     }
 

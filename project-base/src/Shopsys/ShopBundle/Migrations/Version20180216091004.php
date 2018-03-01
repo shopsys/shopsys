@@ -37,6 +37,7 @@ class Version20180216091004 extends AbstractMigration
                 );
             }
         }
+
         $this->sql('DELETE FROM newsletter_subscribers WHERE domain_id IS NULL');
         $this->sql('ALTER TABLE newsletter_subscribers ALTER COLUMN domain_id SET NOT NULL');
         $this->sql('CREATE UNIQUE INDEX newsletter_subscribers_uni ON newsletter_subscribers (email, domain_id)');

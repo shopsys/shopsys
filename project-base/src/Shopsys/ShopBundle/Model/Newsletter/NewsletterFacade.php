@@ -4,6 +4,7 @@ namespace Shopsys\ShopBundle\Model\Newsletter;
 
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManager;
+use Shopsys\ShopBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class NewsletterFacade
 {
@@ -31,7 +32,7 @@ class NewsletterFacade
      */
     public function addSubscribedEmail($email, $domainId)
     {
-        if (!$this->newsletterRepository->existsSubscribedEmail($email, $domainId)) {
+        if (!$this->newsletterRepository->existsSubscribedEmailByDomainId($email, $domainId)) {
             $newsletterSubscriber = new NewsletterSubscriber($email, new DateTimeImmutable(), $domainId);
             $this->em->persist($newsletterSubscriber);
             $this->em->flush($newsletterSubscriber);
@@ -45,5 +46,45 @@ class NewsletterFacade
     public function getAllEmailsDataIteratorByDomainId($domainId)
     {
         return $this->newsletterRepository->getAllEmailsDataIteratorByDomainId($domainId);
+    }
+
+    /**
+     * @param string $email
+     * @param int $domainId
+     * @return \Shopsys\ShopBundle\Model\Newsletter\NewsletterSubscriber|null
+     */
+    public function findNewsletterSubscriberByEmailAndDomain($email, $domainId)
+    {
+        return $this->newsletterRepository->findNewsletterSubscribeByEmailAndDomain($email, $domainId);
+    }
+
+    /**
+     * @param int $selectedDomainId
+     * @param \Shopsys\ShopBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getQueryBuilderForQuickSearch(int $selectedDomainId, QuickSearchFormData $searchData)
+    {
+        return $this->newsletterRepository->getQueryBuilderForQuickSearch($selectedDomainId, $searchData);
+    }
+
+    /**
+     * @param int $id
+     * @return \Shopsys\ShopBundle\Model\Newsletter\NewsletterSubscriber
+     */
+    public function getNewsletterSubscriberById(int $id)
+    {
+        return $this->newsletterRepository->getNewsletterSubscriberById($id);
+    }
+
+    /**
+     * @param int $id
+     */
+    public function deleteById(int $id)
+    {
+        $newsletterSubscriber = $this->getNewsletterSubscriberById($id);
+
+        $this->em->remove($newsletterSubscriber);
+        $this->em->flush();
     }
 }
