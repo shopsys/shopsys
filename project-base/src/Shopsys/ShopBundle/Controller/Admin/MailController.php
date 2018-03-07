@@ -9,6 +9,7 @@ use Shopsys\ShopBundle\Form\Admin\Mail\AllMailTemplatesFormType;
 use Shopsys\ShopBundle\Form\Admin\Mail\MailSettingFormType;
 use Shopsys\ShopBundle\Model\Customer\Mail\RegistrationMailService;
 use Shopsys\ShopBundle\Model\Customer\Mail\ResetPasswordMail;
+use Shopsys\ShopBundle\Model\Gdpr\Mail\CredentialsRequestMail;
 use Shopsys\ShopBundle\Model\Mail\MailTemplate;
 use Shopsys\ShopBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\ShopBundle\Model\Mail\Setting\MailSettingFacade;
@@ -54,6 +55,11 @@ class MailController extends AdminBaseController
      */
     private $orderStatusFacade;
 
+    /**
+     * @var \Shopsys\ShopBundle\Model\Gdpr\Mail\CredentialsRequestMail
+     */
+    private $credentialsRequestMail;
+
     public function __construct(
         ResetPasswordMail $resetPasswordMail,
         OrderMailService $orderMailService,
@@ -61,7 +67,8 @@ class MailController extends AdminBaseController
         AdminDomainTabsFacade $adminDomainTabsFacade,
         MailTemplateFacade $mailTemplateFacade,
         MailSettingFacade $mailSettingFacade,
-        OrderStatusFacade $orderStatusFacade
+        OrderStatusFacade $orderStatusFacade,
+        CredentialsRequestMail $credentialsRequestMail
     ) {
         $this->resetPasswordMail = $resetPasswordMail;
         $this->orderMailService = $orderMailService;
@@ -70,6 +77,7 @@ class MailController extends AdminBaseController
         $this->mailTemplateFacade = $mailTemplateFacade;
         $this->mailSettingFacade = $mailSettingFacade;
         $this->orderStatusFacade = $orderStatusFacade;
+        $this->credentialsRequestMail = $credentialsRequestMail;
     }
 
     /**
@@ -123,6 +131,15 @@ class MailController extends AdminBaseController
         ];
     }
 
+    private function getCredentialsRequestVariablesLabels()
+    {
+        return [
+            CredentialsRequestMail::VARIABLE_DOMAIN => t('E-shop URL address'),
+            CredentialsRequestMail::VARIABLE_EMAIL => t('E-mail'),
+            CredentialsRequestMail::VARIABLE_URL => t('E-shop URL address'),
+        ];
+    }
+
     /**
      * @Route("/mail/template/")
      */
@@ -134,7 +151,7 @@ class MailController extends AdminBaseController
 
         $form = $this->createForm(AllMailTemplatesFormType::class, $allMailTemplatesData);
         $form->handleRequest($request);
-
+        $allMailTemplatesData->getAllTemplates();
         if ($form->isSubmitted() && $form->isValid()) {
             $this->mailTemplateFacade->saveMailTemplatesData(
                 $allMailTemplatesData->getAllTemplates(),
@@ -152,7 +169,6 @@ class MailController extends AdminBaseController
 
         $templateParameters = $this->getTemplateParameters();
         $templateParameters['form'] = $form->createView();
-
         return $this->render('@ShopsysShop/Admin/Content/Mail/template.html.twig', $templateParameters);
     }
 
@@ -192,6 +208,7 @@ class MailController extends AdminBaseController
     {
         $orderStatusesTemplateVariables = $this->orderMailService->getTemplateVariables();
         $registrationTemplateVariables = $this->registrationMailService->getTemplateVariables();
+
         $resetPasswordTemplateVariables = array_unique(array_merge(
             $this->resetPasswordMail->getBodyVariables(),
             $this->resetPasswordMail->getSubjectVariables()
@@ -213,6 +230,10 @@ class MailController extends AdminBaseController
             MailTemplate::RESET_PASSWORD_NAME,
             $selectedDomainId
         );
+        $personalDataAccessTemplate = $this->mailTemplateFacade->get(
+            MailTemplate::PERSONAL_DATA_ACCESS_NAME,
+            $selectedDomainId
+        );
 
         return [
             'orderStatusesIndexedById' => $this->orderStatusFacade->getAllIndexedById(),
@@ -227,6 +248,10 @@ class MailController extends AdminBaseController
             'resetPasswordVariables' => $resetPasswordTemplateVariables,
             'resetPasswordVariablesLabels' => $this->getResetPasswordVariablesLabels(),
             'TYPE_NEW' => OrderStatus::TYPE_NEW,
-        ];
+            'personalDataAccessTemplate' => $personalDataAccessTemplate,
+            'personalDataAccessVariables' => $this->credentialsRequestMail->getSubjectVariables(),
+            'personalDataAccessRequiredVariablesLabels' => $this->credentialsRequestMail->getRequiredBodyVariables(),
+            'personalDataAccessVariablesLabels' => $this->getCredentialsRequestVariablesLabels(),
+            ];
     }
 }

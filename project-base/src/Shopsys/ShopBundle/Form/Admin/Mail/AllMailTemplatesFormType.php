@@ -3,6 +3,7 @@
 namespace Shopsys\ShopBundle\Form\Admin\Mail;
 
 use Shopsys\ShopBundle\Model\Customer\Mail\ResetPasswordMail;
+use Shopsys\ShopBundle\Model\Gdpr\Mail\CredentialsRequestMail;
 use Shopsys\ShopBundle\Model\Mail\AllMailTemplatesData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -18,9 +19,15 @@ class AllMailTemplatesFormType extends AbstractType
      */
     private $resetPasswordMail;
 
-    public function __construct(ResetPasswordMail $resetPasswordMail)
+    /**
+     * @var \Shopsys\ShopBundle\Model\Gdpr\Mail\CredentialsRequestMail
+     */
+    private $credentialsRequestMail;
+
+    public function __construct(ResetPasswordMail $resetPasswordMail, CredentialsRequestMail $credentialsRequestMail)
     {
         $this->resetPasswordMail = $resetPasswordMail;
+        $this->credentialsRequestMail = $credentialsRequestMail;
     }
 
     /**
@@ -31,6 +38,9 @@ class AllMailTemplatesFormType extends AbstractType
     {
         $builder
             ->add('registrationTemplate', MailTemplateFormType::class)
+            ->add('personalDataAccessTemplate', MailTemplateFormType::class, [
+                'required_body_variables' => $this->credentialsRequestMail->getRequiredBodyVariables(),
+            ])
             ->add('resetPasswordTemplate', MailTemplateFormType::class, [
                 'required_subject_variables' => $this->resetPasswordMail->getRequiredSubjectVariables(),
                 'required_body_variables' => $this->resetPasswordMail->getRequiredBodyVariables(),

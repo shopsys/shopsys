@@ -127,5 +127,5 @@ front_gdpr:
   defaults: { _controller: ShopsysShopBundle:Front\Gdpr:index }
 
 front_gdpr_detail:
-  path: /gdpr/detail/{email}/
+  path: /gdpr/detail/{hash}/
   defaults: { _controller: ShopsysShopBundle:Front\Gdpr:detail }

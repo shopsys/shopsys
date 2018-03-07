@@ -19,6 +19,7 @@
                 {{ form_row(form.email) }}
                 {{ form_row(form.send) }}
             {{ form_end(form) }}
+            {{ form_errors(form, { errors_attr: { class : 'in-message--alert' } }) }}
         </div>
     </div>
 

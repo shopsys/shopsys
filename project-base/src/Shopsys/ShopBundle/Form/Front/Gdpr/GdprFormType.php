@@ -2,6 +2,9 @@
 
 namespace Shopsys\ShopBundle\Form\Front\Gdpr;
 
+use Shopsys\ShopBundle\Form\HoneyPotType;
+use Shopsys\ShopBundle\Form\TimedFormTypeExtension;
+use Shopsys\ShopBundle\Model\Gdpr\PersonalDataAccessRequestData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -22,6 +25,7 @@ class GdprFormType extends AbstractType
                     new Email(['message' => 'Please enter valid e-mail']),
                 ],
             ])
+            ->add('email2', HoneyPotType::class)
             ->add('send', SubmitType::class);
     }
 
@@ -32,6 +36,8 @@ class GdprFormType extends AbstractType
     {
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],
+            'data_class' => PersonalDataAccessRequestData::class,
+            TimedFormTypeExtension::OPTION_ENABLED => true,
         ]);
     }
 }

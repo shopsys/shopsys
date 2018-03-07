@@ -95,6 +95,9 @@ services:
   Shopsys\ShopBundle\Model\Article\ArticleFacade:
     public: true
 
+  Shopsys\ShopBundle\Model\Gdpr\GdprFacade:
+    public: true
+
   Shopsys\ShopBundle\Component\Breadcrumb\BreadcrumbResolver:
     factory: ['@Shopsys\ShopBundle\Model\Breadcrumb\FrontBreadcrumbResolverFactory', create]
 
