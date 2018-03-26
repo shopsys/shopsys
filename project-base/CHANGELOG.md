@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [wip-glassbox-customization.md](docs/wip_glassbox/wip-glassbox-customization.md): new WIP documentation about working with glassbox (@Miroslav-Stopka)
 - docker: [`php-fpm/Dockerfile`](docker/php-fpm/Dockerfile) added installation of `grunt-cli` to be able to run `grunt watch` (@MattCzerner)
     - [`docker-compose.yml.dist`](docker/conf/docker-compose.yml.dist) and [`docker-compose-mac.yml.dist`](docker/conf/docker-compose-mac.yml.dist): opened port 35729 for livereload, that is used by `grunt watch`
+- added image info (@stanoMilan)
+    - crc32 hash of original image 
 
 ### Changed
 - `JavascriptCompilerService` can now compile javascript from more than one source directory (@MattCzerner)

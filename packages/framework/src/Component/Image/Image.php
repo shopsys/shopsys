@@ -74,17 +74,23 @@ class Image implements EntityFileUploadInterface
     private $temporaryFilename;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $originalHashImage;
+
+    /**
      * @param string $entityName
      * @param int $entityId
      * @param string|null $type
      * @param string $temporaryFilename
      */
-    public function __construct($entityName, $entityId, $type, $temporaryFilename)
+    public function __construct($entityName, $entityId, $type, $temporaryFilename, $originalHashImage)
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
         $this->type = $type;
         $this->setTemporaryFilename($temporaryFilename);
+        $this->originalHashImage = $originalHashImage;
     }
 
     /**
