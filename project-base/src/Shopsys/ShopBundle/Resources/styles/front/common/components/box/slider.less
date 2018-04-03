@@ -20,8 +20,12 @@
 
         &__item {
             float: left;
-            display: block;
+            display: none;
             position: relative;
+
+            &.slick-active, &:first-child {
+                display: block;
+            }
 
             img {
                 margin: 0 auto;
