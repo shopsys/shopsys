@@ -52,6 +52,18 @@ class ImageService
     }
 
     /**
+     * @param string $entityName
+     * @param int $entityId
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
+     */
+    public function deleteImages($entityName, $entityId, array $images)
+    {
+        foreach ($images as $image) {
+            $this->deleteImage($entityName, $entityId, $image);
+        }
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig $imageEntityConfig
      * @param int $entityId
      * @param string $temporaryFilename
@@ -64,28 +76,21 @@ class ImageService
         $temporaryFilename,
         $type
     ) {
+        $originalHashImage = null;
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
+        if (file_exists($temporaryFilepath)) {
+            $originalHashImage = hash_file('crc32', $temporaryFilepath);
+        }
 
         $image = new Image(
             $imageEntityConfig->getEntityName(),
             $entityId,
             $type,
-            $this->imageProcessingService->convertToShopFormatAndGetNewFilename($temporaryFilepath)
+            $this->imageProcessingService->convertToShopFormatAndGetNewFilename($temporaryFilepath),
+            $originalHashImage
         );
 
         return $image;
-    }
-
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
-     */
-    public function deleteImages($entityName, $entityId, array $images)
-    {
-        foreach ($images as $image) {
-            $this->deleteImage($entityName, $entityId, $image);
-        }
     }
 
     /**
