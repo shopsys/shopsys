@@ -119,4 +119,3 @@ Usage: `original_refs_wipe.sh`
 Delete all local branches and create all non-remote-tracking branches of a specified remote.
 
 Usage: `load_branches_from_remote.sh <remote-name>`
-
