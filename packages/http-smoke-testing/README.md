@@ -131,17 +131,5 @@ Additionally you can override these methods in your implementation of [`HttpSmok
 * `handleRequest` to customize handling `Request` in your application (eg. you can wrap it in database transaction to roll it back into original state).
 
 ## Contributing
-Since this component is open source you are very welcome to contribute to its code. Feel free to open [a pull request](https://github.com/shopsys/http-smoke-testing/compare) with your changes or create [a new issue](https://github.com/shopsys/http-smoke-testing/issues/new).
 
-### Coding Standards and Automatic Tests
-For your code to be accepted it must pass coding standards checks and automatic tests to see that your code meets our coding standards and everything works as expected.
-
-To execute all checks run these commands (same commands run automatically in [Travis CI](https://travis-ci.org/shopsys/http-smoke-testing)):
-
-```
-php vendor/bin/parallel-lint ./src ./tests
-php vendor/bin/php-cs-fixer fix --config=vendor/shopsys/coding-standards/build/phpcs-fixer.php_cs --dry-run --verbose --diff ./src ./tests
-php vendor/bin/phpcs --standard=vendor/shopsys/coding-standards/rulesetCS.xml --extensions=php --encoding=utf-8 --tab-width=4 -sp ./src ./tests
-php vendor/bin/phpmd "./src,./tests" text vendor/shopsys/coding-standards/rulesetMD.xml --extensions=php
-php vendor/bin/phpunit tests
-```
+Report [issues](https://github.com/shopsys/shopsys/issues/new) and send [pull requests](https://github.com/shopsys/shopsys/compare) in the main [Shopsys repository](https://github.com/shopsys/shopsys).
