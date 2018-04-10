@@ -27,7 +27,7 @@ Documentation of the specific project built on Shopsys Framework should be in [P
 ## Installation
 Create new project from [`shopsys/project-base`](https://github.com/shopsys/project-base) using composer.
 ```
-composer create-project shopsys/project-base --no-install
+composer create-project shopsys/project-base --stability=alpha --no-install
 ```
 For more detailed instructions, follow one of the installation guides:
 - [Installation via Docker (recommended)](docs/docker/installation/installation-using-docker.md)
@@ -41,10 +41,8 @@ You can also login into the administration section on [http://127.0.0.1:8000/adm
 * Password: `admin123`
 
 ## Contributing
-Shopsys Framework is decoupled into many packages, but all sources, 
-pull requests and issues are maintained in one repository - [`shopsys/shopsys`](https://github.com/shopsys/shopsys). 
-That is the only place where to [contribute](CONTRIBUTING.md) when you have any feedback for us.
-You can take part in making Shopsys Framework better. 
+
+Report [issues](https://github.com/shopsys/shopsys/issues/new) and send [pull requests](https://github.com/shopsys/shopsys/compare) in the main [Shopsys repository](https://github.com/shopsys/shopsys).
 
 ## Need help
 * [Docker troubleshooting](docs/docker/docker-troubleshooting.md)

@@ -1,4 +1,8 @@
 # Shopsys Framework Form Types
+
+[![Build Status](https://travis-ci.org/shopsys/form-types-bundle.svg?branch=master)](https://travis-ci.org/shopsys/form-types-bundle)
+[![Downloads](https://img.shields.io/packagist/dt/shopsys/form-types-bundle.svg)](https://packagist.org/packages/shopsys/form-types-bundle)
+
 Symfony bundle adding form types for usage in [Shopsys Framework](https://www.shopsys-framework.com), its components and plugins.
 
 ## Installation
@@ -66,3 +70,7 @@ A boolean value is accepted/returned as data.
 A null value can be accepted/returned when no radio button is checked.
 
 ![YesNoType usage example](./docs/images/yes_no_type_example.png)
+
+## Contributing
+
+Report [issues](https://github.com/shopsys/shopsys/issues/new) and send [pull requests](https://github.com/shopsys/shopsys/compare) in the main [Shopsys repository](https://github.com/shopsys/shopsys).

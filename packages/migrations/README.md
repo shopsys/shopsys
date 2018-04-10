@@ -1,4 +1,8 @@
 ## About
+
+[![Build Status](https://travis-ci.org/shopsys/migrations.svg?branch=master)](https://travis-ci.org/shopsys/migrations)
+[![Downloads](https://img.shields.io/packagist/dt/shopsys/migrations.svg)](https://packagist.org/packages/shopsys/migrations)
+
 This bundle provides commands which can be useful for database migrations:
 * `shopsys:migrations:check-mapping` checks if ORM mapping is valid.
 * `shopsys:migrations:check-schema` checks if database schema is satisfying ORM.
@@ -17,3 +21,7 @@ This bundle uses [DoctrineMigrationsBundle](https://symfony.com/doc/current/bund
     new Shopsys\MigrationBundle\ShopsysMigrationBundle(),
     ```
 3. Configure `DoctrineMigrationsBundle` according to its documentation (see https://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html#configuration)
+
+## Contributing
+
+Report [issues](https://github.com/shopsys/shopsys/issues/new) and send [pull requests](https://github.com/shopsys/shopsys/compare) in the main [Shopsys repository](https://github.com/shopsys/shopsys).
