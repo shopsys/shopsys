@@ -95,8 +95,7 @@ class LogErrorReportingFacade
      */
     private function getLogFilepathByDate(DateTime $date, $rotatedLogName)
     {
-        return
-            $this->logsDir . '/'
+        return $this->logsDir . '/'
             . $rotatedLogName
             . '-'
             . $date->format('Y-m-d')

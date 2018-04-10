@@ -100,7 +100,6 @@ class SettingValue
                 if ($this->value === null) {
                     return null;
                 }
-
                 return DateTimeHelper::createFromFormat(self::DATETIME_STORED_FORMAT, $this->value);
             default:
                 return $this->value;
