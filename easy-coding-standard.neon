@@ -1,0 +1,14 @@
+includes:
+    - packages/coding-standards/shopsys-coding-standard.neon
+    - vendor/symplify/easy-coding-standard/config/psr2.neon
+
+parameters:
+    exclude_checkers:
+        # required deeper refactoring
+        - ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff
+        - ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff
+        - ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff
+
+    skip:
+        Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff:
+            - project-base/app/router.php
