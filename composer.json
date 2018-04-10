@@ -38,7 +38,8 @@
       ],
       "Shopsys\\FrameworkBundle\\": [
         "packages/framework/src/"
-      ]
+      ],
+      "Shopsys\\CodingStandards\\": "packages/coding-standards/src"
     },
     "classmap": [
       "project-base/app/AppCache.php",
@@ -65,7 +66,8 @@
       ],
       "Tests\\Shopsys\\HttpSmokeTesting\\": [
         "packages/http-smoke-testing/tests/"
-      ]
+      ],
+      "Shopsys\\Tests\\Unit\\CodingStandards\\": "packages/coding-standards/tests"
     }
   },
   "repositories": [
@@ -135,14 +137,18 @@
     "symfony/assetic-bundle": "2.8.2",
     "symfony/monolog-bundle": "3.1.2",
     "symfony/swiftmailer-bundle": "^3.2.0",
-    "symfony/symfony": "^3.4.6",
+    "symfony/symfony": "3.4.6 as 4.0",
     "symfony-cmf/routing": "2.0.3",
     "symfony-cmf/routing-bundle": "2.0.1",
     "timwhitlock/jparser": "dev-get-rid-of-import#c37f4c6",
     "tracy/tracy": "2.4.12",
     "twig/extensions": "1.5.1",
     "twig/twig": "1.35.2",
-    "vasek-purchart/console-errors-bundle": "1.0.1"
+    "vasek-purchart/console-errors-bundle": "1.0.1",
+    "jakub-onderka/php-parallel-lint": "^0.9",
+    "object-calisthenics/phpcs-calisthenics-rules": "^3.1",
+    "slevomat/coding-standard": "^4.0",
+    "symplify/easy-coding-standard": "^3.0"
   },
   "require-dev": {
     "ext-pgsql": "*",
@@ -153,7 +159,6 @@
     "jdorn/sql-formatter": "~1.2",
     "phpstan/phpstan": "0.7",
     "phpunit/phpunit": "^7.0",
-    "shopsys/coding-standards": "3.1.1",
     "symfony/http-foundation": "^2.5|^3.0|^4.0",
     "symfony/filesystem": "@stable",
     "symfony/form": "^3.0",
@@ -209,6 +214,7 @@
     "shopsys/product-feed-heureka": "self.version",
     "shopsys/product-feed-heureka-delivery": "self.version",
     "shopsys/product-feed-interface": "self.version",
-    "shopsys/framework": "self.version"
+    "shopsys/framework": "self.version",
+    "shopsys/coding-standards": "self.version"
   }
 }
