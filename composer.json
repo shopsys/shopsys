@@ -178,7 +178,9 @@
       "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
       "Shopsys\\Environment::checkEnvironment"
-    ]
+    ],
+    "check-cs": "ecs check packages project-base",
+    "fix-cs": "ecs check packages project-base"
   },
   "config": {
     "preferred-install": "dist",
