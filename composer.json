@@ -180,7 +180,7 @@
       "Shopsys\\Environment::checkEnvironment"
     ],
     "check-cs": "ecs check packages project-base",
-    "fix-cs": "ecs check packages project-base"
+    "fix-cs": "ecs check packages project-base --fix"
   },
   "config": {
     "preferred-install": "dist",
