@@ -120,3 +120,5 @@ Delete all local branches and create all non-remote-tracking branches of a speci
 
 Usage: `load_branches_from_remote.sh <remote-name>`
 
+## Need help
+Contact us on our Slack [http://slack.shopsys-framework.com/](http://slack.shopsys-framework.com/).
