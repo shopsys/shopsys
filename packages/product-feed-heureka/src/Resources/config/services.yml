@@ -7,10 +7,8 @@ services:
     autoconfigure: true
     public: false
 
-  # exclude *CronModule.php - autodiscover rewrite imported cron services from services_cron.yml because has higher priority
   Shopsys\ProductFeed\HeurekaBundle\:
     resource: '../../*'
-    exclude: '../../**/*CronModule.php'
 
   Shopsys\ProductFeed\HeurekaBundle\HeurekaFeedConfig:
     tags:
@@ -39,3 +37,7 @@ services:
   Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFixture:
     tags:
       - { name: shopsys.data_fixture }
+
+  Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
+    tags:
+      - { name: shopsys.cron, hours: '3', minutes: '0' }
