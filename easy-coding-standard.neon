@@ -12,3 +12,17 @@ parameters:
     skip:
         Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff:
             - project-base/app/router.php
+
+    skip_codes:
+        PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff.DetectedCatch:
+            - packages/framework/src/Component/Domain/Domain.php
+            - packages/framework/src/Controller/Admin/ProductController.php
+            - packages/framework/src/Model/Order/OrderFacade.php
+
+        PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff.DetectedWhile:
+            - packages/framework/src/Model/Product/Availability/ProductAvailabilityRecalculator.php
+            - packages/framework/src/Model/Product/Pricing/ProductPriceRecalculator.php
+
+        PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff.NotCamelCaps:
+            # 3rd party Xml value
+            - packages/product-feed-heureka/src/Model/HeurekaCategory/HeurekaCategoryDownloader.php
