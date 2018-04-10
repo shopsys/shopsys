@@ -4,22 +4,25 @@ includes:
 
 parameters:
     exclude_checkers:
-        # required deeper refactoring
+        # requires deeper refactoring
         - ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff
         - ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff
         - ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff
 
     skip:
         Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff:
+            # allow $_SERVER
             - project-base/app/router.php
 
     skip_codes:
         PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff.DetectedCatch:
+            # intentional
             - packages/framework/src/Component/Domain/Domain.php
             - packages/framework/src/Controller/Admin/ProductController.php
             - packages/framework/src/Model/Order/OrderFacade.php
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff.DetectedWhile:
+            # simple message queues
             - packages/framework/src/Model/Product/Availability/ProductAvailabilityRecalculator.php
             - packages/framework/src/Model/Product/Pricing/ProductPriceRecalculator.php
 
