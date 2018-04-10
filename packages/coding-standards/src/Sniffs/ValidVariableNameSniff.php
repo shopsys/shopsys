@@ -53,7 +53,7 @@ final class ValidVariableNameSniff extends AbstractVariableSniff
             return;
         }
 
-        if (in_array($variableName, ['_POST', '_GET', '_SERVER'], true)) {
+        if (in_array($variableName, ['_POST', '_GET', '_SERVER', '_ENV'], true)) {
             return;
         }
 
