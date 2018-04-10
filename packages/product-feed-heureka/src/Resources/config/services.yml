@@ -7,8 +7,10 @@ services:
     autoconfigure: true
     public: false
 
+  # exclude *CronModule.php - autodiscover rewrite imported cron services from services_cron.yml because has higher priority
   Shopsys\ProductFeed\HeurekaBundle\:
     resource: '../../*'
+    exclude: '../../**/*CronModule.php'
 
   Shopsys\ProductFeed\HeurekaBundle\HeurekaFeedConfig:
     tags:
