@@ -103,12 +103,12 @@ class EntityExtensionTest extends DatabaseTestCase
      */
     public function overwriteEntityExtensionEventSubscribers(array $entityExtensionMap): void
     {
-        $loadORMMetadataSubscriber = $this->getContainer()->get('joschi127_doctrine_entity_override.event_subscriber.load_orm_metadata');
-        /* @var $loadORMMetadataSubscriber \Tests\ShopBundle\Database\EntityExtension\OverwritableLoadORMMetadataSubscriber */
+        $loadOrmMetadataSubscriber = $this->getContainer()->get('joschi127_doctrine_entity_override.event_subscriber.load_orm_metadata');
+        /* @var $loadOrmMetadataSubscriber \Tests\ShopBundle\Database\EntityExtension\OverwritableLoadORMMetadataSubscriber */
         $cleanerEventSubscriber = $this->getContainer()->get(EntityExtensionParentMetadataCleanerEventSubscriber::class);
         /* @var $cleanerEventSubscriber \Tests\ShopBundle\Database\EntityExtension\OverwritableEntityExtensionParentMetadataCleanerEventSubscriber */
 
-        $loadORMMetadataSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
+        $loadOrmMetadataSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
         $cleanerEventSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
     }
 

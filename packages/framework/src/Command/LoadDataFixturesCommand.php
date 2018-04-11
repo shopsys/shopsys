@@ -40,14 +40,14 @@ class LoadDataFixturesCommand extends DoctrineCommand
     protected function configure()
     {
         $this->setName('shopsys:fixtures:load')
-           ->setDescription('Load data fixtures to your database.')
-           ->addOption('append', null, InputOption::VALUE_NONE, 'Append the data fixtures instead of deleting all data from the database first.')
-           ->addOption('em', null, InputOption::VALUE_REQUIRED, 'The entity manager to use for this command.')
-           ->addOption('shard', null, InputOption::VALUE_REQUIRED, 'The shard connection to use for this command.')
-           ->addOption('purge-with-truncate', null, InputOption::VALUE_NONE, 'Purge data by using a database-level TRUNCATE statement')
-           ->addOption('fixtures', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Purge data by using a database-level TRUNCATE statement')
-           ->setHelp(
-               <<<EOT
+            ->setDescription('Load data fixtures to your database.')
+            ->addOption('append', null, InputOption::VALUE_NONE, 'Append the data fixtures instead of deleting all data from the database first.')
+            ->addOption('em', null, InputOption::VALUE_REQUIRED, 'The entity manager to use for this command.')
+            ->addOption('shard', null, InputOption::VALUE_REQUIRED, 'The shard connection to use for this command.')
+            ->addOption('purge-with-truncate', null, InputOption::VALUE_NONE, 'Purge data by using a database-level TRUNCATE statement')
+            ->addOption('fixtures', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Purge data by using a database-level TRUNCATE statement')
+            ->setHelp(
+                <<<EOT
 The <info>%command.name%</info> command loads data fixtures from your application:
 
   <info>php %command.full_name%</info>
@@ -63,7 +63,7 @@ the database. If you want to use a TRUNCATE statement instead you can use the <i
 
   <info>php %command.full_name% --purge-with-truncate</info>
 EOT
-           );
+            );
     }
 
     /**

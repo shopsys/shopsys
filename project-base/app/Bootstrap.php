@@ -4,7 +4,6 @@ namespace Shopsys;
 
 use AppKernel;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Shopsys\Environment;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
