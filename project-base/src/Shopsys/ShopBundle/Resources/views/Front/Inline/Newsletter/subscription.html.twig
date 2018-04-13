@@ -9,7 +9,7 @@
             <div class="footer__newsletter__form__wrap">
                 <div class="footer__newsletter__form__in">
                     {{ form_widget(form.email, { attr: {placeholder: 'Enter e-mail'|trans, class: 'footer__newsletter__input'} }) }}
-                    {{ form_errors(form.email) }}
+                    {{ form_errors(form.email, { errors_attr: { class: 'form-error--in-form' } }) }}
                 </div>
                 {{ form_widget(form.send, { label: 'Log in'|trans, attr: { class: "footer__newsletter__form__btn" }}) }}
             </div>
