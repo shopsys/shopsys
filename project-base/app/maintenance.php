@@ -23,6 +23,7 @@
                 padding: 20px;
 
                 text-align: center;
+                box-sizing: border-box;
             }
             .web h1 {
                 margin-bottom: 80px;
@@ -37,7 +38,8 @@
                 font-size: 16px;
             }
             .web img {
-                margin-bottom: 40px;
+                margin: 0 auto 40px;
+                min-width: 100%;
             }
         </style>
         <meta charset="utf-8">
