@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Transport;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
+use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
@@ -36,7 +37,11 @@ class TransportFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+        $builderBasicInformationGroup = $builder->create('information', GroupType::class, [
+            'label' => t('Basic information'),
+        ]);
+
+        $builderBasicInformationGroup
             ->add('name', LocalizedType::class, [
                 'main_constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter name']),
@@ -47,11 +52,22 @@ class TransportFormType extends AbstractType
                         new Constraints\Length(['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']),
                     ],
                 ],
+                'label' => t('Name'),
             ])
             ->add('domains', DomainsType::class, [
                 'required' => false,
+                'label' => t('Display on'),
             ])
-            ->add('hidden', YesNoType::class, ['required' => false])
+            ->add('hidden', YesNoType::class, [
+                'required' => false,
+                'label' => t('Hidden'),
+            ]);
+
+        $builderPricesGroup = $builder->create('prices', GroupType::class, [
+            'label' => t('Prices'),
+        ]);
+
+        $builderPricesGroup
             ->add('vat', ChoiceType::class, [
                 'required' => true,
                 'choices' => $this->vatFacade->getAll(),
@@ -60,14 +76,22 @@ class TransportFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
                 ],
-            ])
+            ]);
+
+        $builderDescriptionGroup = $builder->create('description', GroupType::class, [
+            'label' => t('Description'),
+        ]);
+
+        $builderDescriptionGroup
             ->add('description', LocalizedType::class, [
                 'required' => false,
                 'entry_type' => TextareaType::class,
+                'label' => t('Description'),
             ])
             ->add('instructions', LocalizedType::class, [
                 'required' => false,
                 'entry_type' => CKEditorType::class,
+                'label' => t('Instructions'),
             ])
             ->add('image', ImageUploadType::class, [
                 'required' => false,
@@ -83,6 +107,11 @@ class TransportFormType extends AbstractType
                 'entity' => $options['transport'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]);
+
+        $builder
+            ->add($builderBasicInformationGroup)
+            ->add($builderPricesGroup)
+            ->add($builderDescriptionGroup);
     }
 
     /**
