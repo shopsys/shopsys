@@ -31,7 +31,6 @@ class GroupType extends AbstractType
             ->setAllowedTypes('label', 'string')
             ->setDefaults([
                 'inherit_data' => true,
-                'is_group_container' => true,
                 'label' => '',
                 'is_group_container_to_render_as_the_last_one' => false,
             ]);

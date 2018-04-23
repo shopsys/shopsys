@@ -74,7 +74,6 @@ class AdministratorFormType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => $options['scenario'] === self::SCENARIO_CREATE,
-                'is_group_container' => false,
                 'options' => [
                     'attr' => ['autocomplete' => 'off'],
                 ],
