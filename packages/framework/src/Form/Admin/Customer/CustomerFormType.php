@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
+use Shopsys\FrameworkBundle\Form\OrderListType;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerData;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Symfony\Component\Form\AbstractType;
@@ -34,6 +35,10 @@ class CustomerFormType extends AbstractType
             ])
             ->add('deliveryAddressData', DeliveryAddressFormType::class, [
                 'domain_id' => $options['domain_id'],
+                'render_form_row' => false,
+            ])
+            ->add('orders', OrderListType::class, [
+                'user' => $options['user'],
                 'render_form_row' => false,
             ])
             ->add('save', SubmitType::class);
