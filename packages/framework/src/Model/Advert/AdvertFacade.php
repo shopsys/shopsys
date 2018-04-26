@@ -74,7 +74,7 @@ class AdvertFacade
 
         $this->em->persist($advert);
         $this->em->flush();
-        $this->imageFacade->uploadImage($advert, $advertData->image, null);
+        $this->imageFacade->uploadImage($advert, $advertData->image->uploadedFiles, null);
         $this->em->flush();
 
         return $advert;
@@ -91,7 +91,7 @@ class AdvertFacade
         $advert->edit($advertData);
 
         $this->em->flush();
-        $this->imageFacade->uploadImage($advert, $advertData->image, null);
+        $this->imageFacade->uploadImage($advert, $advertData->image->uploadedFiles, null);
         $this->em->flush();
 
         return $advert;
