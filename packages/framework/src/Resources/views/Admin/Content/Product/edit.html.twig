@@ -50,42 +50,18 @@
     {% endif %}
 {% endblock %}
 
-{% block product_catnum %}
-    {% if product.isMainVariant %}
-        {{ form_row(form.productData.catnum, { label: 'Catalogue number'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
-    {% else %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
-{% block product_partno %}
-    {% if product.isMainVariant %}
-        {{ form_row(form.productData.partno, { label: 'PartNo (serial number)'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
-    {% else %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
-{% block product_ean %}
-    {% if product.isMainVariant %}
-        {{ form_row(form.productData.ean, { label: 'EAN'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
-    {% else %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
 {% block product_stock_and_availability %}
     {% if product.isMainVariant %}
         {{ form_row(form.productData.usingStock, { label: 'Use stocks'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
         <div class="js-product-using-stock form-line__js">
-            {{ form_row(form.productData.stockQuantity, { label: 'Available in stock'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
+            {{ form_row(form.productData.stockQuantity, { label: 'Available in stock'|trans, disabledField: { title: 'Jajaj'} }) }}
             {{ form_row(form.productData.outOfStockAction, { label: 'Action after sellout'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
             <div class="js-product-using-stock-and-alternate-availability">
-                {{ form_row(form.productData.outOfStockAvailability, { label: 'Availability after sellout'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
+                {{ form_row(form.productData.outOfStockAvailability, { label: 'Availability after sellout'|trans, disabledField: { title: 'bubu', class: 'form-line__disabled' } }) }}
             </div>
         </div>
         <div class="js-product-not-using-stock form-line__js">
-            {{ form_row(form.productData.availability, { label: 'Availability'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
+            {{ form_row(form.productData.availability, { label: 'Availability'|trans, disabledField: { title: 'Ja'|trans, class: 'form-line__disabled' } }) }}
         </div>
     {% else %}
         {{ parent() }}

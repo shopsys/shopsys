@@ -66,13 +66,13 @@
         {% endif %}
     {% else %}
         {% if render_form_row %}
-            <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
+            <div class="form-line{{ disabledField is not empty ? ' form-input-disabled form-line--disabled' }}">
             {{ form_errors(form) }}
             {{ form_label(form, label) }}
         {% endif %}
         {{ form_widget(form) }}
-        {% if disabledField is defined %}
-            <span class="form-disabled {{ disabledField.class }} js-tooltip" data-toggle="tooltip" data-placement="{{ disabledField.placement|default('right') }}"
+        {% if disabledField is defined and disabledField is not empty%}
+            <span class="form-disabled form-line__disabled js-tooltip" data-toggle="tooltip" data-placement="{{ disabledField.placement|default('right') }}"
                   title="{{ disabledField.title }}">
                 <i class="svg svg-pencil"></i>
             </span>
@@ -198,7 +198,7 @@
                 {{ seoFormRowMacros.multidomainRow(form, form.vars.label|trans, form.vars.macro.recommended_length) }}
             {% endif %}
         {% else %}
-            <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
+            <div class="form-line{{ disabledField is not empty ? ' form-input-disabled form-line--disabled' }}">
             {{ form_label(form, label) }}
             <div class="form-line__side">
                 <div class="form-line__item">
@@ -212,9 +212,9 @@
                 </div>
                 {{ form_errors(form) }}
             </div>
-            {% if disabledField is defined %}
-                <span class="form-disabled {{ disabledField.class }} js-tooltip" data-toggle="tooltip" data-placement="{{ disabledField.placement|default('right') }}"
-                    title="{{ disabledField.title }}">
+            {% if disabledField is defined and disabledField is not empty%}
+                <span class="form-disabled form-line__disabled js-tooltip" data-toggle="tooltip" data-placement="{{ disabledField.placement|default('right') }}"
+                      title="{{ disabledField.title }}">
                     <i class="svg svg-pencil"></i>
                 </span>
             {% endif %}
