@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
+use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
@@ -46,8 +47,25 @@ class BillingAddressFormType extends AbstractType
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
                     ]),
                 ],
+                'label' => t('Telephone'),
+            ]);
+
+        $builderCompanyDataGroup = $builder->create('company_data', GroupType::class, [
+            'label' => t('Company data'),
+            'attr' => [
+                'id' => 'customer_form_billingAddressData',
+            ],
+        ]);
+
+        $builderCompanyDataGroup
+            ->add('companyCustomer', CheckboxType::class, [
+                'required' => false,
+                'attr' => [
+                    'data-checkbox-toggle-container-id' => 'js-company-fields',
+                    'class' => 'js-checkbox-toggle',
+                ],
+                'label' => t('I buy on company behalf'),
             ])
-            ->add('companyCustomer', CheckboxType::class, ['required' => false])
             ->add('companyName', TextType::class, [
                 'required' => true,
                 'constraints' => [
@@ -61,6 +79,7 @@ class BillingAddressFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
+                'label' => t('Company'),
             ])
             ->add('companyNumber', TextType::class, [
                 'required' => true,
@@ -75,6 +94,7 @@ class BillingAddressFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
+                'label' => t('Company number'),
             ])
             ->add('companyTaxNumber', TextType::class, [
                 'required' => false,
@@ -85,7 +105,13 @@ class BillingAddressFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
-            ])
+                'label' => t('Tax number'),
+            ]);
+        $builderAddressGroup = $builder->create('address', GroupType::class, [
+            'label' => t('Address'),
+        ]);
+
+        $builderAddressGroup
             ->add('street', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -94,6 +120,7 @@ class BillingAddressFormType extends AbstractType
                         'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
+                'label' => t('Street'),
             ])
             ->add('city', TextType::class, [
                 'required' => false,
@@ -103,6 +130,7 @@ class BillingAddressFormType extends AbstractType
                         'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
+                'label' => t('City'),
             ])
             ->add('postcode', TextType::class, [
                 'required' => false,
@@ -112,13 +140,19 @@ class BillingAddressFormType extends AbstractType
                         'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
                     ]),
                 ],
+                'label' => t('Postcode'),
             ])
             ->add('country', ChoiceType::class, [
                 'required' => false,
                 'choices' => $countries,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'label' => t('Country'),
             ]);
+
+        $builder
+            ->add($builderCompanyDataGroup)
+            ->add($builderAddressGroup);
     }
 
     /**

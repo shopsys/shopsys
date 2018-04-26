@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Component\Constraints\NotIdenticalToEmailLocalPart;
 use Shopsys\FrameworkBundle\Component\Constraints\UniqueEmail;
 use Shopsys\FrameworkBundle\Form\DomainType;
+use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Customer\UserData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Symfony\Component\Form\AbstractType;
@@ -38,7 +39,11 @@ class UserFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+        $builderPersonalDataGroup = $builder->create('personal_data', GroupType::class, [
+            'label' => t('Personal data'),
+        ]);
+
+        $builderPersonalDataGroup
             ->add('firstName', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
@@ -47,6 +52,7 @@ class UserFormType extends AbstractType
                         'maxMessage' => 'First name cannot be longer then {{ limit }} characters',
                     ]),
                 ],
+                'label' => t('First name'),
             ])
             ->add('lastName', TextType::class, [
                 'constraints' => [
@@ -56,6 +62,7 @@ class UserFormType extends AbstractType
                         'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
+                'label' => t('Last name'),
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [
@@ -67,7 +74,13 @@ class UserFormType extends AbstractType
                     new Email(['message' => 'Please enter valid e-mail']),
                     new UniqueEmail(['ignoredEmail' => $options['current_email']]),
                 ],
-            ])
+                'label' => t('Personal data'),
+            ]);
+        $builderRegisteredCustGroup = $builder->create('registered_cust', GroupType::class, [
+                'label' => t('Registered cust.'),
+        ]);
+
+        $builderRegisteredCustGroup
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => $options['scenario'] === CustomerFormType::SCENARIO_CREATE,
@@ -78,6 +91,8 @@ class UserFormType extends AbstractType
                     'constraints' => $this->getFirstPasswordConstraints($options['scenario']),
                 ],
                 'invalid_message' => 'Passwords do not match',
+                'first_name' => t('Password'),
+                'second_name' => t('Password again'),
             ]);
 
         if ($options['scenario'] === CustomerFormType::SCENARIO_CREATE) {
@@ -100,7 +115,10 @@ class UserFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'group_by' => $groupPricingGroupsBy,
+                'label' => t('Pricing groups'),
             ]);
+
+        $builder->add($builderPersonalDataGroup);
     }
 
     /**
