@@ -6,8 +6,12 @@ use Shopsys\FrameworkBundle\Component\Constraints\Email;
 use Shopsys\FrameworkBundle\Component\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Component\Constraints\NotIdenticalToEmailLocalPart;
 use Shopsys\FrameworkBundle\Component\Constraints\UniqueEmail;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyTextType;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Customer\UserData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Symfony\Component\Form\AbstractType;
@@ -22,6 +26,8 @@ use Symfony\Component\Validator\Constraints;
 
 class UserFormType extends AbstractType
 {
+    const DATE_TIME_FORMAT = 'Y-m-d, h:i:s A';
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      */
@@ -39,6 +45,37 @@ class UserFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $user = $options['user'];
+        /* @var $user \Shopsys\FrameworkBundle\Model\Customer\User */
+
+        $builderSystemDataBuilder = $builder->create('system_data', GroupType::class, [
+            'label' => t('System data'),
+        ]);
+
+        if ($options['scenario'] === CustomerFormType::SCENARIO_CREATE) {
+            $builderSystemDataBuilder
+                ->add('domainId', DomainType::class, [
+                    'required' => true,
+                    'data' => $options['domain_id'],
+                    'label' => t('Domain'),
+                ]);
+            $pricingGroups = $this->pricingGroupFacade->getAll();
+            $groupPricingGroupsBy = 'domainId';
+        } else {
+            $pricingGroups = $this->pricingGroupFacade->getByDomainId($options['domain_id']);
+            $groupPricingGroupsBy = null;
+        }
+
+        $builderSystemDataBuilder
+            ->add('pricingGroup', ChoiceType::class, [
+                'required' => true,
+                'choices' => $pricingGroups,
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'group_by' => $groupPricingGroupsBy,
+                'label' => t('Pricing groups'),
+            ]);
+
         $builderPersonalDataGroup = $builder->create('personal_data', GroupType::class, [
             'label' => t('Personal data'),
         ]);
@@ -72,12 +109,13 @@ class UserFormType extends AbstractType
                         'maxMessage' => 'Email cannot be longer then {{ limit }} characters',
                     ]),
                     new Email(['message' => 'Please enter valid e-mail']),
-                    new UniqueEmail(['ignoredEmail' => $options['current_email']]),
+                    new UniqueEmail(['ignoredEmail' => $user !== null ? $user->getEmail() : null]),
                 ],
                 'label' => t('Personal data'),
             ]);
+
         $builderRegisteredCustGroup = $builder->create('registered_cust', GroupType::class, [
-                'label' => t('Registered cust.'),
+            'label' => t('Registered cust.'),
         ]);
 
         $builderRegisteredCustGroup
@@ -88,37 +126,42 @@ class UserFormType extends AbstractType
                     'attr' => ['autocomplete' => 'off'],
                 ],
                 'first_options' => [
+                    'label' => t('Password'),
                     'constraints' => $this->getFirstPasswordConstraints($options['scenario']),
                 ],
+                'second_options' => [
+                    'label' => t('Password again'),
+                ],
                 'invalid_message' => 'Passwords do not match',
-                'first_name' => t('Password'),
-                'second_name' => t('Password again'),
             ]);
 
-        if ($options['scenario'] === CustomerFormType::SCENARIO_CREATE) {
-            $builder
-                ->add('domainId', DomainType::class, [
-                    'required' => true,
-                    'data' => $options['domain_id'],
-                ]);
-            $pricingGroups = $this->pricingGroupFacade->getAll();
-            $groupPricingGroupsBy = 'domainId';
-        } else {
-            $pricingGroups = $this->pricingGroupFacade->getByDomainId($options['domain_id']);
-            $groupPricingGroupsBy = null;
+        if ($user instanceof User) {
+            $builderSystemDataBuilder->add('formId', DisplayOnlyType::class, [
+                'label' => t('ID'),
+                'widget_form_type_data' => $user->getId(),
+            ]);
+
+            $builderSystemDataBuilder->add('domainIcon', DisplayOnlyType::class, [
+                'widget_form_type' => DisplayOnlyDomainIconType::class,
+                'widget_form_type_data' => $user->getDomainId(),
+            ]);
+
+            $builderSystemDataBuilder->add('createdAt', DisplayOnlyType::class, [
+                'label' => t('Date of registration and privacy policy agreement'),
+                'widget_form_type_data' => $user->getCreatedAt()->format(self::DATE_TIME_FORMAT),
+            ]);
+
+            $builderRegisteredCustGroup->add('lastLogin', DisplayOnlyType::class, [
+                'label' => t('Last login'),
+                'widget_form_type' => TextType::class,
+                'widget_form_type_data' => $user->getLastLogin() !== null ? $user->getLastLogin()->format(self::DATE_TIME_FORMAT) : 'never',
+            ]);
         }
 
         $builder
-            ->add('pricingGroup', ChoiceType::class, [
-                'required' => true,
-                'choices' => $pricingGroups,
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'group_by' => $groupPricingGroupsBy,
-                'label' => t('Pricing groups'),
-            ]);
-
-        $builder->add($builderPersonalDataGroup);
+            ->add($builderSystemDataBuilder)
+            ->add($builderPersonalDataGroup)
+            ->add($builderRegisteredCustGroup);
     }
 
     /**
@@ -146,13 +189,13 @@ class UserFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['scenario', 'domain_id', 'current_email'])
+            ->setRequired(['scenario', 'domain_id'])
             ->setAllowedValues('scenario', [CustomerFormType::SCENARIO_CREATE, CustomerFormType::SCENARIO_EDIT])
             ->setAllowedTypes('domain_id', 'int')
-            ->setAllowedTypes('current_email', ['null', 'string'])
             ->setDefaults([
                 'data_class' => UserData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'user' => null,
                 'constraints' => [
                     new FieldsAreNotIdentical([
                         'field1' => 'email',
@@ -167,6 +210,7 @@ class UserFormType extends AbstractType
                         'message' => 'Password cannot be same as part of e-mail before at sign',
                     ]),
                 ],
-            ]);
+            ])
+            ->setAllowedTypes('user', [User::class, 'null']);
     }
 }

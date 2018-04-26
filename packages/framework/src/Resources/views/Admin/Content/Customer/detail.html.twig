@@ -8,19 +8,6 @@
     {{ form_start(form) }}
         {{ form_errors(form) }}
 
-        <div class="wrap-border">
-            <div class="form-group">
-                <div class="form-group__title">
-                    {{ 'System data'|trans }}
-                </div>
-            </div>
-            {{ form_id(user|default(null)) }}
-            {% block customer_domain %}{% endblock %}
-            {% block customer_created_at %}{% endblock %}
-        </div>
-
-        {% block customer_sendMail %}{% endblock %}
-
         {% block customer_order_list %}{% endblock %}
 
         {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
