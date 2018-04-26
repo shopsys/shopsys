@@ -128,15 +128,10 @@ class ProductEditFormType extends AbstractType
             ];
         }
 
-        if ($editedProduct !== null) {
-            $existingImages = $this->imageFacade->getImagesByEntityIndexedById($editedProduct, null);
-        } else {
-            $existingImages = [];
-        }
 
         $builder
             ->add('productData', ProductFormType::class, ['product' => $editedProduct])
-            ->add('imagesToUpload', ImageUploadType::class, [
+            ->add('images', ImageUploadType::class, [
                 'required' => false,
                 'multiple' => true,
                 'file_constraints' => [
@@ -148,21 +143,8 @@ class ProductEditFormType extends AbstractType
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
+                'image_or_entity' => $options['product'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
-            ])
-            ->add(
-                $builder->create('orderedImagesById', CollectionType::class, [
-                    'required' => false,
-                    'entry_type' => HiddenType::class,
-                ])->addModelTransformer($this->imagesIdsToImagesTransformer)
-            )
-            ->add('imagesToDelete', ChoiceType::class, [
-                'required' => false,
-                'multiple' => true,
-                'expanded' => true,
-                'choices' => $existingImages,
-                'choice_label' => 'filename',
-                'choice_value' => 'id',
             ])
             ->add($builder->create('parameters', CollectionType::class, [
                     'required' => false,
