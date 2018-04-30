@@ -1,10 +1,11 @@
-<h2>{{ 'Customer orders'|trans }}</h2>
+{% block order_list_widget %}
+    <h2>{{ 'Customer orders'|trans }}</h2>
 
-{% if orders|length == 0 %}
-    {{ 'Customer has no orders so far.'|trans }}
-{% else %}
-    <table class="table-main">
-        <thead>
+    {% if form.vars.orders|length == 0 %}
+        {{ 'Customer has no orders so far.'|trans }}
+    {% else %}
+        <table class="table-main">
+            <thead>
             <tr>
                 <th>{{ 'Order number'|trans }}</th>
                 <th>{{ 'Created on'|trans }}</th>
@@ -13,9 +14,9 @@
                 <th>{{ 'Total price including VAT'|trans }}</th>
                 <th>{{ 'Status'|trans }}</th>
             </tr>
-        </thead>
-        <tbody>
-            {% for order in orders %}
+            </thead>
+            <tbody>
+            {% for order in form.vars.orders %}
                 <tr>
                     <td>
                         <a href="{{ url('admin_order_edit', { id: order.id }) }}" target="_blank">
@@ -37,6 +38,7 @@
                     <td>{{ order.status.name }}</td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
-{% endif %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

@@ -7,6 +7,8 @@ use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyTextType;
+use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
@@ -63,6 +65,11 @@ class ProductFormType extends AbstractType
      */
     private $domain;
 
+    /**
+     * @var array
+     */
+    private $disabledFieldsOptionsIndexedByFieldName;
+
     public function __construct(
         VatFacade $vatFacade,
         AvailabilityFacade $availabilityFacade,
@@ -77,6 +84,7 @@ class ProductFormType extends AbstractType
         $this->flagFacade = $flagFacade;
         $this->unitFacade = $unitFacade;
         $this->domain = $domain;
+        $this->disabledFieldsOptionsIndexedByFieldName = [];
     }
 
     /**
@@ -88,7 +96,12 @@ class ProductFormType extends AbstractType
     {
         $vats = $this->vatFacade->getAllIncludingMarkedForDeletion();
 
-        if ($options['product'] !== null && $options['product']->isVariant()) {
+        $product = $options['product'];
+        /* @var $product \Shopsys\FrameworkBundle\Model\Product\Product */
+
+        $this->disabledFieldsOptionsIndexedByFieldName = $this->getDisabledFieldsOptionsIndexedByFieldName($product);
+
+        if ($product !== null && $product->isVariant()) {
             $builder->add('variantAlias', LocalizedType::class, [
                 'required' => false,
                 'entry_options' => [
@@ -98,7 +111,6 @@ class ProductFormType extends AbstractType
                 ],
             ]);
         }
-
         $categoriesOptionsByDomainId = [];
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoriesOptionsByDomainId[$domainId] = [
@@ -114,28 +126,46 @@ class ProductFormType extends AbstractType
                         new Constraints\Length(['max' => 255, 'maxMessage' => 'Product name cannot be longer than {{ limit }} characters']),
                     ],
                 ],
-            ])
-            ->add('hidden', YesNoType::class, ['required' => false])
-            ->add('sellingDenied', YesNoType::class, [
-                'required' => false,
-            ])
+            ]);
+
+        $builderBasicInformationGroup = $builder->create('basic_information', GroupType::class, [
+            'label' => t('Basic information'),
+            'mapped' => false,
+        ]);
+        $builderBasicInformationGroup
             ->add('catnum', TextType::class, [
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalogue number cannot be longer then {{ limit }} characters']),
                 ],
-            ])
+                'label' => t('Catalogue number'),
+            ] + $this->getDisabledFieldOptionsForFieldName('catnum'))
             ->add('partno', TextType::class, [
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'Part number cannot be longer than {{ limit }} characters']),
                 ],
-            ])
+                'label' => t('PartNo (serial number)'),
+            ] + $this->getDisabledFieldOptionsForFieldName('partno'))
             ->add('ean', TextType::class, [
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'EAN cannot be longer then {{ limit }} characters']),
                 ],
+                'label' => t('EAN'),
+            ] + $this->getDisabledFieldOptionsForFieldName('ean'))
+            ->add('formId', DisplayOnlyTextType::class, [
+                'label' => t('ID'),
+                'data' => $product->getId(),
+            ])
+            ->add('flags', ChoiceType::class, [
+                'required' => false,
+                'choices' => $this->flagFacade->getAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'multiple' => true,
+                'expanded' => true,
+                'label' => t('Flags'),
             ])
             ->add('brand', ChoiceType::class, [
                 'required' => false,
@@ -143,6 +173,40 @@ class ProductFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'placeholder' => t('-- Choose brand --'),
+                'label' => t('Brand'),
+            ]);
+
+        $builderDisplayAndAvailabilityGroup = $builder->create('display_and_availability', GroupType::class, [
+            'label' => t('Display and availability'),
+            'mapped' => false,
+        ]);
+        $builderDisplayAndAvailabilityGroup
+            ->add('hidden', YesNoType::class, [
+                'required' => false,
+                'label' => t('Hide product'),
+            ])
+            ->add('sellingFrom', DatePickerType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Constraints\Date(['message' => 'Enter date in DD.MM.YYYY format']),
+                ],
+                'invalid_message' => 'Enter date in DD.MM.YYYY format',
+                'label' => t('Selling start date')
+            ])
+            ->add('sellingTo', DatePickerType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Constraints\Date(['message' => 'Enter date in DD.MM.YYYY format']),
+                ],
+                'invalid_message' => 'Enter date in DD.MM.YYYY format',
+                'label' => t('')
+            ])
+            ->add('sellingDenied', YesNoType::class, [
+                'required' => false,
+                'label' => t(''),
+                'icon_title' => [
+                    'title' => t('Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.')
+                ],
             ])
             ->add('usingStock', YesNoType::class, ['required' => false])
             ->add('stockQuantity', IntegerType::class, [
@@ -165,6 +229,7 @@ class ProductFormType extends AbstractType
                         'message' => 'Please choose unit',
                     ]),
                 ],
+                'label' => t('Unit'),
             ])
             ->add('availability', ChoiceType::class, [
                 'required' => true,
@@ -225,6 +290,15 @@ class ProductFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('priceCalculationType', ChoiceType::class, [
+                'required' => true,
+                'expanded' => true,
+                'choices' => [
+                    t('Automatically') => Product::PRICE_CALCULATION_TYPE_AUTO,
+                    t('Manually') => Product::PRICE_CALCULATION_TYPE_MANUAL,
+                ],
+                'label' => t('Sale prices calculation'),
+            ])
             ->add('vat', ChoiceType::class, [
                 'required' => true,
                 'choices' => $vats,
@@ -233,36 +307,7 @@ class ProductFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
                 ],
-            ])
-            ->add('sellingFrom', DatePickerType::class, [
-                'required' => false,
-                'constraints' => [
-                    new Constraints\Date(['message' => 'Enter date in DD.MM.YYYY format']),
-                ],
-                'invalid_message' => 'Enter date in DD.MM.YYYY format',
-            ])
-            ->add('sellingTo', DatePickerType::class, [
-                'required' => false,
-                'constraints' => [
-                    new Constraints\Date(['message' => 'Enter date in DD.MM.YYYY format']),
-                ],
-                'invalid_message' => 'Enter date in DD.MM.YYYY format',
-            ])
-            ->add('flags', ChoiceType::class, [
-                'required' => false,
-                'choices' => $this->flagFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'multiple' => true,
-                'expanded' => true,
-            ])
-            ->add('priceCalculationType', ChoiceType::class, [
-                'required' => true,
-                'expanded' => true,
-                'choices' => [
-                    t('Automatically') => Product::PRICE_CALCULATION_TYPE_AUTO,
-                    t('Manually') => Product::PRICE_CALCULATION_TYPE_MANUAL,
-                ],
+                'label' => t('VAT')
             ])
             ->add('orderingPriority', IntegerType::class, [
                 'required' => true,
@@ -276,9 +321,8 @@ class ProductFormType extends AbstractType
                 'options_by_domain_id' => $categoriesOptionsByDomainId,
             ]);
 
-        if ($options['product'] !== null) {
-            $this->disableIrrelevantFields($builder, $options['product']);
-        }
+        $builder->add($builderBasicInformationGroup)
+            ->add($builderDisplayAndAvailabilityGroup);
     }
 
     /**
@@ -316,34 +360,54 @@ class ProductFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $product
+     * @return array
      */
-    private function disableIrrelevantFields(FormBuilderInterface $builder, Product $product)
+    private function getDisabledFieldsOptionsIndexedByFieldName(Product $product)
     {
-        $irrelevantFields = [];
+        if ($product === null) {
+            return [];
+        }
+
+        $disabledFieldsTitlesInedexedByName = [];
+
         if ($product->isMainVariant()) {
-            $irrelevantFields = [
-                'catnum',
-                'partno',
-                'ean',
-                'usingStock',
-                'availability',
-                'price',
-                'vat',
-                'priceCalculationType',
-                'stockQuantity',
-                'outOfStockAction',
-                'outOfStockAvailability',
+            $disabledFieldsTitlesInedexedByName = [
+                'catnum' => t('This item can be set in product detail of a specific variant'),
+                'partno' => t('This item can be set in product detail of a specific variant'),
+                'ean' => t('This item can be set in product detail of a specific variant'),
+                'usingStock' => t('This item can be set in product detail of a specific variant'),
+                'availability' => t('This item can be set in product detail of a specific variant'),
+                'price' => '',
+                'vat' => '',
+                'priceCalculationType' => t('This item can be set in product detail of a specific variant'),
+                'stockQuantity' => '',
+                'outOfStockAction' => t('This item can be set in product detail of a specific variant'),
+                'outOfStockAvailability' => t('This item can be set in product detail of a specific variant'),
             ];
         }
         if ($product->isVariant()) {
-            $irrelevantFields = [
+            $disabledFieldsTitlesInedexedByName = [
                 'categoriesByDomainId',
             ];
         }
-        foreach ($irrelevantFields as $irrelevantField) {
-            $builder->get($irrelevantField)->setDisabled(true);
+
+        return $disabledFieldsTitlesInedexedByName;
+    }
+
+    private function getDisabledFieldOptionsForFieldName($fieldName)
+    {
+        if (isset($this->disabledFieldsOptionsIndexedByFieldName[$fieldName])) {
+            return [
+                'disabledField' => [
+                    'title' => $this->disabledFieldsOptionsIndexedByFieldName[$fieldName],
+                ],
+                'attr' => [
+                    'disabled' => 'disabled',
+                ],
+            ];
         }
+
+        return [];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
+use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
@@ -37,8 +38,20 @@ class DeliveryAddressFormType extends AbstractType
     {
         $countries = $this->countryFacade->getAllByDomainId($options['domain_id']);
 
-        $builder
-            ->add('addressFilled', CheckboxType::class, ['required' => false])
+        $builderDeliveryAdress = $builder->create('delivery_address', GroupType::class, [
+            'label' => 'Shipping address',
+            'attr' => [
+                'id' => 'customer_form_deliveryAddressData',
+            ],
+        ]);
+        $builderDeliveryAdress
+            ->add('addressFilled', CheckboxType::class, [
+                'required' => false,
+                'label' => t('I want to deliver products to different address than the billing one'),
+                'attr' => [
+                    'class' => "'js-checkbox-toggle', 'data-checkbox-toggle-container-id', 'js-delivery-address-fields'",
+                ],
+            ])
             ->add('companyName', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -47,6 +60,7 @@ class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'Company name cannot be longer than {{ limit }} characters',
                     ]),
                 ],
+                'label' => t('Company'),
             ])
             ->add('firstName', TextType::class, [
                 'required' => true,
@@ -60,6 +74,7 @@ class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'First name of contact person cannot be longer then {{ limit }} characters',
                     ]),
                 ],
+                'label' => t('First name'),
             ])
             ->add('lastName', TextType::class, [
                 'required' => true,
@@ -73,6 +88,7 @@ class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'Last name of contact person cannot be longer than {{ limit }} characters',
                     ]),
                 ],
+                'label' => t('Last name'),
             ])
             ->add('telephone', TextType::class, [
                 'required' => false,
@@ -82,6 +98,7 @@ class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
                     ]),
                 ],
+                'label' => t('Telephone'),
             ])
             ->add('street', TextType::class, [
                 'required' => true,
@@ -96,6 +113,7 @@ class DeliveryAddressFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
+                'label' => t('Street'),
             ])
             ->add('city', TextType::class, [
                 'required' => true,
@@ -110,6 +128,7 @@ class DeliveryAddressFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
+                'label' => t('City'),
             ])
             ->add('postcode', TextType::class, [
                 'required' => true,
@@ -124,6 +143,7 @@ class DeliveryAddressFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
+                'label' => t('Postcode'),
             ])
             ->add('country', ChoiceType::class, [
                 'required' => true,
@@ -133,7 +153,10 @@ class DeliveryAddressFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please choose country']),
                 ],
+                'label' => t('Country'),
             ]);
+
+        $builder->add($builderDeliveryAdress);
     }
 
     /**

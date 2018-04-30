@@ -118,6 +118,7 @@ class CustomerController extends AdminBaseController
         $form = $this->createForm(CustomerFormType::class, $customerData, [
             'scenario' => CustomerFormType::SCENARIO_EDIT,
             'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+            'user' => $user,
         ]);
         $form->handleRequest($request);
 

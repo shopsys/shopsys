@@ -50,42 +50,18 @@
     {% endif %}
 {% endblock %}
 
-{% block product_catnum %}
-    {% if product.isMainVariant %}
-        {{ form_row(form.productData.catnum, { label: 'Catalogue number'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
-    {% else %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
-{% block product_partno %}
-    {% if product.isMainVariant %}
-        {{ form_row(form.productData.partno, { label: 'PartNo (serial number)'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
-    {% else %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
-{% block product_ean %}
-    {% if product.isMainVariant %}
-        {{ form_row(form.productData.ean, { label: 'EAN'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
-    {% else %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
 {% block product_stock_and_availability %}
     {% if product.isMainVariant %}
         {{ form_row(form.productData.usingStock, { label: 'Use stocks'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
         <div class="js-product-using-stock form-line__js">
-            {{ form_row(form.productData.stockQuantity, { label: 'Available in stock'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
+            {{ form_row(form.productData.stockQuantity, { label: 'Available in stock'|trans, disabledField: { title: 'Jajaj'} }) }}
             {{ form_row(form.productData.outOfStockAction, { label: 'Action after sellout'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
             <div class="js-product-using-stock-and-alternate-availability">
-                {{ form_row(form.productData.outOfStockAvailability, { label: 'Availability after sellout'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
+                {{ form_row(form.productData.outOfStockAvailability, { label: 'Availability after sellout'|trans, disabledField: { title: 'bubu', class: 'form-line__disabled' } }) }}
             </div>
         </div>
         <div class="js-product-not-using-stock form-line__js">
-            {{ form_row(form.productData.availability, { label: 'Availability'|trans, disabledField: { title: 'This item can be set in product detail of a specific variant'|trans, class: 'form-line__disabled' } }) }}
+            {{ form_row(form.productData.availability, { label: 'Availability'|trans, disabledField: { title: 'Ja'|trans, class: 'form-line__disabled' } }) }}
         </div>
     {% else %}
         {{ parent() }}
@@ -327,41 +303,6 @@
             </div>
         {% endfor %}
     {% endif %}
-{% endblock %}
-
-{% block images %}
-    {% if form.orderedImagesById|length > 0 %}
-        <div class="list-images__wrap">
-            <ul class="list-images" id="js-product-images">
-                {% for imageForm in form.orderedImagesById %}
-                    {% set image = productDetail.imagesIndexedById[imageForm.vars.value] %}
-                    <li class="list-images__item js-product-images-image" data-id="{{ image.id }}">
-                        <div class="list-images__item__in">
-                            <div class="list-images__item__image js-product-images-preview">
-                                {{ image(image, {size: 'original', height: '100'}) }}
-                            </div>
-                            <span class="list-images__item__main">
-                                {{ 'Main image'|trans }}
-                            </span>
-                            <button class="js-product-images-delete-button btn-no-style list-images__item__remove" type="button" title="{{ 'Delete'|trans }}">
-                                <i class="svg svg-circle-cross"></i>
-                            </button>
-                            <span class="js-product-images-image-handle list-images__item__move" title="{{ 'Move'|trans }}">
-                                <i class="svg svg-move"></i>
-                            </span>
-                            <button class="btn-no-style js-product-images-delete-revert-button display-none list-images__item__revert" type="button" title="{{ 'Return back'|trans }}">
-                                <i class="svg svg-forward-page"></i>
-                            </button>
-                            <span class="list-images__item__overlay js-product-images-image-overlay">{{ 'Image will be deleted after saving.'|trans }}</span>
-                        </div>
-                        {# Ignore indices from form definition. Let them reflect new positions. #}
-                        {{ form_widget(imageForm, { full_name: form.orderedImagesById.vars.full_name ~ '[]'}) }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-    {% do form.orderedImagesById.setRendered %}
 {% endblock %}
 
 {% block product_urls %}

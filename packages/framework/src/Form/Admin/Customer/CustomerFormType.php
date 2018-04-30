@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
+use Shopsys\FrameworkBundle\Form\OrderListType;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerData;
+use Shopsys\FrameworkBundle\Model\Customer\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,18 +26,31 @@ class CustomerFormType extends AbstractType
             ->add('userData', UserFormType::class, [
                 'scenario' => $options['scenario'],
                 'domain_id' => $options['domain_id'],
-                'current_email' => $options['data']->userData->email,
+                'user' => $options['user'] !== null ? $options['user'] : null,
+                'render_form_row' => false,
             ])
             ->add('billingAddressData', BillingAddressFormType::class, [
                 'domain_id' => $options['domain_id'],
+                'render_form_row' => false,
             ])
             ->add('deliveryAddressData', DeliveryAddressFormType::class, [
                 'domain_id' => $options['domain_id'],
+                'render_form_row' => false,
+            ])
+            ->add('orders', OrderListType::class, [
+                'user' => $options['user'],
+                'render_form_row' => false,
             ])
             ->add('save', SubmitType::class);
 
         if ($options['scenario'] === self::SCENARIO_CREATE) {
-            $builder->add('sendRegistrationMail', CheckboxType::class, ['required' => false]);
+            $builder->add('sendRegistrationMail', CheckboxType::class, [
+                'required' => false,
+                'label' => t('Send confirmation e-mail about registration to customer'),
+                'attr' => [
+                    'class' => 'js-checkbox-toggle',
+                ],
+            ]);
         }
     }
 
@@ -51,6 +66,8 @@ class CustomerFormType extends AbstractType
             ->setDefaults([
                 'data_class' => CustomerData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-            ]);
+                'user' => null,
+            ])
+            ->setAllowedTypes('user', [User::class, 'null']);
     }
 }

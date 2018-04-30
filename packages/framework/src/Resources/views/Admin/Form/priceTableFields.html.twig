@@ -1,0 +1,39 @@
+{% block price_table_row %}
+    <div class="form-group wrap-border">
+        <div id="transport_prices">
+            <div class="form-price-heading">
+                <div class="form-price-heading__cell form-price-heading__cell--field">
+                    {{ inputPriceLabel({ isSimple: true }) }}
+                </div>
+                {% if form.vars.base_prices is not empty %}
+                    <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price excluding VAT'|trans }}</div>
+                    <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price including VAT'|trans }}</div>
+                {% endif %}
+            </div>
+            {% for key, currency in form.vars.currencies %}
+                <div class="form-line">
+                    <div class="form-line__label">
+                        {{ form_label(form.children[key], 'Base price in %currencyCode%'|trans({'%currencyCode%': currency.code}), { isSimple: true } ) }}
+                    </div>
+                    <div class="form-line__side">
+                        <div class="form-line__item">
+                            {{ form_widget(form.children[key], { symbolAfterInput: currencySymbolByCurrencyId(currency.id) }) }}
+                        </div>
+
+                        {% if form.vars.base_prices[key] is defined %}
+                            <div class="form-line__item--right">
+                                <div class="form-line__item__price">
+                                    {{ form.vars.base_prices[key].priceWithoutVat|priceWithCurrencyByCurrencyId(currency.id) }}
+                                </div>
+                                <div class="form-line__item__price">
+                                    <strong>{{ form.vars.base_prices[key].priceWithVat|priceWithCurrencyByCurrencyId(currency.id) }}</strong>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {{ form_errors(form.children[key]) }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

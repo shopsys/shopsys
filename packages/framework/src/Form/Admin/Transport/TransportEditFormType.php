@@ -2,14 +2,14 @@
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Transport;
 
+use Shopsys\FrameworkBundle\Form\PriceTableType;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Detail\TransportDetail;
 use Shopsys\FrameworkBundle\Model\Transport\TransportEditData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints;
 
 class TransportEditFormType extends AbstractType
 {
@@ -29,40 +29,19 @@ class TransportEditFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $transportDetail = $options['transport_detail'];
+        /* @var $transportDetail \Shopsys\FrameworkBundle\Model\Transport\Detail\TransportDetail */
+
         $builder
-            ->add('transportData', TransportFormType::class)
-            ->add($this->getPricesBuilder($builder))
+            ->add('transportData', TransportFormType::class, [
+                'transport' => $transportDetail !== null ? $transportDetail->getTransport() : null,
+                'render_form_row' => false,
+            ])
+            ->add('pricesByCurrencyId', PriceTableType::class, [
+                'currencies' => $this->currencyFacade->getAllIndexedById(),
+                'base_prices' => $transportDetail !== null ? $transportDetail->getBasePricesByCurrencyId() : [],
+            ])
             ->add('save', SubmitType::class);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    private function getPricesBuilder(FormBuilderInterface $builder)
-    {
-        $pricesBuilder = $builder->create('pricesByCurrencyId', null, [
-            'compound' => true,
-        ]);
-        foreach ($this->currencyFacade->getAll() as $currency) {
-            $pricesBuilder
-                ->add($currency->getId(), MoneyType::class, [
-                    'currency' => false,
-                    'scale' => 6,
-                    'required' => true,
-                    'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
-                    'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter price']),
-                        new Constraints\GreaterThanOrEqual([
-                            'value' => 0,
-                            'message' => 'Price must be greater or equal to {{ compared_value }}',
-                        ]),
-
-                    ],
-                ]);
-        }
-
-        return $pricesBuilder;
     }
 
     /**
@@ -70,9 +49,12 @@ class TransportEditFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => TransportEditData::class,
-            'attr' => ['novalidate' => 'novalidate'],
-        ]);
+        $resolver->setRequired('transport_detail')
+            ->addAllowedTypes('transport_detail', [TransportDetail::class, 'null'])
+            ->setDefaults([
+                'data_class' => TransportEditData::class,
+                'attr' => ['novalidate' => 'novalidate'],
+                'base_prices_by_currency_id' => [],
+            ]);
     }
 }
