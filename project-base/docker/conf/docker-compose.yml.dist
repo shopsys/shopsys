@@ -24,12 +24,11 @@ services:
             - smtp-server
 
     php-fpm:
-        build: docker/php-fpm
+        image: shopsys/framework-php-72-fpm:alpha-1
         container_name: shopsys-framework-php-fpm
         working_dir: /var/www/shopsys-framework
         volumes:
             - .:/var/www/shopsys-framework
-            - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.1/fpm/conf.d/99-overrides.ini
         links:
             - postgres
             - redis

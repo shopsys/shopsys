@@ -41,9 +41,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
         php7.2-xml \
         php7.2-zip
 
+# Suggested PHP settings by Symfony and Shopsys Framework
+COPY php-ini-overrides.ini /etc/php/7.2/fpm/conf.d/99-overrides.ini
+
 # Install Composer
-RUN php -r "copy('https://getcomposer.org/download/1.5.1/composer.phar', '/usr/local/bin/composer');" \
-    && php -r "if (hash_file('SHA384', '/usr/local/bin/composer') === 'fd3800adeff12dde28e9238d2bb82ba6f887bc6d718eee3e3a5d4f70685a236b9e96afd01aeb0dbab8ae6211caeb1cbe') {echo 'Composer installed';} else {echo 'Hash invalid for downloaded composer.phar'; exit(1);}" \
+RUN php -r "copy('https://getcomposer.org/download/1.6.4/composer.phar', '/usr/local/bin/composer');" \
+    && php -r "if (hash_file('SHA256', '/usr/local/bin/composer') === '8d0d9246f68532cc8fd6a47a58d195f0c849d26430f93c397a3176fc2d971ded') {echo 'Composer installed';} else {echo 'Hash invalid for downloaded composer.phar'; exit(1);}" \
     && chmod 0755 /usr/local/bin/composer \
     && /usr/local/bin/composer selfupdate --stable
 

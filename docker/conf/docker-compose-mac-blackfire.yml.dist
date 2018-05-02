@@ -4,18 +4,18 @@ services:
         image: postgres:9.5-alpine
         container_name: shopsys-framework-postgres
         volumes:
-            - ./project-base/var/postgres-data:/var/lib/postgresql/data
+            - shopsys-framework-postgres-data-sync:/var/lib/postgresql/data
         environment:
             - POSTGRES_USER=root
             - POSTGRES_PASSWORD=root
             - POSTGRES_DB=shopsys
 
     webserver:
-        image: nginx:1.13-alpine
+        image: nginx:1-alpine
         container_name: shopsys-framework-webserver
         working_dir: /var/www/shopsys-framework
         volumes:
-            - .:/var/www/shopsys-framework
+            - shopsys-framework-sync:/var/www/shopsys-framework
             - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         ports:
             - "8000:8080"
@@ -24,26 +24,33 @@ services:
             - smtp-server
 
     php-fpm:
-        image: shopsys/framework-php-72-fpm:alpha-1
+        build: docker/php-fpm
         container_name: shopsys-framework-php-fpm
         working_dir: /var/www/shopsys-framework
         volumes:
-            - .:/var/www/shopsys-framework
+            - shopsys-framework-sync:/var/www/shopsys-framework
         links:
             - postgres
             - redis
-        ports:
-            - "35729:35729"
+            - blackfire
         depends_on:
             - postgres
             - redis
 
+    blackfire:
+        image: blackfire/blackfire
+        environment:
+            - BLACKFIRE_CLIENT_ID=
+            - BLACKFIRE_CLIENT_TOKEN=
+            - BLACKFIRE_SERVER_ID=
+            - BLACKFIRE_SERVER_TOKEN=
+
     redis:
-        image: redis:4.0-alpine
+        image: redis:4-alpine
         container_name: shopsys-framework-redis
 
     redis-admin:
-        image: erikdubbelboer/phpredisadmin:v1.10.2
+        image: erikdubbelboer/phpredisadmin:latest
         container_name: shopsys-framework-redis-admin
         environment:
             - REDIS_1_HOST=redis
@@ -55,7 +62,7 @@ services:
             - "1600:80"
 
     selenium-server:
-        image: selenium/standalone-chrome:3.11
+        image: selenium/standalone-chrome
         container_name: shopsys-framework-acceptance-tests
         ports:
             - "4400:4444"
@@ -66,7 +73,7 @@ services:
             - webserver
 
     adminer:
-        image: adminer:4.6
+        image: adminer:latest
         container_name: shopsys-framework-adminer
         ports:
             - "1100:8080"
@@ -76,5 +83,12 @@ services:
             - postgres
 
     smtp-server:
-        image: namshi/smtp:latest
+        image: namshi/smtp
         container_name: shopsys-framework-smtp-server
+
+volumes:
+    shopsys-framework-sync:
+        external: true
+
+    shopsys-framework-postgres-data-sync:
+        external: true
