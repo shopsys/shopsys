@@ -291,13 +291,13 @@
             {{- form_errors(form) -}}
             {% if newline is not defined %}
                 <div{% if isMultidomain() %} class="form-line__side"{% endif %}>
-                    <div class="form-line__item">
+                    <div class="form-line__item form-line__item--full-width">
                         {{- form_widget(form) -}}
                     </div>
                 </div>
             {% else %}
                 <div{% if isMultidomain() %} class="form-line__side"{% endif %}>
-                    {% set inputAttr = attr|merge({'class': (attr.class|default('') ~ ' input--textarea-big')|trim}) %}
+                    {% set inputAttr = attr|merge({'class': (attr.class|default('') ~ ' input--textarea')|trim}) %}
                     {{- form_widget(form, { attr: inputAttr } ) -}}
                 </div>
             {% endif %}
