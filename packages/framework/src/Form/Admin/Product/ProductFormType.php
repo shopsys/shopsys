@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Product;
 
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Constraints\ConstraintValue;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
@@ -153,6 +154,10 @@ class ProductFormType extends AbstractType
                         'message' => 'Please enter stock quantity',
                         'groups' => self::VALIDATION_GROUP_USING_STOCK,
                     ]),
+                    new Constraints\LessThanOrEqual([
+                        'value' => ConstraintValue::INTEGER_MAX_VALUE,
+                        'message' => 'Please enter valid stock quantity',
+                    ]),
                 ],
             ])
             ->add('unit', ChoiceType::class, [
@@ -268,6 +273,10 @@ class ProductFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter sorting priority']),
+                    new Constraints\LessThanOrEqual([
+                        'value' => ConstraintValue::INTEGER_MAX_VALUE,
+                        'message' => 'Please enter valid sorting priority',
+                    ]),
                 ],
             ])
             ->add('categoriesByDomainId', MultidomainType::class, [
