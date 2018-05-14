@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
-use Shopsys\FrameworkBundle\Model\Product\ProductService;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class OrderProductFacade
@@ -48,11 +47,6 @@ class OrderProductFacade
      */
     protected $moduleFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductService
-     */
-    protected $productService;
-
     public function __construct(
         EntityManagerInterface $em,
         ProductHiddenRecalculator $productHiddenRecalculator,
@@ -60,8 +54,7 @@ class OrderProductFacade
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         ProductVisibilityFacade $productVisibilityFacade,
         OrderProductService $orderProductService,
-        ModuleFacade $moduleFacade,
-        ProductService $productService
+        ModuleFacade $moduleFacade
     ) {
         $this->em = $em;
         $this->productHiddenRecalculator = $productHiddenRecalculator;
@@ -70,7 +63,6 @@ class OrderProductFacade
         $this->productVisibilityFacade = $productVisibilityFacade;
         $this->orderProductService = $orderProductService;
         $this->moduleFacade = $moduleFacade;
-        $this->productService = $productService;
     }
 
     /**
@@ -107,7 +99,7 @@ class OrderProductFacade
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($relevantProduct);
             $this->productHiddenRecalculator->calculateHiddenForProduct($relevantProduct);
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($relevantProduct);
-            $this->productService->markProductForVisibilityRecalculation($relevantProduct);
+            $relevantProduct->markProductForVisibilityRecalculation();
         }
         $this->em->flush($relevantProducts);
 
