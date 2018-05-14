@@ -4,8 +4,9 @@ services:
         image: postgres:9.5-alpine
         container_name: shopsys-framework-postgres
         volumes:
-            - shopsys-framework-postgres-data-sync:/var/lib/postgresql/data
+            - pgdata:/var/lib/postgresql/data
         environment:
+            - PGDATA=/var/lib/postgresql/data
             - POSTGRES_USER=root
             - POSTGRES_PASSWORD=root
             - POSTGRES_DB=shopsys
@@ -14,7 +15,7 @@ services:
         image: nginx:1.13-alpine
         container_name: shopsys-framework-webserver
         volumes:
-            - shopsys-framework-sync:/var/www/html
+            - .:/var/www/html
             - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         ports:
             - "8000:8080"
@@ -24,14 +25,14 @@ services:
 
     php-fpm:
         build:
-            context: docker/php-fpm
+            context: project-base/docker/php-fpm
             args:
-                www_data_uid: 501
-                www_data_gid: 20
+                www_data_uid: 82
+                www_data_gid: 82
         container_name: shopsys-framework-php-fpm
         volumes:
-            - shopsys-framework-sync:/var/www/html
-            - ./docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
+            - .:/var/www/html
+            - ./project-base/docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
         links:
             - postgres
             - redis
@@ -83,8 +84,5 @@ services:
         container_name: shopsys-framework-smtp-server
 
 volumes:
-    shopsys-framework-sync:
-        external: true
-
-    shopsys-framework-postgres-data-sync:
-        external: true
+    pgdata:
+        driver: local
