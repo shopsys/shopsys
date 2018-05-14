@@ -313,6 +313,12 @@ msgstr ""
 msgid "Please enter valid e-mail"
 msgstr ""
 
+msgid "Please enter valid sorting priority"
+msgstr ""
+
+msgid "Please enter valid stock quantity"
+msgstr ""
+
 msgid "Please enter whole number."
 msgstr ""
 

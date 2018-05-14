@@ -169,9 +169,6 @@ msgstr ""
 msgid "All search results"
 msgstr ""
 
-msgid "Allowed for shipping types"
-msgstr ""
-
 msgid "Amount"
 msgstr ""
 
@@ -1037,6 +1034,9 @@ msgid "Elements can be aligned under label"
 msgstr ""
 
 msgid "Elements can be ordered behind each other"
+msgstr ""
+
+msgid "Email"
 msgstr ""
 
 msgid "Enter 32-digit code which will be sent to server"
@@ -2812,6 +2812,9 @@ msgstr ""
 msgid "You can set the prices on product detail of specific variant."
 msgstr ""
 
+msgid "You can upload following formats: PNG, JPG"
+msgstr ""
+
 msgid "You can upload following formats: PNG, JPG, GIF"
 msgstr ""
 
@@ -2957,9 +2960,6 @@ msgid "lower or equal"
 msgstr ""
 
 msgid "lower than"
-msgstr ""
-
-msgid "never"
 msgstr ""
 
 msgid "not"

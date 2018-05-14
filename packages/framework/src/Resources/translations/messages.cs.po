@@ -169,9 +169,6 @@ msgstr "Všechny stránky"
 msgid "All search results"
 msgstr "Všechny výsledky hledání"
 
-msgid "Allowed for shipping types"
-msgstr "Povoleno pro typy doprav"
-
 msgid "Amount"
 msgstr "Množství"
 
@@ -1038,6 +1035,9 @@ msgstr "Prvky lze zarovnat pod label"
 
 msgid "Elements can be ordered behind each other"
 msgstr "Prvky lze dávat za sebe"
+
+msgid "Email"
+msgstr ""
 
 msgid "Enter 32-digit code which will be sent to server"
 msgstr ""
@@ -2812,6 +2812,9 @@ msgstr "Kategorie můžete nastavit na kartě hlavní varianty"
 msgid "You can set the prices on product detail of specific variant."
 msgstr "Ceny můžete nastavit na kartě konkrétní varianty."
 
+msgid "You can upload following formats: PNG, JPG"
+msgstr ""
+
 msgid "You can upload following formats: PNG, JPG, GIF"
 msgstr "Můžete nahrávat formáty: PNG, JPG a GIF"
 
@@ -2958,9 +2961,6 @@ msgstr "menší nebo rovno"
 
 msgid "lower than"
 msgstr "menší než"
-
-msgid "never"
-msgstr "nikdy"
 
 msgid "not"
 msgstr "není"
