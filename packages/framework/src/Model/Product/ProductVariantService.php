@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
+
 class ProductVariantService
 {
     /**
@@ -9,9 +11,15 @@ class ProductVariantService
      */
     protected $productFactory;
 
-    public function __construct(ProductFactoryInterface $productFactory)
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
+     */
+    protected $availabilityFacade;
+
+    public function __construct(ProductFactoryInterface $productFactory, AvailabilityFacade $availabilityFacade)
     {
         $this->productFactory = $productFactory;
+        $this->availabilityFacade = $availabilityFacade;
     }
 
     /**
@@ -70,6 +78,7 @@ class ProductVariantService
     {
         $variants[] = $mainProduct;
 
-        return $this->productFactory->createMainVariant($mainVariantEditData->productData, $variants);
+        $defaultsInStockAvailability = $this->availabilityFacade->getDefaultInStockAvailability();
+        return $this->productFactory->createMainVariant($mainVariantEditData->productData, $defaultsInStockAvailability, $variants);
     }
 }
