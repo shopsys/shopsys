@@ -286,9 +286,10 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $defaultInStockAvailability
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
-    protected function __construct(ProductData $productData, array $variants = null)
+    protected function __construct(ProductData $productData, Availability $defaultInStockAvailability, array $variants = null)
     {
         $this->translations = new ArrayCollection();
         $this->catnum = $productData->catnum;
@@ -331,25 +332,32 @@ class Product extends AbstractTranslatableEntity
             $this->variantType = self::VARIANT_TYPE_MAIN;
             $this->addVariants($variants);
         }
+
+        if ($this->isUsingStock()) {
+            $this->setCalculatedAvailability($defaultInStockAvailability);
+            $this->markForAvailabilityRecalculation();
+        }
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $defaultInStockAvailability
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public static function create(ProductData $productData)
+    public static function create(ProductData $productData, Availability $defaultInStockAvailability)
     {
-        return new self($productData, null);
+        return new self($productData, $defaultInStockAvailability, null);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $defaultInStockAvailability
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public static function createMainVariant(ProductData $productData, array $variants)
+    public static function createMainVariant(ProductData $productData, Availability $defaultInStockAvailability, array $variants)
     {
-        return new self($productData, $variants);
+        return new self($productData, $defaultInStockAvailability, $variants);
     }
 
     /**

@@ -206,13 +206,8 @@ class ProductFacade
      */
     public function create(ProductEditData $productEditData)
     {
-        $product = $this->productFactory->create($productEditData->productData);
-
-        if ($product->isUsingStock()) {
-            $defaultInStockAvailability = $this->availabilityFacade->getDefaultInStockAvailability();
-            $product->setCalculatedAvailability($defaultInStockAvailability);
-            $product->markForAvailabilityRecalculation();
-        }
+        $defaultsInStockAvailability = $this->availabilityFacade->getDefaultInStockAvailability();
+        $product = $this->productFactory->create($productEditData->productData, $defaultsInStockAvailability);
 
         $this->em->persist($product);
         $this->em->flush($product);
