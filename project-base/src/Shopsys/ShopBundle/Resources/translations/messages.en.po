@@ -115,6 +115,9 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
+msgid "Created at"
+msgstr ""
+
 msgid "Creation date"
 msgstr ""
 
@@ -185,9 +188,6 @@ msgid "Error occurred"
 msgstr ""
 
 msgid "Error occurred when sending e-mail."
-msgstr ""
-
-msgid "Export customer data"
 msgstr ""
 
 msgid "Finish the order"

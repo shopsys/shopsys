@@ -115,6 +115,9 @@ msgstr "Pokračovat v objednávce"
 msgid "Country"
 msgstr "Stát"
 
+msgid "Created at"
+msgstr ""
+
 msgid "Creation date"
 msgstr "Datum vytvoření"
 
