@@ -12,6 +12,11 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 
 class TransportTest extends TestCase
 {
+    /**
+     * Create testing transport entity for testing
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
+     */
     private function createTransport()
     {
         $vat = new Vat(new VatData('vat', 21));
@@ -21,6 +26,11 @@ class TransportTest extends TestCase
         return $transport;
     }
 
+    /**
+     * Create testing payment entity for testing
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
+     */
     private function createPayment()
     {
         $vat = new Vat(new VatData('vat', 21));
