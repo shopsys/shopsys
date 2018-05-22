@@ -119,7 +119,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     public function setTransports(array $transports)
     {
-        $this->transports->clear();
+        $this->clearTransports();
 
         foreach ($transports as $transport) {
             $this->addTransport($transport);
