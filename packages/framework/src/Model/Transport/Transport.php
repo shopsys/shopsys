@@ -281,6 +281,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     public function removePayment(Payment $payment)
     {
         $this->payments->removeElement($payment);
+        $payment->removeTransport($this);
     }
 
     protected function clearPayments()
