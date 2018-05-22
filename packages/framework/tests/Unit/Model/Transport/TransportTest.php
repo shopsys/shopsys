@@ -13,8 +13,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 class TransportTest extends TestCase
 {
     /**
-     * Create testing transport entity for testing
-     *
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
     private function createTransport()
@@ -27,8 +25,6 @@ class TransportTest extends TestCase
     }
 
     /**
-     * Create testing payment entity for testing
-     *
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
     private function createPayment()
