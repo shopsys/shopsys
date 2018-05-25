@@ -156,7 +156,6 @@ class ProductDataFixtureLoader
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductEditData $productEditData
      * @param array $row
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     private function updateProductEditDataFromCsvRowForFirstDomain(ProductEditData $productEditData, array $row)
     {
@@ -232,7 +231,6 @@ class ProductDataFixtureLoader
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductEditData $productEditData
      * @param array $row
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function updateProductEditDataFromCsvRowForSecondDomain(ProductEditData $productEditData, array $row)
     {

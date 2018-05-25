@@ -2,9 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
-/**
- * @SuppressWarnings(PHPMD.ExcessivePublicCount)
- */
 class ProductData
 {
     /**
