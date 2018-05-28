@@ -887,7 +887,8 @@ That's why is this section formatted differently.
     - rules configuration is now unified in single file - [`easy-coding-standard.neon`](./packages/coding-standards/easy-coding-standard.neon)
     - the option `ignore-whitespace` for rules checking method and class length is not available anymore
         - the limits were increased to 550 (class length) and 60 (method length)
-    
+- [#13](https://github.com/shopsys/coding-standards/pull/13/) [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard) is now used
+    - the tool rules config file changed its format from neon to yaml 
 ##### Removed
 - PHP Mess Detector (@TomasVotruba)
 - line length sniff (@TomasVotruba)

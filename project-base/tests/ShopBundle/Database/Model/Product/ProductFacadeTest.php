@@ -56,9 +56,6 @@ class ProductFacadeTest extends DatabaseTestCase
         $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied());
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-     */
     public function getTestHandleOutOfStockStateDataProvider()
     {
         return [
