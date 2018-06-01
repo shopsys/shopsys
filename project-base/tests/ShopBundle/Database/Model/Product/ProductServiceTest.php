@@ -8,6 +8,8 @@ use Shopsys\FrameworkBundle\DataFixtures\Base\UnitDataFixture;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
+use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
@@ -18,6 +20,8 @@ class ProductServiceTest extends DatabaseTestCase
 {
     public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithoutVat()
     {
+        $em = $this->getEntityManager();
+
         $productService = $this->getContainer()->get(ProductService::class);
         /* @var $productService \Shopsys\FrameworkBundle\Model\Product\ProductService */
         $setting = $this->getContainer()->get(Setting::class);
@@ -27,6 +31,7 @@ class ProductServiceTest extends DatabaseTestCase
 
         $vatData = new VatData('vat', 21);
         $vat = new Vat($vatData);
+        $availability = new Availability(new AvailabilityData([], 0));
 
         $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
 
@@ -34,9 +39,15 @@ class ProductServiceTest extends DatabaseTestCase
         $productData->price = 1000;
         $productData->vat = $vat;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->availability = $availability;
         $product = Product::create($productData);
 
         $productManualInputPrice = new ProductManualInputPrice($product, $pricingGroup, 1000);
+
+        $em->persist($vat);
+        $em->persist($availability);
+        $em->persist($product);
+        $em->flush();
 
         $productService->recalculateInputPriceForNewVatPercent($product, [$productManualInputPrice], 15);
 
@@ -46,6 +57,8 @@ class ProductServiceTest extends DatabaseTestCase
 
     public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithVat()
     {
+        $em = $this->getEntityManager();
+
         $productService = $this->getContainer()->get(ProductService::class);
         /* @var $productService \Shopsys\FrameworkBundle\Model\Product\ProductService */
         $setting = $this->getContainer()->get(Setting::class);
@@ -55,6 +68,7 @@ class ProductServiceTest extends DatabaseTestCase
 
         $vatData = new VatData('vat', 21);
         $vat = new Vat($vatData);
+        $availability = new Availability(new AvailabilityData([], 0));
 
         $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
 
@@ -62,9 +76,15 @@ class ProductServiceTest extends DatabaseTestCase
         $productData->price = 1000;
         $productData->vat = $vat;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->availability = $availability;
         $product = Product::create($productData);
 
         $productManualInputPrice = new ProductManualInputPrice($product, $pricingGroup, 1000);
+
+        $em->persist($vat);
+        $em->persist($availability);
+        $em->persist($product);
+        $em->flush();
 
         $productService->recalculateInputPriceForNewVatPercent($product, [$productManualInputPrice], 15);
 

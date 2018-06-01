@@ -6,8 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\EntityManagerFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductService;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class ProductPriceRecalculator
 {
@@ -49,11 +47,6 @@ class ProductPriceRecalculator
     private $allPricingGroups;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductService
-     */
-    private $productService;
-
-    /**
      * @var \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]|null
      */
     private $productRowsIterator;
@@ -64,8 +57,7 @@ class ProductPriceRecalculator
         ProductPriceCalculation $productPriceCalculation,
         ProductCalculatedPriceRepository $productCalculatedPriceRepository,
         ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        PricingGroupFacade $pricingGroupFacade,
-        ProductService $productService
+        PricingGroupFacade $pricingGroupFacade
     ) {
         $this->em = $em;
         $this->entityManagerFacade = $entityManagerFacade;
@@ -73,7 +65,6 @@ class ProductPriceRecalculator
         $this->productCalculatedPriceRepository = $productCalculatedPriceRepository;
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->pricingGroupFacade = $pricingGroupFacade;
-        $this->productService = $productService;
     }
 
     /**
@@ -103,23 +94,11 @@ class ProductPriceRecalculator
 
     public function runAllScheduledRecalculations()
     {
-        $this->runImmediateRecalculations();
-
         $this->productRowsIterator = null;
         // @codingStandardsIgnoreStart
         while ($this->runBatchOfScheduledDelayedRecalculations()) {
         }
         // @codingStandardsIgnoreEnd
-    }
-
-    public function runImmediateRecalculations()
-    {
-        $products = $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation();
-        foreach ($products as $product) {
-            $this->recalculateProductPrices($product);
-        }
-        $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
-        $this->clearCache();
     }
 
     private function clearCache()
@@ -142,7 +121,7 @@ class ProductPriceRecalculator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
-    private function recalculateProductPrices(Product $product)
+    public function recalculateProductPrices(Product $product)
     {
         foreach ($this->getAllPricingGroups() as $pricingGroup) {
             try {
@@ -154,17 +133,7 @@ class ProductPriceRecalculator
             $this->productCalculatedPriceRepository->saveCalculatedPrice($product, $pricingGroup, $priceWithVat);
         }
         $product->markPriceAsRecalculated();
-        $this->productService->markProductForVisibilityRecalculation($product);
+        $product->markProductForVisibilityRecalculation();
         $this->em->flush($product);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
-    {
-        if ($event->isMasterRequest()) {
-            $this->runImmediateRecalculations();
-        }
     }
 }

@@ -902,4 +902,16 @@ class Product extends AbstractTranslatableEntity
     {
         return new ProductTranslation();
     }
+
+    public function markProductForVisibilityRecalculation()
+    {
+        $this->markForVisibilityRecalculation();
+        if ($this->isMainVariant()) {
+            foreach ($this->getVariants() as $variant) {
+                $variant->markForVisibilityRecalculation();
+            }
+        } elseif ($this->isVariant()) {
+            $this->getMainVariant()->markForVisibilityRecalculation();
+        }
+    }
 }
