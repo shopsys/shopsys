@@ -115,6 +115,22 @@
         Shopsys.timeout.setTimeoutAndClearPrevious('Shopsys.validation.validateWithParentsDelayed', executeDelayedValidators, 100);
     };
 
+    // Issue in dynamic collections validation
+    // https://github.com/formapro/JsFormValidatorBundle/issues/139
+    FpJsFormValidator._preparePrototype = FpJsFormValidator.preparePrototype;
+    FpJsFormValidator.preparePrototype = function (prototype, name, id) {
+        prototype.name = prototype.name.replace(/__name__/g, name);
+        prototype.id = prototype.id.replace(/__name__/g, name);
+
+        if (typeof prototype.children === 'object') {
+            for (var childName in prototype.children) {
+                prototype[childName] = this.preparePrototype(prototype.children[childName], name, id);
+            }
+        }
+
+        return prototype;
+    };
+
     Shopsys.validation.removeDelayedValidationWithParents = function (jsFormValidator) {
         do {
             delete delayedValidators[jsFormValidator.id];
