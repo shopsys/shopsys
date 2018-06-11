@@ -28,22 +28,38 @@ body {
         }
 
         &__in {
-            width: 100%;
+            display: flex;
             margin: 0 auto;
+            height: @height-header;
+            width: 100%;
             min-width: 768px;
+            align-items: center;
+            justify-content: space-between;
 
             background: @bg-primary;
             color: @color-f;
-            border-bottom: 1px solid @color-border-blue;
+        }
+
+        &__logo {
+            padding-left: 20px;
+
+            @media @query-lg {
+                width: @width-panel;
+            }
+
+            &__svg {
+                height: 42px;
+                width: auto;
+            }
         }
     }
 
     &__container {
+        position: relative;
         padding-top: @height-header;
         padding-bottom: @height-fixed-bar;
-        position: relative;
-        min-height: 100vh;
         padding-left: @width-panel;
+        min-height: 100vh;
 
         background: @bg-page;
 
@@ -61,7 +77,7 @@ body {
             top: 0;
             bottom: 0;
             left: @width-panel;
-            width: 3px;
+            width: 1px;
             opacity: 0.3;
             content: '';
 
@@ -79,9 +95,9 @@ body {
 
     &__panel {
         position: fixed;
-        left: 0;
         top: @height-header;
         bottom: 0;
+        left: 0;
         padding-bottom: @height-fixed-bar;
         width: @width-panel;
 
@@ -99,16 +115,36 @@ body {
         &__in {
             position: absolute;
             top: 0;
+            bottom: 0;
             right: 0;
             left: 0;
-            bottom: @height-fixed-bar;
-            overflow: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            &::-webkit-scrollbar {
+                -webkit-appearance: none;
+            }
+            &::-webkit-scrollbar:vertical {
+                width: 11px;
+            }
+            &::-webkit-scrollbar-thumb {
+                border: 2px solid white;
+                border-radius: 8px;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+
+            &::-webkit-scrollbar-track {
+                border-radius: 8px;
+                background-color: @color-f;
+            }
         }
     }
 
     &__content {
-        padding: 0 30px 30px;
         position: relative;
+        margin: 0 auto;
+        padding: 0 30px 30px;
+        max-width: @width-content;
 
         &--padding-top {
             padding-top: 20px;
@@ -127,8 +163,7 @@ body {
         }
 
         &__panel {
-            left: 50%;
-            margin-left: -@width-web / 2;
+            left: 0;
             z-index: 1000;
         }
     }

@@ -16,17 +16,22 @@
             padding: 15px;
 
             text-decoration: none;
-            text-transform: uppercase;
-            color: @color-darklink;
-            font-weight: bold;
+            color: @color-base;
+            font-size: 16px;
+            cursor: pointer;
 
             &:hover {
-                color: @color-darklink-hover;
+                color: @color-primary;
+            }
+
+            .side-menu__submenu & {
+                font-size: 14px;
             }
 
             .side-menu__item--active & {
                 padding-left: 11px;
 
+                background-color: @bg-info;
                 color: @color-link;
                 border-left: 4px solid @color-blue;
 
@@ -38,6 +43,12 @@
             .side-menu__item--superadmin & {
                 border-left-color: @color-red;
                 color: @color-red;
+            }
+
+            .svg {
+                margin-right: 4px;
+
+                color: @color-darklink;
             }
 
             &__icon {
@@ -55,6 +66,15 @@
     &__submenu {
         .reset-ul();
 
+        .side-menu__item--active > & {
+            display: block !important;
+        }
+
+        .open & {
+            .animated(0.1s, 0s);
+            .fadeIn-scale-topLeft;
+        }
+
         &__item {
             display: block;
 
@@ -66,17 +86,19 @@
             &__link {
                 display: block;
                 position: relative;
-                padding: 8px 15px;
+                padding: 8px 15px 8px 37px;
 
                 text-decoration: none;
                 color: @color-darklink;
+                font-size: 14px;
+                cursor: pointer;
 
                 &:hover {
                     color: @color-darklink-hover;
                 }
 
                 .side-menu__item--active & {
-                    padding-left: 11px;
+                    padding-left: 33px;
 
                     border-left: 4px solid @color-blue;
                 }
@@ -85,7 +107,7 @@
                     border-left-color: @color-red;
                 }
 
-                .side-menu__submenu__item--active & {
+                .side-menu__submenu__item--active > & {
                     color: @color-link;
 
                     &:hover {
@@ -95,6 +117,26 @@
 
                 .side-menu__submenu__item--superadmin & {
                     color: @color-red;
+                }
+
+                .side-menu__submenu__item:last-child & {
+                    padding-bottom: 15px;
+                }
+
+                .side-menu__submenu--level2 & {
+                    display: flex;
+                    padding-top: 4px;
+                    padding-bottom: 4px;
+
+                    font-size: 12px;
+
+                    .svg {
+                        margin-right: 5px;
+                    }
+                }
+
+                .side-menu__submenu--level2 .side-menu__submenu__item:last-child & {
+                    padding-bottom: 10px;
                 }
 
             }
