@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 
@@ -167,6 +168,7 @@ class CustomerServiceTest extends TestCase
     public function testGetAmendedCustomerDataByOrderWithoutChanges()
     {
         $customerService = $this->getCustomerService();
+        $paymentPriceFactoryMock = $this->createMock(PaymentPriceFactory::class);
 
         $userData = new UserData();
         $userData->firstName = 'firstName';
@@ -202,7 +204,7 @@ class CustomerServiceTest extends TestCase
         $user = new User($userData, $billingAddress, $deliveryAddress);
 
         $transport = new Transport(new TransportData(['cs' => 'transportName']));
-        $payment = new Payment(new PaymentData(['cs' => 'paymentName']));
+        $payment = new Payment(new PaymentData(['cs' => 'paymentName']), [], $paymentPriceFactoryMock);
         $orderStatus = new OrderStatus(new OrderStatusData(['en' => 'orderStatusName']), OrderStatus::TYPE_NEW);
         $orderData = new OrderData();
         $orderData->transport = $transport;
@@ -247,6 +249,7 @@ class CustomerServiceTest extends TestCase
     public function testGetAmendedCustomerDataByOrder()
     {
         $customerService = $this->getCustomerService();
+        $paymentPriceFactoryMock = $this->createMock(PaymentPriceFactory::class);
 
         $billingCountry = new Country(new CountryData('Česká republika'), self::DOMAIN_ID);
         $deliveryCountry = new Country(new CountryData('Slovenská republika'), self::DOMAIN_ID);
@@ -259,7 +262,7 @@ class CustomerServiceTest extends TestCase
         $user = new User($userData, $billingAddress, null);
 
         $transport = new Transport(new TransportData(['cs' => 'transportName']));
-        $payment = new Payment(new PaymentData(['cs' => 'paymentName']));
+        $payment = new Payment(new PaymentData(['cs' => 'paymentName']), [], $paymentPriceFactoryMock);
         $orderStatus = new OrderStatus(new OrderStatusData(['en' => 'orderStatusName']), OrderStatus::TYPE_NEW);
         $orderData = new OrderData();
         $orderData->transport = $transport;

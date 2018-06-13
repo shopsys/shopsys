@@ -5,6 +5,8 @@ namespace Tests\ShopBundle\Database\Model\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -378,6 +380,8 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
     public function getDefaultPayment(Vat $vat, $enabledForDomains, $hidden)
     {
         $paymentDataFactory = $this->getPaymentDataFactory();
+        $currencyFacade = $this->getCurrencyFacade();
+        $paymentPriceFactory = $this->getPaymentPriceFactory();
 
         $paymentData = $paymentDataFactory->createDefault();
         $paymentData->name = [
@@ -388,7 +392,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $enabledForDomains;
 
-        return new Payment($paymentData);
+        return new Payment($paymentData, $currencyFacade->getAll(), $paymentPriceFactory);
     }
 
     /**
@@ -436,5 +440,21 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
     public function getTransportDataFactory()
     {
         return $this->getContainer()->get(TransportDataFactory::class);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory
+     */
+    public function getPaymentPriceFactory()
+    {
+        return $this->getContainer()->get(PaymentPriceFactory::class);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    public function getCurrencyFacade()
+    {
+        return $this->getContainer()->get(CurrencyFacade::class);
     }
 }

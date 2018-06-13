@@ -6,15 +6,28 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 /**
- * @ORM\Table(name="payment_prices")
+ * @ORM\Table(
+ *     name="payment_prices",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="payment_prices_uni",columns={"payment_id", "currency_id"})
+ *     }
+ * )
  * @ORM\Entity
  */
 class PaymentPrice
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      *
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment", inversedBy="prices")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -23,7 +36,6 @@ class PaymentPrice
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      *
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */

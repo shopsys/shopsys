@@ -97,8 +97,10 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[] $currencies
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
      */
-    public function __construct(PaymentData $paymentData)
+    public function __construct(PaymentData $paymentData, $currencies, PaymentPriceFactoryInterface $paymentPriceFactory)
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
@@ -111,6 +113,8 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->prices = new ArrayCollection();
         $this->czkRounding = $paymentData->czkRounding;
         $this->position = SortablePosition::LAST_POSITION;
+
+        $this->updatePrices($paymentData->pricesByCurrencyId, $currencies, $paymentPriceFactory);
     }
 
     /**
@@ -177,14 +181,17 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[] $currencies
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
      */
-    public function edit(PaymentData $paymentData)
+    public function edit(PaymentData $paymentData, $currencies, PaymentPriceFactoryInterface $paymentPriceFactory)
     {
         $this->vat = $paymentData->vat;
         $this->hidden = $paymentData->hidden;
         $this->czkRounding = $paymentData->czkRounding;
         $this->setTranslations($paymentData);
         $this->setDomains($paymentData);
+        $this->updatePrices($paymentData->pricesByCurrencyId, $currencies, $paymentPriceFactory);
     }
 
     /**
@@ -378,5 +385,20 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
 
         throw new PaymentDomainNotFoundException($this->id, $domainId);
+    }
+
+    /**
+     * @param string[] $pricesByCurrencyId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[] $currencies
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
+     */
+    protected function updatePrices($pricesByCurrencyId, $currencies, PaymentPriceFactoryInterface $paymentPriceFactory)
+    {
+        foreach ($currencies as $currency) {
+            if (isset($pricesByCurrencyId[$currency->getId()])) {
+                $price = $pricesByCurrencyId[$currency->getId()];
+                $this->setPrice($paymentPriceFactory, $currency, $price);
+            }
+        }
     }
 }
