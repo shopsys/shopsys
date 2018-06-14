@@ -379,4 +379,19 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
         throw new PaymentDomainNotFoundException($this->id, $domainId);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     */
+    public function getBasePricesIndexedByCurrencyId(PaymentPriceCalculation $paymentPriceCalculation)
+    {
+        $basePricesIndexedByCurrencyId = [];
+        foreach ($this->getPrices() as $paymentInputPrice) {
+            $currency = $paymentInputPrice->getCurrency();
+            $basePricesIndexedByCurrencyId[$currency->getId()] = $paymentPriceCalculation->calculateIndependentPrice($this, $currency);
+        }
+
+        return $basePricesIndexedByCurrencyId;
+    }
 }
