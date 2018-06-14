@@ -44,7 +44,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category[]
      *
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category", mappedBy="parent", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children;

@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Model\Category\Detail\CategoryDetailFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
@@ -40,11 +39,6 @@ class CategoryFacade
     protected $categoryVisibilityRecalculationScheduler;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\Detail\CategoryDetailFactory
-     */
-    protected $categoryDetailFactory;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
      */
     protected $friendlyUrlFacade;
@@ -65,7 +59,6 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryService $categoryService
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Category\Detail\CategoryDetailFactory $categoryDetailFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
@@ -76,7 +69,6 @@ class CategoryFacade
         CategoryService $categoryService,
         Domain $domain,
         CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler,
-        CategoryDetailFactory $categoryDetailFactory,
         FriendlyUrlFacade $friendlyUrlFacade,
         ImageFacade $imageFacade,
         PluginCrudExtensionFacade $pluginCrudExtensionFacade
@@ -86,7 +78,6 @@ class CategoryFacade
         $this->categoryService = $categoryService;
         $this->domain = $domain;
         $this->categoryVisibilityRecalculationScheduler = $categoryVisibilityRecalculationScheduler;
-        $this->categoryDetailFactory = $categoryDetailFactory;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
         $this->imageFacade = $imageFacade;
         $this->pluginCrudExtensionFacade = $pluginCrudExtensionFacade;
@@ -196,6 +187,35 @@ class CategoryFacade
     }
 
     /**
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getTranslatedFirstLevelCategoriesOnAllDomains($locale)
+    {
+        return $this->categoryRepository->getTranslatedFirstLevelCategoriesOnAllDomains($locale);
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getTranslatedVisibleFirstLevelCategoriesOnDomain($domainId, $locale)
+    {
+        return $this->categoryRepository->getTranslatedVisibleFirstLevelCategoriesOnDomain($domainId, $locale);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getTranslatedVisibleSubcategoriesByDomain(Category $parentCategory, DomainConfig $domainConfig)
+    {
+        return $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain($parentCategory, $domainConfig);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $selectedCategories
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
@@ -217,32 +237,6 @@ class CategoryFacade
     }
 
     /**
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Category\Detail\CategoryDetail[]
-     */
-    public function getAllCategoryDetails($locale)
-    {
-        $categories = $this->categoryRepository->getPreOrderTreeTraversalForAllCategories($locale);
-        $categoryDetails = $this->categoryDetailFactory->createDetailsHierarchy($categories);
-
-        return $categoryDetails;
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Category\Detail\CategoryDetail[]
-     */
-    public function getVisibleCategoryDetailsForDomain($domainId, $locale)
-    {
-        $categories = $this->categoryRepository->getPreOrderTreeTraversalForVisibleCategoriesByDomain($domainId, $locale);
-
-        $categoryDetails = $this->categoryDetailFactory->createDetailsHierarchy($categories);
-
-        return $categoryDetails;
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
@@ -250,20 +244,6 @@ class CategoryFacade
     public function getVisibleCategoriesInPathFromRootOnDomain(Category $category, $domainId)
     {
         return $this->categoryRepository->getVisibleCategoriesInPathFromRootOnDomain($category, $domainId);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Category\Detail\LazyLoadedCategoryDetail[]
-     */
-    public function getVisibleLazyLoadedCategoryDetailsForParent(Category $parentCategory, DomainConfig $domainConfig)
-    {
-        $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain($parentCategory, $domainConfig);
-
-        $categoryDetails = $this->categoryDetailFactory->createLazyLoadedDetails($categories, $domainConfig);
-
-        return $categoryDetails;
     }
 
     /**
@@ -281,16 +261,6 @@ class CategoryFacade
         );
 
         return $categories;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     */
-    public function getAllVisibleChildrenByCategoryAndDomainId(Category $category, $domainId)
-    {
-        return $this->categoryRepository->getAllVisibleChildrenByCategoryAndDomainId($category, $domainId);
     }
 
     /**
