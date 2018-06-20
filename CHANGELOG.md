@@ -45,6 +45,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#254 - Removal of EntityDetail classes](https://github.com/shopsys/shopsys/pull/254/)
     - `CategoryDetail`, `LazyLoadedCategoryDetail` and `CategoryDetailFactory` were removed - `Category` entity is now responsible for it's children management
     - `PaymentDetail` and `PaymentDetailFactory` were removed - `Payment` entity is now responsible for providing it's base prices
+    - `ProductDetail` and `ProductDetailFactory` were removed - `ProductDetail::$parameters` and `ProductDetail::$sellingPrice` were moved to `Product` entity
+    and are accessed via Twig functions now
 
 #### Changed
 - [#171 - Update to twig 2.x](https://github.com/shopsys/shopsys/pull/171):

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 
 /**
  * Product
@@ -292,6 +293,26 @@ class Product extends AbstractTranslatableEntity
     protected $domains;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
+     */
+    protected $sellingPrice;
+
+    /**
+     * @var bool
+     */
+    protected $sellingPriceLoaded;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
+     */
+    protected $productParameterValues;
+
+    /**
+     * @var bool
+     */
+    protected $productParameterValuesLoaded;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
@@ -341,6 +362,9 @@ class Product extends AbstractTranslatableEntity
             $this->variantType = self::VARIANT_TYPE_MAIN;
             $this->addVariants($variants);
         }
+        $this->sellingPriceLoaded = false;
+        $this->productParameterValues = [];
+        $this->productParameterValuesLoaded = false;
     }
 
     /**
@@ -1001,5 +1025,87 @@ class Product extends AbstractTranslatableEntity
         }
 
         $this->setDomains($productData);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasContentForDetailBox()
+    {
+        if ($this->isMainVariant()) {
+            if ($this->getBrand() !== null) {
+                return true;
+            }
+        } else {
+            return $this->getBrand() !== null
+                || $this->getCatnum() !== null
+                || $this->getPartno() !== null
+                || $this->getEan() !== null;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null $sellingPrice
+     */
+    public function setSellingPrice(?ProductPrice $sellingPrice)
+    {
+        $this->sellingPrice = $sellingPrice;
+        $this->sellingPriceLoaded = true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSellingPriceLoaded()
+    {
+        return $this->sellingPriceLoaded;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
+     */
+    public function getSellingPrice()
+    {
+        if (!$this->sellingPriceLoaded) {
+            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\AccessingNotLoadedProperty(
+                'sellingPrice',
+                'getProductSellingPrice'
+            );
+        }
+
+        return $this->sellingPrice;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] $productParameterValues
+     */
+    public function setParameterValues(array $productParameterValues)
+    {
+        $this->productParameterValues = $productParameterValues;
+    }
+
+    /**
+     * @return bool
+     */
+    public function areProductParameterValuesLoaded()
+    {
+        return $this->productParameterValuesLoaded;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
+     */
+    public function getProductParameterValues()
+    {
+        if (!$this->productParameterValuesLoaded) {
+            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\AccessingNotLoadedProperty(
+                'productParameterValues',
+                'getProductParameterValues'
+            );
+        }
+
+        return $this->productParameterValues;
     }
 }
