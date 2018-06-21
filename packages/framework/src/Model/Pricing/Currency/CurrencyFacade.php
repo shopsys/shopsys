@@ -251,6 +251,8 @@ class CurrencyFacade
             $toFlush[] = $transportPrice;
         }
 
-        $this->em->flush($toFlush);
+        if (count($toFlush) > 0) {
+            $this->em->flush($toFlush);
+        }
     }
 }
