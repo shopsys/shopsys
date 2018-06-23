@@ -94,6 +94,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - all occurrences of netdevelo were changed to shopsys
 - [#165 Different approach to multidomain entities](https://github.com/shopsys/shopsys/pull/165)
     - multi-domain attributes are accessed via their main entities (instead of usual entity details)
+- [#273 URL for submitting newsletter subscription should not be visible for robots](https://github.com/shopsys/shopsys/pull/273)
+    - newsletter subscription form looks like GET form without URL, but is POSTed by AJAX 
 
 #### Fixed
 - [#131 - correct rendering of checkbox label](https://github.com/shopsys/shopsys/pull/131):

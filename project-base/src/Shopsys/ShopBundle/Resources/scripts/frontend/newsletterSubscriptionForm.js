@@ -13,7 +13,7 @@
     Shopsys.newsletterSubscriptionForm.ajaxSubmit = function () {
         Shopsys.ajax({
             loaderElement: 'body',
-            url: $(this).attr('action'),
+            url: $(this).data('action'),
             method: 'post',
             data: $(this).serialize(),
             success: onSuccess
