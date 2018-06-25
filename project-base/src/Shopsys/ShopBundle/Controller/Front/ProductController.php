@@ -105,21 +105,20 @@ class ProductController extends FrontBaseController
      */
     public function detailAction($id)
     {
-        $productDetail = $this->productOnCurrentDomainFacade->getVisibleProductDetailById($id);
-        $product = $productDetail->getProduct();
+        $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
 
         if ($product->isVariant()) {
             return $this->redirectToRoute('front_product_detail', ['id' => $product->getMainVariant()->getId()]);
         }
 
-        $accessoriesDetails = $this->productOnCurrentDomainFacade->getAccessoriesProductDetailsForProduct($product);
-        $variantsDetails = $this->productOnCurrentDomainFacade->getVariantsProductDetailsForProduct($product);
+        $accessories = $this->productOnCurrentDomainFacade->getAccessoriesForProduct($product);
+        $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
 
         return $this->render('@ShopsysShop/Front/Content/Product/detail.html.twig', [
-            'productDetail' => $productDetail,
-            'accessoriesDetails' => $accessoriesDetails,
-            'variantsDetails' => $variantsDetails,
+            'product' => $product,
+            'accessories' => $accessories,
+            'variants' => $variants,
             'productMainCategory' => $productMainCategory,
         ]);
     }
@@ -173,7 +172,7 @@ class ProductController extends FrontBaseController
             'category' => $category,
             'filterForm' => $filterForm->createView(),
             'filterFormSubmited' => $filterForm->isSubmitted(),
-            'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId()),
+            'visibleChildren' => $this->categoryFacade->getTranslatedVisibleSubcategoriesByDomain($category, $this->domain->getCurrentDomainConfig()),
             'priceRange' => $productFilterConfig->getPriceRange(),
         ];
 

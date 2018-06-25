@@ -42,6 +42,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#206 clearing Setting's cache is now done via DoctrineEventListener](https://github.com/shopsys/shopsys/pull/206)
     - `EntityManagerFacade` was removed
     - Doctrine identity map can be cleared via `EntityManager::clear()` directly
+- [#254 - Removal of EntityDetail classes](https://github.com/shopsys/shopsys/pull/254/)
+    - `CategoryDetail`, `LazyLoadedCategoryDetail` and `CategoryDetailFactory` were removed - `Category` entity is now responsible for it's children management
+    - `PaymentDetail` and `PaymentDetailFactory` were removed - `Payment` entity is now responsible for providing it's base prices
+    - `ProductDetail` and `ProductDetailFactory` were removed - `ProductDetail::$parameters` and `ProductDetail::$sellingPrice` were moved to `Product` entity
+    and are accessed via Twig functions now
+    - `TransportDetail` and `TransportDetailFactory` were removed - `Transport` entity is now responsible for providing it's base prices
 
 #### Changed
 - [#171 - Update to twig 2.x](https://github.com/shopsys/shopsys/pull/171):

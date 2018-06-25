@@ -29,6 +29,13 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 - `CategoryDomain::$hidden` was changed to `CategoryDomain::$enabled` along with related methods (with negated value)
 - `PaymentDomain` and `TransportDomain` are now created even for domains on which the entity should not be visible, check your custom queries that work with payments or transports
 - instead of using `EntityManagerFacade::clear()` call `clear()` directly on the `EntityManager`
+- all *Detail classes were removed so their attributes are now accessed differently
+    - use `Category::$children` instead of `CategoryDetail::$children` and `LazyLoadedCategoryDetail::$children`
+    - use `Payment::getBasePricesIndexedByCurrencyId()` instead of `PaymentDetail::$basePricesByCurrencyId`
+    - use `Transport::getBasePricesIndexedByCurrencyId()` instead of `TransportDetail::$basePricesByCurrencyId`
+    - use `Product::hasContentForDetailBox()` instead of `ProductDetail::hasContentForDetailBox()`
+    - use Twig function `getProductParameterValues()` instead of `ProductDetail::$parameters`
+    - use Twig function `getProductSellingPrice()` instead of `ProductDetail::$sellingPrice`
 
 ### [shopsys/project-base]
 - Twig has been updated to version 2.4.8

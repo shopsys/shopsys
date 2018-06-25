@@ -164,13 +164,13 @@ class CategoryController extends AdminBaseController
         $this->session->set('categories_selected_domain_id', $domainId);
 
         if ($domainId === self::ALL_DOMAINS) {
-            $categoryDetails = $this->categoryFacade->getAllCategoryDetails($request->getLocale());
+            $categories = $this->categoryFacade->getTranslatedFirstLevelCategoriesOnAllDomains($request->getLocale());
         } else {
-            $categoryDetails = $this->categoryFacade->getVisibleCategoryDetailsForDomain($domainId, $request->getLocale());
+            $categories = $this->categoryFacade->getTranslatedVisibleFirstLevelCategoriesOnDomain($domainId, $request->getLocale());
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/list.html.twig', [
-            'categoryDetails' => $categoryDetails,
+            'categories' => $categories,
             'isForAllDomains' => ($domainId === self::ALL_DOMAINS),
         ]);
     }

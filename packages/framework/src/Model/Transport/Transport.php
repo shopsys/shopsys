@@ -360,4 +360,19 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
         throw new TransportDomainNotFoundException($this->id, $domainId);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     */
+    public function getBasePricesIndexedByCurrencyId(TransportPriceCalculation $transportPriceCalculation)
+    {
+        $basePricesIndexedByCurrencyId = [];
+        foreach ($this->getPrices() as $transportInputPrice) {
+            $currency = $transportInputPrice->getCurrency();
+            $basePricesIndexedByCurrencyId[$currency->getId()] = $transportPriceCalculation->calculateIndependentPrice($this, $currency);
+        }
+
+        return $basePricesIndexedByCurrencyId;
+    }
 }

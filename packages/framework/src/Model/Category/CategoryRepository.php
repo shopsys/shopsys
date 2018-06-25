@@ -104,7 +104,8 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function getFullPathsIndexedByIdsForDomain($domainId, $locale)
     {
-        $queryBuilder = $this->getPreOrderTreeTraversalForAllCategoriesByDomainQueryBuilder($domainId, $locale);
+        $queryBuilder = $this->getPreOrderTreeTraversalByDomainQueryBuilder($domainId, $locale);
+        $queryBuilder->andWhere('c.level >= 1');
 
         $rows = $queryBuilder->select('c.id, IDENTITY(c.parent) AS parentId, ct.name')->getQuery()->getScalarResult();
 
@@ -200,13 +201,13 @@ class CategoryRepository extends NestedTreeRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getPreOrderTreeTraversalForAllCategories($locale)
+    public function getTranslatedFirstLevelCategoriesOnAllDomains($locale)
     {
         $queryBuilder = $this->getAllQueryBuilder();
         $this->addTranslation($queryBuilder, $locale);
 
         $queryBuilder
-            ->andWhere('c.level >= 1')
+            ->andWhere('c.level = 1')
             ->orderBy('c.lft');
 
         return $queryBuilder->getQuery()->execute();
@@ -217,11 +218,13 @@ class CategoryRepository extends NestedTreeRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getPreOrderTreeTraversalForVisibleCategoriesByDomain($domainId, $locale)
+    public function getTranslatedVisibleFirstLevelCategoriesOnDomain($domainId, $locale)
     {
-        $queryBuilder = $this->getPreOrderTreeTraversalForAllCategoriesByDomainQueryBuilder($domainId, $locale);
+        $queryBuilder = $this->getPreOrderTreeTraversalByDomainQueryBuilder($domainId, $locale);
 
-        $queryBuilder->andWhere('cd.visible = TRUE');
+        $queryBuilder
+            ->andWhere('c.level = 1')
+            ->andWhere('cd.visible = TRUE');
 
         return $queryBuilder->getQuery()->execute();
     }
@@ -231,14 +234,13 @@ class CategoryRepository extends NestedTreeRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getPreOrderTreeTraversalForAllCategoriesByDomainQueryBuilder($domainId, $locale)
+    protected function getPreOrderTreeTraversalByDomainQueryBuilder($domainId, $locale)
     {
         $queryBuilder = $this->getAllQueryBuilder();
         $this->addTranslation($queryBuilder, $locale);
 
         $queryBuilder
             ->join(CategoryDomain::class, 'cd', Join::WITH, 'cd.category = c')
-            ->andWhere('c.level >= 1')
             ->andWhere('cd.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->orderBy('c.lft');
