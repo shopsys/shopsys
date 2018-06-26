@@ -4,6 +4,8 @@ namespace Tests\ShopBundle\Database\Model\Payment;
 
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -18,6 +20,8 @@ class PaymentTest extends DatabaseTestCase
         $paymentDataFactory = $this->getContainer()->get(PaymentDataFactory::class);
         $transportDataFactory = $this->getContainer()->get(TransportDataFactory::class);
         $em = $this->getEntityManager();
+        $currencyFacade = $this->getContainer()->get(CurrencyFacade::class);
+        $paymentPriceFactory = $this->getContainer()->get(PaymentPriceFactory::class);
 
         $vat = new Vat(new VatData('vat', 21));
         $transportData = $transportDataFactory->createDefault();
@@ -29,7 +33,11 @@ class PaymentTest extends DatabaseTestCase
         $paymentData->name['cs'] = 'name';
         $paymentData->vat = $vat;
 
-        $payment = new Payment($paymentData);
+        $payment = new Payment(
+            $paymentData,
+            $currencyFacade->getAll(),
+            $paymentPriceFactory
+        );
         $payment->addTransport($transport);
 
         $em->persist($vat);

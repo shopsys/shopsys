@@ -5,6 +5,8 @@ namespace Tests\ShopBundle\Database\Model\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Tests\ShopBundle\Test\DatabaseTestCase;
@@ -38,6 +40,8 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
 
     public function testIsIndependentlyVisibleEmptyName()
     {
+        $currencyFacade = $this->getCurrencyFacade();
+        $paymentPriceFactory = $this->getPaymentPriceFactory();
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
 
@@ -53,7 +57,7 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
             self::SECOND_DOMAIN_ID => false,
         ];
 
-        $payment = new Payment($paymentData);
+        $payment = new Payment($paymentData, $currencyFacade->getAll(), $paymentPriceFactory);
 
         $em->persist($vat);
         $em->persist($payment);
@@ -119,6 +123,8 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
     public function getDefaultPayment(Vat $vat, $enabledForDomains, $hidden)
     {
         $paymentDataFactory = $this->getPaymentDataFactory();
+        $currencyFacade = $this->getCurrencyFacade();
+        $paymentPriceFactory = $this->getPaymentPriceFactory();
 
         $paymentData = $paymentDataFactory->createDefault();
         $paymentData->name = [
@@ -129,7 +135,7 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $enabledForDomains;
 
-        return new Payment($paymentData);
+        return new Payment($paymentData, $currencyFacade->getAll(), $paymentPriceFactory);
     }
 
     /**
@@ -146,5 +152,21 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
     public function getPaymentDataFactory()
     {
         return $this->getContainer()->get(PaymentDataFactory::class);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory
+     */
+    public function getPaymentPriceFactory()
+    {
+        return $this->getContainer()->get(PaymentPriceFactory::class);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    public function getCurrencyFacade()
+    {
+        return $this->getContainer()->get(CurrencyFacade::class);
     }
 }

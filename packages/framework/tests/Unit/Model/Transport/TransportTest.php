@@ -5,6 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Transport;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -29,8 +30,13 @@ class TransportTest extends TestCase
      */
     private function createPayment()
     {
+        $paymentPriceFactoryMock = $this->createMock(PaymentPriceFactory::class);
         $vat = new Vat(new VatData('vat', 21));
-        $payment = new Payment(new PaymentData(['cs' => 'paymentName', 'en' => 'paymentName'], $vat, [], [], true));
+        $payment = new Payment(
+            new PaymentData(['cs' => 'paymentName', 'en' => 'paymentName'], $vat, [], [], true),
+            [],
+            $paymentPriceFactoryMock
+        );
 
         return $payment;
     }

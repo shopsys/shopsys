@@ -81,6 +81,7 @@ class PaymentPriceCalculationTest extends TestCase
         $pricingSettingMock
             ->expects($this->any())->method('getRoundingType')
                 ->will($this->returnValue(PricingSetting::ROUNDING_TYPE_INTEGER));
+        $paymentPriceFactoryMock = $this->createMock(PaymentPriceFactory::class);
 
         $rounding = new Rounding($pricingSettingMock);
 
@@ -92,7 +93,7 @@ class PaymentPriceCalculationTest extends TestCase
         $vat = new Vat(new VatData('vat', $vatPercent));
         $currency = new Currency(new CurrencyData());
 
-        $payment = new Payment(new PaymentData(['cs' => 'paymentName'], $vat));
+        $payment = new Payment(new PaymentData(['cs' => 'paymentName'], $vat), [], $paymentPriceFactoryMock);
         $payment->setPrice(new PaymentPriceFactory(), $currency, $inputPrice);
 
         $price = $paymentPriceCalculation->calculateIndependentPrice($payment, $currency);
@@ -126,6 +127,7 @@ class PaymentPriceCalculationTest extends TestCase
         $pricingSettingMock
             ->expects($this->any())->method('getFreeTransportAndPaymentPriceLimit')
                 ->will($this->returnValue($priceLimit));
+        $paymentPriceFactoryMock = $this->createMock(PaymentPriceFactory::class);
 
         $rounding = new Rounding($pricingSettingMock);
 
@@ -137,7 +139,7 @@ class PaymentPriceCalculationTest extends TestCase
         $vat = new Vat(new VatData('vat', $vatPercent));
         $currency = new Currency(new CurrencyData());
 
-        $payment = new Payment(new PaymentData(['cs' => 'paymentName'], $vat));
+        $payment = new Payment(new PaymentData(['cs' => 'paymentName'], $vat), [], $paymentPriceFactoryMock);
         $payment->setPrice(new PaymentPriceFactory(), $currency, $inputPrice);
 
         $price = $paymentPriceCalculation->calculatePrice($payment, $currency, $productsPrice, 1);

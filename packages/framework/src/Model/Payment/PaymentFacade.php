@@ -106,7 +106,6 @@ class PaymentFacade
         $payment = $this->paymentFactory->create($paymentData);
         $this->em->persist($payment);
         $this->em->flush();
-        $this->updatePaymentPrices($payment, $paymentData->pricesByCurrencyId);
         $this->setAdditionalDataAndFlush($payment, $paymentData);
 
         return $payment;
@@ -118,8 +117,7 @@ class PaymentFacade
      */
     public function edit(Payment $payment, PaymentData $paymentData)
     {
-        $payment->edit($paymentData);
-        $this->updatePaymentPrices($payment, $paymentData->pricesByCurrencyId);
+        $payment->edit($paymentData, $this->currencyFacade->getAll(), $this->paymentPriceFactory);
         $this->setAdditionalDataAndFlush($payment, $paymentData);
     }
 
@@ -171,18 +169,6 @@ class PaymentFacade
         $allPayments = $this->paymentRepository->getAll();
 
         return $this->paymentVisibilityCalculation->filterVisible($allPayments, $domainId);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param string[] $pricesByCurrencyId
-     */
-    protected function updatePaymentPrices(Payment $payment, $pricesByCurrencyId)
-    {
-        foreach ($this->currencyFacade->getAll() as $currency) {
-            $price = $pricesByCurrencyId[$currency->getId()];
-            $payment->setPrice($this->paymentPriceFactory, $currency, $price);
-        }
     }
 
     /**

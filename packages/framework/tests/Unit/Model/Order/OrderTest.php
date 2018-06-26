@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderTest extends TestCase
@@ -21,7 +22,8 @@ class OrderTest extends TestCase
 
     public function testGetProductItems()
     {
-        $payment = new Payment(new PaymentData());
+        $paymentPriceFactory = $this->createMock(PaymentPriceFactory::class);
+        $payment = new Payment(new PaymentData(), [], $paymentPriceFactory);
         $orderData = new OrderData();
         $paymentPrice = new Price(0, 0);
 
@@ -39,7 +41,8 @@ class OrderTest extends TestCase
 
     public function testGetProductItemsCount()
     {
-        $payment = new Payment(new PaymentData());
+        $paymentPriceFactory = $this->createMock(PaymentPriceFactory::class);
+        $payment = new Payment(new PaymentData(), [], $paymentPriceFactory);
         $paymentItemPrice = new Price(0, 0);
         $orderData = new OrderData();
 

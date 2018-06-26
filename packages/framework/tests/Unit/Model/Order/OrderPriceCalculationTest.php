@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -64,7 +65,8 @@ class OrderPriceCalculationTest extends TestCase
     {
         $paymentData = new PaymentData();
         $paymentData->czkRounding = true;
-        $payment = new Payment($paymentData);
+        $paymentPriceFactory = $this->createMock(PaymentPriceFactory::class);
+        $payment = new Payment($paymentData, [], $paymentPriceFactory);
 
         $currency = new Currency(new CurrencyData('currencyName', Currency::CODE_EUR, 1.0));
         $orderTotalPrice = new Price(100, 120);
@@ -82,7 +84,8 @@ class OrderPriceCalculationTest extends TestCase
     {
         $paymentData = new PaymentData();
         $paymentData->czkRounding = false;
-        $payment = new Payment($paymentData);
+        $paymentPriceFactory = $this->createMock(PaymentPriceFactory::class);
+        $payment = new Payment($paymentData, [], $paymentPriceFactory);
 
         $currency = new Currency(new CurrencyData('currencyName', Currency::CODE_CZK, 1.0));
         $orderTotalPrice = new Price(100, 120);
@@ -100,7 +103,8 @@ class OrderPriceCalculationTest extends TestCase
     {
         $paymentData = new PaymentData();
         $paymentData->czkRounding = true;
-        $payment = new Payment($paymentData);
+        $paymentPriceFactory = $this->createMock(PaymentPriceFactory::class);
+        $payment = new Payment($paymentData, [], $paymentPriceFactory);
 
         $currency = new Currency(new CurrencyData('currencyName', Currency::CODE_CZK, 1.0));
         $orderTotalPrice = new Price(100, 120.3);
@@ -125,7 +129,8 @@ class OrderPriceCalculationTest extends TestCase
     {
         $paymentData = new PaymentData();
         $paymentData->czkRounding = true;
-        $payment = new Payment($paymentData);
+        $paymentPriceFactory = $this->createMock(PaymentPriceFactory::class);
+        $payment = new Payment($paymentData, [], $paymentPriceFactory);
 
         $currency = new Currency(new CurrencyData('currencyName', Currency::CODE_CZK, 1.0));
         $orderTotalPrice = new Price(100, 120.9);
