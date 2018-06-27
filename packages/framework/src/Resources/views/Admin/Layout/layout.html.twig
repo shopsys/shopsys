@@ -55,10 +55,7 @@
                         </svg>
 
                     </div>
-                    {{ render(controller('ShopsysFrameworkBundle:Admin/Menu:menu', {
-                        route: getRoute(),
-                        parameters: getRouteParams()
-                    } )) }}
+                    {{ render(controller('ShopsysFrameworkBundle:Admin/Menu:menu')) }}
                 </div>
             </header>
         {% endblock %}
