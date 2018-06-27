@@ -43,6 +43,7 @@
         - label: 'Create variant'
           route: admin_product_createvariant
           visible: false
+
     - label: 'Categories'
       route: admin_category_list
       items:
@@ -59,13 +60,17 @@
   items:
     - label: 'Pricing groups'
       route: admin_pricinggroup_list
+
     - label: 'VAT and rounding'
       route: admin_vat_list
+
     - label: 'Free shipping and payment'
       route: admin_transportandpayment_freetransportandpaymentlimit
-    - label: Currencies
+
+    - label: 'Currencies'
       route: admin_currency_list
-    - label: Promo codes
+
+    - label: 'Promo codes'
       route: admin_promocode_list
 
 - label: 'Marketing'
@@ -81,6 +86,7 @@
         - label: 'Editing article'
           route: admin_article_edit
           visible: false
+
     - label: 'Slider on main page'
       route: admin_slider_list
       items:
@@ -90,10 +96,13 @@
         - label: 'Editing page'
           route: admin_slider_edit
           visible: false
+
     - label: 'Main page products'
       route: admin_topproduct_list
+
     - label: 'Popular categories'
       route: admin_topcategory_list
+
     - label: 'Advertising system'
       route: admin_advert_list
       items:
@@ -103,14 +112,17 @@
         - label: 'Editing advertising'
           route: admin_advert_edit
           visible: false
+
     - label: 'XML Feeds'
       route: admin_feed_list
+
     - label: 'Bestsellers'
       route: admin_bestsellingproduct_list
       items:
         - label: 'Editing bestseller'
           route: admin_bestsellingproduct_detail
           visible: false
+
     - label: 'E-mail newsletter'
       route: admin_newsletter_list
 
@@ -136,37 +148,25 @@
       route: admin_domain_list
       multidomain_only: true
       items:
-        - label: 'E-shop identification'
-          route: admin_domain_list
         - label: 'Editing domain'
           route: admin_domain_edit
           visible: false
 
     - label: 'Operator information'
       route: admin_shopinfo_setting
-      items:
-      - label: 'Operator information'
-        route: admin_shopinfo_setting
 
     - label: 'Legal conditions'
       route: admin_legalconditions_setting
-      items:
-        - label: 'Legal conditions'
-          route: admin_legalconditions_setting
-        - label: 'Personal data access'
-          route: admin_personaldata_setting
+
+    - label: 'Personal data access'
+      route: admin_personaldata_setting
 
     - label: 'Cookies information'
       route: admin_cookies_setting
-      items:
-        - label: 'Cookies information'
-          route: admin_cookies_setting
 
     - label: 'Shippings and payments'
       route: admin_transportandpayment_list
       items:
-        - label: 'Shippings and payments'
-          route: admin_transportandpayment_list
         - label: 'New shipping'
           route: admin_transport_new
           visible: false
@@ -180,98 +180,88 @@
           route: admin_payment_edit
           visible: false
 
-    - label: 'Communication with customer'
+    - label: 'E-mail settings'
       route: admin_mail_setting
-      items:
-        - label: 'E-mail settings'
-          route: admin_mail_setting
 
-        - label: 'E-mail templates'
-          route: admin_mail_template
+    - label: 'E-mail templates'
+      route: admin_mail_template
 
-        - label: 'Order confirmation page'
-          route: admin_customercommunication_ordersubmitted
+    - label: 'Order confirmation page'
+      route: admin_customercommunication_ordersubmitted
 
-    - label: 'Lists and nomenclatures'
+    - label: 'Availability'
       route: admin_availability_list
+
+    - label: 'Flags'
+      route: admin_flag_list
+
+    - label: 'Parameters'
+      route: admin_parameter_list
+
+    - label: 'Status of orders'
+      route: admin_orderstatus_list
       items:
-        - label: 'Availability'
-          route: admin_availability_list
+        - label: 'Editing order status'
+          route: admin_orderstatus_edit
+          visible: false
+        - label: 'New orders status'
+          route: admin_orderstatus_new
+          visible: false
 
-        - label: 'Flags'
-          route: admin_flag_list
+    - label: 'Brands'
+      route: admin_brand_list
+      items:
+        - label: 'Editing brand'
+          route: admin_brand_edit
+          visible: false
+        - label: 'New brand'
+          route: admin_brand_new
+          visible: false
 
-        - label: 'Parameters'
-          route: admin_parameter_list
+    - label: 'Units'
+      route: admin_unit_list
 
-        - label: 'Status of orders'
-          route: admin_orderstatus_list
-          items:
-            - label: 'Editing order status'
-              route: admin_orderstatus_edit
-              visible: false
-            - label: 'New orders status'
-              route: admin_orderstatus_new
-              visible: false
-
-        - label: 'Brands'
-          route: admin_brand_list
-          items:
-            - label: 'Editing brand'
-              route: admin_brand_edit
-              visible: false
-            - label: 'New brand'
-              route: admin_brand_new
-              visible: false
-
-        - label: 'Units'
-          route: admin_unit_list
-
-        - label: 'Countries'
-          route: admin_country_list
+    - label: 'Countries'
+      route: admin_country_list
 
     - label: 'Image size'
       route: admin_image_overview
-      items:
-      - label: 'Image size'
-        route: admin_image_overview
 
     - label: 'SEO'
       route: admin_seo_index
-      items:
-      - label: 'SEO'
-        route: admin_seo_index
 
-    - label: 'Superadmin'
+    - label: 'Modules'
       route: admin_superadmin_modules
       superadmin: true
-      items:
-        - label: 'Modules'
-          route: admin_superadmin_modules
-        - label: 'Error messages'
-          route: admin_superadmin_errors
-        - label: 'Sales including/excluding VAT settings'
-          route: admin_superadmin_pricing
-        - label: 'Css documentation'
-          route: admin_superadmin_cssdocumentation
-        - label: 'URL addresses'
-          route: admin_superadmin_urls
-    - label: 'External scripts'
+
+    - label: 'Error messages'
+      route: admin_superadmin_errors
+      superadmin: true
+
+    - label: 'Sales including/excluding VAT settings'
+      route: admin_superadmin_pricing
+      superadmin: true
+
+    - label: 'Css documentation'
+      route: admin_superadmin_cssdocumentation
+      superadmin: true
+
+    - label: 'URL addresses'
+      route: admin_superadmin_urls
+      superadmin: true
+
+    - label: 'Scripts overview'
       route: admin_script_list
       items:
-      - label: 'Scripts overview'
-        route: admin_script_list
       - label: 'New script'
         route: admin_script_new
         visible: false
       - label: 'Editing script'
         route: admin_script_edit
         visible: false
-      - label: 'Google analytics'
-        route: admin_script_googleanalytics
+
+    - label: 'Google analytics'
+      route: admin_script_googleanalytics
 
     - label: 'Heureka - Verified by Customer'
       route: admin_heureka_setting
-      items:
-      - label: 'Heureka - Verified by Customer'
-        route: admin_heureka_setting

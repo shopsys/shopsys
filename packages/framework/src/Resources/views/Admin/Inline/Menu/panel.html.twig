@@ -28,19 +28,6 @@
                                                 <span>{{ subitem.label }}</span>
                                             </div>
                                         </a>
-                                        {% if subitem.items is not empty %}
-                                            <ul class="side-menu__submenu side-menu__submenu--level2">
-                                                {% for subitem2 in subitem.items %}
-                                                    {% if (subitem2.visible) %}
-                                                        <li class="side-menu__submenu__item{% if subitem2 in activePath %} side-menu__submenu__item--active{% endif %}{% if subitem2.superadmin %} side-menu__submenu__item--superadmin{% endif %}" >
-                                                            <a href="{{ url(subitem2.route, subitem2.routeParameters) }}" class="side-menu__submenu__item__link">
-                                                                <span class="svg svg-arrow-strong"></span>{{ subitem2.label }}
-                                                            </a>
-                                                        </li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
-                                        {% endif %}
                                     </li>
                                 {% endif %}
                             {% endfor %}
