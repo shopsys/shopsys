@@ -21,7 +21,12 @@
                         <img class="web__header__logo__svg" src="{{ asset('assets/admin/images/logo.svg') }}" alt="{{ 'Shopsys Framework'|trans }}">
 
                     </div>
-                    {{ render(controller('ShopsysFrameworkBundle:Admin/Menu:menu')) }}
+                    <div class="web__header__menus-wrap">
+                        <a href="javascript:void(0)" class="js-web-header-menu-toggle-button web__header__menu-toggle-button">
+                            Menu
+                        </a>
+                        {{ render(controller('ShopsysFrameworkBundle:Admin/Menu:menu')) }}
+                    </div>
                 </div>
             </header>
         {% endblock %}
