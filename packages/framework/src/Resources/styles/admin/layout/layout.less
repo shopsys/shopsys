@@ -74,10 +74,19 @@ body {
 		position: relative;
 		padding-top: @height-header;
 		padding-bottom: @height-fixed-bar;
-		padding-left: @width-panel;
 		min-height: 100vh;
 
 		background: @bg-page;
+
+		@media @query-lg {
+			padding-left: @width-panel;
+		}
+
+		.js-side-menu-open & {
+			@media @query-lg {
+				padding-left: @width-panel;
+			}
+		}
 
 		.dump-mode & {
 			padding-top: 0;
@@ -92,12 +101,21 @@ body {
 			position: absolute;
 			top: 0;
 			bottom: 0;
-			left: @width-panel;
+			left: -1px;
 			width: 1px;
 			content: '';
 			opacity: 0.3;
 
 			background: @color-a;
+			transition: @transition;
+
+			@media @query-lg {
+				left: @width-panel;
+			}
+
+			.js-side-menu-open & {
+				left: @width-panel;
+			}
 		}
 
 		&--blank {
@@ -113,11 +131,21 @@ body {
 		position: fixed;
 		top: @height-header;
 		bottom: 0;
-		left: 0;
+		left: -@width-panel;
 		padding-bottom: @height-fixed-bar;
 		width: @width-panel;
+		z-index: 99;
 
 		background-color: @color-f;
+		transition: @transition;
+
+		@media @query-lg {
+			left: 0;
+		}
+
+		.js-side-menu-open & {
+			left: 0;
+		}
 
 		.dump-mode & {
 			position: absolute;
