@@ -1,11 +1,12 @@
 .navig {
-    .reset-ul();
-    display: block;
-    margin-left: @width-panel;
+	.reset-ul();
 
-    font-size: 0;
+	display: block;
+	margin-left: @width-panel;
 
-    &--side {
+	font-size: 0;
+
+	&--side {
 		margin: 0 10px 0 0;
 		text-align: right;
 
@@ -14,121 +15,120 @@
 		}
 	}
 
-    &--main {
-        border-left: 1px solid @bg-primary-darker;
-    }
+	&--main {
+		border-left: 1px solid @bg-primary-darker;
+	}
 
-    &__item {
-        display: inline-block;
-        vertical-align: middle;
-        position: relative;
+	&__item {
+		display: inline-block;
+		position: relative;
+		vertical-align: middle;
 
-        font-size: 14px;
+		font-size: 14px;
 
-        &__link {
-            display: block;
-            height: @height-header;
-            line-height: @height-header;
-            width: 50px;
+		&__link {
+			display: block;
+			width: 50px;
+			height: @height-header;
+			line-height: @height-header;
+			text-align: center;
 
-            color: @color-alterlink;
-            text-decoration: none;
-            text-align: center;
-            cursor: pointer;
+			cursor: pointer;
+			color: @color-alterlink;
+			text-decoration: none;
 
-            .navig__item:hover &,
-            .open & {
-                color: @color-light-blue;
-            }
+			.navig__item:hover &, .open & {
+				color: @color-light-blue;
+			}
 
-            .navig--side & {
-                padding: 0 10px;
-                width: auto;
-            }
+			.navig--side & {
+				padding: 0 10px;
+				width: auto;
+			}
 
-            .navig--main & {
-                border-right: 1px solid @bg-primary-darker;
-                font-size: 11px;
+			.navig--main & {
+				border-right: 1px solid @bg-primary-darker;
+				font-size: 11px;
+				transition: @transition color;
 
-                transition: @transition color;
+				div {
+					display: inline-block;
+					vertical-align: middle;
+					line-height: 1;
 
-                div {
-                    display: inline-block;
-                    vertical-align: middle;
-                    line-height: 1;
+					i {
+						display: block;
+					}
+				}
+			}
 
-                    i {
-                        display: block;
-                    }
-                }
-            }
+			div {
+				span {
+					display: none;
+				}
+			}
 
-            div {
-                span {
-                    display: none;
-                }
-            }
+			i {
+				position: relative;
 
-            i {
-                position: relative;
-                font-size: 16px;
+				font-size: 16px;
 
-                .dump-mode & {
-                    top: 20px;
-                }
-            }
+				.dump-mode & {
+					top: 20px;
+				}
+			}
 
-            @media @query-xl {
-                padding: 0 0;
-                width: 90px;
+			@media @query-xl {
+				padding: 0 0;
+				width: 90px;
 
-                div {
-                    span {
-                        display: block;
-                        margin-top: 8px;
-                    }
-                }
+				div {
+					span {
+						display: block;
+						margin-top: 8px;
+					}
+				}
 
-                i {
-                    font-size: 22px;
-                }
-            }
+				i {
+					font-size: 22px;
+				}
+			}
 
-            &--active {
-                color: @color-alterlink-hover;
-                background: darken(@bg-primary, 5%);
-            }
-        }
+			&--active {
+				background: darken(@bg-primary, 5%);
+				color: @color-alterlink-hover;
+			}
+		}
 
-        &__sub {
-            .reset-ul();
-            position: absolute;
-            top: @height-header;
-            right: 0;
-            width: 200px;
+		&__sub {
+			.reset-ul();
 
-            background: @bg-primary;
-            text-align: left;
-            border: 1px solid darken(@color-border-blue, 8%);
-            border-top: 0;
+			position: absolute;
+			top: @height-header;
+			right: 0;
+			width: 200px;
+			text-align: left;
 
-            &__item {
+			background: @bg-primary;
+			border: 1px solid darken(@color-border-blue, 8%);
+			border-top: 0;
 
-                &__link {
-                    border-top: 1px solid darken(@color-border-blue, 8%);
-                    display: block;
-                    padding: 8px 15px;
-                    word-wrap: break-word;
+			&__item {
+				&__link {
+					display: block;
+					padding: 8px 15px;
 
-                    color: @color-f;
-                    text-decoration: none;
+					border-top: 1px solid darken(@color-border-blue, 8%);
+					color: @color-f;
+					text-decoration: none;
+					word-wrap: break-word;
 
-                    &:hover {
-                        color: @color-light-blue;
-                        background: darken(@bg-primary, 5%);
-                    }
-                }
-            }
-        }
-    }
+					&:hover {
+						background: darken(@bg-primary, 5%);
+						color: @color-light-blue;
+					}
+				}
+			}
+		}
+	}
 }
