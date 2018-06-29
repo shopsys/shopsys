@@ -18,11 +18,16 @@ echo "Rewriting history from a subdirectory '$SUBDIRECTORY'"
 # Previous index file is replaced by a new one (otherwise each file would be in the index twice)
 # Only non-empty are filtered by the commit-filter
 # The tags are rewritten as well as commits (the "cat" command will use original name without any change)
-SUBDIRECTORY=$SUBDIRECTORY SUBDIRECTORY_SED=${SUBDIRECTORY//-/\\-} git filter-branch \
+if [ $(uname) == "Darwin" ]; then
+    XARGS=""
+else
+    XARGS="-r"
+fi
+SUBDIRECTORY=$SUBDIRECTORY SUBDIRECTORY_SED=${SUBDIRECTORY//-/\\-} TAB=$'\t' git filter-branch \
     --index-filter '
-    git ls-files | grep -vE "^\"*$SUBDIRECTORY/" | xargs echo -e | xargs -r git rm -q --cached
+    git ls-files | grep -vE "^\"*$SUBDIRECTORY/" | xargs printf "%s " | xargs ${XARGS} git rm -q --cached
     if [ "$(git ls-files)" != "" ]; then
-        git ls-files -s | sed -r "s-(\t\"*)$SUBDIRECTORY_SED/-\1-" | GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info && mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
+        git ls-files -s | sed -E "s-(${TAB}\"*)$SUBDIRECTORY_SED/-\1-" | GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info && mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
     fi' \
     --commit-filter 'git_commit_non_empty_tree "$@"' \
     --tag-name-filter 'cat' \
