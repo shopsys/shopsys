@@ -23,7 +23,9 @@
                     </div>
                     <div class="web__header__menus-wrap">
                         <a href="javascript:void(0)" class="js-web-header-menu-toggle-button web__header__menu-toggle-button">
-                            Menu
+                            <i class="svg svg-hamburger-menu"></i>
+                            <span class="web__header__menu-toggle-button__title web__header__menu-toggle-button__title--open">{{ 'Menu'|trans }}</span>
+                            <span class="web__header__menu-toggle-button__title web__header__menu-toggle-button__title--close">{{ 'Zavřít'|trans }}</span>
                         </a>
                         {{ render(controller('ShopsysFrameworkBundle:Admin/Menu:menu')) }}
                     </div>

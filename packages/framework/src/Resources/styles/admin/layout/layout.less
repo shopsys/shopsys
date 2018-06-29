@@ -27,12 +27,48 @@ body {
 		}
 
 		&__menu-toggle-button {
+			display: flex;
+			margin-right: 10px;
+			padding: 5px;
+
+			border: 1px solid fade(@color-f, 50%);
 			color: @color-f;
+			text-decoration: none;
+
+			@media @query-lg {
+				display: none;
+			}
+
+			&:hover {
+				color: @color-f;
+			}
+
+			&__title {
+				padding-left: 7px;
+
+				text-transform: uppercase;
+
+				&--open {
+					display: inline-block;
+
+					.js-side-menu-open & {
+						display: none;
+					}
+				}
+
+				&--close {
+					display: none;
+
+					.js-side-menu-open & {
+						display: inline-block;
+					}
+				}
+			}
 		}
 
 		&__menus-wrap {
 			display: flex;
-			justify-content: space-between;
+			justify-content: flex-end;
 			align-items: center;
 
 			flex-grow: 1;
@@ -56,16 +92,21 @@ body {
 
 		&__logo {
 			padding-left: 10px;
-			min-width: 160px;
+			min-width: 140px;
 
 			@media @query-lg {
 				padding-left: 20px;
 				width: @width-panel;
+				min-width: 160px;
 			}
 
 			&__svg {
 				width: auto;
-				height: 42px;
+				height: 35px;
+
+				@media @query-lg {
+					height: 42px;
+				}
 			}
 		}
 	}
