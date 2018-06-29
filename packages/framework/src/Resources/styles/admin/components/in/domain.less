@@ -1,6 +1,11 @@
 .in-domain {
-    margin-bottom: 25px;
-    padding-bottom: 25px;
+    margin-bottom: @item-gap/2;
+    padding-bottom: @item-gap/2;
+
+    @media @query-lg {
+        margin-bottom: @item-gap;
+        padding-bottom: @item-gap;
+    }
 
     border-bottom: 1px solid @color-border-dark;
 

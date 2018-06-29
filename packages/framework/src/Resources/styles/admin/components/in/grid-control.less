@@ -1,5 +1,9 @@
 .in-grid-control {
-    padding-bottom: 25px;
+    padding-bottom: @item-gap/2;
+
+    @media @query-lg {
+        padding-bottom: @item-gap;
+    }
 
     font-size: 0;
 

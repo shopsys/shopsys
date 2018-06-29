@@ -2,8 +2,13 @@
 @wrap-border-inner-gap-small: 15px;
 
 .wrap-border {
-    padding-bottom: @wrap-border-gap;
-    margin-bottom: @wrap-border-gap;
+    margin-bottom: @wrap-border-gap/2;
+    padding-bottom: @wrap-border-gap/2;
+
+    @media @query-lg {
+        margin-bottom: @wrap-border-gap;
+        padding-bottom: @wrap-border-gap;
+    }
 
     border-bottom: 1px solid @color-border-dark;
 
