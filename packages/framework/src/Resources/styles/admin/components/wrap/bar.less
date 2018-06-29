@@ -2,11 +2,16 @@
 @wrap-bar-btn-gap: 10px;
 
 .wrap-bar {
-    padding: 15px 0 @wrap-bar-margin-bottom;
-    margin-bottom: @wrap-bar-margin-bottom;
+    padding: 0px 0 @wrap-bar-margin-bottom/2;
+    margin-bottom: @wrap-bar-margin-bottom/2;
     .clearfix();
 
     border-bottom: 1px solid @color-border-dark;
+
+    @media @query-lg {
+        padding: 15px 0 @wrap-bar-margin-bottom;
+        margin-bottom: @wrap-bar-margin-bottom;
+    }
 
     &__heading {
         float: left;
