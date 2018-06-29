@@ -25,10 +25,12 @@
             {% endif %}
             </div>
             <div class="table-touch">
-                <table class="table-grid">
-                    {{ gridView.renderBlock('grid_titles') }}
-                    {{ gridView.renderBlock('grid_rows') }}
-                </table>
+                <div class="table-touch__in">
+                    <table class="table-grid">
+                        {{ gridView.renderBlock('grid_titles') }}
+                        {{ gridView.renderBlock('grid_rows') }}
+                    </table>
+                </div>
             </div>
             <div class="">
                 {% if grid.enabledPaging %}

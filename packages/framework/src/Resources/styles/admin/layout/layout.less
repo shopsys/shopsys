@@ -228,8 +228,16 @@ body {
 	&__content {
 		position: relative;
 		margin: 0 auto;
-		padding: 0 @item-gap 0 @item-gap;
-		max-width: @width-content;
+		padding: 0 10px 0 10px;
+		max-width: 100%;
+
+        @media @query-lg {
+            padding: 0 @item-gap 0 @item-gap;
+        }
+
+        @media @query-xl {
+            max-width: @width-content;
+        }
 
 		&--padding-top {
 			padding-top: 20px;
