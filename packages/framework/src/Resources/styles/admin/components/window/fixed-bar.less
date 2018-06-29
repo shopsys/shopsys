@@ -2,11 +2,22 @@
 	position: fixed;
 	right: 0;
 	bottom: 0;
-	left: @width-panel;
+	left: 0;
 	z-index: 1010;
 
 	background-color: @color-f;
 	border: 1px solid @color-border-dark;
+	transition: @transition;
+
+	@media @query-lg {
+		left: @width-panel;
+	}
+
+	.js-side-menu-open & {
+        @media @query-lg {
+    		left: @width-panel;
+    	}
+	}
 
 	&--developer-mode {
 		bottom: 36px;
@@ -18,6 +29,10 @@
 		left: 0;
 
 		border: 0;
+
+        .js-side-menu-open & {
+            left: 0;
+        }
 	}
 
 	&__in {
@@ -26,7 +41,6 @@
 		width: 100%;
 		height: @height-fixed-bar;
 		max-width: @width-content;
-		min-width: 768px;
 
 		background: @color-f;
 
@@ -46,11 +60,16 @@
 		display: flex;
 		flex: 1;
 		align-items: center;
-		padding-right: 30px;
-		padding-left: 30px;
+		padding-right: 10px;
+		padding-left: 10px;
 		height: @height-fixed-bar;
 
 		border-left: 1px solid @color-border-dark;
+
+        @media @query-lg {
+            padding-right: @item-gap;
+    		padding-left: @item-gap;
+        }
 
 		&:first-child {
 			border-left: none;
