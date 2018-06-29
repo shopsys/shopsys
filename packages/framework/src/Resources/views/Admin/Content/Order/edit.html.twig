@@ -160,7 +160,7 @@
         </div>
 
         <h2>{{ 'Order items'|trans }}</h2>
-        <fieldset>
+
             <div class="table-touch-always">
                 {{ form_errors(form.itemsWithoutTransportAndPayment) }}
                 <div class="table-touch-always__in">
@@ -219,7 +219,7 @@
                     </table>
                 </div>
             </div>
-        </fieldset>
+
 
         {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
             {% block fixed_bar_content %}

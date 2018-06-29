@@ -14,6 +14,10 @@
     border-right-color: @color-border-darker;
     background: @color-f;
 
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
     &--no-top-border {
         border-top: none;
     }
@@ -25,6 +29,10 @@
 
     &:last-child {
         border-bottom-color: @color-border-darker;
+    }
+
+    a {
+        word-break: break-all;
     }
 
     &__js {
@@ -46,12 +54,13 @@
     }
 
     &__label {
-        width: @form-line-label-size;
         padding: 6px 10px 6px 0;
         height: 30px;
         float: left;
 
         font-weight: bold;
+
+        width: @form-line-label-size;
 
         &--input {
             padding-top: 0;
@@ -85,8 +94,7 @@
     }
 
     &__side {
-        margin-left: 230px;
-        .clearfix();
+        width: @form-line-label-size;
 
         & + .form-line__side {
             margin-top: 10px;
@@ -141,8 +149,11 @@
         }
 
         &--input-size {
-            width: @form-line-input-size - @form-line-gap-size;
             height: 32px;
+
+            @media @query-xl {
+                width: @form-line-input-size - @form-line-gap-size;
+            }
         }
 
         &__price {
