@@ -1,91 +1,92 @@
 .window-fixed-bar {
-    position: fixed;
-    bottom: 0;
-    left: @width-panel;
-    right: 0;
-    z-index: 1010;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: @width-panel;
+	z-index: 1010;
 
-    background-color: @color-f;
-    border: 1px solid @color-border-dark;
+	background-color: @color-f;
+	border: 1px solid @color-border-dark;
 
-    &--developer-mode {
-        bottom: 36px;
-    }
+	&--developer-mode {
+		bottom: 36px;
+	}
 
-    &--top {
-        top: 0;
-        left: 0;
-        bottom: auto;
+	&--top {
+		top: 0;
+		bottom: auto;
+		left: 0;
 
-        border: 0;
-    }
+		border: 0;
+	}
 
-    &__in {
-        display: flex;
-        width: 100%;
-        height: @height-fixed-bar;
-        margin: 0 auto;
-        min-width: 768px;
-        max-width: @width-content;
+	&__in {
+		display: flex;
+		margin: 0 auto;
+		width: 100%;
+		height: @height-fixed-bar;
+		max-width: @width-content;
+		min-width: 768px;
 
-        background: @color-f;
+		background: @color-f;
 
-        .window-fixed-bar--type-alert & {
-            background: @color-alert;
-            color: @color-f;
-            text-align: left;
-        }
+		.window-fixed-bar--type-alert & {
+			text-align: left;
 
-        .window-fixed-bar--top & {
-            max-width: 100%;
-        }
-    }
+			background: @color-alert;
+			color: @color-f;
+		}
 
-    &__item {
-        display: flex;
-        height: @height-fixed-bar;
-        padding-left: 30px;
-        padding-right: 30px;
-        flex: 1;
-        align-items: center;
+		.window-fixed-bar--top & {
+			max-width: 100%;
+		}
+	}
 
-        border-left: 1px solid @color-border-dark;
+	&__item {
+		display: flex;
+		flex: 1;
+		align-items: center;
+		padding-right: 30px;
+		padding-left: 30px;
+		height: @height-fixed-bar;
 
-        &:first-child {
-            border-left: none;
-        }
+		border-left: 1px solid @color-border-dark;
 
-        &--1 {
-            flex: 1;
-        }
+		&:first-child {
+			border-left: none;
+		}
 
-        &--2 {
-            flex: 2;
-        }
+		&--1 {
+			flex: 1;
+		}
 
-        &--3 {
-            flex: 3;
-        }
+		&--2 {
+			flex: 2;
+		}
 
-        &--4 {
-            flex: 4;
-        }
+		&--3 {
+			flex: 3;
+		}
 
-        &--5 {
-            flex: 5;
-        }
+		&--4 {
+			flex: 4;
+		}
 
-        &__cell {
-            flex: 0 100%;
-        }
-    }
+		&--5 {
+			flex: 5;
+		}
+
+		&__cell {
+			flex: 0 100%;
+		}
+	}
 }
 
 @media @query-lg {
-    .window-fixed-bar {
-        &__in {
-            width: @width-web;
-            text-align: right;
-        }
-    }
+	.window-fixed-bar {
+		&__in {
+			width: @width-web;
+			text-align: right;
+		}
+	}
 }
