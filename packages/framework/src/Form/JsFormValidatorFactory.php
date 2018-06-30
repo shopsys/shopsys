@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Form;
 
 use Fp\JsFormValidatorBundle\Factory\JsFormValidatorFactory as BaseJsFormValidatorFactory;
+use Fp\JsFormValidatorBundle\Model\JsConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
@@ -63,5 +64,25 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
         }
 
         return $viewTransformers;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function createJsConfigModel()
+    {
+        $routing = [];
+        if (empty($this->config['routing']) === false) {
+            foreach ($this->config['routing'] as $param => $value) {
+                if ($value === 'fp_js_form_validator.check_unique_entity') {
+                    continue;
+                }
+                $routing[$param] = $this->generateUrl($value);
+            }
+        }
+        $model = new JsConfig();
+        $model->routing = $routing;
+
+        return $model;
     }
 }
