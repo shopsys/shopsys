@@ -43,6 +43,12 @@
     &--domain {
         width: @input-width-with-domain;
         padding-left: @input-space-for-domain;
+        max-width: 100%;
+
+        .form-line__side--money & {
+            width: 200px;
+            margin-right: 5px;
+        }
     }
 
     &--seo {
@@ -85,6 +91,11 @@
 
         + .input__wrap {
             margin-top: 5px;
+        }
+
+        &--with-currency {
+            display: flex;
+            align-items: center;
         }
     }
 

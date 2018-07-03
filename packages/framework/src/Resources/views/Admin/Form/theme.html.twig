@@ -225,22 +225,24 @@
 
 {% block money_row %}
     {% if multidomain is defined %}
-        <div class="form-line__side">
-            <div class="form-line__item">
-                <div class="input__wrap">
-                    {% set inputAttr = attr %}
-                    {% if isMultidomain() %}
-                        {% set inputAttr = inputAttr|merge({'class': (inputAttr.class|default('') ~ ' input--domain')|trim}) %}
-                    {% endif %}
-                    {{ form_widget(form, { attr: inputAttr }) }}
-                    {% if isMultidomain() %}
-                        <span class="input__domain">
-                            {{ domainIcon(domainId) }}
-                        </span>
-                    {% endif %}
+        <div class="form-line__line form-line__line--wide">
+            <div class="form-line__side form-line__side--money">
+                <div class="form-line__item">
+                    <div class="input__wrap input__wrap--with-currency">
+                        {% set inputAttr = attr %}
+                        {% if isMultidomain() %}
+                            {% set inputAttr = inputAttr|merge({'class': (inputAttr.class|default('') ~ ' input--domain')|trim}) %}
+                        {% endif %}
+                        {{ form_widget(form, { attr: inputAttr }) }}
+                        {% if isMultidomain() %}
+                            <span class="input__domain">
+                                {{ domainIcon(domainId) }}
+                            </span>
+                        {% endif %}
+                    </div>
                 </div>
+                {{ form_errors(form) }}
             </div>
-            {{ form_errors(form) }}
         </div>
     {% else %}
         <div class="form-line">

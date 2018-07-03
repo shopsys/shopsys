@@ -8,20 +8,22 @@
             {{ form_label(form, label) }}
         </strong>
 
-        <div class="form-line__side js-characters-counter">
-            <div class="form-line__item form-line__item--left">
-                <div class="input__wrap">
-                    {% set attr = form.vars.attr|merge({class: form.vars.attr.class|default('') ~ ' ' ~ cssClass}) %}
-                    {{ form_widget(form, {attr: attr}) }}
+        <div class="form-line__line form-line__line--wide">
+            <div class="form-line__side js-characters-counter">
+                <div class="form-line__item form-line__item--left">
+                    <div class="input__wrap">
+                        {% set attr = form.vars.attr|merge({class: form.vars.attr.class|default('') ~ ' ' ~ cssClass}) %}
+                        {{ form_widget(form, {attr: attr}) }}
+                    </div>
                 </div>
-            </div>
 
-            {% if recommendedLength is not null %}
-                <div class="form-line__count">
-                    <div class="form-line__count__desc js-characters-counter-info" data-recommended-length="{{ recommendedLength }}"></div>
-                </div>
-            {% endif %}
-            {{ form_errors(form) }}
+                {% if recommendedLength is not null %}
+                    <div class="form-line__count">
+                        <div class="form-line__count__desc js-characters-counter-info" data-recommended-length="{{ recommendedLength }}"></div>
+                    </div>
+                {% endif %}
+                {{ form_errors(form) }}
+            </div>
         </div>
     </div>
 {% endmacro %}
@@ -39,30 +41,32 @@
             {{ label }}:
         </strong>
         {% for domainId, domainForm in multidomainForm %}
-            <div class="form-line__side {% if not loop.first %}margin-top-5{% endif %} js-characters-counter">
-                <div class="form-line__item form-line__item--left">
-                    <div class="input__wrap">
-                        {% set attr = domainForm.vars.attr|merge({class: cssClass ~ ' ' ~ domainForm.vars.attr.class|default('') }) %}
+            <div class="form-line__line form-line__line--wide">
+                <div class="form-line__side {% if not loop.first %}margin-top-5{% endif %} js-characters-counter">
+                    <div class="form-line__item form-line__item--left">
+                        <div class="input__wrap">
+                            {% set attr = domainForm.vars.attr|merge({class: cssClass ~ ' ' ~ domainForm.vars.attr.class|default('') }) %}
 
-                        {{ form_widget(domainForm, {
-                            multidomain: true,
-                            domainId: domainId,
-                            attr: attr
-                        }) }}
-                        {% if isMultidomain() %}
-                            <span class="input__domain">
-                                {{ domainIcon(domainId) }}
-                            </span>
-                        {% endif %}
+                            {{ form_widget(domainForm, {
+                                multidomain: true,
+                                domainId: domainId,
+                                attr: attr
+                            }) }}
+                            {% if isMultidomain() %}
+                                <span class="input__domain">
+                                    {{ domainIcon(domainId) }}
+                                </span>
+                            {% endif %}
+                        </div>
                     </div>
+
+                    {% if recommendedLength is not null %}
+                        <div class="form-line__count">
+                            <span class="form-line__count__desc js-characters-counter-info" data-recommended-length="{{ recommendedLength }}"></span>
+                        </div>
+                    {% endif %}
+                    {{ form_errors(domainForm) }}
                 </div>
-
-                {% if recommendedLength is not null %}
-                    <div class="form-line__count">
-                        <span class="form-line__count__desc js-characters-counter-info" data-recommended-length="{{ recommendedLength }}"></span>
-                    </div>
-                {% endif %}
-                {{ form_errors(domainForm) }}
             </div>
         {% endfor %}
     </div>

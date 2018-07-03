@@ -1,13 +1,18 @@
 .form-price-heading {
     margin-top: 3px;
-    padding: 10px 15px 10px 245px;
-    .clearfix();
+    padding: 10px 15px 10px 15px;
+    text-align: right;
 
+    background: @bg-table;
     border: 1px solid @color-border-dark;
     border-bottom: 0;
-    background: @bg-table;
     font-size: 0;
-    text-align: right;
+
+    .clearfix();
+
+    @media @query-xl {
+        padding: 10px 15px 10px 245px;
+    }
 
     &__cell {
         display: inline-block;
@@ -17,8 +22,8 @@
         font-weight: bold;
 
         &--price {
-            width: 140px;
             float: none;
+            width: 140px;
             text-align: right;
         }
     }

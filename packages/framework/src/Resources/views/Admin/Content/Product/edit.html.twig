@@ -126,7 +126,7 @@
         {% endif %}
 
         {% for domainId, mainCategory in productMainCategoriesIndexedByDomainId %}
-            <div class="form-line__line">
+            <div class="form-line__line form-line__line--wide">
                 {% if mainCategory is null %}
                     {% set mainCategoryName = '-' %}
                 {% else %}
@@ -206,7 +206,7 @@
         <div class="form-line__label">
             {{ form_label(form.productData.price, 'Base price'|trans, { isSimple: true, compulsoryClass: 'form-line__compulsory' } ) }}
         </div>
-        <div class="form-line__side">
+        <div class="form-line__side form-line__side--full-width-columns">
             <div class="form-line__item">
                 {{ form_widget(form.productData.price, { symbolAfterInput: currencySymbolDefault() }) }}
             </div>
@@ -244,7 +244,7 @@
                 <div class="form-line__label">
                     {{ form_label(form.manualInputPricesByPricingGroupId[productSellingPrice.pricingGroup.id], productSellingPrice.pricingGroup.name, { isSimple: true, compulsoryClass: 'form-line__compulsory js-input-price-type-manual' }) }}
                 </div>
-                <div class="form-line__side">
+                <div class="form-line__side form-line__side--full-width-columns">
                     <div class="form-line__item js-input-price-type-manual">
                         {{ form_widget(form.manualInputPricesByPricingGroupId[productSellingPrice.pricingGroup.id], { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
                     </div>

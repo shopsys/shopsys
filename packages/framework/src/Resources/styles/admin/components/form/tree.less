@@ -1,8 +1,14 @@
+@form-tree-left-indent: @form-line-label-size;
+
 .form-tree {
     width: 440px;
     max-width: 100%;
 
     border: 1px solid @color-border;
+
+    @media @query-lg {
+        margin-left: @form-tree-left-indent - 15px;
+    }
 
     &__title {
         display: block;
