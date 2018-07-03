@@ -1,7 +1,9 @@
 .table-grid {
+    margin-bottom: 25px;
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 25px;
+
+    border: 1px solid @color-border;
 
     thead {
         background: @bg-primary;
@@ -11,7 +13,6 @@
 
     tbody {
         background: @color-f;
-        border: 1px solid @color-border;
     }
 
     &__row {
@@ -31,7 +32,6 @@
     &__cell {
         padding: 6px;
         height: 40px;
-
         text-align: left;
 
         &:first-child {
@@ -47,21 +47,19 @@
         }
 
         &--move {
-            width: 40px;
-            padding-left: 17px;
             padding-right: 17px;
+            padding-left: 17px;
+            width: 40px;
         }
 
         &--actions {
-            width: 90px;
-            padding-left: 17px;
             padding-right: 17px;
-
+            padding-left: 17px;
+            width: 90px;
             text-align: right;
 
             a, span {
                 width: 18px;
-
                 text-align: center;
             }
         }

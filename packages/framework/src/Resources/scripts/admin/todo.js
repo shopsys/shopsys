@@ -6,4 +6,10 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
+    $('.js-products-picker-button-add').click(function($container) {
+        setTimeout(function(){
+            $('.mfp-iframe-scaler').addClass('mfp-iframe-scaler--responsive');
+        },2000);
+    });
+
 });
