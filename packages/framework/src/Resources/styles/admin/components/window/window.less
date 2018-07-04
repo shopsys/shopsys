@@ -1,34 +1,54 @@
 .window {
     display: none;
-    width: @window-width;
-    min-height: @window-height;
     position: fixed;
     top: 50%;
-    left: 50%;
-    margin: -@window-height/2 0 0 -@window-width/2;
-    padding: 25px 50px 25px 50px;
+    right: 10px;
+    left: 10px;
+    margin: -@window-height/2 0 0 0;
+    padding: 30px 10px;
     z-index: 10002;
-
+    min-height: @window-height;
     text-align: center;
-    border: 1px solid @color-border;
-    background: @bg-window;
 
+    background: @bg-window;
+    border: 1px solid @color-border;
     box-shadow: 0 0 20px rgba(0,0,0, 0.3);
+
+    @media @query-lg {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin: -@window-height/2 0 0 -@window-width/2;
+        padding: 25px 50px 25px 50px;
+        width: @window-width;
+        min-height: @window-height;
+    }
 
     &--wide {
         position: absolute;
         top: 200px;
-        width: @window-wide-width;
+        right: 10px;
+        left: 10px;
+        margin-left: 0;
+        width: auto;
         height: @window-wide-height;
-        margin: 0 0 0 -@window-wide-width/2;
+
+        @media @query-xl {
+            top: 200px;
+            right: auto;
+            left: 50%;
+            margin: 0 0 0 -@window-wide-width/2;
+            width: @window-wide-width;
+            height: @window-wide-height;
+        }
     }
 
     &--wide-float {
         position: fixed;
         top: 50%;
+        margin: -@window-wide-float-height/2 0 0 -@window-wide-float-width/2;
         width: @window-wide-float-width;
         min-height: @window-wide-float-height;
-        margin: -@window-wide-float-height/2 0 0 -@window-wide-float-width/2;
     }
 
     &--active {
@@ -36,8 +56,8 @@
     }
 
     &__title {
-        font-weight: bold;
         font-size: 18px;
+        font-weight: bold;
     }
 
     &__close {
@@ -47,12 +67,12 @@
         width: 48px;
         height: 48px;
         line-height: 48px;
+        text-align: center;
 
         background: @bg-primary-dark;
         color: @color-f;
-        text-decoration: none;
         font-weight: bold;
-        text-align: center;
+        text-decoration: none;
 
         &:hover {
             background: @bg-primary-dark;
@@ -63,9 +83,9 @@
 
     &__title {
         margin: -25px -30px 30px;
+        padding: 10px 68px 10px 20px;
         height: 48px;
         line-height: 28px;
-        padding: 10px 68px 10px 20px;
 
         background: @bg-primary;
         color: @color-f;
@@ -75,8 +95,8 @@
         margin-top: 20px;
 
         &__btn {
-            min-width: 100px;
             margin: 0 5px;
+            min-width: 100px;
         }
     }
 }
