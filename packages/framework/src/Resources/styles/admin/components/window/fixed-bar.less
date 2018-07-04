@@ -48,6 +48,11 @@
         max-width: 100%;
 
         background: @color-f;
+        text-align: right;
+
+        @media @query-lg {
+            width: @width-content;
+        }
 
         .window-fixed-bar--type-alert & {
             text-align: left;
@@ -58,7 +63,14 @@
 
         .window-fixed-bar--top & {
             max-width: 100%;
+            width: 100%;
+            font-size: 11px;
+
+            @media @query-lg {
+                font-size: inherit;
+            }
         }
+
     }
 
     &__item {
@@ -102,15 +114,6 @@
 
         &__cell {
             flex: 0 100%;
-        }
-    }
-}
-
-@media @query-lg {
-    .window-fixed-bar {
-        &__in {
-            width: @width-web;
-            text-align: right;
         }
     }
 }
