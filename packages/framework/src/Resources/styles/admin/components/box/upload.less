@@ -1,6 +1,7 @@
 .box-upload {
-    background: @color-f;
     clear: both;
+
+    background: @color-f;
 
     &--bordered {
         padding: 10px 15px;
@@ -16,31 +17,45 @@
     &__place {
         position: relative;
 
-        border: 3px solid @color-f;
         background: @bg-upload;
+        border: 3px solid @color-f;
         font-size: 0;
 
         &:after {
             position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 70%;
-            width: 0;
-            height: 100%;
+            right: 0;
+            bottom: 80px;
+            left: 0;
+            width: 100%;
+            height: 1px;
             content: '';
 
-            border-left: 1px solid @color-f;
+            background-color: @color-f;
+
+            @media @query-lg {
+                top: 0;
+                right: auto;
+                bottom: 0;
+                left: 70%;
+                width: 1px;
+                height: 100%;
+            }
         }
 
         &__drop {
             display: inline-block;
             vertical-align: middle;
-            padding: 30px;
-            width: 70%;
-
+            padding: 15px 15px 30px 15px;
+            width: 100%;
             text-align: center;
-            font-size: 16px;
+
             color: @color-action;
+            font-size: 16px;
+
+            @media @query-lg {
+                padding: 30px;
+                width: 70%;
+            }
 
             &__icon {
                 margin-bottom: 10px;
@@ -56,29 +71,39 @@
         &__button {
             display: inline-block;
             vertical-align: middle;
-            padding: 30px;
-            width: 30%;
-
+            padding: 30px 15px 15px 15px;
+            width: 100%;
             text-align: center;
+
+            @media @query-lg {
+                padding: 30px;
+                width: 30%;
+            }
         }
 
         &__between {
             position: absolute;
-            top: 50%;
-            left: 70%;
+            bottom: 80px;
+            left: 50%;
+            margin: 0 0 -11px -22px;
+            width: 44px;
             height: 22px;
             line-height: 22px;
-            width: 44px;
-            margin: -11px 0 0 -22px;
             z-index: 2;
-
             text-align: center;
-            border: 1px solid @color-f;
+
             background: @bg-upload;
+            border: 1px solid @color-f;
             color: @color-action;
-            font-weight: bold;
             font-size: 12px;
+            font-weight: bold;
             text-transform: uppercase;
+
+            @media @query-lg {
+                top: 50%;
+                left: 70%;
+                margin: -11px 0 0 -22px;
+            }
         }
     }
 }
