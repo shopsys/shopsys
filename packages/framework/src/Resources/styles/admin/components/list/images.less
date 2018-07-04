@@ -16,10 +16,18 @@
 
     &__item {
         display: inline-block !important;
-        width: 100% / 4;
+        width: 100%;
         padding-left: 14px;
         vertical-align: top;
         margin-bottom: 10px;
+
+        @media @query-lg {
+            width: 100% / 3;
+        }
+
+        @media @query-xl {
+            width: 100% / 4;
+        }
 
         &__in {
             position: relative;
