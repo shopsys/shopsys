@@ -5,21 +5,38 @@
 
     &__input {
         vertical-align: middle;
-        width: 86%;
+        margin-bottom: 5px;
+        width: 100%;
         height: 30px;
         line-height: 30px;
+
+        @media @query-lg {
+            margin-bottom: 0;
+            width: 81%;
+        }
+
+        @media @query-xl {
+            width: 86%;
+        }
     }
 
     &__btn {
         vertical-align: middle;
-        width: 10%;
-        margin-left: 1%;
+        width: 95%;
+
+        @media @query-lg {
+            margin-left: 1%;
+            width: 15%;
+        }
+
+        @media @query-xl {
+            width: 10%;
+        }
     }
 
     &__icon {
-        width: 3%;
         vertical-align: middle;
-
+        width: 3%;
         text-align: center;
     }
 }

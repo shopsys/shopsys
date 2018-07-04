@@ -4,18 +4,29 @@
     padding: 0 10px;
 
     &__item {
-        margin: 5px -5px;
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
+        margin: 5px -5px;
+
+        @media @query-lg {
+            flex-wrap: nowrap;
+        }
 
         &__content {
-            flex: 1;
+            margin-bottom: 5px;
             padding: 0 5px;
+            width: 100%;
+
+            @media @query-lg {
+                flex: 1;
+                margin-bottom: 0;
+                width: auto;
+            }
 
             &--small {
-                padding: 0 5px 0 0;
                 flex: 0 25px;
-
+                padding: 0 5px 0 0;
                 text-align: right;
 
                 i {
@@ -31,18 +42,17 @@
     }
 
     &__line {
-        padding: 0 10px 5px;
         margin: 0 -10px;
-
+        padding: 0 10px 5px;
         text-align: right;
 
         &--dark {
             padding: 5px 20px;
+            text-align: left;
 
+            background: @bg-dark;
             border-top: 1px solid @color-border;
             border-bottom: 1px solid @color-border;
-            background: @bg-dark;
-            text-align: left;
         }
     }
 }
