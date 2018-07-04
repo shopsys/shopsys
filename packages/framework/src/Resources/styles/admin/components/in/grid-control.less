@@ -1,52 +1,62 @@
 .in-grid-control {
     padding-bottom: @item-gap/2;
 
+    font-size: 0;
+
     @media @query-lg {
         padding-bottom: @item-gap;
     }
 
-    font-size: 0;
-
     &__item {
         display: inline-block;
         vertical-align: top;
-        width: 30%;
+        width: 100%;
 
-        font-size: 12px;
         color: @color-action;
+        font-size: 12px;
+
+        @media @query-lg {
+            width: 30%;
+        }
 
         &--paging {
-            width: 40%;
+            padding-top: 10px;
+            padding-bottom: 10px;
 
-            text-align: center;
+            @media @query-lg {
+                padding-top: 0;
+                padding-bottom: 0;
+                width: 40%;
+                text-align: center;
+            }
         }
 
         &--settings {
-            text-align: right;
+            @media @query-lg {
+                text-align: right;
+            }
         }
 
         &--show {
-            line-height: 22px;
             padding: 5px 0;
         }
 
         &__go {
             display: block;
-
             text-align: right;
 
             &__text {
-                line-height: 32px;
                 display: inline-block;
                 margin-right: 5px;
+                line-height: 32px;
 
                 font-weight: bold;
             }
 
             &__block {
                 display: inline-block;
-                width: 70px;
                 margin-bottom: 3px;
+                width: 70px;
             }
         }
     }
