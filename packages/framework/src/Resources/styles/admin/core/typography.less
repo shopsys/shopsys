@@ -22,28 +22,40 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1, .h1 {
-    margin: 0 0 20px 0;
+    margin: 0 0 .8em 0;
 
-    font-size: 28px;
+    font-size: 20px;
     font-weight: normal;
+
+    @media @query-lg {
+        font-size: 28px;
+    }
 }
 
 h2, .h2 {
-    margin: 0 0 10px 0;
+    margin: 0 0 .8em 0;
 
-    font-size: 22px;
+    font-size: 17px;
     font-weight: normal;
+
+    @media @query-lg {
+        font-size: 22px;
+    }
 }
 
 h3, .h3 {
-    margin: 0 0 10px 0;
+    margin: 0 0 .8em 0;
 
-    font-size: 18px;
+    font-size: 15px;
     font-weight: normal;
+
+    @media @query-lg {
+        font-size: 18px;
+    }
 }
 
 h4, .h4 {
-    margin: 0 0 10px 0;
+    margin: 0 0 .8em 0;
 
     font-size: 14px;
     font-weight: bold;
@@ -58,7 +70,7 @@ h5, .h5 {
 }
 
 h6, .h6 {
-    margin: 0 0 10px 0;
+    margin: 0 0 .8em 0;
 
     font-size: 12px;
     font-weight: bold;
