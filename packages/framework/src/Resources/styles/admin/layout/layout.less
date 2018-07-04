@@ -84,6 +84,7 @@ body {
 
             background: @bg-primary;
             color: @color-f;
+            box-shadow: 5px 0 10px fade(@color-0, 10%);
 
             &--small {
                 justify-content: start;
@@ -137,28 +138,6 @@ body {
             padding-top: @height-header + @height-fixed-bar;
         }
 
-        &:after {
-            display: block;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: -1px;
-            width: 1px;
-            content: '';
-            opacity: 0.3;
-
-            background: @color-a;
-            transition: @transition;
-
-            @media @query-lg {
-                left: @width-panel;
-            }
-
-            .js-side-menu-open & {
-                left: @width-panel;
-            }
-        }
-
         &--blank {
             padding-left: 0;
 
@@ -178,6 +157,7 @@ body {
         z-index: 99;
 
         background-color: @color-f;
+        box-shadow: 5px 0 10px fade(@color-0, 10%);
         transition: @transition;
 
         @media @query-lg {
