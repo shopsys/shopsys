@@ -10,9 +10,18 @@
 # Example: monorepo_build.sh main-repository package-alpha:packages/alpha package-beta:packages/beta
 
 # Check provided arguments
-if [ "$#" -lt "2" ]; then
-    echo 'Please provide at least 2 remotes to be merged into a new monorepo'
-    echo 'Usage: monorepo_build.sh <remote-name>[:<subdirectory>] <remote-name>[:<subdirectory>] ...'
+if [ "$1" == "-p" ] || [ "$1" == "--partial" ]; then
+    shift
+    PARTIAL=true
+else
+    PARTIAL=false
+fi
+if [[ ( "$#" -lt "2"  && "$PARTIAL" == "false" ) || "$#" -lt "1" ]]; then
+    echo 'Please provide at least 2 remotes to be merged into a new monorepo or one remote and request a partial load'
+    echo 'Usage: monorepo_build.sh [OPTION] <remote-name>[:<subdirectory>] <remote-name>[:<subdirectory>] ...'
+    echo ''
+    echo '  -p  --partial Add a repo to an existing monorepo (will only use master branch)'
+    echo ''
     echo 'Example: monorepo_build.sh main-repository package-alpha:packages/alpha package-beta:packages/beta'
     exit
 fi
@@ -29,7 +38,7 @@ for PARAM in $@; do
         SUBDIRECTORY=$REMOTE
     fi
     # Rewrite all branches from the first remote, only master branches from others
-    if [ "$PARAM" == "$1" ]; then
+    if [ "$PARAM" == "$1" ] && [ "$PARTIAL" == "false" ]; then
         echo "Building all branches of the remote '$REMOTE'"
         $MONOREPO_SCRIPT_DIR/load_branches_from_remote.sh $REMOTE
         $MONOREPO_SCRIPT_DIR/rewrite_history_into.sh $SUBDIRECTORY --branches
@@ -56,4 +65,3 @@ for REF in $MERGE_REFS; do
 done
 git commit -m "$COMMIT_MSG"
 git reset --hard
-

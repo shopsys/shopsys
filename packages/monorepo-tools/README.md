@@ -86,8 +86,9 @@ For detailed information go to the scripts themselves and read the comments.
 ### [monorepo_build.sh](./monorepo_build.sh)
 
 Build monorepo from specified remotes. The remotes must be already added to your repository and fetched.
+Additional repos can be added by specifying the partial flag.
 
-Usage: `monorepo_build.sh <remote-name>[:<subdirectory>] <remote-name>[:<subdirectory>] ...`
+Usage: `monorepo_build.sh [-p || --partial] <remote-name>[:<subdirectory>] <remote-name>[:<subdirectory>] ...`
 
 ### [monorepo_split.sh](./monorepo_split.sh)
 
