@@ -27,9 +27,9 @@ else
 fi
 SUBDIRECTORY=$SUBDIRECTORY SUBDIRECTORY_SED=${SUBDIRECTORY//-/\\-} TAB=$'\t' XARGS_OPTS=$XARGS_OPTS SED_OPTS=$SED_OPTS git filter-branch \
     --index-filter '
-    git ls-files | grep -vE "^\"*$SUBDIRECTORY/" | xargs printf "%s " | xargs ${XARGS_OPTS} git rm -q --cached
+    git ls-files | grep -vE "^\"*$SUBDIRECTORY/" | xargs printf "%s " | xargs $XARGS_OPTS git rm -q --cached
     if [ "$(git ls-files)" != "" ]; then
-        git ls-files -s | sed ${SED_OPTS} "s-(${TAB}\"*)$SUBDIRECTORY_SED/-\1-" | GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info && mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
+        git ls-files -s | sed $SED_OPTS "s-($TAB\"*)$SUBDIRECTORY_SED/-\1-" | GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info && mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
     fi' \
     --commit-filter 'git_commit_non_empty_tree "$@"' \
     --tag-name-filter 'cat' \
