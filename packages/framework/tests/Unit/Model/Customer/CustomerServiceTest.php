@@ -179,7 +179,7 @@ class CustomerServiceTest extends TestCase
         $userData->createdAt = new DateTime();
 
         $billingCountryData = new CountryData();
-        $billingCountryData->name = 'Česká republika';
+        $billingCountryData->name = ['cs' => 'Česká republika'];
         $billingCountry = new Country($billingCountryData, self::DOMAIN_ID);
         $billingAddressData = new BillingAddressData();
         $billingAddressData->street = 'street';
@@ -193,7 +193,7 @@ class CustomerServiceTest extends TestCase
         $billingAddressData->country = $billingCountry;
 
         $deliveryCountryData = new CountryData();
-        $deliveryCountryData->name = 'Slovenská republika';
+        $deliveryCountryData->name = ['cs' => 'Slovenská republika'];
         $deliveryCountry = new Country($deliveryCountryData, self::DOMAIN_ID);
         $deliveryAddressData = new DeliveryAddressData();
         $deliveryAddressData->addressFilled = true;
@@ -264,10 +264,10 @@ class CustomerServiceTest extends TestCase
         $customerService = $this->getCustomerService();
 
         $billingCountryData = new CountryData();
-        $billingCountryData->name = 'Česká republika';
+        $billingCountryData->name = ['cs' => 'Česká republika'];
 
         $deliveryCountryData = new CountryData();
-        $deliveryCountryData->name = 'Slovenská republika';
+        $deliveryCountryData->name = ['cs' => 'Slovenská republika'];
 
         $billingCountry = new Country($billingCountryData, self::DOMAIN_ID);
         $deliveryCountry = new Country($deliveryCountryData, self::DOMAIN_ID);

@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Country;
 class CountryData
 {
     /**
-     * @var string
+     * @var string[]
      */
     public $name;
 
@@ -16,6 +16,6 @@ class CountryData
 
     public function __construct()
     {
-        $this->name = '';
+        $this->name = [];
     }
 }

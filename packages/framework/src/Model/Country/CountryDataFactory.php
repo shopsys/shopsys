@@ -30,7 +30,9 @@ class CountryDataFactory implements CountryDataFactoryInterface
      */
     protected function fillFromCountry(CountryData $countryData, Country $country)
     {
-        $countryData->name = $country->getName();
+        foreach ($country->getTranslations() as $translation) {
+            $countryData->name[$translation->getLocale()] = $translation->getName();
+        }
         $countryData->code = $country->getCode();
     }
 }
