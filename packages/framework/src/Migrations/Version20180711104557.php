@@ -18,7 +18,21 @@ class Version20180711104557 extends AbstractMigration
             ->sql('SELECT id, name, domain_id, code FROM countries')
             ->fetchAll();
 
-        var_dump($countries);
+
+        $allDomainIds = $this->getAllDomainIds();
+        $locales = [];
+        foreach($allDomainIds as $domainId) {
+            $locales[$domainId] =  $this->getDomainLocale($domainId);
+        }
+
+        $transformator = new Version20180711104557CountryTransformator();
+        var_dump(
+            $countries,
+            $transformator->getMainCountries($countries),
+            $transformator->getTranslations($countries, $locales),
+            $transformator->getCountryDomains($countries, $allDomainIds),
+            $transformator->getOldToNewIdsMap($countries)
+        );
 
         throw new \Exception('x');
 
