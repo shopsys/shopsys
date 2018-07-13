@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
-use Shopsys\FrameworkBundle\Form\UrlListData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
 class ArticleData
 {
@@ -32,12 +32,12 @@ class ArticleData
     public $domainId;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Form\UrlListData
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
      */
     public $urls;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $placement;
 
@@ -55,20 +55,5 @@ class ArticleData
     {
         $this->urls = new UrlListData();
         $this->hidden = false;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
-     */
-    public function setFromEntity(Article $article)
-    {
-        $this->name = $article->getName();
-        $this->text = $article->getText();
-        $this->seoTitle = $article->getSeoTitle();
-        $this->seoMetaDescription = $article->getSeoMetaDescription();
-        $this->domainId = $article->getDomainId();
-        $this->placement = $article->getPlacement();
-        $this->hidden = $article->isHidden();
-        $this->seoH1 = $article->getSeoH1();
     }
 }

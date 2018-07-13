@@ -3,15 +3,13 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shopsys\FrameworkBundle\Component\Controller\AdminBaseController;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportEditFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\Breadcrumb;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItem;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Transport\Detail\TransportDetailFactory;
 use Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory;
-use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory;
+use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,17 +26,12 @@ class TransportController extends AdminBaseController
     private $currencyFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\Detail\TransportDetailFactory
-     */
-    private $transportDetailFactory;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory
      */
     private $transportGridFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
      */
     private $transportDataFactory;
 
@@ -50,16 +43,14 @@ class TransportController extends AdminBaseController
     public function __construct(
         TransportFacade $transportFacade,
         TransportGridFactory $transportGridFactory,
-        TransportDataFactory $transportDataFactory,
+        TransportDataFactoryInterface $transportDataFactory,
         CurrencyFacade $currencyFacade,
-        TransportDetailFactory $transportDetailFactory,
         Breadcrumb $breadcrumb
     ) {
         $this->transportFacade = $transportFacade;
         $this->transportGridFactory = $transportGridFactory;
         $this->transportDataFactory = $transportDataFactory;
         $this->currencyFacade = $currencyFacade;
-        $this->transportDetailFactory = $transportDetailFactory;
         $this->breadcrumb = $breadcrumb;
     }
 
@@ -69,10 +60,10 @@ class TransportController extends AdminBaseController
      */
     public function newAction(Request $request)
     {
-        $transportData = $this->transportDataFactory->createDefault();
+        $transportData = $this->transportDataFactory->create();
 
         $form = $this->createForm(TransportEditFormType::class, $transportData, [
-            'transport_detail' => null,
+            'transport' => null,
         ]);
         $form->handleRequest($request);
 
@@ -107,11 +98,10 @@ class TransportController extends AdminBaseController
     public function editAction(Request $request, $id)
     {
         $transport = $this->transportFacade->getById($id);
-        $transportDetail = $this->transportDetailFactory->createDetailForTransportWithIndependentPrices($transport);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
 
         $form = $this->createForm(TransportEditFormType::class, $transportData, [
-            'transport_detail' => $transportDetail,
+            'transport' => $transport,
         ]);
         $form->handleRequest($request);
 
@@ -136,7 +126,7 @@ class TransportController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/Transport/edit.html.twig', [
             'form' => $form->createView(),
-            'transportDetail' => $transportDetail,
+            'transport' => $transport,
             'currencies' => $this->currencyFacade->getAllIndexedById(),
         ]);
     }

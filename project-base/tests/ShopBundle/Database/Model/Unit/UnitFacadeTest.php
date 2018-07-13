@@ -2,8 +2,8 @@
 
 namespace Tests\ShopBundle\Database\Model\Unit;
 
-use Shopsys\FrameworkBundle\DataFixtures\Base\UnitDataFixture;
 use Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixture;
+use Shopsys\FrameworkBundle\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
@@ -22,7 +22,9 @@ class UnitFacadeTest extends DatabaseTestCase
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         /* @var $productFacade \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
 
-        $unitToDelete = $unitFacade->create(new UnitData(['cs' => 'name']));
+        $unitData = new UnitData();
+        $unitData->name = ['cs' => 'name'];
+        $unitToDelete = $unitFacade->create($unitData);
         $unitToReplaceWith = $this->getReference(UnitDataFixture::UNIT_PIECES);
         /* @var $newUnit \Shopsys\FrameworkBundle\Model\Product\Unit\Unit */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');

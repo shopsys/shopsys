@@ -6,7 +6,7 @@ use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 
 class ProductDataFixtureLoader
 {
@@ -78,7 +78,7 @@ class ProductDataFixtureLoader
     private $pricingGroups;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      */
     private $productDataFactory;
 
@@ -89,7 +89,7 @@ class ProductDataFixtureLoader
 
     public function __construct(
         ProductParametersFixtureLoader $productParametersFixtureLoader,
-        ProductDataFactory $productDataFactory,
+        ProductDataFactoryInterface $productDataFactory,
         Domain $domain
     ) {
         $this->productParametersFixtureLoader = $productParametersFixtureLoader;
@@ -131,7 +131,7 @@ class ProductDataFixtureLoader
      */
     public function createProductDataFromRowForFirstDomain($row)
     {
-        $productData = $this->productDataFactory->createDefault();
+        $productData = $this->productDataFactory->create();
         $this->updateProductDataFromCsvRowForFirstDomain($productData, $row);
 
         return $productData;
@@ -160,7 +160,7 @@ class ProductDataFixtureLoader
     private function updateProductDataFromCsvRowForFirstDomain(ProductData $productData, array $row)
     {
         $domainId = 1;
-        $productData->name['cs'] = $row[self::COLUMN_NAME_CS];
+
         $productData->name['en'] = $row[self::COLUMN_NAME_EN];
         $productData->catnum = $row[self::COLUMN_CATNUM];
         $productData->partno = $row[self::COLUMN_PARTNO];
@@ -237,6 +237,7 @@ class ProductDataFixtureLoader
         $domainId = 2;
         $productData->descriptions[$domainId] = $row[$this->getDescriptionColumnForDomain($domainId)];
         $productData->shortDescriptions[$domainId] = $row[$this->getShortDescriptionColumnForDomain($domainId)];
+        $productData->name['cs'] = $row[self::COLUMN_NAME_CS];
         $this->setProductDataPricesFromCsv($row, $productData, $domainId);
         $productData->categoriesByDomainId[$domainId] =
             $this->getValuesByKeyString($row[self::COLUMN_CATEGORIES_2], $this->categories);

@@ -251,6 +251,25 @@ class CurrencyFacade
             $toFlush[] = $transportPrice;
         }
 
-        $this->em->flush($toFlush);
+        if (count($toFlush) > 0) {
+            $this->em->flush($toFlush);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
+     */
+    public function getDomainConfigsByCurrency(Currency $currency)
+    {
+        $domainConfigs = [];
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $domainCurrencyId = $this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainConfig->getId());
+            if ($domainCurrencyId === $currency->getId()) {
+                $domainConfigs[] = $domainConfig;
+            }
+        }
+
+        return $domainConfigs;
     }
 }

@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shopsys\FrameworkBundle\Component\Controller\AdminBaseController;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\BestsellingProduct\BestsellingProductFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\Breadcrumb;
@@ -54,12 +53,12 @@ class BestsellingProductController extends AdminBaseController
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
-        $categoryDetails = $this->categoryFacade->getVisibleCategoryDetailsForDomain($domainId, $request->getLocale());
+        $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain($domainId, $request->getLocale());
 
         $bestsellingProductsInCategories = $this->manualBestsellingProductFacade->getCountsIndexedByCategoryId($domainId);
 
         return $this->render('@ShopsysFramework/Admin/Content/BestsellingProduct/list.html.twig', [
-            'categoryDetails' => $categoryDetails,
+            'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
             'selectedDomainId' => $domainId,
             'bestsellingProductsInCategories' => $bestsellingProductsInCategories,
         ]);

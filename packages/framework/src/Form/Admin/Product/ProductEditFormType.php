@@ -2,14 +2,14 @@
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Product;
 
-use Shopsys\FrameworkBundle\Component\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
-use Shopsys\FrameworkBundle\Component\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
-use Shopsys\FrameworkBundle\Component\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
+use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
+use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
+use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -31,7 +31,7 @@ class ProductEditFormType extends AbstractType
     const VALIDATION_GROUP_MANUAL_PRICE_CALCULATION = 'manualPriceCalculation';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Transformers\RemoveDuplicatesFromArrayTransformer
+     * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
      */
     private $removeDuplicatesTransformer;
 
@@ -50,16 +50,23 @@ class ProductEditFormType extends AbstractType
      */
     private $pluginDataFormExtensionFacade;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer
+     */
+    private $productParameterValueToProductParameterValuesLocalizedTransformer;
+
     public function __construct(
         RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
         PricingGroupFacade $pricingGroupFacade,
         Domain $domain,
-        PluginCrudExtensionFacade $pluginDataFormExtensionFacade
+        PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
+        ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer
     ) {
         $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
         $this->pricingGroupFacade = $pricingGroupFacade;
         $this->domain = $domain;
         $this->pluginDataFormExtensionFacade = $pluginDataFormExtensionFacade;
+        $this->productParameterValueToProductParameterValuesLocalizedTransformer = $productParameterValueToProductParameterValuesLocalizedTransformer;
     }
 
     /**
@@ -102,7 +109,7 @@ class ProductEditFormType extends AbstractType
                     ],
                     'error_bubbling' => false,
                 ])
-                ->addViewTransformer(new ProductParameterValueToProductParameterValuesLocalizedTransformer()))
+                ->addViewTransformer($this->productParameterValueToProductParameterValuesLocalizedTransformer))
             ->add('manualInputPricesByPricingGroupId', FormType::class, [
                 'compound' => true,
             ])

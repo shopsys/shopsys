@@ -3,13 +3,12 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shopsys\FrameworkBundle\Component\Controller\AdminBaseController;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\Breadcrumb;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItem;
-use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory;
+use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +24,7 @@ class CategoryController extends AdminBaseController
     private $breadcrumb;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
      */
     private $categoryDataFactory;
 
@@ -46,7 +45,7 @@ class CategoryController extends AdminBaseController
 
     public function __construct(
         CategoryFacade $categoryFacade,
-        CategoryDataFactory $categoryDataFactory,
+        CategoryDataFactoryInterface $categoryDataFactory,
         SessionInterface $session,
         Domain $domain,
         Breadcrumb $breadcrumb
@@ -104,7 +103,7 @@ class CategoryController extends AdminBaseController
      */
     public function newAction(Request $request)
     {
-        $categoryData = $this->categoryDataFactory->createDefault();
+        $categoryData = $this->categoryDataFactory->create();
 
         $form = $this->createForm(CategoryFormType::class, $categoryData, [
             'category' => null,
@@ -164,13 +163,13 @@ class CategoryController extends AdminBaseController
         $this->session->set('categories_selected_domain_id', $domainId);
 
         if ($domainId === self::ALL_DOMAINS) {
-            $categoryDetails = $this->categoryFacade->getAllCategoryDetails($request->getLocale());
+            $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren($request->getLocale());
         } else {
-            $categoryDetails = $this->categoryFacade->getVisibleCategoryDetailsForDomain($domainId, $request->getLocale());
+            $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain($domainId, $request->getLocale());
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/list.html.twig', [
-            'categoryDetails' => $categoryDetails,
+            'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
             'isForAllDomains' => ($domainId === self::ALL_DOMAINS),
         ]);
     }

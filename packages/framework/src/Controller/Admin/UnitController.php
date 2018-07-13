@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
-use Shopsys\FrameworkBundle\Component\Controller\AdminBaseController;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitSettingFormType;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
@@ -142,7 +141,12 @@ class UnitController extends AdminBaseController
      */
     public function settingAction(Request $request)
     {
-        $unitSettingsFormData = ['defaultUnit' => $this->unitFacade->getDefaultUnit()];
+        try {
+            $defaultUnit = $this->unitFacade->getDefaultUnit();
+        } catch (\Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException $ex) {
+            $defaultUnit = null;
+        }
+        $unitSettingsFormData = ['defaultUnit' => $defaultUnit];
 
         $form = $this->createForm(UnitSettingFormType::class, $unitSettingsFormData);
         $form->handleRequest($request);

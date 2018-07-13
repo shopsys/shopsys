@@ -2,16 +2,15 @@
 
 namespace Shopsys\ShopBundle\Controller\Front;
 
-use Shopsys\FrameworkBundle\Component\Controller\FrontBaseController;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Response\XmlStreamedResponse;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
-use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory;
+use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
 use Shopsys\ShopBundle\Form\Front\PersonalData\PersonalDataFormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,9 +54,14 @@ class PersonalDataController extends FrontBaseController
     private $personalDataAccessMailFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface
      */
     private $personalDataAccessRequestDataFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse
+     */
+    private $xmlResponse;
 
     public function __construct(
         Setting $setting,
@@ -67,7 +71,8 @@ class PersonalDataController extends FrontBaseController
         NewsletterFacade $newsletterFacade,
         PersonalDataAccessMailFacade $personalDataAccessMailFacade,
         PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
-        PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory
+        PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory,
+        XmlResponse $xmlResponse
     ) {
         $this->setting = $setting;
         $this->domain = $domain;
@@ -77,13 +82,14 @@ class PersonalDataController extends FrontBaseController
         $this->personalDataAccessMailFacade = $personalDataAccessMailFacade;
         $this->personalDataAccessRequestFacade = $personalDataAccessRequestFacade;
         $this->personalDataAccessRequestDataFactory = $personalDataAccessRequestDataFactory;
+        $this->xmlResponse = $xmlResponse;
     }
 
     public function indexAction(Request $request)
     {
         $form = $this->createForm(
             PersonalDataFormType::class,
-            $this->personalDataAccessRequestDataFactory->createDefaultForDisplay()
+            $this->personalDataAccessRequestDataFactory->createForDisplay()
         );
 
         $form->handleRequest($request);
@@ -110,7 +116,7 @@ class PersonalDataController extends FrontBaseController
     {
         $form = $this->createForm(
             PersonalDataFormType::class,
-            $this->personalDataAccessRequestDataFactory->createDefaultForExport()
+            $this->personalDataAccessRequestDataFactory->createForExport()
         );
 
         $form->handleRequest($request);
@@ -237,9 +243,9 @@ class PersonalDataController extends FrontBaseController
 
             ])->getContent();
 
-            $response = new XmlStreamedResponse($xmlContent, $personalDataAccessRequest->getEmail() . '.xml');
+            $fileName = $personalDataAccessRequest->getEmail() . '.xml';
 
-            return $response;
+            return $this->xmlResponse->getXmlResponse($fileName, $xmlContent);
         }
 
         throw new NotFoundHttpException();

@@ -2,7 +2,7 @@
 
 namespace Tests\ShopBundle\Database\Model\Cart;
 
-use Shopsys\FrameworkBundle\DataFixtures\Base\UnitDataFixture;
+use Shopsys\FrameworkBundle\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -22,9 +22,14 @@ class CartItemTest extends DatabaseTestCase
 
         $customerIdentifier = new CustomerIdentifier('randomString');
 
-        $vat = new Vat(new VatData('vat', 21));
-        $availability = new Availability(new AvailabilityData([], 0));
-        $productData = $productDataFactory->createDefault();
+        $vatData = new VatData();
+        $vatData->name = 'vat';
+        $vatData->percent = 21;
+        $vat = new Vat($vatData);
+        $availabilityData = new AvailabilityData();
+        $availabilityData->dispatchTime = 0;
+        $availability = new Availability($availabilityData);
+        $productData = $productDataFactory->create();
         $productData->name = [];
         $productData->price = 100;
         $productData->vat = $vat;

@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
+use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 
 class ArticleDataFixture extends AbstractReferenceFixture
@@ -15,15 +16,20 @@ class ArticleDataFixture extends AbstractReferenceFixture
     const ARTICLE_PRIVACY_POLICY_1 = 'article_privacy_policy_1';
     const ARTICLE_COOKIES_1 = 'article_cookies_1';
 
-    /** @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade */
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
+     */
     private $articleFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
+     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface
      */
-    public function __construct(ArticleFacade $articleFacade)
+    private $articleDataFactory;
+
+    public function __construct(ArticleFacade $articleFacade, ArticleDataFactoryInterface $articleDataFactory)
     {
         $this->articleFacade = $articleFacade;
+        $this->articleDataFactory = $articleDataFactory;
     }
 
     /**
@@ -31,7 +37,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager)
     {
-        $articleData = new ArticleData();
+        $articleData = $this->articleDataFactory->create();
         $articleData->domainId = Domain::FIRST_DOMAIN_ID;
 
         $articleData->name = 'News';

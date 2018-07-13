@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
-use Shopsys\FrameworkBundle\Component\Controller\AdminBaseController;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Availability\AvailabilitySettingFormType;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -139,8 +138,12 @@ class AvailabilityController extends AdminBaseController
      */
     public function settingAction(Request $request)
     {
-        $availabilitySettingsFormData = [];
-        $availabilitySettingsFormData['defaultInStockAvailability'] = $this->availabilityFacade->getDefaultInStockAvailability();
+        try {
+            $defaultInStockAvailability = $this->availabilityFacade->getDefaultInStockAvailability();
+        } catch (\Shopsys\FrameworkBundle\Model\Product\Availability\Exception\AvailabilityNotFoundException $ex) {
+            $defaultInStockAvailability = null;
+        }
+        $availabilitySettingsFormData['defaultInStockAvailability'] = $defaultInStockAvailability;
 
         $form = $this->createForm(AvailabilitySettingFormType::class, $availabilitySettingsFormData);
         $form->handleRequest($request);

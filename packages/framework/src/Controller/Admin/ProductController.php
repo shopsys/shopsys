@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Doctrine\ORM\QueryBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shopsys\FrameworkBundle\Component\Controller\AdminBaseController;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
@@ -20,12 +19,11 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItem;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
-use Shopsys\FrameworkBundle\Model\Product\Detail\ProductDetailFactory;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\AdminProductPriceCalculationFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 use Shopsys\FrameworkBundle\Twig\ProductExtension;
@@ -54,12 +52,7 @@ class ProductController extends AdminBaseController
     private $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Detail\ProductDetailFactory
-     */
-    private $productDetailFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      */
     private $productDataFactory;
 
@@ -113,8 +106,7 @@ class ProductController extends AdminBaseController
         ProductMassActionFacade $productMassActionFacade,
         GridFactory $gridFactory,
         ProductFacade $productFacade,
-        ProductDetailFactory $productDetailFactory,
-        ProductDataFactory $productDataFactory,
+        ProductDataFactoryInterface $productDataFactory,
         AdminProductPriceCalculationFacade $adminProductPriceCalculationFacade,
         Breadcrumb $breadcrumb,
         PricingGroupFacade $pricingGroupFacade,
@@ -129,7 +121,6 @@ class ProductController extends AdminBaseController
         $this->productMassActionFacade = $productMassActionFacade;
         $this->gridFactory = $gridFactory;
         $this->productFacade = $productFacade;
-        $this->productDetailFactory = $productDetailFactory;
         $this->productDataFactory = $productDataFactory;
         $this->adminProductPriceCalculationFacade = $adminProductPriceCalculationFacade;
         $this->breadcrumb = $breadcrumb;
@@ -177,7 +168,6 @@ class ProductController extends AdminBaseController
         $viewParameters = [
             'form' => $form->createView(),
             'product' => $product,
-            'productDetail' => $this->productDetailFactory->getDetailForProduct($product),
             'productMainCategoriesIndexedByDomainId' => $this->categoryFacade->getProductMainCategoriesIndexedByDomainId($product),
             'domains' => $this->domain->getAll(),
         ];
@@ -200,7 +190,7 @@ class ProductController extends AdminBaseController
      */
     public function newAction(Request $request)
     {
-        $productData = $this->productDataFactory->createDefault();
+        $productData = $this->productDataFactory->create();
 
         $form = $this->createForm(ProductEditFormType::class, $productData, ['product' => null]);
         $form->handleRequest($request);
@@ -402,7 +392,7 @@ class ProductController extends AdminBaseController
         $product = $this->productFacade->getById($productId);
 
         return $this->render('@ShopsysFramework/Admin/Content/Product/visibility.html.twig', [
-            'productDetail' => $this->productDetailFactory->getDetailForProduct($product),
+            'product' => $product,
             'domains' => $this->domain->getAll(),
         ]);
     }

@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shopsys\FrameworkBundle\Component\Controller\AdminBaseController;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -12,7 +11,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\Breadcrumb;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\MenuItem;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
-use Shopsys\FrameworkBundle\Model\Slider\SliderItemData;
+use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,16 +37,23 @@ class SliderController extends AdminBaseController
      */
     private $sliderItemFacade;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface
+     */
+    private $sliderItemDataFactory;
+
     public function __construct(
         SliderItemFacade $sliderItemFacade,
         GridFactory $gridFactory,
         AdminDomainTabsFacade $adminDomainTabsFacade,
-        Breadcrumb $breadcrumb
+        Breadcrumb $breadcrumb,
+        SliderItemDataFactoryInterface $sliderItemDataFactory
     ) {
         $this->sliderItemFacade = $sliderItemFacade;
         $this->gridFactory = $gridFactory;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
         $this->breadcrumb = $breadcrumb;
+        $this->sliderItemDataFactory = $sliderItemDataFactory;
     }
 
     /**
@@ -85,7 +91,7 @@ class SliderController extends AdminBaseController
      */
     public function newAction(Request $request)
     {
-        $sliderItemData = new SliderItemData();
+        $sliderItemData = $this->sliderItemDataFactory->create();
         $sliderItemData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
         $form = $this->createForm(SliderItemFormType::class, $sliderItemData, [
@@ -125,8 +131,7 @@ class SliderController extends AdminBaseController
     public function editAction(Request $request, $id)
     {
         $sliderItem = $this->sliderItemFacade->getById($id);
-        $sliderItemData = new SliderItemData();
-        $sliderItemData->setFromEntity($sliderItem);
+        $sliderItemData = $this->sliderItemDataFactory->createFromSliderItem($sliderItem);
 
         $form = $this->createForm(SliderItemFormType::class, $sliderItemData, [
             'scenario' => SliderItemFormType::SCENARIO_EDIT,

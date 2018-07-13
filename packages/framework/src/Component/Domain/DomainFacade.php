@@ -2,10 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
+use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Symfony\Component\Filesystem\Filesystem;
 
 class DomainFacade
 {
@@ -15,17 +13,12 @@ class DomainFacade
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
-     */
-    protected $pricingSetting;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\DomainService
      */
     protected $domainService;
 
     /**
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var \League\Flysystem\FilesystemInterface
      */
     protected $filesystem;
 
@@ -42,34 +35,15 @@ class DomainFacade
     public function __construct(
         $domainImagesDirectory,
         Domain $domain,
-        PricingSetting $pricingSetting,
         DomainService $domainService,
-        Filesystem $fileSystem,
+        FilesystemInterface $fileSystem,
         FileUpload $fileUpload
     ) {
         $this->domainImagesDirectory = $domainImagesDirectory;
         $this->domain = $domain;
-        $this->pricingSetting = $pricingSetting;
         $this->domainService = $domainService;
         $this->filesystem = $fileSystem;
         $this->fileUpload = $fileUpload;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
-     */
-    public function getDomainConfigsByCurrency(Currency $currency)
-    {
-        $domainConfigs = [];
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainCurrencyId = $this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainConfig->getId());
-            if ($domainCurrencyId === $currency->getId()) {
-                $domainConfigs[] = $domainConfig;
-            }
-        }
-
-        return $domainConfigs;
     }
 
     /**
@@ -96,6 +70,6 @@ class DomainFacade
      */
     public function existsDomainIcon($domainId)
     {
-        return $this->filesystem->exists($this->domainImagesDirectory . '/' . $domainId . '.png');
+        return $this->filesystem->has($this->domainImagesDirectory . '/' . $domainId . '.png');
     }
 }

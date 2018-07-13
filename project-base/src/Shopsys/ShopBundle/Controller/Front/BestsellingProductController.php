@@ -2,7 +2,6 @@
 
 namespace Shopsys\ShopBundle\Controller\Front;
 
-use Shopsys\FrameworkBundle\Component\Controller\FrontBaseController;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
@@ -38,14 +37,14 @@ class BestsellingProductController extends FrontBaseController
 
     public function listAction(Category $category)
     {
-        $bestsellingProducts = $this->cachedBestsellingProductFacade->getAllOfferedProductDetails(
+        $bestsellingProducts = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProducts(
             $this->domain->getId(),
             $category,
             $this->currentCustomer->getPricingGroup()
         );
 
         return $this->render('@ShopsysShop/Front/Content/Product/bestsellingProductsList.html.twig', [
-            'productDetails' => $bestsellingProducts,
+            'products' => $bestsellingProducts,
             'maxShownProducts' => BestsellingProductFacade::MAX_SHOW_RESULTS,
         ]);
     }

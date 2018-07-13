@@ -2,14 +2,12 @@
 
 namespace Shopsys\FrameworkBundle\DataFixtures\Demo;
 
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\DataFixtures\Base\SettingValueDataFixture;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 
-class BrandDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
+class BrandDataFixture extends AbstractReferenceFixture
 {
     const BRAND_APPLE = 'brand_apple';
     const BRAND_CANON = 'brand_canon';
@@ -39,14 +37,14 @@ class BrandDataFixture extends AbstractReferenceFixture implements DependentFixt
     /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade */
     private $brandFacade;
 
-    /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory */
+    /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface */
     private $brandDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory $brandDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface $brandDataFactory
      */
-    public function __construct(BrandFacade $brandFacade, BrandDataFactory $brandDataFactory)
+    public function __construct(BrandFacade $brandFacade, BrandDataFactoryInterface $brandDataFactory)
     {
         $this->brandFacade = $brandFacade;
         $this->brandDataFactory = $brandDataFactory;
@@ -57,7 +55,7 @@ class BrandDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     public function load(ObjectManager $manager)
     {
-        $brandData = $this->brandDataFactory->createDefault();
+        $brandData = $this->brandDataFactory->create();
 
         foreach ($this->getBrandNamesIndexedByBrandConstants() as $brandConstant => $brandName) {
             $brandData->name = $brandName;
@@ -101,16 +99,6 @@ class BrandDataFixture extends AbstractReferenceFixture implements DependentFixt
             self::BRAND_OLYMPUS => 'Olympus',
             self::BRAND_HYUNDAI => 'Hyundai',
             self::BRAND_NIKON => 'Nikon',
-        ];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getDependencies()
-    {
-        return [
-            SettingValueDataFixture::class,
         ];
     }
 }

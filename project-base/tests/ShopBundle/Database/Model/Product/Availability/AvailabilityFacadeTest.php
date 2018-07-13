@@ -2,7 +2,7 @@
 
 namespace Tests\ShopBundle\Database\Model\Product\Availability;
 
-use Shopsys\FrameworkBundle\DataFixtures\Base\AvailabilityDataFixture;
+use Shopsys\FrameworkBundle\DataFixtures\Demo\AvailabilityDataFixture;
 use Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -22,7 +22,9 @@ class AvailabilityFacadeTest extends DatabaseTestCase
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         /* @var $productFacade \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
 
-        $availabilityToDelete = $availabilityFacade->create(new AvailabilityData(['cs' => 'name']));
+        $availabilityData = new AvailabilityData();
+        $availabilityData->name = ['cs' => 'name'];
+        $availabilityToDelete = $availabilityFacade->create($availabilityData);
         $availabilityToReplaceWith = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         /* @var $availabilityToReplaceWith \Shopsys\FrameworkBundle\Model\Product\Availability\Availability */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');

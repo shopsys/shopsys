@@ -13,21 +13,23 @@ SUBDIRECTORY=$1
 REV_LIST_PARAMS=${@:2}
 echo "Rewriting history from a subdirectory '$SUBDIRECTORY'"
 # All paths in the index that are not prefixed with a subdirectory are removed via "git rm --cached"
-# Piping through "echo -e" is needed to resolve pathnames containing unicode characters
+# Setting quotepath to false is needed to handle path and file names containing unicode characters
 # If there are any files in the index all paths have the subdirectory prefix removed and the index is updated
 # Previous index file is replaced by a new one (otherwise each file would be in the index twice)
 # Only non-empty are filtered by the commit-filter
 # The tags are rewritten as well as commits (the "cat" command will use original name without any change)
 if [ $(uname) == "Darwin" ]; then
-    XARGS=""
+    XARGS_OPTS=""
+    SED_OPTS="-E"
 else
-    XARGS="-r"
+    XARGS_OPTS="-r"
+    SED_OPTS="-r"
 fi
-SUBDIRECTORY=$SUBDIRECTORY SUBDIRECTORY_SED=${SUBDIRECTORY//-/\\-} TAB=$'\t' git filter-branch \
+SUBDIRECTORY=$SUBDIRECTORY SUBDIRECTORY_SED=${SUBDIRECTORY//-/\\-} TAB=$'\t' XARGS_OPTS=$XARGS_OPTS SED_OPTS=$SED_OPTS git filter-branch \
     --index-filter '
-    git ls-files | grep -vE "^\"*$SUBDIRECTORY/" | xargs printf "%s " | xargs ${XARGS} git rm -q --cached
+    git -c core.quotepath=false ls-files | grep -vE "^\"*$SUBDIRECTORY/" | xargs $XARGS_OPTS git rm -q --cached
     if [ "$(git ls-files)" != "" ]; then
-        git ls-files -s | sed -E "s-(${TAB}\"*)$SUBDIRECTORY_SED/-\1-" | GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info && mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
+        git ls-files -s | sed $SED_OPTS "s-($TAB\"*)$SUBDIRECTORY_SED/-\1-" | GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info && mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE
     fi' \
     --commit-filter 'git_commit_non_empty_tree "$@"' \
     --tag-name-filter 'cat' \

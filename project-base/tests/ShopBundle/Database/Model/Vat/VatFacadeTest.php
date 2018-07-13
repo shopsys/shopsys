@@ -2,9 +2,9 @@
 
 namespace Tests\ShopBundle\Database\Model\Vat;
 
-use Shopsys\FrameworkBundle\DataFixtures\Base\VatDataFixture;
 use Shopsys\FrameworkBundle\DataFixtures\Demo\PaymentDataFixture;
 use Shopsys\FrameworkBundle\DataFixtures\Demo\TransportDataFixture;
+use Shopsys\FrameworkBundle\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
@@ -29,7 +29,10 @@ class VatFacadeTest extends DatabaseTestCase
         $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
         /* @var $paymentFacade \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade */
 
-        $vatToDelete = $vatFacade->create(new VatData('name', 10));
+        $vatData = new VatData();
+        $vatData->name = 'name';
+        $vatData->percent = 10;
+        $vatToDelete = $vatFacade->create($vatData);
         $vatToReplaceWith = $this->getReference(VatDataFixture::VAT_HIGH);
         /* @var $vatToReplaceWith \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);

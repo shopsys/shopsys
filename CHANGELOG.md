@@ -26,12 +26,70 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### [shopsys/framework]
 #### Changed
+- [#286 - Instantiate entity data objects by factories](https://github.com/shopsys/shopsys/pull/286)
+    - entity data objects have only an empty constructor now
+    - creation of entity data objects moved to factories to allow extensibility
+- [#244 Redesign of administration](https://github.com/shopsys/shopsys/pull/244)
+    - full-width layout
+    - colors changed to match new Shopsys CI
+    - main menu moved to the left panel along with settings menu
+    - menu items do not have type anymore, which lead to simplification of the code
+    - menu was slightly restructured
+- [#285 - Removal of base data fixtures](https://github.com/shopsys/shopsys/pull/285)
+    - all Base Data Fixtures were removed
+    - the data are created either in database migrations or in Demo Data Fixtures
+
+### [shopsys/monorepo-tools]
+#### Fixed
+- [#281 - monorepo-tools: Fix scripts to work on OS X](https://github.com/shopsys/shopsys/pull/282) [@lukaso]
+
+### [shopsys/product-feed-google]
+#### Changed
+- [#286 - Instantiate entity data objects by factories](https://github.com/shopsys/shopsys/pull/286)
+    - entity data objects have only an empty constructor now
+    - creation of entity data objects moved to factories to allow extensibility
+
+### [shopsys/product-feed-heureka]
+#### Changed
+- [#286 - Instantiate entity data objects by factories](https://github.com/shopsys/shopsys/pull/286)
+    - entity data objects have only an empty constructor now
+    - creation of entity data objects moved to factories to allow extensibility
+
+### [shopsys/product-feed-zbozi]
+#### Changed
+- [#286 - Instantiate entity data objects by factories](https://github.com/shopsys/shopsys/pull/286)
+    - entity data objects have only an empty constructor now
+    - creation of entity data objects moved to factories to allow extensibility
+
+### [shopsys/framework]
+#### Fixed
+- [#291 - Unnecessary SQL queries on category detail in admin](https://github.com/shopsys/shopsys/pull/304):
+    - category translations for ancestor category are loaded in the same query as categories
+
+## [7.0.0-alpha3] - 2018-07-03
+### [shopsys/framework]
+#### Changed
+- [#302 - All persistent files like uploads are now stored using abstract filesystem (Flysystem)](https://github.com/shopsys/shopsys/pull/302)
+    - abstract filesystem is used to store:
+        - uploaded files and images
+        - uploaded files and images via WYSIWYG
+        - generated feeds
+        - generated sitemaps
+    - all services using PernamentPhpFileCache now use RedisCache instead
+- [#272 - Changed concept of Components](https://github.com/shopsys/shopsys/pull/143):
+    - added definition of Components in [components.md](./docs/introduction/components.md):
+    - by this definition, classes that did not match it were moved or refactored.
+    - FriendlyUrlGenerator refactored: FriendlyUrlGeneratorFacade does not know anything about particular entities that the friendly urls are generated for.
+        These data are now served from implementations of FriendlyUrlDataProviderInterface.
 - [#143 - Shopsys framework now uses latest version of Shopsys coding standards](https://github.com/shopsys/shopsys/pull/143) [Shopsys Coding Standards dev-master](./packages/coding-standards) is now used
     - version of coding-standards package was updated to dev-master in [composer.json](./packages/framework/composer.json)
     - modified [travis script](./packages/framework/project-base/.travis.yml)
         - removed check for php 7.0
         - php-cs-fixer, phpcs, phpmd binaries replaced by ecs binaries
         - inline code skips moved to [autoload-easy-coding-standard.yml](./packages/framework/autoload-easy-coding-standard.yml) 
+- [#171 - Update to twig 2.x](https://github.com/shopsys/shopsys/pull/171):
+    - updated to Twig 2.4.8
+    - all depracated calls has been fixed
 - [#188 - Rebrading of Shopsys Framework](https://github.com/shopsys/shopsys/pull/188/)
     - all occurrences of netdevelo were changed to shopsys
 - [#257 - Admin: reset.less: disable scrollbar normalization in order to fix problems with jQuery UI drag&drop]( https://github.com/shopsys/shopsys/pull/257)
@@ -42,11 +100,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#206 clearing Setting's cache is now done via DoctrineEventListener](https://github.com/shopsys/shopsys/pull/206)
     - `EntityManagerFacade` was removed
     - Doctrine identity map can be cleared via `EntityManager::clear()` directly
-
-#### Changed
-- [#171 - Update to twig 2.x](https://github.com/shopsys/shopsys/pull/171):
-    - updated to Twig 2.4.8
-    - all depracated calls has been fixed
+- [#254 - Removal of EntityDetail classes](https://github.com/shopsys/shopsys/pull/276)
+    - `TransportDetail` and `TransportDetailFactory` were removed - `TransportFacade` is now able to provide transport base prices
+    - `PaymentDetail` and `PaymentDetailFactory` were removed - `PaymentFacade` is now able to provide payment base prices
+    - `ProductDetail` and `ProductDetailFactory` were removed - new `ProductCachedAttributesFacade` is now responsible for caching of products selling prices and parameters 
+    - `CategoryDetail` was renamed to `CategoryWithPreloadedChildren` and methods for it's creation were moved from `CategoryDetailFactory` to new `CategoryWithPreloadedChildrenFactory` 
+    - `LazyLoadedCategoryDetail` was renamed to `CategoryWithLazyLoadedVisibleChildren` and methods for it's creation were moved from deleted `CategoryDetailFactory` to new `CategoryWithLazyLoadedVisibleChildrenFactory` 
+- [#274 grid: drag&drop is supported with enabled gridInlineEdit](https://github.com/shopsys/shopsys/pull/274)
 - [#165 Different approach to multidomain entities](https://github.com/shopsys/shopsys/pull/165)
     - multi-domain entities were changed so they are used similarly to translations
     - main entities have a bidirectional association to a collection of its entity domains (eg. `BrandDomain`)
@@ -81,7 +141,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#228 - show selectbox options](https://github.com/shopsys/shopsys/pull/228)
     - the use of jQuery plugin for selectboxes was modified on Shopsys Framework side so options will now be seen 
 - [#243 - Admin: changed domain icon in e-shop domain administration can be saved](https://github.com/shopsys/shopsys/pull/243)
-    - changed domain icon in e-shop domain administration can be saved 
+    - changed domain icon in e-shop domain administration can be saved
+- copying of localized entities
+    - detection of new locale is now done before multidomain data are created 
 
 ### [shopsys/project-base]
 #### Changed
@@ -105,6 +167,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#229 - php-fpm/Dockerfile: switch to another mirror of alpine linux repository](https://github.com/shopsys/shopsys/pull/229):
     - fix uninstallable postgres 9.5 by using repository https://dl-cdn.alpinelinux.org/alpine/ instead of https://dl-3.alpinelinux.org/alpine/
 - [#242 - php-fpm/Dockerfile: drop usage of https when accessing dl-cdn.alpinelinux.org](https://github.com/shopsys/shopsys/pull/242)
+- [#277 - Tests fail when only one domain is set](https://github.com/shopsys/shopsys/issues/277)
 
 #### Security
 - [#178 - JsFormValidatorBundle security issue with Ajax validation](https://github.com/shopsys/shopsys/pull/178)
@@ -180,7 +243,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - modified [travis script](./packages/product-feed-google/.travis.yml)
         - removed check for php 7.0 due to compatibility with ecs
         - php-cs-fixer, phpcs, phpmd binaries replaced by ecs binary
-
 - [#171 - Update to twig 2.x](https://github.com/shopsys/shopsys/pull/171):
     - updated to Twig 2.4.8
     - all depracated calls has been fixed
@@ -193,7 +255,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - modified [travis script](./packages/product-feed-heureka/.travis.yml)
         - removed check for php 7.0 due to compatibility with ecs
         - php-cs-fixer, phpcs, phpmd binaries replaced by ecs binary
-
 - [#171 - Update to twig 2.x](https://github.com/shopsys/shopsys/pull/171):
     - updated to Twig 2.4.8
     - all depracated calls has been fixed
@@ -205,7 +266,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - modified [travis script](./packages/product-feed-heureka-delivery/.travis.yml)
         - removed check for php 7.0 due to compatibility with ecs
         - php-cs-fixer, phpcs, phpmd binaries replaced by ecs binary
-
 - [#171 - Update to twig 2.x](https://github.com/shopsys/shopsys/pull/171):
     - updated to Twig 2.4.8
     - all depracated calls has been fixed
@@ -226,7 +286,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - modified [travis script](./packages/product-feed-zbozi/.travis.yml)
         - removed check for php 7.0 due to compatibility with ecs
         - php-cs-fixer, phpcs, phpmd binaries replaced by ecs binary
-
 - [#171 - Update to twig 2.x](https://github.com/shopsys/shopsys/pull/171):
     - updated to Twig 2.4.8
     - all depracated calls has been fixed
@@ -1141,7 +1200,8 @@ That's why is this section formatted differently.
     - YesNoType
 - `.travis.yml` file with Travis CI configuration
 
-[Unreleased]: https://github.com/shopsys/shopsys/compare/v7.0.0-alpha2...HEAD
+[Unreleased]: https://github.com/shopsys/shopsys/compare/v7.0.0-alpha3...HEAD
+[7.0.0-alpha3]: https://github.com/shopsys/shopsys/compare/v7.0.0-alpha2...v7.0.0-alpha3
 [7.0.0-alpha2]: https://github.com/shopsys/shopsys/compare/v7.0.0-alpha1...v7.0.0-alpha2
 
 [shopsys/shopsys]: https://github.com/shopsys/shopsys
@@ -1163,3 +1223,4 @@ That's why is this section formatted differently.
 [@stanoMilan]: https://github.com/stanoMilan
 [@EdoBarnas]: https://github.com/EdoBarnas
 [@DavidKuna]: https://github.com/DavidKuna
+[@lukaso]: https://github.com/lukaso

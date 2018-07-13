@@ -3,8 +3,8 @@
 namespace Tests\ShopBundle\Database\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\DataFixtures\Base\PricingGroupDataFixture;
-use Shopsys\FrameworkBundle\DataFixtures\Base\UnitDataFixture;
+use Shopsys\FrameworkBundle\DataFixtures\Demo\PricingGroupDataFixture;
+use Shopsys\FrameworkBundle\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
@@ -26,12 +26,14 @@ class ProductServiceTest extends DatabaseTestCase
 
         $setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
 
-        $vatData = new VatData('vat', 21);
+        $vatData = new VatData();
+        $vatData->name = 'vat';
+        $vatData->percent = 21;
         $vat = new Vat($vatData);
 
         $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
 
-        $productData = $producDataFactory->createDefault();
+        $productData = $producDataFactory->create();
         $productData->price = 1000;
         $productData->vat = $vat;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
@@ -55,12 +57,14 @@ class ProductServiceTest extends DatabaseTestCase
 
         $setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
 
-        $vatData = new VatData('vat', 21);
+        $vatData = new VatData();
+        $vatData->name = 'vat';
+        $vatData->percent = 21;
         $vat = new Vat($vatData);
 
         $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
 
-        $productData = $productDataFactory->createDefault();
+        $productData = $productDataFactory->create();
         $productData->price = 1000;
         $productData->vat = $vat;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
