@@ -7,34 +7,25 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180711104557 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
     public function up(Schema $schema)
     {
-        $countries = $this
-            ->sql('SELECT id, name, domain_id, code FROM countries')
-            ->fetchAll();
+        $this->sql('UPDATE orders SET country_id = 1 WHERE country_id = 3');
+        $this->sql('UPDATE orders SET country_id = 2 WHERE country_id = 4');
+        $this->sql('UPDATE orders SET delivery_country_id = 1 WHERE delivery_country_id = 3');
+        $this->sql('UPDATE orders SET delivery_country_id = 2 WHERE delivery_country_id = 4');
 
+        $this->sql('UPDATE billing_addresses SET country_id = 1 WHERE country_id = 3');
+        $this->sql('UPDATE billing_addresses SET country_id = 2 WHERE country_id = 4');
 
-        $allDomainIds = $this->getAllDomainIds();
-        $locales = [];
-        foreach($allDomainIds as $domainId) {
-            $locales[$domainId] =  $this->getDomainLocale($domainId);
-        }
+        $this->sql('UPDATE delivery_addresses SET country_id = 1 WHERE country_id = 3');
+        $this->sql('UPDATE delivery_addresses SET country_id = 2 WHERE country_id = 4');
 
-        $transformator = new Version20180711104557CountryTransformator();
-        var_dump(
-            $countries,
-            $transformator->getMainCountries($countries),
-            $transformator->getTranslations($countries, $locales),
-            $transformator->getCountryDomains($countries, $allDomainIds),
-            $transformator->getOldToNewIdsMap($countries)
-        );
+        $this->sql('DELETE FROM countries WHERE id NOT IN (1, 2)');
 
-        throw new \Exception('x');
+        $this->sql('ALTER TABLE countries DROP COLUMN name');
 
         $this->sql('
             CREATE TABLE country_translations (
@@ -52,6 +43,14 @@ class Version20180711104557 extends AbstractMigration
                 country_translations
             ADD
                 CONSTRAINT FK_CA1456952C2AC5D3 FOREIGN KEY (translatable_id) REFERENCES countries (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+
+        $this->sql(
+            'INSERT INTO country_translations (translatable_id, name, locale) VALUES
+                    (1, \'Czech republic\', \'en\'),
+                    (2, \'Slovakia\', \'en\'),
+                    (1, \'Česká republika\', \'cs\'),
+                    (2, \'Slovenská republika\', \'cs\')
+                  ');
     }
 
     /**
