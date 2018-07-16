@@ -2,13 +2,16 @@
 
 namespace Shopsys\FrameworkBundle\Model\Country;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @ORM\Table(name="countries")
  * @ORM\Entity
  */
-class Country
+class Country extends AbstractTranslatableEntity
 {
     /**
      * @var int
@@ -20,11 +23,11 @@ class Country
     protected $id;
 
     /**
-     * @var string
+     * @var \Shopsys\FrameworkBundle\Model\Country\CountryTranslation[]
      *
-     * @ORM\Column(type="string", length=255)
+     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Country\CountryTranslation")
      */
-    protected $name;
+    protected $translations;
 
     /**
      * Country code in ISO 3166-1 alpha-2
@@ -47,7 +50,8 @@ class Country
      */
     public function __construct(CountryData $countryData, $domainId)
     {
-        $this->name = $countryData->name;
+        $this->translations = new ArrayCollection();
+        $this->setTranslations($countryData);
         $this->domainId = $domainId;
         $this->code = $countryData->code;
     }
@@ -57,7 +61,7 @@ class Country
      */
     public function edit(CountryData $countryData)
     {
-        $this->name = $countryData->name;
+        $this->setTranslations($countryData);
         $this->code = $countryData->code;
     }
 
@@ -67,14 +71,6 @@ class Country
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -91,5 +87,32 @@ class Country
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * @return \Prezent\Doctrine\Translatable\TranslationInterface
+     */
+    protected function createTranslation()
+    {
+        return new \Shopsys\FrameworkBundle\Model\Transport\CountryTranslation();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $names
+     */
+    private function setTranslations(CountryData $countryData)
+    {
+        foreach ($countryData->name as $locale => $name) {
+            $this->translation($locale)->setName($name);
+        }
+    }
+
+    /**
+     * @param string|null $locale
+     * @return string|null
+     */
+    public function getName(string $locale = null)
+    {
+        return $this->translation($locale)->getName();
     }
 }

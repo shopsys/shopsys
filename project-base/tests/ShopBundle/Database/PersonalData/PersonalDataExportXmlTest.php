@@ -66,7 +66,7 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
     private function createCountry()
     {
         $countryData = new CountryData();
-        $countryData->name = 'Czech Republic';
+        $countryData->name = ['cs' => 'Czech Republic'];
         $countryData->code = 'CZ';
         $country = new Country($countryData, self::DOMAIN_ID_FIRST);
 
