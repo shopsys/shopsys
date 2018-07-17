@@ -48,8 +48,6 @@ class CartWatcherFacade
     {
         $this->checkNotListableItems($cart);
         $this->checkModifiedPrices($cart);
-
-        $this->em->flush();
     }
 
     /**
@@ -61,9 +59,13 @@ class CartWatcherFacade
 
         foreach ($modifiedItems as $cartItem) {
             $this->flashMessageSender->addInfoFlashTwig(
-                t('Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order.'),
+                t('The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order.'),
                 ['name' => $cartItem->getName()]
             );
+        }
+
+        if (count($modifiedItems) > 0) {
+            $this->em->flush($modifiedItems);
         }
     }
 
@@ -74,11 +76,12 @@ class CartWatcherFacade
     {
         $notVisibleItems = $this->cartWatcherService->getNotListableItems($cart, $this->currentCustomer);
 
+        $toFlush = [];
         foreach ($notVisibleItems as $cartItem) {
             try {
                 $productName = $cartItem->getName();
                 $this->flashMessageSender->addErrorFlashTwig(
-                    t('The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order.'),
+                    t('Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order.'),
                     ['name' => $productName]
                 );
             } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $e) {
@@ -89,8 +92,11 @@ class CartWatcherFacade
 
             $cart->removeItemById($cartItem->getId());
             $this->em->remove($cartItem);
+            $toFlush[] = $cartItem;
         }
 
-        $this->em->flush();
+        if (count($toFlush) > 0) {
+            $this->em->flush($toFlush);
+        }
     }
 }

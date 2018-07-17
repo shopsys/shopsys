@@ -15,7 +15,6 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 * [shopsys/product-feed-google]
 * [shopsys/product-feed-heureka]
 * [shopsys/product-feed-heureka-delivery]
-* [shopsys/product-feed-interface]
 * [shopsys/product-feed-zbozi]
 
 Packages are formatted by release version. You can see all the changes done to package that you carry about with this tree.
@@ -38,33 +37,85 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#285 - Removal of base data fixtures](https://github.com/shopsys/shopsys/pull/285)
     - all Base Data Fixtures were removed
     - the data are created either in database migrations or in Demo Data Fixtures
+- [#271 - Complete refactoring of feeds functionality](https://github.com/shopsys/shopsys/pull/271)
+  - modules are responsible for querying the data to improve performance
+  - interfaces from package product-feed-interface are not used anymore as they were only important with open-box architecture
+  - only relevant data is fetched from the database, should result in enhanced performance
+  - FeedInterface and FeedInfoInterface define the way feeds are registered in the system
+  - FeedExport is responsible for the actual generation of a file in batches on a specific domain
+  - FeedRenderer is responsible for rendering the feed from Twig template
+  - FeedPathProvider is responsible for providing the correct filepath and url to the specified feed on a domain
+  - ProductUrlsBatchLoader and ProductParametersBatchLoader are responsible for loading product data in batches 
+  - cron modules use the logger for debug information
+  - DailyFeedCronModule is responsible for continuation of the correct feed after waking up
+- [#182 - Cart: flush() is called only if there are really some changes in cart items](https://github.com/shopsys/shopsys/pull/182)
+
+#### Fixed
+- [#291 - Unnecessary SQL queries on category detail in admin](https://github.com/shopsys/shopsys/pull/304):
+    - category translations for ancestor category are loaded in the same query as categories
+- [#317 - Travis build is failing for shopsys/framework](https://github.com/shopsys/shopsys/pull/317):
+    - framework package requires redis bundle and redis extension
+    - redis extension enabled in configuration for travis
+- [#316 - Admin: feed items on feeds generation page contain clickable link and datetime](https://github.com/shopsys/shopsys/pull/316)
+    - checks for existing file and for modified time of file use abstract filesystem methods
+- [#291 - Dropped triggers before creation](https://github.com/shopsys/shopsys/pull/314)
+- [#263 - CartWatcherFacade: fixed swapped messages](https://github.com/shopsys/shopsys/pull/263)
+
+### [shopsys/shopsys]
+#### Changed
+- [#296 - normalize phing target "timezones-check"](https://github.com/shopsys/shopsys/pull/296): [@pk16011990]
 
 ### [shopsys/monorepo-tools]
+#### Added
+- [# 311 - monorepo split allows adding new package when monorepo is already tagged](https://github.com/shopsys/shopsys/pull/311)
 #### Fixed
 - [#281 - monorepo-tools: Fix scripts to work on OS X](https://github.com/shopsys/shopsys/pull/282) [@lukaso]
+
+### [shopsys/coding-standards]
+#### Added
+- [#308 - Sniff for forgotten dumps](https://github.com/shopsys/shopsys/pull/308)
+    - ecs tester for coding standards was added with tests for sniffs and fixers [@TomasVotruba]
+    - added support for checking standards of file types twig, html
+    - added sniff for checking of forgotten dump functions
 
 ### [shopsys/product-feed-google]
 #### Changed
 - [#286 - Instantiate entity data objects by factories](https://github.com/shopsys/shopsys/pull/286)
     - entity data objects have only an empty constructor now
     - creation of entity data objects moved to factories to allow extensibility
+- [#271 - Complete refactoring of feeds functionality](https://github.com/shopsys/shopsys/pull/271)
+    - for details see section shopsys/framework
 
 ### [shopsys/product-feed-heureka]
 #### Changed
 - [#286 - Instantiate entity data objects by factories](https://github.com/shopsys/shopsys/pull/286)
     - entity data objects have only an empty constructor now
     - creation of entity data objects moved to factories to allow extensibility
+- [#271 - Complete refactoring of feeds functionality](https://github.com/shopsys/shopsys/pull/271)
+    - for details see section shopsys/framework
+
+### [shopsys/product-feed-heureka-delivery]
+#### Changed
+- [#271 - Complete refactoring of feeds functionality](https://github.com/shopsys/shopsys/pull/271)
+    - for details see section shopsys/framework
+
+### [shopsys/product-feed-interface]
+#### Abandoned
+The package was removed from monorepo during [#271 - Complete refactoring of feeds functionality](https://github.com/shopsys/shopsys/pull/271) and it's development was discontinued.
+It was only important with [the original open-box architecture](https://blog.shopsys.com/architecture-and-workflow-overview-f54ccae348ce), but after the creation of [shopsys/framework] there is no need for isolating interfaces in separate packages.
 
 ### [shopsys/product-feed-zbozi]
 #### Changed
 - [#286 - Instantiate entity data objects by factories](https://github.com/shopsys/shopsys/pull/286)
     - entity data objects have only an empty constructor now
     - creation of entity data objects moved to factories to allow extensibility
-
-### [shopsys/framework]
+- [#271 - Complete refactoring of feeds functionality](https://github.com/shopsys/shopsys/pull/271)
+    - for details see section shopsys/framework
+    
+### [shopsys/project-base]
 #### Fixed
-- [#291 - Unnecessary SQL queries on category detail in admin](https://github.com/shopsys/shopsys/pull/304):
-    - category translations for ancestor category are loaded in the same query as categories
+- [#315 - Route logout/ without csrf token returns not found](https://github.com/shopsys/shopsys/pull/315)
+    - route logout/ must to be called with token in every case because LogoutListener from Symfony throws exception if token generator is set in configuration of firewall but the route logout is used without csrf token parameter
 
 ## [7.0.0-alpha3] - 2018-07-03
 ### [shopsys/framework]
@@ -1222,3 +1273,4 @@ That's why is this section formatted differently.
 [@EdoBarnas]: https://github.com/EdoBarnas
 [@DavidKuna]: https://github.com/DavidKuna
 [@lukaso]: https://github.com/lukaso
+[@TomasVotruba]: https://github.com/TomasVotruba
