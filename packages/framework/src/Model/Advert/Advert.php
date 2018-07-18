@@ -17,6 +17,7 @@ class Advert
     const POSITION_FOOTER = 'footer';
     const POSITION_PRODUCT_LIST = 'productList';
     const POSITION_LEFT_SIDEBAR = 'leftSidebar';
+    const POSITION_ABOVE_LEFT_SIDEBAR = 'aboveLeftSidebar';
 
     /**
      * @var int

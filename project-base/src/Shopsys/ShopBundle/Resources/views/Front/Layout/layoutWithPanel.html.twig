@@ -13,6 +13,7 @@
         </div>
 
         <div class="web__main__panel">
+            {{ render(controller('ShopsysShopBundle:Front/Advert:box',{'positionName' : constant('Shopsys\\FrameworkBundle\\Model\\Advert\\Advert::POSITION_ABOVE_LEFT_SIDEBAR')})) }}
             {{ render(controller('ShopsysShopBundle:Front/Category:panel', { request: app.request } )) }}
 
             {% block panel_content %}{% endblock %}

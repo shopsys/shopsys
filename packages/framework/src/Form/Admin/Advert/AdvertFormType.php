@@ -106,6 +106,7 @@ class AdvertFormType extends AbstractType
                     t('above footer') => Advert::POSITION_FOOTER,
                     t('in category (above the category name)') => Advert::POSITION_PRODUCT_LIST,
                     t('in left panel (under category tree)') => Advert::POSITION_LEFT_SIDEBAR,
+                    t('in left panel (above category tree)') => Advert::POSITION_ABOVE_LEFT_SIDEBAR,
                 ],
                 'placeholder' => t('-- Choose area --'),
                 'constraints' => [
