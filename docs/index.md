@@ -13,6 +13,7 @@
 * [Components](./introduction/components.md)
 * [Abstract Filesystem](./introduction/abstract-filesystem.md)
 * [Product Feeds](./introduction/product-feeds.md)
+* [Logging](./introduction/logging.md)
 
 ## Cookbook
 * [Dumping and Importing the Database](./cookbook/dumping-and-importing-the-database.md)

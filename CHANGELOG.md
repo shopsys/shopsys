@@ -49,6 +49,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - cron modules use the logger for debug information
   - DailyFeedCronModule is responsible for continuation of the correct feed after waking up
 - [#182 - Cart: flush() is called only if there are really some changes in cart items](https://github.com/shopsys/shopsys/pull/182)
+- [#313 - Streamed logging](https://github.com/shopsys/shopsys/pull/313)
+    - monolog logs into streams instead of files (use `docker-compose logs` to access it)
+    - see details in the [Logging](/docs/introduction/logging.md) article
 
 #### Fixed
 - [#291 - Unnecessary SQL queries on category detail in admin](https://github.com/shopsys/shopsys/pull/304):
@@ -61,6 +64,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#291 - Dropped triggers before creation](https://github.com/shopsys/shopsys/pull/314)
 - [#263 - CartWatcherFacade: fixed swapped messages](https://github.com/shopsys/shopsys/pull/263)
 - [#339 - Downgrade snc/redis-bundle to 2.1.4 due to Issue in phpredis](https://github.com/shopsys/shopsys/pull/339)
+
+#### Removed
+- Error reporting functionality was removed as a part of [#313 - Streamed logging](https://github.com/shopsys/shopsys/pull/313)
+    - error reporting should be done from the outside of the application (eg. by [Kubernetes](https://kubernetes.io/))
 
 ### [shopsys/shopsys]
 #### Added
