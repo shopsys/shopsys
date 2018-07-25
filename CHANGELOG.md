@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### [shopsys/framework]
 #### Added
+- [#xxx - monorepo-tools: allow incremental build of monorepo](https://github.com/shopsys/shopsys/pull/xxx) [@lukaso]
 - [#335 - Possibility to add a new administration page](https://github.com/shopsys/shopsys/pull/335)
     - added cookbook [Adding a New Administration Page](/docs/cookbook/adding-a-new-administration-page.md) along with the side menu and breadcrumbs
 
