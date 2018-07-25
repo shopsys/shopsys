@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#335 - Possibility to add a new administration page](https://github.com/shopsys/shopsys/pull/335)
     - added cookbook [Adding a New Administration Page](/docs/cookbook/adding-a-new-administration-page.md) along with the side menu and breadcrumbs
 - [#344 - Adding elasticsearch into technology stack](https://github.com/shopsys/shopsys/pull/344)
+    - elasticsearch docker container: volumes are now set in order to preserve data when the container is shut down
 
 #### Changed
 - [#286 - Instantiate entity data objects by factories](https://github.com/shopsys/shopsys/pull/286)
