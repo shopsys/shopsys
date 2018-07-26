@@ -2,18 +2,18 @@
 
 # Add to a monorepo from specified remotes
 # You must first add the remotes by "git remote add <remote-name> <repository-url>" and fetch from them by "git fetch --all"
-# Final monorepo will contain all branches from the first remote and master branches of all remotes will be merged
+# It will merge master branches of the monorepo and all remotes together while keeping all current branches in monorepo intact
 # If subdirectory is not specified remote name will be used instead
 #
 # Usage: monorepo_add.sh <remote-name>[:<subdirectory>] <remote-name>[:<subdirectory>] ...
 #
-# Example: monorepo_add.sh additional-repository package-alpha:packages/alpha package-beta:packages/beta
+# Example: monorepo_add.sh additional-repository package-gamma:packages/gamma package-delta:packages/delta
 
 # Check provided arguments
 if [ "$#" -lt "1" ]; then
     echo 'Please provide at least 1 remote to be added into an existing monorepo'
     echo 'Usage: monorepo_add.sh <remote-name>[:<subdirectory>] <remote-name>[:<subdirectory>] ...'
-    echo 'Example: monorepo_add.sh additional-repository package-alpha:packages/alpha package-beta:packages/beta'
+    echo 'Example: monorepo_add.sh additional-repository package-gamma:packages/gamma package-delta:packages/delta'
     exit
 fi
 # Get directory of the other scripts
