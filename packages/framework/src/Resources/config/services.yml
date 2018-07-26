@@ -283,8 +283,6 @@ services:
     tags:
       - { name: kernel.event_subscriber }
 
-  Shopsys\FrameworkBundle\Component\Microservice\MicroserviceClient: ~
-
   Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestService:
     tags:
       - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
@@ -502,6 +500,10 @@ services:
     tags:
       # must be ran after CategoryVisibilityRepository and ProductPriceRecalculator
       - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 10 }
+
+  Shopsys\FrameworkBundle\Model\Product\Search\ProductSearchRepository:
+    arguments:
+      $microserviceProductSearchClient: '@shopsys.microservice_client.product_search'
 
   # Define RedirectController explicitly to prevent creating it on-the-fly
   # when redirecting (it causes unnecessary container rebuild).
@@ -906,3 +908,8 @@ services:
 
   Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
     alias: Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
+
+  shopsys.microservice_client.product_search:
+    factory: 'Shopsys\FrameworkBundle\Component\Microservice\MicroserviceClientFactory:create'
+    arguments:
+      $microserviceUrl: '%microservice_product_search_url%'
