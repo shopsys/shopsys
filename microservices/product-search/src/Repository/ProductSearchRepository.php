@@ -12,9 +12,15 @@ class ProductSearchRepository
      */
     private $tsqueryFactory;
 
-    public function __construct(TsqueryFactory $tsqueryFactory)
+    /**
+     * @var string
+     */
+    private $pgConnectionString;
+
+    public function __construct(TsqueryFactory $tsqueryFactory, string $pgConnectionString)
     {
         $this->tsqueryFactory = $tsqueryFactory;
+        $this->pgConnectionString = $pgConnectionString;
     }
 
     /**
@@ -28,7 +34,7 @@ class ProductSearchRepository
             return [];
         }
 
-        $connection = pg_connect("host=postgres dbname=shopsys user=root password=root");
+        $connection = pg_connect($this->pgConnectionString);
         $sql = '
           SELECT p.id, CASE
                 WHEN (
