@@ -16,6 +16,7 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 * [shopsys/product-feed-heureka]
 * [shopsys/product-feed-heureka-delivery]
 * [shopsys/product-feed-zbozi]
+* [shopsys/microservice-product-search]
 
 Packages are formatted by release version. You can see all the changes done to package that you carry about with this tree.
 
@@ -32,7 +33,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 #### Added
 - [#335 - Possibility to add a new administration page](https://github.com/shopsys/shopsys/pull/335)
     - added cookbook [Adding a New Administration Page](/docs/cookbook/adding-a-new-administration-page.md) along with the side menu and breadcrumbs
-
+- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
+    - added [Microservice Product Search](/microservices/product-search/README.md), microservice is used for the searching of products on Shopsys Framework 
+    - added MicroserviceClient component
 #### Changed
 - [#302 - All persistent files like uploads are now stored using abstract filesystem (Flysystem)](https://github.com/shopsys/shopsys/pull/302)
     - abstract filesystem is used to store:
@@ -74,6 +77,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#341 - Category entity in constructor of CategoryRepository is resolved via EntityNameResolver](https://github.com/shopsys/shopsys/pull/341)
 - [#364 - Admin: brand form is rendered via BrandFormType](https://github.com/shopsys/shopsys/pull/364)
 - [#370 - MultidomainEntityClassFinderFacade: metadata are checked on class name resolved by EntityNameResolver](https://github.com/shopsys/shopsys/pull/370)
+- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
+    - added [Microservice Product Search](/microservices/product-search/README.md), microservice is used for the searching of products on Shopsys Framework 
 
 #### Fixed
 - [#304 - Unnecessary SQL queries on category detail in admin](https://github.com/shopsys/shopsys/pull/304):
@@ -106,9 +111,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 #### Added
 - [#320 - Docs: overview of possible and impossible glassbox customizations](https://github.com/shopsys/shopsys/pull/320)
     - added [framework-extensibility.md](/docs/introduction/framework-extensibility.md) article
+- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
+    - added [Microservice Product Search](/microservices/product-search/README.md), microservice is used for the searching of products on Shopsys Framework 
+
 #### Changed
 - [#296 - normalize phing target "timezones-check"](https://github.com/shopsys/shopsys/pull/296): [@pk16011990]
+- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
+    - now the following phing targets are also triggered over the microservice
+        - standards
+        - standards-diff
+        - standards-fix
+        - standards-fix-diff
+        - standards-packages
+        - standards-fix-packages
+        - standards-fix-packages-diff
 
+    
 ### [shopsys/monorepo-tools]
 #### Added
 - [#345 - monorepo-tools: allow incremental build of monorepo](https://github.com/shopsys/shopsys/pull/345) [@lukaso]
@@ -182,6 +200,11 @@ It was only important with [the original open-box architecture](https://blog.sho
 - [#315 - Route logout/ without csrf token returns not found](https://github.com/shopsys/shopsys/pull/315)
     - route logout/ must to be called with token in every case because LogoutListener from Symfony throws exception if token generator is set in configuration of firewall but the route logout is used without csrf token parameter
 - [#339 - Downgrade snc/redis-bundle to 2.1.4 due to Issue in phpredis](https://github.com/shopsys/shopsys/pull/339)
+
+### [shopsys/microservice-product-search]
+#### Added
+- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
+    - the repository was added, extracting current product search of Shopsys Framework
 
 ## [7.0.0-alpha3] - 2018-07-03
 ### [shopsys/framework]
@@ -1327,6 +1350,7 @@ That's why is this section formatted differently.
 [shopsys/form-types-bundle]: https://github.com/shopsys/form-types-bundle
 [shopsys/migrations]: https://github.com/shopsys/migrations
 [shopsys/monorepo-tools]: https://github.com/shopsys/monorepo-tools
+[shopsys/microservice-product-search]: https://github.com/shopsys/microservice-product-search
 
 [@pk16011990]: https://github.com/pk16011990
 [@stanoMilan]: https://github.com/stanoMilan
