@@ -110,7 +110,7 @@ Usage: `monorepo_split.sh <remote-name>[:<subdirectory>] <remote-name>[:<subdire
 
 ### [monorepo_add.sh](./monorepo_add.sh)
 
-Add to an existing monorepo from specified remotes. The remotes must be already added to your repository and fetched. Only master branch will be added from each repo.
+Add repositories to an existing monorepo from specified remotes. The remotes must be already added to your repository and fetched. Only master branch will be added from each repo.
 
 Usage: `monorepo_add.sh <remote-name>[:<subdirectory>] <remote-name>[:<subdirectory>] ...`
 
