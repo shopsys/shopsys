@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      volumes:
+        - name: data
+          hostPath:
+            path: /workspace
+      containers:
+      - name: postgres
+        image: postgres:9.5-alpine
+        ports:
+        - name: postgres
+          containerPort: 5432
+          protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /var/lib/postgresql/data
+        env:
+          - name: POSTGRES_USER
+            value: root
+          - name: POSTGRES_PASSWORD
+            value: root
+          - name: POSTGRES_DB
+            value: shopsys
+

@@ -1,0 +1,160 @@
+defaults: &defaults
+  docker:
+    - image: petrpliska/shopsys-buildpack:0.1.1
+      auth:
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
+  working_directory: ~/source
+
+login-to-dockerhub: &login-to-dockerhub
+  name: Login to Docker hub
+  command: echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
+
+version: 2
+jobs:
+  deploy-to-k8s:
+    <<: *defaults
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+           <<: *login-to-dockerhub
+      - run:
+          name: Build docker image
+          command: |
+            # Calculate Docker image tag from Dockerfile checksum. Docker Image tag is used later in Kubernetes deployment.
+            # On shopsys development server we can assume, that Docker image used by Kubernetes deployment will be always present, because it was builded on same server.
+            # In common we should push this image into Docker registry and use image from registry later.
+            DOCKER_IMAGE="${DOCKER_IMAGE:=shopsys/shopsys}"
+            DOCKER_IMAGE_TAG="$(cksum Dockerfile | cut -d ' ' -f1)"
+            WWW_DATA_UID="${WWW_DATA_UID:=$(id -u)}"
+            WWW_DATA_GID="${WWW_DATA_GID:=$(id -g)}"
+            docker image pull $DOCKER_IMAGE:$DOCKER_IMAGE_TAG || (docker image build \
+              --build-arg www_data_uid=$WWW_DATA_UID \
+              --build-arg www_data_gid=$WWW_DATA_GID \
+              --tag $DOCKER_IMAGE:$DOCKER_IMAGE_TAG \
+              --tag $DOCKER_IMAGE:latest . && \
+            # Push image into docker registry
+            docker image push $DOCKER_IMAGE:$DOCKER_IMAGE_TAG &&
+            docker image push $DOCKER_IMAGE:latest)
+          working_directory: project-base/docker/php-fpm
+      - run:
+          # Setup connection to minikube kubernetes cluster cluster
+          name: Setup Kubernetes cluster connection
+          command: |
+            mkdir -p ~/.minikube
+            mkdir -p ~/.kube
+            echo -e $KUBERNETES_CONFIG_FILE > ~/.kube/config
+            echo -e $KUBERNETES_CA_CRT > ~/.minikube/ca.crt
+            echo -e $KUBERNETES_CLIENT_CRT > ~/.minikube/client.crt
+            echo -e $KUBERNETES_CLIENT_KEY > ~/.minikube/client.key
+      - run:
+          name: Generate Kubernetes manifests for current build
+          command: |
+            DOCKER_IMAGE_TAG="$(cksum ../docker/php-fpm/Dockerfile | cut -d ' ' -f1)"
+            # Write domain records into ingress resource
+            yq write --inplace ingress.yml spec.rules[0].host $CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
+            yq write --inplace ingress.yml spec.rules[1].host 2.$CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
+            # Following 2 lines are very important. We must redeploy postgress and webserver because of hostPath volumes
+            yq write --inplace deployments/postgres.yml spec.template.metadata.labels.commit $CIRCLE_SHA1
+            yq write --inplace deployments/postgres.yml spec.selector.matchLabels.commit $CIRCLE_SHA1
+            yq write --inplace deployments/webserver.yml spec.template.metadata.labels.commit $CIRCLE_SHA1
+            yq write --inplace deployments/webserver.yml spec.selector.matchLabels.commit $CIRCLE_SHA1
+            # Replace docker image in deployment definition
+            yq write --inplace deployments/webserver.yml spec.template.spec.containers[0].image $DOCKER_IMAGE:$DOCKER_IMAGE_TAG
+            # Add domain to pod hosts
+            yq write --inplace deployments/webserver.yml spec.template.spec.hostAliases[0].hostnames[2] $CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
+            yq write --inplace deployments/webserver.yml spec.template.spec.hostAliases[0].hostnames[3] 2.$CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
+            # Add path to persistent volumes
+            yq write --inplace deployments/webserver.yml spec.template.spec.volumes[0].hostPath.path /workspace/shopsys/$CIRCLE_BRANCH/source
+            yq write --inplace deployments/postgres.yml spec.template.spec.volumes[0].hostPath.path /workspace/shopsys/$CIRCLE_BRANCH/db
+            # Create configmap manifests
+            kubectl create configmap nginx-configuration --from-file ../../docker/nginx/nginx.conf --dry-run --output=yaml > nginx-configuration.yml
+            kubectl create configmap php-configuration --from-file ../docker/php-fpm/php-ini-overrides.ini --dry-run --output=yaml > php-configuration.yml
+          working_directory: project-base/k8s
+          environment:
+            DEVELOPMENT_SERVER_DOMAIN: p4a.me
+      - run:
+          name: Setup domain a parameters files
+          command: |
+            # Copy files from teplates
+            cp project-base/app/config/domains_urls.yml.dist project-base/app/config/domains_urls.yml
+            cp project-base/app/config/parameters_test.yml.dist project-base/app/config/parameters_test.yml
+            cp project-base/app/config/parameters.yml.dist project-base/app/config/parameters.yml
+            # Add domains into domain file
+            yq write --inplace project-base/app/config/domains_urls.yml domains_urls[0].url http://$CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
+            yq write --inplace project-base/app/config/domains_urls.yml domains_urls[1].url http://2.$CIRCLE_BRANCH.$DEVELOPMENT_SERVER_DOMAIN
+          environment:
+            DEVELOPMENT_SERVER_DOMAIN: p4a.me
+      - run:
+          # This step simply copies source code over ssh and set required permisions
+          name: Copy source into cluster
+          command: |
+            # write ssl certificate from ENV variable into a file and set required permissions
+            echo -e $SERVER_SSL_CERT > ~/shopsys
+            chmod 0400 ~/shopsys
+            # create archive with source code
+            cd .. && tar -zcvf source.tar.gz source
+            # create workspace directory if not exists
+            ssh -o "StrictHostKeyChecking no" -i ~/shopsys root@shopsys.p4a.me mkdir -p /workspace/shopsys/$CIRCLE_BRANCH
+            # remove database and source code from cluster
+            ssh -i ~/shopsys root@shopsys.p4a.me rm -rf /workspace/shopsys/$CIRCLE_BRANCH/*
+            # copy source codes in cluster
+            scp -i ~/shopsys source.tar.gz root@shopsys.p4a.me:/workspace/shopsys/$CIRCLE_BRANCH/source.tar.gz
+            # unpack source codes on server
+            ssh -i ~/shopsys root@shopsys.p4a.me tar -zxvf /workspace/shopsys/$CIRCLE_BRANCH/source.tar.gz -C /workspace/shopsys/$CIRCLE_BRANCH/
+            # remove archive
+            ssh -i ~/shopsys root@shopsys.p4a.me rm /workspace/shopsys/$CIRCLE_BRANCH/source.tar.gz
+            # create directory for database persistent volume
+            ssh -i ~/shopsys root@shopsys.p4a.me mkdir -p /workspace/shopsys/$CIRCLE_BRANCH/db
+            # change file owner to www-data user (same as in container)
+            ssh -i ~/shopsys root@shopsys.p4a.me chown -R www-data:www-data /workspace/shopsys/$CIRCLE_BRANCH
+      - run:
+          name: Deploy application to Kubernetes cluster
+          command: |
+            # Delete namespace (we need redeploy deployments)
+            kubectl delete namespace $CIRCLE_BRANCH || true
+            # Create kubernetes namepace if not exists
+            kubectl create namespace $CIRCLE_BRANCH || true
+            # After this command you will comunicate with newly created namespace in every kubectl command
+            kubectl config set-context $(kubectl config current-context) --namespace=$CIRCLE_BRANCH
+            # Deploy into cluster
+            kubectl apply --recursive -f .
+          working_directory: project-base/k8s
+      - run:
+          name: Wait for rollouts
+          command: |
+            # This waits until all resources are deployed
+            # Whole step will be reduced to one command in the future(When readiness probe will be implemented)
+            kubectl rollout status deployment/adminer --watch
+            kubectl rollout status deployment/postgres --watch
+            kubectl rollout status deployment/redis --watch
+            kubectl rollout status deployment/redis-admin --watch
+            kubectl rollout status deployment/selenium-server --watch
+            kubectl rollout status deployment/smtp-server --watch
+            kubectl rollout status deployment/webserver --watch
+      - store_artifacts:
+          path: project-base/k8s
+      - store_artifacts:
+          path: project-base/app/config
+      - run:
+          name: Install composer dependencies
+          command: |
+            PHP_FPM_POD=$(kubectl get pods -l app=webserver,commit=$CIRCLE_SHA1 -o=jsonpath='{.items[0].metadata.name}')
+            kubectl exec $PHP_FPM_POD -c php -- composer config -g github-oauth.github.com $COMPOSER_GITHUB_OATUH_TOKEN
+            kubectl exec $PHP_FPM_POD -c php -- composer global require hirak/prestissimo
+            kubectl exec $PHP_FPM_POD -c php -- composer install --optimize-autoloader --no-interaction --no-progress
+      - run:
+          name: Run tests
+          command: |
+            PHP_FPM_POD=$(kubectl get pods -l app=webserver,commit=$CIRCLE_SHA1 -o=jsonpath='{.items[0].metadata.name}')
+            kubectl exec $PHP_FPM_POD -c php ./phing db-create test-db-create build-demo-ci
+
+workflows:
+  version: 2
+  deployment:
+    jobs:
+      - deploy-to-k8s:
+          filters:
+            tags:
+              ignore: /.*/

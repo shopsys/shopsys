@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  webserver
+  labels:
+    app: webserver
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: webserver
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      hostAliases:
+      - ip: "127.0.0.1"
+        hostnames:
+        - "php-fpm"
+        - "webserver"
+      volumes:
+        - name: sources
+          hostPath:
+            path: /workspace
+        - name: nginx-configuration
+          configMap:
+            name: nginx-configuration
+            items:
+            - key: nginx.conf
+              path: default.conf
+        - name: php-configuration
+          configMap:
+            name: php-configuration
+            items:
+            - key: php-ini-overrides.ini
+              path: php.ini
+      containers:
+      - image: $PHP_FPM_IMAGE
+        name: php
+        volumeMounts:
+          - name: php-configuration
+            mountPath: /usr/local/etc/php/php.ini
+            subPath: php.ini
+          - name: sources
+            mountPath: /var/www/html
+      - image: nginx:1.13.10-alpine
+        name: nginx
+        ports:
+          - containerPort: 8080
+            name: http
+        volumeMounts:
+          - name: nginx-configuration
+            mountPath: /etc/nginx/conf.d
+          - name: sources
+            mountPath: /var/www/html
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - nginx -s quit
