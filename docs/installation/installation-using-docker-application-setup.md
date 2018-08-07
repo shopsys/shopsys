@@ -3,15 +3,58 @@
 This guide expects that you have already set up your Docker environment.
 If you haven't already done that check the [Installation Using Docker](installation-using-docker.md).
 
-## 1. Setup the application
-Now that the Docker environment is prepared we can setup the application itself.
+## 1. Setup the microservice for product search
+Installing of Shopsys Framework from a project-base requires manual cloning of the [repository of the microservice](https://github.com/shopsys/microservice-product-search).
+Clone the repository inside a separate directory and configure the container in your `docker-compose.yml`:
+```yaml
+    microservice-product-search:
+        build:
+            context: ../microservice-product-search/docker
+            args:
+                www_data_uid: 1000
+                www_data_gid: 1000
+        container_name: shopsys-framework-microservice-product-search
+        volumes:
+            - ../microservice-product-search:/var/www/html
+            - ../microservice-product-search/docker/php-ini-overrides.ini:/usr/local/etc/php/php.ini
+        links:
+            - postgres
+        depends_on:
+            - postgres
+```
+*Note: If you have edited the docker-compose.yml, you should re-run the docker-compose command --force-recreate -d
+*Note: There can be differences in the configuration on different OS. It should be similar to the `php-fpm`'s configuration.*
 
 ### 1.1. Connect into terminal of the Docker container
+```
+docker exec -it shopsys-framework-microservice-product-search sh
+```
+### 1.2. Install dependencies
+```
+composer install
+```
+### 1.3. Run the server
+Since the microservice acts as a fully independent unit, it needs a separate web server.
+In the current version of this experimental microservice, the PHP's built-in Web Server is used.
+
+You can start the server by executing the command:
+```
+php bin/console server:run *:8000
+```
+
+In this moment the microservice is ready for the requests processing.
+
+*Note: You can switch the running process to run in the background by pressing `CTRL+Z` and executing `bg`.*
+
+## 2. Setup the Shopsys Framework application
+Now that the Docker environment is prepared and the product search microservice is up and running, we can setup the application itself.
+
+### 2.1. Connect into terminal of the Docker container
 ```
 docker exec -it shopsys-framework-php-fpm sh
 ```
 
-### 1.2. Install dependencies and configure parameters
+### 2.2. Install dependencies and configure parameters
 ```
 composer install
 ```
@@ -35,26 +78,26 @@ For development choose `n` when asked `Build in production environment? (Y/n)`.
 
 It will set the environment in your application to `dev` (this will, for example, show Symfony Web Debug Toolbar).
 
-### 1.3. Configure domains
+### 2.3. Configure domains
 Create `domains_urls.yml` from `domains_urls.yml.dist`.
 
 ```
 cp app/config/domains_urls.yml.dist app/config/domains_urls.yml
 ```
 
-### 1.4. Create databases
+### 2.4. Create databases
 ```
 php phing db-create
 php phing test-db-create
 ```
 
-### 1.5. Build the application
+### 2.5. Build the application
 ```
 php phing build-demo-dev
 php phing img-demo
 ```
 
-## 2. See it in your browser!
+## 3. See it in your browser!
 
 Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see running application.
 

@@ -501,6 +501,10 @@ services:
       # must be ran after CategoryVisibilityRepository and ProductPriceRecalculator
       - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 10 }
 
+  Shopsys\FrameworkBundle\Model\Product\Search\ProductSearchRepository:
+    arguments:
+      $microserviceProductSearchClient: '@shopsys.microservice_client.product_search'
+
   # Define RedirectController explicitly to prevent creating it on-the-fly
   # when redirecting (it causes unnecessary container rebuild).
   Symfony\Bundle\FrameworkBundle\Controller\RedirectController:
@@ -904,3 +908,8 @@ services:
 
   Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
     alias: Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
+
+  shopsys.microservice_client.product_search:
+    factory: 'Shopsys\FrameworkBundle\Component\Microservice\MicroserviceClientFactory:create'
+    arguments:
+      $microserviceUrl: '%microservice_product_search_url%'

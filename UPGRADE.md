@@ -14,6 +14,7 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 * [shopsys/product-feed-heureka]
 * [shopsys/product-feed-heureka-delivery]
 * [shopsys/product-feed-zbozi]
+* [shopsys/microservice-product-search]
 
 ## [From 7.0.0-alpha4 to Unreleased]
 
@@ -37,6 +38,10 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 ### [shopsys/product-feed-zbozi]
 - move creation of data objects into factories
 - already existing data object factories changed their signatures
+
+### [shopsys/microservice-product-search]
+- a new experimental microservice was added to the Shopsys Framework
+- it needs to be [installed and run](/docs/installation/installation-using-docker-application-setup.md) (and [configured if installed natively](/docs/installation/native-installation.md)) for the product search to work
 
 ## [From 7.0.0-alpha2 to 7.0.0-alpha3]
 
@@ -251,3 +256,4 @@ parameters:
 [shopsys/form-types-bundle]: https://github.com/shopsys/form-types-bundle 
 [shopsys/migrations]: https://github.com/shopsys/migrations 
 [shopsys/monorepo-tools]: https://github.com/shopsys/monorepo-tools
+[shopsys/microservice-product-search]: https://github.com/shopsys/microservice-product-search

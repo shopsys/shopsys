@@ -3,19 +3,23 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
-use Shopsys\FrameworkBundle\Component\String\TsqueryFactory;
+use Shopsys\FrameworkBundle\Component\Microservice\MicroserviceClient;
 
 class ProductSearchRepository
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\String\TsqueryFactory
+     * @var \Shopsys\FrameworkBundle\Component\Microservice\MicroserviceClient
      */
-    private $tsqueryFactory;
+    protected $microserviceProductSearchClient;
 
-    public function __construct(TsqueryFactory $tsqueryFactory)
+    /**
+     * @var int[][][]
+     */
+    protected $foundProductIdsCache = [];
+
+    public function __construct(MicroserviceClient $microserviceProductSearchClient)
     {
-        $this->tsqueryFactory = $tsqueryFactory;
+        $this->microserviceProductSearchClient = $microserviceProductSearchClient;
     }
 
     /**
@@ -24,13 +28,10 @@ class ProductSearchRepository
      */
     public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText)
     {
-        if ($this->tsqueryFactory->isValidSearchText($searchText)) {
-            $productQueryBuilder
-                ->andWhere('TSQUERY(pd.fulltextTsvector, :fulltextQuery) = TRUE')
-                ->setParameter(
-                    'fulltextQuery',
-                    $this->tsqueryFactory->getTsqueryWithAndConditionsAndPrefixMatchForLastWord($searchText)
-                );
+        $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
+
+        if (count($productIds) > 0) {
+            $productQueryBuilder->andWhere('p.id IN (:productIds)')->setParameter('productIds', $productIds);
         } else {
             $productQueryBuilder->andWhere('TRUE = FALSE');
         }
@@ -42,58 +43,41 @@ class ProductSearchRepository
      */
     public function addRelevance(QueryBuilder $productQueryBuilder, $searchText)
     {
-        $productQueryBuilder->addSelect('
-            CASE
-                WHEN (
-                    NORMALIZE(pt.name) LIKE NORMALIZE(:searchTextLikeWithWildcardOnLeftAndSpaceAndWildcardOnRight)
-                    OR
-                    NORMALIZE(pt.name) LIKE NORMALIZE(:searchTextLikeWithWildcardOnLeft)
-                ) THEN 1
-                WHEN TSQUERY(pt.nameTsvector, :searchTextTsqueryAnd) = TRUE THEN 2
-                WHEN TSQUERY(p.catnumTsvector, :searchTextTsqueryOr) = TRUE THEN 3
-                WHEN TSQUERY(p.partnoTsvector, :searchTextTsqueryOr) = TRUE THEN 4
-                WHEN NORMALIZE(pt.name) LIKE NORMALIZE(:searchTextLikeWithWildcardsOnBothSides) THEN 5
-                WHEN TSQUERY(pt.nameTsvector, :searchTextTsqueryAndWithPrefixMatchForLastWord) = TRUE THEN 6
-                WHEN TSQUERY(pd.descriptionTsvector, :searchTextTsqueryAnd) = TRUE THEN 7
-                WHEN TSQUERY(pt.nameTsvector, :searchTextTsqueryOr) = TRUE THEN 8
-                WHEN TSQUERY(pt.nameTsvector, :searchTextTsqueryOrWithPrefixMatchForLastWord) = TRUE THEN 9
-                ELSE 10
-            END AS HIDDEN relevance
-        ');
+        $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
 
-        $productQueryBuilder->setParameter(
-            'searchTextLikeWithWildcardsOnBothSides',
-            DatabaseSearching::getFullTextLikeSearchString($searchText)
-        );
+        if (count($productIds) > 0) {
+            $sqlCases = [];
+            foreach ($productIds as $index => $productId) {
+                $sqlCases[] = sprintf('WHEN p.id = %d THEN %d', $productId, $index);
+            }
+            $sqlCases[] = sprintf('ELSE %d', count($productIds));
+            $relevanceSql = 'CASE ' . implode(' ', $sqlCases) . ' END';
+        } else {
+            $relevanceSql = '0';
+        }
 
-        $productQueryBuilder->setParameter(
-            'searchTextLikeWithWildcardOnLeft',
-            '%' . DatabaseSearching::getLikeSearchString($searchText)
-        );
+        $productQueryBuilder->addSelect($relevanceSql . ' AS HIDDEN relevance');
+    }
 
-        $productQueryBuilder->setParameter(
-            'searchTextLikeWithWildcardOnLeftAndSpaceAndWildcardOnRight',
-            '%' . DatabaseSearching::getLikeSearchString($searchText) . ' %'
-        );
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
+     * @param $searchText
+     * @return int[]
+     */
+    protected function getFoundProductIds(QueryBuilder $productQueryBuilder, $searchText)
+    {
+        $domainId = $productQueryBuilder->getParameter('domainId')->getValue();
 
-        $productQueryBuilder->setParameter(
-            'searchTextTsqueryAnd',
-            $this->tsqueryFactory->getTsqueryWithAndConditions($searchText)
-        );
+        if (!isset($this->foundProductIdsCache[$domainId][$searchText])) {
+            $searchResult = $this->microserviceProductSearchClient->get('product-ids', [
+                'searchText' => $searchText,
+                'domainId' => $domainId,
+            ]);
+            $foundProductIds = $searchResult->productIds;
 
-        $productQueryBuilder->setParameter(
-            'searchTextTsqueryAndWithPrefixMatchForLastWord',
-            $this->tsqueryFactory->getTsqueryWithAndConditionsAndPrefixMatchForLastWord($searchText)
-        );
+            $this->foundProductIdsCache[$domainId][$searchText] = $foundProductIds;
+        }
 
-        $productQueryBuilder->setParameter(
-            'searchTextTsqueryOr',
-            $this->tsqueryFactory->getTsqueryWithOrConditions($searchText)
-        );
-
-        $productQueryBuilder->setParameter(
-            'searchTextTsqueryOrWithPrefixMatchForLastWord',
-            $this->tsqueryFactory->getTsqueryWithOrConditionsAndPrefixMatchForLastWord($searchText)
-        );
+        return $this->foundProductIdsCache[$domainId][$searchText];
     }
 }
