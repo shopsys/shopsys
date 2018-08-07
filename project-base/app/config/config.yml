@@ -65,6 +65,8 @@ doctrine:
         is_bundle: false
     hydrators:
       GroupedScalarHydrator: \Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator
+    resolve_target_entities:
+      Shopsys\FrameworkBundle\Model\Order\OrderInterface: Shopsys\FrameworkBundle\Model\Order\Order
 
 doctrine_migrations:
     table_name: migrations

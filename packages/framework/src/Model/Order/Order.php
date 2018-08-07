@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
  * @ORM\Table(name="orders")
  * @ORM\Entity
  */
-class Order
+class Order implements OrderInterface
 {
     /**
      * @var int
