@@ -52,11 +52,8 @@ class AdministratorFacade
 
         return $administrator;
     }
-
-    /**
-     * @param int $administratorId
-     */
-    public function edit($administratorId, AdministratorData $administratorData): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    
+    public function edit(int $administratorId, AdministratorData $administratorData): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->administratorRepository->getById($administratorId);
         $administratorByUserName = $this->administratorRepository->findByUserName($administratorData->username);
@@ -70,11 +67,8 @@ class AdministratorFacade
 
         return $administratorEdited;
     }
-
-    /**
-     * @param int $administratorId
-     */
-    public function delete($administratorId)
+    
+    public function delete(int $administratorId): void
     {
         $administrator = $this->administratorRepository->getById($administratorId);
         $adminCountExcludingSuperadmin = $this->administratorRepository->getCountExcludingSuperadmin();
@@ -82,22 +76,15 @@ class AdministratorFacade
         $this->em->remove($administrator);
         $this->em->flush();
     }
-
-    /**
-     * @param string $administratorUsername
-     * @param string $newPassword
-     */
-    public function changePassword($administratorUsername, $newPassword)
+    
+    public function changePassword(string $administratorUsername, string $newPassword): void
     {
         $administrator = $this->administratorRepository->getByUserName($administratorUsername);
         $this->administratorService->setPassword($administrator, $newPassword);
         $this->em->flush($administrator);
     }
-
-    /**
-     * @param int $administratorId
-     */
-    public function getById($administratorId): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    
+    public function getById(int $administratorId): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->administratorRepository->getById($administratorId);
     }

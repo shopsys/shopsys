@@ -28,11 +28,8 @@ class AdminDomainTabsFacade
     {
         return $this->getSelectedDomainConfig()->getId();
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function setSelectedDomainId($domainId)
+    
+    public function setSelectedDomainId(int $domainId): void
     {
         $domainConfig = $this->domain->getDomainConfigById($domainId);
         $this->session->set(self::SESSION_SELECTED_DOMAIN, $domainConfig->getId());

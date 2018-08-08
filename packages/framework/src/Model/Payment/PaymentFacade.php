@@ -96,32 +96,26 @@ class PaymentFacade
         return $payment;
     }
 
-    public function edit(Payment $payment, PaymentData $paymentData)
+    public function edit(Payment $payment, PaymentData $paymentData): void
     {
         $payment->edit($paymentData);
         $this->updatePaymentPrices($payment, $paymentData->pricesByCurrencyId);
         $this->setAdditionalDataAndFlush($payment, $paymentData);
     }
-
-    /**
-     * @param int $id
-     */
-    public function getById($id): \Shopsys\FrameworkBundle\Model\Payment\Payment
+    
+    public function getById(int $id): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->paymentRepository->getById($id);
     }
-
-    /**
-     * @param int $id
-     */
-    public function deleteById($id)
+    
+    public function deleteById(int $id): void
     {
         $payment = $this->getById($id);
         $payment->markAsDeleted();
         $this->em->flush();
     }
 
-    protected function setAdditionalDataAndFlush(Payment $payment, PaymentData $paymentData)
+    protected function setAdditionalDataAndFlush(Payment $payment, PaymentData $paymentData): void
     {
         $transports = $this->transportRepository->getAllByIds($paymentData->transports);
         $payment->setTransports($transports);
@@ -138,10 +132,9 @@ class PaymentFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getVisibleByDomainId($domainId): array
+    public function getVisibleByDomainId(int $domainId): array
     {
         $allPayments = $this->paymentRepository->getAll();
 
@@ -151,7 +144,7 @@ class PaymentFacade
     /**
      * @param string[] $pricesByCurrencyId
      */
-    protected function updatePaymentPrices(Payment $payment, $pricesByCurrencyId)
+    protected function updatePaymentPrices(Payment $payment, $pricesByCurrencyId): void
     {
         foreach ($this->currencyFacade->getAll() as $currency) {
             $price = $pricesByCurrencyId[$currency->getId()];

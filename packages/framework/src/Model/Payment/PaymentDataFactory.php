@@ -57,7 +57,7 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         return $paymentData;
     }
 
-    protected function fillFromPayment(PaymentData $paymentData, Payment $payment)
+    protected function fillFromPayment(PaymentData $paymentData, Payment $payment): void
     {
         $paymentData->vat = $payment->getVat();
         $paymentData->hidden = $payment->isHidden();

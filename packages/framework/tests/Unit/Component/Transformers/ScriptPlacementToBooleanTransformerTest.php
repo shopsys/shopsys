@@ -9,7 +9,7 @@ use stdClass;
 
 class ScriptPlacementToBooleanTransformerTest extends TestCase
 {
-    public function testTransform()
+    public function testTransform(): void
     {
         $allPagesPlacement = Script::PLACEMENT_ALL_PAGES;
         $orderPagePlacement = Script::PLACEMENT_ORDER_SENT_PAGE;
@@ -22,7 +22,7 @@ class ScriptPlacementToBooleanTransformerTest extends TestCase
     /**
      * @dataProvider reverseTransformDataProvider
      */
-    public function testReverseTransform($scriptHasOrderPlacement, $scriptPlacement)
+    public function testReverseTransform($scriptHasOrderPlacement, $scriptPlacement): void
     {
         $transformer = new ScriptPlacementToBooleanTransformer();
 
@@ -32,7 +32,7 @@ class ScriptPlacementToBooleanTransformerTest extends TestCase
     /**
      * @dataProvider reverseTransformExceptionDataProvider
      */
-    public function testReverseTransformException($param)
+    public function testReverseTransformException($param): void
     {
         $transformer = new ScriptPlacementToBooleanTransformer();
 

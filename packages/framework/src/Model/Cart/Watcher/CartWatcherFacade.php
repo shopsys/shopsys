@@ -41,13 +41,13 @@ class CartWatcherFacade
         $this->currentCustomer = $currentCustomer;
     }
 
-    public function checkCartModifications(Cart $cart)
+    public function checkCartModifications(Cart $cart): void
     {
         $this->checkNotListableItems($cart);
         $this->checkModifiedPrices($cart);
     }
 
-    protected function checkModifiedPrices(Cart $cart)
+    protected function checkModifiedPrices(Cart $cart): void
     {
         $modifiedItems = $this->cartWatcherService->getModifiedPriceItemsAndUpdatePrices($cart);
 
@@ -63,7 +63,7 @@ class CartWatcherFacade
         }
     }
 
-    protected function checkNotListableItems(Cart $cart)
+    protected function checkNotListableItems(Cart $cart): void
     {
         $notVisibleItems = $this->cartWatcherService->getNotListableItems($cart, $this->currentCustomer);
 

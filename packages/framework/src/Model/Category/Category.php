@@ -90,7 +90,7 @@ class Category extends AbstractTranslatableEntity
         $this->createDomains($categoryData);
     }
 
-    public function edit(CategoryData $categoryData)
+    public function edit(CategoryData $categoryData): void
     {
         $this->setParent($categoryData->parent);
         $this->setTranslations($categoryData);
@@ -100,7 +100,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $parent
      */
-    public function setParent(self $parent = null)
+    public function setParent(self $parent = null): void
     {
         $this->parent = $parent;
     }
@@ -113,7 +113,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @param string|null $locale
      */
-    public function getName($locale = null): string
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -166,11 +166,8 @@ class Category extends AbstractTranslatableEntity
     {
         return $this->rgt;
     }
-
-    /**
-     * @param int $domainId
-     */
-    protected function getCategoryDomain($domainId): \Shopsys\FrameworkBundle\Model\Category\CategoryDomain
+    
+    protected function getCategoryDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Category\CategoryDomain
     {
         foreach ($this->domains as $categoryDomain) {
             if ($categoryDomain->getDomainId() === $domainId) {
@@ -181,7 +178,7 @@ class Category extends AbstractTranslatableEntity
         throw new CategoryDomainNotFoundException($this->id, $domainId);
     }
 
-    protected function setTranslations(CategoryData $categoryData)
+    protected function setTranslations(CategoryData $categoryData): void
     {
         foreach ($categoryData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -223,7 +220,7 @@ class Category extends AbstractTranslatableEntity
         return new CategoryTranslation();
     }
 
-    protected function setDomains(CategoryData $categoryData)
+    protected function setDomains(CategoryData $categoryData): void
     {
         foreach ($this->domains as $categoryDomain) {
             $domainId = $categoryDomain->getDomainId();
@@ -235,7 +232,7 @@ class Category extends AbstractTranslatableEntity
         }
     }
 
-    protected function createDomains(CategoryData $categoryData)
+    protected function createDomains(CategoryData $categoryData): void
     {
         $domainIds = array_keys($categoryData->seoTitles);
 

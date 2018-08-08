@@ -9,7 +9,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class QueryBuilderDataSourceTest extends DatabaseTestCase
 {
-    public function testGetOneRow()
+    public function testGetOneRow(): void
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /* @var $em \Doctrine\ORM\EntityManager */
@@ -26,7 +26,7 @@ class QueryBuilderDataSourceTest extends DatabaseTestCase
         $this->assertArrayHasKey('p', $row);
     }
 
-    public function testGetTotalRowsCount()
+    public function testGetTotalRowsCount(): void
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /* @var $em \Doctrine\ORM\EntityManager */
@@ -45,7 +45,7 @@ class QueryBuilderDataSourceTest extends DatabaseTestCase
         $this->assertSame(10, $count);
     }
 
-    public function testGetRows()
+    public function testGetRows(): void
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /* @var $em \Doctrine\ORM\EntityManager */
@@ -67,7 +67,7 @@ class QueryBuilderDataSourceTest extends DatabaseTestCase
         }
     }
 
-    public function testGetRowsInAscOrder()
+    public function testGetRowsInAscOrder(): void
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /* @var $em \Doctrine\ORM\EntityManager */
@@ -92,7 +92,7 @@ class QueryBuilderDataSourceTest extends DatabaseTestCase
         }
     }
 
-    public function testGetRowsInDescOrder()
+    public function testGetRowsInDescOrder(): void
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /* @var $em \Doctrine\ORM\EntityManager */

@@ -7,12 +7,9 @@ use Exception;
 class BadErrorPageStatusCodeException extends Exception implements ErrorException
 {
     /**
-     * @param string $url
-     * @param int $expectedStatusCode
-     * @param int $actualStatusCode
      * @param \Exception|null $previous
      */
-    public function __construct($url, $expectedStatusCode, $actualStatusCode, Exception $previous = null)
+    public function __construct(string $url, int $expectedStatusCode, int $actualStatusCode, Exception $previous = null)
     {
         $message = sprintf(
             'Error page "%s" has "%s" status code, expects "%s".',

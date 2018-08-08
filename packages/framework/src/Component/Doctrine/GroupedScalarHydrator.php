@@ -34,10 +34,8 @@ class GroupedScalarHydrator extends AbstractHydrator
     /**
      * Copies implementation of gatherScalarRowData(), but groups non-scalar columns
      * as array of columns.
-     *
-     * @param array $data
      */
-    private function gatherGroupedScalarRowData(&$data): array
+    private function gatherGroupedScalarRowData(array &$data): array
     {
         $rowData = [];
 

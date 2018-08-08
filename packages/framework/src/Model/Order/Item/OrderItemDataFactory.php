@@ -17,7 +17,7 @@ class OrderItemDataFactory implements OrderItemDataFactoryInterface
         return $orderItemData;
     }
 
-    protected function fillFromOrderItem(OrderItemData $orderItemData, OrderItem $orderItem)
+    protected function fillFromOrderItem(OrderItemData $orderItemData, OrderItem $orderItem): void
     {
         $orderItemData->name = $orderItem->getName();
         $orderItemData->priceWithVat = $orderItem->getPriceWithVat();

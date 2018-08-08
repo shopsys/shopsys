@@ -19,18 +19,13 @@ class OrderTransport extends OrderItem
      * @ORM\JoinColumn(nullable=true)
      */
     protected $transport;
-
-    /**
-     * @param string $name
-     * @param string $vatPercent
-     * @param int $quantity
-     */
+    
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
+        string $vatPercent,
+        int $quantity,
         Transport $transport
     ) {
         parent::__construct(
@@ -50,7 +45,7 @@ class OrderTransport extends OrderItem
         return $this->transport;
     }
 
-    public function edit(OrderItemData $orderTransportData)
+    public function edit(OrderItemData $orderTransportData): void
     {
         if ($orderTransportData instanceof OrderTransportData) {
             $this->transport = $orderTransportData->transport;

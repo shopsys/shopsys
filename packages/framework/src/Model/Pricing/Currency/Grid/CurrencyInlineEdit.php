@@ -36,22 +36,15 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
         $this->formFactory = $formFactory;
         $this->currencyDataFactory = $currencyDataFactory;
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     */
-    protected function createEntityAndGetId($currencyData): int
+    
+    protected function createEntityAndGetId(\Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData): int
     {
         $currency = $this->currencyFacade->create($currencyData);
 
         return $currency->getId();
     }
-
-    /**
-     * @param int $currencyId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     */
-    protected function editEntity($currencyId, $currencyData)
+    
+    protected function editEntity(int $currencyId, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData): void
     {
         $this->currencyFacade->edit($currencyId, $currencyData);
     }
@@ -59,7 +52,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
     /**
      * @param int|null $currencyId
      */
-    public function getForm($currencyId): \Symfony\Component\Form\FormInterface
+    public function getForm(?int $currencyId): \Symfony\Component\Form\FormInterface
     {
         if ($currencyId !== null) {
             $currency = $this->currencyFacade->getById((int)$currencyId);
@@ -76,7 +69,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
     /**
      * @param int|null $currencyId
      */
-    protected function isDefaultCurrencyId($currencyId): bool
+    protected function isDefaultCurrencyId(?int $currencyId): bool
     {
         if ($currencyId !== null) {
             $currency = $this->currencyFacade->getById($currencyId);

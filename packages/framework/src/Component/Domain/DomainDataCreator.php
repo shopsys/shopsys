@@ -76,11 +76,8 @@ class DomainDataCreator
 
         return $newDomainsCount;
     }
-
-    /**
-     * @param string $locale
-     */
-    private function isNewLocale($locale): bool
+    
+    private function isNewLocale(string $locale): bool
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             if ($domainConfig->getLocale() === $locale) {

@@ -19,15 +19,12 @@ class Cart
         $this->cartItems = $cartItems;
     }
 
-    public function addItem(CartItem $item)
+    public function addItem(CartItem $item): void
     {
         $this->cartItems[] = $item;
     }
-
-    /**
-     * @param int $cartItemId
-     */
-    public function removeItemById($cartItemId)
+    
+    public function removeItemById(int $cartItemId): void
     {
         foreach ($this->cartItems as $key => $cartItem) {
             if ($cartItem->getId() === $cartItemId) {
@@ -39,7 +36,7 @@ class Cart
         throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException($message);
     }
 
-    public function clean()
+    public function clean(): void
     {
         $this->cartItems = [];
     }

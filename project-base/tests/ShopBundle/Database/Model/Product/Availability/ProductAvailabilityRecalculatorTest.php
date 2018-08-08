@@ -12,7 +12,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class ProductAvailabilityRecalculatorTest extends DatabaseTestCase
 {
-    public function testRecalculateOnProductEditNotUsingStock()
+    public function testRecalculateOnProductEditNotUsingStock(): void
     {
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         /* @var $productFacade \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
@@ -39,7 +39,7 @@ class ProductAvailabilityRecalculatorTest extends DatabaseTestCase
         $this->assertSame($this->getReference(AvailabilityDataFixture::AVAILABILITY_ON_REQUEST), $productFromDb->getCalculatedAvailability());
     }
 
-    public function testRecalculateOnProductEditUsingStockInStock()
+    public function testRecalculateOnProductEditUsingStockInStock(): void
     {
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         /* @var $productFacade \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
@@ -70,7 +70,7 @@ class ProductAvailabilityRecalculatorTest extends DatabaseTestCase
         $this->assertSame($availabilityFacade->getDefaultInStockAvailability(), $productFromDb->getCalculatedAvailability());
     }
 
-    public function testRecalculateOnProductEditUsingStockOutOfStock()
+    public function testRecalculateOnProductEditUsingStockOutOfStock(): void
     {
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         /* @var $productFacade \Shopsys\FrameworkBundle\Model\Product\ProductFacade */

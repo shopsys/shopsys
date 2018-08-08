@@ -14,7 +14,7 @@ class Environment
      */
     private static $environmentFileSetting;
 
-    public static function checkEnvironment(Event $event)
+    public static function checkEnvironment(Event $event): void
     {
         $io = $event->getIO();
         /* @var $io \Composer\IO\IOInterface */
@@ -28,16 +28,13 @@ class Environment
         }
         self::printEnvironmentInfo($io);
     }
-
-    /**
-     * @param bool $console
-     */
-    public static function getEnvironment($console): string
+    
+    public static function getEnvironment(bool $console): string
     {
         return self::getEnvironmentFileSetting()->getEnvironment($console);
     }
 
-    public static function printEnvironmentInfo(IOInterface $io)
+    public static function printEnvironmentInfo(IOInterface $io): void
     {
         $io->write("\nEnvironment is <info>" . self::getEnvironment(false) . "</info>\n");
     }

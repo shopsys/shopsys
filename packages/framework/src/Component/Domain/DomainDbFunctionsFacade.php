@@ -23,7 +23,7 @@ class DomainDbFunctionsFacade
         $this->domain = $domain;
     }
 
-    public function createDomainDbFunctions()
+    public function createDomainDbFunctions(): void
     {
         $this->createDomainIdsByLocaleFunction();
         $this->createLocaleByDomainIdFunction();

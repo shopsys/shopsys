@@ -45,11 +45,8 @@ class TransportDomain
      * @ORM\Column(type="boolean")
      */
     protected $enabled = false;
-
-    /**
-     * @param int $domainId
-     */
-    public function __construct(Transport $transport, $domainId)
+    
+    public function __construct(Transport $transport, int $domainId)
     {
         $this->transport = $transport;
         $this->domainId = $domainId;
@@ -61,7 +58,7 @@ class TransportDomain
         return $this->domainId;
     }
 
-    public function setEnabled(bool $enabled)
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }

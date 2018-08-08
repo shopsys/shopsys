@@ -42,11 +42,8 @@ class ProductTranslation extends AbstractTranslation
     {
         return $this->name;
     }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -59,7 +56,7 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @param string|null $variantAlias
      */
-    public function setVariantAlias($variantAlias)
+    public function setVariantAlias(?string $variantAlias): void
     {
         $this->variantAlias = $variantAlias;
     }

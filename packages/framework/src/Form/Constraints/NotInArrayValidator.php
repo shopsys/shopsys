@@ -9,10 +9,7 @@ use Traversable;
 
 class NotInArrayValidator extends ConstraintValidator
 {
-    /**
-     * @param string $value
-     */
-    public function validate($value, Constraint $constraint)
+    public function validate(string $value, Constraint $constraint): void
     {
         if (!$constraint instanceof NotInArray) {
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, NotInArray::class);

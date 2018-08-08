@@ -28,7 +28,7 @@ class WysiwygTypeExtension extends AbstractTypeExtension
         $this->localization = $localization;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $cssVersion = $this->cssFacade->getCssVersion();
 

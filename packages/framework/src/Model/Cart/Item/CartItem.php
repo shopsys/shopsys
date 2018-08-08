@@ -65,16 +65,12 @@ class CartItem
      * @ORM\Column(type="datetime")
      */
     protected $addedAt;
-
-    /**
-     * @param int $quantity
-     * @param string $watchedPrice
-     */
+    
     public function __construct(
         CustomerIdentifier $customerIdentifier,
         Product $product,
-        $quantity,
-        $watchedPrice
+        int $quantity,
+        string $watchedPrice
     ) {
         $this->cartIdentifier = $customerIdentifier->getCartIdentifier();
         $this->user = $customerIdentifier->getUser();
@@ -83,11 +79,8 @@ class CartItem
         $this->changeQuantity($quantity);
         $this->addedAt = new DateTime();
     }
-
-    /**
-     * @param int $newQuantity
-     */
-    public function changeQuantity($newQuantity)
+    
+    public function changeQuantity(int $newQuantity): void
     {
         if (filter_var($newQuantity, FILTER_VALIDATE_INT) === false || $newQuantity <= 0) {
             throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($newQuantity);
@@ -113,7 +106,7 @@ class CartItem
     /**
      * @param string|null $locale
      */
-    public function getName($locale = null): ?string
+    public function getName(?string $locale = null): ?string
     {
         return $this->getProduct()->getName($locale);
     }
@@ -131,7 +124,7 @@ class CartItem
     /**
      * @param string|null $watchedPrice
      */
-    public function setWatchedPrice($watchedPrice)
+    public function setWatchedPrice(?string $watchedPrice): void
     {
         $this->watchedPrice = $watchedPrice;
     }
@@ -154,7 +147,7 @@ class CartItem
         return $this->addedAt;
     }
 
-    public function changeAddedAt(DateTime $addedAt)
+    public function changeAddedAt(DateTime $addedAt): void
     {
         $this->addedAt = $addedAt;
     }

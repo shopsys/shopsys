@@ -21,11 +21,8 @@ class GridOrderingFacade
         $this->em = $em;
         $this->gridOrderingService = $gridOrderingService;
     }
-
-    /**
-     * @param string $entityClass
-     */
-    public function saveOrdering($entityClass, array $rowIds)
+    
+    public function saveOrdering(string $entityClass, array $rowIds): void
     {
         $entityRepository = $this->getEntityRepository($entityClass);
         $position = 0;
@@ -39,10 +36,9 @@ class GridOrderingFacade
     }
 
     /**
-     * @param string $entityClass
      * @return mixed
      */
-    protected function getEntityRepository($entityClass)
+    protected function getEntityRepository(string $entityClass)
     {
         $interfaces = class_implements($entityClass);
         if (array_key_exists(OrderableEntityInterface::class, $interfaces)) {

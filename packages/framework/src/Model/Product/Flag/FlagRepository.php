@@ -20,19 +20,13 @@ class FlagRepository
     {
         return $this->em->getRepository(Flag::class);
     }
-
-    /**
-     * @param int $flagId
-     */
-    public function findById($flagId): ?\Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+    
+    public function findById(int $flagId): ?\Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         return $this->getFlagRepository()->find($flagId);
     }
-
-    /**
-     * @param int $flagId
-     */
-    public function getById($flagId): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+    
+    public function getById(int $flagId): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         $flag = $this->findById($flagId);
 

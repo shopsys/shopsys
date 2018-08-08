@@ -60,18 +60,13 @@ class ActionColumn
      * @var bool
      */
     private $isAjaxConfirm;
-
-    /**
-     * @param string $type
-     * @param string $title
-     * @param string $route
-     */
+    
     public function __construct(
         RouterInterface $router,
         RouteCsrfProtector $routeCsrfProtector,
-        $type,
-        $title,
-        $route,
+        string $type,
+        string $title,
+        string $route,
         array $bindingRouteParams,
         array $additionalRouteParams
     ) {
@@ -104,21 +99,15 @@ class ActionColumn
     {
         return $this->confirmMessage;
     }
-
-    /**
-     * @param string $classAttribute
-     */
-    public function setClassAttribute($classAttribute): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
+    
+    public function setClassAttribute(string $classAttribute): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         $this->classAttribute = $classAttribute;
 
         return $this;
     }
-
-    /**
-     * @param string $confirmMessage
-     */
-    public function setConfirmMessage($confirmMessage): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
+    
+    public function setConfirmMessage(string $confirmMessage): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         $this->confirmMessage = $confirmMessage;
 

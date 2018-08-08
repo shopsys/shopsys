@@ -29,11 +29,8 @@ class AdvancedSearchOperatorTranslation
             AdvancedSearchFilterInterface::OPERATOR_LTE => t('lower or equal'),
         ];
     }
-
-    /**
-     * @param string $operator
-     */
-    public function translateOperator($operator): string
+    
+    public function translateOperator(string $operator): string
     {
         if (array_key_exists($operator, $this->operatorsTranslations)) {
             return $this->operatorsTranslations[$operator];

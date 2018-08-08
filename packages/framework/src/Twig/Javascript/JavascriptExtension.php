@@ -17,7 +17,7 @@ class JavascriptExtension extends Twig_Extension
     {
         $this->javascriptCompilerService = $javascriptCompilerService;
     }
-    
+
     public function getFunctions()
     {
         return [

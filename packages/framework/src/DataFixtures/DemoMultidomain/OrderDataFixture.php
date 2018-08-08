@@ -61,7 +61,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->orderDataFactory = $orderDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(DemoTransportDataFixture::TRANSPORT_CZECH_POST);
@@ -173,12 +173,12 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             ]
         );
     }
-    
+
     private function createOrder(
         OrderData $orderData,
         array $products,
         User $user = null
-    ) {
+    ): void {
         $quantifiedProducts = [];
         foreach ($products as $productReferenceName => $quantity) {
             $product = $this->getReference($productReferenceName);

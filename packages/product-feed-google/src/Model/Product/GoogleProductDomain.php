@@ -49,7 +49,7 @@ class GoogleProductDomain
         $this->domainId = $googleProductDomainData->domainId;
     }
 
-    public function edit(GoogleProductDomainData $googleProductDomainData)
+    public function edit(GoogleProductDomainData $googleProductDomainData): void
     {
         $this->product = $googleProductDomainData->product;
         $this->show = $googleProductDomainData->show;

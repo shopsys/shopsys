@@ -68,13 +68,13 @@ class RecalculationsCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Run all recalculations.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('Running recalculations:');
         $output->writeln('<fg=green>Categories visibility.</fg=green>');

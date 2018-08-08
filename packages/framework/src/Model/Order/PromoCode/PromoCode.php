@@ -39,7 +39,7 @@ class PromoCode
         $this->percent = $promoCodeData->percent;
     }
 
-    public function edit(PromoCodeData $promoCodeData)
+    public function edit(PromoCodeData $promoCodeData): void
     {
         $this->code = $promoCodeData->code;
         $this->percent = $promoCodeData->percent;

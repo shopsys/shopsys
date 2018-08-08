@@ -29,7 +29,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|\PHPUnit\Framework\MockObject\MockObject
      */
     private $domain;
-    
+
     public function getTermsAndConditionsAgreementIsMandatoryData()
     {
         return [
@@ -41,7 +41,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     /**
      * @dataProvider getTermsAndConditionsAgreementIsMandatoryData
      */
-    public function testTermsAndConditionsAgreementIsMandatory(array $personalInfoFormData, $isExpectedValid)
+    public function testTermsAndConditionsAgreementIsMandatory(array $personalInfoFormData, $isExpectedValid): void
     {
         $this->disableHeurekaShopCertification();
 
@@ -51,11 +51,8 @@ class PersonalInfoFormTypeTest extends TypeTestCase
 
         $this->assertSame($isExpectedValid, $personalInfoForm->isValid());
     }
-
-    /**
-     * @param bool $legalConditionsAgreement
-     */
-    private function getPersonalInfoFormData($legalConditionsAgreement): array
+    
+    private function getPersonalInfoFormData(bool $legalConditionsAgreement): array
     {
         $personalInfoFormData = [];
         $personalInfoFormData['firstName'] = 'test';
@@ -72,7 +69,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         return $personalInfoFormData;
     }
 
-    public function testHeurekaShopCertificationActivatedAndDisallowedByUser()
+    public function testHeurekaShopCertificationActivatedAndDisallowedByUser(): void
     {
         $this->enableHeurekaShopCertification();
         $personalInfoFormData = $this->getPersonalInfoFormData(true);
@@ -85,7 +82,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $data = $personalInfoForm->getData();
         $this->assertTrue($data->disallowHeurekaVerifiedByCustomers);
     }
-    
+
     protected function getExtensions(): array
     {
         return [
@@ -94,7 +91,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         ];
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $countryMock = $this->createMock(Country::class);
         $countryMock->method('getId')->willReturn(1);

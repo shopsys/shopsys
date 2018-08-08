@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class ServerStartWithCustomRouterCommand extends ServerStartCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 

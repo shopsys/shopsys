@@ -15,7 +15,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class VatFacadeTest extends DatabaseTestCase
 {
-    public function testDeleteByIdAndReplace()
+    public function testDeleteByIdAndReplace(): void
     {
         $em = $this->getEntityManager();
         $vatFacade = $this->getContainer()->get(VatFacade::class);

@@ -17,7 +17,7 @@ class ScriptDataFactory implements ScriptDataFactoryInterface
         return $scriptData;
     }
 
-    protected function fillFromScript(ScriptData $scriptData, Script $script)
+    protected function fillFromScript(ScriptData $scriptData, Script $script): void
     {
         $scriptData->name = $script->getName();
         $scriptData->code = $script->getCode();

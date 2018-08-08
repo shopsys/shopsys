@@ -29,11 +29,8 @@ class SqlQuoter
             $identifiers
         );
     }
-
-    /**
-     * @param string $identifier
-     */
-    public function quoteIdentifier($identifier): string
+    
+    public function quoteIdentifier(string $identifier): string
     {
         return $this->em->getConnection()->quoteIdentifier($identifier);
     }

@@ -57,9 +57,8 @@ class CurrencyController extends AdminBaseController
 
     /**
      * @Route("/currency/delete-confirm/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         try {
             $currency = $this->currencyFacade->getById($id);
@@ -77,9 +76,8 @@ class CurrencyController extends AdminBaseController
     /**
      * @Route("/currency/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->currencyFacade->getById($id)->getName();

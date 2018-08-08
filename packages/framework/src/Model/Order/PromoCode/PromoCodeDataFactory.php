@@ -17,7 +17,7 @@ class PromoCodeDataFactory implements PromoCodeDataFactoryInterface
         return $promoCodeData;
     }
 
-    protected function fillFromPromoCode(PromoCodeData $promoCodeData, PromoCode $promoCode)
+    protected function fillFromPromoCode(PromoCodeData $promoCodeData, PromoCode $promoCode): void
     {
         $promoCodeData->code = $promoCode->getCode();
         $promoCodeData->percent = $promoCode->getPercent();

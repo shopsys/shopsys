@@ -17,7 +17,7 @@ class UnitDataFactory implements UnitDataFactoryInterface
         return $unitData;
     }
 
-    protected function fillFromUnit(UnitData $unitData, Unit $unit)
+    protected function fillFromUnit(UnitData $unitData, Unit $unit): void
     {
         $translations = $unit->getTranslations();
         $names = [];

@@ -20,8 +20,8 @@ class CategoryCheckboxType extends AbstractType
     {
         $this->categoryFacade = $categoryFacade;
     }
-    
-    public function buildView(FormView $view, FormInterface $form, array $options)
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $categoryId = $form->getName();
         if (is_numeric($categoryId)) {
@@ -39,7 +39,7 @@ class CategoryCheckboxType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('domain_id')

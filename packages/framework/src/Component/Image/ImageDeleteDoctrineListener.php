@@ -42,7 +42,7 @@ class ImageDeleteDoctrineListener
         return $this->imageFacade;
     }
 
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
 
@@ -52,11 +52,8 @@ class ImageDeleteDoctrineListener
             $this->getImageFacade()->deleteImageFiles($entity);
         }
     }
-
-    /**
-     * @param object $entity
-     */
-    private function deleteEntityImages($entity, EntityManagerInterface $em)
+    
+    private function deleteEntityImages(object $entity, EntityManagerInterface $em): void
     {
         $images = $this->getImageFacade()->getAllImagesByEntity($entity);
         foreach ($images as $image) {

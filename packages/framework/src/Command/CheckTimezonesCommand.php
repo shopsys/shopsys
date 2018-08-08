@@ -28,18 +28,18 @@ class CheckTimezonesCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Checks uniformity of PHP and Postgres timezones');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->checkUniformityOfTimezones($output);
     }
 
-    private function checkUniformityOfTimezones(OutputInterface $output)
+    private function checkUniformityOfTimezones(OutputInterface $output): void
     {
         $output->writeln('Checks uniformity of PHP and Postgres timezones...');
 

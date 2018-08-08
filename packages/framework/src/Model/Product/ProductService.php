@@ -62,7 +62,7 @@ class ProductService
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[] $productManualInputPrices
      * @param string $newVatPercent
      */
-    public function recalculateInputPriceForNewVatPercent(Product $product, $productManualInputPrices, $newVatPercent)
+    public function recalculateInputPriceForNewVatPercent(Product $product, $productManualInputPrices, $newVatPercent): void
     {
         $inputPriceType = $this->pricingSetting->getInputPriceType();
 
@@ -94,23 +94,20 @@ class ProductService
         $this->setInputPrice($product, $inputPrice);
     }
 
-    public function edit(Product $product, ProductData $productData)
+    public function edit(Product $product, ProductData $productData): void
     {
         $product->edit($this->productCategoryDomainFactory, $productData);
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->markProductForVisibilityRecalculation($product);
     }
-
-    /**
-     * @param string $inputPrice
-     */
-    public function setInputPrice(Product $product, $inputPrice)
+    
+    public function setInputPrice(Product $product, string $inputPrice): void
     {
         $product->setPrice($inputPrice);
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
-    public function changeVat(Product $product, Vat $vat)
+    public function changeVat(Product $product, Vat $vat): void
     {
         $product->changeVat($vat);
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
@@ -147,7 +144,7 @@ class ProductService
         return new ProductDeleteResult();
     }
 
-    public function markProductForVisibilityRecalculation(Product $product)
+    public function markProductForVisibilityRecalculation(Product $product): void
     {
         $product->markForVisibilityRecalculation();
         if ($product->isMainVariant()) {

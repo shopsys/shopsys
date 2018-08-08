@@ -28,7 +28,7 @@ class SliderItemDataFixture extends AbstractReferenceFixture
         $this->sliderItemDataFactory = $sliderItemDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $sliderItemData = $this->sliderItemDataFactory->create();
         $sliderItemData->domainId = Domain::FIRST_DOMAIN_ID;

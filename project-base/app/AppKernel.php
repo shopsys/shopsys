@@ -57,7 +57,7 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         foreach ($this->getConfigs() as $filename) {
             if (file_exists($filename) && is_readable($filename)) {

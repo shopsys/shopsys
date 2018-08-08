@@ -17,7 +17,7 @@ class ParameterValueDataFactory implements ParameterValueDataFactoryInterface
         return $parameterValueData;
     }
 
-    protected function fillFromParameterValue(ParameterValueData $parameterValueData, ParameterValue $parameterValue)
+    protected function fillFromParameterValue(ParameterValueData $parameterValueData, ParameterValue $parameterValue): void
     {
         $parameterValueData->text = $parameterValue->getText();
         $parameterValueData->locale = $parameterValue->getLocale();

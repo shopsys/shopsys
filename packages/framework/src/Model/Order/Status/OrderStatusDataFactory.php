@@ -17,7 +17,7 @@ class OrderStatusDataFactory implements OrderStatusDataFactoryInterface
         return $orderStatusData;
     }
 
-    protected function fillFromOrderStatus(OrderStatusData $orderStatusData, OrderStatus $orderStatus)
+    protected function fillFromOrderStatus(OrderStatusData $orderStatusData, OrderStatus $orderStatus): void
     {
         $translations = $orderStatus->getTranslations();
         $names = [];

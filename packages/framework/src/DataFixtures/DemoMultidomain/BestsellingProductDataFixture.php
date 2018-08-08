@@ -12,14 +12,14 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture
 {
     /** @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade */
     private $manualBestsellingProductFacade;
-    
+
     public function __construct(
         ManualBestsellingProductFacade $manualBestsellingProductFacade
     ) {
         $this->manualBestsellingProductFacade = $manualBestsellingProductFacade;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $domainId = 2;
         $this->manualBestsellingProductFacade->edit(

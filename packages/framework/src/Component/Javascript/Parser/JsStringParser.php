@@ -34,19 +34,13 @@ class JsStringParser
 
         throw new \Shopsys\FrameworkBundle\Component\Javascript\Parser\Exception\UnsupportedNodeException();
     }
-
-    /**
-     * @param string $stringLiteral
-     */
-    private function parseStringLiteral($stringLiteral): string
+    
+    private function parseStringLiteral(string $stringLiteral): string
     {
         return json_decode($this->normalizeStringLiteral($stringLiteral));
     }
-
-    /**
-     * @param string $stringLiteral
-     */
-    private function normalizeStringLiteral($stringLiteral): string
+    
+    private function normalizeStringLiteral(string $stringLiteral): string
     {
         $matches = [];
         if (preg_match('/^"(.*)"$/', $stringLiteral, $matches)) {

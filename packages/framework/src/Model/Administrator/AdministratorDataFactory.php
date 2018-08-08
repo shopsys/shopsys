@@ -16,7 +16,7 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
         return $administratorData;
     }
 
-    protected function fillFromAdministrator(AdministratorData $administratorData, Administrator $administrator)
+    protected function fillFromAdministrator(AdministratorData $administratorData, Administrator $administrator): void
     {
         $administratorData->email = $administrator->getEmail();
         $administratorData->realName = $administrator->getRealName();

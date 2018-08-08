@@ -81,11 +81,10 @@ class UserDataFixture
     private $deliveryAddressDataFactory;
 
     /**
-     * @param int $userCountPerDomain
      * @param \Faker\Generator $faker
      */
     public function __construct(
-        $userCountPerDomain,
+        int $userCountPerDomain,
         EntityManagerInterface $em,
         Domain $domain,
         SqlLoggerFacade $sqlLoggerFacade,
@@ -112,7 +111,7 @@ class UserDataFixture
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
     }
 
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -138,23 +137,15 @@ class UserDataFixture
 
         $this->sqlLoggerFacade->reenableLogging();
     }
-
-    /**
-     * @param int $domainId
-     * @param int $userNumber
-     */
-    private function createCustomerOnDomain($domainId, $userNumber): \Shopsys\FrameworkBundle\Model\Customer\User
+    
+    private function createCustomerOnDomain(int $domainId, int $userNumber): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $customerData = $this->getRandomCustomerDataByDomainId($domainId, $userNumber);
 
         return $this->customerEditFacade->create($customerData);
     }
-
-    /**
-     * @param int $domainId
-     * @param int $userNumber
-     */
-    private function getRandomCustomerDataByDomainId($domainId, $userNumber): \Shopsys\FrameworkBundle\Model\Customer\CustomerData
+    
+    private function getRandomCustomerDataByDomainId(int $domainId, int $userNumber): \Shopsys\FrameworkBundle\Model\Customer\CustomerData
     {
         $customerData = $this->customerDataFactory->create();
 

@@ -55,11 +55,8 @@ class ScriptFacade
     {
         return $this->scriptRepository->getAllQueryBuilder();
     }
-
-    /**
-     * @param int $scriptId
-     */
-    public function getById($scriptId): \Shopsys\FrameworkBundle\Model\Script\Script
+    
+    public function getById(int $scriptId): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         return $this->scriptRepository->getById($scriptId);
     }
@@ -73,11 +70,8 @@ class ScriptFacade
 
         return $script;
     }
-
-    /**
-     * @param int $scriptId
-     */
-    public function edit($scriptId, ScriptData $scriptData): \Shopsys\FrameworkBundle\Model\Script\Script
+    
+    public function edit(int $scriptId, ScriptData $scriptData): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         $script = $this->scriptRepository->getById($scriptId);
 
@@ -88,11 +82,8 @@ class ScriptFacade
 
         return $script;
     }
-
-    /**
-     * @param int $scriptId
-     */
-    public function delete($scriptId)
+    
+    public function delete(int $scriptId): void
     {
         $script = $this->scriptRepository->getById($scriptId);
 
@@ -137,9 +128,8 @@ class ScriptFacade
 
     /**
      * @param string|null $trackingId
-     * @param int $domainId
      */
-    public function setGoogleAnalyticsTrackingId($trackingId, $domainId)
+    public function setGoogleAnalyticsTrackingId(?string $trackingId, int $domainId): void
     {
         $this->setting->setForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $trackingId, $domainId);
     }
@@ -148,11 +138,8 @@ class ScriptFacade
     {
         return $this->setting->getForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $domainId);
     }
-
-    /**
-     * @param string $code
-     */
-    protected function replaceVariables($code, Order $order): string
+    
+    protected function replaceVariables(string $code, Order $order): string
     {
         $variableReplacements = [
             self::VARIABLE_NUMBER => $order->getNumber(),

@@ -7,10 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProgressBarFactory
 {
-    /**
-     * @param int $max
-     */
-    public function create(OutputInterface $output, $max): \Symfony\Component\Console\Helper\ProgressBar
+    public function create(OutputInterface $output, int $max): \Symfony\Component\Console\Helper\ProgressBar
     {
         $bar = new ProgressBar($output, $max);
         $this->initializeCustomPlaceholderFormatters();
@@ -23,7 +20,7 @@ class ProgressBarFactory
         return $bar;
     }
 
-    private function initializeCustomPlaceholderFormatters()
+    private function initializeCustomPlaceholderFormatters(): void
     {
         ProgressBar::setPlaceholderFormatterDefinition('remaining_hms', function (ProgressBar $bar) {
             if ($bar->getProgress() !== 0) {
@@ -42,11 +39,8 @@ class ProgressBarFactory
             return $this->formatTimeHms(time() - $bar->getStartTime());
         });
     }
-
-    /**
-     * @param int $timeInSeconds
-     */
-    private function formatTimeHms($timeInSeconds): string
+    
+    private function formatTimeHms(int $timeInSeconds): string
     {
         return sprintf(
             '%dh %02dm %02ds',

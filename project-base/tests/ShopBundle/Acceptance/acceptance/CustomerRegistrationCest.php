@@ -14,7 +14,7 @@ class CustomerRegistrationCest
         RegistrationPage $registrationPage,
         AcceptanceTester $me,
         LayoutPage $layoutPage
-    ) {
+    ): void {
         $me->wantTo('successfully register new customer');
         $me->amOnPage('/');
         $layoutPage->clickOnRegistration();
@@ -25,7 +25,7 @@ class CustomerRegistrationCest
         $me->see('Log out');
     }
 
-    public function testAlreadyUsedEmail(RegistrationPage $registrationPage, AcceptanceTester $me)
+    public function testAlreadyUsedEmail(RegistrationPage $registrationPage, AcceptanceTester $me): void
     {
         $me->wantTo('use already used email while registration');
         $me->amOnPage('/registration/');
@@ -33,7 +33,7 @@ class CustomerRegistrationCest
         $registrationPage->seeEmailError('Email no-reply@shopsys.com is already registered');
     }
 
-    public function testPasswordMismatch(RegistrationPage $registrationPage, AcceptanceTester $me)
+    public function testPasswordMismatch(RegistrationPage $registrationPage, AcceptanceTester $me): void
     {
         $me->wantTo('use mismatching passwords while registration');
         $me->amOnPage('/registration/');

@@ -47,7 +47,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         return $productData;
     }
 
-    public function testIsVisibleOnAnyDomainWhenHidden()
+    public function testIsVisibleOnAnyDomainWhenHidden(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -81,7 +81,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertFalse($productVisibility1->isVisible());
     }
 
-    public function testIsVisibleOnAnyDomainWhenNotHidden()
+    public function testIsVisibleOnAnyDomainWhenNotHidden(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -114,7 +114,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertTrue($productVisibility1->isVisible());
     }
 
-    public function testIsVisibleOnAnyDomainWhenSellingInFuture()
+    public function testIsVisibleOnAnyDomainWhenSellingInFuture(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -143,7 +143,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertFalse($productAgain->isVisible());
     }
 
-    public function testIsVisibleOnAnyDomainWhenSellingInPast()
+    public function testIsVisibleOnAnyDomainWhenSellingInPast(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -172,7 +172,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertFalse($productAgain->isVisible());
     }
 
-    public function testIsVisibleOnAnyDomainWhenSellingNow()
+    public function testIsVisibleOnAnyDomainWhenSellingNow(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -204,7 +204,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertTrue($productAgain->isVisible());
     }
 
-    public function testIsNotVisibleWhenZeroOrNullPrice()
+    public function testIsNotVisibleWhenZeroOrNullPrice(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -236,7 +236,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertFalse($product2Again->isVisible());
     }
 
-    public function testIsVisibleWithFilledName()
+    public function testIsVisibleWithFilledName(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -265,7 +265,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertTrue($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleWithEmptyName()
+    public function testIsNotVisibleWithEmptyName(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -294,7 +294,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsVisibleInVisibileCategory()
+    public function testIsVisibleInVisibileCategory(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -325,7 +325,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertTrue($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleInHiddenCategory()
+    public function testIsNotVisibleInHiddenCategory(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -353,7 +353,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleWhenZeroManualPrice()
+    public function testIsNotVisibleWhenZeroManualPrice(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -394,7 +394,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleWhenNullManualPrice()
+    public function testIsNotVisibleWhenNullManualPrice(): void
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -434,7 +434,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testRefreshProductsVisibilityVisibleVariants()
+    public function testRefreshProductsVisibilityVisibleVariants(): void
     {
         $em = $this->getEntityManager();
         $productVisibilityRepository = $this->getContainer()->get(ProductVisibilityRepository::class);
@@ -470,7 +470,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertTrue($mainVariant->isVisible());
     }
 
-    public function testRefreshProductsVisibilityNotVisibleVariants()
+    public function testRefreshProductsVisibilityNotVisibleVariants(): void
     {
         $em = $this->getEntityManager();
         $productVisibilityRepository = $this->getContainer()->get(ProductVisibilityRepository::class);
@@ -514,7 +514,7 @@ class ProductVisibilityRepositoryTest extends DatabaseTestCase
         $this->assertFalse($mainVariant->isVisible());
     }
 
-    public function testRefreshProductsVisibilityNotVisibleMainVariant()
+    public function testRefreshProductsVisibilityNotVisibleMainVariant(): void
     {
         $em = $this->getEntityManager();
         $productVisibilityRepository = $this->getContainer()->get(ProductVisibilityRepository::class);

@@ -41,9 +41,8 @@ class FlagController extends AdminBaseController
     /**
      * @Route("/product/flag/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->flagFacade->getById($id)->getName();

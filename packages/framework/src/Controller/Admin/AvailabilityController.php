@@ -50,9 +50,8 @@ class AvailabilityController extends AdminBaseController
     /**
      * @Route("/product/availability/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');
 
@@ -87,9 +86,8 @@ class AvailabilityController extends AdminBaseController
 
     /**
      * @Route("/product/availability/delete-confirm/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         try {
             $availability = $this->availabilityFacade->getById($id);

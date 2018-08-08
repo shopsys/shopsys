@@ -43,7 +43,7 @@ class SitemapDumper extends Dumper
      *
      * @throws \RuntimeException
      */
-    protected function activate($targetDir)
+    protected function activate(string $targetDir): void
     {
         $this->deleteExistingSitemaps($targetDir);
 
@@ -57,10 +57,8 @@ class SitemapDumper extends Dumper
 
     /**
      * Deletes sitemap files matching filename patterns of newly generated files
-     *
-     * @param string $targetDir
      */
-    protected function deleteExistingSitemaps($targetDir)
+    protected function deleteExistingSitemaps(string $targetDir): void
     {
         $files = $this->abstractFilesystem->listContents($targetDir);
         foreach ($files as $file) {

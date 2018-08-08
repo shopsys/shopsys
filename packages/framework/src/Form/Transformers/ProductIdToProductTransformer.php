@@ -21,18 +21,15 @@ class ProductIdToProductTransformer implements DataTransformerInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      */
-    public function transform($product): ?int
+    public function transform(?\Shopsys\FrameworkBundle\Model\Product\Product $product): ?int
     {
         if ($product instanceof Product) {
             return $product->getId();
         }
         return null;
     }
-
-    /**
-     * @param int $productId
-     */
-    public function reverseTransform($productId): ?\Shopsys\FrameworkBundle\Model\Product\Product
+    
+    public function reverseTransform(int $productId): ?\Shopsys\FrameworkBundle\Model\Product\Product
     {
         if (empty($productId)) {
             return null;

@@ -22,7 +22,7 @@ class PerformanceTestSummaryPrinter
     public function printSummary(
         array $performanceTestSamples,
         ConsoleOutput $consoleOutput
-    ) {
+    ): void {
         foreach ($performanceTestSamples as $performanceTestSample) {
             $sampleStatus = $this->performanceTestSampleQualifier->getSampleStatus($performanceTestSample);
 
@@ -52,7 +52,7 @@ class PerformanceTestSummaryPrinter
     private function printSample(
         PerformanceTestSample $performanceTestSample,
         ConsoleOutput $consoleOutput
-    ) {
+    ): void {
         $consoleOutput->writeln('');
         $consoleOutput->writeln(
             'Route name: ' . $performanceTestSample->getRouteName() . ' (' . $performanceTestSample->getUrl() . ')'
@@ -73,20 +73,14 @@ class PerformanceTestSummaryPrinter
             $consoleOutput->writeln('<' . $tag . '>Wrong response status code</' . $tag . '>');
         }
     }
-
-    /**
-     * @param float $duration
-     */
-    private function getFormatterTagForDuration($duration): string
+    
+    private function getFormatterTagForDuration(float $duration): string
     {
         $status = $this->performanceTestSampleQualifier->getStatusForDuration($duration);
         return 'fg=' . $this->getStatusConsoleTextColor($status);
     }
-
-    /**
-     * @param int $queryCount
-     */
-    private function getFormatterTagForQueryCount($queryCount): string
+    
+    private function getFormatterTagForQueryCount(int $queryCount): string
     {
         $status = $this->performanceTestSampleQualifier->getStatusForQueryCount($queryCount);
         return 'fg=' . $this->getStatusConsoleTextColor($status);
@@ -96,11 +90,8 @@ class PerformanceTestSummaryPrinter
     {
         return 'fg=' . $this->getStatusConsoleTextColor(PerformanceTestSampleQualifier::STATUS_CRITICAL);
     }
-
-    /**
-     * @param int $status
-     */
-    private function getStatusConsoleTextColor($status): string
+    
+    private function getStatusConsoleTextColor(int $status): string
     {
         switch ($status) {
             case PerformanceTestSampleQualifier::STATUS_OK:

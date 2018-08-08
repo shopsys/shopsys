@@ -23,7 +23,7 @@ class AdministratorGridFacade
         $this->administratorGridService = $administratorGridService;
     }
 
-    public function restoreAndRememberGridLimit(Administrator $administrator, Grid $grid)
+    public function restoreAndRememberGridLimit(Administrator $administrator, Grid $grid): void
     {
         $this->administratorGridService->restoreGridLimit($administrator, $grid);
         $gridLimit = $this->administratorGridService->rememberGridLimit($administrator, $grid);

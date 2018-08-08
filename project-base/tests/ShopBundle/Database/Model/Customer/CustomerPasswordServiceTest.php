@@ -54,7 +54,7 @@ class CustomerPasswordServiceTest extends FunctionalTestCase
         $resetPasswordHashValidThrough,
         $sentHash,
         $isExpectedValid
-    ) {
+    ): void {
         $encoderFactory = $this->getContainer()->get('security.encoder_factory');
         $hashGenerator = $this->getContainer()->get(HashGenerator::class);
 

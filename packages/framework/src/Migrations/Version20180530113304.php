@@ -7,7 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180530113304 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE brand_domains DROP CONSTRAINT "brand_domains_pkey"');
         $this->sql('ALTER TABLE brand_domains ADD id SERIAL NOT NULL');
@@ -15,7 +15,7 @@ class Version20180530113304 extends AbstractMigration
         $this->sql('CREATE UNIQUE INDEX brand_domain ON brand_domains (brand_id, domain_id)');
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

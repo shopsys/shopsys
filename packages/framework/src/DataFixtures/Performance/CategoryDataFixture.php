@@ -79,7 +79,7 @@ class CategoryDataFixture
         $this->progressBarFactory = $progressBarFactory;
     }
 
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         $progressBar = $this->progressBarFactory->create($output, array_sum($this->categoryCountsByLevel));
 
@@ -88,12 +88,8 @@ class CategoryDataFixture
         $this->recursivelyCreateCategoryTree($rootCategory, $progressBar);
         $this->sqlLoggerFacade->reenableLogging();
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
-     * @param int $categoryLevel
-     */
-    private function recursivelyCreateCategoryTree($parentCategory, ProgressBar $progressBar, $categoryLevel = 0)
+    
+    private function recursivelyCreateCategoryTree(\Shopsys\FrameworkBundle\Model\Category\Category $parentCategory, ProgressBar $progressBar, int $categoryLevel = 0): void
     {
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
             $categoryData = $this->getRandomCategoryDataByParentCategory($parentCategory);
@@ -108,11 +104,8 @@ class CategoryDataFixture
             }
         }
     }
-
-    /**
-     * @param int $categoryLevel
-     */
-    private function recursivelyCountCategoriesInCategoryTree($categoryLevel = 0): int
+    
+    private function recursivelyCountCategoriesInCategoryTree(int $categoryLevel = 0): int
     {
         $count = 0;
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {

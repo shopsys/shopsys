@@ -60,20 +60,20 @@ class CreateDomainsDataCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create new domains data');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $this->em->transactional(function () use ($output) {
+        $this->em->transactional(function () use ($output): void {
             $this->doExecute($output);
         });
     }
 
-    private function doExecute(OutputInterface $output)
+    private function doExecute(OutputInterface $output): void
     {
         $output->writeln('Start of creating new domains data.');
 

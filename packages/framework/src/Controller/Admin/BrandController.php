@@ -65,9 +65,8 @@ class BrandController extends AdminBaseController
 
     /**
      * @Route("/brand/edit/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $brand = $this->brandFacade->getById($id);
         $brandData = $this->brandDataFactory->createFromBrand($brand);
@@ -166,9 +165,8 @@ class BrandController extends AdminBaseController
     /**
      * @Route("/brand/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->brandFacade->getById($id)->getName();

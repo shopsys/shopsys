@@ -40,7 +40,7 @@ class ProductManualInputPrice
     /**
      * @param string|null $inputPrice
      */
-    public function __construct(Product $product, PricingGroup $pricingGroup, $inputPrice)
+    public function __construct(Product $product, PricingGroup $pricingGroup, ?string $inputPrice)
     {
         $this->product = $product;
         $this->pricingGroup = $pricingGroup;
@@ -61,11 +61,8 @@ class ProductManualInputPrice
     {
         return $this->inputPrice;
     }
-
-    /**
-     * @param string $inputPrice
-     */
-    public function setInputPrice($inputPrice)
+    
+    public function setInputPrice(string $inputPrice): void
     {
         $this->inputPrice = $inputPrice;
     }

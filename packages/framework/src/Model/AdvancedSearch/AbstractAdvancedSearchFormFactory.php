@@ -41,12 +41,8 @@ abstract class AbstractAdvancedSearchFormFactory
         $this->formFactory = $formFactory;
         $this->advancedSearchOperatorTranslation = $advancedSearchOperatorTranslation;
     }
-
-    /**
-     * @param string $name
-     * @param array $rulesViewData
-     */
-    public function createRulesForm($name, $rulesViewData): \Symfony\Component\Form\FormInterface
+    
+    public function createRulesForm(string $name, array $rulesViewData): \Symfony\Component\Form\FormInterface
     {
         $options = [
             'csrf_protection' => false,
@@ -65,11 +61,8 @@ abstract class AbstractAdvancedSearchFormFactory
 
         return $form;
     }
-
-    /**
-     * @param string $name
-     */
-    private function createRuleFormBuilder($name, AdvancedSearchFilterInterface $ruleFilter): \Symfony\Component\Form\FormBuilderInterface
+    
+    private function createRuleFormBuilder(string $name, AdvancedSearchFilterInterface $ruleFilter): \Symfony\Component\Form\FormBuilderInterface
     {
         $filterFormBuilder = $this->formFactory->createNamedBuilder($name, FormType::class, null, [
             'data_class' => AdvancedSearchRuleData::class,

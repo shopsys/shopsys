@@ -31,11 +31,8 @@ class CronModule
      * @ORM\Column(type="boolean", options={"default"=false})
      */
     protected $suspended;
-
-    /**
-     * @param string $serviceId
-     */
-    public function __construct($serviceId)
+    
+    public function __construct(string $serviceId)
     {
         $this->serviceId = $serviceId;
         $this->scheduled = false;
@@ -57,18 +54,18 @@ class CronModule
         return $this->suspended;
     }
 
-    public function schedule()
+    public function schedule(): void
     {
         $this->scheduled = true;
     }
 
-    public function unschedule()
+    public function unschedule(): void
     {
         $this->scheduled = false;
         $this->suspended = false;
     }
 
-    public function suspend()
+    public function suspend(): void
     {
         $this->suspended = true;
     }

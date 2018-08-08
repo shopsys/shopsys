@@ -26,7 +26,7 @@ class SettingValueShopInfoDataFixture extends AbstractReferenceFixture
         $this->setting = $setting;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach (self::SETTING_VALUES as $key => $value) {
             $this->setting->setForDomain($key, $value, Domain::FIRST_DOMAIN_ID);

@@ -10,7 +10,7 @@ class TsqueryFactoryTest extends TestCase
     /**
      * @dataProvider getIsValidSearchTextData
      */
-    public function testIsValidSearchText($searchText, $expectedResult)
+    public function testIsValidSearchText($searchText, $expectedResult): void
     {
         $tsqueryFactory = new TsqueryFactory();
 
@@ -41,7 +41,7 @@ class TsqueryFactoryTest extends TestCase
     /**
      * @dataProvider getTsqueryWithAndConditionsData
      */
-    public function testGetTsqueryWithAndConditions($searchText, $expectedResult)
+    public function testGetTsqueryWithAndConditions($searchText, $expectedResult): void
     {
         $tsqueryFactory = new TsqueryFactory();
 
@@ -72,7 +72,7 @@ class TsqueryFactoryTest extends TestCase
     /**
      * @dataProvider getTsqueryWithAndConditionsAndPrefixMatchForLastWordData
      */
-    public function testGetTsqueryWithAndConditionsAndPrefixMatchForLastWord($searchText, $expectedResult)
+    public function testGetTsqueryWithAndConditionsAndPrefixMatchForLastWord($searchText, $expectedResult): void
     {
         $tsqueryFactory = new TsqueryFactory();
 
@@ -103,7 +103,7 @@ class TsqueryFactoryTest extends TestCase
     /**
      * @dataProvider getTsqueryWithOrConditionsData
      */
-    public function testGetTsqueryWithOrConditions($searchText, $expectedResult)
+    public function testGetTsqueryWithOrConditions($searchText, $expectedResult): void
     {
         $tsqueryFactory = new TsqueryFactory();
 
@@ -134,7 +134,7 @@ class TsqueryFactoryTest extends TestCase
     /**
      * @dataProvider getTsqueryWithOrConditionsAndPrefixMatchForLastWordData
      */
-    public function testGetTsqueryWithOrConditionsAndPrefixMatchForLastWord($searchText, $expectedResult)
+    public function testGetTsqueryWithOrConditionsAndPrefixMatchForLastWord($searchText, $expectedResult): void
     {
         $tsqueryFactory = new TsqueryFactory();
 

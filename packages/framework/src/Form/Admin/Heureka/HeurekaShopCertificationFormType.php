@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints;
 
 class HeurekaShopCertificationFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
             'label' => t('Settings'),
@@ -46,7 +46,7 @@ class HeurekaShopCertificationFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('server_name')

@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class CurrentCustomerTest extends TestCase
 {
-    public function testGetPricingGroupForUnregisteredCustomerReturnsDefaultPricingGroup()
+    public function testGetPricingGroupForUnregisteredCustomerReturnsDefaultPricingGroup(): void
     {
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
@@ -31,7 +31,7 @@ class CurrentCustomerTest extends TestCase
         $this->assertSame($expectedPricingGroup, $pricingGroup);
     }
 
-    public function testGetPricingGroupForRegisteredCustomerReturnsHisPricingGroup()
+    public function testGetPricingGroupForRegisteredCustomerReturnsHisPricingGroup(): void
     {
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';

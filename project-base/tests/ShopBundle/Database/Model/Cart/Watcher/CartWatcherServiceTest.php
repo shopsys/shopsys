@@ -21,7 +21,7 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class CartWatcherServiceTest extends FunctionalTestCase
 {
-    public function testGetModifiedPriceItemsAndUpdatePrices()
+    public function testGetModifiedPriceItemsAndUpdatePrices(): void
     {
         $customerIdentifier = new CustomerIdentifier('randomString');
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
@@ -63,7 +63,7 @@ class CartWatcherServiceTest extends FunctionalTestCase
         $this->assertEmpty($modifiedItems3);
     }
 
-    public function testGetNotListableItemsWithItemWithoutProduct()
+    public function testGetNotListableItemsWithItemWithoutProduct(): void
     {
         $cartItemMock = $this->getMockBuilder(CartItem::class)
             ->disableOriginalConstructor()
@@ -90,7 +90,7 @@ class CartWatcherServiceTest extends FunctionalTestCase
         $this->assertCount(1, $notListableItems);
     }
 
-    public function testGetNotListableItemsWithVisibleButNotSellableProduct()
+    public function testGetNotListableItemsWithVisibleButNotSellableProduct(): void
     {
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
 

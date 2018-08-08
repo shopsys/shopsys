@@ -8,7 +8,7 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class JsTranslatorCompilerPassTest extends FunctionalTestCase
 {
-    public function testProcess()
+    public function testProcess(): void
     {
         $translator = $this->getContainer()->get('translator');
         /* @var $translator \Shopsys\FrameworkBundle\Component\Translation\Translator */

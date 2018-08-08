@@ -64,7 +64,7 @@ class SliderItem implements OrderableEntityInterface
         $this->hidden = $sliderItemData->hidden;
     }
 
-    public function edit(SliderItemData $sliderItemData)
+    public function edit(SliderItemData $sliderItemData): void
     {
         $this->name = $sliderItemData->name;
         $this->link = $sliderItemData->link;
@@ -95,11 +95,8 @@ class SliderItem implements OrderableEntityInterface
     {
         return $this->position;
     }
-
-    /**
-     * @param int $position
-     */
-    public function setPosition($position)
+    
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }

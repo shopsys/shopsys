@@ -8,10 +8,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class UniqueCollectionValidator extends ConstraintValidator
 {
-    /**
-     * @param array $values
-     */
-    public function validate($values, Constraint $constraint)
+    public function validate(array $values, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueCollection) {
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, UniqueCollection::class);

@@ -97,7 +97,7 @@ class BillingAddress
         $this->country = $billingAddressData->country;
     }
 
-    public function edit(BillingAddressData $billingAddressData)
+    public function edit(BillingAddressData $billingAddressData): void
     {
         $this->street = $billingAddressData->street;
         $this->city = $billingAddressData->city;

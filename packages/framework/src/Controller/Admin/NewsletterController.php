@@ -95,17 +95,14 @@ class NewsletterController extends AdminBaseController
         $response = new StreamedResponse();
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment; filename="emails.csv"');
-        $response->setCallback(function () {
+        $response->setCallback(function (): void {
             $this->streamCsvExport($this->adminDomainTabsFacade->getSelectedDomainId());
         });
 
         return $response;
     }
-
-    /**
-     * @param int $domainId
-     */
-    private function streamCsvExport($domainId)
+    
+    private function streamCsvExport(int $domainId): void
     {
         $output = new SplFileObject('php://output', 'w+');
 

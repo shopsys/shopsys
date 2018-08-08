@@ -76,16 +76,13 @@ class Currency
     {
         return 1 / $this->exchangeRate;
     }
-
-    /**
-     * @param string $exchangeRate
-     */
-    public function setExchangeRate($exchangeRate)
+    
+    public function setExchangeRate(string $exchangeRate): void
     {
         $this->exchangeRate = $exchangeRate;
     }
 
-    public function edit(CurrencyData $currencyData)
+    public function edit(CurrencyData $currencyData): void
     {
         $this->name = $currencyData->name;
         $this->code = $currencyData->code;

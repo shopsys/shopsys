@@ -28,14 +28,14 @@ class SlowLogSubscriber implements EventSubscriberInterface
         $this->startTime = 0;
     }
 
-    public function initStartTime(GetResponseEvent $event)
+    public function initStartTime(GetResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $this->startTime = microtime(true);
         }
     }
 
-    public function addNotice(PostResponseEvent $event)
+    public function addNotice(PostResponseEvent $event): void
     {
         $requestTime = $this->getRequestTime();
         if ($requestTime > self::REQUEST_TIME_LIMIT_SECONDS) {
@@ -51,7 +51,7 @@ class SlowLogSubscriber implements EventSubscriberInterface
     {
         return microtime(true) - $this->startTime;
     }
-    
+
     public static function getSubscribedEvents()
     {
         return [

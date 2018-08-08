@@ -18,7 +18,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class CartFacadeTest extends DatabaseTestCase
 {
-    public function testAddProductToCartAddsItemsOnlyToCurrentCart()
+    public function testAddProductToCartAddsItemsOnlyToCurrentCart(): void
     {
         $customerIdentifier = new CustomerIdentifier('secretSessionHash');
         $anotherCustomerIdentifier = new CustomerIdentifier('anotherSecretSessionHash');
@@ -39,7 +39,7 @@ class CartFacadeTest extends DatabaseTestCase
         $this->assertSame(0, $anotherCart->getItemsCount(), 'Add only in their own cart');
     }
 
-    public function testCannotAddUnsellableProductToCart()
+    public function testCannotAddUnsellableProductToCart(): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '6');
         $productId = $product->getId();
@@ -57,7 +57,7 @@ class CartFacadeTest extends DatabaseTestCase
         $this->assertEmpty($cartItems, 'Product add not suppressed');
     }
 
-    public function testCanChangeCartItemsQuantities()
+    public function testCanChangeCartItemsQuantities(): void
     {
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
@@ -85,7 +85,7 @@ class CartFacadeTest extends DatabaseTestCase
         }
     }
 
-    public function testCannotDeleteNonexistentCartItem()
+    public function testCannotDeleteNonexistentCartItem(): void
     {
         $customerIdentifier = new CustomerIdentifier('secretSessionHash');
 
@@ -103,7 +103,7 @@ class CartFacadeTest extends DatabaseTestCase
         $cartFacade->deleteCartItem($cartItem->getId() + 1);
     }
 
-    public function testCanDeleteCartItem()
+    public function testCanDeleteCartItem(): void
     {
         // Set currentLocale in TranslatableListener as it done in real request
         // because CartWatcherFacade works with entity translations.
@@ -150,8 +150,8 @@ class CartFacadeTest extends DatabaseTestCase
 
         return $cartFactory->get($customerIdentifier);
     }
-    
-    private function assertArrayHasSameElements(array $expected, array $actual)
+
+    private function assertArrayHasSameElements(array $expected, array $actual): void
     {
         foreach ($expected as $expectedElement) {
             $key = array_search($expectedElement, $actual, true);

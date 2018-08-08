@@ -7,7 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20170801093853 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE parameter_titles RENAME TO parameters');
         $this->sql('ALTER SEQUENCE parameter_titles_id_seq RENAME TO parameters_id_seq');
@@ -15,7 +15,7 @@ class Version20170801093853 extends AbstractMigration
         $this->sql('ALTER TABLE parameter_translations RENAME CONSTRAINT parameter_titles_translations_pkey TO parameters_translations_pkey');
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

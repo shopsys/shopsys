@@ -14,17 +14,16 @@ abstract class AbstractNativeFixture extends AbstractFixture
      */
     private $entityManager;
 
-    public function autowireEntityManager(EntityManagerInterface $entityManager)
+    public function autowireEntityManager(EntityManagerInterface $entityManager): void
     {
         $this->entityManager = $entityManager;
     }
 
     /**
-     * @param string $sql
      * @param array|null $parameters
      * @return mixed
      */
-    protected function executeNativeQuery($sql, array $parameters = null)
+    protected function executeNativeQuery(string $sql, array $parameters = null)
     {
         $nativeQuery = $this->entityManager->createNativeQuery($sql, new ResultSetMapping());
         return $nativeQuery->execute($parameters);

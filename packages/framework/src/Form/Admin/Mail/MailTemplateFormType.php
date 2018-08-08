@@ -21,8 +21,8 @@ use Symfony\Component\Validator\Constraints;
 class MailTemplateFormType extends AbstractType
 {
     const VALIDATION_GROUP_SEND_MAIL = 'sendMail';
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('bccEmail', EmailType::class, [
@@ -110,7 +110,7 @@ class MailTemplateFormType extends AbstractType
         return $bodyConstraints;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['required_subject_variables', 'required_body_variables'])

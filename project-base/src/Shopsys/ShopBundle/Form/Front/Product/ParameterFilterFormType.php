@@ -16,8 +16,8 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
     private $parameterChoicesIndexedByParameterId;
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $config = $options['product_filter_config'];
         /* @var $config \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig */
@@ -43,7 +43,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         $builder->addViewTransformer($this);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('product_filter_config')

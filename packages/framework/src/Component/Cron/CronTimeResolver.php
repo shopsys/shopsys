@@ -14,12 +14,8 @@ class CronTimeResolver
         return $this->isMatchWithTimeString($hour, $cronTime->getTimeHours()) &&
             $this->isMatchWithTimeString($minute, $cronTime->getTimeMinutes());
     }
-
-    /**
-     * @param int $value
-     * @param string $timeString
-     */
-    private function isMatchWithTimeString($value, $timeString): bool
+    
+    private function isMatchWithTimeString(int $value, string $timeString): bool
     {
         $timeValues = explode(',', $timeString);
         $matches = null;
@@ -34,13 +30,8 @@ class CronTimeResolver
 
         return false;
     }
-
-    /**
-     * @param string $timeString
-     * @param int $maxValue
-     * @param int $divisibleBy
-     */
-    public function validateTimeString($timeString, $maxValue, $divisibleBy)
+    
+    public function validateTimeString(string $timeString, int $maxValue, int $divisibleBy): void
     {
         $timeValues = explode(',', $timeString);
         $matches = null;

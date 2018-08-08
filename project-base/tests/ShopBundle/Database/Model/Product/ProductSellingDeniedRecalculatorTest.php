@@ -10,7 +10,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class ProductSellingDeniedRecalculatorTest extends DatabaseTestCase
 {
-    public function testCalculateSellingDeniedForProductSellableVariant()
+    public function testCalculateSellingDeniedForProductSellableVariant(): void
     {
         $em = $this->getEntityManager();
         $productSellingDeniedRecalculator = $this->getContainer()->get(ProductSellingDeniedRecalculator::class);
@@ -46,7 +46,7 @@ class ProductSellingDeniedRecalculatorTest extends DatabaseTestCase
         $this->assertFalse($mainVariant->getCalculatedSellingDenied());
     }
 
-    public function testCalculateSellingDeniedForProductNotSellableVariants()
+    public function testCalculateSellingDeniedForProductNotSellableVariants(): void
     {
         $em = $this->getEntityManager();
         $productSellingDeniedRecalculator = $this->getContainer()->get(ProductSellingDeniedRecalculator::class);
@@ -88,7 +88,7 @@ class ProductSellingDeniedRecalculatorTest extends DatabaseTestCase
         $this->assertTrue($mainVariant->getCalculatedSellingDenied());
     }
 
-    public function testCalculateSellingDeniedForProductNotSellableMainVariant()
+    public function testCalculateSellingDeniedForProductNotSellableMainVariant(): void
     {
         $em = $this->getEntityManager();
         $productSellingDeniedRecalculator = $this->getContainer()->get(ProductSellingDeniedRecalculator::class);

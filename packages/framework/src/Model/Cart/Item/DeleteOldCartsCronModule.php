@@ -25,7 +25,7 @@ class DeleteOldCartsCronModule implements SimpleCronModuleInterface
     {
     }
 
-    public function run()
+    public function run(): void
     {
         $this->cartFacade->deleteOldCarts();
     }

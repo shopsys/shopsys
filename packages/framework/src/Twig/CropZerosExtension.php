@@ -13,11 +13,8 @@ class CropZerosExtension extends Twig_Extension
             new Twig_SimpleFilter('cropZeros', [$this, 'cropZeros']),
         ];
     }
-
-    /**
-     * @param string $value
-     */
-    public function cropZeros($value): string
+    
+    public function cropZeros(string $value): string
     {
         return preg_replace('/(?:[,.]0+|([,.]\d*?)0+)$/', '$1', $value);
     }

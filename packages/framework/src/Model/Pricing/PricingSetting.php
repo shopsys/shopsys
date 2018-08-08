@@ -53,33 +53,24 @@ class PricingSetting
     {
         return $this->setting->get(self::DEFAULT_CURRENCY);
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function getDomainDefaultCurrencyIdByDomainId($domainId): int
+    
+    public function getDomainDefaultCurrencyIdByDomainId(int $domainId): int
     {
         return $this->setting->getForDomain(self::DEFAULT_DOMAIN_CURRENCY, $domainId);
     }
 
-    public function setDefaultCurrency(Currency $currency)
+    public function setDefaultCurrency(Currency $currency): void
     {
         $currency->setExchangeRate(Currency::DEFAULT_EXCHANGE_RATE);
         $this->setting->set(self::DEFAULT_CURRENCY, $currency->getId());
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function setDomainDefaultCurrency(Currency $currency, $domainId)
+    
+    public function setDomainDefaultCurrency(Currency $currency, int $domainId): void
     {
         $this->setting->setForDomain(self::DEFAULT_DOMAIN_CURRENCY, $currency->getId(), $domainId);
     }
-
-    /**
-     * @param int $roundingType
-     */
-    public function setRoundingType($roundingType)
+    
+    public function setRoundingType(int $roundingType): void
     {
         if (!in_array($roundingType, self::getRoundingTypes(), true)) {
             throw new \Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidRoundingTypeException(
@@ -90,24 +81,20 @@ class PricingSetting
         $this->setting->set(self::ROUNDING_TYPE, $roundingType);
         $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function getFreeTransportAndPaymentPriceLimit($domainId): ?string
+    
+    public function getFreeTransportAndPaymentPriceLimit(int $domainId): ?string
     {
         return $this->setting->getForDomain(self::FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT, $domainId);
     }
 
     /**
-     * @param int $domainId
      * @param string|null $priceLimit
      */
-    public function setFreeTransportAndPaymentPriceLimit($domainId, $priceLimit = null)
+    public function setFreeTransportAndPaymentPriceLimit(int $domainId, ?string $priceLimit = null): void
     {
         $this->setting->setForDomain(self::FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT, $priceLimit, $domainId);
     }
-    
+
     public static function getInputPriceTypes()
     {
         return [
@@ -115,7 +102,7 @@ class PricingSetting
             self::INPUT_PRICE_TYPE_WITH_VAT,
         ];
     }
-    
+
     public static function getRoundingTypes()
     {
         return [

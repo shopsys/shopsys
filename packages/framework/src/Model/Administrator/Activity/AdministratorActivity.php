@@ -49,13 +49,10 @@ class AdministratorActivity
      * @ORM\Column(type="datetime")
      */
     protected $lastActionTime;
-
-    /**
-     * @param string $ipAddress
-     */
+    
     public function __construct(
         Administrator $administrator,
-        $ipAddress
+        string $ipAddress
     ) {
         $this->administrator = $administrator;
         $this->ipAddress = $ipAddress;
@@ -63,7 +60,7 @@ class AdministratorActivity
         $this->lastActionTime = new DateTime();
     }
 
-    public function updateLastActionTime()
+    public function updateLastActionTime(): void
     {
         $this->lastActionTime = new DateTime();
     }

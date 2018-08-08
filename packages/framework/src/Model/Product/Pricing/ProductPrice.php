@@ -10,11 +10,8 @@ class ProductPrice extends Price
      * @var bool
      */
     private $priceFrom;
-
-    /**
-     * @param bool $priceFrom
-     */
-    public function __construct(Price $price, $priceFrom)
+    
+    public function __construct(Price $price, bool $priceFrom)
     {
         $this->priceFrom = $priceFrom;
         parent::__construct($price->getPriceWithoutVat(), $price->getPriceWithVat());

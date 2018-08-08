@@ -43,7 +43,7 @@ class ProductsType extends AbstractType
         $view->vars['allow_variants'] = $options['allow_variants'];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'entry_type' => HiddenType::class,

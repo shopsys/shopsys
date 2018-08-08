@@ -46,20 +46,16 @@ class OrderRepository
     }
 
     /**
-     * @param int $userId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getOrdersByUserId($userId): array
+    public function getOrdersByUserId(int $userId): array
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.customer = :customer')->setParameter(':customer', $userId)
             ->getQuery()->getResult();
     }
-
-    /**
-     * @param int $userId
-     */
-    public function findLastByUserId($userId): ?\Shopsys\FrameworkBundle\Model\Order\Order
+    
+    public function findLastByUserId(int $userId): ?\Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.customer = :customer')->setParameter(':customer', $userId)
@@ -67,22 +63,16 @@ class OrderRepository
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
     }
-
-    /**
-     * @param int $id
-     */
-    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Order\Order
+    
+    public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.id = :orderId')->setParameter(':orderId', $id)
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
     }
-
-    /**
-     * @param int $id
-     */
-    public function getById($id): \Shopsys\FrameworkBundle\Model\Order\Order
+    
+    public function getById(int $id): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->findById($id);
 
@@ -105,12 +95,9 @@ class OrderRepository
 
         return $queryBuilder->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR) !== null;
     }
-
-    /**
-     * @param string $locale
-     */
+    
     public function getOrderListQueryBuilderByQuickSearchData(
-        $locale,
+        string $locale,
         QuickSearchFormData $quickSearchData
     ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->orderListAdminRepository->getOrderListQueryBuilder($locale);
@@ -156,11 +143,9 @@ class OrderRepository
     }
 
     /**
-     * @param string $email
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getOrderListForEmailByDomainId($email, $domainId): array
+    public function getOrderListForEmailByDomainId(string $email, int $domainId): array
     {
         return $this->getOrderListQueryBuilder()
             ->andWhere('o.domainId = :domain')
@@ -170,12 +155,8 @@ class OrderRepository
             ->setParameter('domain', $domainId)
             ->getQuery()->execute();
     }
-
-    /**
-     * @param string $urlHash
-     * @param int $domainId
-     */
-    public function getByUrlHashAndDomain($urlHash, $domainId): \Shopsys\FrameworkBundle\Model\Order\Order
+    
+    public function getByUrlHashAndDomain(string $urlHash, int $domainId): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->createOrderQueryBuilder()
             ->andWhere('o.urlHash = :urlHash')->setParameter(':urlHash', $urlHash)
@@ -189,11 +170,8 @@ class OrderRepository
 
         return $order;
     }
-
-    /**
-     * @param string $orderNumber
-     */
-    public function getByOrderNumberAndUser($orderNumber, User $user): \Shopsys\FrameworkBundle\Model\Order\Order
+    
+    public function getByOrderNumberAndUser(string $orderNumber, User $user): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->createOrderQueryBuilder()
             ->andWhere('o.number = :number')->setParameter(':number', $orderNumber)
@@ -208,11 +186,8 @@ class OrderRepository
 
         return $order;
     }
-
-    /**
-     * @param string $urlHash
-     */
-    public function findByUrlHashIncludingDeletedOrders($urlHash): ?\Shopsys\FrameworkBundle\Model\Order\Order
+    
+    public function findByUrlHashIncludingDeletedOrders(string $urlHash): ?\Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->getOrderRepository()->findOneBy(['urlHash' => $urlHash]);
     }
@@ -229,12 +204,8 @@ class OrderRepository
             ->groupBy('c')
             ->getQuery()->execute();
     }
-
-    /**
-     * @param string $email
-     * @param int $domainId
-     */
-    public function getOrdersCountByEmailAndDomainId($email, $domainId): int
+    
+    public function getOrdersCountByEmailAndDomainId(string $email, int $domainId): int
     {
         return $this->getOrderListQueryBuilder()
             ->select('count(o)')

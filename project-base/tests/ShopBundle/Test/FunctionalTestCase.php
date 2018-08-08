@@ -14,30 +14,24 @@ abstract class FunctionalTestCase extends WebTestCase
      */
     private $client;
 
-    protected function setUpDomain()
+    protected function setUpDomain(): void
     {
         $domain = $this->getContainer()->get(Domain::class);
         /* @var $domain \Shopsys\FrameworkBundle\Component\Domain\Domain */
         $domain->switchDomainById(1);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpDomain();
     }
-
-    /**
-     * @param bool $createNew
-     * @param string $username
-     * @param string $password
-     * @param array $kernelOptions
-     */
+    
     protected function getClient(
-        $createNew = false,
-        $username = null,
-        $password = null,
-        $kernelOptions = []
+        bool $createNew = false,
+        string $username = null,
+        string $password = null,
+        array $kernelOptions = []
     ): \Symfony\Bundle\FrameworkBundle\Client {
         $defaultKernelOptions = [
             'environment' => EnvironmentType::TEST,
@@ -67,11 +61,8 @@ abstract class FunctionalTestCase extends WebTestCase
     {
         return $this->getClient()->getContainer();
     }
-
-    /**
-     * @param string $referenceName
-     */
-    protected function getReference($referenceName): object
+    
+    protected function getReference(string $referenceName): object
     {
         $persistentReferenceFacade = $this->getContainer()
             ->get(PersistentReferenceFacade::class);

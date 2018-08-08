@@ -34,17 +34,14 @@ class OrderMailFacade
         $this->orderMailService = $orderMailService;
     }
 
-    public function sendEmail(Order $order)
+    public function sendEmail(Order $order): void
     {
         $mailTemplate = $this->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
         $messageData = $this->orderMailService->getMessageDataByOrder($order, $mailTemplate);
         $messageData->attachmentsFilepaths = $this->mailTemplateFacade->getMailTemplateAttachmentsFilepaths($mailTemplate);
         $this->mailer->send($messageData);
     }
-    /**
-     * @param int $domainId
-     */
-    public function getMailTemplateByStatusAndDomainId(OrderStatus $orderStatus, $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+    public function getMailTemplateByStatusAndDomainId(OrderStatus $orderStatus, int $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $templateName = $this->orderMailService->getMailTemplateNameByStatus($orderStatus);
 

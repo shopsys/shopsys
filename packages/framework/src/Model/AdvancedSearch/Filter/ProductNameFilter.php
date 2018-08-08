@@ -61,11 +61,8 @@ class ProductNameFilter implements AdvancedSearchFilterInterface
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
     }
-
-    /**
-     * @param string $operator
-     */
-    private function getDqlOperator($operator): string
+    
+    private function getDqlOperator(string $operator): string
     {
         switch ($operator) {
             case self::OPERATOR_CONTAINS:

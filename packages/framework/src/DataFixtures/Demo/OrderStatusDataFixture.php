@@ -23,7 +23,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
         $this->orderStatusFacade = $orderStatusFacade;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->createOrderStatusReference(1, self::ORDER_STATUS_NEW);
         $this->createOrderStatusReference(2, self::ORDER_STATUS_IN_PROGRESS);
@@ -34,14 +34,12 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     /**
      * Order statuses are created (with specific ids) in database migration.
      *
-     * @param int $orderStatusId
-     * @param string $referenceName
      * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135341
      */
     private function createOrderStatusReference(
-        $orderStatusId,
-        $referenceName
-    ) {
+        int $orderStatusId,
+        string $referenceName
+    ): void {
         $orderStatus = $this->orderStatusFacade->getById($orderStatusId);
         $this->addReference($referenceName, $orderStatus);
     }

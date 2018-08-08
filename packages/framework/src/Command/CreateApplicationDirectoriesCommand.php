@@ -59,20 +59,20 @@ class CreateApplicationDirectoriesCommand extends Command
         $this->projectDir = $projectDir;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create application directories for locks, docs, content, images, uploaded files, etc.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->createMiscellaneousDirectories($output);
         $this->createImageDirectories($output);
         $this->createUploadedFileDirectories($output);
     }
 
-    private function createMiscellaneousDirectories(OutputInterface $output)
+    private function createMiscellaneousDirectories(OutputInterface $output): void
     {
         $directories = [
             '/web/content/feeds',
@@ -101,14 +101,14 @@ class CreateApplicationDirectoriesCommand extends Command
         $output->writeln('<fg=green>Miscellaneous application directories were successfully created.</fg=green>');
     }
 
-    private function createImageDirectories(OutputInterface $output)
+    private function createImageDirectories(OutputInterface $output): void
     {
         $this->imageDirectoryStructureCreator->makeImageDirectories();
 
         $output->writeln('<fg=green>Directories for images were successfully created.</fg=green>');
     }
 
-    private function createUploadedFileDirectories(OutputInterface $output)
+    private function createUploadedFileDirectories(OutputInterface $output): void
     {
         $this->uploadedFileDirectoryStructureCreator->makeUploadedFileDirectories();
 

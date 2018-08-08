@@ -105,7 +105,7 @@ class AdministratorFrontSecurityFacade
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      * @see \Symfony\Component\Security\Core\Authentication\Token\AbstractToken::setUser()
      */
-    protected function refreshUserInToken(TokenInterface $token)
+    protected function refreshUserInToken(TokenInterface $token): void
     {
         $user = $token->getUser();
         if (!$user instanceof UserInterface) {

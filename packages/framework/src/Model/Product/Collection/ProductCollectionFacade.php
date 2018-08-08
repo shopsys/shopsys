@@ -79,7 +79,7 @@ class ProductCollectionFacade
      * @param string|null $sizeName
      * @return string[]
      */
-    public function getImagesUrlsIndexedByProductId(array $products, DomainConfig $domainConfig, $sizeName = null): array
+    public function getImagesUrlsIndexedByProductId(array $products, DomainConfig $domainConfig, ?string $sizeName = null): array
     {
         $imagesUrlsByProductId = [];
         foreach ($this->getMainImagesIndexedByProductId($products) as $productId => $image) {

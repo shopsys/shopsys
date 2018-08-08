@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ShopsysShopBundle extends Bundle
 {
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
 

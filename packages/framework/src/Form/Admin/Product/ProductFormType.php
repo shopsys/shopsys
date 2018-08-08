@@ -87,8 +87,8 @@ class ProductFormType extends AbstractType
         $this->domain = $domain;
         $this->seoSettingFacade = $seoSettingFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $vats = $this->vatFacade->getAllIncludingMarkedForDeletion();
 
@@ -339,7 +339,7 @@ class ProductFormType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('product')
@@ -369,7 +369,7 @@ class ProductFormType extends AbstractType
             ]);
     }
 
-    private function disableIrrelevantFields(FormBuilderInterface $builder, Product $product)
+    private function disableIrrelevantFields(FormBuilderInterface $builder, Product $product): void
     {
         $irrelevantFields = [];
         if ($product->isMainVariant()) {
@@ -399,10 +399,9 @@ class ProductFormType extends AbstractType
     }
 
     /**
-     * @param string $locale
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      */
-    private function getTitlePlaceholder($locale, Product $product = null): string
+    private function getTitlePlaceholder(string $locale, Product $product = null): string
     {
         return $product !== null ? $product->getName($locale) : '';
     }

@@ -26,12 +26,11 @@ class UploadedFileService
     }
 
     /**
-     * @param int $entityId
      * @param string[] $temporaryFilenames
      */
     public function createUploadedFile(
         UploadedFileEntityConfig $uploadedFileEntityConfig,
-        $entityId,
+        int $entityId,
         array $temporaryFilenames
     ): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath(array_pop($temporaryFilenames));

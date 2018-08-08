@@ -21,8 +21,8 @@ class CookiesSettingFormType extends AbstractType
     {
         $this->articleFacade = $articleFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $articles = $this->articleFacade->getAllByDomainId($options['domain_id']);
 
@@ -46,7 +46,7 @@ class CookiesSettingFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('domain_id')

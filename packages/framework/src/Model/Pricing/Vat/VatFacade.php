@@ -53,11 +53,8 @@ class VatFacade
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->vatFactory = $vatFactory;
     }
-
-    /**
-     * @param int $vatId
-     */
-    public function getById($vatId): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+    
+    public function getById(int $vatId): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->vatRepository->getById($vatId);
     }
@@ -86,11 +83,8 @@ class VatFacade
 
         return $vat;
     }
-
-    /**
-     * @param int $vatId
-     */
-    public function edit($vatId, VatData $vatData): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+    
+    public function edit(int $vatId, VatData $vatData): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         $vat = $this->vatRepository->getById($vatId);
         $vat->edit($vatData);
@@ -102,10 +96,9 @@ class VatFacade
     }
 
     /**
-     * @param int $vatId
      * @param int|null $newVatId
      */
-    public function deleteById($vatId, $newVatId = null)
+    public function deleteById(int $vatId, ?int $newVatId = null): void
     {
         $oldVat = $this->vatRepository->getById($vatId);
         $newVat = $newVatId ? $this->vatRepository->getById($newVatId) : null;
@@ -153,7 +146,7 @@ class VatFacade
         return $this->vatRepository->getById($defaultVatId);
     }
 
-    public function setDefaultVat(Vat $vat)
+    public function setDefaultVat(Vat $vat): void
     {
         $this->setting->set(Vat::SETTING_DEFAULT_VAT, $vat->getId());
     }
@@ -166,10 +159,9 @@ class VatFacade
     }
 
     /**
-     * @param int $vatId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
-    public function getAllExceptId($vatId): array
+    public function getAllExceptId(int $vatId): array
     {
         return $this->vatRepository->getAllExceptId($vatId);
     }

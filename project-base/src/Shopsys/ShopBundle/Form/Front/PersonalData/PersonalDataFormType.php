@@ -16,8 +16,7 @@ use Symfony\Component\Validator\Constraints\Email;
 
 class PersonalDataFormType extends AbstractType
 {
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('email', EmailType::class, [
@@ -32,7 +31,7 @@ class PersonalDataFormType extends AbstractType
             ->add('send', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],

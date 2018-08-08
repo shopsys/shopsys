@@ -6,18 +6,12 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class InverseTransformer implements DataTransformerInterface
 {
-    /**
-     * @param bool $value
-     */
-    public function transform($value): bool
+    public function transform(bool $value): bool
     {
         return !$value;
     }
-
-    /**
-     * @param bool $value
-     */
-    public function reverseTransform($value): bool
+    
+    public function reverseTransform(bool $value): bool
     {
         return !$value;
     }

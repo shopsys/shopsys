@@ -90,7 +90,7 @@ class ProductPriceRecalculator
         return true;
     }
 
-    public function runAllScheduledRecalculations()
+    public function runAllScheduledRecalculations(): void
     {
         $this->runImmediateRecalculations();
 
@@ -99,7 +99,7 @@ class ProductPriceRecalculator
         }
     }
 
-    public function runImmediateRecalculations()
+    public function runImmediateRecalculations(): void
     {
         $products = $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation();
         foreach ($products as $product) {
@@ -109,7 +109,7 @@ class ProductPriceRecalculator
         $this->clearCache();
     }
 
-    private function clearCache()
+    private function clearCache(): void
     {
         $this->allPricingGroups = null;
     }
@@ -126,7 +126,7 @@ class ProductPriceRecalculator
         return $this->allPricingGroups;
     }
 
-    private function recalculateProductPrices(Product $product)
+    private function recalculateProductPrices(Product $product): void
     {
         foreach ($this->getAllPricingGroups() as $pricingGroup) {
             try {
@@ -142,7 +142,7 @@ class ProductPriceRecalculator
         $this->em->flush($product);
     }
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $this->runImmediateRecalculations();

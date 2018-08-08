@@ -27,13 +27,13 @@ class GenerateErrorPagesCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generates all error pages for production.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->errorPagesFacade->generateAllErrorPagesForProduction();
     }

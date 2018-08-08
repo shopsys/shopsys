@@ -9,7 +9,7 @@ class Version20180531231229 extends AbstractMigration
 {
     use MultidomainMigrationTrait;
 
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE payment_domains DROP CONSTRAINT "payment_domains_pkey"');
         $this->sql('ALTER TABLE payment_domains ADD id SERIAL NOT NULL');
@@ -32,7 +32,7 @@ class Version20180531231229 extends AbstractMigration
         }
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

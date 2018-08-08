@@ -7,7 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180702111019 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $defaultAvailabilityInStockId = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'defaultAvailabilityInStockId\' AND domain_id = 0;')->fetchColumn(0);
         if ($defaultAvailabilityInStockId <= 0) {
@@ -15,7 +15,7 @@ class Version20180702111019 extends AbstractMigration
         }
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

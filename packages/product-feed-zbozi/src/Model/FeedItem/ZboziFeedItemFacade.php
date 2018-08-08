@@ -57,9 +57,6 @@ class ZboziFeedItemFacade
         $this->zboziProductDomainFacade = $zboziProductDomainFacade;
     }
 
-    /**
-     * @param int|null $lastSeekId
-     */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());

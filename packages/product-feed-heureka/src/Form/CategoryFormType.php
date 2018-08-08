@@ -27,8 +27,8 @@ class CategoryFormType extends AbstractType
         $this->translator = $translator;
         $this->heurekaCategoryFacade = $heurekaCategoryFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $heurekaCategories = $this->heurekaCategoryFacade->getAllIndexedById();
 

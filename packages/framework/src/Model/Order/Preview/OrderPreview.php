@@ -85,7 +85,7 @@ class OrderPreview
         Payment $payment = null,
         Price $paymentPrice = null,
         Price $roundingPrice = null,
-        $promoCodeDiscountPercent = null
+        ?float $promoCodeDiscountPercent = null
     ) {
         $this->quantifiedProductsByIndex = $quantifiedProductsByIndex;
         $this->quantifiedItemsPricesByIndex = $quantifiedItemsPricesByIndex;

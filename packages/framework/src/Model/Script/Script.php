@@ -71,7 +71,7 @@ class Script
         return $this->placement;
     }
 
-    public function edit(ScriptData $scriptData)
+    public function edit(ScriptData $scriptData): void
     {
         $this->name = $scriptData->name;
         $this->code = $scriptData->code;

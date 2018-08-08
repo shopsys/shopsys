@@ -56,12 +56,8 @@ class ManualBestsellingProduct
      * @ORM\Column(type="integer")
      */
     protected $position;
-
-    /**
-     * @param int $domainId
-     * @param int $position
-     */
-    public function __construct($domainId, Category $category, Product $product, $position)
+    
+    public function __construct(int $domainId, Category $category, Product $product, int $position)
     {
         $this->product = $product;
         $this->category = $category;

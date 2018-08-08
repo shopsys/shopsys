@@ -24,7 +24,7 @@ class ProductVisibilityImmediateCronModule implements SimpleCronModuleInterface
     {
     }
 
-    public function run()
+    public function run(): void
     {
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
     }

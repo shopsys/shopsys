@@ -55,7 +55,7 @@ class StrictWebDriver extends WebDriver
     /**
      * @deprecated
      */
-    public function click($link, $context = null)
+    public function click($link, $context = null): void
     {
         $strictAlternatives = [
             'clickBy*',
@@ -67,7 +67,7 @@ class StrictWebDriver extends WebDriver
     /**
      * @see click()
      */
-    private function clickAndWait($link, $context = null)
+    private function clickAndWait($link, $context = null): void
     {
         parent::click($link, $context);
 
@@ -76,10 +76,9 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @param string $text
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByText($text, $contextSelector = null)
+    public function clickByText(string $text, $contextSelector = null): void
     {
         $locator = Crawler::xpathLiteral(trim($text));
 
@@ -94,10 +93,9 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @param string $name
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByName($name, $contextSelector = null)
+    public function clickByName(string $name, $contextSelector = null): void
     {
         $locator = Crawler::xpathLiteral(trim($name));
 
@@ -108,11 +106,8 @@ class StrictWebDriver extends WebDriver
 
         $this->clickAndWait(['xpath' => $xpath], $contextSelector);
     }
-
-    /**
-     * @param string $css
-     */
-    public function clickByCss($css)
+    
+    public function clickByCss(string $css): void
     {
         $this->clickAndWait(['css' => $css]);
     }
@@ -125,7 +120,7 @@ class StrictWebDriver extends WebDriver
     /**
      * @deprecated
      */
-    public function fillField($field, $value)
+    public function fillField($field, $value): void
     {
         $strictAlternatives = [
             'fillFieldBy*',
@@ -133,50 +128,32 @@ class StrictWebDriver extends WebDriver
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
         throw new \Tests\ShopBundle\Test\Codeception\Exception\DeprecatedMethodException($message);
     }
-
-    /**
-     * @param string $value
-     */
-    public function fillFieldByElement(WebDriverElement $element, $value)
+    
+    public function fillFieldByElement(WebDriverElement $element, string $value): void
     {
         $element->clear();
         $element->sendKeys($value);
     }
-
-    /**
-     * @param string $fieldName
-     * @param string $value
-     */
-    public function fillFieldByName($fieldName, $value)
+    
+    public function fillFieldByName(string $fieldName, string $value): void
     {
         $locator = Crawler::xpathLiteral(trim($fieldName));
         $xpath = './/*[self::input | self::textarea | self::select][@name = ' . $locator . ']';
 
         parent::fillField(['xpath' => $xpath], $value);
     }
-
-    /**
-     * @param string $css
-     * @param string $value
-     */
-    public function fillFieldByCss($css, $value)
+    
+    public function fillFieldByCss(string $css, string $value): void
     {
         parent::fillField(['css' => $css], $value);
     }
-
-    /**
-     * @param string $text
-     * @param string $css
-     */
-    public function seeInCss($text, $css)
+    
+    public function seeInCss(string $text, string $css): void
     {
         parent::see($text, ['css' => $css]);
     }
-
-    /**
-     * @param string $text
-     */
-    public function seeInElement($text, WebDriverElement $element)
+    
+    public function seeInElement(string $text, WebDriverElement $element): void
     {
         $this->assertContains($text, $element->getText());
     }
@@ -184,7 +161,7 @@ class StrictWebDriver extends WebDriver
     /**
      * @deprecated
      */
-    public function seeCheckboxIsChecked($checkbox)
+    public function seeCheckboxIsChecked($checkbox): void
     {
         $strictAlternatives = [
             'seeCheckboxIsCheckedBy*',
@@ -192,22 +169,16 @@ class StrictWebDriver extends WebDriver
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
         throw new \Tests\ShopBundle\Test\Codeception\Exception\DeprecatedMethodException($message);
     }
-
-    /**
-     * @param string $checkboxId
-     */
-    public function seeCheckboxIsCheckedById($checkboxId)
+    
+    public function seeCheckboxIsCheckedById(string $checkboxId): void
     {
         $locator = Crawler::xpathLiteral(trim($checkboxId));
         $xpath = './/input[@type = "checkbox"][./@id = ' . $locator . ']';
 
         parent::seeCheckboxIsChecked(['xpath' => $xpath]);
     }
-
-    /**
-     * @param string $label
-     */
-    public function seeCheckboxIsCheckedByLabel($label)
+    
+    public function seeCheckboxIsCheckedByLabel(string $label): void
     {
         /*
          * XPath explanation:
@@ -230,7 +201,7 @@ class StrictWebDriver extends WebDriver
     /**
      * @deprecated
      */
-    public function dontSeeCheckboxIsChecked($checkbox)
+    public function dontSeeCheckboxIsChecked($checkbox): void
     {
         $strictAlternatives = [
             'dontSeeCheckboxIsCheckedBy*',
@@ -238,22 +209,16 @@ class StrictWebDriver extends WebDriver
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
         throw new \Tests\ShopBundle\Test\Codeception\Exception\DeprecatedMethodException($message);
     }
-
-    /**
-     * @param string $checkboxId
-     */
-    public function dontSeeCheckboxIsCheckedById($checkboxId)
+    
+    public function dontSeeCheckboxIsCheckedById(string $checkboxId): void
     {
         $locator = Crawler::xpathLiteral(trim($checkboxId));
         $xpath = './/input[@type = "checkbox"][./@id = ' . $locator . ']';
 
         parent::dontSeeCheckboxIsChecked(['xpath' => $xpath]);
     }
-
-    /**
-     * @param string $label
-     */
-    public function dontSeeCheckboxIsCheckedByLabel($label)
+    
+    public function dontSeeCheckboxIsCheckedByLabel(string $label): void
     {
         /*
          * XPath explanation:
@@ -276,7 +241,7 @@ class StrictWebDriver extends WebDriver
     /**
      * @deprecated
      */
-    public function checkOption($option)
+    public function checkOption($option): void
     {
         $strictAlternatives = [
             'checkOptionBy*',
@@ -284,22 +249,16 @@ class StrictWebDriver extends WebDriver
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
         throw new \Tests\ShopBundle\Test\Codeception\Exception\DeprecatedMethodException($message);
     }
-
-    /**
-     * @param string $optionId
-     */
-    public function checkOptionById($optionId)
+    
+    public function checkOptionById(string $optionId): void
     {
         $locator = Crawler::xpathLiteral(trim($optionId));
         $xpath = './/input[@type = "checkbox" or @type = "radio"][./@id = ' . $locator . ']';
 
         parent::checkOption(['xpath' => $xpath]);
     }
-
-    /**
-     * @param string $label
-     */
-    public function checkOptionByLabel($label)
+    
+    public function checkOptionByLabel(string $label): void
     {
         /*
          * XPath explanation:
@@ -317,20 +276,13 @@ class StrictWebDriver extends WebDriver
         );
         parent::checkOption(['xpath' => $xpath]);
     }
-
-    /**
-     * @param string $selectCss
-     * @param string $optionValue
-     */
-    public function selectOptionByCssAndValue($selectCss, $optionValue)
+    
+    public function selectOptionByCssAndValue(string $selectCss, string $optionValue): void
     {
         parent::selectOption(['css' => $selectCss], $optionValue);
     }
-
-    /**
-     * @param string $css
-     */
-    public function countVisibleByCss($css): int
+    
+    public function countVisibleByCss(string $css): int
     {
         $elements = parent::matchVisible(['css' => $css]);
 
@@ -340,7 +292,7 @@ class StrictWebDriver extends WebDriver
     /**
      * @deprecated
      */
-    public function seeInField($field, $value)
+    public function seeInField($field, $value): void
     {
         $strictAlternatives = [
             'seeInFieldBy*',
@@ -348,33 +300,25 @@ class StrictWebDriver extends WebDriver
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
         throw new \Tests\ShopBundle\Test\Codeception\Exception\DeprecatedMethodException($message);
     }
-
-    /**
-     * @param string $value
-     * @param string $fieldName
-     */
-    public function seeInFieldByName($value, $fieldName)
+    
+    public function seeInFieldByName(string $value, string $fieldName): void
     {
         $locator = Crawler::xpathLiteral(trim($fieldName));
         $xpath = './/*[self::input | self::textarea | self::select][@name = ' . $locator . ']';
 
         parent::seeInField(['xpath' => $xpath], $value);
     }
-
-    /**
-     * @param string $value
-     */
-    public function seeInFieldByElement($value, WebDriverElement $element)
+    
+    public function seeInFieldByElement(string $value, WebDriverElement $element): void
     {
         parent::seeInField($element, $value);
     }
 
     /**
-     * @param string $css
      * @param null|int $offsetX
      * @param null|int $offsetY
      */
-    public function moveMouseOverByCss($css, $offsetX = null, $offsetY = null)
+    public function moveMouseOverByCss(string $css, ?int $offsetX = null, ?int $offsetY = null): void
     {
         parent::moveMouseOver(['css' => $css], $offsetX, $offsetY);
     }
@@ -382,7 +326,7 @@ class StrictWebDriver extends WebDriver
     /**
      * @deprecated
      */
-    public function pressKey($element, $char)
+    public function pressKey($element, $char): void
     {
         $strictAlternatives = [
             'pressKeysBy*',
@@ -402,28 +346,24 @@ class StrictWebDriver extends WebDriver
      *
      * @param string|string[] $keys
      */
-    public function pressKeysByElement(WebDriverElement $element, $keys)
+    public function pressKeysByElement(WebDriverElement $element, $keys): void
     {
         $element->sendKeys($keys);
     }
 
     /**
-     * @param string $text
-     * @param array $nodes
      * @param mixed $selector
      */
-    protected function assertNodesContain($text, $nodes, $selector = null)
+    protected function assertNodesContain(string $text, array $nodes, $selector = null): void
     {
         $message = Locator::humanReadableString($selector);
         parent::assertNodesContain($text, $nodes, $message);
     }
 
     /**
-     * @param string $text
-     * @param array $nodes
      * @param mixed $selector
      */
-    protected function assertNodesNotContain($text, $nodes, $selector = null)
+    protected function assertNodesNotContain(string $text, array $nodes, $selector = null): void
     {
         $message = Locator::humanReadableString($selector);
         parent::assertNodesNotContain($text, $nodes, $message);

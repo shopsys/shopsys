@@ -60,11 +60,8 @@ class BrandDomain
      * @ORM\Column(type="text", nullable=true)
      */
     protected $seoH1;
-
-    /**
-     * @param int $domainId
-     */
-    public function __construct(Brand $brand, $domainId)
+    
+    public function __construct(Brand $brand, int $domainId)
     {
         $this->brand = $brand;
         $this->domainId = $domainId;
@@ -83,7 +80,7 @@ class BrandDomain
     /**
      * @param string|null $seoTitle
      */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle(?string $seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
@@ -96,7 +93,7 @@ class BrandDomain
     /**
      * @param string|null $seoMetaDescription
      */
-    public function setSeoMetaDescription($seoMetaDescription)
+    public function setSeoMetaDescription(?string $seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
@@ -109,7 +106,7 @@ class BrandDomain
     /**
      * @param string|null $seoH1
      */
-    public function setSeoH1($seoH1)
+    public function setSeoH1(?string $seoH1): void
     {
         $this->seoH1 = $seoH1;
     }

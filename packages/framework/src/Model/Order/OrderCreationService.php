@@ -70,7 +70,7 @@ class OrderCreationService
         $this->orderTransportFactory = $orderTransportFactory;
     }
 
-    public function prefillFrontFormData(FrontOrderData $frontOrderData, User $user, Order $order = null)
+    public function prefillFrontFormData(FrontOrderData $frontOrderData, User $user, Order $order = null): void
     {
         if ($order instanceof Order) {
             $this->prefillTransportAndPaymentFromOrder($frontOrderData, $order);
@@ -78,13 +78,13 @@ class OrderCreationService
         $this->prefillFrontFormDataFromCustomer($frontOrderData, $user);
     }
 
-    private function prefillTransportAndPaymentFromOrder(FrontOrderData $frontOrderData, Order $order)
+    private function prefillTransportAndPaymentFromOrder(FrontOrderData $frontOrderData, Order $order): void
     {
         $frontOrderData->transport = $order->getTransport();
         $frontOrderData->payment = $order->getPayment();
     }
 
-    private function prefillFrontFormDataFromCustomer(FrontOrderData $frontOrderData, User $user)
+    private function prefillFrontFormDataFromCustomer(FrontOrderData $frontOrderData, User $user): void
     {
         $frontOrderData->firstName = $user->getFirstName();
         $frontOrderData->lastName = $user->getLastName();
@@ -113,7 +113,7 @@ class OrderCreationService
         }
     }
 
-    public function fillOrderItems(Order $order, OrderPreview $orderPreview)
+    public function fillOrderItems(Order $order, OrderPreview $orderPreview): void
     {
         $locale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
 
@@ -121,11 +121,8 @@ class OrderCreationService
         $this->fillOrderTransportAndPayment($order, $orderPreview, $locale);
         $this->fillOrderRounding($order, $orderPreview, $locale);
     }
-
-    /**
-     * @param string $locale
-     */
-    private function fillOrderTransportAndPayment(Order $order, OrderPreview $orderPreview, $locale)
+    
+    private function fillOrderTransportAndPayment(Order $order, OrderPreview $orderPreview, string $locale): void
     {
         $payment = $order->getPayment();
         $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
@@ -161,11 +158,8 @@ class OrderCreationService
         );
         $order->addItem($orderTransport);
     }
-
-    /**
-     * @param string $locale
-     */
-    private function fillOrderProducts(Order $order, OrderPreview $orderPreview, $locale)
+    
+    private function fillOrderProducts(Order $order, OrderPreview $orderPreview, string $locale): void
     {
         $quantifiedItemPrices = $orderPreview->getQuantifiedItemsPrices();
         $quantifiedItemDiscounts = $orderPreview->getQuantifiedItemsDiscounts();
@@ -198,11 +192,8 @@ class OrderCreationService
             }
         }
     }
-
-    /**
-     * @param string $locale
-     */
-    private function fillOrderRounding(Order $order, OrderPreview $orderPreview, $locale)
+    
+    private function fillOrderRounding(Order $order, OrderPreview $orderPreview, string $locale): void
     {
         if ($orderPreview->getRoundingPrice() !== null) {
             $this->orderProductFactory->create(
@@ -217,12 +208,8 @@ class OrderCreationService
             );
         }
     }
-
-    /**
-     * @param string $locale
-     * @param float $discountPercent
-     */
-    private function addOrderItemDiscount(OrderItem $orderItem, Price $discount, $locale, $discountPercent)
+    
+    private function addOrderItemDiscount(OrderItem $orderItem, Price $discount, string $locale, float $discountPercent): void
     {
         $name = sprintf(
             '%s %s - %s',

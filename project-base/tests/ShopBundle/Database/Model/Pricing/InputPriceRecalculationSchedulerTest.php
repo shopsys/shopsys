@@ -24,7 +24,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class InputPriceRecalculationSchedulerTest extends DatabaseTestCase
 {
-    public function testOnKernelResponseNoAction()
+    public function testOnKernelResponseNoAction(): void
     {
         $setting = $this->getContainer()->get(Setting::class);
         /* @var $setting \Shopsys\FrameworkBundle\Component\Setting\Setting */
@@ -55,14 +55,10 @@ class InputPriceRecalculationSchedulerTest extends DatabaseTestCase
             ['inputPriceWithoutVat' => '17261.983471', 'inputPriceWithVat' => '20887', 'vatPercent' => '21'],
         ];
     }
-
-    /**
-     * @param string $inputPrice
-     * @param string $vatPercent
-     */
+    
     private function createProductWithInputPriceAndVatPercentAndAutoCalculationPriceType(
-        $inputPrice,
-        $vatPercent
+        string $inputPrice,
+        string $vatPercent
     ): \Shopsys\FrameworkBundle\Model\Product\Product {
         $em = $this->getEntityManager();
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
@@ -92,7 +88,7 @@ class InputPriceRecalculationSchedulerTest extends DatabaseTestCase
         $inputPriceWithoutVat,
         $inputPriceWithVat,
         $vatPercent
-    ) {
+    ): void {
         $em = $this->getEntityManager();
 
         $setting = $this->getContainer()->get(Setting::class);
@@ -170,7 +166,7 @@ class InputPriceRecalculationSchedulerTest extends DatabaseTestCase
         $inputPriceWithoutVat,
         $inputPriceWithVat,
         $vatPercent
-    ) {
+    ): void {
         $em = $this->getEntityManager();
 
         $setting = $this->getContainer()->get(Setting::class);

@@ -27,13 +27,13 @@ class CreateDatabaseSchemaCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create database public schema');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('Initializing database schema');
         $this->databaseSchemaFacade->createSchema('public');

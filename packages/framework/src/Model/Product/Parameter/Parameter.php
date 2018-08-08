@@ -51,7 +51,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @param string|null $locale
      */
-    public function getName($locale = null): string
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -61,7 +61,7 @@ class Parameter extends AbstractTranslatableEntity
         return $this->visible;
     }
 
-    protected function setTranslations(ParameterData $parameterData)
+    protected function setTranslations(ParameterData $parameterData): void
     {
         foreach ($parameterData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -73,7 +73,7 @@ class Parameter extends AbstractTranslatableEntity
         return new ParameterTranslation();
     }
 
-    public function edit(ParameterData $parameterData)
+    public function edit(ParameterData $parameterData): void
     {
         $this->setTranslations($parameterData);
         $this->visible = $parameterData->visible;

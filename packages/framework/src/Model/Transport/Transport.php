@@ -101,7 +101,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         $this->payments = new ArrayCollection();
     }
 
-    public function edit(TransportData $transportData)
+    public function edit(TransportData $transportData): void
     {
         $this->vat = $transportData->vat;
         $this->hidden = $transportData->hidden;
@@ -109,7 +109,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         $this->setDomains($transportData);
     }
 
-    protected function setTranslations(TransportData $transportData)
+    protected function setTranslations(TransportData $transportData): void
     {
         foreach ($transportData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -130,7 +130,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @param string|null $locale
      */
-    public function getName($locale = null): string
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -138,7 +138,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @param string|null $locale
      */
-    public function getDescription($locale = null): ?string
+    public function getDescription(?string $locale = null): ?string
     {
         return $this->translation($locale)->getDescription();
     }
@@ -146,7 +146,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @param string|null $locale
      */
-    public function getInstructions($locale = null): ?string
+    public function getInstructions(?string $locale = null): ?string
     {
         return $this->translation($locale)->getInstructions();
     }
@@ -176,15 +176,12 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
             . ' from transport with ID ' . $this->getId() . 'not found.';
         throw new \Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException($message);
     }
-
-    /**
-     * @param string $price
-     */
+    
     public function setPrice(
         TransportPriceFactoryInterface $transportPriceFactory,
         Currency $currency,
-        $price
-    ) {
+        string $price
+    ): void {
         foreach ($this->prices as $transportInputPrice) {
             if ($transportInputPrice->getCurrency() === $currency) {
                 $transportInputPrice->setPrice($price);
@@ -210,7 +207,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         return $this->deleted;
     }
 
-    public function markAsDeleted()
+    public function markAsDeleted(): void
     {
         $this->deleted = true;
     }
@@ -219,16 +216,13 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     {
         return $this->position;
     }
-
-    /**
-     * @param int $position
-     */
-    public function setPosition($position)
+    
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }
 
-    protected function setDomains(TransportData $transportData)
+    protected function setDomains(TransportData $transportData): void
     {
         foreach ($this->domains as $transportDomain) {
             $domainId = $transportDomain->getDomainId();
@@ -236,7 +230,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         }
     }
 
-    protected function createDomains(TransportData $transportData)
+    protected function createDomains(TransportData $transportData): void
     {
         $domainIds = array_keys($transportData->enabled);
 
@@ -253,7 +247,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         return new TransportTranslation();
     }
 
-    public function addPayment(Payment $payment)
+    public function addPayment(Payment $payment): void
     {
         if (!$this->payments->contains($payment)) {
             $this->payments->add($payment);
@@ -264,7 +258,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
      */
-    public function setPayments(array $payments)
+    public function setPayments(array $payments): void
     {
         foreach ($this->payments as $currentPayment) {
             if (!in_array($currentPayment, $payments, true)) {
@@ -277,7 +271,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         }
     }
 
-    public function removePayment(Payment $payment)
+    public function removePayment(Payment $payment): void
     {
         if ($this->payments->contains($payment)) {
             $this->payments->removeElement($payment);

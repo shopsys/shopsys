@@ -31,18 +31,13 @@ class JsTranslatorCall
      * @var string
      */
     private $functionName;
-
-    /**
-     * @param string $messageId
-     * @param string $domain
-     * @param string $functionName
-     */
+    
     public function __construct(
         JCallExprNode $callExprNode,
         JNodeBase $messageIdArgumentNode,
-        $messageId,
-        $domain,
-        $functionName
+        string $messageId,
+        string $domain,
+        string $functionName
     ) {
         $this->callExprNode = $callExprNode;
         $this->messageIdArgumentNode = $messageIdArgumentNode;

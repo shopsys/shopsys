@@ -26,7 +26,7 @@ class RouteConfigCustomizer
      * @see \Shopsys\HttpSmokeTesting\RouteInfo
      * @param callable $callback
      */
-    public function customize($callback): \Shopsys\HttpSmokeTesting\RouteConfigCustomizer
+    public function customize(callable $callback): \Shopsys\HttpSmokeTesting\RouteConfigCustomizer
     {
         foreach ($this->requestDataSetGenerators as $requestDataSetGenerator) {
             $callback($requestDataSetGenerator, $requestDataSetGenerator->getRouteInfo());

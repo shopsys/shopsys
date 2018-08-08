@@ -32,20 +32,17 @@ class TopProductFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct[]
      */
-    public function getAll($domainId): array
+    public function getAll(int $domainId): array
     {
         return $this->topProductRepository->getAll($domainId);
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllOfferedProducts($domainId, $pricingGroup): array
+    public function getAllOfferedProducts(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup): array
     {
         return $this->topProductRepository->getOfferedProductsForTopProductsOnDomain($domainId, $pricingGroup);
     }
@@ -53,7 +50,7 @@ class TopProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      */
-    public function saveTopProductsForDomain($domainId, array $products)
+    public function saveTopProductsForDomain($domainId, array $products): void
     {
         $oldTopProducts = $this->topProductRepository->getAll($domainId);
         foreach ($oldTopProducts as $oldTopProduct) {

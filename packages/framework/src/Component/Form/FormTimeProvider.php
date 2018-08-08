@@ -16,22 +16,16 @@ class FormTimeProvider
     {
         $this->session = $session;
     }
-
-    /**
-     * @param string $name
-     */
-    public function generateFormTime($name): \DateTime
+    
+    public function generateFormTime(string $name): \DateTime
     {
         $startTime = new DateTime();
         $key = $this->getSessionKey($name);
         $this->session->set($key, $startTime);
         return $startTime;
     }
-
-    /**
-     * @param string $name
-     */
-    public function isFormTimeValid($name, array $options): bool
+    
+    public function isFormTimeValid(string $name, array $options): bool
     {
         $startTime = $this->findFormTime($name);
 
@@ -45,20 +39,14 @@ class FormTimeProvider
 
         return true;
     }
-
-    /**
-     * @param string $name
-     */
-    public function hasFormTime($name): bool
+    
+    public function hasFormTime(string $name): bool
     {
         $key = $this->getSessionKey($name);
         return $this->session->has($key);
     }
-
-    /**
-     * @param string $name
-     */
-    public function findFormTime($name): ?\DateTime
+    
+    public function findFormTime(string $name): ?\DateTime
     {
         $key = $this->getSessionKey($name);
         if ($this->hasFormTime($name)) {
@@ -66,20 +54,14 @@ class FormTimeProvider
         }
         return null;
     }
-
-    /**
-     * @param string $name
-     */
-    public function removeFormTime($name)
+    
+    public function removeFormTime(string $name): void
     {
         $key = $this->getSessionKey($name);
         $this->session->remove($key);
     }
-
-    /**
-     * @param string $name
-     */
-    protected function getSessionKey($name): string
+    
+    protected function getSessionKey(string $name): string
     {
         return 'timedSpam-' . $name;
     }

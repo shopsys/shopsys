@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HttpSmokeTest extends HttpSmokeTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -17,7 +17,7 @@ class HttpSmokeTest extends HttpSmokeTestCase
             ->switchDomainById(1);
     }
 
-    protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
+    protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomization = new RouteConfigCustomization(self::$kernel->getContainer());
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);

@@ -24,7 +24,7 @@ class SitemapCronModule implements SimpleCronModuleInterface
     {
     }
 
-    public function run()
+    public function run(): void
     {
         $this->sitemapFacade->generateForAllDomains();
     }

@@ -69,7 +69,7 @@ class Vat
         return $this->replaceWith;
     }
 
-    public function edit(VatData $vatData)
+    public function edit(VatData $vatData): void
     {
         $this->name = $vatData->name;
     }
@@ -77,7 +77,7 @@ class Vat
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat
      */
-    public function markForDeletion(self $newVat)
+    public function markForDeletion(self $newVat): void
     {
         $this->replaceWith = $newVat;
     }

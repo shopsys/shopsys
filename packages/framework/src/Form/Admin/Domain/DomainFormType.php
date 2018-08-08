@@ -12,8 +12,8 @@ use Symfony\Component\Validator\Constraints;
 class DomainFormType extends AbstractType
 {
     const FIELD_ICON = 'icon';
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(self::FIELD_ICON, ImageUploadType::class, [
@@ -32,7 +32,7 @@ class DomainFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],

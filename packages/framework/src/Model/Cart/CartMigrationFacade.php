@@ -42,7 +42,7 @@ class CartMigrationFacade
         $this->customerIdentifierFactory = $customerIdentifierFactory;
     }
 
-    protected function mergeCurrentCartWithCart(Cart $cart)
+    protected function mergeCurrentCartWithCart(Cart $cart): void
     {
         $customerIdentifier = $this->customerIdentifierFactory->get();
         $currentCart = $this->cartFactory->get($customerIdentifier);
@@ -59,7 +59,7 @@ class CartMigrationFacade
         $this->em->flush();
     }
 
-    public function onKernelController(FilterControllerEvent $filterControllerEvent)
+    public function onKernelController(FilterControllerEvent $filterControllerEvent): void
     {
         $session = $filterControllerEvent->getRequest()->getSession();
 

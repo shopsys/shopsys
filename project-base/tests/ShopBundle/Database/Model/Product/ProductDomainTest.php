@@ -33,7 +33,7 @@ class ProductDomainTest extends DatabaseTestCase
      */
     private $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
@@ -44,7 +44,7 @@ class ProductDomainTest extends DatabaseTestCase
     /**
      * @group multidomain
      */
-    public function testCreateProductDomainWithData()
+    public function testCreateProductDomainWithData(): void
     {
         $productData = $this->productDataFactory->create();
 
@@ -75,7 +75,7 @@ class ProductDomainTest extends DatabaseTestCase
     /**
      * @group singledomain
      */
-    public function testCreateProductDomainWithDataForSingleDomain()
+    public function testCreateProductDomainWithDataForSingleDomain(): void
     {
         $productData = $this->productDataFactory->create();
 

@@ -54,10 +54,9 @@ class TransportRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getAllByDomainId($domainId): array
+    public function getAllByDomainId(int $domainId): array
     {
         return $this->getQueryBuilderForAll()
             ->join(TransportDomain::class, 'td', Join::WITH, 't.id = td.transport AND td.domainId = :domainId')
@@ -73,22 +72,16 @@ class TransportRepository
     {
         return $this->getTransportRepository()->findAll();
     }
-
-    /**
-     * @param int $id
-     */
-    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Transport\Transport
+    
+    public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->getQueryBuilderForAll()
             ->andWhere('t.id = :transportId')->setParameter('transportId', $id)
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-    /**
-     * @param int $id
-     */
-    public function getById($id): \Shopsys\FrameworkBundle\Model\Transport\Transport
+    
+    public function getById(int $id): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $transport = $this->findById($id);
         if ($transport === null) {

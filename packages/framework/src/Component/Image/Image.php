@@ -74,12 +74,10 @@ class Image implements EntityFileUploadInterface
     protected $temporaryFilename;
 
     /**
-     * @param string $entityName
-     * @param int $entityId
      * @param string|null $type
      * @param string|null $temporaryFilename
      */
-    public function __construct($entityName, $entityId, $type, $temporaryFilename)
+    public function __construct(string $entityName, int $entityId, ?string $type, ?string $temporaryFilename)
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
@@ -104,12 +102,8 @@ class Image implements EntityFileUploadInterface
         }
         return $files;
     }
-
-    /**
-     * @param string $key
-     * @param string $originalFilename
-     */
-    public function setFileAsUploaded($key, $originalFilename)
+    
+    public function setFileAsUploaded(string $key, string $originalFilename): void
     {
         if ($key === self::UPLOAD_KEY) {
             $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
@@ -121,17 +115,14 @@ class Image implements EntityFileUploadInterface
     /**
      * @param string|null $temporaryFilename
      */
-    public function setTemporaryFilename($temporaryFilename)
+    public function setTemporaryFilename(?string $temporaryFilename): void
     {
         $this->temporaryFilename = $temporaryFilename;
         // workaround: Entity must be changed so that preUpdate and postUpdate are called
         $this->modifiedAt = new DateTime();
     }
-
-    /**
-     * @param int $position
-     */
-    public function setPosition($position)
+    
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }

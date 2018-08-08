@@ -44,11 +44,8 @@ class RequestDataSet implements RequestDataSetConfig
      * @var callable[]
      */
     private $callsDuringTestExecution;
-
-    /**
-     * @param string $routeName
-     */
-    public function __construct($routeName)
+    
+    public function __construct(string $routeName)
     {
         $this->routeName = $routeName;
         $this->skipped = false;
@@ -131,10 +128,9 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param int $code
      * @return $this
      */
-    public function setExpectedStatusCode($code)
+    public function setExpectedStatusCode(int $code)
     {
         $this->expectedStatusCode = $code;
 
@@ -142,11 +138,10 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param string $name
      * @param mixed $value
      * @return $this
      */
-    public function setParameter($name, $value)
+    public function setParameter(string $name, $value)
     {
         $this->parameters[$name] = $value;
 
@@ -154,10 +149,9 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param string $debugNote
      * @return $this
      */
-    public function addDebugNote($debugNote)
+    public function addDebugNote(string $debugNote)
     {
         $this->debugNotes[] = $debugNote;
 
@@ -172,7 +166,7 @@ class RequestDataSet implements RequestDataSetConfig
      * @param callable $callback
      * @return $this
      */
-    public function addCallDuringTestExecution($callback)
+    public function addCallDuringTestExecution(callable $callback)
     {
         $this->callsDuringTestExecution[] = $callback;
 

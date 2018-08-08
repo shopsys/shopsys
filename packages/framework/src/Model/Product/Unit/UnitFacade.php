@@ -38,11 +38,8 @@ class UnitFacade
         $this->setting = $setting;
         $this->unitFactory = $unitFactory;
     }
-
-    /**
-     * @param int $unitId
-     */
-    public function getById($unitId): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    
+    public function getById(int $unitId): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         return $this->unitRepository->getById($unitId);
     }
@@ -55,11 +52,8 @@ class UnitFacade
 
         return $unit;
     }
-
-    /**
-     * @param int $unitId
-     */
-    public function edit($unitId, UnitData $unitData): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    
+    public function edit(int $unitId, UnitData $unitData): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         $unit = $this->unitRepository->getById($unitId);
         $unit->edit($unitData);
@@ -69,10 +63,9 @@ class UnitFacade
     }
 
     /**
-     * @param int $unitId
      * @param int|null $newUnitId
      */
-    public function deleteById($unitId, $newUnitId = null)
+    public function deleteById(int $unitId, ?int $newUnitId = null): void
     {
         $oldUnit = $this->unitRepository->getById($unitId);
 
@@ -102,10 +95,9 @@ class UnitFacade
     }
 
     /**
-     * @param int $unitId
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit[]
      */
-    public function getAllExceptId($unitId): array
+    public function getAllExceptId(int $unitId): array
     {
         return $this->unitRepository->getAllExceptId($unitId);
     }
@@ -122,7 +114,7 @@ class UnitFacade
         return $this->unitRepository->getById($defaultUnitId);
     }
 
-    public function setDefaultUnit(Unit $unit)
+    public function setDefaultUnit(Unit $unit): void
     {
         $this->setting->set(Setting::DEFAULT_UNIT, $unit->getId());
     }

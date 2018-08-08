@@ -37,7 +37,7 @@ class SubscriptionFormTypeTest extends TypeTestCase
         $form->submit($data);
         Assert::assertFalse($form->isValid());
     }
-    
+
     public function getInvalidTestCases(): array
     {
         return [
@@ -70,7 +70,7 @@ class SubscriptionFormTypeTest extends TypeTestCase
             ],
         ];
     }
-    
+
     protected function getExtensions(): array
     {
         return [

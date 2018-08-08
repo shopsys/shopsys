@@ -7,10 +7,7 @@ use JMS\TranslationBundle\Model\MessageCatalogue;
 
 class MessageIdNormalizer
 {
-    /**
-     * @param string $messageId
-     */
-    public function normalizeMessageId($messageId): string
+    public function normalizeMessageId(string $messageId): string
     {
         return trim(preg_replace('~\s+~u', ' ', $messageId));
     }
@@ -29,11 +26,8 @@ class MessageIdNormalizer
 
         return $normalizedCatalogue;
     }
-
-    /**
-     * @param string $domain
-     */
-    private function getNormalizedMessage(Message $message, $domain): \JMS\TranslationBundle\Model\Message
+    
+    private function getNormalizedMessage(Message $message, string $domain): \JMS\TranslationBundle\Model\Message
     {
         $normalizedMessageId = $this->normalizeMessageId($message->getId());
 

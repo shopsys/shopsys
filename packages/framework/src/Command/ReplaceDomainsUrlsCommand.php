@@ -44,13 +44,13 @@ class ReplaceDomainsUrlsCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Replace domains urls in database by urls in domains config');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainConfigUrl = $domainConfig->getUrl();

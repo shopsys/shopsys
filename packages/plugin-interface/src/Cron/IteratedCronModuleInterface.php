@@ -17,7 +17,7 @@ use Symfony\Bridge\Monolog\Logger;
  */
 interface IteratedCronModuleInterface
 {
-    public function setLogger(Logger $logger);
+    public function setLogger(Logger $logger): void;
 
     /**
      * Restores the module's state after being suspended.
@@ -25,7 +25,7 @@ interface IteratedCronModuleInterface
      * If the CRON module was suspended before, this method is called before any calls of iterate() method.
      * You should restore CRON module internal state that was previously stored in sleep() method.
      */
-    public function wakeUp();
+    public function wakeUp(): void;
 
     /**
      * Runs one iteration of long-running task.
@@ -42,5 +42,5 @@ interface IteratedCronModuleInterface
      * another iteration.
      * Here you should save module's internal state that should be restored on next wakeUp() call.
      */
-    public function sleep();
+    public function sleep(): void;
 }

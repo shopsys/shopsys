@@ -20,11 +20,9 @@ class DomainsConfigLoader
     }
 
     /**
-     * @param string $domainsConfigFilepath
-     * @param string $domainsUrlsConfigFilepath
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function loadDomainConfigsFromYaml($domainsConfigFilepath, $domainsUrlsConfigFilepath): array
+    public function loadDomainConfigsFromYaml(string $domainsConfigFilepath, string $domainsUrlsConfigFilepath): array
     {
         $processedConfig = $this->getProcessedConfig($domainsConfigFilepath, new DomainsConfigDefinition());
         $processedUrlsConfig = $this->getProcessedConfig($domainsUrlsConfigFilepath, new DomainsUrlsConfigDefinition());
@@ -44,10 +42,9 @@ class DomainsConfigLoader
     }
 
     /**
-     * @param array $processedConfigsByDomainId
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    private function loadDomainConfigsFromArray($processedConfigsByDomainId): array
+    private function loadDomainConfigsFromArray(array $processedConfigsByDomainId): array
     {
         $domainConfigs = [];
 
@@ -68,12 +65,8 @@ class DomainsConfigLoader
             $domainConfig[DomainsConfigDefinition::CONFIG_STYLES_DIRECTORY]
         );
     }
-
-    /**
-     * @param array $domainConfigsByDomainId
-     * @param array $domainUrlsConfigsByDomainId
-     */
-    private function addUrlsToProcessedConfig($domainConfigsByDomainId, $domainUrlsConfigsByDomainId): array
+    
+    private function addUrlsToProcessedConfig(array $domainConfigsByDomainId, array $domainUrlsConfigsByDomainId): array
     {
         foreach ($domainConfigsByDomainId as $domainId => $domainConfigArray) {
             $domainConfigArray[DomainsUrlsConfigDefinition::CONFIG_URL] =
@@ -83,11 +76,8 @@ class DomainsConfigLoader
 
         return $domainConfigsByDomainId;
     }
-
-    /**
-     * @param string $filepath
-     */
-    private function getProcessedConfig($filepath, ConfigurationInterface $configDefinition): array
+    
+    private function getProcessedConfig(string $filepath, ConfigurationInterface $configDefinition): array
     {
         $yamlParser = new Parser();
         $processor = new Processor();
@@ -102,12 +92,8 @@ class DomainsConfigLoader
 
         return $processor->processConfiguration($configDefinition, [$parsedConfig]);
     }
-
-    /**
-     * @param array $domainConfigsByDomainId
-     * @param array $domainUrlsConfigsByDomainId
-     */
-    private function isConfigMatchingUrlsConfig($domainConfigsByDomainId, $domainUrlsConfigsByDomainId): bool
+    
+    private function isConfigMatchingUrlsConfig(array $domainConfigsByDomainId, array $domainUrlsConfigsByDomainId): bool
     {
         foreach (array_keys($domainConfigsByDomainId) as $domainId) {
             if (!array_key_exists($domainId, $domainUrlsConfigsByDomainId)) {

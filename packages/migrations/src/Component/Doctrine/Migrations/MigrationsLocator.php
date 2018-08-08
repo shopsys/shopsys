@@ -27,12 +27,8 @@ class MigrationsLocator
      * @var string
      */
     private $relativeNamespace;
-
-    /**
-     * @param string $relativeDirectory
-     * @param string $relativeNamespace
-     */
-    public function __construct(KernelInterface $kernel, Filesystem $filesystem, $relativeDirectory, $relativeNamespace)
+    
+    public function __construct(KernelInterface $kernel, Filesystem $filesystem, string $relativeDirectory, string $relativeNamespace)
     {
         $this->kernel = $kernel;
         $this->filesystem = $filesystem;

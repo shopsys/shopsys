@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints;
 
 class ParameterFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', LocalizedType::class, [
@@ -27,7 +27,7 @@ class ParameterFormType extends AbstractType
             ->add('visible', CheckboxType::class, ['required' => false]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ParameterData::class,

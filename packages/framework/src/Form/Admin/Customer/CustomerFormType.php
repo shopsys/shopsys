@@ -22,8 +22,8 @@ class CustomerFormType extends AbstractType
     {
         $this->customerDataFactory = $customerDataFactory;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('userData', UserFormType::class, [
@@ -53,7 +53,7 @@ class CustomerFormType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['user', 'domain_id'])

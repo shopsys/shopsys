@@ -117,9 +117,8 @@ class SliderController extends AdminBaseController
 
     /**
      * @Route("/slider/item/edit/{id}", requirements={"id"="\d+"})
-     * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $sliderItem = $this->sliderItemFacade->getById($id);
         $sliderItemData = $this->sliderItemDataFactory->createFromSliderItem($sliderItem);
@@ -159,9 +158,8 @@ class SliderController extends AdminBaseController
     /**
      * @Route("/slider/item/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $name = $this->sliderItemFacade->getById($id)->getName();

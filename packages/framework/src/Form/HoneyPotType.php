@@ -14,7 +14,7 @@ class HoneyPotType extends AbstractType
         return TextType::class;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'mapped' => false,

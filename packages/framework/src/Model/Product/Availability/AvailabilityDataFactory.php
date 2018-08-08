@@ -17,7 +17,7 @@ class AvailabilityDataFactory implements AvailabilityDataFactoryInterface
         return $availabilityData;
     }
 
-    protected function fillFromAvailability(AvailabilityData $availabilityData, Availability $availability)
+    protected function fillFromAvailability(AvailabilityData $availabilityData, Availability $availability): void
     {
         $availabilityData->dispatchTime = $availability->getDispatchTime();
         $translations = $availability->getTranslations();

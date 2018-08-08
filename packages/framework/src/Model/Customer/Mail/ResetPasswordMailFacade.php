@@ -34,7 +34,7 @@ class ResetPasswordMailFacade
         $this->resetPasswordMail = $resetPasswordMail;
     }
 
-    public function sendMail(User $user)
+    public function sendMail(User $user): void
     {
         $mailTemplate = $this->mailTemplateFacade->get(MailTemplate::RESET_PASSWORD_NAME, $user->getDomainId());
         $messageData = $this->resetPasswordMail->createMessage($mailTemplate, $user);

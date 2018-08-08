@@ -31,7 +31,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->paymentDataFactory = $paymentDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->name = [
@@ -81,15 +81,12 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
         $this->createPayment(self::PAYMENT_CASH, $paymentData, [TransportDataFixture::TRANSPORT_PERSONAL]);
     }
-
-    /**
-     * @param string $referenceName
-     */
+    
     private function createPayment(
-        $referenceName,
+        string $referenceName,
         PaymentData $paymentData,
         array $transportsReferenceNames
-    ) {
+    ): void {
         $paymentData->transports = [];
         foreach ($transportsReferenceNames as $transportReferenceName) {
             $paymentData->transports[] = $this->getReference($transportReferenceName);

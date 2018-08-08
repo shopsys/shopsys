@@ -20,11 +20,9 @@ class TransMethodSpecification
     private $domainArgumentIndex;
 
     /**
-     * @param string $methodName
-     * @param int $messageIdArgumentIndex
      * @param int|null $domainArgumentIndex
      */
-    public function __construct($methodName, $messageIdArgumentIndex = 0, $domainArgumentIndex = null)
+    public function __construct(string $methodName, int $messageIdArgumentIndex = 0, ?int $domainArgumentIndex = null)
     {
         $this->methodName = $methodName;
         $this->messageIdArgumentIndex = $messageIdArgumentIndex;

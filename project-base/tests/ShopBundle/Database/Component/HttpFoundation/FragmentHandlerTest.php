@@ -9,7 +9,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class FragmentHandlerTest extends DatabaseTestCase
 {
-    public function testRenderingFragmentDoesNotIgnoreException()
+    public function testRenderingFragmentDoesNotIgnoreException(): void
     {
         $httpKernelRuntime = $this->getContainer()->get('twig.runtime.httpkernel');
         /* @var $httpKernelRuntime \Symfony\Bridge\Twig\Extension\HttpKernelRuntime */
@@ -23,7 +23,7 @@ class FragmentHandlerTest extends DatabaseTestCase
         $httpKernelRuntime->renderFragment('/test/error-handler/exception');
     }
 
-    private function putFakeRequestToRequestStack()
+    private function putFakeRequestToRequestStack(): void
     {
         $requestStack = $this->getContainer()->get('request_stack');
         /* @var $requestStack \Symfony\Component\HttpFoundation\RequestStack */

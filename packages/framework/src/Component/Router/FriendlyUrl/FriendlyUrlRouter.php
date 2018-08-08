@@ -43,17 +43,14 @@ class FriendlyUrlRouter implements RouterInterface
      * @var \Symfony\Component\Routing\RouteCollection
      */
     private $collection;
-
-    /**
-     * @param string $friendlyUrlRouterResourceFilepath
-     */
+    
     public function __construct(
         RequestContext $context,
         LoaderInterface $configLoader,
         FriendlyUrlGenerator $friendlyUrlGenerator,
         FriendlyUrlMatcher $friendlyUrlMatcher,
         DomainConfig $domainConfig,
-        $friendlyUrlRouterResourceFilepath
+        string $friendlyUrlRouterResourceFilepath
     ) {
         $this->context = $context;
         $this->configLoader = $configLoader;
@@ -104,11 +101,8 @@ class FriendlyUrlRouter implements RouterInterface
             $referenceType
         );
     }
-
-    /**
-     * @param int $referenceType
-     */
-    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
+    
+    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         $routeName = $friendlyUrl->getRouteName();
         $route = $this->getRouteCollection()->get($routeName);

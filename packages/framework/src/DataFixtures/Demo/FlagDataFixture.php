@@ -32,7 +32,7 @@ class FlagDataFixture extends AbstractReferenceFixture
         $this->flagDataFactory = $flagDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $flagData = $this->flagDataFactory->create();
 
@@ -55,7 +55,7 @@ class FlagDataFixture extends AbstractReferenceFixture
     /**
      * @param string|null $referenceName
      */
-    private function createFlag(FlagData $flagData, $referenceName = null)
+    private function createFlag(FlagData $flagData, ?string $referenceName = null): void
     {
         $flag = $this->flagFacade->create($flagData);
         if ($referenceName !== null) {

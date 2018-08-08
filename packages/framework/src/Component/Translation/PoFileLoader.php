@@ -8,12 +8,7 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 class PoFileLoader extends BasePoFileLoader
 {
-    /**
-     * @param string $resource
-     * @param string $locale
-     * @param string $domain
-     */
-    public function load($resource, $locale, $domain = 'messages'): \Symfony\Component\Translation\MessageCatalogue
+    public function load(string $resource, string $locale, string $domain = 'messages'): \Symfony\Component\Translation\MessageCatalogue
     {
         $catalogue = $this->loadIncludingEmpty($resource, $locale, $domain);
 
@@ -32,13 +27,8 @@ class PoFileLoader extends BasePoFileLoader
 
         return $filteredCatalogue;
     }
-
-    /**
-     * @param string $resource
-     * @param string $locale
-     * @param string $domain
-     */
-    public function loadIncludingEmpty($resource, $locale, $domain = 'messages'): \Symfony\Component\Translation\MessageCatalogue
+    
+    public function loadIncludingEmpty(string $resource, string $locale, string $domain = 'messages'): \Symfony\Component\Translation\MessageCatalogue
     {
         return parent::load($resource, $locale, $domain);
     }

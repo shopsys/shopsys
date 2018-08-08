@@ -18,7 +18,7 @@ class DomainSubscriber implements EventSubscriberInterface
         $this->domain = $domain;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             try {
@@ -28,7 +28,7 @@ class DomainSubscriber implements EventSubscriberInterface
             }
         }
     }
-    
+
     public static function getSubscribedEvents()
     {
         return [

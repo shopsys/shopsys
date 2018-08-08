@@ -11,7 +11,7 @@ class InputPriceCalculationTest extends TestCase
     /**
      * @dataProvider getInputPriceDataProvider
      */
-    public function testGetInputPrice($inputPriceType, $priceWithVat, $vatPercent, $expectedResult)
+    public function testGetInputPrice($inputPriceType, $priceWithVat, $vatPercent, $expectedResult): void
     {
         $inputPriceCalculation = new InputPriceCalculation();
         $actualInputPrice = $inputPriceCalculation->getInputPrice($inputPriceType, $priceWithVat, $vatPercent);

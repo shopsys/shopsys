@@ -28,13 +28,10 @@ class ProductFilterCountRepository
         $this->em = $em;
         $this->productFilterRepository = $productFilterRepository;
     }
-
-    /**
-     * @param string $locale
-     */
+    
     public function getProductFilterCountData(
         QueryBuilder $productsQueryBuilder,
-        $locale,
+        string $locale,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
@@ -203,7 +200,6 @@ class ProductFilterCountRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $parameterFilterChoices
-     * @param string $locale
      * @return int[][]
      */
     private function getCountIndexedByParameterIdAndValueId(
@@ -211,7 +207,7 @@ class ProductFilterCountRepository
         array $parameterFilterChoices,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup,
-        $locale
+        string $locale
     ) {
         $countByParameterIdAndValueId = [];
 

@@ -111,9 +111,8 @@ class CustomerController extends AdminBaseController
 
     /**
      * @Route("/customer/edit/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $user = $this->customerFacade->getUserById($id);
         $customerData = $this->customerDataFactory->createFromUser($user);
@@ -239,9 +238,8 @@ class CustomerController extends AdminBaseController
     /**
      * @Route("/customer/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->customerFacade->getUserById($id)->getFullName();
@@ -263,9 +261,8 @@ class CustomerController extends AdminBaseController
 
     /**
      * @Route("/customer/login-as-user/{userId}/", requirements={"id" = "\d+"})
-     * @param int $userId
      */
-    public function loginAsUserAction($userId)
+    public function loginAsUserAction(int $userId)
     {
         $user = $this->customerFacade->getUserById($userId);
         $this->loginAsUserFacade->rememberLoginAsUser($user);

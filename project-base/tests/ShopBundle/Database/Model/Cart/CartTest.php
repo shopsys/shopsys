@@ -16,7 +16,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class CartTest extends DatabaseTestCase
 {
-    public function testRemoveItem()
+    public function testRemoveItem(): void
     {
         $em = $this->getEntityManager();
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);

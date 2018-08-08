@@ -40,18 +40,15 @@ class Country
      * @ORM\Column(type="integer")
      */
     protected $domainId;
-
-    /**
-     * @param int $domainId
-     */
-    public function __construct(CountryData $countryData, $domainId)
+    
+    public function __construct(CountryData $countryData, int $domainId)
     {
         $this->name = $countryData->name;
         $this->domainId = $domainId;
         $this->code = $countryData->code;
     }
 
-    public function edit(CountryData $countryData)
+    public function edit(CountryData $countryData): void
     {
         $this->name = $countryData->name;
         $this->code = $countryData->code;

@@ -27,7 +27,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture
         $this->promoCodeDataFactory = $promoCodeDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test';

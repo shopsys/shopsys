@@ -17,7 +17,7 @@ class FileExtensionMaxLengthValidatorTest extends ConstraintValidatorTestCase
         return new FileExtensionMaxLengthValidator();
     }
 
-    public function testValidateValidLength()
+    public function testValidateValidLength(): void
     {
         $file = new File(__DIR__ . '/' . 'non-existent.file', false);
 
@@ -30,7 +30,7 @@ class FileExtensionMaxLengthValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testValidateInvalidLength()
+    public function testValidateInvalidLength(): void
     {
         $file = new File(__DIR__ . '/' . 'non-existent.file', false);
 

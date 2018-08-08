@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    public function indexAction()
+    public function indexAction(): void
     {
         $translator = $this->get(Translator::class);
         /* @var $translator \Shopsys\FrameworkBundle\Component\Translation\Translator */

@@ -11,11 +11,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class SubRequestListenerTest extends TestCase
 {
-    /**
-     * @param bool $redirect
-     * @param bool $send
-     */
-    public function getResponseMock($redirect = false, $send = false): \Symfony\Component\HttpFoundation\Response
+    public function getResponseMock(bool $redirect = false, bool $send = false): \Symfony\Component\HttpFoundation\Response
     {
         $responseMock = $this->getMockBuilder(Response::class)
             ->setMethods(['isRedirection', 'send'])
@@ -26,7 +22,7 @@ class SubRequestListenerTest extends TestCase
         return $responseMock;
     }
 
-    public function testOnKernelResponseOneMasterResponse()
+    public function testOnKernelResponseOneMasterResponse(): void
     {
         $eventMock = $this->getMockBuilder(FilterResponseEvent::class)
             ->setMethods(['__construct', 'isMasterRequest'])
@@ -38,7 +34,7 @@ class SubRequestListenerTest extends TestCase
         $subRequestListener->onKernelResponse($eventMock);
     }
 
-    public function testOnKernelResponseManyRedirectResponses()
+    public function testOnKernelResponseManyRedirectResponses(): void
     {
         $eventMock1 = $this->getMockBuilder(FilterResponseEvent::class)
             ->setMethods(['__construct', 'isMasterRequest', 'getResponse'])
@@ -69,7 +65,7 @@ class SubRequestListenerTest extends TestCase
         $subRequestListener->onKernelResponse($eventMock3);
     }
 
-    public function testOnKernelResponse()
+    public function testOnKernelResponse(): void
     {
         $eventMock1 = $this->getMockBuilder(FilterResponseEvent::class)
             ->setMethods(['__construct', 'isMasterRequest', 'getResponse'])
@@ -97,7 +93,7 @@ class SubRequestListenerTest extends TestCase
         $subRequestListener->onKernelResponse($eventMock3);
     }
 
-    public function testOnKernelController()
+    public function testOnKernelController(): void
     {
         $masterRequestMock = $this->getMockBuilder(Request::class)
             ->setMethods(['getMethod'])

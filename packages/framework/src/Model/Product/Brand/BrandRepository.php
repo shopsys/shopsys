@@ -20,11 +20,8 @@ class BrandRepository
     {
         return $this->em->getRepository(Brand::class);
     }
-
-    /**
-     * @param int $brandId
-     */
-    public function getById($brandId): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+    
+    public function getById(int $brandId): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
     {
         $brand = $this->getBrandRepository()->find($brandId);
 

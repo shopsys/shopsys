@@ -24,21 +24,15 @@ class AdministratorService
         $this->encoderFactory = $encoderFactory;
         $this->tokenStorage = $tokenStorage;
     }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword(Administrator $administrator, $password)
+    
+    public function setPassword(Administrator $administrator, string $password): void
     {
         $encoder = $this->encoderFactory->getEncoder($administrator);
         $passwordHash = $encoder->encodePassword($password, $administrator->getSalt());
         $administrator->setPassword($passwordHash);
     }
-
-    /**
-     * @param int $adminCountExcludingSuperadmin
-     */
-    public function delete(Administrator $administrator, $adminCountExcludingSuperadmin)
+    
+    public function delete(Administrator $administrator, int $adminCountExcludingSuperadmin): void
     {
         if ($adminCountExcludingSuperadmin === 1) {
             throw new \Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException();
@@ -51,9 +45,6 @@ class AdministratorService
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administratorByUserName
-     */
     public function edit(
         AdministratorData $administratorData,
         Administrator $administrator,

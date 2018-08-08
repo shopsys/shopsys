@@ -52,7 +52,7 @@ class ProductParametersFixtureLoader
      * @param string|null $cellValue
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
      */
-    public function getProductParameterValuesDataFromString($cellValue): array
+    public function getProductParameterValuesDataFromString(?string $cellValue): array
     {
         if ($cellValue === null) {
             return [];
@@ -73,20 +73,16 @@ class ProductParametersFixtureLoader
         return $productParameterValuesDataCollection->toArray();
     }
 
-    public function clearCache()
+    public function clearCache(): void
     {
         $this->parameters = [];
     }
-
-    /**
-     * @param string $serializedParameterNames
-     * @param string $serializedValueTexts
-     */
+    
     private function addProductParameterValuesDataToCollection(
         ArrayCollection $productParameterValuesDataCollection,
-        $serializedParameterNames,
-        $serializedValueTexts
-    ) {
+        string $serializedParameterNames,
+        string $serializedValueTexts
+    ): void {
         $parameterNames = $this->getDeserializedValuesIndexedByLocale($serializedParameterNames);
         $parameterValues = $this->getDeserializedValuesIndexedByLocale($serializedValueTexts);
 
@@ -105,10 +101,9 @@ class ProductParametersFixtureLoader
     }
 
     /**
-     * @param string $serializedString
      * @return string[]
      */
-    private function getDeserializedValuesIndexedByLocale($serializedString): array
+    private function getDeserializedValuesIndexedByLocale(string $serializedString): array
     {
         $values = [];
         $items = explode(',', $serializedString);

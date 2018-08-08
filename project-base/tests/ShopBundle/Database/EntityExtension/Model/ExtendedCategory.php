@@ -294,7 +294,7 @@ class ExtendedCategory extends Category
     /**
      * @param string|null $stringField
      */
-    public function setStringField($stringField): void
+    public function setStringField(?string $stringField): void
     {
         $this->stringField = $stringField;
     }

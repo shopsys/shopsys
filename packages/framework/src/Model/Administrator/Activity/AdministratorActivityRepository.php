@@ -21,11 +21,8 @@ class AdministratorActivityRepository
     {
         return $this->em->getRepository(AdministratorActivity::class);
     }
-
-    /**
-     * @param int $maxResults
-     */
-    protected function getLastActivitiesQueryBuilder(Administrator $administrator, $maxResults): \Doctrine\ORM\QueryBuilder
+    
+    protected function getLastActivitiesQueryBuilder(Administrator $administrator, int $maxResults): \Doctrine\ORM\QueryBuilder
     {
         $lastActivitiesQueryBuilder = $this->getAdministratorActivityRepository()->createQueryBuilder('aa');
 
@@ -48,10 +45,9 @@ class AdministratorActivityRepository
     }
 
     /**
-     * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity[]
      */
-    public function getLastAdministratorActivities(Administrator $administrator, $maxResults): array
+    public function getLastAdministratorActivities(Administrator $administrator, int $maxResults): array
     {
         $lastActivitiesQueryBuilder = $this->getLastActivitiesQueryBuilder($administrator, $maxResults);
 

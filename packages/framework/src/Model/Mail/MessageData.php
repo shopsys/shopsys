@@ -55,28 +55,23 @@ class MessageData
     public $replyTo;
 
     /**
-     * @param string $toEmail
      * @param string|null $bccEmail
-     * @param string $body
-     * @param string $subject
-     * @param string $fromEmail
-     * @param string $fromName
      * @param string[] $variablesReplacementsForBody
      * @param string[] $variablesReplacementsForSubject
      * @param string[] $attachmentsFilepaths
      * @param string|null $replyTo
      */
     public function __construct(
-        $toEmail,
-        $bccEmail,
-        $body,
-        $subject,
-        $fromEmail,
-        $fromName,
+        string $toEmail,
+        ?string $bccEmail,
+        string $body,
+        string $subject,
+        string $fromEmail,
+        string $fromName,
         array $variablesReplacementsForBody = [],
         array $variablesReplacementsForSubject = [],
         array $attachmentsFilepaths = [],
-        $replyTo = null
+        ?string $replyTo = null
     ) {
         $this->toEmail = $toEmail;
         $this->bccEmail = $bccEmail;

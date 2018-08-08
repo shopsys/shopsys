@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class LoginServiceTest extends TestCase
 {
-    public function testCheckLoginProcessWithRequestError()
+    public function testCheckLoginProcessWithRequestError(): void
     {
         $loginService = $this->getLoginService();
 
@@ -26,7 +26,7 @@ class LoginServiceTest extends TestCase
         $loginService->checkLoginProcess($requestMock);
     }
 
-    public function testCheckLoginProcessWithSessionError()
+    public function testCheckLoginProcessWithSessionError(): void
     {
         $loginService = $this->getLoginService();
 
@@ -46,7 +46,7 @@ class LoginServiceTest extends TestCase
         $loginService->checkLoginProcess($requestMock);
     }
 
-    public function testCheckLoginProcessWithoutSessionError()
+    public function testCheckLoginProcessWithoutSessionError(): void
     {
         $loginService = $this->getLoginService();
 

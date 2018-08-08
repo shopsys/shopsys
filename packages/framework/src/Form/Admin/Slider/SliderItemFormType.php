@@ -21,8 +21,8 @@ class SliderItemFormType extends AbstractType
 {
     const SCENARIO_CREATE = 'create';
     const SCENARIO_EDIT = 'edit';
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $imageConstraints = [];
         if ($options['scenario'] === self::SCENARIO_CREATE) {
@@ -113,7 +113,7 @@ class SliderItemFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['scenario', 'slider_item'])

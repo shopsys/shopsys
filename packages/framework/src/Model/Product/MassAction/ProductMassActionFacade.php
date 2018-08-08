@@ -40,7 +40,7 @@ class ProductMassActionFacade
         ProductMassActionData $productMassActionData,
         QueryBuilder $selectQueryBuilder,
         array $checkedProductIds
-    ) {
+    ): void {
         $selectedProductIds = $this->getSelectedProductIds(
             $productMassActionData,
             $selectQueryBuilder,

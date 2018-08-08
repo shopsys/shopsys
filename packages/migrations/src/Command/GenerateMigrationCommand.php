@@ -45,12 +45,9 @@ class GenerateMigrationCommand extends AbstractCommand
      * @var string
      */
     private $vendorDirectoryPath;
-
-    /**
-     * @param string $vendorDirectoryPath
-     */
+    
     public function __construct(
-        $vendorDirectoryPath,
+        string $vendorDirectoryPath,
         DatabaseSchemaFacade $databaseSchemaFacade,
         GenerateMigrationsService $generateMigrationsService,
         MigrationsLocator $migrationsLocator,
@@ -64,7 +61,7 @@ class GenerateMigrationCommand extends AbstractCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generate a new migration if need it');

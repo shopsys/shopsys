@@ -33,22 +33,14 @@ class PerformanceTestSample
      * @var bool
      */
     private $isSuccessful;
-
-    /**
-     * @param string $routeName
-     * @param string $url
-     * @param float $duration
-     * @param int $queryCount
-     * @param int $statusCode
-     * @param bool $isSuccessful
-     */
+    
     public function __construct(
-        $routeName,
-        $url,
-        $duration,
-        $queryCount,
-        $statusCode,
-        $isSuccessful
+        string $routeName,
+        string $url,
+        float $duration,
+        int $queryCount,
+        int $statusCode,
+        bool $isSuccessful
     ) {
         $this->routeName = $routeName;
         $this->url = $url;

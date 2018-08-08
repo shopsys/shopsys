@@ -7,7 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180531141640 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE category_domains DROP CONSTRAINT "category_domains_pkey"');
         $this->sql('ALTER TABLE category_domains ADD id SERIAL NOT NULL');
@@ -18,7 +18,7 @@ class Version20180531141640 extends AbstractMigration
         $this->sql('UPDATE category_domains SET enabled = NOT enabled');
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

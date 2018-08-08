@@ -14,7 +14,7 @@ class IndependentTransportVisibilityCalculationTest extends DatabaseTestCase
     const FIRST_DOMAIN_ID = 1;
     const SECOND_DOMAIN_ID = 2;
 
-    public function testIsIndependentlyVisible()
+    public function testIsIndependentlyVisible(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -37,7 +37,7 @@ class IndependentTransportVisibilityCalculationTest extends DatabaseTestCase
         $this->assertTrue($independentTransportVisibilityCalculation->isIndependentlyVisible($transport, self::FIRST_DOMAIN_ID));
     }
 
-    public function testIsIndependentlyVisibleEmptyName()
+    public function testIsIndependentlyVisibleEmptyName(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -67,7 +67,7 @@ class IndependentTransportVisibilityCalculationTest extends DatabaseTestCase
         $this->assertFalse($independentTransportVisibilityCalculation->isIndependentlyVisible($transport, self::FIRST_DOMAIN_ID));
     }
 
-    public function testIsIndependentlyVisibleNotOnDomain()
+    public function testIsIndependentlyVisibleNotOnDomain(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -90,7 +90,7 @@ class IndependentTransportVisibilityCalculationTest extends DatabaseTestCase
         $this->assertFalse($independentTransportVisibilityCalculation->isIndependentlyVisible($transport, self::FIRST_DOMAIN_ID));
     }
 
-    public function testIsIndependentlyVisibleHidden()
+    public function testIsIndependentlyVisibleHidden(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -112,12 +112,8 @@ class IndependentTransportVisibilityCalculationTest extends DatabaseTestCase
 
         $this->assertFalse($independentTransportVisibilityCalculation->isIndependentlyVisible($transport, self::FIRST_DOMAIN_ID));
     }
-
-    /**
-     * @param array $enabledForDomains
-     * @param bool $hidden
-     */
-    public function getDefaultTransport(Vat $vat, $enabledForDomains, $hidden): \Shopsys\FrameworkBundle\Model\Transport\Transport
+    
+    public function getDefaultTransport(Vat $vat, array $enabledForDomains, bool $hidden): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $transportDataFactory = $this->getTransportDataFactory();
 

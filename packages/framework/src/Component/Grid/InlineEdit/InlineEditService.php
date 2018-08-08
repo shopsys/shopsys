@@ -28,10 +28,9 @@ class InlineEditService
     }
 
     /**
-     * @param string $serviceName
      * @param mixed $rowId
      */
-    public function getRenderedFormRow($serviceName, $rowId): string
+    public function getRenderedFormRow(string $serviceName, $rowId): string
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
         $form = $gridInlineEdit->getForm($rowId);
@@ -40,21 +39,19 @@ class InlineEditService
     }
 
     /**
-     * @param string $serviceName
      * @param mixed $rowId
      * @return mixed
      */
-    public function saveFormData($serviceName, Request $request, $rowId)
+    public function saveFormData(string $serviceName, Request $request, $rowId)
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
         return $gridInlineEdit->saveForm($request, $rowId);
     }
 
     /**
-     * @param string $serviceName
      * @param mixed $rowId
      */
-    public function getRenderedRowHtml($serviceName, $rowId): ?string
+    public function getRenderedRowHtml(string $serviceName, $rowId): ?string
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
         $grid = $gridInlineEdit->getGrid();

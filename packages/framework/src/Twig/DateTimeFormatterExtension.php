@@ -49,7 +49,7 @@ class DateTimeFormatterExtension extends Twig_Extension
             ),
         ];
     }
-    
+
     public function getFunctions()
     {
         return [
@@ -125,7 +125,7 @@ class DateTimeFormatterExtension extends Twig_Extension
     /**
      * @param string|null $locale
      */
-    private function getLocale($locale = null): string
+    private function getLocale(?string $locale = null): string
     {
         if ($locale === null) {
             $locale = $this->localization->getLocale();
@@ -147,11 +147,8 @@ class DateTimeFormatterExtension extends Twig_Extension
             return new DateTime($value);
         }
     }
-
-    /**
-     * @param int $date
-     */
-    public function dateOfCreation($date): string
+    
+    public function dateOfCreation(int $date): string
     {
         $startDate = date('Y', strtotime('1-1-' . $date));
         $endDate = date('Y');

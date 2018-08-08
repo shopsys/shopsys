@@ -30,20 +30,17 @@ class TopProductRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct[]
      */
-    public function getAll($domainId): array
+    public function getAll(int $domainId): array
     {
         return $this->getTopProductRepository()->findBy(['domainId' => $domainId], ['position' => 'ASC']);
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getOfferedProductsForTopProductsOnDomain($domainId, $pricingGroup): array
+    public function getOfferedProductsForTopProductsOnDomain(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup): array
     {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);
 

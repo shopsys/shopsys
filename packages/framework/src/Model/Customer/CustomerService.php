@@ -53,10 +53,6 @@ class CustomerService
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $userByEmail
-     */
     public function create(
         UserData $userData,
         BillingAddress $billingAddress,
@@ -81,7 +77,7 @@ class CustomerService
         return $user;
     }
 
-    public function edit(User $user, UserData $userData)
+    public function edit(User $user, UserData $userData): void
     {
         $user->edit($userData);
 
@@ -90,9 +86,6 @@ class CustomerService
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
-     */
     public function createDeliveryAddress(DeliveryAddressData $deliveryAddressData): ?\Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
     {
         if ($deliveryAddressData->addressFilled) {
@@ -104,9 +97,6 @@ class CustomerService
         return $deliveryAddress;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     */
     public function editDeliveryAddress(
         User $user,
         DeliveryAddressData $deliveryAddressData,
@@ -128,10 +118,9 @@ class CustomerService
     }
 
     /**
-     * @param string $email
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $userByEmail
      */
-    public function changeEmail(User $user, $email, User $userByEmail = null)
+    public function changeEmail(User $user, string $email, User $userByEmail = null): void
     {
         if ($email !== null) {
             $email = mb_strtolower($email);
@@ -183,9 +172,6 @@ class CustomerService
         return $billingAddressData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     */
     private function getAmendedDeliveryAddressDataByOrder(Order $order, DeliveryAddress $deliveryAddress = null): \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
     {
         if ($deliveryAddress === null) {

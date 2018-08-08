@@ -7,7 +7,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class PriceTest extends TestCase
 {
-    public function testAdd()
+    public function testAdd(): void
     {
         $price = new Price(2, 3);
         $priceToAdd = new Price(10, 15);
@@ -18,7 +18,7 @@ class PriceTest extends TestCase
         $this->assertSame(6, $actualAddingResult->getVatAmount());
     }
 
-    public function testAddIsImmutable()
+    public function testAddIsImmutable(): void
     {
         $price = new Price(2, 3);
         $priceToAdd = new Price(10, 15);
@@ -29,7 +29,7 @@ class PriceTest extends TestCase
         $this->assertSame(1, $price->getVatAmount());
     }
 
-    public function testSubtract()
+    public function testSubtract(): void
     {
         $price = new Price(2, 3);
         $priceToSubtract = new Price(10, 15);
@@ -40,7 +40,7 @@ class PriceTest extends TestCase
         $this->assertSame(-4, $actualAddingResult->getVatAmount());
     }
 
-    public function testSubtractIsImmutable()
+    public function testSubtractIsImmutable(): void
     {
         $price = new Price(2, 3);
         $priceToSubtract = new Price(10, 15);

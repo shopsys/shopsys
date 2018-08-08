@@ -16,12 +16,8 @@ class HeurekaProductDomainRepository
     ) {
         $this->em = $em;
     }
-
-    /**
-     * @param int $productId
-     * @param int $domainId
-     */
-    public function findByProductIdAndDomainId($productId, $domainId): ?\Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain
+    
+    public function findByProductIdAndDomainId(int $productId, int $domainId): ?\Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
@@ -36,10 +32,9 @@ class HeurekaProductDomainRepository
     }
 
     /**
-     * @param int $productId
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]|null
      */
-    public function findByProductId($productId): ?array
+    public function findByProductId(int $productId): ?array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
@@ -51,11 +46,9 @@ class HeurekaProductDomainRepository
     }
 
     /**
-     * @param array $productsIds
-     * @param int $domainId
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]
      */
-    public function getHeurekaProductDomainsByProductsIdsDomainIdIndexedByProductId($productsIds, $domainId): array
+    public function getHeurekaProductDomainsByProductsIdsDomainIdIndexedByProductId(array $productsIds, int $domainId): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')

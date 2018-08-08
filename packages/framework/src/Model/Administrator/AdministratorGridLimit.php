@@ -31,12 +31,8 @@ class AdministratorGridLimit
      * @ORM\Column(name="""limit""",type="integer")
      */
     protected $limit;
-
-    /**
-     * @param string $gridId
-     * @param int $limit
-     */
-    public function __construct(Administrator $administrator, $gridId, $limit)
+    
+    public function __construct(Administrator $administrator, string $gridId, int $limit)
     {
         $this->administrator = $administrator;
         $this->gridId = $gridId;
@@ -52,11 +48,8 @@ class AdministratorGridLimit
     {
         return $this->limit;
     }
-
-    /**
-     * @param int $limit
-     */
-    public function setLimit($limit)
+    
+    public function setLimit(int $limit): void
     {
         $this->limit = $limit;
     }

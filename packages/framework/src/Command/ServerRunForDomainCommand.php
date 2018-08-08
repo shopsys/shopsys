@@ -30,7 +30,7 @@ class ServerRunForDomainCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Runs PHP built-in web server for a chosen domain');

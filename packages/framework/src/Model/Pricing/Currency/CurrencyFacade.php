@@ -94,11 +94,8 @@ class CurrencyFacade
         $this->paymentPriceFactory = $paymentPriceFactory;
         $this->transportPriceFactory = $transportPriceFactory;
     }
-
-    /**
-     * @param int $currencyId
-     */
-    public function getById($currencyId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    
+    public function getById(int $currencyId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->currencyRepository->getById($currencyId);
     }
@@ -112,11 +109,8 @@ class CurrencyFacade
 
         return $currency;
     }
-
-    /**
-     * @param int $currencyId
-     */
-    public function edit($currencyId, CurrencyData $currencyData): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    
+    public function edit(int $currencyId, CurrencyData $currencyData): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency = $this->currencyRepository->getById($currencyId);
         $this->currencyService->edit($currency, $currencyData, $this->isDefaultCurrency($currency));
@@ -125,11 +119,8 @@ class CurrencyFacade
 
         return $currency;
     }
-
-    /**
-     * @param int $currencyId
-     */
-    public function deleteById($currencyId)
+    
+    public function deleteById(int $currencyId): void
     {
         $currency = $this->currencyRepository->getById($currencyId);
 
@@ -152,25 +143,19 @@ class CurrencyFacade
     {
         return $this->getById($this->pricingSetting->getDefaultCurrencyId());
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function getDomainDefaultCurrencyByDomainId($domainId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    
+    public function getDomainDefaultCurrencyByDomainId(int $domainId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->getById($this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId));
     }
 
-    public function setDefaultCurrency(Currency $currency)
+    public function setDefaultCurrency(Currency $currency): void
     {
         $this->pricingSetting->setDefaultCurrency($currency);
         $this->em->flush();
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function setDomainDefaultCurrency(Currency $currency, $domainId)
+    
+    public function setDomainDefaultCurrency(Currency $currency, int $domainId): void
     {
         $this->pricingSetting->setDomainDefaultCurrency($currency, $domainId);
         $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
@@ -215,7 +200,7 @@ class CurrencyFacade
         return $currenciesIndexedById;
     }
 
-    protected function createTransportAndPaymentPrices(Currency $currency)
+    protected function createTransportAndPaymentPrices(Currency $currency): void
     {
         $toFlush = [];
         foreach ($this->paymentRepository->getAll() as $payment) {

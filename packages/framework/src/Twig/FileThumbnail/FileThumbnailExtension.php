@@ -46,7 +46,7 @@ class FileThumbnailExtension extends Twig_Extension
             'xml' => 'xml',
         ];
     }
-    
+
     public function getFunctions()
     {
         return [
@@ -58,11 +58,8 @@ class FileThumbnailExtension extends Twig_Extension
     {
         return 'file_thumbnail_extension';
     }
-
-    /**
-     * @param string $filepath
-     */
-    public function getFileThumbnailInfo($filepath): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
+    
+    public function getFileThumbnailInfo(string $filepath): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
     {
         try {
             return $this->getImageThumbnailInfo($filepath);
@@ -70,31 +67,22 @@ class FileThumbnailExtension extends Twig_Extension
             return new FileThumbnailInfo($this->getIconTypeByFilename($filepath));
         }
     }
-
-    /**
-     * @param string $temporaryFilename
-     */
-    public function getFileThumbnailInfoByTemporaryFilename($temporaryFilename): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
+    
+    public function getFileThumbnailInfoByTemporaryFilename(string $temporaryFilename): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
     {
         $filepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
 
         return $this->getFileThumbnailInfo($filepath);
     }
-
-    /**
-     * @param string $filepath
-     */
-    private function getImageThumbnailInfo($filepath): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
+    
+    private function getImageThumbnailInfo(string $filepath): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
     {
         $image = $this->imageThumbnailFactory->getImageThumbnail($filepath);
 
         return new FileThumbnailInfo(null, $image->encode('data-url', self::IMAGE_THUMBNAIL_QUALITY)->getEncoded());
     }
-
-    /**
-     * @param string $filepath
-     */
-    private function getIconTypeByFilename($filepath): string
+    
+    private function getIconTypeByFilename(string $filepath): string
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
         if (array_key_exists($extension, $this->iconsByExtension)) {

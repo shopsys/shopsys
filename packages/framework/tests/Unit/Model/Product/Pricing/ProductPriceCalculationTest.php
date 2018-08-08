@@ -45,10 +45,9 @@ class ProductPriceCalculationTest extends TestCase
     }
 
     /**
-     * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      */
-    private function getProductPriceCalculationWithInputPriceTypeAndVariants($inputPriceType, $variants): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
+    private function getProductPriceCalculationWithInputPriceTypeAndVariants(int $inputPriceType, $variants): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
     {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType', 'getRoundingType', 'getDomainDefaultCurrencyIdByDomainId'])
@@ -109,14 +108,10 @@ class ProductPriceCalculationTest extends TestCase
             $pricingService
         );
     }
-
-    /**
-     * @param string $inputPrice
-     * @param string $vatPercent
-     */
+    
     private function getProductWithInputPriceAndVatPercentAndAutoCalculationPriceType(
-        $inputPrice,
-        $vatPercent
+        string $inputPrice,
+        string $vatPercent
     ): \Shopsys\FrameworkBundle\Model\Product\Product {
         $vatData = new VatData();
         $vatData->name = 'vat';
@@ -141,7 +136,7 @@ class ProductPriceCalculationTest extends TestCase
         $pricingGroupCoefficient,
         $priceWithoutVat,
         $priceWithVat
-    ) {
+    ): void {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             $inputPriceType,
             []
@@ -194,7 +189,7 @@ class ProductPriceCalculationTest extends TestCase
         $variants,
         $expectedPriceWithVat,
         $expectedFrom
-    ) {
+    ): void {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
             $variants
@@ -214,7 +209,7 @@ class ProductPriceCalculationTest extends TestCase
         $this->assertSame($expectedFrom, $productPrice->isPriceFrom());
     }
 
-    public function testCalculatePriceOfMainVariantWithoutAnySellableVariants()
+    public function testCalculatePriceOfMainVariantWithoutAnySellableVariants(): void
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,

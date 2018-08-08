@@ -125,41 +125,32 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         $this->pricingGroup = $userData->pricingGroup;
     }
 
-    public function edit(UserData $userData)
+    public function edit(UserData $userData): void
     {
         $this->firstName = $userData->firstName;
         $this->lastName = $userData->lastName;
         $this->pricingGroup = $userData->pricingGroup;
     }
-
-    /**
-     * @param string $email
-     */
-    public function changeEmail($email)
+    
+    public function changeEmail(string $email): void
     {
         $this->email = $email;
     }
-
-    /**
-     * @param string $password
-     */
-    public function changePassword($password)
+    
+    public function changePassword(string $password): void
     {
         $this->password = $password;
         $this->resetPasswordHash = null;
         $this->resetPasswordHashValidThrough = null;
     }
-
-    /**
-     * @param string $hash
-     */
-    public function setResetPasswordHash($hash)
+    
+    public function setResetPasswordHash(string $hash): void
     {
         $this->resetPasswordHash = $hash;
         $this->resetPasswordHashValidThrough = new DateTime('+48 hours');
     }
 
-    public function setDeliveryAddress(DeliveryAddress $deliveryAddress = null)
+    public function setDeliveryAddress(DeliveryAddress $deliveryAddress = null): void
     {
         $this->deliveryAddress = $deliveryAddress;
     }
@@ -178,16 +169,13 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
     {
         return $this->lastActivity;
     }
-
-    /**
-     * @param DateTime $lastActivity
-     */
-    public function setLastActivity($lastActivity)
+    
+    public function setLastActivity(DateTime $lastActivity): void
     {
         $this->lastActivity = $lastActivity;
     }
 
-    public function onLogin()
+    public function onLogin(): void
     {
         $this->lastLogin = new DateTime();
     }
@@ -196,11 +184,8 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
     {
         return $this->domainId;
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function setDomainId($domainId)
+    
+    public function setDomainId(int $domainId): void
     {
         $this->domainId = $domainId;
     }

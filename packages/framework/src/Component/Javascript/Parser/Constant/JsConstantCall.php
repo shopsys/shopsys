@@ -15,13 +15,10 @@ class JsConstantCall
      * @var string
      */
     private $constantName;
-
-    /**
-     * @param string $constantName
-     */
+    
     public function __construct(
         JCallExprNode $callExprNode,
-        $constantName
+        string $constantName
     ) {
         $this->callExprNode = $callExprNode;
         $this->constantName = $constantName;

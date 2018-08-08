@@ -101,13 +101,11 @@ class OrderDataFixture
     private $orderDataFactory;
 
     /**
-     * @param int $orderTotalCount
-     * @param int $orderItemCountPerOrder
      * @param \Faker\Generator $faker
      */
     public function __construct(
-        $orderTotalCount,
-        $orderItemCountPerOrder,
+        int $orderTotalCount,
+        int $orderItemCountPerOrder,
         EntityManagerInterface $em,
         SqlLoggerFacade $sqlLoggerFacade,
         Faker $faker,
@@ -134,7 +132,7 @@ class OrderDataFixture
         $this->orderDataFactory = $orderDataFactory;
     }
 
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -159,7 +157,7 @@ class OrderDataFixture
         $this->sqlLoggerFacade->reenableLogging();
     }
 
-    private function createOrder()
+    private function createOrder(): void
     {
         $user = $this->getRandomUserOrNull();
         $orderData = $this->createOrderData($user);
@@ -248,7 +246,7 @@ class OrderDataFixture
         return $quantifiedProducts;
     }
 
-    private function loadPerformanceProductIds()
+    private function loadPerformanceProductIds(): void
     {
         $firstPerformanceProduct = $this->persistentReferenceFacade->getReference(
             PerformanceProductDataFixture::FIRST_PERFORMANCE_PRODUCT
@@ -267,15 +265,14 @@ class OrderDataFixture
     }
 
     /**
-     * @param int $count
      * @return int[]
      */
-    private function getRandomPerformanceProductIds($count): array
+    private function getRandomPerformanceProductIds(int $count): array
     {
         return $this->faker->randomElements($this->performanceProductIds, $count);
     }
 
-    private function loadPerformanceUserIdsOnFirstDomain()
+    private function loadPerformanceUserIdsOnFirstDomain(): void
     {
         $firstPerformanceUser = $this->persistentReferenceFacade->getReference(
             PerformanceUserDataFixture::FIRST_PERFORMANCE_USER

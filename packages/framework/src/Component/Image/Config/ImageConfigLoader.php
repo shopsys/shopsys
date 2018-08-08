@@ -28,11 +28,8 @@ class ImageConfigLoader
     {
         $this->filesystem = $filesystem;
     }
-
-    /**
-     * @param string $filename
-     */
-    public function loadFromYaml($filename): \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
+    
+    public function loadFromYaml(string $filename): \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
     {
         $yamlParser = new Parser();
 
@@ -54,10 +51,9 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $outputConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
-    public function loadFromArray($outputConfig): array
+    public function loadFromArray(array $outputConfig): array
     {
         $this->foundEntityConfigs = [];
         $this->foundEntityNames = [];
@@ -75,11 +71,8 @@ class ImageConfigLoader
 
         return $this->foundEntityConfigs;
     }
-
-    /**
-     * @param array $entityConfig
-     */
-    private function processEntityConfig($entityConfig)
+    
+    private function processEntityConfig(array $entityConfig): void
     {
         $entityClass = $entityConfig[ImageConfigDefinition::CONFIG_CLASS];
         $entityName = $entityConfig[ImageConfigDefinition::CONFIG_ENTITY_NAME];
@@ -100,10 +93,9 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $sizesConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
-    private function prepareSizes($sizesConfig): array
+    private function prepareSizes(array $sizesConfig): array
     {
         $result = [];
         foreach ($sizesConfig as $sizeConfig) {
@@ -127,11 +119,8 @@ class ImageConfigLoader
 
         return $result;
     }
-
-    /**
-     * @param array $typesConfig
-     */
-    private function prepareTypes($typesConfig): array
+    
+    private function prepareTypes(array $typesConfig): array
     {
         $result = [];
         foreach ($typesConfig as $typeConfig) {

@@ -4,12 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing;
 
 class InputPriceCalculation
 {
-    /**
-     * @param int $inputPriceType
-     * @param string $basePriceWithVat
-     * @param string $vatPercent
-     */
-    public function getInputPrice($inputPriceType, $basePriceWithVat, $vatPercent): string
+    public function getInputPrice(int $inputPriceType, string $basePriceWithVat, string $vatPercent): string
     {
         if ($inputPriceType === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
             $inputPrice = $this->getInputPriceWithoutVat(
@@ -26,12 +21,8 @@ class InputPriceCalculation
 
         return round($inputPrice, 6);
     }
-
-    /**
-     * @param string $basePriceWithVat
-     * @param string $vatPercent
-     */
-    private function getInputPriceWithoutVat($basePriceWithVat, $vatPercent): string
+    
+    private function getInputPriceWithoutVat(string $basePriceWithVat, string $vatPercent): string
     {
         return 100 * $basePriceWithVat / (100 + $vatPercent);
     }

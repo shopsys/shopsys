@@ -21,19 +21,13 @@ class OrderStatusRepository
     {
         return $this->em->getRepository(OrderStatus::class);
     }
-
-    /**
-     * @param int $orderStatusId
-     */
-    public function findById($orderStatusId): ?\Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    
+    public function findById(int $orderStatusId): ?\Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         return $this->getOrderStatusRepository()->find($orderStatusId);
     }
-
-    /**
-     * @param int $orderStatusId
-     */
-    public function getById($orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    
+    public function getById(int $orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         $orderStatus = $this->findById($orderStatusId);
 
@@ -80,10 +74,9 @@ class OrderStatusRepository
     }
 
     /**
-     * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAllExceptId($orderStatusId): array
+    public function getAllExceptId(int $orderStatusId): array
     {
         $qb = $this->getOrderStatusRepository()->createQueryBuilder('os')
             ->where('os.id != :id')
@@ -92,7 +85,7 @@ class OrderStatusRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function replaceOrderStatus(OrderStatus $oldOrderStatus, OrderStatus $newOrderStatus)
+    public function replaceOrderStatus(OrderStatus $oldOrderStatus, OrderStatus $newOrderStatus): void
     {
         $this->em->createQueryBuilder()
             ->update(Order::class, 'o')

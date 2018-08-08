@@ -30,13 +30,9 @@ class FileForUpload
     private $nameConventionType;
 
     /**
-     * @param string $temporaryFilename
-     * @param bool $isImage
-     * @param string $category
      * @param string|null $targetDirectory
-     * @param int $nameConventionType
      */
-    public function __construct($temporaryFilename, $isImage, $category, $targetDirectory, $nameConventionType)
+    public function __construct(string $temporaryFilename, bool $isImage, string $category, ?string $targetDirectory, int $nameConventionType)
     {
         $this->temporaryFilename = $temporaryFilename;
         $this->isImage = $isImage;

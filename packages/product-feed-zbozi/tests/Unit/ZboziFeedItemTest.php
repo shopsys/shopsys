@@ -55,7 +55,7 @@ class ZboziFeedItemTest extends TestCase
      */
     private $defaultProduct;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->productPriceCalculationForUserMock = $this->createMock(ProductPriceCalculationForUser::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
@@ -105,7 +105,7 @@ class ZboziFeedItemTest extends TestCase
         return $domainConfigMock;
     }
 
-    public function testMinimalZboziFeedItemIsCreatable()
+    public function testMinimalZboziFeedItemIsCreatable(): void
     {
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);
 
@@ -130,7 +130,7 @@ class ZboziFeedItemTest extends TestCase
         self::assertNull($zboziFeedItem->getMaxCpcSearch());
     }
 
-    public function testZboziFeedItemWithGroupId()
+    public function testZboziFeedItemWithGroupId(): void
     {
         $mainVariantMock = $this->createMock(Product::class);
         $mainVariantMock->method('getId')->willReturn(2);
@@ -142,7 +142,7 @@ class ZboziFeedItemTest extends TestCase
         self::assertEquals(2, $zboziFeedItem->getGroupId());
     }
 
-    public function testZboziFeedItemWithDescription()
+    public function testZboziFeedItemWithDescription(): void
     {
         $this->defaultProduct->method('getDescription')
             ->with(1)->willReturn('product description');
@@ -152,7 +152,7 @@ class ZboziFeedItemTest extends TestCase
         self::assertEquals('product description', $zboziFeedItem->getDescription());
     }
 
-    public function testZboziFeedItemWithImgUrl()
+    public function testZboziFeedItemWithImgUrl(): void
     {
         $this->productUrlsBatchLoaderMock->method('getProductImageUrl')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/img/product/1');
@@ -162,7 +162,7 @@ class ZboziFeedItemTest extends TestCase
         self::assertEquals('https://example.com/img/product/1', $zboziFeedItem->getImgUrl());
     }
 
-    public function testZboziFeedItemWithEan()
+    public function testZboziFeedItemWithEan(): void
     {
         $this->defaultProduct->method('getEan')->willReturn('1234567890123');
 
@@ -171,7 +171,7 @@ class ZboziFeedItemTest extends TestCase
         self::assertEquals('1234567890123', $zboziFeedItem->getEan());
     }
 
-    public function testZboziFeedItemWithProductno()
+    public function testZboziFeedItemWithProductno(): void
     {
         $this->defaultProduct->method('getPartno')->willReturn('PN01-B');
 
@@ -180,7 +180,7 @@ class ZboziFeedItemTest extends TestCase
         self::assertEquals('PN01-B', $zboziFeedItem->getProductno());
     }
 
-    public function testZboziFeedItemWithManufacturer()
+    public function testZboziFeedItemWithManufacturer(): void
     {
         $brand = $this->createMock(Brand::class);
         /* @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
@@ -192,7 +192,7 @@ class ZboziFeedItemTest extends TestCase
         self::assertEquals('manufacturer name', $zboziFeedItem->getManufacturer());
     }
 
-    public function testZboziFeedItemWithParams()
+    public function testZboziFeedItemWithParams(): void
     {
         $this->productParametersBatchLoaderMock->method('getProductParametersByName')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn(['color' => 'black']);
@@ -202,7 +202,7 @@ class ZboziFeedItemTest extends TestCase
         self::assertEquals(['color' => 'black'], $zboziFeedItem->getParams());
     }
 
-    public function testZboziFeedItemWithMaxCpc()
+    public function testZboziFeedItemWithMaxCpc(): void
     {
         $zboziProductDomainData = new ZboziProductDomainData();
         $zboziProductDomainData->cpc = 5.0;
@@ -214,7 +214,7 @@ class ZboziFeedItemTest extends TestCase
         self::assertNull($zboziFeedItem->getMaxCpcSearch());
     }
 
-    public function testZboziFeedItemWithMaxCpcSearch()
+    public function testZboziFeedItemWithMaxCpcSearch(): void
     {
         $zboziProductDomainData = new ZboziProductDomainData();
         $zboziProductDomainData->cpcSearch = 5.0;

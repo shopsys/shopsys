@@ -45,11 +45,8 @@ class AvailabilityFacade
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
         $this->availabilityFactory = $availabilityFactory;
     }
-
-    /**
-     * @param int $availabilityId
-     */
-    public function getById($availabilityId): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    
+    public function getById(int $availabilityId): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         return $this->availabilityRepository->getById($availabilityId);
     }
@@ -62,11 +59,8 @@ class AvailabilityFacade
 
         return $availability;
     }
-
-    /**
-     * @param int $availabilityId
-     */
-    public function edit($availabilityId, AvailabilityData $availabilityData): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    
+    public function edit(int $availabilityId, AvailabilityData $availabilityData): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         $availability = $this->availabilityRepository->getById($availabilityId);
         $availability->edit($availabilityData);
@@ -76,10 +70,9 @@ class AvailabilityFacade
     }
 
     /**
-     * @param int $availabilityId
      * @param int|null $newAvailabilityId
      */
-    public function deleteById($availabilityId, $newAvailabilityId = null)
+    public function deleteById(int $availabilityId, ?int $newAvailabilityId = null): void
     {
         $availability = $this->availabilityRepository->getById($availabilityId);
 
@@ -103,7 +96,7 @@ class AvailabilityFacade
         return $this->getById($availabilityId);
     }
 
-    public function setDefaultInStockAvailability(Availability $availability)
+    public function setDefaultInStockAvailability(Availability $availability): void
     {
         $this->setting->set(Setting::DEFAULT_AVAILABILITY_IN_STOCK, $availability->getId());
         $this->productAvailabilityRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
@@ -118,10 +111,9 @@ class AvailabilityFacade
     }
 
     /**
-     * @param int $availabilityId
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability[]
      */
-    public function getAllExceptId($availabilityId): array
+    public function getAllExceptId(int $availabilityId): array
     {
         return $this->availabilityRepository->getAllExceptId($availabilityId);
     }

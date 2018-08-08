@@ -65,7 +65,7 @@ class ZboziProductDomain
         $this->domainId = $zboziProductDomainData->domainId;
     }
 
-    public function edit(ZboziProductDomainData $zboziProductDomainData)
+    public function edit(ZboziProductDomainData $zboziProductDomainData): void
     {
         $this->product = $zboziProductDomainData->product;
         $this->show = $zboziProductDomainData->show;

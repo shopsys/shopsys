@@ -33,18 +33,13 @@ class ExtendedOrderTransport extends ExtendedOrderItem
      * @ORM\Column(type="string", nullable=true)
      */
     protected $transportStringField;
-
-    /**
-     * @param string $name
-     * @param string $vatPercent
-     * @param int $quantity
-     */
+    
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
+        string $vatPercent,
+        int $quantity,
         Transport $transport
     ) {
         parent::__construct(
@@ -64,7 +59,7 @@ class ExtendedOrderTransport extends ExtendedOrderItem
         return $this->transport;
     }
 
-    public function edit(OrderItemData $orderTransportData)
+    public function edit(OrderItemData $orderTransportData): void
     {
         if ($orderTransportData instanceof OrderTransportData) {
             $this->transport = $orderTransportData->transport;
@@ -84,7 +79,7 @@ class ExtendedOrderTransport extends ExtendedOrderItem
     /**
      * @param string|null $transportStringField
      */
-    public function setTransportStringField($transportStringField)
+    public function setTransportStringField(?string $transportStringField): void
     {
         $this->transportStringField = $transportStringField;
     }

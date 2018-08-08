@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 
 class BestsellingProductServiceTest extends TestCase
 {
-    public function testCombineManualAndAutomaticBestsellingProducts()
+    public function testCombineManualAndAutomaticBestsellingProducts(): void
     {
         $bestsellingProductService = new BestsellingProductService();
 

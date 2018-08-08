@@ -18,7 +18,7 @@ class RemoveDuplicatesFromArrayTransformer implements DataTransformerInterface
     /**
      * @param array|null $array
      */
-    public function reverseTransform($array): ?array
+    public function reverseTransform(?array $array): ?array
     {
         if (is_array($array)) {
             $result = [];

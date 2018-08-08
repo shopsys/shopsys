@@ -22,12 +22,8 @@ class HomepagePage extends AbstractPage
         $this->productListComponent = $productListComponent;
         parent::__construct($strictWebDriver, $tester);
     }
-
-    /**
-     * @param string $productName
-     * @param int $quantity
-     */
-    public function addTopProductToCartByName($productName, $quantity = 1)
+    
+    public function addTopProductToCartByName(string $productName, int $quantity = 1): void
     {
         $topProductsContext = $this->getTopProductsContext();
 

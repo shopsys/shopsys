@@ -17,7 +17,7 @@ class PricingGroupDataFactory implements PricingGroupDataFactoryInterface
         return $pricingGroupData;
     }
 
-    protected function fillFromPricingGroup(PricingGroupData $pricingGroupData, PricingGroup $pricingGroup)
+    protected function fillFromPricingGroup(PricingGroupData $pricingGroupData, PricingGroup $pricingGroup): void
     {
         $pricingGroupData->name = $pricingGroup->getName();
         $pricingGroupData->coefficient = $pricingGroup->getCoefficient();

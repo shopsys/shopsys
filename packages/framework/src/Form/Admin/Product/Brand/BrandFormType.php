@@ -40,8 +40,8 @@ class BrandFormType extends AbstractType
         $this->domain = $domain;
         $this->seoSettingFacade = $seoSettingFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $brand = $options['brand'];
         /* @var $brand \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null */
@@ -168,7 +168,7 @@ class BrandFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('brand')
@@ -178,9 +178,6 @@ class BrandFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null $brand
-     */
     private function getTitlePlaceholder(Brand $brand = null): string
     {
         return $brand !== null ? $brand->getName() : '';

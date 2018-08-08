@@ -7,7 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180603135346 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $pricingGroupsCount = $this->sql('SELECT count(*) FROM pricing_groups')->fetchColumn(0);
         if ($pricingGroupsCount <= 0) {
@@ -21,7 +21,7 @@ class Version20180603135346 extends AbstractMigration
         }
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

@@ -67,22 +67,16 @@ class GenerateMigrationsService
 
         return $formattedSqlCommands;
     }
-
-    /**
-     * @param string $filteredSchemaDiffSqlCommand
-     */
-    private function formatSqlCommand($filteredSchemaDiffSqlCommand): string
+    
+    private function formatSqlCommand(string $filteredSchemaDiffSqlCommand): string
     {
         $formattedQuery = $this->formatSqlQueryWithTabs($filteredSchemaDiffSqlCommand);
         $formattedQueryLines = array_map('rtrim', explode("\n", $formattedQuery));
 
         return "\n" . implode("\n", $this->indentSqlCommandLines($formattedQueryLines));
     }
-
-    /**
-     * @param string $query
-     */
-    private function formatSqlQueryWithTabs($query): string
+    
+    private function formatSqlQueryWithTabs(string $query): string
     {
         $previousTab = SqlFormatter::$tab;
         SqlFormatter::$tab = self::INDENT_CHARACTERS;
@@ -116,7 +110,7 @@ class GenerateMigrationsService
         }, $sqlCommands);
     }
 
-    private function createMigrationLocationDirectoryIfNotExists(MigrationsLocation $migrationLocation)
+    private function createMigrationLocationDirectoryIfNotExists(MigrationsLocation $migrationLocation): void
     {
         if (!$this->filesystem->exists($migrationLocation->getDirectory())) {
             $this->filesystem->mkdir($migrationLocation->getDirectory());

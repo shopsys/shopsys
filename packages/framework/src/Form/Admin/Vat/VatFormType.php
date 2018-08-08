@@ -14,8 +14,8 @@ class VatFormType extends AbstractType
 {
     const SCENARIO_CREATE = 'create';
     const SCENARIO_EDIT = 'edit';
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class, [
@@ -39,7 +39,7 @@ class VatFormType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('scenario')

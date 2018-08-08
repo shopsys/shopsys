@@ -7,13 +7,12 @@ class BestsellingProductService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $manualProductsIndexedByPosition
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $automaticProducts
-     * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function combineManualAndAutomaticProducts(
         array $manualProductsIndexedByPosition,
         array $automaticProducts,
-        $maxResults
+        int $maxResults
     ): array {
         $automaticProductsExcludingManual = $this->getAutomaticProductsExcludingManual(
             $automaticProducts,
@@ -49,13 +48,12 @@ class BestsellingProductService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $manualProductsIndexedByPosition
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $automaticProductsExcludingManual
-     * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     private function getCombinedProducts(
         array $manualProductsIndexedByPosition,
         array $automaticProductsExcludingManual,
-        $maxResults
+        int $maxResults
     ): array {
         $combinedProducts = [];
         for ($position = 0; $position < $maxResults; $position++) {

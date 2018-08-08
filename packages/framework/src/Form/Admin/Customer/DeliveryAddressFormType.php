@@ -29,8 +29,8 @@ class DeliveryAddressFormType extends AbstractType
     {
         $this->countryFacade = $countryFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $countries = $this->countryFacade->getAllByDomainId($options['domain_id']);
 
@@ -164,7 +164,7 @@ class DeliveryAddressFormType extends AbstractType
         $builder->add($builderDeliveryAdress);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('domain_id')

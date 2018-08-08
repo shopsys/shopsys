@@ -35,7 +35,7 @@ class CategoryService
         return $category;
     }
 
-    public function setChildrenAsSiblings(Category $category)
+    public function setChildrenAsSiblings(Category $category): void
     {
         foreach ($category->getChildren() as $child) {
             $child->setParent($category->getParent());

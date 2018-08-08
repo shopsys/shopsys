@@ -107,9 +107,8 @@ class OrderController extends AdminBaseController
 
     /**
      * @Route("/order/edit/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $order = $this->orderFacade->getById($id);
 
@@ -164,9 +163,8 @@ class OrderController extends AdminBaseController
 
     /**
      * @Route("/order/add-product/{orderId}", requirements={"orderId" = "\d+"}, condition="request.isXmlHttpRequest()")
-     * @param int $orderId
      */
-    public function addProductAction(Request $request, $orderId)
+    public function addProductAction(Request $request, int $orderId)
     {
         $productId = $request->get('productId');
         $orderItem = $this->orderItemFacade->createOrderProductInOrder($orderId, $productId);
@@ -255,9 +253,8 @@ class OrderController extends AdminBaseController
     /**
      * @Route("/order/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $orderNumber = $this->orderFacade->getById($id)->getNumber();
@@ -277,9 +274,6 @@ class OrderController extends AdminBaseController
         return $this->redirectToRoute('admin_order_list');
     }
 
-    /**
-     * @Route("/order/get-advanced-search-rule-form/", methods={"post"})
-     */
     public function getRuleFormAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm($request->get('filterName'), $request->get('newIndex'));
@@ -291,9 +285,8 @@ class OrderController extends AdminBaseController
 
     /**
      * @Route("/order/preview/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function previewAction($id)
+    public function previewAction(int $id)
     {
         $order = $this->orderFacade->getById($id);
 

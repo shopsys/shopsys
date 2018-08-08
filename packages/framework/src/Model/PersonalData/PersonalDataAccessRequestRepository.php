@@ -17,12 +17,8 @@ class PersonalDataAccessRequestRepository
     {
         $this->em = $em;
     }
-
-    /**
-     * @param string $hash
-     * @param int $domainId
-     */
-    public function findByHashAndDomainId($hash, $domainId): ?\Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
+    
+    public function findByHashAndDomainId(string $hash, int $domainId): ?\Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
     {
         $dateTime = new DateTime('-1 day');
 
@@ -37,11 +33,8 @@ class PersonalDataAccessRequestRepository
             ])
             ->getQuery()->getOneOrNullResult();
     }
-
-    /**
-     * @param string $hash
-     */
-    public function isHashUsed($hash): bool
+    
+    public function isHashUsed(string $hash): bool
     {
         return (bool)$this->getQueryBuilder()
             ->select('count(pdar)')

@@ -42,7 +42,7 @@ class FriendlyUrlGeneratorFacade
         $this->friendlyUrlDataProviderConfig = $friendlyUrlDataProviderConfig;
     }
 
-    public function generateUrlsForSupportedEntities(OutputInterface $output)
+    public function generateUrlsForSupportedEntities(OutputInterface $output): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $output->writeln(' Start of generating friendly urls for domain ' . $domainConfig->getUrl() . '');
@@ -76,11 +76,8 @@ class FriendlyUrlGeneratorFacade
 
         return $totalCountOfCreatedUrls;
     }
-
-    /**
-     * @param string $routeName
-     */
-    protected function generateUrlsByRoute(DomainConfig $domainConfig, $routeName): int
+    
+    protected function generateUrlsByRoute(DomainConfig $domainConfig, string $routeName): int
     {
         $countOfCreatedUrls = 0;
 

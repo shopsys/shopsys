@@ -27,8 +27,8 @@ class CloseNewlyOpenedWindowsHelper extends Module
 
         $this->closeNewlyOpenedWindows($webDriver->webDriver);
     }
-    
-    private function closeNewlyOpenedWindows(RemoteWebDriver $webDriver)
+
+    private function closeNewlyOpenedWindows(RemoteWebDriver $webDriver): void
     {
         $handles = $webDriver->getWindowHandles();
         $firstHandle = array_shift($handles);

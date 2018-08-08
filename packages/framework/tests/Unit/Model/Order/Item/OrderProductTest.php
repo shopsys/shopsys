@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 
 class OrderProductTest extends TestCase
 {
-    public function testEditWithProduct()
+    public function testEditWithProduct(): void
     {
         $orderMock = $this->createMock(Order::class);
         $productMock = $this->createMock(Product::class);
@@ -35,7 +35,7 @@ class OrderProductTest extends TestCase
         $this->assertSame(10, $orderProduct->getvatPercent());
     }
 
-    public function testEditWithoutProduct()
+    public function testEditWithoutProduct(): void
     {
         $orderMock = $this->createMock(Order::class);
         $productPrice = new Price(0, 0);
@@ -57,7 +57,7 @@ class OrderProductTest extends TestCase
         $this->assertSame(10, $orderProduct->getvatPercent());
     }
 
-    public function testConstructWithMainVariantThrowsException()
+    public function testConstructWithMainVariantThrowsException(): void
     {
         $variant = Product::create(new ProductData());
         $mainVariant = Product::createMainVariant(new ProductData(), [$variant]);

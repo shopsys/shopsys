@@ -39,11 +39,8 @@ class PromoCodeFacade
 
         return $promoCode;
     }
-
-    /**
-     * @param int $promoCodeId
-     */
-    public function edit($promoCodeId, PromoCodeData $promoCodeData): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    
+    public function edit(int $promoCodeId, PromoCodeData $promoCodeData): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         $promoCode = $this->getById($promoCodeId);
         $promoCode->edit($promoCodeData);
@@ -51,29 +48,20 @@ class PromoCodeFacade
 
         return $promoCode;
     }
-
-    /**
-     * @param int $promoCodeId
-     */
-    public function getById($promoCodeId): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    
+    public function getById(int $promoCodeId): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         return $this->promoCodeRepository->getById($promoCodeId);
     }
-
-    /**
-     * @param int $promoCodeId
-     */
-    public function deleteById($promoCodeId)
+    
+    public function deleteById(int $promoCodeId): void
     {
         $promoCode = $this->getById($promoCodeId);
         $this->em->remove($promoCode);
         $this->em->flush();
     }
-
-    /**
-     * @param string $code
-     */
-    public function findPromoCodeByCode($code): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    
+    public function findPromoCodeByCode(string $code): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         return $this->promoCodeRepository->findByCode($code);
     }

@@ -28,7 +28,7 @@ class LocalizationListener implements EventSubscriberInterface
         $this->localization = $localization;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $request = $event->getRequest();

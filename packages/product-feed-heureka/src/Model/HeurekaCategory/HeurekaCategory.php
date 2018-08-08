@@ -54,7 +54,7 @@ class HeurekaCategory
         $this->categories = new ArrayCollection($heurekaCategoryData->categories);
     }
 
-    public function edit(HeurekaCategoryData $heurekaCategoryData)
+    public function edit(HeurekaCategoryData $heurekaCategoryData): void
     {
         $this->name = $heurekaCategoryData->name;
         $this->fullName = $heurekaCategoryData->fullName;
@@ -64,7 +64,7 @@ class HeurekaCategory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      */
-    protected function editCategories(array $categories)
+    protected function editCategories(array $categories): void
     {
         $this->categories->clear();
         foreach ($categories as $category) {
@@ -72,12 +72,12 @@ class HeurekaCategory
         }
     }
 
-    public function addCategory(Category $category)
+    public function addCategory(Category $category): void
     {
         $this->categories->add($category);
     }
 
-    public function removeCategory(Category $category)
+    public function removeCategory(Category $category): void
     {
         $this->categories->removeElement($category);
     }

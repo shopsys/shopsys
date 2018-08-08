@@ -29,7 +29,7 @@ class CountryDataFixture extends AbstractReferenceFixture
         $this->countryDataFactory = $countryDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $domainId = 1;
         $countryData = $this->countryDataFactory->create();
@@ -42,12 +42,8 @@ class CountryDataFixture extends AbstractReferenceFixture
         $countryData->code = 'SK';
         $this->createCountry($countryData, $domainId, self::COUNTRY_SLOVAKIA_1);
     }
-
-    /**
-     * @param int $domainId
-     * @param string $referenceName
-     */
-    private function createCountry(CountryData $countryData, $domainId, $referenceName)
+    
+    private function createCountry(CountryData $countryData, int $domainId, string $referenceName): void
     {
         $country = $this->countryFacade->create($countryData, $domainId);
         $this->addReference($referenceName, $country);

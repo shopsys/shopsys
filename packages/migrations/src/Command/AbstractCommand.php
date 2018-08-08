@@ -38,13 +38,13 @@ abstract class AbstractCommand extends Command
         EntityManagerInterface $em,
         MigrationsLock $migrationsLock,
         MigrationsFinder $migrationsFinder
-    ) {
+    ): void {
         $this->em = $em;
         $this->migrationsLock = $migrationsLock;
         $this->migrationsFinder = $migrationsFinder;
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $outputWriter = new OutputWriter(
             function ($message) use ($output) {

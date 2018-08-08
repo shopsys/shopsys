@@ -7,7 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20161013090245 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE delivery_addresses ADD first_name VARCHAR(100) DEFAULT NULL');
         $this->sql('ALTER TABLE delivery_addresses ADD last_name VARCHAR(100) DEFAULT NULL');
@@ -26,7 +26,7 @@ class Version20161013090245 extends AbstractMigration
         $this->sql('ALTER TABLE orders DROP delivery_contact_person');
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

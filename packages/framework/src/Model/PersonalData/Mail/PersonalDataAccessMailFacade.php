@@ -41,7 +41,7 @@ class PersonalDataAccessMailFacade
         $this->personalDataExportMail = $personalDataExportMail;
     }
 
-    public function sendMail(PersonalDataAccessRequest $personalDataAccessRequest)
+    public function sendMail(PersonalDataAccessRequest $personalDataAccessRequest): void
     {
         if ($personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY) {
             $mailTemplate = $this->mailTemplateFacade->get(

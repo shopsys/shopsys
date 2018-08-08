@@ -15,7 +15,7 @@ class TransportImageUploadCest
 
     const TEST_IMAGE_NAME = 'transportTestImage.png';
 
-    public function testSuccessfulImageUpload(AcceptanceTester $me, EntityEditPage $entityEditPage, LoginPage $loginPage)
+    public function testSuccessfulImageUpload(AcceptanceTester $me, EntityEditPage $entityEditPage, LoginPage $loginPage): void
     {
         $me->wantTo('Upload an image in admin transport edit page');
         $loginPage->loginAsAdmin();

@@ -32,12 +32,8 @@ class NewsletterFacade
         $this->newsletterRepository = $newsletterRepository;
         $this->newsletterSubscriberFactory = $newsletterSubscriberFactory;
     }
-
-    /**
-     * @param string $email
-     * @param int $domainId
-     */
-    public function addSubscribedEmail($email, $domainId)
+    
+    public function addSubscribedEmail(string $email, int $domainId): void
     {
         if (!$this->newsletterRepository->existsSubscribedEmail($email, $domainId)) {
             $newsletterSubscriber = $this->newsletterSubscriberFactory->create($email, new DateTimeImmutable(), $domainId);
@@ -45,20 +41,13 @@ class NewsletterFacade
             $this->em->flush($newsletterSubscriber);
         }
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function getAllEmailsDataIteratorByDomainId($domainId): \Doctrine\ORM\Internal\Hydration\IterableResult
+    
+    public function getAllEmailsDataIteratorByDomainId(int $domainId): \Doctrine\ORM\Internal\Hydration\IterableResult
     {
         return $this->newsletterRepository->getAllEmailsDataIteratorByDomainId($domainId);
     }
-
-    /**
-     * @param string $email
-     * @param int $domainId
-     */
-    public function findNewsletterSubscriberByEmailAndDomainId($email, $domainId): ?\Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
+    
+    public function findNewsletterSubscriberByEmailAndDomainId(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
     {
         return $this->newsletterRepository->findNewsletterSubscribeByEmailAndDomainId($email, $domainId);
     }
@@ -73,7 +62,7 @@ class NewsletterFacade
         return $this->newsletterRepository->getNewsletterSubscriberById($id);
     }
 
-    public function deleteById(int $id)
+    public function deleteById(int $id): void
     {
         $newsletterSubscriber = $this->getNewsletterSubscriberById($id);
 

@@ -39,9 +39,8 @@ class ParameterController extends AdminBaseController
     /**
      * @Route("/product/parameter/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->parameterFacade->getById($id)->getName();

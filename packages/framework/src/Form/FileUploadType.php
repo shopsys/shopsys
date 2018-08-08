@@ -38,7 +38,7 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
         $this->fileUpload = $fileUpload;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('info_text')
             ->setAllowedTypes('info_text', ['string', 'null'])
@@ -50,30 +50,24 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
                 'info_text' => null,
             ]);
     }
-
-    /**
-     * @param array $value
-     */
-    public function reverseTransform($value): string
+    
+    public function reverseTransform(array $value): string
     {
         return $value['uploadedFiles'];
     }
-
-    /**
-     * @param string $value
-     */
-    public function transform($value): array
+    
+    public function transform(string $value): array
     {
         return ['uploadedFiles' => (array)$value];
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
         $view->vars['info_text'] = $options['info_text'];
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->fileConstraints = array_merge(
             [
@@ -103,7 +97,7 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
     /**
      * @param string[]|null $uploadedFiles
      */
-    public function validateUploadedFiles($uploadedFiles, ExecutionContextInterface $context)
+    public function validateUploadedFiles($uploadedFiles, ExecutionContextInterface $context): void
     {
         foreach ($uploadedFiles as $uploadedFile) {
             $filepath = $this->fileUpload->getTemporaryFilepath($uploadedFile);
@@ -117,7 +111,7 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
         }
     }
 
-    public function onPreSubmit(FormEvent $event)
+    public function onPreSubmit(FormEvent $event): void
     {
         $data = $event->getData();
         if (is_array($data) && array_key_exists('file', $data) && is_array($data['file'])) {

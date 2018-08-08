@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class NoAuth implements AuthInterface
 {
-    public function authenticateRequest(Request $request)
+    public function authenticateRequest(Request $request): void
     {
     }
 }

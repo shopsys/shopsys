@@ -51,9 +51,8 @@ class UnitController extends AdminBaseController
 
     /**
      * @Route("/unit/delete-confirm/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         try {
             $unit = $this->unitFacade->getById($id);
@@ -96,9 +95,8 @@ class UnitController extends AdminBaseController
     /**
      * @Route("/product/unit/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');
 

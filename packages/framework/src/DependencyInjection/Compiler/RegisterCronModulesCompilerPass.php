@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterCronModulesCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $cronConfigDefinition = $container->findDefinition(CronConfig::class);
 

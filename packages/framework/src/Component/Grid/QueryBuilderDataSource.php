@@ -17,11 +17,8 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @var string
      */
     private $rowIdSourceColumnName;
-
-    /**
-     * @param string $rowIdSourceColumnName
-     */
-    public function __construct(QueryBuilder $queryBuilder, $rowIdSourceColumnName)
+    
+    public function __construct(QueryBuilder $queryBuilder, string $rowIdSourceColumnName)
     {
         $this->queryBuilder = $queryBuilder;
         $this->rowIdSourceColumnName = $rowIdSourceColumnName;
@@ -29,15 +26,13 @@ class QueryBuilderDataSource implements DataSourceInterface
 
     /**
      * @param int|null $limit
-     * @param int $page
      * @param string|null $orderSourceColumnName
-     * @param string $orderDirection
      */
     public function getPaginatedRows(
-        $limit = null,
-        $page = 1,
-        $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC
+        ?int $limit = null,
+        int $page = 1,
+        ?string $orderSourceColumnName = null,
+        string $orderDirection = self::ORDER_ASC
     ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult {
         $queryBuilder = clone $this->queryBuilder;
         if ($orderSourceColumnName !== null) {
@@ -51,11 +46,8 @@ class QueryBuilderDataSource implements DataSourceInterface
 
         return $paginationResult;
     }
-
-    /**
-     * @param int $rowId
-     */
-    public function getOneRow($rowId): array
+    
+    public function getOneRow(int $rowId): array
     {
         $queryBuilder = clone $this->queryBuilder;
         $this->prepareQueryWithOneRow($queryBuilder, $rowId);
@@ -68,20 +60,13 @@ class QueryBuilderDataSource implements DataSourceInterface
         $queryPaginator = new QueryPaginator($this->queryBuilder, GroupedScalarHydrator::HYDRATION_MODE);
         return $queryPaginator->getTotalCount();
     }
-
-    /**
-     * @param string $orderSourceColumnName
-     * @param string $orderDirection
-     */
-    private function addQueryOrder(QueryBuilder $queryBuilder, $orderSourceColumnName, $orderDirection)
+    
+    private function addQueryOrder(QueryBuilder $queryBuilder, string $orderSourceColumnName, string $orderDirection): void
     {
         $queryBuilder->orderBy($orderSourceColumnName, $orderDirection);
     }
-
-    /**
-     * @param int $rowId
-     */
-    private function prepareQueryWithOneRow(QueryBuilder $queryBuilder, $rowId)
+    
+    private function prepareQueryWithOneRow(QueryBuilder $queryBuilder, int $rowId): void
     {
         $queryBuilder
             ->andWhere($this->rowIdSourceColumnName . ' = :rowId')

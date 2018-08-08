@@ -27,7 +27,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         Availability $outOfStockAvailability = null,
         Availability $defaultInStockAvailability = null,
         Availability $expectedCalculatedAvailability = null
-    ) {
+    ): void {
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
         $productData = $productDataFactory->create();
         $productData->usingStock = $usingStock;
@@ -114,7 +114,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         ];
     }
 
-    public function testCalculateAvailabilityMainVariant()
+    public function testCalculateAvailabilityMainVariant(): void
     {
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
 
@@ -165,7 +165,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $this->assertSame($variant1->getCalculatedAvailability(), $mainVariantCalculatedAvailability);
     }
 
-    public function testCalculateAvailabilityMainVariantWithNoSellableVariants()
+    public function testCalculateAvailabilityMainVariantWithNoSellableVariants(): void
     {
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
 

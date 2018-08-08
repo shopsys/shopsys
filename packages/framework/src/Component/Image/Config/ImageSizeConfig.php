@@ -31,12 +31,9 @@ class ImageSizeConfig
 
     /**
      * @param string|null $name
-     * @param int $width
-     * @param int $height
-     * @param bool $crop
      * @param string|null $occurrence
      */
-    public function __construct($name, $width, $height, $crop, $occurrence)
+    public function __construct(?string $name, int $width, int $height, bool $crop, ?string $occurrence)
     {
         $this->name = $name;
         $this->width = $width;

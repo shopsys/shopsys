@@ -34,12 +34,8 @@ class TopCategory
      * @ORM\Column(type="integer")
      */
     protected $position;
-
-    /**
-     * @param int $domainId
-     * @param int $position
-     */
-    public function __construct(Category $category, $domainId, $position)
+    
+    public function __construct(Category $category, int $domainId, int $position)
     {
         $this->category = $category;
         $this->domainId = $domainId;

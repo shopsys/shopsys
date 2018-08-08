@@ -30,8 +30,8 @@ class TransportEditFormType extends AbstractType
         $this->currencyFacade = $currencyFacade;
         $this->transportFacade = $transportFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $transport = $options['transport'];
         /* @var $transport \Shopsys\FrameworkBundle\Model\Transport\Transport */
@@ -56,7 +56,7 @@ class TransportEditFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('transport')
             ->setAllowedTypes('transport', [Transport::class, 'null'])

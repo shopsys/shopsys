@@ -40,7 +40,7 @@ class HeurekaFacade
         $this->heurekaSetting = $heurekaSetting;
     }
 
-    public function sendOrderInfo(Order $order)
+    public function sendOrderInfo(Order $order): void
     {
         try {
             $heurekaShopCertification = $this->heurekaShopCertificationFactory->create($order);
@@ -61,24 +61,18 @@ class HeurekaFacade
     {
         return $this->heurekaSetting->isHeurekaWidgetActivated($domainId);
     }
-
-    /**
-     * @param string $locale
-     */
-    public function isDomainLocaleSupported($locale): bool
+    
+    public function isDomainLocaleSupported(string $locale): bool
     {
         return $this->heurekaShopCertificationService->isDomainLocaleSupported($locale);
     }
-
-    /**
-     * @param string $locale
-     */
-    public function getServerNameByLocale($locale): ?string
+    
+    public function getServerNameByLocale(string $locale): ?string
     {
         return $this->heurekaShopCertificationService->getServerNameByLocale($locale);
     }
 
-    protected function logError(Exception $ex, Order $order)
+    protected function logError(Exception $ex, Order $order): void
     {
         $message = 'Sending order (ID = "' . $order->getId() . '") to Heureka failed - ' . get_class($ex) . ': ' . $ex->getMessage();
         $this->logger->error($message, ['exceptionFullInfo' => (string)$ex]);

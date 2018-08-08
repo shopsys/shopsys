@@ -20,29 +20,20 @@ class CurrencyRepository
     {
         return $this->em->getRepository(Currency::class);
     }
-
-    /**
-     * @param int $currencyId
-     */
-    public function findById($currencyId): ?\Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    
+    public function findById(int $currencyId): ?\Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->getCurrencyRepository()->find($currencyId);
     }
-
-    /**
-     * @param string $code
-     */
-    public function findByCode($code): ?\Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    
+    public function findByCode(string $code): ?\Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->getCurrencyRepository()->findOneBy([
             'code' => $code,
         ]);
     }
-
-    /**
-     * @param int $currencyId
-     */
-    public function getById($currencyId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    
+    public function getById(int $currencyId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency = $this->findById($currencyId);
 

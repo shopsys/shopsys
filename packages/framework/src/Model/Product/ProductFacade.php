@@ -183,11 +183,8 @@ class ProductFacade
         $this->productParameterValueFactory = $productParameterValueFactory;
         $this->productVisibilityFactory = $productVisibilityFactory;
     }
-
-    /**
-     * @param int $productId
-     */
-    public function getById($productId): \Shopsys\FrameworkBundle\Model\Product\Product
+    
+    public function getById(int $productId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->productRepository->getById($productId);
     }
@@ -211,7 +208,7 @@ class ProductFacade
         return $product;
     }
 
-    public function setAdditionalDataAfterCreate(Product $product, ProductData $productData)
+    public function setAdditionalDataAfterCreate(Product $product, ProductData $productData): void
     {
         // Persist of ProductCategoryDomain requires known primary key of Product
         // @see https://github.com/doctrine/doctrine2/issues/4869
@@ -232,11 +229,8 @@ class ProductFacade
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
-
-    /**
-     * @param int $productId
-     */
-    public function edit($productId, ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
+    
+    public function edit(int $productId, ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $product = $this->productRepository->getById($productId);
 
@@ -266,11 +260,8 @@ class ProductFacade
 
         return $product;
     }
-
-    /**
-     * @param int $productId
-     */
-    public function delete($productId)
+    
+    public function delete(int $productId): void
     {
         $product = $this->productRepository->getById($productId);
         $productDeleteResult = $this->productService->delete($product);
@@ -289,7 +280,7 @@ class ProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
      */
-    protected function saveParameters(Product $product, array $productParameterValuesData)
+    protected function saveParameters(Product $product, array $productParameterValuesData): void
     {
         // Doctrine runs INSERTs before DELETEs in UnitOfWork. In case of UNIQUE constraint
         // in database, this leads in trying to insert duplicate entry.
@@ -334,7 +325,7 @@ class ProductFacade
     /**
      * @param string[] $manualInputPrices
      */
-    protected function refreshProductManualInputPrices(Product $product, array $manualInputPrices)
+    protected function refreshProductManualInputPrices(Product $product, array $manualInputPrices): void
     {
         if ($product->getPriceCalculationType() === Product::PRICE_CALCULATION_TYPE_MANUAL) {
             foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
@@ -345,7 +336,7 @@ class ProductFacade
         }
     }
 
-    protected function createProductVisibilities(Product $product)
+    protected function createProductVisibilities(Product $product): void
     {
         $toFlush = [];
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -365,7 +356,7 @@ class ProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $accessories
      */
-    protected function refreshProductAccessories(Product $product, array $accessories)
+    protected function refreshProductAccessories(Product $product, array $accessories): void
     {
         $oldProductAccessories = $this->productAccessoryRepository->getAllByProduct($product);
         foreach ($oldProductAccessories as $oldProductAccessory) {
@@ -384,11 +375,8 @@ class ProductFacade
             $this->em->flush($toFlush);
         }
     }
-
-    /**
-     * @param string $productCatnum
-     */
-    public function getOneByCatnumExcludeMainVariants($productCatnum): \Shopsys\FrameworkBundle\Model\Product\Product
+    
+    public function getOneByCatnumExcludeMainVariants(string $productCatnum): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
     }

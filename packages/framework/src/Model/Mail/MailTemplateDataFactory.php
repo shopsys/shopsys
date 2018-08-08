@@ -17,7 +17,7 @@ class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
         return $mailTemplateData;
     }
 
-    protected function fillFromMailTemplate(MailTemplateData $mailTemplateData, MailTemplate $mailTemplate)
+    protected function fillFromMailTemplate(MailTemplateData $mailTemplateData, MailTemplate $mailTemplate): void
     {
         $mailTemplateData->name = $mailTemplate->getName();
         $mailTemplateData->bccEmail = $mailTemplate->getBccEmail();

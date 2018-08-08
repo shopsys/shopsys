@@ -66,15 +66,15 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
             $this->transMethodSpecifications[$methodName] = $transMethodSpecification;
         }
     }
-    
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->file = $file;
         $this->catalogue = $catalogue;
         $this->traverser->traverse($ast);
     }
 
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): void
     {
         if ($this->isTransMethodOrFuncCall($node)) {
             if (!$this->isIgnored($node)) {
@@ -176,11 +176,8 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 
         return $docComment;
     }
-
-    /**
-     * @param string $methodName
-     */
-    private function getNormalizedMethodName($methodName): string
+    
+    private function getNormalizedMethodName(string $methodName): string
     {
         return mb_strtolower($methodName);
     }
@@ -195,7 +192,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
             throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException('Unable to resolve node name');
         }
     }
-    
+
     public function beforeTraverse(array $nodes)
     {
         return null;
@@ -205,7 +202,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     {
         return null;
     }
-    
+
     public function afterTraverse(array $nodes)
     {
         return null;

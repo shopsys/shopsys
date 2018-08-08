@@ -17,7 +17,7 @@ class SliderItemDataFactory implements SliderItemDataFactoryInterface
         return $sliderItemData;
     }
 
-    protected function fillFromSliderItem(SliderItemData $sliderItemData, SliderItem $sliderItem)
+    protected function fillFromSliderItem(SliderItemData $sliderItemData, SliderItem $sliderItem): void
     {
         $sliderItemData->name = $sliderItem->getName();
         $sliderItemData->link = $sliderItem->getLink();

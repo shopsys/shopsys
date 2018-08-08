@@ -10,7 +10,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class LocalizationListenerTest extends DatabaseTestCase
 {
-    public function testProductDetailOnFirstDomainHasEnglishLocale()
+    public function testProductDetailOnFirstDomainHasEnglishLocale(): void
     {
         $router = $this->getContainer()->get(CurrentDomainRouter::class);
         /* @var $router \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter */
@@ -28,7 +28,7 @@ class LocalizationListenerTest extends DatabaseTestCase
     /**
      * @group multidomain
      */
-    public function testProductDetailOnSecondDomainHasCzechLocale()
+    public function testProductDetailOnSecondDomainHasCzechLocale(): void
     {
         $domain = $this->getContainer()->get(Domain::class);
         /* @var $domain \Shopsys\FrameworkBundle\Component\Domain\Domain */

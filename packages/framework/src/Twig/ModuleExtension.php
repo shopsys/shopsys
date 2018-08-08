@@ -17,18 +17,15 @@ class ModuleExtension extends Twig_Extension
     {
         $this->moduleFacade = $moduleFacade;
     }
-    
+
     public function getFunctions()
     {
         return [
             new Twig_SimpleFunction('isModuleEnabled', [$this, 'isModuleEnabled']),
         ];
     }
-
-    /**
-     * @param int $moduleName
-     */
-    public function isModuleEnabled($moduleName): string
+    
+    public function isModuleEnabled(int $moduleName): string
     {
         return $this->moduleFacade->isEnabled($moduleName);
     }

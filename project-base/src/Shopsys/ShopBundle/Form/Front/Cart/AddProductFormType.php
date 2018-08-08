@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints;
 
 class AddProductFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('productId', HiddenType::class, [
@@ -31,7 +31,7 @@ class AddProductFormType extends AbstractType
             ->add('add', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],

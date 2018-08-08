@@ -23,19 +23,14 @@ class SettingValueRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Setting\SettingValue[]
      */
-    public function getAllByDomainId($domainId): array
+    public function getAllByDomainId(int $domainId): array
     {
         return $this->getSettingValueRepository()->findBy(['domainId' => $domainId]);
     }
-
-    /**
-     * @param int $fromDomainId
-     * @param int $toDomainId
-     */
-    public function copyAllMultidomainSettings($fromDomainId, $toDomainId)
+    
+    public function copyAllMultidomainSettings(int $fromDomainId, int $toDomainId): void
     {
         $query = $this->em->createNativeQuery(
             'INSERT INTO setting_values (name, value, type, domain_id)

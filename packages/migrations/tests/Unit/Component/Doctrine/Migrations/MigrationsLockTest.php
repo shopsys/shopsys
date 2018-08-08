@@ -20,13 +20,13 @@ class MigrationsLockTest extends TestCase
      */
     private $migrationsLock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         copy(self::MIGRATION_LOCK_TEMPLATE, self::MIGRATION_LOCK);
         $this->migrationsLock = $this->createNewMigrationsLock();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unlink(self::MIGRATION_LOCK);
     }
@@ -36,7 +36,7 @@ class MigrationsLockTest extends TestCase
         return new MigrationsLock(self::MIGRATION_LOCK);
     }
 
-    public function testGetSkippedMigrationClasses()
+    public function testGetSkippedMigrationClasses(): void
     {
         $skippedMigrationClasses = $this->migrationsLock->getSkippedMigrationClasses();
 
@@ -44,7 +44,7 @@ class MigrationsLockTest extends TestCase
         $this->assertContains(Version20180101000002::class, $skippedMigrationClasses);
     }
 
-    public function testGetInstalledMigrationClasses()
+    public function testGetInstalledMigrationClasses(): void
     {
         $installedMigrationClasses = $this->migrationsLock->getOrderedInstalledMigrationClasses();
 
@@ -53,7 +53,7 @@ class MigrationsLockTest extends TestCase
         $this->assertContains(Version20180101000003::class, $installedMigrationClasses);
     }
 
-    public function testGetOrderedInstalledMigrationClasses()
+    public function testGetOrderedInstalledMigrationClasses(): void
     {
         $orderedMigrationClasses = $this->migrationsLock->getOrderedInstalledMigrationClasses();
 
@@ -66,7 +66,7 @@ class MigrationsLockTest extends TestCase
         );
     }
 
-    public function testSaveNewMigration()
+    public function testSaveNewMigration(): void
     {
         $newMigrationVersion = $this->createMigrationVersionMock(Version20180101000004::class);
 
@@ -78,7 +78,7 @@ class MigrationsLockTest extends TestCase
         $this->assertContains(Version20180101000004::class, $installedMigrationClasses);
     }
 
-    public function testSaveAlreadyInstalledMigration()
+    public function testSaveAlreadyInstalledMigration(): void
     {
         $alreadyInstalledMigrationVersion = $this->createMigrationVersionMock(Version20180101000001::class);
 

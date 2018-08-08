@@ -13,12 +13,8 @@ class DateTimeHelper
 
         return $todayMidnight;
     }
-
-    /**
-     * @param string $format
-     * @param string $time
-     */
-    public static function createFromFormat($format, $time): \DateTime
+    
+    public static function createFromFormat(string $format, string $time): \DateTime
     {
         $dateTime = DateTime::createFromFormat($format, $time);
 

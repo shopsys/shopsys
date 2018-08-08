@@ -85,7 +85,7 @@ class MailController extends AdminBaseController
         $this->personalDataAccessMail = $personalDataAccessMail;
         $this->personalDataExportMail = $personalDataExportMail;
     }
-    
+
     private function getOrderStatusVariablesLabels()
     {
         return [
@@ -108,7 +108,7 @@ class MailController extends AdminBaseController
             OrderMailService::VARIABLE_PAYMENT_INSTRUCTIONS => t('Payment instructions'),
         ];
     }
-    
+
     private function getRegistrationVariablesLabels()
     {
         return [
@@ -119,7 +119,7 @@ class MailController extends AdminBaseController
             RegistrationMailService::VARIABLE_LOGIN_PAGE => t('Link to the log in page'),
         ];
     }
-    
+
     private function getResetPasswordVariablesLabels()
     {
         return [
@@ -127,7 +127,7 @@ class MailController extends AdminBaseController
             ResetPasswordMail::VARIABLE_NEW_PASSWORD_URL => t('New password settings URL address'),
         ];
     }
-    
+
     private function getPersonalDataAccessVariablesLabels()
     {
         return [
@@ -136,7 +136,7 @@ class MailController extends AdminBaseController
             PersonalDataAccessMail::VARIABLE_URL => t('E-shop URL address'),
         ];
     }
-    
+
     private function getPersonalExportVariablesLabels()
     {
         return [
@@ -145,7 +145,7 @@ class MailController extends AdminBaseController
             PersonalDataExportMail::VARIABLE_URL => t('E-shop URL address'),
         ];
     }
-    
+
     private function getTemplateParameters()
     {
         $orderStatusesTemplateVariables = $this->orderMailService->getTemplateVariables();

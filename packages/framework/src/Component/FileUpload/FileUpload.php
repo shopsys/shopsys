@@ -46,16 +46,11 @@ class FileUpload
      * @var \League\Flysystem\FilesystemInterface
      */
     private $filesystem;
-
-    /**
-     * @param string $temporaryDir
-     * @param string $uploadedFileDir
-     * @param string $imageDir
-     */
+    
     public function __construct(
-        $temporaryDir,
-        $uploadedFileDir,
-        $imageDir,
+        string $temporaryDir,
+        string $uploadedFileDir,
+        string $imageDir,
         FileNamingConvention $fileNamingConvention,
         Filesystem $symfonyFilesystem,
         MountManager $mountManager,
@@ -81,11 +76,8 @@ class FileUpload
 
         return $temporaryFilename;
     }
-
-    /**
-     * @param string $filename
-     */
-    public function tryDeleteTemporaryFile($filename): bool
+    
+    public function tryDeleteTemporaryFile(string $filename): bool
     {
         if (!empty($filename)) {
             $filepath = $this->getTemporaryFilepath($filename);
@@ -97,19 +89,13 @@ class FileUpload
         }
         return true;
     }
-
-    /**
-     * @param string $filename
-     */
-    private function getTemporaryFilename($filename): string
+    
+    private function getTemporaryFilename(string $filename): string
     {
         return TransformString::safeFilename(uniqid('', true) . '__' . $filename);
     }
-
-    /**
-     * @param string $temporaryFilename
-     */
-    public function getTemporaryFilepath($temporaryFilename): string
+    
+    public function getTemporaryFilepath(string $temporaryFilename): string
     {
         return $this->getTemporaryDirectory() . '/' . TransformString::safeFilename($temporaryFilename);
     }
@@ -120,11 +106,9 @@ class FileUpload
     }
 
     /**
-     * @param string $isImage
-     * @param string $category
      * @param string|null $targetDirectory
      */
-    public function getUploadDirectory($isImage, $category, $targetDirectory): string
+    public function getUploadDirectory(string $isImage, string $category, ?string $targetDirectory): string
     {
         return ($isImage ? $this->imageDir : $this->uploadedFileDir)
             . $category
@@ -132,20 +116,14 @@ class FileUpload
     }
 
     /**
-     * @param string $filename
-     * @param bool $isImage
-     * @param string $category
      * @param string|null $targetDirectory
      */
-    private function getTargetFilepath($filename, $isImage, $category, $targetDirectory): string
+    private function getTargetFilepath(string $filename, bool $isImage, string $category, ?string $targetDirectory): string
     {
         return $this->getUploadDirectory($isImage, $category, $targetDirectory) . '/' . $filename;
     }
-
-    /**
-     * @param string $temporaryFilename
-     */
-    public function getOriginalFilenameByTemporary($temporaryFilename): string
+    
+    public function getOriginalFilenameByTemporary(string $temporaryFilename): string
     {
         $matches = [];
         if ($temporaryFilename && preg_match('/^.+?__(.+)$/', $temporaryFilename, $matches)) {
@@ -154,7 +132,7 @@ class FileUpload
         return $temporaryFilename;
     }
 
-    public function preFlushEntity(EntityFileUploadInterface $entity)
+    public function preFlushEntity(EntityFileUploadInterface $entity): void
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
         foreach ($filesForUpload as $key => $fileForUpload) {
@@ -163,7 +141,7 @@ class FileUpload
         }
     }
 
-    public function postFlushEntity(EntityFileUploadInterface $entity)
+    public function postFlushEntity(EntityFileUploadInterface $entity): void
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
         foreach ($filesForUpload as $fileForUpload) {

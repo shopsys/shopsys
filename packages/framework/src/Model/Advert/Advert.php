@@ -87,7 +87,7 @@ class Advert
         $this->hidden = $advert->hidden;
     }
 
-    public function edit(AdvertData $advert)
+    public function edit(AdvertData $advert): void
     {
         $this->domainId = $advert->domainId;
         $this->name = $advert->name;

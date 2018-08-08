@@ -20,7 +20,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
         $this->topProductFacade = $topProductFacade;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $topProductReferenceNamesOnDomain2 = [
             DemoProductDataFixture::PRODUCT_PREFIX . '14',
@@ -34,9 +34,8 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
 
     /**
      * @param string[] $productReferenceNames
-     * @param int $domainId
      */
-    private function createTopProducts(array $productReferenceNames, $domainId)
+    private function createTopProducts(array $productReferenceNames, int $domainId): void
     {
         $products = [];
         foreach ($productReferenceNames as $productReferenceName) {

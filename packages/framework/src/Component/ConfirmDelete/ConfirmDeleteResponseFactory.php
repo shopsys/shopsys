@@ -26,11 +26,9 @@ class ConfirmDeleteResponseFactory
     }
 
     /**
-     * @param string $message
-     * @param string $route
      * @param mixed $entityId
      */
-    public function createDeleteResponse($message, $route, $entityId): \Symfony\Component\HttpFoundation\Response
+    public function createDeleteResponse(string $message, string $route, $entityId): \Symfony\Component\HttpFoundation\Response
     {
         return $this->templating->renderResponse('@ShopsysFramework/Components/ConfirmDelete/directDelete.html.twig', [
             'message' => $message,
@@ -43,12 +41,10 @@ class ConfirmDeleteResponseFactory
     }
 
     /**
-     * @param string $message
-     * @param string $route
      * @param mixed $entityId
      * @param object[] $possibleReplacements
      */
-    public function createSetNewAndDeleteResponse($message, $route, $entityId, array $possibleReplacements): \Symfony\Component\HttpFoundation\Response
+    public function createSetNewAndDeleteResponse(string $message, string $route, $entityId, array $possibleReplacements): \Symfony\Component\HttpFoundation\Response
     {
         foreach ($possibleReplacements as $object) {
             if (!is_object($object) || !method_exists($object, 'getName') || !method_exists($object, 'getId')) {

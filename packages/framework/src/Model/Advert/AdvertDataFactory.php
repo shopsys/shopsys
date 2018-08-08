@@ -16,7 +16,7 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
         return $advertData;
     }
 
-    protected function fillFromAdvert(AdvertData $advertData, Advert $advert)
+    protected function fillFromAdvert(AdvertData $advertData, Advert $advert): void
     {
         $advertData->name = $advert->getName();
         $advertData->type = $advert->getType();

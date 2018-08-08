@@ -26,7 +26,7 @@ class AdvertDataFixture extends AbstractReferenceFixture
         $this->advertDataFactory = $advertDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $advertData = $this->advertDataFactory->create();
         $advertData->domainId = 1;

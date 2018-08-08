@@ -20,19 +20,13 @@ class CountryRepository
     {
         return $this->em->getRepository(Country::class);
     }
-
-    /**
-     * @param int $countryId
-     */
-    public function findById($countryId): ?\Shopsys\FrameworkBundle\Model\Country\Country
+    
+    public function findById(int $countryId): ?\Shopsys\FrameworkBundle\Model\Country\Country
     {
         return $this->getCountryRepository()->find($countryId);
     }
-
-    /**
-     * @param int $countryId
-     */
-    public function getById($countryId): \Shopsys\FrameworkBundle\Model\Country\Country
+    
+    public function getById(int $countryId): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $country = $this->findById($countryId);
 
@@ -44,10 +38,9 @@ class CountryRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Country\Country[]
      */
-    public function getAllByDomainId($domainId): array
+    public function getAllByDomainId(int $domainId): array
     {
         return $this->getCountryRepository()->findBy(['domainId' => $domainId], ['id' => 'asc']);
     }

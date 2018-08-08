@@ -19,7 +19,7 @@ class SubRequestListener
      */
     private $masterRequest;
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $this->masterRequest = $event->getRequest();
@@ -28,7 +28,7 @@ class SubRequestListener
         }
     }
 
-    private function fillSubRequestFromMasterRequest(Request $subRequest)
+    private function fillSubRequestFromMasterRequest(Request $subRequest): void
     {
         $subRequest->setMethod($this->masterRequest->getMethod());
         $subRequest->request = $this->masterRequest->request;
@@ -39,7 +39,7 @@ class SubRequestListener
         $subRequest->query->replace($subRequestQueryParameters);
     }
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             if ($this->redirectResponse !== null) {
@@ -50,7 +50,7 @@ class SubRequestListener
         }
     }
 
-    private function processSubResponse(Response $subResponse)
+    private function processSubResponse(Response $subResponse): void
     {
         if ($subResponse->isRedirection()) {
             if ($this->redirectResponse === null) {

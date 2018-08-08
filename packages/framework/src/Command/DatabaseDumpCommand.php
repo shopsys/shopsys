@@ -91,7 +91,7 @@ class DatabaseDumpCommand extends Command
 
         return proc_close($process);
     }
-    
+
     private function getDescriptorSpec()
     {
         return [

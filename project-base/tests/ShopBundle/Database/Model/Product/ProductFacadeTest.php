@@ -24,7 +24,7 @@ class ProductFacadeTest extends DatabaseTestCase
         $outOfStockAction,
         $calculatedHidden,
         $calculatedSellingDenied
-    ) {
+    ): void {
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
         $productData = $productDataFactory->create();
         $productData->hidden = $hidden;
@@ -104,7 +104,7 @@ class ProductFacadeTest extends DatabaseTestCase
         ];
     }
 
-    public function testEditMarkProductForVisibilityRecalculation()
+    public function testEditMarkProductForVisibilityRecalculation(): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         /* @var $product \Shopsys\FrameworkBundle\Model\Product\Product */

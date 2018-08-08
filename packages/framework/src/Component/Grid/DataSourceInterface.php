@@ -9,21 +9,16 @@ interface DataSourceInterface
 
     /**
      * @param int|null $limit
-     * @param int $page
      * @param string|null $orderSourceColumnName
-     * @param string $orderDirection
      */
     public function getPaginatedRows(
-        $limit = null,
-        $page = 1,
-        $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC
+        ?int $limit = null,
+        int $page = 1,
+        ?string $orderSourceColumnName = null,
+        string $orderDirection = self::ORDER_ASC
     ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-
-    /**
-     * @param int $rowId
-     */
-    public function getOneRow($rowId): array;
+    
+    public function getOneRow(int $rowId): array;
 
     public function getTotalRowsCount(): int;
 

@@ -42,7 +42,7 @@ class CronCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Runs background jobs. Should be executed periodically by system CRON every 5 minutes.')
@@ -50,7 +50,7 @@ class CronCommand extends Command
             ->addOption(self::OPTION_MODULE, null, InputOption::VALUE_OPTIONAL, 'Service ID');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $optionList = $input->getOption(self::OPTION_LIST);
         if ($optionList === true) {
@@ -60,7 +60,7 @@ class CronCommand extends Command
         }
     }
 
-    private function listAllCronModulesSortedByServiceId(OutputInterface $output, CronFacade $cronFacade)
+    private function listAllCronModulesSortedByServiceId(OutputInterface $output, CronFacade $cronFacade): void
     {
         $cronModuleConfigs = $cronFacade->getAll();
 
@@ -73,7 +73,7 @@ class CronCommand extends Command
         }
     }
 
-    private function runCron(InputInterface $input, CronFacade $cronFacade, MutexFactory $mutexFactory)
+    private function runCron(InputInterface $input, CronFacade $cronFacade, MutexFactory $mutexFactory): void
     {
         $requestedModuleServiceId = $input->getOption(self::OPTION_MODULE);
         $runAllModules = $requestedModuleServiceId === null;

@@ -24,19 +24,15 @@ class LocalizationExtension extends \Twig_Extension
         $this->assetPackages = $assetPackages;
         $this->localization = $localization;
     }
-    
+
     public function getFunctions()
     {
         return [
             new Twig_SimpleFunction('localeFlag', [$this, 'getLocaleFlagHtml'], ['is_safe' => ['html']]),
         ];
     }
-
-    /**
-     * @param string $locale
-     * @param bool $showTitle
-     */
-    public function getLocaleFlagHtml($locale, $showTitle = true): string
+    
+    public function getLocaleFlagHtml(string $locale, bool $showTitle = true): string
     {
         $src = $this->assetPackages->getUrl('assets/admin/images/flags/' . $locale . '.png');
 
@@ -52,11 +48,8 @@ class LocalizationExtension extends \Twig_Extension
 
         return $html;
     }
-
-    /**
-     * @param string $locale
-     */
-    private function getTitle($locale): string
+    
+    private function getTitle(string $locale): string
     {
         try {
             $title = $this->localization->getLanguageName($locale);

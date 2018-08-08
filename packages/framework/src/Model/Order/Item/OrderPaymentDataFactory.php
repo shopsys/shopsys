@@ -17,7 +17,7 @@ class OrderPaymentDataFactory implements OrderPaymentDataFactoryInterface
         return $orderPaymentData;
     }
 
-    protected function fillFromOrderPayment(OrderPaymentData $orderPaymentData, OrderPayment $orderPayment)
+    protected function fillFromOrderPayment(OrderPaymentData $orderPaymentData, OrderPayment $orderPayment): void
     {
         $orderPaymentData->name = $orderPayment->getName();
         $orderPaymentData->priceWithVat = $orderPayment->getPriceWithVat();

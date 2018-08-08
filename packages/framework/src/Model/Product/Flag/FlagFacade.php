@@ -30,11 +30,8 @@ class FlagFacade
         $this->flagRepository = $flagRepository;
         $this->flagService = $flagService;
     }
-
-    /**
-     * @param int $flagId
-     */
-    public function getById($flagId): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+    
+    public function getById(int $flagId): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         return $this->flagRepository->getById($flagId);
     }
@@ -47,11 +44,8 @@ class FlagFacade
 
         return $flag;
     }
-
-    /**
-     * @param int $flagId
-     */
-    public function edit($flagId, FlagData $flagData): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+    
+    public function edit(int $flagId, FlagData $flagData): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         $flag = $this->flagRepository->getById($flagId);
         $this->flagService->edit($flag, $flagData);
@@ -59,11 +53,8 @@ class FlagFacade
 
         return $flag;
     }
-
-    /**
-     * @param int $flagId
-     */
-    public function deleteById($flagId)
+    
+    public function deleteById(int $flagId): void
     {
         $flag = $this->flagRepository->getById($flagId);
 

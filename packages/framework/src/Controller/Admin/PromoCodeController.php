@@ -54,9 +54,8 @@ class PromoCodeController extends AdminBaseController
     /**
      * @Route("/promo-code/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $code = $this->promoCodeFacade->getById($id)->getCode();

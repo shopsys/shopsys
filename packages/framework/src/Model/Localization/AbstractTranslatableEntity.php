@@ -21,11 +21,8 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
     {
         return $this->currentLocale;
     }
-
-    /**
-     * @param string $locale
-     */
-    protected function findTranslation($locale): ?\Prezent\Doctrine\Translatable\TranslationInterface
+    
+    protected function findTranslation(string $locale): ?\Prezent\Doctrine\Translatable\TranslationInterface
     {
         foreach ($this->getTranslations() as $translation) {
             if ($translation->getLocale() === $locale) {
@@ -39,7 +36,7 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
     /**
      * @param string|null $locale
      */
-    protected function translation($locale = null): \Prezent\Doctrine\Translatable\TranslationInterface
+    protected function translation(?string $locale = null): \Prezent\Doctrine\Translatable\TranslationInterface
     {
         if ($locale === null) {
             $locale = $this->getCurrentLocale();
@@ -70,5 +67,5 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
     /**
      * return \Prezent\Doctrine\Translatable\TranslationInterface
      */
-    abstract protected function createTranslation();
+    abstract protected function createTranslation(): void;
 }

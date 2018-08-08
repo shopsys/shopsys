@@ -10,12 +10,9 @@ class QueryBuilderService
     const REQUIRED_ALIASES_COUNT = 1;
 
     /**
-     * @param string $class
-     * @param string $alias
-     * @param string $condition
      * @return \Doctrine\ORM\QueryBuilder $queryBuilder
      */
-    public function addOrExtendJoin(QueryBuilder $queryBuilder, $class, $alias, $condition): \Doctrine\ORM\QueryBuilder
+    public function addOrExtendJoin(QueryBuilder $queryBuilder, string $class, string $alias, string $condition): \Doctrine\ORM\QueryBuilder
     {
         $rootAlias = $this->getRootAlias($queryBuilder);
 

@@ -9,7 +9,7 @@ class Version20180409055551 extends AbstractMigration
 {
     use MultidomainMigrationTrait;
 
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('UPDATE setting_values SET name = \'personalDataDisplaySiteContent\' WHERE name = \'personalDataSiteContent\'');
 
@@ -28,7 +28,7 @@ class Version20180409055551 extends AbstractMigration
         }
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

@@ -34,7 +34,7 @@ class CategoryVisibilityRepository
         $this->categoryVisibilityRecalculationScheduler = $categoryVisibilityRecalculationScheduler;
     }
 
-    public function refreshCategoriesVisibility()
+    public function refreshCategoriesVisibility(): void
     {
         $domains = $this->domain->getAll();
         foreach ($domains as $domainConfig) {
@@ -42,7 +42,7 @@ class CategoryVisibilityRepository
         }
     }
 
-    private function refreshCategoriesVisibilityOnDomain(DomainConfig $domainConfig)
+    private function refreshCategoriesVisibilityOnDomain(DomainConfig $domainConfig): void
     {
         $this->setRootCategoryVisibleOnDomain($domainConfig);
 
@@ -53,7 +53,7 @@ class CategoryVisibilityRepository
         }
     }
 
-    private function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig)
+    private function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig): void
     {
         $this->em->getConnection()->executeUpdate(
             'UPDATE category_domains AS cd
@@ -82,11 +82,8 @@ class CategoryVisibilityRepository
             ]
         );
     }
-
-    /**
-     * @param int $level
-     */
-    private function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level)
+    
+    private function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, int $level): void
     {
         $this->em->getConnection()->executeUpdate(
             'UPDATE category_domains AS cd
@@ -113,7 +110,7 @@ class CategoryVisibilityRepository
         );
     }
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

@@ -27,25 +27,16 @@ class PerformanceTestSampleQualifier
      * @var int
      */
     private $queryCountCritical;
-
-    /**
-     * @param int $durationWarning
-     * @param int $durationCritical
-     * @param int $queryCountWarning
-     * @param int $queryCountCritical
-     */
-    public function __construct($durationWarning, $durationCritical, $queryCountWarning, $queryCountCritical)
+    
+    public function __construct(int $durationWarning, int $durationCritical, int $queryCountWarning, int $queryCountCritical)
     {
         $this->durationWarning = $durationWarning;
         $this->durationCritical = $durationCritical;
         $this->queryCountWarning = $queryCountWarning;
         $this->queryCountCritical = $queryCountCritical;
     }
-
-    /**
-     * @param float $duration
-     */
-    public function getStatusForDuration($duration): int
+    
+    public function getStatusForDuration(float $duration): int
     {
         if ($duration >= $this->durationCritical) {
             return self::STATUS_CRITICAL;
@@ -55,11 +46,8 @@ class PerformanceTestSampleQualifier
 
         return self::STATUS_OK;
     }
-
-    /**
-     * @param int $queryCount
-     */
-    public function getStatusForQueryCount($queryCount): int
+    
+    public function getStatusForQueryCount(int $queryCount): int
     {
         if ($queryCount >= $this->queryCountCritical) {
             return self::STATUS_CRITICAL;

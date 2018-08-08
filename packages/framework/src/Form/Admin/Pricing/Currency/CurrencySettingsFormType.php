@@ -22,8 +22,8 @@ class CurrencySettingsFormType extends AbstractType
     {
         $this->currencyFacade = $currencyFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('defaultCurrency', ChoiceType::class, [
@@ -51,7 +51,7 @@ class CurrencySettingsFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],

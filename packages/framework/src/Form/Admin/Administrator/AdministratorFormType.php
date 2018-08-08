@@ -22,8 +22,8 @@ class AdministratorFormType extends AbstractType
 {
     const SCENARIO_CREATE = 'create';
     const SCENARIO_EDIT = 'edit';
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
             'label' => t('Settings'),
@@ -89,10 +89,9 @@ class AdministratorFormType extends AbstractType
     }
 
     /**
-     * @param string $scenario
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getFirstPasswordConstraints($scenario): array
+    private function getFirstPasswordConstraints(string $scenario): array
     {
         $constraints = [
             new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer then {{ limit }} characters']),
@@ -107,7 +106,7 @@ class AdministratorFormType extends AbstractType
         return $constraints;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['administrator', 'scenario'])

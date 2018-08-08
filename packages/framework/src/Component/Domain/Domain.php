@@ -98,11 +98,8 @@ class Domain implements DomainIdsProviderInterface
     {
         return $this->domainConfigs;
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function getDomainConfigById($domainId): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
+    
+    public function getDomainConfigById(int $domainId): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
     {
         foreach ($this->domainConfigs as $domainConfig) {
             if ($domainId === $domainConfig->getId()) {
@@ -112,16 +109,13 @@ class Domain implements DomainIdsProviderInterface
 
         throw new \Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException();
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function switchDomainById($domainId)
+    
+    public function switchDomainById(int $domainId): void
     {
         $this->currentDomainConfig = $this->getDomainConfigById($domainId);
     }
 
-    public function switchDomainByRequest(Request $request)
+    public function switchDomainByRequest(Request $request): void
     {
         // Request::getBasePath() never contains script file name (/index.php)
         $url = $request->getSchemeAndHttpHost() . $request->getBasePath();

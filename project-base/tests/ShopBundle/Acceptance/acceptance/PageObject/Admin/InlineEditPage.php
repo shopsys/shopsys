@@ -9,22 +9,19 @@ class InlineEditPage extends AbstractPage
     /**
      * @param int|null $rowId
      */
-    public function startInlineEdit($rowId)
+    public function startInlineEdit(?int $rowId): void
     {
         $this->tester->clickByCss($this->getRowCssLocator($rowId) . ' .js-inline-edit-edit');
         $this->tester->waitForAjax();
     }
 
-    public function createNewRow()
+    public function createNewRow(): void
     {
         $this->tester->clickByCss('.js-inline-edit-add');
         $this->tester->waitForAjax();
     }
-
-    /**
-     * @param int $rowId
-     */
-    public function delete($rowId)
+    
+    public function delete(int $rowId): void
     {
         $this->tester->clickByCss($this->getRowCssLocator($rowId) . ' .in-icon--delete');
         $this->tester->wait(1); // Pop-up animation
@@ -35,10 +32,8 @@ class InlineEditPage extends AbstractPage
 
     /**
      * @param int|null $rowId
-     * @param string $columnName
-     * @param string $value
      */
-    public function changeInputValue($rowId, $columnName, $value)
+    public function changeInputValue(?int $rowId, string $columnName, string $value): void
     {
         $this->tester->fillFieldByCss(
             $this->getRowCssLocator($rowId) . ' .js-grid-column-' . $columnName . ' input',
@@ -49,7 +44,7 @@ class InlineEditPage extends AbstractPage
     /**
      * @param int|null $rowId
      */
-    public function save($rowId)
+    public function save(?int $rowId): void
     {
         $this->tester->clickByCss($this->getRowCssLocator($rowId) . ' .js-inline-edit-save');
         $this->tester->waitForAjax();
@@ -73,18 +68,13 @@ class InlineEditPage extends AbstractPage
 
     /**
      * @param int|null $rowId
-     * @param string $columnName
-     * @param string $text
      */
-    public function assertSeeInColumn($rowId, $columnName, $text)
+    public function assertSeeInColumn(?int $rowId, string $columnName, string $text): void
     {
         $this->tester->seeInCss($text, $this->getRowCssLocator($rowId) . ' .js-grid-column-' . $columnName);
     }
-
-    /**
-     * @param int $rowId
-     */
-    public function assertDontSeeRow($rowId)
+    
+    public function assertDontSeeRow(int $rowId): void
     {
         $this->tester->dontSeeElement(['css' => $this->getRowCssLocator($rowId)]);
     }
@@ -92,7 +82,7 @@ class InlineEditPage extends AbstractPage
     /**
      * @param int|null $rowId
      */
-    private function getRowCssLocator($rowId): string
+    private function getRowCssLocator(?int $rowId): string
     {
         if ($rowId === null) {
             return '.js-grid-row:not([data-inline-edit-row-id])';

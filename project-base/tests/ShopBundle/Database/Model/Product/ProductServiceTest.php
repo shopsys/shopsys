@@ -16,7 +16,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class ProductServiceTest extends DatabaseTestCase
 {
-    public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithoutVat()
+    public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithoutVat(): void
     {
         $productService = $this->getContainer()->get(ProductService::class);
         /* @var $productService \Shopsys\FrameworkBundle\Model\Product\ProductService */
@@ -47,7 +47,7 @@ class ProductServiceTest extends DatabaseTestCase
         $this->assertSame('1052.173913', (string)$productManualInputPrice->getInputPrice());
     }
 
-    public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithVat()
+    public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithVat(): void
     {
         $productService = $this->getContainer()->get(ProductService::class);
         /* @var $productService \Shopsys\FrameworkBundle\Model\Product\ProductService */

@@ -45,10 +45,9 @@ class Setting
     }
 
     /**
-     * @param string $key
      * @return \DateTime|string|int|float|bool|null
      */
-    public function get($key)
+    public function get(string $key)
     {
         $this->loadDomainValues(SettingValue::DOMAIN_ID_COMMON);
 
@@ -63,11 +62,9 @@ class Setting
     }
 
     /**
-     * @param string $key
-     * @param int $domainId
      * @return \DateTime|string|int|float|bool|null
      */
-    public function getForDomain($key, $domainId)
+    public function getForDomain(string $key, int $domainId)
     {
         $this->loadDomainValues($domainId);
 
@@ -82,10 +79,9 @@ class Setting
     }
 
     /**
-     * @param string $key
      * @param \DateTime|string|int|float|bool|null $value
      */
-    public function set($key, $value)
+    public function set(string $key, $value): void
     {
         $this->loadDomainValues(SettingValue::DOMAIN_ID_COMMON);
 
@@ -101,11 +97,10 @@ class Setting
     }
 
     /**
-     * @param string $key
      * @param \DateTime|string|int|float|bool|null $value
      * @param int $domainId
      */
-    public function setForDomain($key, $value, $domainId)
+    public function setForDomain(string $key, $value, $domainId): void
     {
         $this->loadDomainValues($domainId);
 
@@ -119,11 +114,8 @@ class Setting
             throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException($message);
         }
     }
-
-    /**
-     * @param int $domainId
-     */
-    private function loadDomainValues($domainId)
+    
+    private function loadDomainValues(int $domainId): void
     {
         if ($domainId === null) {
             $message = 'Cannot load setting value for null domain ID';
@@ -138,7 +130,7 @@ class Setting
         }
     }
 
-    public function clearCache()
+    public function clearCache(): void
     {
         $this->values = [];
     }

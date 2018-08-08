@@ -14,7 +14,7 @@ class PluginDataFixtureFacade
         $this->pluginDataFixtureRegistry = $pluginDataFixtureRegistry;
     }
 
-    public function loadAll()
+    public function loadAll(): void
     {
         $pluginDataFixtures = $this->pluginDataFixtureRegistry->getDataFixtures();
         foreach ($pluginDataFixtures as $pluginDataFixture) {

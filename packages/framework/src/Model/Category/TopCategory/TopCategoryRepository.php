@@ -30,19 +30,17 @@ class TopCategoryRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory[]
      */
-    public function getAllByDomainId($domainId): array
+    public function getAllByDomainId(int $domainId): array
     {
         return $this->getTopCategoryRepository()->findBy(['domainId' => $domainId], ['position' => 'ASC']);
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory[]
      */
-    public function getVisibleByDomainId($domainId): array
+    public function getVisibleByDomainId(int $domainId): array
     {
         return $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainId)
             ->select('tc')

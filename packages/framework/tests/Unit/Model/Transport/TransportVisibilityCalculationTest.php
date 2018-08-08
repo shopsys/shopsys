@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
 
 class TransportVisibilityCalculationTest extends TestCase
 {
-    public function testIsVisibleWhenIndepentlyInvisible()
+    public function testIsVisibleWhenIndepentlyInvisible(): void
     {
         $domainId = 1;
         $transportMock = $this->createMock(Transport::class);
@@ -38,7 +38,7 @@ class TransportVisibilityCalculationTest extends TestCase
         $this->assertFalse($transportVisibilityCalculation->isVisible($transportMock, [], $domainId));
     }
 
-    public function testIsVisibleWithHiddenPayment()
+    public function testIsVisibleWithHiddenPayment(): void
     {
         $domainId = 1;
         $transportMock = $this->createMock(Transport::class);
@@ -72,7 +72,7 @@ class TransportVisibilityCalculationTest extends TestCase
         $this->assertFalse($transportVisibilityCalculation->isVisible($transportMock, [$paymentMock], $domainId));
     }
 
-    public function testIsVisibleWithoutPayment()
+    public function testIsVisibleWithoutPayment(): void
     {
         $domainId = 1;
         $transportMock = $this->createMock(Transport::class);
@@ -110,7 +110,7 @@ class TransportVisibilityCalculationTest extends TestCase
         $this->assertFalse($transportVisibilityCalculation->isVisible($transportMock, [$paymentMock], $domainId));
     }
 
-    public function testIsVisibleWithVisiblePayment()
+    public function testIsVisibleWithVisiblePayment(): void
     {
         $domainId = 1;
         $transportMock = $this->createMock(Transport::class);
@@ -148,7 +148,7 @@ class TransportVisibilityCalculationTest extends TestCase
         $this->assertTrue($transportVisibilityCalculation->isVisible($transportMock, [$paymentMock], $domainId));
     }
 
-    public function testFilterVisible()
+    public function testFilterVisible(): void
     {
         $domainId = 1;
         $transportHiddenMock = $this->createMock(Transport::class);

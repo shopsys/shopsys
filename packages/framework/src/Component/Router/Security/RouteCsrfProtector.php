@@ -42,7 +42,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
         if ($this->isProtected($event)) {
             $request = $event->getRequest();
@@ -54,28 +54,18 @@ class RouteCsrfProtector implements EventSubscriberInterface
             }
         }
     }
-
-    /**
-     * @param string $routeName
-     */
-    public function getCsrfTokenId($routeName): string
+    
+    public function getCsrfTokenId(string $routeName): string
     {
         return self::CSRF_TOKEN_ID_PREFIX . $routeName;
     }
-
-    /**
-     * @param string $routeName
-     */
-    public function getCsrfTokenByRoute($routeName): string
+    
+    public function getCsrfTokenByRoute(string $routeName): string
     {
         return $this->tokenManager->getToken($this->getCsrfTokenId($routeName))->getValue();
     }
-
-    /**
-     * @param string $routeName
-     * @param string $csrfToken
-     */
-    private function isCsrfTokenValid($routeName, $csrfToken): bool
+    
+    private function isCsrfTokenValid(string $routeName, string $csrfToken): bool
     {
         $token = new CsrfToken($this->getCsrfTokenId($routeName), $csrfToken);
 

@@ -40,11 +40,8 @@ class OrderStatus extends AbstractTranslatableEntity
      * @ORM\Column(type="integer")
      */
     protected $type;
-
-    /**
-     * @param int $type
-     */
-    public function __construct(OrderStatusData $orderStatusData, $type)
+    
+    public function __construct(OrderStatusData $orderStatusData, int $type)
     {
         $this->translations = new ArrayCollection();
         $this->setType($type);
@@ -59,12 +56,12 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @param string|null $locale
      */
-    public function getName($locale = null): string
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
 
-    protected function setTranslations(OrderStatusData $orderStatusData)
+    protected function setTranslations(OrderStatusData $orderStatusData): void
     {
         foreach ($orderStatusData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -80,11 +77,8 @@ class OrderStatus extends AbstractTranslatableEntity
     {
         return $this->type;
     }
-
-    /**
-     * @param int $type
-     */
-    protected function setType($type)
+    
+    protected function setType(int $type): void
     {
         if (in_array($type, [
             self::TYPE_NEW,
@@ -98,7 +92,7 @@ class OrderStatus extends AbstractTranslatableEntity
         }
     }
 
-    public function edit(OrderStatusData $orderStatusData)
+    public function edit(OrderStatusData $orderStatusData): void
     {
         $this->setTranslations($orderStatusData);
     }

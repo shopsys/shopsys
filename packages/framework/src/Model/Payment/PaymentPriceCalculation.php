@@ -26,15 +26,12 @@ class PaymentPriceCalculation
         $this->pricingSetting = $pricingSetting;
         $this->basePriceCalculation = $basePriceCalculation;
     }
-
-    /**
-     * @param int $domainId
-     */
+    
     public function calculatePrice(
         Payment $payment,
         Currency $currency,
         Price $productsPrice,
-        $domainId
+        int $domainId
     ): \Shopsys\FrameworkBundle\Model\Pricing\Price {
         if ($this->isFree($productsPrice, $domainId)) {
             return new Price(0, 0);
@@ -53,11 +50,8 @@ class PaymentPriceCalculation
             $payment->getVat()
         );
     }
-
-    /**
-     * @param int $domainId
-     */
-    private function isFree(Price $productsPrice, $domainId): bool
+    
+    private function isFree(Price $productsPrice, int $domainId): bool
     {
         $freeTransportAndPaymentPriceLimit = $this->pricingSetting->getFreeTransportAndPaymentPriceLimit($domainId);
 
@@ -70,14 +64,13 @@ class PaymentPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
     public function getCalculatedPricesIndexedByPaymentId(
         array $payments,
         Currency $currency,
         Price $productsPrice,
-        $domainId
+        int $domainId
     ): array {
         $paymentsPricesByPaymentId = [];
         foreach ($payments as $payment) {

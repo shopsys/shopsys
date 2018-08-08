@@ -28,11 +28,8 @@ class BrandTranslation extends AbstractTranslation
     {
         return $this->description;
     }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }

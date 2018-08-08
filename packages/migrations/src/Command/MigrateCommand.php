@@ -38,7 +38,7 @@ class MigrateCommand extends AbstractCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription(
@@ -46,10 +46,10 @@ class MigrateCommand extends AbstractCommand
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         try {
-            $this->em->transactional(function () use ($output) {
+            $this->em->transactional(function () use ($output): void {
                 $this->executeDoctrineMigrateCommand($output);
 
                 $output->writeln('');
@@ -65,7 +65,7 @@ class MigrateCommand extends AbstractCommand
         $this->migrationsLock->saveNewMigrations($migrationVersions);
     }
 
-    private function executeDoctrineMigrateCommand(OutputInterface $output)
+    private function executeDoctrineMigrateCommand(OutputInterface $output): void
     {
         $doctrineMigrateCommand = $this->getApplication()->find('doctrine:migrations:migrate');
         $arguments = [
@@ -84,7 +84,7 @@ class MigrateCommand extends AbstractCommand
         }
     }
 
-    private function executeCheckSchemaCommand(OutputInterface $output)
+    private function executeCheckSchemaCommand(OutputInterface $output): void
     {
         $checkSchemaCommand = $this->getApplication()->find('shopsys:migrations:check-schema');
         $arguments = [

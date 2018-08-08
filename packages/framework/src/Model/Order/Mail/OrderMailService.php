@@ -148,7 +148,7 @@ class OrderMailService
             self::VARIABLE_DATE => $this->getFormattedDateTime($order),
         ];
     }
-    
+
     public function getTemplateVariables()
     {
         return [

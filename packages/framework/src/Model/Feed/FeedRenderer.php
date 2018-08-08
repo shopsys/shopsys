@@ -38,7 +38,7 @@ class FeedRenderer
     {
         return $this->getRenderedBlock('item', ['item' => $item, 'domainConfig' => $domainConfig]);
     }
-    
+
     private function getRenderedBlock(string $name, array $parameters): string
     {
         if (!$this->template->hasBlock($name)) {

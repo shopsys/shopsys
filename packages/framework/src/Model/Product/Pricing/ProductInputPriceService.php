@@ -26,14 +26,13 @@ class ProductInputPriceService
     }
 
     /**
-     * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $pricingGroups
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[] $manualInputPrices
      * @return string[]
      */
     public function getManualInputPricesDataIndexedByPricingGroupId(
         Product $product,
-        $inputPriceType,
+        int $inputPriceType,
         array $pricingGroups,
         array $manualInputPrices
     ): array {
@@ -65,10 +64,9 @@ class ProductInputPriceService
     }
 
     /**
-     * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[] $manualInputPricesInDefaultCurrency
      */
-    public function getInputPrice(Product $product, $inputPriceType, array $manualInputPricesInDefaultCurrency): ?string
+    public function getInputPrice(Product $product, int $inputPriceType, array $manualInputPricesInDefaultCurrency): ?string
     {
         if ($product->getPriceCalculationType() === Product::PRICE_CALCULATION_TYPE_AUTO) {
             return $product->getPrice();

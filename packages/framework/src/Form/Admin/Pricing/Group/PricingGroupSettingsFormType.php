@@ -21,8 +21,8 @@ class PricingGroupSettingsFormType extends AbstractType
     {
         $this->pricingGroupFacade = $pricingGroupFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $pricingGroups = $this->pricingGroupFacade->getByDomainId($options['domain_id']);
 
@@ -39,7 +39,7 @@ class PricingGroupSettingsFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('domain_id')

@@ -18,7 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 
 class ProductInputPriceServiceTest extends TestCase
 {
-    public function testGetManualInputPricesDataWithManualCalculationType()
+    public function testGetManualInputPricesDataWithManualCalculationType(): void
     {
         $productData = new ProductData();
         $vatData = new VatData();
@@ -67,7 +67,7 @@ class ProductInputPriceServiceTest extends TestCase
         $this->assertSame('2000', $manualInputPricesData[$pricingGroups[1]->getId()]);
     }
 
-    public function testGetManualInputPricesDataWithAutoCalculationType()
+    public function testGetManualInputPricesDataWithAutoCalculationType(): void
     {
         $productData = new ProductData();
         $vatData = new VatData();
@@ -124,7 +124,7 @@ class ProductInputPriceServiceTest extends TestCase
         $this->assertSame('2000', (string)$manualInputPricesData[$pricingGroups[1]->getId()]);
     }
 
-    public function testGetInputPriceWithManualCalculationType()
+    public function testGetInputPriceWithManualCalculationType(): void
     {
         $productData = new ProductData();
         $vatData = new VatData();
@@ -178,7 +178,7 @@ class ProductInputPriceServiceTest extends TestCase
         $this->assertSame('2000', (string)$inputPrice);
     }
 
-    public function testGetInputPriceWithAutoCalculationType()
+    public function testGetInputPriceWithAutoCalculationType(): void
     {
         $productData = new ProductData();
         $vatData = new VatData();

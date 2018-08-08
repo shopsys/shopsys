@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory;
 
 class OrderItemPriceCalculationTest extends TestCase
 {
-    public function testCalculatePriceWithoutVat()
+    public function testCalculatePriceWithoutVat(): void
     {
         $priceCalculationMock = $this->getMockBuilder(PriceCalculation::class)
             ->setMethods(['getVatAmountByPriceWithVat'])
@@ -30,7 +30,7 @@ class OrderItemPriceCalculationTest extends TestCase
         $this->assertSame(round(1000 - 100, 6), round($priceWithoutVat, 6));
     }
 
-    public function testCalculateTotalPrice()
+    public function testCalculateTotalPrice(): void
     {
         $priceCalculationMock = $this->getMockBuilder(PriceCalculation::class)
             ->setMethods(['getVatAmountByPriceWithVat'])

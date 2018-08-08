@@ -8,7 +8,7 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class AdvancedSearchProductFilterTranslationTest extends FunctionalTestCase
 {
-    public function testTranslateFilterName()
+    public function testTranslateFilterName(): void
     {
         $advancedSearchConfig = $this->getContainer()->get(ProductAdvancedSearchConfig::class);
         /* @var $advancedSearchConfig \Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig */
@@ -20,7 +20,7 @@ class AdvancedSearchProductFilterTranslationTest extends FunctionalTestCase
         }
     }
 
-    public function testTranslateFilterNameNotFoundException()
+    public function testTranslateFilterNameNotFoundException(): void
     {
         $advancedSearchTranslator = new AdvancedSearchProductFilterTranslation();
 

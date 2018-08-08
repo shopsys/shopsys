@@ -19,7 +19,7 @@ class HashGeneratorTest extends TestCase
     /**
      * @dataProvider hashLengthProvider
      */
-    public function testGenerateHash($length)
+    public function testGenerateHash($length): void
     {
         $hashGererator = new HashGenerator();
 

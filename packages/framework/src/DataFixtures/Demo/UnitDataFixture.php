@@ -39,7 +39,7 @@ class UnitDataFixture extends AbstractReferenceFixture
         $this->setting = $setting;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $unitData = $this->unitDataFactory->create();
 
@@ -55,7 +55,7 @@ class UnitDataFixture extends AbstractReferenceFixture
     /**
      * @param string|null $referenceName
      */
-    private function createUnit(UnitData $unitData, $referenceName = null)
+    private function createUnit(UnitData $unitData, ?string $referenceName = null): void
     {
         $unit = $this->unitFacade->create($unitData);
         if ($referenceName !== null) {

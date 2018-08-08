@@ -44,12 +44,9 @@ class ImageExtension extends Twig_Extension
      * @var \Symfony\Component\Templating\EngineInterface
      */
     private $templating;
-
-    /**
-     * @param string $frontDesignImageUrlPrefix
-     */
+    
     public function __construct(
-        $frontDesignImageUrlPrefix,
+        string $frontDesignImageUrlPrefix,
         ContainerInterface $container,
         Domain $domain,
         ImageLocator $imageLocator,
@@ -63,7 +60,7 @@ class ImageExtension extends Twig_Extension
         $this->imageFacade = $imageFacade;
         $this->templating = $templating;
     }
-    
+
     public function getFunctions()
     {
         return [
@@ -105,11 +102,10 @@ class ImageExtension extends Twig_Extension
     }
 
     /**
-     * @param Object $entity
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getImages($entity, $type = null): array
+    public function getImages(Object $entity, ?string $type = null): array
     {
         return $this->imageFacade->getImagesByEntityIndexedById($entity, $type);
     }
@@ -149,11 +145,10 @@ class ImageExtension extends Twig_Extension
     }
 
     /**
-     * @param string $entityName
      * @param string|null $type
      * @param string|null $sizeName
      */
-    private function getImageCssClass($entityName, $type, $sizeName): string
+    private function getImageCssClass(string $entityName, ?string $type, ?string $sizeName): string
     {
         $allClassParts = [
             'image',
@@ -170,8 +165,8 @@ class ImageExtension extends Twig_Extension
     {
         return 'image_extension';
     }
-    
-    private function preventDefault(array &$attributes)
+
+    private function preventDefault(array &$attributes): void
     {
         Utils::setArrayDefaultValue($attributes, 'type');
         Utils::setArrayDefaultValue($attributes, 'size');

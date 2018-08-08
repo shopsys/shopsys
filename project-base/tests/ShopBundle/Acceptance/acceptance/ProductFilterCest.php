@@ -12,7 +12,7 @@ class ProductFilterCest
         AcceptanceTester $me,
         ProductFilterPage $productFilterPage,
         ProductListPage $productListPage
-    ) {
+    ): void {
         $me->wantTo('test all product filters');
         $me->amOnPage('/tv-audio/');
         $productListPage->assertProductsTotalCount(28);

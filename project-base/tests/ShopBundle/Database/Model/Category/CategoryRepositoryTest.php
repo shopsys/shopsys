@@ -13,7 +13,7 @@ class CategoryRepositoryTest extends DatabaseTestCase
     const FIRST_DOMAIN_ID = 1;
     const SECOND_DOMAIN_ID = 2;
 
-    public function testDoNotGetCategoriesWithoutVisibleChildren()
+    public function testDoNotGetCategoriesWithoutVisibleChildren(): void
     {
         $categoryFacade = $this->getContainer()->get(CategoryFacade::class);
         /* @var $categoryFacade \Shopsys\FrameworkBundle\Model\Category\CategoryFacade */
@@ -43,7 +43,7 @@ class CategoryRepositoryTest extends DatabaseTestCase
         $this->assertCount(0, $categoriesWithVisibleChildren);
     }
 
-    public function testGetCategoriesWithAtLeastOneVisibleChild()
+    public function testGetCategoriesWithAtLeastOneVisibleChild(): void
     {
         $categoryFacade = $this->getContainer()->get(CategoryFacade::class);
         /* @var $categoryFacade \Shopsys\FrameworkBundle\Model\Category\CategoryFacade */

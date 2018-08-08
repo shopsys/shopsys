@@ -15,7 +15,7 @@ class PaymentImageUploadCest
 
     const TEST_IMAGE_NAME = 'paymentTestImage.png';
 
-    public function testSuccessfulImageUpload(AcceptanceTester $me, EntityEditPage $entityEditPage, LoginPage $loginPage)
+    public function testSuccessfulImageUpload(AcceptanceTester $me, EntityEditPage $entityEditPage, LoginPage $loginPage): void
     {
         $me->wantTo('Upload an image in admin payment edit page');
         $loginPage->loginAsAdmin();

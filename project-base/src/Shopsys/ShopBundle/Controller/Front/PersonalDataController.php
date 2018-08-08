@@ -138,11 +138,8 @@ class PersonalDataController extends FrontBaseController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-     * @param string $hash
-     */
-    public function accessDisplayAction($hash)
+    
+    public function accessDisplayAction(string $hash)
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,

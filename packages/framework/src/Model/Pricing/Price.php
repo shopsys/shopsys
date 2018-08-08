@@ -18,12 +18,8 @@ class Price
      * @var string
      */
     private $vatAmount;
-
-    /**
-     * @param string $priceWithoutVat
-     * @param string $priceWithVat
-     */
-    public function __construct($priceWithoutVat, $priceWithVat)
+    
+    public function __construct(string $priceWithoutVat, string $priceWithVat)
     {
         $this->priceWithoutVat = $priceWithoutVat;
         $this->priceWithVat = $priceWithVat;

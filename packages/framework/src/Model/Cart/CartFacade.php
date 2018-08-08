@@ -81,12 +81,8 @@ class CartFacade
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
         $this->cartItemRepository = $cartItemRepository;
     }
-
-    /**
-     * @param int $productId
-     * @param int $quantity
-     */
-    public function addProductToCart($productId, $quantity): \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
+    
+    public function addProductToCart(int $productId, int $quantity): \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
     {
         $product = $this->productRepository->getSellableById(
             $productId,
@@ -103,18 +99,15 @@ class CartFacade
 
         return $result;
     }
-    
-    public function changeQuantities(array $quantitiesByCartItemId)
+
+    public function changeQuantities(array $quantitiesByCartItemId): void
     {
         $cart = $this->getCartOfCurrentCustomer();
         $this->cartService->changeQuantities($cart, $quantitiesByCartItemId);
         $this->em->flush();
     }
-
-    /**
-     * @param int $cartItemId
-     */
-    public function deleteCartItem($cartItemId)
+    
+    public function deleteCartItem(int $cartItemId): void
     {
         $cart = $this->getCartOfCurrentCustomer();
         $cartItemToDelete = $this->cartService->getCartItemById($cart, $cartItemId);
@@ -123,7 +116,7 @@ class CartFacade
         $this->em->flush();
     }
 
-    public function cleanCart()
+    public function cleanCart(): void
     {
         $cart = $this->getCartOfCurrentCustomer();
         $cartItemsToDelete = $cart->getItems();
@@ -137,18 +130,15 @@ class CartFacade
 
         $this->cleanAdditionalData();
     }
-
-    /**
-     * @param int $cartItemId
-     */
-    public function getProductByCartItemId($cartItemId): \Shopsys\FrameworkBundle\Model\Product\Product
+    
+    public function getProductByCartItemId(int $cartItemId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $cart = $this->getCartOfCurrentCustomer();
 
         return $this->cartService->getCartItemById($cart, $cartItemId)->getProduct();
     }
 
-    public function cleanAdditionalData()
+    public function cleanAdditionalData(): void
     {
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
     }
@@ -169,7 +159,7 @@ class CartFacade
         return $this->cartService->getQuantifiedProductsIndexedByCartItemId($cart);
     }
 
-    public function deleteOldCarts()
+    public function deleteOldCarts(): void
     {
         $this->cartItemRepository->deleteOldCartsForUnregisteredCustomers(self::DAYS_LIMIT_FOR_UNREGISTERED);
         $this->cartItemRepository->deleteOldCartsForRegisteredCustomers(self::DAYS_LIMIT_FOR_REGISTERED);

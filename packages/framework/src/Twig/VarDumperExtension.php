@@ -20,7 +20,7 @@ class VarDumperExtension extends Twig_Extension
     /**
      * @param mixed $var
      */
-    public function d($var)
+    public function d($var): void
     {
         d($var);
     }

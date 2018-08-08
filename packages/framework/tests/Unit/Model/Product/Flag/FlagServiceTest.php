@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagService;
 
 class FlagServiceTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $flagService = new FlagService(new FlagFactory());
 
@@ -26,7 +26,7 @@ class FlagServiceTest extends TestCase
         $this->assertEquals($flagDataOriginal, $flagDataNew);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $flagService = new FlagService(new FlagFactory());
 

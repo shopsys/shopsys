@@ -45,11 +45,8 @@ class PaymentDomain
      * @ORM\Column(type="boolean")
      */
     protected $enabled;
-
-    /**
-     * @param int $domainId
-     */
-    public function __construct(Payment $payment, $domainId)
+    
+    public function __construct(Payment $payment, int $domainId)
     {
         $this->payment = $payment;
         $this->domainId = $domainId;
@@ -66,7 +63,7 @@ class PaymentDomain
         return $this->enabled;
     }
 
-    public function setEnabled(bool $enabled)
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }

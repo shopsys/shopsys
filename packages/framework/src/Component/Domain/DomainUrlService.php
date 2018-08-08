@@ -33,12 +33,8 @@ class DomainUrlService
         $this->em = $em;
         $this->sqlQuoter = $sqlQuoter;
     }
-
-    /**
-     * @param string $domainConfigUrl
-     * @param string $domainSettingUrl
-     */
-    public function replaceUrlInStringColumns($domainConfigUrl, $domainSettingUrl)
+    
+    public function replaceUrlInStringColumns(string $domainConfigUrl, string $domainSettingUrl): void
     {
         $stringColumnNames = $this->getAllStringColumnNamesIndexedByTableName();
         foreach ($stringColumnNames as $tableName => $columnNames) {
@@ -59,12 +55,9 @@ class DomainUrlService
     }
 
     /**
-     * @param string $tableName
      * @param string[] $columnNames
-     * @param string $domainSettingUrl
-     * @param string $domainConfigUrl
      */
-    private function getUrlReplacementSql($tableName, array $columnNames, $domainSettingUrl, $domainConfigUrl): string
+    private function getUrlReplacementSql(string $tableName, array $columnNames, string $domainSettingUrl, string $domainConfigUrl): string
     {
         $sqlParts = [];
         $quotedTableName = $this->sqlQuoter->quoteIdentifier($tableName);

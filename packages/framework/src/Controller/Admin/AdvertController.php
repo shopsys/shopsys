@@ -73,9 +73,8 @@ class AdvertController extends AdminBaseController
 
     /**
      * @Route("/advert/edit/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $advert = $this->advertFacade->getById($id);
 
@@ -205,9 +204,8 @@ class AdvertController extends AdminBaseController
     /**
      * @Route("/advert/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->advertFacade->getById($id)->getName();

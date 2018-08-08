@@ -24,7 +24,7 @@ class ErrorPageCronModule implements SimpleCronModuleInterface
     {
     }
 
-    public function run()
+    public function run(): void
     {
         $this->errorPagesFacade->generateAllErrorPagesForProduction();
     }

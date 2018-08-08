@@ -27,13 +27,13 @@ class DropDatabaseSchemaCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Drop database public schema');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('Dropping database schema...');
         $this->databaseSchemaFacade->dropSchemaIfExists('public');

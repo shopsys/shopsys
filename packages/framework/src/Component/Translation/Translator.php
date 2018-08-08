@@ -100,7 +100,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     /**
      * @param string|null $locale
      */
-    private function resolveLocale($locale): ?string
+    private function resolveLocale(?string $locale): ?string
     {
         if ($locale === null) {
             return $this->getLocale();
@@ -112,7 +112,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     /**
      * @param string|null $domain
      */
-    private function resolveDomain($domain): string
+    private function resolveDomain(?string $domain): string
     {
         if ($domain === null) {
             return self::DEFAULT_DOMAIN;
@@ -149,17 +149,16 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Translation\Translator $translator
      */
-    public static function injectSelf(self $translator)
+    public static function injectSelf(self $translator): void
     {
         self::$self = $translator;
     }
 
     /**
-     * @param string $id
      * @param string|null $domain
      * @param string|null $locale
      */
-    public static function staticTrans($id, array $parameters = [], $domain = null, $locale = null): string
+    public static function staticTrans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         if (self::$self === null) {
             throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\InstanceNotInjectedException();
@@ -169,12 +168,10 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     }
 
     /**
-     * @param string $id
-     * @param int $number
      * @param string|null $domain
      * @param string|null $locale
      */
-    public static function staticTransChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string
+    public static function staticTransChoice(string $id, int $number, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         if (self::$self === null) {
             throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\InstanceNotInjectedException();

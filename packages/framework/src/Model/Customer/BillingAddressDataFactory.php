@@ -17,7 +17,7 @@ class BillingAddressDataFactory implements BillingAddressDataFactoryInterface
         return $billingAddressData;
     }
 
-    protected function fillFromBillingAddress(BillingAddressData $billingAddressData, BillingAddress $billingAddress)
+    protected function fillFromBillingAddress(BillingAddressData $billingAddressData, BillingAddress $billingAddress): void
     {
         $billingAddressData->telephone = $billingAddress->getTelephone();
         $billingAddressData->companyCustomer = $billingAddress->isCompanyCustomer();

@@ -33,14 +33,8 @@ class Column
      * @var string
      */
     private $orderSourceColumnName;
-
-    /**
-     * @param string $id
-     * @param string $sourceColumnName
-     * @param string $title
-     * @param bool $sortable
-     */
-    public function __construct($id, $sourceColumnName, $title, $sortable)
+    
+    public function __construct(string $id, string $sourceColumnName, string $title, bool $sortable)
     {
         $this->id = $id;
         $this->sourceColumnName = $sourceColumnName;
@@ -74,11 +68,8 @@ class Column
     {
         return $this->classAttribute;
     }
-
-    /**
-     * @param string $class
-     */
-    public function setClassAttribute($class): \Shopsys\FrameworkBundle\Component\Grid\Column
+    
+    public function setClassAttribute(string $class): \Shopsys\FrameworkBundle\Component\Grid\Column
     {
         $this->classAttribute = $class;
 

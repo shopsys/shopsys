@@ -20,12 +20,8 @@ class FriendlyUrlRepository
     {
         return $this->em->getRepository(FriendlyUrl::class);
     }
-
-    /**
-     * @param int $domainId
-     * @param string $slug
-     */
-    public function findByDomainIdAndSlug($domainId, $slug): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
+    
+    public function findByDomainIdAndSlug(int $domainId, string $slug): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
     {
         return $this->getFriendlyUrlRepository()->findOneBy(
             [
@@ -34,13 +30,8 @@ class FriendlyUrlRepository
             ]
         );
     }
-
-    /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param int $entityId
-     */
-    public function getMainFriendlyUrl($domainId, $routeName, $entityId): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
+    
+    public function getMainFriendlyUrl(int $domainId, string $routeName, int $entityId): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
     {
         $criteria = [
             'domainId' => $domainId,
@@ -56,13 +47,8 @@ class FriendlyUrlRepository
 
         return $friendlyUrl;
     }
-
-    /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param int $entityId
-     */
-    public function findMainFriendlyUrl($domainId, $routeName, $entityId): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
+    
+    public function findMainFriendlyUrl(int $domainId, string $routeName, int $entityId): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
     {
         $criteria = [
             'domainId' => $domainId,
@@ -75,11 +61,9 @@ class FriendlyUrlRepository
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
-    public function getAllByRouteNameAndEntityId($routeName, $entityId): array
+    public function getAllByRouteNameAndEntityId(string $routeName, int $entityId): array
     {
         $criteria = [
             'routeName' => $routeName,
@@ -96,12 +80,9 @@ class FriendlyUrlRepository
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
-    public function getAllByRouteNameAndEntityIdAndDomainId($routeName, $entityId, $domainId): array
+    public function getAllByRouteNameAndEntityIdAndDomainId(string $routeName, int $entityId, int $domainId): array
     {
         $criteria = [
             'routeName' => $routeName,
@@ -114,11 +95,9 @@ class FriendlyUrlRepository
 
     /**
      * @param object[] $entities
-     * @param string $routeName
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
-    public function getMainFriendlyUrlsByEntitiesIndexedByEntityId(array $entities, $routeName, $domainId): array
+    public function getMainFriendlyUrlsByEntitiesIndexedByEntityId(array $entities, string $routeName, int $domainId): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('f')

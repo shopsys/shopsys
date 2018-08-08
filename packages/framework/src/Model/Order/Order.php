@@ -295,14 +295,12 @@ class Order
     protected $createdAsAdministratorName;
 
     /**
-     * @param string $orderNumber
-     * @param string $urlHash
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
      */
     public function __construct(
         OrderData $orderData,
-        $orderNumber,
-        $urlHash,
+        string $orderNumber,
+        string $urlHash,
         User $user = null
     ) {
         $this->transport = $orderData->transport;
@@ -339,7 +337,7 @@ class Order
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
     }
 
-    public function edit(OrderData $orderData)
+    public function edit(OrderData $orderData): void
     {
         $this->firstName = $orderData->firstName;
         $this->lastName = $orderData->lastName;
@@ -363,21 +361,21 @@ class Order
         $this->editOrderPayment($orderData);
     }
 
-    protected function editOrderTransport(OrderData $orderData)
+    protected function editOrderTransport(OrderData $orderData): void
     {
         $orderTransportData = $orderData->orderTransport;
         $this->transport = $orderTransportData->transport;
         $this->getOrderTransport()->edit($orderTransportData);
     }
 
-    protected function editOrderPayment(OrderData $orderData)
+    protected function editOrderPayment(OrderData $orderData): void
     {
         $orderPaymentData = $orderData->orderPayment;
         $this->payment = $orderPaymentData->payment;
         $this->getOrderPayment()->edit($orderPaymentData);
     }
 
-    protected function setDeliveryAddress(OrderData $orderData)
+    protected function setDeliveryAddress(OrderData $orderData): void
     {
         $this->deliveryAddressSameAsBillingAddress = $orderData->deliveryAddressSameAsBillingAddress;
         if ($orderData->deliveryAddressSameAsBillingAddress) {
@@ -401,14 +399,14 @@ class Order
         }
     }
 
-    public function addItem(OrderItem $item)
+    public function addItem(OrderItem $item): void
     {
         if (!$this->items->contains($item)) {
             $this->items->add($item);
         }
     }
 
-    public function removeItem(OrderItem $item)
+    public function removeItem(OrderItem $item): void
     {
         if ($item instanceof OrderTransport) {
             $this->transport = null;
@@ -419,7 +417,7 @@ class Order
         $this->items->removeElement($item);
     }
 
-    public function setStatus(OrderStatus $status)
+    public function setStatus(OrderStatus $status): void
     {
         $this->status = $status;
     }
@@ -429,17 +427,14 @@ class Order
      * @param string|null $companyNumber
      * @param string|null $companyTaxNumber
      */
-    public function setCompanyInfo($companyName = null, $companyNumber = null, $companyTaxNumber = null)
+    public function setCompanyInfo(?string $companyName = null, ?string $companyNumber = null, ?string $companyTaxNumber = null): void
     {
         $this->companyName = $companyName;
         $this->companyNumber = $companyNumber;
         $this->companyTaxNumber = $companyTaxNumber;
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function setDomainId($domainId)
+    
+    public function setDomainId(int $domainId): void
     {
         $this->domainId = $domainId;
     }
@@ -512,7 +507,7 @@ class Order
         return $this->currency;
     }
 
-    public function setTotalPrice(OrderTotalPrice $orderTotalPrice)
+    public function setTotalPrice(OrderTotalPrice $orderTotalPrice): void
     {
         $this->totalPriceWithVat = $orderTotalPrice->getPriceWithVat();
         $this->totalPriceWithoutVat = $orderTotalPrice->getPriceWithoutVat();
@@ -524,7 +519,7 @@ class Order
         return $this->deleted;
     }
 
-    public function markAsDeleted()
+    public function markAsDeleted(): void
     {
         $this->deleted = true;
     }
@@ -599,11 +594,8 @@ class Order
 
         return $totalPrice;
     }
-
-    /**
-     * @param int $orderItemId
-     */
-    public function getItemById($orderItemId): \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+    
+    public function getItemById(int $orderItemId): \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
     {
         foreach ($this->getItems() as $orderItem) {
             if ($orderItem->getId() === $orderItemId) {

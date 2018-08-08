@@ -19,7 +19,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
         $this->manualBestsellingProductFacade = $manualBestsellingProductFacade;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->manualBestsellingProductFacade->edit(
             $this->getReference(CategoryDataFixture::CATEGORY_PHOTO),

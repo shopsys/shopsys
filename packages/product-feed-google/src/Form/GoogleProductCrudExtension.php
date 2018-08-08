@@ -45,11 +45,8 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     {
         return $this->translator->trans('Google Shopping product feed');
     }
-
-    /**
-     * @param int $productId
-     */
-    public function getData($productId): array
+    
+    public function getData(int $productId): array
     {
         $googleProductDomains = $this->googleProductDomainFacade->findByProductId($productId);
 
@@ -61,12 +58,8 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         }
         return $pluginData;
     }
-
-    /**
-     * @param int $productId
-     * @param array $data
-     */
-    public function saveData($productId, $data)
+    
+    public function saveData(int $productId, array $data): void
     {
         $googleProductDomainsDataIndexedByDomainId = [];
         foreach ($data as $productAttributeName => $productAttributeValuesByDomainIds) {
@@ -91,27 +84,20 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
             $googleProductDomainsDataIndexedByDomainId
         );
     }
-
-    /**
-     * @param string $propertyName
-     * @param string $propertyValue
-     */
+    
     private function setGoogleProductDomainDataProperty(
         GoogleProductDomainData $googleProductDomainData,
-        $propertyName,
-        $propertyValue
-    ) {
+        string $propertyName,
+        string $propertyValue
+    ): void {
         switch ($propertyName) {
             case 'show':
                 $googleProductDomainData->show = $propertyValue;
                 break;
         }
     }
-
-    /**
-     * @param int $productId
-     */
-    public function removeData($productId)
+    
+    public function removeData(int $productId): void
     {
         $this->googleProductDomainFacade->delete($productId);
     }

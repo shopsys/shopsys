@@ -87,7 +87,7 @@ class DeliveryAddress
         $this->country = $deliveryAddressData->country;
     }
 
-    public function edit(DeliveryAddressData $deliveryAddressData)
+    public function edit(DeliveryAddressData $deliveryAddressData): void
     {
         $this->street = $deliveryAddressData->street;
         $this->city = $deliveryAddressData->city;

@@ -34,12 +34,8 @@ class TopProduct
      * @ORM\Column(type="integer")
      */
     protected $position;
-
-    /**
-     * @param int $domainId
-     * @param int $position
-     */
-    public function __construct(Product $product, $domainId, $position)
+    
+    public function __construct(Product $product, int $domainId, int $position)
     {
         $this->product = $product;
         $this->domainId = $domainId;

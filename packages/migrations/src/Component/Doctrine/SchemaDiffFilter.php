@@ -7,7 +7,6 @@ use Doctrine\DBAL\Schema\TableDiff;
 
 class SchemaDiffFilter
 {
-
     public function getFilteredSchemaDiff(SchemaDiff $schemaDiff): \Doctrine\DBAL\Schema\SchemaDiff
     {
         $filteredSchemaDiff = new SchemaDiff();

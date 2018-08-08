@@ -52,13 +52,13 @@ class PerformanceDataCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Import performance data to test db. Demo and base data fixtures must be imported first.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('<fg=green>loading ' . CategoryDataFixture::class . '</fg=green>');
         $this->categoryDataFixture->load($output);

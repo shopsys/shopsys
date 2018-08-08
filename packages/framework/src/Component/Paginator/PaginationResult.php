@@ -38,14 +38,8 @@ class PaginationResult
      * @var int
      */
     private $toItem;
-
-    /**
-     * @param int $page
-     * @param int $pageSize
-     * @param int $totalCount
-     * @param array $results
-     */
-    public function __construct($page, $pageSize, $totalCount, $results)
+    
+    public function __construct(int $page, int $pageSize, int $totalCount, array $results)
     {
         $this->page = $page;
         $this->pageSize = $pageSize;
@@ -85,7 +79,7 @@ class PaginationResult
     {
         return $this->totalCount;
     }
-    
+
     public function getResults()
     {
         return $this->results;

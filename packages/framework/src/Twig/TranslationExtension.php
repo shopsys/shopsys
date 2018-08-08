@@ -32,11 +32,10 @@ class TranslationExtension extends \Twig_Extension
      * Helpful for protection from XSS when providing user input as translation argument
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      *
-     * @param string $message
      * @param string|null $domain
      * @param string|null $locale
      */
-    public function transHtml(Twig_Environment $twig, $message, array $arguments = [], $domain = null, $locale = null): string
+    public function transHtml(Twig_Environment $twig, string $message, array $arguments = [], ?string $domain = null, ?string $locale = null): string
     {
         $defaultTransCallable = $twig->getFilter('trans')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);
@@ -50,12 +49,10 @@ class TranslationExtension extends \Twig_Extension
      * Helpful for protection from XSS when providing user input as translation argument
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::transchoice()
      *
-     * @param string $message
-     * @param int $count
      * @param string|null $domain
      * @param string|null $locale
      */
-    public function transchoiceHtml(Twig_Environment $twig, $message, $count, array $arguments = [], $domain = null, $locale = null): string
+    public function transchoiceHtml(Twig_Environment $twig, string $message, int $count, array $arguments = [], ?string $domain = null, ?string $locale = null): string
     {
         $defaultTranschoiceCallable = $twig->getFilter('transchoice')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);

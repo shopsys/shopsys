@@ -95,9 +95,8 @@ class DomainController extends AdminBaseController
 
     /**
      * @Route("/domain/edit/{id}", requirements={"id" = "\d+"}, condition="request.isXmlHttpRequest()")
-     * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $id = (int)$id;
         $domain = $this->domain->getDomainConfigById($id);

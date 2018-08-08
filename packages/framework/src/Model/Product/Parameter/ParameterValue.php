@@ -54,7 +54,7 @@ class ParameterValue
         return $this->locale;
     }
 
-    public function edit(ParameterValueData $parameterData)
+    public function edit(ParameterValueData $parameterData): void
     {
         $this->text = $parameterData->text;
     }

@@ -24,7 +24,7 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
         $this->productFacade = $productFacade;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         /* @var $product \Shopsys\FrameworkBundle\Model\Product\Product */

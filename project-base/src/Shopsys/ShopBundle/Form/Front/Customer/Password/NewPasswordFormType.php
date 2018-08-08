@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints;
 
 class NewPasswordFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('newPassword', RepeatedType::class, [
@@ -31,7 +31,7 @@ class NewPasswordFormType extends AbstractType
             ->add('submit', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],

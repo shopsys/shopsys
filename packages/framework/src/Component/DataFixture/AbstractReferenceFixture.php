@@ -11,39 +11,26 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      */
     private $persistentReferenceFacade;
 
-    public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade)
+    public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade): void
     {
         $this->persistentReferenceFacade = $persistentReferenceFacade;
     }
-
-    /**
-     * @param string $name
-     * @param object $object
-     * @param bool $persistent
-     */
-    public function addReference($name, $object, $persistent = true)
+    
+    public function addReference(string $name, object $object, bool $persistent = true): void
     {
         if ($persistent) {
             $this->persistentReferenceFacade->persistReference($name, $object);
         }
     }
-
-    /**
-     * @param string $name
-     * @param object $object
-     * @param bool $persistent
-     */
-    public function setReference($name, $object, $persistent = true)
+    
+    public function setReference(string $name, object $object, bool $persistent = true): void
     {
         if ($persistent) {
             $this->persistentReferenceFacade->persistReference($name, $object);
         }
     }
-
-    /**
-     * @param string $name
-     */
-    public function getReference($name): object
+    
+    public function getReference(string $name): object
     {
         return $this->persistentReferenceFacade->getReference($name);
     }

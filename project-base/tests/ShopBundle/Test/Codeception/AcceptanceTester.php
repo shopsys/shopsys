@@ -27,23 +27,20 @@ class AcceptanceTester extends Actor
 
     use AcceptanceTesterActions;
 
-    public function switchToLastOpenedWindow()
+    public function switchToLastOpenedWindow(): void
     {
         // workaround for a race condition when windows get enumerated before the new window is opened
         $this->wait(1);
 
-        $this->executeInSelenium(function (RemoteWebDriver $webdriver) {
+        $this->executeInSelenium(function (RemoteWebDriver $webdriver): void {
             $handles = $webdriver->getWindowHandles();
             $lastWindow = end($handles);
             $this->switchToWindow($lastWindow);
         });
         $this->waitForElement('body', self::WAIT_TIMEOUT_SEC);
     }
-
-    /**
-     * @param int $timeout
-     */
-    public function waitForAjax($timeout = self::DEFAULT_AJAX_TIMEOUT_SEC)
+    
+    public function waitForAjax(int $timeout = self::DEFAULT_AJAX_TIMEOUT_SEC): void
     {
         $this->waitForJS('return $.active == 0;', $timeout);
     }

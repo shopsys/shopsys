@@ -112,11 +112,10 @@ class ProductDataFixture
     private $progressBarFactory;
 
     /**
-     * @param int $productTotalCount
      * @param \Faker\Generator $faker
      */
     public function __construct(
-        $productTotalCount,
+        int $productTotalCount,
         EntityManagerInterface $em,
         ProductFacade $productFacade,
         ProductDataFixtureLoader $productDataFixtureLoader,
@@ -149,7 +148,7 @@ class ProductDataFixture
         $this->progressBarFactory = $progressBarFactory;
     }
 
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -204,7 +203,7 @@ class ProductDataFixture
     /**
      * @param string[][] $variantCatnumsByMainVariantCatnum
      */
-    private function createVariants(array $variantCatnumsByMainVariantCatnum)
+    private function createVariants(array $variantCatnumsByMainVariantCatnum): void
     {
         $uniqueIndex = $this->getUniqueIndex();
 
@@ -221,11 +220,8 @@ class ProductDataFixture
             }
         }
     }
-
-    /**
-     * @param string $catnum
-     */
-    private function getProductByCatnum($catnum): \Shopsys\FrameworkBundle\Model\Product\Product
+    
+    private function getProductByCatnum(string $catnum): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         if (!array_key_exists($catnum, $this->productsByCatnum)) {
             $query = $this->em->createQuery('SELECT p FROM ' . Product::class . ' p WHERE p.catnum = :catnum')
@@ -236,7 +232,7 @@ class ProductDataFixture
         return $this->productsByCatnum[$catnum];
     }
 
-    private function makeProductDataUnique(ProductData $productData)
+    private function makeProductDataUnique(ProductData $productData): void
     {
         $matches = [];
         $uniqueIndex = $this->getUniqueIndex();
@@ -261,7 +257,7 @@ class ProductDataFixture
         return ' #' . $this->demoDataIterationCounter;
     }
 
-    private function clearResources()
+    private function clearResources(): void
     {
         $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
         $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
@@ -269,7 +265,7 @@ class ProductDataFixture
         gc_collect_cycles();
     }
 
-    private function cleanAndLoadReferences()
+    private function cleanAndLoadReferences(): void
     {
         $this->clearResources();
         $this->productsByCatnum = [];
@@ -282,18 +278,15 @@ class ProductDataFixture
         );
     }
 
-    private function setRandomPerformanceCategoriesToProductData(ProductData $productData)
+    private function setRandomPerformanceCategoriesToProductData(ProductData $productData): void
     {
         $this->cleanPerformanceCategoriesFromProductDataByDomainId($productData, 1);
         $this->cleanPerformanceCategoriesFromProductDataByDomainId($productData, 2);
         $this->addRandomPerformanceCategoriesToProductDataByDomainId($productData, 1);
         $this->addRandomPerformanceCategoriesToProductDataByDomainId($productData, 2);
     }
-
-    /**
-     * @param int $domainId
-     */
-    private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, $domainId)
+    
+    private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, int $domainId): void
     {
         foreach ($productData->categoriesByDomainId[$domainId] as $key => $category) {
             if ($this->isPerformanceCategory($category)) {
@@ -301,11 +294,8 @@ class ProductDataFixture
             }
         }
     }
-
-    /**
-     * @param int $domainId
-     */
-    private function addRandomPerformanceCategoriesToProductDataByDomainId(ProductData $productData, $domainId)
+    
+    private function addRandomPerformanceCategoriesToProductDataByDomainId(ProductData $productData, int $domainId): void
     {
         $performanceCategoryIds = $this->getPerformanceCategoryIds();
         $randomPerformanceCategoryIds = $this->faker->randomElements(
@@ -348,7 +338,7 @@ class ProductDataFixture
     /**
      * @param string|int $key
      */
-    private function setArrayPointerByKey(array &$array, $key)
+    private function setArrayPointerByKey(array &$array, $key): void
     {
         reset($array);
         while (key($array) !== $key) {

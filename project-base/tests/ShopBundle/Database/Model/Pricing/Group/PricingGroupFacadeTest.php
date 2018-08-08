@@ -16,7 +16,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class PricingGroupFacadeTest extends DatabaseTestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $em = $this->getEntityManager();
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
@@ -39,7 +39,7 @@ class PricingGroupFacadeTest extends DatabaseTestCase
         $this->assertNotNull($productCalculatedPrice);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $em = $this->getEntityManager();
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
@@ -77,7 +77,7 @@ class PricingGroupFacadeTest extends DatabaseTestCase
         $this->assertSame(round($productPriceBeforeEdit * 2, 6), round($productPriceAfterEdit, 6));
     }
 
-    public function testDeleteAndReplace()
+    public function testDeleteAndReplace(): void
     {
         $em = $this->getEntityManager();
         $pricingGroupFacade = $this->getContainer()->get(PricingGroupFacade::class);

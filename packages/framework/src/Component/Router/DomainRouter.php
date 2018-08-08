@@ -37,16 +37,13 @@ class DomainRouter extends ChainRouter
         $this->add($localizedRouter, 20);
         $this->add($friendlyUrlRouter, 30);
     }
-
-    /**
-     * @param int $referenceType
-     */
-    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
+    
+    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->friendlyUrlRouter->generateByFriendlyUrl($friendlyUrl, $parameters, $referenceType);
     }
 
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         if ($this->freeze) {
             $message = 'Set context is not supported in chain DomainRouter';

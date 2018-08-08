@@ -28,7 +28,7 @@ class CheckDatabaseSchemaCommand extends AbstractCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Check if database schema is satisfying ORM');

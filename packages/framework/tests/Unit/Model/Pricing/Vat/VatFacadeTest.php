@@ -15,7 +15,7 @@ use stdClass;
 
 class VatFacadeTest extends TestCase
 {
-    public function testGetDefaultVat()
+    public function testGetDefaultVat(): void
     {
         $expected = new stdClass();
         $emMock = $this->createMock(EntityManager::class);
@@ -57,7 +57,7 @@ class VatFacadeTest extends TestCase
         $this->assertSame($expected, $vatFacade->getDefaultVat());
     }
 
-    public function testSetDefaultVat()
+    public function testSetDefaultVat(): void
     {
         $emMock = $this->createMock(EntityManager::class);
         $vatService = new VatService();

@@ -44,22 +44,15 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     {
         return $this->translator->trans('Zbozi.cz product feed');
     }
-
-    /**
-     * @param int $productId
-     */
-    public function getData($productId): array
+    
+    public function getData(int $productId): array
     {
         $zboziProductDomains = $this->zboziProductDomainFacade->findByProductId($productId);
 
         return !empty($zboziProductDomains) ? $this->getZboziProductDomainsAsPluginDataArray($zboziProductDomains) : [];
     }
-
-    /**
-     * @param int $productId
-     * @param array $data
-     */
-    public function saveData($productId, $data)
+    
+    public function saveData(int $productId, array $data): void
     {
         $zboziProductDomainsDataIndexedByDomainId = [];
 
@@ -85,16 +78,12 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
             $zboziProductDomainsDataIndexedByDomainId
         );
     }
-
-    /**
-     * @param string $propertyName
-     * @param string $propertyValue
-     */
+    
     private function setZboziProductDomainDataProperty(
         ZboziProductDomainData $zboziProductDomainData,
-        $propertyName,
-        $propertyValue
-    ) {
+        string $propertyName,
+        string $propertyValue
+    ): void {
         switch ($propertyName) {
             case 'show':
                 $zboziProductDomainData->show = $propertyValue;
@@ -127,11 +116,8 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
         return $pluginData;
     }
-
-    /**
-     * @param int $productId
-     */
-    public function removeData($productId)
+    
+    public function removeData(int $productId): void
     {
         $this->zboziProductDomainFacade->delete($productId);
     }

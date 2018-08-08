@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\UserData;
 
 class UserTest extends TestCase
 {
-    public function testGetFullNameReturnsLastnameAndFirstnameForUser()
+    public function testGetFullNameReturnsLastnameAndFirstnameForUser(): void
     {
         $userData = new UserData();
         $userData->firstName = 'Firstname';
@@ -22,7 +22,7 @@ class UserTest extends TestCase
         $this->assertSame('Lastname Firstname', $user->getFullName());
     }
 
-    public function testGetFullNameReturnsCompanyNameForCompanyUser()
+    public function testGetFullNameReturnsCompanyNameForCompanyUser(): void
     {
         $userData = new UserData();
         $userData->firstName = 'Firstname';

@@ -22,7 +22,7 @@ class PersonalDataAccessRequestDataFixture extends AbstractReferenceFixture
         $this->personalDataFacade = $personalDataFacade;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $personalDataAccessRequestData = new PersonalDataAccessRequestData();
         $personalDataAccessRequestData->domainId = Domain::FIRST_DOMAIN_ID;

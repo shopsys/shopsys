@@ -6,10 +6,7 @@ use Heureka\ShopCertification;
 
 class HeurekaShopCertificationService
 {
-    /**
-     * @param string $locale
-     */
-    public function isDomainLocaleSupported($locale): bool
+    public function isDomainLocaleSupported(string $locale): bool
     {
         try {
             $this->getLanguageIdByLocale($locale);
@@ -18,11 +15,8 @@ class HeurekaShopCertificationService
             return false;
         }
     }
-
-    /**
-     * @param string $locale
-     */
-    public function getLanguageIdByLocale($locale): int
+    
+    public function getLanguageIdByLocale(string $locale): int
     {
         $supportedLanguagesByLocale = [
             'cs' => ShopCertification::HEUREKA_CZ,
@@ -36,11 +30,8 @@ class HeurekaShopCertificationService
         $message = 'Locale "' . $locale . '" is not supported.';
         throw new \Shopsys\FrameworkBundle\Model\Heureka\Exception\LocaleNotSupportedException($message);
     }
-
-    /**
-     * @param string $locale
-     */
-    public function getServerNameByLocale($locale): ?string
+    
+    public function getServerNameByLocale(string $locale): ?string
     {
         if ($locale === 'cs') {
             return 'Heureka.cz';

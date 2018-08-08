@@ -18,12 +18,11 @@ class PerformanceResultsCsvExporter
 
     /**
      * @param \Tests\ShopBundle\Performance\Feed\PerformanceTestSample[] $performanceTestSamples
-     * @param string $outputFilename
      */
     public function exportJmeterCsvReport(
         array $performanceTestSamples,
-        $outputFilename
-    ) {
+        string $outputFilename
+    ): void {
         $handle = fopen($outputFilename, 'w');
 
         $this->jmeterCsvReporter->writeHeader($handle);

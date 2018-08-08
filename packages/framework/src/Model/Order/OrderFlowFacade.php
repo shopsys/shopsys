@@ -14,7 +14,7 @@ class OrderFlowFacade
         $this->orderFlowFactory = $orderFlowFactory;
     }
 
-    public function resetOrderForm()
+    public function resetOrderForm(): void
     {
         $orderFlow = $this->orderFlowFactory->create();
         $orderFlow->reset();

@@ -27,7 +27,7 @@ class TransportDomainTest extends DatabaseTestCase
      */
     private $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->transportDataFactory = $this->getContainer()->get(TransportDataFactory::class);
@@ -35,7 +35,7 @@ class TransportDomainTest extends DatabaseTestCase
         $this->em = $this->getEntityManager();
     }
 
-    public function testCreateTransportEnabledOnDomain()
+    public function testCreateTransportEnabledOnDomain(): void
     {
         $transportData = $this->transportDataFactory->create();
 
@@ -48,7 +48,7 @@ class TransportDomainTest extends DatabaseTestCase
         $this->assertTrue($refreshedTransport->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    public function testCreateTransportDisabledOnDomain()
+    public function testCreateTransportDisabledOnDomain(): void
     {
         $transportData = $this->transportDataFactory->create();
 
@@ -61,7 +61,7 @@ class TransportDomainTest extends DatabaseTestCase
         $this->assertFalse($refreshedTransport->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    public function testCreateTransportWithDifferentVisibilityOnDomains()
+    public function testCreateTransportWithDifferentVisibilityOnDomains(): void
     {
         $transportData = $this->transportDataFactory->create();
 

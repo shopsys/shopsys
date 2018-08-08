@@ -44,11 +44,8 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     {
         return $this->translator->trans('Heureka.cz product feed');
     }
-
-    /**
-     * @param int $productId
-     */
-    public function getData($productId): array
+    
+    public function getData(int $productId): array
     {
         $heurekaProductDomains = $this->heurekaProductDomainFacade->findByProductId($productId);
 
@@ -60,12 +57,8 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
         }
         return $pluginData;
     }
-
-    /**
-     * @param int $productId
-     * @param array $data
-     */
-    public function saveData($productId, $data)
+    
+    public function saveData(int $productId, array $data): void
     {
         $heurekaProductDomainsData = [];
         if (array_key_exists('cpc', $data)) {
@@ -79,11 +72,8 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
         }
         $this->heurekaProductDomainFacade->saveHeurekaProductDomainsForProductId($productId, $heurekaProductDomainsData);
     }
-
-    /**
-     * @param int $productId
-     */
-    public function removeData($productId)
+    
+    public function removeData(int $productId): void
     {
         $this->heurekaProductDomainFacade->delete($productId);
     }

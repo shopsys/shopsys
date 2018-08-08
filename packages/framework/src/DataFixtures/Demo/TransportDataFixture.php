@@ -31,7 +31,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $this->transportDataFactory = $transportDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $transportData = $this->transportDataFactory->create();
         $transportData->name = [
@@ -77,11 +77,8 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->vat = $this->getReference(VatDataFixture::VAT_ZERO);
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
     }
-
-    /**
-     * @param string $referenceName
-     */
-    private function createTransport($referenceName, TransportData $transportData)
+    
+    private function createTransport(string $referenceName, TransportData $transportData): void
     {
         $transport = $this->transportFacade->create($transportData);
         $this->addReference($referenceName, $transport);

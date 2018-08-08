@@ -51,7 +51,7 @@ class EntityExtensionTest extends DatabaseTestCase
      */
     private $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->em = $this->getEntityManager();

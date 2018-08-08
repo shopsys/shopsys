@@ -40,7 +40,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
         return $transportData;
     }
 
-    protected function fillNew(TransportData $transportData)
+    protected function fillNew(TransportData $transportData): void
     {
         $transportData->vat = $this->vatFacade->getDefaultVat();
 
@@ -57,7 +57,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
         return $transportData;
     }
 
-    protected function fillFromTransport(TransportData $transportData, Transport $transport)
+    protected function fillFromTransport(TransportData $transportData, Transport $transport): void
     {
         $names = [];
         $descriptions = [];

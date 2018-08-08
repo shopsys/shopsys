@@ -33,7 +33,7 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
             'front_personal_data_access_export',
         ];
     }
-    
+
     private function getPersonalDataRouteNames()
     {
         return [

@@ -33,11 +33,8 @@ class ProductAccessory
      * @ORM\Column(type="integer", nullable=false)
      */
     protected $position;
-
-    /**
-     * @param int $position
-     */
-    public function __construct(Product $product, Product $accessory, $position)
+    
+    public function __construct(Product $product, Product $accessory, int $position)
     {
         $this->product = $product;
         $this->accessory = $accessory;

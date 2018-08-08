@@ -7,7 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180329092348 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('
             CREATE TABLE google_product_domains (
@@ -26,7 +26,7 @@ class Version20180329092348 extends AbstractMigration
         $this->sql('ALTER TABLE google_product_domains ALTER show SET NOT NULL');
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

@@ -44,7 +44,7 @@ class PriceCalculationTest extends TestCase
         $priceWithoutVat,
         $vatPercent,
         $expectedPriceWithVat
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getRoundingType'])
             ->disableOriginalConstructor()
@@ -93,7 +93,7 @@ class PriceCalculationTest extends TestCase
         $priceWithVat,
         $vatPercent,
         $expectedVatAmount
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getRoundingType'])
             ->disableOriginalConstructor()

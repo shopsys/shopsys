@@ -6,10 +6,7 @@ use DOMDocument;
 
 class XmlNormalizer
 {
-    /**
-     * @param string $content
-     */
-    public static function normalizeXml($content): string
+    public static function normalizeXml(string $content): string
     {
         $document = new DOMDocument('1.0');
         $document->preserveWhiteSpace = false;

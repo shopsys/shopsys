@@ -31,7 +31,7 @@ class CurrencyDataFixture extends AbstractReferenceFixture
         $this->currencyDataFactory = $currencyDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /**
          * The "CZK" currency is created in database migration.

@@ -18,14 +18,14 @@ class TimedSpamValidationListener implements EventSubscriberInterface
      * @var string[]
      */
     private $options;
-    
+
     public function __construct(FormTimeProvider $formTimeProvider, array $options)
     {
         $this->formTimeProvider = $formTimeProvider;
         $this->options = $options;
     }
 
-    public function preSubmit(FormEvent $event)
+    public function preSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
         if ($form->isRoot() &&
@@ -44,7 +44,7 @@ class TimedSpamValidationListener implements EventSubscriberInterface
         }
         $this->formTimeProvider->removeFormTime($form->getName());
     }
-    
+
     public static function getSubscribedEvents()
     {
         return [

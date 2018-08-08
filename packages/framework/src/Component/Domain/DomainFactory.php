@@ -22,12 +22,8 @@ class DomainFactory
         $this->domainsConfigLoader = $domainsConfigLoader;
         $this->setting = $setting;
     }
-
-    /**
-     * @param string $domainsConfigFilepath
-     * @param string $domainsUrlsConfigFilepath
-     */
-    public function create($domainsConfigFilepath, $domainsUrlsConfigFilepath): \Shopsys\FrameworkBundle\Component\Domain\Domain
+    
+    public function create(string $domainsConfigFilepath, string $domainsUrlsConfigFilepath): \Shopsys\FrameworkBundle\Component\Domain\Domain
     {
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml($domainsConfigFilepath, $domainsUrlsConfigFilepath);
         $domain = new Domain($domainConfigs, $this->setting);

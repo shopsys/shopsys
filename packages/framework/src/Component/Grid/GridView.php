@@ -64,7 +64,7 @@ class GridView
         $this->setTheme($theme, $templateParameters);
     }
 
-    public function render()
+    public function render(): void
     {
         $this->renderBlock('grid');
     }
@@ -72,18 +72,14 @@ class GridView
     /**
      * @param array|null $removeParameters
      */
-    public function renderHiddenInputs($removeParameters = null)
+    public function renderHiddenInputs(?array $removeParameters = null): void
     {
         $this->renderBlock('grid_hidden_inputs', [
             'parameter' => $this->grid->getUrlGridParameters(null, $removeParameters),
         ]);
     }
-
-    /**
-     * @param string $name
-     * @param bool $echo
-     */
-    public function renderBlock($name, array $parameters = [], $echo = true): ?string
+    
+    public function renderBlock(string $name, array $parameters = [], bool $echo = true): ?string
     {
         foreach ($this->getTemplates() as $template) {
             if ($template->hasBlock($name)) {
@@ -114,7 +110,7 @@ class GridView
      * @param array|null $row
      * @param \Symfony\Component\Form\FormView
      */
-    public function renderCell(Column $column, array $row = null, FormView $formView = null)
+    public function renderCell(Column $column, array $row = null, FormView $formView = null): void
     {
         if ($row !== null) {
             $value = $this->getCellValue($column, $row);
@@ -149,8 +145,8 @@ class GridView
             }
         }
     }
-    
-    public function renderActionCell(ActionColumn $actionColumn, array $row)
+
+    public function renderActionCell(ActionColumn $actionColumn, array $row): void
     {
         $posibleBlocks = [
             'grid_action_cell_type_' . $actionColumn->getType(),
@@ -164,7 +160,7 @@ class GridView
         }
     }
 
-    public function renderTitleCell(Column $column)
+    public function renderTitleCell(Column $column): void
     {
         $posibleBlocks = [
             'grid_title_cell_id_' . $column->getId(),
@@ -192,11 +188,8 @@ class GridView
             UrlGeneratorInterface::ABSOLUTE_URL
         );
     }
-
-    /**
-     * @param string $name
-     */
-    private function blockExists($name): bool
+    
+    private function blockExists(string $name): bool
     {
         foreach ($this->getTemplates() as $template) {
             if ($template->hasBlock($name)) {
@@ -218,7 +211,7 @@ class GridView
     /**
      * @param string|string[] $theme
      */
-    private function setTheme($theme, array $parameters = [])
+    private function setTheme($theme, array $parameters = []): void
     {
         $this->theme = $theme;
         $this->templateParameters = $parameters;
@@ -242,20 +235,16 @@ class GridView
 
         return $this->templates;
     }
-
-    /**
-     * @param string $theme
-     */
-    private function getTemplateFromString($theme): \Twig_TemplateWrapper
+    
+    private function getTemplateFromString(string $theme): \Twig_TemplateWrapper
     {
         return $this->twig->load($theme);
     }
 
     /**
-     * @param array $row
      * @return mixed
      */
-    private function getCellValue(Column $column, $row)
+    private function getCellValue(Column $column, array $row)
     {
         return Grid::getValueFromRowBySourceColumnName($row, $column->getSourceColumnName());
     }

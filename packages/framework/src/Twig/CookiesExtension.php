@@ -16,7 +16,7 @@ class CookiesExtension extends \Twig_Extension
     {
         $this->cookiesFacade = $cookiesFacade;
     }
-    
+
     public function getFunctions()
     {
         return [

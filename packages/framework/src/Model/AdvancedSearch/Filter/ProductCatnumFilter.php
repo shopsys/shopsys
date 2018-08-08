@@ -67,11 +67,8 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
             }
         }
     }
-
-    /**
-     * @param string $operator
-     */
-    private function getContainsDqlOperator($operator): string
+    
+    private function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {
             case self::OPERATOR_CONTAINS:

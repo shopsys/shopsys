@@ -24,19 +24,13 @@ class AvailabilityRepository
     {
         return $this->em->getRepository(Availability::class);
     }
-
-    /**
-     * @param int $availabilityId
-     */
-    public function findById($availabilityId): ?\Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    
+    public function findById(int $availabilityId): ?\Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         return $this->getAvailabilityRepository()->find($availabilityId);
     }
-
-    /**
-     * @param int $availabilityId
-     */
-    public function getById($availabilityId): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    
+    public function getById(int $availabilityId): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         $availability = $this->findById($availabilityId);
 
@@ -65,10 +59,9 @@ class AvailabilityRepository
     }
 
     /**
-     * @param int $availabilityId
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability[]
      */
-    public function getAllExceptId($availabilityId): array
+    public function getAllExceptId(int $availabilityId): array
     {
         $qb = $this->getAvailabilityRepository()->createQueryBuilder('a')
             ->where('a.id != :id')
@@ -90,7 +83,7 @@ class AvailabilityRepository
         return $queryBuilder->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR) !== null;
     }
 
-    public function replaceAvailability(Availability $oldAvailability, Availability $newAvailability)
+    public function replaceAvailability(Availability $oldAvailability, Availability $newAvailability): void
     {
         $this->em->createQueryBuilder()
             ->update(Product::class, 'p')

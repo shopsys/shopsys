@@ -49,7 +49,7 @@ class CartFactory
         return new Cart($cartItems);
     }
 
-    public function clearCache()
+    public function clearCache(): void
     {
         $this->carts = [];
     }

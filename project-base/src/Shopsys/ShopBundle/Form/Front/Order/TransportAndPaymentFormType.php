@@ -32,8 +32,8 @@ class TransportAndPaymentFormType extends AbstractType
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $payments = $this->paymentFacade->getVisibleByDomainId($options['domain_id']);
         $transports = $this->transportFacade->getVisibleByDomainId($options['domain_id'], $payments);
@@ -60,7 +60,7 @@ class TransportAndPaymentFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('domain_id')
@@ -73,7 +73,7 @@ class TransportAndPaymentFormType extends AbstractType
             ]);
     }
 
-    public function validateTransportPaymentRelation(OrderData $orderData, ExecutionContextInterface $context)
+    public function validateTransportPaymentRelation(OrderData $orderData, ExecutionContextInterface $context): void
     {
         $payment = $orderData->payment;
         $transport = $orderData->transport;

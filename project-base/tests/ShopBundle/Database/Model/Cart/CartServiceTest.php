@@ -14,7 +14,7 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class CartServiceTest extends FunctionalTestCase
 {
-    public function testCannotAddProductFloatQuantityToCart()
+    public function testCannotAddProductFloatQuantityToCart(): void
     {
         $cartService = $this->getCartService();
         $product = $this->createProduct();
@@ -28,7 +28,7 @@ class CartServiceTest extends FunctionalTestCase
         $cartService->addProductToCart($cart, $customerIdentifier, $product, 1.1);
     }
 
-    public function testCannotAddProductZeroQuantityToCart()
+    public function testCannotAddProductZeroQuantityToCart(): void
     {
         $cartService = $this->getCartService();
         $product = $this->createProduct();
@@ -42,7 +42,7 @@ class CartServiceTest extends FunctionalTestCase
         $cartService->addProductToCart($cart, $customerIdentifier, $product, 0);
     }
 
-    public function testCannotAddProductNegativeQuantityToCart()
+    public function testCannotAddProductNegativeQuantityToCart(): void
     {
         $cartService = $this->getCartService();
         $product = $this->createProduct();
@@ -56,7 +56,7 @@ class CartServiceTest extends FunctionalTestCase
         $cartService->addProductToCart($cart, $customerIdentifier, $product, -10);
     }
 
-    public function testAddProductToCartMarksAddedProductAsNew()
+    public function testAddProductToCartMarksAddedProductAsNew(): void
     {
         $cartService = $this->getCartService();
         $product = $this->createProduct();
@@ -72,7 +72,7 @@ class CartServiceTest extends FunctionalTestCase
         $this->assertTrue($result->getIsNew());
     }
 
-    public function testAddProductToCartMarksRepeatedlyAddedProductAsNotNew()
+    public function testAddProductToCartMarksRepeatedlyAddedProductAsNotNew(): void
     {
         $cartService = $this->getCartService();
         $product = $this->createProduct();
@@ -89,7 +89,7 @@ class CartServiceTest extends FunctionalTestCase
         $this->assertFalse($result->getIsNew());
     }
 
-    public function testAddProductResultContainsAddedProductQuantity()
+    public function testAddProductResultContainsAddedProductQuantity(): void
     {
         $cartService = $this->getCartService();
         $product = $this->createProduct();
@@ -105,7 +105,7 @@ class CartServiceTest extends FunctionalTestCase
         $this->assertSame($quantity, $result->getAddedQuantity());
     }
 
-    public function testAddProductResultDoesNotContainPreviouslyAddedProductQuantity()
+    public function testAddProductResultDoesNotContainPreviouslyAddedProductQuantity(): void
     {
         $cartService = $this->getCartService();
         $product = $this->createProduct();
@@ -122,7 +122,7 @@ class CartServiceTest extends FunctionalTestCase
         $this->assertSame($quantity, $result->getAddedQuantity());
     }
 
-    public function testCleanCartMakesCartEmpty()
+    public function testCleanCartMakesCartEmpty(): void
     {
         $cartService = $this->getCartService();
         $product = $this->createProduct();
@@ -138,7 +138,7 @@ class CartServiceTest extends FunctionalTestCase
         $this->assertTrue($cart->isEmpty());
     }
 
-    public function testMergeCartsReturnsCartWithSummedProducts()
+    public function testMergeCartsReturnsCartWithSummedProducts(): void
     {
         $cartService = $this->getCartService();
 

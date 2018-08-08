@@ -8,10 +8,7 @@ use JMS\TranslationBundle\Translation\Dumper\DumperInterface;
 
 class PoDumper implements DumperInterface
 {
-    /**
-     * @param string $domain
-     */
-    public function dump(MessageCatalogue $catalogue, $domain = 'messages'): string
+    public function dump(MessageCatalogue $catalogue, string $domain = 'messages'): string
     {
         $output = 'msgid ""' . "\n";
         $output .= 'msgstr ""' . "\n";
@@ -36,11 +33,8 @@ class PoDumper implements DumperInterface
 
         return $output;
     }
-
-    /**
-     * @param string $str
-     */
-    private function escape($str): string
+    
+    private function escape(string $str): string
     {
         return addcslashes($str, "\0..\37\42\134");
     }

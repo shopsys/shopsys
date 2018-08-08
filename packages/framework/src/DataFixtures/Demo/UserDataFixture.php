@@ -30,7 +30,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
 
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $em;
-    
+
     public function __construct(
         CustomerFacade $customerFacade,
         UserDataFixtureLoader $loaderService,
@@ -45,7 +45,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $this->em = $em;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $countries = [
             $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC_1),
@@ -77,7 +77,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         ];
     }
 
-    private function resetPassword(User $customer)
+    private function resetPassword(User $customer): void
     {
         $this->customerPasswordService->resetPassword($customer);
         $this->em->flush($customer);

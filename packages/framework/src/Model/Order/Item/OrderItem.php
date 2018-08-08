@@ -86,20 +86,17 @@ abstract class OrderItem
     protected $catnum;
 
     /**
-     * @param string $name
-     * @param string $vatPercent
-     * @param int $quantity
      * @param string|null $unitName
      * @param string|null $catnum
      */
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
-        $unitName,
-        $catnum
+        string $vatPercent,
+        int $quantity,
+        ?string $unitName,
+        ?string $catnum
     ) {
         $this->order = $order; // Must be One-To-Many Bidirectional because of unnecessary join table
         $this->name = $name;
@@ -162,7 +159,7 @@ abstract class OrderItem
         return $this->priceWithVat * $this->quantity;
     }
 
-    public function edit(OrderItemData $orderItemData)
+    public function edit(OrderItemData $orderItemData): void
     {
         $this->name = $orderItemData->name;
         $this->priceWithoutVat = $orderItemData->priceWithoutVat;

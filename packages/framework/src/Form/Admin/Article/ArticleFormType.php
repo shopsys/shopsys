@@ -40,8 +40,8 @@ class ArticleFormType extends AbstractType
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $seoMetaDescriptionAttributes = $this->getSeoMetaDescriptionAttributes($options);
 
@@ -151,7 +151,7 @@ class ArticleFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['article', 'domain_id'])

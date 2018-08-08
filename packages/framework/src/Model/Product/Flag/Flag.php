@@ -59,7 +59,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @param string|null $locale
      */
-    public function getName($locale = null): string
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -74,7 +74,7 @@ class Flag extends AbstractTranslatableEntity
         return $this->visible;
     }
 
-    protected function setTranslations(FlagData $flagData)
+    protected function setTranslations(FlagData $flagData): void
     {
         foreach ($flagData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -86,7 +86,7 @@ class Flag extends AbstractTranslatableEntity
         return new FlagTranslation();
     }
 
-    public function edit(FlagData $flagData)
+    public function edit(FlagData $flagData): void
     {
         $this->setTranslations($flagData);
         $this->rgbColor = $flagData->rgbColor;

@@ -84,7 +84,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
         return $node instanceof FullyQualified && is_subclass_of((string)$node, Constraint::class);
     }
 
-    private function extractMessagesFromOptions(Node $optionsNode)
+    private function extractMessagesFromOptions(Node $optionsNode): void
     {
         if ($optionsNode instanceof Array_) {
             foreach ($optionsNode->items as $optionItemNode) {

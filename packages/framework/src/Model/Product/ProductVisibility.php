@@ -43,14 +43,11 @@ class ProductVisibility
      * @ORM\Column(type="boolean")
      */
     protected $visible;
-
-    /**
-     * @param int $domainId
-     */
+    
     public function __construct(
         Product $product,
         PricingGroup $pricingGroup,
-        $domainId
+        int $domainId
     ) {
         $this->product = $product;
         $this->pricingGroup = $pricingGroup;

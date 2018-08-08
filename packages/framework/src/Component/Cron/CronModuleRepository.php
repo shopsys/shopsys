@@ -26,11 +26,8 @@ class CronModuleRepository
     {
         return $this->em->getRepository(CronModule::class);
     }
-
-    /**
-     * @param string $serviceId
-     */
-    public function getCronModuleByServiceId($serviceId): \Shopsys\FrameworkBundle\Component\Cron\CronModule
+    
+    public function getCronModuleByServiceId(string $serviceId): \Shopsys\FrameworkBundle\Component\Cron\CronModule
     {
         $cronModule = $this->getCronModuleRepository()->find($serviceId);
         if ($cronModule === null) {

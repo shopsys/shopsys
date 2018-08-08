@@ -30,7 +30,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $this->faker = $faker;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $countries = [
             $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC_2),

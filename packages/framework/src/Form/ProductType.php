@@ -22,13 +22,13 @@ class ProductType extends AbstractType
     ) {
         $this->productIdToProductTransformer = $productIdToProductTransformer;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this->productIdToProductTransformer);
     }
-    
-    public function buildView(FormView $view, FormInterface $form, array $options)
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
 
@@ -49,7 +49,7 @@ class ProductType extends AbstractType
         return HiddenType::class;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'placeholder' => t('Choose product'),

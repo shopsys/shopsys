@@ -36,11 +36,8 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
     {
         return $this->translator->trans('Heureka.cz product feed');
     }
-
-    /**
-     * @param int $categoryId
-     */
-    public function getData($categoryId): array
+    
+    public function getData(int $categoryId): array
     {
         $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);
 
@@ -51,12 +48,8 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
 
         return $pluginData;
     }
-
-    /**
-     * @param int $categoryId
-     * @param array $data
-     */
-    public function saveData($categoryId, $data)
+    
+    public function saveData(int $categoryId, array $data): void
     {
         if (isset($data['heureka_category']) && $data['heureka_category'] instanceof HeurekaCategory) {
             $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId($categoryId, $data['heureka_category']);
@@ -64,11 +57,8 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
             $this->heurekaCategoryFacade->removeHeurekaCategoryForCategoryId($categoryId);
         }
     }
-
-    /**
-     * @param int $categoryId
-     */
-    public function removeData($categoryId)
+    
+    public function removeData(int $categoryId): void
     {
         $this->heurekaCategoryFacade->removeHeurekaCategoryForCategoryId($categoryId);
     }

@@ -34,7 +34,7 @@ class CurrentDomainRouter implements RouterInterface
         return $this->context;
     }
 
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }
@@ -43,21 +43,13 @@ class CurrentDomainRouter implements RouterInterface
     {
         return $this->getDomainRouter()->getRouteCollection();
     }
-
-    /**
-     * @param string $routeName
-     * @param array $parameters
-     * @param int $referenceType
-     */
-    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
+    
+    public function generate(string $routeName, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->getDomainRouter()->generate($routeName, $parameters, $referenceType);
     }
-
-    /**
-     * @param string $pathinfo
-     */
-    public function match($pathinfo): array
+    
+    public function match(string $pathinfo): array
     {
         return $this->getDomainRouter()->match($pathinfo);
     }

@@ -28,11 +28,8 @@ class EnabledModuleRepository
     {
         return $this->em->getRepository(EnabledModule::class);
     }
-
-    /**
-     * @param string $moduleName
-     */
-    public function findByName($moduleName): ?\Shopsys\FrameworkBundle\Model\Module\EnabledModule
+    
+    public function findByName(string $moduleName): ?\Shopsys\FrameworkBundle\Model\Module\EnabledModule
     {
         if (!in_array($moduleName, $this->moduleList->getNames(), true)) {
             throw new \Shopsys\FrameworkBundle\Model\Module\Exception\UnsupportedModuleException($moduleName);

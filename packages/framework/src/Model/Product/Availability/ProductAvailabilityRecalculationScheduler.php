@@ -22,12 +22,12 @@ class ProductAvailabilityRecalculationScheduler
         $this->productRepository = $productRepository;
     }
 
-    public function scheduleProductForImmediateRecalculation(Product $product)
+    public function scheduleProductForImmediateRecalculation(Product $product): void
     {
         $this->products[$product->getId()] = $product;
     }
 
-    public function scheduleAllProductsForDelayedRecalculation()
+    public function scheduleAllProductsForDelayedRecalculation(): void
     {
         $this->productRepository->markAllProductsForAvailabilityRecalculation();
     }
@@ -48,7 +48,7 @@ class ProductAvailabilityRecalculationScheduler
         return $this->productRepository->getProductsForAvailabilityRecalculationIterator();
     }
 
-    public function cleanScheduleForImmediateRecalculation()
+    public function cleanScheduleForImmediateRecalculation(): void
     {
         $this->products = [];
     }

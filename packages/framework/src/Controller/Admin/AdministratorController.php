@@ -82,9 +82,8 @@ class AdministratorController extends AdminBaseController
 
     /**
      * @Route("/administrator/edit/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $administrator = $this->administratorFacade->getById($id);
 
@@ -203,9 +202,8 @@ class AdministratorController extends AdminBaseController
     /**
      * @Route("/administrator/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $realName = $this->administratorFacade->getById($id)->getRealName();

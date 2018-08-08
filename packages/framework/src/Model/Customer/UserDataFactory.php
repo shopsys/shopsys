@@ -29,7 +29,7 @@ class UserDataFactory implements UserDataFactoryInterface
         return $userData;
     }
 
-    protected function fillForDomainId(UserData $userData, int $domainId)
+    protected function fillForDomainId(UserData $userData, int $domainId): void
     {
         $userData->pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
     }
@@ -42,7 +42,7 @@ class UserDataFactory implements UserDataFactoryInterface
         return $userData;
     }
 
-    private function fillFromUser(UserData $userData, User $user)
+    private function fillFromUser(UserData $userData, User $user): void
     {
         $userData->domainId = $user->getDomainId();
         $userData->firstName = $user->getFirstName();

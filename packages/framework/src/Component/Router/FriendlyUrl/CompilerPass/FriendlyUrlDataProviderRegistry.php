@@ -16,16 +16,15 @@ class FriendlyUrlDataProviderRegistry
         $this->friendlyUrlDataProviders = [];
     }
 
-    public function registerFriendlyUrlDataProvider(FriendlyUrlDataProviderInterface $service)
+    public function registerFriendlyUrlDataProvider(FriendlyUrlDataProviderInterface $service): void
     {
         $this->friendlyUrlDataProviders[] = $service;
     }
 
     /**
-     * @param string $routeName
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
-    public function getFriendlyUrlDataByRouteAndDomain($routeName, DomainConfig $domainConfig): array
+    public function getFriendlyUrlDataByRouteAndDomain(string $routeName, DomainConfig $domainConfig): array
     {
         foreach ($this->friendlyUrlDataProviders as $friendlyUrlDataProvider) {
             if ($friendlyUrlDataProvider->getRouteName() === $routeName) {

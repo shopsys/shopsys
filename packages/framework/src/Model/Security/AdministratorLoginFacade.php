@@ -67,11 +67,8 @@ class AdministratorLoginFacade
 
         return $multidomainLoginToken;
     }
-
-    /**
-     * @param string $multidomainLoginToken
-     */
-    public function loginByMultidomainToken(Request $request, $multidomainLoginToken)
+    
+    public function loginByMultidomainToken(Request $request, string $multidomainLoginToken): void
     {
         $administrator = $this->administratorRepository->getByValidMultidomainLoginToken($multidomainLoginToken);
         $administrator->setMultidomainLogin(true);
@@ -84,7 +81,7 @@ class AdministratorLoginFacade
         $this->eventDispatcher->dispatch(SecurityEvents::INTERACTIVE_LOGIN, $event);
     }
 
-    public function invalidateCurrentAdministratorLoginToken()
+    public function invalidateCurrentAdministratorLoginToken(): void
     {
         $token = $this->tokenStorage->getToken();
         if ($token !== null) {

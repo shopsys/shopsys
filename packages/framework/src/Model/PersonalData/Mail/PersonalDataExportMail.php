@@ -80,11 +80,8 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
             self::VARIABLE_URL,
         ];
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
-     */
-    public function createMessage(MailTemplate $template, $personalDataAccessRequest): \Shopsys\FrameworkBundle\Model\Mail\MessageData
+    
+    public function createMessage(MailTemplate $template, \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest): \Shopsys\FrameworkBundle\Model\Mail\MessageData
     {
         return new MessageData(
             $personalDataAccessRequest->getEmail(),
@@ -103,13 +100,8 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
             $this->getSubjectValuesIndexedByVariableName($this->domain->getName())
         );
     }
-
-    /**
-     * @param string $url
-     * @param string $email
-     * @param string $domainName
-     */
-    private function getBodyValuesIndexedByVariableName($url, $email, $domainName): array
+    
+    private function getBodyValuesIndexedByVariableName(string $url, string $email, string $domainName): array
     {
         return [
             self::VARIABLE_URL => $url,
@@ -117,21 +109,15 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
             self::VARIABLE_DOMAIN => $domainName,
         ];
     }
-
-    /**
-     * @param string $domainName
-     */
-    private function getSubjectValuesIndexedByVariableName($domainName): array
+    
+    private function getSubjectValuesIndexedByVariableName(string $domainName): array
     {
         return [
             self::VARIABLE_DOMAIN => $domainName,
         ];
     }
-
-    /**
-     * @param string $hash
-     */
-    private function getVariablePersonalDataAccessUrl($hash): string
+    
+    private function getVariablePersonalDataAccessUrl(string $hash): string
     {
         $router = $this->domainRouterFactory->getRouter($this->domain->getId());
 

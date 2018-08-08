@@ -121,7 +121,7 @@ class OrderService
         return $orderProduct;
     }
 
-    public function calculateTotalPrice(Order $order)
+    public function calculateTotalPrice(Order $order): void
     {
         $orderTotalPrice = $this->orderPriceCalculation->getOrderTotalPrice($order);
         $order->setTotalPrice($orderTotalPrice);

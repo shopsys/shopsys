@@ -20,10 +20,9 @@ class BreadcrumbItem
     private $routeParameters;
 
     /**
-     * @param string $name
      * @param string|null $routeName
      */
-    public function __construct($name, $routeName = null, array $routeParameters = [])
+    public function __construct(string $name, ?string $routeName = null, array $routeParameters = [])
     {
         $this->name = $name;
         $this->routeName = $routeName;
@@ -39,7 +38,7 @@ class BreadcrumbItem
     {
         return $this->routeName;
     }
-    
+
     public function getRouteParameters()
     {
         return $this->routeParameters;

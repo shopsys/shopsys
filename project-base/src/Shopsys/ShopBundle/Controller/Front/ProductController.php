@@ -98,11 +98,8 @@ class ProductController extends FrontBaseController
         $this->moduleFacade = $moduleFacade;
         $this->brandFacade = $brandFacade;
     }
-
-    /**
-     * @param int $id
-     */
-    public function detailAction($id)
+    
+    public function detailAction(int $id)
     {
         $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
 
@@ -121,11 +118,8 @@ class ProductController extends FrontBaseController
             'productMainCategory' => $productMainCategory,
         ]);
     }
-
-    /**
-     * @param int $id
-     */
-    public function listByCategoryAction(Request $request, $id)
+    
+    public function listByCategoryAction(Request $request, int $id)
     {
         $category = $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $id);
 
@@ -182,11 +176,8 @@ class ProductController extends FrontBaseController
             return $this->render('@ShopsysShop/Front/Content/Product/list.html.twig', $viewParameters);
         }
     }
-
-    /**
-     * @param int $id
-     */
-    public function listByBrandAction(Request $request, $id)
+    
+    public function listByBrandAction(Request $request, int $id)
     {
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
         if (!$this->isRequestPageValid($requestPage)) {
@@ -288,7 +279,7 @@ class ProductController extends FrontBaseController
     /**
      * @param string|null $searchText
      */
-    private function createProductFilterConfigForSearch($searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+    private function createProductFilterConfigForSearch(?string $searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         return $this->productFilterConfigFactory->createForSearch(
             $this->domain->getId(),
@@ -301,7 +292,7 @@ class ProductController extends FrontBaseController
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    private function searchCategories($searchText): array
+    private function searchCategories(?string $searchText): array
     {
         return $this->categoryFacade->getVisibleByDomainAndSearchText(
             $this->domain->getId(),
@@ -358,11 +349,11 @@ class ProductController extends FrontBaseController
     /**
      * @param string|null $page
      */
-    private function isRequestPageValid($page): bool
+    private function isRequestPageValid(?string $page): bool
     {
         return $page === null || (preg_match('@^([2-9]|[1-9][0-9]+)$@', $page));
     }
-    
+
     private function getRequestParametersWithoutPage()
     {
         $parameters = $this->requestExtension->getAllRequestParams();

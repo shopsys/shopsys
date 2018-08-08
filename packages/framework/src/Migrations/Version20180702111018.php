@@ -7,7 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180702111018 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $orderNumberSequenceCount = $this->sql('SELECT count(*) FROM order_number_sequences')->fetchColumn(0);
         if ($orderNumberSequenceCount > 0) {
@@ -17,7 +17,7 @@ class Version20180702111018 extends AbstractMigration
         $this->sql('INSERT INTO order_number_sequences (id, number) VALUES (1, 0)');
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

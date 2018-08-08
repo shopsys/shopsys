@@ -17,7 +17,7 @@ class CountryDataFactory implements CountryDataFactoryInterface
         return $countryData;
     }
 
-    protected function fillFromCountry(CountryData $countryData, Country $country)
+    protected function fillFromCountry(CountryData $countryData, Country $country): void
     {
         $countryData->name = $country->getName();
         $countryData->code = $country->getCode();

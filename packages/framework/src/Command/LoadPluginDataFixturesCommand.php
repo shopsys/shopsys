@@ -27,13 +27,13 @@ class LoadPluginDataFixturesCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Loads data fixtures of all registered plugins');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->pluginDataFixtureFacade->loadAll();
     }

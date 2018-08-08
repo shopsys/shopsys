@@ -38,11 +38,8 @@ class CartItemRepository
 
         return $this->getCartItemRepository()->findBy($criteria, ['id' => 'desc']);
     }
-
-    /**
-     * @param int $daysLimit
-     */
-    public function deleteOldCartsForUnregisteredCustomers($daysLimit)
+    
+    public function deleteOldCartsForUnregisteredCustomers(int $daysLimit): void
     {
         $nativeQuery = $this->em->createNativeQuery(
             'DELETE FROM cart_items WHERE cart_identifier NOT IN (
@@ -57,11 +54,8 @@ class CartItemRepository
             'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
         ]);
     }
-
-    /**
-     * @param int $daysLimit
-     */
-    public function deleteOldCartsForRegisteredCustomers($daysLimit)
+    
+    public function deleteOldCartsForRegisteredCustomers(int $daysLimit): void
     {
         $nativeQuery = $this->em->createNativeQuery(
             'DELETE FROM cart_items WHERE user_id NOT IN (

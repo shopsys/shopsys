@@ -21,13 +21,13 @@ class CategoryVisibilityRecalculationScheduler
         $this->productVisibilityFacade = $productVisibilityFacade;
     }
 
-    public function scheduleRecalculation(Category $category)
+    public function scheduleRecalculation(Category $category): void
     {
         $this->recalculate = true;
         $this->productVisibilityFacade->markProductsForRecalculationAffectedByCategory($category);
     }
 
-    public function scheduleRecalculationWithoutDependencies()
+    public function scheduleRecalculationWithoutDependencies(): void
     {
         $this->recalculate = true;
     }

@@ -37,7 +37,7 @@ class LoginListener
         $this->administratorActivityFacade = $administratorActivityFacade;
     }
 
-    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
+    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event): void
     {
         $token = $event->getAuthenticationToken();
         $user = $token->getUser();

@@ -54,7 +54,7 @@ class MigrationsLock
     /**
      * @param \Doctrine\DBAL\Migrations\Version[] $migrationVersions
      */
-    public function saveNewMigrations(array $migrationVersions)
+    public function saveNewMigrations(array $migrationVersions): void
     {
         $this->load();
 
@@ -69,7 +69,7 @@ class MigrationsLock
 
         $this->save();
     }
-    
+
     private function load(): array
     {
         if ($this->parsedMigrationsLock === null) {

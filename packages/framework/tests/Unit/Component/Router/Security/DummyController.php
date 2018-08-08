@@ -4,11 +4,11 @@ namespace Tests\FrameworkBundle\Unit\Component\Router\Security;
 
 class DummyController
 {
-    public function withoutProtectionAction()
+    public function withoutProtectionAction(): void
     {
     }
 
-    public function withProtectionAction()
+    public function withProtectionAction(): void
     {
     }
 }

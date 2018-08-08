@@ -87,9 +87,8 @@ class PaymentController extends AdminBaseController
 
     /**
      * @Route("/payment/edit/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $payment = $this->paymentFacade->getById($id);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
@@ -128,9 +127,8 @@ class PaymentController extends AdminBaseController
     /**
      * @Route("/payment/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $paymentName = $this->paymentFacade->getById($id)->getName();

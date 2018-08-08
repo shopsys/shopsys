@@ -39,7 +39,7 @@ class PriceExtensionTest extends FunctionalTestCase
      */
     private $numberFormatRepository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->currencyFacade = $this->getContainer()->get(CurrencyFacade::class);
         $this->domain = $this->getContainer()->get(Domain::class);
@@ -94,7 +94,7 @@ class PriceExtensionTest extends FunctionalTestCase
      * @group singledomain
      * @dataProvider priceFilterDataProviderSingleDomain
      */
-    public function testPriceFilterForSingleDomain($input, $domainId, $result)
+    public function testPriceFilterForSingleDomain($input, $domainId, $result): void
     {
         $this->checkPriceFilter($input, $domainId, $result);
     }
@@ -103,7 +103,7 @@ class PriceExtensionTest extends FunctionalTestCase
      * @group multidomain
      * @dataProvider priceFilterDataProviderMultiDomain
      */
-    public function testPriceFilterForMultiDomain($input, $domainId, $result)
+    public function testPriceFilterForMultiDomain($input, $domainId, $result): void
     {
         $this->checkPriceFilter($input, $domainId, $result);
     }
@@ -111,7 +111,7 @@ class PriceExtensionTest extends FunctionalTestCase
     /**
      * @dataProvider priceFilterDataProvider
      */
-    private function checkPriceFilter($input, $domainId, $result)
+    private function checkPriceFilter($input, $domainId, $result): void
     {
         $this->domain->switchDomainById($domainId);
 

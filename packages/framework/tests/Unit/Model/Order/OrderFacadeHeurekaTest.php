@@ -30,7 +30,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 
 class OrderFacadeHeurekaTest extends TestCase
 {
-    public function testNotSendHeurekaOrderInfoWhenShopCertificationIsNotActivated()
+    public function testNotSendHeurekaOrderInfoWhenShopCertificationIsNotActivated(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
         $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(false);
@@ -40,7 +40,7 @@ class OrderFacadeHeurekaTest extends TestCase
         $this->runHeurekaTest($heurekaFacade, false);
     }
 
-    public function testNotSendHeurekaOrderInfoWhenDomainLocaleNotSupported()
+    public function testNotSendHeurekaOrderInfoWhenDomainLocaleNotSupported(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
         $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(true);
@@ -51,7 +51,7 @@ class OrderFacadeHeurekaTest extends TestCase
         $this->runHeurekaTest($heurekaFacade, false);
     }
 
-    public function testNotSendHeurekaOrderInfoWhenSendingIsDisallowed()
+    public function testNotSendHeurekaOrderInfoWhenSendingIsDisallowed(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
         $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(true);
@@ -62,7 +62,7 @@ class OrderFacadeHeurekaTest extends TestCase
         $this->runHeurekaTest($heurekaFacade, true);
     }
 
-    public function testSendHeurekaOrderInfo()
+    public function testSendHeurekaOrderInfo(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
         $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(true);
@@ -103,7 +103,7 @@ class OrderFacadeHeurekaTest extends TestCase
     /**
      * @param bool|null $disallowHeurekaVerifiedByCustomers
      */
-    private function runHeurekaTest(HeurekaFacade $heurekaFacade, $disallowHeurekaVerifiedByCustomers): void
+    private function runHeurekaTest(HeurekaFacade $heurekaFacade, ?bool $disallowHeurekaVerifiedByCustomers): void
     {
         $orderFacade = $this->createOrderFacade($heurekaFacade);
         $order = $this->createOrderMock();

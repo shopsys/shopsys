@@ -34,22 +34,15 @@ class AvailabilityInlineEdit extends AbstractGridInlineEdit
         $this->formFactory = $formFactory;
         $this->availabilityDataFactory = $availabilityDataFactory;
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
-     */
-    protected function createEntityAndGetId($availabilityData): int
+    
+    protected function createEntityAndGetId(\Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData): int
     {
         $availability = $this->availabilityFacade->create($availabilityData);
 
         return $availability->getId();
     }
-
-    /**
-     * @param int $availabilityId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
-     */
-    protected function editEntity($availabilityId, $availabilityData)
+    
+    protected function editEntity(int $availabilityId, \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData): void
     {
         $this->availabilityFacade->edit($availabilityId, $availabilityData);
     }
@@ -57,7 +50,7 @@ class AvailabilityInlineEdit extends AbstractGridInlineEdit
     /**
      * @param int|null $availabilityId
      */
-    public function getForm($availabilityId): \Symfony\Component\Form\FormInterface
+    public function getForm(?int $availabilityId): \Symfony\Component\Form\FormInterface
     {
         if ($availabilityId !== null) {
             $availability = $this->availabilityFacade->getById((int)$availabilityId);

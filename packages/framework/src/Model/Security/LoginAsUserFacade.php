@@ -56,12 +56,12 @@ class LoginAsUserFacade
         $this->administratorFrontSecurityFacade = $administratorFrontSecurityFacade;
     }
 
-    public function rememberLoginAsUser(User $user)
+    public function rememberLoginAsUser(User $user): void
     {
         $this->session->set(self::SESSION_LOGIN_AS, serialize($user));
     }
 
-    public function loginAsRememberedUser(Request $request)
+    public function loginAsRememberedUser(Request $request): void
     {
         if (!$this->administratorFrontSecurityFacade->isAdministratorLogged()) {
             throw new \Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException('Access denied');

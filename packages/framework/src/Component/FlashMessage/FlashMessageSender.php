@@ -23,41 +23,26 @@ class FlashMessageSender
         $this->flashMessageBag = $flashMessageBag;
         $this->twigEnvironment = $twigEnvironment;
     }
-
-    /**
-     * @param string $template
-     * @param array $parameters
-     */
-    public function addErrorFlashTwig($template, $parameters = [])
+    
+    public function addErrorFlashTwig(string $template, array $parameters = []): void
     {
         $message = $this->renderStringTwigTemplate($template, $parameters);
         $this->flashMessageBag->addError($message, false);
     }
-
-    /**
-     * @param string $template
-     * @param array $parameters
-     */
-    public function addInfoFlashTwig($template, $parameters = [])
+    
+    public function addInfoFlashTwig(string $template, array $parameters = []): void
     {
         $message = $this->renderStringTwigTemplate($template, $parameters);
         $this->flashMessageBag->addInfo($message, false);
     }
-
-    /**
-     * @param string $template
-     * @param array $parameters
-     */
-    public function addSuccessFlashTwig($template, $parameters = [])
+    
+    public function addSuccessFlashTwig(string $template, array $parameters = []): void
     {
         $message = $this->renderStringTwigTemplate($template, $parameters);
         $this->flashMessageBag->addSuccess($message, false);
     }
-
-    /**
-     * @param string $template
-     */
-    private function renderStringTwigTemplate($template, array $parameters): string
+    
+    private function renderStringTwigTemplate(string $template, array $parameters): string
     {
         $twigTemplate = $this->twigEnvironment->createTemplate($template);
 
@@ -67,7 +52,7 @@ class FlashMessageSender
     /**
      * @param string|array $message
      */
-    public function addErrorFlash($message)
+    public function addErrorFlash($message): void
     {
         $this->flashMessageBag->addError($message, true);
     }
@@ -75,7 +60,7 @@ class FlashMessageSender
     /**
      * @param string|array $message
      */
-    public function addInfoFlash($message)
+    public function addInfoFlash($message): void
     {
         $this->flashMessageBag->addInfo($message, true);
     }
@@ -83,7 +68,7 @@ class FlashMessageSender
     /**
      * @param string|array $message
      */
-    public function addSuccessFlash($message)
+    public function addSuccessFlash($message): void
     {
         $this->flashMessageBag->addSuccess($message, true);
     }

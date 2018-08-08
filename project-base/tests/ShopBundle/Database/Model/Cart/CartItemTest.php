@@ -15,7 +15,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class CartItemTest extends DatabaseTestCase
 {
-    public function testIsSimilarItemAs()
+    public function testIsSimilarItemAs(): void
     {
         $em = $this->getEntityManager();
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);

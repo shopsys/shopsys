@@ -37,12 +37,9 @@ class CookiesFacade
      * @var \Symfony\Component\HttpFoundation\RequestStack
      */
     protected $requestStack;
-
-    /**
-     * @param string $environment
-     */
+    
     public function __construct(
-        $environment,
+        string $environment,
         ArticleFacade $articleFacade,
         Setting $setting,
         Domain $domain,
@@ -70,9 +67,8 @@ class CookiesFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $cookiesArticle
-     * @param int $domainId
      */
-    public function setCookiesArticleOnDomain(?Article $cookiesArticle, $domainId)
+    public function setCookiesArticleOnDomain(?Article $cookiesArticle, int $domainId): void
     {
         $cookiesArticleId = null;
         if ($cookiesArticle !== null) {

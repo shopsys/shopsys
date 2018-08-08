@@ -9,11 +9,10 @@ use Shopsys\FrameworkBundle\Model\Localization\TranslatableListener;
 class ImplicitLocaleNotSetException extends Exception implements LocalizationException
 {
     /**
-     * @param object $entity
      * @param mixed $entityId
      * @param \Exception|null $previous
      */
-    public function __construct($entity, $entityId, Exception $previous = null)
+    public function __construct(object $entity, $entityId, Exception $previous = null)
     {
         $message = sprintf(
             'You tried to get a translation of entity %s (ID: "%s") without specifying a locale'

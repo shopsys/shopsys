@@ -12,11 +12,8 @@ class WebDriverHelper extends Module
     {
         return $this->getModule(StrictWebDriver::class);
     }
-
-    /**
-     * @param string $page
-     */
-    public function seeCurrentPageEquals($page)
+    
+    public function seeCurrentPageEquals(string $page): void
     {
         $expectedUrl = Uri::appendPath($this->getWebDriver()->_getUrl(), $page);
         $currentUrl = $this->getWebDriver()->webDriver->getCurrentURL();

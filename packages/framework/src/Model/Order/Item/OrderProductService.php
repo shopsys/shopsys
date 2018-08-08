@@ -7,7 +7,7 @@ class OrderProductService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct[] $orderProducts
      */
-    public function subtractOrderProductsFromStock(array $orderProducts)
+    public function subtractOrderProductsFromStock(array $orderProducts): void
     {
         $orderProductsUsingStock = $this->getOrderProductsUsingStockFromOrderProducts($orderProducts);
         foreach ($orderProductsUsingStock as $orderProductUsingStock) {
@@ -19,7 +19,7 @@ class OrderProductService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct[] $orderProducts
      */
-    public function returnOrderProductsToStock(array $orderProducts)
+    public function returnOrderProductsToStock(array $orderProducts): void
     {
         $orderProductsUsingStock = $this->getOrderProductsUsingStockFromOrderProducts($orderProducts);
         foreach ($orderProductsUsingStock as $orderProductUsingStock) {

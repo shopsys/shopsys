@@ -13,14 +13,10 @@ class TransportAndPaymentCheckResult
      * @var bool
      */
     private $paymentPriceChanged;
-
-    /**
-     * @param bool $transportPriceChanged
-     * @param bool $paymentPriceChanged
-     */
+    
     public function __construct(
-        $transportPriceChanged,
-        $paymentPriceChanged
+        bool $transportPriceChanged,
+        bool $paymentPriceChanged
     ) {
         $this->transportPriceChanged = $transportPriceChanged;
         $this->paymentPriceChanged = $paymentPriceChanged;

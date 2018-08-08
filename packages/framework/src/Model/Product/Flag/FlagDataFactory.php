@@ -17,7 +17,7 @@ class FlagDataFactory implements FlagDataFactoryInterface
         return $flagData;
     }
 
-    protected function fillFromFlag(FlagData $flagData, Flag $flag)
+    protected function fillFromFlag(FlagData $flagData, Flag $flag): void
     {
         $translations = $flag->getTranslations();
         $names = [];

@@ -33,9 +33,8 @@ class EmailValidator extends ConstraintValidator
 
     /**
      * @see https://doc.nette.org/cs/2.4/validators
-     * @param string $value
      */
-    private function isEmail($value): bool
+    private function isEmail(string $value): bool
     {
         $atom = "[-a-z0-9!#$%&'*+/=?^_`{|}~]"; // RFC 5322 unquoted characters in local-part
         $alpha = "a-z\x80-\xFF"; // superset of IDN

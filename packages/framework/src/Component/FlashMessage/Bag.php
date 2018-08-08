@@ -21,11 +21,8 @@ class Bag
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     private $session;
-
-    /**
-     * @param string $bagName
-     */
-    public function __construct($bagName, SessionInterface $session)
+    
+    public function __construct(string $bagName, SessionInterface $session)
     {
         if (!is_string($bagName) || empty($bagName)) {
             $message = 'Bag name for messages must be non-empty string.';
@@ -40,7 +37,7 @@ class Bag
      * @param string|array $message
      * @param bool $escape
      */
-    public function addError($message, $escape = true)
+    public function addError($message, $escape = true): void
     {
         $this->addMessage($message, $escape, self::KEY_ERROR);
     }
@@ -49,7 +46,7 @@ class Bag
      * @param string|array $message
      * @param bool $escape
      */
-    public function addInfo($message, $escape = true)
+    public function addInfo($message, $escape = true): void
     {
         $this->addMessage($message, $escape, self::KEY_INFO);
     }
@@ -58,21 +55,21 @@ class Bag
      * @param string|array $message
      * @param bool $escape
      */
-    public function addSuccess($message, $escape = true)
+    public function addSuccess($message, $escape = true): void
     {
         $this->addMessage($message, $escape, self::KEY_SUCCESS);
     }
-    
+
     public function getErrorMessages()
     {
         return $this->getMessages(self::KEY_ERROR);
     }
-    
+
     public function getInfoMessages()
     {
         return $this->getMessages(self::KEY_INFO);
     }
-    
+
     public function getSuccessMessages()
     {
         return $this->getMessages(self::KEY_SUCCESS);
@@ -86,19 +83,13 @@ class Bag
             && !$flashBag->has($this->getFullbagName(self::KEY_INFO))
             && !$flashBag->has($this->getFullbagName(self::KEY_SUCCESS));
     }
-
-    /**
-     * @param string $key
-     */
-    private function getFullbagName($key): string
+    
+    private function getFullbagName(string $key): string
     {
         return self::MAIN_KEY . '__' . $this->bagName . '__' . $key;
     }
-
-    /**
-     * @param string $key
-     */
-    private function getMessages($key): array
+    
+    private function getMessages(string $key): array
     {
         $flashBag = $this->session->getFlashBag();
         $messages = $flashBag->get($this->getFullbagName($key));
@@ -110,7 +101,7 @@ class Bag
      * @param bool $escape
      * @param string $key
      */
-    private function addMessage($message, $escape, $key)
+    private function addMessage($message, $escape, $key): void
     {
         if (is_array($message)) {
             foreach ($message as $item) {

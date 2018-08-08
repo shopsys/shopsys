@@ -18,7 +18,7 @@ class InputPriceLabelExtension extends Twig_Extension
     ) {
         $this->pricingSetting = $pricingSetting;
     }
-    
+
     public function getFunctions()
     {
         return [

@@ -27,13 +27,13 @@ class ImportDefaultDatabaseSchemaCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Import database default schema');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('Importing default database schema...');
         $this->databaseSchemaFacade->importDefaultSchema();

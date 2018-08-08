@@ -58,7 +58,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->orderDataFactory = $orderDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $user = $this->userRepository->findUserByEmailAndDomain('no-reply@shopsys.com', 1);
         $orderData = $this->orderDataFactory->create();
@@ -546,12 +546,12 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $user
         );
     }
-    
+
     private function createOrder(
         OrderData $orderData,
         array $products,
         User $user = null
-    ) {
+    ): void {
         $quantifiedProducts = [];
         foreach ($products as $productReferenceName => $quantity) {
             $product = $this->getReference($productReferenceName);

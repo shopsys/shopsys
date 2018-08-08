@@ -19,18 +19,13 @@ class OrderPayment extends OrderItem
      * @ORM\JoinColumn(nullable=true)
      */
     protected $payment;
-
-    /**
-     * @param string $name
-     * @param string $vatPercent
-     * @param int $quantity
-     */
+    
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
+        string $vatPercent,
+        int $quantity,
         Payment $payment
     ) {
         parent::__construct(
@@ -50,7 +45,7 @@ class OrderPayment extends OrderItem
         return $this->payment;
     }
 
-    public function edit(OrderItemData $orderPaymentData)
+    public function edit(OrderItemData $orderPaymentData): void
     {
         if ($orderPaymentData instanceof OrderPaymentData) {
             $this->payment = $orderPaymentData->payment;

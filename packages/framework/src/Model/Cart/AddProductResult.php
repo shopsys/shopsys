@@ -20,12 +20,8 @@ class AddProductResult
      * @var int
      */
     private $addedQuantity;
-
-    /**
-     * @param bool $isNew
-     * @param int $addedQuantity
-     */
-    public function __construct(CartItem $cartItem, $isNew, $addedQuantity)
+    
+    public function __construct(CartItem $cartItem, bool $isNew, int $addedQuantity)
     {
         $this->cartItem = $cartItem;
         $this->isNew = $isNew;

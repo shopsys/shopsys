@@ -80,11 +80,8 @@ class CategoryDomain
      * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
-
-    /**
-     * @param int $domainId
-     */
-    public function __construct(Category $category, $domainId)
+    
+    public function __construct(Category $category, int $domainId)
     {
         $this->category = $category;
         $this->domainId = $domainId;
@@ -125,7 +122,7 @@ class CategoryDomain
     /**
      * @param string|null $seoTitle
      */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle(?string $seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
@@ -133,7 +130,7 @@ class CategoryDomain
     /**
      * @param string|null $seoMetaDescription
      */
-    public function setSeoMetaDescription($seoMetaDescription)
+    public function setSeoMetaDescription(?string $seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
@@ -141,23 +138,17 @@ class CategoryDomain
     /**
      * @param string|null $seoH1
      */
-    public function setSeoH1($seoH1)
+    public function setSeoH1(?string $seoH1): void
     {
         $this->seoH1 = $seoH1;
     }
-
-    /**
-     * @param bool $enabled
-     */
-    public function setEnabled($enabled)
+    
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }

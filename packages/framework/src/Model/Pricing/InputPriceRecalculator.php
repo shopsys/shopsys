@@ -69,37 +69,31 @@ class InputPriceRecalculator
         $this->pricingSetting = $pricingSetting;
     }
 
-    public function recalculateToInputPricesWithoutVat()
+    public function recalculateToInputPricesWithoutVat(): void
     {
         $this->recalculateInputPriceForNewType(PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
     }
 
-    public function recalculateToInputPricesWithVat()
+    public function recalculateToInputPricesWithVat(): void
     {
         $this->recalculateInputPriceForNewType(PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
     }
-
-    /**
-     * @param string $newInputPriceType
-     */
-    private function recalculateInputPriceForNewType($newInputPriceType)
+    
+    private function recalculateInputPriceForNewType(string $newInputPriceType): void
     {
         $this->recalculateProductsInputPriceForNewType($newInputPriceType);
         $this->recalculateTransportsInputPriceForNewType($newInputPriceType);
         $this->recalculatePaymentsInputPriceForNewType($newInputPriceType);
     }
-
-    /**
-     * @param string $toInputPriceType
-     */
-    private function recalculateProductsInputPriceForNewType($toInputPriceType)
+    
+    private function recalculateProductsInputPriceForNewType(string $toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
             ->select('p')
             ->from(Product::class, 'p')
             ->getQuery();
 
-        $this->batchProcessQuery($query, function (Product $product) use ($toInputPriceType) {
+        $this->batchProcessQuery($query, function (Product $product) use ($toInputPriceType): void {
             $productPrice = $this->basePriceCalculation->calculateBasePrice(
                 $product->getPrice(),
                 $this->pricingSetting->getInputPriceType(),
@@ -115,18 +109,15 @@ class InputPriceRecalculator
             $this->productService->setInputPrice($product, $newInputPrice);
         });
     }
-
-    /**
-     * @param string $toInputPriceType
-     */
-    private function recalculatePaymentsInputPriceForNewType($toInputPriceType)
+    
+    private function recalculatePaymentsInputPriceForNewType(string $toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
             ->select('p')
             ->from(Payment::class, 'p')
             ->getQuery();
 
-        $this->batchProcessQuery($query, function (Payment $payment) use ($toInputPriceType) {
+        $this->batchProcessQuery($query, function (Payment $payment) use ($toInputPriceType): void {
             foreach ($payment->getPrices() as $paymentInputPrice) {
                 $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice(
                     $payment,
@@ -143,18 +134,15 @@ class InputPriceRecalculator
             }
         });
     }
-
-    /**
-     * @param string $toInputPriceType
-     */
-    private function recalculateTransportsInputPriceForNewType($toInputPriceType)
+    
+    private function recalculateTransportsInputPriceForNewType(string $toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
             ->select('t')
             ->from(Transport::class, 't')
             ->getQuery();
 
-        $this->batchProcessQuery($query, function (Transport $transport) use ($toInputPriceType) {
+        $this->batchProcessQuery($query, function (Transport $transport) use ($toInputPriceType): void {
             foreach ($transport->getPrices() as $transportInputPrice) {
                 $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice(
                     $transport,
@@ -172,7 +160,7 @@ class InputPriceRecalculator
         });
     }
 
-    private function batchProcessQuery(Query $query, Closure $callback)
+    private function batchProcessQuery(Query $query, Closure $callback): void
     {
         $iteration = 0;
 

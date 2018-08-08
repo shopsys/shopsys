@@ -17,7 +17,7 @@ class ParameterDataFactory implements ParameterDataFactoryInterface
         return $parameterData;
     }
 
-    protected function fillFromParameter(ParameterData $parameterData, Parameter $parameter)
+    protected function fillFromParameter(ParameterData $parameterData, Parameter $parameter): void
     {
         $translations = $parameter->getTranslations();
         $names = [];

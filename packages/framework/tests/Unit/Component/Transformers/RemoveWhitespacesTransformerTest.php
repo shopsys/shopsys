@@ -22,7 +22,7 @@ class RemoveWhitespacesTransformerTest extends TestCase
     /**
      * @dataProvider transformValuesProvider
      */
-    public function testReverseTransform($value, $expected)
+    public function testReverseTransform($value, $expected): void
     {
         $transformer = new RemoveWhitespacesTransformer();
         $this->assertSame($expected, $transformer->reverseTransform($value));

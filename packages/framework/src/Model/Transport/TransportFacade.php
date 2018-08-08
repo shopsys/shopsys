@@ -98,7 +98,7 @@ class TransportFacade
         return $transport;
     }
 
-    public function edit(Transport $transport, TransportData $transportData)
+    public function edit(Transport $transport, TransportData $transportData): void
     {
         $transport->edit($transportData);
         $this->updateTransportPrices($transport, $transportData->pricesByCurrencyId);
@@ -106,19 +106,13 @@ class TransportFacade
         $transport->setPayments($transportData->payments);
         $this->em->flush();
     }
-
-    /**
-     * @param int $id
-     */
-    public function getById($id): \Shopsys\FrameworkBundle\Model\Transport\Transport
+    
+    public function getById(int $id): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->transportRepository->getById($id);
     }
-
-    /**
-     * @param int $id
-     */
-    public function deleteById($id)
+    
+    public function deleteById(int $id): void
     {
         $transport = $this->getById($id);
         $transport->markAsDeleted();
@@ -139,11 +133,10 @@ class TransportFacade
     }
 
     /**
-     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $visiblePaymentsOnDomain
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getVisibleByDomainId($domainId, $visiblePaymentsOnDomain): array
+    public function getVisibleByDomainId(int $domainId, $visiblePaymentsOnDomain): array
     {
         $transports = $this->transportRepository->getAllByDomainId($domainId);
 
@@ -153,7 +146,7 @@ class TransportFacade
     /**
      * @param string[] $pricesByCurrencyId
      */
-    protected function updateTransportPrices(Transport $transport, $pricesByCurrencyId)
+    protected function updateTransportPrices(Transport $transport, $pricesByCurrencyId): void
     {
         foreach ($this->currencyFacade->getAll() as $currency) {
             $price = $pricesByCurrencyId[$currency->getId()];

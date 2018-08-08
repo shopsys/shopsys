@@ -21,21 +21,18 @@ class OrderProduct extends OrderItem
     protected $product;
 
     /**
-     * @param string $name
-     * @param string $vatPercent
-     * @param int $quantity
      * @param string|null $unitName
      * @param string|null $catnum
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      */
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
-        $unitName,
-        $catnum,
+        string $vatPercent,
+        int $quantity,
+        ?string $unitName,
+        ?string $catnum,
         Product $product = null
     ) {
         parent::__construct(

@@ -68,8 +68,8 @@ class ProductEditFormType extends AbstractType
         $this->pluginDataFormExtensionFacade = $pluginDataFormExtensionFacade;
         $this->productParameterValueToProductParameterValuesLocalizedTransformer = $productParameterValueToProductParameterValuesLocalizedTransformer;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $editedProduct = $options['product'];
 
@@ -161,7 +161,7 @@ class ProductEditFormType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('product')
@@ -184,7 +184,7 @@ class ProductEditFormType extends AbstractType
             ]);
     }
 
-    private function disableIrrelevantFields(FormBuilderInterface $builder, Product $product)
+    private function disableIrrelevantFields(FormBuilderInterface $builder, Product $product): void
     {
         if ($product->isMainVariant()) {
             $builder->get('manualInputPricesByPricingGroupId')->setDisabled(true);

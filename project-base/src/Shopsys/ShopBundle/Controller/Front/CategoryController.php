@@ -74,11 +74,8 @@ class CategoryController extends FrontBaseController
             'currentCategory' => $currentCategory,
         ]);
     }
-
-    /**
-     * @param int $parentCategoryId
-     */
-    public function branchAction($parentCategoryId)
+    
+    public function branchAction(int $parentCategoryId)
     {
         $parentCategory = $this->categoryFacade->getById($parentCategoryId);
 
@@ -104,9 +101,8 @@ class CategoryController extends FrontBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
-     * @param bool $showProductsCountByCategory
      */
-    public function categoryListAction(array $categories, $showProductsCountByCategory = true)
+    public function categoryListAction(array $categories, bool $showProductsCountByCategory = true)
     {
         if ($showProductsCountByCategory === true) {
             $pricingGroup = $this->currentCustomer->getPricingGroup();

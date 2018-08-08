@@ -38,19 +38,13 @@ class CountryFacade
         $this->domain = $domain;
         $this->countryFactory = $countryFactory;
     }
-
-    /**
-     * @param int $countryId
-     */
-    public function getById($countryId): \Shopsys\FrameworkBundle\Model\Country\Country
+    
+    public function getById(int $countryId): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         return $this->countryRepository->getById($countryId);
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function create(CountryData $countryData, $domainId): \Shopsys\FrameworkBundle\Model\Country\Country
+    
+    public function create(CountryData $countryData, int $domainId): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $country = $this->countryFactory->create($countryData, $domainId);
         $this->em->persist($country);
@@ -58,11 +52,8 @@ class CountryFacade
 
         return $country;
     }
-
-    /**
-     * @param int $countryId
-     */
-    public function edit($countryId, CountryData $countryData): \Shopsys\FrameworkBundle\Model\Country\Country
+    
+    public function edit(int $countryId, CountryData $countryData): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $country = $this->countryRepository->getById($countryId);
         $country->edit($countryData);
@@ -72,10 +63,9 @@ class CountryFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Country\Country[]
      */
-    public function getAllByDomainId($domainId): array
+    public function getAllByDomainId(int $domainId): array
     {
         return $this->countryRepository->getAllByDomainId($domainId);
     }

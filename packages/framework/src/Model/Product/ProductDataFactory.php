@@ -107,7 +107,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData
      */
-    protected function fillNew($productData)
+    protected function fillNew(\Shopsys\FrameworkBundle\Model\Product\ProductData $productData): void
     {
         $productData->vat = $this->vatFacade->getDefaultVat();
         $productData->unit = $this->unitFacade->getDefaultUnit();
@@ -134,7 +134,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         return $productData;
     }
 
-    protected function fillFromProduct(ProductData $productData, Product $product)
+    protected function fillFromProduct(ProductData $productData, Product $product): void
     {
         $translations = $product->getTranslations();
         $names = [];
@@ -214,7 +214,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
 
         return $productParameterValuesData;
     }
-    
+
     protected function getNullForAllDomains()
     {
         $nullForAllDomains = [];

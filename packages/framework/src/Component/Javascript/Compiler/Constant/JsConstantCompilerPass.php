@@ -19,7 +19,7 @@ class JsConstantCompilerPass implements JsCompilerPassInterface
         $this->jsConstantCallParser = $jsConstantCallParser;
     }
 
-    public function process(JProgramNode $node)
+    public function process(JProgramNode $node): void
     {
         $jsConstantCalls = $this->jsConstantCallParser->parse($node);
 
@@ -41,10 +41,9 @@ class JsConstantCompilerPass implements JsCompilerPassInterface
     }
 
     /**
-     * @param string $constantName
      * @return mixed
      */
-    private function getConstantValue($constantName)
+    private function getConstantValue(string $constantName)
     {
         // Normal defined constant (either class or global)
         if (defined($constantName)) {

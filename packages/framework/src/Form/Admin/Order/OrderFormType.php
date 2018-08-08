@@ -59,8 +59,8 @@ class OrderFormType extends AbstractType
         $this->countryFacade = $countryFacade;
         $this->orderStatusFacade = $orderStatusFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $domainId = $options['order']->getDomainId();
         $countries = $this->countryFacade->getAllByDomainId($domainId);
@@ -302,7 +302,7 @@ class OrderFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('order')

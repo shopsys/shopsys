@@ -32,7 +32,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
         $this->articleDataFactory = $articleDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $articleData = $this->articleDataFactory->create();
         $articleData->domainId = Domain::FIRST_DOMAIN_ID;
@@ -72,7 +72,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     /**
      * @param string|null $referenceName
      */
-    private function createArticle(ArticleData $articleData, $referenceName = null)
+    private function createArticle(ArticleData $articleData, ?string $referenceName = null): void
     {
         $article = $this->articleFacade->create($articleData);
         if ($referenceName !== null) {

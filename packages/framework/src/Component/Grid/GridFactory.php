@@ -40,11 +40,8 @@ class GridFactory
         $this->routeCsrfProtector = $routeCsrfProtector;
         $this->twig = $twig;
     }
-
-    /**
-     * @param string $gridId
-     */
-    public function create($gridId, DataSourceInterface $dataSource): \Shopsys\FrameworkBundle\Component\Grid\Grid
+    
+    public function create(string $gridId, DataSourceInterface $dataSource): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         return new Grid(
             $gridId,

@@ -49,7 +49,7 @@ class HeurekaProductDomain
         $this->domainId = $heurekaProductDomainData->domainId;
     }
 
-    public function edit(HeurekaProductDomainData $heurekaProductDomainData)
+    public function edit(HeurekaProductDomainData $heurekaProductDomainData): void
     {
         $this->product = $heurekaProductDomainData->product;
         $this->cpc = $heurekaProductDomainData->cpc;

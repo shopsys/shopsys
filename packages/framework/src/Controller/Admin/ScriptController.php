@@ -77,9 +77,8 @@ class ScriptController extends AdminBaseController
 
     /**
      * @Route("/script/edit/{scriptId}")
-     * @param int $scriptId
      */
-    public function editAction(Request $request, $scriptId)
+    public function editAction(Request $request, int $scriptId)
     {
         $script = $this->scriptFacade->getById($scriptId);
         $scriptData = $this->scriptDataFactory->createFromScript($script);
@@ -134,9 +133,8 @@ class ScriptController extends AdminBaseController
 
     /**
      * @Route("/script/delete/{scriptId}")
-     * @param int $scriptId
      */
-    public function deleteAction($scriptId)
+    public function deleteAction(int $scriptId)
     {
         try {
             $script = $this->scriptFacade->getById($scriptId);

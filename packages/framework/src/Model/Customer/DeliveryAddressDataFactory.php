@@ -17,7 +17,7 @@ class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
         return $deliveryAddressData;
     }
 
-    protected function fillFromDeliveryAddress(DeliveryAddressData $deliveryAddressData, DeliveryAddress $deliveryAddress)
+    protected function fillFromDeliveryAddress(DeliveryAddressData $deliveryAddressData, DeliveryAddress $deliveryAddress): void
     {
         $deliveryAddressData->addressFilled = true;
         $deliveryAddressData->companyName = $deliveryAddress->getCompanyName();

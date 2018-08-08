@@ -20,10 +20,9 @@ class DateTimeFormatter
     /**
      * @param int $dateType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param int $timeType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
-     * @param string $locale
      * @return string|bool
      */
-    public function format(DateTime $value, $dateType, $timeType, $locale)
+    public function format(DateTime $value, int $dateType, int $timeType, string $locale)
     {
         $intlDateFormatter = new IntlDateFormatter(
             $locale,
@@ -38,11 +37,10 @@ class DateTimeFormatter
     }
 
     /**
-     * @param string $locale
      * @param int|null $dateType
      * @param int|null $timeType
      */
-    private function getCustomPattern($locale, $dateType, $timeType): ?string
+    private function getCustomPattern(string $locale, ?int $dateType, ?int $timeType): ?string
     {
         $dateTimePattern = $this->customDateTimeFormatPatternRepository->findDateTimePattern($locale, $dateType, $timeType);
         if ($dateTimePattern !== null) {

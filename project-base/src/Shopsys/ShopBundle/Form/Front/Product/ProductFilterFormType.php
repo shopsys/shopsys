@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints;
 
 class ProductFilterFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $priceScale = 2;
         $priceTransformer = new MoneyToLocalizedStringTransformer($priceScale, false);
@@ -76,7 +76,7 @@ class ProductFilterFormType extends AbstractType
             ->add('search', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('product_filter_config')

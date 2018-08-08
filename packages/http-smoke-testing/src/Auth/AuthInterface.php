@@ -9,5 +9,5 @@ interface AuthInterface
     /**
      * Makes changes to the provided Request object for it to be authenticated.
      */
-    public function authenticateRequest(Request $request);
+    public function authenticateRequest(Request $request): void;
 }

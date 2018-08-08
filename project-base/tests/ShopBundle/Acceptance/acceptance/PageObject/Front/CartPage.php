@@ -8,87 +8,57 @@ use Tests\ShopBundle\Acceptance\acceptance\PageObject\AbstractPage;
 
 class CartPage extends AbstractPage
 {
-    /**
-     * @param string $productName
-     * @param int $quantity
-     */
-    public function assertProductQuantity($productName, $quantity)
+    public function assertProductQuantity(string $productName, int $quantity): void
     {
         $quantityField = $this->getQuantityFieldByProductName($productName);
         $this->tester->seeInFieldByElement($quantity, $quantityField);
     }
-
-    /**
-     * @param string $productName
-     * @param string $formattedPriceWithCurrency
-     */
-    public function assertProductPrice($productName, $formattedPriceWithCurrency)
+    
+    public function assertProductPrice(string $productName, string $formattedPriceWithCurrency): void
     {
         $productPriceCell = $this->getProductPriceCellByName($productName);
         $this->tester->seeInElement($formattedPriceWithCurrency, $productPriceCell);
     }
-
-    /**
-     * @param string $formattedPriceWithCurrency
-     */
-    public function assertTotalPriceWithVat($formattedPriceWithCurrency)
+    
+    public function assertTotalPriceWithVat(string $formattedPriceWithCurrency): void
     {
         $orderPriceCell = $this->getTotalProductsPriceCell();
         $this->tester->seeInElement('Total price including VAT: ' . $formattedPriceWithCurrency, $orderPriceCell);
     }
-
-    /**
-     * @param string $productName
-     * @param int $quantity
-     */
-    public function changeProductQuantity($productName, $quantity)
+    
+    public function changeProductQuantity(string $productName, int $quantity): void
     {
         $quantityField = $this->getQuantityFieldByProductName($productName);
         $this->tester->fillFieldByElement($quantityField, $quantity);
         $this->tester->pressKeysByElement($quantityField, WebDriverKeys::ENTER);
         $this->tester->waitForAjax();
     }
-
-    /**
-     * @param string $productName
-     */
-    public function removeProductFromCart($productName)
+    
+    public function removeProductFromCart(string $productName): void
     {
         $row = $this->findProductRowInCartByName($productName);
         $removingButton = $row->findElement(WebDriverBy::cssSelector('.js-cart-item-remove-button'));
         $this->tester->clickByElement($removingButton);
     }
-
-    /**
-     * @param string $productName
-     */
-    public function assertProductIsInCartByName($productName)
+    
+    public function assertProductIsInCartByName(string $productName): void
     {
         $this->tester->see($productName, WebDriverBy::cssSelector('.js-cart-item-name'));
     }
-
-    /**
-     * @param string $productName
-     */
-    public function assertProductIsNotInCartByName($productName)
+    
+    public function assertProductIsNotInCartByName(string $productName): void
     {
         $this->tester->dontSee($productName, WebDriverBy::cssSelector('.js-cart-item-name'));
     }
-
-    /**
-     * @param string $productName
-     */
-    private function getQuantityFieldByProductName($productName): \Facebook\WebDriver\WebDriverElement
+    
+    private function getQuantityFieldByProductName(string $productName): \Facebook\WebDriver\WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 
         return $row->findElement(WebDriverBy::cssSelector('input[name^="cart_form[quantities]"]'));
     }
-
-    /**
-     * @param string $productName
-     */
-    private function findProductRowInCartByName($productName): \Facebook\WebDriver\WebDriverElement
+    
+    private function findProductRowInCartByName(string $productName): \Facebook\WebDriver\WebDriverElement
     {
         $rows = $this->webDriver->findElements(WebDriverBy::cssSelector('.js-cart-item'));
 
@@ -107,11 +77,8 @@ class CartPage extends AbstractPage
         $message = 'Unable to find row containing product "' . $productName . '" in cart.';
         throw new \Facebook\WebDriver\Exception\NoSuchElementException($message);
     }
-
-    /**
-     * @param string $productName
-     */
-    private function getProductPriceCellByName($productName): \Facebook\WebDriver\WebDriverElement
+    
+    private function getProductPriceCellByName(string $productName): \Facebook\WebDriver\WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 

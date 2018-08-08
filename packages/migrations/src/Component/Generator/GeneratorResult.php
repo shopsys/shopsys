@@ -16,10 +16,9 @@ class GeneratorResult
     private $writtenBytes;
 
     /**
-     * @param string $migrationFilePath
      * @param int|false $writtenBytes
      */
-    public function __construct($migrationFilePath, $writtenBytes)
+    public function __construct(string $migrationFilePath, $writtenBytes)
     {
         $this->migrationFilePath = $migrationFilePath;
         $this->writtenBytes = $writtenBytes;

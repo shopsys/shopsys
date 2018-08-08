@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -29,9 +28,6 @@ class FileUploadController extends AdminBaseController
         $this->fileThumbnailExtension = $fileThumbnailExtension;
     }
 
-    /**
-     * @Route("/file-upload/")
-     */
     public function uploadAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $actionResult = [
@@ -65,9 +61,6 @@ class FileUploadController extends AdminBaseController
         return new JsonResponse($actionResult);
     }
 
-    /**
-     * @Route("/file-upload/delete-temporary-file/")
-     */
     public function deleteTemporaryFileAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $filename = $request->get('filename');

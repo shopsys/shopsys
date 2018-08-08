@@ -6,11 +6,7 @@ use Tests\ShopBundle\Acceptance\acceptance\PageObject\AbstractPage;
 
 class LoginPage extends AbstractPage
 {
-    /**
-     * @param string $email
-     * @param string $password
-     */
-    public function login($email, $password)
+    public function login(string $email, string $password): void
     {
         $this->tester->fillFieldByName('front_login_form[email]', $email);
         $this->tester->fillFieldByName('front_login_form[password]', $password);

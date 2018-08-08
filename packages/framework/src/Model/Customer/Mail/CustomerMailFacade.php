@@ -34,7 +34,7 @@ class CustomerMailFacade
         $this->registrationMailService = $registrationMailService;
     }
 
-    public function sendRegistrationMail(User $user)
+    public function sendRegistrationMail(User $user): void
     {
         $mailTemplate = $this->mailTemplateFacade->get(MailTemplate::REGISTRATION_CONFIRM_NAME, $user->getDomainId());
         $messageData = $this->registrationMailService->getMessageDataByUser($user, $mailTemplate);

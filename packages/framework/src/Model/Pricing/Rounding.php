@@ -13,11 +13,8 @@ class Rounding
     {
         $this->pricingSetting = $pricingSetting;
     }
-
-    /**
-     * @param string $priceWithVat
-     */
-    public function roundPriceWithVat($priceWithVat): string
+    
+    public function roundPriceWithVat(string $priceWithVat): string
     {
         $roundingType = $this->pricingSetting->getRoundingType();
 
@@ -42,19 +39,13 @@ class Rounding
 
         return $roundedPriceWithVat;
     }
-
-    /**
-     * @param string $priceWithoutVat
-     */
-    public function roundPriceWithoutVat($priceWithoutVat): string
+    
+    public function roundPriceWithoutVat(string $priceWithoutVat): string
     {
         return round($priceWithoutVat, 2);
     }
-
-    /**
-     * @param string $vatAmount
-     */
-    public function roundVatAmount($vatAmount): string
+    
+    public function roundVatAmount(string $vatAmount): string
     {
         return round($vatAmount, 2);
     }

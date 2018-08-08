@@ -24,17 +24,13 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
         $this->friendlyUrlRepository = $friendlyUrlRepository;
     }
-
-    /**
-     * @param string $routeName
-     * @param int $referenceType
-     */
+    
     public function generateFromRouteCollection(
         RouteCollection $routeCollection,
         DomainConfig $domainConfig,
-        $routeName,
+        string $routeName,
         array $parameters = [],
-        $referenceType = self::ABSOLUTE_PATH
+        int $referenceType = self::ABSOLUTE_PATH
     ): string {
         $route = $routeCollection->get($routeName);
         if ($route === null) {
@@ -61,12 +57,8 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
         return $this->getGeneratedUrl($routeName, $route, $friendlyUrl, $parameters, $referenceType);
     }
-
-    /**
-     * @param string $routeName
-     * @param string $referenceType
-     */
-    public function getGeneratedUrl($routeName, Route $route, FriendlyUrl $friendlyUrl, array $parameters, $referenceType): string
+    
+    public function getGeneratedUrl(string $routeName, Route $route, FriendlyUrl $friendlyUrl, array $parameters, string $referenceType): string
     {
         $compiledRoute = RouteCompiler::compile($route);
 
@@ -93,7 +85,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
     /**
      * Not supported method
      */
-    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH): void
     {
         throw new \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\MethodGenerateIsNotSupportedException();
     }

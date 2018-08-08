@@ -7,7 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180702111020 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->setInputPriceType();
         $this->setRoundingType();
@@ -24,11 +24,11 @@ class Version20180702111020 extends AbstractMigration
         $this->setFeedHash();
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 
-    private function setInputPriceType()
+    private function setInputPriceType(): void
     {
         $inputPriceTypeSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'inputPriceType\' AND domain_id = 0;')->fetchColumn(0);
         if ($inputPriceTypeSettingCount <= 0) {
@@ -40,7 +40,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setRoundingType()
+    private function setRoundingType(): void
     {
         $roundingTypeSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'roundingType\' AND domain_id = 0;')->fetchColumn(0);
         if ($roundingTypeSettingCount <= 0) {
@@ -52,7 +52,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setOrderSubmittedText()
+    private function setOrderSubmittedText(): void
     {
         $orderSubmittedTextSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'orderSubmittedText\' AND domain_id = 1;')->fetchColumn(0);
         if ($orderSubmittedTextSettingCount <= 0) {
@@ -71,7 +71,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setMainAdminMail()
+    private function setMainAdminMail(): void
     {
         $mailAdminMailSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMail\' AND domain_id = 1;')->fetchColumn(0);
         if ($mailAdminMailSettingCount <= 0) {
@@ -79,7 +79,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setMainAdminMailName()
+    private function setMainAdminMailName(): void
     {
         $mainAdminMailNameSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMailName\' AND domain_id = 1;')->fetchColumn(0);
         if ($mainAdminMailNameSettingCount <= 0) {
@@ -95,7 +95,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setSeoMetaDescriptionMainPage()
+    private function setSeoMetaDescriptionMainPage(): void
     {
         $seoMetaDescriptionMainPageSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'seoMetaDescriptionMainPage\' AND domain_id = 1;')->fetchColumn(0);
         if ($seoMetaDescriptionMainPageSettingCount <= 0) {
@@ -105,7 +105,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setSeoTitleMainPage()
+    private function setSeoTitleMainPage(): void
     {
         $seoTitleMainPageSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleMainPage\' AND domain_id = 1;')->fetchColumn(0);
         if ($seoTitleMainPageSettingCount <= 0) {
@@ -115,7 +115,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setSeoTitleAddOn()
+    private function setSeoTitleAddOn(): void
     {
         $seoTitleAddOnSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleAddOn\' AND domain_id = 1;')->fetchColumn(0);
         if ($seoTitleAddOnSettingCount <= 0) {
@@ -125,7 +125,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setTermsAndConditionsArticleId()
+    private function setTermsAndConditionsArticleId(): void
     {
         $termsAndConditionsArticleIdSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'termsAndConditionsArticleId\' AND domain_id = 1;')->fetchColumn(0);
         if ($termsAndConditionsArticleIdSettingCount <= 0) {
@@ -133,7 +133,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setCookiesArticleId()
+    private function setCookiesArticleId(): void
     {
         $cookiesArticleIdSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'cookiesArticleId\' AND domain_id = 1;')->fetchColumn(0);
         if ($cookiesArticleIdSettingCount <= 0) {
@@ -141,7 +141,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setDomainDataCreated()
+    private function setDomainDataCreated(): void
     {
         $domainDataCreatedSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'domainDataCreated\' AND domain_id = 1;')->fetchColumn(0);
         if ($domainDataCreatedSettingCount <= 0) {
@@ -149,7 +149,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setFeedHash()
+    private function setFeedHash(): void
     {
         $feedHashSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'feedHash\' AND domain_id = 0;')->fetchColumn(0);
         if ($feedHashSettingCount <= 0) {

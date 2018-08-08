@@ -27,18 +27,14 @@ class DomainFactoryOverwritingDomainUrl
      * @param string|null $overwriteDomainUrl
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting
      */
-    public function __construct($overwriteDomainUrl, DomainsConfigLoader $domainsConfigLoader, Setting $setting)
+    public function __construct(?string $overwriteDomainUrl, DomainsConfigLoader $domainsConfigLoader, Setting $setting)
     {
         $this->overwriteDomainUrl = $overwriteDomainUrl;
         $this->domainsConfigLoader = $domainsConfigLoader;
         $this->setting = $setting;
     }
-
-    /**
-     * @param string $domainsConfigFilepath
-     * @param string $domainsUrlsConfigFilepath
-     */
-    public function create($domainsConfigFilepath, $domainsUrlsConfigFilepath): \Shopsys\FrameworkBundle\Component\Domain\Domain
+    
+    public function create(string $domainsConfigFilepath, string $domainsUrlsConfigFilepath): \Shopsys\FrameworkBundle\Component\Domain\Domain
     {
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml($domainsConfigFilepath, $domainsUrlsConfigFilepath);
         if ($this->overwriteDomainUrl !== null) {

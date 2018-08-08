@@ -44,10 +44,9 @@ class AdvancedSearchOrderFacade
     }
 
     /**
-     * @param string $filterName
      * @param string|int $index
      */
-    public function createRuleForm($filterName, $index): \Symfony\Component\Form\FormInterface
+    public function createRuleForm(string $filterName, $index): \Symfony\Component\Form\FormInterface
     {
         $rulesData = [
             $index => $this->advancedSearchOrderService->createDefaultRuleFormViewData($filterName),
@@ -55,11 +54,8 @@ class AdvancedSearchOrderFacade
 
         return $this->orderAdvancedSearchFormFactory->createRulesForm(self::RULES_FORM_NAME, $rulesData);
     }
-
-    /**
-     * @param array $advancedSearchOrderData
-     */
-    public function getQueryBuilderByAdvancedSearchOrderData($advancedSearchOrderData): \Doctrine\ORM\QueryBuilder
+    
+    public function getQueryBuilderByAdvancedSearchOrderData(array $advancedSearchOrderData): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->orderListAdminFacade->getOrderListQueryBuilder();
         $this->advancedSearchOrderService->extendQueryBuilderByAdvancedSearchOrderData($queryBuilder, $advancedSearchOrderData);

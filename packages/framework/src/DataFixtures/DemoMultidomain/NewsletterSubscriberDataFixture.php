@@ -18,7 +18,7 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
     /** @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade */
     private $newsletterFacade;
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $newsletterSubscribersData = $this->getEmailData();
 

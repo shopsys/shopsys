@@ -19,7 +19,7 @@ class FormDetailExtension extends Twig_Extension
     {
         $this->twigEnvironment = $twigEnvironment;
     }
-    
+
     public function getFunctions()
     {
         return [

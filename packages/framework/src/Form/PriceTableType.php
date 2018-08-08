@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints;
 
 class PriceTableType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         foreach ($options['currencies'] as $key => $currency) {
             /* @var $currency \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency */
@@ -33,15 +33,15 @@ class PriceTableType extends AbstractType
                 ]);
         }
     }
-    
-    public function buildView(FormView $view, FormInterface $form, array $options)
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
         $view->vars['base_prices'] = $options['base_prices'];
         $view->vars['currencies'] = $options['currencies'];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['base_prices', 'currencies'])

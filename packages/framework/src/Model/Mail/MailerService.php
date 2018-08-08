@@ -18,7 +18,7 @@ class MailerService
         $this->mailer = $mailer;
     }
 
-    public function send(MessageData $messageData)
+    public function send(MessageData $messageData): void
     {
         $message = $this->getMessageWithReplacedVariables($messageData);
         $failedRecipients = [];
@@ -66,12 +66,8 @@ class MailerService
 
         return $message;
     }
-
-    /**
-     * @param string $string
-     * @param array $variablesKeysAndValues
-     */
-    private function replaceVariables($string, $variablesKeysAndValues): string
+    
+    private function replaceVariables(string $string, array $variablesKeysAndValues): string
     {
         return strtr($string, $variablesKeysAndValues);
     }

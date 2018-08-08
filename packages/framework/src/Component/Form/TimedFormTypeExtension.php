@@ -39,15 +39,15 @@ class TimedFormTypeExtension extends AbstractTypeExtension
             $options
         ));
     }
-    
-    public function finishView(FormView $view, FormInterface $form, array $options)
+
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         if ($options[self::OPTION_ENABLED] && !$view->parent && $options['compound']) {
             $this->formTimeProvider->generateFormTime($form->getName());
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             self::OPTION_ENABLED => false,

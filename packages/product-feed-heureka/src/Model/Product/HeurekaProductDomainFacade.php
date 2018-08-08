@@ -34,10 +34,9 @@ class HeurekaProductDomainFacade
     }
 
     /**
-     * @param int $productId
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]|null
      */
-    public function findByProductId($productId): ?array
+    public function findByProductId(int $productId): ?array
     {
         return $this->heurekaProductDomainRepository->findByProductId($productId);
     }
@@ -59,7 +58,7 @@ class HeurekaProductDomainFacade
         );
     }
 
-    public function delete($productId)
+    public function delete($productId): void
     {
         $heurekaProductDomains = $this->heurekaProductDomainRepository->findByProductId($productId);
 
@@ -72,7 +71,7 @@ class HeurekaProductDomainFacade
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData[] $heurekaProductDomainsData
      */
-    public function saveHeurekaProductDomainsForProductId($productId, array $heurekaProductDomainsData)
+    public function saveHeurekaProductDomainsForProductId($productId, array $heurekaProductDomainsData): void
     {
         $existingHeurekaProductDomains = $this->heurekaProductDomainRepository->findByProductId($productId);
 
@@ -83,7 +82,7 @@ class HeurekaProductDomainFacade
         }
     }
 
-    public function saveHeurekaProductDomain($productId, HeurekaProductDomainData $heurekaProductDomainData)
+    public function saveHeurekaProductDomain($productId, HeurekaProductDomainData $heurekaProductDomainData): void
     {
         $product = $this->productRepository->getById($productId);
         $heurekaProductDomainData->product = $product;
@@ -110,7 +109,7 @@ class HeurekaProductDomainFacade
     protected function removeOldHeurekaProductDomainsForProductId(
         array $existingHeurekaProductDomains,
         array $newHeurekaProductDomainsData
-    ) {
+    ): void {
         $domainsIdsWithNewHeurekaProductDomains = [];
         foreach ($newHeurekaProductDomainsData as $newHeurekaProductDomainData) {
             $domainsIdsWithNewHeurekaProductDomains[$newHeurekaProductDomainData->domainId] = $newHeurekaProductDomainData->domainId;

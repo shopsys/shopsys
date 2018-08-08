@@ -49,7 +49,7 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
         return $articleData;
     }
 
-    protected function fillFromArticle(ArticleData $articleData, Article $article)
+    protected function fillFromArticle(ArticleData $articleData, Article $article): void
     {
         $articleData->name = $article->getName();
         $articleData->text = $article->getText();
@@ -70,7 +70,7 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
         }
     }
 
-    protected function fillNew(ArticleData $articleData)
+    protected function fillNew(ArticleData $articleData): void
     {
         $articleData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
     }

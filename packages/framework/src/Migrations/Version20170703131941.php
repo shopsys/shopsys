@@ -9,7 +9,7 @@ class Version20170703131941 extends AbstractMigration
 {
     use MultidomainMigrationTrait;
 
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('
             CREATE TABLE brand_domains (
@@ -36,7 +36,7 @@ class Version20170703131941 extends AbstractMigration
         }
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

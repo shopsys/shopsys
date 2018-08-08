@@ -279,7 +279,7 @@ class OrderController extends FrontBaseController
         OrderPreview $orderPreview,
         array $transports,
         array $payments
-    ) {
+    ): void {
         $transportAndPaymentCheckResult = $this->transportAndPaymentWatcherService->checkTransportAndPayment(
             $orderData,
             $orderPreview,
@@ -351,11 +351,8 @@ class OrderController extends FrontBaseController
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
         ]);
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
-    private function sendMail($order)
+    
+    private function sendMail(\Shopsys\FrameworkBundle\Model\Order\Order $order): void
     {
         $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
         if ($mailTemplate->isSendMail()) {

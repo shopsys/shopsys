@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints;
 class FriendlyUrlType extends AbstractType
 {
     const SLUG_REGEX = '/^[\w_\-\/]+$/';
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(UrlListData::FIELD_DOMAIN, DomainType::class, [
             'displayUrl' => true,

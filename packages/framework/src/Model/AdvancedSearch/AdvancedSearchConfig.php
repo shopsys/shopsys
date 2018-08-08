@@ -14,7 +14,7 @@ class AdvancedSearchConfig
         $this->filters = [];
     }
 
-    public function registerFilter(AdvancedSearchFilterInterface $filter)
+    public function registerFilter(AdvancedSearchFilterInterface $filter): void
     {
         if (array_key_exists($filter->getName(), $this->filters)) {
             $message = 'Filter "' . $filter->getName() . '" already exists.';
@@ -31,11 +31,8 @@ class AdvancedSearchConfig
     {
         return $this->filters;
     }
-
-    /**
-     * @param string $filterName
-     */
-    public function getFilter($filterName): \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface
+    
+    public function getFilter(string $filterName): \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface
     {
         if (!array_key_exists($filterName, $this->filters)) {
             $message = 'Filter "' . $filterName . '" not found.';

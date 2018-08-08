@@ -259,9 +259,8 @@ class ProductController extends AdminBaseController
     /**
      * @Route("/product/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $product = $this->productFacade->getById($id);
@@ -358,9 +357,8 @@ class ProductController extends AdminBaseController
 
     /**
      * @Route("/product/visibility/{productId}")
-     * @param int $productId
      */
-    public function visibilityAction($productId)
+    public function visibilityAction(int $productId)
     {
         $product = $this->productFacade->getById($productId);
 

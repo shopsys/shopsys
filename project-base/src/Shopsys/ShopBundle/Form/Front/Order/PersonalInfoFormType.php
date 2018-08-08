@@ -47,8 +47,8 @@ class PersonalInfoFormType extends AbstractType
         $this->heurekaFacade = $heurekaFacade;
         $this->domain = $domain;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $countries = $this->countryFacade->getAllByDomainId($options['domain_id']);
 
@@ -277,7 +277,7 @@ class PersonalInfoFormType extends AbstractType
         return 'order_personal_info_form';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('domain_id')

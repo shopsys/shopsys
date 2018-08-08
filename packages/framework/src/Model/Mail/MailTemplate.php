@@ -68,19 +68,15 @@ class MailTemplate
      * @ORM\Column(type="boolean")
      */
     protected $sendMail;
-
-    /**
-     * @param string $name
-     * @param int $domainId
-     */
-    public function __construct($name, $domainId, MailTemplateData $mailTemplateData)
+    
+    public function __construct(string $name, int $domainId, MailTemplateData $mailTemplateData)
     {
         $this->name = $name;
         $this->domainId = $domainId;
         $this->edit($mailTemplateData);
     }
 
-    public function edit(MailTemplateData $mailTemplateData)
+    public function edit(MailTemplateData $mailTemplateData): void
     {
         $this->bccEmail = $mailTemplateData->bccEmail;
         $this->subject = $mailTemplateData->subject;

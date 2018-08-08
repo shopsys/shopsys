@@ -33,21 +33,17 @@ class ExtendedOrderProduct extends ExtendedOrderItem
     protected $productStringField;
 
     /**
-     * @param string $name
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param string $unitName
      * @param string|null $catnum
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      */
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
-        $unitName,
-        $catnum,
+        string $vatPercent,
+        int $quantity,
+        string $unitName,
+        ?string $catnum,
         Product $product = null
     ) {
         parent::__construct(
@@ -85,7 +81,7 @@ class ExtendedOrderProduct extends ExtendedOrderItem
     /**
      * @param string|null $productStringField
      */
-    public function setProductStringField($productStringField)
+    public function setProductStringField(?string $productStringField): void
     {
         $this->productStringField = $productStringField;
     }

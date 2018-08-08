@@ -28,8 +28,8 @@ class PromoCodeFormType extends AbstractType
     {
         $this->promoCodeFacade = $promoCodeFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->promoCode = $options['promo_code'];
 
@@ -58,7 +58,7 @@ class PromoCodeFormType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('promo_code')
@@ -67,11 +67,8 @@ class PromoCodeFormType extends AbstractType
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
     }
-
-    /**
-     * @param string $promoCodeValue
-     */
-    public function validateUniquePromoCode($promoCodeValue, ExecutionContextInterface $context)
+    
+    public function validateUniquePromoCode(string $promoCodeValue, ExecutionContextInterface $context): void
     {
         if ($this->promoCode === null || $promoCodeValue !== $this->promoCode->getCode()) {
             $promoCode = $this->promoCodeFacade->findPromoCodeByCode($promoCodeValue);

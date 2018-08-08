@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $pluginDataFixtureRegistryDefinition = $container->findDefinition(
             PluginDataFixtureRegistry::class
@@ -20,11 +20,8 @@ class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
             $this->registerDataFixture($pluginDataFixtureRegistryDefinition, $serviceId);
         }
     }
-
-    /**
-     * @param string $serviceId
-     */
-    private function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, $serviceId)
+    
+    private function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, string $serviceId): void
     {
         $pluginDataFixtureRegistryDefinition->addMethodCall('registerDataFixture', [new Reference($serviceId)]);
     }

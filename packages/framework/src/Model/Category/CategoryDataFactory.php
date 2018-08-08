@@ -56,7 +56,7 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
         return $categoryData;
     }
 
-    protected function fillNew(CategoryData $categoryData)
+    protected function fillNew(CategoryData $categoryData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->seoMetaDescriptions[$domainId] = null;
@@ -67,7 +67,7 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
         }
     }
 
-    protected function fillFromCategory(CategoryData $categoryData, Category $category)
+    protected function fillFromCategory(CategoryData $categoryData, Category $category): void
     {
         $categoryData->name = $category->getNames();
         $categoryData->parent = $category->getParent();

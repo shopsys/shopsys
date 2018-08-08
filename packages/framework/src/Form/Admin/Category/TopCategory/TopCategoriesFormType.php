@@ -37,8 +37,8 @@ class TopCategoriesFormType extends AbstractType
         $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
         $this->categoriesIdsToCategoriesTransformer = $categoriesIdsToCategoriesTransformer;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $categoryPaths = $this->categoryFacade->getFullPathsIndexedByIdsForDomain(
             $options['domain_id'],
@@ -58,7 +58,7 @@ class TopCategoriesFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['domain_id', 'locale'])

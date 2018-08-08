@@ -172,9 +172,6 @@ class OrderFacade
         $this->orderFactory = $orderFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
-     */
     public function createOrder(OrderData $orderData, OrderPreview $orderPreview, User $user = null): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $orderNumber = $this->orderNumberSequenceRepository->getNextNumber();
@@ -226,7 +223,7 @@ class OrderFacade
     /**
      * @param bool|null $disallowHeurekaVerifiedByCustomers
      */
-    public function sendHeurekaOrderInfo(Order $order, $disallowHeurekaVerifiedByCustomers)
+    public function sendHeurekaOrderInfo(Order $order, ?bool $disallowHeurekaVerifiedByCustomers): void
     {
         $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
         $locale = $domainConfig->getLocale();
@@ -238,11 +235,8 @@ class OrderFacade
             $this->heurekaFacade->sendOrderInfo($order);
         }
     }
-
-    /**
-     * @param int $orderId
-     */
-    public function edit($orderId, OrderData $orderData): \Shopsys\FrameworkBundle\Model\Order\Order
+    
+    public function edit(int $orderId, OrderData $orderData): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->orderRepository->getById($orderId);
         $originalOrderStatus = $order->getStatus();
@@ -272,11 +266,8 @@ class OrderFacade
 
         return $order;
     }
-
-    /**
-     * @param int $orderId
-     */
-    public function getOrderSentPageContent($orderId): string
+    
+    public function getOrderSentPageContent(int $orderId): string
     {
         $order = $this->getById($orderId);
         $orderDetailUrl = $this->orderService->getOrderDetailUrl($order);
@@ -292,16 +283,13 @@ class OrderFacade
         return strtr($orderSentPageContent, $variables);
     }
 
-    public function prefillFrontOrderData(FrontOrderData $orderData, User $user)
+    public function prefillFrontOrderData(FrontOrderData $orderData, User $user): void
     {
         $order = $this->orderRepository->findLastByUserId($user->getId());
         $this->orderCreationService->prefillFrontFormData($orderData, $user, $order);
     }
-
-    /**
-     * @param int $orderId
-     */
-    public function deleteById($orderId)
+    
+    public function deleteById(int $orderId): void
     {
         $order = $this->orderRepository->getById($orderId);
         if ($order->getStatus()->getType() !== OrderStatus::TYPE_CANCELED) {
@@ -320,36 +308,24 @@ class OrderFacade
     }
 
     /**
-     * @param string $email
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getOrderListForEmailByDomainId($email, $domainId): array
+    public function getOrderListForEmailByDomainId(string $email, int $domainId): array
     {
         return $this->orderRepository->getOrderListForEmailByDomainId($email, $domainId);
     }
-
-    /**
-     * @param int $orderId
-     */
-    public function getById($orderId): \Shopsys\FrameworkBundle\Model\Order\Order
+    
+    public function getById(int $orderId): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->orderRepository->getById($orderId);
     }
-
-    /**
-     * @param string $urlHash
-     * @param int $domainId
-     */
-    public function getByUrlHashAndDomain($urlHash, $domainId): \Shopsys\FrameworkBundle\Model\Order\Order
+    
+    public function getByUrlHashAndDomain(string $urlHash, int $domainId): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->orderRepository->getByUrlHashAndDomain($urlHash, $domainId);
     }
-
-    /**
-     * @param string $orderNumber
-     */
-    public function getByOrderNumberAndUser($orderNumber, User $user): \Shopsys\FrameworkBundle\Model\Order\Order
+    
+    public function getByOrderNumberAndUser(string $orderNumber, User $user): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->orderRepository->getByOrderNumberAndUser($orderNumber, $user);
     }
@@ -362,7 +338,7 @@ class OrderFacade
         );
     }
 
-    protected function setOrderDataAdministrator(OrderData $orderData)
+    protected function setOrderDataAdministrator(OrderData $orderData): void
     {
         if ($this->administratorFrontSecurityFacade->isAdministratorLoggedAsCustomer()) {
             try {
@@ -373,12 +349,8 @@ class OrderFacade
             }
         }
     }
-
-    /**
-     * @param string $email
-     * @param int $domainId
-     */
-    public function getOrdersCountByEmailAndDomainId($email, $domainId)
+    
+    public function getOrdersCountByEmailAndDomainId(string $email, int $domainId)
     {
         return $this->orderRepository->getOrdersCountByEmailAndDomainId($email, $domainId);
     }

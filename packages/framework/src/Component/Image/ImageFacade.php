@@ -71,11 +71,10 @@ class ImageFacade
     }
 
     /**
-     * @param object $entity
      * @param array|null $temporaryFilenames
      * @param string|null $type
      */
-    public function uploadImage($entity, $temporaryFilenames, $type)
+    public function uploadImage(object $entity, ?array $temporaryFilenames, ?string $type): void
     {
         if ($temporaryFilenames !== null && count($temporaryFilenames) > 0) {
             $entitiesForFlush = [];
@@ -104,18 +103,17 @@ class ImageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
      */
-    public function saveImageOrdering($orderedImages)
+    public function saveImageOrdering($orderedImages): void
     {
         $this->imageService->setImagePositionsByOrder($orderedImages);
         $this->em->flush($orderedImages);
     }
 
     /**
-     * @param object $entity
      * @param array|null $temporaryFilenames
      * @param string|null $type
      */
-    public function uploadImages($entity, $temporaryFilenames, $type)
+    public function uploadImages(object $entity, ?array $temporaryFilenames, ?string $type): void
     {
         if ($temporaryFilenames !== null && count($temporaryFilenames) > 0) {
             $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
@@ -130,10 +128,9 @@ class ImageFacade
     }
 
     /**
-     * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
      */
-    public function deleteImages($entity, array $images)
+    public function deleteImages(object $entity, array $images): void
     {
         $entityName = $this->imageConfig->getEntityName($entity);
         $entityId = $this->getEntityId($entity);
@@ -147,10 +144,9 @@ class ImageFacade
     }
 
     /**
-     * @param object $entity
      * @param string|null $type
      */
-    public function getImageByEntity($entity, $type): \Shopsys\FrameworkBundle\Component\Image\Image
+    public function getImageByEntity(object $entity, ?string $type): \Shopsys\FrameworkBundle\Component\Image\Image
     {
         return $this->imageRepository->getImageByEntity(
             $this->imageConfig->getEntityName($entity),
@@ -160,11 +156,10 @@ class ImageFacade
     }
 
     /**
-     * @param object $entity
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getImagesByEntityIndexedById($entity, $type): array
+    public function getImagesByEntityIndexedById(object $entity, ?string $type): array
     {
         return $this->imageRepository->getImagesByEntityIndexedById(
             $this->imageConfig->getEntityName($entity),
@@ -174,10 +169,9 @@ class ImageFacade
     }
 
     /**
-     * @param object $entity
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getAllImagesByEntity($entity): array
+    public function getAllImagesByEntity(object $entity): array
     {
         return $this->imageRepository->getAllImagesByEntity(
             $this->imageConfig->getEntityName($entity),
@@ -185,7 +179,7 @@ class ImageFacade
         );
     }
 
-    public function deleteImageFiles(Image $image)
+    public function deleteImageFiles(Image $image): void
     {
         $entityName = $image->getEntityName();
         $imageConfig = $this->imageConfig->getEntityConfigByEntityName($entityName);
@@ -197,11 +191,8 @@ class ImageFacade
             }
         }
     }
-
-    /**
-     * @param object $entity
-     */
-    protected function getEntityId($entity): int
+    
+    protected function getEntityId(object $entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
         $identifier = $entityMetadata->getIdentifierValues($entity);
@@ -250,20 +241,13 @@ class ImageFacade
             return $this->getImageByEntity($imageOrEntity, $type);
         }
     }
-
-    /**
-     * @param int $imageId
-     */
-    public function getById($imageId): \Shopsys\FrameworkBundle\Component\Image\Image
+    
+    public function getById(int $imageId): \Shopsys\FrameworkBundle\Component\Image\Image
     {
         return $this->imageRepository->getById($imageId);
     }
-
-    /**
-     * @param object $sourceEntity
-     * @param object $targetEntity
-     */
-    public function copyImages($sourceEntity, $targetEntity)
+    
+    public function copyImages(object $sourceEntity, object $targetEntity): void
     {
         $sourceImages = $this->getAllImagesByEntity($sourceEntity);
         $targetImages = [];

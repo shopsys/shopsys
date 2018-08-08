@@ -59,7 +59,7 @@ class RegistrationMailService
             self::VARIABLE_LOGIN_PAGE => $router->generate('front_login', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ];
     }
-    
+
     public function getTemplateVariables()
     {
         return [

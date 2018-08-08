@@ -16,11 +16,8 @@ class OrderFlow extends FormFlow
      * @var int
      */
     private $domainId;
-
-    /**
-     * @param int $domainId
-     */
-    public function setDomainId($domainId)
+    
+    public function setDomainId(int $domainId): void
     {
         $this->domainId = $domainId;
     }
@@ -29,7 +26,7 @@ class OrderFlow extends FormFlow
     {
         return 'order';
     }
-    
+
     protected function loadStepsConfig()
     {
         return [
@@ -53,11 +50,8 @@ class OrderFlow extends FormFlow
         // Make instance ID constant as we do not want multiple instances of OrderFlow.
         return $this->getInstanceId();
     }
-
-    /**
-     * @param int $step
-     */
-    public function getFormOptions($step, array $options = []): array
+    
+    public function getFormOptions(int $step, array $options = []): array
     {
         $options = parent::getFormOptions($step, $options);
 
@@ -70,7 +64,7 @@ class OrderFlow extends FormFlow
         return $options;
     }
 
-    public function saveSentStepData()
+    public function saveSentStepData(): void
     {
         $stepData = $this->retrieveStepData();
 
@@ -93,7 +87,7 @@ class OrderFlow extends FormFlow
     /**
      * @param mixed $formData
      */
-    public function bind($formData)
+    public function bind($formData): void
     {
         parent::bind($formData); // load current step number
 
@@ -128,7 +122,7 @@ class OrderFlow extends FormFlow
         return $step->getFormType() === null;
     }
 
-    private function changeRequestToStep(StepInterface $step)
+    private function changeRequestToStep(StepInterface $step): void
     {
         $stepsData = $this->retrieveStepData();
         if (array_key_exists($step->getNumber(), $stepsData)) {

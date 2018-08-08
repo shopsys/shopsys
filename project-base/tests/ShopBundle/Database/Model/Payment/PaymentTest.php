@@ -13,7 +13,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class PaymentTest extends DatabaseTestCase
 {
-    public function testRemoveTransportFromPaymentAfterDelete()
+    public function testRemoveTransportFromPaymentAfterDelete(): void
     {
         $paymentDataFactory = $this->getContainer()->get(PaymentDataFactory::class);
         /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory $paymentDataFactory */

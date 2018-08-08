@@ -51,7 +51,7 @@ class EntityNameResolver
 
         return $string;
     }
-    
+
     private function resolveInArray(array $array): array
     {
         return array_map([$this, 'resolveIn'], $array);
@@ -59,10 +59,8 @@ class EntityNameResolver
 
     /**
      * Resolve entity names recursively in all properties of the subject (even private ones)
-     *
-     * @param object $object
      */
-    private function resolveInObjectProperties($object): void
+    private function resolveInObjectProperties(object $object): void
     {
         $reflection = new \ReflectionObject($object);
         foreach ($reflection->getProperties() as $property) {

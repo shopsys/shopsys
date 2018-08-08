@@ -33,17 +33,17 @@ class InputPriceRecalculationScheduler
         $this->setting = $setting;
     }
 
-    public function scheduleSetInputPricesWithoutVat()
+    public function scheduleSetInputPricesWithoutVat(): void
     {
         $this->recalculateInputPricesWithoutVat = true;
     }
 
-    public function scheduleSetInputPricesWithVat()
+    public function scheduleSetInputPricesWithVat(): void
     {
         $this->recalculateInputPricesWithVat = true;
     }
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

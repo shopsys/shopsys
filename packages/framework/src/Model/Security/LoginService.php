@@ -50,7 +50,7 @@ class LoginService
         return true;
     }
 
-    public function loginUser(User $user, Request $request)
+    public function loginUser(User $user, Request $request): void
     {
         $token = new UsernamePasswordToken($user, $user->getPassword(), 'frontend', $user->getRoles());
         $this->tokenStorage->setToken($token);

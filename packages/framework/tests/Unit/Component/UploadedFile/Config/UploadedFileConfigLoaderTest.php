@@ -9,7 +9,7 @@ use Tests\FrameworkBundle\Unit\Component\UploadedFile\Dummy;
 
 class UploadedFileConfigLoaderTest extends TestCase
 {
-    public function testLoadFromYaml()
+    public function testLoadFromYaml(): void
     {
         $configurationFilapath = __DIR__ . '/test_config_uploaded_files.yml';
         $filesystem = new Filesystem();

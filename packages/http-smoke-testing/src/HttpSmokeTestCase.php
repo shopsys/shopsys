@@ -13,7 +13,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before data provider is executed and before each test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -32,7 +32,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      *
      * @dataProvider httpResponseTestDataProvider
      */
-    final public function testHttpResponse(RequestDataSet $requestDataSet)
+    final public function testHttpResponse(RequestDataSet $requestDataSet): void
     {
         $requestDataSet->executeCallsDuringTestExecution(static::$kernel->getContainer());
 
@@ -95,7 +95,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     /**
      * This method must be implemented to customize and configure the test cases for individual routes
      */
-    abstract protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer);
+    abstract protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void;
 
     protected function createRequest(RequestDataSet $requestDataSet): \Symfony\Component\HttpFoundation\Request
     {
@@ -114,7 +114,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         return static::$kernel->handle($request);
     }
 
-    protected function assertResponse(Response $response, RequestDataSet $requestDataSet)
+    protected function assertResponse(Response $response, RequestDataSet $requestDataSet): void
     {
         $failMessage = sprintf(
             'Failed asserting that status code %d for route "%s" is identical to expected %d',
@@ -128,11 +128,8 @@ abstract class HttpSmokeTestCase extends KernelTestCase
             $this->getMessageWithDebugNotes($requestDataSet, $failMessage)
         );
     }
-
-    /**
-     * @param string $message
-     */
-    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, $message): string
+    
+    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, string $message): string
     {
         if (count($requestDataSet->getDebugNotes()) > 0) {
             $indentedDebugNotes = array_map(function ($debugNote) {

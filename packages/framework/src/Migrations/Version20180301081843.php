@@ -9,7 +9,7 @@ class Version20180301081843 extends AbstractMigration
 {
     use MultidomainMigrationTrait;
 
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         foreach ($this->getAllDomainIds() as $domainId) {
             $this->sql(
@@ -20,7 +20,7 @@ class Version20180301081843 extends AbstractMigration
         }
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

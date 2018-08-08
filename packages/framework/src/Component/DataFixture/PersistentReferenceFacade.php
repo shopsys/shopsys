@@ -30,11 +30,8 @@ class PersistentReferenceFacade
         $this->persistentReferenceRepository = $persistentReferenceRepository;
         $this->persistentReferenceFactory = $persistentReferenceFactory;
     }
-
-    /**
-     * @param string $name
-     */
-    public function getReference($name): object
+    
+    public function getReference(string $name): object
     {
         $persistentReference = $this->persistentReferenceRepository->getByReferenceName($name);
         $entity = $this->em->find($persistentReference->getEntityName(), $persistentReference->getEntityId());
@@ -45,12 +42,8 @@ class PersistentReferenceFacade
 
         return $entity;
     }
-
-    /**
-     * @param string $name
-     * @param object $object
-     */
-    public function persistReference($name, $object)
+    
+    public function persistReference(string $name, object $object): void
     {
         if (!is_object($object)) {
             throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\ObjectRequiredException($object);

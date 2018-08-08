@@ -90,9 +90,8 @@ class LoginController extends AdminBaseController
 
     /**
      * @Route("/sso/{originalDomainId}", requirements={"originalDomainId" = "\d+"})
-     * @param int $originalDomainId
      */
-    public function ssoAction(Request $request, $originalDomainId)
+    public function ssoAction(Request $request, int $originalDomainId)
     {
         $administrator = $this->getUser();
         /* @var $administrator \Shopsys\FrameworkBundle\Model\Administrator\Administrator */

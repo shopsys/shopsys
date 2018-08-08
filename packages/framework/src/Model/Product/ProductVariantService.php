@@ -14,7 +14,7 @@ class ProductVariantService
         $this->productFactory = $productFactory;
     }
 
-    public function checkProductIsNotMainVariant(Product $product)
+    public function checkProductIsNotMainVariant(Product $product): void
     {
         if ($product->isMainVariant()) {
             throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyMainVariantException($product->getId());
@@ -24,7 +24,7 @@ class ProductVariantService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $currentVariants
      */
-    public function refreshProductVariants(Product $mainProduct, array $currentVariants)
+    public function refreshProductVariants(Product $mainProduct, array $currentVariants): void
     {
         $this->unsetRemovedVariants($mainProduct, $currentVariants);
         $this->addNewVariants($mainProduct, $currentVariants);
@@ -33,7 +33,7 @@ class ProductVariantService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $currentVariants
      */
-    private function unsetRemovedVariants(Product $mainProduct, array $currentVariants)
+    private function unsetRemovedVariants(Product $mainProduct, array $currentVariants): void
     {
         foreach ($mainProduct->getVariants() as $originalVariant) {
             if (!in_array($originalVariant, $currentVariants, true)) {
@@ -45,7 +45,7 @@ class ProductVariantService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $currentVariants
      */
-    private function addNewVariants(Product $mainProduct, array $currentVariants)
+    private function addNewVariants(Product $mainProduct, array $currentVariants): void
     {
         foreach ($currentVariants as $currentVariant) {
             if (!in_array($currentVariant, $mainProduct->getVariants(), true)) {

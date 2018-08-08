@@ -30,11 +30,11 @@ class ProductPriceCronModule implements IteratedCronModuleInterface
         $this->logger = $logger;
     }
 
-    public function sleep()
+    public function sleep(): void
     {
     }
 
-    public function wakeUp()
+    public function wakeUp(): void
     {
     }
 

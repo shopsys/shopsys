@@ -64,8 +64,8 @@ class CategoryFormType extends AbstractType
         $this->seoSettingFacade = $seoSettingFacade;
         $this->pluginCrudExtensionFacade = $pluginCrudExtensionFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $seoTitlesOptionsByDomainId = [];
         $seoMetaDescriptionsOptionsByDomainId = [];
@@ -240,7 +240,7 @@ class CategoryFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['scenario', 'category'])
@@ -252,9 +252,6 @@ class CategoryFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
-     */
     private function getCategoryNameForPlaceholder(DomainConfig $domainConfig, Category $category = null): string
     {
         $domainLocale = $domainConfig->getLocale();

@@ -54,11 +54,8 @@ class DomainRouterFactory
         $this->domain = $domain;
         $this->friendlyUrlRouterFactory = $friendlyUrlRouterFactory;
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function getRouter($domainId): \Shopsys\FrameworkBundle\Component\Router\DomainRouter
+    
+    public function getRouter(int $domainId): \Shopsys\FrameworkBundle\Component\Router\DomainRouter
     {
         if (!array_key_exists($domainId, $this->routersByDomainId)) {
             try {

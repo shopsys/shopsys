@@ -27,7 +27,7 @@ class ProductExtension extends \Twig_Extension
         $this->categoryFacade = $categoryFacade;
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
     }
-    
+
     public function getFilters()
     {
         return [
@@ -35,7 +35,7 @@ class ProductExtension extends \Twig_Extension
             new Twig_SimpleFilter('productListDisplayName', [$this, 'getProductListDisplayName']),
         ];
     }
-    
+
     public function getFunctions()
     {
         return [
@@ -82,19 +82,13 @@ class ProductExtension extends \Twig_Extension
 
         return $product->getName();
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function getProductMainCategory(Product $product, $domainId): \Shopsys\FrameworkBundle\Model\Category\Category
+    
+    public function getProductMainCategory(Product $product, int $domainId): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function findProductMainCategory(Product $product, $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
+    
+    public function findProductMainCategory(Product $product, int $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainId);
     }

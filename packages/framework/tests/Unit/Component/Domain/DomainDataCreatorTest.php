@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator;
 
 class DomainDataCreatorTest extends TestCase
 {
-    public function testCreateNewDomainsDataNoNewDomain()
+    public function testCreateNewDomainsDataNoNewDomain(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.com:8080', 'example', 'cs'),
@@ -44,7 +44,7 @@ class DomainDataCreatorTest extends TestCase
         $this->assertEquals(0, $newDomainsDataCreated);
     }
 
-    public function testCreateNewDomainsDataOneNewDomain()
+    public function testCreateNewDomainsDataOneNewDomain(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.com:8080', 'example', 'cs'),
@@ -89,7 +89,7 @@ class DomainDataCreatorTest extends TestCase
         $this->assertEquals(1, $newDomainsDataCreated);
     }
 
-    public function testCreateNewDomainsDataNewLocale()
+    public function testCreateNewDomainsDataNewLocale(): void
     {
         $domainConfigWithDataCreated = new DomainConfig(1, 'http://example.com:8080', 'example', 'cs');
         $domainConfigWithNewLocale = new DomainConfig(2, 'http://example.com:8080', 'example', 'en');

@@ -70,12 +70,9 @@ class UserDataFixtureLoader
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface
      */
     private $deliveryAddressDataFactory;
-
-    /**
-     * @param string $path
-     */
+    
     public function __construct(
-        $path,
+        string $path,
         CsvReader $csvReader,
         UserDataFactoryInterface $userDataFactory,
         CustomerDataFactoryInterface $customerDataFactory,
@@ -93,16 +90,15 @@ class UserDataFixtureLoader
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\Country[] $countries
      */
-    public function injectReferences(array $countries)
+    public function injectReferences(array $countries): void
     {
         $this->countries = $countries;
     }
 
     /**
-     * @param int $domainId
      * @return  \Shopsys\FrameworkBundle\Model\Customer\CustomerData[]
      */
-    public function getCustomersDataByDomainId($domainId): array
+    public function getCustomersDataByDomainId(int $domainId): array
     {
         $rows = $this->csvReader->getRowsFromCsv($this->path);
         $filteredRows = $this->filterRowsByDomainId($rows, $domainId);
@@ -115,11 +111,8 @@ class UserDataFixtureLoader
         }
         return $customersData;
     }
-
-    /**
-     * @param int $domainId
-     */
-    private function filterRowsByDomainId(array $rows, $domainId): array
+    
+    private function filterRowsByDomainId(array $rows, int $domainId): array
     {
         $filteredRows = [];
         $rowId = 0;
@@ -184,11 +177,8 @@ class UserDataFixtureLoader
 
         return $customerData;
     }
-
-    /**
-     * @param string $countryName
-     */
-    private function getCountryByName($countryName): \Shopsys\FrameworkBundle\Model\Country\Country
+    
+    private function getCountryByName(string $countryName): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         foreach ($this->countries as $country) {
             if ($country->getName() === $countryName) {

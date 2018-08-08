@@ -25,12 +25,9 @@ class TranslationSourceReplacement
     private $sourceFileReferences;
 
     /**
-     * @param string $oldSource
-     * @param string $newSource
-     * @param string $domain
      * @param string[] $sourceFileReferences
      */
-    public function __construct($oldSource, $newSource, $domain, array $sourceFileReferences)
+    public function __construct(string $oldSource, string $newSource, string $domain, array $sourceFileReferences)
     {
         $this->oldSource = $oldSource;
         $this->newSource = $newSource;
@@ -66,11 +63,8 @@ class TranslationSourceReplacement
 
         return array_unique($sourceFilePaths);
     }
-
-    /**
-     * @param string $sourceFilePath
-     */
-    public function getExpectedReplacementsCountForSourceFilePath($sourceFilePath): int
+    
+    public function getExpectedReplacementsCountForSourceFilePath(string $sourceFilePath): int
     {
         $expectedReplacementsCount = 0;
         foreach ($this->sourceFileReferences as $sourceFileReference) {
@@ -81,11 +75,8 @@ class TranslationSourceReplacement
 
         return $expectedReplacementsCount;
     }
-
-    /**
-     * @param string $sourceFilePath
-     */
-    public function isExpectedReplacementsCountExact($sourceFilePath): bool
+    
+    public function isExpectedReplacementsCountExact(string $sourceFilePath): bool
     {
         foreach ($this->sourceFileReferences as $sourceFileReference) {
             if ($this->extractSourceFilePathFromReference($sourceFileReference) === $sourceFilePath) {
@@ -97,19 +88,13 @@ class TranslationSourceReplacement
 
         return true;
     }
-
-    /**
-     * @param string $sourceFileReference
-     */
-    private function extractSourceFilePathFromReference($sourceFileReference): string
+    
+    private function extractSourceFilePathFromReference(string $sourceFileReference): string
     {
         return explode(':', $sourceFileReference)[0];
     }
-
-    /**
-     * @param string $sourceFileReference
-     */
-    private function extractSourceFileLineFromReference($sourceFileReference): ?int
+    
+    private function extractSourceFileLineFromReference(string $sourceFileReference): ?int
     {
         $parts = explode(':', $sourceFileReference);
 

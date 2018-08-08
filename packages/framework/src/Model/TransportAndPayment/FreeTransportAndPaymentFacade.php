@@ -20,12 +20,8 @@ class FreeTransportAndPaymentFacade
     {
         return $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId) !== null;
     }
-
-    /**
-     * @param string $productsPriceWithVat
-     * @param int $domainId
-     */
-    public function isFree($productsPriceWithVat, $domainId): bool
+    
+    public function isFree(string $productsPriceWithVat, int $domainId): bool
     {
         $freeTransportAndPaymentPriceLimit = $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId);
         if ($freeTransportAndPaymentPriceLimit === null) {
@@ -34,12 +30,8 @@ class FreeTransportAndPaymentFacade
 
         return $productsPriceWithVat >= $freeTransportAndPaymentPriceLimit;
     }
-
-    /**
-     * @param string $productsPriceWithVat
-     * @param int $domainId
-     */
-    public function getRemainingPriceWithVat($productsPriceWithVat, $domainId): int
+    
+    public function getRemainingPriceWithVat(string $productsPriceWithVat, int $domainId): int
     {
         if (!$this->isFree($productsPriceWithVat, $domainId)) {
             return $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId) - $productsPriceWithVat;
@@ -47,11 +39,8 @@ class FreeTransportAndPaymentFacade
 
         return 0;
     }
-
-    /**
-     * @param int $domainId
-     */
-    protected function getFreeTransportAndPaymentPriceLimitOnDomain($domainId): string
+    
+    protected function getFreeTransportAndPaymentPriceLimitOnDomain(int $domainId): string
     {
         return $this->pricingSetting->getFreeTransportAndPaymentPriceLimit($domainId);
     }

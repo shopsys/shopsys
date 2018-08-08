@@ -180,9 +180,8 @@ class CategoryController extends AdminBaseController
     /**
      * @Route("/category/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->categoryFacade->getById($id)->getName();
@@ -214,10 +213,8 @@ class CategoryController extends AdminBaseController
 
     /**
      * @Route("/category/branch/{domainId}/{id}", requirements={"domainId" = "\d+", "id" = "\d+"}, condition="request.isXmlHttpRequest()")
-     * @param int $domainId
-     * @param int $id
      */
-    public function loadBranchJsonAction($domainId, $id)
+    public function loadBranchJsonAction(int $domainId, int $id)
     {
         $domainId = (int)$domainId;
         $id = (int)$id;

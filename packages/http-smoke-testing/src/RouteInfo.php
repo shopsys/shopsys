@@ -15,11 +15,8 @@ class RouteInfo
      * @var \Symfony\Component\Routing\Route
      */
     private $route;
-
-    /**
-     * @param string $routeName
-     */
-    public function __construct($routeName, Route $route)
+    
+    public function __construct(string $routeName, Route $route)
     {
         $this->routeName = $routeName;
         $this->route = $route;
@@ -39,21 +36,15 @@ class RouteInfo
     {
         return $this->route->getCondition();
     }
-
-    /**
-     * @param string $method
-     */
-    public function isHttpMethodAllowed($method): bool
+    
+    public function isHttpMethodAllowed(string $method): bool
     {
         $methods = $this->route->getMethods();
 
         return count($methods) === 0 || in_array(strtoupper($method), $methods, true);
     }
-
-    /**
-     * @param string $name
-     */
-    public function isRouteParameterRequired($name): bool
+    
+    public function isRouteParameterRequired(string $name): bool
     {
         return !$this->route->hasDefault($name) && in_array($name, $this->getRouteParameterNames(), true);
     }

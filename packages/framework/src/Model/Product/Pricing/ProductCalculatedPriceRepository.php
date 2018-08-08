@@ -33,7 +33,7 @@ class ProductCalculatedPriceRepository
     /**
      * @param string|null $priceWithVat
      */
-    public function saveCalculatedPrice(Product $product, PricingGroup $pricingGroup, $priceWithVat)
+    public function saveCalculatedPrice(Product $product, PricingGroup $pricingGroup, ?string $priceWithVat): void
     {
         $productCalculatedPrice = $this->getProductCalculatedPriceRepository()->find([
             'product' => $product->getId(),
@@ -50,7 +50,7 @@ class ProductCalculatedPriceRepository
         $this->em->flush($productCalculatedPrice);
     }
 
-    public function createProductCalculatedPricesForPricingGroup(PricingGroup $pricingGroup)
+    public function createProductCalculatedPricesForPricingGroup(PricingGroup $pricingGroup): void
     {
         $query = $this->em->createNativeQuery(
             'INSERT INTO product_calculated_prices (product_id, pricing_group_id, price_with_vat)

@@ -19,7 +19,7 @@ class OrderTest extends TestCase
 {
     const DOMAIN_ID = 1;
 
-    public function testGetProductItems()
+    public function testGetProductItems(): void
     {
         $payment = new Payment(new PaymentData());
         $orderData = new OrderData();
@@ -37,7 +37,7 @@ class OrderTest extends TestCase
         $this->assertContainsOnlyInstancesOf(OrderProduct::class, $productItems);
     }
 
-    public function testGetProductItemsCount()
+    public function testGetProductItemsCount(): void
     {
         $payment = new Payment(new PaymentData());
         $paymentItemPrice = new Price(0, 0);
@@ -52,7 +52,7 @@ class OrderTest extends TestCase
         $this->assertSame(1, $order->getProductItemsCount());
     }
 
-    public function testOrderWithDeliveryAddressSameAsBillingAddress()
+    public function testOrderWithDeliveryAddressSameAsBillingAddress(): void
     {
         $orderData = new OrderData();
         $countryData = new CountryData();
@@ -81,7 +81,7 @@ class OrderTest extends TestCase
         $this->assertSame($country, $order->getDeliveryCountry());
     }
 
-    public function testOrderWithoutDeliveryAddressSameAsBillingAddress()
+    public function testOrderWithoutDeliveryAddressSameAsBillingAddress(): void
     {
         $orderData = new OrderData();
         $countryData = new CountryData();
@@ -118,7 +118,7 @@ class OrderTest extends TestCase
         $this->assertSame($country, $order->getDeliveryCountry());
     }
 
-    public function testOrderCreatedWithEmptyCreatedAtIsCreatedNow()
+    public function testOrderCreatedWithEmptyCreatedAtIsCreatedNow(): void
     {
         $orderData = new OrderData();
         $user = null;
@@ -129,7 +129,7 @@ class OrderTest extends TestCase
         $this->assertDateTimeIsCloseTo(new DateTime(), $order->getCreatedAt(), 5);
     }
 
-    public function testOrderCanBeCreatedWithSpecificCreatedAt()
+    public function testOrderCanBeCreatedWithSpecificCreatedAt(): void
     {
         $orderData = new OrderData();
         $user = null;
@@ -140,11 +140,8 @@ class OrderTest extends TestCase
 
         $this->assertEquals($createAt, $order->getCreatedAt());
     }
-
-    /**
-     * @param int $deltaInSeconds
-     */
-    private function assertDateTimeIsCloseTo(DateTimeInterface $expected, DateTimeInterface $actual, $deltaInSeconds)
+    
+    private function assertDateTimeIsCloseTo(DateTimeInterface $expected, DateTimeInterface $actual, int $deltaInSeconds): void
     {
         $diffInSeconds = $expected->getTimestamp() - $actual->getTimestamp();
 

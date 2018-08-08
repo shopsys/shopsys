@@ -40,7 +40,7 @@ class ProductAvailabilityRecalculator
         $this->productAvailabilityCalculation = $productAvailabilityCalculation;
     }
 
-    public function runAllScheduledRecalculations()
+    public function runAllScheduledRecalculations(): void
     {
         $this->productRowsIterator = null;
         while ($this->runBatchOfScheduledDelayedRecalculations()) {
@@ -68,7 +68,7 @@ class ProductAvailabilityRecalculator
         return true;
     }
 
-    public function runImmediateRecalculations()
+    public function runImmediateRecalculations(): void
     {
         $products = $this->productAvailabilityRecalculationScheduler->getProductsForImmediateRecalculation();
         foreach ($products as $product) {
@@ -77,7 +77,7 @@ class ProductAvailabilityRecalculator
         $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
     }
 
-    private function recalculateProductAvailability(Product $product)
+    private function recalculateProductAvailability(Product $product): void
     {
         $calculatedAvailability = $this->productAvailabilityCalculation->calculateAvailability($product);
         $product->setCalculatedAvailability($calculatedAvailability);
@@ -87,7 +87,7 @@ class ProductAvailabilityRecalculator
         $this->em->flush($product);
     }
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $this->runImmediateRecalculations();

@@ -67,11 +67,8 @@ class OrderStatusFacade
 
         return $orderStatus;
     }
-
-    /**
-     * @param int $orderStatusId
-     */
-    public function edit($orderStatusId, OrderStatusData $orderStatusData): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    
+    public function edit(int $orderStatusId, OrderStatusData $orderStatusData): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         $orderStatus = $this->orderStatusRepository->getById($orderStatusId);
         $orderStatus->edit($orderStatusData);
@@ -81,10 +78,9 @@ class OrderStatusFacade
     }
 
     /**
-     * @param int $orderStatusId
      * @param int|null $newOrderStatusId
      */
-    public function deleteById($orderStatusId, $newOrderStatusId = null)
+    public function deleteById(int $orderStatusId, ?int $newOrderStatusId = null): void
     {
         $orderStatus = $this->orderStatusRepository->getById($orderStatusId);
         $this->orderStatusService->checkForDelete($orderStatus);
@@ -96,20 +92,16 @@ class OrderStatusFacade
         $this->em->remove($orderStatus);
         $this->em->flush();
     }
-
-    /**
-     * @param int $orderStatusId
-     */
-    public function getById($orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    
+    public function getById(int $orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         return $this->orderStatusRepository->getById($orderStatusId);
     }
 
     /**
-     * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAllExceptId($orderStatusId): array
+    public function getAllExceptId(int $orderStatusId): array
     {
         return $this->orderStatusRepository->getAllExceptId($orderStatusId);
     }

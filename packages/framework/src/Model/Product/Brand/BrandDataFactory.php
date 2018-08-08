@@ -40,7 +40,7 @@ class BrandDataFactory implements BrandDataFactoryInterface
         return $brandData;
     }
 
-    protected function fillNew(BrandData $brandData)
+    protected function fillNew(BrandData $brandData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $brandData->seoMetaDescriptions[$domainId] = null;
@@ -57,7 +57,7 @@ class BrandDataFactory implements BrandDataFactoryInterface
         return $brandData;
     }
 
-    protected function fillFromBrand(BrandData $brandData, Brand $brand)
+    protected function fillFromBrand(BrandData $brandData, Brand $brand): void
     {
         $brandData->name = $brand->getName();
 

@@ -36,7 +36,7 @@ class ProductFilterRepository
         QueryBuilder $productsQueryBuilder,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): void {
         $this->filterByPrice(
             $productsQueryBuilder,
             $productFilterData->minimalPrice,
@@ -60,17 +60,13 @@ class ProductFilterRepository
             $productFilterData->parameters
         );
     }
-
-    /**
-     * @param string $minimalPrice
-     * @param string $maximalPrice
-     */
+    
     private function filterByPrice(
         QueryBuilder $productsQueryBuilder,
-        $minimalPrice,
-        $maximalPrice,
+        string $minimalPrice,
+        string $maximalPrice,
         PricingGroup $pricingGroup
-    ) {
+    ): void {
         if ($maximalPrice !== null || $minimalPrice !== null) {
             $priceLimits = 'pcp.product = p AND pcp.pricingGroup = :pricingGroup';
             if ($minimalPrice !== null) {
@@ -90,11 +86,8 @@ class ProductFilterRepository
             $productsQueryBuilder->setParameter('pricingGroup', $pricingGroup);
         }
     }
-
-    /**
-     * @param bool $filterByStock
-     */
-    public function filterByStock(QueryBuilder $productsQueryBuilder, $filterByStock)
+    
+    public function filterByStock(QueryBuilder $productsQueryBuilder, bool $filterByStock): void
     {
         if ($filterByStock) {
             $this->queryBuilderService->addOrExtendJoin(
@@ -111,7 +104,7 @@ class ProductFilterRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flags
      */
-    private function filterByFlags(QueryBuilder $productsQueryBuilder, array $flags)
+    private function filterByFlags(QueryBuilder $productsQueryBuilder, array $flags): void
     {
         $flagsCount = count($flags);
         if ($flagsCount !== 0) {
@@ -127,7 +120,7 @@ class ProductFilterRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brands
      */
-    private function filterByBrands(QueryBuilder $productsQueryBuilder, array $brands)
+    private function filterByBrands(QueryBuilder $productsQueryBuilder, array $brands): void
     {
         $brandsCount = count($brands);
         if ($brandsCount !== 0) {

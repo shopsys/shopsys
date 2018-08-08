@@ -9,7 +9,7 @@ use Twig_SimpleFunction;
 class HoneyPotExtension extends Twig_Extension
 {
     const PASSWORD_FIELD_NAME = 'password';
-    
+
     public function getFunctions()
     {
         return [
@@ -25,7 +25,7 @@ class HoneyPotExtension extends Twig_Extension
         return 'honey_pot';
     }
 
-    public function formHoneyPotCheckPasswordAlreadyRendered(FormView $formView)
+    public function formHoneyPotCheckPasswordAlreadyRendered(FormView $formView): void
     {
         $rootFormView = $this->getRootFormView($formView);
 

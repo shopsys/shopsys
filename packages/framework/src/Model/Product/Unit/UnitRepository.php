@@ -22,19 +22,13 @@ class UnitRepository
     {
         return $this->em->getRepository(Unit::class);
     }
-
-    /**
-     * @param int $unitId
-     */
-    public function findById($unitId): ?\Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    
+    public function findById(int $unitId): ?\Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         return $this->getUnitRepository()->find($unitId);
     }
-
-    /**
-     * @param int $unitId
-     */
-    public function getById($unitId): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    
+    public function getById(int $unitId): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         $unit = $this->findById($unitId);
 
@@ -62,10 +56,9 @@ class UnitRepository
     }
 
     /**
-     * @param int $unitId
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit[]
      */
-    public function getAllExceptId($unitId): array
+    public function getAllExceptId(int $unitId): array
     {
         return $this->getAllQueryBuilder()
             ->where('u.id != :id')->setParameter('id', $unitId)
@@ -82,7 +75,7 @@ class UnitRepository
         return $qb->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
-    public function replaceUnit(Unit $oldUnit, Unit $newUnit)
+    public function replaceUnit(Unit $oldUnit, Unit $newUnit): void
     {
         $this->em->createQueryBuilder()
             ->update(Product::class, 'p')

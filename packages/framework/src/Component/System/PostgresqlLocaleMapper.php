@@ -166,27 +166,18 @@ class PostgresqlLocaleMapper
         'zh_SG' => 'Chinese (Simplified)_Singapore',
         'zh_TW' => 'Chinese (Traditional)_Taiwan',
     ];
-
-    /**
-     * @param string $collationName
-     */
-    public function getLinuxLocale($collationName): string
+    
+    public function getLinuxLocale(string $collationName): string
     {
         return $collationName . '.utf8';
     }
-
-    /**
-     * @param string $collationName
-     */
-    public function getMacOsxLocale($collationName): string
+    
+    public function getMacOsxLocale(string $collationName): string
     {
         return $collationName . '.UTF-8';
     }
-
-    /**
-     * @param string $collationName
-     */
-    public function getWindowsLocale($collationName): string
+    
+    public function getWindowsLocale(string $collationName): string
     {
         if (!array_key_exists($collationName, self::$windowsLocalesIndexedByCollation)) {
             throw new \Shopsys\FrameworkBundle\Component\System\Exception\UnknownWindowsLocaleException($collationName);

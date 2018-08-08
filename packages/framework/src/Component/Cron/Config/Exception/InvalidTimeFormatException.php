@@ -6,12 +6,7 @@ use Exception;
 
 class InvalidTimeFormatException extends Exception implements CronConfigException
 {
-    /**
-     * @param string $timeString
-     * @param int $maxValue
-     * @param int $divisibleBy
-     */
-    public function __construct($timeString, $maxValue, $divisibleBy, Exception $previous = null)
+    public function __construct(string $timeString, int $maxValue, int $divisibleBy, Exception $previous = null)
     {
         parent::__construct(
             'Time configuration "' . $timeString . '" is invalid. '

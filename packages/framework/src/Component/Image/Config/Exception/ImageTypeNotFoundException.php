@@ -17,11 +17,9 @@ class ImageTypeNotFoundException extends Exception implements ImageConfigExcepti
     private $imageType;
 
     /**
-     * @param string $entityClass
-     * @param string $imageType
      * @param \Exception|null $previous
      */
-    public function __construct($entityClass, $imageType, Exception $previous = null)
+    public function __construct(string $entityClass, string $imageType, Exception $previous = null)
     {
         $this->entityClass = $entityClass;
         $this->imageType = $imageType;

@@ -27,12 +27,10 @@ class DateTimeFormatPattern
     private $timeType;
 
     /**
-     * @param string $pattern
-     * @param string $locale
      * @param int|null $dateType @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param int|null $timeType @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
-    public function __construct($pattern, $locale, $dateType = null, $timeType = null)
+    public function __construct(string $pattern, string $locale, ?int $dateType = null, ?int $timeType = null)
     {
         $this->pattern = $pattern;
         $this->locale = $locale;

@@ -56,10 +56,9 @@ class UploadedFileFacade
     }
 
     /**
-     * @param object $entity
      * @param array|null $temporaryFilenames
      */
-    public function uploadFile($entity, $temporaryFilenames)
+    public function uploadFile(object $entity, ?array $temporaryFilenames): void
     {
         if ($temporaryFilenames !== null && count($temporaryFilenames) > 0) {
             $entitiesForFlush = [];
@@ -86,18 +85,15 @@ class UploadedFileFacade
             $this->em->flush($entitiesForFlush);
         }
     }
-
-    /**
-     * @param object $entity
-     */
-    public function deleteUploadedFileByEntity($entity)
+    
+    public function deleteUploadedFileByEntity(object $entity): void
     {
         $uploadedFile = $this->getUploadedFileByEntity($entity);
         $this->em->remove($uploadedFile);
         $this->em->flush();
     }
 
-    public function deleteFileFromFilesystem(UploadedFile $uploadedFile)
+    public function deleteFileFromFilesystem(UploadedFile $uploadedFile): void
     {
         $filepath = $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFile);
 
@@ -105,22 +101,16 @@ class UploadedFileFacade
             $this->filesystem->delete($filepath);
         }
     }
-
-    /**
-     * @param object $entity
-     */
-    public function getUploadedFileByEntity($entity): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
+    
+    public function getUploadedFileByEntity(object $entity): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         return $this->uploadedFileRepository->getUploadedFileByEntity(
             $this->uploadedFileConfig->getEntityName($entity),
             $this->getEntityId($entity)
         );
     }
-
-    /**
-     * @param object $entity
-     */
-    protected function getEntityId($entity): int
+    
+    protected function getEntityId(object $entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
         $identifier = $entityMetadata->getIdentifierValues($entity);
@@ -131,19 +121,13 @@ class UploadedFileFacade
         $message = 'Entity "' . get_class($entity) . '" has not set primary key or primary key is compound."';
         throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException($message);
     }
-
-    /**
-     * @param int $uploadedFileId
-     */
-    public function getById($uploadedFileId): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
+    
+    public function getById(int $uploadedFileId): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         return $this->uploadedFileRepository->getById($uploadedFileId);
     }
-
-    /**
-     * @param Object $entity
-     */
-    public function hasUploadedFile($entity): bool
+    
+    public function hasUploadedFile(Object $entity): bool
     {
         try {
             $uploadedFile = $this->getUploadedFileByEntity($entity);

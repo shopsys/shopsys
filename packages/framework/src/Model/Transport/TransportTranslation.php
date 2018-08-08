@@ -52,27 +52,18 @@ class TransportTranslation extends AbstractTranslation
     {
         return $this->instructions;
     }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
-
-    /**
-     * @param string $instructions
-     */
-    public function setInstructions($instructions)
+    
+    public function setInstructions(string $instructions): void
     {
         $this->instructions = $instructions;
     }

@@ -68,18 +68,12 @@ class ImageDemoCommand extends Command
      * @var \League\Flysystem\MountManager
      */
     private $mountManager;
-
-    /**
-     * @param string $demoImagesArchiveUrl
-     * @param string $demoImagesSqlUrl
-     * @param string $imagesDirectory
-     * @param string $domainImagesDirectory
-     */
+    
     public function __construct(
-        $demoImagesArchiveUrl,
-        $demoImagesSqlUrl,
-        $imagesDirectory,
-        $domainImagesDirectory,
+        string $demoImagesArchiveUrl,
+        string $demoImagesSqlUrl,
+        string $imagesDirectory,
+        string $domainImagesDirectory,
         FilesystemInterface $filesystem,
         Filesystem $symfonyFilesystem,
         EntityManagerInterface $em,
@@ -97,7 +91,7 @@ class ImageDemoCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Download demo images');
@@ -140,12 +134,8 @@ class ImageDemoCommand extends Command
 
         return $isCompleted ? self::EXIT_CODE_OK : self::EXIT_CODE_ERROR;
     }
-
-    /**
-     * @param string $imagesPath
-     * @param string $localArchiveFilepath
-     */
-    private function unpackImages(OutputInterface $output, $imagesPath, $localArchiveFilepath): bool
+    
+    private function unpackImages(OutputInterface $output, string $imagesPath, string $localArchiveFilepath): bool
     {
         $zipArchive = new ZipArchive();
 
@@ -161,11 +151,8 @@ class ImageDemoCommand extends Command
 
         return true;
     }
-
-    /**
-     * @param string $sqlUrl
-     */
-    private function loadDbChanges(OutputInterface $output, $sqlUrl)
+    
+    private function loadDbChanges(OutputInterface $output, string $sqlUrl): void
     {
         $fileContents = file_get_contents($sqlUrl);
         if ($fileContents === false) {
@@ -182,12 +169,8 @@ class ImageDemoCommand extends Command
         }
         $output->writeln('<fg=green>DB changes were successfully applied (queries: ' . count($sqlQueries) . ')</fg=green>');
     }
-
-    /**
-     * @param string $archiveUrl
-     * @param string $localArchiveFilepath
-     */
-    private function downloadImages(OutputInterface $output, $archiveUrl, $localArchiveFilepath): bool
+    
+    private function downloadImages(OutputInterface $output, string $archiveUrl, string $localArchiveFilepath): bool
     {
         $output->writeln('Start downloading demo images');
 
@@ -207,7 +190,7 @@ class ImageDemoCommand extends Command
     /**
      * @param string[] $pathsToRemove
      */
-    private function cleanUp(OutputInterface $output, $pathsToRemove)
+    private function cleanUp(OutputInterface $output, $pathsToRemove): void
     {
         try {
             $this->localFilesystem->remove($pathsToRemove);
@@ -216,12 +199,8 @@ class ImageDemoCommand extends Command
             $output->writeln('<fg=red>Exception: ' . $e->getMessage() . '</fg=red>');
         }
     }
-
-    /**
-     * @param string $origin
-     * @param string $target
-     */
-    private function moveFilesFromLocalFilesystemToFilesystem($origin, $target)
+    
+    private function moveFilesFromLocalFilesystemToFilesystem(string $origin, string $target): void
     {
         $finder = new Finder();
         $finder->files()->in($origin);
@@ -250,7 +229,7 @@ class ImageDemoCommand extends Command
         return $imagesCount === 0;
     }
 
-    private function truncateImagesFromDb()
+    private function truncateImagesFromDb(): void
     {
         $this->em->createNativeQuery('TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME, new ResultSetMapping())->execute();
     }

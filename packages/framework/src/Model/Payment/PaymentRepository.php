@@ -45,22 +45,16 @@ class PaymentRepository
     {
         return $this->getPaymentRepository()->findAll();
     }
-
-    /**
-     * @param int $id
-     */
-    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Payment\Payment
+    
+    public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->getQueryBuilderForAll()
             ->andWhere('p.id = :paymentId')->setParameter('paymentId', $id)
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-    /**
-     * @param int $id
-     */
-    public function getById($id): \Shopsys\FrameworkBundle\Model\Payment\Payment
+    
+    public function getById(int $id): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         $payment = $this->findById($id);
         if ($payment === null) {

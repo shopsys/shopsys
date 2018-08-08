@@ -21,12 +21,12 @@ class AllFeedsTest extends FunctionalTestCase
      */
     private $filesystem;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->feedFacade = $this->getContainer()->get(FeedFacade::class);
         $this->filesystem = $this->getContainer()->get(FilesystemInterface::class);
     }
-    
+
     public function getAllFeedExportCreationData(): array
     {
         // Method setUp is called only before each test, data providers are called even before that

@@ -8,7 +8,7 @@ use Tests\ShopBundle\Test\Codeception\AcceptanceTester;
 
 class PromoCodeInlineEditCest
 {
-    public function testPromoCodeEdit(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage)
+    public function testPromoCodeEdit(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage): void
     {
         $me->wantTo('promo code can be edited via inline edit');
         $loginPage->loginAsAdmin();
@@ -21,7 +21,7 @@ class PromoCodeInlineEditCest
         $inlineEditPage->assertSeeInColumn(1, 'code', 'test edited');
     }
 
-    public function testPromoCodeCreate(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage)
+    public function testPromoCodeCreate(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage): void
     {
         $me->wantTo('promo code can be created via inline edit');
         $loginPage->loginAsAdmin();
@@ -38,7 +38,7 @@ class PromoCodeInlineEditCest
         $inlineEditPage->assertSeeInColumn($newRowId, 'percent', '5%');
     }
 
-    public function testPromoCodeDelete(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage)
+    public function testPromoCodeDelete(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage): void
     {
         $me->wantTo('promo code can be deleted via inline edit');
         $loginPage->loginAsAdmin();

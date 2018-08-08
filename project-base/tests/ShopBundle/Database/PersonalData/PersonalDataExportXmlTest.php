@@ -28,7 +28,7 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
     const EXPECTED_XML_FILE_NAME = 'test.xml';
     const DOMAIN_ID_FIRST = Domain::FIRST_DOMAIN_ID;
 
-    public function testExportXml()
+    public function testExportXml(): void
     {
         $country = $this->createCountry();
         $billingAddress = $this->createBillingAddress($country);

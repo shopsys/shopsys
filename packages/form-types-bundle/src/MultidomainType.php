@@ -19,8 +19,8 @@ class MultidomainType extends AbstractType
     {
         $this->domainIdsProvider = $domainIdsProvider;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $entryOptions = $options['entry_options'];
         $entryOptions['required'] = $options['required'] && $entryOptions['required'] ?? false;
@@ -38,7 +38,7 @@ class MultidomainType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'compound' => true,

@@ -36,7 +36,7 @@ class AdministratorGridService
         return $gridLimit;
     }
 
-    public function restoreGridLimit(Administrator $administrator, Grid $grid)
+    public function restoreGridLimit(Administrator $administrator, Grid $grid): void
     {
         $customLimit = $administrator->getLimitByGridId($grid->getId());
         if ($customLimit !== null) {

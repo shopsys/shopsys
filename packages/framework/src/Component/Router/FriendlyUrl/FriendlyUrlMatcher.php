@@ -16,11 +16,8 @@ class FriendlyUrlMatcher
     {
         $this->friendlyUrlRepository = $friendlyUrlRepository;
     }
-
-    /**
-     * @param string $pathinfo
-     */
-    public function match($pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig): array
+    
+    public function match(string $pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig): array
     {
         $pathWithoutSlash = substr($pathinfo, 1);
         $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($domainConfig->getId(), $pathWithoutSlash);

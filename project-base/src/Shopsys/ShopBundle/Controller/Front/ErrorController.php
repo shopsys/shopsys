@@ -47,11 +47,8 @@ class ErrorController extends FrontBaseController
         $this->errorPagesFacade = $errorPagesFacade;
         $this->domain = $domain;
     }
-
-    /**
-     * @param int $code
-     */
-    public function errorPageAction($code)
+    
+    public function errorPageAction(int $code): void
     {
         $this->exceptionController->setDebug(false);
         $this->exceptionController->setShowErrorPagePrototype();
@@ -90,11 +87,8 @@ class ErrorController extends FrontBaseController
             'logger' => $logger,
         ]);
     }
-
-    /**
-     * @param int $statusCode
-     */
-    private function createErrorPageResponse($statusCode): \Symfony\Component\HttpFoundation\Response
+    
+    private function createErrorPageResponse(int $statusCode): \Symfony\Component\HttpFoundation\Response
     {
         $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);
         $errorPageContent = $this->errorPagesFacade->getErrorPageContentByDomainIdAndStatusCode(

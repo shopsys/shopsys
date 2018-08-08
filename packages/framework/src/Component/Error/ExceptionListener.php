@@ -11,7 +11,7 @@ class ExceptionListener
      */
     private $lastException;
 
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(GetResponseForExceptionEvent $event): void
     {
         $this->lastException = $event->getException();
     }

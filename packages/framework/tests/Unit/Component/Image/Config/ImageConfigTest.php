@@ -71,7 +71,7 @@ class ImageConfigTest extends TestCase
         return new ImageConfig($imageEntityConfigByClass);
     }
 
-    public function testGetEntityName()
+    public function testGetEntityName(): void
     {
         $imageConfig = $this->getBaseImageConfig();
         $entity = new stdClass();
@@ -79,7 +79,7 @@ class ImageConfigTest extends TestCase
         $this->assertSame('Name_1', $imageConfig->getEntityName($entity));
     }
 
-    public function testGetEntityNameNotFound()
+    public function testGetEntityNameNotFound(): void
     {
         $imageConfig = $this->getBaseImageConfig();
 
@@ -87,7 +87,7 @@ class ImageConfigTest extends TestCase
         $imageConfig->getEntityName($this);
     }
 
-    public function testGetImageSizeConfigByEntity()
+    public function testGetImageSizeConfigByEntity(): void
     {
         $imageConfig = $this->getBaseImageConfig();
         $entity = new stdClass();
@@ -105,7 +105,7 @@ class ImageConfigTest extends TestCase
         $this->assertSame('SizeName_0_1', $imageSizeConfig3->getName());
     }
 
-    public function testGetImageSizeConfigByEntityName()
+    public function testGetImageSizeConfigByEntityName(): void
     {
         $imageConfig = $this->getBaseImageConfig();
         $entityName = 'Name_1';
@@ -123,7 +123,7 @@ class ImageConfigTest extends TestCase
         $this->assertSame('SizeName_0_1', $imageSizeConfig3->getName());
     }
 
-    public function tesGetImageEntityConfig()
+    public function tesGetImageEntityConfig(): void
     {
         $imageConfig = $this->getBaseImageConfig();
         $entity = new stdClass();
@@ -132,7 +132,7 @@ class ImageConfigTest extends TestCase
         $this->assertSame('Name_1', $imageEntityConfig->getEntityName());
     }
 
-    public function tesGetImageEntityConfigNotFound()
+    public function tesGetImageEntityConfigNotFound(): void
     {
         $imageConfig = $this->getBaseImageConfig();
 

@@ -49,5 +49,5 @@ interface AdvancedSearchFilterInterface
      *
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData);
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void;
 }

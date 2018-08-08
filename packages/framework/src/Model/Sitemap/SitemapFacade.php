@@ -54,7 +54,7 @@ class SitemapFacade
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
-    public function generateForAllDomains()
+    public function generateForAllDomains(): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $section = (string)$domainConfig->getId();

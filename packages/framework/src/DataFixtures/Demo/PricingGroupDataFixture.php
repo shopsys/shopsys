@@ -33,7 +33,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
         $this->pricingGroupDataFactory = $pricingGroupDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /**
          * The pricing group is created with specific ID in database migration.
@@ -50,14 +50,11 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
         $pricingGroupData->name = 'VIP customer';
         $this->createPricingGroup($pricingGroupData, self::PRICING_GROUP_VIP_DOMAIN_1);
     }
-
-    /**
-     * @param string $referenceName
-     */
+    
     private function createPricingGroup(
         PricingGroupData $pricingGroupData,
-        $referenceName
-    ) {
+        string $referenceName
+    ): void {
         $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, Domain::FIRST_DOMAIN_ID);
         $this->addReference($referenceName, $pricingGroup);
     }

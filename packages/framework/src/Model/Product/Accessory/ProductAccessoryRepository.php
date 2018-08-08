@@ -41,11 +41,9 @@ class ProductAccessoryRepository
     }
 
     /**
-     * @param int $domainId
-     * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getTopOfferedAccessories(Product $product, $domainId, PricingGroup $pricingGroup, $limit): array
+    public function getTopOfferedAccessories(Product $product, int $domainId, PricingGroup $pricingGroup, int $limit): array
     {
         $queryBuilder = $this->getAllOfferedAccessoriesByProductQueryBuilder($product, $domainId, $pricingGroup);
         $queryBuilder->setMaxResults($limit);
@@ -62,20 +60,16 @@ class ProductAccessoryRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllOfferedAccessoriesByProduct(Product $product, $domainId, PricingGroup $pricingGroup): array
+    public function getAllOfferedAccessoriesByProduct(Product $product, int $domainId, PricingGroup $pricingGroup): array
     {
         return $this->getAllOfferedAccessoriesByProductQueryBuilder($product, $domainId, $pricingGroup)
             ->getQuery()
             ->getResult();
     }
-
-    /**
-     * @param int $domainId
-     */
-    protected function getAllOfferedAccessoriesByProductQueryBuilder(Product $product, $domainId, PricingGroup $pricingGroup): \Doctrine\ORM\QueryBuilder
+    
+    protected function getAllOfferedAccessoriesByProductQueryBuilder(Product $product, int $domainId, PricingGroup $pricingGroup): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);
         $this->queryBuilderService->addOrExtendJoin(

@@ -48,7 +48,7 @@ class DomainExtension extends \Twig_Extension
         $this->domain = $domain;
         $this->domainFacade = $domainFacade;
     }
-    
+
     public function getFunctions()
     {
         return [
@@ -68,20 +68,13 @@ class DomainExtension extends \Twig_Extension
     {
         return 'domain';
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function getDomainNameById($domainId): string
+    
+    public function getDomainNameById(int $domainId): string
     {
         return $this->getDomain()->getDomainConfigById($domainId)->getName();
     }
-
-    /**
-     * @param int $domainId
-     * @param string $size
-     */
-    public function getDomainIconHtml($domainId, $size = 'normal'): string
+    
+    public function getDomainIconHtml(int $domainId, string $size = 'normal'): string
     {
         $domainName = $this->getDomain()->getDomainConfigById($domainId)->getName();
         if ($this->domainFacade->existsDomainIcon($domainId)) {

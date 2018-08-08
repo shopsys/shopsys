@@ -16,7 +16,7 @@ class CssExtension extends \Twig_Extension
     {
         $this->cssFacade = $cssFacade;
     }
-    
+
     public function getFunctions()
     {
         return [

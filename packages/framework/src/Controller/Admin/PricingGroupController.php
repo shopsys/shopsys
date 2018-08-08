@@ -66,9 +66,8 @@ class PricingGroupController extends AdminBaseController
     /**
      * @Route("/pricing/group/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');
         $newId = $newId !== null ? (int)$newId : null;
@@ -104,9 +103,8 @@ class PricingGroupController extends AdminBaseController
 
     /**
      * @Route("/pricing/group/delete-confirm/{id}", requirements={"id" = "\d+"})
-     * @param int $id
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         try {
             $pricingGroup = $this->pricingGroupFacade->getById($id);

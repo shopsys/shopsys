@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
 {
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $request = $event->getRequest();
@@ -23,7 +23,7 @@ class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
             }
         }
     }
-    
+
     public static function getSubscribedEvents()
     {
         return [

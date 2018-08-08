@@ -55,7 +55,6 @@ class OrderPreviewCalculation
     }
 
     /**
-     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport|null $transport
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
@@ -64,12 +63,12 @@ class OrderPreviewCalculation
      */
     public function calculatePreview(
         Currency $currency,
-        $domainId,
+        int $domainId,
         array $quantifiedProducts,
         Transport $transport = null,
         Payment $payment = null,
         User $user = null,
-        $promoCodeDiscountPercent = null
+        ?float $promoCodeDiscountPercent = null
     ): \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview {
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
@@ -135,10 +134,6 @@ class OrderPreviewCalculation
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice
-     */
     private function calculateRoundingPrice(
         Payment $payment,
         Currency $currency,
@@ -156,11 +151,6 @@ class OrderPreviewCalculation
         return $this->orderPriceCalculation->calculateOrderRoundingPrice($payment, $currency, $totalPrice);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
-     */
     private function calculateTotalPrice(
         Price $productsPrice,
         Price $transportPrice = null,

@@ -51,12 +51,12 @@ class Availability extends AbstractTranslatableEntity
     /**
      * @param string|null $locale
      */
-    public function getName($locale = null): string
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
 
-    protected function setTranslations(AvailabilityData $availabilityData)
+    protected function setTranslations(AvailabilityData $availabilityData): void
     {
         foreach ($availabilityData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -68,7 +68,7 @@ class Availability extends AbstractTranslatableEntity
         return new AvailabilityTranslation();
     }
 
-    public function edit(AvailabilityData $availabilityData)
+    public function edit(AvailabilityData $availabilityData): void
     {
         $this->setTranslations($availabilityData);
         $this->dispatchTime = $availabilityData->dispatchTime;

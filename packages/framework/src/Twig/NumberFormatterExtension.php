@@ -97,7 +97,7 @@ class NumberFormatterExtension extends Twig_Extension
     /**
      * @param string|null $locale
      */
-    private function getLocale($locale = null): string
+    private function getLocale(?string $locale = null): string
     {
         if ($locale === null) {
             $locale = $this->localization->getLocale();

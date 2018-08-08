@@ -7,7 +7,7 @@ use Tests\ShopBundle\Test\Codeception\AcceptanceTester;
 
 class LoginAsCustomerCest
 {
-    public function testLoginAsCustomer(AcceptanceTester $me, LoginPage $loginPage)
+    public function testLoginAsCustomer(AcceptanceTester $me, LoginPage $loginPage): void
     {
         $me->wantTo('login as a customer from admin');
         $loginPage->loginAsAdmin();

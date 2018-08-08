@@ -106,7 +106,7 @@ class Article implements OrderableEntityInterface
         $this->hidden = $articleData->hidden;
     }
 
-    public function edit(ArticleData $articleData)
+    public function edit(ArticleData $articleData): void
     {
         $this->name = $articleData->name;
         $this->text = $articleData->text;
@@ -156,19 +156,13 @@ class Article implements OrderableEntityInterface
     {
         return $this->placement;
     }
-
-    /**
-     * @param int $position
-     */
-    public function setPosition($position)
+    
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }
-
-    /**
-     * @param string $placement
-     */
-    public function setPlacement($placement)
+    
+    public function setPlacement(string $placement): void
     {
         $this->placement = $placement;
     }

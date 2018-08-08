@@ -29,8 +29,8 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
     {
         $this->domain = $domain;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add($this->getPriceLimitsBuilder($builder))
@@ -79,7 +79,7 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
         return $formBuilderForDomains;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],

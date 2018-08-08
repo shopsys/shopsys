@@ -20,19 +20,13 @@ class AdministratorRepository
     {
         return $this->em->getRepository(Administrator::class);
     }
-
-    /**
-     * @param int $administratorId
-     */
-    public function findById($administratorId): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    
+    public function findById(int $administratorId): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->getAdministratorRepository()->find($administratorId);
     }
-
-    /**
-     * @param int $administratorId
-     */
-    public function getById($administratorId): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    
+    public function getById(int $administratorId): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->getAdministratorRepository()->find($administratorId);
         if ($administrator === null) {
@@ -42,11 +36,8 @@ class AdministratorRepository
 
         return $administrator;
     }
-
-    /**
-     * @param string $multidomainLoginToken
-     */
-    public function getByValidMultidomainLoginToken($multidomainLoginToken): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    
+    public function getByValidMultidomainLoginToken(string $multidomainLoginToken): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $queryBuilder = $this->getAdministratorRepository()
             ->createQueryBuilder('a')
@@ -61,19 +52,13 @@ class AdministratorRepository
 
         return $administrator;
     }
-
-    /**
-     * @param string $administratorUserName
-     */
-    public function findByUserName($administratorUserName): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    
+    public function findByUserName(string $administratorUserName): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->getAdministratorRepository()->findOneBy(['username' => $administratorUserName]);
     }
-
-    /**
-     * @param string $administratorUserName
-     */
-    public function getByUserName($administratorUserName): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    
+    public function getByUserName(string $administratorUserName): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->findByUserName($administratorUserName);
         if ($administrator === null) {
@@ -99,12 +84,8 @@ class AdministratorRepository
             ->select('COUNT(a)')
             ->getQuery()->getSingleScalarResult());
     }
-
-    /**
-     * @param int $id
-     * @param string $loginToken
-     */
-    public function findByIdAndLoginToken($id, $loginToken): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    
+    public function findByIdAndLoginToken(int $id, string $loginToken): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->getAdministratorRepository()->findOneBy([
             'id' => $id,

@@ -46,7 +46,7 @@ class BrandDataFixture extends AbstractReferenceFixture
         $this->brandDataFactory = $brandDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $brandData = $this->brandDataFactory->create();
 

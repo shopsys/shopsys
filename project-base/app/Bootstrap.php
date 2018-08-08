@@ -31,7 +31,7 @@ class Bootstrap
         $this->console = (bool)$console;
     }
 
-    public function run()
+    public function run(): void
     {
         if ($this->environment !== EnvironmentType::DEVELOPMENT) {
             // Speed-up loading in production using bootstrap file that combines multiple PHP files to reduce disk IO.
@@ -66,13 +66,13 @@ class Bootstrap
         }
     }
 
-    private function configurePhp()
+    private function configurePhp(): void
     {
         error_reporting(E_ALL);
         ini_set('display_errors', 0);
     }
 
-    private function initDoctrine()
+    private function initDoctrine(): void
     {
         if ($this->environment === EnvironmentType::DEVELOPMENT) {
             $dirs = [__DIR__ . '/../vendor/doctrine/orm/lib/'];

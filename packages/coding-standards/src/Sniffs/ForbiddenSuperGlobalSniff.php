@@ -27,11 +27,8 @@ final class ForbiddenSuperGlobalSniff implements Sniff
     {
         return [T_VARIABLE];
     }
-
-    /**
-     * @param int $position
-     */
-    public function process(File $file, $position): void
+    
+    public function process(File $file, int $position): void
     {
         $currentToken = $file->getTokens()[$position];
 

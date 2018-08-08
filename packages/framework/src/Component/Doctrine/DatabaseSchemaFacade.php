@@ -23,24 +23,18 @@ class DatabaseSchemaFacade
         $this->defaultSchemaFilepath = $defaultSchemaFilepath;
         $this->em = $em;
     }
-
-    /**
-     * @param string $schemaName
-     */
-    public function createSchema($schemaName)
+    
+    public function createSchema(string $schemaName): void
     {
         $this->em->getConnection()->query('CREATE SCHEMA ' . $schemaName);
     }
-
-    /**
-     * @param string $schemaName
-     */
-    public function dropSchemaIfExists($schemaName)
+    
+    public function dropSchemaIfExists(string $schemaName): void
     {
         $this->em->getConnection()->query('DROP SCHEMA IF EXISTS ' . $schemaName . ' CASCADE');
     }
 
-    public function importDefaultSchema()
+    public function importDefaultSchema(): void
     {
         $connection = $this->em->getConnection();
         $handle = fopen($this->defaultSchemaFilepath, 'r');

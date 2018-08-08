@@ -22,11 +22,8 @@ class PricingGroupRepository
     {
         return $this->em->getRepository(PricingGroup::class);
     }
-
-    /**
-     * @param int $pricingGroupId
-     */
-    public function getById($pricingGroupId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+    
+    public function getById(int $pricingGroupId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $pricingGroup = $this->getPricingGroupRepository()->find($pricingGroupId);
         if ($pricingGroup === null) {
@@ -45,28 +42,22 @@ class PricingGroupRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getPricingGroupsByDomainId($domainId): array
+    public function getPricingGroupsByDomainId(int $domainId): array
     {
         return $this->getPricingGroupRepository()->findBy(['domainId' => $domainId]);
     }
-
-    /**
-     * @param int $pricingGroupId
-     */
-    public function findById($pricingGroupId): ?\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+    
+    public function findById(int $pricingGroupId): ?\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->getPricingGroupRepository()->find($pricingGroupId);
     }
 
     /**
-     * @param int $pricingGroupId
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getAllExceptIdByDomainId($pricingGroupId, $domainId): array
+    public function getAllExceptIdByDomainId(int $pricingGroupId, int $domainId): array
     {
         $qb = $this->getPricingGroupRepository()->createQueryBuilder('pg')
             ->where('pg.domainId = :domainId')

@@ -16,7 +16,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
 {
-    public function testFilterByMinimalPrice()
+    public function testFilterByMinimalPrice(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
@@ -27,7 +27,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         $this->assertCount(22, $paginationResult->getResults());
     }
 
-    public function testFilterByMaximalPrice()
+    public function testFilterByMaximalPrice(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
@@ -38,7 +38,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         $this->assertCount(22, $paginationResult->getResults());
     }
 
-    public function testFilterByStockAvailability()
+    public function testFilterByStockAvailability(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PHONES);
 
@@ -49,7 +49,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         $this->assertCount(2, $paginationResult->getResults());
     }
 
-    public function testFilterByFlag()
+    public function testFilterByFlag(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -61,7 +61,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         $this->assertCount(2, $paginationResult->getResults());
     }
 
-    public function testFilterByFlagsReturnsProductsWithAnyOfUsedFlags()
+    public function testFilterByFlagsReturnsProductsWithAnyOfUsedFlags(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS);
 
@@ -74,7 +74,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         $this->assertCount(5, $paginationResult->getResults());
     }
 
-    public function testFilterByBrand()
+    public function testFilterByBrand(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -86,7 +86,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         $this->assertCount(6, $paginationResult->getResults());
     }
 
-    public function testFilterByBrandsReturnsProductsWithAnyOfUsedBrands()
+    public function testFilterByBrandsReturnsProductsWithAnyOfUsedBrands(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -99,7 +99,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         $this->assertCount(8, $paginationResult->getResults());
     }
 
-    public function testFilterByParameter()
+    public function testFilterByParameter(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -115,7 +115,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         $this->assertCount(3, $paginationResult->getResults());
     }
 
-    public function testFilterByParametersUsesOrWithinTheSameParameter()
+    public function testFilterByParametersUsesOrWithinTheSameParameter(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -133,7 +133,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         $this->assertCount(10, $paginationResult->getResults());
     }
 
-    public function testFilterByParametersUsesAndWithinDistinctParameters()
+    public function testFilterByParametersUsesAndWithinDistinctParameters(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 

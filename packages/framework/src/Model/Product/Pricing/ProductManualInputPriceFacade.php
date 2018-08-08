@@ -32,11 +32,8 @@ class ProductManualInputPriceFacade
         $this->productManualInputPriceRepository = $productManualInputPriceRepository;
         $this->productManualInputPriceService = $productManualInputPriceService;
     }
-
-    /**
-     * @param string $inputPrice
-     */
-    public function refresh(Product $product, PricingGroup $pricingGroup, $inputPrice)
+    
+    public function refresh(Product $product, PricingGroup $pricingGroup, string $inputPrice): void
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup($product, $pricingGroup);
         $refreshedProductManualInputPrice = $this->productManualInputPriceService->refresh(
@@ -57,7 +54,7 @@ class ProductManualInputPriceFacade
         return $this->productManualInputPriceRepository->getByProduct($product);
     }
 
-    public function deleteByProduct(Product $product)
+    public function deleteByProduct(Product $product): void
     {
         $manualInputPrices = $this->productManualInputPriceRepository->getByProduct($product);
         foreach ($manualInputPrices as $manualInputPrice) {

@@ -17,7 +17,7 @@ class OrderTransportDataFactory implements OrderTransportDataFactoryInterface
         return $orderTransportData;
     }
 
-    protected function fillFromOrderTransport(OrderTransportData $orderTransportData, OrderTransport $orderTransport)
+    protected function fillFromOrderTransport(OrderTransportData $orderTransportData, OrderTransport $orderTransport): void
     {
         $orderTransportData->name = $orderTransport->getName();
         $orderTransportData->priceWithVat = $orderTransport->getPriceWithVat();

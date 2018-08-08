@@ -97,7 +97,7 @@ class Configuration extends DoctrineConfiguration
      * @throws \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException
      * @return Version[] $migrations the array of migrations we can execute
      */
-    public function getMigrationsToExecute($direction, $to): array
+    public function getMigrationsToExecute(string $direction, string $to): array
     {
         if ($direction === Version::DIRECTION_DOWN) {
             $this->throwMethodIsNotAllowedException('Migration down is not allowed.');

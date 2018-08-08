@@ -18,7 +18,7 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
         $this->newsletterFacade = $newsletterFacade;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $newsletterSubscribersData = $this->getEmailData();
 

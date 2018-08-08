@@ -20,11 +20,8 @@ class SliderItemRepository
     {
         return $this->em->getRepository(SliderItem::class);
     }
-
-    /**
-     * @param int $sliderItemId
-     */
-    public function getById($sliderItemId): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
+    
+    public function getById(int $sliderItemId): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         $sliderItem = $this->getSliderItemRepository()->find($sliderItemId);
         if ($sliderItem === null) {
@@ -33,11 +30,8 @@ class SliderItemRepository
         }
         return $sliderItem;
     }
-
-    /**
-     * @param int $id
-     */
-    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Slider\SliderItem
+    
+    public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         return $this->getSliderItemRepository()->find($id);
     }
@@ -51,10 +45,9 @@ class SliderItemRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAllVisibleByDomainId($domainId): array
+    public function getAllVisibleByDomainId(int $domainId): array
     {
         return $this->getSliderItemRepository()->findBy([
             'domainId' => $domainId,

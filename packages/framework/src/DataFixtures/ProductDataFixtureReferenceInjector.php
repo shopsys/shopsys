@@ -15,14 +15,11 @@ use Shopsys\FrameworkBundle\DataFixtures\DemoMultidomain\PricingGroupDataFixture
 
 class ProductDataFixtureReferenceInjector
 {
-    /**
-     * @param bool $onlyForFirstDomain
-     */
     public function loadReferences(
         ProductDataFixtureLoader $productDataFixtureLoader,
         PersistentReferenceFacade $persistentReferenceFacade,
-        $onlyForFirstDomain
-    ) {
+        bool $onlyForFirstDomain
+    ): void {
         $vats = $this->getVatReferences($persistentReferenceFacade);
         $availabilities = $this->getAvailabilityReferences($persistentReferenceFacade);
         $categories = $this->getCategoryReferences($persistentReferenceFacade);

@@ -10,7 +10,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class AdministratorFrontSecurityFacadeTest extends DatabaseTestCase
 {
-    public function testIsAdministratorLoggedNot()
+    public function testIsAdministratorLoggedNot(): void
     {
         $administratorFrontSecurityFacade = $this->getContainer()->get(AdministratorFrontSecurityFacade::class);
         /* @var $administratorFrontSecurityFacade \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade */
@@ -18,7 +18,7 @@ class AdministratorFrontSecurityFacadeTest extends DatabaseTestCase
         $this->assertFalse($administratorFrontSecurityFacade->isAdministratorLogged());
     }
 
-    public function testIsAdministratorLogged()
+    public function testIsAdministratorLogged(): void
     {
         $session = $this->getContainer()->get('session');
         /* @var $session \Symfony\Component\HttpFoundation\Session\SessionInterface */

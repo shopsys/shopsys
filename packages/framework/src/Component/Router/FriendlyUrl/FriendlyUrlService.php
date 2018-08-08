@@ -25,12 +25,10 @@ class FriendlyUrlService
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
      * @param string[] $namesByLocale
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
-    public function createFriendlyUrls($routeName, $entityId, $namesByLocale): array
+    public function createFriendlyUrls(string $routeName, int $entityId, $namesByLocale): array
     {
         $friendlyUrls = [];
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -52,14 +50,12 @@ class FriendlyUrlService
     }
 
     /**
-     * @param int $attempt
-     * @param string $entityName
      * @param array|null $matchedRouteData
      */
     public function getFriendlyUrlUniqueResult(
-        $attempt,
+        int $attempt,
         FriendlyUrl $friendlyUrl,
-        $entityName,
+        string $entityName,
         array $matchedRouteData = null
     ): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult {
         if ($matchedRouteData === null) {
@@ -84,18 +80,14 @@ class FriendlyUrlService
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
-     * @param string $entityName
-     * @param int $domainId
      * @param int|null $indexPostfix
      */
     public function createFriendlyUrlIfValid(
-        $routeName,
-        $entityId,
-        $entityName,
-        $domainId,
-        $indexPostfix = null
+        string $routeName,
+        int $entityId,
+        string $entityName,
+        int $domainId,
+        ?int $indexPostfix = null
     ): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl {
         if ($entityName !== null
             && $entityName !== ''
@@ -115,11 +107,8 @@ class FriendlyUrlService
 
         return $domainConfig->getUrl() . '/' . $friendlyUrl->getSlug();
     }
-
-    /**
-     * @param string $slug
-     */
-    public function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, $slug): string
+    
+    public function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, string $slug): string
     {
         return $domainConfig->getUrl() . '/' . $slug;
     }

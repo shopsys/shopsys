@@ -81,15 +81,12 @@ class TransportAndPaymentWatcherService
 
         return new TransportAndPaymentCheckResult($transportPriceChanged, $paymentPriceChanged);
     }
-
-    /**
-     * @param int $domainId
-     */
+    
     private function checkTransportPrice(
         Transport $transport,
         Currency $currency,
         OrderPreview $orderPreview,
-        $domainId
+        int $domainId
     ): bool {
         $transportPrices = $this->getRememberedTransportPrices();
 
@@ -109,15 +106,12 @@ class TransportAndPaymentWatcherService
 
         return false;
     }
-
-    /**
-     * @param int $domainId
-     */
+    
     private function checkPaymentPrice(
         Payment $payment,
         Currency $currency,
         OrderPreview $orderPreview,
-        $domainId
+        int $domainId
     ): bool {
         $paymentPrices = $this->getRememberedPaymentPrices();
 
@@ -189,15 +183,14 @@ class TransportAndPaymentWatcherService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param int $domainId
      */
     private function rememberTransportAndPayment(
         array $transports,
         array $payments,
         Currency $currency,
         OrderPreview $orderPreview,
-        $domainId
-    ) {
+        int $domainId
+    ): void {
         $this->session->set(self::SESSION_ROOT, [
             self::SESSION_TRANSPORT_PRICES => $this->getTransportPrices(
                 $transports,
@@ -213,7 +206,7 @@ class TransportAndPaymentWatcherService
             ),
         ]);
     }
-    
+
     private function getRememberedTransportAndPayment()
     {
         return $this->session->get(self::SESSION_ROOT, [
@@ -221,12 +214,12 @@ class TransportAndPaymentWatcherService
             self::SESSION_PAYMENT_PRICES => [],
         ]);
     }
-    
+
     private function getRememberedTransportPrices()
     {
         return $this->getRememberedTransportAndPayment()[self::SESSION_TRANSPORT_PRICES];
     }
-    
+
     private function getRememberedPaymentPrices()
     {
         return $this->getRememberedTransportAndPayment()[self::SESSION_PAYMENT_PRICES];

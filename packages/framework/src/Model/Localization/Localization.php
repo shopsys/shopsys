@@ -56,7 +56,7 @@ class Localization
     {
         return 'en';
     }
-    
+
     public function getLocalesOfAllDomains()
     {
         if ($this->allLocales === null) {
@@ -76,11 +76,8 @@ class Localization
     {
         return $this->collationsByLocale;
     }
-
-    /**
-     * @param string $locale
-     */
-    public function getLanguageName($locale): string
+    
+    public function getLanguageName(string $locale): string
     {
         if (!array_key_exists($locale, $this->languageNamesByLocale)) {
             throw new \Shopsys\FrameworkBundle\Model\Localization\Exception\InvalidLocaleException(
@@ -90,11 +87,8 @@ class Localization
 
         return $this->languageNamesByLocale[$locale];
     }
-
-    /**
-     * @param string $locale
-     */
-    public function getCollationByLocale($locale): string
+    
+    public function getCollationByLocale(string $locale): string
     {
         if (array_key_exists($locale, $this->collationsByLocale)) {
             return $this->collationsByLocale[$locale];

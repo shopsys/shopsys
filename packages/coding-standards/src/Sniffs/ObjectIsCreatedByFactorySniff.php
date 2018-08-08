@@ -28,11 +28,8 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
     {
         return [T_NEW];
     }
-
-    /**
-     * @param int $position
-     */
-    public function process(File $file, $position): void
+    
+    public function process(File $file, int $position): void
     {
         $endPosition = $file->findEndOfStatement($position);
         $instantiatedClassNamePosition = $file->findNext(T_STRING, $position, $endPosition);

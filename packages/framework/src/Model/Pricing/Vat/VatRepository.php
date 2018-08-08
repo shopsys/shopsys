@@ -24,11 +24,8 @@ class VatRepository
     {
         return $this->em->getRepository(Vat::class);
     }
-
-    /**
-     * @param string $vatAlias
-     */
-    protected function getQueryBuilderForAll($vatAlias): \Doctrine\ORM\QueryBuilder
+    
+    protected function getQueryBuilderForAll(string $vatAlias): \Doctrine\ORM\QueryBuilder
     {
         return $this->getVatRepository()
             ->createQueryBuilder($vatAlias)
@@ -51,19 +48,13 @@ class VatRepository
     {
         return $this->getVatRepository()->findAll();
     }
-
-    /**
-     * @param int $vatId
-     */
-    public function findById($vatId): ?\Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+    
+    public function findById(int $vatId): ?\Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->getVatRepository()->find($vatId);
     }
-
-    /**
-     * @param int $vatId
-     */
-    public function getById($vatId): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+    
+    public function getById(int $vatId): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         $vat = $this->findById($vatId);
 
@@ -75,10 +66,9 @@ class VatRepository
     }
 
     /**
-     * @param int $vatId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
-    public function getAllExceptId($vatId): array
+    public function getAllExceptId(int $vatId): array
     {
         $qb = $this->getQueryBuilderForAll('v')
             ->andWhere('v.id != :id')
@@ -150,13 +140,13 @@ class VatRepository
         return $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
-    public function replaceVat(Vat $oldVat, Vat $newVat)
+    public function replaceVat(Vat $oldVat, Vat $newVat): void
     {
         $this->replacePaymentsVat($oldVat, $newVat);
         $this->replaceTransportsVat($oldVat, $newVat);
     }
 
-    protected function replacePaymentsVat(Vat $oldVat, Vat $newVat)
+    protected function replacePaymentsVat(Vat $oldVat, Vat $newVat): void
     {
         $this->em->createQueryBuilder()
             ->update(Payment::class, 'p')
@@ -165,7 +155,7 @@ class VatRepository
             ->getQuery()->execute();
     }
 
-    protected function replaceTransportsVat(Vat $oldVat, Vat $newVat)
+    protected function replaceTransportsVat(Vat $oldVat, Vat $newVat): void
     {
         $this->em->createQueryBuilder()
             ->update(Transport::class, 't')

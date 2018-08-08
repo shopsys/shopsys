@@ -12,7 +12,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class OrderStatusFacadeTest extends DatabaseTestCase
 {
-    public function testDeleteByIdAndReplace()
+    public function testDeleteByIdAndReplace(): void
     {
         $em = $this->getEntityManager();
         $orderStatusFacade = $this->getContainer()->get(OrderStatusFacade::class);

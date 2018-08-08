@@ -22,11 +22,8 @@ class CurrencyService
     {
         return $this->currencyFactory->create($currencyData);
     }
-
-    /**
-     * @param bool $isDefaultCurrency
-     */
-    public function edit(Currency $currency, CurrencyData $currencyData, $isDefaultCurrency): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    
+    public function edit(Currency $currency, CurrencyData $currencyData, bool $isDefaultCurrency): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency->edit($currencyData);
         if ($isDefaultCurrency) {
@@ -39,12 +36,11 @@ class CurrencyService
     }
 
     /**
-     * @param int $defaultCurrencyId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[] $currenciesUsedInOrders
      * @return int[]
      */
     public function getNotAllowedToDeleteCurrencyIds(
-        $defaultCurrencyId,
+        int $defaultCurrencyId,
         array $currenciesUsedInOrders,
         PricingSetting $pricingSetting,
         Domain $domain

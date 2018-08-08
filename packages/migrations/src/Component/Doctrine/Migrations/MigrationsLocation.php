@@ -13,12 +13,8 @@ class MigrationsLocation
      * @var string
      */
     private $namespace;
-
-    /**
-     * @param string $directory
-     * @param string $namespace
-     */
-    public function __construct($directory, $namespace)
+    
+    public function __construct(string $directory, string $namespace)
     {
         $this->directory = $directory;
         $this->namespace = $namespace;

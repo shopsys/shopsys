@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DomainTest extends TestCase
 {
-    public function testGetIdNotSet()
+    public function testGetIdNotSet(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.com:8080', 'example', 'cs'),
@@ -23,7 +23,7 @@ class DomainTest extends TestCase
         $domain->getId();
     }
 
-    public function testSwitchDomainByRequest()
+    public function testSwitchDomainByRequest(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.com:8080', 'example.com', 'cs'),
@@ -47,7 +47,7 @@ class DomainTest extends TestCase
         $this->assertSame('cs', $domain->getLocale());
     }
 
-    public function testGetAllIncludingDomainConfigsWithoutDataCreated()
+    public function testGetAllIncludingDomainConfigsWithoutDataCreated(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.com:8080', 'example.com', 'cs'),
@@ -60,7 +60,7 @@ class DomainTest extends TestCase
         $this->assertSame($domainConfigs, $domain->getAllIncludingDomainConfigsWithoutDataCreated());
     }
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $domainConfigWithDataCreated = new DomainConfig(1, 'http://example.com:8080', 'example.com', 'cs');
         $domainConfigWithoutDataCreated = new DomainConfig(2, 'http://example.org:8080', 'example.org', 'en');
@@ -85,7 +85,7 @@ class DomainTest extends TestCase
         $this->assertSame([$domainConfigWithDataCreated], $domain->getAll());
     }
 
-    public function testGetDomainConfigById()
+    public function testGetDomainConfigById(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.com:8080', 'example.com', 'cs'),

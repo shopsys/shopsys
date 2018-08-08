@@ -55,19 +55,13 @@ class PerformanceTestSample
         $this->duration = $duration;
         $this->statusCode = $statusCode;
     }
-
-    /**
-     * @param string $message
-     */
-    public function setMessage($message)
+    
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
-
-    /**
-     * @param string $failMessage
-     */
-    public function addFailMessage($failMessage)
+    
+    public function addFailMessage(string $failMessage): void
     {
         $this->failMessages[] = $failMessage;
     }

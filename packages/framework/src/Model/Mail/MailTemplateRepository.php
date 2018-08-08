@@ -20,23 +20,15 @@ class MailTemplateRepository
     {
         return $this->em->getRepository(MailTemplate::class);
     }
-
-    /**
-     * @param string $templateName
-     * @param int $domainId
-     */
-    public function findByNameAndDomainId($templateName, $domainId): ?\Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+    
+    public function findByNameAndDomainId(string $templateName, int $domainId): ?\Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $criteria = ['name' => $templateName, 'domainId' => $domainId];
 
         return $this->getMailTemplateRepository()->findOneBy($criteria);
     }
-
-    /**
-     * @param string $templateName
-     * @param int $domainId
-     */
-    public function getByNameAndDomainId($templateName, $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+    
+    public function getByNameAndDomainId(string $templateName, int $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $mailTemplate = $this->findByNameAndDomainId($templateName, $domainId);
         if ($mailTemplate === null) {
@@ -48,10 +40,9 @@ class MailTemplateRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
      */
-    public function getAllByDomainId($domainId): array
+    public function getAllByDomainId(int $domainId): array
     {
         $criteria = ['domainId' => $domainId];
         return $this->getMailTemplateRepository()->findBy($criteria);

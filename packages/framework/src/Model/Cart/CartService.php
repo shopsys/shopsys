@@ -29,11 +29,8 @@ class CartService
         $this->productPriceCalculation = $productPriceCalculation;
         $this->cartItemFactory = $cartItemFactory;
     }
-
-    /**
-     * @param int $quantity
-     */
-    public function addProductToCart(Cart $cart, CustomerIdentifier $customerIdentifier, Product $product, $quantity): \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
+    
+    public function addProductToCart(Cart $cart, CustomerIdentifier $customerIdentifier, Product $product, int $quantity): \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
     {
         if (!is_int($quantity) || $quantity <= 0) {
             throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($quantity);
@@ -52,8 +49,8 @@ class CartService
         $cart->addItem($newCartItem);
         return new AddProductResult($newCartItem, true, $quantity);
     }
-    
-    public function changeQuantities(Cart $cart, array $quantitiesByCartItemId)
+
+    public function changeQuantities(Cart $cart, array $quantitiesByCartItemId): void
     {
         foreach ($cart->getItems() as $cartItem) {
             if (array_key_exists($cartItem->getId(), $quantitiesByCartItemId)) {
@@ -61,11 +58,8 @@ class CartService
             }
         }
     }
-
-    /**
-     * @param int $cartItemId
-     */
-    public function getCartItemById(Cart $cart, $cartItemId): \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
+    
+    public function getCartItemById(Cart $cart, int $cartItemId): \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
     {
         foreach ($cart->getItems() as $cartItem) {
             if ($cartItem->getId() === $cartItemId) {
@@ -76,12 +70,12 @@ class CartService
         throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException($message);
     }
 
-    public function cleanCart(Cart $cart)
+    public function cleanCart(Cart $cart): void
     {
         $cart->clean();
     }
 
-    public function mergeCarts(Cart $resultingCart, Cart $mergedCart, CustomerIdentifier $customerIdentifier)
+    public function mergeCarts(Cart $resultingCart, Cart $mergedCart, CustomerIdentifier $customerIdentifier): void
     {
         foreach ($mergedCart->getItems() as $cartItem) {
             $similarCartItem = $this->findSimilarCartItemByCartItem($resultingCart, $cartItem);

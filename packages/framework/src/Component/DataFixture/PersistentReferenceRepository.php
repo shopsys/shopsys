@@ -20,19 +20,13 @@ class PersistentReferenceRepository
     {
         return $this->em->getRepository(PersistentReference::class);
     }
-
-    /**
-     * @param string $referenceName
-     */
-    public function findByReferenceName($referenceName): ?\Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference
+    
+    public function findByReferenceName(string $referenceName): ?\Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference
     {
         return $this->getReferenceRepository()->find(['referenceName' => $referenceName]);
     }
-
-    /**
-     * @param string $referenceName
-     */
-    public function getByReferenceName($referenceName): \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference
+    
+    public function getByReferenceName(string $referenceName): \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference
     {
         $reference = $this->findByReferenceName($referenceName);
         if ($reference === null) {

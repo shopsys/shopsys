@@ -20,11 +20,8 @@ class ScriptRepository
     {
         return $this->em->getRepository(Script::class);
     }
-
-    /**
-     * @param int $scriptId
-     */
-    public function getById($scriptId): \Shopsys\FrameworkBundle\Model\Script\Script
+    
+    public function getById(int $scriptId): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         $script = $this->getScriptRepository()->find($scriptId);
 
@@ -49,10 +46,9 @@ class ScriptRepository
     }
 
     /**
-     * @param string $placement
      * @return \Shopsys\FrameworkBundle\Model\Script\Script[]
      */
-    public function getScriptsByPlacement($placement): array
+    public function getScriptsByPlacement(string $placement): array
     {
         return $this->getScriptRepository()->findBy(['placement' => $placement]);
     }

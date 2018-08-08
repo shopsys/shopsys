@@ -15,12 +15,9 @@ class HeurekaCategoryDownloader
      * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface
      */
     private $heurekaCategoryDataFactory;
-
-    /**
-     * @param string $heurekaCategoryFeedUrl
-     */
+    
     public function __construct(
-        $heurekaCategoryFeedUrl,
+        string $heurekaCategoryFeedUrl,
         HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory
     ) {
         $this->heurekaCategoryFeedUrl = $heurekaCategoryFeedUrl;

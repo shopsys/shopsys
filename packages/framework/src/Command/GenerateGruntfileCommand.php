@@ -65,13 +65,13 @@ class GenerateGruntfileCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generate Gruntfile.js by domain settings');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $cssVersion = time();
         $this->cssFacade->setCssVersion($cssVersion);

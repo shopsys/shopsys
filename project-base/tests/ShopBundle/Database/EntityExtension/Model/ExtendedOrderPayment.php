@@ -33,18 +33,13 @@ class ExtendedOrderPayment extends ExtendedOrderItem
      * @ORM\Column(type="string", nullable=true)
      */
     protected $paymentStringField;
-
-    /**
-     * @param string $name
-     * @param string $vatPercent
-     * @param int $quantity
-     */
+    
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
+        string $vatPercent,
+        int $quantity,
         Payment $payment
     ) {
         parent::__construct(
@@ -64,7 +59,7 @@ class ExtendedOrderPayment extends ExtendedOrderItem
         return $this->payment;
     }
 
-    public function edit(OrderItemData $orderPaymentData)
+    public function edit(OrderItemData $orderPaymentData): void
     {
         if ($orderPaymentData instanceof OrderPaymentData) {
             $this->payment = $orderPaymentData->payment;
@@ -84,7 +79,7 @@ class ExtendedOrderPayment extends ExtendedOrderItem
     /**
      * @param string|null $paymentStringField
      */
-    public function setPaymentStringField($paymentStringField)
+    public function setPaymentStringField(?string $paymentStringField): void
     {
         $this->paymentStringField = $paymentStringField;
     }

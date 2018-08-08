@@ -30,8 +30,8 @@ class PaymentEditFormType extends AbstractType
         $this->currencyFacade = $currencyFacade;
         $this->paymentFacade = $paymentFacade;
     }
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $payment = $options['payment'];
         /* @var $payment \Shopsys\FrameworkBundle\Model\Payment\Payment */
@@ -56,7 +56,7 @@ class PaymentEditFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('payment')
             ->setAllowedTypes('payment', [Payment::class, 'null'])

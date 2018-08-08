@@ -34,7 +34,7 @@ class UploadedFileExtension extends Twig_Extension
         $this->uploadedFileFacade = $uploadedFileFacade;
         $this->fileThumbnailExtension = $fileThumbnailExtension;
     }
-    
+
     public function getFunctions()
     {
         return [
@@ -44,29 +44,20 @@ class UploadedFileExtension extends Twig_Extension
             new Twig_SimpleFunction('getUploadedFile', [$this, 'getUploadedFileByEntity']),
         ];
     }
-
-    /**
-     * @param Object $entity
-     */
-    public function hasUploadedFile($entity): bool
+    
+    public function hasUploadedFile(Object $entity): bool
     {
         return $this->uploadedFileFacade->hasUploadedFile($entity);
     }
-
-    /**
-     * @param Object $entity
-     */
-    public function getUploadedFileUrl($entity): string
+    
+    public function getUploadedFileUrl(Object $entity): string
     {
         $uploadedFile = $this->getUploadedFileByEntity($entity);
 
         return $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getCurrentDomainConfig(), $uploadedFile);
     }
-
-    /**
-     * @param Object $entity
-     */
-    public function getUploadedFilePreviewHtml($entity): string
+    
+    public function getUploadedFilePreviewHtml(Object $entity): string
     {
         $uploadedFile = $this->getUploadedFileByEntity($entity);
         $filepath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
@@ -87,11 +78,8 @@ class UploadedFileExtension extends Twig_Extension
             return '<img src="' . $fileThumbnailInfo->getImageUri() . '"/>';
         }
     }
-
-    /**
-     * @param Object $entity
-     */
-    public function getUploadedFileByEntity($entity): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
+    
+    public function getUploadedFileByEntity(Object $entity): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         return $this->uploadedFileFacade->getUploadedFileByEntity($entity);
     }

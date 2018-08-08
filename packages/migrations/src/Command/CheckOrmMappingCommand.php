@@ -29,7 +29,7 @@ class CheckOrmMappingCommand extends AbstractCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Check if ORM mapping is valid');

@@ -11,8 +11,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FormRenderingConfigurationExtension extends AbstractTypeExtension
 {
     const DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING = 'multidomain_form_rows_no_padding';
-    
-    public function buildView(FormView $view, FormInterface $form, array $options)
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
         $view->vars['macro'] = $options['macro'];
@@ -23,7 +23,7 @@ class FormRenderingConfigurationExtension extends AbstractTypeExtension
         $view->vars['is_group_container_to_render_as_the_last_one'] = $options['is_group_container_to_render_as_the_last_one'];
         $view->vars['render_form_row'] = $options['render_form_row'];
     }
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'macro' => null,

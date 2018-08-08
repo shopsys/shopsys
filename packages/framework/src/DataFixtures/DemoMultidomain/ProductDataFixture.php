@@ -49,7 +49,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->productDataFactory = $productDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $onlyForFirstDomain = false;
         $this->referenceInjector->loadReferences($this->productDataFixtureLoader, $this->persistentReferenceFacade, $onlyForFirstDomain);
@@ -65,8 +65,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             }
         }
     }
-    
-    private function editProduct(Product $product, array $row)
+
+    private function editProduct(Product $product, array $row): void
     {
         $productData = $this->productDataFactory->createFromProduct($product);
         $this->productDataFixtureLoader->updateProductDataFromCsvRowForSecondDomain($productData, $row);

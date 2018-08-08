@@ -5,11 +5,8 @@ namespace Shopsys\FrameworkBundle\Component\String;
 class HashGenerator
 {
     private $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
-
-    /**
-     * @param int $length
-     */
-    public function generateHash($length): string
+    
+    public function generateHash(int $length): string
     {
         $numberOfChars = strlen($this->characters);
 

@@ -59,11 +59,9 @@ class UploadedFile implements EntityFileUploadInterface
     protected $temporaryFilename;
 
     /**
-     * @param string $entityName
-     * @param int $entityId
      * @param string|null $temporaryFilename
      */
-    public function __construct($entityName, $entityId, $temporaryFilename)
+    public function __construct(string $entityName, int $entityId, ?string $temporaryFilename)
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
@@ -89,12 +87,8 @@ class UploadedFile implements EntityFileUploadInterface
             ),
         ];
     }
-
-    /**
-     * @param string $key
-     * @param string $originalFilename
-     */
-    public function setFileAsUploaded($key, $originalFilename)
+    
+    public function setFileAsUploaded(string $key, string $originalFilename): void
     {
         if ($key === self::UPLOAD_KEY) {
             $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
@@ -106,7 +100,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @param string|null $temporaryFilename
      */
-    public function setTemporaryFilename($temporaryFilename)
+    public function setTemporaryFilename(?string $temporaryFilename): void
     {
         $this->temporaryFilename = $temporaryFilename;
         // workaround: Entity must be changed so that preUpdate and postUpdate are called

@@ -41,7 +41,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         $this->categoryDataFactory = $categoryDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /**
          * Root category is created in database migration.
@@ -180,7 +180,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     /**
      * @param string|null $referenceName
      */
-    private function createCategory(CategoryData $categoryData, $referenceName = null): \Shopsys\FrameworkBundle\Model\Category\Category
+    private function createCategory(CategoryData $categoryData, ?string $referenceName = null): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         $category = $this->categoryFacade->create($categoryData);
         if ($referenceName !== null) {

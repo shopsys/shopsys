@@ -23,11 +23,8 @@ class IndependentTransportVisibilityCalculation
         $this->transportRepository = $transportRepository;
         $this->domain = $domain;
     }
-
-    /**
-     * @param int $domainId
-     */
-    public function isIndependentlyVisible(Transport $transport, $domainId): bool
+    
+    public function isIndependentlyVisible(Transport $transport, int $domainId): bool
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 

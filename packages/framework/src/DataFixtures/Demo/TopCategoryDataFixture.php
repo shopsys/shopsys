@@ -18,7 +18,7 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
         $this->topCategoryFacade = $topCategoryFacade;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $categories = [
             $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),

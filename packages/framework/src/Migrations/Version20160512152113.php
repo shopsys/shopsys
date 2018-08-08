@@ -11,7 +11,7 @@ class Version20160512152113 extends AbstractMigration
 
     const COUNTRIES_SEQUENCE_NAME = 'countries_id_seq';
 
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql(
             'CREATE TABLE countries (
@@ -74,7 +74,7 @@ class Version20160512152113 extends AbstractMigration
         $this->sql('CREATE INDEX IDX_E52FFDEEE76AA954 ON orders (delivery_country_id)');
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }
