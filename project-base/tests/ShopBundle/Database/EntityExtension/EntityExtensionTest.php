@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderPayment;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderTransport;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -19,6 +20,7 @@ use Tests\ShopBundle\Database\EntityExtension\Model\CategoryManyToManyBidirectio
 use Tests\ShopBundle\Database\EntityExtension\Model\CategoryOneToManyBidirectionalEntity;
 use Tests\ShopBundle\Database\EntityExtension\Model\CategoryOneToOneBidirectionalEntity;
 use Tests\ShopBundle\Database\EntityExtension\Model\ExtendedCategory;
+use Tests\ShopBundle\Database\EntityExtension\Model\ExtendedOrder;
 use Tests\ShopBundle\Database\EntityExtension\Model\ExtendedOrderItem;
 use Tests\ShopBundle\Database\EntityExtension\Model\ExtendedOrderPayment;
 use Tests\ShopBundle\Database\EntityExtension\Model\ExtendedOrderProduct;
@@ -42,6 +44,8 @@ class EntityExtensionTest extends DatabaseTestCase
     const ONE_TO_MANY_SELF_REFERENCING_CATEGORY_ID = 3;
     const MANY_TO_MANY_SELF_REFERENCING_CATEGORY_ID = 4;
 
+    const ORDER_ID = 1;
+
     const ORDER_TRANSPORT_ID = 1;
     const ORDER_PAYMENT_ID = 2;
     const ORDER_PRODUCT_ID = 3;
@@ -60,6 +64,7 @@ class EntityExtensionTest extends DatabaseTestCase
         $entityExtensionMap = [
             Product::class => ExtendedProduct::class,
             Category::class => ExtendedCategory::class,
+            Order::class => ExtendedOrder::class,
             OrderItem::class => ExtendedOrderItem::class,
             OrderProduct::class => ExtendedOrderProduct::class,
             OrderPayment::class => ExtendedOrderPayment::class,
@@ -151,6 +156,7 @@ class EntityExtensionTest extends DatabaseTestCase
 
         $this->doTestExtendedEntityInstantiation(Product::class, ExtendedProduct::class, self::MAIN_PRODUCT_ID);
         $this->doTestExtendedEntityInstantiation(Category::class, ExtendedCategory::class, self::MAIN_CATEGORY_ID);
+        $this->doTestExtendedEntityInstantiation(Order::class, ExtendedOrder::class, self::ORDER_ID);
         $this->doTestExtendedEntityInstantiation(OrderItem::class, ExtendedOrderPayment::class, self::ORDER_PAYMENT_ID);
         $this->doTestExtendedEntityInstantiation(OrderItem::class, ExtendedOrderProduct::class, self::ORDER_PRODUCT_ID);
         $this->doTestExtendedEntityInstantiation(OrderItem::class, ExtendedOrderTransport::class, self::ORDER_TRANSPORT_ID);
