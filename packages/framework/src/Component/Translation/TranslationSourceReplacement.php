@@ -63,7 +63,7 @@ class TranslationSourceReplacement
 
         return array_unique($sourceFilePaths);
     }
-    
+
     public function getExpectedReplacementsCountForSourceFilePath(string $sourceFilePath): int
     {
         $expectedReplacementsCount = 0;
@@ -75,7 +75,7 @@ class TranslationSourceReplacement
 
         return $expectedReplacementsCount;
     }
-    
+
     public function isExpectedReplacementsCountExact(string $sourceFilePath): bool
     {
         foreach ($this->sourceFileReferences as $sourceFileReference) {
@@ -88,12 +88,12 @@ class TranslationSourceReplacement
 
         return true;
     }
-    
+
     private function extractSourceFilePathFromReference(string $sourceFileReference): string
     {
         return explode(':', $sourceFileReference)[0];
     }
-    
+
     private function extractSourceFileLineFromReference(string $sourceFileReference): ?int
     {
         $parts = explode(':', $sourceFileReference);

@@ -39,7 +39,7 @@ class AcceptanceTester extends Actor
         });
         $this->waitForElement('body', self::WAIT_TIMEOUT_SEC);
     }
-    
+
     public function waitForAjax(int $timeout = self::DEFAULT_AJAX_TIMEOUT_SEC): void
     {
         $this->waitForJS('return $.active == 0;', $timeout);

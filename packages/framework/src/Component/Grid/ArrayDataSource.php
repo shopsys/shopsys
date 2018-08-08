@@ -15,7 +15,7 @@ class ArrayDataSource implements DataSourceInterface
      * @var string
      */
     private $rowIdSourceColumnName;
-    
+
     public function __construct(array $data, string $rowIdSourceColumnName = null)
     {
         $this->data = $data;

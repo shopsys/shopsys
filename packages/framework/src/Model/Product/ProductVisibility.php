@@ -43,7 +43,7 @@ class ProductVisibility
      * @ORM\Column(type="boolean")
      */
     protected $visible;
-    
+
     public function __construct(
         Product $product,
         PricingGroup $pricingGroup,

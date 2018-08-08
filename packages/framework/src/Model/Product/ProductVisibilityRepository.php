@@ -37,7 +37,7 @@ class ProductVisibilityRepository
         $this->domain = $domain;
         $this->pricingGroupRepository = $pricingGroupRepository;
     }
-    
+
     public function refreshProductsVisibility(bool $onlyMarkedProducts = false): void
     {
         $this->calculateIndependentVisibility($onlyMarkedProducts);
@@ -67,7 +67,7 @@ class ProductVisibilityRepository
             ->getQuery()
             ->execute();
     }
-    
+
     protected function refreshGlobalProductVisibility(bool $onlyMarkedProducts): void
     {
         if ($onlyMarkedProducts) {
@@ -89,7 +89,7 @@ class ProductVisibilityRepository
         );
         $query->execute();
     }
-    
+
     public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, int $domainId): void
     {
         $query = $this->em->createNativeQuery(
@@ -109,7 +109,7 @@ class ProductVisibilityRepository
     {
         return $this->em->getRepository(ProductVisibility::class);
     }
-    
+
     public function getProductVisibility(
         Product $product,
         PricingGroup $pricingGroup,
@@ -134,7 +134,7 @@ class ProductVisibilityRepository
             new ResultSetMapping()
         )->execute();
     }
-    
+
     protected function calculateIndependentVisibility(bool $onlyMarkedProducts): void
     {
         $now = new DateTime();
@@ -206,7 +206,7 @@ class ProductVisibilityRepository
             ]);
         }
     }
-    
+
     protected function hideVariantsWithInvisibleMainVariant(bool $onlyMarkedProducts): void
     {
         if ($onlyMarkedProducts) {
@@ -238,7 +238,7 @@ class ProductVisibilityRepository
             'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
         ]);
     }
-    
+
     protected function hideMainVariantsWithoutVisibleVariants(bool $onlyMarkedProducts): void
     {
         if ($onlyMarkedProducts) {

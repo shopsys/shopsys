@@ -28,7 +28,7 @@ class Environment
         }
         self::printEnvironmentInfo($io);
     }
-    
+
     public static function getEnvironment(bool $console): string
     {
         return self::getEnvironmentFileSetting()->getEnvironment($console);

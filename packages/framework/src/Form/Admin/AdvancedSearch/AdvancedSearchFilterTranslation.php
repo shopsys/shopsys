@@ -13,12 +13,12 @@ class AdvancedSearchFilterTranslation
     {
         $this->filtersTranslationsByFilterName = [];
     }
-    
+
     public function addFilterTranslation(string $filterName, string $filterTranslation): void
     {
         $this->filtersTranslationsByFilterName[$filterName] = $filterTranslation;
     }
-    
+
     public function translateFilterName(string $filterName): string
     {
         if (array_key_exists($filterName, $this->filtersTranslationsByFilterName)) {

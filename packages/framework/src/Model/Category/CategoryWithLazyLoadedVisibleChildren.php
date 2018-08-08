@@ -31,7 +31,7 @@ class CategoryWithLazyLoadedVisibleChildren
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren[]|null
      */
     private $children;
-    
+
     public function __construct(
         Closure $lazyLoadChildrenCallback,
         Category $category,

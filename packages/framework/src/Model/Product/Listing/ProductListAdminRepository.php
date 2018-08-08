@@ -28,7 +28,7 @@ class ProductListAdminRepository
         $this->em = $em;
         $this->localization = $localization;
     }
-    
+
     public function getProductListQueryBuilder(int $pricingGroupId): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder();

@@ -53,7 +53,7 @@ class VatFacade
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->vatFactory = $vatFactory;
     }
-    
+
     public function getById(int $vatId): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->vatRepository->getById($vatId);
@@ -83,7 +83,7 @@ class VatFacade
 
         return $vat;
     }
-    
+
     public function edit(int $vatId, VatData $vatData): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         $vat = $this->vatRepository->getById($vatId);

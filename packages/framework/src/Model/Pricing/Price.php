@@ -18,7 +18,7 @@ class Price
      * @var string
      */
     private $vatAmount;
-    
+
     public function __construct(string $priceWithoutVat, string $priceWithVat)
     {
         $this->priceWithoutVat = $priceWithoutVat;

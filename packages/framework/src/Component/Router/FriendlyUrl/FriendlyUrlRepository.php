@@ -20,7 +20,7 @@ class FriendlyUrlRepository
     {
         return $this->em->getRepository(FriendlyUrl::class);
     }
-    
+
     public function findByDomainIdAndSlug(int $domainId, string $slug): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
     {
         return $this->getFriendlyUrlRepository()->findOneBy(
@@ -30,7 +30,7 @@ class FriendlyUrlRepository
             ]
         );
     }
-    
+
     public function getMainFriendlyUrl(int $domainId, string $routeName, int $entityId): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
     {
         $criteria = [
@@ -47,7 +47,7 @@ class FriendlyUrlRepository
 
         return $friendlyUrl;
     }
-    
+
     public function findMainFriendlyUrl(int $domainId, string $routeName, int $entityId): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
     {
         $criteria = [

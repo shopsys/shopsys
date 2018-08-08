@@ -30,7 +30,7 @@ class DomainConfig
      * @var string
      */
     private $stylesDirectory;
-    
+
     public function __construct(int $id, string $url, string $name, string $locale, string $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT)
     {
         $this->id = $id;

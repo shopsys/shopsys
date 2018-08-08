@@ -425,7 +425,7 @@ class Order
         $this->companyNumber = $companyNumber;
         $this->companyTaxNumber = $companyTaxNumber;
     }
-    
+
     public function setDomainId(int $domainId): void
     {
         $this->domainId = $domainId;
@@ -586,7 +586,7 @@ class Order
 
         return $totalPrice;
     }
-    
+
     public function getItemById(int $orderItemId): \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
     {
         foreach ($this->getItems() as $orderItem) {

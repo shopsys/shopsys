@@ -15,7 +15,7 @@ class JsConstantCall
      * @var string
      */
     private $constantName;
-    
+
     public function __construct(
         JCallExprNode $callExprNode,
         string $constantName

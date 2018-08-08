@@ -74,7 +74,7 @@ class CategoryController extends FrontBaseController
             'currentCategory' => $currentCategory,
         ]);
     }
-    
+
     public function branchAction(int $parentCategoryId)
     {
         $parentCategory = $this->categoryFacade->getById($parentCategoryId);

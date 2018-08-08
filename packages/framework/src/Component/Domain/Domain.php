@@ -98,7 +98,7 @@ class Domain implements DomainIdsProviderInterface
     {
         return $this->domainConfigs;
     }
-    
+
     public function getDomainConfigById(int $domainId): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
     {
         foreach ($this->domainConfigs as $domainConfig) {
@@ -109,7 +109,7 @@ class Domain implements DomainIdsProviderInterface
 
         throw new \Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException();
     }
-    
+
     public function switchDomainById(int $domainId): void
     {
         $this->currentDomainConfig = $this->getDomainConfigById($domainId);

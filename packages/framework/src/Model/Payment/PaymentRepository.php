@@ -45,7 +45,7 @@ class PaymentRepository
     {
         return $this->getPaymentRepository()->findAll();
     }
-    
+
     public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->getQueryBuilderForAll()
@@ -53,7 +53,7 @@ class PaymentRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-    
+
     public function getById(int $id): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         $payment = $this->findById($id);

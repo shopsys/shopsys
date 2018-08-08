@@ -20,7 +20,7 @@ class ProductListComponent extends AbstractPage
         $this->tester->waitForAjax();
         $this->tester->wait(1); // animation of popup window
     }
-    
+
     private function findProductListItemByName(string $productName, WebDriverElement $context): \Facebook\WebDriver\WebDriverElement
     {
         $productItems = $context->findElements(WebDriverBy::cssSelector('.js-list-products-item'));

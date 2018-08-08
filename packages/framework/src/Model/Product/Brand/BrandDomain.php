@@ -60,7 +60,7 @@ class BrandDomain
      * @ORM\Column(type="text", nullable=true)
      */
     protected $seoH1;
-    
+
     public function __construct(Brand $brand, int $domainId)
     {
         $this->brand = $brand;

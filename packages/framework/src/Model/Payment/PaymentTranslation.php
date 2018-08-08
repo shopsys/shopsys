@@ -52,17 +52,17 @@ class PaymentTranslation extends AbstractTranslation
     {
         return $this->instructions;
     }
-    
+
     public function setName(string $name): void
     {
         $this->name = $name;
     }
-    
+
     public function setDescription(string $description): void
     {
         $this->description = $description;
     }
-    
+
     public function setInstructions(string $instructions): void
     {
         $this->instructions = $instructions;

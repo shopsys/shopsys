@@ -29,7 +29,7 @@ class LocalizedRouterFactory
         $this->localeRoutersResourcesFilepaths = $localeRoutersResourcesFilepaths;
         $this->routersByLocaleAndHost = [];
     }
-    
+
     public function getRouter(string $locale, RequestContext $context): \Symfony\Component\Routing\Router
     {
         if (!array_key_exists($locale, $this->localeRoutersResourcesFilepaths)) {

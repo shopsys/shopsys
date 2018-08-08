@@ -100,7 +100,7 @@ class ProductService
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->markProductForVisibilityRecalculation($product);
     }
-    
+
     public function setInputPrice(Product $product, string $inputPrice): void
     {
         $product->setPrice($inputPrice);

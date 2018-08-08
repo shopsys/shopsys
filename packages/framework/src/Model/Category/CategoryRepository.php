@@ -153,7 +153,7 @@ class CategoryRepository extends NestedTreeRepository
             ->getQuery()
             ->execute();
     }
-    
+
     public function findById(int $categoryId): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         $category = $this->getCategoryRepository()->find($categoryId);
@@ -167,7 +167,7 @@ class CategoryRepository extends NestedTreeRepository
 
         return $category;
     }
-    
+
     public function getById(int $categoryId): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         $category = $this->findById($categoryId);
@@ -206,7 +206,7 @@ class CategoryRepository extends NestedTreeRepository
 
         return $queryBuilder->getQuery()->execute();
     }
-    
+
     protected function getPreOrderTreeTraversalForAllCategoriesByDomainQueryBuilder(int $domainId, string $locale): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->getAllQueryBuilder();
@@ -236,7 +236,7 @@ class CategoryRepository extends NestedTreeRepository
 
         return $queryBuilder->getQuery()->execute();
     }
-    
+
     protected function addTranslation(QueryBuilder $categoriesQueryBuilder, string $locale): void
     {
         $categoriesQueryBuilder
@@ -286,7 +286,7 @@ class CategoryRepository extends NestedTreeRepository
 
         return $queryBuilder;
     }
-    
+
     public function getAllVisibleByDomainIdQueryBuilder(int $domainId): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->getAllQueryBuilder()
@@ -358,7 +358,7 @@ class CategoryRepository extends NestedTreeRepository
         );
         $queryBuilder->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($searchText));
     }
-    
+
     public function findProductMainCategoryOnDomain(Product $product, int $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         $qb = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
@@ -380,7 +380,7 @@ class CategoryRepository extends NestedTreeRepository
 
         return $qb->getQuery()->getOneOrNullResult();
     }
-    
+
     public function getProductMainCategoryOnDomain(Product $product, int $domainId): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         $productMainCategory = $this->findProductMainCategoryOnDomain($product, $domainId);

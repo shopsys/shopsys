@@ -132,7 +132,7 @@ class Brand extends AbstractTranslatableEntity
     {
         return $this->getBrandDomain($domainId)->getSeoH1();
     }
-    
+
     public function getDescription(string $locale = null): string
     {
         return $this->translation($locale)->getDescription();

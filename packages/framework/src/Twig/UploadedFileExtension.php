@@ -44,19 +44,19 @@ class UploadedFileExtension extends Twig_Extension
             new Twig_SimpleFunction('getUploadedFile', [$this, 'getUploadedFileByEntity']),
         ];
     }
-    
+
     public function hasUploadedFile(Object $entity): bool
     {
         return $this->uploadedFileFacade->hasUploadedFile($entity);
     }
-    
+
     public function getUploadedFileUrl(Object $entity): string
     {
         $uploadedFile = $this->getUploadedFileByEntity($entity);
 
         return $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getCurrentDomainConfig(), $uploadedFile);
     }
-    
+
     public function getUploadedFilePreviewHtml(Object $entity): string
     {
         $uploadedFile = $this->getUploadedFileByEntity($entity);
@@ -78,7 +78,7 @@ class UploadedFileExtension extends Twig_Extension
             return '<img src="' . $fileThumbnailInfo->getImageUri() . '"/>';
         }
     }
-    
+
     public function getUploadedFileByEntity(Object $entity): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         return $this->uploadedFileFacade->getUploadedFileByEntity($entity);

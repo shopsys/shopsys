@@ -127,7 +127,7 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
     {
         $this->gridLimits->removeElement($gridLimit);
     }
-    
+
     public function getGridLimit(string $gridId): \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit
     {
         foreach ($this->gridLimits as $gridLimit) {
@@ -137,7 +137,7 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         }
         return null;
     }
-    
+
     public function getLimitByGridId(string $gridId): ?int
     {
         $gridLimit = $this->getGridLimit($gridId);
@@ -186,42 +186,42 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
     {
         return $this->superadmin;
     }
-    
+
     public function setSuperadmin(bool $superadmin): void
     {
         $this->superadmin = $superadmin;
     }
-    
+
     public function setUsername(string $username): void
     {
         $this->username = $username;
     }
-    
+
     public function setRealname(string $realName): void
     {
         $this->realName = $realName;
     }
-    
+
     public function setPassword(string $password): void
     {
         $this->password = $password;
     }
-    
+
     public function setEmail(string $email): void
     {
         $this->email = $email;
     }
-    
+
     public function setLoginToken(string $loginToken): void
     {
         $this->loginToken = $loginToken;
     }
-    
+
     public function setLastActivity(\DateTime $lastActivity): void
     {
         $this->lastActivity = $lastActivity;
     }
-    
+
     public function setMultidomainLoginTokenWithExpiration(
         string $multidomainLoginToken,
         DateTime $multidomainLoginTokenExpiration

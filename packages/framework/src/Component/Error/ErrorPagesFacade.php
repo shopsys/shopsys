@@ -35,7 +35,7 @@ class ErrorPagesFacade
      * @var \Symfony\Component\Filesystem\Filesystem
      */
     protected $filesystem;
-    
+
     public function __construct(
         string $errorPagesDir,
         Domain $domain,
@@ -55,7 +55,7 @@ class ErrorPagesFacade
             $this->generateAndSaveErrorPage($domainConfig->getId(), self::PAGE_STATUS_CODE_500);
         }
     }
-    
+
     public function getErrorPageContentByDomainIdAndStatusCode(int $domainId, int $statusCode): string
     {
         $errorPageContent = file_get_contents($this->getErrorPageFilename($domainId, $statusCode));
@@ -65,7 +65,7 @@ class ErrorPagesFacade
 
         return $errorPageContent;
     }
-    
+
     public function getErrorPageStatusCodeByStatusCode(int $statusCode): int
     {
         if ($statusCode === Response::HTTP_NOT_FOUND || $statusCode === Response::HTTP_FORBIDDEN) {
@@ -74,7 +74,7 @@ class ErrorPagesFacade
             return self::PAGE_STATUS_CODE_500;
         }
     }
-    
+
     protected function generateAndSaveErrorPage(int $domainId, int $statusCode): void
     {
         $domainRouter = $this->domainRouterFactory->getRouter($domainId);
@@ -94,12 +94,12 @@ class ErrorPagesFacade
             $errorPageContent
         );
     }
-    
+
     protected function getErrorPageFilename(int $domainId, int $statusCode): string
     {
         return $this->errorPagesDir . $statusCode . '_ ' . $domainId . '.html';
     }
-    
+
     protected function getUrlContent(string $errorPageUrl, int $expectedStatusCode): string
     {
         $errorPageKernel = new AppKernel(EnvironmentType::PRODUCTION, false);

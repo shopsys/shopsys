@@ -24,7 +24,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
         $this->friendlyUrlRepository = $friendlyUrlRepository;
     }
-    
+
     public function generateFromRouteCollection(
         RouteCollection $routeCollection,
         DomainConfig $domainConfig,
@@ -57,7 +57,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
         return $this->getGeneratedUrl($routeName, $route, $friendlyUrl, $parameters, $referenceType);
     }
-    
+
     public function getGeneratedUrl(string $routeName, Route $route, FriendlyUrl $friendlyUrl, array $parameters, string $referenceType): string
     {
         $compiledRoute = RouteCompiler::compile($route);

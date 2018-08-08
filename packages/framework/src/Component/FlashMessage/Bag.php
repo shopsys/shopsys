@@ -21,7 +21,7 @@ class Bag
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     private $session;
-    
+
     public function __construct(string $bagName, SessionInterface $session)
     {
         if (!is_string($bagName) || empty($bagName)) {
@@ -83,12 +83,12 @@ class Bag
             && !$flashBag->has($this->getFullbagName(self::KEY_INFO))
             && !$flashBag->has($this->getFullbagName(self::KEY_SUCCESS));
     }
-    
+
     private function getFullbagName(string $key): string
     {
         return self::MAIN_KEY . '__' . $this->bagName . '__' . $key;
     }
-    
+
     private function getMessages(string $key): array
     {
         $flashBag = $this->session->getFlashBag();

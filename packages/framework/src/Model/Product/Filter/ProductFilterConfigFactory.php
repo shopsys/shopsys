@@ -45,7 +45,7 @@ class ProductFilterConfigFactory
         $this->brandFilterChoiceRepository = $brandFilterChoiceRepository;
         $this->priceRangeRepository = $priceRangeRepository;
     }
-    
+
     public function createForCategory(int $domainId, string $locale, Category $category): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         $pricingGroup = $this->currentCustomer->getPricingGroup();

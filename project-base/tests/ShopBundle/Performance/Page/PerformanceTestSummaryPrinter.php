@@ -73,13 +73,13 @@ class PerformanceTestSummaryPrinter
             $consoleOutput->writeln('<' . $tag . '>Wrong response status code</' . $tag . '>');
         }
     }
-    
+
     private function getFormatterTagForDuration(float $duration): string
     {
         $status = $this->performanceTestSampleQualifier->getStatusForDuration($duration);
         return 'fg=' . $this->getStatusConsoleTextColor($status);
     }
-    
+
     private function getFormatterTagForQueryCount(int $queryCount): string
     {
         $status = $this->performanceTestSampleQualifier->getStatusForQueryCount($queryCount);
@@ -90,7 +90,7 @@ class PerformanceTestSummaryPrinter
     {
         return 'fg=' . $this->getStatusConsoleTextColor(PerformanceTestSampleQualifier::STATUS_CRITICAL);
     }
-    
+
     private function getStatusConsoleTextColor(int $status): string
     {
         switch ($status) {

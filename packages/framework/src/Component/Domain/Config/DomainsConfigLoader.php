@@ -65,7 +65,7 @@ class DomainsConfigLoader
             $domainConfig[DomainsConfigDefinition::CONFIG_STYLES_DIRECTORY]
         );
     }
-    
+
     private function addUrlsToProcessedConfig(array $domainConfigsByDomainId, array $domainUrlsConfigsByDomainId): array
     {
         foreach ($domainConfigsByDomainId as $domainId => $domainConfigArray) {
@@ -76,7 +76,7 @@ class DomainsConfigLoader
 
         return $domainConfigsByDomainId;
     }
-    
+
     private function getProcessedConfig(string $filepath, ConfigurationInterface $configDefinition): array
     {
         $yamlParser = new Parser();
@@ -92,7 +92,7 @@ class DomainsConfigLoader
 
         return $processor->processConfiguration($configDefinition, [$parsedConfig]);
     }
-    
+
     private function isConfigMatchingUrlsConfig(array $domainConfigsByDomainId, array $domainUrlsConfigsByDomainId): bool
     {
         foreach (array_keys($domainConfigsByDomainId) as $domainId) {

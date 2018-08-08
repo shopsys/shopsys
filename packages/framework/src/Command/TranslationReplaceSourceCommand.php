@@ -75,7 +75,7 @@ class TranslationReplaceSourceCommand extends Command
 
         return $allReplacements;
     }
-    
+
     private function isTranslationFileInLocale(DirectoryIterator $directoryIterator, string $targetLocale): bool
     {
         $translationFilePattern = '~\.' . preg_quote($targetLocale, '~') . '\.po~';

@@ -24,7 +24,7 @@ class FileUploadExtension extends Twig_Extension
             new Twig_SimpleFunction('getLabelByTemporaryFilename', [$this, 'getLabelByTemporaryFilename']),
         ];
     }
-    
+
     public function getLabelByTemporaryFilename(string $temporaryFilename): string
     {
         $filename = $this->fileUpload->getOriginalFilenameByTemporary($temporaryFilename);

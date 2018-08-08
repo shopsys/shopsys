@@ -50,7 +50,7 @@ class Version20171005091354 extends AbstractMigration
 
         $this->insertHeurekaDataValues($categoryDataValues, 'category');
     }
-    
+
     private function insertHeurekaDataValues(array $valuesByKey, string $context): void
     {
         foreach ($valuesByKey as $key => $value) {

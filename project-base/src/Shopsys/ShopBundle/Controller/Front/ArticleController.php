@@ -16,7 +16,7 @@ class ArticleController extends FrontBaseController
     {
         $this->articleFacade = $articleFacade;
     }
-    
+
     public function detailAction(int $id)
     {
         $article = $this->articleFacade->getVisibleById($id);

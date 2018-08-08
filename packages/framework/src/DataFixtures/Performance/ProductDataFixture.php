@@ -217,7 +217,7 @@ class ProductDataFixture
             }
         }
     }
-    
+
     private function getProductByCatnum(string $catnum): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         if (!array_key_exists($catnum, $this->productsByCatnum)) {
@@ -282,7 +282,7 @@ class ProductDataFixture
         $this->addRandomPerformanceCategoriesToProductDataByDomainId($productData, 1);
         $this->addRandomPerformanceCategoriesToProductDataByDomainId($productData, 2);
     }
-    
+
     private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, int $domainId): void
     {
         foreach ($productData->categoriesByDomainId[$domainId] as $key => $category) {
@@ -291,7 +291,7 @@ class ProductDataFixture
             }
         }
     }
-    
+
     private function addRandomPerformanceCategoriesToProductDataByDomainId(ProductData $productData, int $domainId): void
     {
         $performanceCategoryIds = $this->getPerformanceCategoryIds();

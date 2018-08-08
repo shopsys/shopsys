@@ -19,17 +19,17 @@ class ShopInfoSettingFacade
     {
         $this->setting = $setting;
     }
-    
+
     public function getPhoneNumber(int $domainId): ?string
     {
         return $this->setting->getForDomain(self::SHOP_INFO_PHONE_NUMBER, $domainId);
     }
-    
+
     public function getEmail(int $domainId): ?string
     {
         return $this->setting->getForDomain(self::SHOP_INFO_EMAIL, $domainId);
     }
-    
+
     public function getPhoneHours(int $domainId): ?string
     {
         return $this->setting->getForDomain(self::SHOP_INFO_PHONE_HOURS, $domainId);

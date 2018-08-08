@@ -32,7 +32,7 @@ class MultidomainEntityDataCreator
         $this->em = $em;
         $this->sqlQuoter = $sqlQuoter;
     }
-    
+
     public function copyAllMultidomainDataForNewDomain(int $templateDomainId, int $newDomainId): void
     {
         $columnNamesIndexedByTableName = $this->multidomainEntityClassFinderFacade

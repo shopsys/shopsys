@@ -48,7 +48,7 @@ class OrderItemFacade
         $this->productPriceCalculationForUser = $productPriceCalculationForUser;
         $this->orderService = $orderService;
     }
-    
+
     public function createOrderProductInOrder(int $orderId, int $productId): \Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct
     {
         $order = $this->orderRepository->getById($orderId);

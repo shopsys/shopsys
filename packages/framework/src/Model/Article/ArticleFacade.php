@@ -46,17 +46,17 @@ class ArticleFacade
         $this->friendlyUrlFacade = $friendlyUrlFacade;
         $this->articleFactory = $articleFactory;
     }
-    
+
     public function findById(int $articleId): ?\Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->articleRepository->findById($articleId);
     }
-    
+
     public function getById(int $articleId): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->articleRepository->getById($articleId);
     }
-    
+
     public function getVisibleById(int $articleId): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->articleRepository->getVisibleById($articleId);
@@ -74,7 +74,7 @@ class ArticleFacade
     {
         return $this->articleRepository->getVisibleArticlesForPlacement($this->domain->getId(), $placement);
     }
-    
+
     public function getOrderedArticlesByDomainIdAndPlacementQueryBuilder(int $domainId, string $placement): \Doctrine\ORM\QueryBuilder
     {
         return $this->articleRepository->getOrderedArticlesByDomainIdAndPlacementQueryBuilder($domainId, $placement);
@@ -96,7 +96,7 @@ class ArticleFacade
 
         return $article;
     }
-    
+
     public function edit(int $articleId, ArticleData $articleData): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         $article = $this->articleRepository->getById($articleId);
@@ -113,7 +113,7 @@ class ArticleFacade
 
         return $article;
     }
-    
+
     public function delete(int $articleId): void
     {
         $article = $this->articleRepository->getById($articleId);

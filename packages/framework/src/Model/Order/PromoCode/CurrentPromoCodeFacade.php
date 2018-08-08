@@ -33,7 +33,7 @@ class CurrentPromoCodeFacade
 
         return $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
     }
-    
+
     public function setEnteredPromoCode(string $enteredCode): void
     {
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);

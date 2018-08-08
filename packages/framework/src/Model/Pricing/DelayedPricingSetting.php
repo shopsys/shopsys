@@ -21,7 +21,7 @@ class DelayedPricingSetting
         $this->pricingSetting = $pricingSetting;
         $this->inputPriceRecalculationScheduler = $inputPriceRecalculationScheduler;
     }
-    
+
     public function scheduleSetInputPriceType(int $inputPriceType): void
     {
         if (!in_array($inputPriceType, PricingSetting::getInputPriceTypes(), true)) {

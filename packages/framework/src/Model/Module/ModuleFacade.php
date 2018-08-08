@@ -30,14 +30,14 @@ class ModuleFacade
         $this->enabledModuleRepository = $enabledModuleRepository;
         $this->enabledModuleFactory = $enabledModuleFactory;
     }
-    
+
     public function isEnabled(string $moduleName): bool
     {
         $enabledModule = $this->enabledModuleRepository->findByName($moduleName);
 
         return $enabledModule !== null;
     }
-    
+
     public function setEnabled(string $moduleName, bool $isEnabled): void
     {
         $enabledModule = $this->enabledModuleRepository->findByName($moduleName);

@@ -16,7 +16,7 @@ class PluginCrudExtensionFacade
     {
         $this->pluginCrudExtensionRegistry = $pluginCrudExtensionRegistry;
     }
-    
+
     public function extendForm(FormBuilderInterface $builder, string $type, string $name): void
     {
         $builder->add($name, FormType::class, [
@@ -29,7 +29,7 @@ class PluginCrudExtensionFacade
             ]);
         }
     }
-    
+
     public function getAllData(string $type, int $id): array
     {
         $allData = [];
@@ -39,7 +39,7 @@ class PluginCrudExtensionFacade
 
         return $allData;
     }
-    
+
     public function saveAllData(string $type, int $id, array $allData): void
     {
         foreach ($this->pluginCrudExtensionRegistry->getCrudExtensions($type) as $key => $crudExtension) {
@@ -48,7 +48,7 @@ class PluginCrudExtensionFacade
             }
         }
     }
-    
+
     public function removeAllData(string $type, int $id): void
     {
         foreach ($this->pluginCrudExtensionRegistry->getCrudExtensions($type) as $crudExtension) {

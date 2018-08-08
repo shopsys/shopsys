@@ -18,7 +18,7 @@ class OrderTotalPrice
      * @var string
      */
     private $productPriceWithVat;
-    
+
     public function __construct(string $priceWithVat, string $priceWithoutVat, string $productPriceWithVat)
     {
         $this->priceWithVat = $priceWithVat;

@@ -17,25 +17,25 @@ class ProductFilterPage extends AbstractPage
     {
         parent::__construct($strictWebDriver, $tester);
     }
-    
+
     public function setMinimalPrice(string $price): void
     {
         $this->tester->fillFieldByCss('#product_filter_form_minimalPrice', $price . WebDriverKeys::ENTER);
         $this->waitForFilter();
     }
-    
+
     public function setMaximalPrice(string $price): void
     {
         $this->tester->fillFieldByCss('#product_filter_form_maximalPrice', $price . WebDriverKeys::ENTER);
         $this->waitForFilter();
     }
-    
+
     public function filterByBrand(string $label): void
     {
         $this->tester->checkOptionByLabel($label);
         $this->waitForFilter();
     }
-    
+
     public function filterByParameter(string $parameterLabel, string $valueLabel): void
     {
         $parameterElement = $this->findParameterElementByLabel($parameterLabel);
@@ -49,7 +49,7 @@ class ProductFilterPage extends AbstractPage
         $this->tester->wait(self::PRE_EVALUATION_WAIT);
         $this->tester->waitForAjax();
     }
-    
+
     private function findParameterElementByLabel(string $parameterLabel): \Facebook\WebDriver\WebDriverElement
     {
         $parameterItems = $this->webDriver->findElements(
@@ -71,7 +71,7 @@ class ProductFilterPage extends AbstractPage
         $message = 'Unable to find parameter with label "' . $parameterLabel . '" in product filter.';
         throw new \Facebook\WebDriver\Exception\NoSuchElementException($message);
     }
-    
+
     private function getLabelElementByParameterValueText(\Facebook\WebDriver\WebDriverElement $parameterElement, string $parameterValueText): \Facebook\WebDriver\WebDriverElement
     {
         $labelElements = $parameterElement->findElements(WebDriverBy::cssSelector('.js-product-filter-parameter-value'));

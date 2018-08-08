@@ -80,14 +80,14 @@ class PerformanceResultsCsvExporterTest extends TestCase
 
         return $performanceTestSamples;
     }
-    
+
     private function assertCsvRowEquals(array $expectedLine, string $filename, int $lineIndex): void
     {
         $actualLine = $this->getCsvLine($filename, $lineIndex);
 
         $this->assertSame($expectedLine, $actualLine);
     }
-    
+
     private function getCsvLine(string $filename, int $lineIndex): array
     {
         $handle = fopen($filename, 'r');

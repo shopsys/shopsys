@@ -66,7 +66,7 @@ class JsFileExtractor implements FileVisitorInterface
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Twig_Node $node): void
     {
     }
-    
+
     private function parseFile(string $contents): void
     {
         $node = JParser::parse_string($contents, true, JParser::class, JTokenizer::class);

@@ -53,7 +53,7 @@ class PricingSetting
     {
         return $this->setting->get(self::DEFAULT_CURRENCY);
     }
-    
+
     public function getDomainDefaultCurrencyIdByDomainId(int $domainId): int
     {
         return $this->setting->getForDomain(self::DEFAULT_DOMAIN_CURRENCY, $domainId);
@@ -64,12 +64,12 @@ class PricingSetting
         $currency->setExchangeRate(Currency::DEFAULT_EXCHANGE_RATE);
         $this->setting->set(self::DEFAULT_CURRENCY, $currency->getId());
     }
-    
+
     public function setDomainDefaultCurrency(Currency $currency, int $domainId): void
     {
         $this->setting->setForDomain(self::DEFAULT_DOMAIN_CURRENCY, $currency->getId(), $domainId);
     }
-    
+
     public function setRoundingType(int $roundingType): void
     {
         if (!in_array($roundingType, self::getRoundingTypes(), true)) {
@@ -81,7 +81,7 @@ class PricingSetting
         $this->setting->set(self::ROUNDING_TYPE, $roundingType);
         $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
     }
-    
+
     public function getFreeTransportAndPaymentPriceLimit(int $domainId): ?string
     {
         return $this->setting->getForDomain(self::FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT, $domainId);

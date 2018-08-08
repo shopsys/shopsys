@@ -17,7 +17,7 @@ class PersonalDataAccessRequestRepository
     {
         $this->em = $em;
     }
-    
+
     public function findByHashAndDomainId(string $hash, int $domainId): ?\Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
     {
         $dateTime = new DateTime('-1 day');
@@ -33,7 +33,7 @@ class PersonalDataAccessRequestRepository
             ])
             ->getQuery()->getOneOrNullResult();
     }
-    
+
     public function isHashUsed(string $hash): bool
     {
         return (bool)$this->getQueryBuilder()

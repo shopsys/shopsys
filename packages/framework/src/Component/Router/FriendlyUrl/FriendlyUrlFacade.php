@@ -67,7 +67,7 @@ class FriendlyUrlFacade
             $this->resolveUniquenessOfFriendlyUrlAndFlush($friendlyUrl, $namesByLocale[$locale]);
         }
     }
-    
+
     public function createFriendlyUrlForDomain(string $routeName, int $entityId, string $entityName, int $domainId): void
     {
         $friendlyUrl = $this->friendlyUrlService->createFriendlyUrlIfValid($routeName, $entityId, $entityName, $domainId);
@@ -75,7 +75,7 @@ class FriendlyUrlFacade
             $this->resolveUniquenessOfFriendlyUrlAndFlush($friendlyUrl, $entityName);
         }
     }
-    
+
     protected function resolveUniquenessOfFriendlyUrlAndFlush(FriendlyUrl $friendlyUrl, string $entityName): void
     {
         $attempt = 0;
@@ -118,12 +118,12 @@ class FriendlyUrlFacade
     {
         return $this->friendlyUrlRepository->getAllByRouteNameAndEntityId($routeName, $entityId);
     }
-    
+
     public function findMainFriendlyUrl(int $domainId, string $routeName, int $entityId): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
     {
         return $this->friendlyUrlRepository->findMainFriendlyUrl($domainId, $routeName, $entityId);
     }
-    
+
     public function saveUrlListFormData(string $routeName, int $entityId, UrlListData $urlListData): void
     {
         $toFlush = [];

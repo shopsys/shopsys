@@ -38,12 +38,12 @@ class CountryFacade
         $this->domain = $domain;
         $this->countryFactory = $countryFactory;
     }
-    
+
     public function getById(int $countryId): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         return $this->countryRepository->getById($countryId);
     }
-    
+
     public function create(CountryData $countryData, int $domainId): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $country = $this->countryFactory->create($countryData, $domainId);
@@ -52,7 +52,7 @@ class CountryFacade
 
         return $country;
     }
-    
+
     public function edit(int $countryId, CountryData $countryData): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $country = $this->countryRepository->getById($countryId);

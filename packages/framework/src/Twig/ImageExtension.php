@@ -44,7 +44,7 @@ class ImageExtension extends Twig_Extension
      * @var \Symfony\Component\Templating\EngineInterface
      */
     private $templating;
-    
+
     public function __construct(
         string $frontDesignImageUrlPrefix,
         ContainerInterface $container,

@@ -176,7 +176,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 
         return $docComment;
     }
-    
+
     private function getNormalizedMethodName(string $methodName): string
     {
         return mb_strtolower($methodName);

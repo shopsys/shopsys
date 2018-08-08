@@ -97,7 +97,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator->addUrl($urlConcrete, $section);
         }
     }
-    
+
     private function addHomepageUrl(
         AbstractGenerator $generator,
         DomainConfig $domainConfig,

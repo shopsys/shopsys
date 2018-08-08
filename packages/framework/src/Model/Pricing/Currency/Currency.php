@@ -76,7 +76,7 @@ class Currency
     {
         return 1 / $this->exchangeRate;
     }
-    
+
     public function setExchangeRate(string $exchangeRate): void
     {
         $this->exchangeRate = $exchangeRate;

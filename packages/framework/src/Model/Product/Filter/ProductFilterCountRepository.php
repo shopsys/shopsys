@@ -28,7 +28,7 @@ class ProductFilterCountRepository
         $this->em = $em;
         $this->productFilterRepository = $productFilterRepository;
     }
-    
+
     public function getProductFilterCountData(
         QueryBuilder $productsQueryBuilder,
         string $locale,

@@ -31,7 +31,7 @@ class JsTranslatorCall
      * @var string
      */
     private $functionName;
-    
+
     public function __construct(
         JCallExprNode $callExprNode,
         JNodeBase $messageIdArgumentNode,

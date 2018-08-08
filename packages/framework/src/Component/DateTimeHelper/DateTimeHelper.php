@@ -13,7 +13,7 @@ class DateTimeHelper
 
         return $todayMidnight;
     }
-    
+
     public static function createFromFormat(string $format, string $time): \DateTime
     {
         $dateTime = DateTime::createFromFormat($format, $time);

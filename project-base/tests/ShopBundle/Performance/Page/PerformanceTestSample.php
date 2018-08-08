@@ -33,7 +33,7 @@ class PerformanceTestSample
      * @var bool
      */
     private $isSuccessful;
-    
+
     public function __construct(
         string $routeName,
         string $url,

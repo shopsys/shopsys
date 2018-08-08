@@ -370,7 +370,7 @@ class RouteConfigCustomization
                     ->setExpectedStatusCode(200);
             });
     }
-    
+
     private function getPersistentReference(string $name): object
     {
         $persistentReferenceFacade = $this->container

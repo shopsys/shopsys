@@ -61,12 +61,12 @@ class HeurekaFacade
     {
         return $this->heurekaSetting->isHeurekaWidgetActivated($domainId);
     }
-    
+
     public function isDomainLocaleSupported(string $locale): bool
     {
         return $this->heurekaShopCertificationService->isDomainLocaleSupported($locale);
     }
-    
+
     public function getServerNameByLocale(string $locale): ?string
     {
         return $this->heurekaShopCertificationService->getServerNameByLocale($locale);

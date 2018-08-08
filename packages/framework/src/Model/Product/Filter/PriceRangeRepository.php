@@ -26,7 +26,7 @@ class PriceRangeRepository
         $this->productRepository = $productRepository;
         $this->queryBuilderService = $queryBuilderService;
     }
-    
+
     public function getPriceRangeInCategory(int $domainId, PricingGroup $pricingGroup, Category $category): \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
     {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(

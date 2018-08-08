@@ -95,7 +95,7 @@ class SliderItem implements OrderableEntityInterface
     {
         return $this->position;
     }
-    
+
     public function setPosition(int $position): void
     {
         $this->position = $position;

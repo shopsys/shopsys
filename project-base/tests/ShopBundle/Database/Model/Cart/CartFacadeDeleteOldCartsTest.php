@@ -71,7 +71,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
 
         $this->assertCartItemCount($cartFacade, 2, 'Cart items should not be deleted');
     }
-    
+
     private function getProductById(int $productId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $productFacade = $this->getContainer()->get(ProductFacade::class);
@@ -129,7 +129,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
 
         $this->getEntityManager()->flush($cartItemResult->getCartItem());
     }
-    
+
     private function assertCartItemCount(CartFacade $cartFacade, int $count, string $message): void
     {
         $cartItems = $cartFacade->getCartOfCurrentCustomer()->getItems();

@@ -26,7 +26,7 @@ abstract class FunctionalTestCase extends WebTestCase
         parent::setUp();
         $this->setUpDomain();
     }
-    
+
     protected function getClient(
         bool $createNew = false,
         string $username = null,
@@ -61,7 +61,7 @@ abstract class FunctionalTestCase extends WebTestCase
     {
         return $this->getClient()->getContainer();
     }
-    
+
     protected function getReference(string $referenceName): object
     {
         $persistentReferenceFacade = $this->getContainer()

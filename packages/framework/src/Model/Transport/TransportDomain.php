@@ -45,7 +45,7 @@ class TransportDomain
      * @ORM\Column(type="boolean")
      */
     protected $enabled = false;
-    
+
     public function __construct(Transport $transport, int $domainId)
     {
         $this->transport = $transport;

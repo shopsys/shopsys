@@ -53,7 +53,7 @@ class AdvancedSearchFacade
 
         return $this->advancedSearchFormFactory->createRulesForm(self::RULES_FORM_NAME, $rulesData);
     }
-    
+
     public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->productListAdminFacade->getProductListQueryBuilder();

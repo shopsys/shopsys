@@ -10,7 +10,7 @@ class ExceptionController extends BaseController
      * @var bool
      */
     private $showErrorPagePrototype = false;
-    
+
     public function setDebug(bool $bool): void
     {
         $this->debug = $bool;

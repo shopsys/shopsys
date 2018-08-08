@@ -40,7 +40,7 @@ class Country
      * @ORM\Column(type="integer")
      */
     protected $domainId;
-    
+
     public function __construct(CountryData $countryData, int $domainId)
     {
         $this->name = $countryData->name;

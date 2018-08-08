@@ -351,7 +351,7 @@ class OrderController extends FrontBaseController
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
         ]);
     }
-    
+
     private function sendMail(\Shopsys\FrameworkBundle\Model\Order\Order $order): void
     {
         $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());

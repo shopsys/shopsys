@@ -24,7 +24,7 @@ class ModuleExtension extends Twig_Extension
             new Twig_SimpleFunction('isModuleEnabled', [$this, 'isModuleEnabled']),
         ];
     }
-    
+
     public function isModuleEnabled(int $moduleName): string
     {
         return $this->moduleFacade->isEnabled($moduleName);

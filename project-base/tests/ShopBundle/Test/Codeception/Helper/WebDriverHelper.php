@@ -12,7 +12,7 @@ class WebDriverHelper extends Module
     {
         return $this->getModule(StrictWebDriver::class);
     }
-    
+
     public function seeCurrentPageEquals(string $page): void
     {
         $expectedUrl = Uri::appendPath($this->getWebDriver()->_getUrl(), $page);

@@ -55,12 +55,12 @@ class PerformanceTestSample
         $this->duration = $duration;
         $this->statusCode = $statusCode;
     }
-    
+
     public function setMessage(string $message): void
     {
         $this->message = $message;
     }
-    
+
     public function addFailMessage(string $failMessage): void
     {
         $this->failMessages[] = $failMessage;

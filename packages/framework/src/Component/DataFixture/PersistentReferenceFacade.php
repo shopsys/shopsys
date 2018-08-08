@@ -30,7 +30,7 @@ class PersistentReferenceFacade
         $this->persistentReferenceRepository = $persistentReferenceRepository;
         $this->persistentReferenceFactory = $persistentReferenceFactory;
     }
-    
+
     public function getReference(string $name): object
     {
         $persistentReference = $this->persistentReferenceRepository->getByReferenceName($name);
@@ -42,7 +42,7 @@ class PersistentReferenceFacade
 
         return $entity;
     }
-    
+
     public function persistReference(string $name, object $object): void
     {
         if (!is_object($object)) {

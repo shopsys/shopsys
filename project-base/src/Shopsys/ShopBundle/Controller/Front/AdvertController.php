@@ -15,7 +15,7 @@ class AdvertController extends FrontBaseController
     {
         $this->advertFacade = $advertFacade;
     }
-    
+
     public function boxAction(string $positionName)
     {
         $advert = $this->advertFacade->findRandomAdvertByPositionOnCurrentDomain($positionName);

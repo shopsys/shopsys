@@ -13,7 +13,7 @@ class CssFacade
     {
         $this->cssVersionFilepath = $cssVersionFilepath;
     }
-    
+
     public function setCssVersion(string $cssVersion): void
     {
         file_put_contents($this->cssVersionFilepath, $cssVersion);

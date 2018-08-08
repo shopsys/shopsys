@@ -163,7 +163,7 @@ class Category extends AbstractTranslatableEntity
     {
         return $this->rgt;
     }
-    
+
     protected function getCategoryDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Category\CategoryDomain
     {
         foreach ($this->domains as $categoryDomain) {

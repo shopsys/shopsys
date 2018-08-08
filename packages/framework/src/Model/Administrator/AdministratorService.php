@@ -24,14 +24,14 @@ class AdministratorService
         $this->encoderFactory = $encoderFactory;
         $this->tokenStorage = $tokenStorage;
     }
-    
+
     public function setPassword(Administrator $administrator, string $password): void
     {
         $encoder = $this->encoderFactory->getEncoder($administrator);
         $passwordHash = $encoder->encodePassword($password, $administrator->getSalt());
         $administrator->setPassword($passwordHash);
     }
-    
+
     public function delete(Administrator $administrator, int $adminCountExcludingSuperadmin): void
     {
         if ($adminCountExcludingSuperadmin === 1) {

@@ -26,7 +26,7 @@ class TransportPriceCalculation
         $this->pricingSetting = $pricingSetting;
         $this->basePriceCalculation = $basePriceCalculation;
     }
-    
+
     public function calculatePrice(
         Transport $transport,
         Currency $currency,
@@ -50,7 +50,7 @@ class TransportPriceCalculation
             $transport->getVat()
         );
     }
-    
+
     private function isFree(Price $productsPrice, int $domainId): bool
     {
         $freeTransportAndPaymentPriceLimit = $this->pricingSetting->getFreeTransportAndPaymentPriceLimit($domainId);

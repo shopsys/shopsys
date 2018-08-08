@@ -20,19 +20,19 @@ class CurrencyRepository
     {
         return $this->em->getRepository(Currency::class);
     }
-    
+
     public function findById(int $currencyId): ?\Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->getCurrencyRepository()->find($currencyId);
     }
-    
+
     public function findByCode(string $code): ?\Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->getCurrencyRepository()->findOneBy([
             'code' => $code,
         ]);
     }
-    
+
     public function getById(int $currencyId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency = $this->findById($currencyId);

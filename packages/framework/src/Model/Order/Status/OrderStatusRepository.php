@@ -21,12 +21,12 @@ class OrderStatusRepository
     {
         return $this->em->getRepository(OrderStatus::class);
     }
-    
+
     public function findById(int $orderStatusId): ?\Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         return $this->getOrderStatusRepository()->find($orderStatusId);
     }
-    
+
     public function getById(int $orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         $orderStatus = $this->findById($orderStatusId);

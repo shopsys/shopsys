@@ -51,7 +51,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
 
         $this->assertSame($isExpectedValid, $personalInfoForm->isValid());
     }
-    
+
     private function getPersonalInfoFormData(bool $legalConditionsAgreement): array
     {
         $personalInfoFormData = [];

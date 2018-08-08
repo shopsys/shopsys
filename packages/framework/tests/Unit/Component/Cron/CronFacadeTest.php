@@ -120,7 +120,7 @@ class CronFacadeTest extends TestCase
     {
         return $this->createMock(CronModuleFacade::class);
     }
-    
+
     private function expectMethodCallWithCronModuleConfig(\PHPUnit\Framework\MockObject\MockObject $mock, string $methodName, string $serviceId): void
     {
         $mock->expects($this->atLeastOnce())

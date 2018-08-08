@@ -26,7 +26,7 @@ class MessageIdNormalizer
 
         return $normalizedCatalogue;
     }
-    
+
     private function getNormalizedMessage(Message $message, string $domain): \JMS\TranslationBundle\Model\Message
     {
         $normalizedMessageId = $this->normalizeMessageId($message->getId());

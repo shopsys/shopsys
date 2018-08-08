@@ -94,7 +94,7 @@ class CurrencyFacade
         $this->paymentPriceFactory = $paymentPriceFactory;
         $this->transportPriceFactory = $transportPriceFactory;
     }
-    
+
     public function getById(int $currencyId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->currencyRepository->getById($currencyId);
@@ -109,7 +109,7 @@ class CurrencyFacade
 
         return $currency;
     }
-    
+
     public function edit(int $currencyId, CurrencyData $currencyData): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency = $this->currencyRepository->getById($currencyId);
@@ -119,7 +119,7 @@ class CurrencyFacade
 
         return $currency;
     }
-    
+
     public function deleteById(int $currencyId): void
     {
         $currency = $this->currencyRepository->getById($currencyId);
@@ -143,7 +143,7 @@ class CurrencyFacade
     {
         return $this->getById($this->pricingSetting->getDefaultCurrencyId());
     }
-    
+
     public function getDomainDefaultCurrencyByDomainId(int $domainId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->getById($this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId));
@@ -154,7 +154,7 @@ class CurrencyFacade
         $this->pricingSetting->setDefaultCurrency($currency);
         $this->em->flush();
     }
-    
+
     public function setDomainDefaultCurrency(Currency $currency, int $domainId): void
     {
         $this->pricingSetting->setDomainDefaultCurrency($currency, $domainId);

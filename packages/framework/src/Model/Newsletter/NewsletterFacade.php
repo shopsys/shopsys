@@ -32,7 +32,7 @@ class NewsletterFacade
         $this->newsletterRepository = $newsletterRepository;
         $this->newsletterSubscriberFactory = $newsletterSubscriberFactory;
     }
-    
+
     public function addSubscribedEmail(string $email, int $domainId): void
     {
         if (!$this->newsletterRepository->existsSubscribedEmail($email, $domainId)) {
@@ -41,12 +41,12 @@ class NewsletterFacade
             $this->em->flush($newsletterSubscriber);
         }
     }
-    
+
     public function getAllEmailsDataIteratorByDomainId(int $domainId): \Doctrine\ORM\Internal\Hydration\IterableResult
     {
         return $this->newsletterRepository->getAllEmailsDataIteratorByDomainId($domainId);
     }
-    
+
     public function findNewsletterSubscriberByEmailAndDomainId(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
     {
         return $this->newsletterRepository->findNewsletterSubscribeByEmailAndDomainId($email, $domainId);

@@ -153,7 +153,7 @@ class Grid
      * @var bool
      */
     private $multipleDragAndDrop;
-    
+
     public function __construct(
         string $id,
         DataSourceInterface $dataSource,
@@ -185,7 +185,7 @@ class Grid
 
         $this->loadFromRequest();
     }
-    
+
     public function addColumn(string $id, string $sourceColumnName, string $title, bool $sortable = false): \Shopsys\FrameworkBundle\Component\Grid\Column
     {
         if (array_key_exists($id, $this->columnsById)) {
@@ -197,7 +197,7 @@ class Grid
         $this->columnsById[$id] = $column;
         return $column;
     }
-    
+
     public function addActionColumn(
         string $type,
         string $name,
@@ -218,12 +218,12 @@ class Grid
 
         return $actionColumn;
     }
-    
+
     public function addEditActionColumn(string $route, array $bindingRouteParams = [], array $additionalRouteParams = []): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         return $this->addActionColumn(ActionColumn::TYPE_EDIT, t('Edit'), $route, $bindingRouteParams, $additionalRouteParams);
     }
-    
+
     public function addDeleteActionColumn(string $route, array $bindingRouteParams = [], array $additionalRouteParams = []): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         return $this->addActionColumn(ActionColumn::TYPE_DELETE, t('Delete'), $route, $bindingRouteParams, $additionalRouteParams);
@@ -251,7 +251,7 @@ class Grid
     {
         return self::getValueFromRowBySourceColumnName($row, $this->dataSource->getRowIdSourceColumnName());
     }
-    
+
     public function setActionColumnClassAttribute(string $classAttribute): void
     {
         $this->actionColumnClassAttribute = $classAttribute;
@@ -276,7 +276,7 @@ class Grid
 
         return $gridView;
     }
-    
+
     public function createViewWithOneRow(int $rowId): \Shopsys\FrameworkBundle\Component\Grid\GridView
     {
         $gridView = $this->createViewWithoutRows();
@@ -309,14 +309,14 @@ class Grid
     {
         $this->enableSelecting = true;
     }
-    
+
     public function setDefaultLimit(int $limit): void
     {
         if (!$this->isLimitFromRequest) {
             $this->setLimit((int)$limit);
         }
     }
-    
+
     public function setDefaultOrder(string $columnId, string $direction = DataSourceInterface::ORDER_ASC): void
     {
         if (!$this->isOrderFromRequest) {
@@ -337,7 +337,7 @@ class Grid
     {
         return $this->columnsById;
     }
-    
+
     public function existsColumn(string $columnId): bool
     {
         return array_key_exists($columnId, $this->columnsById);
@@ -381,7 +381,7 @@ class Grid
     {
         return $this->limit;
     }
-    
+
     private function setLimit(int $limit): void
     {
         if (in_array($limit, $this->allowedLimits, true)) {
@@ -438,7 +438,7 @@ class Grid
     {
         return $this->paginationResults;
     }
-    
+
     private function setOrderingByOrderString(string $orderString): void
     {
         if (substr($orderString, 0, 1) === '-') {
@@ -553,7 +553,7 @@ class Grid
 
         $this->rows = $this->paginationResults->getResults();
     }
-    
+
     private function loadRowsWithOneRow(int $rowId): void
     {
         $this->rows = [$this->dataSource->getOneRow($rowId)];
@@ -589,7 +589,7 @@ class Grid
 
         return $row[$sourceColumnName];
     }
-    
+
     public function enableDragAndDrop(string $entityClass): void
     {
         $this->orderingEntityClass = $entityClass;

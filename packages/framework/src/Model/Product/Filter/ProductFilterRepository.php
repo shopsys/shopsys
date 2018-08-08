@@ -60,7 +60,7 @@ class ProductFilterRepository
             $productFilterData->parameters
         );
     }
-    
+
     private function filterByPrice(
         QueryBuilder $productsQueryBuilder,
         string $minimalPrice,
@@ -86,7 +86,7 @@ class ProductFilterRepository
             $productsQueryBuilder->setParameter('pricingGroup', $pricingGroup);
         }
     }
-    
+
     public function filterByStock(QueryBuilder $productsQueryBuilder, bool $filterByStock): void
     {
         if ($filterByStock) {

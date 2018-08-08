@@ -23,7 +23,7 @@ class RegisterPluginCrudExtensionsCompilerPass implements CompilerPassInterface
             }
         }
     }
-    
+
     private function registerPluginCrudExtension(Definition $pluginCrudExtensionRegistryDefinition, string $serviceId, string $type): void
     {
         PluginCrudExtensionRegistry::assertTypeIsKnown($type);

@@ -22,7 +22,7 @@ class CurrencyService
     {
         return $this->currencyFactory->create($currencyData);
     }
-    
+
     public function edit(Currency $currency, CurrencyData $currencyData, bool $isDefaultCurrency): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency->edit($currencyData);

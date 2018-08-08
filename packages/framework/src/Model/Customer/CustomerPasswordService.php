@@ -27,7 +27,7 @@ class CustomerPasswordService
         $this->encoderFactory = $encoderFactory;
         $this->hashGenerator = $hashGenerator;
     }
-    
+
     public function changePassword(User $user, string $password): void
     {
         $encoder = $this->encoderFactory->getEncoder($user);

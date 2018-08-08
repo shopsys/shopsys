@@ -20,17 +20,17 @@ class PromoCodeRepository
     {
         return $this->em->getRepository(PromoCode::class);
     }
-    
+
     public function findById(int $promoCodeId): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         return $this->getPromoCodeRepository()->find($promoCodeId);
     }
-    
+
     public function findByCode(string $code): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         return $this->getPromoCodeRepository()->findOneBy(['code' => $code]);
     }
-    
+
     public function getById(int $promoCodeId): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         $promoCode = $this->findById($promoCodeId);

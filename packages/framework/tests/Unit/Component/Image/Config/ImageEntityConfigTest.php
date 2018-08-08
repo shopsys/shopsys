@@ -73,7 +73,7 @@ class ImageEntityConfigTest extends TestCase
         $type2Size1 = $imageEntityConfig->getSizeConfigByType('TypeName_2', null);
         $this->assertSame($types['TypeName_2'][ImageEntityConfig::WITHOUT_NAME_KEY], $type2Size1);
     }
-    
+
     private function createImageSizeConfig(string $name): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
     {
         return new ImageSizeConfig($name, null, null, false, null);

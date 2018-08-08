@@ -45,7 +45,7 @@ class PricingGroupSettingFacade
         return $this->pricingGroupRepository->existsUserWithPricingGroup($pricingGroup)
             || $this->isPricingGroupDefaultOnSelectedDomain($pricingGroup);
     }
-    
+
     public function getDefaultPricingGroupByDomainId(int $domainId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $defaultPricingGroupId = $this->setting->getForDomain(Setting::DEFAULT_PRICING_GROUP, $domainId);

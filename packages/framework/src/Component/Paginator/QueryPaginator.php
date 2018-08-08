@@ -25,7 +25,7 @@ class QueryPaginator implements PaginatorInterface
         $this->queryBuilder = $queryBuilder;
         $this->hydrationMode = $hydrationMode;
     }
-    
+
     public function getResult(int $page = 1, int $pageSize = null): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
     {
         $queryBuilder = clone $this->queryBuilder;

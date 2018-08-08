@@ -17,7 +17,7 @@ class EnabledModule
      * @ORM\Column(type="string", length=100)
      */
     protected $name;
-    
+
     public function __construct(string $name)
     {
         $this->name = $name;

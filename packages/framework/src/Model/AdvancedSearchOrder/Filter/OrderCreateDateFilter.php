@@ -20,7 +20,7 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     public function getAllowedOperators(): array
-{
+    {
         return [
             self::OPERATOR_AFTER,
             self::OPERATOR_BEFORE,

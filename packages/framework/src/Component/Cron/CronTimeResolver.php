@@ -14,7 +14,7 @@ class CronTimeResolver
         return $this->isMatchWithTimeString($hour, $cronTime->getTimeHours()) &&
             $this->isMatchWithTimeString($minute, $cronTime->getTimeMinutes());
     }
-    
+
     private function isMatchWithTimeString(int $value, string $timeString): bool
     {
         $timeValues = explode(',', $timeString);
@@ -30,7 +30,7 @@ class CronTimeResolver
 
         return false;
     }
-    
+
     public function validateTimeString(string $timeString, int $maxValue, int $divisibleBy): void
     {
         $timeValues = explode(',', $timeString);

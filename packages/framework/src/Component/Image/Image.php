@@ -98,7 +98,7 @@ class Image implements EntityFileUploadInterface
         }
         return $files;
     }
-    
+
     public function setFileAsUploaded(string $key, string $originalFilename): void
     {
         if ($key === self::UPLOAD_KEY) {
@@ -114,7 +114,7 @@ class Image implements EntityFileUploadInterface
         // workaround: Entity must be changed so that preUpdate and postUpdate are called
         $this->modifiedAt = new DateTime();
     }
-    
+
     public function setPosition(int $position): void
     {
         $this->position = $position;

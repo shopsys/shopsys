@@ -54,7 +54,7 @@ class OrderRepository
             ->andWhere('o.customer = :customer')->setParameter(':customer', $userId)
             ->getQuery()->getResult();
     }
-    
+
     public function findLastByUserId(int $userId): ?\Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->createOrderQueryBuilder()
@@ -63,7 +63,7 @@ class OrderRepository
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
     }
-    
+
     public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->createOrderQueryBuilder()
@@ -71,7 +71,7 @@ class OrderRepository
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
     }
-    
+
     public function getById(int $id): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->findById($id);
@@ -95,7 +95,7 @@ class OrderRepository
 
         return $queryBuilder->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR) !== null;
     }
-    
+
     public function getOrderListQueryBuilderByQuickSearchData(
         string $locale,
         QuickSearchFormData $quickSearchData
@@ -155,7 +155,7 @@ class OrderRepository
             ->setParameter('domain', $domainId)
             ->getQuery()->execute();
     }
-    
+
     public function getByUrlHashAndDomain(string $urlHash, int $domainId): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->createOrderQueryBuilder()
@@ -170,7 +170,7 @@ class OrderRepository
 
         return $order;
     }
-    
+
     public function getByOrderNumberAndUser(string $orderNumber, User $user): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->createOrderQueryBuilder()
@@ -186,7 +186,7 @@ class OrderRepository
 
         return $order;
     }
-    
+
     public function findByUrlHashIncludingDeletedOrders(string $urlHash): ?\Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->getOrderRepository()->findOneBy(['urlHash' => $urlHash]);
@@ -204,7 +204,7 @@ class OrderRepository
             ->groupBy('c')
             ->getQuery()->execute();
     }
-    
+
     public function getOrdersCountByEmailAndDomainId(string $email, int $domainId): int
     {
         return $this->getOrderListQueryBuilder()

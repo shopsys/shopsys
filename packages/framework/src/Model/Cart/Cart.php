@@ -23,7 +23,7 @@ class Cart
     {
         $this->cartItems[] = $item;
     }
-    
+
     public function removeItemById(int $cartItemId): void
     {
         foreach ($this->cartItems as $key => $cartItem) {

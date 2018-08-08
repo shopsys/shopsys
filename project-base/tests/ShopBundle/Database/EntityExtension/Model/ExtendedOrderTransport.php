@@ -33,7 +33,7 @@ class ExtendedOrderTransport extends ExtendedOrderItem
      * @ORM\Column(type="string", nullable=true)
      */
     protected $transportStringField;
-    
+
     public function __construct(
         Order $order,
         string $name,

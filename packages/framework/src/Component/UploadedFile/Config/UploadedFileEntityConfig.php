@@ -13,7 +13,7 @@ class UploadedFileEntityConfig
      * @var string
      */
     private $entityClass;
-    
+
     public function __construct(string $entityName, string $entityClass)
     {
         $this->entityName = $entityName;

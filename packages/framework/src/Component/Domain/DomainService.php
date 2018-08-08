@@ -36,7 +36,7 @@ class DomainService
         $this->imageProcessingService = $imageProcessingService;
         $this->filesystem = $filesystem;
     }
-    
+
     public function convertToDomainIconFormatAndSave(int $domainId, string $filepath, string $domainImagesDirectory): void
     {
         $resizedImage = $this->imageProcessingService->resize(

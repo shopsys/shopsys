@@ -18,7 +18,7 @@ class PluginCrudExtensionRegistry
      * @var \Shopsys\Plugin\PluginCrudExtensionInterface[][]
      */
     private $crudExtensionsByTypeAndServiceId = [];
-    
+
     public function registerCrudExtension(PluginCrudExtensionInterface $crudExtension, string $type, string $serviceId): void
     {
         self::assertTypeIsKnown($type);
@@ -38,7 +38,7 @@ class PluginCrudExtensionRegistry
     {
         return $this->crudExtensionsByTypeAndServiceId[$type] ?? [];
     }
-    
+
     public static function assertTypeIsKnown(string $type): void
     {
         if (!in_array($type, self::KNOWN_TYPES, true)) {

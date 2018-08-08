@@ -53,13 +53,13 @@ class DomainFacade
     {
         return $this->domain->getAll();
     }
-    
+
     public function editIcon(int $domainId, string $iconName): void
     {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($iconName);
         $this->domainService->convertToDomainIconFormatAndSave($domainId, $temporaryFilepath, $this->domainImagesDirectory);
     }
-    
+
     public function existsDomainIcon(int $domainId): bool
     {
         return $this->filesystem->has($this->domainImagesDirectory . '/' . $domainId . '.png');

@@ -82,12 +82,12 @@ class ProductExtension extends \Twig_Extension
 
         return $product->getName();
     }
-    
+
     public function getProductMainCategory(Product $product, int $domainId): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
     }
-    
+
     public function findProductMainCategory(Product $product, int $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainId);

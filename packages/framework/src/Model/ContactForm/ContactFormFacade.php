@@ -54,7 +54,7 @@ class ContactFormFacade
         );
         $this->mailerService->send($messageData);
     }
-    
+
     protected function getMailBody(\Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData $contactFormData): string
     {
         return $this->twig->render('@ShopsysFramework/Mail/ContactForm/mail.html.twig', [

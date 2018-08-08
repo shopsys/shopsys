@@ -149,7 +149,7 @@ class CreateDatabaseCommand extends Command
 
         $symfonyStyleIo->success('Collations are created');
     }
-    
+
     private function createCollationIfNotExists(string $collation, string $locale): void
     {
         $connection = $this->getConnection();

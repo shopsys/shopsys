@@ -22,12 +22,12 @@ class UnitRepository
     {
         return $this->em->getRepository(Unit::class);
     }
-    
+
     public function findById(int $unitId): ?\Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         return $this->getUnitRepository()->find($unitId);
     }
-    
+
     public function getById(int $unitId): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         $unit = $this->findById($unitId);

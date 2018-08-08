@@ -23,14 +23,14 @@ class ProductListPage extends AbstractPage
         $this->productListComponent = $productListComponent;
         parent::__construct($strictWebDriver, $tester);
     }
-    
+
     public function addProductToCartByName(string $productName, int $quantity = 1): void
     {
         $context = $this->getProductListCompomentContext();
 
         $this->productListComponent->addProductToCartByName($productName, $quantity, $context);
     }
-    
+
     public function assertProductsTotalCount(int $expectedCount): void
     {
         $totalCountElement = $this->getProductListCompomentContext()

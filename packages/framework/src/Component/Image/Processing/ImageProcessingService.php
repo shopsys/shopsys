@@ -52,7 +52,7 @@ class ImageProcessingService
         ];
         $this->localFilesystem = $localFilesystem;
     }
-    
+
     public function createInterventionImage(string $filepath): \Intervention\Image\Image
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
@@ -74,7 +74,7 @@ class ImageProcessingService
             throw new \Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException($filepath, $ex);
         }
     }
-    
+
     public function convertToShopFormatAndGetNewFilename(string $filepath): string
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
@@ -127,7 +127,7 @@ class ImageProcessingService
     {
         return $this->supportedImageExtensions;
     }
-    
+
     private function removeFileIfRenamed(string $filepath, string $newFilepath): void
     {
         if ($this->filesystem->has($filepath) && $filepath !== $newFilepath) {

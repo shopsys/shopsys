@@ -49,7 +49,7 @@ class AdministratorActivity
      * @ORM\Column(type="datetime")
      */
     protected $lastActionTime;
-    
+
     public function __construct(
         Administrator $administrator,
         string $ipAddress

@@ -76,7 +76,7 @@ class FriendlyUrlGeneratorFacade
 
         return $totalCountOfCreatedUrls;
     }
-    
+
     protected function generateUrlsByRoute(DomainConfig $domainConfig, string $routeName): int
     {
         $countOfCreatedUrls = 0;

@@ -34,12 +34,12 @@ class JsStringParser
 
         throw new \Shopsys\FrameworkBundle\Component\Javascript\Parser\Exception\UnsupportedNodeException();
     }
-    
+
     private function parseStringLiteral(string $stringLiteral): string
     {
         return json_decode($this->normalizeStringLiteral($stringLiteral));
     }
-    
+
     private function normalizeStringLiteral(string $stringLiteral): string
     {
         $matches = [];

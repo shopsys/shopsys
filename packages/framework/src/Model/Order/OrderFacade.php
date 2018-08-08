@@ -232,7 +232,7 @@ class OrderFacade
             $this->heurekaFacade->sendOrderInfo($order);
         }
     }
-    
+
     public function edit(int $orderId, OrderData $orderData): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->orderRepository->getById($orderId);
@@ -263,7 +263,7 @@ class OrderFacade
 
         return $order;
     }
-    
+
     public function getOrderSentPageContent(int $orderId): string
     {
         $order = $this->getById($orderId);
@@ -285,7 +285,7 @@ class OrderFacade
         $order = $this->orderRepository->findLastByUserId($user->getId());
         $this->orderCreationService->prefillFrontFormData($orderData, $user, $order);
     }
-    
+
     public function deleteById(int $orderId): void
     {
         $order = $this->orderRepository->getById($orderId);
@@ -311,17 +311,17 @@ class OrderFacade
     {
         return $this->orderRepository->getOrderListForEmailByDomainId($email, $domainId);
     }
-    
+
     public function getById(int $orderId): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->orderRepository->getById($orderId);
     }
-    
+
     public function getByUrlHashAndDomain(string $urlHash, int $domainId): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->orderRepository->getByUrlHashAndDomain($urlHash, $domainId);
     }
-    
+
     public function getByOrderNumberAndUser(string $orderNumber, User $user): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->orderRepository->getByOrderNumberAndUser($orderNumber, $user);
@@ -346,7 +346,7 @@ class OrderFacade
             }
         }
     }
-    
+
     public function getOrdersCountByEmailAndDomainId(string $email, int $domainId)
     {
         return $this->orderRepository->getOrdersCountByEmailAndDomainId($email, $domainId);

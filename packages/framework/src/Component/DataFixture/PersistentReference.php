@@ -33,14 +33,14 @@ class PersistentReference
      * @ORM\Column(type="integer")
      */
     protected $entityId;
-    
+
     public function __construct(string $referenceName, string $entityName, int $entityId)
     {
         $this->referenceName = $referenceName;
         $this->entityName = $entityName;
         $this->entityId = $entityId;
     }
-    
+
     public function replace(string $entityName, int $entityId): void
     {
         $this->entityName = $entityName;

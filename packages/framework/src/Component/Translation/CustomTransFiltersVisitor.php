@@ -38,7 +38,7 @@ class CustomTransFiltersVisitor extends Twig_BaseNodeVisitor
 
         return $node;
     }
-    
+
     private function replaceCustomFilterName(Twig_Node_Expression_Filter $filterExpressionNode, string $newFilterName): void
     {
         $filterNameConstantNode = $filterExpressionNode->getNode('filter');

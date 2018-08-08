@@ -45,7 +45,7 @@ class AvailabilityFacade
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
         $this->availabilityFactory = $availabilityFactory;
     }
-    
+
     public function getById(int $availabilityId): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         return $this->availabilityRepository->getById($availabilityId);
@@ -59,7 +59,7 @@ class AvailabilityFacade
 
         return $availability;
     }
-    
+
     public function edit(int $availabilityId, AvailabilityData $availabilityData): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         $availability = $this->availabilityRepository->getById($availabilityId);

@@ -20,14 +20,14 @@ class MailTemplateRepository
     {
         return $this->em->getRepository(MailTemplate::class);
     }
-    
+
     public function findByNameAndDomainId(string $templateName, int $domainId): ?\Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $criteria = ['name' => $templateName, 'domainId' => $domainId];
 
         return $this->getMailTemplateRepository()->findOneBy($criteria);
     }
-    
+
     public function getByNameAndDomainId(string $templateName, int $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $mailTemplate = $this->findByNameAndDomainId($templateName, $domainId);

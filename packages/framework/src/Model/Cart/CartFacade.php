@@ -81,7 +81,7 @@ class CartFacade
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
         $this->cartItemRepository = $cartItemRepository;
     }
-    
+
     public function addProductToCart(int $productId, int $quantity): \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
     {
         $product = $this->productRepository->getSellableById(
@@ -106,7 +106,7 @@ class CartFacade
         $this->cartService->changeQuantities($cart, $quantitiesByCartItemId);
         $this->em->flush();
     }
-    
+
     public function deleteCartItem(int $cartItemId): void
     {
         $cart = $this->getCartOfCurrentCustomer();
@@ -130,7 +130,7 @@ class CartFacade
 
         $this->cleanAdditionalData();
     }
-    
+
     public function getProductByCartItemId(int $cartItemId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $cart = $this->getCartOfCurrentCustomer();

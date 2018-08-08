@@ -102,7 +102,7 @@ EOT
         });
         $executor->execute($this->fixturesLoader->getFixtures(), $input->getOption('append'));
     }
-    
+
     private function askConfirmation(InputInterface $input, OutputInterface $output, string $question, bool $default)
     {
         $questionHelper = $this->getHelperSet()->get('question');

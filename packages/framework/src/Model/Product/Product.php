@@ -755,12 +755,12 @@ class Product extends AbstractTranslatableEntity
         $this->variantType = self::VARIANT_TYPE_VARIANT;
         $this->mainVariant = $mainVariant;
     }
-    
+
     public function addStockQuantity(int $quantity): void
     {
         $this->stockQuantity += $quantity;
     }
-    
+
     public function subtractStockQuantity(int $quantity): void
     {
         $this->stockQuantity -= $quantity;

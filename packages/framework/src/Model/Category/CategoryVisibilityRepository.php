@@ -82,7 +82,7 @@ class CategoryVisibilityRepository
             ]
         );
     }
-    
+
     private function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, int $level): void
     {
         $this->em->getConnection()->executeUpdate(

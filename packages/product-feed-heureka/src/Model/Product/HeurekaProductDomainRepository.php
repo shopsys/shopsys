@@ -16,7 +16,7 @@ class HeurekaProductDomainRepository
     ) {
         $this->em = $em;
     }
-    
+
     public function findByProductIdAndDomainId(int $productId, int $domainId): ?\Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain
     {
         $queryBuilder = $this->em->createQueryBuilder()

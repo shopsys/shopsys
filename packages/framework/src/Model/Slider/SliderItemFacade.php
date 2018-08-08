@@ -46,7 +46,7 @@ class SliderItemFacade
         $this->domain = $domain;
         $this->sliderItemFactory = $sliderItemFactory;
     }
-    
+
     public function getById(int $sliderItemId): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         return $this->sliderItemRepository->getById($sliderItemId);
@@ -62,7 +62,7 @@ class SliderItemFacade
 
         return $sliderItem;
     }
-    
+
     public function edit(int $sliderItemId, SliderItemData $sliderItemData): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
@@ -73,7 +73,7 @@ class SliderItemFacade
 
         return $sliderItem;
     }
-    
+
     public function delete(int $sliderItemId): void
     {
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);

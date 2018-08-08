@@ -167,7 +167,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
             . ' from transport with ID ' . $this->getId() . 'not found.';
         throw new \Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException($message);
     }
-    
+
     public function setPrice(
         TransportPriceFactoryInterface $transportPriceFactory,
         Currency $currency,
@@ -207,7 +207,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     {
         return $this->position;
     }
-    
+
     public function setPosition(int $position): void
     {
         $this->position = $position;

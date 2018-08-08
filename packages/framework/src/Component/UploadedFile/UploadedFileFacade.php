@@ -85,7 +85,7 @@ class UploadedFileFacade
             $this->em->flush($entitiesForFlush);
         }
     }
-    
+
     public function deleteUploadedFileByEntity(object $entity): void
     {
         $uploadedFile = $this->getUploadedFileByEntity($entity);
@@ -101,7 +101,7 @@ class UploadedFileFacade
             $this->filesystem->delete($filepath);
         }
     }
-    
+
     public function getUploadedFileByEntity(object $entity): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         return $this->uploadedFileRepository->getUploadedFileByEntity(
@@ -109,7 +109,7 @@ class UploadedFileFacade
             $this->getEntityId($entity)
         );
     }
-    
+
     protected function getEntityId(object $entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
@@ -121,12 +121,12 @@ class UploadedFileFacade
         $message = 'Entity "' . get_class($entity) . '" has not set primary key or primary key is compound."';
         throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException($message);
     }
-    
+
     public function getById(int $uploadedFileId): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         return $this->uploadedFileRepository->getById($uploadedFileId);
     }
-    
+
     public function hasUploadedFile(Object $entity): bool
     {
         try {

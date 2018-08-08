@@ -41,7 +41,7 @@ abstract class AbstractAdvancedSearchFormFactory
         $this->formFactory = $formFactory;
         $this->advancedSearchOperatorTranslation = $advancedSearchOperatorTranslation;
     }
-    
+
     public function createRulesForm(string $name, array $rulesViewData): \Symfony\Component\Form\FormInterface
     {
         $options = [
@@ -61,7 +61,7 @@ abstract class AbstractAdvancedSearchFormFactory
 
         return $form;
     }
-    
+
     private function createRuleFormBuilder(string $name, AdvancedSearchFilterInterface $ruleFilter): \Symfony\Component\Form\FormBuilderInterface
     {
         $filterFormBuilder = $this->formFactory->createNamedBuilder($name, FormType::class, null, [

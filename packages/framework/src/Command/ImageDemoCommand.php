@@ -68,7 +68,7 @@ class ImageDemoCommand extends Command
      * @var \League\Flysystem\MountManager
      */
     private $mountManager;
-    
+
     public function __construct(
         string $demoImagesArchiveUrl,
         string $demoImagesSqlUrl,
@@ -134,7 +134,7 @@ class ImageDemoCommand extends Command
 
         return $isCompleted ? self::EXIT_CODE_OK : self::EXIT_CODE_ERROR;
     }
-    
+
     private function unpackImages(OutputInterface $output, string $imagesPath, string $localArchiveFilepath): bool
     {
         $zipArchive = new ZipArchive();
@@ -151,7 +151,7 @@ class ImageDemoCommand extends Command
 
         return true;
     }
-    
+
     private function loadDbChanges(OutputInterface $output, string $sqlUrl): void
     {
         $fileContents = file_get_contents($sqlUrl);
@@ -169,7 +169,7 @@ class ImageDemoCommand extends Command
         }
         $output->writeln('<fg=green>DB changes were successfully applied (queries: ' . count($sqlQueries) . ')</fg=green>');
     }
-    
+
     private function downloadImages(OutputInterface $output, string $archiveUrl, string $localArchiveFilepath): bool
     {
         $output->writeln('Start downloading demo images');
@@ -199,7 +199,7 @@ class ImageDemoCommand extends Command
             $output->writeln('<fg=red>Exception: ' . $e->getMessage() . '</fg=red>');
         }
     }
-    
+
     private function moveFilesFromLocalFilesystemToFilesystem(string $origin, string $target): void
     {
         $finder = new Finder();

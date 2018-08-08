@@ -35,7 +35,7 @@ class PaymentPrice
      * @ORM\Column(type="decimal", precision=20, scale=6)
      */
     protected $price;
-    
+
     public function __construct(Payment $payment, Currency $currency, string $price)
     {
         $this->payment = $payment;
@@ -57,7 +57,7 @@ class PaymentPrice
     {
         return $this->price;
     }
-    
+
     public function setPrice(string $price): void
     {
         $this->price = $price;

@@ -9,7 +9,7 @@ use Tests\ShopBundle\Acceptance\acceptance\PageObject\AbstractPage;
 class ProductAdvancedSearchPage extends AbstractPage
 {
     const SEARCH_SUBJECT_CATNUM = 'productCatnum';
-    
+
     public function search(string $searchSubject, string $value): void
     {
         $this->tester->amOnPage('/admin/product/list/');
@@ -21,12 +21,12 @@ class ProductAdvancedSearchPage extends AbstractPage
 
         $this->tester->clickByText('Search', WebDriverBy::cssSelector('#js-advanced-search-rules-box'));
     }
-    
+
     public function assertFoundProductByName(string $productName): void
     {
         $this->tester->seeInCss($productName, '.js-grid-column-name');
     }
-    
+
     public function assertFoundProductCount(int $expectedCount): void
     {
         $foundProductCount = $this->tester->countVisibleByCss('tbody .table-grid__row');

@@ -16,7 +16,7 @@ class CronModuleExecutor
      * @var \DateTimeImmutable|null
      */
     private $canRunTo;
-    
+
     public function __construct(int $secondsTimeout)
     {
         $this->canRunTo = new DateTimeImmutable('+' . $secondsTimeout . ' sec');

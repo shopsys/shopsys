@@ -20,12 +20,12 @@ class AdvertRepository
     {
         return $this->em->getRepository(Advert::class);
     }
-    
+
     public function findById(string $advertId): ?\Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         return $this->getAdvertRepository()->find($advertId);
     }
-    
+
     protected function getAdvertByPositionQueryBuilder(string $positionName, int $domainId): \Doctrine\ORM\QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -35,7 +35,7 @@ class AdvertRepository
             ->andWhere('a.hidden = FALSE')
             ->andWhere('a.domainId = :domainId')->setParameter('domainId', $domainId);
     }
-    
+
     public function findRandomAdvertByPosition(string $positionName, int $domainId): ?\Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         $count = $this->getAdvertByPositionQueryBuilder($positionName, $domainId)
@@ -52,7 +52,7 @@ class AdvertRepository
             ->setMaxResults(1)
             ->getQuery()->getSingleResult();
     }
-    
+
     public function getById(int $advertId): \Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         $advert = $this->getAdvertRepository()->find($advertId);

@@ -20,7 +20,7 @@ class SliderItemRepository
     {
         return $this->em->getRepository(SliderItem::class);
     }
-    
+
     public function getById(int $sliderItemId): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         $sliderItem = $this->getSliderItemRepository()->find($sliderItemId);
@@ -30,7 +30,7 @@ class SliderItemRepository
         }
         return $sliderItem;
     }
-    
+
     public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         return $this->getSliderItemRepository()->find($id);

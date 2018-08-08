@@ -67,7 +67,7 @@ class AdministratorLoginFacade
 
         return $multidomainLoginToken;
     }
-    
+
     public function loginByMultidomainToken(Request $request, string $multidomainLoginToken): void
     {
         $administrator = $this->administratorRepository->getByValidMultidomainLoginToken($multidomainLoginToken);

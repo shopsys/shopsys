@@ -67,7 +67,7 @@ class PromoCodeFormType extends AbstractType
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
     }
-    
+
     public function validateUniquePromoCode(string $promoCodeValue, ExecutionContextInterface $context): void
     {
         if ($this->promoCode === null || $promoCodeValue !== $this->promoCode->getCode()) {

@@ -12,13 +12,13 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
      * @var callable
      */
     private $manipulateRowCallback;
-    
+
     public function __construct(QueryBuilder $queryBuilder, string $rowIdSourceColumnName, Closure $manipulateRowCallback)
     {
         parent::__construct($queryBuilder, $rowIdSourceColumnName);
         $this->manipulateRowCallback = $manipulateRowCallback;
     }
-    
+
     public function getOneRow(int $rowId): array
     {
         $row = parent::getOneRow($rowId);

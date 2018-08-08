@@ -80,7 +80,7 @@ class ImageService
             $this->deleteImage($entityName, $entityId, $image);
         }
     }
-    
+
     private function deleteImage(string $entityName, int $entityId, Image $image): void
     {
         if ($image->getEntityName() !== $entityName

@@ -112,7 +112,7 @@ class IndependentTransportVisibilityCalculationTest extends DatabaseTestCase
 
         $this->assertFalse($independentTransportVisibilityCalculation->isIndependentlyVisible($transport, self::FIRST_DOMAIN_ID));
     }
-    
+
     public function getDefaultTransport(Vat $vat, array $enabledForDomains, bool $hidden): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $transportDataFactory = $this->getTransportDataFactory();

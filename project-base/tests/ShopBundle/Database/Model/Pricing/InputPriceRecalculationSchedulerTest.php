@@ -55,7 +55,7 @@ class InputPriceRecalculationSchedulerTest extends DatabaseTestCase
             ['inputPriceWithoutVat' => '17261.983471', 'inputPriceWithVat' => '20887', 'vatPercent' => '21'],
         ];
     }
-    
+
     private function createProductWithInputPriceAndVatPercentAndAutoCalculationPriceType(
         string $inputPrice,
         string $vatPercent

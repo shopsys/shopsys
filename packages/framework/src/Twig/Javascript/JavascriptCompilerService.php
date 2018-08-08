@@ -83,7 +83,7 @@ class JavascriptCompilerService
 
         return array_unique($this->javascriptLinks);
     }
-    
+
     private function process(string $javascript): void
     {
         foreach ($this->jsSourcePaths as $jsSourcePath) {
@@ -100,7 +100,7 @@ class JavascriptCompilerService
 
         $this->processExternalJavascript($javascript);
     }
-    
+
     private function tryToProcessJavascriptFile(string $jsSourcePath, string $javascript): bool
     {
         $sourcePath = $jsSourcePath . '/' . $javascript;
@@ -120,14 +120,14 @@ class JavascriptCompilerService
 
         return false;
     }
-    
+
     private function getPathWithTimestamp(string $relativePath, string $timestamp): string
     {
         $version = '-v' . $timestamp;
 
         return substr_replace($relativePath, $version, strrpos($relativePath, '.'), 0);
     }
-    
+
     private function getRelativeTargetPath(string $javascript): string
     {
         $relativeTargetPath = null;
@@ -142,7 +142,7 @@ class JavascriptCompilerService
 
         return $relativeTargetPath;
     }
-    
+
     private function compileJavascriptFile(string $sourceFilename, string $relativeTargetPath): void
     {
         $compiledFilename = $this->webPath . '/' . $relativeTargetPath;
@@ -160,7 +160,7 @@ class JavascriptCompilerService
             $this->filesystem->dumpFile($compiledFilename, $newContent);
         }
     }
-    
+
     private function isCompiledFileFresh(string $compiledFilename, string $sourceFilename): bool
     {
         if (is_file($compiledFilename) && parse_url($sourceFilename, PHP_URL_HOST) === null) {
@@ -170,7 +170,7 @@ class JavascriptCompilerService
         }
         return $isCompiledFileFresh;
     }
-    
+
     private function tryToProcessJavascriptDirectoryMask(string $jsSourcePath, string $directoryMask): bool
     {
         $parts = explode('/', $directoryMask);
@@ -184,7 +184,7 @@ class JavascriptCompilerService
         $filenameMask = $mask === '' ? '*' : $mask;
         return $this->processJavascriptByMask($jsSourcePath, $path, $filenameMask);
     }
-    
+
     private function processJavascriptByMask(string $jsSourcePath, string $path, string $filenameMask): bool
     {
         $filepaths = (array)glob($jsSourcePath . '/' . $path . '/' . $filenameMask);
@@ -195,12 +195,12 @@ class JavascriptCompilerService
 
         return true;
     }
-    
+
     private function isMaskValid(string $filenameMask): bool
     {
         return $filenameMask === '' || strpos($filenameMask, '*') !== false;
     }
-    
+
     private function processExternalJavascript(string $javascriptUrl): void
     {
         $this->javascriptLinks[] = $this->assetPackages->getUrl($javascriptUrl);

@@ -101,7 +101,7 @@ class NewsletterController extends AdminBaseController
 
         return $response;
     }
-    
+
     private function streamCsvExport(int $domainId): void
     {
         $output = new SplFileObject('php://output', 'w+');

@@ -134,14 +134,14 @@ class UserDataFixture
 
         $this->sqlLoggerFacade->reenableLogging();
     }
-    
+
     private function createCustomerOnDomain(int $domainId, int $userNumber): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $customerData = $this->getRandomCustomerDataByDomainId($domainId, $userNumber);
 
         return $this->customerEditFacade->create($customerData);
     }
-    
+
     private function getRandomCustomerDataByDomainId(int $domainId, int $userNumber): \Shopsys\FrameworkBundle\Model\Customer\CustomerData
     {
         $customerData = $this->customerDataFactory->create();

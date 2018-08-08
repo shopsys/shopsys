@@ -46,12 +46,12 @@ class AdvertFacade
         $this->domain = $domain;
         $this->advertFactory = $advertFactory;
     }
-    
+
     public function getById(int $advertId): \Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         return $this->advertRepository->getById($advertId);
     }
-    
+
     public function findRandomAdvertByPositionOnCurrentDomain(string $positionName): ?\Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         return $this->advertRepository->findRandomAdvertByPosition($positionName, $this->domain->getId());
@@ -68,7 +68,7 @@ class AdvertFacade
 
         return $advert;
     }
-    
+
     public function edit(int $advertId, AdvertData $advertData): \Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         $advert = $this->advertRepository->getById($advertId);
@@ -80,7 +80,7 @@ class AdvertFacade
 
         return $advert;
     }
-    
+
     public function delete(int $advertId): void
     {
         $advert = $this->advertRepository->getById($advertId);

@@ -34,7 +34,7 @@ class TopProduct
      * @ORM\Column(type="integer")
      */
     protected $position;
-    
+
     public function __construct(Product $product, int $domainId, int $position)
     {
         $this->product = $product;

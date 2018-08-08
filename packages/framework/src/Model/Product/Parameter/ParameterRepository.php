@@ -48,12 +48,12 @@ class ParameterRepository
     {
         return $this->em->getRepository(ProductParameterValue::class);
     }
-    
+
     public function findById(int $parameterId): ?\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         return $this->getParameterRepository()->find($parameterId);
     }
-    
+
     public function getById(int $parameterId): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         $parameter = $this->findById($parameterId);
@@ -73,7 +73,7 @@ class ParameterRepository
     {
         return $this->getParameterRepository()->findBy([], ['id' => 'asc']);
     }
-    
+
     public function findOrCreateParameterValueByValueTextAndLocale(string $valueText, string $locale): \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
     {
         $parameterValue = $this->getParameterValueRepository()->findOneBy([
@@ -105,7 +105,7 @@ class ParameterRepository
 
         return $queryBuilder;
     }
-    
+
     protected function getProductParameterValuesByProductSortedByNameQueryBuilder(Product $product, string $locale): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder()

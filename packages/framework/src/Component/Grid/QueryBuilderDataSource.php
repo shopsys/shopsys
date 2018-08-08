@@ -17,7 +17,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @var string
      */
     private $rowIdSourceColumnName;
-    
+
     public function __construct(QueryBuilder $queryBuilder, string $rowIdSourceColumnName)
     {
         $this->queryBuilder = $queryBuilder;
@@ -42,7 +42,7 @@ class QueryBuilderDataSource implements DataSourceInterface
 
         return $paginationResult;
     }
-    
+
     public function getOneRow(int $rowId): array
     {
         $queryBuilder = clone $this->queryBuilder;
@@ -56,12 +56,12 @@ class QueryBuilderDataSource implements DataSourceInterface
         $queryPaginator = new QueryPaginator($this->queryBuilder, GroupedScalarHydrator::HYDRATION_MODE);
         return $queryPaginator->getTotalCount();
     }
-    
+
     private function addQueryOrder(QueryBuilder $queryBuilder, string $orderSourceColumnName, string $orderDirection): void
     {
         $queryBuilder->orderBy($orderSourceColumnName, $orderDirection);
     }
-    
+
     private function prepareQueryWithOneRow(QueryBuilder $queryBuilder, int $rowId): void
     {
         $queryBuilder

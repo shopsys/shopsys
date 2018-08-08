@@ -46,7 +46,7 @@ class JsTranslatorCompilerPass implements JsCompilerPassInterface
             $messageIdArgumentNode->terminate(json_encode($translatedMessage));
         }
     }
-    
+
     private function translate(\Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCall $jsTranslatorsCall): string
     {
         $locale = $this->translator->getLocale();

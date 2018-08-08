@@ -140,7 +140,7 @@ class OrderTest extends TestCase
 
         $this->assertEquals($createAt, $order->getCreatedAt());
     }
-    
+
     private function assertDateTimeIsCloseTo(DateTimeInterface $expected, DateTimeInterface $actual, int $deltaInSeconds): void
     {
         $diffInSeconds = $expected->getTimestamp() - $actual->getTimestamp();

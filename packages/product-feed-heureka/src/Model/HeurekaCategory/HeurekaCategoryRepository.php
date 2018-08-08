@@ -42,7 +42,7 @@ class HeurekaCategoryRepository
         return $queryBuilder->getQuery()
             ->execute();
     }
-    
+
     public function findByCategoryId(int $categoryId): ?\Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
     {
         $queryBuilder = $this->em->createQueryBuilder()
@@ -55,7 +55,7 @@ class HeurekaCategoryRepository
         return $queryBuilder->getQuery()
             ->getOneOrNullResult();
     }
-    
+
     public function getOneById(int $id): \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
     {
         $queryBuilder = $this->getHeurekaCategoryRepository()

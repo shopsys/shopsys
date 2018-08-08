@@ -23,12 +23,12 @@ class DatabaseSchemaFacade
         $this->defaultSchemaFilepath = $defaultSchemaFilepath;
         $this->em = $em;
     }
-    
+
     public function createSchema(string $schemaName): void
     {
         $this->em->getConnection()->query('CREATE SCHEMA ' . $schemaName);
     }
-    
+
     public function dropSchemaIfExists(string $schemaName): void
     {
         $this->em->getConnection()->query('DROP SCHEMA IF EXISTS ' . $schemaName . ' CASCADE');

@@ -38,7 +38,7 @@ class UnitFacade
         $this->setting = $setting;
         $this->unitFactory = $unitFactory;
     }
-    
+
     public function getById(int $unitId): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         return $this->unitRepository->getById($unitId);
@@ -52,7 +52,7 @@ class UnitFacade
 
         return $unit;
     }
-    
+
     public function edit(int $unitId, UnitData $unitData): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         $unit = $this->unitRepository->getById($unitId);

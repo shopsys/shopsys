@@ -86,7 +86,7 @@ class CategoryFacade
         $this->categoryWithPreloadedChildrenFactory = $categoryWithPreloadedChildrenFactory;
         $this->categoryWithLazyLoadedVisibleChildrenFactory = $categoryWithLazyLoadedVisibleChildrenFactory;
     }
-    
+
     public function getById(int $categoryId): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryRepository->getById($categoryId);
@@ -107,7 +107,7 @@ class CategoryFacade
 
         return $category;
     }
-    
+
     public function edit(int $categoryId, CategoryData $categoryData): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         $rootCategory = $this->getRootCategory();
@@ -124,7 +124,7 @@ class CategoryFacade
 
         return $category;
     }
-    
+
     public function deleteById(int $categoryId): void
     {
         $category = $this->categoryRepository->getById($categoryId);
@@ -297,12 +297,12 @@ class CategoryFacade
 
         return $mainCategoriesIndexedByDomainId;
     }
-    
+
     public function getProductMainCategoryByDomainId(Product $product, int $domainId): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryRepository->getProductMainCategoryOnDomain($product, $domainId);
     }
-    
+
     public function findProductMainCategoryByDomainId(Product $product, int $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryRepository->findProductMainCategoryOnDomain($product, $domainId);
@@ -320,7 +320,7 @@ class CategoryFacade
     {
         return $this->categoryRepository->getRootCategory();
     }
-    
+
     public function getVisibleOnDomainById(int $domainId, int $categoryId): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         $category = $this->getById($categoryId);

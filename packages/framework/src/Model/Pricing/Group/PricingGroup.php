@@ -39,7 +39,7 @@ class PricingGroup
      * @ORM\Column(type="decimal", precision=20, scale=4)
      */
     protected $coefficient;
-    
+
     public function __construct(PricingGroupData $pricingGroupData, int $domainId)
     {
         $this->coefficient = $pricingGroupData->coefficient;

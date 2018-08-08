@@ -31,7 +31,7 @@ class DirectoryStructureCreator
      * @var string
      */
     private $domainImageDir;
-    
+
     public function __construct(
         string $imageDir,
         string $domainImageDir,

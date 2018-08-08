@@ -51,7 +51,7 @@ class FriendlyUrl
      * @ORM\Column(type="boolean")
      */
     protected $main;
-    
+
     public function __construct(string $routeName, int $entityId, int $domainId, string $slug)
     {
         $this->routeName = $routeName;
@@ -85,7 +85,7 @@ class FriendlyUrl
     {
         return $this->main;
     }
-    
+
     public function setMain(bool $main): void
     {
         $this->main = $main;

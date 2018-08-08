@@ -39,7 +39,7 @@ class ProductCategoryDomain
      * @ORM\Column(type="integer")
      */
     protected $domainId;
-    
+
     public function __construct(Product $product, Category $category, int $domainId)
     {
         $this->product = $product;

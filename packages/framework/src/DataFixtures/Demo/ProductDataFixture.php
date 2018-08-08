@@ -69,7 +69,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createVariants($productsByCatnum, $productNo);
     }
-    
+
     private function createProduct(string $referenceName, ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $product = $this->productFacade->create($productData);

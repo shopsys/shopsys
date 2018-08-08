@@ -35,7 +35,7 @@ class TransportPrice
      * @ORM\Column(type="decimal", precision=20, scale=6)
      */
     protected $price;
-    
+
     public function __construct(Transport $transport, Currency $currency, string $price)
     {
         $this->transport = $transport;
@@ -57,7 +57,7 @@ class TransportPrice
     {
         return $this->price;
     }
-    
+
     public function setPrice(string $price): void
     {
         $this->price = $price;

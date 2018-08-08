@@ -33,7 +33,7 @@ class LegalConditionsFacade
         $this->setting = $setting;
         $this->domain = $domain;
     }
-    
+
     public function findTermsAndConditions(int $domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->findArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainId);
@@ -48,7 +48,7 @@ class LegalConditionsFacade
     {
         return t('Terms-and-conditions.html');
     }
-    
+
     public function findPrivacyPolicy(int $domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->findArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainId);
@@ -74,7 +74,7 @@ class LegalConditionsFacade
 
         return false;
     }
-    
+
     protected function findArticle(string $settingKey, int $domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
     {
         $articleId = $this->setting->getForDomain($settingKey, $domainId);

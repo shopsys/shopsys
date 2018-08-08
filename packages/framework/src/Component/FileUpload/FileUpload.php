@@ -46,7 +46,7 @@ class FileUpload
      * @var \League\Flysystem\FilesystemInterface
      */
     private $filesystem;
-    
+
     public function __construct(
         string $temporaryDir,
         string $uploadedFileDir,
@@ -76,7 +76,7 @@ class FileUpload
 
         return $temporaryFilename;
     }
-    
+
     public function tryDeleteTemporaryFile(string $filename): bool
     {
         if (!empty($filename)) {
@@ -89,12 +89,12 @@ class FileUpload
         }
         return true;
     }
-    
+
     private function getTemporaryFilename(string $filename): string
     {
         return TransformString::safeFilename(uniqid('', true) . '__' . $filename);
     }
-    
+
     public function getTemporaryFilepath(string $temporaryFilename): string
     {
         return $this->getTemporaryDirectory() . '/' . TransformString::safeFilename($temporaryFilename);
@@ -116,7 +116,7 @@ class FileUpload
     {
         return $this->getUploadDirectory($isImage, $category, $targetDirectory) . '/' . $filename;
     }
-    
+
     public function getOriginalFilenameByTemporary(string $temporaryFilename): string
     {
         $matches = [];

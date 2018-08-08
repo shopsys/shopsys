@@ -77,7 +77,7 @@ class ProductParametersFixtureLoader
     {
         $this->parameters = [];
     }
-    
+
     private function addProductParameterValuesDataToCollection(
         ArrayCollection $productParameterValuesDataCollection,
         string $serializedParameterNames,

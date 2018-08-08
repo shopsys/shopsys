@@ -86,7 +86,7 @@ class ProductDomain
      * @ORM\Column(type="text", nullable=true)
      */
     protected $seoH1;
-    
+
     public function __construct(Product $product, int $domainId)
     {
         $this->product = $product;
@@ -122,7 +122,7 @@ class ProductDomain
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
-    
+
     public function setSeoH1(string $seoH1): void
     {
         $this->seoH1 = $seoH1;

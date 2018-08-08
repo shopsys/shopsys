@@ -21,7 +21,7 @@ class UploadedFileLocator
      * @var \League\Flysystem\FilesystemInterface
      */
     private $filesystem;
-    
+
     public function __construct(string $uploadedFileDir, string $uploadedFileUrlPrefix, FilesystemInterface $filesystem)
     {
         $this->uploadedFileDir = $uploadedFileDir;
@@ -56,12 +56,12 @@ class UploadedFileLocator
 
         return $this->filesystem->has($fileFilepath);
     }
-    
+
     private function getRelativeFilePath(string $entityName): string
     {
         return $entityName;
     }
-    
+
     public function getAbsoluteFilePath(string $entityName): string
     {
         return $this->uploadedFileDir . $this->getRelativeFilePath($entityName);

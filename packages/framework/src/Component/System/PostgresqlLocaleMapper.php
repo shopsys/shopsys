@@ -166,17 +166,17 @@ class PostgresqlLocaleMapper
         'zh_SG' => 'Chinese (Simplified)_Singapore',
         'zh_TW' => 'Chinese (Traditional)_Taiwan',
     ];
-    
+
     public function getLinuxLocale(string $collationName): string
     {
         return $collationName . '.utf8';
     }
-    
+
     public function getMacOsxLocale(string $collationName): string
     {
         return $collationName . '.UTF-8';
     }
-    
+
     public function getWindowsLocale(string $collationName): string
     {
         if (!array_key_exists($collationName, self::$windowsLocalesIndexedByCollation)) {

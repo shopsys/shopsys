@@ -52,7 +52,7 @@ class ImageDeleteDoctrineListener
             $this->getImageFacade()->deleteImageFiles($entity);
         }
     }
-    
+
     private function deleteEntityImages(object $entity, EntityManagerInterface $em): void
     {
         $images = $this->getImageFacade()->getAllImagesByEntity($entity);

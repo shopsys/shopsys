@@ -20,12 +20,12 @@ class AdministratorRepository
     {
         return $this->em->getRepository(Administrator::class);
     }
-    
+
     public function findById(int $administratorId): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->getAdministratorRepository()->find($administratorId);
     }
-    
+
     public function getById(int $administratorId): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->getAdministratorRepository()->find($administratorId);
@@ -36,7 +36,7 @@ class AdministratorRepository
 
         return $administrator;
     }
-    
+
     public function getByValidMultidomainLoginToken(string $multidomainLoginToken): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $queryBuilder = $this->getAdministratorRepository()
@@ -52,12 +52,12 @@ class AdministratorRepository
 
         return $administrator;
     }
-    
+
     public function findByUserName(string $administratorUserName): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->getAdministratorRepository()->findOneBy(['username' => $administratorUserName]);
     }
-    
+
     public function getByUserName(string $administratorUserName): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->findByUserName($administratorUserName);
@@ -84,7 +84,7 @@ class AdministratorRepository
             ->select('COUNT(a)')
             ->getQuery()->getSingleScalarResult());
     }
-    
+
     public function findByIdAndLoginToken(int $id, string $loginToken): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->getAdministratorRepository()->findOneBy([

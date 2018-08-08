@@ -31,7 +31,7 @@ class LocalizationExtension extends \Twig_Extension
             new Twig_SimpleFunction('localeFlag', [$this, 'getLocaleFlagHtml'], ['is_safe' => ['html']]),
         ];
     }
-    
+
     public function getLocaleFlagHtml(string $locale, bool $showTitle = true): string
     {
         $src = $this->assetPackages->getUrl('assets/admin/images/flags/' . $locale . '.png');
@@ -48,7 +48,7 @@ class LocalizationExtension extends \Twig_Extension
 
         return $html;
     }
-    
+
     private function getTitle(string $locale): string
     {
         try {

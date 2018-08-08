@@ -67,7 +67,7 @@ class GenerateMigrationsService
 
         return $formattedSqlCommands;
     }
-    
+
     private function formatSqlCommand(string $filteredSchemaDiffSqlCommand): string
     {
         $formattedQuery = $this->formatSqlQueryWithTabs($filteredSchemaDiffSqlCommand);
@@ -75,7 +75,7 @@ class GenerateMigrationsService
 
         return "\n" . implode("\n", $this->indentSqlCommandLines($formattedQueryLines));
     }
-    
+
     private function formatSqlQueryWithTabs(string $query): string
     {
         $previousTab = SqlFormatter::$tab;

@@ -58,7 +58,7 @@ class ProductPriceCalculation
         $this->productRepository = $productRepository;
         $this->pricingService = $pricingService;
     }
-    
+
     public function calculatePrice(Product $product, int $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         if ($product->isMainVariant()) {
@@ -76,7 +76,7 @@ class ProductPriceCalculation
             );
         }
     }
-    
+
     private function calculateMainVariantPrice(Product $mainVariant, int $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
@@ -99,7 +99,7 @@ class ProductPriceCalculation
 
         return new ProductPrice($minVariantPrice, $from);
     }
-    
+
     private function calculateBasePrice(string $inputPrice, Vat $vat): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         return $this->basePriceCalculation->calculateBasePrice(
@@ -121,7 +121,7 @@ class ProductPriceCalculation
 
         return new ProductPrice($basePrice, false);
     }
-    
+
     private function calculateProductPriceForPricingGroupAuto(Product $product, PricingGroup $pricingGroup, int $domainId): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         $basePrice = $this->calculateBasePrice($product->getPrice(), $product->getVat());
@@ -134,7 +134,7 @@ class ProductPriceCalculation
 
         return new ProductPrice($price, false);
     }
-    
+
     private function getDomainDefaultCurrencyReversedExchangeRate(int $domainId): string
     {
         $domainDefaultCurrencyId = $this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId);

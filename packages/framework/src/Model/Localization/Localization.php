@@ -76,7 +76,7 @@ class Localization
     {
         return $this->collationsByLocale;
     }
-    
+
     public function getLanguageName(string $locale): string
     {
         if (!array_key_exists($locale, $this->languageNamesByLocale)) {
@@ -87,7 +87,7 @@ class Localization
 
         return $this->languageNamesByLocale[$locale];
     }
-    
+
     public function getCollationByLocale(string $locale): string
     {
         if (array_key_exists($locale, $this->collationsByLocale)) {

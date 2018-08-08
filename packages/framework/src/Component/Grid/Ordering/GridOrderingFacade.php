@@ -21,7 +21,7 @@ class GridOrderingFacade
         $this->em = $em;
         $this->gridOrderingService = $gridOrderingService;
     }
-    
+
     public function saveOrdering(string $entityClass, array $rowIds): void
     {
         $entityRepository = $this->getEntityRepository($entityClass);

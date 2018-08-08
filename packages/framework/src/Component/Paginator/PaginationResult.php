@@ -38,7 +38,7 @@ class PaginationResult
      * @var int
      */
     private $toItem;
-    
+
     public function __construct(int $page, int $pageSize, int $totalCount, array $results)
     {
         $this->page = $page;

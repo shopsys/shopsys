@@ -31,7 +31,7 @@ class AdvancedSearchConfig
     {
         return $this->filters;
     }
-    
+
     public function getFilter(string $filterName): \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface
     {
         if (!array_key_exists($filterName, $this->filters)) {

@@ -13,7 +13,7 @@ interface DataSourceInterface
         ?string $orderSourceColumnName = null,
         string $orderDirection = self::ORDER_ASC
     ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-    
+
     public function getOneRow(int $rowId): array;
 
     public function getTotalRowsCount(): int;

@@ -53,12 +53,12 @@ class CustomerFacade
         $this->billingAddressFactory = $billingAddressFactory;
         $this->billingAddressDataFactory = $billingAddressDataFactory;
     }
-    
+
     public function getUserById(int $userId): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->userRepository->getUserById($userId);
     }
-    
+
     public function findUserByEmailAndDomain(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->userRepository->findUserByEmailAndDomain($email, $domainId);
@@ -122,7 +122,7 @@ class CustomerFacade
 
         return $user;
     }
-    
+
     protected function edit(int $userId, CustomerData $customerData): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->getUserById($userId);
@@ -148,7 +148,7 @@ class CustomerFacade
 
         return $user;
     }
-    
+
     public function editByAdmin(int $userId, CustomerData $customerData): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->edit($userId, $customerData);
@@ -163,7 +163,7 @@ class CustomerFacade
 
         return $user;
     }
-    
+
     public function editByCustomer(int $userId, CustomerData $customerData): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->edit($userId, $customerData);
@@ -172,7 +172,7 @@ class CustomerFacade
 
         return $user;
     }
-    
+
     public function delete(int $userId): void
     {
         $user = $this->getUserById($userId);

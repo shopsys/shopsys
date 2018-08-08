@@ -108,17 +108,17 @@ class CustomerController extends FrontBaseController
             'orders' => $orders,
         ]);
     }
-    
+
     public function orderDetailRegisteredAction(string $orderNumber)
     {
         return $this->orderDetailAction(null, $orderNumber);
     }
-    
+
     public function orderDetailUnregisteredAction(string $urlHash)
     {
         return $this->orderDetailAction($urlHash, null);
     }
-    
+
     private function orderDetailAction(string $urlHash = null, string $orderNumber = null)
     {
         if ($orderNumber !== null) {

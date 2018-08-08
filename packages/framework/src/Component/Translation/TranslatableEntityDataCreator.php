@@ -34,7 +34,7 @@ class TranslatableEntityDataCreator
         $this->notNullableColumnsFinder = $notNullableColumnsFinder;
         $this->sqlQuoter = $sqlQuoter;
     }
-    
+
     public function copyAllTranslatableDataForNewLocale(string $templateLocale, string $newLocale): void
     {
         $notNullableColumns = $this->notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName(

@@ -68,12 +68,12 @@ class DomainExtension extends \Twig_Extension
     {
         return 'domain';
     }
-    
+
     public function getDomainNameById(int $domainId): string
     {
         return $this->getDomain()->getDomainConfigById($domainId)->getName();
     }
-    
+
     public function getDomainIconHtml(int $domainId, string $size = 'normal'): string
     {
         $domainName = $this->getDomain()->getDomainConfigById($domainId)->getName();

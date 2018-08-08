@@ -43,7 +43,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
         $domainId1 = 2;
         $this->createPricingGroup($pricingGroupData, $domainId1, self::PRICING_GROUP_VIP_DOMAIN_2);
     }
-    
+
     private function createPricingGroup(
         PricingGroupData $pricingGroupData,
         int $domainId,

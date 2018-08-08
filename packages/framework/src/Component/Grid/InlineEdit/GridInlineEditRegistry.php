@@ -17,7 +17,7 @@ class GridInlineEditRegistry
     {
         $this->gridInlineEdits = $gridInlineEdits;
     }
-    
+
     public function getGridInlineEdit(string $serviceName): \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface
     {
         foreach ($this->gridInlineEdits as $gridInlineEdit) {

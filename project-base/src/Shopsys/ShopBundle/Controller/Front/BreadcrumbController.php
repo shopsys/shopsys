@@ -16,7 +16,7 @@ class BreadcrumbController extends FrontBaseController
     ) {
         $this->breadcrumbResolver = $breadcrumbResolver;
     }
-    
+
     public function indexAction(string $routeName, array $routeParameters = [])
     {
         $breadcrumbItems = $this->breadcrumbResolver->resolveBreadcrumbItems($routeName, $routeParameters);

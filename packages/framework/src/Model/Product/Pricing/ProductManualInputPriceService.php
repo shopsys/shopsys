@@ -17,7 +17,7 @@ class ProductManualInputPriceService
     {
         $this->productManualInputPriceFactory = $productManualInputPriceFactory;
     }
-    
+
     public function refresh(Product $product, PricingGroup $pricingGroup, string $inputPrice, \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice $productManualInputPrice): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice
     {
         if ($productManualInputPrice === null) {

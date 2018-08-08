@@ -15,7 +15,7 @@ class QuantifiedProduct
      * @var int
      */
     private $quantity;
-    
+
     public function __construct(Product $product, int $quantity)
     {
         $this->product = $product;

@@ -38,7 +38,7 @@ class CustomerPasswordFacade
         $this->customerPasswordService = $customerPasswordService;
         $this->resetPasswordMailFacade = $resetPasswordMailFacade;
     }
-    
+
     public function resetPassword(string $email, int $domainId): void
     {
         $user = $this->userRepository->getUserByEmailAndDomain($email, $domainId);

@@ -82,7 +82,7 @@ class ImageRepository
             'entityId' => $entityId,
         ]);
     }
-    
+
     public function getById(int $imageId): \Shopsys\FrameworkBundle\Component\Image\Image
     {
         $image = $this->getImageRepository()->find($imageId);

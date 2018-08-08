@@ -42,7 +42,7 @@ class CountryDataFixture extends AbstractReferenceFixture
         $countryData->code = 'SK';
         $this->createCountry($countryData, $domainId, self::COUNTRY_SLOVAKIA_1);
     }
-    
+
     private function createCountry(CountryData $countryData, int $domainId, string $referenceName): void
     {
         $country = $this->countryFacade->create($countryData, $domainId);

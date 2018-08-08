@@ -16,7 +16,7 @@ class ImageThumbnailFactory
     {
         $this->imageProcessingService = $imageProcessingService;
     }
-    
+
     public function getImageThumbnail(string $filepath): \Intervention\Image\Image
     {
         $image = $this->imageProcessingService->createInterventionImage($filepath);

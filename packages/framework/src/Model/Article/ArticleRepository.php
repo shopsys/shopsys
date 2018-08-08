@@ -20,19 +20,19 @@ class ArticleRepository
     {
         return $this->em->getRepository(Article::class);
     }
-    
+
     public function findById(string $articleId): ?\Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->getArticleRepository()->find($articleId);
     }
-    
+
     public function getOrderedArticlesByDomainIdAndPlacementQueryBuilder(int $domainId, string $placement): \Doctrine\ORM\QueryBuilder
     {
         return $this->getArticlesByDomainIdQueryBuilder($domainId)
             ->andWhere('a.placement = :placement')->setParameter('placement', $placement)
             ->orderBy('a.position, a.id');
     }
-    
+
     protected function getArticlesByDomainIdQueryBuilder(int $domainId): \Doctrine\ORM\QueryBuilder
     {
         return $this->em->createQueryBuilder()
@@ -40,7 +40,7 @@ class ArticleRepository
             ->from(Article::class, 'a')
             ->where('a.domainId = :domainId')->setParameter('domainId', $domainId);
     }
-    
+
     public function getVisibleArticlesByDomainIdQueryBuilder(int $domainId): \Doctrine\ORM\QueryBuilder
     {
         return $this->getAllVisibleQueryBuilder()
@@ -66,7 +66,7 @@ class ArticleRepository
 
         return $queryBuilder->getQuery()->execute();
     }
-    
+
     public function getById(int $articleId): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         $article = $this->getArticleRepository()->find($articleId);
@@ -76,7 +76,7 @@ class ArticleRepository
         }
         return $article;
     }
-    
+
     public function getVisibleById(int $articleId): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         $article = $this->getAllVisibleQueryBuilder()

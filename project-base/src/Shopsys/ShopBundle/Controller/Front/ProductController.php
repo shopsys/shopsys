@@ -98,7 +98,7 @@ class ProductController extends FrontBaseController
         $this->moduleFacade = $moduleFacade;
         $this->brandFacade = $brandFacade;
     }
-    
+
     public function detailAction(int $id)
     {
         $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
@@ -118,7 +118,7 @@ class ProductController extends FrontBaseController
             'productMainCategory' => $productMainCategory,
         ]);
     }
-    
+
     public function listByCategoryAction(Request $request, int $id)
     {
         $category = $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $id);
@@ -176,7 +176,7 @@ class ProductController extends FrontBaseController
             return $this->render('@ShopsysShop/Front/Content/Product/list.html.twig', $viewParameters);
         }
     }
-    
+
     public function listByBrandAction(Request $request, int $id)
     {
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);

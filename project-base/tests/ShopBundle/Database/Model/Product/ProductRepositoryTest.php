@@ -179,7 +179,7 @@ class ProductRepositoryTest extends DatabaseTestCase
         $this->assertSame($product1, $results[0]);
         $this->assertSame($product2, $results[1]);
     }
-    
+
     private function setProductOrderingPriority(Product $product, int $priority): void
     {
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);

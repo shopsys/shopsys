@@ -30,7 +30,7 @@ class GoogleProductDomainRepository
 
         return $queryBuilder->getQuery()->execute();
     }
-    
+
     public function findByProductIdAndDomainId(int $productId, int $domainId): ?\Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain
     {
         $queryBuilder = $this->em->createQueryBuilder()

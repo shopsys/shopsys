@@ -31,7 +31,7 @@ class AdministratorActivityFacade
         $this->administratorActivityRepository = $administratorActivityRepository;
         $this->administratorActivityFactory = $administratorActivityFactory;
     }
-    
+
     public function create(
         Administrator $administrator,
         string $ipAddress

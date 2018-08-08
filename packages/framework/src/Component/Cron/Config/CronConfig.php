@@ -65,7 +65,7 @@ class CronConfig
 
         return $matchedCronConfigs;
     }
-    
+
     public function getCronModuleConfigByServiceId(string $serviceId): \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig
     {
         foreach ($this->cronModuleConfigs as $cronConfig) {

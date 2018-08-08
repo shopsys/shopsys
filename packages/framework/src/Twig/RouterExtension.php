@@ -28,7 +28,7 @@ class RouterExtension extends Twig_Extension
             ),
         ];
     }
-    
+
     public function findUrlByDomainId(string $route, array $routeParams, int $domainId): ?string
     {
         $domainRouter = $this->domainRouterFactory->getRouter($domainId);

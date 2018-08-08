@@ -17,7 +17,7 @@ class ProductDataFixtureCsvReader
      * @var \Shopsys\FrameworkBundle\Component\Csv\CsvReader
      */
     private $csvReader;
-    
+
     public function __construct(
         string $path,
         CsvReader $csvReader

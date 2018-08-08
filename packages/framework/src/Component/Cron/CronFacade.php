@@ -67,7 +67,7 @@ class CronFacade
 
         $this->logger->addInfo('======= End of cron =======');
     }
-    
+
     public function runModuleByServiceId(string $serviceId): void
     {
         $cronModuleConfig = $this->cronConfig->getCronModuleConfigByServiceId($serviceId);

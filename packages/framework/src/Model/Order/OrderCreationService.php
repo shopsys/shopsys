@@ -121,7 +121,7 @@ class OrderCreationService
         $this->fillOrderTransportAndPayment($order, $orderPreview, $locale);
         $this->fillOrderRounding($order, $orderPreview, $locale);
     }
-    
+
     private function fillOrderTransportAndPayment(Order $order, OrderPreview $orderPreview, string $locale): void
     {
         $payment = $order->getPayment();
@@ -158,7 +158,7 @@ class OrderCreationService
         );
         $order->addItem($orderTransport);
     }
-    
+
     private function fillOrderProducts(Order $order, OrderPreview $orderPreview, string $locale): void
     {
         $quantifiedItemPrices = $orderPreview->getQuantifiedItemsPrices();
@@ -192,7 +192,7 @@ class OrderCreationService
             }
         }
     }
-    
+
     private function fillOrderRounding(Order $order, OrderPreview $orderPreview, string $locale): void
     {
         if ($orderPreview->getRoundingPrice() !== null) {
@@ -208,7 +208,7 @@ class OrderCreationService
             );
         }
     }
-    
+
     private function addOrderItemDiscount(OrderItem $orderItem, Price $discount, string $locale, float $discountPercent): void
     {
         $name = sprintf(

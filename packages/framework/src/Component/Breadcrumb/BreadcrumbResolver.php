@@ -38,7 +38,7 @@ class BreadcrumbResolver
             throw new \Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsException($ex);
         }
     }
-    
+
     public function hasGeneratorForRoute(string $routeName): bool
     {
         return array_key_exists($routeName, $this->breadcrumbGeneratorsByRouteName);

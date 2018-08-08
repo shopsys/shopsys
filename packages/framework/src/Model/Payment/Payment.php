@@ -172,7 +172,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->setTranslations($paymentData);
         $this->setDomains($paymentData);
     }
-    
+
     public function setPrice(
         PaymentPriceFactoryInterface $paymentPriceFactory,
         Currency $currency,
@@ -258,7 +258,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     {
         return $this->position;
     }
-    
+
     public function setPosition(int $position): void
     {
         $this->position = $position;

@@ -44,14 +44,14 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     {
         return $this->translator->trans('Zbozi.cz product feed');
     }
-    
+
     public function getData(int $productId): array
     {
         $zboziProductDomains = $this->zboziProductDomainFacade->findByProductId($productId);
 
         return !empty($zboziProductDomains) ? $this->getZboziProductDomainsAsPluginDataArray($zboziProductDomains) : [];
     }
-    
+
     public function saveData(int $productId, array $data): void
     {
         $zboziProductDomainsDataIndexedByDomainId = [];
@@ -78,7 +78,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
             $zboziProductDomainsDataIndexedByDomainId
         );
     }
-    
+
     private function setZboziProductDomainDataProperty(
         ZboziProductDomainData $zboziProductDomainData,
         string $propertyName,
@@ -116,7 +116,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
         return $pluginData;
     }
-    
+
     public function removeData(int $productId): void
     {
         $this->zboziProductDomainFacade->delete($productId);

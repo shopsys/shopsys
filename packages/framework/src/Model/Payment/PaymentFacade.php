@@ -102,12 +102,12 @@ class PaymentFacade
         $this->updatePaymentPrices($payment, $paymentData->pricesByCurrencyId);
         $this->setAdditionalDataAndFlush($payment, $paymentData);
     }
-    
+
     public function getById(int $id): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->paymentRepository->getById($id);
     }
-    
+
     public function deleteById(int $id): void
     {
         $payment = $this->getById($id);

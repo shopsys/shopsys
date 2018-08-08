@@ -58,7 +58,7 @@ class FilepathComparatorTest extends TestCase
 
         $this->assertTrue($filepathComparator->isPathWithinDirectory($path, $directoryPath));
     }
-    
+
     private function getResourcePath(string $relativePath): string
     {
         return __DIR__ . '/Resources/' . $relativePath;

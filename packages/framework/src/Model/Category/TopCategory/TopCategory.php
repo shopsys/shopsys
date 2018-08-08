@@ -34,7 +34,7 @@ class TopCategory
      * @ORM\Column(type="integer")
      */
     protected $position;
-    
+
     public function __construct(Category $category, int $domainId, int $position)
     {
         $this->category = $category;

@@ -19,7 +19,7 @@ class OrderPayment extends OrderItem
      * @ORM\JoinColumn(nullable=true)
      */
     protected $payment;
-    
+
     public function __construct(
         Order $order,
         string $name,

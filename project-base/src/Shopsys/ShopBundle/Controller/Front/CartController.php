@@ -145,7 +145,7 @@ class CartController extends FrontBaseController
             'productsPrice' => $orderPreview->getProductsPrice(),
         ]);
     }
-    
+
     public function addProductFormAction(Product $product, string $type = 'normal')
     {
         $form = $this->createForm(AddProductFormType::class, ['productId' => $product->getId()], [
@@ -270,7 +270,7 @@ class CartController extends FrontBaseController
             );
         }
     }
-    
+
     public function deleteAction(Request $request, int $cartItemId)
     {
         $cartItemId = (int)$cartItemId;

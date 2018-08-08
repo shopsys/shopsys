@@ -37,7 +37,7 @@ class CookiesFacade
      * @var \Symfony\Component\HttpFoundation\RequestStack
      */
     protected $requestStack;
-    
+
     public function __construct(
         string $environment,
         ArticleFacade $articleFacade,

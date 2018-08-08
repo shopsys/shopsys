@@ -55,7 +55,7 @@ class ScriptFacade
     {
         return $this->scriptRepository->getAllQueryBuilder();
     }
-    
+
     public function getById(int $scriptId): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         return $this->scriptRepository->getById($scriptId);
@@ -70,7 +70,7 @@ class ScriptFacade
 
         return $script;
     }
-    
+
     public function edit(int $scriptId, ScriptData $scriptData): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         $script = $this->scriptRepository->getById($scriptId);
@@ -82,7 +82,7 @@ class ScriptFacade
 
         return $script;
     }
-    
+
     public function delete(int $scriptId): void
     {
         $script = $this->scriptRepository->getById($scriptId);
@@ -135,7 +135,7 @@ class ScriptFacade
     {
         return $this->setting->getForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $domainId);
     }
-    
+
     protected function replaceVariables(string $code, Order $order): string
     {
         $variableReplacements = [

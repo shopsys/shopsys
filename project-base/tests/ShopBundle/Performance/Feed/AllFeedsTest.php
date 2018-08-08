@@ -89,7 +89,7 @@ class AllFeedsTest extends KernelTestCase
 
         $this->assertSamplesAreSuccessful($performanceTestSamples);
     }
-    
+
     private function doTestFeedGeneration(FeedInfoInterface $feedInfo, DomainConfig $domainConfig, int $maxDuration): \Tests\ShopBundle\Performance\Feed\PerformanceTestSample
     {
         $performanceTestSample = $this->generateFeed($feedInfo, $domainConfig);
@@ -138,7 +138,7 @@ class AllFeedsTest extends KernelTestCase
 
         return $feedGenerationData;
     }
-    
+
     private function setPerformanceTestSampleMessage(PerformanceTestSample $performanceTestSample, int $maxDuration, float $realDuration): void
     {
         $minDuration = $this->minDuration;

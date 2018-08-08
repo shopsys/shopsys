@@ -106,7 +106,7 @@ class StrictWebDriver extends WebDriver
 
         $this->clickAndWait(['xpath' => $xpath], $contextSelector);
     }
-    
+
     public function clickByCss(string $css): void
     {
         $this->clickAndWait(['css' => $css]);
@@ -128,13 +128,13 @@ class StrictWebDriver extends WebDriver
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
         throw new \Tests\ShopBundle\Test\Codeception\Exception\DeprecatedMethodException($message);
     }
-    
+
     public function fillFieldByElement(WebDriverElement $element, string $value): void
     {
         $element->clear();
         $element->sendKeys($value);
     }
-    
+
     public function fillFieldByName(string $fieldName, string $value): void
     {
         $locator = Crawler::xpathLiteral(trim($fieldName));
@@ -142,17 +142,17 @@ class StrictWebDriver extends WebDriver
 
         parent::fillField(['xpath' => $xpath], $value);
     }
-    
+
     public function fillFieldByCss(string $css, string $value): void
     {
         parent::fillField(['css' => $css], $value);
     }
-    
+
     public function seeInCss(string $text, string $css): void
     {
         parent::see($text, ['css' => $css]);
     }
-    
+
     public function seeInElement(string $text, WebDriverElement $element): void
     {
         $this->assertContains($text, $element->getText());
@@ -169,7 +169,7 @@ class StrictWebDriver extends WebDriver
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
         throw new \Tests\ShopBundle\Test\Codeception\Exception\DeprecatedMethodException($message);
     }
-    
+
     public function seeCheckboxIsCheckedById(string $checkboxId): void
     {
         $locator = Crawler::xpathLiteral(trim($checkboxId));
@@ -177,7 +177,7 @@ class StrictWebDriver extends WebDriver
 
         parent::seeCheckboxIsChecked(['xpath' => $xpath]);
     }
-    
+
     public function seeCheckboxIsCheckedByLabel(string $label): void
     {
         /*
@@ -209,7 +209,7 @@ class StrictWebDriver extends WebDriver
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
         throw new \Tests\ShopBundle\Test\Codeception\Exception\DeprecatedMethodException($message);
     }
-    
+
     public function dontSeeCheckboxIsCheckedById(string $checkboxId): void
     {
         $locator = Crawler::xpathLiteral(trim($checkboxId));
@@ -217,7 +217,7 @@ class StrictWebDriver extends WebDriver
 
         parent::dontSeeCheckboxIsChecked(['xpath' => $xpath]);
     }
-    
+
     public function dontSeeCheckboxIsCheckedByLabel(string $label): void
     {
         /*
@@ -249,7 +249,7 @@ class StrictWebDriver extends WebDriver
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
         throw new \Tests\ShopBundle\Test\Codeception\Exception\DeprecatedMethodException($message);
     }
-    
+
     public function checkOptionById(string $optionId): void
     {
         $locator = Crawler::xpathLiteral(trim($optionId));
@@ -257,7 +257,7 @@ class StrictWebDriver extends WebDriver
 
         parent::checkOption(['xpath' => $xpath]);
     }
-    
+
     public function checkOptionByLabel(string $label): void
     {
         /*
@@ -276,12 +276,12 @@ class StrictWebDriver extends WebDriver
         );
         parent::checkOption(['xpath' => $xpath]);
     }
-    
+
     public function selectOptionByCssAndValue(string $selectCss, string $optionValue): void
     {
         parent::selectOption(['css' => $selectCss], $optionValue);
     }
-    
+
     public function countVisibleByCss(string $css): int
     {
         $elements = parent::matchVisible(['css' => $css]);
@@ -300,7 +300,7 @@ class StrictWebDriver extends WebDriver
         $message = $this->getDeprecatedMethodExceptionMessage($strictAlternatives);
         throw new \Tests\ShopBundle\Test\Codeception\Exception\DeprecatedMethodException($message);
     }
-    
+
     public function seeInFieldByName(string $value, string $fieldName): void
     {
         $locator = Crawler::xpathLiteral(trim($fieldName));
@@ -308,7 +308,7 @@ class StrictWebDriver extends WebDriver
 
         parent::seeInField(['xpath' => $xpath], $value);
     }
-    
+
     public function seeInFieldByElement(string $value, WebDriverElement $element): void
     {
         parent::seeInField($element, $value);

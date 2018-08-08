@@ -24,7 +24,7 @@ class OrderNumberSequence
      * @ORM\Column(type="decimal", precision=10, scale=0, nullable=false)
      */
     protected $number;
-    
+
     public function __construct(int $id, string $number = '0')
     {
         $this->id = $id;
@@ -35,7 +35,7 @@ class OrderNumberSequence
     {
         return $this->number;
     }
-    
+
     public function setNumber(string $number): void
     {
         $this->number = $number;

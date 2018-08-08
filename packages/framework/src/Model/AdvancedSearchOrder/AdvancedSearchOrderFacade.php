@@ -54,7 +54,7 @@ class AdvancedSearchOrderFacade
 
         return $this->orderAdvancedSearchFormFactory->createRulesForm(self::RULES_FORM_NAME, $rulesData);
     }
-    
+
     public function getQueryBuilderByAdvancedSearchOrderData(array $advancedSearchOrderData): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->orderListAdminFacade->getOrderListQueryBuilder();

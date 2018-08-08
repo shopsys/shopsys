@@ -21,7 +21,7 @@ class BasePriceCalculation
         $this->priceCalculation = $priceCalculation;
         $this->rounding = $rounding;
     }
-    
+
     public function calculateBasePrice(string $inputPrice, int $inputPriceType, Vat $vat): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         $basePriceWithVat = $this->getBasePriceWithVat($inputPrice, $inputPriceType, $vat);
@@ -46,7 +46,7 @@ class BasePriceCalculation
 
         return new Price($priceWithoutVat, $priceWithVat);
     }
-    
+
     private function getBasePriceWithVat(string $inputPrice, int $inputPriceType, Vat $vat): string
     {
         switch ($inputPriceType) {

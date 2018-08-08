@@ -16,7 +16,7 @@ class FriendlyUrlMatcher
     {
         $this->friendlyUrlRepository = $friendlyUrlRepository;
     }
-    
+
     public function match(string $pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig): array
     {
         $pathWithoutSlash = substr($pathinfo, 1);

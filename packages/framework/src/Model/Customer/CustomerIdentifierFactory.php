@@ -36,7 +36,7 @@ class CustomerIdentifierFactory
 
         return $customerIdentifier;
     }
-    
+
     public function getOnlyWithCartIdentifier(string $cartIdentifier): \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier
     {
         return new CustomerIdentifier($cartIdentifier, null);

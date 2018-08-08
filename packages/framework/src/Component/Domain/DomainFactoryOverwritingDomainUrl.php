@@ -33,7 +33,7 @@ class DomainFactoryOverwritingDomainUrl
         $this->domainsConfigLoader = $domainsConfigLoader;
         $this->setting = $setting;
     }
-    
+
     public function create(string $domainsConfigFilepath, string $domainsUrlsConfigFilepath): \Shopsys\FrameworkBundle\Component\Domain\Domain
     {
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml($domainsConfigFilepath, $domainsUrlsConfigFilepath);

@@ -61,8 +61,5 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
         return $translation;
     }
 
-    /**
-     * @return \Prezent\Doctrine\Translatable\TranslationInterface
-     */
     abstract protected function createTranslation(): \Prezent\Doctrine\Translatable\TranslationInterface;
 }

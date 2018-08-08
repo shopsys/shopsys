@@ -23,12 +23,12 @@ class NewsletterRepository
     {
         return $this->em->getRepository(NewsletterSubscriber::class);
     }
-    
+
     public function existsSubscribedEmail(string $email, int $domainId): bool
     {
         return $this->getNewsletterSubscriberRepository()->findOneBy(['email' => $email, 'domainId' => $domainId]) !== null;
     }
-    
+
     public function getAllEmailsDataIteratorByDomainId(int $domainId): \Doctrine\ORM\Internal\Hydration\IterableResult
     {
         $query = $this->getNewsletterSubscriberRepository()
@@ -61,7 +61,7 @@ class NewsletterRepository
     {
         return $this->getNewsletterSubscriberRepository()->find($id);
     }
-    
+
     public function findNewsletterSubscribeByEmailAndDomainId(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
     {
         return $this->getNewsletterSubscriberRepository()

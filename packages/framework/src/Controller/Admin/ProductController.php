@@ -3,11 +3,9 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Doctrine\ORM\QueryBuilder;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductEditFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductMassActionFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\VariantFormType;

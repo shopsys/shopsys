@@ -80,7 +80,7 @@ class CategoryDomain
      * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
-    
+
     public function __construct(Category $category, int $domainId)
     {
         $this->category = $category;
@@ -133,12 +133,12 @@ class CategoryDomain
     {
         $this->seoH1 = $seoH1;
     }
-    
+
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
-    
+
     public function setDescription(string $description): void
     {
         $this->description = $description;

@@ -26,7 +26,7 @@ class QuantifiedProductDiscountCalculation
         $this->priceCalculation = $priceCalculation;
         $this->rounding = $rounding;
     }
-    
+
     private function calculateDiscount(QuantifiedItemPrice $quantifiedItemPrice, float $discountPercent): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         $vat = $quantifiedItemPrice->getVat();

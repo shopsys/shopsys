@@ -131,19 +131,19 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         $this->lastName = $userData->lastName;
         $this->pricingGroup = $userData->pricingGroup;
     }
-    
+
     public function changeEmail(string $email): void
     {
         $this->email = $email;
     }
-    
+
     public function changePassword(string $password): void
     {
         $this->password = $password;
         $this->resetPasswordHash = null;
         $this->resetPasswordHashValidThrough = null;
     }
-    
+
     public function setResetPasswordHash(string $hash): void
     {
         $this->resetPasswordHash = $hash;
@@ -169,7 +169,7 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
     {
         return $this->lastActivity;
     }
-    
+
     public function setLastActivity(DateTime $lastActivity): void
     {
         $this->lastActivity = $lastActivity;
@@ -184,7 +184,7 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
     {
         return $this->domainId;
     }
-    
+
     public function setDomainId(int $domainId): void
     {
         $this->domainId = $domainId;

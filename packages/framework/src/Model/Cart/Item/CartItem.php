@@ -65,7 +65,7 @@ class CartItem
      * @ORM\Column(type="datetime")
      */
     protected $addedAt;
-    
+
     public function __construct(
         CustomerIdentifier $customerIdentifier,
         Product $product,
@@ -79,7 +79,7 @@ class CartItem
         $this->changeQuantity($quantity);
         $this->addedAt = new DateTime();
     }
-    
+
     public function changeQuantity(int $newQuantity): void
     {
         if (filter_var($newQuantity, FILTER_VALIDATE_INT) === false || $newQuantity <= 0) {

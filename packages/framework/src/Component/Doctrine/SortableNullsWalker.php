@@ -12,7 +12,7 @@ class SortableNullsWalker extends SqlWalker
 {
     const NULLS_FIRST = 'NULLS FIRST';
     const NULLS_LAST = 'NULLS LAST';
-    
+
     public function walkOrderByItem(\Doctrine\ORM\Query\AST\OrderByItem $orderByItem): string
     {
         $sql = parent::walkOrderByItem($orderByItem);

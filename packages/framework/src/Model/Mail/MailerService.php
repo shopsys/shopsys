@@ -66,7 +66,7 @@ class MailerService
 
         return $message;
     }
-    
+
     private function replaceVariables(string $string, array $variablesKeysAndValues): string
     {
         return strtr($string, $variablesKeysAndValues);

@@ -78,14 +78,14 @@ class InputPriceRecalculator
     {
         $this->recalculateInputPriceForNewType(PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
     }
-    
+
     private function recalculateInputPriceForNewType(string $newInputPriceType): void
     {
         $this->recalculateProductsInputPriceForNewType($newInputPriceType);
         $this->recalculateTransportsInputPriceForNewType($newInputPriceType);
         $this->recalculatePaymentsInputPriceForNewType($newInputPriceType);
     }
-    
+
     private function recalculateProductsInputPriceForNewType(string $toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
@@ -109,7 +109,7 @@ class InputPriceRecalculator
             $this->productService->setInputPrice($product, $newInputPrice);
         });
     }
-    
+
     private function recalculatePaymentsInputPriceForNewType(string $toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
@@ -134,7 +134,7 @@ class InputPriceRecalculator
             }
         });
     }
-    
+
     private function recalculateTransportsInputPriceForNewType(string $toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()

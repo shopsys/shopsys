@@ -52,7 +52,7 @@ class AdministratorFacade
 
         return $administrator;
     }
-    
+
     public function edit(int $administratorId, AdministratorData $administratorData): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->administratorRepository->getById($administratorId);
@@ -67,7 +67,7 @@ class AdministratorFacade
 
         return $administratorEdited;
     }
-    
+
     public function delete(int $administratorId): void
     {
         $administrator = $this->administratorRepository->getById($administratorId);
@@ -76,14 +76,14 @@ class AdministratorFacade
         $this->em->remove($administrator);
         $this->em->flush();
     }
-    
+
     public function changePassword(string $administratorUsername, string $newPassword): void
     {
         $administrator = $this->administratorRepository->getByUserName($administratorUsername);
         $this->administratorService->setPassword($administrator, $newPassword);
         $this->em->flush($administrator);
     }
-    
+
     public function getById(int $administratorId): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->administratorRepository->getById($administratorId);

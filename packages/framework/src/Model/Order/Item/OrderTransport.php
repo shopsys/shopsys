@@ -19,7 +19,7 @@ class OrderTransport extends OrderItem
      * @ORM\JoinColumn(nullable=true)
      */
     protected $transport;
-    
+
     public function __construct(
         Order $order,
         string $name,

@@ -67,7 +67,7 @@ class OrderStatusFacade
 
         return $orderStatus;
     }
-    
+
     public function edit(int $orderStatusId, OrderStatusData $orderStatusData): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         $orderStatus = $this->orderStatusRepository->getById($orderStatusId);
@@ -89,7 +89,7 @@ class OrderStatusFacade
         $this->em->remove($orderStatus);
         $this->em->flush();
     }
-    
+
     public function getById(int $orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         return $this->orderStatusRepository->getById($orderStatusId);

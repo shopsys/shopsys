@@ -39,7 +39,7 @@ class ProgressBarFactory
             return $this->formatTimeHms(time() - $bar->getStartTime());
         });
     }
-    
+
     private function formatTimeHms(int $timeInSeconds): string
     {
         return sprintf(

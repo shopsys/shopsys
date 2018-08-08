@@ -58,7 +58,7 @@ class FileThumbnailExtension extends Twig_Extension
     {
         return 'file_thumbnail_extension';
     }
-    
+
     public function getFileThumbnailInfo(string $filepath): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
     {
         try {
@@ -67,21 +67,21 @@ class FileThumbnailExtension extends Twig_Extension
             return new FileThumbnailInfo($this->getIconTypeByFilename($filepath));
         }
     }
-    
+
     public function getFileThumbnailInfoByTemporaryFilename(string $temporaryFilename): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
     {
         $filepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
 
         return $this->getFileThumbnailInfo($filepath);
     }
-    
+
     private function getImageThumbnailInfo(string $filepath): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
     {
         $image = $this->imageThumbnailFactory->getImageThumbnail($filepath);
 
         return new FileThumbnailInfo(null, $image->encode('data-url', self::IMAGE_THUMBNAIL_QUALITY)->getEncoded());
     }
-    
+
     private function getIconTypeByFilename(string $filepath): string
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));

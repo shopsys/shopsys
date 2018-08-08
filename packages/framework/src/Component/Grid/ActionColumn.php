@@ -60,7 +60,7 @@ class ActionColumn
      * @var bool
      */
     private $isAjaxConfirm;
-    
+
     public function __construct(
         RouterInterface $router,
         RouteCsrfProtector $routeCsrfProtector,
@@ -99,14 +99,14 @@ class ActionColumn
     {
         return $this->confirmMessage;
     }
-    
+
     public function setClassAttribute(string $classAttribute): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         $this->classAttribute = $classAttribute;
 
         return $this;
     }
-    
+
     public function setConfirmMessage(string $confirmMessage): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         $this->confirmMessage = $confirmMessage;

@@ -44,7 +44,7 @@ class RequestDataSet implements RequestDataSetConfig
      * @var callable[]
      */
     private $callsDuringTestExecution;
-    
+
     public function __construct(string $routeName)
     {
         $this->routeName = $routeName;

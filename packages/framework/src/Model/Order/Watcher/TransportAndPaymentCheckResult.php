@@ -13,7 +13,7 @@ class TransportAndPaymentCheckResult
      * @var bool
      */
     private $paymentPriceChanged;
-    
+
     public function __construct(
         bool $transportPriceChanged,
         bool $paymentPriceChanged

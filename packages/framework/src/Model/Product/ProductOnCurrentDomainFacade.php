@@ -67,7 +67,7 @@ class ProductOnCurrentDomainFacade
         $this->productAccessoryRepository = $productAccessoryRepository;
         $this->brandRepository = $brandRepository;
     }
-    
+
     public function getVisibleProductById(int $productId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->productRepository->getVisible(
@@ -100,7 +100,7 @@ class ProductOnCurrentDomainFacade
             $this->currentCustomer->getPricingGroup()
         );
     }
-    
+
     public function getPaginatedProductDetailsInCategory(
         ProductFilterData $productFilterData,
         string $orderingModeId,
@@ -129,7 +129,7 @@ class ProductOnCurrentDomainFacade
             $products
         );
     }
-    
+
     public function getPaginatedProductDetailsForBrand(
         string $orderingModeId,
         int $page,
@@ -203,7 +203,7 @@ class ProductOnCurrentDomainFacade
 
         return $paginationResult;
     }
-    
+
     public function getProductFilterCountDataInCategory(
         int $categoryId,
         ProductFilterConfig $productFilterConfig,

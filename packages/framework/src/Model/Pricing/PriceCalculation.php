@@ -15,14 +15,14 @@ class PriceCalculation
     {
         $this->rounding = $rounding;
     }
-    
+
     public function getVatAmountByPriceWithVat(string $priceWithVat, Vat $vat): string
     {
         return $this->rounding->roundVatAmount(
             $priceWithVat * $this->getVatCoefficientByPercent($vat->getPercent())
         );
     }
-    
+
     public function getVatCoefficientByPercent(string $vatPercent): string
     {
         $ratio = $vatPercent / (100 + $vatPercent);

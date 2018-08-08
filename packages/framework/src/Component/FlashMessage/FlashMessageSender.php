@@ -23,25 +23,25 @@ class FlashMessageSender
         $this->flashMessageBag = $flashMessageBag;
         $this->twigEnvironment = $twigEnvironment;
     }
-    
+
     public function addErrorFlashTwig(string $template, array $parameters = []): void
     {
         $message = $this->renderStringTwigTemplate($template, $parameters);
         $this->flashMessageBag->addError($message, false);
     }
-    
+
     public function addInfoFlashTwig(string $template, array $parameters = []): void
     {
         $message = $this->renderStringTwigTemplate($template, $parameters);
         $this->flashMessageBag->addInfo($message, false);
     }
-    
+
     public function addSuccessFlashTwig(string $template, array $parameters = []): void
     {
         $message = $this->renderStringTwigTemplate($template, $parameters);
         $this->flashMessageBag->addSuccess($message, false);
     }
-    
+
     private function renderStringTwigTemplate(string $template, array $parameters): string
     {
         $twigTemplate = $this->twigEnvironment->createTemplate($template);

@@ -33,7 +33,7 @@ class DomainUrlService
         $this->em = $em;
         $this->sqlQuoter = $sqlQuoter;
     }
-    
+
     public function replaceUrlInStringColumns(string $domainConfigUrl, string $domainSettingUrl): void
     {
         $stringColumnNames = $this->getAllStringColumnNamesIndexedByTableName();

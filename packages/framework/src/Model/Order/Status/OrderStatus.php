@@ -40,7 +40,7 @@ class OrderStatus extends AbstractTranslatableEntity
      * @ORM\Column(type="integer")
      */
     protected $type;
-    
+
     public function __construct(OrderStatusData $orderStatusData, int $type)
     {
         $this->translations = new ArrayCollection();
@@ -74,7 +74,7 @@ class OrderStatus extends AbstractTranslatableEntity
     {
         return $this->type;
     }
-    
+
     protected function setType(int $type): void
     {
         if (in_array($type, [

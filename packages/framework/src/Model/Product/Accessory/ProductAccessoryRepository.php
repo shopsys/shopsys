@@ -68,7 +68,7 @@ class ProductAccessoryRepository
             ->getQuery()
             ->getResult();
     }
-    
+
     protected function getAllOfferedAccessoriesByProductQueryBuilder(Product $product, int $domainId, PricingGroup $pricingGroup): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);

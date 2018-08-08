@@ -8,7 +8,7 @@ class LoginPage extends AbstractPage
 {
     const ADMIN_USERNAME = 'admin';
     const ADMIN_PASSWORD = 'admin123';
-    
+
     public function login(string $username, string $password): void
     {
         $this->tester->amOnPage('/admin/');

@@ -17,7 +17,7 @@ class InlineEditPage extends AbstractPage
         $this->tester->clickByCss('.js-inline-edit-add');
         $this->tester->waitForAjax();
     }
-    
+
     public function delete(int $rowId): void
     {
         $this->tester->clickByCss($this->getRowCssLocator($rowId) . ' .in-icon--delete');
@@ -61,7 +61,7 @@ class InlineEditPage extends AbstractPage
     {
         $this->tester->seeInCss($text, $this->getRowCssLocator($rowId) . ' .js-grid-column-' . $columnName);
     }
-    
+
     public function assertDontSeeRow(int $rowId): void
     {
         $this->tester->dontSeeElement(['css' => $this->getRowCssLocator($rowId)]);

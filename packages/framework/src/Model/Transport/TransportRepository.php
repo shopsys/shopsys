@@ -72,7 +72,7 @@ class TransportRepository
     {
         return $this->getTransportRepository()->findAll();
     }
-    
+
     public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->getQueryBuilderForAll()
@@ -80,7 +80,7 @@ class TransportRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-    
+
     public function getById(int $id): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $transport = $this->findById($id);

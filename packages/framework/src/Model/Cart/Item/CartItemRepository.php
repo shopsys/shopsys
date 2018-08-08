@@ -38,7 +38,7 @@ class CartItemRepository
 
         return $this->getCartItemRepository()->findBy($criteria, ['id' => 'desc']);
     }
-    
+
     public function deleteOldCartsForUnregisteredCustomers(int $daysLimit): void
     {
         $nativeQuery = $this->em->createNativeQuery(
@@ -54,7 +54,7 @@ class CartItemRepository
             'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
         ]);
     }
-    
+
     public function deleteOldCartsForRegisteredCustomers(int $daysLimit): void
     {
         $nativeQuery = $this->em->createNativeQuery(

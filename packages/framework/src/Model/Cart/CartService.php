@@ -29,7 +29,7 @@ class CartService
         $this->productPriceCalculation = $productPriceCalculation;
         $this->cartItemFactory = $cartItemFactory;
     }
-    
+
     public function addProductToCart(Cart $cart, CustomerIdentifier $customerIdentifier, Product $product, int $quantity): \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
     {
         if (!is_int($quantity) || $quantity <= 0) {
@@ -58,7 +58,7 @@ class CartService
             }
         }
     }
-    
+
     public function getCartItemById(Cart $cart, int $cartItemId): \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
     {
         foreach ($cart->getItems() as $cartItem) {

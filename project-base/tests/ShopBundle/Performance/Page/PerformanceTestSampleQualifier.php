@@ -27,7 +27,7 @@ class PerformanceTestSampleQualifier
      * @var int
      */
     private $queryCountCritical;
-    
+
     public function __construct(int $durationWarning, int $durationCritical, int $queryCountWarning, int $queryCountCritical)
     {
         $this->durationWarning = $durationWarning;
@@ -35,7 +35,7 @@ class PerformanceTestSampleQualifier
         $this->queryCountWarning = $queryCountWarning;
         $this->queryCountCritical = $queryCountCritical;
     }
-    
+
     public function getStatusForDuration(float $duration): int
     {
         if ($duration >= $this->durationCritical) {
@@ -46,7 +46,7 @@ class PerformanceTestSampleQualifier
 
         return self::STATUS_OK;
     }
-    
+
     public function getStatusForQueryCount(int $queryCount): int
     {
         if ($queryCount >= $this->queryCountCritical) {

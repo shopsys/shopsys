@@ -68,7 +68,7 @@ class MailTemplate
      * @ORM\Column(type="boolean")
      */
     protected $sendMail;
-    
+
     public function __construct(string $name, int $domainId, MailTemplateData $mailTemplateData)
     {
         $this->name = $name;

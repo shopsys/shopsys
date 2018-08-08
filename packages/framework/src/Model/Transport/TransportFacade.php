@@ -106,12 +106,12 @@ class TransportFacade
         $transport->setPayments($transportData->payments);
         $this->em->flush();
     }
-    
+
     public function getById(int $id): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->transportRepository->getById($id);
     }
-    
+
     public function deleteById(int $id): void
     {
         $transport = $this->getById($id);

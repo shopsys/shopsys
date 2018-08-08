@@ -15,7 +15,7 @@ class CustomerListAdminFacade
     {
         $this->userRepository = $userRepository;
     }
-    
+
     public function getCustomerListQueryBuilderByQuickSearchData(
         int $domainId,
         QuickSearchFormData $quickSearchData

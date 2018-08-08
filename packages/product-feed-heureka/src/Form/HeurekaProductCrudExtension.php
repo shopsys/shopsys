@@ -44,7 +44,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     {
         return $this->translator->trans('Heureka.cz product feed');
     }
-    
+
     public function getData(int $productId): array
     {
         $heurekaProductDomains = $this->heurekaProductDomainFacade->findByProductId($productId);
@@ -57,7 +57,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
         }
         return $pluginData;
     }
-    
+
     public function saveData(int $productId, array $data): void
     {
         $heurekaProductDomainsData = [];
@@ -72,7 +72,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
         }
         $this->heurekaProductDomainFacade->saveHeurekaProductDomainsForProductId($productId, $heurekaProductDomainsData);
     }
-    
+
     public function removeData(int $productId): void
     {
         $this->heurekaProductDomainFacade->delete($productId);

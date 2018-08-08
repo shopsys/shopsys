@@ -24,12 +24,12 @@ class AvailabilityRepository
     {
         return $this->em->getRepository(Availability::class);
     }
-    
+
     public function findById(int $availabilityId): ?\Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         return $this->getAvailabilityRepository()->find($availabilityId);
     }
-    
+
     public function getById(int $availabilityId): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         $availability = $this->findById($availabilityId);

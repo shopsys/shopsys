@@ -45,7 +45,7 @@ class GenerateMigrationCommand extends AbstractCommand
      * @var string
      */
     private $vendorDirectoryPath;
-    
+
     public function __construct(
         string $vendorDirectoryPath,
         DatabaseSchemaFacade $databaseSchemaFacade,

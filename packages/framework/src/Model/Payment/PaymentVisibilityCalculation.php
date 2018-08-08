@@ -39,7 +39,7 @@ class PaymentVisibilityCalculation
 
         return $visiblePayments;
     }
-    
+
     private function isVisible(Payment $payment, int $domainId): bool
     {
         if (!$this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, $domainId)) {
@@ -48,7 +48,7 @@ class PaymentVisibilityCalculation
 
         return $this->hasIndependentlyVisibleTransport($payment, $domainId);
     }
-    
+
     private function hasIndependentlyVisibleTransport(Payment $payment, int $domainId): bool
     {
         foreach ($payment->getTransports() as $transport) {

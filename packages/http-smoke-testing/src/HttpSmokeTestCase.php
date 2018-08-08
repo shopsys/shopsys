@@ -128,7 +128,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
             $this->getMessageWithDebugNotes($requestDataSet, $failMessage)
         );
     }
-    
+
     protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, string $message): string
     {
         if (count($requestDataSet->getDebugNotes()) > 0) {

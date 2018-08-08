@@ -22,7 +22,7 @@ class PricingGroupRepository
     {
         return $this->em->getRepository(PricingGroup::class);
     }
-    
+
     public function getById(int $pricingGroupId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $pricingGroup = $this->getPricingGroupRepository()->find($pricingGroupId);
@@ -48,7 +48,7 @@ class PricingGroupRepository
     {
         return $this->getPricingGroupRepository()->findBy(['domainId' => $domainId]);
     }
-    
+
     public function findById(int $pricingGroupId): ?\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->getPricingGroupRepository()->find($pricingGroupId);

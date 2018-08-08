@@ -50,7 +50,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
         $pricingGroupData->name = 'VIP customer';
         $this->createPricingGroup($pricingGroupData, self::PRICING_GROUP_VIP_DOMAIN_1);
     }
-    
+
     private function createPricingGroup(
         PricingGroupData $pricingGroupData,
         string $referenceName

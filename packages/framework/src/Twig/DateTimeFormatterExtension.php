@@ -144,7 +144,7 @@ class DateTimeFormatterExtension extends Twig_Extension
             return new DateTime($value);
         }
     }
-    
+
     public function dateOfCreation(int $date): string
     {
         $startDate = date('Y', strtotime('1-1-' . $date));

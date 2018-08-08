@@ -58,7 +58,7 @@ class ProductManualInputPrice
     {
         return $this->inputPrice;
     }
-    
+
     public function setInputPrice(string $inputPrice): void
     {
         $this->inputPrice = $inputPrice;

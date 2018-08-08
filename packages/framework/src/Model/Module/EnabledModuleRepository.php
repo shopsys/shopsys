@@ -28,7 +28,7 @@ class EnabledModuleRepository
     {
         return $this->em->getRepository(EnabledModule::class);
     }
-    
+
     public function findByName(string $moduleName): ?\Shopsys\FrameworkBundle\Model\Module\EnabledModule
     {
         if (!in_array($moduleName, $this->moduleList->getNames(), true)) {

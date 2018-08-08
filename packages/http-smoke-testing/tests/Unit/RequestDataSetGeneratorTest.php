@@ -39,7 +39,7 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertEquals($firstRequestDataSets[0], $secondRequestDataSets[0]);
         self::assertNotSame($firstRequestDataSets[0], $secondRequestDataSets[0]);
     }
-    
+
     private function createRequestDataSetGenerator(string $routePath, string $routeName): \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
     {
         $route = new Route($routePath);

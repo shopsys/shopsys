@@ -84,7 +84,7 @@ class UploadedFile implements EntityFileUploadInterface
             ),
         ];
     }
-    
+
     public function setFileAsUploaded(string $key, string $originalFilename): void
     {
         if ($key === self::UPLOAD_KEY) {

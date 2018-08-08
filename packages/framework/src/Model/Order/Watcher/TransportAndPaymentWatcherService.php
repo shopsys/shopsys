@@ -81,7 +81,7 @@ class TransportAndPaymentWatcherService
 
         return new TransportAndPaymentCheckResult($transportPriceChanged, $paymentPriceChanged);
     }
-    
+
     private function checkTransportPrice(
         Transport $transport,
         Currency $currency,
@@ -106,7 +106,7 @@ class TransportAndPaymentWatcherService
 
         return false;
     }
-    
+
     private function checkPaymentPrice(
         Payment $payment,
         Currency $currency,

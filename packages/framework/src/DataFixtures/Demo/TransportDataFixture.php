@@ -77,7 +77,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->vat = $this->getReference(VatDataFixture::VAT_ZERO);
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
     }
-    
+
     private function createTransport(string $referenceName, TransportData $transportData): void
     {
         $transport = $this->transportFacade->create($transportData);

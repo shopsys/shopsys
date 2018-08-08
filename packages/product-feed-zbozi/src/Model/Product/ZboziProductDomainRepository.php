@@ -16,7 +16,7 @@ class ZboziProductDomainRepository
     ) {
         $this->em = $em;
     }
-    
+
     public function findByProductIdAndDomainId(int $productId, int $domainId): ?\Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain
     {
         $queryBuilder = $this->em->createQueryBuilder()

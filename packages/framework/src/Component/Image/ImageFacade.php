@@ -188,7 +188,7 @@ class ImageFacade
             }
         }
     }
-    
+
     protected function getEntityId(object $entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
@@ -238,12 +238,12 @@ class ImageFacade
             return $this->getImageByEntity($imageOrEntity, $type);
         }
     }
-    
+
     public function getById(int $imageId): \Shopsys\FrameworkBundle\Component\Image\Image
     {
         return $this->imageRepository->getById($imageId);
     }
-    
+
     public function copyImages(object $sourceEntity, object $targetEntity): void
     {
         $sourceImages = $this->getAllImagesByEntity($sourceEntity);

@@ -21,7 +21,7 @@ class AdministratorActivityRepository
     {
         return $this->em->getRepository(AdministratorActivity::class);
     }
-    
+
     protected function getLastActivitiesQueryBuilder(Administrator $administrator, int $maxResults): \Doctrine\ORM\QueryBuilder
     {
         $lastActivitiesQueryBuilder = $this->getAdministratorActivityRepository()->createQueryBuilder('aa');

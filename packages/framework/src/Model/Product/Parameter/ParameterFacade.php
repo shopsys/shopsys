@@ -30,7 +30,7 @@ class ParameterFacade
         $this->parameterRepository = $parameterRepository;
         $this->parameterFactory = $parameterFactory;
     }
-    
+
     public function getById(int $parameterId): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         return $this->parameterRepository->getById($parameterId);
@@ -60,7 +60,7 @@ class ParameterFacade
     {
         return $this->parameterRepository->findParameterByNames($namesByLocale);
     }
-    
+
     public function edit(int $parameterId, ParameterData $parameterData): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         $parameter = $this->parameterRepository->getById($parameterId);
@@ -69,7 +69,7 @@ class ParameterFacade
 
         return $parameter;
     }
-    
+
     public function deleteById(int $parameterId): void
     {
         $parameter = $this->parameterRepository->getById($parameterId);

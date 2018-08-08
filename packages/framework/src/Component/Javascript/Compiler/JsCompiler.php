@@ -19,7 +19,7 @@ class JsCompiler
     {
         $this->compilerPasses = $compilerPasses;
     }
-    
+
     public function compile(string $content): string
     {
         $node = JParser::parse_string($content, true, JParser::class, JTokenizer::class);

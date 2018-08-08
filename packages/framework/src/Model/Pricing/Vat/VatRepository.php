@@ -24,7 +24,7 @@ class VatRepository
     {
         return $this->em->getRepository(Vat::class);
     }
-    
+
     protected function getQueryBuilderForAll(string $vatAlias): \Doctrine\ORM\QueryBuilder
     {
         return $this->getVatRepository()
@@ -48,12 +48,12 @@ class VatRepository
     {
         return $this->getVatRepository()->findAll();
     }
-    
+
     public function findById(int $vatId): ?\Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->getVatRepository()->find($vatId);
     }
-    
+
     public function getById(int $vatId): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         $vat = $this->findById($vatId);

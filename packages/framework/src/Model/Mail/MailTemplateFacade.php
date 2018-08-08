@@ -69,7 +69,7 @@ class MailTemplateFacade
         $this->mailTemplateFactory = $mailTemplateFactory;
         $this->mailTemplateDataFactory = $mailTemplateDataFactory;
     }
-    
+
     public function get(string $templateName, int $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         return $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
@@ -105,7 +105,7 @@ class MailTemplateFacade
 
         $this->em->flush();
     }
-    
+
     public function getAllMailTemplatesDataByDomainId(int $domainId): \Shopsys\FrameworkBundle\Model\Mail\AllMailTemplatesData
     {
         $orderStatuses = $this->orderStatusRepository->getAll();
@@ -157,7 +157,7 @@ class MailTemplateFacade
 
         return $allMailTemplatesData;
     }
-    
+
     public function createMailTemplateForAllDomains(string $name): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {

@@ -33,7 +33,7 @@ class ExtendedOrderPayment extends ExtendedOrderItem
      * @ORM\Column(type="string", nullable=true)
      */
     protected $paymentStringField;
-    
+
     public function __construct(
         Order $order,
         string $name,

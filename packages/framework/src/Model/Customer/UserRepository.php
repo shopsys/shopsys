@@ -24,7 +24,7 @@ class UserRepository
     {
         return $this->em->getRepository(User::class);
     }
-    
+
     public function findUserByEmailAndDomain(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->getUserRepository()->findOneBy([
@@ -32,7 +32,7 @@ class UserRepository
             'domainId' => $domainId,
         ]);
     }
-    
+
     public function getUserByEmailAndDomain(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->findUserByEmailAndDomain($email, $domainId);
@@ -46,7 +46,7 @@ class UserRepository
 
         return $user;
     }
-    
+
     public function getUserById(int $id): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->findById($id);
@@ -55,12 +55,12 @@ class UserRepository
         }
         return $user;
     }
-    
+
     public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->getUserRepository()->find($id);
     }
-    
+
     public function findByIdAndLoginToken(int $id, string $loginToken): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->getUserRepository()->findOneBy([
@@ -68,7 +68,7 @@ class UserRepository
             'loginToken' => $loginToken,
         ]);
     }
-    
+
     public function getCustomerListQueryBuilderByQuickSearchData(
         int $domainId,
         QuickSearchFormData $quickSearchData

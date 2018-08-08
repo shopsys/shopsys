@@ -78,7 +78,7 @@ class GridView
             'parameter' => $this->grid->getUrlGridParameters(null, $removeParameters),
         ]);
     }
-    
+
     public function renderBlock(string $name, array $parameters = [], bool $echo = true): ?string
     {
         foreach ($this->getTemplates() as $template) {
@@ -188,7 +188,7 @@ class GridView
             UrlGeneratorInterface::ABSOLUTE_URL
         );
     }
-    
+
     private function blockExists(string $name): bool
     {
         foreach ($this->getTemplates() as $template) {
@@ -235,7 +235,7 @@ class GridView
 
         return $this->templates;
     }
-    
+
     private function getTemplateFromString(string $theme): \Twig_TemplateWrapper
     {
         return $this->twig->load($theme);

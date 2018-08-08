@@ -183,7 +183,7 @@ class ProductFacade
         $this->productParameterValueFactory = $productParameterValueFactory;
         $this->productVisibilityFactory = $productVisibilityFactory;
     }
-    
+
     public function getById(int $productId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->productRepository->getById($productId);
@@ -229,7 +229,7 @@ class ProductFacade
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
-    
+
     public function edit(int $productId, ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $product = $this->productRepository->getById($productId);
@@ -260,7 +260,7 @@ class ProductFacade
 
         return $product;
     }
-    
+
     public function delete(int $productId): void
     {
         $product = $this->productRepository->getById($productId);
@@ -375,7 +375,7 @@ class ProductFacade
             $this->em->flush($toFlush);
         }
     }
-    
+
     public function getOneByCatnumExcludeMainVariants(string $productCatnum): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);

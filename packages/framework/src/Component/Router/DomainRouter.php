@@ -37,7 +37,7 @@ class DomainRouter extends ChainRouter
         $this->add($localizedRouter, 20);
         $this->add($friendlyUrlRouter, 30);
     }
-    
+
     public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->friendlyUrlRouter->generateByFriendlyUrl($friendlyUrl, $parameters, $referenceType);

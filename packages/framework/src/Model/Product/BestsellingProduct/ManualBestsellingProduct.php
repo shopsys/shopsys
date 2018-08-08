@@ -56,7 +56,7 @@ class ManualBestsellingProduct
      * @ORM\Column(type="integer")
      */
     protected $position;
-    
+
     public function __construct(int $domainId, Category $category, Product $product, int $position)
     {
         $this->product = $product;

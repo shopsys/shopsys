@@ -45,7 +45,7 @@ class PaymentDomain
      * @ORM\Column(type="boolean")
      */
     protected $enabled;
-    
+
     public function __construct(Payment $payment, int $domainId)
     {
         $this->payment = $payment;

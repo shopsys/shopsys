@@ -43,7 +43,7 @@ class Version20170807084807 extends AbstractMigration
             'Shopsys\\ProductFeed\\ZboziBundle\\ShopsysProductFeedZboziBundle'
         );
     }
-    
+
     private function insertPluginDataValues(array $valuesByKey, string $pluginName): void
     {
         foreach ($valuesByKey as $key => $value) {

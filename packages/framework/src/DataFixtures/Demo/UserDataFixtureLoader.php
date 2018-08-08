@@ -70,7 +70,7 @@ class UserDataFixtureLoader
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface
      */
     private $deliveryAddressDataFactory;
-    
+
     public function __construct(
         string $path,
         CsvReader $csvReader,
@@ -111,7 +111,7 @@ class UserDataFixtureLoader
         }
         return $customersData;
     }
-    
+
     private function filterRowsByDomainId(array $rows, int $domainId): array
     {
         $filteredRows = [];
@@ -177,7 +177,7 @@ class UserDataFixtureLoader
 
         return $customerData;
     }
-    
+
     private function getCountryByName(string $countryName): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         foreach ($this->countries as $country) {

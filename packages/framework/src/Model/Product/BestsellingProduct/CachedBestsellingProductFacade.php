@@ -73,7 +73,7 @@ class CachedBestsellingProductFacade
             return $this->getSortedProducts($domainId, $pricingGroup, $sortedProductsIds);
         }
     }
-    
+
     public function invalidateCacheByDomainIdAndCategory(int $domainId, Category $category): void
     {
         $pricingGroups = $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
@@ -106,7 +106,7 @@ class CachedBestsellingProductFacade
 
         return $this->productService->sortProductsByProductIds($products, $sortedProductIds);
     }
-    
+
     protected function getCacheId(int $domainId, Category $category, PricingGroup $pricingGroup): string
     {
         return $domainId . '_' . $category->getId() . '_' . $pricingGroup->getId();

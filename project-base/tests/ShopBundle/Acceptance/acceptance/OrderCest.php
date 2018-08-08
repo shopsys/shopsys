@@ -93,7 +93,7 @@ class OrderCest
 
         $me->seeInSource('GA-test');
     }
-    
+
     private function setGoogleAnalyticsTrackingId(string $trackingId, ScriptFacade $scriptFacade): void
     {
         $scriptFacade->setGoogleAnalyticsTrackingId($trackingId, Domain::FIRST_DOMAIN_ID);

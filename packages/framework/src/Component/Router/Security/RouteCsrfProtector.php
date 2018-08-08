@@ -54,17 +54,17 @@ class RouteCsrfProtector implements EventSubscriberInterface
             }
         }
     }
-    
+
     public function getCsrfTokenId(string $routeName): string
     {
         return self::CSRF_TOKEN_ID_PREFIX . $routeName;
     }
-    
+
     public function getCsrfTokenByRoute(string $routeName): string
     {
         return $this->tokenManager->getToken($this->getCsrfTokenId($routeName))->getValue();
     }
-    
+
     private function isCsrfTokenValid(string $routeName, string $csrfToken): bool
     {
         $token = new CsrfToken($this->getCsrfTokenId($routeName), $csrfToken);

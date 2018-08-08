@@ -29,7 +29,7 @@ class SettingValueRepository
     {
         return $this->getSettingValueRepository()->findBy(['domainId' => $domainId]);
     }
-    
+
     public function copyAllMultidomainSettings(int $fromDomainId, int $toDomainId): void
     {
         $query = $this->em->createNativeQuery(

@@ -114,7 +114,7 @@ class Setting
             throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException($message);
         }
     }
-    
+
     private function loadDomainValues(int $domainId): void
     {
         if ($domainId === null) {

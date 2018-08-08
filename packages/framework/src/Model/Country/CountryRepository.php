@@ -20,12 +20,12 @@ class CountryRepository
     {
         return $this->em->getRepository(Country::class);
     }
-    
+
     public function findById(int $countryId): ?\Shopsys\FrameworkBundle\Model\Country\Country
     {
         return $this->getCountryRepository()->find($countryId);
     }
-    
+
     public function getById(int $countryId): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $country = $this->findById($countryId);

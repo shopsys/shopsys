@@ -32,7 +32,7 @@ class ProductManualInputPriceFacade
         $this->productManualInputPriceRepository = $productManualInputPriceRepository;
         $this->productManualInputPriceService = $productManualInputPriceService;
     }
-    
+
     public function refresh(Product $product, PricingGroup $pricingGroup, string $inputPrice): void
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup($product, $pricingGroup);

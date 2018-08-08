@@ -18,12 +18,12 @@ class RegistrationPage extends AbstractPage
         $this->tester->wait(TimedFormTypeExtension::MINIMUM_FORM_FILLING_SECONDS);
         $this->tester->clickByName('registration_form[save]');
     }
-    
+
     public function seeEmailError(string $text): void
     {
         $this->seeErrorForField('.js-validation-error-list-registration_form_email', $text);
     }
-    
+
     public function seePasswordError(string $text): void
     {
         $this->seeErrorForField('.js-validation-error-list-registration_form_password_first', $text);

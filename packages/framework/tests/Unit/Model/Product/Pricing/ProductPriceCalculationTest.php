@@ -108,7 +108,7 @@ class ProductPriceCalculationTest extends TestCase
             $pricingService
         );
     }
-    
+
     private function getProductWithInputPriceAndVatPercentAndAutoCalculationPriceType(
         string $inputPrice,
         string $vatPercent

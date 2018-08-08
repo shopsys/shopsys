@@ -47,7 +47,7 @@ class ErrorController extends FrontBaseController
         $this->errorPagesFacade = $errorPagesFacade;
         $this->domain = $domain;
     }
-    
+
     public function errorPageAction(int $code): void
     {
         $this->exceptionController->setDebug(false);
@@ -87,7 +87,7 @@ class ErrorController extends FrontBaseController
             'logger' => $logger,
         ]);
     }
-    
+
     private function createErrorPageResponse(int $statusCode): \Symfony\Component\HttpFoundation\Response
     {
         $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);

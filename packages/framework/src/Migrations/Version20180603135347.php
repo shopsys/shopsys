@@ -20,7 +20,7 @@ class Version20180603135347 extends AbstractMigration
     public function down(Schema $schema): void
     {
     }
-    
+
     private function createMailTemplateIfNotExist(string $mailTemplateName, string $sendMail): void
     {
         $mailTemplateCount = $this->sql('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName', [

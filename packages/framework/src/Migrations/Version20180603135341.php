@@ -19,7 +19,7 @@ class Version20180603135341 extends AbstractMigration
         $this->createOrderStatusWithEnglishAndCzechTranslations(4, 4, 'Canceled', 'Stornována');
         $this->sql('ALTER SEQUENCE order_statuses_id_seq RESTART WITH 5');
     }
-    
+
     private function createOrderStatusWithEnglishAndCzechTranslations(
         int $orderStatusId,
         int $orderStatusType,

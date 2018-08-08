@@ -31,7 +31,7 @@ class CronModule
      * @ORM\Column(type="boolean", options={"default"=false})
      */
     protected $suspended;
-    
+
     public function __construct(string $serviceId)
     {
         $this->serviceId = $serviceId;

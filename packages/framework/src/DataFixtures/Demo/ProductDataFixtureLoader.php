@@ -124,7 +124,7 @@ class ProductDataFixtureLoader
         $this->pricingGroups = $pricingGroups;
         $this->productParametersFixtureLoader->clearCache();
     }
-    
+
     public function createProductDataFromRowForFirstDomain(array $row): \Shopsys\FrameworkBundle\Model\Product\ProductData
     {
         $productData = $this->productDataFactory->create();
@@ -225,7 +225,7 @@ class ProductDataFixtureLoader
         $productData->categoriesByDomainId[$domainId] =
             $this->getValuesByKeyString($row[self::COLUMN_CATEGORIES_2], $this->categories);
     }
-    
+
     private function getShortDescriptionColumnForDomain(int $domainId): int
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
@@ -239,7 +239,7 @@ class ProductDataFixtureLoader
                 throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnsupportedLocaleException($locale);
         }
     }
-    
+
     private function getDescriptionColumnForDomain(int $domainId): int
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
@@ -284,7 +284,7 @@ class ProductDataFixtureLoader
 
         return $values;
     }
-    
+
     private function setProductDataPricesFromCsv(array $row, ProductData $productData, int $domainId): void
     {
         switch ($row[self::COLUMN_PRICE_CALCULATION_TYPE]) {

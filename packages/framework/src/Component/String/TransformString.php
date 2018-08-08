@@ -15,7 +15,7 @@ class TransformString
 
         return $string;
     }
-    
+
     public static function emptyToNull(string $value): ?string
     {
         return $value === '' ? null : $value;
@@ -57,7 +57,7 @@ class TransformString
 
         return $string;
     }
-    
+
     private static function toAscii(string $string): string
     {
         return iconv('utf-8', 'us-ascii//TRANSLIT//IGNORE', $string);

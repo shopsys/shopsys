@@ -88,7 +88,7 @@ class CategoryDataFixture
         $this->recursivelyCreateCategoryTree($rootCategory, $progressBar);
         $this->sqlLoggerFacade->reenableLogging();
     }
-    
+
     private function recursivelyCreateCategoryTree(\Shopsys\FrameworkBundle\Model\Category\Category $parentCategory, ProgressBar $progressBar, int $categoryLevel = 0): void
     {
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
@@ -104,7 +104,7 @@ class CategoryDataFixture
             }
         }
     }
-    
+
     private function recursivelyCountCategoriesInCategoryTree(int $categoryLevel = 0): int
     {
         $count = 0;

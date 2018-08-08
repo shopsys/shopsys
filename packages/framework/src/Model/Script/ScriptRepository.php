@@ -20,7 +20,7 @@ class ScriptRepository
     {
         return $this->em->getRepository(Script::class);
     }
-    
+
     public function getById(int $scriptId): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         $script = $this->getScriptRepository()->find($scriptId);

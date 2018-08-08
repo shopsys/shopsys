@@ -38,7 +38,7 @@ class ParameterFilterRepository
             $parameterIndex++;
         }
     }
-    
+
     private function getParameterQueryBuilder(
         ParameterFilterData $parameterFilterData,
         EntityManagerInterface $em,

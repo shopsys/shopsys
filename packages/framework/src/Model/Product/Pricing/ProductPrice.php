@@ -10,7 +10,7 @@ class ProductPrice extends Price
      * @var bool
      */
     private $priceFrom;
-    
+
     public function __construct(Price $price, bool $priceFrom)
     {
         $this->priceFrom = $priceFrom;

@@ -37,7 +37,7 @@ class AdvancedSearchService
 
         return $searchRulesViewData;
     }
-    
+
     public function createDefaultRuleFormViewData(string $filterName): array
     {
         return [

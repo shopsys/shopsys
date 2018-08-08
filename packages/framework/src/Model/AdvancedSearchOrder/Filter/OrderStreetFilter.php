@@ -21,7 +21,7 @@ class OrderStreetFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     public function getAllowedOperators(): array
-{
+    {
         return [
             self::OPERATOR_CONTAINS,
             self::OPERATOR_NOT_CONTAINS,

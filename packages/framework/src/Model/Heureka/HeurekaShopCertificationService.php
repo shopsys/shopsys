@@ -15,7 +15,7 @@ class HeurekaShopCertificationService
             return false;
         }
     }
-    
+
     public function getLanguageIdByLocale(string $locale): int
     {
         $supportedLanguagesByLocale = [
@@ -30,7 +30,7 @@ class HeurekaShopCertificationService
         $message = 'Locale "' . $locale . '" is not supported.';
         throw new \Shopsys\FrameworkBundle\Model\Heureka\Exception\LocaleNotSupportedException($message);
     }
-    
+
     public function getServerNameByLocale(string $locale): ?string
     {
         if ($locale === 'cs') {

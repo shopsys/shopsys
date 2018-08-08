@@ -78,20 +78,20 @@ class MigrationsLocatorTest extends TestCase
         $this->assertEquals('Test\\MockBundle\\MigrationsNamespace', $migrationsLocation->getNamespace());
         $this->assertEquals('test/MockBundle/MigrationsDirectory', $migrationsLocation->getDirectory());
     }
-    
+
     private function kernelReturnsOneBundle(string $namespace, string $path): void
     {
         $this->kernelMock->method('getBundles')
             ->willReturn([$this->createBundleMock($namespace, $path)]);
     }
-    
+
     private function filesystemSaysPathExists(string $path, bool $exists = true): void
     {
         $this->filesystemMock->method('exists')
             ->with($path)
             ->willReturn($exists);
     }
-    
+
     private function filesystemSaysEveryPathExists(bool $exists = true): void
     {
         $this->filesystemMock->method('exists')
