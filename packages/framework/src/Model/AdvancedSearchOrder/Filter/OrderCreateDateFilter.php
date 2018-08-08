@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 
 class OrderCreateDateFilter implements AdvancedSearchFilterInterface
 {
-/**
+    /**
      * {@inheritdoc}
      */
     public function getName(): string
@@ -36,10 +36,10 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
         return DatePickerType::class;
     }
 
-/**
+    /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions():array
+    public function getValueFormOptions(): array
     {
         return [];
     }

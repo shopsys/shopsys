@@ -38,7 +38,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions():array
+    public function getValueFormOptions(): array
     {
         return [];
     }

@@ -40,7 +40,7 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions():array
+    public function getValueFormOptions(): array
     {
         return [];
     }

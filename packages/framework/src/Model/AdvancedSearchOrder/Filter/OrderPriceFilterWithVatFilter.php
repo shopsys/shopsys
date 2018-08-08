@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
 {
-/**
+    /**
      * {@inheritdoc}
      */
     public function getName(): string
@@ -20,7 +20,7 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     public function getAllowedOperators(): array
-{
+    {
         return [
             self::OPERATOR_GT,
             self::OPERATOR_LT,
@@ -38,10 +38,10 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
         return NumberType::class;
     }
 
-/**
+    /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions():array
+    public function getValueFormOptions(): array
     {
         return [];
     }

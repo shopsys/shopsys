@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct;
 
 class OrderProductFilter implements AdvancedSearchFilterInterface
 {
-/**
+    /**
      * {@inheritdoc}
      */
     public function getName(): string
@@ -21,7 +21,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     public function getAllowedOperators(): array
-{
+    {
         return [
             self::OPERATOR_CONTAINS,
             self::OPERATOR_NOT_CONTAINS,
@@ -36,10 +36,10 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
         return ProductType::class;
     }
 
-/**
+    /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions():array
+    public function getValueFormOptions(): array
     {
         return [];
     }

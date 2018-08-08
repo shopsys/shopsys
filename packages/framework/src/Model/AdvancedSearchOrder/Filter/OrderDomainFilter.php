@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 
 class OrderDomainFilter implements AdvancedSearchFilterInterface
 {
-/**
+    /**
      * {@inheritdoc}
      */
     public function getName(): string
@@ -20,7 +20,7 @@ class OrderDomainFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     public function getAllowedOperators(): array
-{
+    {
         return [
             self::OPERATOR_IS,
             self::OPERATOR_IS_NOT,
@@ -35,10 +35,10 @@ class OrderDomainFilter implements AdvancedSearchFilterInterface
         return DomainType::class;
     }
 
-/**
+    /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions():array
+    public function getValueFormOptions(): array
     {
         return [];
     }

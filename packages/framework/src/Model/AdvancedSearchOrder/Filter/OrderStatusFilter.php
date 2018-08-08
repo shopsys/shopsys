@@ -19,7 +19,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
         $this->orderStatusFacade = $orderStatusFacade;
     }
 
-/**
+    /**
      * {@inheritdoc}
      */
     public function getName(): string
@@ -46,10 +46,10 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
         return ChoiceType::class;
     }
 
-/**
+    /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions():array
+    public function getValueFormOptions(): array
     {
         return [
             'choices' => $this->orderStatusFacade->getAll(),

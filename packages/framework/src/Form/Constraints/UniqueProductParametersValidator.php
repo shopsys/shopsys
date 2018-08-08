@@ -9,7 +9,7 @@ class UniqueProductParametersValidator extends ConstraintValidator
 {
     /**
      * @param mixed $values
-    ueSlugsOnDomainsValidator     */
+     */
     public function validate($values, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueProductParameters) {

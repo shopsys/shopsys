@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class OrderLastNameFilter implements AdvancedSearchFilterInterface
 {
-/**
+    /**
      * {@inheritdoc}
      */
     public function getName(): string
@@ -21,7 +21,7 @@ class OrderLastNameFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     public function getAllowedOperators(): array
-{
+    {
         return [
             self::OPERATOR_CONTAINS,
             self::OPERATOR_NOT_CONTAINS,
@@ -36,10 +36,10 @@ class OrderLastNameFilter implements AdvancedSearchFilterInterface
         return TextType::class;
     }
 
-/**
+    /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions():array
+    public function getValueFormOptions(): array
     {
         return [];
     }

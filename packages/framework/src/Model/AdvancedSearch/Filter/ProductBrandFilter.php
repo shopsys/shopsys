@@ -25,7 +25,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
      * {@inheritdoc}
      */
     public function getAllowedOperators(): array
-{
+    {
         return [
             self::OPERATOR_IS,
             self::OPERATOR_IS_NOT,
@@ -33,7 +33,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
         ];
     }
 
-/**
+    /**
      * {@inheritdoc}
      */
     public function getName(): string
@@ -41,7 +41,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
         return 'productBrand';
     }
 
-/**
+    /**
      * {@inheritdoc}
      */
     public function getValueFormOptions(): array
