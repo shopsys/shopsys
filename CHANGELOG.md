@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * [shopsys/coding-standards]
 #### Added
-- [#XXX - Added fixers to remove redundant annotations](https://github.com/shopsys/shopsys/pull/XXX)
+- [#391 - Added fixers to remove redundant annotations](https://github.com/shopsys/shopsys/pull/391)
     - for details about these fixers see https://www.tomasvotruba.cz/blog/2017/12/17/new-in-symplify-3-doc-block-cleaner-fixer/
 
 ## [7.0.0-alpha4] - 2018-08-02
