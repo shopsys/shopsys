@@ -40,9 +40,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         return $paymentData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     protected function fillNew(PaymentData $paymentData): void
     {
         $paymentData->vat = $this->vatFacade->getDefaultVat();
@@ -60,9 +57,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         return $paymentData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     protected function fillFromPayment(PaymentData $paymentData, Payment $payment)
     {
         $paymentData->vat = $payment->getVat();

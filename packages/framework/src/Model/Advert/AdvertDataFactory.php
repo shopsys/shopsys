@@ -9,9 +9,6 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
         return new AdvertData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert
-     */
     public function createFromAdvert(Advert $advert): AdvertData
     {
         $advertData = new AdvertData();

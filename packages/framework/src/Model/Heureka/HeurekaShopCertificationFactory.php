@@ -23,10 +23,6 @@ class HeurekaShopCertificationFactory
      */
     private $heurekaShopCertificationService;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationService
-     */
     public function __construct(
         Domain $domain,
         HeurekaSetting $heurekaSetting,

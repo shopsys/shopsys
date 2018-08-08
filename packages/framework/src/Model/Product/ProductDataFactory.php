@@ -104,9 +104,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         return $productData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     protected function fillNew($productData)
     {
         $productData->vat = $this->vatFacade->getDefaultVat();

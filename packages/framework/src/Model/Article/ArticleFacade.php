@@ -33,10 +33,6 @@ class ArticleFacade
      */
     protected $articleFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
     public function __construct(
         EntityManagerInterface $em,
         ArticleRepository $articleRepository,

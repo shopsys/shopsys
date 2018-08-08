@@ -19,9 +19,6 @@ class AdminLogoutHandler implements LogoutSuccessHandlerInterface
      */
     private $administratorLoginFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade
-     */
     public function __construct(RouterInterface $router, AdministratorLoginFacade $administratorLoginFacade)
     {
         $this->router = $router;

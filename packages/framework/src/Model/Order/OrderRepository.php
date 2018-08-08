@@ -151,7 +151,6 @@ class OrderRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getCustomerOrderList(User $user)

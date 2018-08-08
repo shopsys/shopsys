@@ -9,9 +9,6 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
         return new AdministratorData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
     public function createFromAdministrator(Administrator $administrator): AdministratorData
     {
         $administratorData = new AdministratorData();

@@ -113,7 +113,6 @@ class GridView
 
     /**
      * @param array|null $row
-     * @param \Symfony\Component\Form\FormView
      */
     public function renderCell(Column $column, array $row = null, FormView $formView = null)
     {

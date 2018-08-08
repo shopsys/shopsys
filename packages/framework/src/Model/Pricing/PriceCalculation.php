@@ -39,7 +39,7 @@ class PriceCalculation
 
     /**
      * @param string $priceWithoutVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+
      * @return string
      */
     public function applyVatPercent($priceWithoutVat, Vat $vat)

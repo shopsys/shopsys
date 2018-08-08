@@ -359,9 +359,6 @@ class Product extends AbstractTranslatableEntity
         return new self($productData, $variants);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     public function edit(
         ProductCategoryDomainFactoryInterface $productCategoryDomainFactory,
         ProductData $productData

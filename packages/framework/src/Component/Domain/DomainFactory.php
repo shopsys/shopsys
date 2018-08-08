@@ -17,9 +17,6 @@ class DomainFactory
      */
     private $setting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
     public function __construct(DomainsConfigLoader $domainsConfigLoader, Setting $setting)
     {
         $this->domainsConfigLoader = $domainsConfigLoader;

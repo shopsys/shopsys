@@ -82,9 +82,6 @@ class CustomerService
         return $user;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData
-     */
     public function edit(User $user, UserData $userData)
     {
         $user->edit($userData);
@@ -95,7 +92,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
     public function createDeliveryAddress(DeliveryAddressData $deliveryAddressData)

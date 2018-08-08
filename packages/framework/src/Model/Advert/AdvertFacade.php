@@ -33,9 +33,6 @@ class AdvertFacade
      */
     protected $advertFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     public function __construct(
         EntityManagerInterface $em,
         AdvertRepository $advertRepository,

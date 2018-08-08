@@ -116,9 +116,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         $this->username = $administratorData->username;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit
-     */
     public function addGridLimit(AdministratorGridLimit $gridLimit)
     {
         if (!$this->gridLimits->contains($gridLimit)) {

@@ -50,6 +50,9 @@ class DomainDataCreator
         $this->translatableEntityDataCreator = $translatableEntityDataCreator;
     }
 
+    /**
+     * @return int
+     */
     public function createNewDomainsData()
     {
         $newDomainsCount = 0;

@@ -30,9 +30,6 @@ class CartMigrationFacade
      */
     protected $customerIdentifierFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         CartService $cartService,
