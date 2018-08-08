@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository;
 
 class SettingTest extends TestCase
 {
-    public function testSet()
+    public function testSet(): void
     {
         $settingValueArray = [
             [SettingValue::DOMAIN_ID_COMMON, []],
@@ -41,7 +41,7 @@ class SettingTest extends TestCase
         $setting->setForDomain('key2', 'value', 1);
     }
 
-    public function testSetNotFoundException()
+    public function testSetNotFoundException(): void
     {
         $settingValueArray = [
             [SettingValue::DOMAIN_ID_COMMON, []],
@@ -67,7 +67,7 @@ class SettingTest extends TestCase
         $setting->setForDomain('key2', 'value', 1);
     }
 
-    public function testSetInvalidArgumentException()
+    public function testSetInvalidArgumentException(): void
     {
         $entityManagerMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
@@ -86,7 +86,7 @@ class SettingTest extends TestCase
         $setting->setForDomain('key2', 'value', null);
     }
 
-    public function testGetNotFoundException()
+    public function testGetNotFoundException(): void
     {
         $settingValueArray = [new SettingValue('key', 'value', 1)];
 
@@ -109,7 +109,7 @@ class SettingTest extends TestCase
         $setting->getForDomain('key2', 1);
     }
 
-    public function testGetValues()
+    public function testGetValues(): void
     {
         $settingValueArrayByDomainIdMap = [
             [SettingValue::DOMAIN_ID_COMMON, [new SettingValue('key', 'valueCommon', SettingValue::DOMAIN_ID_COMMON)]],
@@ -141,7 +141,7 @@ class SettingTest extends TestCase
         $this->assertSame('newValueCommon', $setting->get('key'));
     }
 
-    public function testSetValueNewDomain()
+    public function testSetValueNewDomain(): void
     {
         $settingValueArrayByDomainIdMap = [
             [SettingValue::DOMAIN_ID_COMMON, [new SettingValue('key', 'valueCommon', SettingValue::DOMAIN_ID_COMMON)]],
@@ -164,7 +164,7 @@ class SettingTest extends TestCase
         $this->assertSame('value', $setting->getForDomain('key', 1));
     }
 
-    public function testCannotSetNonexistentCommonValue()
+    public function testCannotSetNonexistentCommonValue(): void
     {
         $entityManagerMock = $this->createDummyEntityManagerMock();
 
@@ -177,7 +177,7 @@ class SettingTest extends TestCase
         $setting->set('nonexistentKey', 'anyValue');
     }
 
-    public function testCannotSetNonexistentValueForDomain()
+    public function testCannotSetNonexistentValueForDomain(): void
     {
         $entityManagerMock = $this->createDummyEntityManagerMock();
 

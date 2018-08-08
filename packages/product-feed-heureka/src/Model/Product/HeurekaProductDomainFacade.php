@@ -23,11 +23,6 @@ class HeurekaProductDomainFacade
      */
     protected $productRepository;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainRepository $heurekaProductDomainRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(
         EntityManagerInterface $em,
         HeurekaProductDomainRepository $heurekaProductDomainRepository,
@@ -39,20 +34,18 @@ class HeurekaProductDomainFacade
     }
 
     /**
-     * @param int $productId
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]|null
      */
-    public function findByProductId($productId)
+    public function findByProductId(int $productId): ?array
     {
         return $this->heurekaProductDomainRepository->findByProductId($productId);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]
      */
-    public function getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
+    public function getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain): array
     {
         $productIds = [];
         foreach ($products as $product) {
@@ -65,10 +58,7 @@ class HeurekaProductDomainFacade
         );
     }
 
-    /**
-     * @param $productId
-     */
-    public function delete($productId)
+    public function delete($productId): void
     {
         $heurekaProductDomains = $this->heurekaProductDomainRepository->findByProductId($productId);
 
@@ -79,10 +69,9 @@ class HeurekaProductDomainFacade
     }
 
     /**
-     * @param $productId
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData[] $heurekaProductDomainsData
      */
-    public function saveHeurekaProductDomainsForProductId($productId, array $heurekaProductDomainsData)
+    public function saveHeurekaProductDomainsForProductId($productId, array $heurekaProductDomainsData): void
     {
         $existingHeurekaProductDomains = $this->heurekaProductDomainRepository->findByProductId($productId);
 
@@ -93,11 +82,7 @@ class HeurekaProductDomainFacade
         }
     }
 
-    /**
-     * @param $productId
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData $heurekaProductDomainData
-     */
-    public function saveHeurekaProductDomain($productId, HeurekaProductDomainData $heurekaProductDomainData)
+    public function saveHeurekaProductDomain($productId, HeurekaProductDomainData $heurekaProductDomainData): void
     {
         $product = $this->productRepository->getById($productId);
         $heurekaProductDomainData->product = $product;
@@ -124,7 +109,7 @@ class HeurekaProductDomainFacade
     protected function removeOldHeurekaProductDomainsForProductId(
         array $existingHeurekaProductDomains,
         array $newHeurekaProductDomainsData
-    ) {
+    ): void {
         $domainsIdsWithNewHeurekaProductDomains = [];
         foreach ($newHeurekaProductDomainsData as $newHeurekaProductDomainData) {
             $domainsIdsWithNewHeurekaProductDomains[$newHeurekaProductDomainData->domainId] = $newHeurekaProductDomainData->domainId;

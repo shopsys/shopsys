@@ -17,23 +17,17 @@ class ProductPriceRecalculationScheduler
      */
     private $products = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    public function scheduleProductForImmediateRecalculation(Product $product)
+    public function scheduleProductForImmediateRecalculation(Product $product): void
     {
         $this->products[$product->getId()] = $product;
     }
 
-    public function scheduleAllProductsForDelayedRecalculation()
+    public function scheduleAllProductsForDelayedRecalculation(): void
     {
         $this->productRepository->markAllProductsForPriceRecalculation();
     }
@@ -41,7 +35,7 @@ class ProductPriceRecalculationScheduler
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getProductsForImmediateRecalculation()
+    public function getProductsForImmediateRecalculation(): array
     {
         return $this->products;
     }
@@ -54,7 +48,7 @@ class ProductPriceRecalculationScheduler
         return $this->productRepository->getProductsForPriceRecalculationIterator();
     }
 
-    public function cleanScheduleForImmediateRecalculation()
+    public function cleanScheduleForImmediateRecalculation(): void
     {
         $this->products = [];
     }

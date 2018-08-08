@@ -36,27 +36,17 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         $this->googleProductDomainDataFactory = $googleProductDomainDataFactory;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return GoogleProductFormType::class;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Google Shopping product feed');
     }
 
-    /**
-     * @param int $productId
-     * @return array
-     */
-    public function getData($productId)
+    public function getData(int $productId): array
     {
         $googleProductDomains = $this->googleProductDomainFacade->findByProductId($productId);
 
@@ -69,11 +59,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         return $pluginData;
     }
 
-    /**
-     * @param int $productId
-     * @param array $data
-     */
-    public function saveData($productId, $data)
+    public function saveData(int $productId, array $data): void
     {
         $googleProductDomainsDataIndexedByDomainId = [];
         foreach ($data as $productAttributeName => $productAttributeValuesByDomainIds) {
@@ -99,16 +85,11 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         );
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
-     * @param string $propertyName
-     * @param string $propertyValue
-     */
     private function setGoogleProductDomainDataProperty(
         GoogleProductDomainData $googleProductDomainData,
-        $propertyName,
-        $propertyValue
-    ) {
+        string $propertyName,
+        string $propertyValue
+    ): void {
         switch ($propertyName) {
             case 'show':
                 $googleProductDomainData->show = $propertyValue;
@@ -116,10 +97,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         }
     }
 
-    /**
-     * @param int $productId
-     */
-    public function removeData($productId)
+    public function removeData(int $productId): void
     {
         $this->googleProductDomainFacade->delete($productId);
     }

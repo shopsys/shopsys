@@ -17,10 +17,6 @@ class HeurekaCategoryRepository
      */
     protected $queryBuilderService;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderService $queryBuilderService
-     */
     public function __construct(
         EntityManagerInterface $em,
         QueryBuilderService $queryBuilderService
@@ -29,10 +25,7 @@ class HeurekaCategoryRepository
         $this->queryBuilderService = $queryBuilderService;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getHeurekaCategoryRepository()
+    protected function getHeurekaCategoryRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(HeurekaCategory::class);
     }
@@ -40,7 +33,7 @@ class HeurekaCategoryRepository
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory[]
      */
-    public function getAllIndexedById()
+    public function getAllIndexedById(): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('hc')
@@ -50,11 +43,7 @@ class HeurekaCategoryRepository
             ->execute();
     }
 
-    /**
-     * @param int $categoryId
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory|null
-     */
-    public function findByCategoryId($categoryId)
+    public function findByCategoryId(int $categoryId): ?\Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('hc')
@@ -67,11 +56,7 @@ class HeurekaCategoryRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @param int $id
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
-     */
-    public function getOneById($id)
+    public function getOneById(int $id): \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
     {
         $queryBuilder = $this->getHeurekaCategoryRepository()
             ->createQueryBuilder('hc')

@@ -39,13 +39,7 @@ class PaginationResult
      */
     private $toItem;
 
-    /**
-     * @param int $page
-     * @param int $pageSize
-     * @param int $totalCount
-     * @param array $results
-     */
-    public function __construct($page, $pageSize, $totalCount, $results)
+    public function __construct(int $page, int $pageSize, int $totalCount, array $results)
     {
         $this->page = $page;
         $this->pageSize = $pageSize;
@@ -71,58 +65,37 @@ class PaginationResult
         }
     }
 
-    /**
-     * @return int
-     */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * @return int
-     */
-    public function getPageSize()
+    public function getPageSize(): int
     {
         return $this->pageSize;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         return $this->totalCount;
     }
 
-    /**
-     * @return array
-     */
     public function getResults()
     {
         return $this->results;
     }
 
-    /**
-     * @return int
-     */
-    public function getPageCount()
+    public function getPageCount(): int
     {
         return $this->pageCount;
     }
 
-    /**
-     * @return int
-     */
-    public function getFromItem()
+    public function getFromItem(): int
     {
         return $this->fromItem;
     }
 
-    /**
-     * @return int
-     */
-    public function getToItem()
+    public function getToItem(): int
     {
         return $this->toItem;
     }

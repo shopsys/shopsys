@@ -15,7 +15,7 @@ class ProductImageUploadCest
 
     const TEST_IMAGE_NAME = 'productTestImage.png';
 
-    public function testSuccessfulImageUpload(AcceptanceTester $me, EntityEditPage $entityEditPage, LoginPage $loginPage)
+    public function testSuccessfulImageUpload(AcceptanceTester $me, EntityEditPage $entityEditPage, LoginPage $loginPage): void
     {
         $me->wantTo('upload image in admin product edit page');
         $loginPage->loginAsAdmin();

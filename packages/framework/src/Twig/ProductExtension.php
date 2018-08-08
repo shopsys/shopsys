@@ -28,9 +28,6 @@ class ProductExtension extends \Twig_Extension
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
     }
 
-    /**
-     * @return array
-     */
     public function getFilters()
     {
         return [
@@ -39,9 +36,6 @@ class ProductExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [
@@ -64,19 +58,12 @@ class ProductExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'product';
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string
-     */
-    public function getProductDisplayName(Product $product)
+    public function getProductDisplayName(Product $product): string
     {
         if ($product->getName() === null) {
             return t('ID %productId%', [
@@ -87,11 +74,7 @@ class ProductExtension extends \Twig_Extension
         return $product->getName();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string
-     */
-    public function getProductListDisplayName(Product $product)
+    public function getProductListDisplayName(Product $product): string
     {
         if ($product->getName() === null) {
             return t('Product name in default language is not entered');
@@ -100,40 +83,25 @@ class ProductExtension extends \Twig_Extension
         return $product->getName();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    public function getProductMainCategory(Product $product, $domainId)
+    public function getProductMainCategory(Product $product, int $domainId): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
-     */
-    public function findProductMainCategory(Product $product, $domainId)
+    public function findProductMainCategory(Product $product, int $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
-     */
-    public function getProductSellingPrice(Product $product)
+    public function getProductSellingPrice(Product $product): ?\Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         return $this->productCachedAttributesFacade->getProductSellingPrice($product);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValues(Product $product)
+    public function getProductParameterValues(Product $product): array
     {
         return $this->productCachedAttributesFacade->getProductParameterValues($product);
     }

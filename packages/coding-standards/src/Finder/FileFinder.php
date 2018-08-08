@@ -14,7 +14,6 @@ final class FileFinder implements CustomSourceProviderInterface
 {
     /**
      * @param string[] $source
-     * @return IteratorAggregate
      */
     public function find(array $source): IteratorAggregate
     {

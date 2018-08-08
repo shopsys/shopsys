@@ -13,18 +13,12 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
     /** @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade */
     private $newsletterFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     */
     public function __construct(NewsletterFacade $newsletterFacade)
     {
         $this->newsletterFacade = $newsletterFacade;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $newsletterSubscribersData = $this->getEmailData();
 
@@ -36,7 +30,7 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
     /**
      * @return string[]
      */
-    private function getEmailData()
+    private function getEmailData(): array
     {
         return [
             'james.black@no-reply.com',

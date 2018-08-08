@@ -15,27 +15,17 @@ class VatRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getVatRepository()
+    protected function getVatRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Vat::class);
     }
 
-    /**
-     * @param string $vatAlias
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function getQueryBuilderForAll($vatAlias)
+    protected function getQueryBuilderForAll(string $vatAlias): \Doctrine\ORM\QueryBuilder
     {
         return $this->getVatRepository()
             ->createQueryBuilder($vatAlias)
@@ -46,7 +36,7 @@ class VatRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getQueryBuilderForAll('v')->getQuery()->getResult();
     }
@@ -54,25 +44,17 @@ class VatRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
-    public function getAllIncludingMarkedForDeletion()
+    public function getAllIncludingMarkedForDeletion(): array
     {
         return $this->getVatRepository()->findAll();
     }
 
-    /**
-     * @param int $vatId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
-     */
-    public function findById($vatId)
+    public function findById(int $vatId): ?\Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->getVatRepository()->find($vatId);
     }
 
-    /**
-     * @param int $vatId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    public function getById($vatId)
+    public function getById(int $vatId): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         $vat = $this->findById($vatId);
 
@@ -84,10 +66,9 @@ class VatRepository
     }
 
     /**
-     * @param int $vatId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
-    public function getAllExceptId($vatId)
+    public function getAllExceptId(int $vatId): array
     {
         $qb = $this->getQueryBuilderForAll('v')
             ->andWhere('v.id != :id')
@@ -96,11 +77,7 @@ class VatRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return bool
-     */
-    public function existsVatToBeReplacedWith(Vat $vat)
+    public function existsVatToBeReplacedWith(Vat $vat): bool
     {
         $query = $this->em->createQuery('
             SELECT COUNT(v)
@@ -113,7 +90,7 @@ class VatRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
-    public function getVatsWithoutProductsMarkedForDeletion()
+    public function getVatsWithoutProductsMarkedForDeletion(): array
     {
         $query = $this->em->createQuery('
             SELECT v
@@ -133,11 +110,7 @@ class VatRepository
             || $this->existsProductWithVat($vat);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return bool
-     */
-    protected function existsPaymentWithVat(Vat $vat)
+    protected function existsPaymentWithVat(Vat $vat): bool
     {
         $query = $this->em->createQuery('
             SELECT COUNT(p)
@@ -147,11 +120,7 @@ class VatRepository
         return $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return bool
-     */
-    protected function existsTransportWithVat(Vat $vat)
+    protected function existsTransportWithVat(Vat $vat): bool
     {
         $query = $this->em->createQuery('
             SELECT COUNT(t)
@@ -161,11 +130,7 @@ class VatRepository
         return $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return bool
-     */
-    protected function existsProductWithVat(Vat $vat)
+    protected function existsProductWithVat(Vat $vat): bool
     {
         $query = $this->em->createQuery('
             SELECT COUNT(p)
@@ -175,21 +140,13 @@ class VatRepository
         return $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $oldVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat
-     */
-    public function replaceVat(Vat $oldVat, Vat $newVat)
+    public function replaceVat(Vat $oldVat, Vat $newVat): void
     {
         $this->replacePaymentsVat($oldVat, $newVat);
         $this->replaceTransportsVat($oldVat, $newVat);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $oldVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat
-     */
-    protected function replacePaymentsVat(Vat $oldVat, Vat $newVat)
+    protected function replacePaymentsVat(Vat $oldVat, Vat $newVat): void
     {
         $this->em->createQueryBuilder()
             ->update(Payment::class, 'p')
@@ -198,11 +155,7 @@ class VatRepository
             ->getQuery()->execute();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $oldVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat
-     */
-    protected function replaceTransportsVat(Vat $oldVat, Vat $newVat)
+    protected function replaceTransportsVat(Vat $oldVat, Vat $newVat): void
     {
         $this->em->createQueryBuilder()
             ->update(Transport::class, 't')

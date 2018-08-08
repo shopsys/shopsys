@@ -50,10 +50,7 @@ class DomainDataCreator
         $this->translatableEntityDataCreator = $translatableEntityDataCreator;
     }
 
-    /**
-     * @return int
-     */
-    public function createNewDomainsData()
+    public function createNewDomainsData(): int
     {
         $newDomainsCount = 0;
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
@@ -80,11 +77,7 @@ class DomainDataCreator
         return $newDomainsCount;
     }
 
-    /**
-     * @param string $locale
-     * @return bool
-     */
-    private function isNewLocale($locale)
+    private function isNewLocale(string $locale): bool
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             if ($domainConfig->getLocale() === $locale) {
@@ -95,10 +88,7 @@ class DomainDataCreator
         return true;
     }
 
-    /**
-     * @return string
-     */
-    private function getTemplateLocale()
+    private function getTemplateLocale(): string
     {
         return $this->domain->getDomainConfigById(self::TEMPLATE_DOMAIN_ID)->getLocale();
     }

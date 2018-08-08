@@ -7,10 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180603135347 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->createMailTemplateIfNotExist('order_status_1', 'true');
         $this->createMailTemplateIfNotExist('order_status_2', 'false');
@@ -20,18 +17,11 @@ class Version20180603135347 extends AbstractMigration
         $this->createMailTemplateIfNotExist('reset_password', 'true');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 
-    /**
-     * @param string $mailTemplateName
-     * @param string $sendMail
-     */
-    private function createMailTemplateIfNotExist($mailTemplateName, $sendMail)
+    private function createMailTemplateIfNotExist(string $mailTemplateName, string $sendMail): void
     {
         $mailTemplateCount = $this->sql('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName', [
             'mailTemplateName' => $mailTemplateName,

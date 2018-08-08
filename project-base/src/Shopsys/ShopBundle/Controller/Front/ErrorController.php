@@ -48,10 +48,7 @@ class ErrorController extends FrontBaseController
         $this->domain = $domain;
     }
 
-    /**
-     * @param int $code
-     */
-    public function errorPageAction($code)
+    public function errorPageAction(int $code): void
     {
         $this->exceptionController->setDebug(false);
         $this->exceptionController->setShowErrorPagePrototype();
@@ -59,11 +56,6 @@ class ErrorController extends FrontBaseController
         throw new \Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException($code);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
-     */
     public function showAction(
         Request $request,
         FlattenException $exception,
@@ -78,17 +70,11 @@ class ErrorController extends FrontBaseController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     private function createErrorPagePrototypeResponse(
         Request $request,
         FlattenException $exception,
         DebugLoggerInterface $logger
-    ) {
+    ): \Symfony\Component\HttpFoundation\Response {
         // Same as in \Symfony\Bundle\TwigBundle\Controller\PreviewErrorController
         $format = $request->getRequestFormat();
 
@@ -102,11 +88,7 @@ class ErrorController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param int $statusCode
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function createErrorPageResponse($statusCode)
+    private function createErrorPageResponse(int $statusCode): \Symfony\Component\HttpFoundation\Response
     {
         $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);
         $errorPageContent = $this->errorPagesFacade->getErrorPageContentByDomainIdAndStatusCode(
@@ -117,13 +99,7 @@ class ErrorController extends FrontBaseController
         return new Response($errorPageContent, $errorPageStatusCode);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function createExceptionResponse(Request $request, FlattenException $exception, DebugLoggerInterface $logger)
+    private function createExceptionResponse(Request $request, FlattenException $exception, DebugLoggerInterface $logger): \Symfony\Component\HttpFoundation\Response
     {
         $lastException = $this->exceptionListener->getLastException();
         if ($lastException !== null) {
@@ -133,11 +109,7 @@ class ErrorController extends FrontBaseController
         return $this->exceptionController->showAction($request, $exception, $logger);
     }
 
-    /**
-     * @param \Exception $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function getPrettyExceptionResponse(Exception $exception)
+    private function getPrettyExceptionResponse(Exception $exception): \Symfony\Component\HttpFoundation\Response
     {
         Debugger::$time = time();
         $blueScreen = new BlueScreen();

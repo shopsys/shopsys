@@ -19,20 +19,12 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
      */
     private $router;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $router
-     */
     public function __construct(CurrentDomainRouter $router)
     {
         $this->router = $router;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token): \Symfony\Component\HttpFoundation\Response
     {
         $referer = $request->headers->get('referer');
         if ($request->isXmlHttpRequest()) {
@@ -47,12 +39,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): \Symfony\Component\HttpFoundation\Response
     {
         if ($request->isXmlHttpRequest()) {
             $responseData = [

@@ -7,10 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180603135344 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $defaultUnitId = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'defaultUnitId\' AND domain_id = 0;')->fetchColumn(0);
         if ($defaultUnitId <= 0) {
@@ -18,10 +15,7 @@ class Version20180603135344 extends AbstractMigration
         }
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

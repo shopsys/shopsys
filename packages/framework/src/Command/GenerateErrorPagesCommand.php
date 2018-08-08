@@ -20,9 +20,6 @@ class GenerateErrorPagesCommand extends Command
      */
     private $errorPagesFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
-     */
     public function __construct(ErrorPagesFacade $errorPagesFacade)
     {
         $this->errorPagesFacade = $errorPagesFacade;
@@ -30,17 +27,13 @@ class GenerateErrorPagesCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generates all error pages for production.');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->errorPagesFacade->generateAllErrorPagesForProduction();
     }

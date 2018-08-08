@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
 class ImageController extends AdminBaseController
@@ -17,9 +16,6 @@ class ImageController extends AdminBaseController
         $this->imageFacade = $imageFacade;
     }
 
-    /**
-     * @Route("/image/overview/")
-     */
     public function overviewAction()
     {
         $imageEntityConfigs = $this->imageFacade->getAllImageEntityConfigsByClass();

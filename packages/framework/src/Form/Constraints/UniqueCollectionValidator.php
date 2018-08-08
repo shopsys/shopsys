@@ -9,10 +9,9 @@ use Symfony\Component\Validator\ConstraintValidator;
 class UniqueCollectionValidator extends ConstraintValidator
 {
     /**
-     * @param array $values
-     * @param \Symfony\Component\Validator\Constraint $constraint
+     * @param mixed $values
      */
-    public function validate($values, Constraint $constraint)
+    public function validate($values, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueCollection) {
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, UniqueCollection::class);
@@ -45,12 +44,10 @@ class UniqueCollectionValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueCollection $constraint
      * @param mixed $value1
      * @param mixed $value2
-     * @return bool
      */
-    private function areValuesEqual(UniqueCollection $constraint, $value1, $value2)
+    private function areValuesEqual(UniqueCollection $constraint, $value1, $value2): bool
     {
         if ($constraint->allowEmpty) {
             if ($value1 === null || $value2 === null) {
@@ -66,12 +63,10 @@ class UniqueCollectionValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $fields
      * @param mixed $value1
      * @param mixed $value2
-     * @return bool
      */
-    private function areValuesEqualInFields(array $fields, $value1, $value2)
+    private function areValuesEqualInFields(array $fields, $value1, $value2): bool
     {
         foreach ($fields as $field) {
             $fieldValue1 = $this->getFieldValue($value1, $field);

@@ -16,15 +16,10 @@ class CustomerListAdminFacade
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getCustomerListQueryBuilderByQuickSearchData(
-        $domainId,
+        int $domainId,
         QuickSearchFormData $quickSearchData
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         return $this->userRepository->getCustomerListQueryBuilderByQuickSearchData(
             $domainId,
             $quickSearchData

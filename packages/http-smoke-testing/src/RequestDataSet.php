@@ -45,10 +45,7 @@ class RequestDataSet implements RequestDataSetConfig
      */
     private $callsDuringTestExecution;
 
-    /**
-     * @param string $routeName
-     */
-    public function __construct($routeName)
+    public function __construct(string $routeName)
     {
         $this->routeName = $routeName;
         $this->skipped = false;
@@ -57,26 +54,17 @@ class RequestDataSet implements RequestDataSetConfig
         $this->callsDuringTestExecution = [];
     }
 
-    /**
-     * @return string
-     */
-    public function getRouteName()
+    public function getRouteName(): string
     {
         return $this->routeName;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSkipped()
+    public function isSkipped(): bool
     {
         return $this->skipped;
     }
 
-    /**
-     * @return \Shopsys\HttpSmokeTesting\Auth\AuthInterface
-     */
-    public function getAuth()
+    public function getAuth(): \Shopsys\HttpSmokeTesting\Auth\AuthInterface
     {
         if ($this->auth === null) {
             return new NoAuth();
@@ -85,10 +73,7 @@ class RequestDataSet implements RequestDataSetConfig
         return $this->auth;
     }
 
-    /**
-     * @return int
-     */
-    public function getExpectedStatusCode()
+    public function getExpectedStatusCode(): int
     {
         if ($this->expectedStatusCode === null) {
             return self::DEFAULT_EXPECTED_STATUS_CODE;
@@ -97,10 +82,7 @@ class RequestDataSet implements RequestDataSetConfig
         return $this->expectedStatusCode;
     }
 
-    /**
-     * @return array
-     */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
@@ -108,13 +90,12 @@ class RequestDataSet implements RequestDataSetConfig
     /**
      * @return string[]
      */
-    public function getDebugNotes()
+    public function getDebugNotes(): array
     {
         return $this->debugNotes;
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @return $this
      */
     public function executeCallsDuringTestExecution(ContainerInterface $container)
@@ -137,7 +118,6 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\Auth\AuthInterface $auth
      * @return $this
      */
     public function setAuth(AuthInterface $auth)
@@ -148,10 +128,9 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param int $code
      * @return $this
      */
-    public function setExpectedStatusCode($code)
+    public function setExpectedStatusCode(int $code)
     {
         $this->expectedStatusCode = $code;
 
@@ -159,11 +138,10 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param string $name
      * @param mixed $value
      * @return $this
      */
-    public function setParameter($name, $value)
+    public function setParameter(string $name, $value)
     {
         $this->parameters[$name] = $value;
 
@@ -171,10 +149,9 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param string $debugNote
      * @return $this
      */
-    public function addDebugNote($debugNote)
+    public function addDebugNote(string $debugNote)
     {
         $this->debugNotes[] = $debugNote;
 
@@ -189,7 +166,7 @@ class RequestDataSet implements RequestDataSetConfig
      * @param callable $callback
      * @return $this
      */
-    public function addCallDuringTestExecution($callback)
+    public function addCallDuringTestExecution(callable $callback)
     {
         $this->callsDuringTestExecution[] = $callback;
 

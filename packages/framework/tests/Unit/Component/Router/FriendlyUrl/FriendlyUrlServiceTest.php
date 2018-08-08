@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class FriendlyUrlServiceTest extends TestCase
 {
-    public function testCreateFriendlyUrls()
+    public function testCreateFriendlyUrls(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.cz', 'example.cz', 'cs'),
@@ -43,7 +43,7 @@ class FriendlyUrlServiceTest extends TestCase
         }
     }
 
-    public function testGetFriendlyUrlUniqueResultNewUnique()
+    public function testGetFriendlyUrlUniqueResultNewUnique(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.com', 'example.com', 'en'),
@@ -67,7 +67,7 @@ class FriendlyUrlServiceTest extends TestCase
         $this->assertSame($friendlyUrl, $friendlyUrlUniqueResult->getFriendlyUrlForPersist());
     }
 
-    public function testGetFriendlyUrlUniqueResultOldUnique()
+    public function testGetFriendlyUrlUniqueResultOldUnique(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.com', 'example.com', 'en'),
@@ -94,7 +94,7 @@ class FriendlyUrlServiceTest extends TestCase
         $this->assertNull($friendlyUrlUniqueResult->getFriendlyUrlForPersist());
     }
 
-    public function testGetFriendlyUrlUniqueResultNotUnique()
+    public function testGetFriendlyUrlUniqueResultNotUnique(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.com', 'example.com', 'en'),
@@ -125,7 +125,7 @@ class FriendlyUrlServiceTest extends TestCase
         $this->assertSame('name-4/', $friendlyUrlForPersist->getSlug());
     }
 
-    public function testGetAbsoluteUrlByFriendlyUrl()
+    public function testGetAbsoluteUrlByFriendlyUrl(): void
     {
         $domainConfigs = [
             new DomainConfig(1, 'http://example.cz', 'example.cz', 'cs'),

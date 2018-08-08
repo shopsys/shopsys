@@ -14,28 +14,18 @@ class MigrationsLocation
      */
     private $namespace;
 
-    /**
-     * @param string $directory
-     * @param string $namespace
-     */
-    public function __construct($directory, $namespace)
+    public function __construct(string $directory, string $namespace)
     {
         $this->directory = $directory;
         $this->namespace = $namespace;
     }
 
-    /**
-     * @return string
-     */
-    public function getDirectory()
+    public function getDirectory(): string
     {
         return $this->directory;
     }
 
-    /**
-     * @return string
-     */
-    public function getNamespace()
+    public function getNamespace(): string
     {
         return $this->namespace;
     }

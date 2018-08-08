@@ -56,9 +56,6 @@ class SliderItem implements OrderableEntityInterface
      */
     protected $hidden;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
     public function __construct(SliderItemData $sliderItemData)
     {
         $this->domainId = $sliderItemData->domainId;
@@ -67,68 +64,44 @@ class SliderItem implements OrderableEntityInterface
         $this->hidden = $sliderItemData->hidden;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
-    public function edit(SliderItemData $sliderItemData)
+    public function edit(SliderItemData $sliderItemData): void
     {
         $this->name = $sliderItemData->name;
         $this->link = $sliderItemData->link;
         $this->hidden = $sliderItemData->hidden;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->link;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    /**
-     * @param int $position
-     */
-    public function setPosition($position)
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }

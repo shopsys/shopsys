@@ -40,17 +40,14 @@ class ProductAvailabilityRecalculator
         $this->productAvailabilityCalculation = $productAvailabilityCalculation;
     }
 
-    public function runAllScheduledRecalculations()
+    public function runAllScheduledRecalculations(): void
     {
         $this->productRowsIterator = null;
         while ($this->runBatchOfScheduledDelayedRecalculations()) {
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function runBatchOfScheduledDelayedRecalculations()
+    public function runBatchOfScheduledDelayedRecalculations(): bool
     {
         if ($this->productRowsIterator === null) {
             $this->productRowsIterator = $this->productAvailabilityRecalculationScheduler->getProductsIteratorForDelayedRecalculation();
@@ -71,7 +68,7 @@ class ProductAvailabilityRecalculator
         return true;
     }
 
-    public function runImmediateRecalculations()
+    public function runImmediateRecalculations(): void
     {
         $products = $this->productAvailabilityRecalculationScheduler->getProductsForImmediateRecalculation();
         foreach ($products as $product) {
@@ -80,10 +77,7 @@ class ProductAvailabilityRecalculator
         $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    private function recalculateProductAvailability(Product $product)
+    private function recalculateProductAvailability(Product $product): void
     {
         $calculatedAvailability = $this->productAvailabilityCalculation->calculateAvailability($product);
         $product->setCalculatedAvailability($calculatedAvailability);
@@ -93,10 +87,7 @@ class ProductAvailabilityRecalculator
         $this->em->flush($product);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $this->runImmediateRecalculations();

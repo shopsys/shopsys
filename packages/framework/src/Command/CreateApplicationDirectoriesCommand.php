@@ -43,13 +43,6 @@ class CreateApplicationDirectoriesCommand extends Command
      */
     private $projectDir;
 
-    /**
-     * @param string $projectDir
-     * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param \Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator $imageDirectoryStructureCreator
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator $uploadedFileDirectoryStructureCreator
-     */
     public function __construct(
         string $projectDir,
         FilesystemInterface $filesystem,
@@ -66,24 +59,20 @@ class CreateApplicationDirectoriesCommand extends Command
         $this->projectDir = $projectDir;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create application directories for locks, docs, content, images, uploaded files, etc.');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->createMiscellaneousDirectories($output);
         $this->createImageDirectories($output);
         $this->createUploadedFileDirectories($output);
     }
 
-    private function createMiscellaneousDirectories(OutputInterface $output)
+    private function createMiscellaneousDirectories(OutputInterface $output): void
     {
         $directories = [
             '/web/content/feeds',
@@ -112,20 +101,14 @@ class CreateApplicationDirectoriesCommand extends Command
         $output->writeln('<fg=green>Miscellaneous application directories were successfully created.</fg=green>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    private function createImageDirectories(OutputInterface $output)
+    private function createImageDirectories(OutputInterface $output): void
     {
         $this->imageDirectoryStructureCreator->makeImageDirectories();
 
         $output->writeln('<fg=green>Directories for images were successfully created.</fg=green>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    private function createUploadedFileDirectories(OutputInterface $output)
+    private function createUploadedFileDirectories(OutputInterface $output): void
     {
         $this->uploadedFileDirectoryStructureCreator->makeUploadedFileDirectories();
 

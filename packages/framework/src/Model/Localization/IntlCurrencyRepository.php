@@ -182,7 +182,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
      * {@inheritDoc}
      * @return \CommerceGuys\Intl\Currency\CurrencyInterface[]
      */
-    public function getAll($locale = null, $fallbackLocale = null)
+    public function getAll($locale = null, $fallbackLocale = null): array
     {
         $intlCurrencies = parent::getAll($locale, $fallbackLocale);
         /* @var $intlCurrencies \CommerceGuys\Intl\Currency\CurrencyInterface[] */
@@ -197,11 +197,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         return $supportedCurrencies;
     }
 
-    /**
-     * @param string $currencyCode
-     * @return bool
-     */
-    public function isSupportedCurrency($currencyCode)
+    public function isSupportedCurrency(string $currencyCode): bool
     {
         return in_array($currencyCode, self::SUPPORTED_CURRENCY_CODES, true);
     }

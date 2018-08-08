@@ -33,20 +33,17 @@ class InputPriceRecalculationScheduler
         $this->setting = $setting;
     }
 
-    public function scheduleSetInputPricesWithoutVat()
+    public function scheduleSetInputPricesWithoutVat(): void
     {
         $this->recalculateInputPricesWithoutVat = true;
     }
 
-    public function scheduleSetInputPricesWithVat()
+    public function scheduleSetInputPricesWithVat(): void
     {
         $this->recalculateInputPricesWithVat = true;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

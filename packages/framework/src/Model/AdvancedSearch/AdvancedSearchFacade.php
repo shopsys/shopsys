@@ -34,11 +34,7 @@ class AdvancedSearchFacade
         $this->productListAdminFacade = $productListAdminFacade;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createAdvancedSearchForm(Request $request)
+    public function createAdvancedSearchForm(Request $request): \Symfony\Component\Form\FormInterface
     {
         $rulesData = (array)$request->get(self::RULES_FORM_NAME);
         $rulesFormData = $this->advancedSearchService->getRulesFormViewDataByRequestData($rulesData);
@@ -47,11 +43,9 @@ class AdvancedSearchFacade
     }
 
     /**
-     * @param string $filterName
      * @param string|int $index
-     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createRuleForm($filterName, $index)
+    public function createRuleForm(string $filterName, $index): \Symfony\Component\Form\FormInterface
     {
         $rulesData = [
             $index => $this->advancedSearchService->createDefaultRuleFormViewData($filterName),
@@ -60,11 +54,7 @@ class AdvancedSearchFacade
         return $this->advancedSearchFormFactory->createRulesForm(self::RULES_FORM_NAME, $rulesData);
     }
 
-    /**
-     * @param array $advancedSearchData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getQueryBuilderByAdvancedSearchData($advancedSearchData)
+    public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->productListAdminFacade->getProductListQueryBuilder();
         $this->advancedSearchService->extendQueryBuilderByAdvancedSearchData($queryBuilder, $advancedSearchData);
@@ -72,11 +62,7 @@ class AdvancedSearchFacade
         return $queryBuilder;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
-     */
-    public function isAdvancedSearchFormSubmitted(Request $request)
+    public function isAdvancedSearchFormSubmitted(Request $request): bool
     {
         $rulesData = $request->get(self::RULES_FORM_NAME);
 

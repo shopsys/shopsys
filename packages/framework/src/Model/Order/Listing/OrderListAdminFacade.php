@@ -16,10 +16,6 @@ class OrderListAdminFacade
      */
     protected $localization;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository $orderListAdminRepository
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
     public function __construct(
         OrderListAdminRepository $orderListAdminRepository,
         Localization $localization
@@ -28,10 +24,7 @@ class OrderListAdminFacade
         $this->localization = $localization;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getOrderListQueryBuilder()
+    public function getOrderListQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->orderListAdminRepository->getOrderListQueryBuilder($this->localization->getAdminLocale());
     }

@@ -30,12 +30,7 @@ class LocalizedRouterFactory
         $this->routersByLocaleAndHost = [];
     }
 
-    /**
-     * @param string $locale
-     * @param \Symfony\Component\Routing\RequestContext $context
-     * @return \Symfony\Component\Routing\Router
-     */
-    public function getRouter($locale, RequestContext $context)
+    public function getRouter(string $locale, RequestContext $context): \Symfony\Component\Routing\Router
     {
         if (!array_key_exists($locale, $this->localeRoutersResourcesFilepaths)) {
             $message = 'File with localized routes "routing_front_' . $locale . '.yml" was not found. '

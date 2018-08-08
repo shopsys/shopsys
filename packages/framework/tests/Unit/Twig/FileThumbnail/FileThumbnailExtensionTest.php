@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 
 class FileThumbnailExtensionTest extends TestCase
 {
-    public function testGetFileThumbnailInfoByTemporaryFilenameBrokenImage()
+    public function testGetFileThumbnailInfoByTemporaryFilenameBrokenImage(): void
     {
         $temporaryFilename = 'filename.jpg';
 
@@ -34,7 +34,7 @@ class FileThumbnailExtensionTest extends TestCase
         $this->assertNull($fileThumbnailInfo->getImageUri());
     }
 
-    public function testGetFileThumbnailInfoByTemporaryFilenameImage()
+    public function testGetFileThumbnailInfoByTemporaryFilenameImage(): void
     {
         $temporaryFilename = 'filename.jpg';
         $encodedData = 'encodedData';
@@ -65,7 +65,7 @@ class FileThumbnailExtensionTest extends TestCase
         $this->assertSame($encodedData, $fileThumbnailInfo->getImageUri());
     }
 
-    public function testGetFileThumbnailInfoByTemporaryFilenameImageDocument()
+    public function testGetFileThumbnailInfoByTemporaryFilenameImageDocument(): void
     {
         $temporaryFilename = 'filename.doc';
 

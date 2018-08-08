@@ -16,19 +16,12 @@ class HeurekaProductFormType extends AbstractType
      */
     private $translator;
 
-    /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('cpc', MultidomainType::class, [
             'label' => $this->translator->trans('Maximum price per click'),

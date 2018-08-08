@@ -26,12 +26,6 @@ class AdministratorFacade
      */
     protected $administratorFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorService $administratorService
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface
-     */
     public function __construct(
         EntityManagerInterface $em,
         AdministratorRepository $administratorRepository,
@@ -44,11 +38,7 @@ class AdministratorFacade
         $this->administratorFactory = $administratorFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
-    public function create(AdministratorData $administratorData)
+    public function create(AdministratorData $administratorData): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administratorByUserName = $this->administratorRepository->findByUserName($administratorData->username);
         if ($administratorByUserName !== null) {
@@ -63,12 +53,7 @@ class AdministratorFacade
         return $administrator;
     }
 
-    /**
-     * @param int $administratorId
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
-    public function edit($administratorId, AdministratorData $administratorData)
+    public function edit(int $administratorId, AdministratorData $administratorData): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->administratorRepository->getById($administratorId);
         $administratorByUserName = $this->administratorRepository->findByUserName($administratorData->username);
@@ -83,10 +68,7 @@ class AdministratorFacade
         return $administratorEdited;
     }
 
-    /**
-     * @param int $administratorId
-     */
-    public function delete($administratorId)
+    public function delete(int $administratorId): void
     {
         $administrator = $this->administratorRepository->getById($administratorId);
         $adminCountExcludingSuperadmin = $this->administratorRepository->getCountExcludingSuperadmin();
@@ -95,30 +77,19 @@ class AdministratorFacade
         $this->em->flush();
     }
 
-    /**
-     * @param string $administratorUsername
-     * @param string $newPassword
-     */
-    public function changePassword($administratorUsername, $newPassword)
+    public function changePassword(string $administratorUsername, string $newPassword): void
     {
         $administrator = $this->administratorRepository->getByUserName($administratorUsername);
         $this->administratorService->setPassword($administrator, $newPassword);
         $this->em->flush($administrator);
     }
 
-    /**
-     * @param int $administratorId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
-    public function getById($administratorId)
+    public function getById(int $administratorId): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->administratorRepository->getById($administratorId);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllListableQueryBuilder()
+    public function getAllListableQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->administratorRepository->getAllListableQueryBuilder();
     }

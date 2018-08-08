@@ -34,38 +34,24 @@ class ProductAccessory
      */
     protected $position;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $accessory
-     * @param int $position
-     */
-    public function __construct(Product $product, Product $accessory, $position)
+    public function __construct(Product $product, Product $accessory, int $position)
     {
         $this->product = $product;
         $this->accessory = $accessory;
         $this->position = $position;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getProduct()
+    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getAccessory()
+    public function getAccessory(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->accessory;
     }
 
-    /**
-     * @return int
-     */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }

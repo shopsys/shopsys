@@ -32,38 +32,24 @@ class AdministratorGridLimit
      */
     protected $limit;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param string $gridId
-     * @param int $limit
-     */
-    public function __construct(Administrator $administrator, $gridId, $limit)
+    public function __construct(Administrator $administrator, string $gridId, int $limit)
     {
         $this->administrator = $administrator;
         $this->gridId = $gridId;
         $this->limit = $limit;
     }
 
-    /**
-     * @return string
-     */
-    public function getGridId()
+    public function getGridId(): string
     {
         return $this->gridId;
     }
 
-    /**
-     * @return int
-     */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
 
-    /**
-     * @param int $limit
-     */
-    public function setLimit($limit)
+    public function setLimit(int $limit): void
     {
         $this->limit = $limit;
     }

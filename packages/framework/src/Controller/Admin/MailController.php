@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\AllMailTemplatesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailSettingFormType;
@@ -87,9 +86,6 @@ class MailController extends AdminBaseController
         $this->personalDataExportMail = $personalDataExportMail;
     }
 
-    /**
-     * @return array
-     */
     private function getOrderStatusVariablesLabels()
     {
         return [
@@ -113,9 +109,6 @@ class MailController extends AdminBaseController
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getRegistrationVariablesLabels()
     {
         return [
@@ -127,9 +120,6 @@ class MailController extends AdminBaseController
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getResetPasswordVariablesLabels()
     {
         return [
@@ -138,9 +128,6 @@ class MailController extends AdminBaseController
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getPersonalDataAccessVariablesLabels()
     {
         return [
@@ -150,9 +137,6 @@ class MailController extends AdminBaseController
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getPersonalExportVariablesLabels()
     {
         return [
@@ -162,9 +146,6 @@ class MailController extends AdminBaseController
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getTemplateParameters()
     {
         $orderStatusesTemplateVariables = $this->orderMailService->getTemplateVariables();
@@ -224,9 +205,6 @@ class MailController extends AdminBaseController
         ];
     }
 
-    /**
-     * @Route("/mail/template/")
-     */
     public function templateAction(Request $request)
     {
         $allMailTemplatesData = $this->mailTemplateFacade->getAllMailTemplatesDataByDomainId(
@@ -258,9 +236,6 @@ class MailController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Mail/template.html.twig', $templateParameters);
     }
 
-    /**
-     * @Route("/mail/setting/")
-     */
     public function settingAction(Request $request)
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();

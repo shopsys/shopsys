@@ -24,9 +24,6 @@ class ChangeAdminPasswordCommand extends Command
      */
     private $administratorFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
-     */
     public function __construct(AdministratorFacade $administratorFacade)
     {
         $this->administratorFacade = $administratorFacade;
@@ -59,12 +56,7 @@ class ChangeAdminPasswordCommand extends Command
         $output->writeln(sprintf('Password for administrator "%s" was successfully changed', $adminUsername));
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @return string
-     */
-    private function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io)
+    private function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io): string
     {
         $question = new Question('Enter new password');
         $question->setHidden(true);

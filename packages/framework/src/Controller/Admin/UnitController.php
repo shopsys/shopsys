@@ -2,9 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitSettingFormType;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitInlineEdit;
@@ -38,9 +36,6 @@ class UnitController extends AdminBaseController
         $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
     }
 
-    /**
-     * @Route("/product/unit/list/")
-     */
     public function listAction()
     {
         $unitInlineEdit = $this->unitInlineEdit;
@@ -52,11 +47,7 @@ class UnitController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/unit/delete-confirm/{id}", requirements={"id" = "\d+"})
-     * @param int $id
-     */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         try {
             $unit = $this->unitFacade->getById($id);
@@ -96,13 +87,7 @@ class UnitController extends AdminBaseController
         }
     }
 
-    /**
-     * @Route("/product/unit/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');
 
@@ -135,10 +120,6 @@ class UnitController extends AdminBaseController
         return $this->redirectToRoute('admin_unit_list');
     }
 
-    /**
-     * @Route("/product/unit/setting/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingAction(Request $request)
     {
         try {

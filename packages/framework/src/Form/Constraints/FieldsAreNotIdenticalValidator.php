@@ -9,10 +9,9 @@ use Symfony\Component\Validator\ConstraintValidator;
 class FieldsAreNotIdenticalValidator extends ConstraintValidator
 {
     /**
-     * @param array $values
-     * @param \Symfony\Component\Validator\Constraint $constraint
+     * @param mixed $values
      */
-    public function validate($values, Constraint $constraint)
+    public function validate($values, Constraint $constraint): void
     {
         if (!$constraint instanceof FieldsAreNotIdentical) {
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, FieldsAreNotIdentical::class);

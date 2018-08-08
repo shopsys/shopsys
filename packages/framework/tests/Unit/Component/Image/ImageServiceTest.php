@@ -16,7 +16,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ImageServiceTest extends TestCase
 {
-    public function testGetUploadedImagesException()
+    public function testGetUploadedImagesException(): void
     {
         $imageEntityConfig = new ImageEntityConfig('entityName', 'entityClass', [], [], ['type' => false]);
 
@@ -30,7 +30,7 @@ class ImageServiceTest extends TestCase
         $imageService->getUploadedImages($imageEntityConfig, 1, [], 'type');
     }
 
-    public function testGetUploadedImages()
+    public function testGetUploadedImages(): void
     {
         $imageEntityConfig = new ImageEntityConfig('entityName', 'entityClass', [], [], ['type' => true]);
         $filenames = ['filename1.jpg', 'filename2.png'];
@@ -56,7 +56,7 @@ class ImageServiceTest extends TestCase
         }
     }
 
-    public function testCreateImage()
+    public function testCreateImage(): void
     {
         $imageEntityConfig = new ImageEntityConfig('entityName', 'entityClass', [], [], ['type' => true]);
         $filename = 'filename.jpg';
@@ -75,10 +75,7 @@ class ImageServiceTest extends TestCase
         $this->assertSame($filename, array_pop($temporaryFiles)->getTemporaryFilename());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
-    private function getFileUpload()
+    private function getFileUpload(): \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
     {
         $fileNamingConvention = new FileNamingConvention();
         $filesystem = new Filesystem();

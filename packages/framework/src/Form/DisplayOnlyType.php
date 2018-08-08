@@ -8,10 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DisplayOnlyType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults([
@@ -23,10 +20,7 @@ class DisplayOnlyType extends AbstractType
             ]);
     }
 
-    /**
-     * @return null|string
-     */
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }

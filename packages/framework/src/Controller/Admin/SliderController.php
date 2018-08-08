@@ -2,11 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
@@ -55,9 +53,6 @@ class SliderController extends AdminBaseController
         $this->sliderItemDataFactory = $sliderItemDataFactory;
     }
 
-    /**
-     * @Route("/slider/list/")
-     */
     public function listAction()
     {
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
@@ -84,10 +79,6 @@ class SliderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/slider/item/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $sliderItemData = $this->sliderItemDataFactory->create();
@@ -122,12 +113,7 @@ class SliderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/slider/item/edit/{id}", requirements={"id"="\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $sliderItem = $this->sliderItemFacade->getById($id);
         $sliderItemData = $this->sliderItemDataFactory->createFromSliderItem($sliderItem);
@@ -164,12 +150,7 @@ class SliderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/slider/item/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $name = $this->sliderItemFacade->getById($id)->getName();

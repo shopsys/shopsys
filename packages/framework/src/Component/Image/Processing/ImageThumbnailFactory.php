@@ -12,19 +12,12 @@ class ImageThumbnailFactory
      */
     private $imageProcessingService;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessingService $imageProcessingService
-     */
     public function __construct(ImageProcessingService $imageProcessingService)
     {
         $this->imageProcessingService = $imageProcessingService;
     }
 
-    /**
-     * @param string $filepath
-     * @return \Intervention\Image\Image
-     */
-    public function getImageThumbnail($filepath)
+    public function getImageThumbnail(string $filepath): \Intervention\Image\Image
     {
         $image = $this->imageProcessingService->createInterventionImage($filepath);
         $this->imageProcessingService->resize($image, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT);

@@ -47,14 +47,6 @@ class GenerateGruntfileCommand extends Command
      */
     private $cssFacade;
 
-    /**
-     * @param string $customResourcesDirectory
-     * @param string $frameworkResourcesDirectory
-     * @param string $rootDirectory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Twig\Environment $twig
-     * @param \Shopsys\FrameworkBundle\Component\Css\CssFacade $cssFacade
-     */
     public function __construct(
         string $customResourcesDirectory,
         string $frameworkResourcesDirectory,
@@ -73,17 +65,13 @@ class GenerateGruntfileCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generate Gruntfile.js by domain settings');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $cssVersion = time();
         $this->cssFacade->setCssVersion($cssVersion);

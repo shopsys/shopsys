@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator;
 
 class FilepathComparatorTest extends TestCase
 {
-    public function testIsPathWithinDirectoryThrowsExceptionWithNonExistentDirectoryPath()
+    public function testIsPathWithinDirectoryThrowsExceptionWithNonExistentDirectoryPath(): void
     {
         $filepathComparator = new FilepathComparator();
 
@@ -19,7 +19,7 @@ class FilepathComparatorTest extends TestCase
         $filepathComparator->isPathWithinDirectory($path, $nonExistentPath);
     }
 
-    public function testIsPathWithinAnotherExistingPathReturnsTrueForFileInsideDirectory()
+    public function testIsPathWithinAnotherExistingPathReturnsTrueForFileInsideDirectory(): void
     {
         $filepathComparator = new FilepathComparator();
 
@@ -29,7 +29,7 @@ class FilepathComparatorTest extends TestCase
         $this->assertTrue($filepathComparator->isPathWithinDirectory($path, $directoryPath));
     }
 
-    public function testIsPathWithinAnotherExistingPathReturnsFalseForFileOutsideDirectory()
+    public function testIsPathWithinAnotherExistingPathReturnsFalseForFileOutsideDirectory(): void
     {
         $filepathComparator = new FilepathComparator();
 
@@ -39,7 +39,7 @@ class FilepathComparatorTest extends TestCase
         $this->assertFalse($filepathComparator->isPathWithinDirectory($path, $directoryPath));
     }
 
-    public function testIsPathWithinAnotherExistingPathReturnsTrueForDirectorySelf()
+    public function testIsPathWithinAnotherExistingPathReturnsTrueForDirectorySelf(): void
     {
         $filepathComparator = new FilepathComparator();
 
@@ -49,7 +49,7 @@ class FilepathComparatorTest extends TestCase
         $this->assertTrue($filepathComparator->isPathWithinDirectory($path, $directoryPath));
     }
 
-    public function testIsPathWithinAnotherExistingPathReturnsTrueForNonExistentFileInsideDirectory()
+    public function testIsPathWithinAnotherExistingPathReturnsTrueForNonExistentFileInsideDirectory(): void
     {
         $filepathComparator = new FilepathComparator();
 
@@ -59,11 +59,7 @@ class FilepathComparatorTest extends TestCase
         $this->assertTrue($filepathComparator->isPathWithinDirectory($path, $directoryPath));
     }
 
-    /**
-     * @param string $relativePath
-     * @return string
-     */
-    private function getResourcePath($relativePath)
+    private function getResourcePath(string $relativePath): string
     {
         return __DIR__ . '/Resources/' . $relativePath;
     }

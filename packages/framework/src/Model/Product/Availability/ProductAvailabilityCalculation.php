@@ -49,11 +49,7 @@ class ProductAvailabilityCalculation
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     */
-    public function calculateAvailability(Product $product)
+    public function calculateAvailability(Product $product): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         if ($product->isMainVariant()) {
             return $this->calculateMainVariantAvailability($product);
@@ -71,11 +67,7 @@ class ProductAvailabilityCalculation
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     */
-    private function calculateMainVariantAvailability(Product $mainVariant)
+    private function calculateMainVariantAvailability(Product $mainVariant): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         $atLeastSomewhereSellableVariants = $this->getAtLeastSomewhereSellableVariantsByMainVariant($mainVariant);
         if (count($atLeastSomewhereSellableVariants) === 0) {
@@ -97,10 +89,9 @@ class ProductAvailabilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    private function getAtLeastSomewhereSellableVariantsByMainVariant(Product $mainVariant)
+    private function getAtLeastSomewhereSellableVariantsByMainVariant(Product $mainVariant): array
     {
         $allVariants = $mainVariant->getVariants();
         foreach ($allVariants as $variant) {

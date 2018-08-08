@@ -16,10 +16,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
  */
 class VaryResponseByXRequestedWithHeaderListener
 {
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $event->getResponse()->headers->set('Vary', 'X-Requested-With');

@@ -39,61 +39,38 @@ class PricingSetting
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
     }
 
-    /**
-     * @return int
-     */
-    public function getInputPriceType()
+    public function getInputPriceType(): int
     {
         return $this->setting->get(self::INPUT_PRICE_TYPE);
     }
 
-    /**
-     * @return int
-     */
-    public function getRoundingType()
+    public function getRoundingType(): int
     {
         return $this->setting->get(self::ROUNDING_TYPE);
     }
 
-    /**
-     * @return int
-     */
-    public function getDefaultCurrencyId()
+    public function getDefaultCurrencyId(): int
     {
         return $this->setting->get(self::DEFAULT_CURRENCY);
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
-    public function getDomainDefaultCurrencyIdByDomainId($domainId)
+    public function getDomainDefaultCurrencyIdByDomainId(int $domainId): int
     {
         return $this->setting->getForDomain(self::DEFAULT_DOMAIN_CURRENCY, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     */
-    public function setDefaultCurrency(Currency $currency)
+    public function setDefaultCurrency(Currency $currency): void
     {
         $currency->setExchangeRate(Currency::DEFAULT_EXCHANGE_RATE);
         $this->setting->set(self::DEFAULT_CURRENCY, $currency->getId());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param int $domainId
-     */
-    public function setDomainDefaultCurrency(Currency $currency, $domainId)
+    public function setDomainDefaultCurrency(Currency $currency, int $domainId): void
     {
         $this->setting->setForDomain(self::DEFAULT_DOMAIN_CURRENCY, $currency->getId(), $domainId);
     }
 
-    /**
-     * @param int $roundingType
-     */
-    public function setRoundingType($roundingType)
+    public function setRoundingType(int $roundingType): void
     {
         if (!in_array($roundingType, self::getRoundingTypes(), true)) {
             throw new \Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidRoundingTypeException(
@@ -105,27 +82,16 @@ class PricingSetting
         $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getFreeTransportAndPaymentPriceLimit($domainId)
+    public function getFreeTransportAndPaymentPriceLimit(int $domainId): ?string
     {
         return $this->setting->getForDomain(self::FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @param string|null $priceLimit
-     */
-    public function setFreeTransportAndPaymentPriceLimit($domainId, $priceLimit = null)
+    public function setFreeTransportAndPaymentPriceLimit(int $domainId, ?string $priceLimit = null): void
     {
         $this->setting->setForDomain(self::FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT, $priceLimit, $domainId);
     }
 
-    /**
-     * @return array
-     */
     public static function getInputPriceTypes()
     {
         return [
@@ -134,9 +100,6 @@ class PricingSetting
         ];
     }
 
-    /**
-     * @return array
-     */
     public static function getRoundingTypes()
     {
         return [

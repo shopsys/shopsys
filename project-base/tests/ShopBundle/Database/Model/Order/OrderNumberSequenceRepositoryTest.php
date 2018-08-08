@@ -7,7 +7,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class OrderNumberSequenceRepositoryTest extends DatabaseTestCase
 {
-    public function testGetNextNumber()
+    public function testGetNextNumber(): void
     {
         $orderNumberSequenceRepository = $this->getContainer()->get(OrderNumberSequenceRepository::class);
         /* @var $orderNumberSequenceRepository \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository */

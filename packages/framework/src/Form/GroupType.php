@@ -7,10 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GroupType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setAllowedTypes('label', 'string')

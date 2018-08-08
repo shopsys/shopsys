@@ -8,10 +8,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20170807084807 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->transferDroppedProductDataToPluginDataValues();
 
@@ -21,7 +18,7 @@ class Version20170807084807 extends AbstractMigration
         $this->sql('ALTER TABLE product_domains DROP zbozi_cpc_search');
     }
 
-    private function transferDroppedProductDataToPluginDataValues()
+    private function transferDroppedProductDataToPluginDataValues(): void
     {
         $heurekaDataValues = [];
         $zboziDataValues = [];
@@ -47,11 +44,7 @@ class Version20170807084807 extends AbstractMigration
         );
     }
 
-    /**
-     * @param array $valuesByKey
-     * @param string $pluginName
-     */
-    private function insertPluginDataValues(array $valuesByKey, $pluginName)
+    private function insertPluginDataValues(array $valuesByKey, string $pluginName): void
     {
         foreach ($valuesByKey as $key => $value) {
             $this->sql(
@@ -67,10 +60,7 @@ class Version20170807084807 extends AbstractMigration
         }
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

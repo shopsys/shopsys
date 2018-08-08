@@ -24,11 +24,6 @@ class CustomerMailFacade
      */
     protected $registrationMailService;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerService $mailer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMailService $registrationMailService
-     */
     public function __construct(
         MailerService $mailer,
         MailTemplateFacade $mailTemplateFacade,
@@ -39,10 +34,7 @@ class CustomerMailFacade
         $this->registrationMailService = $registrationMailService;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
-    public function sendRegistrationMail(User $user)
+    public function sendRegistrationMail(User $user): void
     {
         $mailTemplate = $this->mailTemplateFacade->get(MailTemplate::REGISTRATION_CONFIRM_NAME, $user->getDomainId());
         $messageData = $this->registrationMailService->getMessageDataByUser($user, $mailTemplate);

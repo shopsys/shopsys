@@ -31,14 +31,6 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $em;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\UserDataFixtureLoader $loaderService
-     * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordService $customerPasswordService
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     */
     public function __construct(
         CustomerFacade $customerFacade,
         UserDataFixtureLoader $loaderService,
@@ -53,10 +45,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $this->em = $em;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $countries = [
             $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC_1),
@@ -88,10 +77,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $customer
-     */
-    private function resetPassword(User $customer)
+    private function resetPassword(User $customer): void
     {
         $this->customerPasswordService->resetPassword($customer);
         $this->em->flush($customer);

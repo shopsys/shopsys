@@ -37,11 +37,7 @@ class NewsletterController extends FrontBaseController
         $this->domain = $domain;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response|NULL
-     */
-    public function subscribeEmailAction(Request $request)
+    public function subscribeEmailAction(Request $request): ?\Symfony\Component\HttpFoundation\Response
     {
         $form = $this->createSubscriptionForm();
         $form->handleRequest($request);
@@ -54,9 +50,6 @@ class NewsletterController extends FrontBaseController
         return $this->renderSubscription($form);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function subscriptionAction(): Response
     {
         $form = $this->createSubscriptionForm();
@@ -64,9 +57,6 @@ class NewsletterController extends FrontBaseController
         return $this->renderSubscription($form);
     }
 
-    /**
-     * @return \Symfony\Component\Form\Form
-     */
     private function createSubscriptionForm(): Form
     {
         return $this->createForm(SubscriptionFormType::class, null, [
@@ -74,10 +64,6 @@ class NewsletterController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\Form $form
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     private function renderSubscription(Form $form): Response
     {
         $privacyPolicyArticle = $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId());

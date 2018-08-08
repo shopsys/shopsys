@@ -9,11 +9,7 @@ class LoginPage extends AbstractPage
     const ADMIN_USERNAME = 'admin';
     const ADMIN_PASSWORD = 'admin123';
 
-    /**
-     * @param string $username
-     * @param string $password
-     */
-    public function login($username, $password)
+    public function login(string $username, string $password): void
     {
         $this->tester->amOnPage('/admin/');
         $this->tester->fillFieldByName('admin_login_form[username]', $username);
@@ -21,13 +17,13 @@ class LoginPage extends AbstractPage
         $this->tester->clickByText('Log in');
     }
 
-    public function loginAsAdmin()
+    public function loginAsAdmin(): void
     {
         $this->login(self::ADMIN_USERNAME, self::ADMIN_PASSWORD);
         $this->tester->see('Dashboard');
     }
 
-    public function assertLoginFailed()
+    public function assertLoginFailed(): void
     {
         $this->tester->see('Log in failed.');
         $this->tester->seeCurrentPageEquals('/admin/');

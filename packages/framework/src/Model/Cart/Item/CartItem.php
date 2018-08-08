@@ -66,17 +66,11 @@ class CartItem
      */
     protected $addedAt;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $quantity
-     * @param string $watchedPrice
-     */
     public function __construct(
         CustomerIdentifier $customerIdentifier,
         Product $product,
-        $quantity,
-        $watchedPrice
+        int $quantity,
+        string $watchedPrice
     ) {
         $this->cartIdentifier = $customerIdentifier->getCartIdentifier();
         $this->user = $customerIdentifier->getUser();
@@ -86,10 +80,7 @@ class CartItem
         $this->addedAt = new DateTime();
     }
 
-    /**
-     * @param int $newQuantity
-     */
-    public function changeQuantity($newQuantity)
+    public function changeQuantity(int $newQuantity): void
     {
         if (filter_var($newQuantity, FILTER_VALIDATE_INT) === false || $newQuantity <= 0) {
             throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($newQuantity);
@@ -98,18 +89,12 @@ class CartItem
         $this->quantity = $newQuantity;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getProduct()
+    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         if ($this->product === null) {
             throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException();
@@ -118,68 +103,45 @@ class CartItem
         return $this->product;
     }
 
-    /**
-     * @param string|null $locale
-     * @return string|null
-     */
-    public function getName($locale = null)
+    public function getName(?string $locale = null): ?string
     {
         return $this->getProduct()->getName($locale);
     }
 
-    /**
-     * @return int
-     */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getWatchedPrice()
+    public function getWatchedPrice(): ?string
     {
         return $this->watchedPrice;
     }
 
-    /**
-     * @param string|null $watchedPrice
-     */
-    public function setWatchedPrice($watchedPrice)
+    public function setWatchedPrice(?string $watchedPrice): void
     {
         $this->watchedPrice = $watchedPrice;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
-     * @return bool
      */
-    public function isSimilarItemAs(self $cartItem)
+    public function isSimilarItemAs(self $cartItem): bool
     {
         return $this->getProduct()->getId() === $cartItem->getProduct()->getId();
     }
 
-    /**
-     * @return string
-     */
-    public function getCartIdentifier()
+    public function getCartIdentifier(): string
     {
         return $this->cartIdentifier;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getAddedAt()
+    public function getAddedAt(): \DateTime
     {
         return $this->addedAt;
     }
 
-    /**
-     * @param \DateTime $addedAt
-     */
-    public function changeAddedAt(DateTime $addedAt)
+    public function changeAddedAt(DateTime $addedAt): void
     {
         $this->addedAt = $addedAt;
     }

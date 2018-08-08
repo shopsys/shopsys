@@ -15,7 +15,7 @@ class OrderCest
         ProductListPage $productListPage,
         OrderPage $orderPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('have my payment and transport remembered by order');
 
         $me->amOnPage('/tv-audio/');
@@ -39,7 +39,7 @@ class OrderCest
         ProductListPage $productListPage,
         OrderPage $orderPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('have my payment and transport remembered by order');
 
         $me->amOnPage('/tv-audio/');
@@ -59,7 +59,7 @@ class OrderCest
         $orderPage->assertPaymentIsSelected('Cash on delivery');
     }
 
-    public function testFormRemembersFirstName(ProductListPage $productListPage, OrderPage $orderPage, AcceptanceTester $me)
+    public function testFormRemembersFirstName(ProductListPage $productListPage, OrderPage $orderPage, AcceptanceTester $me): void
     {
         $me->wantTo('have my first name remembered by order');
 
@@ -85,7 +85,7 @@ class OrderCest
         OrderPage $orderPage,
         AcceptanceTester $me,
         SymfonyHelper $symfonyHelper
-    ) {
+    ): void {
         $scriptFacade = $symfonyHelper->grabServiceFromContainer(ScriptFacade::class);
         $this->setGoogleAnalyticsTrackingId('GA-test', $scriptFacade);
 
@@ -94,11 +94,7 @@ class OrderCest
         $me->seeInSource('GA-test');
     }
 
-    /**
-     * @param string $trackingId
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade
-     */
-    private function setGoogleAnalyticsTrackingId($trackingId, ScriptFacade $scriptFacade)
+    private function setGoogleAnalyticsTrackingId(string $trackingId, ScriptFacade $scriptFacade): void
     {
         $scriptFacade->setGoogleAnalyticsTrackingId($trackingId, Domain::FIRST_DOMAIN_ID);
     }
@@ -107,7 +103,7 @@ class OrderCest
         ProductListPage $productListPage,
         OrderPage $orderPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->amOnPage('/tv-audio/');
         $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
         $me->clickByText('Go to cart');

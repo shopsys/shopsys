@@ -29,14 +29,7 @@ class ImageSizeConfig
      */
     private $occurrence;
 
-    /**
-     * @param string|null $name
-     * @param int $width
-     * @param int $height
-     * @param bool $crop
-     * @param string|null $occurrence
-     */
-    public function __construct($name, $width, $height, $crop, $occurrence)
+    public function __construct(?string $name, ?int $width, ?int $height, bool $crop, ?string $occurrence)
     {
         $this->name = $name;
         $this->width = $width;
@@ -45,42 +38,27 @@ class ImageSizeConfig
         $this->occurrence = $occurrence;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->width;
     }
 
-    /**
-     * @return int
-     */
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->height;
     }
 
-    /**
-     * @return int
-     */
-    public function getCrop()
+    public function getCrop(): int
     {
         return $this->crop;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getOccurrence()
+    public function getOccurrence(): ?string
     {
         return $this->occurrence;
     }

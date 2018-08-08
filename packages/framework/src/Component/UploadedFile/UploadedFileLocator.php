@@ -22,41 +22,24 @@ class UploadedFileLocator
      */
     private $filesystem;
 
-    /**
-     * @param string $uploadedFileDir
-     * @param string $uploadedFileUrlPrefix
-     */
-    public function __construct($uploadedFileDir, $uploadedFileUrlPrefix, FilesystemInterface $filesystem)
+    public function __construct(string $uploadedFileDir, string $uploadedFileUrlPrefix, FilesystemInterface $filesystem)
     {
         $this->uploadedFileDir = $uploadedFileDir;
         $this->uploadedFileUrlPrefix = $uploadedFileUrlPrefix;
         $this->filesystem = $filesystem;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return string
-     */
-    public function getRelativeUploadedFileFilepath(UploadedFile $uploadedFile)
+    public function getRelativeUploadedFileFilepath(UploadedFile $uploadedFile): string
     {
         return $this->getRelativeFilePath($uploadedFile->getEntityName()) . '/' . $uploadedFile->getFilename();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return string
-     */
-    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile)
+    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile): string
     {
         return $this->getAbsoluteFilePath($uploadedFile->getEntityName()) . '/' . $uploadedFile->getFilename();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return string
-     */
-    public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile)
+    public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
         if ($this->fileExists($uploadedFile)) {
             return $domainConfig->getUrl()
@@ -67,31 +50,19 @@ class UploadedFileLocator
         throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return bool
-     */
-    public function fileExists(UploadedFile $uploadedFile)
+    public function fileExists(UploadedFile $uploadedFile): bool
     {
         $fileFilepath = $this->getAbsoluteUploadedFileFilepath($uploadedFile);
 
         return $this->filesystem->has($fileFilepath);
     }
 
-    /**
-     * @param string $entityName
-     * @return string
-     */
-    private function getRelativeFilePath($entityName)
+    private function getRelativeFilePath(string $entityName): string
     {
         return $entityName;
     }
 
-    /**
-     * @param string $entityName
-     * @return string
-     */
-    public function getAbsoluteFilePath($entityName)
+    public function getAbsoluteFilePath(string $entityName): string
     {
         return $this->uploadedFileDir . $this->getRelativeFilePath($entityName);
     }

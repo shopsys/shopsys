@@ -49,26 +49,18 @@ class DomainFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function getAllDomainConfigs()
+    public function getAllDomainConfigs(): array
     {
         return $this->domain->getAll();
     }
 
-    /**
-     * @param int $domainId
-     * @param string $iconName
-     */
-    public function editIcon($domainId, $iconName)
+    public function editIcon(int $domainId, string $iconName): void
     {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($iconName);
         $this->domainService->convertToDomainIconFormatAndSave($domainId, $temporaryFilepath, $this->domainImagesDirectory);
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function existsDomainIcon($domainId)
+    public function existsDomainIcon(int $domainId): bool
     {
         return $this->filesystem->has($this->domainImagesDirectory . '/' . $domainId . '.png');
     }

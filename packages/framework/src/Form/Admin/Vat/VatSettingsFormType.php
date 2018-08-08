@@ -24,11 +24,7 @@ class VatSettingsFormType extends AbstractType
         $this->vatFacade = $vatFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
             'label' => t('Settings'),
@@ -60,10 +56,7 @@ class VatSettingsFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],

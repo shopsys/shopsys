@@ -39,14 +39,6 @@ class BrandFacade
      */
     protected $brandFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface $brandFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         BrandRepository $brandRepository,
@@ -63,20 +55,12 @@ class BrandFacade
         $this->brandFactory = $brandFactory;
     }
 
-    /**
-     * @param int $brandId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
-    public function getById($brandId)
+    public function getById(int $brandId): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
     {
         return $this->brandRepository->getById($brandId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
-    public function create(BrandData $brandData)
+    public function create(BrandData $brandData): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
     {
         $domains = $this->domain->getAll();
         $brand = $this->brandFactory->create($brandData);
@@ -97,12 +81,7 @@ class BrandFacade
         return $brand;
     }
 
-    /**
-     * @param $brandId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
-    public function edit($brandId, BrandData $brandData)
+    public function edit($brandId, BrandData $brandData): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
     {
         $domains = $this->domain->getAll();
         $brand = $this->brandRepository->getById($brandId);
@@ -124,10 +103,7 @@ class BrandFacade
         return $brand;
     }
 
-    /**
-     * @param int $brandId
-     */
-    public function deleteById($brandId)
+    public function deleteById(int $brandId): void
     {
         $brand = $this->brandRepository->getById($brandId);
         $this->em->remove($brand);
@@ -137,7 +113,7 @@ class BrandFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->brandRepository->getAll();
     }

@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductService;
 
 class ProductPriceRecalculatorTest extends TestCase
 {
-    public function testRunImmediatelyRecalculations()
+    public function testRunImmediatelyRecalculations(): void
     {
         $productMock = $this->getMockBuilder(Product::class)->setMethods(null)->disableOriginalConstructor()->getMock();
         $pricingGroupMock = $this->getMockBuilder(PricingGroup::class)->setMethods(null)->disableOriginalConstructor()->getMock();

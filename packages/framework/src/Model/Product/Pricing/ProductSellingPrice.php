@@ -17,28 +17,18 @@ class ProductSellingPrice
      */
     private $sellingPrice;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $sellingPrice
-     */
     public function __construct(PricingGroup $pricingGroup, Price $sellingPrice)
     {
         $this->pricingGroup = $pricingGroup;
         $this->sellingPrice = $sellingPrice;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function getPricingGroup()
+    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->pricingGroup;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    public function getSellingPrice()
+    public function getSellingPrice(): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         return $this->sellingPrice;
     }

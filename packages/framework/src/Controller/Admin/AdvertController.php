@@ -2,11 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Advert\AdvertFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -71,12 +69,7 @@ class AdvertController extends AdminBaseController
         $this->advertDataFactory = $advertDataFactory;
     }
 
-    /**
-     * @Route("/advert/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $advert = $this->advertFacade->getById($id);
 
@@ -115,9 +108,6 @@ class AdvertController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/advert/list/")
-     */
     public function listAction()
     {
         $administrator = $this->getUser();
@@ -170,10 +160,6 @@ class AdvertController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/advert/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $advertData = $this->advertDataFactory->create();
@@ -210,12 +196,7 @@ class AdvertController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/advert/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->advertFacade->getById($id)->getName();

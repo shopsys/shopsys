@@ -9,10 +9,7 @@ use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
 
 class CustomDateTimeFormatterFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter
-     */
-    public function create()
+    public function create(): \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter
     {
         $customDateTimeFormatPatternRepository = new DateTimeFormatPatternRepository();
         $customDateTimeFormatPatternRepository->add(

@@ -7,20 +7,20 @@ interface MailTypeInterface
     /**
      * @return string[]
      */
-    public function getSubjectVariables();
+    public function getSubjectVariables(): array;
 
     /**
      * @return string[]
      */
-    public function getBodyVariables();
+    public function getBodyVariables(): array;
 
     /**
      * @return string[]
      */
-    public function getRequiredSubjectVariables();
+    public function getRequiredSubjectVariables(): array;
 
     /**
      * @return string[]
      */
-    public function getRequiredBodyVariables();
+    public function getRequiredBodyVariables(): array;
 }

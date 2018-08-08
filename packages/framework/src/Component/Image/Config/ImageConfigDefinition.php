@@ -20,10 +20,7 @@ class ImageConfigDefinition implements ConfigurationInterface
     const CONFIG_SIZE_CROP = 'crop';
     const CONFIG_SIZE_OCCURRENCE = 'occurrence';
 
-    /**
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): \Symfony\Component\Config\Definition\Builder\TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('images');
@@ -33,11 +30,7 @@ class ImageConfigDefinition implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
-     */
-    private function buildItemsNode(ArrayNodeDefinition $node)
+    private function buildItemsNode(ArrayNodeDefinition $node): \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
     {
         return $node
             ->addDefaultsIfNotSet()

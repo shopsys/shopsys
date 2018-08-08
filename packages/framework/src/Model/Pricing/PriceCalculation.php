@@ -16,34 +16,23 @@ class PriceCalculation
         $this->rounding = $rounding;
     }
 
-    /**
-     * @param string $priceWithVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return string
-     */
-    public function getVatAmountByPriceWithVat($priceWithVat, Vat $vat)
+    public function getVatAmountByPriceWithVat(string $priceWithVat, Vat $vat): string
     {
         return $this->rounding->roundVatAmount(
             $priceWithVat * $this->getVatCoefficientByPercent($vat->getPercent())
         );
     }
 
-    /**
-     * @param string $vatPercent
-     * @return string
-     */
-    public function getVatCoefficientByPercent($vatPercent)
+    public function getVatCoefficientByPercent(string $vatPercent): string
     {
         $ratio = $vatPercent / (100 + $vatPercent);
         return round($ratio, 4);
     }
 
     /**
-     * @param string $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     * @return string
      */
-    public function applyVatPercent($priceWithoutVat, Vat $vat)
+    public function applyVatPercent(string $priceWithoutVat, Vat $vat): string
     {
         return $priceWithoutVat * (100 + $vat->getPercent()) / 100;
     }

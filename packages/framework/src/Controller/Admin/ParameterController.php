@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterInlineEdit;
 
@@ -27,9 +25,6 @@ class ParameterController extends AdminBaseController
         $this->parameterInlineEdit = $parameterInlineEdit;
     }
 
-    /**
-     * @Route("/product/parameter/list/")
-     */
     public function listAction()
     {
         $grid = $this->parameterInlineEdit->getGrid();
@@ -39,12 +34,7 @@ class ParameterController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/parameter/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->parameterFacade->getById($id)->getName();

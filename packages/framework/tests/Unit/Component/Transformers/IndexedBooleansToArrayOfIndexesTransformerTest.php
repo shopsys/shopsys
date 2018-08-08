@@ -21,7 +21,7 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
     /**
      * @dataProvider transformValuesProvider
      */
-    public function testTransform($value, $expected)
+    public function testTransform($value, $expected): void
     {
         $transformer = new IndexedBooleansToArrayOfIndexesTransformer();
         $this->assertSame($expected, $transformer->transform($value));
@@ -43,7 +43,7 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
     /**
      * @dataProvider reverseTransformValuesProvider
      */
-    public function testReverseTransform($value, $expected)
+    public function testReverseTransform($value, $expected): void
     {
         $transformer = new IndexedBooleansToArrayOfIndexesTransformer();
         $this->assertSame($expected, $transformer->reverseTransform($value));

@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder;
 
 class NotNullableColumnsFinderTest extends TestCase
 {
-    public function testGetAllNotNullableColumnNamesIndexedByTableName()
+    public function testGetAllNotNullableColumnNamesIndexedByTableName(): void
     {
         $classMetadataInfoMock = $this->createMock(ClassMetadataInfo::class);
         $classMetadataInfoMock
@@ -63,7 +63,7 @@ class NotNullableColumnsFinderTest extends TestCase
         $this->assertSame($expectedResult, $actualResult);
     }
 
-    public function testGetAllNotNullableColumnNamesIndexedByTableNameException()
+    public function testGetAllNotNullableColumnNamesIndexedByTableNameException(): void
     {
         $classMetadataMock = $this->createMock(ClassMetadata::class);
         $this->expectException(\Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException::class);

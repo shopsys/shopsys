@@ -32,9 +32,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         $this->domain = $domain;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     public function create(): PaymentData
     {
         $paymentData = new PaymentData();
@@ -43,9 +40,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         return $paymentData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     protected function fillNew(PaymentData $paymentData): void
     {
         $paymentData->vat = $this->vatFacade->getDefaultVat();
@@ -55,10 +49,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     public function createFromPayment(Payment $payment): PaymentData
     {
         $paymentData = new PaymentData();
@@ -67,11 +57,7 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         return $paymentData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     */
-    protected function fillFromPayment(PaymentData $paymentData, Payment $payment)
+    protected function fillFromPayment(PaymentData $paymentData, Payment $payment): void
     {
         $paymentData->vat = $payment->getVat();
         $paymentData->hidden = $payment->isHidden();

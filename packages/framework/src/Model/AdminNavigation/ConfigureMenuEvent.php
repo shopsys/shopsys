@@ -34,17 +34,11 @@ class ConfigureMenuEvent extends Event
         $this->menu = $menu;
     }
 
-    /**
-     * @return \Knp\Menu\FactoryInterface
-     */
     public function getMenuFactory(): FactoryInterface
     {
         return $this->menuFactory;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     public function getMenu(): ItemInterface
     {
         return $this->menu;

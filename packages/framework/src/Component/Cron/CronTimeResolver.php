@@ -6,12 +6,7 @@ use DateTimeInterface;
 
 class CronTimeResolver
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface $cronTime
-     * @param \DateTimeInterface $dateTime
-     * @return bool
-     */
-    public function isValidAtTime(CronTimeInterface $cronTime, DateTimeInterface $dateTime)
+    public function isValidAtTime(CronTimeInterface $cronTime, DateTimeInterface $dateTime): bool
     {
         $hour = (int)$dateTime->format('G');
         $minute = (int)$dateTime->format('i');
@@ -20,12 +15,7 @@ class CronTimeResolver
             $this->isMatchWithTimeString($minute, $cronTime->getTimeMinutes());
     }
 
-    /**
-     * @param int $value
-     * @param string $timeString
-     * @return bool
-     */
-    private function isMatchWithTimeString($value, $timeString)
+    private function isMatchWithTimeString(int $value, string $timeString): bool
     {
         $timeValues = explode(',', $timeString);
         $matches = null;
@@ -41,12 +31,7 @@ class CronTimeResolver
         return false;
     }
 
-    /**
-     * @param string $timeString
-     * @param int $maxValue
-     * @param int $divisibleBy
-     */
-    public function validateTimeString($timeString, $maxValue, $divisibleBy)
+    public function validateTimeString(string $timeString, int $maxValue, int $divisibleBy): void
     {
         $timeValues = explode(',', $timeString);
         $matches = null;

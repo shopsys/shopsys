@@ -23,21 +23,14 @@ class HomepagePage extends AbstractPage
         parent::__construct($strictWebDriver, $tester);
     }
 
-    /**
-     * @param string $productName
-     * @param int $quantity
-     */
-    public function addTopProductToCartByName($productName, $quantity = 1)
+    public function addTopProductToCartByName(string $productName, int $quantity = 1): void
     {
         $topProductsContext = $this->getTopProductsContext();
 
         $this->productListComponent->addProductToCartByName($productName, $quantity, $topProductsContext);
     }
 
-    /**
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
-    private function getTopProductsContext()
+    private function getTopProductsContext(): \Facebook\WebDriver\WebDriverElement
     {
         return $this->webDriver->findElement(WebDriverBy::cssSelector('#top-products'));
     }

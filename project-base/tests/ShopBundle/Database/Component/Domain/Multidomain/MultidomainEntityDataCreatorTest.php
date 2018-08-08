@@ -9,7 +9,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class MultidomainEntityDataCreatorTest extends DatabaseTestCase
 {
-    public function testCopyAllMultidomainDataForNewDomainCopiesTestRow()
+    public function testCopyAllMultidomainDataForNewDomainCopiesTestRow(): void
     {
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         /* @var $em \Doctrine\ORM\EntityManager */
@@ -66,7 +66,7 @@ class MultidomainEntityDataCreatorTest extends DatabaseTestCase
         $this->assertSame($expectedResults, $results);
     }
 
-    public function testCopyAllMultidomainDataForNewDomainWithDomainIdDoesNotThrowDriverException()
+    public function testCopyAllMultidomainDataForNewDomainWithDomainIdDoesNotThrowDriverException(): void
     {
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         /* @var $em \Doctrine\ORM\EntityManager */

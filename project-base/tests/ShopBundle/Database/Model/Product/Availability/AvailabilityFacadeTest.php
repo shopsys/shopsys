@@ -12,7 +12,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class AvailabilityFacadeTest extends DatabaseTestCase
 {
-    public function testDeleteByIdAndReplace()
+    public function testDeleteByIdAndReplace(): void
     {
         $em = $this->getEntityManager();
         $availabilityFacade = $this->getContainer()->get(AvailabilityFacade::class);

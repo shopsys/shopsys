@@ -25,7 +25,7 @@ class MigrationsLocatorTest extends TestCase
      */
     private $migrationsLocator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->kernelMock = $this->createMock(KernelInterface::class);
         $this->filesystemMock = $this->createMock(Filesystem::class);
@@ -37,7 +37,7 @@ class MigrationsLocatorTest extends TestCase
         );
     }
 
-    public function testExistingMigrationsLocation()
+    public function testExistingMigrationsLocation(): void
     {
         $this->kernelReturnsOneBundle('Test\\MockBundle', 'test/MockBundle');
         $this->filesystemSaysPathExists('test/MockBundle/MigrationsDirectory');
@@ -47,7 +47,7 @@ class MigrationsLocatorTest extends TestCase
         $this->assertCount(1, $migrationsLocations);
     }
 
-    public function testNonExistingMigrationsLocation()
+    public function testNonExistingMigrationsLocation(): void
     {
         $this->kernelReturnsOneBundle('Test\\MockBundle', 'test/MockBundle');
         $this->filesystemSaysPathExists('test/MockBundle/MigrationsDirectory', false);
@@ -57,7 +57,7 @@ class MigrationsLocatorTest extends TestCase
         $this->assertEmpty($migrationsLocations);
     }
 
-    public function testMultipleMigrationsLocations()
+    public function testMultipleMigrationsLocations(): void
     {
         $bundle = $this->createBundleMock('Test\\MockBundle', 'test/MockBundle');
         $this->kernelMock->method('getBundles')->willReturn([$bundle, $bundle, $bundle]);
@@ -68,7 +68,7 @@ class MigrationsLocatorTest extends TestCase
         $this->assertCount(3, $migrationsLocations);
     }
 
-    public function testMigrationsLocationParameters()
+    public function testMigrationsLocationParameters(): void
     {
         $this->kernelReturnsOneBundle('Test\\MockBundle', 'test/MockBundle');
         $this->filesystemSaysEveryPathExists();
@@ -79,42 +79,29 @@ class MigrationsLocatorTest extends TestCase
         $this->assertEquals('test/MockBundle/MigrationsDirectory', $migrationsLocation->getDirectory());
     }
 
-    /**
-     * @param string $namespace
-     * @param string $path
-     */
-    private function kernelReturnsOneBundle($namespace, $path)
+    private function kernelReturnsOneBundle(string $namespace, string $path): void
     {
         $this->kernelMock->method('getBundles')
             ->willReturn([$this->createBundleMock($namespace, $path)]);
     }
 
-    /**
-     * @param string $path
-     * @param bool $exists
-     */
-    private function filesystemSaysPathExists($path, $exists = true)
+    private function filesystemSaysPathExists(string $path, bool $exists = true): void
     {
         $this->filesystemMock->method('exists')
             ->with($path)
             ->willReturn($exists);
     }
 
-    /**
-     * @param bool $exists
-     */
-    private function filesystemSaysEveryPathExists($exists = true)
+    private function filesystemSaysEveryPathExists(bool $exists = true): void
     {
         $this->filesystemMock->method('exists')
             ->willReturn($exists);
     }
 
     /**
-     * @param string $namespace
-     * @param string $path
      * @return \Symfony\Component\HttpKernel\Bundle\BundleInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function createBundleMock($namespace, $path)
+    private function createBundleMock(string $namespace, string $path)
     {
         $bundleMock = $this->createMock(BundleInterface::class);
 

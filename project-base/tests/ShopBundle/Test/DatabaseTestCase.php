@@ -4,22 +4,19 @@ namespace Tests\ShopBundle\Test;
 
 abstract class DatabaseTestCase extends FunctionalTestCase
 {
-    /**
-     * @return \Doctrine\ORM\EntityManagerInterface
-     */
-    protected function getEntityManager()
+    protected function getEntityManager(): \Doctrine\ORM\EntityManagerInterface
     {
         return $this->getContainer()->get('doctrine.orm.entity_manager');
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->getEntityManager()->beginTransaction();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->getEntityManager()->rollback();
 

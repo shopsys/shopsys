@@ -32,10 +32,7 @@ class FlagDataFixture extends AbstractReferenceFixture
         $this->flagDataFactory = $flagDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $flagData = $this->flagDataFactory->create();
 
@@ -55,11 +52,7 @@ class FlagDataFixture extends AbstractReferenceFixture
         $this->createFlag($flagData, self::FLAG_ACTION_PRODUCT);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     * @param string|null $referenceName
-     */
-    private function createFlag(FlagData $flagData, $referenceName = null)
+    private function createFlag(FlagData $flagData, ?string $referenceName = null): void
     {
         $flag = $this->flagFacade->create($flagData);
         if ($referenceName !== null) {

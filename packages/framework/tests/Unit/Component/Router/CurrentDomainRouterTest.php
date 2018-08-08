@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 class CurrentDomainRouterTest extends TestCase
 {
-    public function testDelegateRouter()
+    public function testDelegateRouter(): void
     {
         $domainConfigs = new DomainConfig(1, 'http://example.com:8080', 'example', 'en');
         $settingMock = $this->createMock(Setting::class);

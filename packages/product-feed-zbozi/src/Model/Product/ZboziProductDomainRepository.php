@@ -17,12 +17,7 @@ class ZboziProductDomainRepository
         $this->em = $em;
     }
 
-    /**
-     * @param int $productId
-     * @param int $domainId
-     * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain|null
-     */
-    public function findByProductIdAndDomainId($productId, $domainId)
+    public function findByProductIdAndDomainId(int $productId, int $domainId): ?\Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
@@ -37,10 +32,9 @@ class ZboziProductDomainRepository
     }
 
     /**
-     * @param int $productId
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]|null
      */
-    public function findByProductId($productId)
+    public function findByProductId(int $productId): ?array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
@@ -52,11 +46,9 @@ class ZboziProductDomainRepository
     }
 
     /**
-     * @param array $productsIds
-     * @param int $domainId
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]
      */
-    public function getZboziProductDomainsByProductsIdsDomainIdIndexedByProductId($productsIds, $domainId)
+    public function getZboziProductDomainsByProductsIdsDomainIdIndexedByProductId(array $productsIds, int $domainId): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')

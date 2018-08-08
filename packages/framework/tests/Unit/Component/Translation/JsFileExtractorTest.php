@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor;
 
 class JsFileExtractorTest extends TestCase
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $fileName = 'test.js';
 

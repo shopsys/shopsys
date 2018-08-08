@@ -9,10 +9,9 @@ use Symfony\Component\Validator\ConstraintValidator;
 class FileExtensionMaxLengthValidator extends ConstraintValidator
 {
     /**
-     * @param string $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
+     * @param mixed $value
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof FileExtensionMaxLength) {
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, FileExtensionMaxLength::class);

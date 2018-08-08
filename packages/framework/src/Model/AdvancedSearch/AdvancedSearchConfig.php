@@ -14,10 +14,7 @@ class AdvancedSearchConfig
         $this->filters = [];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $filter
-     */
-    public function registerFilter(AdvancedSearchFilterInterface $filter)
+    public function registerFilter(AdvancedSearchFilterInterface $filter): void
     {
         if (array_key_exists($filter->getName(), $this->filters)) {
             $message = 'Filter "' . $filter->getName() . '" already exists.';
@@ -30,16 +27,12 @@ class AdvancedSearchConfig
     /**
      * @return \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface[]
      */
-    public function getAllFilters()
+    public function getAllFilters(): array
     {
         return $this->filters;
     }
 
-    /**
-     * @param string $filterName
-     * @return \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface
-     */
-    public function getFilter($filterName)
+    public function getFilter(string $filterName): \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface
     {
         if (!array_key_exists($filterName, $this->filters)) {
             $message = 'Filter "' . $filterName . '" not found.';

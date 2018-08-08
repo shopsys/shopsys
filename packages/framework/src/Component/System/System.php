@@ -4,18 +4,12 @@ namespace Shopsys\FrameworkBundle\Component\System;
 
 class System
 {
-    /**
-     * @return bool
-     */
-    public function isWindows()
+    public function isWindows(): bool
     {
         return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
     }
 
-    /**
-     * @return bool
-     */
-    public function isMac()
+    public function isMac(): bool
     {
         return stripos(PHP_OS, 'darwin') === 0;
     }

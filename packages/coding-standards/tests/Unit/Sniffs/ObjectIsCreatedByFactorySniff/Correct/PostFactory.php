@@ -6,7 +6,7 @@ namespace Tests\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff\Correct;
 
 final class PostFactory
 {
-    public function create()
+    public function create(): void
     {
         $post = new Post();
     }

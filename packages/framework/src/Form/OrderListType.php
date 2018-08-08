@@ -22,10 +22,7 @@ class OrderListType extends AbstractType
         $this->orderFacade = $orderFacade;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('user')
             ->setAllowedTypes('user', User::class)
@@ -34,16 +31,13 @@ class OrderListType extends AbstractType
             ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
         $view->vars['orders'] = $this->orderFacade->getCustomerOrderList($options['user']);
     }
 
-    /**
-     * @return null|string
-     */
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }

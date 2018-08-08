@@ -11,11 +11,7 @@ class EntityParseException extends Exception implements ImageConfigException
      */
     private $entityClass;
 
-    /**
-     * @param string $entityClass
-     * @param \Exception|null $previous
-     */
-    public function __construct($entityClass, Exception $previous = null)
+    public function __construct(string $entityClass, Exception $previous = null)
     {
         $this->entityClass = $entityClass;
 
@@ -23,10 +19,7 @@ class EntityParseException extends Exception implements ImageConfigException
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }

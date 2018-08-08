@@ -7,9 +7,6 @@ use Twig_SimpleFunction;
 
 class FormExtension extends \Twig_Extension
 {
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [
@@ -19,10 +16,8 @@ class FormExtension extends \Twig_Extension
 
     /**
      * Creates source id of FormError equally as it is created in JS function FpJsFormValidator.validate
-     * @param \Symfony\Component\Form\FormError $formError
-     * @return string
      */
-    public function getFormErrorSourceId(FormError $formError)
+    public function getFormErrorSourceId(FormError $formError): string
     {
         $form = $formError->getOrigin();
         $sourceIdParts = [];

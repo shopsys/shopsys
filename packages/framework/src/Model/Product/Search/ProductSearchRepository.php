@@ -18,11 +18,7 @@ class ProductSearchRepository
         $this->tsqueryFactory = $tsqueryFactory;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
-     * @param string|null $searchText
-     */
-    public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText)
+    public function filterBySearchText(QueryBuilder $productQueryBuilder, ?string $searchText): void
     {
         if ($this->tsqueryFactory->isValidSearchText($searchText)) {
             $productQueryBuilder
@@ -36,11 +32,7 @@ class ProductSearchRepository
         }
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
-     * @param string|null $searchText
-     */
-    public function addRelevance(QueryBuilder $productQueryBuilder, $searchText)
+    public function addRelevance(QueryBuilder $productQueryBuilder, ?string $searchText): void
     {
         $productQueryBuilder->addSelect('
             CASE

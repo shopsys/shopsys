@@ -2,3 +2,27 @@ imports:
     - { resource: 'packages/coding-standards/easy-coding-standard.yml' }
     - { resource: 'packages/*/easy-coding-standard.yml' }
     - { resource: 'project-base/easy-coding-standard.yml' }
+
+
+services:
+    PhpCsFixer\Fixer\FunctionNotation\PhpdocToReturnTypeFixer:
+
+    SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff:
+        usefulAnnotations:
+            - '@deprecated'
+            - '@see'
+            - '@dataProvider'
+            - '@group'
+
+    Symplify\CodingStandard\Fixer\Commenting\RemoveUselessDocBlockFixer:
+
+parameters:
+    skip:
+        SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff.MissingTraversableParameterTypeHintSpecification: ~
+        SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff.MissingParameterTypeHint: ~
+
+        SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff.MissingTraversableReturnTypeHintSpecification: ~
+        SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff.MissingReturnTypeHint: ~
+
+        SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff.MissingTraversablePropertyTypeHintSpecification: ~
+        SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff.MissingPropertyTypeHint: ~

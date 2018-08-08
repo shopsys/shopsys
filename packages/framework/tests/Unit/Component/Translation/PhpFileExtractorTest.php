@@ -16,7 +16,7 @@ use SplFileInfo;
 
 class PhpFileExtractorTest extends TestCase
 {
-    public function testExtractController()
+    public function testExtractController(): void
     {
         $fileName = 'Controller.php';
 

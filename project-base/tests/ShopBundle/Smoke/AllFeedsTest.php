@@ -21,15 +21,12 @@ class AllFeedsTest extends FunctionalTestCase
      */
     private $filesystem;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->feedFacade = $this->getContainer()->get(FeedFacade::class);
         $this->filesystem = $this->getContainer()->get(FilesystemInterface::class);
     }
 
-    /**
-     * @return array
-     */
     public function getAllFeedExportCreationData(): array
     {
         // Method setUp is called only before each test, data providers are called even before that
@@ -51,9 +48,6 @@ class AllFeedsTest extends FunctionalTestCase
 
     /**
      * @dataProvider getAllFeedExportCreationData
-     *
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
     public function testFeedIsExportable(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): void
     {
@@ -67,10 +61,6 @@ class AllFeedsTest extends FunctionalTestCase
         $this->cleanUp($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     private function cleanUp(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): void
     {
         $feedFilepath = $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig);

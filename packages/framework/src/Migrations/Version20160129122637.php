@@ -8,10 +8,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20160129122637 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $sql = 'INSERT INTO setting_values (name, domain_id, value, type) VALUES
             (\'' . Setting::BASE_URL . '\', 1, \'http://localhost:8080\', \'string\')
@@ -37,10 +34,7 @@ class Version20160129122637 extends AbstractMigration
             $$ LANGUAGE plpgsql IMMUTABLE;');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

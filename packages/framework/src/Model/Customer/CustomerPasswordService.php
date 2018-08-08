@@ -28,32 +28,20 @@ class CustomerPasswordService
         $this->hashGenerator = $hashGenerator;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param string $password
-     */
-    public function changePassword(User $user, $password)
+    public function changePassword(User $user, string $password): void
     {
         $encoder = $this->encoderFactory->getEncoder($user);
         $passwordHash = $encoder->encodePassword($password, $user->getSalt());
         $user->changePassword($passwordHash);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
-    public function resetPassword(User $user)
+    public function resetPassword(User $user): void
     {
         $hash = $this->hashGenerator->generateHash(self::RESET_PASSWORD_HASH_LENGTH);
         $user->setResetPasswordHash($hash);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param string|null $hash
-     * @return bool
-     */
-    public function isResetPasswordHashValid(User $user, $hash)
+    public function isResetPasswordHashValid(User $user, ?string $hash): bool
     {
         if ($hash === null || $user->getResetPasswordHash() !== $hash) {
             return false;
@@ -67,12 +55,7 @@ class CustomerPasswordService
         return true;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param string|null $hash
-     * @param string $newPassword
-     */
-    public function setNewPassword(User $user, $hash, $newPassword)
+    public function setNewPassword(User $user, ?string $hash, string $newPassword): void
     {
         if (!$this->isResetPasswordHashValid($user, $hash)) {
             throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashException();

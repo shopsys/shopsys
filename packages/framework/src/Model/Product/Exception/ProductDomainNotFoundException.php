@@ -6,11 +6,6 @@ use Exception;
 
 class ProductDomainNotFoundException extends Exception implements ProductException
 {
-    /**
-     * @param int|null $productId
-     * @param int $domainId
-     * @param \Exception|null $previous
-     */
     public function __construct(int $productId = null, int $domainId, Exception $previous = null)
     {
         $productDescription = $productId !== null ? sprintf('with ID %d', $productId) : 'without ID';

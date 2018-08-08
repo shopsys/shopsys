@@ -32,11 +32,6 @@ class TransportAndPaymentWatcherService
      */
     private $transportPriceCalculation;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     */
     public function __construct(
         SessionInterface $session,
         PaymentPriceCalculation $paymentPriceCalculation,
@@ -48,13 +43,10 @@ class TransportAndPaymentWatcherService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @return \Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentCheckResult
      */
-    public function checkTransportAndPayment(OrderData $orderData, OrderPreview $orderPreview, $transports, $payments)
+    public function checkTransportAndPayment(OrderData $orderData, OrderPreview $orderPreview, $transports, $payments): \Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentCheckResult
     {
         $transport = $orderData->transport;
         $payment = $orderData->payment;
@@ -90,19 +82,12 @@ class TransportAndPaymentWatcherService
         return new TransportAndPaymentCheckResult($transportPriceChanged, $paymentPriceChanged);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
-     * @param int $domainId
-     * @return bool
-     */
     private function checkTransportPrice(
         Transport $transport,
         Currency $currency,
         OrderPreview $orderPreview,
-        $domainId
-    ) {
+        int $domainId
+    ): bool {
         $transportPrices = $this->getRememberedTransportPrices();
 
         if (array_key_exists($transport->getId(), $transportPrices)) {
@@ -122,19 +107,12 @@ class TransportAndPaymentWatcherService
         return false;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
-     * @param int $domainId
-     * @return bool
-     */
     private function checkPaymentPrice(
         Payment $payment,
         Currency $currency,
         OrderPreview $orderPreview,
-        $domainId
-    ) {
+        int $domainId
+    ): bool {
         $paymentPrices = $this->getRememberedPaymentPrices();
 
         if (array_key_exists($payment->getId(), $paymentPrices)) {
@@ -156,17 +134,14 @@ class TransportAndPaymentWatcherService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param int $domainId
-     * @return array
      */
     private function getTransportPrices(
         $transports,
         Currency $currency,
         OrderPreview $orderPreview,
         $domainId
-    ) {
+    ): array {
         $transportPriceValues = [];
         foreach ($transports as $transport) {
             $transportPrice = $this->transportPriceCalculation->calculatePrice(
@@ -183,17 +158,14 @@ class TransportAndPaymentWatcherService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param int $domainId
-     * @return array
      */
     private function getPaymentPrices(
         $payments,
         Currency $currency,
         OrderPreview $orderPreview,
         $domainId
-    ) {
+    ): array {
         $paymentPriceValues = [];
         foreach ($payments as $payment) {
             $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
@@ -211,17 +183,14 @@ class TransportAndPaymentWatcherService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
-     * @param int $domainId
      */
     private function rememberTransportAndPayment(
         array $transports,
         array $payments,
         Currency $currency,
         OrderPreview $orderPreview,
-        $domainId
-    ) {
+        int $domainId
+    ): void {
         $this->session->set(self::SESSION_ROOT, [
             self::SESSION_TRANSPORT_PRICES => $this->getTransportPrices(
                 $transports,
@@ -238,9 +207,6 @@ class TransportAndPaymentWatcherService
         ]);
     }
 
-    /**
-     * @return array
-     */
     private function getRememberedTransportAndPayment()
     {
         return $this->session->get(self::SESSION_ROOT, [
@@ -249,17 +215,11 @@ class TransportAndPaymentWatcherService
         ]);
     }
 
-    /**
-     * @return array
-     */
     private function getRememberedTransportPrices()
     {
         return $this->getRememberedTransportAndPayment()[self::SESSION_TRANSPORT_PRICES];
     }
 
-    /**
-     * @return array
-     */
     private function getRememberedPaymentPrices()
     {
         return $this->getRememberedTransportAndPayment()[self::SESSION_PAYMENT_PRICES];

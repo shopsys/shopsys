@@ -7,10 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180327093930 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('
             CREATE TABLE heureka_category (
@@ -41,10 +38,7 @@ class Version20180327093930 extends AbstractMigration
                 CONSTRAINT FK_FE112A6912469DE2 FOREIGN KEY (category_id) REFERENCES categories (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

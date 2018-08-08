@@ -35,7 +35,7 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
     /**
      * @dataProvider formatNumberDataProvider
      */
-    public function testFormatNumber($input, $locale, $result)
+    public function testFormatNumber($input, $locale, $result): void
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()

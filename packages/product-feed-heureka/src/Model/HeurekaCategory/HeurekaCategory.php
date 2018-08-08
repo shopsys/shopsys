@@ -46,9 +46,6 @@ class HeurekaCategory
      */
     protected $categories;
 
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData $heurekaCategoryData
-     */
     public function __construct(HeurekaCategoryData $heurekaCategoryData)
     {
         $this->id = $heurekaCategoryData->id;
@@ -57,10 +54,7 @@ class HeurekaCategory
         $this->categories = new ArrayCollection($heurekaCategoryData->categories);
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData $heurekaCategoryData
-     */
-    public function edit(HeurekaCategoryData $heurekaCategoryData)
+    public function edit(HeurekaCategoryData $heurekaCategoryData): void
     {
         $this->name = $heurekaCategoryData->name;
         $this->fullName = $heurekaCategoryData->fullName;
@@ -70,7 +64,7 @@ class HeurekaCategory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      */
-    protected function editCategories(array $categories)
+    protected function editCategories(array $categories): void
     {
         $this->categories->clear();
         foreach ($categories as $category) {
@@ -78,42 +72,27 @@ class HeurekaCategory
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
-    public function addCategory(Category $category)
+    public function addCategory(Category $category): void
     {
         $this->categories->add($category);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
-    public function removeCategory(Category $category)
+    public function removeCategory(Category $category): void
     {
         $this->categories->removeElement($category);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getFullName()
+    public function getFullName(): ?string
     {
         return $this->fullName;
     }

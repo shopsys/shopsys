@@ -32,19 +32,12 @@ class JsTranslatorCall
      */
     private $functionName;
 
-    /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
-     * @param \PLUG\JavaScript\JNodes\JNodeBase $messageIdArgumentNode
-     * @param string $messageId
-     * @param string $domain
-     * @param string $functionName
-     */
     public function __construct(
         JCallExprNode $callExprNode,
         JNodeBase $messageIdArgumentNode,
-        $messageId,
-        $domain,
-        $functionName
+        string $messageId,
+        string $domain,
+        string $functionName
     ) {
         $this->callExprNode = $callExprNode;
         $this->messageIdArgumentNode = $messageIdArgumentNode;
@@ -53,42 +46,27 @@ class JsTranslatorCall
         $this->functionName = $functionName;
     }
 
-    /**
-     * @return \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode
-     */
-    public function getCallExprNode()
+    public function getCallExprNode(): \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode
     {
         return $this->callExprNode;
     }
 
-    /**
-     * @return \PLUG\JavaScript\JNodes\JNodeBase
-     */
-    public function getMessageIdArgumentNode()
+    public function getMessageIdArgumentNode(): \PLUG\JavaScript\JNodes\JNodeBase
     {
         return $this->messageIdArgumentNode;
     }
 
-    /**
-     * @return string
-     */
-    public function getMessageId()
+    public function getMessageId(): string
     {
         return $this->messageId;
     }
 
-    /**
-     * @return string
-     */
-    public function getDomain()
+    public function getDomain(): string
     {
         return $this->domain;
     }
 
-    /**
-     * @return string
-     */
-    public function getFunctionName()
+    public function getFunctionName(): string
     {
         return $this->functionName;
     }

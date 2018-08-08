@@ -4,19 +4,11 @@ namespace Shopsys\FrameworkBundle\Component\String;
 
 class EncodingConverter
 {
-    /**
-     * @param string $stringCp1250
-     * @return string
-     */
-    private static function stringCp1250ToUtf8($stringCp1250)
+    private static function stringCp1250ToUtf8(string $stringCp1250): string
     {
         return iconv('CP1250', 'UTF-8//TRANSLIT', $stringCp1250);
     }
 
-    /**
-     * @param array $array
-     * @return array
-     */
     private static function arrayCp1250ToUtf8(array $array)
     {
         foreach ($array as $key => $value) {

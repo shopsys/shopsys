@@ -25,11 +25,6 @@ class ProductVisibilityExtension extends \Twig_Extension
      */
     private $domain;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         ProductVisibilityRepository $productVisibilityRepository,
         PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -40,9 +35,6 @@ class ProductVisibilityExtension extends \Twig_Extension
         $this->domain = $domain;
     }
 
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [
@@ -54,20 +46,12 @@ class ProductVisibilityExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'product_visibility';
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return bool
-     */
-    public function isVisibleForDefaultPricingGroupOnDomain(Product $product, $domainId)
+    public function isVisibleForDefaultPricingGroupOnDomain(Product $product, int $domainId): bool
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
         $productVisibility = $this->productVisibilityRepository->getProductVisibility($product, $pricingGroup, $domainId);
@@ -75,11 +59,7 @@ class ProductVisibilityExtension extends \Twig_Extension
         return $productVisibility->isVisible();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return bool
-     */
-    public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product)
+    public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product): bool
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             if (!$this->isVisibleForDefaultPricingGroupOnDomain($product, $domainConfig->getId())) {

@@ -21,11 +21,6 @@ class ParameterFacade
      */
     protected $parameterFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         ParameterRepository $parameterRepository,
@@ -36,11 +31,7 @@ class ParameterFacade
         $this->parameterFactory = $parameterFactory;
     }
 
-    /**
-     * @param int $parameterId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
-    public function getById($parameterId)
+    public function getById(int $parameterId): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         return $this->parameterRepository->getById($parameterId);
     }
@@ -48,16 +39,12 @@ class ParameterFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->parameterRepository->getAll();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
-    public function create(ParameterData $parameterData)
+    public function create(ParameterData $parameterData): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         $parameter = $this->parameterFactory->create($parameterData);
         $this->em->persist($parameter);
@@ -68,19 +55,13 @@ class ParameterFacade
 
     /**
      * @param string[] $namesByLocale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null
      */
-    public function findParameterByNames(array $namesByLocale)
+    public function findParameterByNames(array $namesByLocale): ?\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         return $this->parameterRepository->findParameterByNames($namesByLocale);
     }
 
-    /**
-     * @param int $parameterId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
-    public function edit($parameterId, ParameterData $parameterData)
+    public function edit(int $parameterId, ParameterData $parameterData): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         $parameter = $this->parameterRepository->getById($parameterId);
         $parameter->edit($parameterData);
@@ -89,10 +70,7 @@ class ParameterFacade
         return $parameter;
     }
 
-    /**
-     * @param int $parameterId
-     */
-    public function deleteById($parameterId)
+    public function deleteById(int $parameterId): void
     {
         $parameter = $this->parameterRepository->getById($parameterId);
 

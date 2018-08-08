@@ -19,13 +19,13 @@ class ImageConfigLoaderTest extends TestCase
      */
     private $imageConfigLoader;
 
-    public function setUp()
+    public function setUp(): void
     {
         $filesystem = new Filesystem();
         $this->imageConfigLoader = new ImageConfigLoader($filesystem);
     }
 
-    public function testLoadFromArrayDuplicateEntityName()
+    public function testLoadFromArrayDuplicateEntityName(): void
     {
         $inputConfig = [
             [
@@ -54,7 +54,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertInstanceOf(DuplicateEntityNameException::class, $previousException);
     }
 
-    public function testLoadFromArrayDuplicateEntityClass()
+    public function testLoadFromArrayDuplicateEntityClass(): void
     {
         $inputConfig = [
             [
@@ -83,7 +83,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertInstanceOf(DuplicateEntityNameException::class, $previousException);
     }
 
-    public function testLoadFromArrayDuplicateNullSizeName()
+    public function testLoadFromArrayDuplicateNullSizeName(): void
     {
         $inputConfig = [
             [
@@ -120,7 +120,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertInstanceOf(DuplicateSizeNameException::class, $previousException);
     }
 
-    public function testLoadFromArrayDuplicateTypeName()
+    public function testLoadFromArrayDuplicateTypeName(): void
     {
         $inputConfig = [
             [
@@ -152,7 +152,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertInstanceOf(DuplicateTypeNameException::class, $previousException);
     }
 
-    public function testLoadFromArray()
+    public function testLoadFromArray(): void
     {
         $inputConfig = [
             [
@@ -207,7 +207,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertSame(true, $imageSize->getCrop());
     }
 
-    public function testLoadFromArrayOriginalSize()
+    public function testLoadFromArrayOriginalSize(): void
     {
         $inputConfig = [
             [
@@ -230,7 +230,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertFalse($imageSize->getCrop());
     }
 
-    public function testLoadFromArrayExistsOriginalSize()
+    public function testLoadFromArrayExistsOriginalSize(): void
     {
         $inputConfig = [
             [

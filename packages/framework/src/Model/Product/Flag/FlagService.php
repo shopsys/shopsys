@@ -9,29 +9,17 @@ class FlagService
      */
     protected $flagFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactoryInterface $flagFactory
-     */
     public function __construct(FlagFactoryInterface $flagFactory)
     {
         $this->flagFactory = $flagFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
-    public function create(FlagData $flagData)
+    public function create(FlagData $flagData): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         return $this->flagFactory->create($flagData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
-    public function edit(Flag $flag, FlagData $flagData)
+    public function edit(Flag $flag, FlagData $flagData): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         $flag->edit($flagData);
 

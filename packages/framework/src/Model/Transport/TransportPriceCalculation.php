@@ -19,10 +19,6 @@ class TransportPriceCalculation
      */
     private $pricingSetting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         BasePriceCalculation $basePriceCalculation,
         PricingSetting $pricingSetting
@@ -31,19 +27,12 @@ class TransportPriceCalculation
         $this->basePriceCalculation = $basePriceCalculation;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
     public function calculatePrice(
         Transport $transport,
         Currency $currency,
         Price $productsPrice,
-        $domainId
-    ) {
+        int $domainId
+    ): \Shopsys\FrameworkBundle\Model\Pricing\Price {
         if ($this->isFree($productsPrice, $domainId)) {
             return new Price(0, 0);
         }
@@ -51,15 +40,10 @@ class TransportPriceCalculation
         return $this->calculateIndependentPrice($transport, $currency);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
     public function calculateIndependentPrice(
         Transport $transport,
         Currency $currency
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Pricing\Price {
         return $this->basePriceCalculation->calculateBasePrice(
             $transport->getPrice($currency)->getPrice(),
             $this->pricingSetting->getInputPriceType(),
@@ -67,12 +51,7 @@ class TransportPriceCalculation
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param int $domainId
-     * @return bool
-     */
-    private function isFree(Price $productsPrice, $domainId)
+    private function isFree(Price $productsPrice, int $domainId): bool
     {
         $freeTransportAndPaymentPriceLimit = $this->pricingSetting->getFreeTransportAndPaymentPriceLimit($domainId);
 
@@ -85,17 +64,14 @@ class TransportPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
     public function getCalculatedPricesIndexedByTransportId(
         array $transports,
         Currency $currency,
         Price $productsPrice,
-        $domainId
-    ) {
+        int $domainId
+    ): array {
         $transportsPricesByTransportId = [];
         foreach ($transports as $transport) {
             $transportsPricesByTransportId[$transport->getId()] = $this->calculatePrice(

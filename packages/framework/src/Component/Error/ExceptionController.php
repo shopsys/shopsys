@@ -11,31 +11,22 @@ class ExceptionController extends BaseController
      */
     private $showErrorPagePrototype = false;
 
-    /**
-     * @param bool $bool
-     */
-    public function setDebug($bool)
+    public function setDebug(bool $bool): void
     {
         $this->debug = $bool;
     }
 
-    /**
-     * @return bool
-     */
-    public function getDebug()
+    public function getDebug(): bool
     {
         return $this->debug;
     }
 
-    /**
-     * @return bool
-     */
-    public function isShownErrorPagePrototype()
+    public function isShownErrorPagePrototype(): bool
     {
         return $this->showErrorPagePrototype;
     }
 
-    public function setShowErrorPagePrototype()
+    public function setShowErrorPagePrototype(): void
     {
         $this->showErrorPagePrototype = true;
     }

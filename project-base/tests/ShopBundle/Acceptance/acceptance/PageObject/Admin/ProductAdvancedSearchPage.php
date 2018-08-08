@@ -10,11 +10,7 @@ class ProductAdvancedSearchPage extends AbstractPage
 {
     const SEARCH_SUBJECT_CATNUM = 'productCatnum';
 
-    /**
-     * @param string $searchSubject
-     * @param string $value
-     */
-    public function search($searchSubject, $value)
+    public function search(string $searchSubject, string $value): void
     {
         $this->tester->amOnPage('/admin/product/list/');
 
@@ -26,18 +22,12 @@ class ProductAdvancedSearchPage extends AbstractPage
         $this->tester->clickByText('Search', WebDriverBy::cssSelector('#js-advanced-search-rules-box'));
     }
 
-    /**
-     * @param string $productName
-     */
-    public function assertFoundProductByName($productName)
+    public function assertFoundProductByName(string $productName): void
     {
         $this->tester->seeInCss($productName, '.js-grid-column-name');
     }
 
-    /**
-     * @param int $expectedCount
-     */
-    public function assertFoundProductCount($expectedCount)
+    public function assertFoundProductCount(int $expectedCount): void
     {
         $foundProductCount = $this->tester->countVisibleByCss('tbody .table-grid__row');
 

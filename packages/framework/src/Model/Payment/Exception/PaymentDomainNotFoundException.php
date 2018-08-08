@@ -6,11 +6,6 @@ use Exception;
 
 class PaymentDomainNotFoundException extends Exception implements PaymentException
 {
-    /**
-     * @param int|null $paymentId
-     * @param int $domainId
-     * @param \Exception|null $previous
-     */
     public function __construct(int $paymentId = null, int $domainId, Exception $previous = null)
     {
         $paymentDescription = $paymentId !== null ? sprintf('with ID %d', $paymentId) : 'without ID';

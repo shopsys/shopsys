@@ -32,7 +32,7 @@ class DateTimeFormatterExtension extends Twig_Extension
     /**
      * @return \Twig_SimpleFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new \Twig_SimpleFilter(
@@ -50,9 +50,6 @@ class DateTimeFormatterExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [
@@ -66,9 +63,8 @@ class DateTimeFormatterExtension extends Twig_Extension
     /**
      * @param mixed $dateTime
      * @param string|null $locale
-     * @return string
      */
-    public function formatDate($dateTime, $locale = null)
+    public function formatDate($dateTime, $locale = null): string
     {
         return $this->format(
             $dateTime,
@@ -81,9 +77,8 @@ class DateTimeFormatterExtension extends Twig_Extension
     /**
      * @param mixed $dateTime
      * @param string|null $locale
-     * @return string
      */
-    public function formatTime($dateTime, $locale = null)
+    public function formatTime($dateTime, $locale = null): string
     {
         return $this->format(
             $dateTime,
@@ -96,9 +91,8 @@ class DateTimeFormatterExtension extends Twig_Extension
     /**
      * @param mixed $dateTime
      * @param string|null $locale
-     * @return string
      */
-    public function formatDateTime($dateTime, $locale = null)
+    public function formatDateTime($dateTime, $locale = null): string
     {
         return $this->format(
             $dateTime,
@@ -113,9 +107,8 @@ class DateTimeFormatterExtension extends Twig_Extension
      * @param int $dateType {@link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants}
      * @param int $timeType {@link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants}
      * @param string|null $locale
-     * @return string
      */
-    private function format($dateTime, $dateType, $timeType, $locale = null)
+    private function format($dateTime, $dateType, $timeType, $locale = null): string
     {
         if ($dateTime === null) {
             return '-';
@@ -129,11 +122,7 @@ class DateTimeFormatterExtension extends Twig_Extension
         );
     }
 
-    /**
-     * @param string|null $locale
-     * @return string
-     */
-    private function getLocale($locale = null)
+    private function getLocale(?string $locale = null): string
     {
         if ($locale === null) {
             $locale = $this->localization->getLocale();
@@ -144,9 +133,8 @@ class DateTimeFormatterExtension extends Twig_Extension
 
     /**
      * @param mixed $value
-     * @return \DateTime
      */
-    private function convertToDateTime($value)
+    private function convertToDateTime($value): \DateTime
     {
         if ($value instanceof DateTime) {
             return $value;
@@ -157,11 +145,7 @@ class DateTimeFormatterExtension extends Twig_Extension
         }
     }
 
-    /**
-     * @param int $date
-     * @return string
-     */
-    public function dateOfCreation($date)
+    public function dateOfCreation(int $date): string
     {
         $startDate = date('Y', strtotime('1-1-' . $date));
         $endDate = date('Y');
@@ -173,10 +157,7 @@ class DateTimeFormatterExtension extends Twig_Extension
         return $startDate . ' - ' . $endDate;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'date_formatter_extension';
     }

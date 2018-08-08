@@ -30,12 +30,6 @@ class CartMigrationFacade
      */
     protected $customerIdentifierFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartService $cartService
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         CartService $cartService,
@@ -48,10 +42,7 @@ class CartMigrationFacade
         $this->customerIdentifierFactory = $customerIdentifierFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
-    protected function mergeCurrentCartWithCart(Cart $cart)
+    protected function mergeCurrentCartWithCart(Cart $cart): void
     {
         $customerIdentifier = $this->customerIdentifierFactory->get();
         $currentCart = $this->cartFactory->get($customerIdentifier);
@@ -68,10 +59,7 @@ class CartMigrationFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $filterControllerEvent
-     */
-    public function onKernelController(FilterControllerEvent $filterControllerEvent)
+    public function onKernelController(FilterControllerEvent $filterControllerEvent): void
     {
         $session = $filterControllerEvent->getRequest()->getSession();
 

@@ -54,7 +54,7 @@ class SitemapFacade
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
-    public function generateForAllDomains()
+    public function generateForAllDomains(): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $section = (string)$domainConfig->getId();
@@ -69,10 +69,9 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
-    public function getSitemapItemsForVisibleProducts(DomainConfig $domainConfig)
+    public function getSitemapItemsForVisibleProducts(DomainConfig $domainConfig): array
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());
 
@@ -80,19 +79,17 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
-    public function getSitemapItemsForVisibleCategories(DomainConfig $domainConfig)
+    public function getSitemapItemsForVisibleCategories(DomainConfig $domainConfig): array
     {
         return $this->sitemapRepository->getSitemapItemsForVisibleCategories($domainConfig);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
-    public function getSitemapItemsForArticlesOnDomain(DomainConfig $domainConfig)
+    public function getSitemapItemsForArticlesOnDomain(DomainConfig $domainConfig): array
     {
         return $this->sitemapRepository->getSitemapItemsForArticlesOnDomain($domainConfig);
     }

@@ -22,18 +22,12 @@ class ValueByDateTimeDataPoint
         $this->dateTime = $dateTime;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateTime()
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }

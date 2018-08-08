@@ -25,28 +25,18 @@ class OrderNumberSequence
      */
     protected $number;
 
-    /**
-     * @param int $id
-     * @param string $number
-     */
-    public function __construct($id, $number = '0')
+    public function __construct(int $id, string $number = '0')
     {
         $this->id = $id;
         $this->number = $number;
     }
 
-    /**
-     * @return string
-     */
-    public function getNumber()
+    public function getNumber(): string
     {
         return $this->number;
     }
 
-    /**
-     * @param string $number
-     */
-    public function setNumber($number)
+    public function setNumber(string $number): void
     {
         $this->number = $number;
     }

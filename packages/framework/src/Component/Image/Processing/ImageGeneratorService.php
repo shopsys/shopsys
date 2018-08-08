@@ -41,12 +41,7 @@ class ImageGeneratorService
         $this->filesystem = $filesystem;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @param string|null $sizeName
-     * @return string
-     */
-    public function generateImageSizeAndGetFilepath(Image $image, $sizeName)
+    public function generateImageSizeAndGetFilepath(Image $image, ?string $sizeName): string
     {
         if ($sizeName === ImageConfig::ORIGINAL_SIZE_NAME) {
             throw new \Shopsys\FrameworkBundle\Component\Image\Processing\Exception\OriginalSizeImageCannotBeGeneratedException(

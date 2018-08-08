@@ -94,12 +94,7 @@ class OrderMailService
         $this->orderService = $orderService;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
-     */
-    public function getMessageDataByOrder(Order $order, MailTemplate $mailTemplate)
+    public function getMessageDataByOrder(Order $order, MailTemplate $mailTemplate): \Shopsys\FrameworkBundle\Model\Mail\MessageData
     {
         return new MessageData(
             $order->getEmail(),
@@ -113,20 +108,12 @@ class OrderMailService
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
-     * @return string
-     */
-    public function getMailTemplateNameByStatus(OrderStatus $orderStatus)
+    public function getMailTemplateNameByStatus(OrderStatus $orderStatus): string
     {
         return self::MAIL_TEMPLATE_NAME_PREFIX . $orderStatus->getId();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return array
-     */
-    private function getVariablesReplacementsForBody(Order $order)
+    private function getVariablesReplacementsForBody(Order $order): array
     {
         $router = $this->domainRouterFactory->getRouter($order->getDomainId());
         $orderDomainConfig = $this->domain->getDomainConfigById($order->getDomainId());
@@ -154,11 +141,7 @@ class OrderMailService
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return array
-     */
-    private function getVariablesReplacementsForSubject(Order $order)
+    private function getVariablesReplacementsForSubject(Order $order): array
     {
         return [
             self::VARIABLE_NUMBER => $order->getNumber(),
@@ -166,9 +149,6 @@ class OrderMailService
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getTemplateVariables()
     {
         return [
@@ -188,11 +168,7 @@ class OrderMailService
         ];
     }
 
-    /**
-     * @param  \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
-    private function getFormattedPrice(Order $order)
+    private function getFormattedPrice(Order $order): string
     {
         return $this->priceExtension->priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
             $order->getTotalPriceWithVat(),
@@ -201,11 +177,7 @@ class OrderMailService
         );
     }
 
-    /**
-     * @param  \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
-    private function getFormattedDateTime(Order $order)
+    private function getFormattedDateTime(Order $order): string
     {
         return $this->dateTimeFormatterExtension->formatDateTime(
             $order->getCreatedAt(),
@@ -213,11 +185,7 @@ class OrderMailService
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
-    private function getBillingAddressHtmlTable(Order $order)
+    private function getBillingAddressHtmlTable(Order $order): string
     {
         return $this->twig->render('@ShopsysFramework/Mail/Order/billingAddress.html.twig', [
             'order' => $order,
@@ -225,11 +193,7 @@ class OrderMailService
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
-    private function getDeliveryAddressHtmlTable(Order $order)
+    private function getDeliveryAddressHtmlTable(Order $order): string
     {
         return $this->twig->render('@ShopsysFramework/Mail/Order/deliveryAddress.html.twig', [
             'order' => $order,
@@ -237,11 +201,7 @@ class OrderMailService
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
-    private function getProductsHtmlTable(Order $order)
+    private function getProductsHtmlTable(Order $order): string
     {
         $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById($order->getItems());
 
@@ -252,11 +212,7 @@ class OrderMailService
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
-    private function getDomainLocaleByOrder(Order $order)
+    private function getDomainLocaleByOrder(Order $order): string
     {
         return $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
     }

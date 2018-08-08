@@ -22,7 +22,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class OrderFacadeTest extends DatabaseTestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $cartFacade = $this->getContainer()->get(CartFacade::class);
         /* @var $cartFacade \Shopsys\FrameworkBundle\Model\Cart\CartFacade */
@@ -114,7 +114,7 @@ class OrderFacadeTest extends DatabaseTestCase
         $this->assertCount(3, $orderFromDb->getItems());
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $orderFacade = $this->getContainer()->get(OrderFacade::class);
         /* @var $orderFacade \Shopsys\FrameworkBundle\Model\Order\OrderFacade */

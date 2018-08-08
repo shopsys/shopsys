@@ -7,9 +7,6 @@ use Twig_SimpleFunction;
 
 class VarDumperExtension extends Twig_Extension
 {
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [
@@ -23,7 +20,7 @@ class VarDumperExtension extends Twig_Extension
     /**
      * @param mixed $var
      */
-    public function d($var)
+    public function d($var): void
     {
         d($var);
     }

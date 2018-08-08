@@ -53,11 +53,7 @@ class ImageProcessingService
         $this->localFilesystem = $localFilesystem;
     }
 
-    /**
-     * @param string $filepath
-     * @return \Intervention\Image\Image
-     */
-    public function createInterventionImage($filepath)
+    public function createInterventionImage(string $filepath): \Intervention\Image\Image
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
 
@@ -79,11 +75,7 @@ class ImageProcessingService
         }
     }
 
-    /**
-     * @param string $filepath
-     * @return string
-     */
-    public function convertToShopFormatAndGetNewFilename($filepath)
+    public function convertToShopFormatAndGetNewFilename(string $filepath): string
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
         $newFilepath = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . pathinfo($filepath, PATHINFO_FILENAME) . '.';
@@ -106,22 +98,15 @@ class ImageProcessingService
         return $image->filename . '.' . $image->extension;
     }
 
-    /**
-     * @param \Intervention\Image\Image $image
-     * @param int|null $width
-     * @param int|null $height
-     * @param bool $crop
-     * @return \Intervention\Image\Image
-     */
-    public function resize(Image $image, $width, $height, $crop = false)
+    public function resize(Image $image, ?int $width, ?int $height, bool $crop = false): \Intervention\Image\Image
     {
         if ($crop) {
-            $image->fit($width, $height, function (Constraint $constraint) {
+            $image->fit($width, $height, function (Constraint $constraint): void {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
         } else {
-            $image->resize($width, $height, function (Constraint $constraint) {
+            $image->resize($width, $height, function (Constraint $constraint): void {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
@@ -130,11 +115,7 @@ class ImageProcessingService
         return $image;
     }
 
-    /**
-     * @param \Intervention\Image\Image $image
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
-     */
-    public function resizeBySizeConfig(Image $image, ImageSizeConfig $sizeConfig)
+    public function resizeBySizeConfig(Image $image, ImageSizeConfig $sizeConfig): void
     {
         $this->resize($image, $sizeConfig->getWidth(), $sizeConfig->getHeight(), $sizeConfig->getCrop());
     }
@@ -142,16 +123,12 @@ class ImageProcessingService
     /**
      * @return string[]
      */
-    public function getSupportedImageExtensions()
+    public function getSupportedImageExtensions(): array
     {
         return $this->supportedImageExtensions;
     }
 
-    /**
-     * @param string $filepath
-     * @param string $newFilepath
-     */
-    private function removeFileIfRenamed($filepath, $newFilepath)
+    private function removeFileIfRenamed(string $filepath, string $newFilepath): void
     {
         if ($this->filesystem->has($filepath) && $filepath !== $newFilepath) {
             $this->filesystem->delete($filepath);

@@ -9,9 +9,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterProductFeedConfigsCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container): void
     {
         $feedRegistryDefinition = $container->findDefinition(FeedRegistry::class);

@@ -14,64 +14,37 @@ class HeurekaSetting
      */
     private $setting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(Setting $setting)
     {
         $this->setting = $setting;
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getApiKeyByDomainId($domainId)
+    public function getApiKeyByDomainId(int $domainId): string
     {
         return $this->setting->getForDomain(self::HEUREKA_API_KEY, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getHeurekaShopCertificationWidgetByDomainId($domainId)
+    public function getHeurekaShopCertificationWidgetByDomainId(int $domainId): string
     {
         return $this->setting->getForDomain(self::HEUREKA_WIDGET_CODE, $domainId);
     }
 
-    /**
-     * @param string $apiKey
-     * @param int $domainId
-     */
-    public function setApiKeyForDomain($apiKey, $domainId)
+    public function setApiKeyForDomain(string $apiKey, int $domainId): void
     {
         $this->setting->setForDomain(self::HEUREKA_API_KEY, $apiKey, $domainId);
     }
 
-    /**
-     * @param string $heurekaWidgetCode
-     * @param int $domainId
-     */
-    public function setHeurekaShopCertificationWidgetForDomain($heurekaWidgetCode, $domainId)
+    public function setHeurekaShopCertificationWidgetForDomain(string $heurekaWidgetCode, int $domainId): void
     {
         $this->setting->setForDomain(self::HEUREKA_WIDGET_CODE, $heurekaWidgetCode, $domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isHeurekaShopCertificationActivated($domainId)
+    public function isHeurekaShopCertificationActivated($domainId): bool
     {
         return !empty($this->setting->getForDomain(self::HEUREKA_API_KEY, $domainId));
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isHeurekaWidgetActivated($domainId)
+    public function isHeurekaWidgetActivated($domainId): bool
     {
         return !empty($this->setting->getForDomain(self::HEUREKA_WIDGET_CODE, $domainId));
     }

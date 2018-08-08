@@ -17,7 +17,6 @@ class ParameterFilterChoice
     private $values;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $values
      */
     public function __construct(
@@ -28,10 +27,7 @@ class ParameterFilterChoice
         $this->values = $values;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
-    public function getParameter()
+    public function getParameter(): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         return $this->parameter;
     }
@@ -39,7 +35,7 @@ class ParameterFilterChoice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    public function getValues()
+    public function getValues(): array
     {
         return $this->values;
     }

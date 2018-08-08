@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData;
 
 class OrderDataTest extends TestCase
 {
-    public function testGetNewItemsWithoutTransportAndPayment()
+    public function testGetNewItemsWithoutTransportAndPayment(): void
     {
         $orderData = new OrderData();
         $newOrderItemData = new OrderItemData();

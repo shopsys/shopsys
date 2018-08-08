@@ -30,7 +30,7 @@ class CategoryDomainTest extends DatabaseTestCase
      */
     private $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->categoryDataFactory = $this->getContainer()->get(CategoryDataFactory::class);
@@ -38,7 +38,7 @@ class CategoryDomainTest extends DatabaseTestCase
         $this->em = $this->getEntityManager();
     }
 
-    public function testCreateCategoryEnabledOnDomain()
+    public function testCreateCategoryEnabledOnDomain(): void
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -51,7 +51,7 @@ class CategoryDomainTest extends DatabaseTestCase
         $this->assertTrue($refreshedCategory->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    public function testCreateCategoryDisabledOnDomain()
+    public function testCreateCategoryDisabledOnDomain(): void
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -67,7 +67,7 @@ class CategoryDomainTest extends DatabaseTestCase
     /**
      * @group multidomain
      */
-    public function testCreateCategoryWithDifferentVisibilityOnDomains()
+    public function testCreateCategoryWithDifferentVisibilityOnDomains(): void
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -85,7 +85,7 @@ class CategoryDomainTest extends DatabaseTestCase
     /**
      * @group multidomain
      */
-    public function testCreateCategoryDomainWithData()
+    public function testCreateCategoryDomainWithData(): void
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -108,7 +108,7 @@ class CategoryDomainTest extends DatabaseTestCase
     /**
      * @group singledomain
      */
-    public function testCreateCategoryDomainWithDataForSingleDomain()
+    public function testCreateCategoryDomainWithDataForSingleDomain(): void
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -125,11 +125,7 @@ class CategoryDomainTest extends DatabaseTestCase
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedCategory->getSeoH1(self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    private function getRefreshedCategoryFromDatabase(Category $category)
+    private function getRefreshedCategoryFromDatabase(Category $category): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         $this->em->persist($category);
         $this->em->flush();

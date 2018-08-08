@@ -23,11 +23,6 @@ class ImageService
      */
     protected $imageFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessingService $imageProcessingService
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
-     */
     public function __construct(
         ImageProcessingService $imageProcessingService,
         FileUpload $fileUpload,
@@ -39,13 +34,10 @@ class ImageService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig $imageEntityConfig
-     * @param int $entityId
-     * @param array $temporaryFilenames
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getUploadedImages(ImageEntityConfig $imageEntityConfig, $entityId, array $temporaryFilenames, $type)
+    public function getUploadedImages(ImageEntityConfig $imageEntityConfig, int $entityId, array $temporaryFilenames, ?string $type): array
     {
         if (!$imageEntityConfig->isMultiple($type)) {
             $message = 'Entity ' . $imageEntityConfig->getEntityClass()
@@ -61,19 +53,12 @@ class ImageService
         return $images;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig $imageEntityConfig
-     * @param int $entityId
-     * @param string $temporaryFilename
-     * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
-     */
     public function createImage(
         ImageEntityConfig $imageEntityConfig,
-        $entityId,
-        $temporaryFilename,
-        $type
-    ) {
+        int $entityId,
+        string $temporaryFilename,
+        ?string $type
+    ): \Shopsys\FrameworkBundle\Component\Image\Image {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
 
         $image = $this->imageFactory->create(
@@ -87,23 +72,16 @@ class ImageService
     }
 
     /**
-     * @param string $entityName
-     * @param int $entityId
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
      */
-    public function deleteImages($entityName, $entityId, array $images)
+    public function deleteImages(string $entityName, int $entityId, array $images): void
     {
         foreach ($images as $image) {
             $this->deleteImage($entityName, $entityId, $image);
         }
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     */
-    private function deleteImage($entityName, $entityId, Image $image)
+    private function deleteImage(string $entityName, int $entityId, Image $image): void
     {
         if ($image->getEntityName() !== $entityName
             || $image->getEntityId() !== $entityId
@@ -122,7 +100,7 @@ class ImageService
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
      */
-    public function setImagePositionsByOrder($orderedImages)
+    public function setImagePositionsByOrder($orderedImages): void
     {
         $position = 0;
         foreach ($orderedImages as $image) {

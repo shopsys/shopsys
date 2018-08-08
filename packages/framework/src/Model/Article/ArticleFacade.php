@@ -33,13 +33,6 @@ class ArticleFacade
      */
     protected $articleFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         ArticleRepository $articleRepository,
@@ -54,66 +47,40 @@ class ArticleFacade
         $this->articleFactory = $articleFactory;
     }
 
-    /**
-     * @param int $articleId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
-     */
-    public function findById($articleId)
+    public function findById(int $articleId): ?\Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->articleRepository->findById($articleId);
     }
 
-    /**
-     * @param int $articleId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
-     */
-    public function getById($articleId)
+    public function getById(int $articleId): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->articleRepository->getById($articleId);
     }
 
-    /**
-     * @param int $articleId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
-     */
-    public function getVisibleById($articleId)
+    public function getVisibleById(int $articleId): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->articleRepository->getVisibleById($articleId);
     }
 
-    /**
-     * @param $domainId
-     * @return int
-     */
-    public function getAllArticlesCountByDomainId($domainId)
+    public function getAllArticlesCountByDomainId($domainId): int
     {
         return $this->articleRepository->getAllArticlesCountByDomainId($domainId);
     }
 
     /**
-     * @param string $placement
      * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
-    public function getVisibleArticlesForPlacementOnCurrentDomain($placement)
+    public function getVisibleArticlesForPlacementOnCurrentDomain(string $placement): array
     {
         return $this->articleRepository->getVisibleArticlesForPlacement($this->domain->getId(), $placement);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $placement
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getOrderedArticlesByDomainIdAndPlacementQueryBuilder($domainId, $placement)
+    public function getOrderedArticlesByDomainIdAndPlacementQueryBuilder(int $domainId, string $placement): \Doctrine\ORM\QueryBuilder
     {
         return $this->articleRepository->getOrderedArticlesByDomainIdAndPlacementQueryBuilder($domainId, $placement);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
-     */
-    public function create(ArticleData $articleData)
+    public function create(ArticleData $articleData): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         $article = $this->articleFactory->create($articleData);
 
@@ -130,12 +97,7 @@ class ArticleFacade
         return $article;
     }
 
-    /**
-     * @param int $articleId
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
-     */
-    public function edit($articleId, ArticleData $articleData)
+    public function edit(int $articleId, ArticleData $articleData): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         $article = $this->articleRepository->getById($articleId);
         $article->edit($articleData);
@@ -152,10 +114,7 @@ class ArticleFacade
         return $article;
     }
 
-    /**
-     * @param int $articleId
-     */
-    public function delete($articleId)
+    public function delete(int $articleId): void
     {
         $article = $this->articleRepository->getById($articleId);
 
@@ -166,7 +125,7 @@ class ArticleFacade
     /**
      * @param string[][] $rowIdsByGridId
      */
-    public function saveOrdering(array $rowIdsByGridId)
+    public function saveOrdering(array $rowIdsByGridId): void
     {
         foreach ($rowIdsByGridId as $gridId => $rowIds) {
             foreach ($rowIds as $position => $rowId) {
@@ -179,10 +138,9 @@ class ArticleFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId(int $domainId): array
     {
         return $this->articleRepository->getAllByDomainId($domainId);
     }

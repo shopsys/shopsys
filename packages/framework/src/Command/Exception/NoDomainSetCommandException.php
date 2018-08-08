@@ -6,9 +6,6 @@ use Exception;
 
 class NoDomainSetCommandException extends Exception implements CommandException
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(Exception $previous = null)
     {
         $message = 'There are no domains set.';

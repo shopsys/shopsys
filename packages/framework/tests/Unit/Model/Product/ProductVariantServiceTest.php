@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVariantService;
 
 class ProductVariantServiceTest extends TestCase
 {
-    public function testCheckProductIsNotMainVariantException()
+    public function testCheckProductIsNotMainVariantException(): void
     {
         $productVariantService = new ProductVariantService(new ProductFactory());
         $productData = new ProductData();
@@ -21,7 +21,7 @@ class ProductVariantServiceTest extends TestCase
         $productVariantService->checkProductIsNotMainVariant($mainVariant);
     }
 
-    public function testRefreshProductVariants()
+    public function testRefreshProductVariants(): void
     {
         $productVariantService = new ProductVariantService(new ProductFactory());
         $productData = new ProductData();
@@ -40,7 +40,7 @@ class ProductVariantServiceTest extends TestCase
         $this->assertContains($variant3, $variantsArray);
     }
 
-    public function testCreateVariant()
+    public function testCreateVariant(): void
     {
         $mainVariantData = new ProductData();
         $mainProduct = Product::create(new ProductData());

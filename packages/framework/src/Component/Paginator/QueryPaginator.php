@@ -20,22 +20,13 @@ class QueryPaginator implements PaginatorInterface
      */
     private $hydrationMode;
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string|null $hydrationMode
-     */
-    public function __construct(QueryBuilder $queryBuilder, $hydrationMode = null)
+    public function __construct(QueryBuilder $queryBuilder, ?string $hydrationMode = null)
     {
         $this->queryBuilder = $queryBuilder;
         $this->hydrationMode = $hydrationMode;
     }
 
-    /**
-     * @param int $page
-     * @param int $pageSize
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getResult($page = 1, $pageSize = null)
+    public function getResult(int $page = 1, int $pageSize = null): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
     {
         $queryBuilder = clone $this->queryBuilder;
 
@@ -68,21 +59,14 @@ class QueryPaginator implements PaginatorInterface
         return new PaginationResult($page, $pageSize, $totalCount, $results);
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         $totalNativeQuery = $this->getTotalNativeQuery($this->queryBuilder);
 
         return $totalNativeQuery->getSingleScalarResult();
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @return \Doctrine\ORM\NativeQuery
-     */
-    private function getTotalNativeQuery(QueryBuilder $queryBuilder)
+    private function getTotalNativeQuery(QueryBuilder $queryBuilder): \Doctrine\ORM\NativeQuery
     {
         $em = $queryBuilder->getEntityManager();
 

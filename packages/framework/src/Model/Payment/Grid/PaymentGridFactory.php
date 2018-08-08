@@ -47,10 +47,7 @@ class PaymentGridFactory implements GridFactoryInterface
         $this->paymentFacade = $paymentFacade;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
-    public function create()
+    public function create(): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->paymentRepository->getQueryBuilderForAll()
             ->addSelect('pt')
@@ -82,11 +79,7 @@ class PaymentGridFactory implements GridFactoryInterface
         return $grid;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return string
-     */
-    private function getDisplayPrice(Payment $payment)
+    private function getDisplayPrice(Payment $payment): string
     {
         $transportBasePricesIndexedByCurrencyId = $this->paymentFacade->getIndependentBasePricesIndexedByCurrencyId($payment);
 

@@ -17,19 +17,12 @@ class PricingGroupSettingsFormType extends AbstractType
      */
     private $pricingGroupFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     */
     public function __construct(PricingGroupFacade $pricingGroupFacade)
     {
         $this->pricingGroupFacade = $pricingGroupFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $pricingGroups = $this->pricingGroupFacade->getByDomainId($options['domain_id']);
 
@@ -46,10 +39,7 @@ class PricingGroupSettingsFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('domain_id')

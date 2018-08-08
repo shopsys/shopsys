@@ -44,21 +44,13 @@ class FriendlyUrlRouter implements RouterInterface
      */
     private $collection;
 
-    /**
-     * @param \Symfony\Component\Routing\RequestContext $context
-     * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGenerator $friendlyUrlGenerator
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlMatcher $friendlyUrlMatcher
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string $friendlyUrlRouterResourceFilepath
-     */
     public function __construct(
         RequestContext $context,
         LoaderInterface $configLoader,
         FriendlyUrlGenerator $friendlyUrlGenerator,
         FriendlyUrlMatcher $friendlyUrlMatcher,
         DomainConfig $domainConfig,
-        $friendlyUrlRouterResourceFilepath
+        string $friendlyUrlRouterResourceFilepath
     ) {
         $this->context = $context;
         $this->configLoader = $configLoader;
@@ -110,13 +102,7 @@ class FriendlyUrlRouter implements RouterInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
-     * @param int $referenceType
-     * @return string
-     */
-    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         $routeName = $friendlyUrl->getRouteName();
         $route = $this->getRouteCollection()->get($routeName);

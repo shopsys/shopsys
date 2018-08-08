@@ -8,12 +8,7 @@ use Tests\ShopBundle\Acceptance\acceptance\PageObject\AbstractPage;
 
 class ProductListComponent extends AbstractPage
 {
-    /**
-     * @param string $productName
-     * @param int $quantity
-     * @param \Facebook\WebDriver\WebDriverElement $context
-     */
-    public function addProductToCartByName($productName, $quantity, WebDriverElement $context)
+    public function addProductToCartByName(string $productName, int $quantity, WebDriverElement $context): void
     {
         $productItemElement = $this->findProductListItemByName($productName, $context);
 
@@ -26,12 +21,7 @@ class ProductListComponent extends AbstractPage
         $this->tester->wait(1); // animation of popup window
     }
 
-    /**
-     * @param string $productName
-     * @param \Facebook\WebDriver\WebDriverElement $context
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
-    private function findProductListItemByName($productName, WebDriverElement $context)
+    private function findProductListItemByName(string $productName, WebDriverElement $context): \Facebook\WebDriver\WebDriverElement
     {
         $productItems = $context->findElements(WebDriverBy::cssSelector('.js-list-products-item'));
 

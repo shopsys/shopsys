@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductAvailabilityRecalculatorTest extends TestCase
 {
-    public function testRunImmediatelyRecalculations()
+    public function testRunImmediatelyRecalculations(): void
     {
         $productMock = $this->getMockBuilder(Product::class)
             ->setMethods(null)
@@ -50,7 +50,7 @@ class ProductAvailabilityRecalculatorTest extends TestCase
         $productAvailabilityRecalculator->runImmediateRecalculations();
     }
 
-    public function testRecalculateAvailabilityForVariant()
+    public function testRecalculateAvailabilityForVariant(): void
     {
         $variantMock = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()

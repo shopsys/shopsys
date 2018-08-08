@@ -4,6 +4,6 @@ namespace Shopsys\FrameworkBundle\Component\Paginator;
 
 interface PaginatorInterface
 {
-    public function getResult($page, $pageSize);
-    public function getTotalCount();
+    public function getResult($page, $pageSize): void;
+    public function getTotalCount(): void;
 }

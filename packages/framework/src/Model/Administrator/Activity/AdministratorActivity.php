@@ -50,13 +50,9 @@ class AdministratorActivity
      */
     protected $lastActionTime;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param string $ipAddress
-     */
     public function __construct(
         Administrator $administrator,
-        $ipAddress
+        string $ipAddress
     ) {
         $this->administrator = $administrator;
         $this->ipAddress = $ipAddress;
@@ -64,31 +60,22 @@ class AdministratorActivity
         $this->lastActionTime = new DateTime();
     }
 
-    public function updateLastActionTime()
+    public function updateLastActionTime(): void
     {
         $this->lastActionTime = new DateTime();
     }
 
-    /**
-     * @return string
-     */
-    public function getIpAddress()
+    public function getIpAddress(): string
     {
         return $this->ipAddress;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getLoginTime()
+    public function getLoginTime(): \DateTime
     {
         return $this->loginTime;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getLastActionTime()
+    public function getLastActionTime(): \DateTime
     {
         return $this->lastActionTime;
     }

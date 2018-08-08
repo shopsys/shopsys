@@ -11,7 +11,7 @@ class PricingServiceTest extends TestCase
     /**
      * @dataProvider getMinimumPriceProvider
      */
-    public function testGetMinimumPrice(array $prices, $minimumPrice)
+    public function testGetMinimumPrice(array $prices, $minimumPrice): void
     {
         $pricingService = new PricingService();
 
@@ -45,7 +45,7 @@ class PricingServiceTest extends TestCase
         ];
     }
 
-    public function testGetMinimumPriceEmptyArray()
+    public function testGetMinimumPriceEmptyArray(): void
     {
         $pricingService = new PricingService();
 
@@ -56,7 +56,7 @@ class PricingServiceTest extends TestCase
     /**
      * @dataProvider getArePricesDifferentProvider
      */
-    public function testArePricesDifferent(array $prices, $arePricesDifferent)
+    public function testArePricesDifferent(array $prices, $arePricesDifferent): void
     {
         $pricingService = new PricingService();
 
@@ -96,7 +96,7 @@ class PricingServiceTest extends TestCase
         ];
     }
 
-    public function testArePricesDifferentEmptyArray()
+    public function testArePricesDifferentEmptyArray(): void
     {
         $pricingService = new PricingService();
 

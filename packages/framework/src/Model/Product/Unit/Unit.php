@@ -29,54 +29,35 @@ class Unit extends AbstractTranslatableEntity
      */
     protected $translations;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     */
     public function __construct(UnitData $unitData)
     {
         $this->translations = new ArrayCollection();
         $this->setTranslations($unitData);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param string|null $locale
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     */
-    protected function setTranslations(UnitData $unitData)
+    protected function setTranslations(UnitData $unitData): void
     {
         foreach ($unitData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation
     {
         return new UnitTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
-     */
-    public function edit(UnitData $unitData)
+    public function edit(UnitData $unitData): void
     {
         $this->setTranslations($unitData);
     }

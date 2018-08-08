@@ -70,21 +70,15 @@ class MailTemplateFacade
         $this->mailTemplateDataFactory = $mailTemplateDataFactory;
     }
 
-    /**
-     * @param string $templateName
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
-    public function get($templateName, $domainId)
+    public function get(string $templateName, int $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         return $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
      */
-    public function getOrderStatusMailTemplatesIndexedByOrderStatusId($domainId)
+    public function getOrderStatusMailTemplatesIndexedByOrderStatusId(int $domainId): array
     {
         $orderStatuses = $this->orderStatusRepository->getAll();
         $mailTemplates = $this->mailTemplateRepository->getAllByDomainId($domainId);
@@ -97,9 +91,8 @@ class MailTemplateFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData[] $mailTemplatesData
-     * @param int $domainId
      */
-    public function saveMailTemplatesData(array $mailTemplatesData, $domainId)
+    public function saveMailTemplatesData(array $mailTemplatesData, int $domainId): void
     {
         foreach ($mailTemplatesData as $mailTemplateData) {
             $mailTemplate = $this->mailTemplateRepository->getByNameAndDomainId($mailTemplateData->name, $domainId);
@@ -113,11 +106,7 @@ class MailTemplateFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\AllMailTemplatesData
-     */
-    public function getAllMailTemplatesDataByDomainId($domainId)
+    public function getAllMailTemplatesDataByDomainId(int $domainId): \Shopsys\FrameworkBundle\Model\Mail\AllMailTemplatesData
     {
         $orderStatuses = $this->orderStatusRepository->getAll();
         $mailTemplates = $this->mailTemplateRepository->getAllByDomainId($domainId);
@@ -169,10 +158,7 @@ class MailTemplateFacade
         return $allMailTemplatesData;
     }
 
-    /**
-     * @param string $name
-     */
-    public function createMailTemplateForAllDomains($name)
+    public function createMailTemplateForAllDomains(string $name): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $mailTemplateData = $this->mailTemplateDataFactory->create();
@@ -184,10 +170,9 @@ class MailTemplateFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @return string[]
      */
-    public function getMailTemplateAttachmentsFilepaths(MailTemplate $mailTemplate)
+    public function getMailTemplateAttachmentsFilepaths(MailTemplate $mailTemplate): array
     {
         $filepaths = [];
         if ($this->uploadedFileFacade->hasUploadedFile($mailTemplate)) {
@@ -198,10 +183,7 @@ class MailTemplateFacade
         return $filepaths;
     }
 
-    /**
-     * @return bool
-     */
-    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()
+    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject(): bool
     {
         return $this->mailTemplateRepository->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject();
     }

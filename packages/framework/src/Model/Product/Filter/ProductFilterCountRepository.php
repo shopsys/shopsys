@@ -29,21 +29,13 @@ class ProductFilterCountRepository
         $this->productFilterRepository = $productFilterRepository;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
     public function getProductFilterCountData(
         QueryBuilder $productsQueryBuilder,
-        $locale,
+        string $locale,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData {
         $productFilterCountData = new ProductFilterCountData();
         $productFilterCountData->countInStock = $this->getCountInStock(
             $productsQueryBuilder,
@@ -73,17 +65,11 @@ class ProductFilterCountRepository
         return $productFilterCountData;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return int
-     */
     private function getCountInStock(
         QueryBuilder $productsQueryBuilder,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): int {
         $productsInStockQueryBuilder = clone $productsQueryBuilder;
         $productInStockFilterData = clone $productFilterData;
 
@@ -103,10 +89,7 @@ class ProductFilterCountRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brandFilterChoices
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return int[]
      */
     private function getCountIndexedByBrandId(
@@ -114,7 +97,7 @@ class ProductFilterCountRepository
         array $brandFilterChoices,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): array {
         if (count($brandFilterChoices) === 0) {
             return [];
         }
@@ -156,10 +139,7 @@ class ProductFilterCountRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flagFilterChoices
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return int[]
      */
     private function getCountIndexedByFlagId(
@@ -167,7 +147,7 @@ class ProductFilterCountRepository
         array $flagFilterChoices,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): array {
         if (count($flagFilterChoices) === 0) {
             return [];
         }
@@ -219,11 +199,7 @@ class ProductFilterCountRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $parameterFilterChoices
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
      * @return int[][]
      */
     private function getCountIndexedByParameterIdAndValueId(
@@ -231,7 +207,7 @@ class ProductFilterCountRepository
         array $parameterFilterChoices,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup,
-        $locale
+        string $locale
     ) {
         $countByParameterIdAndValueId = [];
 

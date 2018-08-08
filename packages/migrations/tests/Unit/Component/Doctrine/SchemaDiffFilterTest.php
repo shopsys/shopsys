@@ -15,7 +15,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\SchemaDiffFilter;
 
 class SchemaDiffFilterTest extends TestCase
 {
-    public function testGetFilteredSchemaDiff()
+    public function testGetFilteredSchemaDiff(): void
     {
         $schemaDiff = new SchemaDiff();
         $testType = Type::getType('string');

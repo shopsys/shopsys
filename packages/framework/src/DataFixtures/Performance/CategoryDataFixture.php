@@ -58,12 +58,7 @@ class CategoryDataFixture
 
     /**
      * @param int[] $categoryCountsByLevel
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface $categoryDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      */
     public function __construct(
         $categoryCountsByLevel,
@@ -84,10 +79,7 @@ class CategoryDataFixture
         $this->progressBarFactory = $progressBarFactory;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         $progressBar = $this->progressBarFactory->create($output, array_sum($this->categoryCountsByLevel));
 
@@ -97,12 +89,7 @@ class CategoryDataFixture
         $this->sqlLoggerFacade->reenableLogging();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBar $progressBar
-     * @param int $categoryLevel
-     */
-    private function recursivelyCreateCategoryTree($parentCategory, ProgressBar $progressBar, $categoryLevel = 0)
+    private function recursivelyCreateCategoryTree(\Shopsys\FrameworkBundle\Model\Category\Category $parentCategory, ProgressBar $progressBar, int $categoryLevel = 0): void
     {
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
             $categoryData = $this->getRandomCategoryDataByParentCategory($parentCategory);
@@ -118,11 +105,7 @@ class CategoryDataFixture
         }
     }
 
-    /**
-     * @param int $categoryLevel
-     * @return int
-     */
-    private function recursivelyCountCategoriesInCategoryTree($categoryLevel = 0)
+    private function recursivelyCountCategoriesInCategoryTree(int $categoryLevel = 0): int
     {
         $count = 0;
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
@@ -135,11 +118,7 @@ class CategoryDataFixture
         return $count;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryData
-     */
-    private function getRandomCategoryDataByParentCategory(Category $parentCategory)
+    private function getRandomCategoryDataByParentCategory(Category $parentCategory): \Shopsys\FrameworkBundle\Model\Category\CategoryData
     {
         $categoryData = $this->categoryDataFactory->create();
         $categoryName = $this->faker->word . ' #' . $this->categoriesCreated;

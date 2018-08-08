@@ -19,10 +19,7 @@ class YesNoType extends AbstractType
         $this->translator = $translator;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'choices' => [
@@ -38,10 +35,7 @@ class YesNoType extends AbstractType
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

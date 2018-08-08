@@ -18,10 +18,6 @@ class AdminDomainTabsFacade
      */
     protected $session;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     */
     public function __construct(Domain $domain, SessionInterface $session)
     {
         $this->domain = $domain;
@@ -33,19 +29,13 @@ class AdminDomainTabsFacade
         return $this->getSelectedDomainConfig()->getId();
     }
 
-    /**
-     * @param int $domainId
-     */
-    public function setSelectedDomainId($domainId)
+    public function setSelectedDomainId(int $domainId): void
     {
         $domainConfig = $this->domain->getDomainConfigById($domainId);
         $this->session->set(self::SESSION_SELECTED_DOMAIN, $domainConfig->getId());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    public function getSelectedDomainConfig()
+    public function getSelectedDomainConfig(): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
     {
         try {
             $domainId = $this->session->get(self::SESSION_SELECTED_DOMAIN);

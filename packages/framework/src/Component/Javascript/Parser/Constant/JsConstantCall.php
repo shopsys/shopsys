@@ -16,30 +16,20 @@ class JsConstantCall
      */
     private $constantName;
 
-    /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
-     * @param string $constantName
-     */
     public function __construct(
         JCallExprNode $callExprNode,
-        $constantName
+        string $constantName
     ) {
         $this->callExprNode = $callExprNode;
         $this->constantName = $constantName;
     }
 
-    /**
-     * @return \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode
-     */
-    public function getCallExprNode()
+    public function getCallExprNode(): \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode
     {
         return $this->callExprNode;
     }
 
-    /**
-     * @return string
-     */
-    public function getConstantName()
+    public function getConstantName(): string
     {
         return $this->constantName;
     }

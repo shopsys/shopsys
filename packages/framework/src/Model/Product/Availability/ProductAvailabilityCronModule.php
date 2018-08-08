@@ -25,23 +25,23 @@ class ProductAvailabilityCronModule implements IteratedCronModuleInterface
     /**
      * @inheritdoc
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
 
-    public function sleep()
+    public function sleep(): void
     {
     }
 
-    public function wakeUp()
+    public function wakeUp(): void
     {
     }
 
     /**
      * @inheritdoc
      */
-    public function iterate()
+    public function iterate(): bool
     {
         if ($this->productAvailabilityRecalculator->runBatchOfScheduledDelayedRecalculations()) {
             $this->logger->debug('Batch is recalculated.');

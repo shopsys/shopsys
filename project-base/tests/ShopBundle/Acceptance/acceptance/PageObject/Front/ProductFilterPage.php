@@ -18,38 +18,25 @@ class ProductFilterPage extends AbstractPage
         parent::__construct($strictWebDriver, $tester);
     }
 
-    /**
-     * @param string $price
-     */
-    public function setMinimalPrice($price)
+    public function setMinimalPrice(string $price): void
     {
         $this->tester->fillFieldByCss('#product_filter_form_minimalPrice', $price . WebDriverKeys::ENTER);
         $this->waitForFilter();
     }
 
-    /**
-     * @param string $price
-     */
-    public function setMaximalPrice($price)
+    public function setMaximalPrice(string $price): void
     {
         $this->tester->fillFieldByCss('#product_filter_form_maximalPrice', $price . WebDriverKeys::ENTER);
         $this->waitForFilter();
     }
 
-    /**
-     * @param string $label
-     */
-    public function filterByBrand($label)
+    public function filterByBrand(string $label): void
     {
         $this->tester->checkOptionByLabel($label);
         $this->waitForFilter();
     }
 
-    /**
-     * @param string $parameterLabel
-     * @param string $valueLabel
-     */
-    public function filterByParameter($parameterLabel, $valueLabel)
+    public function filterByParameter(string $parameterLabel, string $valueLabel): void
     {
         $parameterElement = $this->findParameterElementByLabel($parameterLabel);
         $labelElement = $this->getLabelElementByParameterValueText($parameterElement, $valueLabel);
@@ -57,17 +44,13 @@ class ProductFilterPage extends AbstractPage
         $this->waitForFilter();
     }
 
-    private function waitForFilter()
+    private function waitForFilter(): void
     {
         $this->tester->wait(self::PRE_EVALUATION_WAIT);
         $this->tester->waitForAjax();
     }
 
-    /**
-     * @param string $parameterLabel
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
-    private function findParameterElementByLabel($parameterLabel)
+    private function findParameterElementByLabel(string $parameterLabel): \Facebook\WebDriver\WebDriverElement
     {
         $parameterItems = $this->webDriver->findElements(
             WebDriverBy::cssSelector('#product_filter_form_parameters .js-product-filter-parameter')
@@ -89,12 +72,7 @@ class ProductFilterPage extends AbstractPage
         throw new \Facebook\WebDriver\Exception\NoSuchElementException($message);
     }
 
-    /**
-     * @param \Facebook\WebDriver\WebDriverElement $parameterElement
-     * @param string $parameterValueText
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
-    private function getLabelElementByParameterValueText($parameterElement, $parameterValueText)
+    private function getLabelElementByParameterValueText(\Facebook\WebDriver\WebDriverElement $parameterElement, string $parameterValueText): \Facebook\WebDriver\WebDriverElement
     {
         $labelElements = $parameterElement->findElements(WebDriverBy::cssSelector('.js-product-filter-parameter-value'));
 

@@ -24,10 +24,7 @@ class CurrentPromoCodeFacade
         $this->session = $session;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
-     */
-    public function getValidEnteredPromoCodeOrNull()
+    public function getValidEnteredPromoCodeOrNull(): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         $enteredCode = $this->session->get(self::PROMO_CODE_SESSION_KEY);
         if ($enteredCode === null) {
@@ -37,10 +34,7 @@ class CurrentPromoCodeFacade
         return $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
     }
 
-    /**
-     * @param string $enteredCode
-     */
-    public function setEnteredPromoCode($enteredCode)
+    public function setEnteredPromoCode(string $enteredCode): void
     {
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
         if ($promoCode === null) {
@@ -50,7 +44,7 @@ class CurrentPromoCodeFacade
         }
     }
 
-    public function removeEnteredPromoCode()
+    public function removeEnteredPromoCode(): void
     {
         $this->session->remove(self::PROMO_CODE_SESSION_KEY);
     }

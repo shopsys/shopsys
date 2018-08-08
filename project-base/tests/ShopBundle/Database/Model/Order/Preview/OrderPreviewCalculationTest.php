@@ -22,7 +22,7 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class OrderPreviewCalculationTest extends FunctionalTestCase
 {
-    public function testCalculatePreviewWithTransportAndPayment()
+    public function testCalculatePreviewWithTransportAndPayment(): void
     {
         $domain = $this->getContainer()->get(Domain::class);
         /* @var $domain \Shopsys\FrameworkBundle\Component\Domain\Domain */
@@ -109,7 +109,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $this->assertSame($transportPrice, $orderPreview->getTransportPrice());
     }
 
-    public function testCalculatePreviewWithoutTransportAndPayment()
+    public function testCalculatePreviewWithoutTransportAndPayment(): void
     {
         $domain = $this->getContainer()->get(Domain::class);
         /* @var $domain \Shopsys\FrameworkBundle\Component\Domain\Domain */

@@ -34,7 +34,7 @@ class CategoryVisibilityRepository
         $this->categoryVisibilityRecalculationScheduler = $categoryVisibilityRecalculationScheduler;
     }
 
-    public function refreshCategoriesVisibility()
+    public function refreshCategoriesVisibility(): void
     {
         $domains = $this->domain->getAll();
         foreach ($domains as $domainConfig) {
@@ -42,10 +42,7 @@ class CategoryVisibilityRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
-    private function refreshCategoriesVisibilityOnDomain(DomainConfig $domainConfig)
+    private function refreshCategoriesVisibilityOnDomain(DomainConfig $domainConfig): void
     {
         $this->setRootCategoryVisibleOnDomain($domainConfig);
 
@@ -56,10 +53,7 @@ class CategoryVisibilityRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
-    private function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig)
+    private function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig): void
     {
         $this->em->getConnection()->executeUpdate(
             'UPDATE category_domains AS cd
@@ -76,11 +70,7 @@ class CategoryVisibilityRepository
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return int
-     */
-    private function getMaxLevelOnDomain(DomainConfig $domainConfig)
+    private function getMaxLevelOnDomain(DomainConfig $domainConfig): int
     {
         return $this->em->getConnection()->fetchColumn(
             'SELECT MAX(c.level)
@@ -93,11 +83,7 @@ class CategoryVisibilityRepository
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int $level
-     */
-    private function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level)
+    private function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, int $level): void
     {
         $this->em->getConnection()->executeUpdate(
             'UPDATE category_domains AS cd
@@ -124,10 +110,7 @@ class CategoryVisibilityRepository
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

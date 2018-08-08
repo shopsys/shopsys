@@ -38,18 +38,12 @@ class DomainRouter extends ChainRouter
         $this->add($friendlyUrlRouter, 30);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
-     * @param int $referenceType
-     * @return string
-     */
-    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->friendlyUrlRouter->generateByFriendlyUrl($friendlyUrl, $parameters, $referenceType);
     }
 
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         if ($this->freeze) {
             $message = 'Set context is not supported in chain DomainRouter';

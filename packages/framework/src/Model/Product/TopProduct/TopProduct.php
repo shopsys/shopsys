@@ -35,22 +35,14 @@ class TopProduct
      */
     protected $position;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param int $position
-     */
-    public function __construct(Product $product, $domainId, $position)
+    public function __construct(Product $product, int $domainId, int $position)
     {
         $this->product = $product;
         $this->domainId = $domainId;
         $this->position = $position;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getProduct()
+    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }

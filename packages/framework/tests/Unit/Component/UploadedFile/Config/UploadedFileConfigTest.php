@@ -9,7 +9,7 @@ use Tests\FrameworkBundle\Unit\Component\UploadedFile\Dummy;
 
 class UploadedFileConfigTest extends TestCase
 {
-    public function testGetEntityName()
+    public function testGetEntityName(): void
     {
         $entity = new Dummy();
         $fileEntityConfigsByClass = [
@@ -20,7 +20,7 @@ class UploadedFileConfigTest extends TestCase
         $this->assertSame('entityName', $uploadedFileConfig->getEntityName($entity));
     }
 
-    public function testGetEntityNameNotFoundException()
+    public function testGetEntityNameNotFoundException(): void
     {
         $entity = new Dummy();
         $fileEntityConfigsByClass = [];
@@ -32,7 +32,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileConfig->getEntityName($entity);
     }
 
-    public function testGetAllUploadedFileEntityConfigs()
+    public function testGetAllUploadedFileEntityConfigs(): void
     {
         $fileEntityConfigsByClass = [
             Dummy::class => new UploadedFileEntityConfig('entityName', Dummy::class),
@@ -42,7 +42,7 @@ class UploadedFileConfigTest extends TestCase
         $this->assertSame($fileEntityConfigsByClass, $uploadedFileConfig->getAllUploadedFileEntityConfigs());
     }
 
-    public function testGetUploadedFileEntityConfig()
+    public function testGetUploadedFileEntityConfig(): void
     {
         $entity = new Dummy();
         $fileEntityConfigsByClass = [];
@@ -54,7 +54,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileConfig->getUploadedFileEntityConfig($entity);
     }
 
-    public function testHasUploadedFileEntityConfig()
+    public function testHasUploadedFileEntityConfig(): void
     {
         $entity = new Dummy();
         $fileEntityConfigsByClass = [
@@ -65,7 +65,7 @@ class UploadedFileConfigTest extends TestCase
         $this->assertTrue($uploadedFileConfig->hasUploadedFileEntityConfig($entity));
     }
 
-    public function testHasNotUploadedFileEntityConfig()
+    public function testHasNotUploadedFileEntityConfig(): void
     {
         $entity = new Dummy();
         $fileEntityConfigsByClass = [];

@@ -42,11 +42,6 @@ class NewsletterSubscriber
      */
     protected $createdAt;
 
-    /**
-     * @param string $email
-     * @param DateTimeImmutable $createdAt
-     * @param int $domainId
-     */
     public function __construct(string $email, DateTimeImmutable $createdAt, int $domainId)
     {
         $this->email = $email;
@@ -54,25 +49,16 @@ class NewsletterSubscriber
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;

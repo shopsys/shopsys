@@ -17,27 +17,27 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class ProductRepositoryTest extends DatabaseTestCase
 {
-    public function testVisibleAndNotSellingDeniedProductIsListed()
+    public function testVisibleAndNotSellingDeniedProductIsListed(): void
     {
         $this->getAllListableQueryBuilderTest(1, true);
     }
 
-    public function testVisibleAndSellingDeniedProductIsNotListed()
+    public function testVisibleAndSellingDeniedProductIsNotListed(): void
     {
         $this->getAllListableQueryBuilderTest(6, false);
     }
 
-    public function testProductVariantIsNotListed()
+    public function testProductVariantIsNotListed(): void
     {
         $this->getAllListableQueryBuilderTest(53, false);
     }
 
-    public function testProductMainVariantIsListed()
+    public function testProductMainVariantIsListed(): void
     {
         $this->getAllListableQueryBuilderTest(148, true);
     }
 
-    private function getAllListableQueryBuilderTest($productReferenceId, $isExpectedInResult)
+    private function getAllListableQueryBuilderTest($productReferenceId, $isExpectedInResult): void
     {
         $productRepository = $this->getContainer()->get(ProductRepository::class);
         /* @var $productRepository \Shopsys\FrameworkBundle\Model\Product\ProductRepository */
@@ -58,27 +58,27 @@ class ProductRepositoryTest extends DatabaseTestCase
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
 
-    public function testVisibleAndNotSellingDeniedProductIsSellable()
+    public function testVisibleAndNotSellingDeniedProductIsSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(1, true);
     }
 
-    public function testVisibleAndSellingDeniedProductIsNotSellable()
+    public function testVisibleAndSellingDeniedProductIsNotSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(6, false);
     }
 
-    public function testProductVariantIsSellable()
+    public function testProductVariantIsSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(53, true);
     }
 
-    public function testProductMainVariantIsNotSellable()
+    public function testProductMainVariantIsNotSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(148, false);
     }
 
-    private function getAllSellableQueryBuilderTest($productReferenceId, $isExpectedInResult)
+    private function getAllSellableQueryBuilderTest($productReferenceId, $isExpectedInResult): void
     {
         $productRepository = $this->getContainer()->get(ProductRepository::class);
         /* @var $productRepository \Shopsys\FrameworkBundle\Model\Product\ProductRepository */
@@ -99,27 +99,27 @@ class ProductRepositoryTest extends DatabaseTestCase
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
 
-    public function testVisibleAndNotSellingDeniedProductIsOfferred()
+    public function testVisibleAndNotSellingDeniedProductIsOfferred(): void
     {
         $this->getAllOfferedQueryBuilderTest(1, true);
     }
 
-    public function testVisibleAndSellingDeniedProductIsNotOfferred()
+    public function testVisibleAndSellingDeniedProductIsNotOfferred(): void
     {
         $this->getAllOfferedQueryBuilderTest(6, false);
     }
 
-    public function testProductVariantIsOfferred()
+    public function testProductVariantIsOfferred(): void
     {
         $this->getAllOfferedQueryBuilderTest(53, true);
     }
 
-    public function testProductMainVariantIsOfferred()
+    public function testProductMainVariantIsOfferred(): void
     {
         $this->getAllOfferedQueryBuilderTest(69, true);
     }
 
-    private function getAllOfferedQueryBuilderTest($productReferenceId, $isExpectedInResult)
+    private function getAllOfferedQueryBuilderTest($productReferenceId, $isExpectedInResult): void
     {
         $productRepository = $this->getContainer()->get(ProductRepository::class);
         /* @var $productRepository \Shopsys\FrameworkBundle\Model\Product\ProductRepository */
@@ -140,7 +140,7 @@ class ProductRepositoryTest extends DatabaseTestCase
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
 
-    public function testOrderingByProductPriorityInCategory()
+    public function testOrderingByProductPriorityInCategory(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_FOOD);
         /* @var $category \Shopsys\FrameworkBundle\DataFixtures\Demo\CategoryDataFixture */
@@ -161,7 +161,7 @@ class ProductRepositoryTest extends DatabaseTestCase
         $this->assertSame($product1, $results[1]);
     }
 
-    public function testOrderingByProductPriorityInSearch()
+    public function testOrderingByProductPriorityInSearch(): void
     {
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 45);
@@ -180,11 +180,7 @@ class ProductRepositoryTest extends DatabaseTestCase
         $this->assertSame($product2, $results[1]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $priority
-     */
-    private function setProductOrderingPriority(Product $product, $priority)
+    private function setProductOrderingPriority(Product $product, int $priority): void
     {
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
         /* @var $productDataFactory \Shopsys\FrameworkBundle\Model\Product\ProductDataFactory */
@@ -197,10 +193,9 @@ class ProductRepositoryTest extends DatabaseTestCase
     }
 
     /**
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    private function getProductsForSearchOrderedByPriority($searchText)
+    private function getProductsForSearchOrderedByPriority(string $searchText): array
     {
         $productRepository = $this->getContainer()->get(ProductRepository::class);
         /* @var $productRepository \Shopsys\FrameworkBundle\Model\Product\ProductRepository */
@@ -222,10 +217,9 @@ class ProductRepositoryTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    private function getProductsInCategoryOrderedByPriority(Category $category)
+    private function getProductsInCategoryOrderedByPriority(Category $category): array
     {
         $productRepository = $this->getContainer()->get(ProductRepository::class);
         /* @var $productRepository \Shopsys\FrameworkBundle\Model\Product\ProductRepository */

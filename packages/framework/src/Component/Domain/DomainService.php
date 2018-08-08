@@ -37,12 +37,7 @@ class DomainService
         $this->filesystem = $filesystem;
     }
 
-    /**
-     * @param int $domainId
-     * @param string $filepath
-     * @param string $domainImagesDirectory
-     */
-    public function convertToDomainIconFormatAndSave($domainId, $filepath, $domainImagesDirectory)
+    public function convertToDomainIconFormatAndSave(int $domainId, string $filepath, string $domainImagesDirectory): void
     {
         $resizedImage = $this->imageProcessingService->resize(
             $this->imageProcessingService->createInterventionImage($filepath),

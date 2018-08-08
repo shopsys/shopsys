@@ -46,7 +46,7 @@ class ImageController extends FrontBaseController
                 'content-size' => $this->filesystem->getSize($imageFilepath),
             ];
 
-            $callback = function () use ($fileStream) {
+            $callback = function () use ($fileStream): void {
                 $out = fopen('php://output', 'wb');
                 stream_copy_to_stream($fileStream, $out);
             };

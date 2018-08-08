@@ -56,9 +56,6 @@ class ZboziProductDomain
      */
     protected $domainId;
 
-    /**
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
-     */
     public function __construct(ZboziProductDomainData $zboziProductDomainData)
     {
         $this->product = $zboziProductDomainData->product;
@@ -68,10 +65,7 @@ class ZboziProductDomain
         $this->domainId = $zboziProductDomainData->domainId;
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
-     */
-    public function edit(ZboziProductDomainData $zboziProductDomainData)
+    public function edit(ZboziProductDomainData $zboziProductDomainData): void
     {
         $this->product = $zboziProductDomainData->product;
         $this->show = $zboziProductDomainData->show;
@@ -80,50 +74,32 @@ class ZboziProductDomain
         $this->domainId = $zboziProductDomainData->domainId;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getProduct()
+    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }
 
-    /**
-     * @return bool
-     */
-    public function getShow()
+    public function getShow(): bool
     {
         return $this->show;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCpc()
+    public function getCpc(): ?string
     {
         return $this->cpc;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCpcSearch()
+    public function getCpcSearch(): ?string
     {
         return $this->cpcSearch;
     }

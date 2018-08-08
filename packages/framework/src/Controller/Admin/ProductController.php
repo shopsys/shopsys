@@ -3,11 +3,9 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Doctrine\ORM\QueryBuilder;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductEditFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductMassActionFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\VariantFormType;
@@ -132,10 +130,6 @@ class ProductController extends AdminBaseController
         $this->domain = $domain;
     }
 
-    /**
-     * @Route("/product/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function editAction(Request $request, $id)
     {
         $product = $this->productFacade->getById($id);
@@ -181,10 +175,6 @@ class ProductController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Product/edit.html.twig', $viewParameters);
     }
 
-    /**
-     * @Route("/product/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $productData = $this->productDataFactory->create();
@@ -214,10 +204,6 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function listAction(Request $request)
     {
         $administrator = $this->getUser();
@@ -268,12 +254,7 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $product = $this->productFacade->getById($id);
@@ -293,10 +274,6 @@ class ProductController extends AdminBaseController
         return $this->redirectToRoute('admin_product_list');
     }
 
-    /**
-     * @Route("/product/get-advanced-search-rule-form/", methods={"post"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function getRuleFormAction(Request $request)
     {
         $ruleForm = $this->advancedSearchFacade->createRuleForm($request->get('filterName'), $request->get('newIndex'));
@@ -306,10 +283,6 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/create-variant/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function createVariantAction(Request $request)
     {
         $form = $this->createForm(VariantFormType::class);
@@ -341,11 +314,7 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
-    private function getGrid(QueryBuilder $queryBuilder)
+    private function getGrid(QueryBuilder $queryBuilder): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $dataSource = new QueryBuilderWithRowManipulatorDataSource(
             $queryBuilder,
@@ -380,11 +349,7 @@ class ProductController extends AdminBaseController
         return $grid;
     }
 
-    /**
-     * @Route("/product/visibility/{productId}")
-     * @param int $productId
-     */
-    public function visibilityAction($productId)
+    public function visibilityAction(int $productId)
     {
         $product = $this->productFacade->getById($productId);
 

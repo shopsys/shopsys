@@ -17,12 +17,7 @@ class PluginCrudExtensionFacade
         $this->pluginCrudExtensionRegistry = $pluginCrudExtensionRegistry;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string $type
-     * @param string $name
-     */
-    public function extendForm(FormBuilderInterface $builder, $type, $name)
+    public function extendForm(FormBuilderInterface $builder, string $type, string $name): void
     {
         $builder->add($name, FormType::class, [
             'compound' => true,
@@ -35,12 +30,7 @@ class PluginCrudExtensionFacade
         }
     }
 
-    /**
-     * @param string $type
-     * @param int $id
-     * @return array
-     */
-    public function getAllData($type, $id)
+    public function getAllData(string $type, int $id): array
     {
         $allData = [];
         foreach ($this->pluginCrudExtensionRegistry->getCrudExtensions($type) as $key => $crudExtension) {
@@ -50,12 +40,7 @@ class PluginCrudExtensionFacade
         return $allData;
     }
 
-    /**
-     * @param string $type
-     * @param int $id
-     * @param array $allData
-     */
-    public function saveAllData($type, $id, array $allData)
+    public function saveAllData(string $type, int $id, array $allData): void
     {
         foreach ($this->pluginCrudExtensionRegistry->getCrudExtensions($type) as $key => $crudExtension) {
             if (array_key_exists($key, $allData)) {
@@ -64,11 +49,7 @@ class PluginCrudExtensionFacade
         }
     }
 
-    /**
-     * @param string $type
-     * @param int $id
-     */
-    public function removeAllData($type, $id)
+    public function removeAllData(string $type, int $id): void
     {
         foreach ($this->pluginCrudExtensionRegistry->getCrudExtensions($type) as $crudExtension) {
             $crudExtension->removeData($id);

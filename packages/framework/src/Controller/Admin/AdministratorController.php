@@ -2,10 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
@@ -57,9 +55,6 @@ class AdministratorController extends AdminBaseController
         $this->administratorDataFactory = $administratorDataFactory;
     }
 
-    /**
-     * @Route("/administrator/list/")
-     */
     public function listAction()
     {
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
@@ -83,12 +78,7 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/administrator/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $administrator = $this->administratorFacade->getById($id);
 
@@ -153,9 +143,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/administrator/my-account/")
-     */
     public function myAccountAction()
     {
         $loggedUser = $this->getUser();
@@ -166,10 +153,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/administrator/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [
@@ -211,12 +194,7 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/administrator/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $realName = $this->administratorFacade->getById($id)->getRealName();

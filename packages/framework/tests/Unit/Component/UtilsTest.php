@@ -7,14 +7,14 @@ use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
 class UtilsTest extends TestCase
 {
-    public function testIfNull()
+    public function testIfNull(): void
     {
         $this->assertTrue(Utils::ifNull(null, true));
         $this->assertFalse(Utils::ifNull(false, true));
         $this->assertTrue(Utils::ifNull(true, false));
     }
 
-    public function testSetArrayDefaultValueExists()
+    public function testSetArrayDefaultValueExists(): void
     {
         $array = [
             'key' => 'value',
@@ -25,7 +25,7 @@ class UtilsTest extends TestCase
         $this->assertSame($expectedArray, $array);
     }
 
-    public function testSetArrayDefaultValueExistsNull()
+    public function testSetArrayDefaultValueExistsNull(): void
     {
         $array = [
             'key' => null,
@@ -36,7 +36,7 @@ class UtilsTest extends TestCase
         $this->assertSame($expectedArray, $array);
     }
 
-    public function testSetArrayDefaultValueNotExist()
+    public function testSetArrayDefaultValueNotExist(): void
     {
         $array = [
             'key' => null,
@@ -50,18 +50,18 @@ class UtilsTest extends TestCase
         $this->assertSame($expectedArray, $array);
     }
 
-    public function testMixedToArrayIfNull()
+    public function testMixedToArrayIfNull(): void
     {
         $this->assertSame([], Utils::mixedToArray(null));
     }
 
-    public function testMixedToArrayIfNotArray()
+    public function testMixedToArrayIfNotArray(): void
     {
         $value = 'I am not array';
         $this->assertSame([$value], Utils::mixedToArray($value));
     }
 
-    public function testMixedToArrayIfArray()
+    public function testMixedToArrayIfArray(): void
     {
         $value = ['1', 3, []];
         $this->assertSame($value, Utils::mixedToArray($value));

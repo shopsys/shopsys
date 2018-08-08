@@ -6,7 +6,7 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class HomepageControllerTest extends FunctionalTestCase
 {
-    public function testHomepageHttpStatus200()
+    public function testHomepageHttpStatus200(): void
     {
         $client = $this->getClient();
 
@@ -16,7 +16,7 @@ class HomepageControllerTest extends FunctionalTestCase
         $this->assertSame(200, $code);
     }
 
-    public function testHomepageHasBodyEnd()
+    public function testHomepageHasBodyEnd(): void
     {
         $client = $this->getClient();
 

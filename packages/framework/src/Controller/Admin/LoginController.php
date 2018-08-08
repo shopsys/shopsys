@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Form\Admin\Login\LoginFormType;
@@ -50,12 +49,6 @@ class LoginController extends AdminBaseController
         $this->administratorLoginFacade = $administratorLoginFacade;
     }
 
-    /**
-     * @Route("/", name="admin_login")
-     * @Route("/login-check/", name="admin_login_check")
-     * @Route("/logout/", name="admin_logout")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function loginAction(Request $request)
     {
         $currentDomainId = $this->domain->getId();
@@ -94,12 +87,7 @@ class LoginController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/sso/{originalDomainId}", requirements={"originalDomainId" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $originalDomainId
-     */
-    public function ssoAction(Request $request, $originalDomainId)
+    public function ssoAction(Request $request, int $originalDomainId)
     {
         $administrator = $this->getUser();
         /* @var $administrator \Shopsys\FrameworkBundle\Model\Administrator\Administrator */
@@ -117,10 +105,6 @@ class LoginController extends AdminBaseController
         return $this->redirect($redirectTo);
     }
 
-    /**
-     * @Route("/authorization/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function authorizationAction(Request $request)
     {
         $multidomainLoginToken = $request->get(self::MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME);

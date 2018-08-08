@@ -34,23 +34,17 @@ class ProductListOrderingConfig
     /**
      * @return string[]
      */
-    public function getSupportedOrderingModesNamesIndexedById()
+    public function getSupportedOrderingModesNamesIndexedById(): array
     {
         return $this->supportedOrderingModesNamesById;
     }
 
-    /**
-     * @return string
-     */
-    public function getCookieName()
+    public function getCookieName(): string
     {
         return $this->cookieName;
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultOrderingModeId()
+    public function getDefaultOrderingModeId(): string
     {
         return $this->defaultOrderingModeId;
     }

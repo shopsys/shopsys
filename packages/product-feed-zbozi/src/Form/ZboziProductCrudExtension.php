@@ -35,38 +35,24 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
         $this->zboziProductDomainDataFactory = $zboziProductDomainDataFactory;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return ZboziProductFormType::class;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Zbozi.cz product feed');
     }
 
-    /**
-     * @param int $productId
-     * @return array
-     */
-    public function getData($productId)
+    public function getData(int $productId): array
     {
         $zboziProductDomains = $this->zboziProductDomainFacade->findByProductId($productId);
 
         return !empty($zboziProductDomains) ? $this->getZboziProductDomainsAsPluginDataArray($zboziProductDomains) : [];
     }
 
-    /**
-     * @param int $productId
-     * @param array $data
-     */
-    public function saveData($productId, $data)
+    public function saveData(int $productId, array $data): void
     {
         $zboziProductDomainsDataIndexedByDomainId = [];
 
@@ -93,16 +79,11 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
         );
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
-     * @param string $propertyName
-     * @param string $propertyValue
-     */
     private function setZboziProductDomainDataProperty(
         ZboziProductDomainData $zboziProductDomainData,
-        $propertyName,
-        $propertyValue
-    ) {
+        string $propertyName,
+        string $propertyValue
+    ): void {
         switch ($propertyName) {
             case 'show':
                 $zboziProductDomainData->show = $propertyValue;
@@ -118,9 +99,8 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[] $zboziProductDomains
-     * @return array
      */
-    private function getZboziProductDomainsAsPluginDataArray(array $zboziProductDomains)
+    private function getZboziProductDomainsAsPluginDataArray(array $zboziProductDomains): array
     {
         $pluginData = [
             'show' => [],
@@ -137,10 +117,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
         return $pluginData;
     }
 
-    /**
-     * @param int $productId
-     */
-    public function removeData($productId)
+    public function removeData(int $productId): void
     {
         $this->zboziProductDomainFacade->delete($productId);
     }

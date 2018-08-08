@@ -8,10 +8,9 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ContainsValidator extends ConstraintValidator
 {
     /**
-     * @param string $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
+     * @param mixed $value
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof Contains) {
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, Contains::class);

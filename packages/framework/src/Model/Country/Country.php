@@ -41,54 +41,35 @@ class Country
      */
     protected $domainId;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     * @param int $domainId
-     */
-    public function __construct(CountryData $countryData, $domainId)
+    public function __construct(CountryData $countryData, int $domainId)
     {
         $this->name = $countryData->name;
         $this->domainId = $domainId;
         $this->code = $countryData->code;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
-    public function edit(CountryData $countryData)
+    public function edit(CountryData $countryData): void
     {
         $this->name = $countryData->name;
         $this->code = $countryData->code;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCode()
+    public function getCode(): ?string
     {
         return $this->code;
     }

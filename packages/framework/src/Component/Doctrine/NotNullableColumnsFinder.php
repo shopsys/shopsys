@@ -29,10 +29,9 @@ class NotNullableColumnsFinder
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadataInfo
      * @return string[]
      */
-    private function getNotNullableFieldColumnNames(ClassMetadataInfo $classMetadataInfo)
+    private function getNotNullableFieldColumnNames(ClassMetadataInfo $classMetadataInfo): array
     {
         $notNullableFieldNames = [];
         foreach ($classMetadataInfo->getFieldNames() as $fieldName) {
@@ -45,10 +44,9 @@ class NotNullableColumnsFinder
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadataInfo
      * @return string[]
      */
-    private function getNotNullableAssociationColumnNames(ClassMetadataInfo $classMetadataInfo)
+    private function getNotNullableAssociationColumnNames(ClassMetadataInfo $classMetadataInfo): array
     {
         $notNullableAssociationNames = [];
         foreach ($classMetadataInfo->getAssociationMappings() as $associationMapping) {

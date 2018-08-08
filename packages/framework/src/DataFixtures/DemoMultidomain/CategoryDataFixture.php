@@ -28,10 +28,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         $this->categoryDataFacade = $categoryDataFacade;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->editCategoryOnDomain2(
             DemoCategoryDataFixture::CATEGORY_ELECTRONICS,
@@ -116,11 +113,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         );
     }
 
-    /**
-     * @param string $referenceName
-     * @param string|null $descriptionDomain2
-     */
-    private function editCategoryOnDomain2($referenceName, $descriptionDomain2)
+    private function editCategoryOnDomain2(string $referenceName, ?string $descriptionDomain2): void
     {
         $category = $this->getReference($referenceName);
         /* @var $category \Shopsys\FrameworkBundle\Model\Category\Category */

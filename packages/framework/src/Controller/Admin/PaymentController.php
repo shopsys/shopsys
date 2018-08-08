@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentEditFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory;
@@ -53,10 +51,6 @@ class PaymentController extends AdminBaseController
         $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
-    /**
-     * @Route("/payment/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $paymentData = $this->paymentDataFactory->create();
@@ -89,12 +83,7 @@ class PaymentController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/payment/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $payment = $this->paymentFacade->getById($id);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
@@ -130,12 +119,7 @@ class PaymentController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/payment/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $paymentName = $this->paymentFacade->getById($id)->getName();

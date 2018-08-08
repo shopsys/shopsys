@@ -7,10 +7,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180329142420 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('
             CREATE TABLE zbozi_product_domains (
@@ -31,10 +28,7 @@ class Version20180329142420 extends AbstractMigration
         $this->sql('ALTER TABLE zbozi_product_domains ALTER show SET NOT NULL');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

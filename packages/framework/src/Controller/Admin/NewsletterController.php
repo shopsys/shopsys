@@ -2,11 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
@@ -41,9 +39,6 @@ class NewsletterController extends AdminBaseController
         $this->gridFactory = $gridFactory;
     }
 
-    /**
-     * @Route("/newsletter/list/")
-     */
     public function listAction(Request $request)
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -75,11 +70,6 @@ class NewsletterController extends AdminBaseController
         );
     }
 
-    /**
-     * @Route("/newsletter/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
     public function deleteAction(int $id)
     {
         try {
@@ -100,25 +90,19 @@ class NewsletterController extends AdminBaseController
         return $this->redirectToRoute('admin_newsletter_list');
     }
 
-    /**
-     * @Route("/newsletter/export-csv/")
-     */
     public function exportAction()
     {
         $response = new StreamedResponse();
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment; filename="emails.csv"');
-        $response->setCallback(function () {
+        $response->setCallback(function (): void {
             $this->streamCsvExport($this->adminDomainTabsFacade->getSelectedDomainId());
         });
 
         return $response;
     }
 
-    /**
-     * @param int $domainId
-     */
-    private function streamCsvExport($domainId)
+    private function streamCsvExport(int $domainId): void
     {
         $output = new SplFileObject('php://output', 'w+');
 

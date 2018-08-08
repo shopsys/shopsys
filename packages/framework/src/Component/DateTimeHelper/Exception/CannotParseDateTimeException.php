@@ -6,12 +6,7 @@ use Exception;
 
 class CannotParseDateTimeException extends Exception
 {
-    /**
-     * @param string $format
-     * @param string $time
-     * @param \Exception|null $previous
-     */
-    public function __construct($format, $time, Exception $previous = null)
+    public function __construct(string $format, string $time, Exception $previous = null)
     {
         $message = sprintf(
             'Cannot parse string %s using format %s as DateTime.',

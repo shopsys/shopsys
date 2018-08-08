@@ -95,9 +95,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
      */
     protected $multidomainLoginTokenExpiration;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     */
     public function __construct(AdministratorData $administratorData)
     {
         $this->email = $administratorData->email;
@@ -112,39 +109,26 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         $this->multidomainLoginTokenExpiration = new DateTime();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     */
-    public function edit(AdministratorData $administratorData)
+    public function edit(AdministratorData $administratorData): void
     {
         $this->email = $administratorData->email;
         $this->realName = $administratorData->realName;
         $this->username = $administratorData->username;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit
-     */
-    public function addGridLimit(AdministratorGridLimit $gridLimit)
+    public function addGridLimit(AdministratorGridLimit $gridLimit): void
     {
         if (!$this->gridLimits->contains($gridLimit)) {
             $this->gridLimits->add($gridLimit);
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit $gridLimit
-     */
-    public function removeGridLimit(AdministratorGridLimit $gridLimit)
+    public function removeGridLimit(AdministratorGridLimit $gridLimit): void
     {
         $this->gridLimits->removeElement($gridLimit);
     }
 
-    /**
-     * @param string $gridId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit
-     */
-    public function getGridLimit($gridId)
+    public function getGridLimit(string $gridId): \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit
     {
         foreach ($this->gridLimits as $gridLimit) {
             if ($gridLimit->getGridId() === $gridId) {
@@ -154,11 +138,7 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         return null;
     }
 
-    /**
-     * @param string $gridId
-     * @return int|null
-     */
-    public function getLimitByGridId($gridId)
+    public function getLimitByGridId(string $gridId): ?int
     {
         $gridLimit = $this->getGridLimit($gridId);
         if ($gridLimit !== null) {
@@ -167,134 +147,85 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         return null;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @return string
-     */
-    public function getRealName()
+    public function getRealName(): string
     {
         return $this->realName;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    /**
-     * @return string
-     */
-    public function getLoginToken()
+    public function getLoginToken(): string
     {
         return $this->loginToken;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getLastActivity()
+    public function getLastActivity(): \DateTime
     {
         return $this->lastActivity;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSuperadmin()
+    public function isSuperadmin(): bool
     {
         return $this->superadmin;
     }
 
-    /**
-     * @param bool $superadmin
-     */
-    public function setSuperadmin($superadmin)
+    public function setSuperadmin(bool $superadmin): void
     {
         $this->superadmin = $superadmin;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }
 
-    /**
-     * @param string $realName
-     */
-    public function setRealname($realName)
+    public function setRealname(string $realName): void
     {
         $this->realName = $realName;
     }
 
-    /**
-     * @param string $password
-     */
-    public function setPassword($password)
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @param string $loginToken
-     */
-    public function setLoginToken($loginToken)
+    public function setLoginToken(string $loginToken): void
     {
         $this->loginToken = $loginToken;
     }
 
-    /**
-     * @param \DateTime $lastActivity
-     */
-    public function setLastActivity($lastActivity)
+    public function setLastActivity(\DateTime $lastActivity): void
     {
         $this->lastActivity = $lastActivity;
     }
 
-    /**
-     * @param string $multidomainLoginToken
-     * @param \DateTime $multidomainLoginTokenExpiration
-     */
     public function setMultidomainLoginTokenWithExpiration(
-        $multidomainLoginToken,
+        string $multidomainLoginToken,
         DateTime $multidomainLoginTokenExpiration
-    ) {
+    ): void {
         $this->multidomainLoginToken = $multidomainLoginToken;
         $this->multidomainLoginTokenExpiration = $multidomainLoginTokenExpiration;
     }

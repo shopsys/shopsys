@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -55,12 +54,7 @@ class ProductPickerController extends AdminBaseController
         $this->productFacade = $productFacade;
     }
 
-    /**
-     * @Route("/product-picker/pick-multiple/{jsInstanceId}/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $jsInstanceId
-     */
-    public function pickMultipleAction(Request $request, $jsInstanceId)
+    public function pickMultipleAction(Request $request, string $jsInstanceId)
     {
         return $this->getPickerResponse(
             $request,
@@ -76,12 +70,7 @@ class ProductPickerController extends AdminBaseController
         );
     }
 
-    /**
-     * @Route("/product-picker/pick-single/{parentInstanceId}/", defaults={"parentInstanceId"="__instance_id__"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $parentInstanceId
-     */
-    public function pickSingleAction(Request $request, $parentInstanceId)
+    public function pickSingleAction(Request $request, string $parentInstanceId)
     {
         return $this->getPickerResponse(
             $request,
@@ -97,11 +86,6 @@ class ProductPickerController extends AdminBaseController
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $viewParameters
-     * @param array $gridViewParameters
-     */
     private function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters)
     {
         $administrator = $this->getUser();

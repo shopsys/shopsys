@@ -75,9 +75,6 @@ class DeliveryAddress
      */
     protected $country;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     */
     public function __construct(DeliveryAddressData $deliveryAddressData)
     {
         $this->street = $deliveryAddressData->street;
@@ -90,10 +87,7 @@ class DeliveryAddress
         $this->country = $deliveryAddressData->country;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     */
-    public function edit(DeliveryAddressData $deliveryAddressData)
+    public function edit(DeliveryAddressData $deliveryAddressData): void
     {
         $this->street = $deliveryAddressData->street;
         $this->city = $deliveryAddressData->city;
@@ -105,66 +99,42 @@ class DeliveryAddress
         $this->country = $deliveryAddressData->country;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCompanyName()
+    public function getCompanyName(): ?string
     {
         return $this->companyName;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getFirstName()
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLastName()
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStreet()
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCity()
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPostcode()
+    public function getPostcode(): ?string
     {
         return $this->postcode;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTelephone()
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
-     */
-    public function getCountry()
+    public function getCountry(): ?\Shopsys\FrameworkBundle\Model\Country\Country
     {
         return $this->country;
     }

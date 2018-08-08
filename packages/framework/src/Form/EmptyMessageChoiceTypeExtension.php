@@ -10,21 +10,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
         $view->vars['empty_message'] = $options['empty_message'];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('empty_message')
             ->setAllowedTypes('empty_message', 'string')
@@ -33,10 +25,7 @@ class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
             ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return ChoiceType::class;
     }

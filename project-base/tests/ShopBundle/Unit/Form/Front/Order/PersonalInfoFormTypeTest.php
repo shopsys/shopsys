@@ -30,9 +30,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      */
     private $domain;
 
-    /**
-     * @return array
-     */
     public function getTermsAndConditionsAgreementIsMandatoryData()
     {
         return [
@@ -42,11 +39,9 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     }
 
     /**
-     * @param array $personalInfoFormData
-     * @param $isExpectedValid
      * @dataProvider getTermsAndConditionsAgreementIsMandatoryData
      */
-    public function testTermsAndConditionsAgreementIsMandatory(array $personalInfoFormData, $isExpectedValid)
+    public function testTermsAndConditionsAgreementIsMandatory(array $personalInfoFormData, $isExpectedValid): void
     {
         $this->disableHeurekaShopCertification();
 
@@ -57,11 +52,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $this->assertSame($isExpectedValid, $personalInfoForm->isValid());
     }
 
-    /**
-     * @param bool $legalConditionsAgreement
-     * @return array
-     */
-    private function getPersonalInfoFormData($legalConditionsAgreement)
+    private function getPersonalInfoFormData(bool $legalConditionsAgreement): array
     {
         $personalInfoFormData = [];
         $personalInfoFormData['firstName'] = 'test';
@@ -78,7 +69,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         return $personalInfoFormData;
     }
 
-    public function testHeurekaShopCertificationActivatedAndDisallowedByUser()
+    public function testHeurekaShopCertificationActivatedAndDisallowedByUser(): void
     {
         $this->enableHeurekaShopCertification();
         $personalInfoFormData = $this->getPersonalInfoFormData(true);
@@ -92,9 +83,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $this->assertTrue($data->disallowHeurekaVerifiedByCustomers);
     }
 
-    /**
-     * @return array
-     */
     protected function getExtensions(): array
     {
         return [
@@ -103,7 +91,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         ];
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $countryMock = $this->createMock(Country::class);
         $countryMock->method('getId')->willReturn(1);
@@ -118,9 +106,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     private function createPersonalInfoForm(): FormInterface
     {
         $personalInfoForm = $this->factory->create(PersonalInfoFormType::class, null, [

@@ -2,12 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Article\Article;
@@ -80,12 +78,7 @@ class ArticleController extends AdminBaseController
         $this->cookiesFacade = $cookiesFacade;
     }
 
-    /**
-     * @Route("/article/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $article = $this->articleFacade->getById($id);
         $articleData = $this->articleDataFactory->createFromArticle($article);
@@ -122,9 +115,6 @@ class ArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/article/list/")
-     */
     public function listAction()
     {
         $gridTop = $this->getGrid(Article::PLACEMENT_TOP_MENU);
@@ -140,10 +130,6 @@ class ArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/article/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $articleData = $this->articleDataFactory->create();
@@ -179,12 +165,7 @@ class ArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/article/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->articleFacade->getById($id)->getName();
@@ -204,11 +185,7 @@ class ArticleController extends AdminBaseController
         return $this->redirectToRoute('admin_article_list');
     }
 
-    /**
-     * @Route("/article/delete-confirm/{id}", requirements={"id" = "\d+"})
-     * @param int $id
-     */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         $article = $this->articleFacade->getById($id);
         if ($this->legalConditionsFacade->isArticleUsedAsLegalConditions($article)) {
@@ -228,12 +205,7 @@ class ArticleController extends AdminBaseController
         return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_article_delete', $id);
     }
 
-    /**
-     * @Route("/article/save-ordering/", condition="request.isXmlHttpRequest()")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function saveOrderingAction(Request $request)
+    public function saveOrderingAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $this->articleFacade->saveOrdering($request->get('rowIdsByGridId'));
 
@@ -242,11 +214,7 @@ class ArticleController extends AdminBaseController
         return new JsonResponse($responseData);
     }
 
-    /**
-     * @param string $articlePlacement
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
-    private function getGrid($articlePlacement)
+    private function getGrid(string $articlePlacement): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->articleFacade->getOrderedArticlesByDomainIdAndPlacementQueryBuilder(
             $this->adminDomainTabsFacade->getSelectedDomainId(),

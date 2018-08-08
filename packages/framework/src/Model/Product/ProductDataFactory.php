@@ -96,9 +96,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $this->productParameterValueDataFactory = $productParameterValueDataFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     public function create(): ProductData
     {
         $productData = new ProductData();
@@ -107,10 +104,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         return $productData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
-    protected function fillNew($productData)
+    protected function fillNew(\Shopsys\FrameworkBundle\Model\Product\ProductData $productData): void
     {
         $productData->vat = $this->vatFacade->getDefaultVat();
         $productData->unit = $this->unitFacade->getDefaultUnit();
@@ -129,10 +123,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->accessories = [];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     public function createFromProduct(Product $product): ProductData
     {
         $productData = new ProductData();
@@ -141,11 +131,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         return $productData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    protected function fillFromProduct(ProductData $productData, Product $product)
+    protected function fillFromProduct(ProductData $productData, Product $product): void
     {
         $translations = $product->getTranslations();
         $names = [];
@@ -200,10 +186,9 @@ class ProductDataFactory implements ProductDataFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    protected function getAccessoriesData(Product $product)
+    protected function getAccessoriesData(Product $product): array
     {
         $productAccessoriesByPosition = [];
         foreach ($this->productAccessoryRepository->getAllByProduct($product) as $productAccessory) {
@@ -214,10 +199,9 @@ class ProductDataFactory implements ProductDataFactoryInterface
     }
 
     /**
-     * @param Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
      */
-    protected function getParametersData(Product $product)
+    protected function getParametersData(Product $product): array
     {
         $productParameterValuesData = [];
         $productParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product);
@@ -228,9 +212,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         return $productParameterValuesData;
     }
 
-    /**
-     * @return array
-     */
     protected function getNullForAllDomains()
     {
         $nullForAllDomains = [];

@@ -7,11 +7,9 @@ use Symfony\Component\Form\Form;
 class ErrorService
 {
     /**
-     * @param \Symfony\Component\Form\Form $form
-     * @param \Shopsys\FrameworkBundle\Component\FlashMessage\Bag $flashMessageBag
      * @return string[]
      */
-    public function getAllErrorsAsArray(Form $form, Bag $flashMessageBag)
+    public function getAllErrorsAsArray(Form $form, Bag $flashMessageBag): array
     {
         $errors = $flashMessageBag->getErrorMessages();
         foreach ($form->getErrors(true) as $error) {

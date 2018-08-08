@@ -33,7 +33,7 @@ class ProductDomainTest extends DatabaseTestCase
      */
     private $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
@@ -44,7 +44,7 @@ class ProductDomainTest extends DatabaseTestCase
     /**
      * @group multidomain
      */
-    public function testCreateProductDomainWithData()
+    public function testCreateProductDomainWithData(): void
     {
         $productData = $this->productDataFactory->create();
 
@@ -75,7 +75,7 @@ class ProductDomainTest extends DatabaseTestCase
     /**
      * @group singledomain
      */
-    public function testCreateProductDomainWithDataForSingleDomain()
+    public function testCreateProductDomainWithDataForSingleDomain(): void
     {
         $productData = $this->productDataFactory->create();
 
@@ -98,11 +98,7 @@ class ProductDomainTest extends DatabaseTestCase
         $this->assertSame(self::DEMONSTRATIVE_SHORT_DESCRIPTION, $refreshedProduct->getShortDescription(self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    private function getRefreshedProductFromDatabase(Product $product)
+    private function getRefreshedProductFromDatabase(Product $product): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $this->em->persist($product);
         $this->em->flush();

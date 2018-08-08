@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
@@ -71,18 +70,11 @@ class SuperadminController extends AdminBaseController
         $this->localizedRouterFactory = $localizedRouterFactory;
     }
 
-    /**
-     * @Route("/superadmin/errors/")
-     */
     public function errorsAction()
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/errors.html.twig');
     }
 
-    /**
-     * @Route("/superadmin/pricing/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function pricingAction(Request $request)
     {
         $pricingSettingData = [
@@ -106,9 +98,6 @@ class SuperadminController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/superadmin/urls/")
-     */
     public function urlsAction()
     {
         $allLocales = $this->localization->getLocalesOfAllDomains();
@@ -125,11 +114,7 @@ class SuperadminController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param array $locales
-     * @return array
-     */
-    private function loadDataForUrls(array $locales)
+    private function loadDataForUrls(array $locales): array
     {
         $data = [];
         $requestContext = new RequestContext();
@@ -147,9 +132,6 @@ class SuperadminController extends AdminBaseController
         return $data;
     }
 
-    /**
-     * @Route("/superadmin/modules/")
-     */
     public function modulesAction(Request $request)
     {
         $formData = [];
@@ -176,9 +158,6 @@ class SuperadminController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/superadmin/css-documentation/")
-     */
     public function cssDocumentationAction()
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/cssDocumentation.html.twig');

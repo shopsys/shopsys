@@ -22,10 +22,6 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
      */
     private $heurekaCategoryFacade;
 
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownloader $heurekaCategoryDownloader
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
-     */
     public function __construct(
         HeurekaCategoryDownloader $heurekaCategoryDownloader,
         HeurekaCategoryFacade $heurekaCategoryFacade
@@ -37,7 +33,7 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
     /**
      * @inheritdoc
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
@@ -45,7 +41,7 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
     /**
      * @inheritdoc
      */
-    public function run()
+    public function run(): void
     {
         try {
             $heurekaCategoriesData = $this->heurekaCategoryDownloader->getHeurekaCategories();

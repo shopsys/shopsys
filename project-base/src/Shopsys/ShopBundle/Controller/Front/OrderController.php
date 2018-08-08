@@ -246,9 +246,6 @@ class OrderController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function previewAction(Request $request)
     {
         $transportId = $request->get('transportId');
@@ -274,8 +271,6 @@ class OrderController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
      */
@@ -284,7 +279,7 @@ class OrderController extends FrontBaseController
         OrderPreview $orderPreview,
         array $transports,
         array $payments
-    ) {
+    ): void {
         $transportAndPaymentCheckResult = $this->transportAndPaymentWatcherService->checkTransportAndPayment(
             $orderData,
             $orderPreview,
@@ -350,20 +345,14 @@ class OrderController extends FrontBaseController
         );
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function getTermsAndConditionsResponse()
+    private function getTermsAndConditionsResponse(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysShop/Front/Content/Order/legalConditions.html.twig', [
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
-    private function sendMail($order)
+    private function sendMail(\Shopsys\FrameworkBundle\Model\Order\Order $order): void
     {
         $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
         if ($mailTemplate->isSendMail()) {

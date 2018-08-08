@@ -80,9 +80,6 @@ class Category extends AbstractTranslatableEntity
      */
     protected $domains;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
     public function __construct(CategoryData $categoryData)
     {
         $this->setParent($categoryData->parent);
@@ -93,10 +90,7 @@ class Category extends AbstractTranslatableEntity
         $this->createDomains($categoryData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
-    public function edit(CategoryData $categoryData)
+    public function edit(CategoryData $categoryData): void
     {
         $this->setParent($categoryData->parent);
         $this->setTranslations($categoryData);
@@ -106,24 +100,17 @@ class Category extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $parent
      */
-    public function setParent(self $parent = null)
+    public function setParent(self $parent = null): void
     {
         $this->parent = $parent;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param string|null $locale
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -131,7 +118,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return string[]
      */
-    public function getNames()
+    public function getNames(): array
     {
         $namesByLocale = [];
         foreach ($this->translations as $translation) {
@@ -141,28 +128,20 @@ class Category extends AbstractTranslatableEntity
         return $namesByLocale;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
-     */
-    public function getParent()
+    public function getParent(): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->parent;
     }
 
-    /**
-     * @return int
-     */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }
 
     /**
      * Method does not lazy load children
-     *
-     * @return bool
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return $this->getRgt() - $this->getLft() > 1;
     }
@@ -170,32 +149,22 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->children;
     }
 
-    /**
-     * @return int
-     */
-    public function getLft()
+    public function getLft(): int
     {
         return $this->lft;
     }
 
-    /**
-     * @return int
-     */
-    public function getRgt()
+    public function getRgt(): int
     {
         return $this->rgt;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryDomain
-     */
-    protected function getCategoryDomain($domainId)
+    protected function getCategoryDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Category\CategoryDomain
     {
         foreach ($this->domains as $categoryDomain) {
             if ($categoryDomain->getDomainId() === $domainId) {
@@ -206,82 +175,49 @@ class Category extends AbstractTranslatableEntity
         throw new CategoryDomainNotFoundException($this->id, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
-    protected function setTranslations(CategoryData $categoryData)
+    protected function setTranslations(CategoryData $categoryData): void
     {
         foreach ($categoryData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
         }
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getSeoTitle(int $domainId)
+    public function getSeoTitle(int $domainId): ?string
     {
         return $this->getCategoryDomain($domainId)->getSeoTitle();
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getSeoH1(int $domainId)
+    public function getSeoH1(int $domainId): ?string
     {
         return $this->getCategoryDomain($domainId)->getSeoH1();
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isEnabled(int $domainId)
+    public function isEnabled(int $domainId): bool
     {
         return $this->getCategoryDomain($domainId)->isEnabled();
     }
 
-    /**
-     * @param $domainId
-     * @return bool
-     */
-    public function isVisible(int $domainId)
+    public function isVisible(int $domainId): bool
     {
         return $this->getCategoryDomain($domainId)->isVisible();
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
+    public function getSeoMetaDescription(int $domainId): ?string
     {
         return $this->getCategoryDomain($domainId)->getSeoMetaDescription();
     }
 
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getDescription(int $domainId)
+    public function getDescription(int $domainId): ?string
     {
         return $this->getCategoryDomain($domainId)->getDescription();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation
     {
         return new CategoryTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
-    protected function setDomains(CategoryData $categoryData)
+    protected function setDomains(CategoryData $categoryData): void
     {
         foreach ($this->domains as $categoryDomain) {
             $domainId = $categoryDomain->getDomainId();
@@ -293,10 +229,7 @@ class Category extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
-    protected function createDomains(CategoryData $categoryData)
+    protected function createDomains(CategoryData $categoryData): void
     {
         $domainIds = array_keys($categoryData->seoTitles);
 

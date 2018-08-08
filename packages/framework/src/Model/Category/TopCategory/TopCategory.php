@@ -35,22 +35,14 @@ class TopCategory
      */
     protected $position;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
-     * @param int $position
-     */
-    public function __construct(Category $category, $domainId, $position)
+    public function __construct(Category $category, int $domainId, int $position)
     {
         $this->category = $category;
         $this->domainId = $domainId;
         $this->position = $position;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    public function getCategory()
+    public function getCategory(): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->category;
     }

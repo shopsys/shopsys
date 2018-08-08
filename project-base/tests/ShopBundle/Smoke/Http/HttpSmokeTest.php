@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class HttpSmokeTest extends HttpSmokeTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -17,20 +17,13 @@ class HttpSmokeTest extends HttpSmokeTestCase
             ->switchDomainById(1);
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
-    protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
+    protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomization = new RouteConfigCustomization(self::$kernel->getContainer());
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function handleRequest(Request $request)
+    protected function handleRequest(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $entityManager = self::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /* @var $entityManager \Doctrine\ORM\EntityManager */

@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportEditFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -53,10 +51,6 @@ class TransportController extends AdminBaseController
         $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
-    /**
-     * @Route("/transport/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $transportData = $this->transportDataFactory->create();
@@ -89,12 +83,7 @@ class TransportController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/transport/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $transport = $this->transportFacade->getById($id);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
@@ -130,12 +119,7 @@ class TransportController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/transport/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $transportName = $this->transportFacade->getById($id)->getName();

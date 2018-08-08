@@ -48,26 +48,17 @@ class CronModuleConfig implements CronTimeInterface
         return $this->service;
     }
 
-    /**
-     * @return string
-     */
-    public function getServiceId()
+    public function getServiceId(): string
     {
         return $this->serviceId;
     }
 
-    /**
-     * @return string
-     */
-    public function getTimeMinutes()
+    public function getTimeMinutes(): string
     {
         return $this->timeMinutes;
     }
 
-    /**
-     * @return string
-     */
-    public function getTimeHours()
+    public function getTimeHours(): string
     {
         return $this->timeHours;
     }

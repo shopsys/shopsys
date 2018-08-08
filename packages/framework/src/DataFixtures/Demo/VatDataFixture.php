@@ -42,10 +42,7 @@ class VatDataFixture extends AbstractReferenceFixture
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
 
         /**
@@ -72,11 +69,7 @@ class VatDataFixture extends AbstractReferenceFixture
         $this->setHighVatAsDefault();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     * @param string|null $referenceName
-     */
-    private function createVat(VatData $vatData, $referenceName = null)
+    private function createVat(VatData $vatData, ?string $referenceName = null): void
     {
         $vat = $this->vatFacade->create($vatData);
         if ($referenceName !== null) {
@@ -84,7 +77,7 @@ class VatDataFixture extends AbstractReferenceFixture
         }
     }
 
-    private function setHighVatAsDefault()
+    private function setHighVatAsDefault(): void
     {
         $defaultVat = $this->getReference(self::VAT_HIGH);
         /** @var $defaultVat \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat */

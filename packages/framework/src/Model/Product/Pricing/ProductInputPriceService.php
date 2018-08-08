@@ -26,18 +26,16 @@ class ProductInputPriceService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $pricingGroups
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[] $manualInputPrices
      * @return string[]
      */
     public function getManualInputPricesDataIndexedByPricingGroupId(
         Product $product,
-        $inputPriceType,
+        int $inputPriceType,
         array $pricingGroups,
         array $manualInputPrices
-    ) {
+    ): array {
         $manualInputPricesDataByPricingGroupId = [];
 
         if ($product->getPriceCalculationType() === Product::PRICE_CALCULATION_TYPE_AUTO) {
@@ -66,12 +64,9 @@ class ProductInputPriceService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[] $manualInputPricesInDefaultCurrency
-     * @return string|null
      */
-    public function getInputPrice(Product $product, $inputPriceType, array $manualInputPricesInDefaultCurrency)
+    public function getInputPrice(Product $product, int $inputPriceType, array $manualInputPricesInDefaultCurrency): ?string
     {
         if ($product->getPriceCalculationType() === Product::PRICE_CALCULATION_TYPE_AUTO) {
             return $product->getPrice();
@@ -94,11 +89,9 @@ class ProductInputPriceService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[] $manualInputPricesInDefaultCurrency
-     * @return string|null
      */
-    private function getMaxSellingPriceWithVatInDefaultCurrency(Product $product, array $manualInputPricesInDefaultCurrency)
+    private function getMaxSellingPriceWithVatInDefaultCurrency(Product $product, array $manualInputPricesInDefaultCurrency): ?string
     {
         $maxSellingPriceWithVatInDefaultCurrency = null;
         foreach ($manualInputPricesInDefaultCurrency as $manualInputPrice) {

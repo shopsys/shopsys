@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\TopProduct\TopProductsFormType;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
@@ -28,9 +27,6 @@ class TopProductController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @Route("/product/top-product/list/")
-     */
     public function listAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -55,10 +51,9 @@ class TopProductController extends AdminBaseController
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    private function getProductsForDomain($domainId)
+    private function getProductsForDomain(int $domainId): array
     {
         $topProducts = $this->topProductFacade->getAll($domainId);
         $products = [];

@@ -33,14 +33,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade */
     private $productVariantFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureLoader $productDataFixtureLoader
-     * @param \Shopsys\FrameworkBundle\DataFixtures\ProductDataFixtureReferenceInjector $referenceInjector
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureCsvReader $productDataFixtureCsvReader
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
-     */
     public function __construct(
         ProductDataFixtureLoader $productDataFixtureLoader,
         ProductDataFixtureReferenceInjector $referenceInjector,
@@ -57,10 +49,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->productVariantFacade = $productVariantFacade;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $onlyForFirstDomain = true;
         $this->referenceInjector->loadReferences($this->productDataFixtureLoader, $this->persistentReferenceFacade, $onlyForFirstDomain);
@@ -81,12 +70,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createVariants($productsByCatnum, $productNo);
     }
 
-    /**
-     * @param string $referenceName
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    private function createProduct($referenceName, ProductData $productData)
+    private function createProduct(string $referenceName, ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $product = $this->productFacade->create($productData);
 
@@ -97,9 +81,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $productsByCatnum
-     * @param int $productNo
      */
-    private function createVariants(array $productsByCatnum, $productNo)
+    private function createVariants(array $productsByCatnum, int $productNo): void
     {
         $csvRows = $this->productDataFixtureCsvReader->getProductDataFixtureCsvRows();
         $variantCatnumsByMainVariantCatnum = $this->productDataFixtureLoader->getVariantCatnumsIndexedByMainVariantCatnum($csvRows);

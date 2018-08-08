@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Model\Country\CountryInlineEdit;
 
 class CountryController extends AdminBaseController
@@ -19,9 +18,6 @@ class CountryController extends AdminBaseController
         $this->countryInlineEdit = $countryInlineEdit;
     }
 
-    /**
-     * @Route("/country/list/")
-     */
     public function listAction()
     {
         $countryInlineEdit = $this->countryInlineEdit;

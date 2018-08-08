@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\CustomerCommunication\CustomerCommunicationFormType;
@@ -29,9 +28,6 @@ class CustomerCommunicationController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @Route("/customer-communication/order-submitted/")
-     */
     public function orderSubmittedAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

@@ -7,9 +7,6 @@ use Twig_SimpleFilter;
 
 class TranslationExtension extends \Twig_Extension
 {
-    /**
-     * @return array
-     */
     public function getFilters()
     {
         return [
@@ -24,10 +21,7 @@ class TranslationExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'translation';
     }
@@ -38,14 +32,10 @@ class TranslationExtension extends \Twig_Extension
      * Helpful for protection from XSS when providing user input as translation argument
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      *
-     * @param \Twig_Environment $twig
-     * @param string $message
-     * @param array $arguments
      * @param string|null $domain
      * @param string|null $locale
-     * @return string
      */
-    public function transHtml(Twig_Environment $twig, $message, array $arguments = [], $domain = null, $locale = null)
+    public function transHtml(Twig_Environment $twig, string $message, array $arguments = [], ?string $domain = null, ?string $locale = null): string
     {
         $defaultTransCallable = $twig->getFilter('trans')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);
@@ -59,15 +49,10 @@ class TranslationExtension extends \Twig_Extension
      * Helpful for protection from XSS when providing user input as translation argument
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::transchoice()
      *
-     * @param \Twig_Environment $twig
-     * @param string $message
-     * @param int $count
-     * @param array $arguments
      * @param string|null $domain
      * @param string|null $locale
-     * @return string
      */
-    public function transchoiceHtml(Twig_Environment $twig, $message, $count, array $arguments = [], $domain = null, $locale = null)
+    public function transchoiceHtml(Twig_Environment $twig, string $message, int $count, array $arguments = [], ?string $domain = null, ?string $locale = null): string
     {
         $defaultTranschoiceCallable = $twig->getFilter('transchoice')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);
@@ -77,12 +62,8 @@ class TranslationExtension extends \Twig_Extension
 
     /**
      * Escapes all elements in array with default twig "escape" filter
-     *
-     * @param \Twig_Environment $twig
-     * @param array $elements
-     * @return array
      */
-    private function getEscapedElements(Twig_Environment $twig, array $elements)
+    private function getEscapedElements(Twig_Environment $twig, array $elements): array
     {
         $defaultEscapeFilterCallable = $twig->getFilter('escape')->getCallable();
         $escapedElements = [];

@@ -22,17 +22,15 @@ interface AdvancedSearchFilterInterface
 
     /**
      * Returns a unique name of the filter
-     *
-     * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns an array of OPERATOR_* constants specifying which operators can be used with this filter
      *
      * @return string[]
      */
-    public function getAllowedOperators();
+    public function getAllowedOperators(): array;
 
     /**
      * Returns a form type that should be used for value selection
@@ -43,16 +41,13 @@ interface AdvancedSearchFilterInterface
 
     /**
      * Returns options that will be passed to the form type used for value selection
-     *
-     * @return array
      */
-    public function getValueFormOptions();
+    public function getValueFormOptions(): array;
 
     /**
      * Method that applies the filtering conditions specified by $rulesData to the provided query builder
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData);
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void;
 }

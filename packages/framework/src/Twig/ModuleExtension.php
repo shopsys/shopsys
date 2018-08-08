@@ -18,9 +18,6 @@ class ModuleExtension extends Twig_Extension
         $this->moduleFacade = $moduleFacade;
     }
 
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [
@@ -28,19 +25,12 @@ class ModuleExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @param int $moduleName
-     * @return string
-     */
-    public function isModuleEnabled($moduleName)
+    public function isModuleEnabled(int $moduleName): string
     {
         return $this->moduleFacade->isEnabled($moduleName);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'module';
     }

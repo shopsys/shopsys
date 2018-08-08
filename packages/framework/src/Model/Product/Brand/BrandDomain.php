@@ -61,68 +61,43 @@ class BrandDomain
      */
     protected $seoH1;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @param int $domainId
-     */
-    public function __construct(Brand $brand, $domainId)
+    public function __construct(Brand $brand, int $domainId)
     {
         $this->brand = $brand;
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoTitle()
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
 
-    /**
-     * @param string|null $seoTitle
-     */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle(?string $seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription()
+    public function getSeoMetaDescription(): ?string
     {
         return $this->seoMetaDescription;
     }
 
-    /**
-     * @param string|null $seoMetaDescription
-     */
-    public function setSeoMetaDescription($seoMetaDescription)
+    public function setSeoMetaDescription(?string $seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoH1()
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }
 
-    /**
-     * @param string|null $seoH1
-     */
-    public function setSeoH1($seoH1)
+    public function setSeoH1(?string $seoH1): void
     {
         $this->seoH1 = $seoH1;
     }

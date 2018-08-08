@@ -14,32 +14,25 @@ abstract class FunctionalTestCase extends WebTestCase
      */
     private $client;
 
-    protected function setUpDomain()
+    protected function setUpDomain(): void
     {
         $domain = $this->getContainer()->get(Domain::class);
         /* @var $domain \Shopsys\FrameworkBundle\Component\Domain\Domain */
         $domain->switchDomainById(1);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setUpDomain();
     }
 
-    /**
-     * @param bool $createNew
-     * @param string $username
-     * @param string $password
-     * @param array $kernelOptions
-     * @return \Symfony\Bundle\FrameworkBundle\Client
-     */
     protected function getClient(
-        $createNew = false,
-        $username = null,
-        $password = null,
-        $kernelOptions = []
-    ) {
+        bool $createNew = false,
+        string $username = null,
+        string $password = null,
+        array $kernelOptions = []
+    ): \Symfony\Bundle\FrameworkBundle\Client {
         $defaultKernelOptions = [
             'environment' => EnvironmentType::TEST,
             'debug' => EnvironmentType::isDebug(EnvironmentType::TEST),
@@ -64,19 +57,12 @@ abstract class FunctionalTestCase extends WebTestCase
         return $this->client;
     }
 
-    /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected function getContainer()
+    protected function getContainer(): \Symfony\Component\DependencyInjection\ContainerInterface
     {
         return $this->getClient()->getContainer();
     }
 
-    /**
-     * @param string $referenceName
-     * @return object
-     */
-    protected function getReference($referenceName)
+    protected function getReference(string $referenceName): object
     {
         $persistentReferenceFacade = $this->getContainer()
             ->get(PersistentReferenceFacade::class);

@@ -17,15 +17,12 @@ class PersonalDataAccessRequestDataFixture extends AbstractReferenceFixture
     /** @var PersonalDataAccessRequestFacade */
     private $personalDataFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataFacade
-     */
     public function __construct(PersonalDataAccessRequestFacade $personalDataFacade)
     {
         $this->personalDataFacade = $personalDataFacade;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $personalDataAccessRequestData = new PersonalDataAccessRequestData();
         $personalDataAccessRequestData->domainId = Domain::FIRST_DOMAIN_ID;

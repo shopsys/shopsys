@@ -20,9 +20,6 @@ class LoadPluginDataFixturesCommand extends Command
      */
     private $pluginDataFixtureFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureFacade $pluginDataFixtureFacade
-     */
     public function __construct(PluginDataFixtureFacade $pluginDataFixtureFacade)
     {
         $this->pluginDataFixtureFacade = $pluginDataFixtureFacade;
@@ -30,13 +27,13 @@ class LoadPluginDataFixturesCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Loads data fixtures of all registered plugins');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->pluginDataFixtureFacade->loadAll();
     }

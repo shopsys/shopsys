@@ -57,9 +57,6 @@ class PriceExtension extends Twig_Extension
         $this->intlCurrencyRepository = $intlCurrencyRepository;
     }
 
-    /**
-     * @return array
-     */
     public function getFilters()
     {
         return [
@@ -100,9 +97,6 @@ class PriceExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [
@@ -128,22 +122,14 @@ class PriceExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @param string $price
-     * @return string
-     */
-    public function priceFilter($price)
+    public function priceFilter(string $price): string
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
 
         return $this->formatCurrency($price, $currency);
     }
 
-    /**
-     * @param string $price
-     * @return string
-     */
-    public function priceTextFilter($price)
+    public function priceTextFilter(string $price): string
     {
         if ($price == 0) {
             return t('Free');
@@ -152,13 +138,7 @@ class PriceExtension extends Twig_Extension
         }
     }
 
-    /**
-     * @param string $price
-     * @param int $currencyId
-     * @param string $locale
-     * @return string
-     */
-    public function priceTextWithCurrencyByCurrencyIdAndLocaleFilter($price, $currencyId, $locale)
+    public function priceTextWithCurrencyByCurrencyIdAndLocaleFilter(string $price, int $currencyId, string $locale): string
     {
         if ($price == 0) {
             return t('Free');
@@ -168,33 +148,19 @@ class PriceExtension extends Twig_Extension
         }
     }
 
-    /**
-     * @param string $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return string
-     */
-    public function priceWithCurrencyFilter($price, Currency $currency)
+    public function priceWithCurrencyFilter(string $price, Currency $currency): string
     {
         return $this->formatCurrency($price, $currency);
     }
 
-    /**
-     * @param string $price
-     * @return string
-     */
-    public function priceWithCurrencyAdminFilter($price)
+    public function priceWithCurrencyAdminFilter(string $price): string
     {
         $currency = $this->currencyFacade->getDefaultCurrency();
 
         return $this->formatCurrency($price, $currency);
     }
 
-    /**
-     * @param string $price
-     * @param int $domainId
-     * @return string
-     */
-    public function priceWithCurrencyByDomainIdFilter($price, $domainId)
+    public function priceWithCurrencyByDomainIdFilter(string $price, int $domainId): string
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
@@ -208,13 +174,7 @@ class PriceExtension extends Twig_Extension
         return $this->formatCurrency($price, $currency);
     }
 
-    /**
-     * @param string $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param string|null $locale
-     * @return string
-     */
-    private function formatCurrency($price, Currency $currency, $locale = null)
+    private function formatCurrency(string $price, Currency $currency, ?string $locale = null): string
     {
         if (!is_numeric($price)) {
             return $price;
@@ -236,11 +196,7 @@ class PriceExtension extends Twig_Extension
         return $numberFormatter->formatCurrency($priceWithFixedFloatingPointError, $intlCurrency);
     }
 
-    /**
-     * @param string $locale
-     * @return \CommerceGuys\Intl\Formatter\NumberFormatter
-     */
-    private function getNumberFormatter($locale)
+    private function getNumberFormatter(string $locale): \CommerceGuys\Intl\Formatter\NumberFormatter
     {
         $numberFormat = $this->numberFormatRepository->get($locale);
         $numberFormatter = new NumberFormatter($numberFormat, NumberFormatter::CURRENCY);
@@ -250,34 +206,21 @@ class PriceExtension extends Twig_Extension
         return $numberFormatter;
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getCurrencySymbolByDomainId($domainId)
+    public function getCurrencySymbolByDomainId(int $domainId): string
     {
         $locale = $this->localization->getLocale();
 
         return $this->getCurrencySymbolByDomainIdAndLocale($domainId, $locale);
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getCurrencyCodeByDomainId($domainId)
+    public function getCurrencyCodeByDomainId(int $domainId): string
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         return $currency->getCode();
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @return string
-     */
-    private function getCurrencySymbolByDomainIdAndLocale($domainId, $locale)
+    private function getCurrencySymbolByDomainIdAndLocale(int $domainId, string $locale): string
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $intlCurrency = $this->intlCurrencyRepository->get($currency->getCode(), $locale);
@@ -285,21 +228,14 @@ class PriceExtension extends Twig_Extension
         return $intlCurrency->getSymbol();
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultCurrencySymbol()
+    public function getDefaultCurrencySymbol(): string
     {
         $locale = $this->localization->getLocale();
 
         return $this->getDefaultCurrencySymbolByLocale($locale);
     }
 
-    /**
-     * @param string $locale
-     * @return string
-     */
-    private function getDefaultCurrencySymbolByLocale($locale)
+    private function getDefaultCurrencySymbolByLocale(string $locale): string
     {
         $currency = $this->currencyFacade->getDefaultCurrency();
         $intlCurrency = $this->intlCurrencyRepository->get($currency->getCode(), $locale);
@@ -307,23 +243,14 @@ class PriceExtension extends Twig_Extension
         return $intlCurrency->getSymbol();
     }
 
-    /**
-     * @param int $currencyId
-     * @return string
-     */
-    public function getCurrencySymbolByCurrencyId($currencyId)
+    public function getCurrencySymbolByCurrencyId(int $currencyId): string
     {
         $locale = $this->localization->getLocale();
 
         return $this->getCurrencySymbolByCurrencyIdAndLocale($currencyId, $locale);
     }
 
-    /**
-     * @param int $currencyId
-     * @param string $locale
-     * @return string
-     */
-    private function getCurrencySymbolByCurrencyIdAndLocale($currencyId, $locale)
+    private function getCurrencySymbolByCurrencyIdAndLocale(int $currencyId, string $locale): string
     {
         $currency = $this->currencyFacade->getById($currencyId);
         $intlCurrency = $this->intlCurrencyRepository->get($currency->getCode(), $locale);
@@ -331,10 +258,7 @@ class PriceExtension extends Twig_Extension
         return $intlCurrency->getSymbol();
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'price_extension';
     }

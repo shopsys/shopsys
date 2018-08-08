@@ -9,7 +9,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class AdministratorRepositoryTest extends DatabaseTestCase
 {
-    public function testGetByValidMultidomainLogin()
+    public function testGetByValidMultidomainLogin(): void
     {
         $validMultidomainLoginToken = 'validMultidomainLoginToken';
         $multidomainLoginTokenExpiration = new DateTime('+60 seconds');
@@ -27,7 +27,7 @@ class AdministratorRepositoryTest extends DatabaseTestCase
         $this->assertSame($administrator, $administratorFromDb);
     }
 
-    public function testGetByValidMultidomainLoginTokenInvalidTokenException()
+    public function testGetByValidMultidomainLoginTokenInvalidTokenException(): void
     {
         $validMultidomainLoginToken = 'validMultidomainLoginToken';
         $invalidMultidomainLoginToken = 'invalidMultidomainLoginToken';
@@ -46,7 +46,7 @@ class AdministratorRepositoryTest extends DatabaseTestCase
         $administratorRepository->getByValidMultidomainLoginToken($invalidMultidomainLoginToken);
     }
 
-    public function testGetByValidMultidomainLoginTokenExpiredTokenException()
+    public function testGetByValidMultidomainLoginTokenExpiredTokenException(): void
     {
         $validMultidomainLoginToken = 'validMultidomainLoginToken';
         $multidomainLoginTokenExpiration = new DateTime('-60 seconds');

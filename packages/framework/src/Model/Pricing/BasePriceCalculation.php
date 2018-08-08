@@ -16,23 +16,13 @@ class BasePriceCalculation
      */
     private $rounding;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     */
     public function __construct(PriceCalculation $priceCalculation, Rounding $rounding)
     {
         $this->priceCalculation = $priceCalculation;
         $this->rounding = $rounding;
     }
 
-    /**
-     * @param string $inputPrice
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    public function calculateBasePrice($inputPrice, $inputPriceType, Vat $vat)
+    public function calculateBasePrice(string $inputPrice, int $inputPriceType, Vat $vat): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         $basePriceWithVat = $this->getBasePriceWithVat($inputPrice, $inputPriceType, $vat);
         $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($basePriceWithVat, $vat);
@@ -42,12 +32,9 @@ class BasePriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param Vat $vat
      * @param string[] $coefficients
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function applyCoefficients(Price $price, Vat $vat, $coefficients)
+    public function applyCoefficients(Price $price, Vat $vat, $coefficients): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         $priceWithVatBeforeRounding = $price->getPriceWithVat();
         foreach ($coefficients as $coefficient) {
@@ -60,13 +47,7 @@ class BasePriceCalculation
         return new Price($priceWithoutVat, $priceWithVat);
     }
 
-    /**
-     * @param string $inputPrice
-     * @param int $inputPriceType
-     * @param Vat $vat
-     * @return string
-     */
-    private function getBasePriceWithVat($inputPrice, $inputPriceType, Vat $vat)
+    private function getBasePriceWithVat(string $inputPrice, int $inputPriceType, Vat $vat): string
     {
         switch ($inputPriceType) {
             case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:

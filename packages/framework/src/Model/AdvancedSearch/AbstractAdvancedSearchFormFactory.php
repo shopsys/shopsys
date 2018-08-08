@@ -42,12 +42,7 @@ abstract class AbstractAdvancedSearchFormFactory
         $this->advancedSearchOperatorTranslation = $advancedSearchOperatorTranslation;
     }
 
-    /**
-     * @param string $name
-     * @param array $rulesViewData
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createRulesForm($name, $rulesViewData)
+    public function createRulesForm(string $name, array $rulesViewData): \Symfony\Component\Form\FormInterface
     {
         $options = [
             'csrf_protection' => false,
@@ -67,12 +62,7 @@ abstract class AbstractAdvancedSearchFormFactory
         return $form;
     }
 
-    /**
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $ruleFilter
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    private function createRuleFormBuilder($name, AdvancedSearchFilterInterface $ruleFilter)
+    private function createRuleFormBuilder(string $name, AdvancedSearchFilterInterface $ruleFilter): \Symfony\Component\Form\FormBuilderInterface
     {
         $filterFormBuilder = $this->formFactory->createNamedBuilder($name, FormType::class, null, [
             'data_class' => AdvancedSearchRuleData::class,
@@ -93,10 +83,9 @@ abstract class AbstractAdvancedSearchFormFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $filter
      * @return string[]
      */
-    private function getFilterOperatorChoices(AdvancedSearchFilterInterface $filter)
+    private function getFilterOperatorChoices(AdvancedSearchFilterInterface $filter): array
     {
         $choices = [];
         foreach ($filter->getAllowedOperators() as $operator) {
@@ -109,7 +98,7 @@ abstract class AbstractAdvancedSearchFormFactory
     /**
      * @return string[]
      */
-    private function getSubjectChoices()
+    private function getSubjectChoices(): array
     {
         $choices = [];
         foreach ($this->advancedSearchConfig->getAllFilters() as $filter) {

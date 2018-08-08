@@ -29,26 +29,17 @@ class CurrentDomainRouter implements RouterInterface
         $this->domainRouterFactory = $domainRouterFactory;
     }
 
-    /**
-     * @return \Symfony\Component\Routing\RequestContext
-     */
-    public function getContext()
+    public function getContext(): \Symfony\Component\Routing\RequestContext
     {
         return $this->context;
     }
 
-    /**
-     * @param \Symfony\Component\Routing\RequestContext $context
-     */
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }
 
-    /**
-     * @return \Symfony\Component\Routing\RouteCollection
-     */
-    public function getRouteCollection()
+    public function getRouteCollection(): \Symfony\Component\Routing\RouteCollection
     {
         return $this->getDomainRouter()->getRouteCollection();
     }
@@ -57,26 +48,21 @@ class CurrentDomainRouter implements RouterInterface
      * @param string $routeName
      * @param array $parameters
      * @param int $referenceType
-     * @return string
      */
-    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->getDomainRouter()->generate($routeName, $parameters, $referenceType);
     }
 
     /**
      * @param string $pathinfo
-     * @return array
      */
-    public function match($pathinfo)
+    public function match($pathinfo): array
     {
         return $this->getDomainRouter()->match($pathinfo);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\DomainRouter
-     */
-    private function getDomainRouter()
+    private function getDomainRouter(): \Shopsys\FrameworkBundle\Component\Router\DomainRouter
     {
         return $this->domainRouterFactory->getRouter($this->domain->getId());
     }

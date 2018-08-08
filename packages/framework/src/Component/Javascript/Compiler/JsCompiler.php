@@ -20,11 +20,7 @@ class JsCompiler
         $this->compilerPasses = $compilerPasses;
     }
 
-    /**
-     * @param string $content
-     * @return string
-     */
-    public function compile($content)
+    public function compile(string $content): string
     {
         $node = JParser::parse_string($content, true, JParser::class, JTokenizer::class);
         /* @var $node \PLUG\JavaScript\JNodes\nonterminal\JProgramNode */

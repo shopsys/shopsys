@@ -25,7 +25,7 @@ class PaginationResultTest extends TestCase
     /**
      * @dataProvider getTestPageCountData
      */
-    public function testGetPageCount($page, $pageSize, $totalCount, $results, $expectedPageCount)
+    public function testGetPageCount($page, $pageSize, $totalCount, $results, $expectedPageCount): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, $results);
 

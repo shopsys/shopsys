@@ -45,11 +45,9 @@ class ProductPriceCalculationTest extends TestCase
     }
 
     /**
-     * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
      */
-    private function getProductPriceCalculationWithInputPriceTypeAndVariants($inputPriceType, $variants)
+    private function getProductPriceCalculationWithInputPriceTypeAndVariants(int $inputPriceType, $variants): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
     {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType', 'getRoundingType', 'getDomainDefaultCurrencyIdByDomainId'])
@@ -111,15 +109,10 @@ class ProductPriceCalculationTest extends TestCase
         );
     }
 
-    /**
-     * @param string $inputPrice
-     * @param string $vatPercent
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
     private function getProductWithInputPriceAndVatPercentAndAutoCalculationPriceType(
-        $inputPrice,
-        $vatPercent
-    ) {
+        string $inputPrice,
+        string $vatPercent
+    ): \Shopsys\FrameworkBundle\Model\Product\Product {
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
@@ -143,7 +136,7 @@ class ProductPriceCalculationTest extends TestCase
         $pricingGroupCoefficient,
         $priceWithoutVat,
         $priceWithVat
-    ) {
+    ): void {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             $inputPriceType,
             []
@@ -196,7 +189,7 @@ class ProductPriceCalculationTest extends TestCase
         $variants,
         $expectedPriceWithVat,
         $expectedFrom
-    ) {
+    ): void {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
             $variants
@@ -216,7 +209,7 @@ class ProductPriceCalculationTest extends TestCase
         $this->assertSame($expectedFrom, $productPrice->isPriceFrom());
     }
 
-    public function testCalculatePriceOfMainVariantWithoutAnySellableVariants()
+    public function testCalculatePriceOfMainVariantWithoutAnySellableVariants(): void
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,

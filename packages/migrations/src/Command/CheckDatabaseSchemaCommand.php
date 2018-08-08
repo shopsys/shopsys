@@ -21,9 +21,6 @@ class CheckDatabaseSchemaCommand extends AbstractCommand
      */
     private $databaseSchemaFacade;
 
-    /**
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
-     */
     public function __construct(DatabaseSchemaFacade $databaseSchemaFacade)
     {
         $this->databaseSchemaFacade = $databaseSchemaFacade;
@@ -31,16 +28,12 @@ class CheckDatabaseSchemaCommand extends AbstractCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Check if database schema is satisfying ORM');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Checking database schema...');

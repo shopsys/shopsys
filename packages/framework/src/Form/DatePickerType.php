@@ -11,10 +11,7 @@ class DatePickerType extends AbstractType
     const FORMAT_PHP = 'dd.MM.yyyy';
     const FORMAT_JS = 'dd.mm.yy';
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'widget' => 'single_text',

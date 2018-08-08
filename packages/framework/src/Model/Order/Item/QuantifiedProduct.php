@@ -16,11 +16,7 @@ class QuantifiedProduct
      */
     private $quantity;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $quantity
-     */
-    public function __construct(Product $product, $quantity)
+    public function __construct(Product $product, int $quantity)
     {
         $this->product = $product;
         $this->quantity = $quantity;
@@ -29,15 +25,12 @@ class QuantifiedProduct
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
-    public function getProduct()
+    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }
 
-    /**
-     * @return int
-     */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }

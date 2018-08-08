@@ -13,17 +13,11 @@ class FileUploadExtension extends Twig_Extension
      */
     private $fileUpload;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     */
     public function __construct(FileUpload $fileUpload)
     {
         $this->fileUpload = $fileUpload;
     }
 
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [
@@ -31,11 +25,7 @@ class FileUploadExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @param string $temporaryFilename
-     * @return string
-     */
-    public function getLabelByTemporaryFilename($temporaryFilename)
+    public function getLabelByTemporaryFilename(string $temporaryFilename): string
     {
         $filename = $this->fileUpload->getOriginalFilenameByTemporary($temporaryFilename);
         $filepath = ($this->fileUpload->getTemporaryDirectory() . '/' . $temporaryFilename);
@@ -46,10 +36,7 @@ class FileUploadExtension extends Twig_Extension
         return '';
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'fileupload_extension';
     }

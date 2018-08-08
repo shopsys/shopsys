@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
 
 class UploadedFileLocatorTest extends TestCase
 {
-    public function testFileExists()
+    public function testFileExists(): void
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
             ->setMethods(['getFilename', 'getEntityName'])
@@ -23,7 +23,7 @@ class UploadedFileLocatorTest extends TestCase
         $this->assertTrue($uploadedFileLocator->fileExists($uploadedFileMock));
     }
 
-    public function testFileNotExists()
+    public function testFileNotExists(): void
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
             ->setMethods(['getFilename', 'getEntityName'])
@@ -36,7 +36,7 @@ class UploadedFileLocatorTest extends TestCase
         $this->assertFalse($uploadedFileLocator->fileExists($uploadedFileMock));
     }
 
-    public function testGetAbsoluteFilePath()
+    public function testGetAbsoluteFilePath(): void
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
         $uploadedFileUrlPrefix = '';
@@ -48,7 +48,7 @@ class UploadedFileLocatorTest extends TestCase
         );
     }
 
-    public function testGetAbsoluteUploadedFileFilepath()
+    public function testGetAbsoluteUploadedFileFilepath(): void
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
@@ -65,7 +65,7 @@ class UploadedFileLocatorTest extends TestCase
         );
     }
 
-    public function testGetRelativeUploadedFileFilepath()
+    public function testGetRelativeUploadedFileFilepath(): void
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
             ->setMethods(['getFilename', 'getEntityName'])
@@ -81,7 +81,7 @@ class UploadedFileLocatorTest extends TestCase
         );
     }
 
-    public function testGetUploadedFileUrl()
+    public function testGetUploadedFileUrl(): void
     {
         $domainConfig = new DomainConfig(1, 'http://www.example.com', 'example domain', 'en');
 
@@ -99,12 +99,7 @@ class UploadedFileLocatorTest extends TestCase
         );
     }
 
-    /**
-     * @param $uploadedFileDir
-     * @param $uploadedFileUrlPrefix
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
-     */
-    private function createUploadedFileLocator($uploadedFileUrlPrefix = '', $has = true)
+    private function createUploadedFileLocator($uploadedFileUrlPrefix = '', $has = true): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
         $filesystemMock = $this->createMock(FilesystemInterface::class);

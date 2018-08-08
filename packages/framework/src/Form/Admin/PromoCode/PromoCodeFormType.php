@@ -29,11 +29,7 @@ class PromoCodeFormType extends AbstractType
         $this->promoCodeFacade = $promoCodeFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->promoCode = $options['promo_code'];
 
@@ -62,10 +58,7 @@ class PromoCodeFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('promo_code')
@@ -75,11 +68,7 @@ class PromoCodeFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param string $promoCodeValue
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
-    public function validateUniquePromoCode($promoCodeValue, ExecutionContextInterface $context)
+    public function validateUniquePromoCode(string $promoCodeValue, ExecutionContextInterface $context): void
     {
         if ($this->promoCode === null || $promoCodeValue !== $this->promoCode->getCode()) {
             $promoCode = $this->promoCodeFacade->findPromoCodeByCode($promoCodeValue);

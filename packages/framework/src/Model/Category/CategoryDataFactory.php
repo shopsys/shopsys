@@ -40,10 +40,6 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
         $this->domain = $domain;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryData
-     */
     public function createFromCategory(Category $category): CategoryData
     {
         $categoryData = new CategoryData();
@@ -52,9 +48,6 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
         return $categoryData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryData
-     */
     public function create(): CategoryData
     {
         $categoryData = new CategoryData();
@@ -63,10 +56,7 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
         return $categoryData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
-    protected function fillNew(CategoryData $categoryData)
+    protected function fillNew(CategoryData $categoryData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->seoMetaDescriptions[$domainId] = null;
@@ -77,11 +67,7 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
-    protected function fillFromCategory(CategoryData $categoryData, Category $category)
+    protected function fillFromCategory(CategoryData $categoryData, Category $category): void
     {
         $categoryData->name = $category->getNames();
         $categoryData->parent = $category->getParent();

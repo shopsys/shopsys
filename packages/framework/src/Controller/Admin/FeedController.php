@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use DateTime;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -37,12 +36,7 @@ class FeedController extends AdminBaseController
         $this->domain = $domain;
     }
 
-    /**
-     * @Route("/feed/generate/{feedName}/{domainId}", requirements={"domainId" = "\d+"})
-     * @param string $feedName
-     * @param int $domainId
-     */
-    public function generateAction($feedName, $domainId)
+    public function generateAction(string $feedName, int $domainId)
     {
         $domainConfig = $this->domain->getDomainConfigById((int)$domainId);
 
@@ -67,9 +61,6 @@ class FeedController extends AdminBaseController
         return $this->redirectToRoute('admin_feed_list');
     }
 
-    /**
-     * @Route("/feed/list/")
-     */
     public function listAction()
     {
         $feedsData = [];

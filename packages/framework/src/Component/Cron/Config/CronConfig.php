@@ -31,7 +31,7 @@ class CronConfig
      * @param string $timeHours
      * @param string $timeMinutes
      */
-    public function registerCronModule($service, $serviceId, $timeHours, $timeMinutes)
+    public function registerCronModule($service, $serviceId, $timeHours, $timeMinutes): void
     {
         if (!$service instanceof SimpleCronModuleInterface && !$service instanceof IteratedCronModuleInterface) {
             throw new \Shopsys\FrameworkBundle\Component\Cron\Exception\InvalidCronModuleException($serviceId);
@@ -45,16 +45,15 @@ class CronConfig
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function getAllCronModuleConfigs()
+    public function getAllCronModuleConfigs(): array
     {
         return $this->cronModuleConfigs;
     }
 
     /**
-     * @param \DateTimeInterface $roundedTime
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function getCronModuleConfigsByTime(DateTimeInterface $roundedTime)
+    public function getCronModuleConfigsByTime(DateTimeInterface $roundedTime): array
     {
         $matchedCronConfigs = [];
 
@@ -67,11 +66,7 @@ class CronConfig
         return $matchedCronConfigs;
     }
 
-    /**
-     * @param string $serviceId
-     * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig
-     */
-    public function getCronModuleConfigByServiceId($serviceId)
+    public function getCronModuleConfigByServiceId(string $serviceId): \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig
     {
         foreach ($this->cronModuleConfigs as $cronConfig) {
             if ($cronConfig->getServiceId() === $serviceId) {

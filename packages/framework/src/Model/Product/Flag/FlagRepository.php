@@ -11,36 +11,22 @@ class FlagRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getFlagRepository()
+    protected function getFlagRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Flag::class);
     }
 
-    /**
-     * @param int $flagId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
-     */
-    public function findById($flagId)
+    public function findById(int $flagId): ?\Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         return $this->getFlagRepository()->find($flagId);
     }
 
-    /**
-     * @param int $flagId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
-    public function getById($flagId)
+    public function getById(int $flagId): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         $flag = $this->findById($flagId);
 
@@ -54,7 +40,7 @@ class FlagRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getFlagRepository()->findBy([], ['id' => 'asc']);
     }

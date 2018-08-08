@@ -6,11 +6,7 @@ class HashGenerator
 {
     private $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
 
-    /**
-     * @param int $length
-     * @return string
-     */
-    public function generateHash($length)
+    public function generateHash(int $length): string
     {
         $numberOfChars = strlen($this->characters);
 

@@ -21,38 +21,24 @@ class AddProductResult
      */
     private $addedQuantity;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
-     * @param bool $isNew
-     * @param int $addedQuantity
-     */
-    public function __construct(CartItem $cartItem, $isNew, $addedQuantity)
+    public function __construct(CartItem $cartItem, bool $isNew, int $addedQuantity)
     {
         $this->cartItem = $cartItem;
         $this->isNew = $isNew;
         $this->addedQuantity = $addedQuantity;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
-     */
-    public function getCartItem()
+    public function getCartItem(): \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
     {
         return $this->cartItem;
     }
 
-    /**
-     * @return bool
-     */
-    public function getIsNew()
+    public function getIsNew(): bool
     {
         return $this->isNew;
     }
 
-    /**
-     * @return int
-     */
-    public function getAddedQuantity()
+    public function getAddedQuantity(): int
     {
         return $this->addedQuantity;
     }

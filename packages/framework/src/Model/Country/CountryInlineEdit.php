@@ -45,9 +45,8 @@ class CountryInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     * @return int
      */
-    protected function createEntityAndGetId($countryData)
+    protected function createEntityAndGetId($countryData): int
     {
         $country = $this->countryFacade->create($countryData, $this->adminDomainTabsFacade->getSelectedDomainId());
 
@@ -55,19 +54,18 @@ class CountryInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int $countryId
+     * @param int|string $countryId
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
      */
-    protected function editEntity($countryId, $countryData)
+    protected function editEntity($countryId, $countryData): void
     {
         $this->countryFacade->edit($countryId, $countryData);
     }
 
     /**
      * @param int|null $countryId
-     * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($countryId)
+    public function getForm($countryId): \Symfony\Component\Form\FormInterface
     {
         if ($countryId !== null) {
             $country = $this->countryFacade->getById((int)$countryId);

@@ -2,9 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Availability\AvailabilitySettingFormType;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityInlineEdit;
@@ -38,9 +36,6 @@ class AvailabilityController extends AdminBaseController
         $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
     }
 
-    /**
-     * @Route("/product/availability/list/")
-     */
     public function listAction()
     {
         $grid = $this->availabilityInlineEdit->getGrid();
@@ -50,13 +45,7 @@ class AvailabilityController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/availability/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');
 
@@ -89,11 +78,7 @@ class AvailabilityController extends AdminBaseController
         return $this->redirectToRoute('admin_availability_list');
     }
 
-    /**
-     * @Route("/product/availability/delete-confirm/{id}", requirements={"id" = "\d+"})
-     * @param int $id
-     */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         try {
             $availability = $this->availabilityFacade->getById($id);
@@ -132,10 +117,6 @@ class AvailabilityController extends AdminBaseController
         }
     }
 
-    /**
-     * @Route("/product/availability/setting/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingAction(Request $request)
     {
         try {

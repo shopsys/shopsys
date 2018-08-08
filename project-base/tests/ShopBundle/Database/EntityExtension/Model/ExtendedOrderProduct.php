@@ -32,24 +32,14 @@ class ExtendedOrderProduct extends ExtendedOrderItem
      */
     protected $productStringField;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param string $unitName
-     * @param string|null $catnum
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     */
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
-        $unitName,
-        $catnum,
+        string $vatPercent,
+        int $quantity,
+        string $unitName,
+        ?string $catnum,
         Product $product = null
     ) {
         parent::__construct(
@@ -69,34 +59,22 @@ class ExtendedOrderProduct extends ExtendedOrderItem
         $this->product = $product;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
-     */
-    public function getProduct()
+    public function getProduct(): ?\Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasProduct()
+    public function hasProduct(): bool
     {
         return $this->product !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getProductStringField()
+    public function getProductStringField(): ?string
     {
         return $this->productStringField;
     }
 
-    /**
-     * @param string|null $productStringField
-     */
-    public function setProductStringField($productStringField)
+    public function setProductStringField(?string $productStringField): void
     {
         $this->productStringField = $productStringField;
     }

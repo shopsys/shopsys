@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\BestsellingProduct\BestsellingProductFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -44,10 +43,6 @@ class BestsellingProductController extends AdminBaseController
         $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
-    /**
-     * @Route("/product/bestselling-product/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function listAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -63,9 +58,6 @@ class BestsellingProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/bestselling-product/detail/")
-     */
     public function detailAction(Request $request)
     {
         $category = $this->categoryFacade->getById($request->get('categoryId'));

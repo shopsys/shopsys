@@ -23,11 +23,6 @@ class HeurekaShopCertificationFactory
      */
     private $heurekaShopCertificationService;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationService
-     */
     public function __construct(
         Domain $domain,
         HeurekaSetting $heurekaSetting,
@@ -38,11 +33,7 @@ class HeurekaShopCertificationFactory
         $this->heurekaShopCertificationService = $heurekaShopCertificationService;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Heureka\ShopCertification
-     */
-    public function create(Order $order)
+    public function create(Order $order): \Heureka\ShopCertification
     {
         $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
 

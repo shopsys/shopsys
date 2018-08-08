@@ -20,9 +20,6 @@ class ImportDefaultDatabaseSchemaCommand extends Command
      */
     private $databaseSchemaFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
-     */
     public function __construct(DatabaseSchemaFacade $databaseSchemaFacade)
     {
         $this->databaseSchemaFacade = $databaseSchemaFacade;
@@ -30,17 +27,13 @@ class ImportDefaultDatabaseSchemaCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Import database default schema');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('Importing default database schema...');
         $this->databaseSchemaFacade->importDefaultSchema();

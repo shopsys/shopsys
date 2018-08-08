@@ -9,15 +9,12 @@ class OrderFlowFacade
      */
     protected $orderFlowFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface $orderFlowFactory
-     */
     public function __construct(OrderFlowFactoryInterface $orderFlowFactory)
     {
         $this->orderFlowFactory = $orderFlowFactory;
     }
 
-    public function resetOrderForm()
+    public function resetOrderForm(): void
     {
         $orderFlow = $this->orderFlowFactory->create();
         $orderFlow->reset();

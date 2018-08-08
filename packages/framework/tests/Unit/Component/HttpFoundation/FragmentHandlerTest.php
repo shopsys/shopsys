@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Fragment\FragmentRendererInterface;
 
 class FragmentHandlerTest extends TestCase
 {
-    public function testRenderNotIgnoreErrorsWithoutDebug()
+    public function testRenderNotIgnoreErrorsWithoutDebug(): void
     {
         $rendererMock = $this->createMock(FragmentRendererInterface::class);
         $rendererMock->expects($this->once())->method('getName')->will($this->returnValue('rendererName'));
@@ -41,7 +41,7 @@ class FragmentHandlerTest extends TestCase
         $fragmentHandler->render('uri', 'rendererName', []);
     }
 
-    public function testDeliveryRedirect()
+    public function testDeliveryRedirect(): void
     {
         $response = new Response('', 301);
 
@@ -61,7 +61,7 @@ class FragmentHandlerTest extends TestCase
         $this->assertSame('', $fragmentHandler->render('uri', 'rendererName', []));
     }
 
-    public function testNotDeliveryErrorResponse()
+    public function testNotDeliveryErrorResponse(): void
     {
         $response = new Response('', 500);
 

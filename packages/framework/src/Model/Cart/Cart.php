@@ -19,18 +19,12 @@ class Cart
         $this->cartItems = $cartItems;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $item
-     */
-    public function addItem(CartItem $item)
+    public function addItem(CartItem $item): void
     {
         $this->cartItems[] = $item;
     }
 
-    /**
-     * @param int $cartItemId
-     */
-    public function removeItemById($cartItemId)
+    public function removeItemById(int $cartItemId): void
     {
         foreach ($this->cartItems as $key => $cartItem) {
             if ($cartItem->getId() === $cartItemId) {
@@ -42,7 +36,7 @@ class Cart
         throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException($message);
     }
 
-    public function clean()
+    public function clean(): void
     {
         $this->cartItems = [];
     }
@@ -50,23 +44,17 @@ class Cart
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
-    public function getItems()
+    public function getItems(): array
     {
         return $this->cartItems;
     }
 
-    /**
-     * @return int
-     */
-    public function getItemsCount()
+    public function getItemsCount(): int
     {
         return count($this->getItems());
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return $this->getItemsCount() === 0;
     }

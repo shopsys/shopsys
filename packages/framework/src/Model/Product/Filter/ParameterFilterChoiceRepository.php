@@ -33,18 +33,14 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
     public function getParameterFilterChoicesInCategory(
-        $domainId,
+        int $domainId,
         PricingGroup $pricingGroup,
-        $locale,
+        string $locale,
         Category $category
-    ) {
+    ): array {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -79,11 +75,9 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
-    private function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale)
+    private function getVisibleParametersIndexedByIdOrderedByName(array $rows, string $locale): array
     {
         $parameterIds = [];
         foreach ($rows as $row) {
@@ -111,11 +105,9 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]
      */
-    private function getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, $locale)
+    private function getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, string $locale)
     {
         $parameterIdsByValueId = [];
         foreach ($rows as $row) {
@@ -137,11 +129,9 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
-     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    private function getParameterValuesIndexedByIdOrderedByText(array $rows, $locale)
+    private function getParameterValuesIndexedByIdOrderedByText(array $rows, string $locale): array
     {
         $valueIds = [];
         foreach ($rows as $row) {

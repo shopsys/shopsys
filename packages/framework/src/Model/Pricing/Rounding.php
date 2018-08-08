@@ -9,19 +9,12 @@ class Rounding
      */
     private $pricingSetting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(PricingSetting $pricingSetting)
     {
         $this->pricingSetting = $pricingSetting;
     }
 
-    /**
-     * @param string $priceWithVat
-     * @return string
-     */
-    public function roundPriceWithVat($priceWithVat)
+    public function roundPriceWithVat(string $priceWithVat): string
     {
         $roundingType = $this->pricingSetting->getRoundingType();
 
@@ -47,20 +40,12 @@ class Rounding
         return $roundedPriceWithVat;
     }
 
-    /**
-     * @param string $priceWithoutVat
-     * @return string
-     */
-    public function roundPriceWithoutVat($priceWithoutVat)
+    public function roundPriceWithoutVat(string $priceWithoutVat): string
     {
         return round($priceWithoutVat, 2);
     }
 
-    /**
-     * @param string $vatAmount
-     * @return string
-     */
-    public function roundVatAmount($vatAmount)
+    public function roundVatAmount(string $vatAmount): string
     {
         return round($vatAmount, 2);
     }

@@ -11,7 +11,7 @@ class ProductStockFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'productStock';
     }
@@ -19,7 +19,7 @@ class ProductStockFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_IS_USED,
@@ -38,7 +38,7 @@ class ProductStockFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [];
     }
@@ -46,7 +46,7 @@ class ProductStockFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             $usingStock = $ruleData->operator === self::OPERATOR_IS_USED;

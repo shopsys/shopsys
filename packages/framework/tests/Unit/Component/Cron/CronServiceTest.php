@@ -9,7 +9,7 @@ use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class CronServiceTest extends TestCase
 {
-    public function testFilterScheduledCronModuleConfigs()
+    public function testFilterScheduledCronModuleConfigs(): void
     {
         $cronModuleMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
 

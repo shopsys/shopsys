@@ -14,7 +14,7 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
     const FIRST_DOMAIN_ID = 1;
     const SECOND_DOMAIN_ID = 2;
 
-    public function testIsIndependentlyVisible()
+    public function testIsIndependentlyVisible(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -36,7 +36,7 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
         $this->assertTrue($independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }
 
-    public function testIsIndependentlyVisibleEmptyName()
+    public function testIsIndependentlyVisibleEmptyName(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -66,7 +66,7 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
         $this->assertFalse($independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }
 
-    public function testIsIndependentlyVisibleNotOnDomain()
+    public function testIsIndependentlyVisibleNotOnDomain(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -88,7 +88,7 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
         $this->assertFalse($independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }
 
-    public function testIsIndependentlyVisibleHidden()
+    public function testIsIndependentlyVisibleHidden(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -111,12 +111,10 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param bool[] $enabledForDomains
      * @param bool $hidden
-     * @return Payment
      */
-    public function getDefaultPayment(Vat $vat, $enabledForDomains, $hidden)
+    public function getDefaultPayment(Vat $vat, $enabledForDomains, $hidden): Payment
     {
         $paymentDataFactory = $this->getPaymentDataFactory();
 
@@ -132,10 +130,7 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
         return new Payment($paymentData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    private function getDefaultVat()
+    private function getDefaultVat(): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         $vatData = new VatData();
         $vatData->name = 'vat';
@@ -143,10 +138,7 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
         return new Vat($vatData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory
-     */
-    public function getPaymentDataFactory()
+    public function getPaymentDataFactory(): \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory
     {
         return $this->getContainer()->get(PaymentDataFactory::class);
     }

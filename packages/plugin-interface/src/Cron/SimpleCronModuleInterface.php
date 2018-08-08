@@ -16,13 +16,10 @@ use Symfony\Bridge\Monolog\Logger;
  */
 interface SimpleCronModuleInterface
 {
-    /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
-     */
-    public function setLogger(Logger $logger);
+    public function setLogger(Logger $logger): void;
 
     /**
      * This method is called to run the CRON module.
      */
-    public function run();
+    public function run(): void;
 }

@@ -38,12 +38,6 @@ class PerformanceDataCommand extends Command
      */
     private $orderDataFixture;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Performance\CategoryDataFixture $categoryDataFixture
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Performance\ProductDataFixture $productDataFixture
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Performance\UserDataFixture $userDataFixture
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Performance\OrderDataFixture $orderDataFixture
-     */
     public function __construct(
         CategoryDataFixture $categoryDataFixture,
         ProductDataFixture $productDataFixture,
@@ -58,17 +52,13 @@ class PerformanceDataCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Import performance data to test db. Demo and base data fixtures must be imported first.');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('<fg=green>loading ' . CategoryDataFixture::class . '</fg=green>');
         $this->categoryDataFixture->load($output);

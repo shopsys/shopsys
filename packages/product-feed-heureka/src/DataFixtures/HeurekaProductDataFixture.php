@@ -42,7 +42,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
         $this->heurekaProductDomainDataFactory = $heurekaProductDomainDataFactory;
     }
 
-    public function load()
+    public function load(): void
     {
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
         $heurekaProductDomainData->domainId = self::DOMAIN_ID_FIRST;

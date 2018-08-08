@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 
 class DirectoryStructureCreatorTest extends TestCase
 {
-    public function testMakeImageDirectories()
+    public function testMakeImageDirectories(): void
     {
         $imageDir = 'imageDir/';
         $domainImageDir = 'domainImageDir';

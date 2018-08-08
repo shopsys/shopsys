@@ -9,9 +9,6 @@ use Twig_Error;
 
 class HoneyPotRenderedBeforePasswordException extends Twig_Error implements TwigException
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(Exception $previous = null)
     {
         $message = sprintf(

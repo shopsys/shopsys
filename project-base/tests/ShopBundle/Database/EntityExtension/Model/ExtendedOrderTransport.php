@@ -34,20 +34,12 @@ class ExtendedOrderTransport extends ExtendedOrderItem
      */
     protected $transportStringField;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     */
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
+        string $vatPercent,
+        int $quantity,
         Transport $transport
     ) {
         parent::__construct(
@@ -62,18 +54,12 @@ class ExtendedOrderTransport extends ExtendedOrderItem
         $this->transport = $transport;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    public function getTransport()
+    public function getTransport(): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->transport;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderTransportData
-     */
-    public function edit(OrderItemData $orderTransportData)
+    public function edit(OrderItemData $orderTransportData): void
     {
         if ($orderTransportData instanceof OrderTransportData) {
             $this->transport = $orderTransportData->transport;
@@ -85,18 +71,12 @@ class ExtendedOrderTransport extends ExtendedOrderItem
         }
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTransportStringField()
+    public function getTransportStringField(): ?string
     {
         return $this->transportStringField;
     }
 
-    /**
-     * @param string|null $transportStringField
-     */
-    public function setTransportStringField($transportStringField)
+    public function setTransportStringField(?string $transportStringField): void
     {
         $this->transportStringField = $transportStringField;
     }

@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Route;
 
 class RequestDataSetGeneratorTest extends TestCase
 {
-    public function testGeneratorGeneratesExactlyOneRequestDataSet()
+    public function testGeneratorGeneratesExactlyOneRequestDataSet(): void
     {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator('test_route_path', 'test_route_name');
 
@@ -18,7 +18,7 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertCount(1, $requestDataSets);
     }
 
-    public function testGeneratorCanAddExtraRequestDataSet()
+    public function testGeneratorCanAddExtraRequestDataSet(): void
     {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator('test_route_path', 'test_route_name');
 
@@ -29,7 +29,7 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertCount(3, $requestDataSets);
     }
 
-    public function testGeneratorGeneratesUniqueInstancesOfEqualRequestDataSet()
+    public function testGeneratorGeneratesUniqueInstancesOfEqualRequestDataSet(): void
     {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator('test_route_path', 'test_route_name');
 
@@ -40,12 +40,7 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertNotSame($firstRequestDataSets[0], $secondRequestDataSets[0]);
     }
 
-    /**
-     * @param string $routePath
-     * @param string $routeName
-     * @return \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
-     */
-    private function createRequestDataSetGenerator($routePath, $routeName)
+    private function createRequestDataSetGenerator(string $routePath, string $routeName): \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
     {
         $route = new Route($routePath);
         $routeInfo = new RouteInfo($routeName, $route);

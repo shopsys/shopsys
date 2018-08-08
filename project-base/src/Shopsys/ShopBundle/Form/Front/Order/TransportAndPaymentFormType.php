@@ -27,21 +27,13 @@ class TransportAndPaymentFormType extends AbstractType
      */
     private $paymentFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     */
     public function __construct(TransportFacade $transportFacade, PaymentFacade $paymentFacade)
     {
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $payments = $this->paymentFacade->getVisibleByDomainId($options['domain_id']);
         $transports = $this->transportFacade->getVisibleByDomainId($options['domain_id'], $payments);
@@ -68,10 +60,7 @@ class TransportAndPaymentFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('domain_id')
@@ -84,11 +73,7 @@ class TransportAndPaymentFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
-    public function validateTransportPaymentRelation(OrderData $orderData, ExecutionContextInterface $context)
+    public function validateTransportPaymentRelation(OrderData $orderData, ExecutionContextInterface $context): void
     {
         $payment = $orderData->payment;
         $transport = $orderData->transport;

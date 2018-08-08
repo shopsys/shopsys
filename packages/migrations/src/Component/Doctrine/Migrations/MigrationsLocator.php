@@ -28,13 +28,7 @@ class MigrationsLocator
      */
     private $relativeNamespace;
 
-    /**
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param string $relativeDirectory
-     * @param string $relativeNamespace
-     */
-    public function __construct(KernelInterface $kernel, Filesystem $filesystem, $relativeDirectory, $relativeNamespace)
+    public function __construct(KernelInterface $kernel, Filesystem $filesystem, string $relativeDirectory, string $relativeNamespace)
     {
         $this->kernel = $kernel;
         $this->filesystem = $filesystem;
@@ -47,7 +41,7 @@ class MigrationsLocator
      *
      * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation[]
      */
-    public function getMigrationsLocations()
+    public function getMigrationsLocations(): array
     {
         $migrationsLocations = [];
         foreach ($this->kernel->getBundles() as $bundle) {
@@ -62,11 +56,8 @@ class MigrationsLocator
 
     /**
      * Creates a locations of migration classes for a particular bundle.
-     *
-     * @param \Symfony\Component\HttpKernel\Bundle\BundleInterface $bundle
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
      */
-    public function createMigrationsLocation(BundleInterface $bundle)
+    public function createMigrationsLocation(BundleInterface $bundle): \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
     {
         return new MigrationsLocation(
             $bundle->getPath() . '/' . $this->relativeDirectory,

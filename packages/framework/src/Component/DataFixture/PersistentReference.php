@@ -34,48 +34,30 @@ class PersistentReference
      */
     protected $entityId;
 
-    /**
-     * @param string $referenceName
-     * @param string $entityName
-     * @param int $entityId
-     */
-    public function __construct($referenceName, $entityName, $entityId)
+    public function __construct(string $referenceName, string $entityName, int $entityId)
     {
         $this->referenceName = $referenceName;
         $this->entityName = $entityName;
         $this->entityId = $entityId;
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     */
-    public function replace($entityName, $entityId)
+    public function replace(string $entityName, int $entityId): void
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
     }
 
-    /**
-     * @return string
-     */
-    public function getReferenceName()
+    public function getReferenceName(): string
     {
         return $this->referenceName;
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityName()
+    public function getEntityName(): string
     {
         return $this->entityName;
     }
 
-    /**
-     * @return int
-     */
-    public function getEntityId()
+    public function getEntityId(): int
     {
         return $this->entityId;
     }

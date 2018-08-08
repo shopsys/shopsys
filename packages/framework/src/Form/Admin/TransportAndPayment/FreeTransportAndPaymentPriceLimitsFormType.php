@@ -30,22 +30,14 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
         $this->domain = $domain;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add($this->getPriceLimitsBuilder($builder))
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    private function getPriceLimitsBuilder(FormBuilderInterface $builder)
+    private function getPriceLimitsBuilder(FormBuilderInterface $builder): \Symfony\Component\Form\FormBuilderInterface
     {
         $formBuilderForDomains = $builder->create(self::DOMAINS_SUBFORM_NAME, null, ['compound' => true]);
 
@@ -87,10 +79,7 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
         return $formBuilderForDomains;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],

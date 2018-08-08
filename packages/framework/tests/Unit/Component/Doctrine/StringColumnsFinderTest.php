@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder;
 
 class StringColumnsFinderTest extends TestCase
 {
-    public function testGetAllStringColumnNamesIndexedByTableName()
+    public function testGetAllStringColumnNamesIndexedByTableName(): void
     {
         $classMetadataInfoMock = $this->createMock(ClassMetadataInfo::class);
         $classMetadataInfoMock
@@ -51,7 +51,7 @@ class StringColumnsFinderTest extends TestCase
         $this->assertSame($expectedResult, $actualResult);
     }
 
-    public function testGetAllStringColumnNamesIndexedByTableNameException()
+    public function testGetAllStringColumnNamesIndexedByTableNameException(): void
     {
         $classMetadataMock = $this->createMock(ClassMetadata::class);
         $this->expectException(\Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException::class);

@@ -19,19 +19,12 @@ class ZboziProductFormType extends AbstractType
      */
     private $translator;
 
-    /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('show', MultidomainType::class, [
@@ -69,7 +62,7 @@ class ZboziProductFormType extends AbstractType
                     ],
                 ],
             ])
-            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {
                 // Setting default value of multidomain form "show" to true via event because of dynamic form count
                 $multidomainShowForm = $event->getForm()->get('show');
                 foreach ($multidomainShowForm as $showForm) {

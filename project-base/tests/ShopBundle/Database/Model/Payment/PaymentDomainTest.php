@@ -27,7 +27,7 @@ class PaymentDomainTest extends DatabaseTestCase
      */
     private $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->paymentDataFactory = $this->getContainer()->get(PaymentDataFactory::class);
@@ -35,7 +35,7 @@ class PaymentDomainTest extends DatabaseTestCase
         $this->em = $this->getEntityManager();
     }
 
-    public function testCreatePaymentEnabledOnDomain()
+    public function testCreatePaymentEnabledOnDomain(): void
     {
         $paymentData = $this->paymentDataFactory->create();
 
@@ -50,7 +50,7 @@ class PaymentDomainTest extends DatabaseTestCase
         $this->assertTrue($refreshedPayment->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    public function testCreatePaymentDisabledOnDomain()
+    public function testCreatePaymentDisabledOnDomain(): void
     {
         $paymentData = $this->paymentDataFactory->create();
 
@@ -63,7 +63,7 @@ class PaymentDomainTest extends DatabaseTestCase
         $this->assertFalse($refreshedPayment->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    public function testCreatePaymentWithDifferentVisibilityOnDomains()
+    public function testCreatePaymentWithDifferentVisibilityOnDomains(): void
     {
         $paymentData = $this->paymentDataFactory->create();
 
@@ -78,11 +78,7 @@ class PaymentDomainTest extends DatabaseTestCase
         $this->assertFalse($refreshedPayment->isEnabled(self::SECOND_DOMAIN_ID));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    private function getRefreshedPaymentFromDatabase(Payment $payment)
+    private function getRefreshedPaymentFromDatabase(Payment $payment): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         $this->em->persist($payment);
         $this->em->flush();

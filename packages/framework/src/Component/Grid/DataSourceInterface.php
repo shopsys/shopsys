@@ -7,33 +7,16 @@ interface DataSourceInterface
     const ORDER_ASC = 'asc';
     const ORDER_DESC = 'desc';
 
-    /**
-     * @param int|null $limit
-     * @param int $page
-     * @param string|null $orderSourceColumnName
-     * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
     public function getPaginatedRows(
-        $limit = null,
-        $page = 1,
-        $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC
-    );
+        ?int $limit = null,
+        int $page = 1,
+        ?string $orderSourceColumnName = null,
+        string $orderDirection = self::ORDER_ASC
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
-    /**
-     * @param int $rowId
-     * @return array
-     */
-    public function getOneRow($rowId);
+    public function getOneRow(int $rowId): array;
 
-    /**
-     * @return int
-     */
-    public function getTotalRowsCount();
+    public function getTotalRowsCount(): int;
 
-    /**
-     * @return string
-     */
-    public function getRowIdSourceColumnName();
+    public function getRowIdSourceColumnName(): string;
 }

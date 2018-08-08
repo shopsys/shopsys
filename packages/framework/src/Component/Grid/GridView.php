@@ -46,12 +46,7 @@ class GridView
     private $twig;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Twig_Environment $twig
      * @param string|string[] $theme
-     * @param array $templateParameters
      */
     public function __construct(
         Grid $grid,
@@ -69,7 +64,7 @@ class GridView
         $this->setTheme($theme, $templateParameters);
     }
 
-    public function render()
+    public function render(): void
     {
         $this->renderBlock('grid');
     }
@@ -77,20 +72,14 @@ class GridView
     /**
      * @param array|null $removeParameters
      */
-    public function renderHiddenInputs($removeParameters = null)
+    public function renderHiddenInputs(?array $removeParameters = null): void
     {
         $this->renderBlock('grid_hidden_inputs', [
             'parameter' => $this->grid->getUrlGridParameters(null, $removeParameters),
         ]);
     }
 
-    /**
-     * @param string $name
-     * @param array $parameters
-     * @param bool $echo
-     * @return string|null
-     */
-    public function renderBlock($name, array $parameters = [], $echo = true)
+    public function renderBlock(string $name, array $parameters = [], bool $echo = true): ?string
     {
         foreach ($this->getTemplates() as $template) {
             if ($template->hasBlock($name)) {
@@ -118,11 +107,10 @@ class GridView
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
      * @param array|null $row
      * @param \Symfony\Component\Form\FormView
      */
-    public function renderCell(Column $column, array $row = null, FormView $formView = null)
+    public function renderCell(Column $column, array $row = null, FormView $formView = null): void
     {
         if ($row !== null) {
             $value = $this->getCellValue($column, $row);
@@ -158,11 +146,7 @@ class GridView
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\ActionColumn $actionColumn
-     * @param array $row
-     */
-    public function renderActionCell(ActionColumn $actionColumn, array $row)
+    public function renderActionCell(ActionColumn $actionColumn, array $row): void
     {
         $posibleBlocks = [
             'grid_action_cell_type_' . $actionColumn->getType(),
@@ -176,10 +160,7 @@ class GridView
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
-     */
-    public function renderTitleCell(Column $column)
+    public function renderTitleCell(Column $column): void
     {
         $posibleBlocks = [
             'grid_title_cell_id_' . $column->getId(),
@@ -194,11 +175,9 @@ class GridView
     }
 
     /**
-     * @param array $parameters
      * @param array|string|null $removeParameters
-     * @return string
      */
-    public function getUrl(array $parameters = null, $removeParameters = null)
+    public function getUrl(array $parameters = null, $removeParameters = null): string
     {
         $masterRequest = $this->requestStack->getMasterRequest();
         $routeParameters = $this->grid->getUrlParameters($parameters, $removeParameters);
@@ -210,11 +189,7 @@ class GridView
         );
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    private function blockExists($name)
+    private function blockExists(string $name): bool
     {
         foreach ($this->getTemplates() as $template) {
             if ($template->hasBlock($name)) {
@@ -235,9 +210,8 @@ class GridView
 
     /**
      * @param string|string[] $theme
-     * @param array $parameters
      */
-    private function setTheme($theme, array $parameters = [])
+    private function setTheme($theme, array $parameters = []): void
     {
         $this->theme = $theme;
         $this->templateParameters = $parameters;
@@ -246,7 +220,7 @@ class GridView
     /**
      * @return \Twig_TemplateWrapper[]
      */
-    private function getTemplates()
+    private function getTemplates(): array
     {
         if (empty($this->templates)) {
             $this->templates = [];
@@ -262,30 +236,23 @@ class GridView
         return $this->templates;
     }
 
-    /**
-     * @param string $theme
-     * @return \Twig_TemplateWrapper
-     */
-    private function getTemplateFromString($theme)
+    private function getTemplateFromString(string $theme): \Twig_TemplateWrapper
     {
         return $this->twig->load($theme);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
-     * @param array $row
      * @return mixed
      */
-    private function getCellValue(Column $column, $row)
+    private function getCellValue(Column $column, array $row)
     {
         return Grid::getValueFromRowBySourceColumnName($row, $column->getSourceColumnName());
     }
 
     /**
      * @param mixed $variable
-     * @return string
      */
-    private function getVariableType($variable)
+    private function getVariableType($variable): string
     {
         switch (gettype($variable)) {
             case 'boolean':

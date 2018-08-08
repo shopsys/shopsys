@@ -10,11 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CustomerCommunicationFormType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
             'label' => t('Settings'),

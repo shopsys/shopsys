@@ -28,10 +28,7 @@ class JsTranslatorCompilerPass implements JsCompilerPassInterface
         $this->translator = $translator;
     }
 
-    /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JProgramNode $node
-     */
-    public function process(JProgramNode $node)
+    public function process(JProgramNode $node): void
     {
         $jsTranslatorsCalls = $this->jsTranslatorCallParser->parse($node);
 
@@ -50,11 +47,7 @@ class JsTranslatorCompilerPass implements JsCompilerPassInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCall $jsTranslatorsCall
-     * @return string
-     */
-    private function translate($jsTranslatorsCall)
+    private function translate(\Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCall $jsTranslatorsCall): string
     {
         $locale = $this->translator->getLocale();
         $catalogue = $this->translator->getCatalogue($locale);

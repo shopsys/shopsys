@@ -109,27 +109,17 @@ class CustomerController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param string $orderNumber
-     */
-    public function orderDetailRegisteredAction($orderNumber)
+    public function orderDetailRegisteredAction(string $orderNumber)
     {
         return $this->orderDetailAction(null, $orderNumber);
     }
 
-    /**
-     * @param string $urlHash
-     */
-    public function orderDetailUnregisteredAction($urlHash)
+    public function orderDetailUnregisteredAction(string $urlHash)
     {
         return $this->orderDetailAction($urlHash, null);
     }
 
-    /**
-     * @param string $urlHash
-     * @param string $orderNumber
-     */
-    private function orderDetailAction($urlHash = null, $orderNumber = null)
+    private function orderDetailAction(string $urlHash = null, string $orderNumber = null)
     {
         if ($orderNumber !== null) {
             if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
@@ -158,11 +148,7 @@ class CustomerController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function loginAsRememberedUserAction(Request $request)
+    public function loginAsRememberedUserAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         try {
             $this->loginAsUserFacade->loginAsRememberedUser($request);

@@ -21,7 +21,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
 class CurrencyFacadeTest extends TestCase
 {
-    public function testGetDomainConfigsForCurrency()
+    public function testGetDomainConfigsForCurrency(): void
     {
         $entityManagerMock = $this->createMock(EntityManager::class);
         $currencyRepositoryMock = $this->createMock(CurrencyRepository::class);

@@ -4,12 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Csv;
 
 class CsvReader
 {
-    /**
-     * @param string $filename
-     * @param string $delimiter
-     * @return array
-     */
-    public function getRowsFromCsv($filename, $delimiter = ';')
+    public function getRowsFromCsv(string $filename, string $delimiter = ';'): array
     {
         if (!file_exists($filename) || !is_readable($filename)) {
             throw new \Symfony\Component\Filesystem\Exception\FileNotFoundException();

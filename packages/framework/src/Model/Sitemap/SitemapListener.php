@@ -61,10 +61,7 @@ class SitemapListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Presta\SitemapBundle\Event\SitemapPopulateEvent $event
-     */
-    public function populateSitemap(SitemapPopulateEvent $event)
+    public function populateSitemap(SitemapPopulateEvent $event): void
     {
         $section = $event->getSection();
         $domainId = (int)$section;
@@ -86,18 +83,14 @@ class SitemapListener implements EventSubscriberInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[] $sitemapItems
-     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string $section
-     * @param int $elementPriority
      */
     private function addUrlsBySitemapItems(
         array $sitemapItems,
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
-        $section,
-        $elementPriority
-    ) {
+        string $section,
+        int $elementPriority
+    ): void {
         foreach ($sitemapItems as $sitemapItem) {
             $absoluteUrl = $this->friendlyUrlService->getAbsoluteUrlByDomainConfigAndSlug($domainConfig, $sitemapItem->slug);
             $urlConcrete = new UrlConcrete($absoluteUrl, null, null, $elementPriority);
@@ -105,18 +98,12 @@ class SitemapListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string $section
-     * @param int $elementPriority
-     */
     private function addHomepageUrl(
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
-        $section,
-        $elementPriority
-    ) {
+        string $section,
+        int $elementPriority
+    ): void {
         $domainRouter = $this->domainRouterFactory->getRouter($domainConfig->getId());
         $absoluteUrl = $domainRouter->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
         $urlConcrete = new UrlConcrete($absoluteUrl, null, null, $elementPriority);

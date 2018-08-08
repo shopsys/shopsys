@@ -41,12 +41,7 @@ class GridFactory
         $this->twig = $twig;
     }
 
-    /**
-     * @param string $gridId
-     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
-    public function create($gridId, DataSourceInterface $dataSource)
+    public function create(string $gridId, DataSourceInterface $dataSource): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         return new Grid(
             $gridId,

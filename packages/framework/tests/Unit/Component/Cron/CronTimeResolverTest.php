@@ -25,7 +25,7 @@ class CronTimeResolverTest extends TestCase
     /**
      * @dataProvider validTimeStringProvider
      */
-    public function testValidateTimeString($timeString, $maxValue, $divisibleBy)
+    public function testValidateTimeString($timeString, $maxValue, $divisibleBy): void
     {
         $cronTimeResolver = new CronTimeResolver();
         $cronTimeResolver->validateTimeString($timeString, $maxValue, $divisibleBy);
@@ -47,7 +47,7 @@ class CronTimeResolverTest extends TestCase
     /**
      * @dataProvider invalidTimeStringProvider
      */
-    public function testValidateTimeStringInvalidTimeFormatException($invalidTimeString, $maxValue, $divisibleBy)
+    public function testValidateTimeStringInvalidTimeFormatException($invalidTimeString, $maxValue, $divisibleBy): void
     {
         $cronTimeResolver = new CronTimeResolver();
         $this->expectException(\Shopsys\FrameworkBundle\Component\Cron\Config\Exception\InvalidTimeFormatException::class);
@@ -78,7 +78,7 @@ class CronTimeResolverTest extends TestCase
     /**
      * @dataProvider isValidAtTimeProvider
      */
-    public function testIsValidAtTime($timeHours, $timeMinutes, $dateTimeString, $isValid)
+    public function testIsValidAtTime($timeHours, $timeMinutes, $dateTimeString, $isValid): void
     {
         $cronTimeMock = $this->getMockBuilder(CronTimeInterface::class)
             ->setMethods(['getTimeHours', 'getTimeMinutes'])

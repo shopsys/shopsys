@@ -73,13 +73,7 @@ class Image implements EntityFileUploadInterface
      */
     protected $temporaryFilename;
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string|null $type
-     * @param string|null $temporaryFilename
-     */
-    public function __construct($entityName, $entityId, $type, $temporaryFilename)
+    public function __construct(string $entityName, int $entityId, ?string $type, ?string $temporaryFilename)
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
@@ -90,7 +84,7 @@ class Image implements EntityFileUploadInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload[]
      */
-    public function getTemporaryFilesForUpload()
+    public function getTemporaryFilesForUpload(): array
     {
         $files = [];
         if ($this->temporaryFilename !== null) {
@@ -105,11 +99,7 @@ class Image implements EntityFileUploadInterface
         return $files;
     }
 
-    /**
-     * @param string $key
-     * @param string $originalFilename
-     */
-    public function setFileAsUploaded($key, $originalFilename)
+    public function setFileAsUploaded(string $key, string $originalFilename): void
     {
         if ($key === self::UPLOAD_KEY) {
             $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
@@ -118,76 +108,49 @@ class Image implements EntityFileUploadInterface
         }
     }
 
-    /**
-     * @param string|null $temporaryFilename
-     */
-    public function setTemporaryFilename($temporaryFilename)
+    public function setTemporaryFilename(?string $temporaryFilename): void
     {
         $this->temporaryFilename = $temporaryFilename;
         // workaround: Entity must be changed so that preUpdate and postUpdate are called
         $this->modifiedAt = new DateTime();
     }
 
-    /**
-     * @param int $position
-     */
-    public function setPosition($position)
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @return string
-     */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->id . '.' . $this->extension;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityName()
+    public function getEntityName(): string
     {
         return $this->entityName;
     }
 
-    /**
-     * @return int
-     */
-    public function getEntityId()
+    public function getEntityId(): int
     {
         return $this->entityId;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
-    public function getExtension()
+    public function getExtension(): string
     {
         return $this->extension;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getModifiedAt()
+    public function getModifiedAt(): \DateTime
     {
         return $this->modifiedAt;
     }

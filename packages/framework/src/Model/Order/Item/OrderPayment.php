@@ -20,20 +20,12 @@ class OrderPayment extends OrderItem
      */
     protected $payment;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     */
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
+        string $vatPercent,
+        int $quantity,
         Payment $payment
     ) {
         parent::__construct(
@@ -48,18 +40,12 @@ class OrderPayment extends OrderItem
         $this->payment = $payment;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    public function getPayment()
+    public function getPayment(): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->payment;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderPaymentData
-     */
-    public function edit(OrderItemData $orderPaymentData)
+    public function edit(OrderItemData $orderPaymentData): void
     {
         if ($orderPaymentData instanceof OrderPaymentData) {
             $this->payment = $orderPaymentData->payment;

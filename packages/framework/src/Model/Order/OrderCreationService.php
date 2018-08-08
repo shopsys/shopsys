@@ -52,15 +52,6 @@ class OrderCreationService
      */
     protected $orderTransportFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderPaymentFactoryInterface $orderPaymentFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFactoryInterface $orderProductFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderTransportFactoryInterface $orderTransportFactory
-     */
     public function __construct(
         PaymentPriceCalculation $paymentPriceCalculation,
         TransportPriceCalculation $transportPriceCalculation,
@@ -79,12 +70,7 @@ class OrderCreationService
         $this->orderTransportFactory = $orderTransportFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
-    public function prefillFrontFormData(FrontOrderData $frontOrderData, User $user, Order $order = null)
+    public function prefillFrontFormData(FrontOrderData $frontOrderData, User $user, Order $order = null): void
     {
         if ($order instanceof Order) {
             $this->prefillTransportAndPaymentFromOrder($frontOrderData, $order);
@@ -92,21 +78,13 @@ class OrderCreationService
         $this->prefillFrontFormDataFromCustomer($frontOrderData, $user);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
-    private function prefillTransportAndPaymentFromOrder(FrontOrderData $frontOrderData, Order $order)
+    private function prefillTransportAndPaymentFromOrder(FrontOrderData $frontOrderData, Order $order): void
     {
         $frontOrderData->transport = $order->getTransport();
         $frontOrderData->payment = $order->getPayment();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
-    private function prefillFrontFormDataFromCustomer(FrontOrderData $frontOrderData, User $user)
+    private function prefillFrontFormDataFromCustomer(FrontOrderData $frontOrderData, User $user): void
     {
         $frontOrderData->firstName = $user->getFirstName();
         $frontOrderData->lastName = $user->getLastName();
@@ -135,11 +113,7 @@ class OrderCreationService
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
-     */
-    public function fillOrderItems(Order $order, OrderPreview $orderPreview)
+    public function fillOrderItems(Order $order, OrderPreview $orderPreview): void
     {
         $locale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
 
@@ -148,12 +122,7 @@ class OrderCreationService
         $this->fillOrderRounding($order, $orderPreview, $locale);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
-     * @param string $locale
-     */
-    private function fillOrderTransportAndPayment(Order $order, OrderPreview $orderPreview, $locale)
+    private function fillOrderTransportAndPayment(Order $order, OrderPreview $orderPreview, string $locale): void
     {
         $payment = $order->getPayment();
         $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
@@ -190,12 +159,7 @@ class OrderCreationService
         $order->addItem($orderTransport);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
-     * @param string $locale
-     */
-    private function fillOrderProducts(Order $order, OrderPreview $orderPreview, $locale)
+    private function fillOrderProducts(Order $order, OrderPreview $orderPreview, string $locale): void
     {
         $quantifiedItemPrices = $orderPreview->getQuantifiedItemsPrices();
         $quantifiedItemDiscounts = $orderPreview->getQuantifiedItemsDiscounts();
@@ -229,12 +193,7 @@ class OrderCreationService
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
-     * @param string $locale
-     */
-    private function fillOrderRounding(Order $order, OrderPreview $orderPreview, $locale)
+    private function fillOrderRounding(Order $order, OrderPreview $orderPreview, string $locale): void
     {
         if ($orderPreview->getRoundingPrice() !== null) {
             $this->orderProductFactory->create(
@@ -250,13 +209,7 @@ class OrderCreationService
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $discount
-     * @param string $locale
-     * @param float $discountPercent
-     */
-    private function addOrderItemDiscount(OrderItem $orderItem, Price $discount, $locale, $discountPercent)
+    private function addOrderItemDiscount(OrderItem $orderItem, Price $discount, string $locale, float $discountPercent): void
     {
         $name = sprintf(
             '%s %s - %s',

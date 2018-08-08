@@ -18,10 +18,7 @@ class DomainSubscriber implements EventSubscriberInterface
         $this->domain = $domain;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-     */
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             try {
@@ -32,9 +29,6 @@ class DomainSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents()
     {
         return [

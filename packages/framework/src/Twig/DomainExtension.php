@@ -49,9 +49,6 @@ class DomainExtension extends \Twig_Extension
         $this->domainFacade = $domainFacade;
     }
 
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [
@@ -62,37 +59,22 @@ class DomainExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    public function getDomain()
+    public function getDomain(): \Shopsys\FrameworkBundle\Component\Domain\Domain
     {
         return $this->domain;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'domain';
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    public function getDomainNameById($domainId)
+    public function getDomainNameById(int $domainId): string
     {
         return $this->getDomain()->getDomainConfigById($domainId)->getName();
     }
 
-    /**
-     * @param int $domainId
-     * @param string $size
-     * @return string
-     */
-    public function getDomainIconHtml($domainId, $size = 'normal')
+    public function getDomainIconHtml(int $domainId, string $size = 'normal'): string
     {
         $domainName = $this->getDomain()->getDomainConfigById($domainId)->getName();
         if ($this->domainFacade->existsDomainIcon($domainId)) {
@@ -120,10 +102,7 @@ class DomainExtension extends \Twig_Extension
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function isMultidomain()
+    public function isMultidomain(): bool
     {
         return $this->getDomain()->isMultidomain();
     }

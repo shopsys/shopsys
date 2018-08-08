@@ -7,14 +7,7 @@ use Tests\ShopBundle\Acceptance\acceptance\PageObject\AbstractPage;
 
 class RegistrationPage extends AbstractPage
 {
-    /**
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $email
-     * @param string $firstPassword
-     * @param string $secondPassword
-     */
-    public function register($firstName, $lastName, $email, $firstPassword, $secondPassword)
+    public function register(string $firstName, string $lastName, string $email, string $firstPassword, string $secondPassword): void
     {
         $this->tester->fillFieldByName('registration_form[firstName]', $firstName);
         $this->tester->fillFieldByName('registration_form[lastName]', $lastName);
@@ -26,27 +19,17 @@ class RegistrationPage extends AbstractPage
         $this->tester->clickByName('registration_form[save]');
     }
 
-    /**
-     * @param string $text
-     */
-    public function seeEmailError($text)
+    public function seeEmailError(string $text): void
     {
         $this->seeErrorForField('.js-validation-error-list-registration_form_email', $text);
     }
 
-    /**
-     * @param string $text
-     */
-    public function seePasswordError($text)
+    public function seePasswordError(string $text): void
     {
         $this->seeErrorForField('.js-validation-error-list-registration_form_password_first', $text);
     }
 
-    /**
-     * @param $fieldClass $text
-     * @param string $text
-     */
-    private function seeErrorForField($fieldClass, $text)
+    private function seeErrorForField($fieldClass, string $text): void
     {
         // Error message might be in popup - wait for animation
         $this->tester->wait(1);

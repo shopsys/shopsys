@@ -17,10 +17,6 @@ class ProductListAdminFacade
      */
     protected $pricingGroupSettingFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminRepository $productListAdminRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     */
     public function __construct(
         ProductListAdminRepository $productListAdminRepository,
         PricingGroupSettingFacade $pricingGroupSettingFacade
@@ -29,10 +25,7 @@ class ProductListAdminFacade
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getProductListQueryBuilder()
+    public function getProductListQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         /**
          * temporary solution -
@@ -43,11 +36,7 @@ class ProductListAdminFacade
         return $this->productListAdminRepository->getProductListQueryBuilder($defaultPricingGroupId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData)
+    public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->getProductListQueryBuilder();
         $this->productListAdminRepository->extendQueryBuilderByQuickSearchData($queryBuilder, $quickSearchData);

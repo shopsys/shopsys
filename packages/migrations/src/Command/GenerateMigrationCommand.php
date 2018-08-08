@@ -46,15 +46,8 @@ class GenerateMigrationCommand extends AbstractCommand
      */
     private $vendorDirectoryPath;
 
-    /**
-     * @param string $vendorDirectoryPath
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
-     * @param \Shopsys\MigrationBundle\Component\Generator\GenerateMigrationsService $generateMigrationsService
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocator $migrationsLocator
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
-     */
     public function __construct(
-        $vendorDirectoryPath,
+        string $vendorDirectoryPath,
         DatabaseSchemaFacade $databaseSchemaFacade,
         GenerateMigrationsService $generateMigrationsService,
         MigrationsLocator $migrationsLocator,
@@ -68,18 +61,13 @@ class GenerateMigrationCommand extends AbstractCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generate a new migration if need it');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Checking database schema...');
 
@@ -115,11 +103,7 @@ class GenerateMigrationCommand extends AbstractCommand
         return self::RETURN_CODE_OK;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
-     */
-    private function chooseMigrationLocation(SymfonyStyle $io)
+    private function chooseMigrationLocation(SymfonyStyle $io): \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
     {
         $bundles = $this->getAllBundleNamesExceptVendor();
 
@@ -138,7 +122,7 @@ class GenerateMigrationCommand extends AbstractCommand
     /**
      * @return string[]
      */
-    private function getAllBundleNamesExceptVendor()
+    private function getAllBundleNamesExceptVendor(): array
     {
         $bundles = [];
         foreach ($this->kernel->getBundles() as $bundle) {
@@ -149,11 +133,7 @@ class GenerateMigrationCommand extends AbstractCommand
         return $bundles;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Bundle\BundleInterface $bundle
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
-     */
-    private function getMigrationLocation(BundleInterface $bundle)
+    private function getMigrationLocation(BundleInterface $bundle): \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
     {
         return $this->migrationsLocator->createMigrationsLocation($bundle);
     }

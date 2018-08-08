@@ -18,10 +18,7 @@ class ProductListOrderingModeForSearchFacade
         $this->productListOrderingModeService = $productListOrderingModeService;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig
-     */
-    public function getProductListOrderingConfig()
+    public function getProductListOrderingConfig(): \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig
     {
         return new ProductListOrderingConfig(
             [
@@ -37,11 +34,7 @@ class ProductListOrderingModeForSearchFacade
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return string
-     */
-    public function getOrderingModeIdFromRequest(Request $request)
+    public function getOrderingModeIdFromRequest(Request $request): string
     {
         return $this->productListOrderingModeService->getOrderingModeIdFromRequest(
             $request,

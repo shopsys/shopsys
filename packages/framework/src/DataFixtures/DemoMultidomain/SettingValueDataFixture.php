@@ -17,18 +17,12 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
      */
     private $setting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(Setting $setting)
     {
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $termsAndConditionsDomain2 = $this->getReference(ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS_2);
         /* @var $termsAndConditionsDomain2 \Shopsys\FrameworkBundle\Model\Article\Article */

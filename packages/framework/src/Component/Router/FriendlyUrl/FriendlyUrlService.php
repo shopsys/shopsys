@@ -18,10 +18,6 @@ class FriendlyUrlService
      */
     protected $friendlyUrlFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface $friendlyUrlFactory
-     */
     public function __construct(Domain $domain, FriendlyUrlFactoryInterface $friendlyUrlFactory)
     {
         $this->domain = $domain;
@@ -29,12 +25,10 @@ class FriendlyUrlService
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
      * @param string[] $namesByLocale
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
-    public function createFriendlyUrls($routeName, $entityId, $namesByLocale)
+    public function createFriendlyUrls(string $routeName, int $entityId, $namesByLocale): array
     {
         $friendlyUrls = [];
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -56,18 +50,14 @@ class FriendlyUrlService
     }
 
     /**
-     * @param int $attempt
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param string $entityName
      * @param array|null $matchedRouteData
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult
      */
     public function getFriendlyUrlUniqueResult(
-        $attempt,
+        int $attempt,
         FriendlyUrl $friendlyUrl,
-        $entityName,
+        string $entityName,
         array $matchedRouteData = null
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult {
         if ($matchedRouteData === null) {
             return new FriendlyUrlUniqueResult(true, $friendlyUrl);
         }
@@ -89,21 +79,13 @@ class FriendlyUrlService
         return new FriendlyUrlUniqueResult(false, $newIndexedFriendlyUrl);
     }
 
-    /**
-     * @param string $routeName
-     * @param int $entityId
-     * @param string $entityName
-     * @param int $domainId
-     * @param int|null $indexPostfix
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
-     */
     public function createFriendlyUrlIfValid(
-        $routeName,
-        $entityId,
-        $entityName,
-        $domainId,
-        $indexPostfix = null
-    ) {
+        string $routeName,
+        int $entityId,
+        string $entityName,
+        int $domainId,
+        ?int $indexPostfix = null
+    ): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl {
         if ($entityName !== null
             && $entityName !== ''
         ) {
@@ -116,23 +98,14 @@ class FriendlyUrlService
         return null;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @return string
-     */
-    public function getAbsoluteUrlByFriendlyUrl(FriendlyUrl $friendlyUrl)
+    public function getAbsoluteUrlByFriendlyUrl(FriendlyUrl $friendlyUrl): string
     {
         $domainConfig = $this->domain->getDomainConfigById($friendlyUrl->getDomainId());
 
         return $domainConfig->getUrl() . '/' . $friendlyUrl->getSlug();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string $slug
-     * @return string
-     */
-    public function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, $slug)
+    public function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, string $slug): string
     {
         return $domainConfig->getUrl() . '/' . $slug;
     }

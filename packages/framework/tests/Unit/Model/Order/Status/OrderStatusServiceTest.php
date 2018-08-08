@@ -23,7 +23,7 @@ class OrderStatusServiceTest extends TestCase
     /**
      * @dataProvider checkForDeleteProvider
      */
-    public function testCheckForDelete($statusType, $expectedException = null)
+    public function testCheckForDelete($statusType, $expectedException = null): void
     {
         $orderStatusService = new OrderStatusService();
         $orderStatusData = new OrderStatusData();

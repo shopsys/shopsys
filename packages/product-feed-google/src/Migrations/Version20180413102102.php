@@ -8,10 +8,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180413102102 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $oldTableExists = $this->sql(
             'SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name=\'plugin_data_values\''
@@ -22,10 +19,7 @@ class Version20180413102102 extends AbstractMigration
         }
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 

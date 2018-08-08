@@ -12,7 +12,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class UnitFacadeTest extends DatabaseTestCase
 {
-    public function testDeleteByIdAndReplace()
+    public function testDeleteByIdAndReplace(): void
     {
         $em = $this->getEntityManager();
         $unitFacade = $this->getContainer()->get(UnitFacade::class);

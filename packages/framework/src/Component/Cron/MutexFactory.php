@@ -25,10 +25,7 @@ class MutexFactory
         $this->mutexesByName = [];
     }
 
-    /**
-     * @return \NinjaMutex\Mutex
-     */
-    public function getCronMutex()
+    public function getCronMutex(): \NinjaMutex\Mutex
     {
         if (!array_key_exists(self::MUTEX_CRON_NAME, $this->mutexesByName)) {
             $this->mutexesByName[self::MUTEX_CRON_NAME] = new Mutex(self::MUTEX_CRON_NAME, $this->lock);

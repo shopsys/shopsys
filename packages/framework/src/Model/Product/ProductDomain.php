@@ -87,100 +87,63 @@ class ProductDomain
      */
     protected $seoH1;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     */
-    public function __construct(Product $product, $domainId)
+    public function __construct(Product $product, int $domainId)
     {
         $this->product = $product;
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoTitle()
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription()
+    public function getSeoMetaDescription(): ?string
     {
         return $this->seoMetaDescription;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoH1()
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }
 
-    /**
-     * @param string|null $seoTitle
-     */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle(?string $seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
 
-    /**
-     * @param string|null $seoMetaDescription
-     */
-    public function setSeoMetaDescription($seoMetaDescription)
+    public function setSeoMetaDescription(?string $seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
 
-    /**
-     * @param string $seoH1
-     */
-    public function setSeoH1($seoH1)
+    public function setSeoH1(string $seoH1): void
     {
         $this->seoH1 = $seoH1;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getShortDescription()
+    public function getShortDescription(): ?string
     {
         return $this->shortDescription;
     }
 
-    /**
-     * @param string|null $description
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @param string|null $shortDescription
-     */
-    public function setShortDescription($shortDescription)
+    public function setShortDescription(?string $shortDescription): void
     {
         $this->shortDescription = $shortDescription;
     }

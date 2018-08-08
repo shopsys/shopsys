@@ -39,11 +39,7 @@ class TransportFormType extends AbstractType
         $this->paymentFacade = $paymentFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $transport = $options['transport'];
         /* @var $transport \Shopsys\FrameworkBundle\Model\Transport\Transport */
@@ -143,10 +139,7 @@ class TransportFormType extends AbstractType
             ->add($builderImageGroup);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('transport')
             ->setAllowedTypes('transport', [Transport::class, 'null'])

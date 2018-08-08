@@ -106,11 +106,6 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
      */
     protected $resetPasswordHashValidThrough;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     */
     public function __construct(
         UserData $userData,
         BillingAddress $billingAddress,
@@ -130,140 +125,92 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         $this->pricingGroup = $userData->pricingGroup;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     */
-    public function edit(UserData $userData)
+    public function edit(UserData $userData): void
     {
         $this->firstName = $userData->firstName;
         $this->lastName = $userData->lastName;
         $this->pricingGroup = $userData->pricingGroup;
     }
 
-    /**
-     * @param string $email
-     */
-    public function changeEmail($email)
+    public function changeEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @param string $password
-     */
-    public function changePassword($password)
+    public function changePassword(string $password): void
     {
         $this->password = $password;
         $this->resetPasswordHash = null;
         $this->resetPasswordHashValidThrough = null;
     }
 
-    /**
-     * @param string $hash
-     */
-    public function setResetPasswordHash($hash)
+    public function setResetPasswordHash(string $hash): void
     {
         $this->resetPasswordHash = $hash;
         $this->resetPasswordHashValidThrough = new DateTime('+48 hours');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     */
-    public function setDeliveryAddress(DeliveryAddress $deliveryAddress = null)
+    public function setDeliveryAddress(DeliveryAddress $deliveryAddress = null): void
     {
         $this->deliveryAddress = $deliveryAddress;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getLastActivity()
+    public function getLastActivity(): DateTime
     {
         return $this->lastActivity;
     }
 
-    /**
-     * @param DateTime $lastActivity
-     */
-    public function setLastActivity($lastActivity)
+    public function setLastActivity(DateTime $lastActivity): void
     {
         $this->lastActivity = $lastActivity;
     }
 
-    public function onLogin()
+    public function onLogin(): void
     {
         $this->lastLogin = new DateTime();
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @param int $domainId
-     */
-    public function setDomainId($domainId)
+    public function setDomainId(int $domainId): void
     {
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    /**
-     * @return string
-     */
-    public function getFullName()
+    public function getFullName(): string
     {
         if ($this->billingAddress->isCompanyCustomer()) {
             return $this->billingAddress->getCompanyName();
@@ -272,58 +219,37 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         return $this->lastName . ' ' . $this->firstName;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     */
-    public function getBillingAddress()
+    public function getBillingAddress(): \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
     {
         return $this->billingAddress;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
-     */
-    public function getDeliveryAddress()
+    public function getDeliveryAddress(): ?\Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
     {
         return $this->deliveryAddress;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getLastLogin()
+    public function getLastLogin(): ?\DateTime
     {
         return $this->lastLogin;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function getPricingGroup()
+    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->pricingGroup;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getResetPasswordHash()
+    public function getResetPasswordHash(): ?string
     {
         return $this->resetPasswordHash;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getResetPasswordHashValidThrough()
+    public function getResetPasswordHashValidThrough(): ?\DateTime
     {
         return $this->resetPasswordHashValidThrough;
     }

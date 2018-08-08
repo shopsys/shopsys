@@ -12,7 +12,7 @@ class CustomerLoginCest
         LoginPage $loginPage,
         AcceptanceTester $me,
         LayoutPage $layoutPage
-    ) {
+    ): void {
         $me->wantTo('login as a customer from main page');
         $me->amOnPage('/');
         $layoutPage->openLoginPopup();
@@ -27,7 +27,7 @@ class CustomerLoginCest
         LoginPage $loginPage,
         AcceptanceTester $me,
         LayoutPage $layoutPage
-    ) {
+    ): void {
         $me->wantTo('login as a customer from category page');
         $me->amOnPage('/personal-computers-accessories/');
         $layoutPage->openLoginPopup();
@@ -42,7 +42,7 @@ class CustomerLoginCest
         LoginPage $loginPage,
         AcceptanceTester $me,
         LayoutPage $layoutPage
-    ) {
+    ): void {
         $me->wantTo('login as a customer from login page');
         $me->amOnPage('/login/');
         $loginPage->login('no-reply@shopsys.com', 'user123');

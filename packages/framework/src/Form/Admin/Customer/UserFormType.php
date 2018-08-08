@@ -45,11 +45,7 @@ class UserFormType extends AbstractType
         $this->dateTimeFormatterExtension = $dateTimeFormatterExtension;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $user = $options['user'];
         /* @var $user \Shopsys\FrameworkBundle\Model\Customer\User */
@@ -174,10 +170,9 @@ class UserFormType extends AbstractType
     }
 
     /**
-     * @param bool $isCreatingNewUser
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getFirstPasswordConstraints($isCreatingNewUser)
+    private function getFirstPasswordConstraints(bool $isCreatingNewUser): array
     {
         $constraints = [
             new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer then {{ limit }} characters']),
@@ -192,10 +187,7 @@ class UserFormType extends AbstractType
         return $constraints;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['user', 'domain_id'])

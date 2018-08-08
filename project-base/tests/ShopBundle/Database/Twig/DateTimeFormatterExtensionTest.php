@@ -24,7 +24,7 @@ class DateTimeFormatterExtensionTest extends FunctionalTestCase
     /**
      * @dataProvider formatDateDataProvider
      */
-    public function testFormatDate($input, $locale, $result)
+    public function testFormatDate($input, $locale, $result): void
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()

@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\PersonalData\PersonalDataFormType;
@@ -28,9 +27,6 @@ class PersonalDataController extends AdminBaseController
         $this->setting = $setting;
     }
 
-    /**
-     * @Route("/personal-data/setting/")
-     */
     public function settingAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

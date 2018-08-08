@@ -18,7 +18,7 @@ class CartCest
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage
-    ) {
+    ): void {
         $me->wantTo('have more pieces of the same product as one item in cart');
         $me->amOnPage('/22-sencor-sle-22f46dm4-hello-kitty/');
 
@@ -41,7 +41,7 @@ class CartCest
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage
-    ) {
+    ): void {
         $me->wantTo('add product to cart from product list');
         $me->amOnPage('/tv-audio/');
         $productListPage->addProductToCartByName('Defender 2.0 SPK-480', 1);
@@ -58,7 +58,7 @@ class CartCest
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage
-    ) {
+    ): void {
         $me->wantTo('add product to cart from homepage');
         $me->amOnPage('/');
         $homepagePage->addTopProductToCartByName('22" Sencor SLE 22F46DM4 HELLO KITTY', 1);
@@ -74,7 +74,7 @@ class CartCest
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage
-    ) {
+    ): void {
         $me->wantTo('add product to cart from product detail');
         $me->amOnPage('/22-sencor-sle-22f46dm4-hello-kitty/');
         $me->see('Add to cart');
@@ -90,7 +90,7 @@ class CartCest
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('change items in cart and recalculate price');
         $me->amOnPage('/22-sencor-sle-22f46dm4-hello-kitty/');
         $me->see('Add to cart');
@@ -105,7 +105,7 @@ class CartCest
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('add some items to cart and remove them');
 
         $me->amOnPage('/panasonic-dmc-ft5ep/');
@@ -130,7 +130,7 @@ class CartCest
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage
-    ) {
+    ): void {
         $me->wantTo('add distinct products to cart');
 
         $me->amOnPage('/22-sencor-sle-22f46dm4-hello-kitty/');
@@ -152,7 +152,7 @@ class CartCest
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('see that prices of products in cart are calculated well');
 
         $me->amOnPage('/aquila-aquagym-non-carbonated-spring-water/');

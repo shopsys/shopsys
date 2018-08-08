@@ -35,7 +35,7 @@ class FixturesLoader extends Loader
     /**
      * @param \Doctrine\Common\DataFixtures\FixtureInterface[] $fixtures
      */
-    public function addFixtures(array $fixtures)
+    public function addFixtures(array $fixtures): void
     {
         // Store all loaded fixtures so that we can resolve the dependencies correctly.
         foreach ($fixtures as $fixture) {
@@ -48,10 +48,7 @@ class FixturesLoader extends Loader
         }
     }
 
-    /**
-     * @param \Doctrine\Common\DataFixtures\FixtureInterface $fixture
-     */
-    public function addFixture(FixtureInterface $fixture)
+    public function addFixture(FixtureInterface $fixture): void
     {
         $class = get_class($fixture);
         if (!isset($this->loadedFixtures[$class])) {
@@ -71,9 +68,8 @@ class FixturesLoader extends Loader
 
     /**
      * @param string $class
-     * @return \Doctrine\Common\DataFixtures\FixtureInterface
      */
-    protected function createFixture($class)
+    protected function createFixture($class): \Doctrine\Common\DataFixtures\FixtureInterface
     {
         /*
          * We don't actually need to create the fixture. We just
@@ -95,10 +91,8 @@ class FixturesLoader extends Loader
      * For doctrine/data-fixtures 1.2 or lower, this detects an unsupported
      * feature with DependentFixtureInterface so that we can throw a
      * clear exception.
-     *
-     * @param \Doctrine\Common\DataFixtures\FixtureInterface $fixture
      */
-    private function checkForNonInstantiableFixtures(FixtureInterface $fixture)
+    private function checkForNonInstantiableFixtures(FixtureInterface $fixture): void
     {
         if (!$fixture instanceof DependentFixtureInterface) {
             return;
@@ -125,7 +119,7 @@ class FixturesLoader extends Loader
     /**
      * @param string $dir
      */
-    public function loadFromDirectory($dir)
+    public function loadFromDirectory($dir): void
     {
         $fixtures = $this->symfonyFixturesLoader->loadFromDirectory($dir);
         $this->addFixtures($fixtures);

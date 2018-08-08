@@ -7,11 +7,7 @@ use PLUG\JavaScript\JNodes\nonterminal\JCallExprNode;
 
 class JsFunctionCallParser
 {
-    /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
-     * @return string|null
-     */
-    public function getFunctionName(JCallExprNode $callExprNode)
+    public function getFunctionName(JCallExprNode $callExprNode): ?string
     {
         $memberExprNodes = $callExprNode->get_nodes_by_symbol(J_MEMBER_EXPR, 1);
         /* @var $memberExprNodes \PLUG\JavaScript\JNodes\nonterminal\JMemberExprNode[] */
@@ -24,10 +20,9 @@ class JsFunctionCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
      * @return \PLUG\JavaScript\JNodes\JNodeBase[]
      */
-    public function getArgumentNodes(JCallExprNode $callExprNode)
+    public function getArgumentNodes(JCallExprNode $callExprNode): array
     {
         $argListNodes = $callExprNode->get_nodes_by_symbol(J_ARG_LIST, 2);
         /* @var $argListNodes \PLUG\JavaScript\JNodes\nonterminal\JArgListNode[] */

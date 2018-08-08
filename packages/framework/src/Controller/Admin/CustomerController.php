@@ -2,13 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\CustomerFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -109,12 +107,7 @@ class CustomerController extends AdminBaseController
         $this->customerDataFactory = $customerDataFactory;
     }
 
-    /**
-     * @Route("/customer/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $user = $this->customerFacade->getUserById($id);
         $customerData = $this->customerDataFactory->createFromUser($user);
@@ -155,10 +148,6 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/customer/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function listAction(Request $request)
     {
         $administrator = $this->getUser();
@@ -204,10 +193,6 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/customer/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $customerData = $this->customerDataFactory->create();
@@ -245,12 +230,7 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/customer/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->customerFacade->getUserById($id)->getFullName();
@@ -270,11 +250,7 @@ class CustomerController extends AdminBaseController
         return $this->redirectToRoute('admin_customer_list');
     }
 
-    /**
-     * @Route("/customer/login-as-user/{userId}/", requirements={"id" = "\d+"})
-     * @param int $userId
-     */
-    public function loginAsUserAction($userId)
+    public function loginAsUserAction(int $userId)
     {
         $user = $this->customerFacade->getUserById($userId);
         $this->loginAsUserFacade->rememberLoginAsUser($user);
@@ -282,11 +258,7 @@ class CustomerController extends AdminBaseController
         return $this->redirectToRoute('front_customer_login_as_remembered_user');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @return string
-     */
-    private function getSsoLoginAsUserUrl(User $user)
+    private function getSsoLoginAsUserUrl(User $user): string
     {
         $customerDomainRouter = $this->domainRouterFactory->getRouter($user->getDomainId());
         $loginAsUserUrl = $customerDomainRouter->generate(

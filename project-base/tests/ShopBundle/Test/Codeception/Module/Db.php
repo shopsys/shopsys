@@ -11,13 +11,13 @@ class Db extends BaseDb
     /**
      * Revert database to the original state
      */
-    public function _afterSuite()
+    public function _afterSuite(): void
     {
         $this->cleanup();
         $this->_loadDump();
     }
 
-    public function cleanup()
+    public function cleanup(): void
     {
         $symfonyHelper = $this->getModule(SymfonyHelper::class);
         /* @var $symfonyHelper \Tests\ShopBundle\Test\Codeception\Helper\SymfonyHelper */

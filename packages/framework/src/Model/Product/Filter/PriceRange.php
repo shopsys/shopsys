@@ -14,28 +14,18 @@ class PriceRange
      */
     private $maximalPrice;
 
-    /**
-     * @param string|null $minimalPrice
-     * @param string|null $maximalPrice
-     */
-    public function __construct($minimalPrice, $maximalPrice)
+    public function __construct(?string $minimalPrice, ?string $maximalPrice)
     {
         $this->minimalPrice = $minimalPrice === null ? '0' : $minimalPrice;
         $this->maximalPrice = $maximalPrice === null ? '0' : $maximalPrice;
     }
 
-    /**
-     * @return string
-     */
-    public function getMinimalPrice()
+    public function getMinimalPrice(): string
     {
         return $this->minimalPrice;
     }
 
-    /**
-     * @return string
-     */
-    public function getMaximalPrice()
+    public function getMaximalPrice(): string
     {
         return $this->maximalPrice;
     }

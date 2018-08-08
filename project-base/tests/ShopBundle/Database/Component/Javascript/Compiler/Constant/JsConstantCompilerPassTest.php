@@ -8,7 +8,7 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class JsConstantCompilerPassTest extends FunctionalTestCase
 {
-    public function testJsCompilerReplacesDefinedConstants()
+    public function testJsCompilerReplacesDefinedConstants(): void
     {
         $content = file_get_contents(__DIR__ . '/testDefinedConstant.js');
         $result = $this->getJsCompiler()->compile($content);
@@ -18,7 +18,7 @@ class JsConstantCompilerPassTest extends FunctionalTestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    public function testJsCompilerReplacesClassNames()
+    public function testJsCompilerReplacesClassNames(): void
     {
         $content = file_get_contents(__DIR__ . '/testClassName.js');
         $result = $this->getJsCompiler()->compile($content);
@@ -28,7 +28,7 @@ class JsConstantCompilerPassTest extends FunctionalTestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    public function testJsCompilerFailsOnUndefinedConstant()
+    public function testJsCompilerFailsOnUndefinedConstant(): void
     {
         $content = file_get_contents(__DIR__ . '/testUndefinedConstant.js');
 
@@ -36,10 +36,7 @@ class JsConstantCompilerPassTest extends FunctionalTestCase
         $this->getJsCompiler()->compile($content);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Javascript\Compiler\JsCompiler
-     */
-    private function getJsCompiler()
+    private function getJsCompiler(): \Shopsys\FrameworkBundle\Component\Javascript\Compiler\JsCompiler
     {
         $jsConstantCompilerPass = $this->getContainer()->get(JsConstantCompilerPass::class);
 

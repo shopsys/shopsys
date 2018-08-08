@@ -15,17 +15,11 @@ class FormThemeExtension extends \Twig_Extension
      */
     protected $requestStack;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [
@@ -33,10 +27,7 @@ class FormThemeExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getDefaultFormTheme()
+    public function getDefaultFormTheme(): string
     {
         $masterRequest = $this->requestStack->getMasterRequest();
         if (mb_stripos($masterRequest->get('_controller'), 'Shopsys\FrameworkBundle\Controller\Admin') === 0) {
@@ -46,10 +37,7 @@ class FormThemeExtension extends \Twig_Extension
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'form_theme';
     }

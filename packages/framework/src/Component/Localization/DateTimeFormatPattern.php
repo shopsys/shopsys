@@ -27,12 +27,10 @@ class DateTimeFormatPattern
     private $timeType;
 
     /**
-     * @param string $pattern
-     * @param string $locale
      * @param int|null $dateType @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param int|null $timeType @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
-    public function __construct($pattern, $locale, $dateType = null, $timeType = null)
+    public function __construct(string $pattern, string $locale, ?int $dateType = null, ?int $timeType = null)
     {
         $this->pattern = $pattern;
         $this->locale = $locale;
@@ -40,18 +38,12 @@ class DateTimeFormatPattern
         $this->timeType = $timeType;
     }
 
-    /**
-     * @return string
-     */
-    public function getPattern()
+    public function getPattern(): string
     {
         return $this->pattern;
     }
 
-    /**
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -59,7 +51,7 @@ class DateTimeFormatPattern
     /**
      * @return int|null @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
-    public function getDateType()
+    public function getDateType(): ?int
     {
         return $this->dateType;
     }
@@ -67,7 +59,7 @@ class DateTimeFormatPattern
     /**
      * @return int|null @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
-    public function getTimeType()
+    public function getTimeType(): ?int
     {
         return $this->timeType;
     }

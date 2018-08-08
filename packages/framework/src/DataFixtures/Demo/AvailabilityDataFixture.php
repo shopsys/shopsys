@@ -41,10 +41,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $availabilityData = $this->availabilityDataFactory->create();
         $availabilityData->name = ['cs' => 'Připravujeme', 'en' => 'Preparing'];
@@ -65,12 +62,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
         $this->createAvailability($availabilityData, self::AVAILABILITY_OUT_OF_STOCK);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
-     * @param string|null $referenceName
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     */
-    private function createAvailability(AvailabilityData $availabilityData, $referenceName = null)
+    private function createAvailability(AvailabilityData $availabilityData, ?string $referenceName = null): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         $availability = $this->availabilityFacade->create($availabilityData);
         if ($referenceName !== null) {

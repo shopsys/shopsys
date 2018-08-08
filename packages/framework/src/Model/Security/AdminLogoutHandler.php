@@ -19,21 +19,13 @@ class AdminLogoutHandler implements LogoutSuccessHandlerInterface
      */
     private $administratorLoginFacade;
 
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade
-     */
     public function __construct(RouterInterface $router, AdministratorLoginFacade $administratorLoginFacade)
     {
         $this->router = $router;
         $this->administratorLoginFacade = $administratorLoginFacade;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function onLogoutSuccess(Request $request)
+    public function onLogoutSuccess(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $this->administratorLoginFacade->invalidateCurrentAdministratorLoginToken();
         $url = $this->router->generate('admin_login');

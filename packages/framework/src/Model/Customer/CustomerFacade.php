@@ -38,14 +38,6 @@ class CustomerFacade
      */
     private $billingAddressDataFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerService $customerService
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         UserRepository $userRepository,
@@ -62,30 +54,17 @@ class CustomerFacade
         $this->billingAddressDataFactory = $billingAddressDataFactory;
     }
 
-    /**
-     * @param int $userId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    public function getUserById($userId)
+    public function getUserById(int $userId): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->userRepository->getUserById($userId);
     }
 
-    /**
-     * @param string $email
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
-     */
-    public function findUserByEmailAndDomain($email, $domainId)
+    public function findUserByEmailAndDomain(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->userRepository->findUserByEmailAndDomain($email, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    public function register(UserData $userData)
+    public function register(UserData $userData): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $userByEmailAndDomain = $this->findUserByEmailAndDomain($userData->email, $userData->domainId);
 
@@ -108,11 +87,7 @@ class CustomerFacade
         return $user;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    public function create(CustomerData $customerData)
+    public function create(CustomerData $customerData): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $toFlush = [];
         $billingAddress = $this->billingAddressFactory->create($customerData->billingAddressData);
@@ -148,12 +123,7 @@ class CustomerFacade
         return $user;
     }
 
-    /**
-     * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    protected function edit($userId, CustomerData $customerData)
+    protected function edit(int $userId, CustomerData $customerData): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->getUserById($userId);
 
@@ -179,12 +149,7 @@ class CustomerFacade
         return $user;
     }
 
-    /**
-     * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    public function editByAdmin($userId, CustomerData $customerData)
+    public function editByAdmin(int $userId, CustomerData $customerData): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->edit($userId, $customerData);
 
@@ -199,12 +164,7 @@ class CustomerFacade
         return $user;
     }
 
-    /**
-     * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    public function editByCustomer($userId, CustomerData $customerData)
+    public function editByCustomer(int $userId, CustomerData $customerData): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->edit($userId, $customerData);
 
@@ -213,10 +173,7 @@ class CustomerFacade
         return $user;
     }
 
-    /**
-     * @param int $userId
-     */
-    public function delete($userId)
+    public function delete(int $userId): void
     {
         $user = $this->getUserById($userId);
 
@@ -224,11 +181,7 @@ class CustomerFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
-    public function amendCustomerDataFromOrder(User $user, Order $order)
+    public function amendCustomerDataFromOrder(User $user, Order $order): void
     {
         $this->edit(
             $user->getId(),

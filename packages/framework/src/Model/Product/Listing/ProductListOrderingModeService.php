@@ -13,15 +13,10 @@ class ProductListOrderingModeService
     const ORDER_BY_PRICE_DESC = 'price_desc';
     const ORDER_BY_PRIORITY = 'priority';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig $productListOrderingConfig
-     * @return string
-     */
     public function getOrderingModeIdFromRequest(
         Request $request,
         ProductListOrderingConfig $productListOrderingConfig
-    ) {
+    ): string {
         $orderingModeId = $request->cookies->get($productListOrderingConfig->getCookieName());
 
         if (!in_array($orderingModeId, $this->getSupportedOrderingModeIds($productListOrderingConfig), true)) {
@@ -32,10 +27,9 @@ class ProductListOrderingModeService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig $productListOrderingConfig
      * @return string[]
      */
-    private function getSupportedOrderingModeIds(ProductListOrderingConfig $productListOrderingConfig)
+    private function getSupportedOrderingModeIds(ProductListOrderingConfig $productListOrderingConfig): array
     {
         return array_keys($productListOrderingConfig->getSupportedOrderingModesNamesIndexedById());
     }

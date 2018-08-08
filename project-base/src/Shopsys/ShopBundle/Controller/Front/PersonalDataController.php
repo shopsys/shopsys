@@ -139,10 +139,7 @@ class PersonalDataController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param string $hash
-     */
-    public function accessDisplayAction($hash)
+    public function accessDisplayAction(string $hash)
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,
@@ -174,9 +171,6 @@ class PersonalDataController extends FrontBaseController
         throw new NotFoundHttpException();
     }
 
-    /**
-     * @param $hash
-     */
     public function accessExportAction($hash)
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
@@ -210,9 +204,6 @@ class PersonalDataController extends FrontBaseController
         throw new NotFoundHttpException();
     }
 
-    /**
-     * @param $hash
-     */
     public function exportXmlAction($hash)
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(

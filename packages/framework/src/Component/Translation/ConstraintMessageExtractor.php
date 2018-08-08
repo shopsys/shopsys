@@ -79,19 +79,12 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
         }
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     * @return bool
-     */
-    private function isConstraintClass(Node $node)
+    private function isConstraintClass(Node $node): bool
     {
         return $node instanceof FullyQualified && is_subclass_of((string)$node, Constraint::class);
     }
 
-    /**
-     * @param \PhpParser\Node $optionsNode
-     */
-    private function extractMessagesFromOptions(Node $optionsNode)
+    private function extractMessagesFromOptions(Node $optionsNode): void
     {
         if ($optionsNode instanceof Array_) {
             foreach ($optionsNode->items as $optionItemNode) {
@@ -107,11 +100,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
         }
     }
 
-    /**
-     * @param \PhpParser\Node\Expr\ArrayItem $node
-     * @return bool
-     */
-    private function isMessageOptionItem(ArrayItem $node)
+    private function isMessageOptionItem(ArrayItem $node): bool
     {
         return $node->key instanceof String_ && strtolower(substr($node->key->value, -7)) === 'message';
     }

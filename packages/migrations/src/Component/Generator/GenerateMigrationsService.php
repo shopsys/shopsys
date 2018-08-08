@@ -24,10 +24,6 @@ class GenerateMigrationsService
      */
     private $filesystem;
 
-    /**
-     * @param \Symfony\Component\Templating\EngineInterface $twigEngine
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     */
     public function __construct(
         EngineInterface $twigEngine,
         Filesystem $filesystem
@@ -36,12 +32,7 @@ class GenerateMigrationsService
         $this->filesystem = $filesystem;
     }
 
-    /**
-     * @param array $sqlCommands
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation $migrationsLocation
-     * @return \Shopsys\MigrationBundle\Component\Generator\GeneratorResult
-     */
-    public function generate(array $sqlCommands, MigrationsLocation $migrationsLocation)
+    public function generate(array $sqlCommands, MigrationsLocation $migrationsLocation): \Shopsys\MigrationBundle\Component\Generator\GeneratorResult
     {
         $this->createMigrationLocationDirectoryIfNotExists($migrationsLocation);
         $formattedSqlCommands = $this->formatSqlCommandsIfLengthOverflow($sqlCommands);
@@ -63,7 +54,7 @@ class GenerateMigrationsService
      * @param string[] $filteredSchemaDiffSqlCommands
      * @return string[]
      */
-    private function formatSqlCommandsIfLengthOverflow(array $filteredSchemaDiffSqlCommands)
+    private function formatSqlCommandsIfLengthOverflow(array $filteredSchemaDiffSqlCommands): array
     {
         $formattedSqlCommands = [];
         foreach ($filteredSchemaDiffSqlCommands as $key => $filteredSchemaDiffSqlCommand) {
@@ -77,11 +68,7 @@ class GenerateMigrationsService
         return $formattedSqlCommands;
     }
 
-    /**
-     * @param string $filteredSchemaDiffSqlCommand
-     * @return string
-     */
-    private function formatSqlCommand($filteredSchemaDiffSqlCommand)
+    private function formatSqlCommand(string $filteredSchemaDiffSqlCommand): string
     {
         $formattedQuery = $this->formatSqlQueryWithTabs($filteredSchemaDiffSqlCommand);
         $formattedQueryLines = array_map('rtrim', explode("\n", $formattedQuery));
@@ -89,11 +76,7 @@ class GenerateMigrationsService
         return "\n" . implode("\n", $this->indentSqlCommandLines($formattedQueryLines));
     }
 
-    /**
-     * @param string $query
-     * @return string
-     */
-    private function formatSqlQueryWithTabs($query)
+    private function formatSqlQueryWithTabs(string $query): string
     {
         $previousTab = SqlFormatter::$tab;
         SqlFormatter::$tab = self::INDENT_CHARACTERS;
@@ -109,7 +92,7 @@ class GenerateMigrationsService
      * @param string[] $queryLines
      * @return string[]
      */
-    private function indentSqlCommandLines(array $queryLines)
+    private function indentSqlCommandLines(array $queryLines): array
     {
         return array_map(function ($queryLine) {
             return str_repeat(self::INDENT_CHARACTERS, self::INDENT_TABULATOR_COUNT) . $queryLine;
@@ -120,17 +103,14 @@ class GenerateMigrationsService
      * @param string[] $sqlCommands
      * @return string[]
      */
-    private function escapeSqlCommands(array $sqlCommands)
+    private function escapeSqlCommands(array $sqlCommands): array
     {
         return array_map(function ($sqlCommand) {
             return str_replace('\'', "\\'", $sqlCommand);
         }, $sqlCommands);
     }
 
-    /**
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation $migrationLocation
-     */
-    private function createMigrationLocationDirectoryIfNotExists(MigrationsLocation $migrationLocation)
+    private function createMigrationLocationDirectoryIfNotExists(MigrationsLocation $migrationLocation): void
     {
         if (!$this->filesystem->exists($migrationLocation->getDirectory())) {
             $this->filesystem->mkdir($migrationLocation->getDirectory());

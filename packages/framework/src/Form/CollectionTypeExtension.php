@@ -14,11 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CollectionTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->removeOriginalResizeFormListener($builder->getEventDispatcher());
 
@@ -33,18 +29,12 @@ class CollectionTypeExtension extends AbstractTypeExtension
         $builder->addEventSubscriber($resizeListener);
     }
 
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return CollectionType::class;
     }
 
-    /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
-    private function removeOriginalResizeFormListener(EventDispatcherInterface $eventDispatcher)
+    private function removeOriginalResizeFormListener(EventDispatcherInterface $eventDispatcher): void
     {
         $listenersByEventName = $eventDispatcher->getListeners();
 

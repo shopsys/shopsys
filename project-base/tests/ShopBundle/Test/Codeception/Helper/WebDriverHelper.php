@@ -8,18 +8,12 @@ use Tests\ShopBundle\Test\Codeception\Module\StrictWebDriver;
 
 class WebDriverHelper extends Module
 {
-    /**
-     * @return \Tests\ShopBundle\Test\Codeception\Module\StrictWebDriver
-     */
-    private function getWebDriver()
+    private function getWebDriver(): \Tests\ShopBundle\Test\Codeception\Module\StrictWebDriver
     {
         return $this->getModule(StrictWebDriver::class);
     }
 
-    /**
-     * @param string $page
-     */
-    public function seeCurrentPageEquals($page)
+    public function seeCurrentPageEquals(string $page): void
     {
         $expectedUrl = Uri::appendPath($this->getWebDriver()->_getUrl(), $page);
         $currentUrl = $this->getWebDriver()->webDriver->getCurrentURL();

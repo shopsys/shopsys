@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
 
 class CartFactoryTest extends TestCase
 {
-    public function testGetReturnsTheSameCartForTheSameCustomer()
+    public function testGetReturnsTheSameCartForTheSameCustomer(): void
     {
         $cartFactory = $this->getCartFactory();
 
@@ -24,7 +24,7 @@ class CartFactoryTest extends TestCase
         $this->assertSame($cart1, $cart2, 'Users with the same session ID have different carts.');
     }
 
-    public function testGetReturnsDifferentCartsForDifferentCustomers()
+    public function testGetReturnsDifferentCartsForDifferentCustomers(): void
     {
         $cartFactory = $this->getCartFactory();
 
@@ -39,10 +39,7 @@ class CartFactoryTest extends TestCase
         $this->assertNotSame($cart1, $cart2, 'Users with different session IDs have the same cart.');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFactory
-     */
-    private function getCartFactory()
+    private function getCartFactory(): \Shopsys\FrameworkBundle\Model\Cart\CartFactory
     {
         $cartItemRepository = $this->getMockBuilder(CartItemRepository::class)
             ->setMethods(['__construct', 'getAllByCustomerIdentifier'])

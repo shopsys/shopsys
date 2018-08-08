@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Heureka\HeurekaShopCertificationFormType;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
@@ -33,10 +32,6 @@ class HeurekaController extends AdminBaseController
         $this->heurekaFacade = $heurekaFacade;
     }
 
-    /**
-     * @Route("/heureka/setting/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

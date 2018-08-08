@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class ProductVisibilityFacadeTest extends TestCase
 {
-    public function testOnKernelResponseRecalc()
+    public function testOnKernelResponseRecalc(): void
     {
         $productVisibilityRepositoryMock = $this->createMock(ProductVisibilityRepository::class);
         $productVisibilityRepositoryMock
@@ -30,7 +30,7 @@ class ProductVisibilityFacadeTest extends TestCase
         $productVisibilityFacade->onKernelResponse($eventMock);
     }
 
-    public function testOnKernelResponseNoRecalc()
+    public function testOnKernelResponseNoRecalc(): void
     {
         $productVisibilityRepositoryMock = $this->createMock(ProductVisibilityRepository::class);
         $productVisibilityRepositoryMock->expects($this->never())->method('refreshProductsVisibility');
@@ -47,7 +47,7 @@ class ProductVisibilityFacadeTest extends TestCase
         $productVisibilityFacade->onKernelResponse($eventMock);
     }
 
-    public function testRefreshProductsVisibility()
+    public function testRefreshProductsVisibility(): void
     {
         $productVisibilityRepositoryMock = $this->createMock(ProductVisibilityRepository::class);
         $productVisibilityRepositoryMock->expects($this->once())->method('refreshProductsVisibility');
@@ -56,7 +56,7 @@ class ProductVisibilityFacadeTest extends TestCase
         $productVisibilityFacade->refreshProductsVisibility();
     }
 
-    public function testRefreshProductsVisibilityForMarked()
+    public function testRefreshProductsVisibilityForMarked(): void
     {
         $productVisibilityRepositoryMock = $this->createMock(ProductVisibilityRepository::class);
         $productVisibilityRepositoryMock

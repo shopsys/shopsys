@@ -96,9 +96,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     protected $domains;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
     public function __construct(PaymentData $paymentData)
     {
         $this->translations = new ArrayCollection();
@@ -114,10 +111,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->position = self::GEDMO_SORTABLE_LAST_POSITION;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     */
-    public function addTransport(Transport $transport)
+    public function addTransport(Transport $transport): void
     {
         if (!$this->transports->contains($transport)) {
             $this->transports->add($transport);
@@ -128,7 +122,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      */
-    public function setTransports(array $transports)
+    public function setTransports(array $transports): void
     {
         foreach ($this->transports as $currentTransport) {
             if (!in_array($currentTransport, $transports, true)) {
@@ -141,10 +135,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     */
-    public function removeTransport(Transport $transport)
+    public function removeTransport(Transport $transport): void
     {
         if ($this->transports->contains($transport)) {
             $this->transports->removeElement($transport);
@@ -160,10 +151,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         return $this->transports;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
-    protected function setTranslations(PaymentData $paymentData)
+    protected function setTranslations(PaymentData $paymentData): void
     {
         foreach ($paymentData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -176,10 +164,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
-    public function edit(PaymentData $paymentData)
+    public function edit(PaymentData $paymentData): void
     {
         $this->vat = $paymentData->vat;
         $this->hidden = $paymentData->hidden;
@@ -188,16 +173,11 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->setDomains($paymentData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param string $price
-     */
     public function setPrice(
         PaymentPriceFactoryInterface $paymentPriceFactory,
         Currency $currency,
-        $price
-    ) {
+        string $price
+    ): void {
         foreach ($this->prices as $paymentInputPrice) {
             if ($paymentInputPrice->getCurrency() === $currency) {
                 $paymentInputPrice->setPrice($price);
@@ -208,19 +188,12 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->prices[] = $paymentPriceFactory->create($this, $currency, $price);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param string|null $locale
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -228,16 +201,12 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentPrice[]
      */
-    public function getPrices()
+    public function getPrices(): array
     {
         return $this->prices;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentPrice
-     */
-    public function getPrice(Currency $currency)
+    public function getPrice(Currency $currency): \Shopsys\FrameworkBundle\Model\Payment\PaymentPrice
     {
         foreach ($this->prices as $price) {
             if ($price->getCurrency() === $currency) {
@@ -249,99 +218,63 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         throw new \Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException($message);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    public function getVat()
+    public function getVat(): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->vat;
     }
 
-    /**
-     * @param string|null $locale
-     * @return string|null
-     */
-    public function getDescription($locale = null)
+    public function getDescription(?string $locale = null): ?string
     {
         return $this->translation($locale)->getDescription();
     }
 
-    /**
-     * @param string|null $locale
-     * @return string|null
-     */
-    public function getInstructions($locale = null)
+    public function getInstructions(?string $locale = null): ?string
     {
         return $this->translation($locale)->getInstructions();
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isEnabled(int $domainId)
+    public function isEnabled(int $domainId): bool
     {
         return $this->getPaymentDomain($domainId)->isEnabled();
     }
 
-    /**
-     * @return bool
-     */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDeleted()
+    public function isDeleted(): bool
     {
         return $this->deleted;
     }
 
-    public function markAsDeleted()
+    public function markAsDeleted(): void
     {
         $this->deleted = true;
         $this->transports->clear();
     }
 
-    /**
-     * @return int|null
-     */
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    /**
-     * @param int $position
-     */
-    public function setPosition($position)
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @return bool
-     */
-    public function isCzkRounding()
+    public function isCzkRounding(): bool
     {
         return $this->czkRounding;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation
     {
         return new PaymentTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
-    protected function setDomains(PaymentData $paymentData)
+    protected function setDomains(PaymentData $paymentData): void
     {
         foreach ($this->domains as $paymentDomain) {
             $domainId = $paymentDomain->getDomainId();
@@ -349,10 +282,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
-    protected function createDomains(PaymentData $paymentData)
+    protected function createDomains(PaymentData $paymentData): void
     {
         $domainIds = array_keys($paymentData->enabled);
 
@@ -364,11 +294,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->setDomains($paymentData);
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentDomain
-     */
-    protected function getPaymentDomain(int $domainId)
+    protected function getPaymentDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Payment\PaymentDomain
     {
         if ($this->domains !== null) {
             foreach ($this->domains as $paymentDomain) {

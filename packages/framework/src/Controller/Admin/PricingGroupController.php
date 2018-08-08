@@ -2,10 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Group\PricingGroupSettingsFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Grid\PricingGroupInlineEdit;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -54,9 +52,6 @@ class PricingGroupController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @Route("/pricing/group/list/")
-     */
     public function listAction()
     {
         $grid = $this->pricingGroupInlineEdit->getGrid();
@@ -66,13 +61,7 @@ class PricingGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/pricing/group/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');
         $newId = $newId !== null ? (int)$newId : null;
@@ -106,11 +95,7 @@ class PricingGroupController extends AdminBaseController
         return $this->redirectToRoute('admin_pricinggroup_list');
     }
 
-    /**
-     * @Route("/pricing/group/delete-confirm/{id}", requirements={"id" = "\d+"})
-     * @param int $id
-     */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         try {
             $pricingGroup = $this->pricingGroupFacade->getById($id);
@@ -148,9 +133,6 @@ class PricingGroupController extends AdminBaseController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingsAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

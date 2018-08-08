@@ -52,7 +52,7 @@ class GoogleFeedItemTest extends TestCase
      */
     private $defaultProduct;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->productPriceCalculationForUserMock = $this->createMock(ProductPriceCalculationForUser::class);
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
@@ -76,11 +76,6 @@ class GoogleFeedItemTest extends TestCase
         $this->mockProductUrl($this->defaultProduct, $this->defaultDomain, 'https://example.com/product-1');
     }
 
-    /**
-     * @param int $id
-     * @param string $code
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|\PHPUnit\Framework\MockObject\MockObject
-     */
     private function createCurrencyMock(int $id, string $code): Currency
     {
         $currencyMock = $this->createMock(Currency::class);
@@ -92,10 +87,6 @@ class GoogleFeedItemTest extends TestCase
     }
 
     /**
-     * @param int $id
-     * @param string $url
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|\PHPUnit\Framework\MockObject\MockObject
      */
     private function createDomainConfigMock(int $id, string $url, string $locale, Currency $currency): DomainConfig
@@ -112,11 +103,6 @@ class GoogleFeedItemTest extends TestCase
         return $domainConfigMock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     */
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
         $productPrice = new ProductPrice($price, false);
@@ -124,29 +110,19 @@ class GoogleFeedItemTest extends TestCase
             ->with($product, $domain->getId(), null)->willReturn($productPrice);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockProductUrl(Product $product, DomainConfig $domain, string $url): void
     {
         $this->productUrlsBatchLoaderMock->method('getProductUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockProductImageUrl(Product $product, DomainConfig $domain, string $url): void
     {
         $this->productUrlsBatchLoaderMock->method('getProductImageUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
-    public function testMinimalGoogleFeedItemIsCreatable()
+    public function testMinimalGoogleFeedItemIsCreatable(): void
     {
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -166,7 +142,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals([], $googleFeedItem->getIdentifiers());
     }
 
-    public function testGoogleFeedItemWithBrand()
+    public function testGoogleFeedItemWithBrand(): void
     {
         $brand = $this->createMock(Brand::class);
         /* @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
@@ -178,7 +154,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals('brand name', $googleFeedItem->getBrand());
     }
 
-    public function testGoogleFeedItemWithDescription()
+    public function testGoogleFeedItemWithDescription(): void
     {
         $this->defaultProduct->method('getDescription')
             ->with(1)->willReturn('product description');
@@ -188,7 +164,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals('product description', $googleFeedItem->getDescription());
     }
 
-    public function testGoogleFeedItemWithImageLink()
+    public function testGoogleFeedItemWithImageLink(): void
     {
         $this->mockProductImageUrl($this->defaultProduct, $this->defaultDomain, 'https://example.com/img/product/1');
 
@@ -197,7 +173,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals('https://example.com/img/product/1', $googleFeedItem->getImageLink());
     }
 
-    public function testGoogleFeedItemWithSellingDenied()
+    public function testGoogleFeedItemWithSellingDenied(): void
     {
         $product = $this->createMock(Product::class);
         $product->method('getId')->willReturn(1);
@@ -209,7 +185,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals('out of stock', $googleFeedItem->getAvailability());
     }
 
-    public function testGoogleFeedItemWithEan()
+    public function testGoogleFeedItemWithEan(): void
     {
         $this->defaultProduct->method('getEan')->willReturn('1234567890123');
 
@@ -218,7 +194,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals(['gtin' => '1234567890123'], $googleFeedItem->getIdentifiers());
     }
 
-    public function testGoogleFeedItemWithPartno()
+    public function testGoogleFeedItemWithPartno(): void
     {
         $this->defaultProduct->method('getPartno')->willReturn('HSC0424PP');
 
@@ -227,7 +203,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals(['mpn' => 'HSC0424PP'], $googleFeedItem->getIdentifiers());
     }
 
-    public function testGoogleFeedItemWithEanAndPartno()
+    public function testGoogleFeedItemWithEanAndPartno(): void
     {
         $this->defaultProduct->method('getEan')->willReturn('1234567890123');
         $this->defaultProduct->method('getPartno')->willReturn('HSC0424PP');

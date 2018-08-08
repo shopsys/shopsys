@@ -46,13 +46,7 @@ class ProductFilterConfigFactory
         $this->priceRangeRepository = $priceRangeRepository;
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
-    public function createForCategory($domainId, $locale, Category $category)
+    public function createForCategory(int $domainId, string $locale, Category $category): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         $pricingGroup = $this->currentCustomer->getPricingGroup();
         $parameterFilterChoices = $this->parameterFilterChoiceRepository
@@ -66,13 +60,7 @@ class ProductFilterConfigFactory
         return new ProductFilterConfig($parameterFilterChoices, $flagFilterChoices, $brandFilterChoices, $priceRange);
     }
 
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param string|null $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
-    public function createForSearch($domainId, $locale, $searchText)
+    public function createForSearch(int $domainId, string $locale, ?string $searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         $parameterFilterChoices = [];
         $pricingGroup = $this->currentCustomer->getPricingGroup();

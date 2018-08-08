@@ -13,11 +13,6 @@ class NormalizingExtractorManager extends ExtractorManager
      */
     private $messageIdNormalizer;
 
-    /**
-     * @param \JMS\TranslationBundle\Translation\Extractor\FileExtractor $extractor
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer $messageIdNormalizer
-     */
     public function __construct(FileExtractor $extractor, LoggerInterface $logger, MessageIdNormalizer $messageIdNormalizer)
     {
         parent::__construct($extractor, $logger);

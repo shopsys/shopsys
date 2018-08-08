@@ -31,7 +31,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
         $this->pricingGroupDataFactory = $pricingGroupDataFactory;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $pricingGroupData = $this->pricingGroupDataFactory->create();
 
@@ -44,16 +44,11 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
         $this->createPricingGroup($pricingGroupData, $domainId1, self::PRICING_GROUP_VIP_DOMAIN_2);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     * @param int $domainId
-     * @param string $referenceName
-     */
     private function createPricingGroup(
         PricingGroupData $pricingGroupData,
-        $domainId,
-        $referenceName
-    ) {
+        int $domainId,
+        string $referenceName
+    ): void {
         $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, $domainId);
         $this->addReference($referenceName, $pricingGroup);
     }

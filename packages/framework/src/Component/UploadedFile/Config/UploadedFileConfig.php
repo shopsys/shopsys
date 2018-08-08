@@ -17,20 +17,12 @@ class UploadedFileConfig
         $this->uploadedFileEntityConfigsByClass = $uploadedFileEntityConfigsByClass;
     }
 
-    /**
-     * @param Object $entity
-     * @return string
-     */
-    public function getEntityName($entity)
+    public function getEntityName(Object $entity): string
     {
         return $this->getUploadedFileEntityConfig($entity)->getEntityName();
     }
 
-    /**
-     * @param Object $entity
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
-     */
-    public function getUploadedFileEntityConfig($entity)
+    public function getUploadedFileEntityConfig(Object $entity): \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
     {
         foreach ($this->uploadedFileEntityConfigsByClass as $className => $entityConfig) {
             if ($entity instanceof $className) {
@@ -43,11 +35,7 @@ class UploadedFileConfig
         );
     }
 
-    /**
-     * @param object $entity
-     * @return bool
-     */
-    public function hasUploadedFileEntityConfig($entity)
+    public function hasUploadedFileEntityConfig(object $entity): bool
     {
         foreach ($this->uploadedFileEntityConfigsByClass as $className => $entityConfig) {
             if ($entity instanceof $className) {
@@ -60,7 +48,7 @@ class UploadedFileConfig
     /**
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[]
      */
-    public function getAllUploadedFileEntityConfigs()
+    public function getAllUploadedFileEntityConfigs(): array
     {
         return $this->uploadedFileEntityConfigsByClass;
     }

@@ -70,7 +70,7 @@ class PaymentPriceCalculationTest extends TestCase
         $vatPercent,
         $priceWithoutVat,
         $priceWithVat
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType', 'getRoundingType'])
             ->disableOriginalConstructor()
@@ -117,7 +117,7 @@ class PaymentPriceCalculationTest extends TestCase
         $priceWithoutVat,
         $priceWithVat,
         $productsPrice
-    ) {
+    ): void {
         $priceLimit = 1000;
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType', 'getRoundingType', 'getFreeTransportAndPaymentPriceLimit'])

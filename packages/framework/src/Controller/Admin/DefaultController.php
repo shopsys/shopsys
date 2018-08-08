@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -58,9 +57,6 @@ class DefaultController extends AdminBaseController
         $this->availabilityFacade = $availabilityFacade;
     }
 
-    /**
-     * @Route("/dashboard/")
-     */
     public function dashboardAction()
     {
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();

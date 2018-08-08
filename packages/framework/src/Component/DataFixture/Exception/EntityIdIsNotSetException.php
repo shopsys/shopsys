@@ -6,12 +6,7 @@ use Exception;
 
 class EntityIdIsNotSetException extends Exception implements DataFixtureException
 {
-    /**
-     * @param string $referenceName
-     * @param object $object
-     * @param \Exception|null $previous
-     */
-    public function __construct($referenceName, $object, Exception $previous = null)
+    public function __construct(string $referenceName, object $object, Exception $previous = null)
     {
         $message = 'Cannot create persistent reference "' . $referenceName . '" for entity without ID. '
             . 'Flush the entity ("' . get_class($object) . '") before creating a persistent reference.';

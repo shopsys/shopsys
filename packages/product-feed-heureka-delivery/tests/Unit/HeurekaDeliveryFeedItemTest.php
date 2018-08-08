@@ -14,12 +14,12 @@ class HeurekaDeliveryFeedItemTest extends TestCase
      */
     private $heurekaDeliveryFeedItemFactory;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->heurekaDeliveryFeedItemFactory = new HeurekaDeliveryFeedItemFactory();
     }
 
-    public function testHeurekaDeliveryFeedItemIsCreatable()
+    public function testHeurekaDeliveryFeedItemIsCreatable(): void
     {
         $heurekaDeliveryFeedItem = $this->heurekaDeliveryFeedItemFactory->create(['id' => 1, 'stockQuantity' => 5]);
 
@@ -30,14 +30,14 @@ class HeurekaDeliveryFeedItemTest extends TestCase
         self::assertEquals(5, $heurekaDeliveryFeedItem->getStockQuantity());
     }
 
-    public function testHeurekaDeliveryFeedItemIsNotCreatableWhenIdMissing()
+    public function testHeurekaDeliveryFeedItemIsNotCreatableWhenIdMissing(): void
     {
         $this->expectException(HeurekaDeliveryDataMissingException::class);
 
         $this->heurekaDeliveryFeedItemFactory->create(['stockQuantity' => 5]);
     }
 
-    public function testHeurekaDeliveryFeedItemIsNotCreatableWhenStockQuantityMissing()
+    public function testHeurekaDeliveryFeedItemIsNotCreatableWhenStockQuantityMissing(): void
     {
         $this->expectException(HeurekaDeliveryDataMissingException::class);
 

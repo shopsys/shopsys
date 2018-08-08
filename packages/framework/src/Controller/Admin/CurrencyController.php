@@ -2,10 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency\CurrencySettingsFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyInlineEdit;
@@ -46,9 +44,6 @@ class CurrencyController extends AdminBaseController
         $this->domain = $domain;
     }
 
-    /**
-     * @Route("/currency/list/")
-     */
     public function listAction()
     {
         $grid = $this->currencyInlineEdit->getGrid();
@@ -58,11 +53,7 @@ class CurrencyController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/currency/delete-confirm/{id}", requirements={"id" = "\d+"})
-     * @param int $id
-     */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         try {
             $currency = $this->currencyFacade->getById($id);
@@ -77,12 +68,7 @@ class CurrencyController extends AdminBaseController
         }
     }
 
-    /**
-     * @Route("/currency/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->currencyFacade->getById($id)->getName();
@@ -105,9 +91,6 @@ class CurrencyController extends AdminBaseController
         return $this->redirectToRoute('admin_currency_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingsAction(Request $request)
     {
         $domainNames = [];

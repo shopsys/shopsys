@@ -28,7 +28,7 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
     const EXPECTED_XML_FILE_NAME = 'test.xml';
     const DOMAIN_ID_FIRST = Domain::FIRST_DOMAIN_ID;
 
-    public function testExportXml()
+    public function testExportXml(): void
     {
         $country = $this->createCountry();
         $billingAddress = $this->createBillingAddress($country);
@@ -60,10 +60,7 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
         $this->assertEquals($expectedXml, $generatedXml);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
-     */
-    private function createCountry()
+    private function createCountry(): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $countryData = new CountryData();
         $countryData->name = 'Czech Republic';
@@ -73,11 +70,7 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
         return $country;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     */
-    private function createBillingAddress(Country $country)
+    private function createBillingAddress(Country $country): \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
     {
         $billingAddressData = new BillingAddressData();
         $billingAddressData->country = $country;
@@ -95,11 +88,7 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
         return $billingAddress;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
-     */
-    private function createDeliveryAddress(Country $country)
+    private function createDeliveryAddress(Country $country): \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
     {
         $deliveryAddressData = new DeliveryAddressData();
         $deliveryAddressData->country = $country;
@@ -115,12 +104,7 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
         return $deliveryAddress;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    private function createUser(BillingAddress $billingAddress, DeliveryAddress $deliveryAddress)
+    private function createUser(BillingAddress $billingAddress, DeliveryAddress $deliveryAddress): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $userData = new UserData();
         $userData->firstName = 'Jaromír';
@@ -134,13 +118,7 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
         return $user;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $status
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    private function createOrder(Currency $currency, OrderStatus $status, Country $country)
+    private function createOrder(Currency $currency, OrderStatus $status, Country $country): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $orderData = new OrderData();
         $orderData->currency = $currency;

@@ -20,24 +20,14 @@ class OrderProduct extends OrderItem
      */
     protected $product;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param string|null $unitName
-     * @param string|null $catnum
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     */
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
-        $unitName,
-        $catnum,
+        string $vatPercent,
+        int $quantity,
+        ?string $unitName,
+        ?string $catnum,
         Product $product = null
     ) {
         parent::__construct(
@@ -57,18 +47,12 @@ class OrderProduct extends OrderItem
         $this->product = $product;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
-     */
-    public function getProduct()
+    public function getProduct(): ?\Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasProduct()
+    public function hasProduct(): bool
     {
         return $this->product !== null;
     }

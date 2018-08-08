@@ -6,7 +6,7 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class BagTest extends FunctionalTestCase
 {
-    public function testAddFrontVsAdmin()
+    public function testAddFrontVsAdmin(): void
     {
         $flashMessageAdmin = $this->getContainer()->get('shopsys.shop.component.flash_message.bag.admin');
         /* @var $flashMessageAdmin \Shopsys\FrameworkBundle\Component\FlashMessage\Bag */
@@ -29,7 +29,7 @@ class BagTest extends FunctionalTestCase
         $this->assertSame([], $flashMessageFront->getSuccessMessages());
     }
 
-    public function testAddArrayOfMessages()
+    public function testAddArrayOfMessages(): void
     {
         $flashMessageAdmin = $this->getContainer()->get('shopsys.shop.component.flash_message.bag.admin');
         /* @var $flashMessageAdmin \Shopsys\FrameworkBundle\Component\FlashMessage\Bag */
@@ -41,7 +41,7 @@ class BagTest extends FunctionalTestCase
         $this->assertSame($errorMessagesAdmin, $flashMessageAdmin->getErrorMessages());
     }
 
-    public function testGetUniqueMessage()
+    public function testGetUniqueMessage(): void
     {
         $flashMessageAdmin = $this->getContainer()->get('shopsys.shop.component.flash_message.bag.admin');
         /* @var $flashMessageAdmin \Shopsys\FrameworkBundle\Component\FlashMessage\Bag */
@@ -54,7 +54,7 @@ class BagTest extends FunctionalTestCase
         $this->assertSame([$errorMessageAdmin], $flashMessageAdmin->getErrorMessages());
     }
 
-    public function testGetAndClearBag()
+    public function testGetAndClearBag(): void
     {
         $flashMessageAdmin = $this->getContainer()->get('shopsys.shop.component.flash_message.bag.admin');
         /* @var $flashMessageAdmin \Shopsys\FrameworkBundle\Component\FlashMessage\Bag */
@@ -67,7 +67,7 @@ class BagTest extends FunctionalTestCase
         $this->assertSame([], $flashMessageAdmin->getErrorMessages());
     }
 
-    public function testIsEmpty()
+    public function testIsEmpty(): void
     {
         $flashMessageAdmin = $this->getContainer()->get('shopsys.shop.component.flash_message.bag.admin');
         /* @var $flashMessageAdmin \Shopsys\FrameworkBundle\Component\FlashMessage\Bag */

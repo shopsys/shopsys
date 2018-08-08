@@ -20,18 +20,12 @@ class SettingValueShopInfoDataFixture extends AbstractReferenceFixture
      */
     private $setting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(Setting $setting)
     {
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $domainId = 2;
         foreach (self::SETTING_VALUES as $key => $value) {

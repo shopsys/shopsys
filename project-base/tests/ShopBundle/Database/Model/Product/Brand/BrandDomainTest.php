@@ -29,7 +29,7 @@ class BrandDomainTest extends DatabaseTestCase
      */
     private $em;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->brandDataFactory = $this->getContainer()->get(BrandDataFactory::class);
@@ -40,7 +40,7 @@ class BrandDomainTest extends DatabaseTestCase
     /**
      * @group multidomain
      */
-    public function testCreateBrandDomain()
+    public function testCreateBrandDomain(): void
     {
         $brandData = $this->brandDataFactory->create();
 
@@ -60,7 +60,7 @@ class BrandDomainTest extends DatabaseTestCase
     /**
      * @group singledomain
      */
-    public function testCreateBrandDomainForSingleDomain()
+    public function testCreateBrandDomainForSingleDomain(): void
     {
         $brandData = $this->brandDataFactory->create();
 
@@ -75,11 +75,7 @@ class BrandDomainTest extends DatabaseTestCase
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedBrand->getSeoH1(self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
-    private function getRefreshedBrandFromDatabase(Brand $brand)
+    private function getRefreshedBrandFromDatabase(Brand $brand): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
     {
         $this->em->persist($brand);
         $this->em->flush();

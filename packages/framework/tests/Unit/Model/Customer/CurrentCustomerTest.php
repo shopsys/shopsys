@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class CurrentCustomerTest extends TestCase
 {
-    public function testGetPricingGroupForUnregisteredCustomerReturnsDefaultPricingGroup()
+    public function testGetPricingGroupForUnregisteredCustomerReturnsDefaultPricingGroup(): void
     {
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
@@ -31,7 +31,7 @@ class CurrentCustomerTest extends TestCase
         $this->assertSame($expectedPricingGroup, $pricingGroup);
     }
 
-    public function testGetPricingGroupForRegisteredCustomerReturnsHisPricingGroup()
+    public function testGetPricingGroupForRegisteredCustomerReturnsHisPricingGroup(): void
     {
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
@@ -49,7 +49,6 @@ class CurrentCustomerTest extends TestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $defaultPricingGroup
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
      */
     private function getPricingGroupSettingFacadeMockReturningDefaultPricingGroup(PricingGroup $defaultPricingGroup)
@@ -66,11 +65,7 @@ class CurrentCustomerTest extends TestCase
         return $pricingGroupSettingFacadeMock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    private function getUserWithPricingGroup(PricingGroup $pricingGroup)
+    private function getUserWithPricingGroup(PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $billingAddress = $this->createMock(BillingAddress::class);
         $userData = new UserData();
@@ -80,7 +75,6 @@ class CurrentCustomerTest extends TestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
      */
     private function getTokenStorageMockForUser(User $user)

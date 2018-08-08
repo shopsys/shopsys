@@ -76,9 +76,6 @@ class CartController extends FrontBaseController
         $this->errorService = $errorService;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function indexAction(Request $request)
     {
         $cart = $this->cartFacade->getCartOfCurrentCustomer();
@@ -149,11 +146,7 @@ class CartController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string $type
-     */
-    public function addProductFormAction(Product $product, $type = 'normal')
+    public function addProductFormAction(Product $product, string $type = 'normal')
     {
         $form = $this->createForm(AddProductFormType::class, ['productId' => $product->getId()], [
             'action' => $this->generateUrl('front_cart_add_product'),
@@ -166,9 +159,6 @@ class CartController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function addProductAction(Request $request)
     {
         $form = $this->createForm(AddProductFormType::class);
@@ -210,9 +200,6 @@ class CartController extends FrontBaseController
         return $this->redirect($redirectTo);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function addProductAjaxAction(Request $request)
     {
         $form = $this->createForm(AddProductFormType::class);
@@ -260,12 +247,9 @@ class CartController extends FrontBaseController
         return $this->forward('ShopsysShopBundle:Front/FlashMessage:index');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\AddProductResult $addProductResult
-     */
     private function sendAddProductResultFlashMessage(
         AddProductResult $addProductResult
-    ) {
+    ): void {
         if ($addProductResult->getIsNew()) {
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart'),
@@ -287,11 +271,7 @@ class CartController extends FrontBaseController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $cartItemId
-     */
-    public function deleteAction(Request $request, $cartItemId)
+    public function deleteAction(Request $request, int $cartItemId)
     {
         $cartItemId = (int)$cartItemId;
         $token = new CsrfToken('front_cart_delete_' . $cartItemId, $request->query->get('_token'));

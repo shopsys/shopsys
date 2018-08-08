@@ -12,7 +12,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
 class RouteCsrfProtectorTest extends TestCase
 {
-    public function testSubRequest()
+    public function testSubRequest(): void
     {
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
@@ -28,7 +28,7 @@ class RouteCsrfProtectorTest extends TestCase
         $routeCsrfProtector->onKernelController($eventMock);
     }
 
-    public function testRequestWithoutProtection()
+    public function testRequestWithoutProtection(): void
     {
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
@@ -48,7 +48,7 @@ class RouteCsrfProtectorTest extends TestCase
         $routeCsrfProtector->onKernelController($eventMock);
     }
 
-    public function testRequestWithProtection()
+    public function testRequestWithProtection(): void
     {
         $validCsrfToken = 'validCsrfToken';
         $request = new Request([
@@ -82,7 +82,7 @@ class RouteCsrfProtectorTest extends TestCase
         $routeCsrfProtector->onKernelController($eventMock);
     }
 
-    public function testRequestWithProtectionWithoutCsrfToken()
+    public function testRequestWithProtectionWithoutCsrfToken(): void
     {
         $request = new Request();
         $annotationReader = new AnnotationReader();
@@ -105,7 +105,7 @@ class RouteCsrfProtectorTest extends TestCase
         $routeCsrfProtector->onKernelController($eventMock);
     }
 
-    public function testRequestWithProtectionWithInvalidCsrfToken()
+    public function testRequestWithProtectionWithInvalidCsrfToken(): void
     {
         $invalidCsrfToken = 'invalidCsrfToken';
         $request = new Request([

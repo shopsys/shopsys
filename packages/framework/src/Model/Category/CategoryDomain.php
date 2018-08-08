@@ -81,11 +81,7 @@ class CategoryDomain
      */
     protected $description;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
-     */
-    public function __construct(Category $category, $domainId)
+    public function __construct(Category $category, int $domainId)
     {
         $this->category = $category;
         $this->domainId = $domainId;
@@ -93,98 +89,62 @@ class CategoryDomain
         $this->visible = false;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoTitle()
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription()
+    public function getSeoMetaDescription(): ?string
     {
         return $this->seoMetaDescription;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoH1()
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @param string|null $seoTitle
-     */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle(?string $seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
 
-    /**
-     * @param string|null $seoMetaDescription
-     */
-    public function setSeoMetaDescription($seoMetaDescription)
+    public function setSeoMetaDescription(?string $seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
 
-    /**
-     * @param string|null $seoH1
-     */
-    public function setSeoH1($seoH1)
+    public function setSeoH1(?string $seoH1): void
     {
         $this->seoH1 = $seoH1;
     }
 
-    /**
-     * @param bool $enabled
-     */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return bool
-     */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return $this->visible;
     }

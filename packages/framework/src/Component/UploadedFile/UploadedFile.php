@@ -58,12 +58,7 @@ class UploadedFile implements EntityFileUploadInterface
      */
     protected $temporaryFilename;
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string|null $temporaryFilename
-     */
-    public function __construct($entityName, $entityId, $temporaryFilename)
+    public function __construct(string $entityName, int $entityId, ?string $temporaryFilename)
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
@@ -73,7 +68,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload[]
      */
-    public function getTemporaryFilesForUpload()
+    public function getTemporaryFilesForUpload(): array
     {
         if ($this->temporaryFilename === null) {
             return [];
@@ -90,11 +85,7 @@ class UploadedFile implements EntityFileUploadInterface
         ];
     }
 
-    /**
-     * @param string $key
-     * @param string $originalFilename
-     */
-    public function setFileAsUploaded($key, $originalFilename)
+    public function setFileAsUploaded(string $key, string $originalFilename): void
     {
         if ($key === self::UPLOAD_KEY) {
             $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
@@ -103,52 +94,34 @@ class UploadedFile implements EntityFileUploadInterface
         }
     }
 
-    /**
-     * @param string|null $temporaryFilename
-     */
-    public function setTemporaryFilename($temporaryFilename)
+    public function setTemporaryFilename(?string $temporaryFilename): void
     {
         $this->temporaryFilename = $temporaryFilename;
         // workaround: Entity must be changed so that preUpdate and postUpdate are called
         $this->modifiedAt = new DateTime();
     }
 
-    /**
-     * @return string
-     */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->id . '.' . $this->extension;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityName()
+    public function getEntityName(): string
     {
         return $this->entityName;
     }
 
-    /**
-     * @return int
-     */
-    public function getEntityId()
+    public function getEntityId(): int
     {
         return $this->entityId;
     }
 
-    /**
-     * @return string
-     */
-    public function getExtension()
+    public function getExtension(): string
     {
         return $this->extension;
     }

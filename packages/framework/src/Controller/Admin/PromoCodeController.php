@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
@@ -35,9 +33,6 @@ class PromoCodeController extends AdminBaseController
         $this->administratorGridFacade = $administratorGridFacade;
     }
 
-    /**
-     * @Route("/promo-code/list")
-     */
     public function listAction()
     {
         $administrator = $this->getUser();
@@ -54,12 +49,7 @@ class PromoCodeController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/promo-code/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $code = $this->promoCodeFacade->getById($id)->getCode();

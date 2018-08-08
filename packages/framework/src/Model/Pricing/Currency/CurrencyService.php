@@ -13,30 +13,17 @@ class CurrencyService
      */
     protected $currencyFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface $currencyFactory
-     */
     public function __construct(CurrencyFactoryInterface $currencyFactory)
     {
         $this->currencyFactory = $currencyFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    public function create(CurrencyData $currencyData)
+    public function create(CurrencyData $currencyData): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->currencyFactory->create($currencyData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     * @param bool $isDefaultCurrency
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    public function edit(Currency $currency, CurrencyData $currencyData, $isDefaultCurrency)
+    public function edit(Currency $currency, CurrencyData $currencyData, bool $isDefaultCurrency): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency->edit($currencyData);
         if ($isDefaultCurrency) {
@@ -49,18 +36,15 @@ class CurrencyService
     }
 
     /**
-     * @param int $defaultCurrencyId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[] $currenciesUsedInOrders
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @return int[]
      */
     public function getNotAllowedToDeleteCurrencyIds(
-        $defaultCurrencyId,
+        int $defaultCurrencyId,
         array $currenciesUsedInOrders,
         PricingSetting $pricingSetting,
         Domain $domain
-    ) {
+    ): array {
         $notAllowedToDeleteCurrencyIds = [$defaultCurrencyId];
         foreach ($domain->getAll() as $domainConfig) {
             $notAllowedToDeleteCurrencyIds[] = $pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainConfig->getId());

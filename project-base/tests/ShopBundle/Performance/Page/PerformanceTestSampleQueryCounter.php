@@ -26,10 +26,7 @@ class PerformanceTestSampleQueryCounter implements SQLLogger
     {
     }
 
-    /**
-     * @return int
-     */
-    public function getQueryCount()
+    public function getQueryCount(): int
     {
         return $this->queryCount;
     }

@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\TransportAndPayment\FreeTransportAndPaymentPriceLimitsFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -28,19 +27,11 @@ class TransportAndPaymentController extends AdminBaseController
         $this->pricingSetting = $pricingSetting;
     }
 
-    /**
-     * @Route("/transport-and-payment/list/")
-     */
     public function listAction()
     {
         return $this->render('@ShopsysFramework/Admin/Content/TransportAndPayment/list.html.twig');
     }
 
-    /**
-     * @Route("/transport-and-payment/free-transport-and-payment-limit/")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function freeTransportAndPaymentLimitAction(Request $request)
     {
         $formData = [];

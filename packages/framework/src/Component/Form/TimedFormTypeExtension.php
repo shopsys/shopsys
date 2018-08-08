@@ -20,9 +20,6 @@ class TimedFormTypeExtension extends AbstractTypeExtension
      */
     private $formTimeProvider;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider $formTimeProvider
-     */
     public function __construct(FormTimeProvider $formTimeProvider)
     {
         $this->formTimeProvider = $formTimeProvider;
@@ -43,22 +40,14 @@ class TimedFormTypeExtension extends AbstractTypeExtension
         ));
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         if ($options[self::OPTION_ENABLED] && !$view->parent && $options['compound']) {
             $this->formTimeProvider->generateFormTime($form->getName());
         }
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             self::OPTION_ENABLED => false,
@@ -66,10 +55,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return FormType::class;
     }

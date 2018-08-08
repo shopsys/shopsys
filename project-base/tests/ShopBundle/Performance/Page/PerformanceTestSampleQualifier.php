@@ -28,13 +28,7 @@ class PerformanceTestSampleQualifier
      */
     private $queryCountCritical;
 
-    /**
-     * @param int $durationWarning
-     * @param int $durationCritical
-     * @param int $queryCountWarning
-     * @param int $queryCountCritical
-     */
-    public function __construct($durationWarning, $durationCritical, $queryCountWarning, $queryCountCritical)
+    public function __construct(int $durationWarning, int $durationCritical, int $queryCountWarning, int $queryCountCritical)
     {
         $this->durationWarning = $durationWarning;
         $this->durationCritical = $durationCritical;
@@ -42,11 +36,7 @@ class PerformanceTestSampleQualifier
         $this->queryCountCritical = $queryCountCritical;
     }
 
-    /**
-     * @param float $duration
-     * @return int
-     */
-    public function getStatusForDuration($duration)
+    public function getStatusForDuration(float $duration): int
     {
         if ($duration >= $this->durationCritical) {
             return self::STATUS_CRITICAL;
@@ -57,11 +47,7 @@ class PerformanceTestSampleQualifier
         return self::STATUS_OK;
     }
 
-    /**
-     * @param int $queryCount
-     * @return int
-     */
-    public function getStatusForQueryCount($queryCount)
+    public function getStatusForQueryCount(int $queryCount): int
     {
         if ($queryCount >= $this->queryCountCritical) {
             return self::STATUS_CRITICAL;
@@ -72,11 +58,7 @@ class PerformanceTestSampleQualifier
         return self::STATUS_OK;
     }
 
-    /**
-     * @param \Tests\ShopBundle\Performance\Page\PerformanceTestSample $performanceTestSample
-     * @return int
-     */
-    public function getSampleStatus(PerformanceTestSample $performanceTestSample)
+    public function getSampleStatus(PerformanceTestSample $performanceTestSample): int
     {
         $overallStatus = self::STATUS_OK;
 
@@ -97,9 +79,8 @@ class PerformanceTestSampleQualifier
 
     /**
      * @param \Tests\ShopBundle\Performance\Page\PerformanceTestSample[] $performanceTestSamples
-     * @return int
      */
-    public function getOverallStatus(array $performanceTestSamples)
+    public function getOverallStatus(array $performanceTestSamples): int
     {
         $allStatuses = [self::STATUS_OK];
 

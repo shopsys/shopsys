@@ -17,21 +17,13 @@ class AdministratorGridFacade
      */
     protected $administratorGridService;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridService $administratorGridService
-     */
     public function __construct(EntityManagerInterface $em, AdministratorGridService $administratorGridService)
     {
         $this->em = $em;
         $this->administratorGridService = $administratorGridService;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
-     */
-    public function restoreAndRememberGridLimit(Administrator $administrator, Grid $grid)
+    public function restoreAndRememberGridLimit(Administrator $administrator, Grid $grid): void
     {
         $this->administratorGridService->restoreGridLimit($administrator, $grid);
         $gridLimit = $this->administratorGridService->rememberGridLimit($administrator, $grid);

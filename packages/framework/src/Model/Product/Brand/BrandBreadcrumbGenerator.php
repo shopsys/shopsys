@@ -18,11 +18,9 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * @param string $routeName
-     * @param array $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems(string $routeName, array $routeParameters = []): array
     {
         $isBrandDetail = $routeName === 'front_brand_detail';
 
@@ -44,7 +42,7 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritDoc}
      */
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return ['front_brand_detail'];
     }

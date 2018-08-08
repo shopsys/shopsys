@@ -23,9 +23,6 @@ class ServerRunForDomainCommand extends Command
      */
     private $domain;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(Domain $domain)
     {
         $this->domain = $domain;
@@ -33,18 +30,13 @@ class ServerRunForDomainCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Runs PHP built-in web server for a chosen domain');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         if ($input->hasParameterOption(['--env', '-e'])) {
@@ -61,11 +53,7 @@ class ServerRunForDomainCommand extends Command
         return $this->runServerForDomain($domainConfig, $output);
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    private function chooseDomainConfig(SymfonyStyle $io)
+    private function chooseDomainConfig(SymfonyStyle $io): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
     {
         $domainConfigs = $this->domain->getAll();
 
@@ -95,12 +83,7 @@ class ServerRunForDomainCommand extends Command
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
-    private function runServerForDomain(DomainConfig $domainConfig, OutputInterface $output)
+    private function runServerForDomain(DomainConfig $domainConfig, OutputInterface $output): int
     {
         $command = $this->getApplication()->find('server:run');
 

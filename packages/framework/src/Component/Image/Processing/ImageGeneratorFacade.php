@@ -24,14 +24,7 @@ class ImageGeneratorFacade
         $this->imageGeneratorService = $imageGeneratorService;
     }
 
-    /**
-     * @param string $entityName
-     * @param int $imageId
-     * @param string|null $type
-     * @param string|null $sizeName
-     * @return string
-     */
-    public function generateImageAndGetFilepath($entityName, $imageId, $type, $sizeName)
+    public function generateImageAndGetFilepath(string $entityName, int $imageId, ?string $type, ?string $sizeName): string
     {
         $image = $this->imageRepository->getById($imageId);
 

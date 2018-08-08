@@ -16,56 +16,35 @@ class RouteInfo
      */
     private $route;
 
-    /**
-     * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
-     */
-    public function __construct($routeName, Route $route)
+    public function __construct(string $routeName, Route $route)
     {
         $this->routeName = $routeName;
         $this->route = $route;
     }
 
-    /**
-     * @return string
-     */
-    public function getRouteName()
+    public function getRouteName(): string
     {
         return $this->routeName;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutePath()
+    public function getRoutePath(): string
     {
         return $this->route->getPath();
     }
 
-    /**
-     * @return string
-     */
-    public function getRouteCondition()
+    public function getRouteCondition(): string
     {
         return $this->route->getCondition();
     }
 
-    /**
-     * @param string $method
-     * @return bool
-     */
-    public function isHttpMethodAllowed($method)
+    public function isHttpMethodAllowed(string $method): bool
     {
         $methods = $this->route->getMethods();
 
         return count($methods) === 0 || in_array(strtoupper($method), $methods, true);
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function isRouteParameterRequired($name)
+    public function isRouteParameterRequired(string $name): bool
     {
         return !$this->route->hasDefault($name) && in_array($name, $this->getRouteParameterNames(), true);
     }
@@ -73,7 +52,7 @@ class RouteInfo
     /**
      * @return string[]
      */
-    public function getRouteParameterNames()
+    public function getRouteParameterNames(): array
     {
         $compiledRoute = $this->route->compile();
 

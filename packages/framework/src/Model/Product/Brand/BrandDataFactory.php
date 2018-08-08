@@ -32,9 +32,6 @@ class BrandDataFactory implements BrandDataFactoryInterface
         $this->domain = $domain;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData
-     */
     public function create(): BrandData
     {
         $brandData = new BrandData();
@@ -43,10 +40,7 @@ class BrandDataFactory implements BrandDataFactoryInterface
         return $brandData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     */
-    protected function fillNew(BrandData $brandData)
+    protected function fillNew(BrandData $brandData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $brandData->seoMetaDescriptions[$domainId] = null;
@@ -55,10 +49,6 @@ class BrandDataFactory implements BrandDataFactoryInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData
-     */
     public function createFromBrand(Brand $brand): BrandData
     {
         $brandData = new BrandData();
@@ -67,11 +57,7 @@ class BrandDataFactory implements BrandDataFactoryInterface
         return $brandData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     */
-    protected function fillFromBrand(BrandData $brandData, Brand $brand)
+    protected function fillFromBrand(BrandData $brandData, Brand $brand): void
     {
         $brandData->name = $brand->getName();
 

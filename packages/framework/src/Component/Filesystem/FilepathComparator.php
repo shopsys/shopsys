@@ -4,12 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Filesystem;
 
 class FilepathComparator
 {
-    /**
-     * @param string $path
-     * @param string $directoryPath
-     * @return bool
-     */
-    public function isPathWithinDirectory($path, $directoryPath)
+    public function isPathWithinDirectory(string $path, string $directoryPath): bool
     {
         $directoryPathRealpath = realpath($directoryPath);
         if ($directoryPathRealpath === false) {
@@ -21,12 +16,7 @@ class FilepathComparator
         return $this->isPathWithinDirectoryRealpathRecursive($path, $directoryPathRealpath);
     }
 
-    /**
-     * @param string $path
-     * @param string $directoryRealpath
-     * @return bool
-     */
-    private function isPathWithinDirectoryRealpathRecursive($path, $directoryRealpath)
+    private function isPathWithinDirectoryRealpathRecursive(string $path, string $directoryRealpath): bool
     {
         if (realpath($path) === $directoryRealpath) {
             return true;
@@ -39,11 +29,7 @@ class FilepathComparator
         }
     }
 
-    /**
-     * @param string $path
-     * @return bool
-     */
-    private function hasAncestorPath($path)
+    private function hasAncestorPath(string $path): bool
     {
         return dirname($path) !== $path;
     }

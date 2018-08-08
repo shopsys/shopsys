@@ -11,11 +11,7 @@ class DuplicateEntityNameException extends Exception implements UploadedFileConf
      */
     private $entityName;
 
-    /**
-     * @param string $entityName
-     * @param \Exception|null $previous
-     */
-    public function __construct($entityName, Exception $previous = null)
+    public function __construct(string $entityName, Exception $previous = null)
     {
         $this->entityName = $entityName;
 
@@ -23,10 +19,7 @@ class DuplicateEntityNameException extends Exception implements UploadedFileConf
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityName()
+    public function getEntityName(): string
     {
         return $this->entityName;
     }

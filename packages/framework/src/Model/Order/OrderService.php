@@ -39,13 +39,6 @@ class OrderService
      */
     protected $orderProductFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFactoryInterface $orderProductFactory
-     */
     public function __construct(
         Domain $domain,
         OrderItemPriceCalculation $orderItemPriceCalculation,
@@ -60,12 +53,7 @@ class OrderService
         $this->orderProductFactory = $orderProductFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderEditResult
-     */
-    public function editOrder(Order $order, OrderData $orderData)
+    public function editOrder(Order $order, OrderData $orderData): \Shopsys\FrameworkBundle\Model\Order\OrderEditResult
     {
         $orderTransportData = $orderData->orderTransport;
         $orderTransportData->priceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat($orderTransportData);
@@ -112,13 +100,7 @@ class OrderService
         return new OrderEditResult($orderItemsToCreate, $orderItemsToDelete, $statusChanged);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productPrice
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct
-     */
-    public function createOrderProductInOrder(Order $order, Product $product, Price $productPrice)
+    public function createOrderProductInOrder(Order $order, Product $product, Price $productPrice): \Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct
     {
         $orderDomainConfig = $this->domain->getDomainConfigById($order->getDomainId());
 
@@ -139,20 +121,13 @@ class OrderService
         return $orderProduct;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
-    public function calculateTotalPrice(Order $order)
+    public function calculateTotalPrice(Order $order): void
     {
         $orderTotalPrice = $this->orderPriceCalculation->getOrderTotalPrice($order);
         $order->setTotalPrice($orderTotalPrice);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return string
-     */
-    public function getOrderDetailUrl(Order $order)
+    public function getOrderDetailUrl(Order $order): string
     {
         return $this->domainRouterFactory->getRouter($order->getDomainId())->generate(
             'front_customer_order_detail_unregistered',

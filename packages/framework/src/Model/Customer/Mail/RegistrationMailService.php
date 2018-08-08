@@ -34,12 +34,7 @@ class RegistrationMailService
         $this->domainRouterFactory = $domainRouterFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
-     */
-    public function getMessageDataByUser(User $user, MailTemplate $mailTemplate)
+    public function getMessageDataByUser(User $user, MailTemplate $mailTemplate): \Shopsys\FrameworkBundle\Model\Mail\MessageData
     {
         return new MessageData(
             $user->getEmail(),
@@ -52,11 +47,7 @@ class RegistrationMailService
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @return array
-     */
-    private function getVariablesReplacements(User $user)
+    private function getVariablesReplacements(User $user): array
     {
         $router = $this->domainRouterFactory->getRouter($user->getDomainId());
 
@@ -69,9 +60,6 @@ class RegistrationMailService
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getTemplateVariables()
     {
         return [

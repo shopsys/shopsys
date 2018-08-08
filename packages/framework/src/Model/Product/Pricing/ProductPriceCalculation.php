@@ -59,13 +59,7 @@ class ProductPriceCalculation
         $this->pricingService = $pricingService;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    public function calculatePrice(Product $product, $domainId, PricingGroup $pricingGroup)
+    public function calculatePrice(Product $product, int $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         if ($product->isMainVariant()) {
             return $this->calculateMainVariantPrice($product, $domainId, $pricingGroup);
@@ -83,13 +77,7 @@ class ProductPriceCalculation
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    private function calculateMainVariantPrice(Product $mainVariant, $domainId, PricingGroup $pricingGroup)
+    private function calculateMainVariantPrice(Product $mainVariant, int $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
             $mainVariant,
@@ -112,12 +100,7 @@ class ProductPriceCalculation
         return new ProductPrice($minVariantPrice, $from);
     }
 
-    /**
-     * @param string $inputPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    private function calculateBasePrice($inputPrice, Vat $vat)
+    private function calculateBasePrice(string $inputPrice, Vat $vat): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         return $this->basePriceCalculation->calculateBasePrice(
             $inputPrice,
@@ -126,12 +109,7 @@ class ProductPriceCalculation
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    private function calculateProductPriceForPricingGroupManual(Product $product, PricingGroup $pricingGroup)
+    private function calculateProductPriceForPricingGroupManual(Product $product, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup($product, $pricingGroup);
         if ($manualInputPrice !== null) {
@@ -144,13 +122,7 @@ class ProductPriceCalculation
         return new ProductPrice($basePrice, false);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    private function calculateProductPriceForPricingGroupAuto(Product $product, PricingGroup $pricingGroup, $domainId)
+    private function calculateProductPriceForPricingGroupAuto(Product $product, PricingGroup $pricingGroup, int $domainId): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         $basePrice = $this->calculateBasePrice($product->getPrice(), $product->getVat());
 
@@ -163,11 +135,7 @@ class ProductPriceCalculation
         return new ProductPrice($price, false);
     }
 
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    private function getDomainDefaultCurrencyReversedExchangeRate($domainId)
+    private function getDomainDefaultCurrencyReversedExchangeRate(int $domainId): string
     {
         $domainDefaultCurrencyId = $this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId);
         $currency = $this->currencyFacade->getById($domainDefaultCurrencyId);

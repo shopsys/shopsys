@@ -30,7 +30,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
             ->setMethods(['match'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $routerMock->method('match')->willReturnCallback(function ($path) {
+        $routerMock->method('match')->willReturnCallback(function ($path): void {
             if ($path !== '/existing-url/') {
                 throw new \Symfony\Component\Routing\Exception\ResourceNotFoundException();
             }
@@ -45,7 +45,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         return new UniqueSlugsOnDomainsValidator($domain, $domainRouterFactoryMock);
     }
 
-    public function testValidateSameSlugsOnDifferentDomains()
+    public function testValidateSameSlugsOnDifferentDomains(): void
     {
         $values = [
             [
@@ -63,7 +63,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testValidateDuplicateSlugsOnSameDomain()
+    public function testValidateDuplicateSlugsOnSameDomain(): void
     {
         $values = [
             [
@@ -85,7 +85,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testValidateExistingSlug()
+    public function testValidateExistingSlug(): void
     {
         $values = [
             [

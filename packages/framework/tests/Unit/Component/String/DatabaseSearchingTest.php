@@ -22,7 +22,7 @@ class DatabaseSearchingTest extends TestCase
     /**
      * @dataProvider searchTextProvider
      */
-    public function testSafeFilename($searchText, $querySearchStringQuery)
+    public function testSafeFilename($searchText, $querySearchStringQuery): void
     {
         $this->assertSame($querySearchStringQuery, DatabaseSearching::getLikeSearchString($searchText));
     }

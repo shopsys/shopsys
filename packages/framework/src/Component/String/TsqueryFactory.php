@@ -4,44 +4,28 @@ namespace Shopsys\FrameworkBundle\Component\String;
 
 class TsqueryFactory
 {
-    /**
-     * @param string|null $searchText
-     * @return string
-     */
-    public function getTsqueryWithAndConditions($searchText)
+    public function getTsqueryWithAndConditions(?string $searchText): string
     {
         $tokens = $this->splitToTokens($searchText);
 
         return implode(' & ', $tokens);
     }
 
-    /**
-     * @param string|null $searchText
-     * @return string
-     */
-    public function getTsqueryWithAndConditionsAndPrefixMatchForLastWord($searchText)
+    public function getTsqueryWithAndConditionsAndPrefixMatchForLastWord(?string $searchText): string
     {
         $tokens = $this->splitToTokensWithPrefixMatchForLastToken($searchText);
 
         return implode(' & ', $tokens);
     }
 
-    /**
-     * @param string|null $searchText
-     * @return string
-     */
-    public function getTsqueryWithOrConditions($searchText)
+    public function getTsqueryWithOrConditions(?string $searchText): string
     {
         $tokens = $this->splitToTokens($searchText);
 
         return implode(' | ', $tokens);
     }
 
-    /**
-     * @param string|null $searchText
-     * @return string
-     */
-    public function getTsqueryWithOrConditionsAndPrefixMatchForLastWord($searchText)
+    public function getTsqueryWithOrConditionsAndPrefixMatchForLastWord(?string $searchText): string
     {
         $tokens = $this->splitToTokensWithPrefixMatchForLastToken($searchText);
 
@@ -61,11 +45,7 @@ class TsqueryFactory
         return $tokens;
     }
 
-    /**
-     * @param string|null $searchText
-     * @return bool
-     */
-    public function isValidSearchText($searchText)
+    public function isValidSearchText(?string $searchText): bool
     {
         return count($this->splitToTokens($searchText)) > 0;
     }
@@ -74,7 +54,7 @@ class TsqueryFactory
      * @param string|null $searchText
      * @return string[]
      */
-    private function splitToTokens($searchText)
+    private function splitToTokens(?string $searchText): array
     {
         return preg_split(
             '/[^\w\/-]+/ui',

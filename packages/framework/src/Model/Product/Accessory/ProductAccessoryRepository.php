@@ -35,22 +35,15 @@ class ProductAccessoryRepository
         $this->queryBuilderService = $queryBuilderService;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    public function getProductAccessoryRepository()
+    public function getProductAccessoryRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(ProductAccessory::class);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getTopOfferedAccessories(Product $product, $domainId, PricingGroup $pricingGroup, $limit)
+    public function getTopOfferedAccessories(Product $product, int $domainId, PricingGroup $pricingGroup, int $limit): array
     {
         $queryBuilder = $this->getAllOfferedAccessoriesByProductQueryBuilder($product, $domainId, $pricingGroup);
         $queryBuilder->setMaxResults($limit);
@@ -59,34 +52,24 @@ class ProductAccessoryRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessory[]
      */
-    public function getAllByProduct(Product $product)
+    public function getAllByProduct(Product $product): array
     {
         return $this->getProductAccessoryRepository()->findBy(['product' => $product], ['position' => 'asc']);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllOfferedAccessoriesByProduct(Product $product, $domainId, PricingGroup $pricingGroup)
+    public function getAllOfferedAccessoriesByProduct(Product $product, int $domainId, PricingGroup $pricingGroup): array
     {
         return $this->getAllOfferedAccessoriesByProductQueryBuilder($product, $domainId, $pricingGroup)
             ->getQuery()
             ->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function getAllOfferedAccessoriesByProductQueryBuilder(Product $product, $domainId, PricingGroup $pricingGroup)
+    protected function getAllOfferedAccessoriesByProductQueryBuilder(Product $product, int $domainId, PricingGroup $pricingGroup): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);
         $this->queryBuilderService->addOrExtendJoin(
@@ -102,12 +85,7 @@ class ProductAccessoryRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $accessory
-     * @return \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessory|null
-     */
-    public function findByProductAndAccessory(Product $product, Product $accessory)
+    public function findByProductAndAccessory(Product $product, Product $accessory): ?\Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessory
     {
         return $this->getProductAccessoryRepository()->findOneBy([
             'product' => $product,

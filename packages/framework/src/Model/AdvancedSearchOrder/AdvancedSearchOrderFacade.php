@@ -35,11 +35,7 @@ class AdvancedSearchOrderFacade
         $this->orderListAdminFacade = $orderListAdminFacade;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createAdvancedSearchOrderForm(Request $request)
+    public function createAdvancedSearchOrderForm(Request $request): \Symfony\Component\Form\FormInterface
     {
         $rulesData = (array)$request->get(self::RULES_FORM_NAME);
         $rulesFormData = $this->advancedSearchOrderService->getRulesFormViewDataByRequestData($rulesData);
@@ -48,11 +44,9 @@ class AdvancedSearchOrderFacade
     }
 
     /**
-     * @param string $filterName
      * @param string|int $index
-     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createRuleForm($filterName, $index)
+    public function createRuleForm(string $filterName, $index): \Symfony\Component\Form\FormInterface
     {
         $rulesData = [
             $index => $this->advancedSearchOrderService->createDefaultRuleFormViewData($filterName),
@@ -61,11 +55,7 @@ class AdvancedSearchOrderFacade
         return $this->orderAdvancedSearchFormFactory->createRulesForm(self::RULES_FORM_NAME, $rulesData);
     }
 
-    /**
-     * @param array $advancedSearchOrderData
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getQueryBuilderByAdvancedSearchOrderData($advancedSearchOrderData)
+    public function getQueryBuilderByAdvancedSearchOrderData(array $advancedSearchOrderData): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->orderListAdminFacade->getOrderListQueryBuilder();
         $this->advancedSearchOrderService->extendQueryBuilderByAdvancedSearchOrderData($queryBuilder, $advancedSearchOrderData);
@@ -73,11 +63,7 @@ class AdvancedSearchOrderFacade
         return $queryBuilder;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
-     */
-    public function isAdvancedSearchOrderFormSubmitted(Request $request)
+    public function isAdvancedSearchOrderFormSubmitted(Request $request): bool
     {
         $rulesData = $request->get(self::RULES_FORM_NAME);
 

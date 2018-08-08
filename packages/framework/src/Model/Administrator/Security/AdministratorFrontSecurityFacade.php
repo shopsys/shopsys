@@ -46,10 +46,7 @@ class AdministratorFrontSecurityFacade
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAdministratorLogged()
+    public function isAdministratorLogged(): bool
     {
         try {
             $token = $this->getAdministratorToken();
@@ -64,10 +61,7 @@ class AdministratorFrontSecurityFacade
         return $this->accessDecisionManager->decide($token, [Roles::ROLE_ADMIN]);
     }
 
-    /**
-     * @return bool
-     */
-    public function isAdministratorLoggedAsCustomer()
+    public function isAdministratorLoggedAsCustomer(): bool
     {
         try {
             return $this->authorizationChecker->isGranted(Roles::ROLE_ADMIN_AS_CUSTOMER);
@@ -76,10 +70,7 @@ class AdministratorFrontSecurityFacade
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
-    public function getCurrentAdministrator()
+    public function getCurrentAdministrator(): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         if ($this->isAdministratorLogged()) {
             return $this->getAdministratorToken()->getUser();
@@ -90,10 +81,9 @@ class AdministratorFrontSecurityFacade
     }
 
     /**
-     * @return \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      */
-    protected function getAdministratorToken()
+    protected function getAdministratorToken(): \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
     {
         $serializedToken = $this->session->get('_security_' . self::ADMINISTRATION_CONTEXT);
         if ($serializedToken === null) {
@@ -112,11 +102,10 @@ class AdministratorFrontSecurityFacade
     }
 
     /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      * @see \Symfony\Component\Security\Core\Authentication\Token\AbstractToken::setUser()
      */
-    protected function refreshUserInToken(TokenInterface $token)
+    protected function refreshUserInToken(TokenInterface $token): void
     {
         $user = $token->getUser();
         if (!$user instanceof UserInterface) {

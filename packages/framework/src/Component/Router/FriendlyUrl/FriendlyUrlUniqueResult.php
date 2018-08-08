@@ -14,28 +14,18 @@ class FriendlyUrlUniqueResult
      */
     private $friendlyUrlForPersist;
 
-    /**
-     * @param bool $unique
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null $friendlyUrl
-     */
-    public function __construct($unique, FriendlyUrl $friendlyUrl = null)
+    public function __construct(bool $unique, FriendlyUrl $friendlyUrl = null)
     {
         $this->unique = $unique;
         $this->friendlyUrlForPersist = $friendlyUrl;
     }
 
-    /**
-     * @return bool
-     */
-    public function isUnique()
+    public function isUnique(): bool
     {
         return $this->unique;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
-     */
-    public function getFriendlyUrlForPersist()
+    public function getFriendlyUrlForPersist(): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
     {
         return $this->friendlyUrlForPersist;
     }

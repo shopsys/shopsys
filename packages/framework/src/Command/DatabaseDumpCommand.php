@@ -24,9 +24,6 @@ class DatabaseDumpCommand extends Command
      */
     private $connection;
 
-    /**
-     * @param \Doctrine\DBAL\Connection $connection
-     */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -45,12 +42,7 @@ class DatabaseDumpCommand extends Command
             ->addOption(self::OPT_PGDUMP_BIN, null, InputOption::VALUE_OPTIONAL, 'Path to pg_dump binary', 'pg_dump');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // --schema=public option is used in order to dump only "public" schema which contains the application data
         // --no-owner option ensures that the dump can be imported on system with different database username
@@ -100,9 +92,6 @@ class DatabaseDumpCommand extends Command
         return proc_close($process);
     }
 
-    /**
-     * @return array
-     */
     private function getDescriptorSpec()
     {
         return [

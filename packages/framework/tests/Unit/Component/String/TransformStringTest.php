@@ -48,7 +48,7 @@ class TransformStringTest extends TestCase
     /**
      * @dataProvider safeFilenameProvider
      */
-    public function testSafeFilename($actual, $expected)
+    public function testSafeFilename($actual, $expected): void
     {
         $this->assertSame($expected, TransformString::safeFilename($actual));
     }
@@ -90,7 +90,7 @@ class TransformStringTest extends TestCase
     /**
      * @dataProvider stringToFriendlyUrlSlugProvider
      */
-    public function testStringToFriendlyUrlSlug($actual, $expected)
+    public function testStringToFriendlyUrlSlug($actual, $expected): void
     {
         $this->assertSame($expected, TransformString::stringToFriendlyUrlSlug($actual));
     }
@@ -140,7 +140,7 @@ class TransformStringTest extends TestCase
     /**
      * @dataProvider stringToCamelCaseProvider
      */
-    public function testStringToCamelCase($actual, $expected)
+    public function testStringToCamelCase($actual, $expected): void
     {
         $this->assertSame($expected, TransformString::stringToCamelCase($actual));
     }

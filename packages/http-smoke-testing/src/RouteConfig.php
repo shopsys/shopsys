@@ -10,15 +10,14 @@ interface RouteConfig
      * @param string|null $debugNote
      * @return $this
      */
-    public function skipRoute($debugNote = null);
+    public function skipRoute(?string $debugNote = null);
 
     /**
      * Allows you to configure default data set of a request for this route. Debug notes will be shown on test failure.
      *
      * @param string|null $debugNote
-     * @return \Shopsys\HttpSmokeTesting\RequestDataSetConfig
      */
-    public function changeDefaultRequestDataSet($debugNote = null);
+    public function changeDefaultRequestDataSet(?string $debugNote = null): \Shopsys\HttpSmokeTesting\RequestDataSetConfig;
 
     /**
      * Adds a new request data set for this route and allows you to configure it. Debug notes will be shown on test failure.
@@ -27,7 +26,6 @@ interface RouteConfig
      * Later changes to the default data set will not be discarded.
      *
      * @param string|null $debugNote
-     * @return \Shopsys\HttpSmokeTesting\RequestDataSetConfig
      */
-    public function addExtraRequestDataSet($debugNote = null);
+    public function addExtraRequestDataSet(?string $debugNote = null): \Shopsys\HttpSmokeTesting\RequestDataSetConfig;
 }

@@ -40,30 +40,19 @@ class ProductCategoryDomain
      */
     protected $domainId;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
-     */
-    public function __construct(Product $product, Category $category, $domainId)
+    public function __construct(Product $product, Category $category, int $domainId)
     {
         $this->product = $product;
         $this->category = $category;
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    public function getCategory()
+    public function getCategory(): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->category;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }

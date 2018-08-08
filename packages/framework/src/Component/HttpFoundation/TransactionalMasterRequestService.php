@@ -25,10 +25,7 @@ class TransactionalMasterRequestService
         $this->em = $em;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-     */
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         if ($event->isMasterRequest() && !$this->inTransaction) {
             $this->em->beginTransaction();
@@ -36,10 +33,7 @@ class TransactionalMasterRequestService
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if ($event->isMasterRequest() && $this->inTransaction) {
             $this->em->commit();
@@ -47,10 +41,7 @@ class TransactionalMasterRequestService
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
-     */
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(GetResponseForExceptionEvent $event): void
     {
         if ($event->isMasterRequest() && $this->inTransaction) {
             $this->em->rollback();

@@ -26,12 +26,7 @@ class CurrentCategoryResolver
         $this->productFacade = $productFacade;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
-     */
-    public function findCurrentCategoryByRequest(Request $request, $domainId)
+    public function findCurrentCategoryByRequest(Request $request, int $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         $routeName = $request->get('_route');
 

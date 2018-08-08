@@ -31,11 +31,7 @@ class LoginService
         $this->traceableEventDispatcher = $traceableEventDispatcher;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
-     */
-    public function checkLoginProcess(Request $request)
+    public function checkLoginProcess(Request $request): bool
     {
         $error = null;
 
@@ -54,11 +50,7 @@ class LoginService
         return true;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
-    public function loginUser(User $user, Request $request)
+    public function loginUser(User $user, Request $request): void
     {
         $token = new UsernamePasswordToken($user, $user->getPassword(), 'frontend', $user->getRoles());
         $this->tokenStorage->setToken($token);

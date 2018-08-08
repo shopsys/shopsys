@@ -20,17 +20,13 @@ class StatisticsService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
-     * @param \DateTime $startDateTime
-     * @param \DateTime $endDateTime
-     * @param \DateInterval $interval
-     * @return array
      */
     public function normalizeDataPointsByDateTimeIntervals(
         array $valueByDateTimeDataPoints,
         DateTime $startDateTime,
         DateTime $endDateTime,
         DateInterval $interval
-    ) {
+    ): array {
         $currentProcessedDateTime = $startDateTime;
         $returnStatisticCounts = [];
 
@@ -55,7 +51,7 @@ class StatisticsService
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
      * @return string[]
      */
-    public function getDateTimesFormattedToLocaleFormat(array $valueByDateTimeDataPoints)
+    public function getDateTimesFormattedToLocaleFormat(array $valueByDateTimeDataPoints): array
     {
         $returnDates = [];
         foreach ($valueByDateTimeDataPoints as $valueByDateTimeDataPoint) {
@@ -69,7 +65,7 @@ class StatisticsService
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
      * @return \DateTime[]
      */
-    private function getDateTimes(array $valueByDateTimeDataPoints)
+    private function getDateTimes(array $valueByDateTimeDataPoints): array
     {
         $returnData = [];
         foreach ($valueByDateTimeDataPoints as $key => $valueByDateTimeDataPoint) {
@@ -84,7 +80,7 @@ class StatisticsService
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
      * @return int[]
      */
-    public function getCounts(array $valueByDateTimeDataPoints)
+    public function getCounts(array $valueByDateTimeDataPoints): array
     {
         $returnData = [];
         foreach ($valueByDateTimeDataPoints as $key => $valueByDateTimeDataPoint) {

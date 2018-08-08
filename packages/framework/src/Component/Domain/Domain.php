@@ -28,7 +28,6 @@ class Domain implements DomainIdsProviderInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
     public function __construct(array $domainConfigs, Setting $setting)
     {
@@ -36,42 +35,27 @@ class Domain implements DomainIdsProviderInterface
         $this->setting = $setting;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->getCurrentDomainConfig()->getId();
     }
 
-    /**
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->getCurrentDomainConfig()->getLocale();
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->getCurrentDomainConfig()->getName();
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->getCurrentDomainConfig()->getUrl();
     }
 
-    /**
-     * @return bool
-     */
-    public function isHttps()
+    public function isHttps(): bool
     {
         return $this->getCurrentDomainConfig()->isHttps();
     }
@@ -79,7 +63,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         $domainConfigsWithDataCreated = [];
         foreach ($this->domainConfigs as $domainConfig) {
@@ -97,7 +81,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return int[]
      */
-    public function getAllIds()
+    public function getAllIds(): array
     {
         $ids = [];
         foreach ($this->getAll() as $domainConfig) {
@@ -110,16 +94,12 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function getAllIncludingDomainConfigsWithoutDataCreated()
+    public function getAllIncludingDomainConfigsWithoutDataCreated(): array
     {
         return $this->domainConfigs;
     }
 
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    public function getDomainConfigById($domainId)
+    public function getDomainConfigById(int $domainId): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
     {
         foreach ($this->domainConfigs as $domainConfig) {
             if ($domainId === $domainConfig->getId()) {
@@ -130,18 +110,12 @@ class Domain implements DomainIdsProviderInterface
         throw new \Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException();
     }
 
-    /**
-     * @param int $domainId
-     */
-    public function switchDomainById($domainId)
+    public function switchDomainById(int $domainId): void
     {
         $this->currentDomainConfig = $this->getDomainConfigById($domainId);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
-    public function switchDomainByRequest(Request $request)
+    public function switchDomainByRequest(Request $request): void
     {
         // Request::getBasePath() never contains script file name (/index.php)
         $url = $request->getSchemeAndHttpHost() . $request->getBasePath();
@@ -156,10 +130,7 @@ class Domain implements DomainIdsProviderInterface
         throw new \Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException($url);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    public function getCurrentDomainConfig()
+    public function getCurrentDomainConfig(): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
     {
         if ($this->currentDomainConfig === null) {
             throw new \Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException();
@@ -168,10 +139,7 @@ class Domain implements DomainIdsProviderInterface
         return $this->currentDomainConfig;
     }
 
-    /**
-     * @return bool
-     */
-    public function isMultidomain()
+    public function isMultidomain(): bool
     {
         return count($this->getAll()) > 1;
     }

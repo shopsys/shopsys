@@ -24,10 +24,6 @@ class JsConstantCallParser
      */
     private $jsStringParser;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\JsFunctionCallParser $jsFunctionCallParser
-     * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\JsStringParser $jsStringParser
-     */
     public function __construct(
         JsFunctionCallParser $jsFunctionCallParser,
         JsStringParser $jsStringParser
@@ -37,10 +33,9 @@ class JsConstantCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JProgramNode $node
      * @return \Shopsys\FrameworkBundle\Component\Javascript\Parser\Constant\JsConstantCall[]
      */
-    public function parse(JProgramNode $node)
+    public function parse(JProgramNode $node): array
     {
         $jsConstantCalls = [];
 
@@ -61,22 +56,14 @@ class JsConstantCallParser
         return $jsConstantCalls;
     }
 
-    /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
-     * @return bool
-     */
-    private function isConstantFunctionCall(JCallExprNode $callExprNode)
+    private function isConstantFunctionCall(JCallExprNode $callExprNode): bool
     {
         $functionName = $this->jsFunctionCallParser->getFunctionName($callExprNode);
 
         return $functionName === self::FUNCTION_NAME;
     }
 
-    /**
-     * @param \PLUG\JavaScript\JNodes\JNodeBase $constantNameArgumentNode
-     * @return string
-     */
-    private function getConstantName(JNodeBase $constantNameArgumentNode)
+    private function getConstantName(JNodeBase $constantNameArgumentNode): string
     {
         try {
             $constantName = $this->jsStringParser->getConcatenatedString($constantNameArgumentNode);
@@ -92,11 +79,7 @@ class JsConstantCallParser
         return $constantName;
     }
 
-    /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
-     * @return \PLUG\JavaScript\JNodes\JNodeBase
-     */
-    private function getConstantNameArgumentNode(JCallExprNode $callExprNode)
+    private function getConstantNameArgumentNode(JCallExprNode $callExprNode): \PLUG\JavaScript\JNodes\JNodeBase
     {
         $argumentNodes = $this->jsFunctionCallParser->getArgumentNodes($callExprNode);
         if (!isset($argumentNodes[self::NAME_ARGUMENT_INDEX])) {

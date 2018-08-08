@@ -6,9 +6,6 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class AppKernel extends Kernel
 {
-    /**
-     * @{inheritdoc}
-     */
     public function registerBundles()
     {
         $bundles = [
@@ -60,10 +57,7 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
-    /**
-     * @{inheritdoc}
-     */
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         foreach ($this->getConfigs() as $filename) {
             if (file_exists($filename) && is_readable($filename)) {
@@ -75,7 +69,7 @@ class AppKernel extends Kernel
     /**
      * @return string[]
      */
-    private function getConfigs()
+    private function getConfigs(): array
     {
         $configs = [
             __DIR__ . '/config/parameters_common.yml',
@@ -101,25 +95,16 @@ class AppKernel extends Kernel
         return $configs;
     }
 
-    /**
-     * @{inheritdoc}
-     */
     public function getRootDir()
     {
         return __DIR__;
     }
 
-    /**
-     * @{inheritdoc}
-     */
     public function getCacheDir()
     {
         return dirname(__DIR__) . '/var/cache/' . $this->getEnvironment();
     }
 
-    /**
-     * @{inheritdoc}
-     */
     public function getLogDir()
     {
         return dirname(__DIR__) . '/var/logs';

@@ -32,7 +32,6 @@ class ProductDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     public function getFriendlyUrlData(DomainConfig $domainConfig): array
@@ -62,9 +61,6 @@ class ProductDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
         return $friendlyUrlsData;
     }
 
-    /**
-     * @return string
-     */
     public function getRouteName(): string
     {
         return self::ROUTE_NAME;

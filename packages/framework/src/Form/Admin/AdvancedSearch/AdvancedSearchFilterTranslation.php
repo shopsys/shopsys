@@ -14,20 +14,12 @@ class AdvancedSearchFilterTranslation
         $this->filtersTranslationsByFilterName = [];
     }
 
-    /**
-     * @param string $filterName
-     * @param string $filterTranslation
-     */
-    public function addFilterTranslation($filterName, $filterTranslation)
+    public function addFilterTranslation(string $filterName, string $filterTranslation): void
     {
         $this->filtersTranslationsByFilterName[$filterName] = $filterTranslation;
     }
 
-    /**
-     * @param string $filterName
-     * @return string
-     */
-    public function translateFilterName($filterName)
+    public function translateFilterName(string $filterName): string
     {
         if (array_key_exists($filterName, $this->filtersTranslationsByFilterName)) {
             return $this->filtersTranslationsByFilterName[$filterName];

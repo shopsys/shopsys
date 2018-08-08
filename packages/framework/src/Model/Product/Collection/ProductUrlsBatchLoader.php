@@ -29,7 +29,6 @@ class ProductUrlsBatchLoader
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
     public function loadForProducts(array $products, DomainConfig $domainConfig): void
     {
@@ -45,11 +44,6 @@ class ProductUrlsBatchLoader
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getProductUrl(Product $product, DomainConfig $domainConfig): string
     {
         $key = $this->getKey($product, $domainConfig);
@@ -60,11 +54,6 @@ class ProductUrlsBatchLoader
         return $this->loadedProductUrls[$key];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string|null
-     */
     public function getProductImageUrl(Product $product, DomainConfig $domainConfig): ?string
     {
         $key = $this->getKey($product, $domainConfig);
@@ -75,11 +64,6 @@ class ProductUrlsBatchLoader
         return $this->loadedProductImageUrls[$key];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     protected function getKey(Product $product, DomainConfig $domainConfig): string
     {
         return $domainConfig->getId() . '-' . $product->getId();

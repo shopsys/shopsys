@@ -25,11 +25,6 @@ class TranslatableEntityDataCreator
      */
     private $sqlQuoter;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder $notNullableColumnsFinder
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter $sqlQuoter
-     */
     public function __construct(
         EntityManagerInterface $em,
         NotNullableColumnsFinder $notNullableColumnsFinder,
@@ -40,11 +35,7 @@ class TranslatableEntityDataCreator
         $this->sqlQuoter = $sqlQuoter;
     }
 
-    /**
-     * @param string $templateLocale
-     * @param string $newLocale
-     */
-    public function copyAllTranslatableDataForNewLocale($templateLocale, $newLocale)
+    public function copyAllTranslatableDataForNewLocale(string $templateLocale, string $newLocale): void
     {
         $notNullableColumns = $this->notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName(
             $this->getAllTranslatableEntitiesMetadata()
@@ -61,7 +52,7 @@ class TranslatableEntityDataCreator
     /**
      * @return \Doctrine\ORM\Mapping\ClassMetadata[]
      */
-    private function getAllTranslatableEntitiesMetadata()
+    private function getAllTranslatableEntitiesMetadata(): array
     {
         $translatableEntitiesMetadata = [];
         $allClassesMetadata = $this->em->getMetadataFactory()->getAllMetadata();
@@ -76,12 +67,9 @@ class TranslatableEntityDataCreator
     }
 
     /**
-     * @param string $templateLocale
-     * @param string $newLocale
-     * @param string $tableName
      * @param string[] $columnNames
      */
-    private function copyTranslatableDataForNewLocale($templateLocale, $newLocale, $tableName, array $columnNames)
+    private function copyTranslatableDataForNewLocale(string $templateLocale, string $newLocale, string $tableName, array $columnNames): void
     {
         $quotedColumnNames = $this->sqlQuoter->quoteIdentifiers($columnNames);
         $quotedColumnNamesSql = implode(', ', $quotedColumnNames);

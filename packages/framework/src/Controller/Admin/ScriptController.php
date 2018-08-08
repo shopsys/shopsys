@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -47,10 +46,6 @@ class ScriptController extends AdminBaseController
         $this->scriptDataFactory = $scriptDataFactory;
     }
 
-    /**
-     * @Route("/script/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $form = $this->createForm(ScriptFormType::class, $this->scriptDataFactory->create());
@@ -79,12 +74,7 @@ class ScriptController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/script/edit/{scriptId}")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $scriptId
-     */
-    public function editAction(Request $request, $scriptId)
+    public function editAction(Request $request, int $scriptId)
     {
         $script = $this->scriptFacade->getById($scriptId);
         $scriptData = $this->scriptDataFactory->createFromScript($script);
@@ -115,9 +105,6 @@ class ScriptController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/script/list/")
-     */
     public function listAction()
     {
         $dataSource = new QueryBuilderDataSource($this->scriptFacade->getAllQueryBuilder(), 's.id');
@@ -140,11 +127,7 @@ class ScriptController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/script/delete/{scriptId}")
-     * @param int $scriptId
-     */
-    public function deleteAction($scriptId)
+    public function deleteAction(int $scriptId)
     {
         try {
             $script = $this->scriptFacade->getById($scriptId);
@@ -164,10 +147,6 @@ class ScriptController extends AdminBaseController
         return $this->redirectToRoute('admin_script_list');
     }
 
-    /**
-     * @Route("/script/google-analytics/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function googleAnalyticsAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -189,7 +168,7 @@ class ScriptController extends AdminBaseController
     /**
      * @return string[]
      */
-    private function getOrderSentPageScriptVariableLabelsIndexedByVariables()
+    private function getOrderSentPageScriptVariableLabelsIndexedByVariables(): array
     {
         return [
             ScriptFacade::VARIABLE_NUMBER => t('Order number'),

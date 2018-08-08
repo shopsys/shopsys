@@ -29,9 +29,8 @@ class UniqueEmailValidator extends ConstraintValidator
 
     /**
      * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueEmail) {
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, UniqueCollection::class);

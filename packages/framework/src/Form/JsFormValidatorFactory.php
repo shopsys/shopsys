@@ -10,11 +10,7 @@ use Symfony\Component\Validator\Constraints;
 
 class JsFormValidatorFactory extends BaseJsFormValidatorFactory
 {
-    /**
-     * @param array $constraints
-     * @return array
-     */
-    protected function parseConstraints(array $constraints)
+    protected function parseConstraints(array $constraints): array
     {
         $result = parent::parseConstraints($constraints);
 
@@ -29,13 +25,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
         return $result;
     }
 
-    /**
-     * @param FormInterface $form
-     * @param array $viewTransformers
-     *
-     * @return array
-     */
-    protected function normalizeViewTransformers(FormInterface $form, array $viewTransformers)
+    protected function normalizeViewTransformers(FormInterface $form, array $viewTransformers): array
     {
         $config = $form->getConfig();
 

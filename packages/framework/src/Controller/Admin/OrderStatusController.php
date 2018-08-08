@@ -2,9 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusInlineEdit;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,9 +35,6 @@ class OrderStatusController extends AdminBaseController
         $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
     }
 
-    /**
-     * @Route("/order-status/list/")
-     */
     public function listAction()
     {
         $grid = $this->orderStatusInlineEdit->getGrid();
@@ -49,13 +44,7 @@ class OrderStatusController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/order-status/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');
 
@@ -94,11 +83,7 @@ class OrderStatusController extends AdminBaseController
         return $this->redirectToRoute('admin_orderstatus_list');
     }
 
-    /**
-     * @Route("/order-status/delete-confirm/{id}", requirements={"id" = "\d+"})
-     * @param int $id
-     */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         try {
             $orderStatus = $this->orderStatusFacade->getById($id);

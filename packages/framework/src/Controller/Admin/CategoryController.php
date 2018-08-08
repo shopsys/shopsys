@@ -2,9 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
@@ -56,10 +54,6 @@ class CategoryController extends AdminBaseController
         $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
-    /**
-     * @Route("/category/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function editAction(Request $request, $id)
     {
         $category = $this->categoryFacade->getById($id);
@@ -96,10 +90,6 @@ class CategoryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/category/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $categoryData = $this->categoryDataFactory->create();
@@ -135,10 +125,6 @@ class CategoryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/category/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function listAction(Request $request)
     {
         if (count($this->domain->getAll()) > 1) {
@@ -173,10 +159,6 @@ class CategoryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/category/save-order/", methods={"post"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function saveOrderAction(Request $request)
     {
         $categoriesOrderingData = $request->get('categoriesOrderingData');
@@ -193,12 +175,7 @@ class CategoryController extends AdminBaseController
         return new Response('OK - dummy');
     }
 
-    /**
-     * @Route("/category/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->categoryFacade->getById($id)->getName();
@@ -228,12 +205,7 @@ class CategoryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/category/branch/{domainId}/{id}", requirements={"domainId" = "\d+", "id" = "\d+"}, condition="request.isXmlHttpRequest()")
-     * @param int $domainId
-     * @param int $id
-     */
-    public function loadBranchJsonAction($domainId, $id)
+    public function loadBranchJsonAction(int $domainId, int $id)
     {
         $domainId = (int)$domainId;
         $id = (int)$id;

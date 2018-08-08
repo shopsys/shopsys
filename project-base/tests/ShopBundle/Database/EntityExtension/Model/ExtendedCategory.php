@@ -123,9 +123,6 @@ class ExtendedCategory extends Category
      */
     protected $manyToManySelfReferencingInverseEntities;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
     public function __construct(CategoryData $categoryData)
     {
         parent::__construct($categoryData);
@@ -138,49 +135,31 @@ class ExtendedCategory extends Category
         $this->manyToManySelfReferencingInverseEntities = new ArrayCollection();
     }
 
-    /**
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity
-     */
     public function getManyToOneUnidirectionalEntity(): UnidirectionalEntity
     {
         return $this->manyToOneUnidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity $manyToOneUnidirectionalEntity
-     */
     public function setManyToOneUnidirectionalEntity(UnidirectionalEntity $manyToOneUnidirectionalEntity): void
     {
         $this->manyToOneUnidirectionalEntity = $manyToOneUnidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity
-     */
     public function getOneToOneUnidirectionalEntity(): UnidirectionalEntity
     {
         return $this->oneToOneUnidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity $oneToOneUnidirectionalEntity
-     */
     public function setOneToOneUnidirectionalEntity(UnidirectionalEntity $oneToOneUnidirectionalEntity): void
     {
         $this->oneToOneUnidirectionalEntity = $oneToOneUnidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\CategoryOneToOneBidirectionalEntity
-     */
     public function getOneToOneBidirectionalEntity(): CategoryOneToOneBidirectionalEntity
     {
         return $this->oneToOneBidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity
-     */
     public function setOneToOneBidirectionalEntity(CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity): void
     {
         $oneToOneBidirectionalEntity->setCategory($this);
@@ -211,9 +190,6 @@ class ExtendedCategory extends Category
         return $this->oneToManyBidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\CategoryOneToManyBidirectionalEntity $oneToManyBidirectionalEntity
-     */
     public function addOneToManyBidirectionalEntity(CategoryOneToManyBidirectionalEntity $oneToManyBidirectionalEntity): void
     {
         $oneToManyBidirectionalEntity->setCategory($this);
@@ -228,9 +204,6 @@ class ExtendedCategory extends Category
         return $this->oneToManyUnidirectionalWithJoinTableEntities->getValues();
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity
-     */
     public function addOneToManyUnidirectionalWithJoinTableEntity(UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity): void
     {
         $this->oneToManyUnidirectionalWithJoinTableEntities->add($oneToManyUnidirectionalWithJoinTableEntity);
@@ -269,9 +242,6 @@ class ExtendedCategory extends Category
         return $this->manyToManyUnidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity $manyToManyUnidirectionalEntity
-     */
     public function addManyToManyUnidirectionalEntity(UnidirectionalEntity $manyToManyUnidirectionalEntity): void
     {
         $this->manyToManyUnidirectionalEntities->add($manyToManyUnidirectionalEntity);
@@ -285,9 +255,6 @@ class ExtendedCategory extends Category
         return $this->manyToManyBidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\CategoryManyToManyBidirectionalEntity $manyToManyBidirectionalEntity
-     */
     public function addManyToManyBidirectionalEntity(CategoryManyToManyBidirectionalEntity $manyToManyBidirectionalEntity): void
     {
         $manyToManyBidirectionalEntity->addCategory($this);
@@ -319,18 +286,12 @@ class ExtendedCategory extends Category
         $this->manyToManySelfReferencingEntities->add($manyToManySelfReferencing);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStringField()
+    public function getStringField(): ?string
     {
         return $this->stringField;
     }
 
-    /**
-     * @param string|null $stringField
-     */
-    public function setStringField($stringField): void
+    public function setStringField(?string $stringField): void
     {
         $this->stringField = $stringField;
     }

@@ -2,18 +2,13 @@
 
 namespace Tests\FrameworkBundle\Unit\Component\Router\Security;
 
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-
 class DummyController
 {
-    public function withoutProtectionAction()
+    public function withoutProtectionAction(): void
     {
     }
 
-    /**
-     * @CsrfProtection
-     */
-    public function withProtectionAction()
+    public function withProtectionAction(): void
     {
     }
 }

@@ -111,24 +111,8 @@ class ProductDataFixture
      */
     private $progressBarFactory;
 
-    /**
-     * @param int $productTotalCount
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureLoader $productDataFixtureLoader
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
-     * @param \Shopsys\FrameworkBundle\DataFixtures\ProductDataFixtureReferenceInjector $productDataReferenceInjector
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureCsvReader $productDataFixtureCsvReader
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     */
     public function __construct(
-        $productTotalCount,
+        int $productTotalCount,
         EntityManagerInterface $em,
         ProductFacade $productFacade,
         ProductDataFixtureLoader $productDataFixtureLoader,
@@ -161,10 +145,7 @@ class ProductDataFixture
         $this->progressBarFactory = $progressBarFactory;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -219,7 +200,7 @@ class ProductDataFixture
     /**
      * @param string[][] $variantCatnumsByMainVariantCatnum
      */
-    private function createVariants(array $variantCatnumsByMainVariantCatnum)
+    private function createVariants(array $variantCatnumsByMainVariantCatnum): void
     {
         $uniqueIndex = $this->getUniqueIndex();
 
@@ -237,11 +218,7 @@ class ProductDataFixture
         }
     }
 
-    /**
-     * @param string $catnum
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    private function getProductByCatnum($catnum)
+    private function getProductByCatnum(string $catnum): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         if (!array_key_exists($catnum, $this->productsByCatnum)) {
             $query = $this->em->createQuery('SELECT p FROM ' . Product::class . ' p WHERE p.catnum = :catnum')
@@ -252,10 +229,7 @@ class ProductDataFixture
         return $this->productsByCatnum[$catnum];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    private function makeProductDataUnique(ProductData $productData)
+    private function makeProductDataUnique(ProductData $productData): void
     {
         $matches = [];
         $uniqueIndex = $this->getUniqueIndex();
@@ -275,15 +249,12 @@ class ProductDataFixture
         }
     }
 
-    /**
-     * @return string
-     */
-    private function getUniqueIndex()
+    private function getUniqueIndex(): string
     {
         return ' #' . $this->demoDataIterationCounter;
     }
 
-    private function clearResources()
+    private function clearResources(): void
     {
         $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
         $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
@@ -291,7 +262,7 @@ class ProductDataFixture
         gc_collect_cycles();
     }
 
-    private function cleanAndLoadReferences()
+    private function cleanAndLoadReferences(): void
     {
         $this->clearResources();
         $this->productsByCatnum = [];
@@ -304,10 +275,7 @@ class ProductDataFixture
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    private function setRandomPerformanceCategoriesToProductData(ProductData $productData)
+    private function setRandomPerformanceCategoriesToProductData(ProductData $productData): void
     {
         $this->cleanPerformanceCategoriesFromProductDataByDomainId($productData, 1);
         $this->cleanPerformanceCategoriesFromProductDataByDomainId($productData, 2);
@@ -315,11 +283,7 @@ class ProductDataFixture
         $this->addRandomPerformanceCategoriesToProductDataByDomainId($productData, 2);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param int $domainId
-     */
-    private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, $domainId)
+    private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, int $domainId): void
     {
         foreach ($productData->categoriesByDomainId[$domainId] as $key => $category) {
             if ($this->isPerformanceCategory($category)) {
@@ -328,11 +292,7 @@ class ProductDataFixture
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param int $domainId
-     */
-    private function addRandomPerformanceCategoriesToProductDataByDomainId(ProductData $productData, $domainId)
+    private function addRandomPerformanceCategoriesToProductDataByDomainId(ProductData $productData, int $domainId): void
     {
         $performanceCategoryIds = $this->getPerformanceCategoryIds();
         $randomPerformanceCategoryIds = $this->faker->randomElements(
@@ -351,7 +311,7 @@ class ProductDataFixture
     /**
      * @return int[]
      */
-    private function getPerformanceCategoryIds()
+    private function getPerformanceCategoryIds(): array
     {
         $allCategoryIds = $this->categoryRepository->getAllIds();
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
@@ -362,11 +322,7 @@ class ProductDataFixture
         return array_slice($allCategoryIds, $firstPerformanceCategoryKey);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return bool
-     */
-    private function isPerformanceCategory(Category $category)
+    private function isPerformanceCategory(Category $category): bool
     {
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
             CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY
@@ -377,10 +333,9 @@ class ProductDataFixture
     }
 
     /**
-     * @param array $array
      * @param string|int $key
      */
-    private function setArrayPointerByKey(array &$array, $key)
+    private function setArrayPointerByKey(array &$array, $key): void
     {
         reset($array);
         while (key($array) !== $key) {

@@ -20,7 +20,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
 {
-    public function testOldUnregisteredCustomerCartGetsDeleted()
+    public function testOldUnregisteredCustomerCartGetsDeleted(): void
     {
         $product = $this->getProductById(1);
 
@@ -32,7 +32,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         $this->assertCartItemCount($cartFacade, 0, 'Cart items should be deleted');
     }
 
-    public function testUnregisteredCustomerCartDoesNotGetDeletedIfItContainsRecentlyAddedItem()
+    public function testUnregisteredCustomerCartDoesNotGetDeletedIfItContainsRecentlyAddedItem(): void
     {
         $product1 = $this->getProductById(1);
         $product2 = $this->getProductById(2);
@@ -46,7 +46,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         $this->assertCartItemCount($cartFacade, 2, 'Cart items should not be deleted');
     }
 
-    public function testOldRegisteredCustomerCartGetsDeleted()
+    public function testOldRegisteredCustomerCartGetsDeleted(): void
     {
         $product = $this->getProductById(1);
 
@@ -58,7 +58,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         $this->assertCartItemCount($cartFacade, 0, 'Cart items should be deleted');
     }
 
-    public function testRegisteredCustomerCartDoesNotGetDeletedIfItContainsRecentlyAddedItem()
+    public function testRegisteredCustomerCartDoesNotGetDeletedIfItContainsRecentlyAddedItem(): void
     {
         $product1 = $this->getProductById(1);
         $product2 = $this->getProductById(2);
@@ -72,11 +72,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         $this->assertCartItemCount($cartFacade, 2, 'Cart items should not be deleted');
     }
 
-    /**
-     * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    private function getProductById($productId)
+    private function getProductById(int $productId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         /* @var $productFacade \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
@@ -84,10 +80,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         return $productFacade->getById($productId);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    private function getCartFacadeForRegisteredCustomer()
+    private function getCartFacadeForRegisteredCustomer(): \Shopsys\FrameworkBundle\Model\Cart\CartFacade
     {
         $customerFacade = $this->getContainer()->get(CustomerFacade::class);
         /* @var $customerFacade \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade */
@@ -97,19 +90,12 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         return $this->getCartFacadeForCustomer(new CustomerIdentifier('', $user));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    private function getCartFacadeForUnregisteredCustomer()
+    private function getCartFacadeForUnregisteredCustomer(): \Shopsys\FrameworkBundle\Model\Cart\CartFacade
     {
         return $this->getCartFacadeForCustomer(new CustomerIdentifier('randomString'));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    private function getCartFacadeForCustomer(CustomerIdentifier $customerIdentifier)
+    private function getCartFacadeForCustomer(CustomerIdentifier $customerIdentifier): \Shopsys\FrameworkBundle\Model\Cart\CartFacade
     {
         return new CartFacade(
             $this->getEntityManager(),
@@ -124,11 +110,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    private function getCustomerIdentifierFactoryMock(CustomerIdentifier $customerIdentifier)
+    private function getCustomerIdentifierFactoryMock(CustomerIdentifier $customerIdentifier): \PHPUnit\Framework\MockObject\MockObject
     {
         $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerIdentifierFactory::class)
             ->disableOriginalConstructor()
@@ -139,12 +121,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         return $customerIdentifierFactoryMock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \DateTime $addedAt
-     */
-    private function addProductToCartAtTime(CartFacade $cartFacade, Product $product, DateTime $addedAt)
+    private function addProductToCartAtTime(CartFacade $cartFacade, Product $product, DateTime $addedAt): void
     {
         $cartItemResult = $cartFacade->addProductToCart($product->getId(), 1);
 
@@ -153,12 +130,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         $this->getEntityManager()->flush($cartItemResult->getCartItem());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param int $count
-     * @param string $message
-     */
-    private function assertCartItemCount(CartFacade $cartFacade, $count, $message)
+    private function assertCartItemCount(CartFacade $cartFacade, int $count, string $message): void
     {
         $cartItems = $cartFacade->getCartOfCurrentCustomer()->getItems();
         $this->assertCount($count, $cartItems, $message);

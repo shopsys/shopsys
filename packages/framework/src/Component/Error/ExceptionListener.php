@@ -11,18 +11,12 @@ class ExceptionListener
      */
     private $lastException;
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
-     */
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(GetResponseForExceptionEvent $event): void
     {
         $this->lastException = $event->getException();
     }
 
-    /**
-     * @return \Exception|null
-     */
-    public function getLastException()
+    public function getLastException(): ?\Exception
     {
         return $this->lastException;
     }

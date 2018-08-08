@@ -39,14 +39,6 @@ class OrderStatusFacade
      */
     protected $orderStatusFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusService $orderStatusService
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface $orderStatusFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         OrderStatusRepository $orderStatusRepository,
@@ -63,11 +55,7 @@ class OrderStatusFacade
         $this->orderStatusFactory = $orderStatusFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusFormData
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     */
-    public function create(OrderStatusData $orderStatusFormData)
+    public function create(OrderStatusData $orderStatusFormData): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         $orderStatus = $this->orderStatusFactory->create($orderStatusFormData, OrderStatus::TYPE_IN_PROGRESS);
         $this->em->persist($orderStatus);
@@ -80,12 +68,7 @@ class OrderStatusFacade
         return $orderStatus;
     }
 
-    /**
-     * @param int $orderStatusId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     */
-    public function edit($orderStatusId, OrderStatusData $orderStatusData)
+    public function edit(int $orderStatusId, OrderStatusData $orderStatusData): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         $orderStatus = $this->orderStatusRepository->getById($orderStatusId);
         $orderStatus->edit($orderStatusData);
@@ -94,11 +77,7 @@ class OrderStatusFacade
         return $orderStatus;
     }
 
-    /**
-     * @param int $orderStatusId
-     * @param int|null $newOrderStatusId
-     */
-    public function deleteById($orderStatusId, $newOrderStatusId = null)
+    public function deleteById(int $orderStatusId, ?int $newOrderStatusId = null): void
     {
         $orderStatus = $this->orderStatusRepository->getById($orderStatusId);
         $this->orderStatusService->checkForDelete($orderStatus);
@@ -111,29 +90,20 @@ class OrderStatusFacade
         $this->em->flush();
     }
 
-    /**
-     * @param int $orderStatusId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     */
-    public function getById($orderStatusId)
+    public function getById(int $orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         return $this->orderStatusRepository->getById($orderStatusId);
     }
 
     /**
-     * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAllExceptId($orderStatusId)
+    public function getAllExceptId(int $orderStatusId): array
     {
         return $this->orderStatusRepository->getAllExceptId($orderStatusId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
-     * @return bool
-     */
-    public function isOrderStatusUsed(OrderStatus $orderStatus)
+    public function isOrderStatusUsed(OrderStatus $orderStatus): bool
     {
         return $this->orderRepository->isOrderStatusUsed($orderStatus);
     }
@@ -141,7 +111,7 @@ class OrderStatusFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->orderStatusRepository->getAll();
     }
@@ -149,7 +119,7 @@ class OrderStatusFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAllIndexedById()
+    public function getAllIndexedById(): array
     {
         return $this->orderStatusRepository->getAllIndexedById();
     }

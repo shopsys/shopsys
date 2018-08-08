@@ -16,20 +16,12 @@ class UploadedFileRepository
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getUploadedFileRepository()
+    protected function getUploadedFileRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(UploadedFile::class);
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile|null
-     */
-    public function findUploadedFileByEntity($entityName, $entityId)
+    public function findUploadedFileByEntity(string $entityName, int $entityId): ?\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         return $this->getUploadedFileRepository()->findOneBy([
             'entityName' => $entityName,
@@ -37,12 +29,7 @@ class UploadedFileRepository
         ]);
     }
 
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     */
-    public function getUploadedFileByEntity($entityName, $entityId)
+    public function getUploadedFileByEntity(string $entityName, int $entityId): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         $uploadedFile = $this->findUploadedFileByEntity($entityName, $entityId);
         if ($uploadedFile === null) {
@@ -53,11 +40,7 @@ class UploadedFileRepository
         return $uploadedFile;
     }
 
-    /**
-     * @param int $uploadedFileId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     */
-    public function getById($uploadedFileId)
+    public function getById(int $uploadedFileId): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         $uploadedFile = $this->getUploadedFileRepository()->find($uploadedFileId);
 

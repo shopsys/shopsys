@@ -24,12 +24,7 @@ class IndependentTransportVisibilityCalculation
         $this->domain = $domain;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param int $domainId
-     * @return bool
-     */
-    public function isIndependentlyVisible(Transport $transport, $domainId)
+    public function isIndependentlyVisible(Transport $transport, int $domainId): bool
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 

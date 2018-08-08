@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoSettingFormType;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
@@ -29,9 +28,6 @@ class SeoController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @Route("/seo/")
-     */
     public function indexAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

@@ -85,23 +85,14 @@ abstract class OrderItem
      */
     protected $catnum;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param string|null $unitName
-     * @param string|null $catnum
-     */
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
-        $unitName,
-        $catnum
+        string $vatPercent,
+        int $quantity,
+        ?string $unitName,
+        ?string $catnum
     ) {
         $this->order = $order; // Must be One-To-Many Bidirectional because of unnecessary join table
         $this->name = $name;
@@ -114,90 +105,57 @@ abstract class OrderItem
         $this->order->addItem($this); // call after setting attrs for recalc total price
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    public function getOrder()
+    public function getOrder(): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->order;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getPriceWithoutVat()
+    public function getPriceWithoutVat(): string
     {
         return $this->priceWithoutVat;
     }
 
-    /**
-     * @return string
-     */
-    public function getPriceWithVat()
+    public function getPriceWithVat(): string
     {
         return $this->priceWithVat;
     }
 
-    /**
-     * @return string
-     */
-    public function getVatPercent()
+    public function getVatPercent(): string
     {
         return $this->vatPercent;
     }
 
-    /**
-     * @return int
-     */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getUnitName()
+    public function getUnitName(): ?string
     {
         return $this->unitName;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCatnum()
+    public function getCatnum(): ?string
     {
         return $this->catnum;
     }
 
-    /**
-     * @return string
-     */
-    public function getTotalPriceWithVat()
+    public function getTotalPriceWithVat(): string
     {
         return $this->priceWithVat * $this->quantity;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     */
-    public function edit(OrderItemData $orderItemData)
+    public function edit(OrderItemData $orderItemData): void
     {
         $this->name = $orderItemData->name;
         $this->priceWithoutVat = $orderItemData->priceWithoutVat;

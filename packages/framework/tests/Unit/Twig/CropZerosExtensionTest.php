@@ -22,7 +22,7 @@ class CropZerosExtensionTest extends TestCase
     /**
      * @dataProvider returnValuesProvider
      */
-    public function testReturnValues($input, $return)
+    public function testReturnValues($input, $return): void
     {
         $this->assertSame($return, (new CropZerosExtension())->cropZeros($input));
     }

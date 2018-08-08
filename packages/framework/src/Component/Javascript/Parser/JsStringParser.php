@@ -7,11 +7,7 @@ use PLUG\JavaScript\JNodes\JNodeBase;
 
 class JsStringParser
 {
-    /**
-     * @param \PLUG\JavaScript\JNodes\JNodeBase $node
-     * @return string
-     */
-    public function getConcatenatedString(JNodeBase $node)
+    public function getConcatenatedString(JNodeBase $node): string
     {
         if ($node->scalar_symbol() === J_STRING_LITERAL) {
             return $this->parseStringLiteral((string)$node);
@@ -39,20 +35,12 @@ class JsStringParser
         throw new \Shopsys\FrameworkBundle\Component\Javascript\Parser\Exception\UnsupportedNodeException();
     }
 
-    /**
-     * @param string $stringLiteral
-     * @return string
-     */
-    private function parseStringLiteral($stringLiteral)
+    private function parseStringLiteral(string $stringLiteral): string
     {
         return json_decode($this->normalizeStringLiteral($stringLiteral));
     }
 
-    /**
-     * @param string $stringLiteral
-     * @return string
-     */
-    private function normalizeStringLiteral($stringLiteral)
+    private function normalizeStringLiteral(string $stringLiteral): string
     {
         $matches = [];
         if (preg_match('/^"(.*)"$/', $stringLiteral, $matches)) {

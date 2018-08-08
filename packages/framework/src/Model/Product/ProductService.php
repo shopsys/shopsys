@@ -59,11 +59,10 @@ class ProductService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[] $productManualInputPrices
      * @param string $newVatPercent
      */
-    public function recalculateInputPriceForNewVatPercent(Product $product, $productManualInputPrices, $newVatPercent)
+    public function recalculateInputPriceForNewVatPercent(Product $product, $productManualInputPrices, $newVatPercent): void
     {
         $inputPriceType = $this->pricingSetting->getInputPriceType();
 
@@ -95,43 +94,30 @@ class ProductService
         $this->setInputPrice($product, $inputPrice);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    public function edit(Product $product, ProductData $productData)
+    public function edit(Product $product, ProductData $productData): void
     {
         $product->edit($this->productCategoryDomainFactory, $productData);
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->markProductForVisibilityRecalculation($product);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param string $inputPrice
-     */
-    public function setInputPrice(Product $product, $inputPrice)
+    public function setInputPrice(Product $product, string $inputPrice): void
     {
         $product->setPrice($inputPrice);
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     */
-    public function changeVat(Product $product, Vat $vat)
+    public function changeVat(Product $product, Vat $vat): void
     {
         $product->changeVat($vat);
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $pricingGroups
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[]
      */
-    public function getProductSellingPricesIndexedByDomainIdAndPricingGroupId(Product $product, array $pricingGroups)
+    public function getProductSellingPricesIndexedByDomainIdAndPricingGroupId(Product $product, array $pricingGroups): array
     {
         $productSellingPrices = [];
         foreach ($pricingGroups as $pricingGroup) {
@@ -144,11 +130,7 @@ class ProductService
         return $productSellingPrices;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductDeleteResult
-     */
-    public function delete(Product $product)
+    public function delete(Product $product): \Shopsys\FrameworkBundle\Model\Product\ProductDeleteResult
     {
         if ($product->isMainVariant()) {
             foreach ($product->getVariants() as $variantProduct) {
@@ -162,10 +144,7 @@ class ProductService
         return new ProductDeleteResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    public function markProductForVisibilityRecalculation(Product $product)
+    public function markProductForVisibilityRecalculation(Product $product): void
     {
         $product->markForVisibilityRecalculation();
         if ($product->isMainVariant()) {
@@ -182,7 +161,7 @@ class ProductService
      * @param int[] $orderedProductIds
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function sortProductsByProductIds(array $products, array $orderedProductIds)
+    public function sortProductsByProductIds(array $products, array $orderedProductIds): array
     {
         $orderedProductIds = array_values($orderedProductIds);
 

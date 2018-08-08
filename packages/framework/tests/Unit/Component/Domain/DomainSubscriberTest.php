@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 class DomainSubscriberTest extends TestCase
 {
-    public function testOnKernelRequestWithoutMasterRequest()
+    public function testOnKernelRequestWithoutMasterRequest(): void
     {
         $eventMock = $this->getMockBuilder(GetResponseEvent::class)
             ->setMethods(['__construct', 'isMasterRequest'])
@@ -26,7 +26,7 @@ class DomainSubscriberTest extends TestCase
         $domainSubscriber->onKernelRequest($eventMock);
     }
 
-    public function testOnKernelRequestWithMasterRequestAndSetDomain()
+    public function testOnKernelRequestWithMasterRequestAndSetDomain(): void
     {
         $eventMock = $this->getMockBuilder(GetResponseEvent::class)
             ->setMethods(['__construct', 'isMasterRequest'])
@@ -44,7 +44,7 @@ class DomainSubscriberTest extends TestCase
         $domainSubscriber->onKernelRequest($eventMock);
     }
 
-    public function testOnKernelRequestWithMasterRequest()
+    public function testOnKernelRequestWithMasterRequest(): void
     {
         $getRequestResult = new Request();
         $eventMock = $this->getMockBuilder(GetResponseEvent::class)

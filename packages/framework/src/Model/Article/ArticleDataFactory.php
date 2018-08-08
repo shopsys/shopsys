@@ -33,10 +33,6 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
-     * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
-     */
     public function createFromArticle(Article $article): ArticleData
     {
         $articleData = new ArticleData();
@@ -45,9 +41,6 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
         return $articleData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
-     */
     public function create(): ArticleData
     {
         $articleData = new ArticleData();
@@ -56,11 +49,7 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
         return $articleData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
-     */
-    protected function fillFromArticle(ArticleData $articleData, Article $article)
+    protected function fillFromArticle(ArticleData $articleData, Article $article): void
     {
         $articleData->name = $article->getName();
         $articleData->text = $article->getText();
@@ -81,10 +70,7 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     */
-    protected function fillNew(ArticleData $articleData)
+    protected function fillNew(ArticleData $articleData): void
     {
         $articleData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
     }

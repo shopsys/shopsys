@@ -18,12 +18,11 @@ class PerformanceTestSummaryPrinter
 
     /**
      * @param \Tests\ShopBundle\Performance\Page\PerformanceTestSample[] $performanceTestSamples
-     * @param \Symfony\Component\Console\Output\ConsoleOutput $consoleOutput
      */
     public function printSummary(
         array $performanceTestSamples,
         ConsoleOutput $consoleOutput
-    ) {
+    ): void {
         foreach ($performanceTestSamples as $performanceTestSample) {
             $sampleStatus = $this->performanceTestSampleQualifier->getSampleStatus($performanceTestSample);
 
@@ -50,14 +49,10 @@ class PerformanceTestSummaryPrinter
         }
     }
 
-    /**
-     * @param \Tests\ShopBundle\Performance\Page\PerformanceTestSample $performanceTestSample
-     * @param \Symfony\Component\Console\Output\ConsoleOutput $consoleOutput
-     */
     private function printSample(
         PerformanceTestSample $performanceTestSample,
         ConsoleOutput $consoleOutput
-    ) {
+    ): void {
         $consoleOutput->writeln('');
         $consoleOutput->writeln(
             'Route name: ' . $performanceTestSample->getRouteName() . ' (' . $performanceTestSample->getUrl() . ')'
@@ -79,39 +74,24 @@ class PerformanceTestSummaryPrinter
         }
     }
 
-    /**
-     * @param float $duration
-     * @return string
-     */
-    private function getFormatterTagForDuration($duration)
+    private function getFormatterTagForDuration(float $duration): string
     {
         $status = $this->performanceTestSampleQualifier->getStatusForDuration($duration);
         return 'fg=' . $this->getStatusConsoleTextColor($status);
     }
 
-    /**
-     * @param int $queryCount
-     * @return string
-     */
-    private function getFormatterTagForQueryCount($queryCount)
+    private function getFormatterTagForQueryCount(int $queryCount): string
     {
         $status = $this->performanceTestSampleQualifier->getStatusForQueryCount($queryCount);
         return 'fg=' . $this->getStatusConsoleTextColor($status);
     }
 
-    /**
-     * @return string
-     */
-    private function getFormatterTagForError()
+    private function getFormatterTagForError(): string
     {
         return 'fg=' . $this->getStatusConsoleTextColor(PerformanceTestSampleQualifier::STATUS_CRITICAL);
     }
 
-    /**
-     * @param int $status
-     * @return string
-     */
-    private function getStatusConsoleTextColor($status)
+    private function getStatusConsoleTextColor(int $status): string
     {
         switch ($status) {
             case PerformanceTestSampleQualifier::STATUS_OK:

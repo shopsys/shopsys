@@ -17,7 +17,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListenerTest extends TestCase
 {
-    public function testOnSecurityInteractiveLoginUnique()
+    public function testOnSecurityInteractiveLoginUnique(): void
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
             ->setMethods(['__construct', 'persist', 'flush'])
@@ -48,7 +48,7 @@ class LoginListenerTest extends TestCase
         $loginListener->onSecurityInteractiveLogin($eventMock);
     }
 
-    public function testOnSecurityInteractiveLoginTimelimit()
+    public function testOnSecurityInteractiveLoginTimelimit(): void
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
             ->setMethods(['__construct', 'persist', 'flush'])
@@ -79,7 +79,7 @@ class LoginListenerTest extends TestCase
         $loginListener->onSecurityInteractiveLogin($eventMock);
     }
 
-    public function testOnSecurityInteractiveLoginResetOrderForm()
+    public function testOnSecurityInteractiveLoginResetOrderForm(): void
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
             ->setMethods(['__construct', 'persist', 'flush'])
@@ -113,7 +113,7 @@ class LoginListenerTest extends TestCase
         $loginListener->onSecurityInteractiveLogin($eventMock);
     }
 
-    public function testOnSecurityInteractiveLoginAdministrator()
+    public function testOnSecurityInteractiveLoginAdministrator(): void
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
             ->setMethods(['__construct', 'persist', 'flush'])

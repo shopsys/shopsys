@@ -9,10 +9,7 @@ class Version20180603135339 extends AbstractMigration
 {
     use MultidomainMigrationTrait;
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE transport_domains DROP CONSTRAINT "transport_domains_pkey"');
         $this->sql('ALTER TABLE transport_domains ADD id SERIAL NOT NULL');
@@ -35,10 +32,7 @@ class Version20180603135339 extends AbstractMigration
         }
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

@@ -4,13 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 
 interface CronTimeInterface
 {
-    /**
-     * @return string
-     */
-    public function getTimeMinutes();
+    public function getTimeMinutes(): string;
 
-    /**
-     * @return string
-     */
-    public function getTimeHours();
+    public function getTimeHours(): string;
 }

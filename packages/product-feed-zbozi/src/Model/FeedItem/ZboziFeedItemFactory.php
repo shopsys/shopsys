@@ -45,12 +45,6 @@ class ZboziFeedItemFactory
         $this->categoryFacade = $categoryFacade;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain|null $zboziProductDomain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItem
-     */
     public function create(Product $product, ?ZboziProductDomain $zboziProductDomain, DomainConfig $domainConfig): ZboziFeedItem
     {
         $mainVariantId = $product->isVariant() ? $product->getMainVariant()->getId() : null;
@@ -76,10 +70,6 @@ class ZboziFeedItemFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string|null
-     */
     protected function getBrandName(Product $product): ?string
     {
         $brand = $product->getBrand();
@@ -87,11 +77,6 @@ class ZboziFeedItemFactory
         return $brand !== null ? $brand->getName() : null;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
     protected function getPrice(Product $product, DomainConfig $domainConfig): Price
     {
         return $this->productPriceCalculationForUser->calculatePriceForUserAndDomainId(
@@ -102,8 +87,6 @@ class ZboziFeedItemFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
     protected function getPathToMainCategory(Product $product, DomainConfig $domainConfig): array

@@ -33,13 +33,6 @@ class AdvertFacade
      */
     protected $advertFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertRepository $advertRepository
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFactoryInterface $advertFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         AdvertRepository $advertRepository,
@@ -54,29 +47,17 @@ class AdvertFacade
         $this->advertFactory = $advertFactory;
     }
 
-    /**
-     * @param int $advertId
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
-     */
-    public function getById($advertId)
+    public function getById(int $advertId): \Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         return $this->advertRepository->getById($advertId);
     }
 
-    /**
-     * @param string $positionName
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert|null
-     */
-    public function findRandomAdvertByPositionOnCurrentDomain($positionName)
+    public function findRandomAdvertByPositionOnCurrentDomain(string $positionName): ?\Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         return $this->advertRepository->findRandomAdvertByPosition($positionName, $this->domain->getId());
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
-     */
-    public function create(AdvertData $advertData)
+    public function create(AdvertData $advertData): \Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         $advert = $this->advertFactory->create($advertData);
 
@@ -88,12 +69,7 @@ class AdvertFacade
         return $advert;
     }
 
-    /**
-     * @param int $advertId
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
-     */
-    public function edit($advertId, AdvertData $advertData)
+    public function edit(int $advertId, AdvertData $advertData): \Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         $advert = $this->advertRepository->getById($advertId);
         $advert->edit($advertData);
@@ -105,10 +81,7 @@ class AdvertFacade
         return $advert;
     }
 
-    /**
-     * @param int $advertId
-     */
-    public function delete($advertId)
+    public function delete(int $advertId): void
     {
         $advert = $this->advertRepository->getById($advertId);
         $this->em->remove($advert);

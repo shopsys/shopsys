@@ -14,27 +14,20 @@ class CartItemRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getCartItemRepository()
+    protected function getCartItemRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(CartItem::class);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
-    public function getAllByCustomerIdentifier(CustomerIdentifier $customerIdentifier)
+    public function getAllByCustomerIdentifier(CustomerIdentifier $customerIdentifier): array
     {
         $criteria = [];
         if ($customerIdentifier->getUser() !== null) {
@@ -46,10 +39,7 @@ class CartItemRepository
         return $this->getCartItemRepository()->findBy($criteria, ['id' => 'desc']);
     }
 
-    /**
-     * @param int $daysLimit
-     */
-    public function deleteOldCartsForUnregisteredCustomers($daysLimit)
+    public function deleteOldCartsForUnregisteredCustomers(int $daysLimit): void
     {
         $nativeQuery = $this->em->createNativeQuery(
             'DELETE FROM cart_items WHERE cart_identifier NOT IN (
@@ -65,10 +55,7 @@ class CartItemRepository
         ]);
     }
 
-    /**
-     * @param int $daysLimit
-     */
-    public function deleteOldCartsForRegisteredCustomers($daysLimit)
+    public function deleteOldCartsForRegisteredCustomers(int $daysLimit): void
     {
         $nativeQuery = $this->em->createNativeQuery(
             'DELETE FROM cart_items WHERE user_id NOT IN (

@@ -33,43 +33,28 @@ class ParameterValue
      */
     protected $locale;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
-     */
     public function __construct(ParameterValueData $parameterData)
     {
         $this->text = $parameterData->text;
         $this->locale = $parameterData->locale;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
 
-    /**
-     * @return string
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
-     */
-    public function edit(ParameterValueData $parameterData)
+    public function edit(ParameterValueData $parameterData): void
     {
         $this->text = $parameterData->text;
     }

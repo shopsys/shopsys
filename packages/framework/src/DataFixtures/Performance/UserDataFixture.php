@@ -80,22 +80,8 @@ class UserDataFixture
      */
     private $deliveryAddressDataFactory;
 
-    /**
-     * @param int $userCountPerDomain
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerEditFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface $userDataFactory
-     * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
-     */
     public function __construct(
-        $userCountPerDomain,
+        int $userCountPerDomain,
         EntityManagerInterface $em,
         Domain $domain,
         SqlLoggerFacade $sqlLoggerFacade,
@@ -122,10 +108,7 @@ class UserDataFixture
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -152,24 +135,14 @@ class UserDataFixture
         $this->sqlLoggerFacade->reenableLogging();
     }
 
-    /**
-     * @param int $domainId
-     * @param int $userNumber
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    private function createCustomerOnDomain($domainId, $userNumber)
+    private function createCustomerOnDomain(int $domainId, int $userNumber): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $customerData = $this->getRandomCustomerDataByDomainId($domainId, $userNumber);
 
         return $this->customerEditFacade->create($customerData);
     }
 
-    /**
-     * @param int $domainId
-     * @param int $userNumber
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
-     */
-    private function getRandomCustomerDataByDomainId($domainId, $userNumber)
+    private function getRandomCustomerDataByDomainId(int $domainId, int $userNumber): \Shopsys\FrameworkBundle\Model\Customer\CustomerData
     {
         $customerData = $this->customerDataFactory->create();
 

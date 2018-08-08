@@ -57,11 +57,10 @@ class SettingValue
     protected $type;
 
     /**
-     * @param string $name
      * @param \DateTime|string|int|float|bool|null $value
      * @param int $domainId
      */
-    public function __construct($name, $value, $domainId)
+    public function __construct(string $name, $value, $domainId)
     {
         $this->name = $name;
         $this->setValue($value);
@@ -71,15 +70,12 @@ class SettingValue
     /**
      * @param \DateTime|string|int|float|bool|null $value
      */
-    public function edit($value)
+    public function edit($value): void
     {
         $this->setValue($value);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -107,10 +103,7 @@ class SettingValue
         }
     }
 
-    /**
-     * @return int|null
-     */
-    public function getDomainId()
+    public function getDomainId(): ?int
     {
         return $this->domainId;
     }
@@ -118,7 +111,7 @@ class SettingValue
     /**
      * @param \DateTime|string|int|float|bool|null $value
      */
-    protected function setValue($value)
+    protected function setValue($value): void
     {
         $this->type = $this->getValueType($value);
         if ($this->type === self::TYPE_BOOLEAN) {
@@ -134,9 +127,8 @@ class SettingValue
 
     /**
      * @param \DateTime|string|int|float|bool|null $value
-     * @return string
      */
-    protected function getValueType($value)
+    protected function getValueType($value): string
     {
         if (is_int($value)) {
             return self::TYPE_INTEGER;

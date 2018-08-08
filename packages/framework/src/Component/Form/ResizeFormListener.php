@@ -39,19 +39,12 @@ class ResizeFormListener implements EventSubscriberInterface
      */
     private $deleteEmpty;
 
-    /**
-     * @param string|null $type
-     * @param array $options
-     * @param bool $allowAdd
-     * @param bool $allowDelete
-     * @param bool $deleteEmpty
-     */
     public function __construct(
-        $type,
+        ?string $type,
         array $options = [],
-        $allowAdd = false,
-        $allowDelete = false,
-        $deleteEmpty = false
+        bool $allowAdd = false,
+        bool $allowDelete = false,
+        bool $deleteEmpty = false
     ) {
         $this->type = $type;
         $this->allowAdd = $allowAdd;
@@ -60,9 +53,6 @@ class ResizeFormListener implements EventSubscriberInterface
         $this->deleteEmpty = $deleteEmpty;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents()
     {
         return [
@@ -77,10 +67,8 @@ class ResizeFormListener implements EventSubscriberInterface
     /**
      * Just for compatibility with original Symfony's ResizeFormListener,
      * (CollectionType tests expect UnexpectedTypeException).
-     *
-     * @param \Symfony\Component\Form\FormEvent $event
      */
-    public function preSetData(FormEvent $event)
+    public function preSetData(FormEvent $event): void
     {
         $data = $event->getData();
 
@@ -99,10 +87,8 @@ class ResizeFormListener implements EventSubscriberInterface
     /**
      * Remove all form children and add them again to correspond to viewData.
      * (In Symfony ResizeFormListener made with modelData)
-     *
-     * @param \Symfony\Component\Form\FormEvent $event
      */
-    public function postSetData(FormEvent $event)
+    public function postSetData(FormEvent $event): void
     {
         $form = $event->getForm();
         $viewData = $form->getViewData();
@@ -134,10 +120,8 @@ class ResizeFormListener implements EventSubscriberInterface
 
     /**
      * Copy-pasted from original ResizeFormListener::preSubmit().
-     *
-     * @param \Symfony\Component\Form\FormEvent $event
      */
-    public function preSubmit(FormEvent $event)
+    public function preSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
         $data = $event->getData();
@@ -181,10 +165,8 @@ class ResizeFormListener implements EventSubscriberInterface
      * - Remove viewData which don't have child in form
      * - Transform modified viewData back to normData
      * (In Symfony this method works just with normData)
-     *
-     * @param \Symfony\Component\Form\FormEvent $event
      */
-    public function onSubmit(FormEvent $event)
+    public function onSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
         $normData = $event->getData();
@@ -228,7 +210,6 @@ class ResizeFormListener implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param mixed $viewData
      * @param mixed $previousViewData
      * @return mixed
@@ -251,7 +232,6 @@ class ResizeFormListener implements EventSubscriberInterface
 
     /**
      * @param mixed $viewData
-     * @param \Symfony\Component\Form\FormInterface $form
      * @return mixed
      */
     private function removeDataItemsNotPresentInForm($viewData, FormInterface $form)
@@ -274,7 +254,6 @@ class ResizeFormListener implements EventSubscriberInterface
     /**
      * Copy-pasted from Form::normToView()
      *
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param mixed $value
      * @return mixed
      */
@@ -299,11 +278,9 @@ class ResizeFormListener implements EventSubscriberInterface
     /**
      * Copy-pasted from Form::viewToNorm()
      *
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param string $value
      * @return mixed
      */
-    private function viewToNorm(FormInterface $form, $value)
+    private function viewToNorm(FormInterface $form, string $value)
     {
         $transformers = $form->getConfig()->getViewTransformers();
 

@@ -9,10 +9,9 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 class ParameterFilterRepository
 {
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $parameters
      */
-    public function filterByParameters(QueryBuilder $productsQueryBuilder, array $parameters)
+    public function filterByParameters(QueryBuilder $productsQueryBuilder, array $parameters): void
     {
         $parameterIndex = 1;
         $valueIndex = 1;
@@ -40,19 +39,12 @@ class ParameterFilterRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData $parameterFilterData
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param int $parameterIndex
-     * @param int $valueIndex
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     private function getParameterQueryBuilder(
         ParameterFilterData $parameterFilterData,
         EntityManagerInterface $em,
-        $parameterIndex,
-        &$valueIndex
-    ) {
+        int $parameterIndex,
+        int &$valueIndex
+    ): \Doctrine\ORM\QueryBuilder {
         $ppvAlias = 'ppv' . $parameterIndex;
         $parameterPlaceholder = ':parameter' . $parameterIndex;
 
@@ -82,17 +74,13 @@ class ParameterFilterRepository
      * ppv.value = :parameterValueM OR ppv.value = :parameterValueN OR ...
      *
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
-     * @param \Doctrine\ORM\QueryBuilder $parameterQueryBuilder
-     * @param string $ppvAlias
-     * @param int $valueIndex
-     * @return \Doctrine\ORM\Query\Expr
      */
     private function getValuesExpr(
         array $parameterValues,
         QueryBuilder $parameterQueryBuilder,
-        $ppvAlias,
-        &$valueIndex
-    ) {
+        string $ppvAlias,
+        int &$valueIndex
+    ): \Doctrine\ORM\Query\Expr {
         $valuesExpr = $parameterQueryBuilder->expr()->orX();
 
         foreach ($parameterValues as $parameterValue) {

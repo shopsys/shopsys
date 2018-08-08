@@ -114,7 +114,7 @@ class ProductDataFixtureLoader
         array $brands,
         array $units,
         array $pricingGroups
-    ) {
+    ): void {
         $this->vats = $vats;
         $this->availabilities = $availabilities;
         $this->categories = $categories;
@@ -125,11 +125,7 @@ class ProductDataFixtureLoader
         $this->productParametersFixtureLoader->clearCache();
     }
 
-    /**
-     * @param array $row
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
-    public function createProductDataFromRowForFirstDomain($row)
+    public function createProductDataFromRowForFirstDomain(array $row): \Shopsys\FrameworkBundle\Model\Product\ProductData
     {
         $productData = $this->productDataFactory->create();
         $this->updateProductDataFromCsvRowForFirstDomain($productData, $row);
@@ -138,10 +134,9 @@ class ProductDataFixtureLoader
     }
 
     /**
-     * @param array $rows
      * @return string[][]
      */
-    public function getVariantCatnumsIndexedByMainVariantCatnum($rows)
+    public function getVariantCatnumsIndexedByMainVariantCatnum(array $rows)
     {
         $variantCatnumsByMainVariantCatnum = [];
         foreach ($rows as $row) {
@@ -153,11 +148,7 @@ class ProductDataFixtureLoader
         return $variantCatnumsByMainVariantCatnum;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param array $row
-     */
-    private function updateProductDataFromCsvRowForFirstDomain(ProductData $productData, array $row)
+    private function updateProductDataFromCsvRowForFirstDomain(ProductData $productData, array $row): void
     {
         $domainId = 1;
 
@@ -219,20 +210,12 @@ class ProductDataFixtureLoader
         }
     }
 
-    /**
-     * @param array $row
-     * @return string
-     */
-    public function getCatnumFromRow($row)
+    public function getCatnumFromRow($row): string
     {
         return $row[self::COLUMN_CATNUM];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param array $row
-     */
-    public function updateProductDataFromCsvRowForSecondDomain(ProductData $productData, array $row)
+    public function updateProductDataFromCsvRowForSecondDomain(ProductData $productData, array $row): void
     {
         $domainId = 2;
         $productData->descriptions[$domainId] = $row[$this->getDescriptionColumnForDomain($domainId)];
@@ -243,11 +226,7 @@ class ProductDataFixtureLoader
             $this->getValuesByKeyString($row[self::COLUMN_CATEGORIES_2], $this->categories);
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
-    private function getShortDescriptionColumnForDomain($domainId)
+    private function getShortDescriptionColumnForDomain(int $domainId): int
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
@@ -261,11 +240,7 @@ class ProductDataFixtureLoader
         }
     }
 
-    /**
-     * @param int $domainId
-     * @return int
-     */
-    private function getDescriptionColumnForDomain($domainId)
+    private function getDescriptionColumnForDomain(int $domainId): int
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
@@ -280,10 +255,9 @@ class ProductDataFixtureLoader
     }
 
     /**
-     * @param string $string
      * @return string[]
      */
-    private function getProductManualPricesIndexedByPricingGroupFromString($string)
+    private function getProductManualPricesIndexedByPricingGroupFromString(string $string): array
     {
         $productManualPricesByPricingGroup = [];
         $rowData = explode(';', $string);
@@ -296,11 +270,9 @@ class ProductDataFixtureLoader
     }
 
     /**
-     * @param string $keyString
-     * @param array $valuesByKey
      * @return string[]
      */
-    private function getValuesByKeyString($keyString, array $valuesByKey)
+    private function getValuesByKeyString(string $keyString, array $valuesByKey): array
     {
         $values = [];
         if (!empty($keyString)) {
@@ -313,12 +285,7 @@ class ProductDataFixtureLoader
         return $values;
     }
 
-    /**
-     * @param array $row
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param int $domainId
-     */
-    private function setProductDataPricesFromCsv(array $row, ProductData $productData, $domainId)
+    private function setProductDataPricesFromCsv(array $row, ProductData $productData, int $domainId): void
     {
         switch ($row[self::COLUMN_PRICE_CALCULATION_TYPE]) {
             case 'auto':
@@ -344,10 +311,7 @@ class ProductDataFixtureLoader
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    private function createDefaultManualPriceForAllPricingGroups(ProductData $productData)
+    private function createDefaultManualPriceForAllPricingGroups(ProductData $productData): void
     {
         foreach ($this->pricingGroups as $pricingGroupReferenceName => $pricingGroup) {
             if (!array_key_exists($pricingGroup->getId(), $productData->manualInputPricesByPricingGroupId)) {

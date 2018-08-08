@@ -36,7 +36,7 @@ class LoadDataFixturesCommand extends DoctrineCommand
         $this->fixturesLoader = $fixturesLoader;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('shopsys:fixtures:load')
            ->setDescription('Load data fixtures to your database.')
@@ -65,11 +65,7 @@ EOT
            );
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $doctrine = $this->getContainer()->get('doctrine');
         /** @var $doctrine \Doctrine\Common\Persistence\ManagerRegistry */
@@ -101,19 +97,13 @@ EOT
         $purger = new ORMPurger($em);
         $purger->setPurgeMode($input->getOption('purge-with-truncate') ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE);
         $executor = new ORMExecutor($em, $purger);
-        $executor->setLogger(function ($message) use ($output) {
+        $executor->setLogger(function ($message) use ($output): void {
             $output->writeln(sprintf('  <comment>></comment> <info>%s</info>', $message));
         });
         $executor->execute($this->fixturesLoader->getFixtures(), $input->getOption('append'));
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $question
-     * @param bool $default
-     */
-    private function askConfirmation(InputInterface $input, OutputInterface $output, $question, $default)
+    private function askConfirmation(InputInterface $input, OutputInterface $output, string $question, bool $default)
     {
         $questionHelper = $this->getHelperSet()->get('question');
         $question = new ConfirmationQuestion($question, $default);

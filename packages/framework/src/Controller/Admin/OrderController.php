@@ -2,12 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -105,12 +103,7 @@ class OrderController extends AdminBaseController
         $this->orderDataFactory = $orderDataFactory;
     }
 
-    /**
-     * @Route("/order/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $id
-     */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $order = $this->orderFacade->getById($id);
 
@@ -163,12 +156,7 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/order/add-product/{orderId}", requirements={"orderId" = "\d+"}, condition="request.isXmlHttpRequest()")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $orderId
-     */
-    public function addProductAction(Request $request, $orderId)
+    public function addProductAction(Request $request, int $orderId)
     {
         $productId = $request->get('productId');
         $orderItem = $this->orderItemFacade->createOrderProductInOrder($orderId, $productId);
@@ -189,10 +177,6 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/order/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function listAction(Request $request)
     {
         $administrator = $this->getUser();
@@ -251,23 +235,14 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @param array $row
-     * @return array
-     */
-    private function addOrderEntityToDataSource(array $row)
+    private function addOrderEntityToDataSource(array $row): array
     {
         $row['order'] = $this->orderFacade->getById($row['id']);
 
         return $row;
     }
 
-    /**
-     * @Route("/order/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $orderNumber = $this->orderFacade->getById($id)->getNumber();
@@ -287,12 +262,7 @@ class OrderController extends AdminBaseController
         return $this->redirectToRoute('admin_order_list');
     }
 
-    /**
-     * @Route("/order/get-advanced-search-rule-form/", methods={"post"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function getRuleFormAction(Request $request)
+    public function getRuleFormAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm($request->get('filterName'), $request->get('newIndex'));
 
@@ -301,11 +271,7 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/order/preview/{id}", requirements={"id" = "\d+"})
-     * @param int $id
-     */
-    public function previewAction($id)
+    public function previewAction(int $id)
     {
         $order = $this->orderFacade->getById($id);
 

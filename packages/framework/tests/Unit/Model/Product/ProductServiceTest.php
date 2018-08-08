@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductService;
 
 class ProductServiceTest extends TestCase
 {
-    public function testEditSchedulesPriceRecalculation()
+    public function testEditSchedulesPriceRecalculation(): void
     {
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
             ->disableOriginalConstructor()
@@ -51,7 +51,7 @@ class ProductServiceTest extends TestCase
         $productService->edit($product, $productData);
     }
 
-    public function testSetInputPriceSchedulesPriceRecalculation()
+    public function testSetInputPriceSchedulesPriceRecalculation(): void
     {
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
             ->disableOriginalConstructor()
@@ -85,7 +85,7 @@ class ProductServiceTest extends TestCase
         $productService->setInputPrice($product, 100);
     }
 
-    public function testChangeVatSchedulesPriceRecalculation()
+    public function testChangeVatSchedulesPriceRecalculation(): void
     {
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
             ->disableOriginalConstructor()
@@ -122,7 +122,7 @@ class ProductServiceTest extends TestCase
         $productService->changeVat($product, $vat);
     }
 
-    public function testDeleteNotVariant()
+    public function testDeleteNotVariant(): void
     {
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
             ->setMethods(null)
@@ -160,7 +160,7 @@ class ProductServiceTest extends TestCase
         $this->assertEmpty($productService->delete($product)->getProductsForRecalculations());
     }
 
-    public function testDeleteVariant()
+    public function testDeleteVariant(): void
     {
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
             ->setMethods(null)
@@ -199,7 +199,7 @@ class ProductServiceTest extends TestCase
         $this->assertSame([$mainVariant], $productService->delete($variant)->getProductsForRecalculations());
     }
 
-    public function testDeleteMainVariant()
+    public function testDeleteMainVariant(): void
     {
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
             ->setMethods(null)
@@ -239,7 +239,7 @@ class ProductServiceTest extends TestCase
         $this->assertFalse($variant->isVariant());
     }
 
-    public function testMarkProductForVisibilityRecalculation()
+    public function testMarkProductForVisibilityRecalculation(): void
     {
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
             ->setMethods(null)
@@ -282,7 +282,7 @@ class ProductServiceTest extends TestCase
         $productService->markProductForVisibilityRecalculation($productMock);
     }
 
-    public function testMarkProductForVisibilityRecalculationMainVariant()
+    public function testMarkProductForVisibilityRecalculationMainVariant(): void
     {
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
             ->setMethods(null)
@@ -332,7 +332,7 @@ class ProductServiceTest extends TestCase
         $productService->markProductForVisibilityRecalculation($mainVariantMock);
     }
 
-    public function testMarkProductForVisibilityRecalculationVariant()
+    public function testMarkProductForVisibilityRecalculationVariant(): void
     {
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
             ->setMethods(null)
@@ -382,7 +382,7 @@ class ProductServiceTest extends TestCase
         $productService->markProductForVisibilityRecalculation($variantMock);
     }
 
-    public function testSortingProducts()
+    public function testSortingProducts(): void
     {
         $productPriceCalculationMock = $this->createMock(ProductPriceCalculation::class);
         $inputPriceCalculationMock = $this->createMock(InputPriceCalculation::class);

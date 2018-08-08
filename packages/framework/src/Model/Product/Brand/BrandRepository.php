@@ -11,27 +11,17 @@ class BrandRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getBrandRepository()
+    protected function getBrandRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Brand::class);
     }
 
-    /**
-     * @param int $brandId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
-    public function getById($brandId)
+    public function getById(int $brandId): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
     {
         $brand = $this->getBrandRepository()->find($brandId);
 
@@ -46,7 +36,7 @@ class BrandRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getBrandRepository()->findBy([], ['name' => 'asc']);
     }

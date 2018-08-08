@@ -38,12 +38,9 @@ class BestsellingProductFacade
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllOfferedBestsellingProducts($domainId, Category $category, PricingGroup $pricingGroup)
+    public function getAllOfferedBestsellingProducts(int $domainId, Category $category, PricingGroup $pricingGroup): array
     {
         $manualBestsellingProducts = $this->manualBestsellingProductRepository->getOfferedByCategory(
             $domainId,

@@ -17,41 +17,32 @@ class ProductVisibilityFacade
      */
     protected $recalcVisibilityForMarked = false;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
-     */
     public function __construct(ProductVisibilityRepository $productVisibilityRepository)
     {
         $this->productVisibilityRepository = $productVisibilityRepository;
     }
 
-    public function refreshProductsVisibilityForMarkedDelayed()
+    public function refreshProductsVisibilityForMarkedDelayed(): void
     {
         $this->recalcVisibilityForMarked = true;
     }
 
-    public function refreshProductsVisibility()
+    public function refreshProductsVisibility(): void
     {
         $this->productVisibilityRepository->refreshProductsVisibility();
     }
 
-    public function refreshProductsVisibilityForMarked()
+    public function refreshProductsVisibilityForMarked(): void
     {
         $this->productVisibilityRepository->refreshProductsVisibility(true);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
-    public function markProductsForRecalculationAffectedByCategory(Category $category)
+    public function markProductsForRecalculationAffectedByCategory(Category $category): void
     {
         $this->productVisibilityRepository->markProductsForRecalculationAffectedByCategory($category);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

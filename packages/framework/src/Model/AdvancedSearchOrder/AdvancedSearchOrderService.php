@@ -21,9 +21,8 @@ class AdvancedSearchOrderService
 
     /**
      * @param array|null $requestData
-     * @return array
      */
-    public function getRulesFormViewDataByRequestData(array $requestData = null)
+    public function getRulesFormViewDataByRequestData(array $requestData = null): array
     {
         if ($requestData === null) {
             $searchRulesViewData = [];
@@ -40,11 +39,7 @@ class AdvancedSearchOrderService
         return $searchRulesViewData;
     }
 
-    /**
-     * @param string $filterName
-     * @return array
-     */
-    public function createDefaultRuleFormViewData($filterName)
+    public function createDefaultRuleFormViewData(string $filterName): array
     {
         return [
             'subject' => $filterName,
@@ -54,10 +49,9 @@ class AdvancedSearchOrderService
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $advancedSearchOrderData
      */
-    public function extendQueryBuilderByAdvancedSearchOrderData(QueryBuilder $queryBuilder, array $advancedSearchOrderData)
+    public function extendQueryBuilderByAdvancedSearchOrderData(QueryBuilder $queryBuilder, array $advancedSearchOrderData): void
     {
         $rulesDataByFilterName = [];
         foreach ($advancedSearchOrderData as $key => $ruleData) {

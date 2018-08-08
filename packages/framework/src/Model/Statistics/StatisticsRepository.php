@@ -14,20 +14,15 @@ class StatisticsRepository
      */
     private $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }
 
     /**
-     * @param DateTime $start
-     * @param DateTime $end
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
-    public function getCustomersRegistrationsCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end)
+    public function getCustomersRegistrationsCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end): array
     {
         $resultSetMapping = new ResultSetMapping();
         $resultSetMapping->addScalarResult('count', 'count');
@@ -54,11 +49,9 @@ class StatisticsRepository
     }
 
     /**
-     * @param DateTime $start
-     * @param DateTime $end
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
-    public function getNewOrdersCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end)
+    public function getNewOrdersCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end): array
     {
         $resultSetMapping = new ResultSetMapping();
         $resultSetMapping->addScalarResult('count', 'count');

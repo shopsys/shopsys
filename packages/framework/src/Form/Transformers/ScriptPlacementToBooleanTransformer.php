@@ -9,9 +9,9 @@ class ScriptPlacementToBooleanTransformer implements DataTransformerInterface
 {
     /**
      * @param string|null $scriptPlacement
-     * @return bool|null
+     * @param string|null $scriptPlacement
      */
-    public function transform($scriptPlacement)
+    public function transform($scriptPlacement): ?bool
     {
         if ($scriptPlacement === Script::PLACEMENT_ORDER_SENT_PAGE) {
             return true;
@@ -22,9 +22,8 @@ class ScriptPlacementToBooleanTransformer implements DataTransformerInterface
 
     /**
      * @param bool $scriptHasOrderPlacement
-     * @return string
      */
-    public function reverseTransform($scriptHasOrderPlacement)
+    public function reverseTransform($scriptHasOrderPlacement): string
     {
         if (!is_bool($scriptHasOrderPlacement)) {
             $message = 'Expected boolean, got "' . gettype($scriptHasOrderPlacement) . '".';

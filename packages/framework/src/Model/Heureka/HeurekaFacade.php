@@ -28,12 +28,6 @@ class HeurekaFacade
      */
     protected $heurekaSetting;
 
-    /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationFactory $heurekaShopCertificationFactory
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationService $heurekaShopCertificationService
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting $heurekaSetting
-     */
     public function __construct(
         Logger $logger,
         HeurekaShopCertificationFactory $heurekaShopCertificationFactory,
@@ -46,10 +40,7 @@ class HeurekaFacade
         $this->heurekaSetting = $heurekaSetting;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
-    public function sendOrderInfo(Order $order)
+    public function sendOrderInfo(Order $order): void
     {
         try {
             $heurekaShopCertification = $this->heurekaShopCertificationFactory->create($order);
@@ -61,47 +52,27 @@ class HeurekaFacade
         }
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isHeurekaShopCertificationActivated($domainId)
+    public function isHeurekaShopCertificationActivated($domainId): bool
     {
         return $this->heurekaSetting->isHeurekaShopCertificationActivated($domainId);
     }
 
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isHeurekaWidgetActivated($domainId)
+    public function isHeurekaWidgetActivated($domainId): bool
     {
         return $this->heurekaSetting->isHeurekaWidgetActivated($domainId);
     }
 
-    /**
-     * @param string $locale
-     * @return bool
-     */
-    public function isDomainLocaleSupported($locale)
+    public function isDomainLocaleSupported(string $locale): bool
     {
         return $this->heurekaShopCertificationService->isDomainLocaleSupported($locale);
     }
 
-    /**
-     * @param string $locale
-     * @return string|null
-     */
-    public function getServerNameByLocale($locale)
+    public function getServerNameByLocale(string $locale): ?string
     {
         return $this->heurekaShopCertificationService->getServerNameByLocale($locale);
     }
 
-    /**
-     * @param \Exception $ex
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
-    protected function logError(Exception $ex, Order $order)
+    protected function logError(Exception $ex, Order $order): void
     {
         $message = 'Sending order (ID = "' . $order->getId() . '") to Heureka failed - ' . get_class($ex) . ': ' . $ex->getMessage();
         $this->logger->error($message, ['exceptionFullInfo' => (string)$ex]);

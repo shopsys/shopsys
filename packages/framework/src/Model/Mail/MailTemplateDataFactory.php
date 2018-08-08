@@ -4,18 +4,11 @@ namespace Shopsys\FrameworkBundle\Model\Mail;
 
 class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData
-     */
     public function create(): MailTemplateData
     {
         return new MailTemplateData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData
-     */
     public function createFromMailTemplate(MailTemplate $mailTemplate): MailTemplateData
     {
         $mailTemplateData = new MailTemplateData();
@@ -24,11 +17,7 @@ class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
         return $mailTemplateData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     */
-    protected function fillFromMailTemplate(MailTemplateData $mailTemplateData, MailTemplate $mailTemplate)
+    protected function fillFromMailTemplate(MailTemplateData $mailTemplateData, MailTemplate $mailTemplate): void
     {
         $mailTemplateData->name = $mailTemplate->getName();
         $mailTemplateData->bccEmail = $mailTemplate->getBccEmail();

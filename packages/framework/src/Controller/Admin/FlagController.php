@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagInlineEdit;
 
@@ -27,9 +25,6 @@ class FlagController extends AdminBaseController
         $this->flagInlineEdit = $flagInlineEdit;
     }
 
-    /**
-     * @Route("/product/flag/list/")
-     */
     public function listAction()
     {
         $productInlineEdit = $this->flagInlineEdit;
@@ -41,12 +36,7 @@ class FlagController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/flag/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->flagFacade->getById($id)->getName();

@@ -13,18 +13,12 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
     /** @var \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade */
     private $topCategoryFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
-     */
     public function __construct(TopCategoryFacade $topCategoryFacade)
     {
         $this->topCategoryFacade = $topCategoryFacade;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $categories = [
             $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),

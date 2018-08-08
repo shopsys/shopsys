@@ -43,9 +43,8 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
 //        $visibleTransports = $transportFacade->getVisibleOnCurrentDomain($visiblePayments);
 //
 //        $this->assertContains($transport, $visibleTransports);
-//    }
-
-    public function testVisibleTransportHiddenTransport()
+    //    }
+    public function testVisibleTransportHiddenTransport(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -75,7 +74,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $this->assertNotContains($transport, $visibleTransports);
     }
 
-    public function testVisibleTransportHiddenPayment()
+    public function testVisibleTransportHiddenPayment(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -110,7 +109,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $this->assertNotContains($transport, $visibleTransports);
     }
 
-    public function testVisibleTransportNoPayment()
+    public function testVisibleTransportNoPayment(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -136,7 +135,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $this->assertNotContains($transport, $visibleTransports);
     }
 
-    public function testVisibleTransportOnDifferentDomain()
+    public function testVisibleTransportOnDifferentDomain(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -171,7 +170,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $this->assertNotContains($transport, $visibleTransports);
     }
 
-    public function testVisibleTransportPaymentOnDifferentDomain()
+    public function testVisibleTransportPaymentOnDifferentDomain(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -204,7 +203,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $this->assertNotContains($transport, $visibleTransports);
     }
 
-    public function testVisiblePayment()
+    public function testVisiblePayment(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -231,7 +230,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $this->assertContains($payment, $visiblePayments);
     }
 
-    public function testVisiblePaymentHiddenTransport()
+    public function testVisiblePaymentHiddenTransport(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -258,7 +257,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $this->assertNotContains($payment, $visiblePayments);
     }
 
-    public function testVisiblePaymentHiddenPayment()
+    public function testVisiblePaymentHiddenPayment(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -285,7 +284,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $this->assertNotContains($payment, $visiblePayments);
     }
 
-    public function testVisiblePaymentNoTransport()
+    public function testVisiblePaymentNoTransport(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -308,7 +307,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $this->assertNotContains($payment, $visiblePayments);
     }
 
-    public function testVisiblePaymentOnDifferentDomain()
+    public function testVisiblePaymentOnDifferentDomain(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -338,7 +337,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         $this->assertNotContains($payment, $visiblePayments);
     }
 
-    public function testVisiblePaymentTransportOnDifferentDomain()
+    public function testVisiblePaymentTransportOnDifferentDomain(): void
     {
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
@@ -370,12 +369,10 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param bool[] $enabledForDomains
      * @param bool $hidden
-     * @return Payment
      */
-    public function getDefaultPayment(Vat $vat, $enabledForDomains, $hidden)
+    public function getDefaultPayment(Vat $vat, $enabledForDomains, $hidden): Payment
     {
         $paymentDataFactory = $this->getPaymentDataFactory();
 
@@ -392,12 +389,10 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param bool[] $enabledForDomains
      * @param bool $hidden
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getDefaultTransport(Vat $vat, $enabledForDomains, $hidden)
+    public function getDefaultTransport(Vat $vat, $enabledForDomains, $hidden): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $transportDataFactory = $this->getTransportDataFactory();
 
@@ -414,10 +409,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         return new Transport($transportData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    private function getDefaultVat()
+    private function getDefaultVat(): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         $vatData = new VatData();
         $vatData->name = 'vat';
@@ -425,18 +417,12 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
         return new Vat($vatData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory
-     */
-    public function getPaymentDataFactory()
+    public function getPaymentDataFactory(): \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory
     {
         return $this->getContainer()->get(PaymentDataFactory::class);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
-     */
-    public function getTransportDataFactory()
+    public function getTransportDataFactory(): \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
     {
         return $this->getContainer()->get(TransportDataFactory::class);
     }

@@ -36,9 +36,6 @@ class Availability extends AbstractTranslatableEntity
      */
     protected $dispatchTime;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
-     */
     public function __construct(AvailabilityData $availabilityData)
     {
         $this->translations = new ArrayCollection();
@@ -46,54 +43,35 @@ class Availability extends AbstractTranslatableEntity
         $this->dispatchTime = $availabilityData->dispatchTime;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param string|null $locale
-     * @return string
-     */
-    public function getName($locale = null)
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
-     */
-    protected function setTranslations(AvailabilityData $availabilityData)
+    protected function setTranslations(AvailabilityData $availabilityData): void
     {
         foreach ($availabilityData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityTranslation
     {
         return new AvailabilityTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
-     */
-    public function edit(AvailabilityData $availabilityData)
+    public function edit(AvailabilityData $availabilityData): void
     {
         $this->setTranslations($availabilityData);
         $this->dispatchTime = $availabilityData->dispatchTime;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getDispatchTime()
+    public function getDispatchTime(): ?int
     {
         return $this->dispatchTime;
     }

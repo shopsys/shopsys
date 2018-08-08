@@ -184,20 +184,12 @@ class ProductFacade
         $this->productVisibilityFactory = $productVisibilityFactory;
     }
 
-    /**
-     * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getById($productId)
+    public function getById(int $productId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->productRepository->getById($productId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function create(ProductData $productData)
+    public function create(ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $product = $this->productFactory->create($productData);
 
@@ -216,11 +208,7 @@ class ProductFacade
         return $product;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    public function setAdditionalDataAfterCreate(Product $product, ProductData $productData)
+    public function setAdditionalDataAfterCreate(Product $product, ProductData $productData): void
     {
         // Persist of ProductCategoryDomain requires known primary key of Product
         // @see https://github.com/doctrine/doctrine2/issues/4869
@@ -242,12 +230,7 @@ class ProductFacade
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
-    /**
-     * @param int $productId
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function edit($productId, ProductData $productData)
+    public function edit(int $productId, ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $product = $this->productRepository->getById($productId);
 
@@ -278,10 +261,7 @@ class ProductFacade
         return $product;
     }
 
-    /**
-     * @param int $productId
-     */
-    public function delete($productId)
+    public function delete(int $productId): void
     {
         $product = $this->productRepository->getById($productId);
         $productDeleteResult = $this->productService->delete($product);
@@ -298,10 +278,9 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
      */
-    protected function saveParameters(Product $product, array $productParameterValuesData)
+    protected function saveParameters(Product $product, array $productParameterValuesData): void
     {
         // Doctrine runs INSERTs before DELETEs in UnitOfWork. In case of UNIQUE constraint
         // in database, this leads in trying to insert duplicate entry.
@@ -333,10 +312,9 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[]
      */
-    public function getAllProductSellingPricesIndexedByDomainId(Product $product)
+    public function getAllProductSellingPricesIndexedByDomainId(Product $product): array
     {
         return $this->productService->getProductSellingPricesIndexedByDomainIdAndPricingGroupId(
             $product,
@@ -345,10 +323,9 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param string[] $manualInputPrices
      */
-    protected function refreshProductManualInputPrices(Product $product, array $manualInputPrices)
+    protected function refreshProductManualInputPrices(Product $product, array $manualInputPrices): void
     {
         if ($product->getPriceCalculationType() === Product::PRICE_CALCULATION_TYPE_MANUAL) {
             foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
@@ -359,10 +336,7 @@ class ProductFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    protected function createProductVisibilities(Product $product)
+    protected function createProductVisibilities(Product $product): void
     {
         $toFlush = [];
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -380,10 +354,9 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $accessories
      */
-    protected function refreshProductAccessories(Product $product, array $accessories)
+    protected function refreshProductAccessories(Product $product, array $accessories): void
     {
         $oldProductAccessories = $this->productAccessoryRepository->getAllByProduct($product);
         foreach ($oldProductAccessories as $oldProductAccessory) {
@@ -403,11 +376,7 @@ class ProductFacade
         }
     }
 
-    /**
-     * @param string $productCatnum
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getOneByCatnumExcludeMainVariants($productCatnum)
+    public function getOneByCatnumExcludeMainVariants(string $productCatnum): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
     }

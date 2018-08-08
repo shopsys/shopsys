@@ -35,17 +35,14 @@ class RouteCsrfProtector implements EventSubscriberInterface
     /**
      * @return string[]
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => 'onKernelController',
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
-     */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
         if ($this->isProtected($event)) {
             $request = $event->getRequest();
@@ -58,41 +55,24 @@ class RouteCsrfProtector implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param string $routeName
-     * @return string
-     */
-    public function getCsrfTokenId($routeName)
+    public function getCsrfTokenId(string $routeName): string
     {
         return self::CSRF_TOKEN_ID_PREFIX . $routeName;
     }
 
-    /**
-     * @param string $routeName
-     * @return string
-     */
-    public function getCsrfTokenByRoute($routeName)
+    public function getCsrfTokenByRoute(string $routeName): string
     {
         return $this->tokenManager->getToken($this->getCsrfTokenId($routeName))->getValue();
     }
 
-    /**
-     * @param string $routeName
-     * @param string $csrfToken
-     * @return bool
-     */
-    private function isCsrfTokenValid($routeName, $csrfToken)
+    private function isCsrfTokenValid(string $routeName, string $csrfToken): bool
     {
         $token = new CsrfToken($this->getCsrfTokenId($routeName), $csrfToken);
 
         return $this->tokenManager->isTokenValid($token);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
-     * @return bool
-     */
-    private function isProtected(FilterControllerEvent $event)
+    private function isProtected(FilterControllerEvent $event): bool
     {
         if (!$event->isMasterRequest()) {
             return false;

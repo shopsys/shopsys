@@ -32,10 +32,6 @@ class CronCommand extends Command
      */
     private $mutexFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
-     */
     public function __construct(
         CronFacade $cronFacade,
         MutexFactory $mutexFactory
@@ -46,7 +42,7 @@ class CronCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Runs background jobs. Should be executed periodically by system CRON every 5 minutes.')
@@ -54,11 +50,7 @@ class CronCommand extends Command
             ->addOption(self::OPTION_MODULE, null, InputOption::VALUE_OPTIONAL, 'Service ID');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $optionList = $input->getOption(self::OPTION_LIST);
         if ($optionList === true) {
@@ -68,11 +60,7 @@ class CronCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     */
-    private function listAllCronModulesSortedByServiceId(OutputInterface $output, CronFacade $cronFacade)
+    private function listAllCronModulesSortedByServiceId(OutputInterface $output, CronFacade $cronFacade): void
     {
         $cronModuleConfigs = $cronFacade->getAll();
 
@@ -85,12 +73,7 @@ class CronCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
-     */
-    private function runCron(InputInterface $input, CronFacade $cronFacade, MutexFactory $mutexFactory)
+    private function runCron(InputInterface $input, CronFacade $cronFacade, MutexFactory $mutexFactory): void
     {
         $requestedModuleServiceId = $input->getOption(self::OPTION_MODULE);
         $runAllModules = $requestedModuleServiceId === null;
@@ -113,10 +96,7 @@ class CronCommand extends Command
         }
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
-    private function getCurrentRoundedTime()
+    private function getCurrentRoundedTime(): \DateTimeImmutable
     {
         $time = new DateTime(null);
         $time->modify('-' . $time->format('s') . ' sec');

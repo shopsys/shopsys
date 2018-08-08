@@ -11,40 +11,24 @@ class MailTemplateRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getMailTemplateRepository()
+    protected function getMailTemplateRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(MailTemplate::class);
     }
 
-    /**
-     * @param string $templateName
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
-     */
-    public function findByNameAndDomainId($templateName, $domainId)
+    public function findByNameAndDomainId(string $templateName, int $domainId): ?\Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $criteria = ['name' => $templateName, 'domainId' => $domainId];
 
         return $this->getMailTemplateRepository()->findOneBy($criteria);
     }
 
-    /**
-     * @param string $templateName
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
-     */
-    public function getByNameAndDomainId($templateName, $domainId)
+    public function getByNameAndDomainId(string $templateName, int $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $mailTemplate = $this->findByNameAndDomainId($templateName, $domainId);
         if ($mailTemplate === null) {
@@ -56,19 +40,15 @@ class MailTemplateRepository
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId(int $domainId): array
     {
         $criteria = ['domainId' => $domainId];
         return $this->getMailTemplateRepository()->findBy($criteria);
     }
 
-    /**
-     * @return bool
-     */
-    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()
+    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject(): bool
     {
         $countOfEmptyTemplates = (int)$this->em->createQueryBuilder()
             ->select('COUNT(mt)')

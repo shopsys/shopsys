@@ -43,12 +43,6 @@ class FeedExportFactory
         $this->feedPathProvider = $feedPathProvider;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string|null $lastSeekId
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExport
-     */
     public function create(FeedInterface $feed, DomainConfig $domainConfig, string $lastSeekId = null): FeedExport
     {
         $feedRenderer = $this->feedRendererFactory->create($feed);

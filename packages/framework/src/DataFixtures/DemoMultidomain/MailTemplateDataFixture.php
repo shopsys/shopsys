@@ -29,10 +29,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
         $this->mailTemplateDataFactory = $mailTemplateDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->name = 'order_status_1';
@@ -137,10 +134,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
         $this->updateMailTemplate($mailTemplateData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
-     */
-    private function updateMailTemplate(MailTemplateData $mailTemplateData)
+    private function updateMailTemplate(MailTemplateData $mailTemplateData): void
     {
         $domainId = 2;
 
