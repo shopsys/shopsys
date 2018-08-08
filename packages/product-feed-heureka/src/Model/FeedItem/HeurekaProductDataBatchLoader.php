@@ -42,7 +42,6 @@ class HeurekaProductDataBatchLoader
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
     public function loadForProducts(array $products, DomainConfig $domainConfig): void
     {
@@ -71,8 +70,6 @@ class HeurekaProductDataBatchLoader
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
     public function getProductParametersByName(Product $product, DomainConfig $domainConfig): array

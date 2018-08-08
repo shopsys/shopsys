@@ -25,8 +25,6 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
@@ -45,8 +43,6 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)

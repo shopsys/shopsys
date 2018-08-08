@@ -26,7 +26,6 @@ class AdministratorService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param string $password
      */
     public function setPassword(Administrator $administrator, $password)
@@ -37,7 +36,6 @@ class AdministratorService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param int $adminCountExcludingSuperadmin
      */
     public function delete(Administrator $administrator, $adminCountExcludingSuperadmin)
@@ -54,8 +52,6 @@ class AdministratorService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administratorByUserName
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */

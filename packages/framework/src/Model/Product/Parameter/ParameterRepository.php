@@ -118,7 +118,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getProductParameterValuesByProductQueryBuilder(Product $product)
@@ -133,7 +132,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -156,7 +154,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
     public function getProductParameterValuesByProduct(Product $product)
@@ -167,7 +164,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
@@ -205,7 +201,6 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
     public function getProductParameterValuesByParameter(Parameter $parameter)
@@ -244,7 +239,6 @@ class ParameterRepository
     }
 
     /**
-     * @param array $productIdsAndParameterNamesAndValues
      * @return string[][]
      */
     protected function getParameterValuesIndexedByProductIdAndParameterName(array $productIdsAndParameterNamesAndValues)

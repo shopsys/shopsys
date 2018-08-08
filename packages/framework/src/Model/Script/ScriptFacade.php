@@ -69,7 +69,6 @@ class ScriptFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
      * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
     public function create(ScriptData $scriptData)
@@ -84,7 +83,6 @@ class ScriptFacade
 
     /**
      * @param int $scriptId
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
      * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
     public function edit($scriptId, ScriptData $scriptData)
@@ -126,7 +124,6 @@ class ScriptFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string[]
      */
     public function getOrderSentPageScriptCodesWithReplacedVariables(Order $order)
@@ -142,7 +139,6 @@ class ScriptFacade
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isGoogleAnalyticsActivated($domainId)
@@ -160,7 +156,6 @@ class ScriptFacade
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getGoogleAnalyticsTrackingId($domainId)
@@ -170,7 +165,6 @@ class ScriptFacade
 
     /**
      * @param string $code
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     protected function replaceVariables($code, Order $order)

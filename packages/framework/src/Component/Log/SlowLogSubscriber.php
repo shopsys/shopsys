@@ -54,10 +54,7 @@ class SlowLogSubscriber implements EventSubscriberInterface
     {
         return microtime(true) - $this->startTime;
     }
-
-    /**
-     * @return array
-     */
+    
     public static function getSubscribedEvents()
     {
         return [

@@ -44,7 +44,6 @@ class ProductCachedAttributesFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
      */
     public function getProductSellingPrice(Product $product)
@@ -63,7 +62,6 @@ class ProductCachedAttributesFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
     public function getProductParameterValues(Product $product)

@@ -114,7 +114,6 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @return $this
      */
     public function executeCallsDuringTestExecution(ContainerInterface $container)
@@ -137,7 +136,6 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\Auth\AuthInterface $auth
      * @return $this
      */
     public function setAuth(AuthInterface $auth)

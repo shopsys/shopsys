@@ -111,7 +111,6 @@ class CustomerController extends AdminBaseController
 
     /**
      * @Route("/customer/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function editAction(Request $request, $id)
@@ -275,7 +274,6 @@ class CustomerController extends AdminBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @return string
      */
     private function getSsoLoginAsUserUrl(User $user)

@@ -18,8 +18,6 @@ class AdministratorGridService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
      * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit|null
      */
     public function rememberGridLimit(Administrator $administrator, Grid $grid)

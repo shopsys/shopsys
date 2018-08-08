@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\InlineEditService;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;

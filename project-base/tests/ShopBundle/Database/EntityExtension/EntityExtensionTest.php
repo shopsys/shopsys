@@ -435,7 +435,6 @@ class EntityExtensionTest extends DatabaseTestCase
     }
 
     /**
-     * @param int $id
      * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedCategory
      */
     private function getOrderTransport(int $id): ExtendedOrderTransport

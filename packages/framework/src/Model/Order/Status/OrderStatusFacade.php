@@ -56,7 +56,6 @@ class OrderStatusFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusFormData
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
     public function create(OrderStatusData $orderStatusFormData)
@@ -74,7 +73,6 @@ class OrderStatusFacade
 
     /**
      * @param int $orderStatusId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
     public function edit($orderStatusId, OrderStatusData $orderStatusData)
@@ -122,7 +120,6 @@ class OrderStatusFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return bool
      */
     public function isOrderStatusUsed(OrderStatus $orderStatus)

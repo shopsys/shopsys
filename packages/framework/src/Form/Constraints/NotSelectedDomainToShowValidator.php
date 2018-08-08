@@ -20,7 +20,6 @@ class NotSelectedDomainToShowValidator extends ConstraintValidator
 
     /**
      * @param array $values
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
     public function validate($values, Constraint $constraint)
     {

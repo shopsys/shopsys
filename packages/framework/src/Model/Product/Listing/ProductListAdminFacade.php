@@ -40,7 +40,6 @@ class ProductListAdminFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData)

@@ -60,9 +60,7 @@ class ProductPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
     public function calculatePrice(Product $product, $domainId, PricingGroup $pricingGroup)
@@ -84,9 +82,7 @@ class ProductPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
     private function calculateMainVariantPrice(Product $mainVariant, $domainId, PricingGroup $pricingGroup)
@@ -114,7 +110,6 @@ class ProductPriceCalculation
 
     /**
      * @param string $inputPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     private function calculateBasePrice($inputPrice, Vat $vat)
@@ -127,8 +122,6 @@ class ProductPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
     private function calculateProductPriceForPricingGroupManual(Product $product, PricingGroup $pricingGroup)
@@ -145,8 +138,6 @@ class ProductPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */

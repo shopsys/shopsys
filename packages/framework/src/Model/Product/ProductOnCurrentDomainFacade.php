@@ -82,7 +82,6 @@ class ProductOnCurrentDomainFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getAccessoriesForProduct(Product $product)
@@ -95,7 +94,6 @@ class ProductOnCurrentDomainFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getVariantsForProduct(Product $product)
@@ -108,7 +106,6 @@ class ProductOnCurrentDomainFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
@@ -180,7 +177,6 @@ class ProductOnCurrentDomainFacade
 
     /**
      * @param string|null $searchText
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
@@ -240,8 +236,6 @@ class ProductOnCurrentDomainFacade
 
     /**
      * @param int $categoryId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataInCategory(
@@ -266,8 +260,6 @@ class ProductOnCurrentDomainFacade
 
     /**
      * @param string|null $searchText
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataForSearch(

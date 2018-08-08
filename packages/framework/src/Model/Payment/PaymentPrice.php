@@ -37,8 +37,6 @@ class PaymentPrice
     protected $price;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param string $price
      */
     public function __construct(Payment $payment, Currency $currency, $price)

@@ -149,7 +149,6 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $entityConfig
      * @return array
      */
     private function getMultipleByType(array $entityConfig)

@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductAccessoryFactory implements ProductAccessoryFactoryInterface
 {
-
     public function create(
         Product $product,
         Product $accessory,

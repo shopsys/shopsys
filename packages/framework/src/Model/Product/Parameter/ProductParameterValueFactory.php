@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductParameterValueFactory implements ProductParameterValueFactoryInterface
 {
-
     public function create(
         Product $product,
         Parameter $parameter,

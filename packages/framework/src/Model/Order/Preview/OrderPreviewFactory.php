@@ -86,7 +86,6 @@ class OrderPreviewFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport|null $transport

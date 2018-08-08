@@ -22,7 +22,6 @@ class AddProductResult
     private $addedQuantity;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
      * @param bool $isNew
      * @param int $addedQuantity
      */

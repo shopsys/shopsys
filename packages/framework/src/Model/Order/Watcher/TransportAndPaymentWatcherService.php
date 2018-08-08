@@ -43,8 +43,6 @@ class TransportAndPaymentWatcherService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
      * @return \Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentCheckResult
@@ -86,9 +84,6 @@ class TransportAndPaymentWatcherService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param int $domainId
      * @return bool
      */
@@ -118,9 +113,6 @@ class TransportAndPaymentWatcherService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param int $domainId
      * @return bool
      */
@@ -151,8 +143,6 @@ class TransportAndPaymentWatcherService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param int $domainId
      * @return array
      */
@@ -178,8 +168,6 @@ class TransportAndPaymentWatcherService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param int $domainId
      * @return array
      */
@@ -206,8 +194,6 @@ class TransportAndPaymentWatcherService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param int $domainId
      */
     private function rememberTransportAndPayment(
@@ -232,10 +218,7 @@ class TransportAndPaymentWatcherService
             ),
         ]);
     }
-
-    /**
-     * @return array
-     */
+    
     private function getRememberedTransportAndPayment()
     {
         return $this->session->get(self::SESSION_ROOT, [
@@ -243,18 +226,12 @@ class TransportAndPaymentWatcherService
             self::SESSION_PAYMENT_PRICES => [],
         ]);
     }
-
-    /**
-     * @return array
-     */
+    
     private function getRememberedTransportPrices()
     {
         return $this->getRememberedTransportAndPayment()[self::SESSION_TRANSPORT_PRICES];
     }
-
-    /**
-     * @return array
-     */
+    
     private function getRememberedPaymentPrices()
     {
         return $this->getRememberedTransportAndPayment()[self::SESSION_PAYMENT_PRICES];

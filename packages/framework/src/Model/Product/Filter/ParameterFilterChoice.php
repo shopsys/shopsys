@@ -17,7 +17,6 @@ class ParameterFilterChoice
     private $values;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $values
      */
     public function __construct(

@@ -178,7 +178,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      * @param string|null $referenceName
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */

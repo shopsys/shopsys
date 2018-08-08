@@ -25,7 +25,6 @@ class RegisterPluginCrudExtensionsCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\Definition $pluginCrudExtensionRegistryDefinition
      * @param string $serviceId
      * @param string $type
      */

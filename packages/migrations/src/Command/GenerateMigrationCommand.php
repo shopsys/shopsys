@@ -48,10 +48,6 @@ class GenerateMigrationCommand extends AbstractCommand
 
     /**
      * @param string $vendorDirectoryPath
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
-     * @param \Shopsys\MigrationBundle\Component\Generator\GenerateMigrationsService $generateMigrationsService
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocator $migrationsLocator
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
      */
     public function __construct(
         $vendorDirectoryPath,
@@ -75,8 +71,6 @@ class GenerateMigrationCommand extends AbstractCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -116,7 +110,6 @@ class GenerateMigrationCommand extends AbstractCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
      */
     private function chooseMigrationLocation(SymfonyStyle $io)
@@ -150,7 +143,6 @@ class GenerateMigrationCommand extends AbstractCommand
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Bundle\BundleInterface $bundle
      * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
      */
     private function getMigrationLocation(BundleInterface $bundle)

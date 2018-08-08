@@ -16,11 +16,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
     private $parameterChoicesIndexedByParameterId;
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $config = $options['product_filter_config'];

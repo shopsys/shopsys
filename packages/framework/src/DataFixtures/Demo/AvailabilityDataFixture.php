@@ -63,7 +63,6 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
      * @param string|null $referenceName
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */

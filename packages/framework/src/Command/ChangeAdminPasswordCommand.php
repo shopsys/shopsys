@@ -57,8 +57,6 @@ class ChangeAdminPasswordCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return string
      */
     private function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io)

@@ -7,9 +7,6 @@ use Twig_SimpleFunction;
 
 class VarDumperExtension extends Twig_Extension
 {
-    /**
-     * @return array
-     */
     public function getFunctions()
     {
         return [

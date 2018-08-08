@@ -21,11 +21,7 @@ use Symfony\Component\Validator\Constraints;
 class MailTemplateFormType extends AbstractType
 {
     const VALIDATION_GROUP_SEND_MAIL = 'sendMail';
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -65,7 +61,6 @@ class MailTemplateFormType extends AbstractType
     }
 
     /**
-     * @param array $options
      * @return \Symfony\Component\Validator\Constraint[]
      */
     private function getSubjectConstraints(array $options)
@@ -93,7 +88,6 @@ class MailTemplateFormType extends AbstractType
     }
 
     /**
-     * @param array $options
      * @return \Symfony\Component\Validator\Constraint[]
      */
     private function getBodyConstraints(array $options)

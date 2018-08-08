@@ -295,7 +295,6 @@ class Order
     protected $createdAsAdministratorName;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user

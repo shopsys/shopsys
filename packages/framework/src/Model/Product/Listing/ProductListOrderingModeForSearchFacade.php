@@ -38,7 +38,6 @@ class ProductListOrderingModeForSearchFacade
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return string
      */
     public function getOrderingModeIdFromRequest(Request $request)

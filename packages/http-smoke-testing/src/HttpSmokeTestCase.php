@@ -30,7 +30,6 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * If you need custom behavior for creating or handling requests in your application you should override the
      * createRequest or handleRequest method.
      *
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @dataProvider httpResponseTestDataProvider
      */
     final public function testHttpResponse(RequestDataSet $requestDataSet)
@@ -98,13 +97,10 @@ abstract class HttpSmokeTestCase extends KernelTestCase
 
     /**
      * This method must be implemented to customize and configure the test cases for individual routes
-     *
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
     abstract protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer);
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return \Symfony\Component\HttpFoundation\Request
      */
     protected function createRequest(RequestDataSet $requestDataSet)
@@ -120,7 +116,6 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleRequest(Request $request)
@@ -144,7 +139,6 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     }
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @param string $message
      * @return string
      */

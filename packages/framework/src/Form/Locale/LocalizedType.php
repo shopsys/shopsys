@@ -20,11 +20,7 @@ class LocalizedType extends AbstractType
     {
         $this->localization = $localization;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         Utils::setArrayDefaultValue($options['entry_options'], 'required', $options['required']);

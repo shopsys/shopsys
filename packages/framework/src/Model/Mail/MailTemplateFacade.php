@@ -184,7 +184,6 @@ class MailTemplateFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @return string[]
      */
     public function getMailTemplateAttachmentsFilepaths(MailTemplate $mailTemplate)

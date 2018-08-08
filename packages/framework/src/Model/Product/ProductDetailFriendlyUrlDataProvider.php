@@ -32,7 +32,6 @@ class ProductDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     public function getFriendlyUrlData(DomainConfig $domainConfig): array

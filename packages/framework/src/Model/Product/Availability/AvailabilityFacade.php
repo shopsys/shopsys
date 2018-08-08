@@ -56,7 +56,6 @@ class AvailabilityFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
     public function create(AvailabilityData $availabilityData)
@@ -70,7 +69,6 @@ class AvailabilityFacade
 
     /**
      * @param int $availabilityId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
     public function edit($availabilityId, AvailabilityData $availabilityData)
@@ -137,7 +135,6 @@ class AvailabilityFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
      * @return bool
      */
     public function isAvailabilityUsed(Availability $availability)
@@ -146,7 +143,6 @@ class AvailabilityFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
      * @return bool
      */
     public function isAvailabilityDefault(Availability $availability)

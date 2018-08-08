@@ -33,10 +33,7 @@ class ShopInfoExtension extends \Twig_Extension
         $this->shopInfoSettingFacade = $shopInfoSettingFacade;
         $this->domain = $domain;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

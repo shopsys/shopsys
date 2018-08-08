@@ -79,7 +79,6 @@ class PaymentDomainTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
     private function getRefreshedPaymentFromDatabase(Payment $payment)

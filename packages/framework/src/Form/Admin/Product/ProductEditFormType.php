@@ -68,11 +68,7 @@ class ProductEditFormType extends AbstractType
         $this->pluginDataFormExtensionFacade = $pluginDataFormExtensionFacade;
         $this->productParameterValueToProductParameterValuesLocalizedTransformer = $productParameterValueToProductParameterValuesLocalizedTransformer;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $editedProduct = $options['product'];

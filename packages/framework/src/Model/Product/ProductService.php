@@ -59,7 +59,6 @@ class ProductService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[] $productManualInputPrices
      * @param string $newVatPercent
      */
@@ -103,7 +102,6 @@ class ProductService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param string $inputPrice
      */
     public function setInputPrice(Product $product, $inputPrice)
@@ -119,7 +117,6 @@ class ProductService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $pricingGroups
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[]
      */
@@ -137,7 +134,6 @@ class ProductService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductDeleteResult
      */
     public function delete(Product $product)

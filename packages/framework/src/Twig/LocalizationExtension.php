@@ -24,10 +24,7 @@ class LocalizationExtension extends \Twig_Extension
         $this->assetPackages = $assetPackages;
         $this->localization = $localization;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

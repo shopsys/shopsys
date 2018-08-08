@@ -27,11 +27,7 @@ class BillingAddressFormType extends AbstractType
     {
         $this->countryFacade = $countryFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $countries = $this->countryFacade->getAllByDomainId($options['domain_id']);

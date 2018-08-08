@@ -30,15 +30,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
 
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $em;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\UserDataFixtureLoader $loaderService
-     * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordService $customerPasswordService
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     */
+    
     public function __construct(
         CustomerFacade $customerFacade,
         UserDataFixtureLoader $loaderService,

@@ -24,7 +24,6 @@ class Bag
 
     /**
      * @param string $bagName
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
     public function __construct($bagName, SessionInterface $session)
     {
@@ -63,26 +62,17 @@ class Bag
     {
         $this->addMessage($message, $escape, self::KEY_SUCCESS);
     }
-
-    /**
-     * @return array
-     */
+    
     public function getErrorMessages()
     {
         return $this->getMessages(self::KEY_ERROR);
     }
-
-    /**
-     * @return array
-     */
+    
     public function getInfoMessages()
     {
         return $this->getMessages(self::KEY_INFO);
     }
-
-    /**
-     * @return array
-     */
+    
     public function getSuccessMessages()
     {
         return $this->getMessages(self::KEY_SUCCESS);

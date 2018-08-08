@@ -22,7 +22,6 @@ class CronModuleRepositoryTest extends TestCase
     }
 
     /**
-     * @param \Doctrine\ORM\EntityRepository $entityRepository
      * @return \PHPUnit\Framework\MockObject\MockObject|\Doctrine\ORM\EntityManagerInterface
      */
     private function createEntityManagerMockWithRepository(EntityRepository $entityRepository)

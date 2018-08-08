@@ -41,9 +41,6 @@ class EntityNameResolver
 
     /**
      * Replace every occurrence of the original FQNs with word borders on both sides and not followed by a back-slash
-     *
-     * @param string $string
-     * @return string
      */
     private function resolveInString(string $string): string
     {
@@ -54,11 +51,7 @@ class EntityNameResolver
 
         return $string;
     }
-
-    /**
-     * @param array $array
-     * @return array
-     */
+    
     private function resolveInArray(array $array): array
     {
         return array_map([$this, 'resolveIn'], $array);

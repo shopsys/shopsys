@@ -7,7 +7,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductCalculatedPriceFactory implements ProductCalculatedPriceFactoryInterface
 {
-
     public function create(
         Product $product,
         PricingGroup $pricingGroup,

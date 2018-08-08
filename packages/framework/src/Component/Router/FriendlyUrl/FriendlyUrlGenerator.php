@@ -26,10 +26,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
     }
 
     /**
-     * @param \Symfony\Component\Routing\RouteCollection $routeCollection
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $routeName
-     * @param array $parameters
      * @param int $referenceType
      * @return string
      */
@@ -68,9 +65,6 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
     /**
      * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
      * @param string $referenceType
      * @return string
      */

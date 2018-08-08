@@ -35,8 +35,6 @@ class ProductAccessory
     protected $position;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $accessory
      * @param int $position
      */
     public function __construct(Product $product, Product $accessory, $position)

@@ -62,13 +62,9 @@ class ActionColumn
     private $isAjaxConfirm;
 
     /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
      * @param string $type
      * @param string $title
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
      */
     public function __construct(
         RouterInterface $router,
@@ -162,7 +158,6 @@ class ActionColumn
     }
 
     /**
-     * @param array $row
      * @return string
      */
     public function getTargetUrl(array $row)

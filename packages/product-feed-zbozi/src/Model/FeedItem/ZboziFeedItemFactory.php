@@ -87,8 +87,6 @@ class ZboziFeedItemFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
     protected function getPathToMainCategory(Product $product, DomainConfig $domainConfig): array

@@ -45,7 +45,6 @@ class TransportRepository
     }
 
     /**
-     * @param array $transportIds
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
     public function getAllByIds(array $transportIds)

@@ -32,11 +32,7 @@ class TransportAndPaymentFormType extends AbstractType
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $payments = $this->paymentFacade->getVisibleByDomainId($options['domain_id']);

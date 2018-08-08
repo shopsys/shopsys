@@ -28,7 +28,6 @@ class QuantifiedProductDiscountCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
      * @param float $discountPercent
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */

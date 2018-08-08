@@ -28,7 +28,6 @@ class ManualBestsellingProductRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProduct[]
      */
     public function getByCategory($domainId, Category $category)
@@ -46,8 +45,6 @@ class ManualBestsellingProductRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProduct[]
      */
     public function getOfferedByCategory($domainId, Category $category, PricingGroup $pricingGroup)

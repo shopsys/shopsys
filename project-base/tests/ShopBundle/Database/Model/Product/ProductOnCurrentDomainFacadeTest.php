@@ -153,8 +153,6 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
     }
 
     /**
-     * @param array $namesByLocale
-     * @param array $valuesTextsByLocales
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
      */
     private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales)
@@ -195,8 +193,6 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     private function getPaginationResultInCategory(ProductFilterData $productFilterData, Category $category)

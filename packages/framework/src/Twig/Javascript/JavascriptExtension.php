@@ -17,10 +17,7 @@ class JavascriptExtension extends Twig_Extension
     {
         $this->javascriptCompilerService = $javascriptCompilerService;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [
@@ -42,7 +39,6 @@ class JavascriptExtension extends Twig_Extension
     }
 
     /**
-     * @param array $javascriptLinks
      * @return string
      */
     private function getHtmlJavascriptImports(array $javascriptLinks)

@@ -76,7 +76,6 @@ class BrandDomainTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
     private function getRefreshedBrandFromDatabase(Brand $brand)

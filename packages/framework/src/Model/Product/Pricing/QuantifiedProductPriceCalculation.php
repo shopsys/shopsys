@@ -53,7 +53,6 @@ class QuantifiedProductPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice

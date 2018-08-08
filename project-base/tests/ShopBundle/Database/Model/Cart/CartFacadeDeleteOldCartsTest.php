@@ -106,7 +106,6 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      */
     private function getCartFacadeForCustomer(CustomerIdentifier $customerIdentifier)
@@ -125,7 +124,6 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     private function getCustomerIdentifierFactoryMock(CustomerIdentifier $customerIdentifier)
@@ -149,7 +147,6 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param int $count
      * @param string $message
      */

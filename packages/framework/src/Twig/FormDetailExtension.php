@@ -19,10 +19,7 @@ class FormDetailExtension extends Twig_Extension
     {
         $this->twigEnvironment = $twigEnvironment;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [
@@ -58,8 +55,6 @@ class FormDetailExtension extends Twig_Extension
 
     /**
      * @param mixed $object
-     * @param \Symfony\Component\Form\FormView $formView
-     * @param array $vars
      * @return string
      */
     public function formSave($object, FormView $formView, array $vars = [])

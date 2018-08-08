@@ -22,11 +22,7 @@ class CustomerFormType extends AbstractType
     {
         $this->customerDataFactory = $customerDataFactory;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

@@ -83,7 +83,6 @@ class AvailabilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
      * @return bool
      */
     public function isAvailabilityUsed(Availability $availability)

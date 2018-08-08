@@ -14,10 +14,6 @@ use Symfony\Component\Validator\Constraints;
 
 class LoginFormType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

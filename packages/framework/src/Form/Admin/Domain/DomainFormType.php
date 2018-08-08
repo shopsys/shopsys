@@ -12,11 +12,7 @@ use Symfony\Component\Validator\Constraints;
 class DomainFormType extends AbstractType
 {
     const FIELD_ICON = 'icon';
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

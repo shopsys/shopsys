@@ -94,7 +94,6 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
      * @param string $propertyName
      * @param string $propertyValue
      */

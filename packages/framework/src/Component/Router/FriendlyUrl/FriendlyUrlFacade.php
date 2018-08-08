@@ -85,7 +85,6 @@ class FriendlyUrlFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param string $entityName
      */
     protected function resolveUniquenessOfFriendlyUrlAndFlush(FriendlyUrl $friendlyUrl, $entityName)
@@ -147,7 +146,6 @@ class FriendlyUrlFacade
     /**
      * @param string $routeName
      * @param int $entityId
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData $urlListData
      */
     public function saveUrlListFormData($routeName, $entityId, UrlListData $urlListData)
     {

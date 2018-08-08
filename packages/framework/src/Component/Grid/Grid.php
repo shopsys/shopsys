@@ -156,11 +156,6 @@ class Grid
 
     /**
      * @param string $id
-     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     * @param \Twig_Environment $twig
      */
     public function __construct(
         $id,
@@ -217,8 +212,6 @@ class Grid
      * @param string $type
      * @param string $name
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addActionColumn(
@@ -244,8 +237,6 @@ class Grid
 
     /**
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addEditActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
@@ -255,8 +246,6 @@ class Grid
 
     /**
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addDeleteActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
@@ -304,7 +293,6 @@ class Grid
 
     /**
      * @param string|string[] $viewTheme
-     * @param array $viewParameters
      */
     public function setTheme($viewTheme, array $viewParameters = [])
     {
@@ -420,10 +408,7 @@ class Grid
     {
         return $this->actionColumns;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getRows()
     {
         return $this->rows;
@@ -446,7 +431,6 @@ class Grid
     }
 
     /**
-     * @param array $row
      * @return bool
      */
     public function isRowSelected(array $row)
@@ -454,10 +438,7 @@ class Grid
         $rowId = $this->getRowId($row);
         return in_array($rowId, $this->selectedRowIds, true);
     }
-
-    /**
-     * @return array
-     */
+    
     public function getSelectedRowIds()
     {
         return $this->selectedRowIds;
@@ -480,10 +461,7 @@ class Grid
             $this->limit = $limit;
         }
     }
-
-    /**
-     * @return array
-     */
+    
     public function getAllowedLimits()
     {
         return $this->allowedLimits;
@@ -695,7 +673,6 @@ class Grid
     }
 
     /**
-     * @param array $row
      * @param string $sourceColumnName
      * @return mixed
      */

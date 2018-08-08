@@ -39,11 +39,7 @@ class AllMailTemplatesFormType extends AbstractType
         $this->personalDataAccessMail = $personalDataAccessMail;
         $this->personalDataExportMail = $personalDataExportMail;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

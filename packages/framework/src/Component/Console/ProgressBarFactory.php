@@ -8,7 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProgressBarFactory
 {
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param int $max
      * @return \Symfony\Component\Console\Helper\ProgressBar
      */

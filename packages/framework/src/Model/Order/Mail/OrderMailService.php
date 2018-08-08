@@ -95,8 +95,6 @@ class OrderMailService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     public function getMessageDataByOrder(Order $order, MailTemplate $mailTemplate)
@@ -114,7 +112,6 @@ class OrderMailService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return string
      */
     public function getMailTemplateNameByStatus(OrderStatus $orderStatus)
@@ -123,7 +120,6 @@ class OrderMailService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return array
      */
     private function getVariablesReplacementsForBody(Order $order)
@@ -155,7 +151,6 @@ class OrderMailService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return array
      */
     private function getVariablesReplacementsForSubject(Order $order)
@@ -165,10 +160,7 @@ class OrderMailService
             self::VARIABLE_DATE => $this->getFormattedDateTime($order),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     public function getTemplateVariables()
     {
         return [
@@ -189,7 +181,6 @@ class OrderMailService
     }
 
     /**
-     * @param  \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     private function getFormattedPrice(Order $order)
@@ -202,7 +193,6 @@ class OrderMailService
     }
 
     /**
-     * @param  \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     private function getFormattedDateTime(Order $order)
@@ -214,7 +204,6 @@ class OrderMailService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     private function getBillingAddressHtmlTable(Order $order)
@@ -226,7 +215,6 @@ class OrderMailService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     private function getDeliveryAddressHtmlTable(Order $order)
@@ -238,7 +226,6 @@ class OrderMailService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     private function getProductsHtmlTable(Order $order)
@@ -253,7 +240,6 @@ class OrderMailService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     private function getDomainLocaleByOrder(Order $order)

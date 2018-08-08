@@ -9,10 +9,7 @@ use Twig_SimpleFunction;
 class HoneyPotExtension extends Twig_Extension
 {
     const PASSWORD_FIELD_NAME = 'password';
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [
@@ -41,7 +38,6 @@ class HoneyPotExtension extends Twig_Extension
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $formView
      * @return \Symfony\Component\Form\FormView
      */
     private function getRootFormView(FormView $formView)
@@ -56,7 +52,6 @@ class HoneyPotExtension extends Twig_Extension
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $formView
      * @return bool
      */
     private function containsNotRenderedPassword(FormView $formView)

@@ -11,6 +11,8 @@ services:
             - '@dataProvider'
             - '@group'
 
+    Symplify\CodingStandard\Fixer\Commenting\RemoveUselessDocBlockFixer:
+
 parameters:
     skip:
         SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff.MissingTraversableParameterTypeHintSpecification: ~

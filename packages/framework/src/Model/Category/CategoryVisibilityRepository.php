@@ -71,7 +71,6 @@ class CategoryVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return int
      */
     private function getMaxLevelOnDomain(DomainConfig $domainConfig)
@@ -88,7 +87,6 @@ class CategoryVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int $level
      */
     private function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level)

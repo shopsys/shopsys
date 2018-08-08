@@ -87,10 +87,6 @@ class GoogleFeedItemTest extends TestCase
     }
 
     /**
-     * @param int $id
-     * @param string $url
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|\PHPUnit\Framework\MockObject\MockObject
      */
     private function createDomainConfigMock(int $id, string $url, string $locale, Currency $currency): DomainConfig

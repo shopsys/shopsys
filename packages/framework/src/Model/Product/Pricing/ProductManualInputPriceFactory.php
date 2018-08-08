@@ -7,7 +7,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductManualInputPriceFactory implements ProductManualInputPriceFactoryInterface
 {
-
     public function create(
         Product $product,
         PricingGroup $pricingGroup,

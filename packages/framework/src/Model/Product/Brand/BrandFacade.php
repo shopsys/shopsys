@@ -65,7 +65,6 @@ class BrandFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
     public function create(BrandData $brandData)
@@ -90,8 +89,6 @@ class BrandFacade
     }
 
     /**
-     * @param $brandId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
     public function edit($brandId, BrandData $brandData)

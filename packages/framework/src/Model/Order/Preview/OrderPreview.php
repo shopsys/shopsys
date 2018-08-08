@@ -67,8 +67,6 @@ class OrderPreview
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProductsByIndex
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPricesByIndex
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscountsByIndex
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport|null $transport
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment

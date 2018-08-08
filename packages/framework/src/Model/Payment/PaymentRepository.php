@@ -81,7 +81,6 @@ class PaymentRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
     public function getAllByTransport(Transport $transport)

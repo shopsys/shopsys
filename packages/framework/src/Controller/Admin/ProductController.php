@@ -322,7 +322,6 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     private function getGrid(QueryBuilder $queryBuilder)

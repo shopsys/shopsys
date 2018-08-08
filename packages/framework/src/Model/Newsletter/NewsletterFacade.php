@@ -66,8 +66,6 @@ class NewsletterFacade
     }
 
     /**
-     * @param int $selectedDomainId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getQueryBuilderForQuickSearch(int $selectedDomainId, QuickSearchFormData $searchData)
@@ -76,7 +74,6 @@ class NewsletterFacade
     }
 
     /**
-     * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
      */
     public function getNewsletterSubscriberById(int $id)

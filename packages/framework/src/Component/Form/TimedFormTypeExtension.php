@@ -39,12 +39,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
             $options
         ));
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
+    
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         if ($options[self::OPTION_ENABLED] && !$view->parent && $options['compound']) {

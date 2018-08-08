@@ -38,11 +38,7 @@ class PaymentFormType extends AbstractType
         $this->transportFacade = $transportFacade;
         $this->vatFacade = $vatFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $payment = $options['payment'];

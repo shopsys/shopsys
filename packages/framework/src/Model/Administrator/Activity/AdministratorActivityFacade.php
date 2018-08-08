@@ -33,7 +33,6 @@ class AdministratorActivityFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param string $ipAddress
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity
      */
@@ -57,7 +56,6 @@ class AdministratorActivityFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity[]
      */

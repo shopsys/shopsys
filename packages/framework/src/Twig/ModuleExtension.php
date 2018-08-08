@@ -17,10 +17,7 @@ class ModuleExtension extends Twig_Extension
     {
         $this->moduleFacade = $moduleFacade;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

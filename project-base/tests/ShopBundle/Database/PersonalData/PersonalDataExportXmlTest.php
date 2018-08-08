@@ -74,7 +74,6 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
      */
     private function createBillingAddress(Country $country)
@@ -96,7 +95,6 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
      */
     private function createDeliveryAddress(Country $country)
@@ -116,8 +114,6 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     private function createUser(BillingAddress $billingAddress, DeliveryAddress $deliveryAddress)
@@ -135,9 +131,6 @@ class PersonalDataExportXmlTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $status
-     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     private function createOrder(Currency $currency, OrderStatus $status, Country $country)

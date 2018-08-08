@@ -23,7 +23,6 @@ class FriendlyUrlDataProviderRegistry
 
     /**
      * @param string $routeName
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     public function getFriendlyUrlDataByRouteAndDomain($routeName, DomainConfig $domainConfig)

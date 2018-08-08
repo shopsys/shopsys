@@ -53,7 +53,6 @@ class FriendlyUrlService
 
     /**
      * @param int $attempt
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param string $entityName
      * @param array|null $matchedRouteData
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult
@@ -113,7 +112,6 @@ class FriendlyUrlService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @return string
      */
     public function getAbsoluteUrlByFriendlyUrl(FriendlyUrl $friendlyUrl)
@@ -124,7 +122,6 @@ class FriendlyUrlService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $slug
      * @return string
      */

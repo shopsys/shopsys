@@ -40,7 +40,6 @@ class ManualBestsellingProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $productsIndexedByPosition
      */

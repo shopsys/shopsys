@@ -19,7 +19,6 @@ class CurrencyService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
     public function create(CurrencyData $currencyData)
@@ -28,8 +27,6 @@ class CurrencyService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @param bool $isDefaultCurrency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
@@ -48,8 +45,6 @@ class CurrencyService
     /**
      * @param int $defaultCurrencyId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[] $currenciesUsedInOrders
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @return int[]
      */
     public function getNotAllowedToDeleteCurrencyIds(

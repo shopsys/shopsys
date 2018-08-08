@@ -48,10 +48,7 @@ class DomainExtension extends \Twig_Extension
         $this->domain = $domain;
         $this->domainFacade = $domainFacade;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

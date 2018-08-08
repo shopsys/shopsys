@@ -27,7 +27,6 @@ class FrontLogoutHandler implements LogoutSuccessHandlerInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function onLogoutSuccess(Request $request)

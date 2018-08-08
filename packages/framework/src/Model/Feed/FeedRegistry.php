@@ -28,7 +28,6 @@ class FeedRegistry
 
     /**
      * @param string[] $knownTypes
-     * @param string $defaultType
      */
     public function __construct(array $knownTypes, string $defaultType)
     {
@@ -52,7 +51,6 @@ class FeedRegistry
     }
 
     /**
-     * @param string $type
      * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInterface[]
      */
     public function getFeeds(string $type): array

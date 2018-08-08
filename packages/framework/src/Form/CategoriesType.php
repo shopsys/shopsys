@@ -22,21 +22,12 @@ class CategoriesType extends AbstractType
     {
         $this->categoriesTypeTransformer = $categoryTransformer;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
+    
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['domain_id'] = $options['domain_id'];
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addViewTransformer($this->categoriesTypeTransformer);

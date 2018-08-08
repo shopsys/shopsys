@@ -103,16 +103,7 @@ class OrderDataFixture
     /**
      * @param int $orderTotalCount
      * @param int $orderItemCountPerOrder
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory
      */
     public function __construct(
         $orderTotalCount,
@@ -188,7 +179,6 @@ class OrderDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
      */
     private function createOrderData(User $user = null)

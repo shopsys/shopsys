@@ -10,7 +10,6 @@ class InvalidTimeFormatException extends Exception implements CronConfigExceptio
      * @param string $timeString
      * @param int $maxValue
      * @param int $divisibleBy
-     * @param \Exception $previous
      */
     public function __construct($timeString, $maxValue, $divisibleBy, Exception $previous = null)
     {

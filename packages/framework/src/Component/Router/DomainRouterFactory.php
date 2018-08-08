@@ -83,7 +83,6 @@ class DomainRouterFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Symfony\Component\Routing\Router
      */
     private function getBasicRouter(DomainConfig $domainConfig)
@@ -97,7 +96,6 @@ class DomainRouterFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Symfony\Component\Routing\RequestContext
      */
     private function getRequestContextByDomainConfig(DomainConfig $domainConfig)
@@ -124,7 +122,6 @@ class DomainRouterFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
      */
     public function getFriendlyUrlRouter(DomainConfig $domainConfig)

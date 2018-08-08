@@ -44,7 +44,6 @@ class CountryDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
      * @param int $domainId
      * @param string $referenceName
      */

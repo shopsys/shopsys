@@ -271,8 +271,6 @@ class OrderController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
      */

@@ -66,7 +66,6 @@ class AdvertFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
      */
     public function create(AdvertData $advertData)
@@ -83,7 +82,6 @@ class AdvertFacade
 
     /**
      * @param int $advertId
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
      */
     public function edit($advertId, AdvertData $advertData)

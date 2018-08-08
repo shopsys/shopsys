@@ -20,7 +20,6 @@ class ProductDataFixtureCsvReader
 
     /**
      * @param string $path
-     * @param \Shopsys\FrameworkBundle\Component\Csv\CsvReader $csvReader
      */
     public function __construct(
         $path,
@@ -29,10 +28,7 @@ class ProductDataFixtureCsvReader
         $this->path = $path;
         $this->csvReader = $csvReader;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getProductDataFixtureCsvRows()
     {
         $rawRowsWithHeader = $this->csvReader->getRowsFromCsv($this->path);

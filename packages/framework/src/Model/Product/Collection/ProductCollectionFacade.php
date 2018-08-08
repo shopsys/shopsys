@@ -76,7 +76,6 @@ class ProductCollectionFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string|null $sizeName
      * @return string[]
      */
@@ -112,7 +111,6 @@ class ProductCollectionFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
     public function getAbsoluteUrlsIndexedByProductId(array $products, DomainConfig $domainConfig)
@@ -133,7 +131,6 @@ class ProductCollectionFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[][]
      */
     public function getProductParameterValuesIndexedByProductIdAndParameterName(array $products, DomainConfig $domainConfig)

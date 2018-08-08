@@ -73,7 +73,6 @@ class AdvertController extends AdminBaseController
 
     /**
      * @Route("/advert/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function editAction(Request $request, $id)

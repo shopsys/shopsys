@@ -277,7 +277,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
 
     /**
      * @param string $multidomainLoginToken
-     * @param \DateTime $multidomainLoginTokenExpiration
      */
     public function setMultidomainLoginTokenWithExpiration(
         $multidomainLoginToken,

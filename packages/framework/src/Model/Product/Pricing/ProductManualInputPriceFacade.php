@@ -34,8 +34,6 @@ class ProductManualInputPriceFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $inputPrice
      */
     public function refresh(Product $product, PricingGroup $pricingGroup, $inputPrice)
@@ -52,7 +50,6 @@ class ProductManualInputPriceFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[]
      */
     public function getAllByProduct(Product $product)

@@ -18,11 +18,7 @@ class TimedSpamValidationListener implements EventSubscriberInterface
      * @var string[]
      */
     private $options;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider $formTimeProvider
-     * @param array $options
-     */
+    
     public function __construct(FormTimeProvider $formTimeProvider, array $options)
     {
         $this->formTimeProvider = $formTimeProvider;
@@ -48,10 +44,7 @@ class TimedSpamValidationListener implements EventSubscriberInterface
         }
         $this->formTimeProvider->removeFormTime($form->getName());
     }
-
-    /**
-     * @return array
-     */
+    
     public static function getSubscribedEvents()
     {
         return [

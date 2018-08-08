@@ -18,7 +18,6 @@ class PriceCalculation
 
     /**
      * @param string $priceWithVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return string
      */
     public function getVatAmountByPriceWithVat($priceWithVat, Vat $vat)

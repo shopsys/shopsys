@@ -28,7 +28,6 @@ class Domain implements DomainIdsProviderInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
     public function __construct(array $domainConfigs, Setting $setting)
     {

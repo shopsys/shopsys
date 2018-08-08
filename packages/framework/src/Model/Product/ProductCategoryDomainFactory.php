@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class ProductCategoryDomainFactory implements ProductCategoryDomainFactoryInterface
 {
-
     public function create(
         Product $product,
         Category $category,

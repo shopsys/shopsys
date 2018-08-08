@@ -99,7 +99,6 @@ class ProductDomainTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     private function getRefreshedProductFromDatabase(Product $product)

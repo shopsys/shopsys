@@ -79,7 +79,6 @@ class LegalConditionsFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
      * @return bool
      */
     public function isArticleUsedAsLegalConditions(Article $article)

@@ -68,7 +68,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @param string|null $referenceName
      */
     private function createArticle(ArticleData $articleData, $referenceName = null)

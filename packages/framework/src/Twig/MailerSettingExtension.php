@@ -42,10 +42,7 @@ class MailerSettingExtension extends Twig_Extension
         $this->mailerWhitelistExpressions = $this->container->getParameter('mailer_delivery_whitelist');
         $this->templating = $templating;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

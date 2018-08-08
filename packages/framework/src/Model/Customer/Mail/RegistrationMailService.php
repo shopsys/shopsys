@@ -35,8 +35,6 @@ class RegistrationMailService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     public function getMessageDataByUser(User $user, MailTemplate $mailTemplate)
@@ -53,7 +51,6 @@ class RegistrationMailService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @return array
      */
     private function getVariablesReplacements(User $user)
@@ -68,10 +65,7 @@ class RegistrationMailService
             self::VARIABLE_LOGIN_PAGE => $router->generate('front_login', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     public function getTemplateVariables()
     {
         return [

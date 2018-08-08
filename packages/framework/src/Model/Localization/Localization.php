@@ -62,10 +62,7 @@ class Localization
     {
         return 'en';
     }
-
-    /**
-     * @return array
-     */
+    
     public function getLocalesOfAllDomains()
     {
         if ($this->allLocales === null) {

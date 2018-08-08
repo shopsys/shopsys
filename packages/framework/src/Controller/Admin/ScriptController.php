@@ -77,7 +77,6 @@ class ScriptController extends AdminBaseController
 
     /**
      * @Route("/script/edit/{scriptId}")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $scriptId
      */
     public function editAction(Request $request, $scriptId)

@@ -19,10 +19,7 @@ class FormThemeExtension extends \Twig_Extension
     {
         $this->requestStack = $requestStack;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

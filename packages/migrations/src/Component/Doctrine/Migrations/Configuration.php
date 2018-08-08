@@ -121,7 +121,6 @@ class Configuration extends DoctrineConfiguration
     }
 
     /**
-     * @param \Doctrine\DBAL\Migrations\Version $version
      * @param \Doctrine\DBAL\Migrations\Version[] $migratedVersions
      * @return bool
      */

@@ -59,11 +59,7 @@ class OrderFormType extends AbstractType
         $this->countryFacade = $countryFacade;
         $this->orderStatusFacade = $orderStatusFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $domainId = $options['order']->getDomainId();

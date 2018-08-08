@@ -31,9 +31,6 @@ class CartService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
      * @return \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
      */
@@ -56,11 +53,7 @@ class CartService
         $cart->addItem($newCartItem);
         return new AddProductResult($newCartItem, true, $quantity);
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param array $quantitiesByCartItemId
-     */
+    
     public function changeQuantities(Cart $cart, array $quantitiesByCartItemId)
     {
         foreach ($cart->getItems() as $cartItem) {
@@ -71,7 +64,6 @@ class CartService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @param int $cartItemId
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
      */
@@ -110,8 +102,6 @@ class CartService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem|null
      */
     private function findSimilarCartItemByCartItem(Cart $cart, CartItem $cartItem)
@@ -126,7 +116,6 @@ class CartService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
     public function getQuantifiedProductsIndexedByCartItemId(Cart $cart)

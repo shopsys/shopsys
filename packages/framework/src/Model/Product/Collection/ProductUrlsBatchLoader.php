@@ -29,7 +29,6 @@ class ProductUrlsBatchLoader
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
     public function loadForProducts(array $products, DomainConfig $domainConfig): void
     {

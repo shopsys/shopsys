@@ -86,7 +86,6 @@ class PaymentFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
     public function create(PaymentData $paymentData)
@@ -154,7 +153,6 @@ class PaymentFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param string[] $pricesByCurrencyId
      */
     protected function updatePaymentPrices(Payment $payment, $pricesByCurrencyId)
@@ -174,7 +172,6 @@ class PaymentFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return string[]
      */
     public function getPaymentPricesWithVatIndexedByPaymentId(Currency $currency)
@@ -212,7 +209,6 @@ class PaymentFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
     public function getIndependentBasePricesIndexedByCurrencyId(Payment $payment)

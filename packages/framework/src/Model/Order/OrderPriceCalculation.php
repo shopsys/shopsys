@@ -30,7 +30,6 @@ class OrderPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Shopsys\FrameworkBundle\Model\Order\OrderTotalPrice
      */
     public function getOrderTotalPrice(Order $order)
@@ -54,9 +53,6 @@ class OrderPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $orderTotalPrice
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     public function calculateOrderRoundingPrice(

@@ -42,7 +42,6 @@ class OrderMailFacade
         $this->mailer->send($messageData);
     }
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */

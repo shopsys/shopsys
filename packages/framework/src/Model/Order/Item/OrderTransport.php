@@ -21,12 +21,9 @@ class OrderTransport extends OrderItem
     protected $transport;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @param string $vatPercent
      * @param int $quantity
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      */
     public function __construct(
         Order $order,

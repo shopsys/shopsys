@@ -49,10 +49,7 @@ class DateTimeFormatterExtension extends Twig_Extension
             ),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

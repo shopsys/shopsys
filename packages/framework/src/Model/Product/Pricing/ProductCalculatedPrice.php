@@ -38,8 +38,6 @@ class ProductCalculatedPrice
     protected $priceWithVat;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string|null $priceWithVat
      */
     public function __construct(Product $product, PricingGroup $pricingGroup, $priceWithVat)

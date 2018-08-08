@@ -7,7 +7,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ManualBestsellingProductFactory implements ManualBestsellingProductFactoryInterface
 {
-
     public function create(
         int $domainId,
         Category $category,

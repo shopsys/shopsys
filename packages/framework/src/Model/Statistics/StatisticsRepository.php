@@ -20,8 +20,6 @@ class StatisticsRepository
     }
 
     /**
-     * @param DateTime $start
-     * @param DateTime $end
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
     public function getCustomersRegistrationsCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end)
@@ -51,8 +49,6 @@ class StatisticsRepository
     }
 
     /**
-     * @param DateTime $start
-     * @param DateTime $end
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
     public function getNewOrdersCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end)

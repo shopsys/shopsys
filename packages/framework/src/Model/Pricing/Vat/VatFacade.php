@@ -80,7 +80,6 @@ class VatFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
     public function create(VatData $vatData)
@@ -94,7 +93,6 @@ class VatFacade
 
     /**
      * @param int $vatId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
     public function edit($vatId, VatData $vatData)
@@ -172,7 +170,6 @@ class VatFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return bool
      */
     public function isVatUsed(Vat $vat)

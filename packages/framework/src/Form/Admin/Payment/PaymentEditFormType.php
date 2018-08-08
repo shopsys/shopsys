@@ -30,11 +30,7 @@ class PaymentEditFormType extends AbstractType
         $this->currencyFacade = $currencyFacade;
         $this->paymentFacade = $paymentFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $payment = $options['payment'];

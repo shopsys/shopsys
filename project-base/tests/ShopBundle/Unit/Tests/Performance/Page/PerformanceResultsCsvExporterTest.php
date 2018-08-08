@@ -85,7 +85,6 @@ class PerformanceResultsCsvExporterTest extends TestCase
     }
 
     /**
-     * @param array $expectedLine
      * @param string $filename
      * @param int $lineIndex
      */

@@ -22,11 +22,7 @@ class SingleCheckboxChoiceType extends AbstractType
             'expanded' => true,
         ]);
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);

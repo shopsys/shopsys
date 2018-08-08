@@ -82,7 +82,6 @@ class CategoryDomain
     protected $description;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      */
     public function __construct(Category $category, $domainId)

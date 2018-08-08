@@ -12,11 +12,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture
 {
     /** @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade */
     private $manualBestsellingProductFacade;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade $manualBestsellingProductFacade
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     */
+    
     public function __construct(
         ManualBestsellingProductFacade $manualBestsellingProductFacade
     ) {

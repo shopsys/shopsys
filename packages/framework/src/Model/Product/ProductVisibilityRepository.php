@@ -97,7 +97,6 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      */
     public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, $domainId)
@@ -124,8 +123,6 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
      */

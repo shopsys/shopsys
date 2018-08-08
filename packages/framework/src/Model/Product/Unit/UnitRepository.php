@@ -81,7 +81,6 @@ class UnitRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      * @return bool
      */
     public function existsProductWithUnit(Unit $unit)

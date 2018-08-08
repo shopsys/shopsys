@@ -70,7 +70,6 @@ class CronModuleFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
      * @return bool
      */
     public function isModuleSuspended(CronModuleConfig $cronModuleConfig)

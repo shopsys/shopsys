@@ -80,7 +80,6 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return bool
      */
     private function isConstraintClass(Node $node)
@@ -105,7 +104,6 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node\Expr\ArrayItem $node
      * @return bool
      */
     private function isMessageOptionItem(ArrayItem $node)

@@ -22,11 +22,7 @@ class CurrencySettingsFormType extends AbstractType
     {
         $this->currencyFacade = $currencyFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

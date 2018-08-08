@@ -30,7 +30,6 @@ class ImageLocator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      * @param string|null $sizeName
      * @return string
      */
@@ -42,7 +41,6 @@ class ImageLocator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      * @param string|null $sizeName
      * @return string
      */
@@ -54,7 +52,6 @@ class ImageLocator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      * @return bool
      */
     public function imageExists(Image $image)

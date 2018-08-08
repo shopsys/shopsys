@@ -24,7 +24,6 @@ class GridOrderingFacade
 
     /**
      * @param string $entityClass
-     * @param array $rowIds
      */
     public function saveOrdering($entityClass, array $rowIds)
     {

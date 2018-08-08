@@ -90,7 +90,6 @@ class LoginController extends AdminBaseController
 
     /**
      * @Route("/sso/{originalDomainId}", requirements={"originalDomainId" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $originalDomainId
      */
     public function ssoAction(Request $request, $originalDomainId)

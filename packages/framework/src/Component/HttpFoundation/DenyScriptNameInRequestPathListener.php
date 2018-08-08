@@ -23,10 +23,7 @@ class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
             }
         }
     }
-
-    /**
-     * @return array
-     */
+    
     public static function getSubscribedEvents()
     {
         return [

@@ -28,7 +28,6 @@ class CartItemRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
     public function getAllByCustomerIdentifier(CustomerIdentifier $customerIdentifier)

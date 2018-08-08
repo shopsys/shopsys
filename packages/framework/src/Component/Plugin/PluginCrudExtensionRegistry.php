@@ -20,7 +20,6 @@ class PluginCrudExtensionRegistry
     private $crudExtensionsByTypeAndServiceId = [];
 
     /**
-     * @param \Shopsys\Plugin\PluginCrudExtensionInterface $crudExtension
      * @param string $type
      * @param string $serviceId
      */

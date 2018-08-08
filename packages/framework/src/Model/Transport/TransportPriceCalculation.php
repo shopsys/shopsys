@@ -28,9 +28,6 @@ class TransportPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
@@ -48,8 +45,6 @@ class TransportPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public function calculateIndependentPrice(
@@ -64,7 +59,6 @@ class TransportPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @param int $domainId
      * @return bool
      */
@@ -81,8 +75,6 @@ class TransportPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */

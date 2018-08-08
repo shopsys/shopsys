@@ -23,7 +23,6 @@ class BreadcrumbResolver
 
     /**
      * @param string $routeName
-     * @param array $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     public function resolveBreadcrumbItems($routeName, array $routeParameters = [])

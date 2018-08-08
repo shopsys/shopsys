@@ -123,7 +123,6 @@ class ProductController extends FrontBaseController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function listByCategoryAction(Request $request, $id)
@@ -185,7 +184,6 @@ class ProductController extends FrontBaseController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function listByBrandAction(Request $request, $id)
@@ -279,7 +277,6 @@ class ProductController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
     private function createProductFilterConfigForCategory(Category $category)
@@ -370,10 +367,7 @@ class ProductController extends FrontBaseController
     {
         return $page === null || (preg_match('@^([2-9]|[1-9][0-9]+)$@', $page));
     }
-
-    /**
-     * @return array
-     */
+    
     private function getRequestParametersWithoutPage()
     {
         $parameters = $this->requestExtension->getAllRequestParams();

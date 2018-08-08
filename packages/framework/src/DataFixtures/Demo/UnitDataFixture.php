@@ -53,7 +53,6 @@ class UnitDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @param string|null $referenceName
      */
     private function createUnit(UnitData $unitData, $referenceName = null)

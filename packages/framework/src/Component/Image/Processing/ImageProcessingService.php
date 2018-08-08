@@ -107,7 +107,6 @@ class ImageProcessingService
     }
 
     /**
-     * @param \Intervention\Image\Image $image
      * @param int|null $width
      * @param int|null $height
      * @param bool $crop

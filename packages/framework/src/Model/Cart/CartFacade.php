@@ -104,10 +104,7 @@ class CartFacade
 
         return $result;
     }
-
-    /**
-     * @param array $quantitiesByCartItemId
-     */
+    
     public function changeQuantities(array $quantitiesByCartItemId)
     {
         $cart = $this->getCartOfCurrentCustomer();

@@ -17,10 +17,7 @@ class RequestExtension extends Twig_Extension
     {
         $this->requestStack = $requestStack;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [
@@ -38,10 +35,7 @@ class RequestExtension extends Twig_Extension
             ),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     public function getAllRequestParams()
     {
         return array_merge(
@@ -57,18 +51,12 @@ class RequestExtension extends Twig_Extension
     {
         return $this->requestStack->getMasterRequest()->attributes->get('_route');
     }
-
-    /**
-     * @return array
-     */
+    
     private function getParamsFromRequest()
     {
         return $this->requestStack->getMasterRequest()->query->all();
     }
-
-    /**
-     * @return array
-     */
+    
     public function getRouteParams()
     {
         return $this->requestStack->getMasterRequest()->attributes->get('_route_params');

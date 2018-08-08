@@ -74,11 +74,7 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
         parent::buildView($view, $form, $options);
         $view->vars['info_text'] = $options['info_text'];
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->fileConstraints = array_merge(
@@ -108,7 +104,6 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
 
     /**
      * @param string[]|null $uploadedFiles
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function validateUploadedFiles($uploadedFiles, ExecutionContextInterface $context)
     {

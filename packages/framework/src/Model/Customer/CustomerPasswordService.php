@@ -29,7 +29,6 @@ class CustomerPasswordService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @param string $password
      */
     public function changePassword(User $user, $password)
@@ -46,7 +45,6 @@ class CustomerPasswordService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @param string|null $hash
      * @return bool
      */
@@ -65,7 +63,6 @@ class CustomerPasswordService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @param string|null $hash
      * @param string $newPassword
      */

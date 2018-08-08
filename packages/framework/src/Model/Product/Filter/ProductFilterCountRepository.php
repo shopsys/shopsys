@@ -30,11 +30,7 @@ class ProductFilterCountRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountData(
@@ -74,9 +70,6 @@ class ProductFilterCountRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return int
      */
     private function getCountInStock(
@@ -103,10 +96,7 @@ class ProductFilterCountRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brandFilterChoices
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return int[]
      */
     private function getCountIndexedByBrandId(
@@ -156,10 +146,7 @@ class ProductFilterCountRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flagFilterChoices
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return int[]
      */
     private function getCountIndexedByFlagId(
@@ -219,10 +206,7 @@ class ProductFilterCountRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $parameterFilterChoices
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $locale
      * @return int[][]
      */

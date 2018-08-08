@@ -41,8 +41,6 @@ class FilemanagerAccess
      * @see \FM\ElfinderBundle\Configuration\ElFinderConfigurationReader::access()
      * @param string $attr
      * @param string $path
-     * @param $data
-     * @param $volume
      * @return bool|null
      */
     public function isPathAccessible($attr, $path, $data, $volume)
@@ -71,8 +69,6 @@ class FilemanagerAccess
      * @see \FM\ElfinderBundle\Configuration\ElFinderConfigurationReader::access()
      * @param string $attr
      * @param string $path
-     * @param $data
-     * @param $volume
      * @return bool|null
      */
     public static function isPathAccessibleStatic($attr, $path, $data, $volume)

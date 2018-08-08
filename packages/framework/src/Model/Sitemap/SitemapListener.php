@@ -83,8 +83,6 @@ class SitemapListener implements EventSubscriberInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[] $sitemapItems
-     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $section
      * @param int $elementPriority
      */
@@ -103,8 +101,6 @@ class SitemapListener implements EventSubscriberInterface
     }
 
     /**
-     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $section
      * @param int $elementPriority
      */

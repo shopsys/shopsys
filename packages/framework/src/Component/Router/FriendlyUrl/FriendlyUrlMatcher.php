@@ -19,8 +19,6 @@ class FriendlyUrlMatcher
 
     /**
      * @param string $pathinfo
-     * @param \Symfony\Component\Routing\RouteCollection $routeCollection
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return array
      */
     public function match($pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig)

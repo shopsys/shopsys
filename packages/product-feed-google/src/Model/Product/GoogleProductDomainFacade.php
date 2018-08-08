@@ -42,7 +42,6 @@ class GoogleProductDomainFacade
     }
 
     /**
-     * @param $productId
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData[] $googleProductDomainsData
      */
     public function saveGoogleProductDomainsForProductId($productId, array $googleProductDomainsData)

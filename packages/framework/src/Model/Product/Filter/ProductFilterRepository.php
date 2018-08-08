@@ -62,10 +62,8 @@ class ProductFilterRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param string $minimalPrice
      * @param string $maximalPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      */
     private function filterByPrice(
         QueryBuilder $productsQueryBuilder,
@@ -94,7 +92,6 @@ class ProductFilterRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param bool $filterByStock
      */
     public function filterByStock(QueryBuilder $productsQueryBuilder, $filterByStock)
@@ -112,7 +109,6 @@ class ProductFilterRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flags
      */
     private function filterByFlags(QueryBuilder $productsQueryBuilder, array $flags)
@@ -129,7 +125,6 @@ class ProductFilterRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brands
      */
     private function filterByBrands(QueryBuilder $productsQueryBuilder, array $brands)
@@ -147,7 +142,6 @@ class ProductFilterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flags
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @return \Doctrine\ORM\QueryBuilder
      */
     private function getFlagsQueryBuilder(array $flags, EntityManagerInterface $em)
@@ -166,7 +160,6 @@ class ProductFilterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brands
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @return \Doctrine\ORM\QueryBuilder
      */
     private function getBrandsQueryBuilder(array $brands, EntityManagerInterface $em)

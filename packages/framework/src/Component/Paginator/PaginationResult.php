@@ -94,10 +94,7 @@ class PaginationResult
     {
         return $this->totalCount;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getResults()
     {
         return $this->results;

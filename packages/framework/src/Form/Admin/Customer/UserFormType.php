@@ -44,11 +44,7 @@ class UserFormType extends AbstractType
         $this->pricingGroupFacade = $pricingGroupFacade;
         $this->dateTimeFormatterExtension = $dateTimeFormatterExtension;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $user = $options['user'];

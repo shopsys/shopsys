@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class OrderTransportFactory implements OrderTransportFactoryInterface
 {
-
     public function create(
         Order $order,
         string $name,

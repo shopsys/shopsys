@@ -47,7 +47,6 @@ class PaymentDomain
     protected $enabled;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param int $domainId
      */
     public function __construct(Payment $payment, $domainId)

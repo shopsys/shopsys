@@ -36,7 +36,6 @@ class CartWatcherService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
     public function getModifiedPriceItemsAndUpdatePrices(Cart $cart)
@@ -53,8 +52,6 @@ class CartWatcherService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
     public function getNotListableItems(Cart $cart, CurrentCustomer $currentCustomer)

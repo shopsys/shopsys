@@ -29,10 +29,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|\PHPUnit\Framework\MockObject\MockObject
      */
     private $domain;
-
-    /**
-     * @return array
-     */
+    
     public function getTermsAndConditionsAgreementIsMandatoryData()
     {
         return [
@@ -42,8 +39,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     }
 
     /**
-     * @param array $personalInfoFormData
-     * @param $isExpectedValid
      * @dataProvider getTermsAndConditionsAgreementIsMandatoryData
      */
     public function testTermsAndConditionsAgreementIsMandatory(array $personalInfoFormData, $isExpectedValid)
@@ -91,10 +86,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $data = $personalInfoForm->getData();
         $this->assertTrue($data->disallowHeurekaVerifiedByCustomers);
     }
-
-    /**
-     * @return array
-     */
+    
     protected function getExtensions(): array
     {
         return [

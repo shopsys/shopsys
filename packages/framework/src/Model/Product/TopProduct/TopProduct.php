@@ -36,7 +36,6 @@ class TopProduct
     protected $position;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param int $position
      */

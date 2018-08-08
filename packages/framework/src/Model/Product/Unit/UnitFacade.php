@@ -49,7 +49,6 @@ class UnitFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
     public function create(UnitData $unitData)
@@ -63,7 +62,6 @@ class UnitFacade
 
     /**
      * @param int $unitId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
     public function edit($unitId, UnitData $unitData)
@@ -104,7 +102,6 @@ class UnitFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      * @return bool
      */
     public function isUnitUsed(Unit $unit)
@@ -145,7 +142,6 @@ class UnitFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      * @return bool
      */
     public function isUnitDefault(Unit $unit)

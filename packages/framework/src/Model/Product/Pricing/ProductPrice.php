@@ -12,7 +12,6 @@ class ProductPrice extends Price
     private $priceFrom;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @param bool $priceFrom
      */
     public function __construct(Price $price, $priceFrom)

@@ -51,7 +51,6 @@ class CronConfig
     }
 
     /**
-     * @param \DateTimeInterface $roundedTime
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
     public function getCronModuleConfigsByTime(DateTimeInterface $roundedTime)

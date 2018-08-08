@@ -36,9 +36,7 @@ class ImageEntityConfig
     /**
      * @param string $entityName
      * @param string $entityClass
-     * @param array $sizeConfigsByType
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
-     * @param array $multipleByType
      */
     public function __construct($entityName, $entityClass, array $sizeConfigsByType, array $sizeConfigs, array $multipleByType)
     {
@@ -64,10 +62,7 @@ class ImageEntityConfig
     {
         return $this->entityClass;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getTypes()
     {
         return array_keys($this->sizeConfigsByType);

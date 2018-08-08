@@ -41,7 +41,6 @@ class PricingGroupSettingFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return bool
      */
     public function isPricingGroupUsedOnSelectedDomain(PricingGroup $pricingGroup)
@@ -83,7 +82,6 @@ class PricingGroupSettingFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return bool
      */
     public function isPricingGroupDefaultOnSelectedDomain(PricingGroup $pricingGroup)

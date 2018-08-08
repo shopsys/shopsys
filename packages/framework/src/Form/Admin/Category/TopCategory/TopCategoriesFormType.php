@@ -37,11 +37,7 @@ class TopCategoriesFormType extends AbstractType
         $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
         $this->categoriesIdsToCategoriesTransformer = $categoriesIdsToCategoriesTransformer;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $categoryPaths = $this->categoryFacade->getFullPathsIndexedByIdsForDomain(

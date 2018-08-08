@@ -22,21 +22,12 @@ class ProductType extends AbstractType
     ) {
         $this->productIdToProductTransformer = $productIdToProductTransformer;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this->productIdToProductTransformer);
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
+    
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);

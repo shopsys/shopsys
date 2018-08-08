@@ -33,10 +33,7 @@ class SeoExtension extends \Twig_Extension
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

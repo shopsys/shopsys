@@ -67,8 +67,6 @@ class CartItem
     protected $addedAt;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
      * @param string $watchedPrice
      */

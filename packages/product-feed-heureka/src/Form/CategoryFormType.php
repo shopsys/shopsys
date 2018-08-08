@@ -27,11 +27,7 @@ class CategoryFormType extends AbstractType
         $this->translator = $translator;
         $this->heurekaCategoryFacade = $heurekaCategoryFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param  array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $heurekaCategories = $this->heurekaCategoryFacade->getAllIndexedById();

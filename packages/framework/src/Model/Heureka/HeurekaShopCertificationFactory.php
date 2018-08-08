@@ -34,7 +34,6 @@ class HeurekaShopCertificationFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Heureka\ShopCertification
      */
     public function create(Order $order)

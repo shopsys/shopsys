@@ -34,7 +34,6 @@ class MailerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
      * @return \Swift_Message
      */
     private function getMessageWithReplacedVariables(MessageData $messageData)

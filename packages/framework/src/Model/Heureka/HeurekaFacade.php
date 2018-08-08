@@ -53,7 +53,6 @@ class HeurekaFacade
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isHeurekaShopCertificationActivated($domainId)
@@ -62,7 +61,6 @@ class HeurekaFacade
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isHeurekaWidgetActivated($domainId)

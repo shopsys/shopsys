@@ -11,8 +11,6 @@ use SplFileInfo;
 class PhpParserNodeHelper
 {
     /**
-     * @param \PhpParser\Node $node
-     * @param \SplFileInfo $fileInfo
      * @return string
      */
     public static function getConcatenatedStringValue(Node $node, SplFileInfo $fileInfo)

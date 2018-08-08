@@ -44,7 +44,6 @@ class HeurekaProductDomainFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]
      */
     public function getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
@@ -71,7 +70,6 @@ class HeurekaProductDomainFacade
     }
 
     /**
-     * @param $productId
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData[] $heurekaProductDomainsData
      */
     public function saveHeurekaProductDomainsForProductId($productId, array $heurekaProductDomainsData)

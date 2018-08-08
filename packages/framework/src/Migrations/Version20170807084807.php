@@ -45,7 +45,6 @@ class Version20170807084807 extends AbstractMigration
     }
 
     /**
-     * @param array $valuesByKey
      * @param string $pluginName
      */
     private function insertPluginDataValues(array $valuesByKey, $pluginName)

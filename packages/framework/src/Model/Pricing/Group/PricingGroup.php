@@ -41,7 +41,6 @@ class PricingGroup
     protected $coefficient;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @param int $domainId
      */
     public function __construct(PricingGroupData $pricingGroupData, $domainId)

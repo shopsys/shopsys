@@ -47,10 +47,6 @@ class ImageExtension extends Twig_Extension
 
     /**
      * @param string $frontDesignImageUrlPrefix
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(
         $frontDesignImageUrlPrefix,
@@ -67,10 +63,7 @@ class ImageExtension extends Twig_Extension
         $this->imageFacade = $imageFacade;
         $this->templating = $templating;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [
@@ -125,7 +118,6 @@ class ImageExtension extends Twig_Extension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
-     * @param array $attributes
      * @return string
      */
     public function getImageHtml($imageOrEntity, array $attributes = [])
@@ -145,7 +137,6 @@ class ImageExtension extends Twig_Extension
     }
 
     /**
-     * @param array $attributes
      * @return string
      */
     public function getNoimageHtml(array $attributes = [])
@@ -192,10 +183,7 @@ class ImageExtension extends Twig_Extension
     {
         return 'image_extension';
     }
-
-    /**
-     * @param array $attributes
-     */
+    
     private function preventDefault(array &$attributes)
     {
         Utils::setArrayDefaultValue($attributes, 'type');
@@ -205,8 +193,6 @@ class ImageExtension extends Twig_Extension
     }
 
     /**
-     * @param array $attributes
-     * @param $entityName
      * @return string
      */
     private function getImageHtmlByEntityName(array $attributes, $entityName)

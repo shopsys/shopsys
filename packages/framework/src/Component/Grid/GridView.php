@@ -46,12 +46,7 @@ class GridView
     private $twig;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Twig_Environment $twig
      * @param string|string[] $theme
-     * @param array $templateParameters
      */
     public function __construct(
         Grid $grid,
@@ -86,7 +81,6 @@ class GridView
 
     /**
      * @param string $name
-     * @param array $parameters
      * @param bool $echo
      * @return string|null
      */
@@ -118,7 +112,6 @@ class GridView
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
      * @param array|null $row
      * @param \Symfony\Component\Form\FormView
      */
@@ -157,11 +150,7 @@ class GridView
             }
         }
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\ActionColumn $actionColumn
-     * @param array $row
-     */
+    
     public function renderActionCell(ActionColumn $actionColumn, array $row)
     {
         $posibleBlocks = [
@@ -191,7 +180,6 @@ class GridView
     }
 
     /**
-     * @param array $parameters
      * @param array|string|null $removeParameters
      * @return string
      */
@@ -232,7 +220,6 @@ class GridView
 
     /**
      * @param string|string[] $theme
-     * @param array $parameters
      */
     private function setTheme($theme, array $parameters = [])
     {
@@ -269,7 +256,6 @@ class GridView
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
      * @param array $row
      * @return mixed
      */

@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 interface TopProductFactoryInterface
 {
-
     public function create(
         Product $product,
         int $domainId,

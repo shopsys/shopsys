@@ -33,8 +33,6 @@ class JsTranslatorCall
     private $functionName;
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
-     * @param \PLUG\JavaScript\JNodes\JNodeBase $messageIdArgumentNode
      * @param string $messageId
      * @param string $domain
      * @param string $functionName

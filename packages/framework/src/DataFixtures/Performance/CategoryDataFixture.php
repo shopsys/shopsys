@@ -58,12 +58,7 @@ class CategoryDataFixture
 
     /**
      * @param int[] $categoryCountsByLevel
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface $categoryDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      */
     public function __construct(
         $categoryCountsByLevel,
@@ -96,7 +91,6 @@ class CategoryDataFixture
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBar $progressBar
      * @param int $categoryLevel
      */
     private function recursivelyCreateCategoryTree($parentCategory, ProgressBar $progressBar, $categoryLevel = 0)
@@ -133,7 +127,6 @@ class CategoryDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryData
      */
     private function getRandomCategoryDataByParentCategory(Category $parentCategory)

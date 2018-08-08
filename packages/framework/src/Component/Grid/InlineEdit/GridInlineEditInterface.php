@@ -13,7 +13,6 @@ interface GridInlineEditInterface
     public function getForm($rowId);
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $rowId
      * @return mixed
      */

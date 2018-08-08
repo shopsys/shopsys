@@ -52,7 +52,6 @@ class Version20171005091354 extends AbstractMigration
     }
 
     /**
-     * @param array $valuesByKey
      * @param string $context
      */
     private function insertHeurekaDataValues(array $valuesByKey, $context)

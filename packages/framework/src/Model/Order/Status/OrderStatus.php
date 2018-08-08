@@ -42,7 +42,6 @@ class OrderStatus extends AbstractTranslatableEntity
     protected $type;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      * @param int $type
      */
     public function __construct(OrderStatusData $orderStatusData, $type)

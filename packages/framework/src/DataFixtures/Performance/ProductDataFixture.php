@@ -113,19 +113,7 @@ class ProductDataFixture
 
     /**
      * @param int $productTotalCount
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureLoader $productDataFixtureLoader
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
-     * @param \Shopsys\FrameworkBundle\DataFixtures\ProductDataFixtureReferenceInjector $productDataReferenceInjector
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureCsvReader $productDataFixtureCsvReader
-     * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      */
     public function __construct(
         $productTotalCount,
@@ -307,7 +295,6 @@ class ProductDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param int $domainId
      */
     private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, $domainId)
@@ -320,7 +307,6 @@ class ProductDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param int $domainId
      */
     private function addRandomPerformanceCategoriesToProductDataByDomainId(ProductData $productData, $domainId)
@@ -354,7 +340,6 @@ class ProductDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return bool
      */
     private function isPerformanceCategory(Category $category)
@@ -368,7 +353,6 @@ class ProductDataFixture
     }
 
     /**
-     * @param array $array
      * @param string|int $key
      */
     private function setArrayPointerByKey(array &$array, $key)

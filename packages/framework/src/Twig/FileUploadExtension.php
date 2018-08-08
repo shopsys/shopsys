@@ -17,10 +17,7 @@ class FileUploadExtension extends Twig_Extension
     {
         $this->fileUpload = $fileUpload;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

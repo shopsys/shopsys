@@ -174,8 +174,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param string $price
      */
     public function setPrice(
@@ -219,7 +217,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentPrice
      */
     public function getPrice(Currency $currency)
@@ -261,7 +258,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isEnabled(int $domainId)
@@ -344,7 +340,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentDomain
      */
     protected function getPaymentDomain(int $domainId)

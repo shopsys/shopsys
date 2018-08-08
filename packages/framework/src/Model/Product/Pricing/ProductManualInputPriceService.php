@@ -19,8 +19,6 @@ class ProductManualInputPriceService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $inputPrice
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice $productManualInputPrice
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice

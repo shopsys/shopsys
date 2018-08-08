@@ -147,7 +147,6 @@ class CartController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param string $type
      */
     public function addProductFormAction(Product $product, $type = 'normal')
@@ -276,7 +275,6 @@ class CartController extends FrontBaseController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $cartItemId
      */
     public function deleteAction(Request $request, $cartItemId)

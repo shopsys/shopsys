@@ -21,11 +21,7 @@ class AvailabilitySettingFormType extends AbstractType
     {
         $this->availabilityFacade = $availabilityFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

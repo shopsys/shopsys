@@ -24,9 +24,7 @@ class FlagFilterChoiceRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getFlagFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category)
@@ -42,7 +40,6 @@ class FlagFilterChoiceRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $locale
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
@@ -56,7 +53,6 @@ class FlagFilterChoiceRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */

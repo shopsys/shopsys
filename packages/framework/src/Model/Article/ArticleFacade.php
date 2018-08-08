@@ -75,7 +75,6 @@ class ArticleFacade
     }
 
     /**
-     * @param $domainId
      * @return int
      */
     public function getAllArticlesCountByDomainId($domainId)
@@ -103,7 +102,6 @@ class ArticleFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
     public function create(ArticleData $articleData)
@@ -125,7 +123,6 @@ class ArticleFacade
 
     /**
      * @param int $articleId
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
     public function edit($articleId, ArticleData $articleData)

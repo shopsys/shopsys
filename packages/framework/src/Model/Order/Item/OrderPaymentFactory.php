@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderPaymentFactory implements OrderPaymentFactoryInterface
 {
-
     public function create(
         Order $order,
         string $name,

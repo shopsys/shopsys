@@ -30,8 +30,6 @@ class FeedPathProvider
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
     public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
@@ -40,8 +38,6 @@ class FeedPathProvider
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
     public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
@@ -50,8 +46,6 @@ class FeedPathProvider
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
     protected function getFeedFilename(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)

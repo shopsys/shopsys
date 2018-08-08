@@ -69,7 +69,6 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForVisibleProducts(DomainConfig $domainConfig)
@@ -80,7 +79,6 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForVisibleCategories(DomainConfig $domainConfig)
@@ -89,7 +87,6 @@ class SitemapFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForArticlesOnDomain(DomainConfig $domainConfig)

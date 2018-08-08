@@ -52,7 +52,6 @@ class CronFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor $cronModuleExecutor
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[] $cronModuleConfigs
      */
     protected function runModules(CronModuleExecutor $cronModuleExecutor, array $cronModuleConfigs)

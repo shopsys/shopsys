@@ -50,7 +50,6 @@ class ProductAvailabilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
     public function calculateAvailability(Product $product)
@@ -72,7 +71,6 @@ class ProductAvailabilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
     private function calculateMainVariantAvailability(Product $mainVariant)
@@ -97,7 +95,6 @@ class ProductAvailabilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     private function getAtLeastSomewhereSellableVariantsByMainVariant(Product $mainVariant)

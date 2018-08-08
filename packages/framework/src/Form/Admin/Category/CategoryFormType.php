@@ -64,11 +64,7 @@ class CategoryFormType extends AbstractType
         $this->seoSettingFacade = $seoSettingFacade;
         $this->pluginCrudExtensionFacade = $pluginCrudExtensionFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $seoTitlesOptionsByDomainId = [];
@@ -257,7 +253,6 @@ class CategoryFormType extends AbstractType
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return string
      */

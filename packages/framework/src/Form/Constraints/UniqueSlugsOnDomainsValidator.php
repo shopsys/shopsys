@@ -28,7 +28,6 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
 
     /**
      * @param array $values
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
     public function validate($values, Constraint $constraint)
     {
@@ -39,11 +38,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
         $this->validateDuplication($values, $constraint);
         $this->validateExists($values, $constraint);
     }
-
-    /**
-     * @param array $values
-     * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains $constraint
-     */
+    
     private function validateDuplication(array $values, UniqueSlugsOnDomains $constraint)
     {
         $slugsCountByDomainId = $this->getSlugsCountIndexedByDomainId($values);
@@ -64,7 +59,6 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
 
     /**
      * @param array $values
-     * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains $constraint
      */
     private function validateExists($values, UniqueSlugsOnDomains $constraint)
     {
@@ -90,7 +84,6 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
      * @return int[][]
      */
     private function getSlugsCountIndexedByDomainId(array $values)

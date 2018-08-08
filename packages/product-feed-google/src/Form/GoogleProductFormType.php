@@ -21,11 +21,7 @@ class GoogleProductFormType extends AbstractType
     {
         $this->translator = $translator;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('show', MultidomainType::class, [

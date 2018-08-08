@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class OrderProductFactory implements OrderProductFactoryInterface
 {
-
     public function create(
         Order $order,
         string $name,

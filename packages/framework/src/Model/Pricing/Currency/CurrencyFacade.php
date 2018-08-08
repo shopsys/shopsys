@@ -105,7 +105,6 @@ class CurrencyFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
     public function create(CurrencyData $currencyData)
@@ -120,7 +119,6 @@ class CurrencyFacade
 
     /**
      * @param int $currencyId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
     public function edit($currencyId, CurrencyData $currencyData)
@@ -179,7 +177,6 @@ class CurrencyFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      */
     public function setDomainDefaultCurrency(Currency $currency, $domainId)
@@ -202,7 +199,6 @@ class CurrencyFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return bool
      */
     public function isDefaultCurrency(Currency $currency)
@@ -251,7 +247,6 @@ class CurrencyFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
     public function getDomainConfigsByCurrency(Currency $currency)

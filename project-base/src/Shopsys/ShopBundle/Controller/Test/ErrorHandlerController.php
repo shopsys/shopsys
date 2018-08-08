@@ -2,7 +2,6 @@
 
 namespace Shopsys\ShopBundle\Controller\Test;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\ShopBundle\Controller\Front\FrontBaseController;
 use Symfony\Component\HttpFoundation\Response;
 

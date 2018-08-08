@@ -86,7 +86,6 @@ class TransportFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
     public function create(TransportData $transportData)
@@ -156,7 +155,6 @@ class TransportFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param string[] $pricesByCurrencyId
      */
     protected function updateTransportPrices(Transport $transport, $pricesByCurrencyId)
@@ -181,7 +179,6 @@ class TransportFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return string[]
      */
     public function getTransportPricesWithVatIndexedByTransportId(Currency $currency)
@@ -211,7 +208,6 @@ class TransportFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
     public function getIndependentBasePricesIndexedByCurrencyId(Transport $transport)

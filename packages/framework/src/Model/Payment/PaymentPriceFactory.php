@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class PaymentPriceFactory implements PaymentPriceFactoryInterface
 {
-
     public function create(
         Payment $payment,
         Currency $currency,

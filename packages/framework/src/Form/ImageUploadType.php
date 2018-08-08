@@ -70,7 +70,6 @@ class ImageUploadType extends AbstractType
     }
 
     /**
-     * @param array $options
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     private function getImagesIndexedById(array $options)

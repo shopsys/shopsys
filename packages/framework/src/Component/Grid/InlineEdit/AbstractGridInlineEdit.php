@@ -18,7 +18,6 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int|string|null $rowId
      * @return int|string
      */

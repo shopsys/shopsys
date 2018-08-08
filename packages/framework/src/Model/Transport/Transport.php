@@ -158,7 +158,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isEnabled(int $domainId)
@@ -175,7 +174,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Transport\TransportPrice
      */
     public function getPrice(Currency $currency)
@@ -192,8 +190,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface $transportPriceFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param string $price
      */
     public function setPrice(
@@ -325,7 +321,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Transport\TransportDomain
      */
     protected function getTransportDomain(int $domainId)

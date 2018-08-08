@@ -11,10 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ShopInfoSettingFormType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builderPublishedDataGroup = $builder->create('publishedData', GroupType::class, [

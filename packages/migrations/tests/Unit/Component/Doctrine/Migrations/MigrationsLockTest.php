@@ -90,7 +90,6 @@ class MigrationsLockTest extends TestCase
     }
 
     /**
-     * @param string $className
      * @return \Doctrine\DBAL\Migrations\Version|\PHPUnit\Framework\MockObject\MockObject
      */
     private function createMigrationVersionMock(string $className)

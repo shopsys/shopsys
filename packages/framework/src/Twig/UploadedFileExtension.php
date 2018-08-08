@@ -34,10 +34,7 @@ class UploadedFileExtension extends Twig_Extension
         $this->uploadedFileFacade = $uploadedFileFacade;
         $this->fileThumbnailExtension = $fileThumbnailExtension;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

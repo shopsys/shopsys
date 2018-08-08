@@ -7,7 +7,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 interface CartItemFactoryInterface
 {
-
     public function create(
         CustomerIdentifier $customerIdentifier,
         Product $product,

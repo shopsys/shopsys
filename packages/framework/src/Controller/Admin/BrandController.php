@@ -65,7 +65,6 @@ class BrandController extends AdminBaseController
 
     /**
      * @Route("/brand/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function editAction(Request $request, $id)

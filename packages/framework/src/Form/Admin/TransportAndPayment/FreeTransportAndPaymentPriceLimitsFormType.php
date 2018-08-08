@@ -29,11 +29,7 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
     {
         $this->domain = $domain;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -42,7 +38,6 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function getPriceLimitsBuilder(FormBuilderInterface $builder)

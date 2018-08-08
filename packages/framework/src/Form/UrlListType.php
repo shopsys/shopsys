@@ -43,11 +43,7 @@ class UrlListType extends AbstractType
         $this->domainRouterFactory = $domainRouterFactory;
         $this->domain = $domain;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['route_name'] === null) {
@@ -88,12 +84,7 @@ class UrlListType extends AbstractType
             ]);
         }
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
+    
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $absoluteUrlsByDomainIdAndSlug = $this->getAbsoluteUrlsIndexedByDomainIdAndSlug(

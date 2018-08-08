@@ -119,7 +119,6 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @param \Facebook\WebDriver\WebDriverElement $element
      * @return \Facebook\WebDriver\WebDriverElement
      */
     public function clickByElement(WebDriverElement $element)
@@ -140,7 +139,6 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @param \Facebook\WebDriver\WebDriverElement $element
      * @param string $value
      */
     public function fillFieldByElement(WebDriverElement $element, $value)
@@ -181,7 +179,6 @@ class StrictWebDriver extends WebDriver
 
     /**
      * @param string $text
-     * @param \Facebook\WebDriver\WebDriverElement $element
      */
     public function seeInElement($text, WebDriverElement $element)
     {
@@ -371,7 +368,6 @@ class StrictWebDriver extends WebDriver
 
     /**
      * @param string $value
-     * @param \Facebook\WebDriver\WebDriverElement $element
      */
     public function seeInFieldByElement($value, WebDriverElement $element)
     {
@@ -409,7 +405,6 @@ class StrictWebDriver extends WebDriver
      * For available keys:
      * @see \Facebook\WebDriver\WebDriverKeys
      *
-     * @param \Facebook\WebDriver\WebDriverElement $element
      * @param string|string[] $keys
      */
     public function pressKeysByElement(WebDriverElement $element, $keys)

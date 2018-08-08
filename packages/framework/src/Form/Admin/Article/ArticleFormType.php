@@ -40,11 +40,7 @@ class ArticleFormType extends AbstractType
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $seoMetaDescriptionAttributes = $this->getSeoMetaDescriptionAttributes($options);
@@ -168,7 +164,6 @@ class ArticleFormType extends AbstractType
     }
 
     /**
-     * @param array $options
      * @return string[]
      */
     private function getSeoMetaDescriptionAttributes(array $options)

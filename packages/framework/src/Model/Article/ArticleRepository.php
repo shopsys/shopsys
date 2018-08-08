@@ -69,7 +69,6 @@ class ArticleRepository
     }
 
     /**
-     * @param $domainId
      * @return int
      */
     public function getAllArticlesCountByDomainId($domainId)

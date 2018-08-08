@@ -43,7 +43,6 @@ class ProductPriceCalculationForUser
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
     public function calculatePriceForCurrentUser(Product $product)
@@ -56,7 +55,6 @@ class ProductPriceCalculationForUser
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice

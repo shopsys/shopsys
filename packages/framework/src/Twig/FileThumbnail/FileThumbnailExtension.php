@@ -46,10 +46,7 @@ class FileThumbnailExtension extends Twig_Extension
             'xml' => 'xml',
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [

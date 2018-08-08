@@ -82,7 +82,6 @@ class PricingGroupRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return bool
      */
     public function existsUserWithPricingGroup(PricingGroup $pricingGroup)

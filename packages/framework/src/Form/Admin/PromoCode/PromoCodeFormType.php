@@ -28,11 +28,7 @@ class PromoCodeFormType extends AbstractType
     {
         $this->promoCodeFacade = $promoCodeFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->promoCode = $options['promo_code'];
@@ -74,7 +70,6 @@ class PromoCodeFormType extends AbstractType
 
     /**
      * @param string $promoCodeValue
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function validateUniquePromoCode($promoCodeValue, ExecutionContextInterface $context)
     {

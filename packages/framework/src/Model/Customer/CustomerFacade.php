@@ -74,7 +74,6 @@ class CustomerFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     public function register(UserData $userData)
@@ -101,7 +100,6 @@ class CustomerFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     public function create(CustomerData $customerData)
@@ -142,7 +140,6 @@ class CustomerFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     protected function edit($userId, CustomerData $customerData)
@@ -173,7 +170,6 @@ class CustomerFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     public function editByAdmin($userId, CustomerData $customerData)
@@ -193,7 +189,6 @@ class CustomerFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     public function editByCustomer($userId, CustomerData $customerData)

@@ -42,7 +42,6 @@ class PaymentVisibilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param int $domainId
      * @return bool
      */
@@ -56,7 +55,6 @@ class PaymentVisibilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param int $domainId
      * @return bool
      */

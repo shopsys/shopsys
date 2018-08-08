@@ -31,7 +31,6 @@ class CollateFunction extends FunctionNode
     }
 
     /**
-     * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
      * @return string
      */
     public function getSql(SqlWalker $sqlWalker)

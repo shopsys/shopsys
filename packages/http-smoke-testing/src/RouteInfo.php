@@ -18,7 +18,6 @@ class RouteInfo
 
     /**
      * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
      */
     public function __construct($routeName, Route $route)
     {

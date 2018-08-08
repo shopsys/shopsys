@@ -95,7 +95,6 @@ class DomainController extends AdminBaseController
 
     /**
      * @Route("/domain/edit/{id}", requirements={"id" = "\d+"}, condition="request.isXmlHttpRequest()")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function editAction(Request $request, $id)

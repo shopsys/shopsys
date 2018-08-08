@@ -189,7 +189,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     protected function getAccessoriesData(Product $product)
@@ -203,7 +202,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
     }
 
     /**
-     * @param Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
      */
     protected function getParametersData(Product $product)
@@ -216,10 +214,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
 
         return $productParameterValuesData;
     }
-
-    /**
-     * @return array
-     */
+    
     protected function getNullForAllDomains()
     {
         $nullForAllDomains = [];

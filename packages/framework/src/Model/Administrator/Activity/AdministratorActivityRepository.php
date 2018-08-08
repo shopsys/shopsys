@@ -26,7 +26,6 @@ class AdministratorActivityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param int $maxResults
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -43,7 +42,6 @@ class AdministratorActivityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity
      */
     public function getCurrent(Administrator $administrator)
@@ -57,7 +55,6 @@ class AdministratorActivityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity[]
      */

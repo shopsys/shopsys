@@ -33,8 +33,6 @@ class GenerateMigrationsService
     }
 
     /**
-     * @param array $sqlCommands
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation $migrationsLocation
      * @return \Shopsys\MigrationBundle\Component\Generator\GeneratorResult
      */
     public function generate(array $sqlCommands, MigrationsLocation $migrationsLocation)

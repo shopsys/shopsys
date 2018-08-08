@@ -82,7 +82,6 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */

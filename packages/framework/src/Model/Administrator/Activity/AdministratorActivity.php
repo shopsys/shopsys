@@ -51,7 +51,6 @@ class AdministratorActivity
     protected $lastActionTime;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param string $ipAddress
      */
     public function __construct(

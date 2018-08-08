@@ -86,7 +86,6 @@ class RouteCsrfProtector implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      * @return bool
      */
     private function isProtected(FilterControllerEvent $event)

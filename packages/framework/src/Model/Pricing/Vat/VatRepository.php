@@ -94,7 +94,6 @@ class VatRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return bool
      */
     public function existsVatToBeReplacedWith(Vat $vat)
@@ -131,7 +130,6 @@ class VatRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return bool
      */
     protected function existsPaymentWithVat(Vat $vat)
@@ -145,7 +143,6 @@ class VatRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return bool
      */
     protected function existsTransportWithVat(Vat $vat)
@@ -159,7 +156,6 @@ class VatRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return bool
      */
     protected function existsProductWithVat(Vat $vat)

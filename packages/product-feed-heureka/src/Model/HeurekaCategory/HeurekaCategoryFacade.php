@@ -78,7 +78,6 @@ class HeurekaCategoryFacade
 
     /**
      * @param int $categoryId
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory $heurekaCategory
      */
     public function changeHeurekaCategoryForCategoryId($categoryId, HeurekaCategory $heurekaCategory)
     {

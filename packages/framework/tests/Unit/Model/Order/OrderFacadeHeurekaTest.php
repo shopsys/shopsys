@@ -101,7 +101,6 @@ class OrderFacadeHeurekaTest extends TestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @param bool|null $disallowHeurekaVerifiedByCustomers
      */
     private function runHeurekaTest(HeurekaFacade $heurekaFacade, $disallowHeurekaVerifiedByCustomers): void

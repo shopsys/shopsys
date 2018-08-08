@@ -32,7 +32,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     }
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return string
      */
     public function generateUri(RequestDataSet $requestDataSet)

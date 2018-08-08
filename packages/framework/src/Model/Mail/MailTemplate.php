@@ -72,7 +72,6 @@ class MailTemplate
     /**
      * @param string $name
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
      */
     public function __construct($name, $domainId, MailTemplateData $mailTemplateData)
     {

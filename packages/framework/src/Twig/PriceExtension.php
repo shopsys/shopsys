@@ -56,10 +56,7 @@ class PriceExtension extends Twig_Extension
         $this->numberFormatRepository = $numberFormatRepository;
         $this->intlCurrencyRepository = $intlCurrencyRepository;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFilters()
     {
         return [
@@ -99,10 +96,7 @@ class PriceExtension extends Twig_Extension
             ),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [
@@ -170,7 +164,6 @@ class PriceExtension extends Twig_Extension
 
     /**
      * @param string $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return string
      */
     public function priceWithCurrencyFilter($price, Currency $currency)
@@ -210,7 +203,6 @@ class PriceExtension extends Twig_Extension
 
     /**
      * @param string $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param string|null $locale
      * @return string
      */

@@ -29,7 +29,6 @@ class SubscriptionFormTypeTest extends TypeTestCase
     }
 
     /**
-     * @param array $data
      * @dataProvider getInvalidTestCases
      */
     public function testInvalid(array $data): void
@@ -38,10 +37,7 @@ class SubscriptionFormTypeTest extends TypeTestCase
         $form->submit($data);
         Assert::assertFalse($form->isValid());
     }
-
-    /**
-     * @return array
-     */
+    
     public function getInvalidTestCases(): array
     {
         return [
@@ -74,10 +70,7 @@ class SubscriptionFormTypeTest extends TypeTestCase
             ],
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     protected function getExtensions(): array
     {
         return [

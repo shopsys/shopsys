@@ -20,9 +20,6 @@ class StatisticsService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[] $valueByDateTimeDataPoints
-     * @param \DateTime $startDateTime
-     * @param \DateTime $endDateTime
-     * @param \DateInterval $interval
      * @return array
      */
     public function normalizeDataPointsByDateTimeIntervals(

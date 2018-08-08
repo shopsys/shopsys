@@ -18,10 +18,7 @@ class RouterExtension extends Twig_Extension
     {
         $this->domainRouterFactory = $domainRouterFactory;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [
@@ -34,7 +31,6 @@ class RouterExtension extends Twig_Extension
 
     /**
      * @param string $route
-     * @param array $routeParams
      * @param int $domainId
      * @return string|null
      */

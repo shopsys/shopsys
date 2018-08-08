@@ -54,8 +54,6 @@ class OrderService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\OrderEditResult
      */
     public function editOrder(Order $order, OrderData $orderData)
@@ -106,9 +104,6 @@ class OrderService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productPrice
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct
      */
     public function createOrderProductInOrder(Order $order, Product $product, Price $productPrice)
@@ -139,7 +134,6 @@ class OrderService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     public function getOrderDetailUrl(Order $order)

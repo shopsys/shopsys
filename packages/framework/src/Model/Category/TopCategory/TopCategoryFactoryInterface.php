@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 interface TopCategoryFactoryInterface
 {
-
     public function create(
         Category $category,
         int $domainId,

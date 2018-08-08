@@ -32,11 +32,7 @@ class SeoSettingFormType extends AbstractType
         $this->domain = $domain;
         $this->seoSettingFacade = $seoSettingFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $titlesOnOtherDomains = [];

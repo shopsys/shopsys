@@ -30,7 +30,6 @@ class CartFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
     public function get(CustomerIdentifier $customerIdentifier)
@@ -47,7 +46,6 @@ class CartFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
     private function createNewCart(CustomerIdentifier $customerIdentifier)

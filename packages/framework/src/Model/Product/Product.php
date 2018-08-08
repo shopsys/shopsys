@@ -292,7 +292,6 @@ class Product extends AbstractTranslatableEntity
     protected $domains;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
     protected function __construct(ProductData $productData, array $variants = null)
@@ -344,7 +343,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     public static function create(ProductData $productData)
@@ -353,7 +351,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
@@ -637,7 +634,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categoriesByDomainId
      */
     public function setCategories(
@@ -651,7 +647,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $newCategories
      * @param int $domainId
      */
@@ -899,7 +894,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductDomain
      */
     protected function getProductDomain(int $domainId)
@@ -914,7 +908,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getShortDescription(int $domainId)
@@ -923,7 +916,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getDescription(int $domainId)
@@ -932,7 +924,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoH1(int $domainId)
@@ -941,7 +932,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoTitle(int $domainId)
@@ -950,7 +940,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoMetaDescription(int $domainId)

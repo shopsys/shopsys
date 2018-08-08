@@ -123,8 +123,6 @@ class OrderCreationService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
     private function fillOrderTransportAndPayment(Order $order, OrderPreview $orderPreview, $locale)
@@ -165,8 +163,6 @@ class OrderCreationService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
     private function fillOrderProducts(Order $order, OrderPreview $orderPreview, $locale)
@@ -204,8 +200,6 @@ class OrderCreationService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
     private function fillOrderRounding(Order $order, OrderPreview $orderPreview, $locale)
@@ -225,8 +219,6 @@ class OrderCreationService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $discount
      * @param string $locale
      * @param float $discountPercent
      */

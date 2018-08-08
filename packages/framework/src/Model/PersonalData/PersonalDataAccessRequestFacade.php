@@ -41,7 +41,6 @@ class PersonalDataAccessRequestFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData $personalDataAccessRequestData
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
      */

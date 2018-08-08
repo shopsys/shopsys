@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Category\TopCategory\TopCategoriesFormType;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;

@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\AllMailTemplatesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailSettingFormType;
@@ -86,10 +85,7 @@ class MailController extends AdminBaseController
         $this->personalDataAccessMail = $personalDataAccessMail;
         $this->personalDataExportMail = $personalDataExportMail;
     }
-
-    /**
-     * @return array
-     */
+    
     private function getOrderStatusVariablesLabels()
     {
         return [
@@ -112,10 +108,7 @@ class MailController extends AdminBaseController
             OrderMailService::VARIABLE_PAYMENT_INSTRUCTIONS => t('Payment instructions'),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     private function getRegistrationVariablesLabels()
     {
         return [
@@ -126,10 +119,7 @@ class MailController extends AdminBaseController
             RegistrationMailService::VARIABLE_LOGIN_PAGE => t('Link to the log in page'),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     private function getResetPasswordVariablesLabels()
     {
         return [
@@ -137,10 +127,7 @@ class MailController extends AdminBaseController
             ResetPasswordMail::VARIABLE_NEW_PASSWORD_URL => t('New password settings URL address'),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     private function getPersonalDataAccessVariablesLabels()
     {
         return [
@@ -149,10 +136,7 @@ class MailController extends AdminBaseController
             PersonalDataAccessMail::VARIABLE_URL => t('E-shop URL address'),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     private function getPersonalExportVariablesLabels()
     {
         return [
@@ -161,10 +145,7 @@ class MailController extends AdminBaseController
             PersonalDataExportMail::VARIABLE_URL => t('E-shop URL address'),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     private function getTemplateParameters()
     {
         $orderStatusesTemplateVariables = $this->orderMailService->getTemplateVariables();

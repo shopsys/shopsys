@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class ProductVisibilityFactory implements ProductVisibilityFactoryInterface
 {
-
     public function create(
         Product $product,
         PricingGroup $pricingGroup,

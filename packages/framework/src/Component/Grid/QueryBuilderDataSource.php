@@ -19,7 +19,6 @@ class QueryBuilderDataSource implements DataSourceInterface
     private $rowIdSourceColumnName;
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $rowIdSourceColumnName
      */
     public function __construct(QueryBuilder $queryBuilder, $rowIdSourceColumnName)
@@ -76,7 +75,6 @@ class QueryBuilderDataSource implements DataSourceInterface
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $orderSourceColumnName
      * @param string $orderDirection
      */
@@ -86,7 +84,6 @@ class QueryBuilderDataSource implements DataSourceInterface
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param int $rowId
      */
     private function prepareQueryWithOneRow(QueryBuilder $queryBuilder, $rowId)

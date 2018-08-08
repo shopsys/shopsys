@@ -103,7 +103,6 @@ class OrderRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return bool
      */
     public function isOrderStatusUsed(OrderStatus $orderStatus)
@@ -121,7 +120,6 @@ class OrderRepository
 
     /**
      * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getOrderListQueryBuilderByQuickSearchData(
@@ -208,7 +206,6 @@ class OrderRepository
 
     /**
      * @param string $orderNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function getByOrderNumberAndUser($orderNumber, User $user)

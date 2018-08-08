@@ -546,12 +546,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $user
         );
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param array $products
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
+    
     private function createOrder(
         OrderData $orderData,
         array $products,

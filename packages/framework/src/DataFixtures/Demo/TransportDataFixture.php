@@ -80,7 +80,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
     /**
      * @param string $referenceName
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      */
     private function createTransport($referenceName, TransportData $transportData)
     {

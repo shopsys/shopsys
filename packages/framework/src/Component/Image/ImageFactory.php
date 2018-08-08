@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Component\Image;
 
 class ImageFactory implements ImageFactoryInterface
 {
-
     public function create(
         string $entityName,
         int $entityId,

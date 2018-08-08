@@ -70,7 +70,6 @@ class VatDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @param string|null $referenceName
      */
     private function createVat(VatData $vatData, $referenceName = null)

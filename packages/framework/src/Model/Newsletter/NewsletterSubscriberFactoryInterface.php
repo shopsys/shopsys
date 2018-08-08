@@ -6,6 +6,5 @@ use DateTimeImmutable;
 
 interface NewsletterSubscriberFactoryInterface
 {
-
     public function create(string $email, DateTimeImmutable $createdAt, int $domainId): NewsletterSubscriber;
 }

@@ -52,7 +52,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     private $previousNode;
 
     /**
-     * @param \Doctrine\Common\Annotations\DocParser $docParser
      * @param \Shopsys\FrameworkBundle\Component\Translation\TransMethodSpecification[] $transMethodSpecifications
      */
     public function __construct(DocParser $docParser, array $transMethodSpecifications)
@@ -67,12 +66,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
             $this->transMethodSpecifications[$methodName] = $transMethodSpecification;
         }
     }
-
-    /**
-     * @param \SplFileInfo $file
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     * @param array $ast
-     */
+    
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {
         $this->file = $file;
@@ -131,7 +125,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return bool
      */
     private function isTransMethodOrFuncCall(Node $node)
@@ -152,7 +145,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return bool
      */
     private function isIgnored(Node $node)
@@ -167,7 +159,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return \Doctrine\Common\Annotations\Annotation[]
      */
     private function getAnnotations(Node $node)
@@ -182,7 +173,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return \PhpParser\Comment\Doc|null
      */
     private function getDocComment(Node $node)
@@ -208,7 +198,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return string
      */
     private function getNodeName(Node $node)
@@ -221,10 +210,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
             throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException('Unable to resolve node name');
         }
     }
-
-    /**
-     * @param array $nodes
-     */
+    
     public function beforeTraverse(array $nodes)
     {
         return null;
@@ -234,10 +220,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     {
         return null;
     }
-
-    /**
-     * @param array $nodes
-     */
+    
     public function afterTraverse(array $nodes)
     {
         return null;

@@ -21,11 +21,7 @@ class PricingGroupSettingsFormType extends AbstractType
     {
         $this->pricingGroupFacade = $pricingGroupFacade;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $pricingGroups = $this->pricingGroupFacade->getByDomainId($options['domain_id']);

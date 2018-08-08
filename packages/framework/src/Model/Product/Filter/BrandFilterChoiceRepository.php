@@ -23,8 +23,6 @@ class BrandFilterChoiceRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function getBrandFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, Category $category)
@@ -40,7 +38,6 @@ class BrandFilterChoiceRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $locale
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
@@ -54,7 +51,6 @@ class BrandFilterChoiceRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     private function getBrandsByProductsQueryBuilder(QueryBuilder $productsQueryBuilder)

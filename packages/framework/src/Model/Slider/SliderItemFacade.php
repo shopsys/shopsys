@@ -57,7 +57,6 @@ class SliderItemFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
      */
     public function create(SliderItemData $sliderItemData)
@@ -73,7 +72,6 @@ class SliderItemFacade
 
     /**
      * @param int $sliderItemId
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
      */
     public function edit($sliderItemId, SliderItemData $sliderItemData)

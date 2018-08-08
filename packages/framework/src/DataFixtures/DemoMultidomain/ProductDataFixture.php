@@ -65,11 +65,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             }
         }
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param array $row
-     */
+    
     private function editProduct(Product $product, array $row)
     {
         $productData = $this->productDataFactory->createFromProduct($product);

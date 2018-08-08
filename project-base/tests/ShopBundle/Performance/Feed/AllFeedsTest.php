@@ -91,8 +91,6 @@ class AllFeedsTest extends KernelTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int $maxDuration
      * @return \Tests\ShopBundle\Performance\Feed\PerformanceTestSample
      */
@@ -147,7 +145,6 @@ class AllFeedsTest extends KernelTestCase
     }
 
     /**
-     * @param \Tests\ShopBundle\Performance\Feed\PerformanceTestSample $performanceTestSample
      * @param int $maxDuration
      * @param float $realDuration
      */
@@ -171,8 +168,6 @@ class AllFeedsTest extends KernelTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feed
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Tests\ShopBundle\Performance\Feed\PerformanceTestSample
      */
     private function generateFeed(FeedInfoInterface $feed, DomainConfig $domainConfig)

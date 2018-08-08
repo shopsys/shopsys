@@ -27,10 +27,7 @@ class ProductExtension extends \Twig_Extension
         $this->categoryFacade = $categoryFacade;
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFilters()
     {
         return [
@@ -38,10 +35,7 @@ class ProductExtension extends \Twig_Extension
             new Twig_SimpleFilter('productListDisplayName', [$this, 'getProductListDisplayName']),
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [
@@ -73,7 +67,6 @@ class ProductExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return string
      */
     public function getProductDisplayName(Product $product)
@@ -88,7 +81,6 @@ class ProductExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return string
      */
     public function getProductListDisplayName(Product $product)
@@ -101,7 +93,6 @@ class ProductExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
@@ -111,7 +102,6 @@ class ProductExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
      */
@@ -121,7 +111,6 @@ class ProductExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
      */
     public function getProductSellingPrice(Product $product)
@@ -130,7 +119,6 @@ class ProductExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
     public function getProductParameterValues(Product $product)

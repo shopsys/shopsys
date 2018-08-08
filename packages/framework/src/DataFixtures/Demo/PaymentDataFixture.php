@@ -84,8 +84,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param string $referenceName
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     * @param array $transportsReferenceNames
      */
     private function createPayment(
         $referenceName,

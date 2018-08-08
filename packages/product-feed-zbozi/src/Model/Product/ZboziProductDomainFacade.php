@@ -44,7 +44,6 @@ class ZboziProductDomainFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]
      */
     public function getZboziProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
@@ -61,7 +60,6 @@ class ZboziProductDomainFacade
     }
 
     /**
-     * @param $productId
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData[] $zboziProductDomainsData
      */
     public function saveZboziProductDomainsForProductId($productId, array $zboziProductDomainsData)

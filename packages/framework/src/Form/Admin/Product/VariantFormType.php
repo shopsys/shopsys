@@ -15,11 +15,7 @@ class VariantFormType extends AbstractType
 {
     const MAIN_VARIANT = 'mainVariant';
     const VARIANTS = 'variants';
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

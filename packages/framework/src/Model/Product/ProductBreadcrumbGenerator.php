@@ -57,7 +57,6 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     private function getCategoryBreadcrumbItems(Category $category)

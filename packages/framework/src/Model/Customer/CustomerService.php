@@ -54,8 +54,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $userByEmail
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
@@ -109,8 +107,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
@@ -135,7 +131,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @param string $email
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $userByEmail
      */
@@ -155,8 +150,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
      */
     public function getAmendedCustomerDataByOrder(User $user, Order $order)
@@ -175,8 +168,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
      */
     private function getAmendedBillingAddressDataByOrder(Order $order, BillingAddress $billingAddress)
@@ -202,7 +193,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      */

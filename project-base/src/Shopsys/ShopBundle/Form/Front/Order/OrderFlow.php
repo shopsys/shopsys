@@ -32,10 +32,7 @@ class OrderFlow extends FormFlow
     {
         return 'order';
     }
-
-    /**
-     * @return array
-     */
+    
     protected function loadStepsConfig()
     {
         return [
@@ -65,7 +62,6 @@ class OrderFlow extends FormFlow
 
     /**
      * @param int $step
-     * @param array $options
      * @return array
      */
     public function getFormOptions($step, array $options = [])
@@ -133,7 +129,6 @@ class OrderFlow extends FormFlow
     }
 
     /**
-     * @param \Craue\FormFlowBundle\Form\StepInterface $step
      * @return bool
      */
     private function isStepValid(StepInterface $step)

@@ -16,10 +16,7 @@ class CookiesExtension extends \Twig_Extension
     {
         $this->cookiesFacade = $cookiesFacade;
     }
-
-    /**
-     * @return array
-     */
+    
     public function getFunctions()
     {
         return [
@@ -45,7 +42,6 @@ class CookiesExtension extends \Twig_Extension
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
     public function findCookiesArticleByDomainId($domainId)

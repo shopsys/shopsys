@@ -57,7 +57,6 @@ class ImageDeleteDoctrineListener
 
     /**
      * @param object $entity
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     private function deleteEntityImages($entity, EntityManagerInterface $em)
     {

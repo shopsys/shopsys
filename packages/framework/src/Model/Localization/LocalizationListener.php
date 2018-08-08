@@ -42,7 +42,6 @@ class LocalizationListener implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
     private function isAdminRequest(Request $request)

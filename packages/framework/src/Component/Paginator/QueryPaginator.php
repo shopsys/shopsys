@@ -21,7 +21,6 @@ class QueryPaginator implements PaginatorInterface
     private $hydrationMode;
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string|null $hydrationMode
      */
     public function __construct(QueryBuilder $queryBuilder, $hydrationMode = null)
@@ -79,7 +78,6 @@ class QueryPaginator implements PaginatorInterface
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return \Doctrine\ORM\NativeQuery
      */
     private function getTotalNativeQuery(QueryBuilder $queryBuilder)

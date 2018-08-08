@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 interface FriendlyUrlFactoryInterface
 {
-
     public function create(
         string $routeName,
         int $entityId,

@@ -112,7 +112,6 @@ class AdministratorFrontSecurityFacade
     }
 
     /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      * @see \Symfony\Component\Security\Core\Authentication\Token\AbstractToken::setUser()
      */

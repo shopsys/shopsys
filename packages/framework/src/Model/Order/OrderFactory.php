@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User;
 
 class OrderFactory implements OrderFactoryInterface
 {
-
     public function create(
         OrderData $orderData,
         string $orderNumber,

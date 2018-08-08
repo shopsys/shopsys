@@ -79,7 +79,6 @@ class PricingSetting
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      */
     public function setDomainDefaultCurrency(Currency $currency, $domainId)
@@ -119,10 +118,7 @@ class PricingSetting
     {
         $this->setting->setForDomain(self::FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT, $priceLimit, $domainId);
     }
-
-    /**
-     * @return array
-     */
+    
     public static function getInputPriceTypes()
     {
         return [
@@ -130,10 +126,7 @@ class PricingSetting
             self::INPUT_PRICE_TYPE_WITH_VAT,
         ];
     }
-
-    /**
-     * @return array
-     */
+    
     public static function getRoundingTypes()
     {
         return [

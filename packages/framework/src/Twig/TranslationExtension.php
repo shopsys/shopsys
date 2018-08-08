@@ -7,9 +7,6 @@ use Twig_SimpleFilter;
 
 class TranslationExtension extends \Twig_Extension
 {
-    /**
-     * @return array
-     */
     public function getFilters()
     {
         return [
@@ -38,9 +35,7 @@ class TranslationExtension extends \Twig_Extension
      * Helpful for protection from XSS when providing user input as translation argument
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      *
-     * @param \Twig_Environment $twig
      * @param string $message
-     * @param array $arguments
      * @param string|null $domain
      * @param string|null $locale
      * @return string
@@ -59,10 +54,8 @@ class TranslationExtension extends \Twig_Extension
      * Helpful for protection from XSS when providing user input as translation argument
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::transchoice()
      *
-     * @param \Twig_Environment $twig
      * @param string $message
      * @param int $count
-     * @param array $arguments
      * @param string|null $domain
      * @param string|null $locale
      * @return string
@@ -78,8 +71,6 @@ class TranslationExtension extends \Twig_Extension
     /**
      * Escapes all elements in array with default twig "escape" filter
      *
-     * @param \Twig_Environment $twig
-     * @param array $elements
      * @return array
      */
     private function getEscapedElements(Twig_Environment $twig, array $elements)
