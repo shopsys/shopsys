@@ -24,8 +24,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### [shopsys/framework]
+#### Changed
+- [#387 - OrderInterface is created for extensibility of OrderItem](https://github.com/shopsys/shopsys/pull/387)
+    - OrderItem target entity is now OrderInterface
+
 #### Fixed
 - [#260 - JS validation: dynamically added form inputs are now validated](https://github.com/shopsys/shopsys/pull/260)
+
+### [shopsys/project-base]
+#### Added
+- [#387 - OrderInterface is created for extensibility of OrderItem](https://github.com/shopsys/shopsys/pull/387)
+    - mapping for OrderInterface to Order target entity is added into doctrine.orm.resolve_target_rentities section
 
 ## [7.0.0-alpha4] - 2018-08-02
 ### [shopsys/framework]

@@ -76,6 +76,11 @@ It replaces the parent entity name by the extended entity name in strings, array
 
 The various capabilities of this resolver are best described in its unit test `\Tests\FrameworkBundle\Unit\Component\EntityExtension\EntityNameResolverTest`.
 
+### Resolve Target Entities
+
+Parent entities that are included in the association types of ORM annotation as target entities need to be resolved into 
+their extended forms. For that purpose we use doctrine [resolve_target_entity](https://symfony.com/doc/current/doctrine/resolve_target_entity.html).
+
 ### Factories
 
 Entities are created by factories. If any part of framework creates an entity, it uses a factory.

@@ -31,7 +31,7 @@ abstract class OrderItem
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Order
      *
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\OrderInterface", inversedBy="items")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false)
      */
     protected $order;
