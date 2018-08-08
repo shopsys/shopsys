@@ -39,9 +39,8 @@ class PromoCodeInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     * @return int
      */
-    protected function createEntityAndGetId($promoCodeData)
+    protected function createEntityAndGetId($promoCodeData): int
     {
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
 
@@ -59,9 +58,8 @@ class PromoCodeInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param int|null $promoCodeId
-     * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($promoCodeId)
+    public function getForm($promoCodeId): \Symfony\Component\Form\FormInterface
     {
         $promoCode = null;
 

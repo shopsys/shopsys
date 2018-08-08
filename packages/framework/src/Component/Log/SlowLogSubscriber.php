@@ -47,10 +47,7 @@ class SlowLogSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @return float
-     */
-    protected function getRequestTime()
+    protected function getRequestTime(): float
     {
         return microtime(true) - $this->startTime;
     }

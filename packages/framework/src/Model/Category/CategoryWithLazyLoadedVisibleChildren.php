@@ -45,18 +45,12 @@ class CategoryWithLazyLoadedVisibleChildren
         $this->hasChildren = $hasChildren;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    public function getCategory()
+    public function getCategory(): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->category;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return $this->hasChildren;
     }
@@ -64,7 +58,7 @@ class CategoryWithLazyLoadedVisibleChildren
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren[]
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         if ($this->children === null) {
             $this->children = call_user_func($this->lazyLoadChildrenCallback);

@@ -4,10 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 class FriendlyUrlDataFactory implements FriendlyUrlDataFactoryInterface
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData
-     */
-    public function createFromData($data)
+    public function createFromData($data): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData
     {
         $friendlyUrlData = new FriendlyUrlData();
         $friendlyUrlData->name = $data['id'];

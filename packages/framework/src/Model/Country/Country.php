@@ -57,34 +57,22 @@ class Country
         $this->code = $countryData->code;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCode()
+    public function getCode(): ?string
     {
         return $this->code;
     }

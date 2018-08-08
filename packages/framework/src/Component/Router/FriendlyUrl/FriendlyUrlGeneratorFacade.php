@@ -57,10 +57,7 @@ class FriendlyUrlGeneratorFacade
         }
     }
 
-    /**
-     * @return int
-     */
-    protected function generateUrlsByDomainConfig(OutputInterface $output, DomainConfig $domainConfig)
+    protected function generateUrlsByDomainConfig(OutputInterface $output, DomainConfig $domainConfig): int
     {
         $totalCountOfCreatedUrls = 0;
         $friendlyUrlRouter = $this->domainRouterFactory->getFriendlyUrlRouter($domainConfig);
@@ -82,9 +79,8 @@ class FriendlyUrlGeneratorFacade
 
     /**
      * @param string $routeName
-     * @return int
      */
-    protected function generateUrlsByRoute(DomainConfig $domainConfig, $routeName)
+    protected function generateUrlsByRoute(DomainConfig $domainConfig, $routeName): int
     {
         $countOfCreatedUrls = 0;
 

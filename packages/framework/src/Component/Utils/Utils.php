@@ -39,9 +39,8 @@ class Utils
 
     /**
      * @param mixed $value
-     * @return array
      */
-    public static function mixedToArray($value)
+    public static function mixedToArray($value): array
     {
         if ($value === null) {
             $value = [];

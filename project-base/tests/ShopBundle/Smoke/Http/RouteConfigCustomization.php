@@ -373,9 +373,8 @@ class RouteConfigCustomization
 
     /**
      * @param string $name
-     * @return object
      */
-    private function getPersistentReference($name)
+    private function getPersistentReference($name): object
     {
         $persistentReferenceFacade = $this->container
             ->get(PersistentReferenceFacade::class);
@@ -384,10 +383,7 @@ class RouteConfigCustomization
         return $persistentReferenceFacade->getReference($name);
     }
 
-    /**
-     * @return bool
-     */
-    private function isSingleDomain()
+    private function isSingleDomain(): bool
     {
         $domain = $this->container->get(Domain::class);
         /* @var $domain \Shopsys\FrameworkBundle\Component\Domain\Domain */

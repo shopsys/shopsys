@@ -44,7 +44,7 @@ class ProductDataFixtureCsvReader
      * @param array $rawRow
      * @return array mixed
      */
-    private function prepareRawRow($rawRow)
+    private function prepareRawRow($rawRow): array
     {
         $row = array_map([TransformString::class, 'emptyToNull'], $rawRow);
 

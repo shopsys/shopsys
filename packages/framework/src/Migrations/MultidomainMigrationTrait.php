@@ -14,7 +14,7 @@ trait MultidomainMigrationTrait
     /**
      * @return int[]
      */
-    protected function getAllDomainIds()
+    protected function getAllDomainIds(): array
     {
         return $this
             ->sql('SELECT domain_id FROM setting_values WHERE name = :baseUrl', ['baseUrl' => Setting::BASE_URL])
@@ -23,9 +23,8 @@ trait MultidomainMigrationTrait
 
     /**
      * @param int $domainId
-     * @return string
      */
-    protected function getDomainLocale($domainId)
+    protected function getDomainLocale($domainId): string
     {
         return $this
             ->sql('SELECT get_domain_locale(:domainId)', ['domainId' => $domainId])

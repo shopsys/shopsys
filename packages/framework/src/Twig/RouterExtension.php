@@ -32,9 +32,8 @@ class RouterExtension extends Twig_Extension
     /**
      * @param string $route
      * @param int $domainId
-     * @return string|null
      */
-    public function findUrlByDomainId($route, array $routeParams, $domainId)
+    public function findUrlByDomainId($route, array $routeParams, $domainId): ?string
     {
         $domainRouter = $this->domainRouterFactory->getRouter($domainId);
 
@@ -45,10 +44,7 @@ class RouterExtension extends Twig_Extension
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'router_extension';
     }

@@ -9,9 +9,8 @@ class ProgressBarFactory
 {
     /**
      * @param int $max
-     * @return \Symfony\Component\Console\Helper\ProgressBar
      */
-    public function create(OutputInterface $output, $max)
+    public function create(OutputInterface $output, $max): \Symfony\Component\Console\Helper\ProgressBar
     {
         $bar = new ProgressBar($output, $max);
         $this->initializeCustomPlaceholderFormatters();
@@ -46,9 +45,8 @@ class ProgressBarFactory
 
     /**
      * @param int $timeInSeconds
-     * @return string
      */
-    private function formatTimeHms($timeInSeconds)
+    private function formatTimeHms($timeInSeconds): string
     {
         return sprintf(
             '%dh %02dm %02ds',

@@ -99,9 +99,8 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
 
     /**
      * @param string|null $locale
-     * @return string|null
      */
-    private function resolveLocale($locale)
+    private function resolveLocale($locale): ?string
     {
         if ($locale === null) {
             return $this->getLocale();
@@ -112,9 +111,8 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
 
     /**
      * @param string|null $domain
-     * @return string
      */
-    private function resolveDomain($domain)
+    private function resolveDomain($domain): string
     {
         if ($domain === null) {
             return self::DEFAULT_DOMAIN;
@@ -160,9 +158,8 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
      * @param string $id
      * @param string|null $domain
      * @param string|null $locale
-     * @return string
      */
-    public static function staticTrans($id, array $parameters = [], $domain = null, $locale = null)
+    public static function staticTrans($id, array $parameters = [], $domain = null, $locale = null): string
     {
         if (self::$self === null) {
             throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\InstanceNotInjectedException();
@@ -176,9 +173,8 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
      * @param int $number
      * @param string|null $domain
      * @param string|null $locale
-     * @return string
      */
-    public static function staticTransChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
+    public static function staticTransChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string
     {
         if (self::$self === null) {
             throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\InstanceNotInjectedException();

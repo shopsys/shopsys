@@ -82,9 +82,8 @@ class GridView
     /**
      * @param string $name
      * @param bool $echo
-     * @return string|null
      */
-    public function renderBlock($name, array $parameters = [], $echo = true)
+    public function renderBlock($name, array $parameters = [], $echo = true): ?string
     {
         foreach ($this->getTemplates() as $template) {
             if ($template->hasBlock($name)) {
@@ -181,9 +180,8 @@ class GridView
 
     /**
      * @param array|string|null $removeParameters
-     * @return string
      */
-    public function getUrl(array $parameters = null, $removeParameters = null)
+    public function getUrl(array $parameters = null, $removeParameters = null): string
     {
         $masterRequest = $this->requestStack->getMasterRequest();
         $routeParameters = $this->grid->getUrlParameters($parameters, $removeParameters);
@@ -197,9 +195,8 @@ class GridView
 
     /**
      * @param string $name
-     * @return bool
      */
-    private function blockExists($name)
+    private function blockExists($name): bool
     {
         foreach ($this->getTemplates() as $template) {
             if ($template->hasBlock($name)) {
@@ -230,7 +227,7 @@ class GridView
     /**
      * @return \Twig_TemplateWrapper[]
      */
-    private function getTemplates()
+    private function getTemplates(): array
     {
         if (empty($this->templates)) {
             $this->templates = [];
@@ -248,9 +245,8 @@ class GridView
 
     /**
      * @param string $theme
-     * @return \Twig_TemplateWrapper
      */
-    private function getTemplateFromString($theme)
+    private function getTemplateFromString($theme): \Twig_TemplateWrapper
     {
         return $this->twig->load($theme);
     }
@@ -266,9 +262,8 @@ class GridView
 
     /**
      * @param mixed $variable
-     * @return string
      */
-    private function getVariableType($variable)
+    private function getVariableType($variable): string
     {
         switch (gettype($variable)) {
             case 'boolean':

@@ -36,10 +36,7 @@ class ServerRunForDomainCommand extends Command
             ->setDescription('Runs PHP built-in web server for a chosen domain');
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         if ($input->hasParameterOption(['--env', '-e'])) {
@@ -56,10 +53,7 @@ class ServerRunForDomainCommand extends Command
         return $this->runServerForDomain($domainConfig, $output);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    private function chooseDomainConfig(SymfonyStyle $io)
+    private function chooseDomainConfig(SymfonyStyle $io): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
     {
         $domainConfigs = $this->domain->getAll();
 
@@ -89,10 +83,7 @@ class ServerRunForDomainCommand extends Command
         }
     }
 
-    /**
-     * @return int
-     */
-    private function runServerForDomain(DomainConfig $domainConfig, OutputInterface $output)
+    private function runServerForDomain(DomainConfig $domainConfig, OutputInterface $output): int
     {
         $command = $this->getApplication()->find('server:run');
 

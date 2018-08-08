@@ -16,7 +16,7 @@ class MultidomainEntityClassFinder
         array $allClassesMetadata,
         array $ignoredEntitiesNames,
         array $manualMultidomainEntitiesNames
-    ) {
+    ): array {
         $multidomainEntitiesNames = [];
         foreach ($allClassesMetadata as $classMetadata) {
             $entityName = $classMetadata->getName();
@@ -32,10 +32,7 @@ class MultidomainEntityClassFinder
         return $multidomainEntitiesNames;
     }
 
-    /**
-     * @return bool
-     */
-    private function isMultidomainEntity(ClassMetadata $classMetadata)
+    private function isMultidomainEntity(ClassMetadata $classMetadata): bool
     {
         $identifierFieldNames = $classMetadata->getIdentifierFieldNames();
 

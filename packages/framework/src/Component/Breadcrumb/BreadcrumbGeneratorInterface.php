@@ -8,10 +8,10 @@ interface BreadcrumbGeneratorInterface
      * @param string $routeName
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
-    public function getBreadcrumbItems($routeName, array $routeParameters = []);
+    public function getBreadcrumbItems($routeName, array $routeParameters = []): array;
 
     /**
      * @return string[]
      */
-    public function getRouteNames();
+    public function getRouteNames(): array;
 }

@@ -80,18 +80,16 @@ class PricingGroupFacade
 
     /**
      * @param int $pricingGroupId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getById($pricingGroupId)
+    public function getById($pricingGroupId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->pricingGroupRepository->getById($pricingGroupId);
     }
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function create(PricingGroupData $pricingGroupData, $domainId)
+    public function create(PricingGroupData $pricingGroupData, $domainId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $pricingGroup = $this->pricingGroupFactory->create($pricingGroupData, $domainId);
 
@@ -110,9 +108,8 @@ class PricingGroupFacade
 
     /**
      * @param int $pricingGroupId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function edit($pricingGroupId, PricingGroupData $pricingGroupData)
+    public function edit($pricingGroupId, PricingGroupData $pricingGroupData): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $pricingGroup = $this->pricingGroupRepository->getById($pricingGroupId);
         $pricingGroup->edit($pricingGroupData);
@@ -149,7 +146,7 @@ class PricingGroupFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->pricingGroupRepository->getAll();
     }
@@ -158,7 +155,7 @@ class PricingGroupFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getByDomainId($domainId)
+    public function getByDomainId($domainId): array
     {
         return $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
     }
@@ -168,7 +165,7 @@ class PricingGroupFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getAllExceptIdByDomainId($id, $domainId)
+    public function getAllExceptIdByDomainId($id, $domainId): array
     {
         return $this->pricingGroupRepository->getAllExceptIdByDomainId($id, $domainId);
     }

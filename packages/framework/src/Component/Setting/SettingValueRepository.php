@@ -17,10 +17,7 @@ class SettingValueRepository
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getSettingValueRepository()
+    protected function getSettingValueRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(SettingValue::class);
     }
@@ -29,7 +26,7 @@ class SettingValueRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Setting\SettingValue[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId($domainId): array
     {
         return $this->getSettingValueRepository()->findBy(['domainId' => $domainId]);
     }

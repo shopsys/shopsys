@@ -152,10 +152,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         $this->assertCount(2, $paginationResult->getResults());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
-     */
-    private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales)
+    private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales): \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
     {
         $parameterRepository = $this->getContainer()->get(ParameterRepository::class);
         /* @var $parameterRepository \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository */
@@ -174,7 +171,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
      * @param array[] $valuesTextsByLocales
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales)
+    private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales): array
     {
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         /* @var $em \Doctrine\ORM\EntityManager */
@@ -192,10 +189,7 @@ class ProductOnCurrentDomainFacadeTest extends DatabaseTestCase
         return $parameterValues;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    private function getPaginationResultInCategory(ProductFilterData $productFilterData, Category $category)
+    private function getPaginationResultInCategory(ProductFilterData $productFilterData, Category $category): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
     {
         $productOnCurrentDomainFacade = $this->getContainer()->get(ProductOnCurrentDomainFacade::class);
         /* @var $productOnCurrentDomainFacade \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade */

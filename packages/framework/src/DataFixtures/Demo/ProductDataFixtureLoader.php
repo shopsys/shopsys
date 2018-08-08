@@ -127,9 +127,8 @@ class ProductDataFixtureLoader
 
     /**
      * @param array $row
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
      */
-    public function createProductDataFromRowForFirstDomain($row)
+    public function createProductDataFromRowForFirstDomain($row): \Shopsys\FrameworkBundle\Model\Product\ProductData
     {
         $productData = $this->productDataFactory->create();
         $this->updateProductDataFromCsvRowForFirstDomain($productData, $row);
@@ -215,10 +214,7 @@ class ProductDataFixtureLoader
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getCatnumFromRow($row)
+    public function getCatnumFromRow($row): string
     {
         return $row[self::COLUMN_CATNUM];
     }
@@ -236,9 +232,8 @@ class ProductDataFixtureLoader
 
     /**
      * @param int $domainId
-     * @return int
      */
-    private function getShortDescriptionColumnForDomain($domainId)
+    private function getShortDescriptionColumnForDomain($domainId): int
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
@@ -254,9 +249,8 @@ class ProductDataFixtureLoader
 
     /**
      * @param int $domainId
-     * @return int
      */
-    private function getDescriptionColumnForDomain($domainId)
+    private function getDescriptionColumnForDomain($domainId): int
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
@@ -274,7 +268,7 @@ class ProductDataFixtureLoader
      * @param string $string
      * @return string[]
      */
-    private function getProductManualPricesIndexedByPricingGroupFromString($string)
+    private function getProductManualPricesIndexedByPricingGroupFromString($string): array
     {
         $productManualPricesByPricingGroup = [];
         $rowData = explode(';', $string);
@@ -290,7 +284,7 @@ class ProductDataFixtureLoader
      * @param string $keyString
      * @return string[]
      */
-    private function getValuesByKeyString($keyString, array $valuesByKey)
+    private function getValuesByKeyString($keyString, array $valuesByKey): array
     {
         $values = [];
         if (!empty($keyString)) {

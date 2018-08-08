@@ -45,10 +45,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
         return $rowId;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
-    public function getGrid()
+    public function getGrid(): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $grid = $this->gridFactory->create();
         $grid->setInlineEditService($this);
@@ -56,10 +53,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
         return $grid;
     }
 
-    /**
-     * @return bool
-     */
-    public function canAddNewRow()
+    public function canAddNewRow(): bool
     {
         return true;
     }
@@ -67,19 +61,16 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     /**
      * Since Symfony 3.4, the best practice for service names is using FQCN
      * if you don't follow this best practice you should override this method
-     *
-     * @return string
      */
-    public function getServiceName()
+    public function getServiceName(): string
     {
         return static::class;
     }
 
     /**
      * @param int|string|null $rowId
-     * @return \Symfony\Component\Form\FormInterface
      */
-    abstract public function getForm($rowId);
+    abstract public function getForm($rowId): \Symfony\Component\Form\FormInterface;
 
     /**
      * @param int|string $rowId

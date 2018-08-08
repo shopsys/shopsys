@@ -35,10 +35,7 @@ class FormRenderingConfigurationExtension extends AbstractTypeExtension
             'render_form_row' => true,
         ]);
     }
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return FormType::class;
     }

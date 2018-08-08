@@ -42,7 +42,7 @@ class AllMailTemplatesData
     /**
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData[]
      */
-    public function getAllTemplates()
+    public function getAllTemplates(): array
     {
         $allTemplates = $this->orderStatusTemplates;
         $allTemplates[] = $this->registrationTemplate;

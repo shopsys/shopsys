@@ -70,10 +70,7 @@ class GenerateMigrationCommand extends AbstractCommand
             ->setDescription('Generate a new migration if need it');
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Checking database schema...');
 
@@ -109,10 +106,7 @@ class GenerateMigrationCommand extends AbstractCommand
         return self::RETURN_CODE_OK;
     }
 
-    /**
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
-     */
-    private function chooseMigrationLocation(SymfonyStyle $io)
+    private function chooseMigrationLocation(SymfonyStyle $io): \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
     {
         $bundles = $this->getAllBundleNamesExceptVendor();
 
@@ -131,7 +125,7 @@ class GenerateMigrationCommand extends AbstractCommand
     /**
      * @return string[]
      */
-    private function getAllBundleNamesExceptVendor()
+    private function getAllBundleNamesExceptVendor(): array
     {
         $bundles = [];
         foreach ($this->kernel->getBundles() as $bundle) {
@@ -142,10 +136,7 @@ class GenerateMigrationCommand extends AbstractCommand
         return $bundles;
     }
 
-    /**
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
-     */
-    private function getMigrationLocation(BundleInterface $bundle)
+    private function getMigrationLocation(BundleInterface $bundle): \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
     {
         return $this->migrationsLocator->createMigrationsLocation($bundle);
     }

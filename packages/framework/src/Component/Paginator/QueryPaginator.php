@@ -32,9 +32,8 @@ class QueryPaginator implements PaginatorInterface
     /**
      * @param int $page
      * @param int $pageSize
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getResult($page = 1, $pageSize = null)
+    public function getResult($page = 1, $pageSize = null): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
     {
         $queryBuilder = clone $this->queryBuilder;
 
@@ -67,20 +66,14 @@ class QueryPaginator implements PaginatorInterface
         return new PaginationResult($page, $pageSize, $totalCount, $results);
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         $totalNativeQuery = $this->getTotalNativeQuery($this->queryBuilder);
 
         return $totalNativeQuery->getSingleScalarResult();
     }
 
-    /**
-     * @return \Doctrine\ORM\NativeQuery
-     */
-    private function getTotalNativeQuery(QueryBuilder $queryBuilder)
+    private function getTotalNativeQuery(QueryBuilder $queryBuilder): \Doctrine\ORM\NativeQuery
     {
         $em = $queryBuilder->getEntityManager();
 

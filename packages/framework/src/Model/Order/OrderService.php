@@ -53,10 +53,7 @@ class OrderService
         $this->orderProductFactory = $orderProductFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderEditResult
-     */
-    public function editOrder(Order $order, OrderData $orderData)
+    public function editOrder(Order $order, OrderData $orderData): \Shopsys\FrameworkBundle\Model\Order\OrderEditResult
     {
         $orderTransportData = $orderData->orderTransport;
         $orderTransportData->priceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat($orderTransportData);
@@ -103,10 +100,7 @@ class OrderService
         return new OrderEditResult($orderItemsToCreate, $orderItemsToDelete, $statusChanged);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct
-     */
-    public function createOrderProductInOrder(Order $order, Product $product, Price $productPrice)
+    public function createOrderProductInOrder(Order $order, Product $product, Price $productPrice): \Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct
     {
         $orderDomainConfig = $this->domain->getDomainConfigById($order->getDomainId());
 
@@ -133,10 +127,7 @@ class OrderService
         $order->setTotalPrice($orderTotalPrice);
     }
 
-    /**
-     * @return string
-     */
-    public function getOrderDetailUrl(Order $order)
+    public function getOrderDetailUrl(Order $order): string
     {
         return $this->domainRouterFactory->getRouter($order->getDomainId())->generate(
             'front_customer_order_detail_unregistered',

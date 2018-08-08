@@ -33,7 +33,7 @@ class OrderEditResult
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
-    public function getOrderItemsToCreate()
+    public function getOrderItemsToCreate(): array
     {
         return $this->orderItemsToCreate;
     }
@@ -41,15 +41,12 @@ class OrderEditResult
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
-    public function getOrderItemsToDelete()
+    public function getOrderItemsToDelete(): array
     {
         return $this->orderItemsToDelete;
     }
 
-    /**
-     * @return bool
-     */
-    public function isStatusChanged()
+    public function isStatusChanged(): bool
     {
         return $this->statusChanged;
     }

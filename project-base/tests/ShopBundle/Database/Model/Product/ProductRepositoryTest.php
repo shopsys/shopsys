@@ -199,7 +199,7 @@ class ProductRepositoryTest extends DatabaseTestCase
      * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    private function getProductsForSearchOrderedByPriority($searchText)
+    private function getProductsForSearchOrderedByPriority($searchText): array
     {
         $productRepository = $this->getContainer()->get(ProductRepository::class);
         /* @var $productRepository \Shopsys\FrameworkBundle\Model\Product\ProductRepository */
@@ -223,7 +223,7 @@ class ProductRepositoryTest extends DatabaseTestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    private function getProductsInCategoryOrderedByPriority(Category $category)
+    private function getProductsInCategoryOrderedByPriority(Category $category): array
     {
         $productRepository = $this->getContainer()->get(ProductRepository::class);
         /* @var $productRepository \Shopsys\FrameworkBundle\Model\Product\ProductRepository */

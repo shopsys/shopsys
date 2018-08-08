@@ -67,26 +67,17 @@ class ExtendedOrderProduct extends ExtendedOrderItem
         $this->product = $product;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
-     */
-    public function getProduct()
+    public function getProduct(): ?\Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasProduct()
+    public function hasProduct(): bool
     {
         return $this->product !== null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getProductStringField()
+    public function getProductStringField(): ?string
     {
         return $this->productStringField;
     }

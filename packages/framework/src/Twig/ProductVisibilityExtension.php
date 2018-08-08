@@ -46,19 +46,15 @@ class ProductVisibilityExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'product_visibility';
     }
 
     /**
      * @param int $domainId
-     * @return bool
      */
-    public function isVisibleForDefaultPricingGroupOnDomain(Product $product, $domainId)
+    public function isVisibleForDefaultPricingGroupOnDomain(Product $product, $domainId): bool
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
         $productVisibility = $this->productVisibilityRepository->getProductVisibility($product, $pricingGroup, $domainId);
@@ -66,10 +62,7 @@ class ProductVisibilityExtension extends \Twig_Extension
         return $productVisibility->isVisible();
     }
 
-    /**
-     * @return bool
-     */
-    public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product)
+    public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product): bool
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             if (!$this->isVisibleForDefaultPricingGroupOnDomain($product, $domainConfig->getId())) {

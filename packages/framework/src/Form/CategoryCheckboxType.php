@@ -46,10 +46,7 @@ class CategoryCheckboxType extends AbstractType
             ->setAllowedTypes('domain_id', 'int');
     }
 
-    /**
-     * @return string
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return CheckboxType::class;
     }

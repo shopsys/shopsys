@@ -286,10 +286,7 @@ class ExtendedCategory extends Category
         $this->manyToManySelfReferencingEntities->add($manyToManySelfReferencing);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStringField()
+    public function getStringField(): ?string
     {
         return $this->stringField;
     }

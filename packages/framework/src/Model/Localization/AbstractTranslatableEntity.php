@@ -17,19 +17,15 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
      */
     protected $currentTranslation;
 
-    /**
-     * @return string|null
-     */
-    protected function getCurrentLocale()
+    protected function getCurrentLocale(): ?string
     {
         return $this->currentLocale;
     }
 
     /**
      * @param string $locale
-     * @return \Prezent\Doctrine\Translatable\TranslationInterface|null
      */
-    protected function findTranslation($locale)
+    protected function findTranslation($locale): ?\Prezent\Doctrine\Translatable\TranslationInterface
     {
         foreach ($this->getTranslations() as $translation) {
             if ($translation->getLocale() === $locale) {
@@ -42,9 +38,8 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
 
     /**
      * @param string|null $locale
-     * @return \Prezent\Doctrine\Translatable\TranslationInterface
      */
-    protected function translation($locale = null)
+    protected function translation($locale = null): \Prezent\Doctrine\Translatable\TranslationInterface
     {
         if ($locale === null) {
             $locale = $this->getCurrentLocale();

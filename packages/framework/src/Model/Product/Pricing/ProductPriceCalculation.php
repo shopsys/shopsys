@@ -61,9 +61,8 @@ class ProductPriceCalculation
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function calculatePrice(Product $product, $domainId, PricingGroup $pricingGroup)
+    public function calculatePrice(Product $product, $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         if ($product->isMainVariant()) {
             return $this->calculateMainVariantPrice($product, $domainId, $pricingGroup);
@@ -83,9 +82,8 @@ class ProductPriceCalculation
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    private function calculateMainVariantPrice(Product $mainVariant, $domainId, PricingGroup $pricingGroup)
+    private function calculateMainVariantPrice(Product $mainVariant, $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
             $mainVariant,
@@ -110,9 +108,8 @@ class ProductPriceCalculation
 
     /**
      * @param string $inputPrice
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    private function calculateBasePrice($inputPrice, Vat $vat)
+    private function calculateBasePrice($inputPrice, Vat $vat): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         return $this->basePriceCalculation->calculateBasePrice(
             $inputPrice,
@@ -121,10 +118,7 @@ class ProductPriceCalculation
         );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    private function calculateProductPriceForPricingGroupManual(Product $product, PricingGroup $pricingGroup)
+    private function calculateProductPriceForPricingGroupManual(Product $product, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup($product, $pricingGroup);
         if ($manualInputPrice !== null) {
@@ -139,9 +133,8 @@ class ProductPriceCalculation
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    private function calculateProductPriceForPricingGroupAuto(Product $product, PricingGroup $pricingGroup, $domainId)
+    private function calculateProductPriceForPricingGroupAuto(Product $product, PricingGroup $pricingGroup, $domainId): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         $basePrice = $this->calculateBasePrice($product->getPrice(), $product->getVat());
 
@@ -156,9 +149,8 @@ class ProductPriceCalculation
 
     /**
      * @param int $domainId
-     * @return string
      */
-    private function getDomainDefaultCurrencyReversedExchangeRate($domainId)
+    private function getDomainDefaultCurrencyReversedExchangeRate($domainId): string
     {
         $domainDefaultCurrencyId = $this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId);
         $currency = $this->currencyFacade->getById($domainDefaultCurrencyId);

@@ -41,7 +41,7 @@ class ProductSellingDeniedRecalculator
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    private function getProductsForCalculations(Product $product)
+    private function getProductsForCalculations(Product $product): array
     {
         $products = [$product];
         if ($product->isMainVariant()) {

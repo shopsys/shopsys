@@ -32,14 +32,13 @@ abstract class FunctionalTestCase extends WebTestCase
      * @param string $username
      * @param string $password
      * @param array $kernelOptions
-     * @return \Symfony\Bundle\FrameworkBundle\Client
      */
     protected function getClient(
         $createNew = false,
         $username = null,
         $password = null,
         $kernelOptions = []
-    ) {
+    ): \Symfony\Bundle\FrameworkBundle\Client {
         $defaultKernelOptions = [
             'environment' => EnvironmentType::TEST,
             'debug' => EnvironmentType::isDebug(EnvironmentType::TEST),
@@ -64,19 +63,15 @@ abstract class FunctionalTestCase extends WebTestCase
         return $this->client;
     }
 
-    /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected function getContainer()
+    protected function getContainer(): \Symfony\Component\DependencyInjection\ContainerInterface
     {
         return $this->getClient()->getContainer();
     }
 
     /**
      * @param string $referenceName
-     * @return object
      */
-    protected function getReference($referenceName)
+    protected function getReference($referenceName): object
     {
         $persistentReferenceFacade = $this->getContainer()
             ->get(PersistentReferenceFacade::class);

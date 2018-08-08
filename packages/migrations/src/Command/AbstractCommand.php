@@ -57,10 +57,7 @@ abstract class AbstractCommand extends Command
         $this->getApplication()->getHelperSet()->set($configurationHelper, 'configuration');
     }
 
-    /**
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Configuration
-     */
-    protected function getMigrationsConfiguration()
+    protected function getMigrationsConfiguration(): \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Configuration
     {
         return $this->migrationsConfiguration;
     }

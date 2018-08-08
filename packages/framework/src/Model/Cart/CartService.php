@@ -32,9 +32,8 @@ class CartService
 
     /**
      * @param int $quantity
-     * @return \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
      */
-    public function addProductToCart(Cart $cart, CustomerIdentifier $customerIdentifier, Product $product, $quantity)
+    public function addProductToCart(Cart $cart, CustomerIdentifier $customerIdentifier, Product $product, $quantity): \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
     {
         if (!is_int($quantity) || $quantity <= 0) {
             throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($quantity);
@@ -65,9 +64,8 @@ class CartService
 
     /**
      * @param int $cartItemId
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
      */
-    public function getCartItemById(Cart $cart, $cartItemId)
+    public function getCartItemById(Cart $cart, $cartItemId): \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
     {
         foreach ($cart->getItems() as $cartItem) {
             if ($cartItem->getId() === $cartItemId) {
@@ -101,10 +99,7 @@ class CartService
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem|null
-     */
-    private function findSimilarCartItemByCartItem(Cart $cart, CartItem $cartItem)
+    private function findSimilarCartItemByCartItem(Cart $cart, CartItem $cartItem): ?\Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
     {
         foreach ($cart->getItems() as $similarCartItem) {
             if ($similarCartItem->isSimilarItemAs($cartItem)) {
@@ -118,7 +113,7 @@ class CartService
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
-    public function getQuantifiedProductsIndexedByCartItemId(Cart $cart)
+    public function getQuantifiedProductsIndexedByCartItemId(Cart $cart): array
     {
         $quantifiedProductsByCartItemId = [];
         foreach ($cart->getItems() as $cartItem) {

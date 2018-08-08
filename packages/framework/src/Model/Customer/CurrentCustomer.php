@@ -25,10 +25,7 @@ class CurrentCustomer
         $this->pricingGroupSettingFacade = $ricingGroupSettingFacade;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function getPricingGroup()
+    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $user = $this->findCurrentUser();
         if ($user === null) {
@@ -38,10 +35,7 @@ class CurrentCustomer
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
-     */
-    public function findCurrentUser()
+    public function findCurrentUser(): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         $token = $this->tokenStorage->getToken();
         if ($token === null) {

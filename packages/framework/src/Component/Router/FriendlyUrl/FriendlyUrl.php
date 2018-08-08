@@ -67,42 +67,27 @@ class FriendlyUrl
         $this->main = false;
     }
 
-    /**
-     * @return string
-     */
-    public function getRouteName()
+    public function getRouteName(): string
     {
         return $this->routeName;
     }
 
-    /**
-     * @return int
-     */
-    public function getEntityId()
+    public function getEntityId(): int
     {
         return $this->entityId;
     }
 
-    /**
-     * @return string
-     */
-    public function getDomainId()
+    public function getDomainId(): string
     {
         return $this->domainId;
     }
 
-    /**
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * @return bool
-     */
-    public function isMain()
+    public function isMain(): bool
     {
         return $this->main;
     }

@@ -347,10 +347,7 @@ class CustomerServiceTest extends TestCase
         $this->assertSame($order->getCountry(), $customerData->billingAddressData->country);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerService
-     */
-    private function getCustomerService()
+    private function getCustomerService(): \Shopsys\FrameworkBundle\Model\Customer\CustomerService
     {
         $customerPasswordServiceMock = $this->createMock(CustomerPasswordService::class);
         $deliveryAddressFactory = new DeliveryAddressFactory();
@@ -372,9 +369,8 @@ class CustomerServiceTest extends TestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData|null $billingAddressData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
      */
-    private function createBillingAddress(BillingAddressData $billingAddressData = null)
+    private function createBillingAddress(BillingAddressData $billingAddressData = null): \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
     {
         if ($billingAddressData === null) {
             $billingAddressData = new BillingAddressData();
@@ -385,9 +381,8 @@ class CustomerServiceTest extends TestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null $deliveryAddressData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
      */
-    private function createDeliveryAddress(DeliveryAddressData $deliveryAddressData = null)
+    private function createDeliveryAddress(DeliveryAddressData $deliveryAddressData = null): \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
     {
         if ($deliveryAddressData === null) {
             $deliveryAddressData = new DeliveryAddressData();

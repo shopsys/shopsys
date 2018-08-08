@@ -129,10 +129,7 @@ class CartFacadeTest extends DatabaseTestCase
         $this->assertArrayHasSameElements([$cartItem2], $cartItems);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    private function createCartFacade(CustomerIdentifier $customerIdentifier)
+    private function createCartFacade(CustomerIdentifier $customerIdentifier): \Shopsys\FrameworkBundle\Model\Cart\CartFacade
     {
         return new CartFacade(
             $this->getEntityManager(),
@@ -147,10 +144,7 @@ class CartFacadeTest extends DatabaseTestCase
         );
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
-     */
-    private function getCartByCustomerIdentifier(CustomerIdentifier $customerIdentifier)
+    private function getCartByCustomerIdentifier(CustomerIdentifier $customerIdentifier): \Shopsys\FrameworkBundle\Model\Cart\Cart
     {
         $cartFactory = $this->getContainer()->get(CartFactory::class);
 
@@ -174,10 +168,7 @@ class CartFacadeTest extends DatabaseTestCase
         }
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    private function getCustomerIdentifierFactoryMock(CustomerIdentifier $customerIdentifier)
+    private function getCustomerIdentifierFactoryMock(CustomerIdentifier $customerIdentifier): \PHPUnit\Framework\MockObject\MockObject
     {
         $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerIdentifierFactory::class)
             ->disableOriginalConstructor()

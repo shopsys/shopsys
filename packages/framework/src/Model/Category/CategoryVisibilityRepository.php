@@ -70,10 +70,7 @@ class CategoryVisibilityRepository
         );
     }
 
-    /**
-     * @return int
-     */
-    private function getMaxLevelOnDomain(DomainConfig $domainConfig)
+    private function getMaxLevelOnDomain(DomainConfig $domainConfig): int
     {
         return $this->em->getConnection()->fetchColumn(
             'SELECT MAX(c.level)

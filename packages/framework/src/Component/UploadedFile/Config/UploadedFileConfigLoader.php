@@ -30,9 +30,8 @@ class UploadedFileConfigLoader
 
     /**
      * @param string $filename
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig
      */
-    public function loadFromYaml($filename)
+    public function loadFromYaml($filename): \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig
     {
         $yamlParser = new Parser();
 
@@ -76,9 +75,8 @@ class UploadedFileConfigLoader
 
     /**
      * @param array $entityConfig
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
      */
-    private function processEntityConfig($entityConfig)
+    private function processEntityConfig($entityConfig): \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
     {
         $entityClass = $entityConfig[UploadedFileConfigDefinition::CONFIG_CLASS];
         $entityName = $entityConfig[UploadedFileConfigDefinition::CONFIG_ENTITY_NAME];

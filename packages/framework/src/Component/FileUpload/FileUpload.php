@@ -70,10 +70,7 @@ class FileUpload
         $this->filesystem = $filesystem;
     }
 
-    /**
-     * @return string
-     */
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file): string
     {
         if ($file->getError()) {
             throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException($file->getErrorMessage(), $file->getError());
@@ -87,9 +84,8 @@ class FileUpload
 
     /**
      * @param string $filename
-     * @return bool
      */
-    public function tryDeleteTemporaryFile($filename)
+    public function tryDeleteTemporaryFile($filename): bool
     {
         if (!empty($filename)) {
             $filepath = $this->getTemporaryFilepath($filename);
@@ -104,26 +100,21 @@ class FileUpload
 
     /**
      * @param string $filename
-     * @return string
      */
-    private function getTemporaryFilename($filename)
+    private function getTemporaryFilename($filename): string
     {
         return TransformString::safeFilename(uniqid('', true) . '__' . $filename);
     }
 
     /**
      * @param string $temporaryFilename
-     * @return string
      */
-    public function getTemporaryFilepath($temporaryFilename)
+    public function getTemporaryFilepath($temporaryFilename): string
     {
         return $this->getTemporaryDirectory() . '/' . TransformString::safeFilename($temporaryFilename);
     }
 
-    /**
-     * @return string
-     */
-    public function getTemporaryDirectory()
+    public function getTemporaryDirectory(): string
     {
         return $this->temporaryDir . '/' . self::TEMPORARY_DIRECTORY;
     }
@@ -132,9 +123,8 @@ class FileUpload
      * @param string $isImage
      * @param string $category
      * @param string|null $targetDirectory
-     * @return string
      */
-    public function getUploadDirectory($isImage, $category, $targetDirectory)
+    public function getUploadDirectory($isImage, $category, $targetDirectory): string
     {
         return ($isImage ? $this->imageDir : $this->uploadedFileDir)
             . $category
@@ -146,18 +136,16 @@ class FileUpload
      * @param bool $isImage
      * @param string $category
      * @param string|null $targetDirectory
-     * @return string
      */
-    private function getTargetFilepath($filename, $isImage, $category, $targetDirectory)
+    private function getTargetFilepath($filename, $isImage, $category, $targetDirectory): string
     {
         return $this->getUploadDirectory($isImage, $category, $targetDirectory) . '/' . $filename;
     }
 
     /**
      * @param string $temporaryFilename
-     * @return string
      */
-    public function getOriginalFilenameByTemporary($temporaryFilename)
+    public function getOriginalFilenameByTemporary($temporaryFilename): string
     {
         $matches = [];
         if ($temporaryFilename && preg_match('/^.+?__(.+)$/', $temporaryFilename, $matches)) {

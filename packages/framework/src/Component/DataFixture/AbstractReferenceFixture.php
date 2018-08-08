@@ -42,9 +42,8 @@ abstract class AbstractReferenceFixture implements FixtureInterface
 
     /**
      * @param string $name
-     * @return object
      */
-    public function getReference($name)
+    public function getReference($name): object
     {
         return $this->persistentReferenceFacade->getReference($name);
     }

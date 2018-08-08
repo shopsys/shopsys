@@ -75,10 +75,7 @@ class ImageServiceTest extends TestCase
         $this->assertSame($filename, array_pop($temporaryFiles)->getTemporaryFilename());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
-    private function getFileUpload()
+    private function getFileUpload(): \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
     {
         $fileNamingConvention = new FileNamingConvention();
         $filesystem = new Filesystem();

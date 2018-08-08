@@ -3,7 +3,10 @@ imports:
     - { resource: 'packages/*/easy-coding-standard.yml' }
     - { resource: 'project-base/easy-coding-standard.yml' }
 
+
 services:
+    PhpCsFixer\Fixer\FunctionNotation\PhpdocToReturnTypeFixer:
+
     SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff:
         usefulAnnotations:
             - '@deprecated'

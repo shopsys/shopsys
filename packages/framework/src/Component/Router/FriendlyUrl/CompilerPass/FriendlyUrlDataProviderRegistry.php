@@ -25,7 +25,7 @@ class FriendlyUrlDataProviderRegistry
      * @param string $routeName
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
-    public function getFriendlyUrlDataByRouteAndDomain($routeName, DomainConfig $domainConfig)
+    public function getFriendlyUrlDataByRouteAndDomain($routeName, DomainConfig $domainConfig): array
     {
         foreach ($this->friendlyUrlDataProviders as $friendlyUrlDataProvider) {
             if ($friendlyUrlDataProvider->getRouteName() === $routeName) {

@@ -191,7 +191,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    protected function getAccessoriesData(Product $product)
+    protected function getAccessoriesData(Product $product): array
     {
         $productAccessoriesByPosition = [];
         foreach ($this->productAccessoryRepository->getAllByProduct($product) as $productAccessory) {
@@ -204,7 +204,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
      */
-    protected function getParametersData(Product $product)
+    protected function getParametersData(Product $product): array
     {
         $productParameterValuesData = [];
         $productParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product);

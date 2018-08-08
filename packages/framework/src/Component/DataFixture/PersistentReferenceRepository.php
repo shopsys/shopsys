@@ -16,28 +16,23 @@ class PersistentReferenceRepository
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getReferenceRepository()
+    protected function getReferenceRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(PersistentReference::class);
     }
 
     /**
      * @param string $referenceName
-     * @return \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference|null
      */
-    public function findByReferenceName($referenceName)
+    public function findByReferenceName($referenceName): ?\Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference
     {
         return $this->getReferenceRepository()->find(['referenceName' => $referenceName]);
     }
 
     /**
      * @param string $referenceName
-     * @return \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference
      */
-    public function getByReferenceName($referenceName)
+    public function getByReferenceName($referenceName): \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference
     {
         $reference = $this->findByReferenceName($referenceName);
         if ($reference === null) {

@@ -177,7 +177,7 @@ class ScriptController extends AdminBaseController
     /**
      * @return string[]
      */
-    private function getOrderSentPageScriptVariableLabelsIndexedByVariables()
+    private function getOrderSentPageScriptVariableLabelsIndexedByVariables(): array
     {
         return [
             ScriptFacade::VARIABLE_NUMBER => t('Order number'),

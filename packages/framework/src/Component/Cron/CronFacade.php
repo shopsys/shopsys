@@ -103,7 +103,7 @@ class CronFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->cronConfig->getAllCronModuleConfigs();
     }

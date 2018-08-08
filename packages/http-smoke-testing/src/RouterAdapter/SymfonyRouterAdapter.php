@@ -21,7 +21,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     /**
      * @return \Shopsys\HttpSmokeTesting\RouteInfo[]
      */
-    public function getAllRouteInfo()
+    public function getAllRouteInfo(): array
     {
         $allRouteInfo = [];
         foreach ($this->router->getRouteCollection() as $routeName => $route) {
@@ -31,10 +31,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return $allRouteInfo;
     }
 
-    /**
-     * @return string
-     */
-    public function generateUri(RequestDataSet $requestDataSet)
+    public function generateUri(RequestDataSet $requestDataSet): string
     {
         return $this->router->generate($requestDataSet->getRouteName(), $requestDataSet->getParameters());
     }

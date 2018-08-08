@@ -8,17 +8,13 @@ interface PluginCrudExtensionInterface
      * Returns a class name of a form type to be used
      *
      * Should return FQCN of a implementation of \Symfony\Component\Form\FormTypeInterface to be used as a sub-form
-     *
-     * @return string
      */
-    public function getFormTypeClass();
+    public function getFormTypeClass(): string;
 
     /**
      * Returns a human readable label of the sub-form
-     *
-     * @return string
      */
-    public function getFormLabel();
+    public function getFormLabel(): string;
 
     /**
      * Returns the data of an entity with provided id to be fed into the sub-form

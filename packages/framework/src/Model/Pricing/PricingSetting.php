@@ -39,35 +39,25 @@ class PricingSetting
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
     }
 
-    /**
-     * @return int
-     */
-    public function getInputPriceType()
+    public function getInputPriceType(): int
     {
         return $this->setting->get(self::INPUT_PRICE_TYPE);
     }
 
-    /**
-     * @return int
-     */
-    public function getRoundingType()
+    public function getRoundingType(): int
     {
         return $this->setting->get(self::ROUNDING_TYPE);
     }
 
-    /**
-     * @return int
-     */
-    public function getDefaultCurrencyId()
+    public function getDefaultCurrencyId(): int
     {
         return $this->setting->get(self::DEFAULT_CURRENCY);
     }
 
     /**
      * @param int $domainId
-     * @return int
      */
-    public function getDomainDefaultCurrencyIdByDomainId($domainId)
+    public function getDomainDefaultCurrencyIdByDomainId($domainId): int
     {
         return $this->setting->getForDomain(self::DEFAULT_DOMAIN_CURRENCY, $domainId);
     }
@@ -103,9 +93,8 @@ class PricingSetting
 
     /**
      * @param int $domainId
-     * @return string|null
      */
-    public function getFreeTransportAndPaymentPriceLimit($domainId)
+    public function getFreeTransportAndPaymentPriceLimit($domainId): ?string
     {
         return $this->setting->getForDomain(self::FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT, $domainId);
     }

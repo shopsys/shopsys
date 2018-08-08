@@ -24,10 +24,7 @@ class AdminProductPriceCalculationFacade
         $this->pricingSetting = $pricingSetting;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    public function calculateProductBasePrice(Product $product)
+    public function calculateProductBasePrice(Product $product): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         if ($product->getPriceCalculationType() !== Product::PRICE_CALCULATION_TYPE_AUTO) {
             throw new \Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\ProductBasePriceCalculationException(

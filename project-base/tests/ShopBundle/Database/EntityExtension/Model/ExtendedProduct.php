@@ -275,7 +275,7 @@ class ExtendedProduct extends Product
     /**
      * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedProduct[]
      */
-    public function getManyToManySelfReferencingInverseEntities()
+    public function getManyToManySelfReferencingInverseEntities(): array
     {
         return $this->manyToManySelfReferencingInverseEntities->getValues();
     }
@@ -289,10 +289,7 @@ class ExtendedProduct extends Product
         $this->manyToManySelfReferencingEntities->add($manyToManySelfReferencing);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStringField()
+    public function getStringField(): ?string
     {
         return $this->stringField;
     }

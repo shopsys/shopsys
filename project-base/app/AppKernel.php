@@ -69,7 +69,7 @@ class AppKernel extends Kernel
     /**
      * @return string[]
      */
-    private function getConfigs()
+    private function getConfigs(): array
     {
         $configs = [
             __DIR__ . '/config/parameters_common.yml',

@@ -96,10 +96,7 @@ class CronCommand extends Command
         }
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
-    private function getCurrentRoundedTime()
+    private function getCurrentRoundedTime(): \DateTimeImmutable
     {
         $time = new DateTime(null);
         $time->modify('-' . $time->format('s') . ' sec');

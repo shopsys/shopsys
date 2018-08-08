@@ -30,9 +30,8 @@ class FormDetailExtension extends Twig_Extension
 
     /**
      * @param mixed $object
-     * @return string
      */
-    public function formId($object)
+    public function formId($object): string
     {
         if ($object === null) {
             return '';
@@ -55,9 +54,8 @@ class FormDetailExtension extends Twig_Extension
 
     /**
      * @param mixed $object
-     * @return string
      */
-    public function formSave($object, FormView $formView, array $vars = [])
+    public function formSave($object, FormView $formView, array $vars = []): string
     {
         $template = $this->twigEnvironment->createTemplate('{{ form_widget(form.save, vars) }}');
 
@@ -75,10 +73,7 @@ class FormDetailExtension extends Twig_Extension
         return $template->render($parameters);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'shopsys.twig.form_detail_extension';
     }

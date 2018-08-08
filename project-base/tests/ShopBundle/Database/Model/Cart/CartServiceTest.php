@@ -170,10 +170,7 @@ class CartServiceTest extends FunctionalTestCase
         $this->assertSame(2, $mergingCart->getItemsCount());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    private function createProduct()
+    private function createProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
 
@@ -192,10 +189,7 @@ class CartServiceTest extends FunctionalTestCase
         return $product;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartService
-     */
-    private function getCartService()
+    private function getCartService(): \Shopsys\FrameworkBundle\Model\Cart\CartService
     {
         return $this->getContainer()->get(CartService::class);
     }

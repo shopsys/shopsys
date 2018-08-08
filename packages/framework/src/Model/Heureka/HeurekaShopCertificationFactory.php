@@ -33,10 +33,7 @@ class HeurekaShopCertificationFactory
         $this->heurekaShopCertificationService = $heurekaShopCertificationService;
     }
 
-    /**
-     * @return \Heureka\ShopCertification
-     */
-    public function create(Order $order)
+    public function create(Order $order): \Heureka\ShopCertification
     {
         $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
 

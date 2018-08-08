@@ -30,7 +30,7 @@ class FriendlyUrlService
      * @param string[] $namesByLocale
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
-    public function createFriendlyUrls($routeName, $entityId, $namesByLocale)
+    public function createFriendlyUrls($routeName, $entityId, $namesByLocale): array
     {
         $friendlyUrls = [];
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -55,14 +55,13 @@ class FriendlyUrlService
      * @param int $attempt
      * @param string $entityName
      * @param array|null $matchedRouteData
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult
      */
     public function getFriendlyUrlUniqueResult(
         $attempt,
         FriendlyUrl $friendlyUrl,
         $entityName,
         array $matchedRouteData = null
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult {
         if ($matchedRouteData === null) {
             return new FriendlyUrlUniqueResult(true, $friendlyUrl);
         }
@@ -90,7 +89,6 @@ class FriendlyUrlService
      * @param string $entityName
      * @param int $domainId
      * @param int|null $indexPostfix
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
      */
     public function createFriendlyUrlIfValid(
         $routeName,
@@ -98,7 +96,7 @@ class FriendlyUrlService
         $entityName,
         $domainId,
         $indexPostfix = null
-    ) {
+    ): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl {
         if ($entityName !== null
             && $entityName !== ''
         ) {
@@ -111,10 +109,7 @@ class FriendlyUrlService
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getAbsoluteUrlByFriendlyUrl(FriendlyUrl $friendlyUrl)
+    public function getAbsoluteUrlByFriendlyUrl(FriendlyUrl $friendlyUrl): string
     {
         $domainConfig = $this->domain->getDomainConfigById($friendlyUrl->getDomainId());
 
@@ -123,9 +118,8 @@ class FriendlyUrlService
 
     /**
      * @param string $slug
-     * @return string
      */
-    public function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, $slug)
+    public function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, $slug): string
     {
         return $domainConfig->getUrl() . '/' . $slug;
     }

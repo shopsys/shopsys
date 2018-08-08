@@ -178,10 +178,7 @@ class OrderDataFixture
         $this->orderFacade->createOrder($orderData, $orderPreview, $user);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
-    private function createOrderData(User $user = null)
+    private function createOrderData(User $user = null): \Shopsys\FrameworkBundle\Model\Order\OrderData
     {
         $orderData = $this->orderDataFactory->create();
 
@@ -236,7 +233,7 @@ class OrderDataFixture
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
-    private function createQuantifiedProducts()
+    private function createQuantifiedProducts(): array
     {
         $quantifiedProducts = [];
 
@@ -273,7 +270,7 @@ class OrderDataFixture
      * @param int $count
      * @return int[]
      */
-    private function getRandomPerformanceProductIds($count)
+    private function getRandomPerformanceProductIds($count): array
     {
         return $this->faker->randomElements($this->performanceProductIds, $count);
     }
@@ -296,10 +293,7 @@ class OrderDataFixture
         $this->performanceUserIds = array_column($qb->getQuery()->getScalarResult(), 'id');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
-     */
-    private function getRandomUserOrNull()
+    private function getRandomUserOrNull(): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         $shouldBeRegisteredUser = $this->faker->boolean(self::PERCENTAGE_OF_ORDERS_BY_REGISTERED_USERS);
 
@@ -311,10 +305,7 @@ class OrderDataFixture
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    private function getRandomTransport()
+    private function getRandomTransport(): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $randomTransportReferenceName = $this->faker->randomElement([
             TransportDataFixture::TRANSPORT_CZECH_POST,
@@ -325,10 +316,7 @@ class OrderDataFixture
         return $this->persistentReferenceFacade->getReference($randomTransportReferenceName);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    private function getRandomPayment()
+    private function getRandomPayment(): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         $randomPaymentReferenceName = $this->faker->randomElement([
             PaymentDataFixture::PAYMENT_CARD,
@@ -339,10 +327,7 @@ class OrderDataFixture
         return $this->persistentReferenceFacade->getReference($randomPaymentReferenceName);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
-     */
-    private function getRandomCountryFromFirstDomain()
+    private function getRandomCountryFromFirstDomain(): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $randomPaymentReferenceName = $this->faker->randomElement([
             CountryDataFixture::COUNTRY_CZECH_REPUBLIC_1,

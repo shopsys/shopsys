@@ -30,9 +30,8 @@ class InlineEditService
     /**
      * @param string $serviceName
      * @param mixed $rowId
-     * @return string
      */
-    public function getRenderedFormRow($serviceName, $rowId)
+    public function getRenderedFormRow($serviceName, $rowId): string
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
         $form = $gridInlineEdit->getForm($rowId);
@@ -54,9 +53,8 @@ class InlineEditService
     /**
      * @param string $serviceName
      * @param mixed $rowId
-     * @return string|null
      */
-    public function getRenderedRowHtml($serviceName, $rowId)
+    public function getRenderedRowHtml($serviceName, $rowId): ?string
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
         $grid = $gridInlineEdit->getGrid();
@@ -74,9 +72,8 @@ class InlineEditService
 
     /**
      * @param mixed $rowId
-     * @return string
      */
-    private function renderFormAsRow(GridInlineEditInterface $gridInlineEditService, $rowId, Form $form)
+    private function renderFormAsRow(GridInlineEditInterface $gridInlineEditService, $rowId, Form $form): string
     {
         $grid = $gridInlineEditService->getGrid();
         if ($rowId === null) {
@@ -88,10 +85,7 @@ class InlineEditService
         return $gridView->renderBlock('grid_row', $this->getFormRowTemplateParameters($grid, $form), false);
     }
 
-    /**
-     * @return array
-     */
-    private function getFormRowTemplateParameters(Grid $grid, Form $form)
+    private function getFormRowTemplateParameters(Grid $grid, Form $form): array
     {
         $formView = $form->createView();
         $rows = $grid->getRows();

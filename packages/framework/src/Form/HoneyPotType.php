@@ -9,10 +9,7 @@ use Symfony\Component\Validator\Constraints;
 
 class HoneyPotType extends AbstractType
 {
-    /**
-     * @return string
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }

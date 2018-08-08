@@ -39,7 +39,7 @@ class PluginCrudExtensionRegistry
      * @param string $type
      * @return \Shopsys\Plugin\PluginCrudExtensionInterface[]
      */
-    public function getCrudExtensions($type)
+    public function getCrudExtensions($type): array
     {
         return $this->crudExtensionsByTypeAndServiceId[$type] ?? [];
     }

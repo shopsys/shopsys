@@ -68,9 +68,8 @@ class FixturesLoader extends Loader
 
     /**
      * @param string $class
-     * @return \Doctrine\Common\DataFixtures\FixtureInterface
      */
-    protected function createFixture($class)
+    protected function createFixture($class): \Doctrine\Common\DataFixtures\FixtureInterface
     {
         /*
          * We don't actually need to create the fixture. We just

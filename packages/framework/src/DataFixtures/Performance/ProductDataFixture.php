@@ -224,9 +224,8 @@ class ProductDataFixture
 
     /**
      * @param string $catnum
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    private function getProductByCatnum($catnum)
+    private function getProductByCatnum($catnum): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         if (!array_key_exists($catnum, $this->productsByCatnum)) {
             $query = $this->em->createQuery('SELECT p FROM ' . Product::class . ' p WHERE p.catnum = :catnum')
@@ -257,10 +256,7 @@ class ProductDataFixture
         }
     }
 
-    /**
-     * @return string
-     */
-    private function getUniqueIndex()
+    private function getUniqueIndex(): string
     {
         return ' #' . $this->demoDataIterationCounter;
     }
@@ -328,7 +324,7 @@ class ProductDataFixture
     /**
      * @return int[]
      */
-    private function getPerformanceCategoryIds()
+    private function getPerformanceCategoryIds(): array
     {
         $allCategoryIds = $this->categoryRepository->getAllIds();
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
@@ -339,10 +335,7 @@ class ProductDataFixture
         return array_slice($allCategoryIds, $firstPerformanceCategoryKey);
     }
 
-    /**
-     * @return bool
-     */
-    private function isPerformanceCategory(Category $category)
+    private function isPerformanceCategory(Category $category): bool
     {
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
             CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY

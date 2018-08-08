@@ -43,9 +43,8 @@ class OrderMailFacade
     }
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */
-    public function getMailTemplateByStatusAndDomainId(OrderStatus $orderStatus, $domainId)
+    public function getMailTemplateByStatusAndDomainId(OrderStatus $orderStatus, $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $templateName = $this->orderMailService->getMailTemplateNameByStatus($orderStatus);
 

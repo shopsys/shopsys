@@ -14,7 +14,7 @@ class ErrorPageBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * @param string $routeName
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         $isPageNotFound = $routeParameters['code'] === '404';
         $breadcrumbName = $isPageNotFound ? t('Page not found') : t('Oops! Error occurred');
@@ -27,7 +27,7 @@ class ErrorPageBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * @return string[]
      */
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return [
             'front_error_page',

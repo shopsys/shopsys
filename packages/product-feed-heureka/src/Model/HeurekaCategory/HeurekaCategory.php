@@ -82,26 +82,17 @@ class HeurekaCategory
         $this->categories->removeElement($category);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getFullName()
+    public function getFullName(): ?string
     {
         return $this->fullName;
     }

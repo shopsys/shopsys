@@ -46,7 +46,7 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
     /**
      * @return string[]
      */
-    public function getSubjectVariables()
+    public function getSubjectVariables(): array
     {
         return $this->getBodyVariables();
     }
@@ -54,7 +54,7 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
     /**
      * @return string[]
      */
-    public function getBodyVariables()
+    public function getBodyVariables(): array
     {
         return [
             self::VARIABLE_URL,
@@ -66,7 +66,7 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
     /**
      * @return string[]
      */
-    public function getRequiredSubjectVariables()
+    public function getRequiredSubjectVariables(): array
     {
         return [];
     }
@@ -74,7 +74,7 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
     /**
      * @return string[]
      */
-    public function getRequiredBodyVariables()
+    public function getRequiredBodyVariables(): array
     {
         return [
             self::VARIABLE_URL,
@@ -83,9 +83,8 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $template, $personalDataAccessRequest)
+    public function createMessage(MailTemplate $template, $personalDataAccessRequest): \Shopsys\FrameworkBundle\Model\Mail\MessageData
     {
         return new MessageData(
             $personalDataAccessRequest->getEmail(),
@@ -109,9 +108,8 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
      * @param string $url
      * @param string $email
      * @param string $domainName
-     * @return array
      */
-    private function getBodyValuesIndexedByVariableName($url, $email, $domainName)
+    private function getBodyValuesIndexedByVariableName($url, $email, $domainName): array
     {
         return [
             self::VARIABLE_URL => $url,
@@ -122,9 +120,8 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
 
     /**
      * @param string $domainName
-     * @return array
      */
-    private function getSubjectValuesIndexedByVariableName($domainName)
+    private function getSubjectValuesIndexedByVariableName($domainName): array
     {
         return [
             self::VARIABLE_DOMAIN => $domainName,
@@ -133,9 +130,8 @@ class PersonalDataExportMail implements MailTypeInterface, MessageFactoryInterfa
 
     /**
      * @param string $hash
-     * @return string
      */
-    private function getVariablePersonalDataAccessUrl($hash)
+    private function getVariablePersonalDataAccessUrl($hash): string
     {
         $router = $this->domainRouterFactory->getRouter($this->domain->getId());
 

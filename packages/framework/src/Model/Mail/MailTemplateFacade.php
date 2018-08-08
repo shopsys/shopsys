@@ -73,9 +73,8 @@ class MailTemplateFacade
     /**
      * @param string $templateName
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */
-    public function get($templateName, $domainId)
+    public function get($templateName, $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         return $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
     }
@@ -84,7 +83,7 @@ class MailTemplateFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
      */
-    public function getOrderStatusMailTemplatesIndexedByOrderStatusId($domainId)
+    public function getOrderStatusMailTemplatesIndexedByOrderStatusId($domainId): array
     {
         $orderStatuses = $this->orderStatusRepository->getAll();
         $mailTemplates = $this->mailTemplateRepository->getAllByDomainId($domainId);
@@ -115,9 +114,8 @@ class MailTemplateFacade
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\AllMailTemplatesData
      */
-    public function getAllMailTemplatesDataByDomainId($domainId)
+    public function getAllMailTemplatesDataByDomainId($domainId): \Shopsys\FrameworkBundle\Model\Mail\AllMailTemplatesData
     {
         $orderStatuses = $this->orderStatusRepository->getAll();
         $mailTemplates = $this->mailTemplateRepository->getAllByDomainId($domainId);
@@ -186,7 +184,7 @@ class MailTemplateFacade
     /**
      * @return string[]
      */
-    public function getMailTemplateAttachmentsFilepaths(MailTemplate $mailTemplate)
+    public function getMailTemplateAttachmentsFilepaths(MailTemplate $mailTemplate): array
     {
         $filepaths = [];
         if ($this->uploadedFileFacade->hasUploadedFile($mailTemplate)) {
@@ -197,10 +195,7 @@ class MailTemplateFacade
         return $filepaths;
     }
 
-    /**
-     * @return bool
-     */
-    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()
+    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject(): bool
     {
         return $this->mailTemplateRepository->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject();
     }

@@ -47,9 +47,8 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     * @return int
      */
-    protected function createEntityAndGetId($pricingGroupData)
+    protected function createEntityAndGetId($pricingGroupData): int
     {
         $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, $this->adminDomainTabsFacade->getSelectedDomainId());
 
@@ -67,9 +66,8 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param int|null $pricingGroupId
-     * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($pricingGroupId)
+    public function getForm($pricingGroupId): \Symfony\Component\Form\FormInterface
     {
         if ($pricingGroupId !== null) {
             $pricingGroupId = (int)$pricingGroupId;

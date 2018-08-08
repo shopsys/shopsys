@@ -72,7 +72,7 @@ class ImageUploadType extends AbstractType
     /**
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    private function getImagesIndexedById(array $options)
+    private function getImagesIndexedById(array $options): array
     {
         if ($options['entity'] === null) {
             return [];
@@ -81,10 +81,7 @@ class ImageUploadType extends AbstractType
         return $this->imageFacade->getImagesByEntityIndexedById($options['entity'], null);
     }
 
-    /**
-     * @return string
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return FileUploadType::class;
     }

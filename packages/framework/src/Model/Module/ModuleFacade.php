@@ -33,9 +33,8 @@ class ModuleFacade
 
     /**
      * @param string $moduleName
-     * @return bool
      */
-    public function isEnabled($moduleName)
+    public function isEnabled($moduleName): bool
     {
         $enabledModule = $this->enabledModuleRepository->findByName($moduleName);
 

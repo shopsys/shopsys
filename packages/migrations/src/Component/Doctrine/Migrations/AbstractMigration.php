@@ -22,9 +22,8 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
      * @param string $query
      * @param array $types
      * @param \Doctrine\DBAL\Cache\QueryCacheProfile|null $qcp
-     * @return \Doctrine\DBAL\Driver\Statement
      */
-    public function sql($query, array $params = [], $types = [], QueryCacheProfile $qcp = null)
+    public function sql($query, array $params = [], $types = [], QueryCacheProfile $qcp = null): \Doctrine\DBAL\Driver\Statement
     {
         return $this->connection->executeQuery($query, $params, $types, $qcp);
     }

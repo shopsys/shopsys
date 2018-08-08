@@ -30,10 +30,7 @@ class CollateFunction extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
-    /**
-     * @return string
-     */
-    public function getSql(SqlWalker $sqlWalker)
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return sprintf(
             '%s COLLATE %s',

@@ -276,10 +276,7 @@ class ProductController extends FrontBaseController
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
-    private function createProductFilterConfigForCategory(Category $category)
+    private function createProductFilterConfigForCategory(Category $category): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         return $this->productFilterConfigFactory->createForCategory(
             $this->domain->getId(),
@@ -290,9 +287,8 @@ class ProductController extends FrontBaseController
 
     /**
      * @param string|null $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    private function createProductFilterConfigForSearch($searchText)
+    private function createProductFilterConfigForSearch($searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         return $this->productFilterConfigFactory->createForSearch(
             $this->domain->getId(),
@@ -305,7 +301,7 @@ class ProductController extends FrontBaseController
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    private function searchCategories($searchText)
+    private function searchCategories($searchText): array
     {
         return $this->categoryFacade->getVisibleByDomainAndSearchText(
             $this->domain->getId(),
@@ -361,9 +357,8 @@ class ProductController extends FrontBaseController
 
     /**
      * @param string|null $page
-     * @return bool
      */
-    private function isRequestPageValid($page)
+    private function isRequestPageValid($page): bool
     {
         return $page === null || (preg_match('@^([2-9]|[1-9][0-9]+)$@', $page));
     }

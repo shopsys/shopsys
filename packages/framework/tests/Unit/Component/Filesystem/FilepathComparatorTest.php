@@ -61,9 +61,8 @@ class FilepathComparatorTest extends TestCase
 
     /**
      * @param string $relativePath
-     * @return string
      */
-    private function getResourcePath($relativePath)
+    private function getResourcePath($relativePath): string
     {
         return __DIR__ . '/Resources/' . $relativePath;
     }

@@ -21,7 +21,7 @@ class GoogleProductDomainRepository
      * @param int $productId
      * @return \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain[]
      */
-    public function findByProductId($productId)
+    public function findByProductId($productId): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
@@ -35,9 +35,8 @@ class GoogleProductDomainRepository
     /**
      * @param int $productId
      * @param int $domainId
-     * @return \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain|null
      */
-    public function findByProductIdAndDomainId($productId, $domainId)
+    public function findByProductIdAndDomainId($productId, $domainId): ?\Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')

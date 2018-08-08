@@ -28,9 +28,8 @@ class CronModuleExecutor
     /**
      * @param \Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface $cronModuleService
      * @param bool $suspended
-     * @return string
      */
-    public function runModule($cronModuleService, $suspended)
+    public function runModule($cronModuleService, $suspended): string
     {
         if (!$this->canRun()) {
             return self::RUN_STATUS_TIMEOUT;
@@ -57,10 +56,7 @@ class CronModuleExecutor
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function canRun()
+    public function canRun(): bool
     {
         return $this->canRunTo > new DateTimeImmutable();
     }

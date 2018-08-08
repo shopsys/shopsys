@@ -127,7 +127,7 @@ class FriendlyUrlFacade
      * @param int $entityId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
-    public function getAllByRouteNameAndEntityId($routeName, $entityId)
+    public function getAllByRouteNameAndEntityId($routeName, $entityId): array
     {
         return $this->friendlyUrlRepository->getAllByRouteNameAndEntityId($routeName, $entityId);
     }
@@ -136,9 +136,8 @@ class FriendlyUrlFacade
      * @param int $domainId
      * @param string $routeName
      * @param int $entityId
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
      */
-    public function findMainFriendlyUrl($domainId, $routeName, $entityId)
+    public function findMainFriendlyUrl($domainId, $routeName, $entityId): ?\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
     {
         return $this->friendlyUrlRepository->findMainFriendlyUrl($domainId, $routeName, $entityId);
     }

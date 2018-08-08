@@ -49,7 +49,7 @@ class ProductDataFixtureReferenceInjector
     /**
      * @return string[]
      */
-    private function getVatReferences(PersistentReferenceFacade $persistentReferenceFacade)
+    private function getVatReferences(PersistentReferenceFacade $persistentReferenceFacade): array
     {
         return [
             'high' => $persistentReferenceFacade->getReference(VatDataFixture::VAT_HIGH),
@@ -62,7 +62,7 @@ class ProductDataFixtureReferenceInjector
     /**
      * @return string[]
      */
-    private function getAvailabilityReferences(PersistentReferenceFacade $persistentReferenceFacade)
+    private function getAvailabilityReferences(PersistentReferenceFacade $persistentReferenceFacade): array
     {
         return [
             'in-stock' => $persistentReferenceFacade->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK),
@@ -74,7 +74,7 @@ class ProductDataFixtureReferenceInjector
     /**
      * @return string[]
      */
-    private function getCategoryReferences(PersistentReferenceFacade $persistentReferenceFacade)
+    private function getCategoryReferences(PersistentReferenceFacade $persistentReferenceFacade): array
     {
         return [
             'electronics' => $persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
@@ -94,7 +94,7 @@ class ProductDataFixtureReferenceInjector
     /**
      * @return string[]
      */
-    private function getFlagReferences(PersistentReferenceFacade $persistentReferenceFacade)
+    private function getFlagReferences(PersistentReferenceFacade $persistentReferenceFacade): array
     {
         return [
             'action' => $persistentReferenceFacade->getReference(FlagDataFixture::FLAG_ACTION_PRODUCT),
@@ -106,7 +106,7 @@ class ProductDataFixtureReferenceInjector
     /**
      * @return string[]
      */
-    private function getBrandReferences(PersistentReferenceFacade $persistentReferenceFacade)
+    private function getBrandReferences(PersistentReferenceFacade $persistentReferenceFacade): array
     {
         return [
             'apple' => $persistentReferenceFacade->getReference(BrandDataFixture::BRAND_APPLE),
@@ -139,7 +139,7 @@ class ProductDataFixtureReferenceInjector
     /**
      * @return string[]
      */
-    private function getUnitReferences(PersistentReferenceFacade $persistentReferenceFacade)
+    private function getUnitReferences(PersistentReferenceFacade $persistentReferenceFacade): array
     {
         return [
             'pcs' => $persistentReferenceFacade->getReference(UnitDataFixture::UNIT_PIECES),
@@ -150,7 +150,7 @@ class ProductDataFixtureReferenceInjector
     /**
      * @return string[]
      */
-    private function getPricingGroupReferencesForFirstDomain(PersistentReferenceFacade $persistentReferenceFacade)
+    private function getPricingGroupReferencesForFirstDomain(PersistentReferenceFacade $persistentReferenceFacade): array
     {
         return [
             'ordinary_domain_1' => $persistentReferenceFacade->getReference(DemoPricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1),
@@ -162,7 +162,7 @@ class ProductDataFixtureReferenceInjector
     /**
      * @return string[]
      */
-    private function getPricingGroupReferences(PersistentReferenceFacade $persistentReferenceFacade)
+    private function getPricingGroupReferences(PersistentReferenceFacade $persistentReferenceFacade): array
     {
         return [
             'ordinary_domain_1' => $persistentReferenceFacade->getReference(DemoPricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1),
@@ -176,7 +176,7 @@ class ProductDataFixtureReferenceInjector
     /**
      * @return string[]
      */
-    public static function getDependenciesForFirstDomain()
+    public static function getDependenciesForFirstDomain(): array
     {
         return [
             VatDataFixture::class,
@@ -191,7 +191,7 @@ class ProductDataFixtureReferenceInjector
     /**
      * @return string[]
      */
-    public static function getDependenciesForMultidomain()
+    public static function getDependenciesForMultidomain(): array
     {
         return [
             MultidomainPricingGroupDataFixture::class,

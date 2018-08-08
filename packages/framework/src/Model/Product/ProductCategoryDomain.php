@@ -50,18 +50,12 @@ class ProductCategoryDomain
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    public function getCategory()
+    public function getCategory(): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->category;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }

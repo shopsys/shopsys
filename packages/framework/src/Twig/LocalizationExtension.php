@@ -35,9 +35,8 @@ class LocalizationExtension extends \Twig_Extension
     /**
      * @param string $locale
      * @param bool $showTitle
-     * @return string
      */
-    public function getLocaleFlagHtml($locale, $showTitle = true)
+    public function getLocaleFlagHtml($locale, $showTitle = true): string
     {
         $src = $this->assetPackages->getUrl('assets/admin/images/flags/' . $locale . '.png');
 
@@ -56,9 +55,8 @@ class LocalizationExtension extends \Twig_Extension
 
     /**
      * @param string $locale
-     * @return string
      */
-    private function getTitle($locale)
+    private function getTitle($locale): string
     {
         try {
             $title = $this->localization->getLanguageName($locale);
@@ -69,10 +67,7 @@ class LocalizationExtension extends \Twig_Extension
         return $title;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'localization';
     }

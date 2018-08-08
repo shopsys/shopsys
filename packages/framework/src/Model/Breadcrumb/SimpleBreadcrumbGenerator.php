@@ -16,7 +16,7 @@ class SimpleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * @param string $routeName
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         $routeNameMap = $this->getRouteNameMap();
 
@@ -28,7 +28,7 @@ class SimpleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * @return string[]
      */
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return array_keys($this->getRouteNameMap());
     }
@@ -36,7 +36,7 @@ class SimpleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * @return string[]
      */
-    private function getRouteNameMap()
+    private function getRouteNameMap(): array
     {
         if ($this->routeNameMap === null) {
             // Caching in order to translate breadcrumb item names only once

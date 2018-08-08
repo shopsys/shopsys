@@ -6,9 +6,8 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
  * @param string $id
  * @param string|null $domain
  * @param string|null $locale
- * @return string
  */
-function t($id, array $parameters = [], $domain = null, $locale = null)
+function t($id, array $parameters = [], $domain = null, $locale = null): string
 {
     return Translator::staticTrans($id, $parameters, $domain, $locale);
 }
@@ -18,9 +17,8 @@ function t($id, array $parameters = [], $domain = null, $locale = null)
  * @param int $number
  * @param string|null $domain
  * @param string|null $locale
- * @return string
  */
-function tc($id, $number, array $parameters = [], $domain = null, $locale = null)
+function tc($id, $number, array $parameters = [], $domain = null, $locale = null): string
 {
     return Translator::staticTransChoice($id, $number, $parameters, $domain, $locale);
 }

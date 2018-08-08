@@ -55,10 +55,7 @@ class InlineEditPage extends AbstractPage
         $this->tester->waitForAjax();
     }
 
-    /**
-     * @return int|null
-     */
-    public function getHighestRowId()
+    public function getHighestRowId(): ?int
     {
         $highestId = $this->webDriver->executeScript(
             'var highestId = null;
@@ -94,9 +91,8 @@ class InlineEditPage extends AbstractPage
 
     /**
      * @param int|null $rowId
-     * @return string
      */
-    private function getRowCssLocator($rowId)
+    private function getRowCssLocator($rowId): string
     {
         if ($rowId === null) {
             return '.js-grid-row:not([data-inline-edit-row-id])';

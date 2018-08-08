@@ -130,9 +130,8 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
 
     /**
      * @param string $gridId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit
      */
-    public function getGridLimit($gridId)
+    public function getGridLimit($gridId): \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit
     {
         foreach ($this->gridLimits as $gridLimit) {
             if ($gridLimit->getGridId() === $gridId) {
@@ -144,9 +143,8 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
 
     /**
      * @param string $gridId
-     * @return int|null
      */
-    public function getLimitByGridId($gridId)
+    public function getLimitByGridId($gridId): ?int
     {
         $gridLimit = $this->getGridLimit($gridId);
         if ($gridLimit !== null) {
@@ -155,66 +153,42 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         return null;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @return string
-     */
-    public function getRealName()
+    public function getRealName(): string
     {
         return $this->realName;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    /**
-     * @return string
-     */
-    public function getLoginToken()
+    public function getLoginToken(): string
     {
         return $this->loginToken;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getLastActivity()
+    public function getLastActivity(): \DateTime
     {
         return $this->lastActivity;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSuperadmin()
+    public function isSuperadmin(): bool
     {
         return $this->superadmin;
     }

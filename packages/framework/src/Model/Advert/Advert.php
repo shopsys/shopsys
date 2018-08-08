@@ -98,66 +98,42 @@ class Advert
         $this->hidden = $advert->hidden;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLink()
+    public function getLink(): ?string
     {
         return $this->link;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCode()
+    public function getCode(): ?string
     {
         return $this->code;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPositionName()
+    public function getPositionName(): ?string
     {
         return $this->positionName;
     }

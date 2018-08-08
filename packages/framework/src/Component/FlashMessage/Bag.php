@@ -78,10 +78,7 @@ class Bag
         return $this->getMessages(self::KEY_SUCCESS);
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         $flashBag = $this->session->getFlashBag();
 
@@ -92,18 +89,16 @@ class Bag
 
     /**
      * @param string $key
-     * @return string
      */
-    private function getFullbagName($key)
+    private function getFullbagName($key): string
     {
         return self::MAIN_KEY . '__' . $this->bagName . '__' . $key;
     }
 
     /**
      * @param string $key
-     * @return array
      */
-    private function getMessages($key)
+    private function getMessages($key): array
     {
         $flashBag = $this->session->getFlashBag();
         $messages = $flashBag->get($this->getFullbagName($key));

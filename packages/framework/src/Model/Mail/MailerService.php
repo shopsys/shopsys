@@ -33,10 +33,7 @@ class MailerService
         }
     }
 
-    /**
-     * @return \Swift_Message
-     */
-    private function getMessageWithReplacedVariables(MessageData $messageData)
+    private function getMessageWithReplacedVariables(MessageData $messageData): \Swift_Message
     {
         $toEmail = $messageData->toEmail;
         $body = $this->replaceVariables(
@@ -73,9 +70,8 @@ class MailerService
     /**
      * @param string $string
      * @param array $variablesKeysAndValues
-     * @return string
      */
-    private function replaceVariables($string, $variablesKeysAndValues)
+    private function replaceVariables($string, $variablesKeysAndValues): string
     {
         return strtr($string, $variablesKeysAndValues);
     }

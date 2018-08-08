@@ -85,10 +85,7 @@ class TransportFacade
         $this->transportPriceFactory = $transportPriceFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    public function create(TransportData $transportData)
+    public function create(TransportData $transportData): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $transport = $this->transportFactory->create($transportData);
         $this->em->persist($transport);
@@ -112,9 +109,8 @@ class TransportFacade
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getById($id)
+    public function getById($id): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->transportRepository->getById($id);
     }
@@ -137,7 +133,7 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $visiblePayments
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getVisibleOnCurrentDomain(array $visiblePayments)
+    public function getVisibleOnCurrentDomain(array $visiblePayments): array
     {
         return $this->getVisibleByDomainId($this->domain->getId(), $visiblePayments);
     }
@@ -147,7 +143,7 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $visiblePaymentsOnDomain
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getVisibleByDomainId($domainId, $visiblePaymentsOnDomain)
+    public function getVisibleByDomainId($domainId, $visiblePaymentsOnDomain): array
     {
         $transports = $this->transportRepository->getAllByDomainId($domainId);
 
@@ -173,7 +169,7 @@ class TransportFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getAllIncludingDeleted()
+    public function getAllIncludingDeleted(): array
     {
         return $this->transportRepository->getAllIncludingDeleted();
     }
@@ -181,7 +177,7 @@ class TransportFacade
     /**
      * @return string[]
      */
-    public function getTransportPricesWithVatIndexedByTransportId(Currency $currency)
+    public function getTransportPricesWithVatIndexedByTransportId(Currency $currency): array
     {
         $transportPricesWithVatByTransportId = [];
         $transports = $this->getAllIncludingDeleted();
@@ -196,7 +192,7 @@ class TransportFacade
     /**
      * @return string[]
      */
-    public function getTransportVatPercentsIndexedByTransportId()
+    public function getTransportVatPercentsIndexedByTransportId(): array
     {
         $transportVatPercentsByTransportId = [];
         $transports = $this->getAllIncludingDeleted();
@@ -210,7 +206,7 @@ class TransportFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    public function getIndependentBasePricesIndexedByCurrencyId(Transport $transport)
+    public function getIndependentBasePricesIndexedByCurrencyId(Transport $transport): array
     {
         $prices = [];
         foreach ($transport->getPrices() as $transportInputPrice) {

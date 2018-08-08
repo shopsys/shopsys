@@ -39,10 +39,7 @@ class YesNoTypeTest extends FunctionalTestCase
         $this->assertSame(false, $form->getData());
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    private function getForm()
+    private function getForm(): \Symfony\Component\Form\FormInterface
     {
         $formFactory = $this->getContainer()->get('form.factory');
         /* @var $formFactory \Symfony\Component\Form\FormFactoryInterface */

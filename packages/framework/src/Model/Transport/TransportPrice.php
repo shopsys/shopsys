@@ -46,26 +46,17 @@ class TransportPrice
         $this->price = $price;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    public function getCurrency()
+    public function getCurrency(): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->currency;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    public function getTransport()
+    public function getTransport(): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->transport;
     }
 
-    /**
-     * @return string
-     */
-    public function getPrice()
+    public function getPrice(): string
     {
         return $this->price;
     }

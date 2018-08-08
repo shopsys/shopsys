@@ -41,9 +41,8 @@ class FilemanagerAccess
      * @see \FM\ElfinderBundle\Configuration\ElFinderConfigurationReader::access()
      * @param string $attr
      * @param string $path
-     * @return bool|null
      */
-    public function isPathAccessible($attr, $path, $data, $volume)
+    public function isPathAccessible($attr, $path, $data, $volume): ?bool
     {
         if (!$this->filepathComparator->isPathWithinDirectory($path, $this->filemanagerUploadDir)) {
             return false;
@@ -69,9 +68,8 @@ class FilemanagerAccess
      * @see \FM\ElfinderBundle\Configuration\ElFinderConfigurationReader::access()
      * @param string $attr
      * @param string $path
-     * @return bool|null
      */
-    public static function isPathAccessibleStatic($attr, $path, $data, $volume)
+    public static function isPathAccessibleStatic($attr, $path, $data, $volume): ?bool
     {
         if (self::$self === null) {
             throw new \Shopsys\FrameworkBundle\Model\Security\Filesystem\Exception\InstanceNotInjectedException();

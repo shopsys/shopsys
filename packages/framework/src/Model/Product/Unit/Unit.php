@@ -35,19 +35,15 @@ class Unit extends AbstractTranslatableEntity
         $this->setTranslations($unitData);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * @param string|null $locale
-     * @return string
      */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -59,10 +55,7 @@ class Unit extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation
     {
         return new UnitTranslation();
     }

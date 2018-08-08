@@ -47,26 +47,17 @@ class ProductManualInputPrice
         $this->inputPrice = $inputPrice;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getProduct()
+    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function getPricingGroup()
+    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->pricingGroup;
     }
 
-    /**
-     * @return string
-     */
-    public function getInputPrice()
+    public function getInputPrice(): string
     {
         return $this->inputPrice;
     }

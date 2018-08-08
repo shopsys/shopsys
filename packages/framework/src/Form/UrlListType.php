@@ -161,7 +161,7 @@ class UrlListType extends AbstractType
      * @param int $entityId
      * @return string[]
      */
-    private function getMainFriendlyUrlSlugsIndexedByDomainId($routeName, $entityId)
+    private function getMainFriendlyUrlSlugsIndexedByDomainId($routeName, $entityId): array
     {
         $mainFriendlyUrlsSlugsByDomainId = [];
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -184,7 +184,7 @@ class UrlListType extends AbstractType
     /**
      * @return string[]
      */
-    private function getDomainUrlsIndexedById()
+    private function getDomainUrlsIndexedById(): array
     {
         $domainUrlsById = [];
         foreach ($this->domain->getAll() as $domainConfig) {

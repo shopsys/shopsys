@@ -97,9 +97,8 @@ class HeurekaCategoryFacade
 
     /**
      * @param int $categoryId
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory|null
      */
-    public function findByCategoryId($categoryId)
+    public function findByCategoryId($categoryId): ?\Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
     {
         return $this->heurekaCategoryRepository->findByCategoryId($categoryId);
     }
@@ -121,9 +120,8 @@ class HeurekaCategoryFacade
 
     /**
      * @param int $id
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
      */
-    public function getOneById($id)
+    public function getOneById($id): \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
     {
         return $this->heurekaCategoryRepository->getOneById($id);
     }
@@ -131,7 +129,7 @@ class HeurekaCategoryFacade
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory[]
      */
-    public function getAllIndexedById()
+    public function getAllIndexedById(): array
     {
         return $this->heurekaCategoryRepository->getAllIndexedById();
     }

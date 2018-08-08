@@ -222,9 +222,8 @@ class ArticleController extends AdminBaseController
 
     /**
      * @Route("/article/save-ordering/", condition="request.isXmlHttpRequest()")
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function saveOrderingAction(Request $request)
+    public function saveOrderingAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $this->articleFacade->saveOrdering($request->get('rowIdsByGridId'));
 
@@ -235,9 +234,8 @@ class ArticleController extends AdminBaseController
 
     /**
      * @param string $articlePlacement
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    private function getGrid($articlePlacement)
+    private function getGrid($articlePlacement): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->articleFacade->getOrderedArticlesByDomainIdAndPlacementQueryBuilder(
             $this->adminDomainTabsFacade->getSelectedDomainId(),

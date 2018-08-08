@@ -20,9 +20,8 @@ class ProductIdToProductTransformer implements DataTransformerInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return int|null
      */
-    public function transform($product)
+    public function transform($product): ?int
     {
         if ($product instanceof Product) {
             return $product->getId();
@@ -32,9 +31,8 @@ class ProductIdToProductTransformer implements DataTransformerInterface
 
     /**
      * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
      */
-    public function reverseTransform($productId)
+    public function reverseTransform($productId): ?\Shopsys\FrameworkBundle\Model\Product\Product
     {
         if (empty($productId)) {
             return null;

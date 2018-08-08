@@ -85,10 +85,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         );
     }
 
-    /**
-     * @return \Shopsys\HttpSmokeTesting\RouterAdapter\RouterAdapterInterface
-     */
-    protected function getRouterAdapter()
+    protected function getRouterAdapter(): \Shopsys\HttpSmokeTesting\RouterAdapter\RouterAdapterInterface
     {
         $router = static::$kernel->getContainer()->get('router');
 
@@ -100,10 +97,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      */
     abstract protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer);
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    protected function createRequest(RequestDataSet $requestDataSet)
+    protected function createRequest(RequestDataSet $requestDataSet): \Symfony\Component\HttpFoundation\Request
     {
         $uri = $this->getRouterAdapter()->generateUri($requestDataSet);
 
@@ -115,10 +109,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         return $request;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function handleRequest(Request $request)
+    protected function handleRequest(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         return static::$kernel->handle($request);
     }
@@ -140,9 +131,8 @@ abstract class HttpSmokeTestCase extends KernelTestCase
 
     /**
      * @param string $message
-     * @return string
      */
-    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, $message)
+    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, $message): string
     {
         if (count($requestDataSet->getDebugNotes()) > 0) {
             $indentedDebugNotes = array_map(function ($debugNote) {

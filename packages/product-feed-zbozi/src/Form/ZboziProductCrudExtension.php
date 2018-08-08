@@ -35,27 +35,20 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
         $this->zboziProductDomainDataFactory = $zboziProductDomainDataFactory;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return ZboziProductFormType::class;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Zbozi.cz product feed');
     }
 
     /**
      * @param int $productId
-     * @return array
      */
-    public function getData($productId)
+    public function getData($productId): array
     {
         $zboziProductDomains = $this->zboziProductDomainFacade->findByProductId($productId);
 
@@ -117,9 +110,8 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[] $zboziProductDomains
-     * @return array
      */
-    private function getZboziProductDomainsAsPluginDataArray(array $zboziProductDomains)
+    private function getZboziProductDomainsAsPluginDataArray(array $zboziProductDomains): array
     {
         $pluginData = [
             'show' => [],

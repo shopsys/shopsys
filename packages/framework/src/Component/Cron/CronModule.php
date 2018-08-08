@@ -42,26 +42,17 @@ class CronModule
         $this->suspended = false;
     }
 
-    /**
-     * @return string
-     */
-    public function getServiceId()
+    public function getServiceId(): string
     {
         return $this->serviceId;
     }
 
-    /**
-     * @return bool
-     */
-    public function isScheduled()
+    public function isScheduled(): bool
     {
         return $this->scheduled;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSuspended()
+    public function isSuspended(): bool
     {
         return $this->suspended;
     }

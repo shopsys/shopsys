@@ -21,10 +21,7 @@ use Tests\ShopBundle\Test\DatabaseTestCase;
 
 class ProductVisibilityRepositoryTest extends DatabaseTestCase
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
-    private function getDefaultProductData()
+    private function getDefaultProductData(): \Shopsys\FrameworkBundle\Model\Product\ProductData
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
 

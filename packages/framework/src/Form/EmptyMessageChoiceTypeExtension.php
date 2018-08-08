@@ -25,10 +25,7 @@ class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
             ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return ChoiceType::class;
     }

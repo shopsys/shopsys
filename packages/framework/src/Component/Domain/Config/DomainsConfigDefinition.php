@@ -13,10 +13,7 @@ class DomainsConfigDefinition implements ConfigurationInterface
     const CONFIG_LOCALE = 'locale';
     const CONFIG_STYLES_DIRECTORY = 'styles_directory';
 
-    /**
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): \Symfony\Component\Config\Definition\Builder\TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('domains');

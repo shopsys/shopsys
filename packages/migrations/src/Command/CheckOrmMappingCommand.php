@@ -35,10 +35,7 @@ class CheckOrmMappingCommand extends AbstractCommand
             ->setDescription('Check if ORM mapping is valid');
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Checking ORM mapping...');
 

@@ -16,10 +16,7 @@ class MailTemplateRepository
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getMailTemplateRepository()
+    protected function getMailTemplateRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(MailTemplate::class);
     }
@@ -27,9 +24,8 @@ class MailTemplateRepository
     /**
      * @param string $templateName
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
      */
-    public function findByNameAndDomainId($templateName, $domainId)
+    public function findByNameAndDomainId($templateName, $domainId): ?\Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $criteria = ['name' => $templateName, 'domainId' => $domainId];
 
@@ -39,9 +35,8 @@ class MailTemplateRepository
     /**
      * @param string $templateName
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */
-    public function getByNameAndDomainId($templateName, $domainId)
+    public function getByNameAndDomainId($templateName, $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $mailTemplate = $this->findByNameAndDomainId($templateName, $domainId);
         if ($mailTemplate === null) {
@@ -56,16 +51,13 @@ class MailTemplateRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId($domainId): array
     {
         $criteria = ['domainId' => $domainId];
         return $this->getMailTemplateRepository()->findBy($criteria);
     }
 
-    /**
-     * @return bool
-     */
-    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()
+    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject(): bool
     {
         $countOfEmptyTemplates = (int)$this->em->createQueryBuilder()
             ->select('COUNT(mt)')

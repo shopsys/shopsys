@@ -11,7 +11,7 @@ class ModuleList
     /**
      * @return string[]
      */
-    public function getNames()
+    public function getNames(): array
     {
         return array_keys($this->getLabelsIndexedByName());
     }
@@ -19,7 +19,7 @@ class ModuleList
     /**
      * @return string[]
      */
-    public function getNamesIndexedByLabel()
+    public function getNamesIndexedByLabel(): array
     {
         $labelsIndexedByNames = $this->getLabelsIndexedByName();
         $namesIndexedByLabel = array_flip($labelsIndexedByNames);
@@ -33,7 +33,7 @@ class ModuleList
     /**
      * @return string[]
      */
-    private function getLabelsIndexedByName()
+    private function getLabelsIndexedByName(): array
     {
         return [
             self::ACCESSORIES_ON_BUY => t('Accessories in purchase confirmation box'),

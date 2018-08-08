@@ -49,35 +49,29 @@ class ArticleFacade
 
     /**
      * @param int $articleId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
-    public function findById($articleId)
+    public function findById($articleId): ?\Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->articleRepository->findById($articleId);
     }
 
     /**
      * @param int $articleId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
-    public function getById($articleId)
+    public function getById($articleId): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->articleRepository->getById($articleId);
     }
 
     /**
      * @param int $articleId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
-    public function getVisibleById($articleId)
+    public function getVisibleById($articleId): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->articleRepository->getVisibleById($articleId);
     }
 
-    /**
-     * @return int
-     */
-    public function getAllArticlesCountByDomainId($domainId)
+    public function getAllArticlesCountByDomainId($domainId): int
     {
         return $this->articleRepository->getAllArticlesCountByDomainId($domainId);
     }
@@ -86,7 +80,7 @@ class ArticleFacade
      * @param string $placement
      * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
-    public function getVisibleArticlesForPlacementOnCurrentDomain($placement)
+    public function getVisibleArticlesForPlacementOnCurrentDomain($placement): array
     {
         return $this->articleRepository->getVisibleArticlesForPlacement($this->domain->getId(), $placement);
     }
@@ -94,17 +88,13 @@ class ArticleFacade
     /**
      * @param int $domainId
      * @param string $placement
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getOrderedArticlesByDomainIdAndPlacementQueryBuilder($domainId, $placement)
+    public function getOrderedArticlesByDomainIdAndPlacementQueryBuilder($domainId, $placement): \Doctrine\ORM\QueryBuilder
     {
         return $this->articleRepository->getOrderedArticlesByDomainIdAndPlacementQueryBuilder($domainId, $placement);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
-     */
-    public function create(ArticleData $articleData)
+    public function create(ArticleData $articleData): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         $article = $this->articleFactory->create($articleData);
 
@@ -123,9 +113,8 @@ class ArticleFacade
 
     /**
      * @param int $articleId
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
-    public function edit($articleId, ArticleData $articleData)
+    public function edit($articleId, ArticleData $articleData): \Shopsys\FrameworkBundle\Model\Article\Article
     {
         $article = $this->articleRepository->getById($articleId);
         $article->edit($articleData);
@@ -172,7 +161,7 @@ class ArticleFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId($domainId): array
     {
         return $this->articleRepository->getAllByDomainId($domainId);
     }

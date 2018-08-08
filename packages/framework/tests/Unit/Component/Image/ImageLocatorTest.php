@@ -13,10 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ImageLocatorTest extends TestCase
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
-    private function getBaseImageConfig()
+    private function getBaseImageConfig(): \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
     {
         $inputConfig = [
             [

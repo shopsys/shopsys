@@ -98,10 +98,7 @@ class ProductDomainTest extends DatabaseTestCase
         $this->assertSame(self::DEMONSTRATIVE_SHORT_DESCRIPTION, $refreshedProduct->getShortDescription(self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    private function getRefreshedProductFromDatabase(Product $product)
+    private function getRefreshedProductFromDatabase(Product $product): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $this->em->persist($product);
         $this->em->flush();

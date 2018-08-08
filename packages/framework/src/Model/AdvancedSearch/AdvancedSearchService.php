@@ -20,9 +20,8 @@ class AdvancedSearchService
 
     /**
      * @param array|null $requestData
-     * @return array
      */
-    public function getRulesFormViewDataByRequestData(array $requestData = null)
+    public function getRulesFormViewDataByRequestData(array $requestData = null): array
     {
         if ($requestData === null) {
             $searchRulesViewData = [];
@@ -41,9 +40,8 @@ class AdvancedSearchService
 
     /**
      * @param string $filterName
-     * @return array
      */
-    public function createDefaultRuleFormViewData($filterName)
+    public function createDefaultRuleFormViewData($filterName): array
     {
         return [
             'subject' => $filterName,

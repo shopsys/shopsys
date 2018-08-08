@@ -142,9 +142,8 @@ class ProductFilterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flags
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getFlagsQueryBuilder(array $flags, EntityManagerInterface $em)
+    private function getFlagsQueryBuilder(array $flags, EntityManagerInterface $em): \Doctrine\ORM\QueryBuilder
     {
         $flagsQueryBuilder = $em->createQueryBuilder();
 
@@ -160,9 +159,8 @@ class ProductFilterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brands
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getBrandsQueryBuilder(array $brands, EntityManagerInterface $em)
+    private function getBrandsQueryBuilder(array $brands, EntityManagerInterface $em): \Doctrine\ORM\QueryBuilder
     {
         $brandsQueryBuilder = $em->createQueryBuilder();
 

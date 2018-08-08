@@ -38,10 +38,7 @@ class AdministratorFacade
         $this->administratorFactory = $administratorFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
-     */
-    public function create(AdministratorData $administratorData)
+    public function create(AdministratorData $administratorData): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administratorByUserName = $this->administratorRepository->findByUserName($administratorData->username);
         if ($administratorByUserName !== null) {
@@ -58,9 +55,8 @@ class AdministratorFacade
 
     /**
      * @param int $administratorId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function edit($administratorId, AdministratorData $administratorData)
+    public function edit($administratorId, AdministratorData $administratorData): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->administratorRepository->getById($administratorId);
         $administratorByUserName = $this->administratorRepository->findByUserName($administratorData->username);
@@ -100,17 +96,13 @@ class AdministratorFacade
 
     /**
      * @param int $administratorId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function getById($administratorId)
+    public function getById($administratorId): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->administratorRepository->getById($administratorId);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllListableQueryBuilder()
+    public function getAllListableQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->administratorRepository->getAllListableQueryBuilder();
     }

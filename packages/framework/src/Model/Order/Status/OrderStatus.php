@@ -51,19 +51,15 @@ class OrderStatus extends AbstractTranslatableEntity
         $this->setTranslations($orderStatusData);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * @param string|null $locale
-     * @return string
      */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -75,18 +71,12 @@ class OrderStatus extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation
     {
         return new OrderStatusTranslation();
     }
 
-    /**
-     * @return int
-     */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }

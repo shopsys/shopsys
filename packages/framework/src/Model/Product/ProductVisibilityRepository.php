@@ -114,23 +114,19 @@ class ProductVisibilityRepository
         $this->refreshProductsVisibility();
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getProductVisibilityRepository()
+    protected function getProductVisibilityRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(ProductVisibility::class);
     }
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
      */
     public function getProductVisibility(
         Product $product,
         PricingGroup $pricingGroup,
         $domainId
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Product\ProductVisibility {
         $productVisibility = $this->getProductVisibilityRepository()->find([
             'product' => $product->getId(),
             'pricingGroup' => $pricingGroup->getId(),

@@ -47,18 +47,12 @@ class ImageEntityConfig
         $this->multipleByType = $multipleByType;
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityName()
+    public function getEntityName(): string
     {
         return $this->entityName;
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }
@@ -71,7 +65,7 @@ class ImageEntityConfig
     /**
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
-    public function getSizeConfigs()
+    public function getSizeConfigs(): array
     {
         return $this->sizeConfigs;
     }
@@ -79,7 +73,7 @@ class ImageEntityConfig
     /**
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
-    public function getSizeConfigsByTypes()
+    public function getSizeConfigsByTypes(): array
     {
         return $this->sizeConfigsByType;
     }
@@ -88,7 +82,7 @@ class ImageEntityConfig
      * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
-    public function getSizeConfigsByType($type)
+    public function getSizeConfigsByType($type): array
     {
         if (array_key_exists($type, $this->sizeConfigsByType)) {
             return $this->sizeConfigsByType[$type];
@@ -99,9 +93,8 @@ class ImageEntityConfig
 
     /**
      * @param string|null $sizeName
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
      */
-    public function getSizeConfig($sizeName)
+    public function getSizeConfig($sizeName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
     {
         return $this->getSizeConfigFromSizeConfigs($this->sizeConfigs, $sizeName);
     }
@@ -109,9 +102,8 @@ class ImageEntityConfig
     /**
      * @param string|null $type
      * @param string|null $sizeName
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
      */
-    public function getSizeConfigByType($type, $sizeName)
+    public function getSizeConfigByType($type, $sizeName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
     {
         if ($type === null) {
             $typeSizes = $this->sizeConfigs;
@@ -123,9 +115,8 @@ class ImageEntityConfig
 
     /**
      * @param string|null $type
-     * @return bool
      */
-    public function isMultiple($type)
+    public function isMultiple($type): bool
     {
         $key = Utils::ifNull($type, self::WITHOUT_NAME_KEY);
         if (array_key_exists($key, $this->multipleByType)) {
@@ -138,9 +129,8 @@ class ImageEntityConfig
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizes
      * @param string $sizeName
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
      */
-    private function getSizeConfigFromSizeConfigs($sizes, $sizeName)
+    private function getSizeConfigFromSizeConfigs($sizes, $sizeName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
     {
         $key = Utils::ifNull($sizeName, self::WITHOUT_NAME_KEY);
         if (array_key_exists($key, $sizes)) {

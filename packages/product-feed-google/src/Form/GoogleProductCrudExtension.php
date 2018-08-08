@@ -36,27 +36,20 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         $this->googleProductDomainDataFactory = $googleProductDomainDataFactory;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return GoogleProductFormType::class;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Google Shopping product feed');
     }
 
     /**
      * @param int $productId
-     * @return array
      */
-    public function getData($productId)
+    public function getData($productId): array
     {
         $googleProductDomains = $this->googleProductDomainFacade->findByProductId($productId);
 

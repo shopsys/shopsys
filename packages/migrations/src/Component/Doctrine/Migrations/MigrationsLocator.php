@@ -45,7 +45,7 @@ class MigrationsLocator
      *
      * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation[]
      */
-    public function getMigrationsLocations()
+    public function getMigrationsLocations(): array
     {
         $migrationsLocations = [];
         foreach ($this->kernel->getBundles() as $bundle) {
@@ -60,10 +60,8 @@ class MigrationsLocator
 
     /**
      * Creates a locations of migration classes for a particular bundle.
-     *
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
      */
-    public function createMigrationsLocation(BundleInterface $bundle)
+    public function createMigrationsLocation(BundleInterface $bundle): \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
     {
         return new MigrationsLocation(
             $bundle->getPath() . '/' . $this->relativeDirectory,

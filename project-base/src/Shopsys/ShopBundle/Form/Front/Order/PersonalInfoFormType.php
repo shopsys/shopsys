@@ -272,10 +272,7 @@ class PersonalInfoFormType extends AbstractType
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'order_personal_info_form';
     }

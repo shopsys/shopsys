@@ -36,10 +36,8 @@ class ImageDeleteDoctrineListener
 
     /**
      * Prevent ServiceCircularReferenceException (DoctrineListener cannot be dependent on the EntityManager)
-     *
-     * @return \Shopsys\FrameworkBundle\Component\Image\ImageFacade
      */
-    private function getImageFacade()
+    private function getImageFacade(): \Shopsys\FrameworkBundle\Component\Image\ImageFacade
     {
         return $this->imageFacade;
     }

@@ -25,10 +25,7 @@ class ProductListAdminFacade
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getProductListQueryBuilder()
+    public function getProductListQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         /**
          * temporary solution -
@@ -39,10 +36,7 @@ class ProductListAdminFacade
         return $this->productListAdminRepository->getProductListQueryBuilder($defaultPricingGroupId);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData)
+    public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->getProductListQueryBuilder();
         $this->productListAdminRepository->extendQueryBuilderByQuickSearchData($queryBuilder, $quickSearchData);

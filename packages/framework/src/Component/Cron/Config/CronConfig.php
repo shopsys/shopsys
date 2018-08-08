@@ -45,7 +45,7 @@ class CronConfig
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function getAllCronModuleConfigs()
+    public function getAllCronModuleConfigs(): array
     {
         return $this->cronModuleConfigs;
     }
@@ -53,7 +53,7 @@ class CronConfig
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function getCronModuleConfigsByTime(DateTimeInterface $roundedTime)
+    public function getCronModuleConfigsByTime(DateTimeInterface $roundedTime): array
     {
         $matchedCronConfigs = [];
 
@@ -68,9 +68,8 @@ class CronConfig
 
     /**
      * @param string $serviceId
-     * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig
      */
-    public function getCronModuleConfigByServiceId($serviceId)
+    public function getCronModuleConfigByServiceId($serviceId): \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig
     {
         foreach ($this->cronModuleConfigs as $cronConfig) {
             if ($cronConfig->getServiceId() === $serviceId) {

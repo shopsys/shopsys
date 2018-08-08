@@ -36,10 +36,7 @@ class FrontBreadcrumbResolverFactory
         ];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver
-     */
-    public function create()
+    public function create(): \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver
     {
         $frontBreadcrumbResolver = new BreadcrumbResolver();
         foreach ($this->breadcrumbGenerators as $breadcrumbGenerator) {

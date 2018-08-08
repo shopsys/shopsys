@@ -22,7 +22,7 @@ class StatisticsRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
-    public function getCustomersRegistrationsCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end)
+    public function getCustomersRegistrationsCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end): array
     {
         $resultSetMapping = new ResultSetMapping();
         $resultSetMapping->addScalarResult('count', 'count');
@@ -51,7 +51,7 @@ class StatisticsRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
-    public function getNewOrdersCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end)
+    public function getNewOrdersCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end): array
     {
         $resultSetMapping = new ResultSetMapping();
         $resultSetMapping->addScalarResult('count', 'count');

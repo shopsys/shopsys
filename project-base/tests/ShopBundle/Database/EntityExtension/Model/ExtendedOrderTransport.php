@@ -59,10 +59,7 @@ class ExtendedOrderTransport extends ExtendedOrderItem
         $this->transport = $transport;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    public function getTransport()
+    public function getTransport(): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->transport;
     }
@@ -79,10 +76,7 @@ class ExtendedOrderTransport extends ExtendedOrderItem
         }
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTransportStringField()
+    public function getTransportStringField(): ?string
     {
         return $this->transportStringField;
     }

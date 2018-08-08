@@ -14,9 +14,8 @@ class StrictWebDriver extends WebDriver
 
     /**
      * @param string[] $alternatives
-     * @return string
      */
-    private function getDeprecatedMethodExceptionMessage(array $alternatives)
+    private function getDeprecatedMethodExceptionMessage(array $alternatives): string
     {
         $messageWithAlternativesPlaceholder = 'This method is deprecated because it uses fuzzy locators. '
             . 'Use one of strict alternatives instead: %s. Or implement new method with strict locator. See ' . self::class;
@@ -118,10 +117,7 @@ class StrictWebDriver extends WebDriver
         $this->clickAndWait(['css' => $css]);
     }
 
-    /**
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
-    public function clickByElement(WebDriverElement $element)
+    public function clickByElement(WebDriverElement $element): \Facebook\WebDriver\WebDriverElement
     {
         $element->click();
     }
@@ -333,9 +329,8 @@ class StrictWebDriver extends WebDriver
 
     /**
      * @param string $css
-     * @return int
      */
-    public function countVisibleByCss($css)
+    public function countVisibleByCss($css): int
     {
         $elements = parent::matchVisible(['css' => $css]);
 

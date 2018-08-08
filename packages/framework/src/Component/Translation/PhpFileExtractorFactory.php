@@ -16,10 +16,7 @@ class PhpFileExtractorFactory
         $this->docParser = $docParser;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor
-     */
-    public function create()
+    public function create(): \Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor
     {
         $transMethodSpecifications = [
             new TransMethodSpecification('trans', 0, 2),

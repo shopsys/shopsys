@@ -105,19 +105,15 @@ class Category extends AbstractTranslatableEntity
         $this->parent = $parent;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * @param string|null $locale
-     * @return string
      */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -125,7 +121,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return string[]
      */
-    public function getNames()
+    public function getNames(): array
     {
         $namesByLocale = [];
         foreach ($this->translations as $translation) {
@@ -135,28 +131,20 @@ class Category extends AbstractTranslatableEntity
         return $namesByLocale;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
-     */
-    public function getParent()
+    public function getParent(): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->parent;
     }
 
-    /**
-     * @return int
-     */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }
 
     /**
      * Method does not lazy load children
-     *
-     * @return bool
      */
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return $this->getRgt() - $this->getLft() > 1;
     }
@@ -164,32 +152,25 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->children;
     }
 
-    /**
-     * @return int
-     */
-    public function getLft()
+    public function getLft(): int
     {
         return $this->lft;
     }
 
-    /**
-     * @return int
-     */
-    public function getRgt()
+    public function getRgt(): int
     {
         return $this->rgt;
     }
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryDomain
      */
-    protected function getCategoryDomain($domainId)
+    protected function getCategoryDomain($domainId): \Shopsys\FrameworkBundle\Model\Category\CategoryDomain
     {
         foreach ($this->domains as $categoryDomain) {
             if ($categoryDomain->getDomainId() === $domainId) {
@@ -207,58 +188,37 @@ class Category extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoTitle(int $domainId)
+    public function getSeoTitle(int $domainId): ?string
     {
         return $this->getCategoryDomain($domainId)->getSeoTitle();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoH1(int $domainId)
+    public function getSeoH1(int $domainId): ?string
     {
         return $this->getCategoryDomain($domainId)->getSeoH1();
     }
 
-    /**
-     * @return bool
-     */
-    public function isEnabled(int $domainId)
+    public function isEnabled(int $domainId): bool
     {
         return $this->getCategoryDomain($domainId)->isEnabled();
     }
 
-    /**
-     * @return bool
-     */
-    public function isVisible(int $domainId)
+    public function isVisible(int $domainId): bool
     {
         return $this->getCategoryDomain($domainId)->isVisible();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
+    public function getSeoMetaDescription(int $domainId): ?string
     {
         return $this->getCategoryDomain($domainId)->getSeoMetaDescription();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getDescription(int $domainId)
+    public function getDescription(int $domainId): ?string
     {
         return $this->getCategoryDomain($domainId)->getDescription();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation
     {
         return new CategoryTranslation();
     }

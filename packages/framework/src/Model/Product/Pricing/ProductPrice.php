@@ -20,10 +20,7 @@ class ProductPrice extends Price
         parent::__construct($price->getPriceWithoutVat(), $price->getPriceWithVat());
     }
 
-    /**
-     * @return bool
-     */
-    public function isPriceFrom()
+    public function isPriceFrom(): bool
     {
         return $this->priceFrom;
     }

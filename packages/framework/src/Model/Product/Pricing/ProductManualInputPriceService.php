@@ -21,9 +21,8 @@ class ProductManualInputPriceService
     /**
      * @param string $inputPrice
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice $productManualInputPrice
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice
      */
-    public function refresh(Product $product, PricingGroup $pricingGroup, $inputPrice, $productManualInputPrice)
+    public function refresh(Product $product, PricingGroup $pricingGroup, $inputPrice, $productManualInputPrice): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice
     {
         if ($productManualInputPrice === null) {
             $productManualInputPrice = $this->productManualInputPriceFactory->create($product, $pricingGroup, $inputPrice);

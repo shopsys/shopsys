@@ -15,7 +15,7 @@ class AnnotatedRouteControllerLoader extends SensioAnnotatedRouteControllerLoade
      *
      * @return string The default route name
      */
-    protected function getDefaultRouteName(\ReflectionClass $class, \ReflectionMethod $method)
+    protected function getDefaultRouteName(\ReflectionClass $class, \ReflectionMethod $method): string
     {
         $routeName = parent::getDefaultRouteName($class, $method);
 

@@ -66,10 +66,7 @@ class CreateDatabaseCommand extends Command
             ->setDescription('Creates database with required db extensions');
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $symfonyStyleIo = new SymfonyStyle($input, $output);
 
@@ -216,10 +213,7 @@ class CreateDatabaseCommand extends Command
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function isConnectedAsSuperuser()
+    private function isConnectedAsSuperuser(): bool
     {
         $stmt = $this->createDatabaselessConnection()
             ->executeQuery('SELECT rolsuper FROM pg_roles WHERE rolname = current_user');
@@ -227,20 +221,14 @@ class CreateDatabaseCommand extends Command
         return $stmt->fetchColumn();
     }
 
-    /**
-     * @return \Doctrine\DBAL\Connection
-     */
-    private function getDefaultConnection()
+    private function getDefaultConnection(): \Doctrine\DBAL\Connection
     {
         $defaultConnectionName = $this->doctrineRegistry->getDefaultConnectionName();
 
         return $this->doctrineRegistry->getConnection($defaultConnectionName);
     }
 
-    /**
-     * @return \Doctrine\DBAL\Connection
-     */
-    private function getConnection()
+    private function getConnection(): \Doctrine\DBAL\Connection
     {
         if ($this->connection === null) {
             $this->connection = $this->getDefaultConnection();
@@ -249,10 +237,7 @@ class CreateDatabaseCommand extends Command
         return $this->connection;
     }
 
-    /**
-     * @return \Doctrine\DBAL\Connection
-     */
-    private function createDatabaselessConnection()
+    private function createDatabaselessConnection(): \Doctrine\DBAL\Connection
     {
         $connection = $this->getConnection();
 

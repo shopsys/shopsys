@@ -7,9 +7,8 @@ class ProductCollectionService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $imagesByProductId
-     * @return array
      */
-    public function getImagesIndexedByProductId(array $products, array $imagesByProductId)
+    public function getImagesIndexedByProductId(array $products, array $imagesByProductId): array
     {
         $imagesOrNullByProductId = [];
 

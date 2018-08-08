@@ -33,10 +33,7 @@ class FriendlyUrlRouterFactory
         $this->friendlyUrlRepository = $friendlyUrlRepository;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
-     */
-    public function createRouter(DomainConfig $domainConfig, RequestContext $context)
+    public function createRouter(DomainConfig $domainConfig, RequestContext $context): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
     {
         return new FriendlyUrlRouter(
             $context,

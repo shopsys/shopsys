@@ -38,26 +38,17 @@ class TransportTranslation extends AbstractTranslation
      */
     protected $instructions;
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
-    public function getInstructions()
+    public function getInstructions(): string
     {
         return $this->instructions;
     }

@@ -25,10 +25,7 @@ class OrderFlow extends FormFlow
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'order';
     }
@@ -51,10 +48,7 @@ class OrderFlow extends FormFlow
         ];
     }
 
-    /**
-     * @return string
-     */
-    protected function determineInstanceId()
+    protected function determineInstanceId(): string
     {
         // Make instance ID constant as we do not want multiple instances of OrderFlow.
         return $this->getInstanceId();
@@ -62,9 +56,8 @@ class OrderFlow extends FormFlow
 
     /**
      * @param int $step
-     * @return array
      */
-    public function getFormOptions($step, array $options = [])
+    public function getFormOptions($step, array $options = []): array
     {
         $options = parent::getFormOptions($step, $options);
 
@@ -91,10 +84,7 @@ class OrderFlow extends FormFlow
         $this->saveStepData($stepData);
     }
 
-    /**
-     * @return bool
-     */
-    public function isBackToCartTransition()
+    public function isBackToCartTransition(): bool
     {
         return $this->getRequestedStepNumber() === 2
             && $this->getRequestedTransition() === self::TRANSITION_BACK;
@@ -114,10 +104,7 @@ class OrderFlow extends FormFlow
         }
     }
 
-    /**
-     * @return StepInterface|null
-     */
-    private function getFirstInvalidStep()
+    private function getFirstInvalidStep(): ?StepInterface
     {
         foreach ($this->getSteps() as $step) {
             if (!$this->isStepValid($step)) {
@@ -128,10 +115,7 @@ class OrderFlow extends FormFlow
         return null;
     }
 
-    /**
-     * @return bool
-     */
-    private function isStepValid(StepInterface $step)
+    private function isStepValid(StepInterface $step): bool
     {
         $stepNumber = $step->getNumber();
         $stepsData = $this->retrieveStepData();

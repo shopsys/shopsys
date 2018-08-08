@@ -142,9 +142,8 @@ class UserDataFixture
     /**
      * @param int $domainId
      * @param int $userNumber
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    private function createCustomerOnDomain($domainId, $userNumber)
+    private function createCustomerOnDomain($domainId, $userNumber): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $customerData = $this->getRandomCustomerDataByDomainId($domainId, $userNumber);
 
@@ -154,9 +153,8 @@ class UserDataFixture
     /**
      * @param int $domainId
      * @param int $userNumber
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
      */
-    private function getRandomCustomerDataByDomainId($domainId, $userNumber)
+    private function getRandomCustomerDataByDomainId($domainId, $userNumber): \Shopsys\FrameworkBundle\Model\Customer\CustomerData
     {
         $customerData = $this->customerDataFactory->create();
 

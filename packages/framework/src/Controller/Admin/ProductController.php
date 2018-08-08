@@ -321,10 +321,7 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
-    private function getGrid(QueryBuilder $queryBuilder)
+    private function getGrid(QueryBuilder $queryBuilder): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $dataSource = new QueryBuilderWithRowManipulatorDataSource(
             $queryBuilder,

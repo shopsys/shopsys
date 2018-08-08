@@ -6,10 +6,7 @@ use DateTimeInterface;
 
 class CronTimeResolver
 {
-    /**
-     * @return bool
-     */
-    public function isValidAtTime(CronTimeInterface $cronTime, DateTimeInterface $dateTime)
+    public function isValidAtTime(CronTimeInterface $cronTime, DateTimeInterface $dateTime): bool
     {
         $hour = (int)$dateTime->format('G');
         $minute = (int)$dateTime->format('i');
@@ -21,9 +18,8 @@ class CronTimeResolver
     /**
      * @param int $value
      * @param string $timeString
-     * @return bool
      */
-    private function isMatchWithTimeString($value, $timeString)
+    private function isMatchWithTimeString($value, $timeString): bool
     {
         $timeValues = explode(',', $timeString);
         $matches = null;

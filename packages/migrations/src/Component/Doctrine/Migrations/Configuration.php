@@ -47,7 +47,7 @@ class Configuration extends DoctrineConfiguration
      *
      * @return Version[] $migrations
      */
-    public function getMigrations()
+    public function getMigrations(): array
     {
         if ($this->migrationVersions === null) {
             $this->migrationVersions = [];
@@ -97,7 +97,7 @@ class Configuration extends DoctrineConfiguration
      * @throws \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException
      * @return Version[] $migrations the array of migrations we can execute
      */
-    public function getMigrationsToExecute($direction, $to)
+    public function getMigrationsToExecute($direction, $to): array
     {
         if ($direction === Version::DIRECTION_DOWN) {
             $this->throwMethodIsNotAllowedException('Migration down is not allowed.');
@@ -122,9 +122,8 @@ class Configuration extends DoctrineConfiguration
 
     /**
      * @param \Doctrine\DBAL\Migrations\Version[] $migratedVersions
-     * @return bool
      */
-    private function shouldExecuteMigration(Version $version, array $migratedVersions)
+    private function shouldExecuteMigration(Version $version, array $migratedVersions): bool
     {
         $isVersionInstalled = in_array($version->getVersion(), $migratedVersions, true);
 

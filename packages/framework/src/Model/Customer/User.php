@@ -164,26 +164,17 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         $this->deliveryAddress = $deliveryAddress;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getLastActivity()
+    public function getLastActivity(): DateTime
     {
         return $this->lastActivity;
     }
@@ -201,10 +192,7 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         $this->lastLogin = new DateTime();
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -217,42 +205,27 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    /**
-     * @return string
-     */
-    public function getFullName()
+    public function getFullName(): string
     {
         if ($this->billingAddress->isCompanyCustomer()) {
             return $this->billingAddress->getCompanyName();
@@ -261,58 +234,37 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         return $this->lastName . ' ' . $this->firstName;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     */
-    public function getBillingAddress()
+    public function getBillingAddress(): \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
     {
         return $this->billingAddress;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
-     */
-    public function getDeliveryAddress()
+    public function getDeliveryAddress(): ?\Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
     {
         return $this->deliveryAddress;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getLastLogin()
+    public function getLastLogin(): ?\DateTime
     {
         return $this->lastLogin;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    public function getPricingGroup()
+    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->pricingGroup;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getResetPasswordHash()
+    public function getResetPasswordHash(): ?string
     {
         return $this->resetPasswordHash;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getResetPasswordHashValidThrough()
+    public function getResetPasswordHashValidThrough(): ?\DateTime
     {
         return $this->resetPasswordHashValidThrough;
     }

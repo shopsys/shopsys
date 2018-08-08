@@ -32,10 +32,7 @@ class GenerateMigrationsService
         $this->filesystem = $filesystem;
     }
 
-    /**
-     * @return \Shopsys\MigrationBundle\Component\Generator\GeneratorResult
-     */
-    public function generate(array $sqlCommands, MigrationsLocation $migrationsLocation)
+    public function generate(array $sqlCommands, MigrationsLocation $migrationsLocation): \Shopsys\MigrationBundle\Component\Generator\GeneratorResult
     {
         $this->createMigrationLocationDirectoryIfNotExists($migrationsLocation);
         $formattedSqlCommands = $this->formatSqlCommandsIfLengthOverflow($sqlCommands);
@@ -57,7 +54,7 @@ class GenerateMigrationsService
      * @param string[] $filteredSchemaDiffSqlCommands
      * @return string[]
      */
-    private function formatSqlCommandsIfLengthOverflow(array $filteredSchemaDiffSqlCommands)
+    private function formatSqlCommandsIfLengthOverflow(array $filteredSchemaDiffSqlCommands): array
     {
         $formattedSqlCommands = [];
         foreach ($filteredSchemaDiffSqlCommands as $key => $filteredSchemaDiffSqlCommand) {
@@ -73,9 +70,8 @@ class GenerateMigrationsService
 
     /**
      * @param string $filteredSchemaDiffSqlCommand
-     * @return string
      */
-    private function formatSqlCommand($filteredSchemaDiffSqlCommand)
+    private function formatSqlCommand($filteredSchemaDiffSqlCommand): string
     {
         $formattedQuery = $this->formatSqlQueryWithTabs($filteredSchemaDiffSqlCommand);
         $formattedQueryLines = array_map('rtrim', explode("\n", $formattedQuery));
@@ -85,9 +81,8 @@ class GenerateMigrationsService
 
     /**
      * @param string $query
-     * @return string
      */
-    private function formatSqlQueryWithTabs($query)
+    private function formatSqlQueryWithTabs($query): string
     {
         $previousTab = SqlFormatter::$tab;
         SqlFormatter::$tab = self::INDENT_CHARACTERS;
@@ -103,7 +98,7 @@ class GenerateMigrationsService
      * @param string[] $queryLines
      * @return string[]
      */
-    private function indentSqlCommandLines(array $queryLines)
+    private function indentSqlCommandLines(array $queryLines): array
     {
         return array_map(function ($queryLine) {
             return str_repeat(self::INDENT_CHARACTERS, self::INDENT_TABULATOR_COUNT) . $queryLine;
@@ -114,7 +109,7 @@ class GenerateMigrationsService
      * @param string[] $sqlCommands
      * @return string[]
      */
-    private function escapeSqlCommands(array $sqlCommands)
+    private function escapeSqlCommands(array $sqlCommands): array
     {
         return array_map(function ($sqlCommand) {
             return str_replace('\'', "\\'", $sqlCommand);

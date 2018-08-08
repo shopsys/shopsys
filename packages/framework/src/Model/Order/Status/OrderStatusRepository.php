@@ -17,28 +17,23 @@ class OrderStatusRepository
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getOrderStatusRepository()
+    protected function getOrderStatusRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(OrderStatus::class);
     }
 
     /**
      * @param int $orderStatusId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
      */
-    public function findById($orderStatusId)
+    public function findById($orderStatusId): ?\Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         return $this->getOrderStatusRepository()->find($orderStatusId);
     }
 
     /**
      * @param int $orderStatusId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function getById($orderStatusId)
+    public function getById($orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         $orderStatus = $this->findById($orderStatusId);
 
@@ -50,10 +45,7 @@ class OrderStatusRepository
         return $orderStatus;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
-     */
-    public function getDefault()
+    public function getDefault(): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         $orderStatus = $this->getOrderStatusRepository()->findOneBy(['type' => OrderStatus::TYPE_NEW]);
 
@@ -68,7 +60,7 @@ class OrderStatusRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getOrderStatusRepository()->findBy([], ['id' => 'asc']);
     }
@@ -76,7 +68,7 @@ class OrderStatusRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAllIndexedById()
+    public function getAllIndexedById(): array
     {
         $orderStatusesIndexedById = [];
 
@@ -91,7 +83,7 @@ class OrderStatusRepository
      * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAllExceptId($orderStatusId)
+    public function getAllExceptId($orderStatusId): array
     {
         $qb = $this->getOrderStatusRepository()->createQueryBuilder('os')
             ->where('os.id != :id')

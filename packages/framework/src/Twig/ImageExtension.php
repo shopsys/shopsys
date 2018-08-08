@@ -78,9 +78,8 @@ class ImageExtension extends Twig_Extension
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param string|null $type
-     * @return bool
      */
-    public function imageExists($imageOrEntity, $type = null)
+    public function imageExists($imageOrEntity, $type = null): bool
     {
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $type);
@@ -95,9 +94,8 @@ class ImageExtension extends Twig_Extension
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
      * @param string|null $sizeName
      * @param string|null $type
-     * @return string
      */
-    public function getImageUrl($imageOrEntity, $sizeName = null, $type = null)
+    public function getImageUrl($imageOrEntity, $sizeName = null, $type = null): string
     {
         try {
             return $this->imageFacade->getImageUrl($this->domain->getCurrentDomainConfig(), $imageOrEntity, $sizeName, $type);
@@ -111,16 +109,15 @@ class ImageExtension extends Twig_Extension
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getImages($entity, $type = null)
+    public function getImages($entity, $type = null): array
     {
         return $this->imageFacade->getImagesByEntityIndexedById($entity, $type);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
-     * @return string
      */
-    public function getImageHtml($imageOrEntity, array $attributes = [])
+    public function getImageHtml($imageOrEntity, array $attributes = []): string
     {
         $this->preventDefault($attributes);
 
@@ -136,10 +133,7 @@ class ImageExtension extends Twig_Extension
         return $this->getImageHtmlByEntityName($attributes, $entityName);
     }
 
-    /**
-     * @return string
-     */
-    public function getNoimageHtml(array $attributes = [])
+    public function getNoimageHtml(array $attributes = []): string
     {
         $this->preventDefault($attributes);
 
@@ -149,10 +143,7 @@ class ImageExtension extends Twig_Extension
         return $this->getImageHtmlByEntityName($attributes, $entityName);
     }
 
-    /**
-     * @return string
-     */
-    private function getEmptyImageUrl()
+    private function getEmptyImageUrl(): string
     {
         return $this->domain->getUrl() . $this->frontDesignImageUrlPrefix . self::NOIMAGE_FILENAME;
     }
@@ -161,9 +152,8 @@ class ImageExtension extends Twig_Extension
      * @param string $entityName
      * @param string|null $type
      * @param string|null $sizeName
-     * @return string
      */
-    private function getImageCssClass($entityName, $type, $sizeName)
+    private function getImageCssClass($entityName, $type, $sizeName): string
     {
         $allClassParts = [
             'image',
@@ -176,10 +166,7 @@ class ImageExtension extends Twig_Extension
         return implode('-', $classParts);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'image_extension';
     }
@@ -192,10 +179,7 @@ class ImageExtension extends Twig_Extension
         Utils::setArrayDefaultValue($attributes, 'title', $attributes['alt']);
     }
 
-    /**
-     * @return string
-     */
-    private function getImageHtmlByEntityName(array $attributes, $entityName)
+    private function getImageHtmlByEntityName(array $attributes, $entityName): string
     {
         $htmlAttributes = $attributes;
         unset($htmlAttributes['type'], $htmlAttributes['size']);

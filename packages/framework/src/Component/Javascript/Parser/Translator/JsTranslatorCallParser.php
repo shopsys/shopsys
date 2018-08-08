@@ -49,7 +49,7 @@ class JsTranslatorCallParser
     /**
      * @return \Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCall[]
      */
-    public function parse(JProgramNode $node)
+    public function parse(JProgramNode $node): array
     {
         $jsTranslatorCalls = [];
 
@@ -72,10 +72,7 @@ class JsTranslatorCallParser
         return $jsTranslatorCalls;
     }
 
-    /**
-     * @return bool
-     */
-    private function isTransFunctionCall(JCallExprNode $callExprNode)
+    private function isTransFunctionCall(JCallExprNode $callExprNode): bool
     {
         $functionName = $this->jsFunctionCallParser->getFunctionName($callExprNode);
 
@@ -88,10 +85,7 @@ class JsTranslatorCallParser
         return false;
     }
 
-    /**
-     * @return string
-     */
-    private function getMessageId(JNodeBase $messageIdArgumentNode)
+    private function getMessageId(JNodeBase $messageIdArgumentNode): string
     {
         try {
             $messageId = $this->jsStringParser->getConcatenatedString($messageIdArgumentNode);
@@ -107,10 +101,7 @@ class JsTranslatorCallParser
         return $messageId;
     }
 
-    /**
-     * @return string
-     */
-    private function getDomain(JCallExprNode $callExprNode)
+    private function getDomain(JCallExprNode $callExprNode): string
     {
         $functionName = $this->jsFunctionCallParser->getFunctionName($callExprNode);
         $domainArgumentIndex = $this->transMethodSpecifications[$functionName]->getDomainArgumentIndex();
@@ -134,10 +125,7 @@ class JsTranslatorCallParser
         }
     }
 
-    /**
-     * @return \PLUG\JavaScript\JNodes\JNodeBase
-     */
-    private function getMessageIdArgumentNode(JCallExprNode $callExprNode)
+    private function getMessageIdArgumentNode(JCallExprNode $callExprNode): \PLUG\JavaScript\JNodes\JNodeBase
     {
         $functionName = $this->jsFunctionCallParser->getFunctionName($callExprNode);
         $messageIdArgumentIndex = $this->transMethodSpecifications[$functionName]->getMessageIdArgumentIndex();

@@ -73,7 +73,7 @@ class JavascriptCompilerService
      * @param string[] $javascripts
      * @return string[] URLs of compiled JS files
      */
-    public function generateCompiledFiles(array $javascripts)
+    public function generateCompiledFiles(array $javascripts): array
     {
         $this->javascriptLinks = [];
 
@@ -107,9 +107,8 @@ class JavascriptCompilerService
     /**
      * @param string $jsSourcePath
      * @param string $javascript
-     * @return bool
      */
-    private function tryToProcessJavascriptFile($jsSourcePath, $javascript)
+    private function tryToProcessJavascriptFile($jsSourcePath, $javascript): bool
     {
         $sourcePath = $jsSourcePath . '/' . $javascript;
         $relativeTargetPath = $this->getRelativeTargetPath($javascript);
@@ -132,9 +131,8 @@ class JavascriptCompilerService
     /**
      * @param string $relativePath
      * @param string $timestamp
-     * @return string
      */
-    private function getPathWithTimestamp($relativePath, $timestamp)
+    private function getPathWithTimestamp($relativePath, $timestamp): string
     {
         $version = '-v' . $timestamp;
 
@@ -143,9 +141,8 @@ class JavascriptCompilerService
 
     /**
      * @param string $javascript
-     * @return string
      */
-    private function getRelativeTargetPath($javascript)
+    private function getRelativeTargetPath($javascript): string
     {
         $relativeTargetPath = null;
         if (strpos($javascript, 'admin/') === 0 || strpos($javascript, 'frontend/') === 0 || strpos($javascript, 'common/') === 0) {
@@ -185,9 +182,8 @@ class JavascriptCompilerService
     /**
      * @param string $compiledFilename
      * @param string $sourceFilename
-     * @return bool
      */
-    private function isCompiledFileFresh($compiledFilename, $sourceFilename)
+    private function isCompiledFileFresh($compiledFilename, $sourceFilename): bool
     {
         if (is_file($compiledFilename) && parse_url($sourceFilename, PHP_URL_HOST) === null) {
             $isCompiledFileFresh = filemtime($sourceFilename) < filemtime($compiledFilename);
@@ -200,9 +196,8 @@ class JavascriptCompilerService
     /**
      * @param string $jsSourcePath
      * @param string $directoryMask
-     * @return bool
      */
-    private function tryToProcessJavascriptDirectoryMask($jsSourcePath, $directoryMask)
+    private function tryToProcessJavascriptDirectoryMask($jsSourcePath, $directoryMask): bool
     {
         $parts = explode('/', $directoryMask);
         $mask = array_pop($parts);
@@ -220,9 +215,8 @@ class JavascriptCompilerService
      * @param string $jsSourcePath
      * @param string $path
      * @param string $filenameMask
-     * @return bool
      */
-    private function processJavascriptByMask($jsSourcePath, $path, $filenameMask)
+    private function processJavascriptByMask($jsSourcePath, $path, $filenameMask): bool
     {
         $filepaths = (array)glob($jsSourcePath . '/' . $path . '/' . $filenameMask);
         foreach ($filepaths as $filepath) {
@@ -235,9 +229,8 @@ class JavascriptCompilerService
 
     /**
      * @param string $filenameMask
-     * @return bool
      */
-    private function isMaskValid($filenameMask)
+    private function isMaskValid($filenameMask): bool
     {
         return $filenameMask === '' || strpos($filenameMask, '*') !== false;
     }

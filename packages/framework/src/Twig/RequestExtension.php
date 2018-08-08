@@ -44,10 +44,7 @@ class RequestExtension extends Twig_Extension
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getRoute()
+    public function getRoute(): string
     {
         return $this->requestStack->getMasterRequest()->attributes->get('_route');
     }
@@ -62,10 +59,7 @@ class RequestExtension extends Twig_Extension
         return $this->requestStack->getMasterRequest()->attributes->get('_route_params');
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'request_extension';
     }

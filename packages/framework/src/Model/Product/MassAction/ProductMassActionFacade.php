@@ -67,7 +67,7 @@ class ProductMassActionFacade
         ProductMassActionData $productMassActionData,
         QueryBuilder $selectQueryBuilder,
         array $checkedProductIds
-    ) {
+    ): array {
         $selectedProductIds = [];
 
         if ($productMassActionData->selectType === ProductMassActionData::SELECT_TYPE_ALL_RESULTS) {

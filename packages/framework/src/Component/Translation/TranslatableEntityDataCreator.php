@@ -56,7 +56,7 @@ class TranslatableEntityDataCreator
     /**
      * @return \Doctrine\ORM\Mapping\ClassMetadata[]
      */
-    private function getAllTranslatableEntitiesMetadata()
+    private function getAllTranslatableEntitiesMetadata(): array
     {
         $translatableEntitiesMetadata = [];
         $allClassesMetadata = $this->em->getMetadataFactory()->getAllMetadata();

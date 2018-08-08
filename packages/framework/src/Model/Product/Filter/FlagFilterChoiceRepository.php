@@ -27,7 +27,7 @@ class FlagFilterChoiceRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getFlagFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category)
+    public function getFlagFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category): array
     {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
@@ -44,7 +44,7 @@ class FlagFilterChoiceRepository
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getFlagFilterChoicesForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText)
+    public function getFlagFilterChoicesForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText): array
     {
         $productsQueryBuilder = $this->productRepository
             ->getListableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
@@ -56,7 +56,7 @@ class FlagFilterChoiceRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    private function getVisibleFlagsByProductsQueryBuilder(QueryBuilder $productsQueryBuilder, $locale)
+    private function getVisibleFlagsByProductsQueryBuilder(QueryBuilder $productsQueryBuilder, $locale): array
     {
         $clonedProductsQueryBuilder = clone $productsQueryBuilder;
 

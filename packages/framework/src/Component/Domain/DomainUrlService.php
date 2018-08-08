@@ -63,9 +63,8 @@ class DomainUrlService
      * @param string[] $columnNames
      * @param string $domainSettingUrl
      * @param string $domainConfigUrl
-     * @return string
      */
-    private function getUrlReplacementSql($tableName, array $columnNames, $domainSettingUrl, $domainConfigUrl)
+    private function getUrlReplacementSql($tableName, array $columnNames, $domainSettingUrl, $domainConfigUrl): string
     {
         $sqlParts = [];
         $quotedTableName = $this->sqlQuoter->quoteIdentifier($tableName);

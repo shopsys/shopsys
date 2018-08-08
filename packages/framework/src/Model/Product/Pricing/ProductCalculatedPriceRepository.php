@@ -25,10 +25,7 @@ class ProductCalculatedPriceRepository
         $this->productCalculatedPriceFactory = $productCalculatedPriceFactory;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getProductCalculatedPriceRepository()
+    protected function getProductCalculatedPriceRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(ProductCalculatedPrice::class);
     }

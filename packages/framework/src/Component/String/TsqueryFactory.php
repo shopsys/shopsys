@@ -6,9 +6,8 @@ class TsqueryFactory
 {
     /**
      * @param string|null $searchText
-     * @return string
      */
-    public function getTsqueryWithAndConditions($searchText)
+    public function getTsqueryWithAndConditions($searchText): string
     {
         $tokens = $this->splitToTokens($searchText);
 
@@ -17,9 +16,8 @@ class TsqueryFactory
 
     /**
      * @param string|null $searchText
-     * @return string
      */
-    public function getTsqueryWithAndConditionsAndPrefixMatchForLastWord($searchText)
+    public function getTsqueryWithAndConditionsAndPrefixMatchForLastWord($searchText): string
     {
         $tokens = $this->splitToTokensWithPrefixMatchForLastToken($searchText);
 
@@ -28,9 +26,8 @@ class TsqueryFactory
 
     /**
      * @param string|null $searchText
-     * @return string
      */
-    public function getTsqueryWithOrConditions($searchText)
+    public function getTsqueryWithOrConditions($searchText): string
     {
         $tokens = $this->splitToTokens($searchText);
 
@@ -39,9 +36,8 @@ class TsqueryFactory
 
     /**
      * @param string|null $searchText
-     * @return string
      */
-    public function getTsqueryWithOrConditionsAndPrefixMatchForLastWord($searchText)
+    public function getTsqueryWithOrConditionsAndPrefixMatchForLastWord($searchText): string
     {
         $tokens = $this->splitToTokensWithPrefixMatchForLastToken($searchText);
 
@@ -63,9 +59,8 @@ class TsqueryFactory
 
     /**
      * @param string|null $searchText
-     * @return bool
      */
-    public function isValidSearchText($searchText)
+    public function isValidSearchText($searchText): bool
     {
         return count($this->splitToTokens($searchText)) > 0;
     }
@@ -74,7 +69,7 @@ class TsqueryFactory
      * @param string|null $searchText
      * @return string[]
      */
-    private function splitToTokens($searchText)
+    private function splitToTokens($searchText): array
     {
         return preg_split(
             '/[^\w\/-]+/ui',

@@ -61,7 +61,6 @@ class OrderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
      * @param float|null $promoCodeDiscountPercent
-     * @return \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview
      */
     public function calculatePreview(
         Currency $currency,
@@ -71,7 +70,7 @@ class OrderPreviewCalculation
         Payment $payment = null,
         User $user = null,
         $promoCodeDiscountPercent = null
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview {
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
             $domainId,
@@ -139,7 +138,6 @@ class OrderPreviewCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     private function calculateRoundingPrice(
         Payment $payment,
@@ -147,7 +145,7 @@ class OrderPreviewCalculation
         Price $productsPrice,
         Price $transportPrice = null,
         Price $paymentPrice = null
-    ) {
+    ): ?\Shopsys\FrameworkBundle\Model\Pricing\Price {
         $totalPrice = $this->calculateTotalPrice(
             $productsPrice,
             $transportPrice,
@@ -162,14 +160,13 @@ class OrderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     private function calculateTotalPrice(
         Price $productsPrice,
         Price $transportPrice = null,
         Price $paymentPrice = null,
         Price $roundingPrice = null
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Pricing\Price {
         $totalPrice = new Price(0, 0);
 
         $totalPrice = $totalPrice->add($productsPrice);
@@ -192,9 +189,8 @@ class OrderPreviewCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscounts
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    private function getProductsPrice(array $quantifiedItemsPrices, array $quantifiedItemsDiscounts)
+    private function getProductsPrice(array $quantifiedItemsPrices, array $quantifiedItemsDiscounts): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         $finalPrice = new Price(0, 0);
 

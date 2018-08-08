@@ -31,10 +31,7 @@ class LoginService
         $this->traceableEventDispatcher = $traceableEventDispatcher;
     }
 
-    /**
-     * @return bool
-     */
-    public function checkLoginProcess(Request $request)
+    public function checkLoginProcess(Request $request): bool
     {
         $error = null;
 

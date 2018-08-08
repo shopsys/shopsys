@@ -43,48 +43,33 @@ class ShopInfoExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private function getDomain()
+    private function getDomain(): \Shopsys\FrameworkBundle\Component\Domain\Domain
     {
         // Twig extensions are loaded during assetic:dump command,
         // so they cannot be dependent on Domain service
         return $this->domain;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'shopInfo';
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPhoneNumber()
+    public function getPhoneNumber(): ?string
     {
         $currentDomainId = $this->getDomain()->getId();
 
         return $this->shopInfoSettingFacade->getPhoneNumber($currentDomainId);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         $currentDomainId = $this->getDomain()->getId();
 
         return $this->shopInfoSettingFacade->getEmail($currentDomainId);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPhoneHours()
+    public function getPhoneHours(): ?string
     {
         $currentDomainId = $this->getDomain()->getId();
 

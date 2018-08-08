@@ -32,10 +32,8 @@ interface IteratedCronModuleInterface
      *
      * This method is called to process a single part of the whole work that the CRON module does.
      * The method should return TRUE if there is any work left of FALSE when it finished everything.
-     *
-     * @return bool
      */
-    public function iterate();
+    public function iterate(): bool;
 
     /**
      * Suspends the process to be re-run later.

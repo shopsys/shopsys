@@ -41,9 +41,8 @@ class DateTimeFormatter
      * @param string $locale
      * @param int|null $dateType
      * @param int|null $timeType
-     * @return string|null
      */
-    private function getCustomPattern($locale, $dateType, $timeType)
+    private function getCustomPattern($locale, $dateType, $timeType): ?string
     {
         $dateTimePattern = $this->customDateTimeFormatPatternRepository->findDateTimePattern($locale, $dateType, $timeType);
         if ($dateTimePattern !== null) {

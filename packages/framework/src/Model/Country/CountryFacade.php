@@ -41,18 +41,16 @@ class CountryFacade
 
     /**
      * @param int $countryId
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    public function getById($countryId)
+    public function getById($countryId): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         return $this->countryRepository->getById($countryId);
     }
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    public function create(CountryData $countryData, $domainId)
+    public function create(CountryData $countryData, $domainId): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $country = $this->countryFactory->create($countryData, $domainId);
         $this->em->persist($country);
@@ -63,9 +61,8 @@ class CountryFacade
 
     /**
      * @param int $countryId
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    public function edit($countryId, CountryData $countryData)
+    public function edit($countryId, CountryData $countryData): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $country = $this->countryRepository->getById($countryId);
         $country->edit($countryData);
@@ -78,7 +75,7 @@ class CountryFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Country\Country[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId($domainId): array
     {
         return $this->countryRepository->getAllByDomainId($domainId);
     }
@@ -86,7 +83,7 @@ class CountryFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country[]
      */
-    public function getAllOnCurrentDomain()
+    public function getAllOnCurrentDomain(): array
     {
         return $this->countryRepository->getAllByDomainId($this->domain->getId());
     }

@@ -74,9 +74,8 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
 
     /**
      * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    private function getProductById($productId)
+    private function getProductById($productId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         /* @var $productFacade \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
@@ -84,10 +83,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         return $productFacade->getById($productId);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    private function getCartFacadeForRegisteredCustomer()
+    private function getCartFacadeForRegisteredCustomer(): \Shopsys\FrameworkBundle\Model\Cart\CartFacade
     {
         $customerFacade = $this->getContainer()->get(CustomerFacade::class);
         /* @var $customerFacade \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade */
@@ -97,18 +93,12 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         return $this->getCartFacadeForCustomer(new CustomerIdentifier('', $user));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    private function getCartFacadeForUnregisteredCustomer()
+    private function getCartFacadeForUnregisteredCustomer(): \Shopsys\FrameworkBundle\Model\Cart\CartFacade
     {
         return $this->getCartFacadeForCustomer(new CustomerIdentifier('randomString'));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    private function getCartFacadeForCustomer(CustomerIdentifier $customerIdentifier)
+    private function getCartFacadeForCustomer(CustomerIdentifier $customerIdentifier): \Shopsys\FrameworkBundle\Model\Cart\CartFacade
     {
         return new CartFacade(
             $this->getEntityManager(),
@@ -123,10 +113,7 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         );
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    private function getCustomerIdentifierFactoryMock(CustomerIdentifier $customerIdentifier)
+    private function getCustomerIdentifierFactoryMock(CustomerIdentifier $customerIdentifier): \PHPUnit\Framework\MockObject\MockObject
     {
         $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerIdentifierFactory::class)
             ->disableOriginalConstructor()

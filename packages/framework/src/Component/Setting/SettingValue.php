@@ -76,10 +76,7 @@ class SettingValue
         $this->setValue($value);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -107,10 +104,7 @@ class SettingValue
         }
     }
 
-    /**
-     * @return int|null
-     */
-    public function getDomainId()
+    public function getDomainId(): ?int
     {
         return $this->domainId;
     }
@@ -134,9 +128,8 @@ class SettingValue
 
     /**
      * @param \DateTime|string|int|float|bool|null $value
-     * @return string
      */
-    protected function getValueType($value)
+    protected function getValueType($value): string
     {
         if (is_int($value)) {
             return self::TYPE_INTEGER;

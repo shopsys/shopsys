@@ -28,10 +28,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
         $this->gridFactory = $gridFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
-    public function create()
+    public function create(): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder

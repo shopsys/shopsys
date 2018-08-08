@@ -16,19 +16,15 @@ class AdvertRepository
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getAdvertRepository()
+    protected function getAdvertRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Advert::class);
     }
 
     /**
      * @param string $advertId
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert|null
      */
-    public function findById($advertId)
+    public function findById($advertId): ?\Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         return $this->getAdvertRepository()->find($advertId);
     }
@@ -36,9 +32,8 @@ class AdvertRepository
     /**
      * @param string $positionName
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getAdvertByPositionQueryBuilder($positionName, $domainId)
+    protected function getAdvertByPositionQueryBuilder($positionName, $domainId): \Doctrine\ORM\QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('a')
@@ -51,9 +46,8 @@ class AdvertRepository
     /**
      * @param string $positionName
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert|null
      */
-    public function findRandomAdvertByPosition($positionName, $domainId)
+    public function findRandomAdvertByPosition($positionName, $domainId): ?\Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         $count = $this->getAdvertByPositionQueryBuilder($positionName, $domainId)
             ->select('COUNT(a)')
@@ -72,9 +66,8 @@ class AdvertRepository
 
     /**
      * @param int $advertId
-     * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
      */
-    public function getById($advertId)
+    public function getById($advertId): \Shopsys\FrameworkBundle\Model\Advert\Advert
     {
         $advert = $this->getAdvertRepository()->find($advertId);
         if ($advert === null) {

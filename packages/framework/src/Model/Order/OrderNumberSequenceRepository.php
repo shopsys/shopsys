@@ -19,18 +19,12 @@ class OrderNumberSequenceRepository
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getOrderNumberSequenceRepository()
+    protected function getOrderNumberSequenceRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(OrderNumberSequence::class);
     }
 
-    /**
-     * @return string
-     */
-    public function getNextNumber()
+    public function getNextNumber(): string
     {
         try {
             $this->em->beginTransaction();

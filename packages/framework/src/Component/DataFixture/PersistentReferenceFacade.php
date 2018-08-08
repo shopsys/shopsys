@@ -33,9 +33,8 @@ class PersistentReferenceFacade
 
     /**
      * @param string $name
-     * @return object
      */
-    public function getReference($name)
+    public function getReference($name): object
     {
         $persistentReference = $this->persistentReferenceRepository->getByReferenceName($name);
         $entity = $this->em->find($persistentReference->getEntityName(), $persistentReference->getEntityId());

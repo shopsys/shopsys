@@ -47,10 +47,7 @@ class ProductAvailabilityRecalculator
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function runBatchOfScheduledDelayedRecalculations()
+    public function runBatchOfScheduledDelayedRecalculations(): bool
     {
         if ($this->productRowsIterator === null) {
             $this->productRowsIterator = $this->productAvailabilityRecalculationScheduler->getProductsIteratorForDelayedRecalculation();

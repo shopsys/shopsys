@@ -43,27 +43,20 @@ class Parameter extends AbstractTranslatableEntity
         $this->visible = $parameterData->visible;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * @param string|null $locale
-     * @return string
      */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @return bool
-     */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return $this->visible;
     }
@@ -75,10 +68,7 @@ class Parameter extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation
     {
         return new ParameterTranslation();
     }

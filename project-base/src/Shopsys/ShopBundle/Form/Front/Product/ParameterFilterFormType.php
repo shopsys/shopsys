@@ -57,7 +57,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]|null $value
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[]|null
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?array
     {
         if ($value === null) {
             return null;

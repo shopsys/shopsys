@@ -16,9 +16,8 @@ class FormExtension extends \Twig_Extension
 
     /**
      * Creates source id of FormError equally as it is created in JS function FpJsFormValidator.validate
-     * @return string
      */
-    public function getFormErrorSourceId(FormError $formError)
+    public function getFormErrorSourceId(FormError $formError): string
     {
         $form = $formError->getOrigin();
         $sourceIdParts = [];

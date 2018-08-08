@@ -70,18 +70,12 @@ class BrandDomain
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoTitle()
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
@@ -94,10 +88,7 @@ class BrandDomain
         $this->seoTitle = $seoTitle;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription()
+    public function getSeoMetaDescription(): ?string
     {
         return $this->seoMetaDescription;
     }
@@ -110,10 +101,7 @@ class BrandDomain
         $this->seoMetaDescription = $seoMetaDescription;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoH1()
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }

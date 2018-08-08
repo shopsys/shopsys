@@ -31,9 +31,8 @@ class ProductListAdminRepository
 
     /**
      * @param int $pricingGroupId
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getProductListQueryBuilder($pricingGroupId)
+    public function getProductListQueryBuilder($pricingGroupId): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder

@@ -105,10 +105,7 @@ class CronFacadeTest extends TestCase
         $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->runScheduledModules();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Cron\CronFacade
-     */
-    private function createCronFacade(CronConfig $cronConfig, CronModuleFacade $cronModuleFacade)
+    private function createCronFacade(CronConfig $cronConfig, CronModuleFacade $cronModuleFacade): \Shopsys\FrameworkBundle\Component\Cron\CronFacade
     {
         $loggerMock = $this->createMock(Logger::class);
         /* @var $loggerMock \Symfony\Bridge\Monolog\Logger */
@@ -138,9 +135,8 @@ class CronFacadeTest extends TestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver|\PHPUnit\Framework\MockObject\MockObject|null $cronTimeResolverMock
-     * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig
      */
-    private function createCronConfigWithRegisteredServices(array $servicesIndexedById, $cronTimeResolverMock = null)
+    private function createCronConfigWithRegisteredServices(array $servicesIndexedById, $cronTimeResolverMock = null): \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig
     {
         $cronTimeResolver = $cronTimeResolverMock !== null ? $cronTimeResolverMock : new CronTimeResolver();
         $cronConfig = new CronConfig($cronTimeResolver);

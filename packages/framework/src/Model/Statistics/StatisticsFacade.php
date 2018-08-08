@@ -28,7 +28,7 @@ class StatisticsFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
-    public function getCustomersRegistrationsCountByDayInLastTwoWeeks()
+    public function getCustomersRegistrationsCountByDayInLastTwoWeeks(): array
     {
         $startDataTime = new DateTime('- 2 weeks midnight');
         $tomorrowDateTime = new DateTime('tomorrow');
@@ -51,7 +51,7 @@ class StatisticsFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
-    public function getNewOrdersCountByDayInLastTwoWeeks()
+    public function getNewOrdersCountByDayInLastTwoWeeks(): array
     {
         $startDataTime = new DateTime('- 2 weeks midnight');
         $tomorrowDateTime = new DateTime('tomorrow');

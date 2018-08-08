@@ -36,10 +36,7 @@ class JsConstantCompilerPassTest extends FunctionalTestCase
         $this->getJsCompiler()->compile($content);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Javascript\Compiler\JsCompiler
-     */
-    private function getJsCompiler()
+    private function getJsCompiler(): \Shopsys\FrameworkBundle\Component\Javascript\Compiler\JsCompiler
     {
         $jsConstantCompilerPass = $this->getContainer()->get(JsConstantCompilerPass::class);
 

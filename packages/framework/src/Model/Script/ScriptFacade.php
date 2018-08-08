@@ -46,32 +46,25 @@ class ScriptFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Script\Script[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->scriptRepository->getAll();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllQueryBuilder()
+    public function getAllQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->scriptRepository->getAllQueryBuilder();
     }
 
     /**
      * @param int $scriptId
-     * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
-    public function getById($scriptId)
+    public function getById($scriptId): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         return $this->scriptRepository->getById($scriptId);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Script\Script
-     */
-    public function create(ScriptData $scriptData)
+    public function create(ScriptData $scriptData): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         $script = $this->scriptFactory->create($scriptData);
 
@@ -83,9 +76,8 @@ class ScriptFacade
 
     /**
      * @param int $scriptId
-     * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
-    public function edit($scriptId, ScriptData $scriptData)
+    public function edit($scriptId, ScriptData $scriptData): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         $script = $this->scriptRepository->getById($scriptId);
 
@@ -111,7 +103,7 @@ class ScriptFacade
     /**
      * @return string[]
      */
-    public function getAllPagesScriptCodes()
+    public function getAllPagesScriptCodes(): array
     {
         $allPagesScripts = $this->scriptRepository->getScriptsByPlacement(Script::PLACEMENT_ALL_PAGES);
         $scriptCodes = [];
@@ -126,7 +118,7 @@ class ScriptFacade
     /**
      * @return string[]
      */
-    public function getOrderSentPageScriptCodesWithReplacedVariables(Order $order)
+    public function getOrderSentPageScriptCodesWithReplacedVariables(Order $order): array
     {
         $scripts = $this->scriptRepository->getScriptsByPlacement(Script::PLACEMENT_ORDER_SENT_PAGE);
         $scriptCodes = [];
@@ -138,10 +130,7 @@ class ScriptFacade
         return $scriptCodes;
     }
 
-    /**
-     * @return bool
-     */
-    public function isGoogleAnalyticsActivated($domainId)
+    public function isGoogleAnalyticsActivated($domainId): bool
     {
         return !empty($this->setting->getForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $domainId));
     }
@@ -155,19 +144,15 @@ class ScriptFacade
         $this->setting->setForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $trackingId, $domainId);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getGoogleAnalyticsTrackingId($domainId)
+    public function getGoogleAnalyticsTrackingId($domainId): ?string
     {
         return $this->setting->getForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $domainId);
     }
 
     /**
      * @param string $code
-     * @return string
      */
-    protected function replaceVariables($code, Order $order)
+    protected function replaceVariables($code, Order $order): string
     {
         $variableReplacements = [
             self::VARIABLE_NUMBER => $order->getNumber(),

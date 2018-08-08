@@ -12,10 +12,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 
 class TransportTest extends TestCase
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    private function createTransport()
+    private function createTransport(): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $vatData = new VatData();
         $vatData->name = 'vat';
@@ -30,10 +27,7 @@ class TransportTest extends TestCase
         return $transport;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    private function createPayment()
+    private function createPayment(): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         $vatData = new VatData();
         $vatData->name = 'vat';

@@ -68,9 +68,8 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
 
     /**
      * @param string $operator
-     * @return string
      */
-    private function getContainsDqlOperator($operator)
+    private function getContainsDqlOperator($operator): string
     {
         switch ($operator) {
             case self::OPERATOR_CONTAINS:

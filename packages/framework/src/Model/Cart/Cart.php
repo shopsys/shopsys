@@ -47,23 +47,17 @@ class Cart
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
-    public function getItems()
+    public function getItems(): array
     {
         return $this->cartItems;
     }
 
-    /**
-     * @return int
-     */
-    public function getItemsCount()
+    public function getItemsCount(): int
     {
         return count($this->getItems());
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return $this->getItemsCount() === 0;
     }

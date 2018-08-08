@@ -39,10 +39,7 @@ class CartFactoryTest extends TestCase
         $this->assertNotSame($cart1, $cart2, 'Users with different session IDs have the same cart.');
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFactory
-     */
-    private function getCartFactory()
+    private function getCartFactory(): \Shopsys\FrameworkBundle\Model\Cart\CartFactory
     {
         $cartItemRepository = $this->getMockBuilder(CartItemRepository::class)
             ->setMethods(['__construct', 'getAllByCustomerIdentifier'])

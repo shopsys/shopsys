@@ -68,10 +68,7 @@ class ProductPriceRecalculator
         $this->productService = $productService;
     }
 
-    /**
-     * @return bool
-     */
-    public function runBatchOfScheduledDelayedRecalculations()
+    public function runBatchOfScheduledDelayedRecalculations(): bool
     {
         if ($this->productRowsIterator === null) {
             $this->productRowsIterator = $this->productPriceRecalculationScheduler->getProductsIteratorForDelayedRecalculation();
@@ -120,7 +117,7 @@ class ProductPriceRecalculator
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    private function getAllPricingGroups()
+    private function getAllPricingGroups(): array
     {
         if ($this->allPricingGroups === null) {
             $this->allPricingGroups = $this->pricingGroupFacade->getAll();

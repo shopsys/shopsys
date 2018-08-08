@@ -59,7 +59,7 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
-    private function getCategoryBreadcrumbItems(Category $category)
+    private function getCategoryBreadcrumbItems(Category $category): array
     {
         $categoriesInPath = $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain(
             $category,

@@ -33,26 +33,17 @@ class UploadedFileLocator
         $this->filesystem = $filesystem;
     }
 
-    /**
-     * @return string
-     */
-    public function getRelativeUploadedFileFilepath(UploadedFile $uploadedFile)
+    public function getRelativeUploadedFileFilepath(UploadedFile $uploadedFile): string
     {
         return $this->getRelativeFilePath($uploadedFile->getEntityName()) . '/' . $uploadedFile->getFilename();
     }
 
-    /**
-     * @return string
-     */
-    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile)
+    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile): string
     {
         return $this->getAbsoluteFilePath($uploadedFile->getEntityName()) . '/' . $uploadedFile->getFilename();
     }
 
-    /**
-     * @return string
-     */
-    public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile)
+    public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
         if ($this->fileExists($uploadedFile)) {
             return $domainConfig->getUrl()
@@ -63,10 +54,7 @@ class UploadedFileLocator
         throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException();
     }
 
-    /**
-     * @return bool
-     */
-    public function fileExists(UploadedFile $uploadedFile)
+    public function fileExists(UploadedFile $uploadedFile): bool
     {
         $fileFilepath = $this->getAbsoluteUploadedFileFilepath($uploadedFile);
 
@@ -75,18 +63,16 @@ class UploadedFileLocator
 
     /**
      * @param string $entityName
-     * @return string
      */
-    private function getRelativeFilePath($entityName)
+    private function getRelativeFilePath($entityName): string
     {
         return $entityName;
     }
 
     /**
      * @param string $entityName
-     * @return string
      */
-    public function getAbsoluteFilePath($entityName)
+    public function getAbsoluteFilePath($entityName): string
     {
         return $this->uploadedFileDir . $this->getRelativeFilePath($entityName);
     }

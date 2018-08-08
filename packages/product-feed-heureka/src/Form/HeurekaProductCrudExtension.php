@@ -35,27 +35,20 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
         $this->heurekaProductDomainDataFactory = $heurekaProductDomainDataFactory;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return HeurekaProductFormType::class;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Heureka.cz product feed');
     }
 
     /**
      * @param int $productId
-     * @return array
      */
-    public function getData($productId)
+    public function getData($productId): array
     {
         $heurekaProductDomains = $this->heurekaProductDomainFacade->findByProductId($productId);
 

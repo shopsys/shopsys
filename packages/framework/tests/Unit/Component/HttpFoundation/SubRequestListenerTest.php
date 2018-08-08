@@ -14,9 +14,8 @@ class SubRequestListenerTest extends TestCase
     /**
      * @param bool $redirect
      * @param bool $send
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getResponseMock($redirect = false, $send = false)
+    public function getResponseMock($redirect = false, $send = false): \Symfony\Component\HttpFoundation\Response
     {
         $responseMock = $this->getMockBuilder(Response::class)
             ->setMethods(['isRedirection', 'send'])

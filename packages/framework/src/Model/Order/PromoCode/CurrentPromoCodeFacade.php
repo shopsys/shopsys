@@ -24,10 +24,7 @@ class CurrentPromoCodeFacade
         $this->session = $session;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
-     */
-    public function getValidEnteredPromoCodeOrNull()
+    public function getValidEnteredPromoCodeOrNull(): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         $enteredCode = $this->session->get(self::PROMO_CODE_SESSION_KEY);
         if ($enteredCode === null) {

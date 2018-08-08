@@ -8,9 +8,8 @@ class InputPriceCalculation
      * @param int $inputPriceType
      * @param string $basePriceWithVat
      * @param string $vatPercent
-     * @return string
      */
-    public function getInputPrice($inputPriceType, $basePriceWithVat, $vatPercent)
+    public function getInputPrice($inputPriceType, $basePriceWithVat, $vatPercent): string
     {
         if ($inputPriceType === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
             $inputPrice = $this->getInputPriceWithoutVat(
@@ -31,9 +30,8 @@ class InputPriceCalculation
     /**
      * @param string $basePriceWithVat
      * @param string $vatPercent
-     * @return string
      */
-    private function getInputPriceWithoutVat($basePriceWithVat, $vatPercent)
+    private function getInputPriceWithoutVat($basePriceWithVat, $vatPercent): string
     {
         return 100 * $basePriceWithVat / (100 + $vatPercent);
     }

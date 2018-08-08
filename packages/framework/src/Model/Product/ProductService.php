@@ -120,7 +120,7 @@ class ProductService
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $pricingGroups
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[]
      */
-    public function getProductSellingPricesIndexedByDomainIdAndPricingGroupId(Product $product, array $pricingGroups)
+    public function getProductSellingPricesIndexedByDomainIdAndPricingGroupId(Product $product, array $pricingGroups): array
     {
         $productSellingPrices = [];
         foreach ($pricingGroups as $pricingGroup) {
@@ -133,10 +133,7 @@ class ProductService
         return $productSellingPrices;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductDeleteResult
-     */
-    public function delete(Product $product)
+    public function delete(Product $product): \Shopsys\FrameworkBundle\Model\Product\ProductDeleteResult
     {
         if ($product->isMainVariant()) {
             foreach ($product->getVariants() as $variantProduct) {
@@ -167,7 +164,7 @@ class ProductService
      * @param int[] $orderedProductIds
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function sortProductsByProductIds(array $products, array $orderedProductIds)
+    public function sortProductsByProductIds(array $products, array $orderedProductIds): array
     {
         $orderedProductIds = array_values($orderedProductIds);
 

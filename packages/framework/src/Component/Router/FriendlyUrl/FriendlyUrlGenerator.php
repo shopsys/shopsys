@@ -28,7 +28,6 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
     /**
      * @param string $routeName
      * @param int $referenceType
-     * @return string
      */
     public function generateFromRouteCollection(
         RouteCollection $routeCollection,
@@ -36,7 +35,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         $routeName,
         array $parameters = [],
         $referenceType = self::ABSOLUTE_PATH
-    ) {
+    ): string {
         $route = $routeCollection->get($routeName);
         if ($route === null) {
             $message = 'Unable to generate a URL for the named route "' . $routeName . '" as such route does not exist.';
@@ -66,9 +65,8 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
     /**
      * @param string $routeName
      * @param string $referenceType
-     * @return string
      */
-    public function getGeneratedUrl($routeName, Route $route, FriendlyUrl $friendlyUrl, array $parameters, $referenceType)
+    public function getGeneratedUrl($routeName, Route $route, FriendlyUrl $friendlyUrl, array $parameters, $referenceType): string
     {
         $compiledRoute = RouteCompiler::compile($route);
 

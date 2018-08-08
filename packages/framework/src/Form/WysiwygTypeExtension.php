@@ -43,10 +43,7 @@ class WysiwygTypeExtension extends AbstractTypeExtension
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return CKEditorType::class;
     }

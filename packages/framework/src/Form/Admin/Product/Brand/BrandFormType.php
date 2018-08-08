@@ -180,9 +180,8 @@ class BrandFormType extends AbstractType
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null $brand
-     * @return string
      */
-    private function getTitlePlaceholder(Brand $brand = null)
+    private function getTitlePlaceholder(Brand $brand = null): string
     {
         return $brand !== null ? $brand->getName() : '';
     }

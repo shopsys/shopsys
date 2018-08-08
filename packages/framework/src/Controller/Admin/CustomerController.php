@@ -273,10 +273,7 @@ class CustomerController extends AdminBaseController
         return $this->redirectToRoute('front_customer_login_as_remembered_user');
     }
 
-    /**
-     * @return string
-     */
-    private function getSsoLoginAsUserUrl(User $user)
+    private function getSsoLoginAsUserUrl(User $user): string
     {
         $customerDomainRouter = $this->domainRouterFactory->getRouter($user->getDomainId());
         $loginAsUserUrl = $customerDomainRouter->generate(

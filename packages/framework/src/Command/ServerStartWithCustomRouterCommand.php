@@ -24,10 +24,7 @@ class ServerStartWithCustomRouterCommand extends ServerStartCommand
         $this->setName(self::$defaultName);
     }
 
-    /**
-     * @return int|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         if ($input->hasParameterOption(['--env', '-e'])) {
             $io = new SymfonyStyle($input, $output);

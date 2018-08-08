@@ -16,28 +16,23 @@ class AdministratorRepository
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getAdministratorRepository()
+    protected function getAdministratorRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Administrator::class);
     }
 
     /**
      * @param int $administratorId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
      */
-    public function findById($administratorId)
+    public function findById($administratorId): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->getAdministratorRepository()->find($administratorId);
     }
 
     /**
      * @param int $administratorId
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function getById($administratorId)
+    public function getById($administratorId): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->getAdministratorRepository()->find($administratorId);
         if ($administrator === null) {
@@ -50,9 +45,8 @@ class AdministratorRepository
 
     /**
      * @param string $multidomainLoginToken
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function getByValidMultidomainLoginToken($multidomainLoginToken)
+    public function getByValidMultidomainLoginToken($multidomainLoginToken): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $queryBuilder = $this->getAdministratorRepository()
             ->createQueryBuilder('a')
@@ -70,18 +64,16 @@ class AdministratorRepository
 
     /**
      * @param string $administratorUserName
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
      */
-    public function findByUserName($administratorUserName)
+    public function findByUserName($administratorUserName): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->getAdministratorRepository()->findOneBy(['username' => $administratorUserName]);
     }
 
     /**
      * @param string $administratorUserName
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function getByUserName($administratorUserName)
+    public function getByUserName($administratorUserName): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->findByUserName($administratorUserName);
         if ($administrator === null) {
@@ -93,10 +85,7 @@ class AdministratorRepository
         return $administrator;
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllListableQueryBuilder()
+    public function getAllListableQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->getAdministratorRepository()
             ->createQueryBuilder('a')
@@ -104,10 +93,7 @@ class AdministratorRepository
             ->setParameter('isSuperadmin', false);
     }
 
-    /**
-     * @return int
-     */
-    public function getCountExcludingSuperadmin()
+    public function getCountExcludingSuperadmin(): int
     {
         return (int)($this->getAllListableQueryBuilder()
             ->select('COUNT(a)')
@@ -117,9 +103,8 @@ class AdministratorRepository
     /**
      * @param int $id
      * @param string $loginToken
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
      */
-    public function findByIdAndLoginToken($id, $loginToken)
+    public function findByIdAndLoginToken($id, $loginToken): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->getAdministratorRepository()->findOneBy([
             'id' => $id,
@@ -130,7 +115,7 @@ class AdministratorRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator[]
      */
-    public function getAllSuperadmins()
+    public function getAllSuperadmins(): array
     {
         return $this->getAdministratorRepository()->findBy(['superadmin' => true]);
     }

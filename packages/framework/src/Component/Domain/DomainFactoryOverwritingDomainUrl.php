@@ -37,9 +37,8 @@ class DomainFactoryOverwritingDomainUrl
     /**
      * @param string $domainsConfigFilepath
      * @param string $domainsUrlsConfigFilepath
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    public function create($domainsConfigFilepath, $domainsUrlsConfigFilepath)
+    public function create($domainsConfigFilepath, $domainsUrlsConfigFilepath): \Shopsys\FrameworkBundle\Component\Domain\Domain
     {
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml($domainsConfigFilepath, $domainsUrlsConfigFilepath);
         if ($this->overwriteDomainUrl !== null) {
@@ -60,7 +59,7 @@ class DomainFactoryOverwritingDomainUrl
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function overwriteDomainUrl(array $domainConfigs)
+    public function overwriteDomainUrl(array $domainConfigs): array
     {
         $mockedDomainConfigs = [];
         foreach ($domainConfigs as $domainConfig) {

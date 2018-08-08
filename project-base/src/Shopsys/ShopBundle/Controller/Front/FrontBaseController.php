@@ -6,10 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class FrontBaseController extends Controller
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender
-     */
-    public function getFlashMessageSender()
+    public function getFlashMessageSender(): \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender
     {
         return $this->get('shopsys.shop.component.flash_message.sender.front');
     }

@@ -51,35 +51,25 @@ class Flag extends AbstractTranslatableEntity
         $this->visible = $flagData->visible;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * @param string|null $locale
-     * @return string
      */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @return string
-     */
-    public function getRgbColor()
+    public function getRgbColor(): string
     {
         return $this->rgbColor;
     }
 
-    /**
-     * @return bool
-     */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return $this->visible;
     }
@@ -91,10 +81,7 @@ class Flag extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation
     {
         return new FlagTranslation();
     }

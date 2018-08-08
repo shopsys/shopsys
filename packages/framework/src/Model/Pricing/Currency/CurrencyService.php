@@ -18,19 +18,15 @@ class CurrencyService
         $this->currencyFactory = $currencyFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    public function create(CurrencyData $currencyData)
+    public function create(CurrencyData $currencyData): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->currencyFactory->create($currencyData);
     }
 
     /**
      * @param bool $isDefaultCurrency
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function edit(Currency $currency, CurrencyData $currencyData, $isDefaultCurrency)
+    public function edit(Currency $currency, CurrencyData $currencyData, $isDefaultCurrency): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency->edit($currencyData);
         if ($isDefaultCurrency) {
@@ -52,7 +48,7 @@ class CurrencyService
         array $currenciesUsedInOrders,
         PricingSetting $pricingSetting,
         Domain $domain
-    ) {
+    ): array {
         $notAllowedToDeleteCurrencyIds = [$defaultCurrencyId];
         foreach ($domain->getAll() as $domainConfig) {
             $notAllowedToDeleteCurrencyIds[] = $pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainConfig->getId());

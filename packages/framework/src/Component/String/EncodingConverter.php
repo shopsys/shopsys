@@ -6,9 +6,8 @@ class EncodingConverter
 {
     /**
      * @param string $stringCp1250
-     * @return string
      */
-    private static function stringCp1250ToUtf8($stringCp1250)
+    private static function stringCp1250ToUtf8($stringCp1250): string
     {
         return iconv('CP1250', 'UTF-8//TRANSLIT', $stringCp1250);
     }

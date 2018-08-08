@@ -7,7 +7,7 @@ interface EntityFileUploadInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload[]
      */
-    public function getTemporaryFilesForUpload();
+    public function getTemporaryFilesForUpload(): array;
 
     /**
      * @param string $key
@@ -15,8 +15,5 @@ interface EntityFileUploadInterface
      */
     public function setFileAsUploaded($key, $originalFilename);
 
-    /**
-     * @return int
-     */
-    public function getId();
+    public function getId(): int;
 }

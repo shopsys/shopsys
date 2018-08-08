@@ -49,34 +49,22 @@ class Vat
         $this->percent = $vatData->percent;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getPercent()
+    public function getPercent(): string
     {
         return $this->percent;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
-     */
-    public function getReplaceWith()
+    public function getReplaceWith(): ?\Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->replaceWith;
     }

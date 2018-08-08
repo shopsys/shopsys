@@ -27,9 +27,8 @@ class FileUploadExtension extends Twig_Extension
 
     /**
      * @param string $temporaryFilename
-     * @return string
      */
-    public function getLabelByTemporaryFilename($temporaryFilename)
+    public function getLabelByTemporaryFilename($temporaryFilename): string
     {
         $filename = $this->fileUpload->getOriginalFilenameByTemporary($temporaryFilename);
         $filepath = ($this->fileUpload->getTemporaryDirectory() . '/' . $temporaryFilename);
@@ -40,10 +39,7 @@ class FileUploadExtension extends Twig_Extension
         return '';
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'fileupload_extension';
     }

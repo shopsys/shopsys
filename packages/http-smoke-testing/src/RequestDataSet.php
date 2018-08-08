@@ -57,26 +57,17 @@ class RequestDataSet implements RequestDataSetConfig
         $this->callsDuringTestExecution = [];
     }
 
-    /**
-     * @return string
-     */
-    public function getRouteName()
+    public function getRouteName(): string
     {
         return $this->routeName;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSkipped()
+    public function isSkipped(): bool
     {
         return $this->skipped;
     }
 
-    /**
-     * @return \Shopsys\HttpSmokeTesting\Auth\AuthInterface
-     */
-    public function getAuth()
+    public function getAuth(): \Shopsys\HttpSmokeTesting\Auth\AuthInterface
     {
         if ($this->auth === null) {
             return new NoAuth();
@@ -85,10 +76,7 @@ class RequestDataSet implements RequestDataSetConfig
         return $this->auth;
     }
 
-    /**
-     * @return int
-     */
-    public function getExpectedStatusCode()
+    public function getExpectedStatusCode(): int
     {
         if ($this->expectedStatusCode === null) {
             return self::DEFAULT_EXPECTED_STATUS_CODE;
@@ -97,10 +85,7 @@ class RequestDataSet implements RequestDataSetConfig
         return $this->expectedStatusCode;
     }
 
-    /**
-     * @return array
-     */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
@@ -108,7 +93,7 @@ class RequestDataSet implements RequestDataSetConfig
     /**
      * @return string[]
      */
-    public function getDebugNotes()
+    public function getDebugNotes(): array
     {
         return $this->debugNotes;
     }

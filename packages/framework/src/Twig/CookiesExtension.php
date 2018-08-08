@@ -25,26 +25,17 @@ class CookiesExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'cookies';
     }
 
-    /**
-     * @return bool
-     */
-    public function isCookiesConsentGiven()
+    public function isCookiesConsentGiven(): bool
     {
         return $this->cookiesFacade->isCookiesConsentGiven();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
-     */
-    public function findCookiesArticleByDomainId($domainId)
+    public function findCookiesArticleByDomainId($domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->cookiesFacade->findCookiesArticleByDomainId($domainId);
     }

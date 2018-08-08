@@ -29,10 +29,7 @@ class CollectionTypeExtension extends AbstractTypeExtension
         $builder->addEventSubscriber($resizeListener);
     }
 
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return CollectionType::class;
     }

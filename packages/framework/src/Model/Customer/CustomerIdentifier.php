@@ -31,26 +31,17 @@ class CustomerIdentifier
         }
     }
 
-    /**
-     * @return string
-     */
-    public function getCartIdentifier()
+    public function getCartIdentifier(): string
     {
         return $this->cartIdentifier;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
-     */
-    public function getUser()
+    public function getUser(): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
-    public function getObjectHash()
+    public function getObjectHash(): string
     {
         if ($this->user instanceof User) {
             $userId = $this->user->getId();

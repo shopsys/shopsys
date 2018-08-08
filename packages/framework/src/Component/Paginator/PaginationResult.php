@@ -71,26 +71,17 @@ class PaginationResult
         }
     }
 
-    /**
-     * @return int
-     */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * @return int
-     */
-    public function getPageSize()
+    public function getPageSize(): int
     {
         return $this->pageSize;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         return $this->totalCount;
     }
@@ -100,26 +91,17 @@ class PaginationResult
         return $this->results;
     }
 
-    /**
-     * @return int
-     */
-    public function getPageCount()
+    public function getPageCount(): int
     {
         return $this->pageCount;
     }
 
-    /**
-     * @return int
-     */
-    public function getFromItem()
+    public function getFromItem(): int
     {
         return $this->fromItem;
     }
 
-    /**
-     * @return int
-     */
-    public function getToItem()
+    public function getToItem(): int
     {
         return $this->toItem;
     }

@@ -174,9 +174,8 @@ class OrderFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function createOrder(OrderData $orderData, OrderPreview $orderPreview, User $user = null)
+    public function createOrder(OrderData $orderData, OrderPreview $orderPreview, User $user = null): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $orderNumber = $this->orderNumberSequenceRepository->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
@@ -206,10 +205,7 @@ class OrderFacade
         return $order;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    public function createOrderFromFront(OrderData $orderData)
+    public function createOrderFromFront(OrderData $orderData): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $orderData->status = $this->orderStatusRepository->getDefault();
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment);
@@ -245,9 +241,8 @@ class OrderFacade
 
     /**
      * @param int $orderId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function edit($orderId, OrderData $orderData)
+    public function edit($orderId, OrderData $orderData): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->orderRepository->getById($orderId);
         $originalOrderStatus = $order->getStatus();
@@ -280,9 +275,8 @@ class OrderFacade
 
     /**
      * @param int $orderId
-     * @return string
      */
-    public function getOrderSentPageContent($orderId)
+    public function getOrderSentPageContent($orderId): string
     {
         $order = $this->getById($orderId);
         $orderDetailUrl = $this->orderService->getOrderDetailUrl($order);
@@ -320,7 +314,7 @@ class OrderFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getCustomerOrderList(User $user)
+    public function getCustomerOrderList(User $user): array
     {
         return $this->orderRepository->getCustomerOrderList($user);
     }
@@ -330,16 +324,15 @@ class OrderFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getOrderListForEmailByDomainId($email, $domainId)
+    public function getOrderListForEmailByDomainId($email, $domainId): array
     {
         return $this->orderRepository->getOrderListForEmailByDomainId($email, $domainId);
     }
 
     /**
      * @param int $orderId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getById($orderId)
+    public function getById($orderId): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->orderRepository->getById($orderId);
     }
@@ -347,26 +340,21 @@ class OrderFacade
     /**
      * @param string $urlHash
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByUrlHashAndDomain($urlHash, $domainId)
+    public function getByUrlHashAndDomain($urlHash, $domainId): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->orderRepository->getByUrlHashAndDomain($urlHash, $domainId);
     }
 
     /**
      * @param string $orderNumber
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByOrderNumberAndUser($orderNumber, User $user)
+    public function getByOrderNumberAndUser($orderNumber, User $user): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->orderRepository->getByOrderNumberAndUser($orderNumber, $user);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData)
+    public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): \Doctrine\ORM\QueryBuilder
     {
         return $this->orderRepository->getOrderListQueryBuilderByQuickSearchData(
             $this->localization->getAdminLocale(),

@@ -24,18 +24,12 @@ class CssExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'css';
     }
 
-    /**
-     * @return string
-     */
-    public function getCssVersion()
+    public function getCssVersion(): string
     {
         return $this->cssFacade->getCssVersion();
     }

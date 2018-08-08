@@ -27,9 +27,8 @@ class JavascriptExtension extends Twig_Extension
 
     /**
      * @param string|array $javascripts
-     * @return string
      */
-    public function renderJavascripts($javascripts)
+    public function renderJavascripts($javascripts): string
     {
         $javascriptsArray = Utils::mixedToArray($javascripts);
 
@@ -38,10 +37,7 @@ class JavascriptExtension extends Twig_Extension
         return $this->getHtmlJavascriptImports($javascriptLinks);
     }
 
-    /**
-     * @return string
-     */
-    private function getHtmlJavascriptImports(array $javascriptLinks)
+    private function getHtmlJavascriptImports(array $javascriptLinks): string
     {
         $html = '';
         foreach ($javascriptLinks as $javascriptLink) {
@@ -51,10 +47,7 @@ class JavascriptExtension extends Twig_Extension
         return $html;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'javascript_extension';
     }

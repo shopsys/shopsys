@@ -19,18 +19,16 @@ class MailSettingFacade
 
     /**
      * @param int $domainId
-     * @return string
      */
-    public function getMainAdminMail($domainId)
+    public function getMainAdminMail($domainId): string
     {
         return $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $domainId);
     }
 
     /**
      * @param int $domainId
-     * @return string
      */
-    public function getMainAdminMailName($domainId)
+    public function getMainAdminMailName($domainId): string
     {
         return $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $domainId);
     }

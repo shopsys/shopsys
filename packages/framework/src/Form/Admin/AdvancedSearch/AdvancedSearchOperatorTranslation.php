@@ -32,9 +32,8 @@ class AdvancedSearchOperatorTranslation
 
     /**
      * @param string $operator
-     * @return string
      */
-    public function translateOperator($operator)
+    public function translateOperator($operator): string
     {
         if (array_key_exists($operator, $this->operatorsTranslations)) {
             return $this->operatorsTranslations[$operator];

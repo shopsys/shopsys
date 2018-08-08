@@ -46,10 +46,7 @@ class LoginController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\Form\Form
-     */
-    private function getLoginForm()
+    private function getLoginForm(): \Symfony\Component\Form\Form
     {
         return $this->createForm(LoginFormType::class, null, [
             'action' => $this->generateUrl('front_login_check'),

@@ -20,9 +20,8 @@ class GridInlineEditRegistry
 
     /**
      * @param string $serviceName
-     * @return \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface
      */
-    public function getGridInlineEdit($serviceName)
+    public function getGridInlineEdit($serviceName): \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface
     {
         foreach ($this->gridInlineEdits as $gridInlineEdit) {
             if ($gridInlineEdit instanceof $serviceName && $gridInlineEdit instanceof GridInlineEditInterface) {

@@ -10,9 +10,8 @@ class PoDumper implements DumperInterface
 {
     /**
      * @param string $domain
-     * @return string
      */
-    public function dump(MessageCatalogue $catalogue, $domain = 'messages')
+    public function dump(MessageCatalogue $catalogue, $domain = 'messages'): string
     {
         $output = 'msgid ""' . "\n";
         $output .= 'msgstr ""' . "\n";
@@ -40,9 +39,8 @@ class PoDumper implements DumperInterface
 
     /**
      * @param string $str
-     * @return string
      */
-    private function escape($str)
+    private function escape($str): string
     {
         return addcslashes($str, "\0..\37\42\134");
     }
@@ -51,7 +49,7 @@ class PoDumper implements DumperInterface
      * @param \JMS\TranslationBundle\Model\Message[] $messages
      * @return \JMS\TranslationBundle\Model\Message[]
      */
-    private function sortMessagesByMessageId(array $messages)
+    private function sortMessagesByMessageId(array $messages): array
     {
         usort($messages, function (Message $messageA, Message $messageB) {
             return strcmp($messageA->getId(), $messageB->getId());

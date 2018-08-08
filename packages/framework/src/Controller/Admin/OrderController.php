@@ -245,10 +245,7 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return array
-     */
-    private function addOrderEntityToDataSource(array $row)
+    private function addOrderEntityToDataSource(array $row): array
     {
         $row['order'] = $this->orderFacade->getById($row['id']);
 
@@ -282,9 +279,8 @@ class OrderController extends AdminBaseController
 
     /**
      * @Route("/order/get-advanced-search-rule-form/", methods={"post"})
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getRuleFormAction(Request $request)
+    public function getRuleFormAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm($request->get('filterName'), $request->get('newIndex'));
 

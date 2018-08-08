@@ -49,17 +49,13 @@ class SliderItemFacade
 
     /**
      * @param int $sliderItemId
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
      */
-    public function getById($sliderItemId)
+    public function getById($sliderItemId): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         return $this->sliderItemRepository->getById($sliderItemId);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
-     */
-    public function create(SliderItemData $sliderItemData)
+    public function create(SliderItemData $sliderItemData): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         $sliderItem = $this->sliderItemFactory->create($sliderItemData);
 
@@ -72,9 +68,8 @@ class SliderItemFacade
 
     /**
      * @param int $sliderItemId
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
      */
-    public function edit($sliderItemId, SliderItemData $sliderItemData)
+    public function edit($sliderItemId, SliderItemData $sliderItemData): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
         $sliderItem->edit($sliderItemData);
@@ -99,7 +94,7 @@ class SliderItemFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAllVisibleOnCurrentDomain()
+    public function getAllVisibleOnCurrentDomain(): array
     {
         return $this->sliderItemRepository->getAllVisibleByDomainId($this->domain->getId());
     }

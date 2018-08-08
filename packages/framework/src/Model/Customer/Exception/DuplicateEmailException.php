@@ -22,10 +22,7 @@ class DuplicateEmailException extends Exception implements CustomerException
         parent::__construct('User with email ' . $this->email . ' already exists.', 0, $previous);
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }

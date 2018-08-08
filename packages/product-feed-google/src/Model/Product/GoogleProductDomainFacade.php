@@ -36,7 +36,7 @@ class GoogleProductDomainFacade
      * @param int $productId
      * @return \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain[]|null
      */
-    public function findByProductId($productId)
+    public function findByProductId($productId): ?array
     {
         return $this->googleProductDomainRepository->findByProductId($productId);
     }

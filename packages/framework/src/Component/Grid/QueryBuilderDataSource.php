@@ -32,14 +32,13 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param int $page
      * @param string|null $orderSourceColumnName
      * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginatedRows(
         $limit = null,
         $page = 1,
         $orderSourceColumnName = null,
         $orderDirection = self::ORDER_ASC
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult {
         $queryBuilder = clone $this->queryBuilder;
         if ($orderSourceColumnName !== null) {
             $this->addQueryOrder($queryBuilder, $orderSourceColumnName, $orderDirection);
@@ -55,9 +54,8 @@ class QueryBuilderDataSource implements DataSourceInterface
 
     /**
      * @param int $rowId
-     * @return array
      */
-    public function getOneRow($rowId)
+    public function getOneRow($rowId): array
     {
         $queryBuilder = clone $this->queryBuilder;
         $this->prepareQueryWithOneRow($queryBuilder, $rowId);
@@ -65,10 +63,7 @@ class QueryBuilderDataSource implements DataSourceInterface
         return $queryBuilder->getQuery()->getSingleResult(GroupedScalarHydrator::HYDRATION_MODE);
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalRowsCount()
+    public function getTotalRowsCount(): int
     {
         $queryPaginator = new QueryPaginator($this->queryBuilder, GroupedScalarHydrator::HYDRATION_MODE);
         return $queryPaginator->getTotalCount();
@@ -96,10 +91,7 @@ class QueryBuilderDataSource implements DataSourceInterface
             ->resetDQLPart('orderBy');
     }
 
-    /**
-     * @return string
-     */
-    public function getRowIdSourceColumnName()
+    public function getRowIdSourceColumnName(): string
     {
         return $this->rowIdSourceColumnName;
     }

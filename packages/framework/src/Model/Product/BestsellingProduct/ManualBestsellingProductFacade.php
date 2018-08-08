@@ -66,7 +66,7 @@ class ManualBestsellingProductFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getProductsIndexedByPosition($category, $domainId)
+    public function getProductsIndexedByPosition($category, $domainId): array
     {
         $bestsellingProducts = $this->manualBestsellingProductRepository->getByCategory($domainId, $category);
 
@@ -82,7 +82,7 @@ class ManualBestsellingProductFacade
      * @param int $domainId
      * @return int[]
      */
-    public function getCountsIndexedByCategoryId($domainId)
+    public function getCountsIndexedByCategoryId($domainId): array
     {
         return $this->manualBestsellingProductRepository->getCountsIndexedByCategoryId($domainId);
     }

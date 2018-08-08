@@ -50,61 +50,42 @@ class Column
         $this->orderSourceColumnName = $sourceColumnName;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getSourceColumnName()
+    public function getSourceColumnName(): string
     {
         return $this->sourceColumnName;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSortable()
+    public function isSortable(): bool
     {
         return $this->sortable;
     }
 
-    /**
-     * @return string
-     */
-    public function getClassAttribute()
+    public function getClassAttribute(): string
     {
         return $this->classAttribute;
     }
 
     /**
      * @param string $class
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Column
      */
-    public function setClassAttribute($class)
+    public function setClassAttribute($class): \Shopsys\FrameworkBundle\Component\Grid\Column
     {
         $this->classAttribute = $class;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getOrderSourceColumnName()
+    public function getOrderSourceColumnName(): string
     {
         return $this->orderSourceColumnName;
     }

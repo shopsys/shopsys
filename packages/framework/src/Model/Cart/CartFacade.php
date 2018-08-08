@@ -85,9 +85,8 @@ class CartFacade
     /**
      * @param int $productId
      * @param int $quantity
-     * @return \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
      */
-    public function addProductToCart($productId, $quantity)
+    public function addProductToCart($productId, $quantity): \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
     {
         $product = $this->productRepository->getSellableById(
             $productId,
@@ -141,9 +140,8 @@ class CartFacade
 
     /**
      * @param int $cartItemId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProductByCartItemId($cartItemId)
+    public function getProductByCartItemId($cartItemId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $cart = $this->getCartOfCurrentCustomer();
 
@@ -154,10 +152,7 @@ class CartFacade
     {
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
     }
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
-     */
-    public function getCartOfCurrentCustomer()
+    public function getCartOfCurrentCustomer(): \Shopsys\FrameworkBundle\Model\Cart\Cart
     {
         $customerIdentifier = $this->customerIdentifierFactory->get();
 
@@ -167,7 +162,7 @@ class CartFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
-    public function getQuantifiedProductsOfCurrentCustomerIndexedByCartItemId()
+    public function getQuantifiedProductsOfCurrentCustomerIndexedByCartItemId(): array
     {
         $cart = $this->getCartOfCurrentCustomer();
 

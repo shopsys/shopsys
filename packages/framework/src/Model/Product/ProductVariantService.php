@@ -56,9 +56,8 @@ class ProductVariantService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function createMainVariant(ProductData $mainVariantData, Product $mainProduct, array $variants)
+    public function createMainVariant(ProductData $mainVariantData, Product $mainProduct, array $variants): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $variants[] = $mainProduct;
 

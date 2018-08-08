@@ -30,17 +30,14 @@ class HeurekaCategoryDownloader
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData[]
      */
-    public function getHeurekaCategories()
+    public function getHeurekaCategories(): array
     {
         $xmlCategoryDataObjects = $this->loadXml()->xpath('/HEUREKA//CATEGORY[CATEGORY_FULLNAME]');
 
         return $this->convertToShopEntities($xmlCategoryDataObjects);
     }
 
-    /**
-     * @return \SimpleXMLElement
-     */
-    private function loadXml()
+    private function loadXml(): \SimpleXMLElement
     {
         try {
             return new SimpleXMLElement($this->heurekaCategoryFeedUrl, LIBXML_NOERROR | LIBXML_NOWARNING, true);
@@ -52,7 +49,7 @@ class HeurekaCategoryDownloader
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData[]
      */
-    private function convertToShopEntities(array $xmlCategoryDataObjects)
+    private function convertToShopEntities(array $xmlCategoryDataObjects): array
     {
         $heurekaCategoriesData = [];
 

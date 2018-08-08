@@ -149,9 +149,8 @@ class ImageFacade
     /**
      * @param object $entity
      * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
-    public function getImageByEntity($entity, $type)
+    public function getImageByEntity($entity, $type): \Shopsys\FrameworkBundle\Component\Image\Image
     {
         return $this->imageRepository->getImageByEntity(
             $this->imageConfig->getEntityName($entity),
@@ -165,7 +164,7 @@ class ImageFacade
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getImagesByEntityIndexedById($entity, $type)
+    public function getImagesByEntityIndexedById($entity, $type): array
     {
         return $this->imageRepository->getImagesByEntityIndexedById(
             $this->imageConfig->getEntityName($entity),
@@ -178,7 +177,7 @@ class ImageFacade
      * @param object $entity
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getAllImagesByEntity($entity)
+    public function getAllImagesByEntity($entity): array
     {
         return $this->imageRepository->getAllImagesByEntity(
             $this->imageConfig->getEntityName($entity),
@@ -201,9 +200,8 @@ class ImageFacade
 
     /**
      * @param object $entity
-     * @return int
      */
-    protected function getEntityId($entity)
+    protected function getEntityId($entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
         $identifier = $entityMetadata->getIdentifierValues($entity);
@@ -218,7 +216,7 @@ class ImageFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
-    public function getAllImageEntityConfigsByClass()
+    public function getAllImageEntityConfigsByClass(): array
     {
         return $this->imageConfig->getAllImageEntityConfigsByClass();
     }
@@ -227,9 +225,8 @@ class ImageFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
      * @param string|null $sizeName
      * @param string|null $type
-     * @return string
      */
-    public function getImageUrl(DomainConfig $domainConfig, $imageOrEntity, $sizeName = null, $type = null)
+    public function getImageUrl(DomainConfig $domainConfig, $imageOrEntity, $sizeName = null, $type = null): string
     {
         $image = $this->getImageByObject($imageOrEntity, $type);
         if ($this->imageLocator->imageExists($image)) {
@@ -244,9 +241,8 @@ class ImageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
      * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
-    public function getImageByObject($imageOrEntity, $type = null)
+    public function getImageByObject($imageOrEntity, $type = null): \Shopsys\FrameworkBundle\Component\Image\Image
     {
         if ($imageOrEntity instanceof Image) {
             return $imageOrEntity;
@@ -257,9 +253,8 @@ class ImageFacade
 
     /**
      * @param int $imageId
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
-    public function getById($imageId)
+    public function getById($imageId): \Shopsys\FrameworkBundle\Component\Image\Image
     {
         return $this->imageRepository->getById($imageId);
     }

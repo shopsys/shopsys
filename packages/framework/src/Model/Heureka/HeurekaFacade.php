@@ -52,36 +52,28 @@ class HeurekaFacade
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function isHeurekaShopCertificationActivated($domainId)
+    public function isHeurekaShopCertificationActivated($domainId): bool
     {
         return $this->heurekaSetting->isHeurekaShopCertificationActivated($domainId);
     }
 
-    /**
-     * @return bool
-     */
-    public function isHeurekaWidgetActivated($domainId)
+    public function isHeurekaWidgetActivated($domainId): bool
     {
         return $this->heurekaSetting->isHeurekaWidgetActivated($domainId);
     }
 
     /**
      * @param string $locale
-     * @return bool
      */
-    public function isDomainLocaleSupported($locale)
+    public function isDomainLocaleSupported($locale): bool
     {
         return $this->heurekaShopCertificationService->isDomainLocaleSupported($locale);
     }
 
     /**
      * @param string $locale
-     * @return string|null
      */
-    public function getServerNameByLocale($locale)
+    public function getServerNameByLocale($locale): ?string
     {
         return $this->heurekaShopCertificationService->getServerNameByLocale($locale);
     }

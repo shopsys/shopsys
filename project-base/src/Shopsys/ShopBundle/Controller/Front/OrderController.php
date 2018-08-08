@@ -345,10 +345,7 @@ class OrderController extends FrontBaseController
         );
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function getTermsAndConditionsResponse()
+    private function getTermsAndConditionsResponse(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysShop/Front/Content/Order/legalConditions.html.twig', [
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),

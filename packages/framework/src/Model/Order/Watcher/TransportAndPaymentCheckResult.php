@@ -26,18 +26,12 @@ class TransportAndPaymentCheckResult
         $this->paymentPriceChanged = $paymentPriceChanged;
     }
 
-    /**
-     * @return bool
-     */
-    public function isTransportPriceChanged()
+    public function isTransportPriceChanged(): bool
     {
         return $this->transportPriceChanged;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPaymentPriceChanged()
+    public function isPaymentPriceChanged(): bool
     {
         return $this->paymentPriceChanged;
     }

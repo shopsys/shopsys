@@ -35,7 +35,7 @@ class ProductPriceRecalculationScheduler
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getProductsForImmediateRecalculation()
+    public function getProductsForImmediateRecalculation(): array
     {
         return $this->products;
     }

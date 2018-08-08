@@ -85,43 +85,30 @@ class ActionColumn
         $this->isAjaxConfirm = false;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getClassAttribute()
+    public function getClassAttribute(): ?string
     {
         return $this->classAttribute;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getConfirmMessage()
+    public function getConfirmMessage(): ?string
     {
         return $this->confirmMessage;
     }
 
     /**
      * @param string $classAttribute
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setClassAttribute($classAttribute)
+    public function setClassAttribute($classAttribute): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         $this->classAttribute = $classAttribute;
 
@@ -130,37 +117,27 @@ class ActionColumn
 
     /**
      * @param string $confirmMessage
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setConfirmMessage($confirmMessage)
+    public function setConfirmMessage($confirmMessage): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         $this->confirmMessage = $confirmMessage;
 
         return $this;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
-     */
-    public function setAjaxConfirm()
+    public function setAjaxConfirm(): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         $this->isAjaxConfirm = true;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAjaxConfirm()
+    public function isAjaxConfirm(): bool
     {
         return $this->isAjaxConfirm;
     }
 
-    /**
-     * @return string
-     */
-    public function getTargetUrl(array $row)
+    public function getTargetUrl(array $row): string
     {
         $parameters = $this->additionalRouteParams;
 

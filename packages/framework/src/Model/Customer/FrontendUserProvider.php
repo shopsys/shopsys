@@ -29,9 +29,8 @@ class FrontendUserProvider implements UserProviderInterface
 
     /**
      * @param string $email
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    public function loadUserByUsername($email)
+    public function loadUserByUsername($email): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->userRepository->findUserByEmailAndDomain(mb_strtolower($email), $this->domain->getId());
 
@@ -46,10 +45,7 @@ class FrontendUserProvider implements UserProviderInterface
         return $user;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $class = get_class($user);
         if (!$this->supportsClass($class)) {
@@ -79,9 +75,8 @@ class FrontendUserProvider implements UserProviderInterface
 
     /**
      * @param string $class
-     * @return bool
      */
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return User::class === $class || is_subclass_of($class, User::class);
     }

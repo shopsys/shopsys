@@ -92,9 +92,8 @@ class AllFeedsTest extends KernelTestCase
 
     /**
      * @param int $maxDuration
-     * @return \Tests\ShopBundle\Performance\Feed\PerformanceTestSample
      */
-    private function doTestFeedGeneration(FeedInfoInterface $feedInfo, DomainConfig $domainConfig, $maxDuration)
+    private function doTestFeedGeneration(FeedInfoInterface $feedInfo, DomainConfig $domainConfig, $maxDuration): \Tests\ShopBundle\Performance\Feed\PerformanceTestSample
     {
         $performanceTestSample = $this->generateFeed($feedInfo, $domainConfig);
         $this->setPerformanceTestSampleMessage($performanceTestSample, $maxDuration, $performanceTestSample->getDuration());
@@ -105,7 +104,7 @@ class AllFeedsTest extends KernelTestCase
     /**
      * @return array[]
      */
-    public function getAllFeedGenerationData()
+    public function getAllFeedGenerationData(): array
     {
         $feedRegistry = self::$kernel->getContainer()->get(FeedRegistry::class);
         /* @var $feedRegistry \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry */
@@ -132,7 +131,7 @@ class AllFeedsTest extends KernelTestCase
      * @param int $maxDuration
      * @return array[]
      */
-    private function getFeedGenerationData(array $feeds, array $domainConfigs, $maxDuration)
+    private function getFeedGenerationData(array $feeds, array $domainConfigs, $maxDuration): array
     {
         $feedGenerationData = [];
         foreach ($domainConfigs as $domainConfig) {
@@ -167,10 +166,7 @@ class AllFeedsTest extends KernelTestCase
         $performanceTestSample->setMessage($message);
     }
 
-    /**
-     * @return \Tests\ShopBundle\Performance\Feed\PerformanceTestSample
-     */
-    private function generateFeed(FeedInfoInterface $feed, DomainConfig $domainConfig)
+    private function generateFeed(FeedInfoInterface $feed, DomainConfig $domainConfig): \Tests\ShopBundle\Performance\Feed\PerformanceTestSample
     {
         $this->setUp();
 

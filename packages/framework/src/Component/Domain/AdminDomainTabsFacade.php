@@ -38,10 +38,7 @@ class AdminDomainTabsFacade
         $this->session->set(self::SESSION_SELECTED_DOMAIN, $domainConfig->getId());
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    public function getSelectedDomainConfig()
+    public function getSelectedDomainConfig(): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
     {
         try {
             $domainId = $this->session->get(self::SESSION_SELECTED_DOMAIN);

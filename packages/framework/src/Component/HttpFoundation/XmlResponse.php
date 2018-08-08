@@ -11,9 +11,8 @@ class XmlResponse extends Response
     /**
      * @param string $fileName
      * @param string $content
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getXmlResponse($fileName, $content)
+    public function getXmlResponse($fileName, $content): \Symfony\Component\HttpFoundation\Response
     {
         $xmlContent = XmlNormalizer::normalizeXml($content);
         $response = new Response($xmlContent);

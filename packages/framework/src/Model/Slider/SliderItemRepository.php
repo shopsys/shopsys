@@ -16,19 +16,15 @@ class SliderItemRepository
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getSliderItemRepository()
+    protected function getSliderItemRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(SliderItem::class);
     }
 
     /**
      * @param int $sliderItemId
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
      */
-    public function getById($sliderItemId)
+    public function getById($sliderItemId): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         $sliderItem = $this->getSliderItemRepository()->find($sliderItemId);
         if ($sliderItem === null) {
@@ -40,9 +36,8 @@ class SliderItemRepository
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem|null
      */
-    public function findById($id)
+    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         return $this->getSliderItemRepository()->find($id);
     }
@@ -50,7 +45,7 @@ class SliderItemRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getSliderItemRepository()->findAll();
     }
@@ -59,7 +54,7 @@ class SliderItemRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAllVisibleByDomainId($domainId)
+    public function getAllVisibleByDomainId($domainId): array
     {
         return $this->getSliderItemRepository()->findBy([
             'domainId' => $domainId,

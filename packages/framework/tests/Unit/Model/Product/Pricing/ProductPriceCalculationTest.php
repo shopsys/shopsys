@@ -47,9 +47,8 @@ class ProductPriceCalculationTest extends TestCase
     /**
      * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
      */
-    private function getProductPriceCalculationWithInputPriceTypeAndVariants($inputPriceType, $variants)
+    private function getProductPriceCalculationWithInputPriceTypeAndVariants($inputPriceType, $variants): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
     {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType', 'getRoundingType', 'getDomainDefaultCurrencyIdByDomainId'])
@@ -114,12 +113,11 @@ class ProductPriceCalculationTest extends TestCase
     /**
      * @param string $inputPrice
      * @param string $vatPercent
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     private function getProductWithInputPriceAndVatPercentAndAutoCalculationPriceType(
         $inputPrice,
         $vatPercent
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Product\Product {
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;

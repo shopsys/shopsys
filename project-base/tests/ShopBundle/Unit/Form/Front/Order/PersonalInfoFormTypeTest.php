@@ -54,9 +54,8 @@ class PersonalInfoFormTypeTest extends TypeTestCase
 
     /**
      * @param bool $legalConditionsAgreement
-     * @return array
      */
-    private function getPersonalInfoFormData($legalConditionsAgreement)
+    private function getPersonalInfoFormData($legalConditionsAgreement): array
     {
         $personalInfoFormData = [];
         $personalInfoFormData['firstName'] = 'test';

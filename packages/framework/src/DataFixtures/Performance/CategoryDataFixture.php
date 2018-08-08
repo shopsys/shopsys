@@ -111,9 +111,8 @@ class CategoryDataFixture
 
     /**
      * @param int $categoryLevel
-     * @return int
      */
-    private function recursivelyCountCategoriesInCategoryTree($categoryLevel = 0)
+    private function recursivelyCountCategoriesInCategoryTree($categoryLevel = 0): int
     {
         $count = 0;
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
@@ -126,10 +125,7 @@ class CategoryDataFixture
         return $count;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryData
-     */
-    private function getRandomCategoryDataByParentCategory(Category $parentCategory)
+    private function getRandomCategoryDataByParentCategory(Category $parentCategory): \Shopsys\FrameworkBundle\Model\Category\CategoryData
     {
         $categoryData = $this->categoryDataFactory->create();
         $categoryName = $this->faker->word . ' #' . $this->categoriesCreated;

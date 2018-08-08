@@ -73,14 +73,11 @@ class ErrorController extends FrontBaseController
         }
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     private function createErrorPagePrototypeResponse(
         Request $request,
         FlattenException $exception,
         DebugLoggerInterface $logger
-    ) {
+    ): \Symfony\Component\HttpFoundation\Response {
         // Same as in \Symfony\Bundle\TwigBundle\Controller\PreviewErrorController
         $format = $request->getRequestFormat();
 
@@ -96,9 +93,8 @@ class ErrorController extends FrontBaseController
 
     /**
      * @param int $statusCode
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function createErrorPageResponse($statusCode)
+    private function createErrorPageResponse($statusCode): \Symfony\Component\HttpFoundation\Response
     {
         $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);
         $errorPageContent = $this->errorPagesFacade->getErrorPageContentByDomainIdAndStatusCode(
@@ -109,10 +105,7 @@ class ErrorController extends FrontBaseController
         return new Response($errorPageContent, $errorPageStatusCode);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function createExceptionResponse(Request $request, FlattenException $exception, DebugLoggerInterface $logger)
+    private function createExceptionResponse(Request $request, FlattenException $exception, DebugLoggerInterface $logger): \Symfony\Component\HttpFoundation\Response
     {
         $lastException = $this->exceptionListener->getLastException();
         if ($lastException !== null) {
@@ -122,10 +115,7 @@ class ErrorController extends FrontBaseController
         return $this->exceptionController->showAction($request, $exception, $logger);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function getPrettyExceptionResponse(Exception $exception)
+    private function getPrettyExceptionResponse(Exception $exception): \Symfony\Component\HttpFoundation\Response
     {
         Debugger::$time = time();
         $blueScreen = new BlueScreen();

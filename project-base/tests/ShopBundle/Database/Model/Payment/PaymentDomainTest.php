@@ -78,10 +78,7 @@ class PaymentDomainTest extends DatabaseTestCase
         $this->assertFalse($refreshedPayment->isEnabled(self::SECOND_DOMAIN_ID));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    private function getRefreshedPaymentFromDatabase(Payment $payment)
+    private function getRefreshedPaymentFromDatabase(Payment $payment): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         $this->em->persist($payment);
         $this->em->flush();

@@ -37,10 +37,7 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    private function getPriceLimitsBuilder(FormBuilderInterface $builder)
+    private function getPriceLimitsBuilder(FormBuilderInterface $builder): \Symfony\Component\Form\FormBuilderInterface
     {
         $formBuilderForDomains = $builder->create(self::DOMAINS_SUBFORM_NAME, null, ['compound' => true]);
 

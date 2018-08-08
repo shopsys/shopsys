@@ -65,7 +65,7 @@ class BrandDataFixture extends AbstractReferenceFixture
     /**
      * @return string[]
      */
-    private function getBrandNamesIndexedByBrandConstants()
+    private function getBrandNamesIndexedByBrandConstants(): array
     {
         return [
             self::BRAND_APPLE => 'Apple',

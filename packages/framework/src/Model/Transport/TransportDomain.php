@@ -56,10 +56,7 @@ class TransportDomain
         $this->enabled = true;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -69,10 +66,7 @@ class TransportDomain
         $this->enabled = $enabled;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }

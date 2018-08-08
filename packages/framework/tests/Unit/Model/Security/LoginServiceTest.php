@@ -65,10 +65,7 @@ class LoginServiceTest extends TestCase
         $this->assertSame(true, $loginService->checkLoginProcess($requestMock));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Security\LoginService
-     */
-    private function getLoginService()
+    private function getLoginService(): \Shopsys\FrameworkBundle\Model\Security\LoginService
     {
         $tokenStorageMock = $this->createMock(TokenStorage::class);
         $traceableEventDispatcherMock = $this->createMock(TraceableEventDispatcher::class);

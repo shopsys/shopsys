@@ -54,19 +54,15 @@ class FileThumbnailExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'file_thumbnail_extension';
     }
 
     /**
      * @param string $filepath
-     * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
      */
-    public function getFileThumbnailInfo($filepath)
+    public function getFileThumbnailInfo($filepath): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
     {
         try {
             return $this->getImageThumbnailInfo($filepath);
@@ -77,9 +73,8 @@ class FileThumbnailExtension extends Twig_Extension
 
     /**
      * @param string $temporaryFilename
-     * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
      */
-    public function getFileThumbnailInfoByTemporaryFilename($temporaryFilename)
+    public function getFileThumbnailInfoByTemporaryFilename($temporaryFilename): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
     {
         $filepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
 
@@ -88,9 +83,8 @@ class FileThumbnailExtension extends Twig_Extension
 
     /**
      * @param string $filepath
-     * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
      */
-    private function getImageThumbnailInfo($filepath)
+    private function getImageThumbnailInfo($filepath): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
     {
         $image = $this->imageThumbnailFactory->getImageThumbnail($filepath);
 
@@ -99,9 +93,8 @@ class FileThumbnailExtension extends Twig_Extension
 
     /**
      * @param string $filepath
-     * @return string
      */
-    private function getIconTypeByFilename($filepath)
+    private function getIconTypeByFilename($filepath): string
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
         if (array_key_exists($extension, $this->iconsByExtension)) {

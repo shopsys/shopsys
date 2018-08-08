@@ -117,66 +117,42 @@ class Article implements OrderableEntityInterface
         $this->hidden = $articleData->hidden;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoTitle()
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription()
+    public function getSeoMetaDescription(): ?string
     {
         return $this->seoMetaDescription;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoH1()
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }
 
-    /**
-     * @return string
-     */
-    public function getPlacement()
+    public function getPlacement(): string
     {
         return $this->placement;
     }
@@ -200,7 +176,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return bool $visible
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }

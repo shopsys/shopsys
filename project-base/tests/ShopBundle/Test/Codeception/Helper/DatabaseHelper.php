@@ -27,10 +27,7 @@ class DatabaseHelper extends Module
         ]);
     }
 
-    /**
-     * @return string
-     */
-    private function getConnectionDsn(Connection $connection)
+    private function getConnectionDsn(Connection $connection): string
     {
         $connectionParams = $connection->getParams();
 

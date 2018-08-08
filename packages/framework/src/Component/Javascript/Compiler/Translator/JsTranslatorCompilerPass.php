@@ -49,9 +49,8 @@ class JsTranslatorCompilerPass implements JsCompilerPassInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCall $jsTranslatorsCall
-     * @return string
      */
-    private function translate($jsTranslatorsCall)
+    private function translate($jsTranslatorsCall): string
     {
         $locale = $this->translator->getLocale();
         $catalogue = $this->translator->getCatalogue($locale);

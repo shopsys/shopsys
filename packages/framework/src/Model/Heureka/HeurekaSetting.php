@@ -21,18 +21,16 @@ class HeurekaSetting
 
     /**
      * @param int $domainId
-     * @return string
      */
-    public function getApiKeyByDomainId($domainId)
+    public function getApiKeyByDomainId($domainId): string
     {
         return $this->setting->getForDomain(self::HEUREKA_API_KEY, $domainId);
     }
 
     /**
      * @param int $domainId
-     * @return string
      */
-    public function getHeurekaShopCertificationWidgetByDomainId($domainId)
+    public function getHeurekaShopCertificationWidgetByDomainId($domainId): string
     {
         return $this->setting->getForDomain(self::HEUREKA_WIDGET_CODE, $domainId);
     }
@@ -55,18 +53,12 @@ class HeurekaSetting
         $this->setting->setForDomain(self::HEUREKA_WIDGET_CODE, $heurekaWidgetCode, $domainId);
     }
 
-    /**
-     * @return bool
-     */
-    public function isHeurekaShopCertificationActivated($domainId)
+    public function isHeurekaShopCertificationActivated($domainId): bool
     {
         return !empty($this->setting->getForDomain(self::HEUREKA_API_KEY, $domainId));
     }
 
-    /**
-     * @return bool
-     */
-    public function isHeurekaWidgetActivated($domainId)
+    public function isHeurekaWidgetActivated($domainId): bool
     {
         return !empty($this->setting->getForDomain(self::HEUREKA_WIDGET_CODE, $domainId));
     }

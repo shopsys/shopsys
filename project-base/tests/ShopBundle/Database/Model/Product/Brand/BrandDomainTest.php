@@ -75,10 +75,7 @@ class BrandDomainTest extends DatabaseTestCase
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedBrand->getSeoH1(self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
-    private function getRefreshedBrandFromDatabase(Brand $brand)
+    private function getRefreshedBrandFromDatabase(Brand $brand): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
     {
         $this->em->persist($brand);
         $this->em->flush();

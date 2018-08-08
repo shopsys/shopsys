@@ -191,19 +191,15 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->prices[] = $paymentPriceFactory->create($this, $currency, $price);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * @param string|null $locale
-     * @return string
      */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -211,15 +207,12 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentPrice[]
      */
-    public function getPrices()
+    public function getPrices(): array
     {
         return $this->prices;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentPrice
-     */
-    public function getPrice(Currency $currency)
+    public function getPrice(Currency $currency): \Shopsys\FrameworkBundle\Model\Payment\PaymentPrice
     {
         foreach ($this->prices as $price) {
             if ($price->getCurrency() === $currency) {
@@ -231,52 +224,38 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         throw new \Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException($message);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    public function getVat()
+    public function getVat(): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->vat;
     }
 
     /**
      * @param string|null $locale
-     * @return string|null
      */
-    public function getDescription($locale = null)
+    public function getDescription($locale = null): ?string
     {
         return $this->translation($locale)->getDescription();
     }
 
     /**
      * @param string|null $locale
-     * @return string|null
      */
-    public function getInstructions($locale = null)
+    public function getInstructions($locale = null): ?string
     {
         return $this->translation($locale)->getInstructions();
     }
 
-    /**
-     * @return bool
-     */
-    public function isEnabled(int $domainId)
+    public function isEnabled(int $domainId): bool
     {
         return $this->getPaymentDomain($domainId)->isEnabled();
     }
 
-    /**
-     * @return bool
-     */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDeleted()
+    public function isDeleted(): bool
     {
         return $this->deleted;
     }
@@ -287,10 +266,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->transports->clear();
     }
 
-    /**
-     * @return int|null
-     */
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
@@ -303,18 +279,12 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->position = $position;
     }
 
-    /**
-     * @return bool
-     */
-    public function isCzkRounding()
+    public function isCzkRounding(): bool
     {
         return $this->czkRounding;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation
     {
         return new PaymentTranslation();
     }
@@ -339,10 +309,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->setDomains($paymentData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentDomain
-     */
-    protected function getPaymentDomain(int $domainId)
+    protected function getPaymentDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Payment\PaymentDomain
     {
         if ($this->domains !== null) {
             foreach ($this->domains as $paymentDomain) {

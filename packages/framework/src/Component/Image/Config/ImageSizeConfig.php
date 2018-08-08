@@ -45,42 +45,27 @@ class ImageSizeConfig
         $this->occurrence = $occurrence;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->width;
     }
 
-    /**
-     * @return int
-     */
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->height;
     }
 
-    /**
-     * @return int
-     */
-    public function getCrop()
+    public function getCrop(): int
     {
         return $this->crop;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getOccurrence()
+    public function getOccurrence(): ?string
     {
         return $this->occurrence;
     }

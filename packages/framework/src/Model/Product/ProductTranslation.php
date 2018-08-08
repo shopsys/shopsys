@@ -38,10 +38,7 @@ class ProductTranslation extends AbstractTranslation
      */
     protected $variantAlias;
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -54,10 +51,7 @@ class ProductTranslation extends AbstractTranslation
         $this->name = $name;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getVariantAlias()
+    public function getVariantAlias(): ?string
     {
         return $this->variantAlias;
     }

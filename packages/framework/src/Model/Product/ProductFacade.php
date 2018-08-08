@@ -186,17 +186,13 @@ class ProductFacade
 
     /**
      * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getById($productId)
+    public function getById($productId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->productRepository->getById($productId);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function create(ProductData $productData)
+    public function create(ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $product = $this->productFactory->create($productData);
 
@@ -239,9 +235,8 @@ class ProductFacade
 
     /**
      * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function edit($productId, ProductData $productData)
+    public function edit($productId, ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $product = $this->productRepository->getById($productId);
 
@@ -328,7 +323,7 @@ class ProductFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[]
      */
-    public function getAllProductSellingPricesIndexedByDomainId(Product $product)
+    public function getAllProductSellingPricesIndexedByDomainId(Product $product): array
     {
         return $this->productService->getProductSellingPricesIndexedByDomainIdAndPricingGroupId(
             $product,
@@ -392,9 +387,8 @@ class ProductFacade
 
     /**
      * @param string $productCatnum
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getOneByCatnumExcludeMainVariants($productCatnum)
+    public function getOneByCatnumExcludeMainVariants($productCatnum): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
     }

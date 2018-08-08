@@ -5,10 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 class VatService
 {
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    public function getNewDefaultVat(Vat $defaultVat, Vat $vatToDelete, Vat $newVat)
+    public function getNewDefaultVat(Vat $defaultVat, Vat $vatToDelete, Vat $newVat): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         if ($defaultVat->getId() === $vatToDelete->getId()) {
             return $newVat;

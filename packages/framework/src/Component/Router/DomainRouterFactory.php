@@ -57,9 +57,8 @@ class DomainRouterFactory
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Router\DomainRouter
      */
-    public function getRouter($domainId)
+    public function getRouter($domainId): \Shopsys\FrameworkBundle\Component\Router\DomainRouter
     {
         if (!array_key_exists($domainId, $this->routersByDomainId)) {
             try {
@@ -82,10 +81,7 @@ class DomainRouterFactory
         return $this->routersByDomainId[$domainId];
     }
 
-    /**
-     * @return \Symfony\Component\Routing\Router
-     */
-    private function getBasicRouter(DomainConfig $domainConfig)
+    private function getBasicRouter(DomainConfig $domainConfig): \Symfony\Component\Routing\Router
     {
         return new Router(
             $this->configLoader,
@@ -95,10 +91,7 @@ class DomainRouterFactory
         );
     }
 
-    /**
-     * @return \Symfony\Component\Routing\RequestContext
-     */
-    private function getRequestContextByDomainConfig(DomainConfig $domainConfig)
+    private function getRequestContextByDomainConfig(DomainConfig $domainConfig): \Symfony\Component\Routing\RequestContext
     {
         $urlComponents = parse_url($domainConfig->getUrl());
         $requestContext = new RequestContext();
@@ -121,10 +114,7 @@ class DomainRouterFactory
         return $requestContext;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
-     */
-    public function getFriendlyUrlRouter(DomainConfig $domainConfig)
+    public function getFriendlyUrlRouter(DomainConfig $domainConfig): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
     {
         $context = $this->getRequestContextByDomainConfig($domainConfig);
 

@@ -37,7 +37,7 @@ class HeurekaProductDomainFacade
      * @param int $productId
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]|null
      */
-    public function findByProductId($productId)
+    public function findByProductId($productId): ?array
     {
         return $this->heurekaProductDomainRepository->findByProductId($productId);
     }
@@ -46,7 +46,7 @@ class HeurekaProductDomainFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]
      */
-    public function getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
+    public function getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain): array
     {
         $productIds = [];
         foreach ($products as $product) {

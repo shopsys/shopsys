@@ -76,10 +76,7 @@ class TransportDomainTest extends DatabaseTestCase
         $this->assertFalse($refreshedTransport->isEnabled(self::SECOND_DOMAIN_ID));
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    private function getRefreshedTransportFromDatabase(Transport $transport)
+    private function getRefreshedTransportFromDatabase(Transport $transport): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $this->em->persist($transport);
         $this->em->flush();

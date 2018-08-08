@@ -16,17 +16,13 @@ class CropZerosExtension extends Twig_Extension
 
     /**
      * @param string $value
-     * @return string
      */
-    public function cropZeros($value)
+    public function cropZeros($value): string
     {
         return preg_replace('/(?:[,.]0+|([,.]\d*?)0+)$/', '$1', $value);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'cropZeros';
     }

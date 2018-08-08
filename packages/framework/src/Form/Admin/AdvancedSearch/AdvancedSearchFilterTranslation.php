@@ -25,9 +25,8 @@ class AdvancedSearchFilterTranslation
 
     /**
      * @param string $filterName
-     * @return string
      */
-    public function translateFilterName($filterName)
+    public function translateFilterName($filterName): string
     {
         if (array_key_exists($filterName, $this->filtersTranslationsByFilterName)) {
             return $this->filtersTranslationsByFilterName[$filterName];

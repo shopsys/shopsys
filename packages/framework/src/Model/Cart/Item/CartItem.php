@@ -96,18 +96,12 @@ class CartItem
         $this->quantity = $newQuantity;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getProduct()
+    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         if ($this->product === null) {
             throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException();
@@ -118,25 +112,18 @@ class CartItem
 
     /**
      * @param string|null $locale
-     * @return string|null
      */
-    public function getName($locale = null)
+    public function getName($locale = null): ?string
     {
         return $this->getProduct()->getName($locale);
     }
 
-    /**
-     * @return int
-     */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getWatchedPrice()
+    public function getWatchedPrice(): ?string
     {
         return $this->watchedPrice;
     }
@@ -151,25 +138,18 @@ class CartItem
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
-     * @return bool
      */
-    public function isSimilarItemAs(self $cartItem)
+    public function isSimilarItemAs(self $cartItem): bool
     {
         return $this->getProduct()->getId() === $cartItem->getProduct()->getId();
     }
 
-    /**
-     * @return string
-     */
-    public function getCartIdentifier()
+    public function getCartIdentifier(): string
     {
         return $this->cartIdentifier;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getAddedAt()
+    public function getAddedAt(): \DateTime
     {
         return $this->addedAt;
     }

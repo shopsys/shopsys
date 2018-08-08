@@ -59,12 +59,11 @@ class InputPriceRecalculationSchedulerTest extends DatabaseTestCase
     /**
      * @param string $inputPrice
      * @param string $vatPercent
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     private function createProductWithInputPriceAndVatPercentAndAutoCalculationPriceType(
         $inputPrice,
         $vatPercent
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Product\Product {
         $em = $this->getEntityManager();
         $productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
         /* @var $productDataFactory \Shopsys\FrameworkBundle\Model\Product\ProductDataFactory */

@@ -166,7 +166,7 @@ class ArticleFormType extends AbstractType
     /**
      * @return string[]
      */
-    private function getSeoMetaDescriptionAttributes(array $options)
+    private function getSeoMetaDescriptionAttributes(array $options): array
     {
         $seoMetaDescriptionAttributes = [];
 

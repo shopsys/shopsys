@@ -43,9 +43,8 @@ class RequestDataSetGeneratorTest extends TestCase
     /**
      * @param string $routePath
      * @param string $routeName
-     * @return \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
      */
-    private function createRequestDataSetGenerator($routePath, $routeName)
+    private function createRequestDataSetGenerator($routePath, $routeName): \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
     {
         $route = new Route($routePath);
         $routeInfo = new RouteInfo($routeName, $route);

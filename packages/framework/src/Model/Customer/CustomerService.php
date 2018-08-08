@@ -56,14 +56,13 @@ class CustomerService
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $userByEmail
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     public function create(
         UserData $userData,
         BillingAddress $billingAddress,
         DeliveryAddress $deliveryAddress = null,
         User $userByEmail = null
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Customer\User {
         if ($userByEmail instanceof User) {
             $isSameEmail = (mb_strtolower($userByEmail->getEmail()) === mb_strtolower($userData->email));
             $isSameDomain = ($userByEmail->getDomainId() === $userData->domainId);
@@ -93,9 +92,8 @@ class CustomerService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
-    public function createDeliveryAddress(DeliveryAddressData $deliveryAddressData)
+    public function createDeliveryAddress(DeliveryAddressData $deliveryAddressData): ?\Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
     {
         if ($deliveryAddressData->addressFilled) {
             $deliveryAddress = $this->deliveryAddressFactory->create($deliveryAddressData);
@@ -108,13 +106,12 @@ class CustomerService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
     public function editDeliveryAddress(
         User $user,
         DeliveryAddressData $deliveryAddressData,
         DeliveryAddress $deliveryAddress = null
-    ) {
+    ): ?\Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress {
         if ($deliveryAddressData->addressFilled) {
             if ($deliveryAddress instanceof DeliveryAddress) {
                 $deliveryAddress->edit($deliveryAddressData);
@@ -149,10 +146,7 @@ class CustomerService
         $user->changeEmail($email);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
-     */
-    public function getAmendedCustomerDataByOrder(User $user, Order $order)
+    public function getAmendedCustomerDataByOrder(User $user, Order $order): \Shopsys\FrameworkBundle\Model\Customer\CustomerData
     {
         $billingAddress = $user->getBillingAddress();
         $deliveryAddress = $user->getDeliveryAddress();
@@ -167,10 +161,7 @@ class CustomerService
         return $customerData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
-     */
-    private function getAmendedBillingAddressDataByOrder(Order $order, BillingAddress $billingAddress)
+    private function getAmendedBillingAddressDataByOrder(Order $order, BillingAddress $billingAddress): \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
     {
         $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
 
@@ -194,9 +185,8 @@ class CustomerService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      */
-    private function getAmendedDeliveryAddressDataByOrder(Order $order, DeliveryAddress $deliveryAddress = null)
+    private function getAmendedDeliveryAddressDataByOrder(Order $order, DeliveryAddress $deliveryAddress = null): \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
     {
         if ($deliveryAddress === null) {
             $deliveryAddressData = $this->deliveryAddressDataFactory->create();

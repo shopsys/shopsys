@@ -14,18 +14,12 @@ class FlagService
         $this->flagFactory = $flagFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
-    public function create(FlagData $flagData)
+    public function create(FlagData $flagData): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         return $this->flagFactory->create($flagData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
-    public function edit(Flag $flag, FlagData $flagData)
+    public function edit(Flag $flag, FlagData $flagData): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         $flag->edit($flagData);
 

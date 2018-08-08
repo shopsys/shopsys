@@ -16,10 +16,7 @@ class FreeTransportAndPaymentFacade
         $this->pricingSetting = $pricingSetting;
     }
 
-    /**
-     * @return bool
-     */
-    public function isActive($domainId)
+    public function isActive($domainId): bool
     {
         return $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId) !== null;
     }
@@ -27,9 +24,8 @@ class FreeTransportAndPaymentFacade
     /**
      * @param string $productsPriceWithVat
      * @param int $domainId
-     * @return bool
      */
-    public function isFree($productsPriceWithVat, $domainId)
+    public function isFree($productsPriceWithVat, $domainId): bool
     {
         $freeTransportAndPaymentPriceLimit = $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId);
         if ($freeTransportAndPaymentPriceLimit === null) {
@@ -42,9 +38,8 @@ class FreeTransportAndPaymentFacade
     /**
      * @param string $productsPriceWithVat
      * @param int $domainId
-     * @return int
      */
-    public function getRemainingPriceWithVat($productsPriceWithVat, $domainId)
+    public function getRemainingPriceWithVat($productsPriceWithVat, $domainId): int
     {
         if (!$this->isFree($productsPriceWithVat, $domainId)) {
             return $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId) - $productsPriceWithVat;
@@ -55,9 +50,8 @@ class FreeTransportAndPaymentFacade
 
     /**
      * @param int $domainId
-     * @return string
      */
-    protected function getFreeTransportAndPaymentPriceLimitOnDomain($domainId)
+    protected function getFreeTransportAndPaymentPriceLimitOnDomain($domainId): string
     {
         return $this->pricingSetting->getFreeTransportAndPaymentPriceLimit($domainId);
     }

@@ -32,18 +32,12 @@ class OrderRepository
         $this->orderListAdminRepository = $orderListAdminRepository;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getOrderRepository()
+    protected function getOrderRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Order::class);
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function createOrderQueryBuilder()
+    protected function createOrderQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('o')
@@ -55,7 +49,7 @@ class OrderRepository
      * @param int $userId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getOrdersByUserId($userId)
+    public function getOrdersByUserId($userId): array
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.customer = :customer')->setParameter(':customer', $userId)
@@ -64,9 +58,8 @@ class OrderRepository
 
     /**
      * @param int $userId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    public function findLastByUserId($userId)
+    public function findLastByUserId($userId): ?\Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.customer = :customer')->setParameter(':customer', $userId)
@@ -77,9 +70,8 @@ class OrderRepository
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    public function findById($id)
+    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.id = :orderId')->setParameter(':orderId', $id)
@@ -89,9 +81,8 @@ class OrderRepository
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getById($id)
+    public function getById($id): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->findById($id);
 
@@ -102,10 +93,7 @@ class OrderRepository
         return $order;
     }
 
-    /**
-     * @return bool
-     */
-    public function isOrderStatusUsed(OrderStatus $orderStatus)
+    public function isOrderStatusUsed(OrderStatus $orderStatus): bool
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -120,12 +108,11 @@ class OrderRepository
 
     /**
      * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getOrderListQueryBuilderByQuickSearchData(
         $locale,
         QuickSearchFormData $quickSearchData
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->orderListAdminRepository->getOrderListQueryBuilder($locale);
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
@@ -154,7 +141,7 @@ class OrderRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getCustomerOrderList(User $user)
+    public function getCustomerOrderList(User $user): array
     {
         return $this->createOrderQueryBuilder()
             ->select('o, oi, os, ost, c')
@@ -173,7 +160,7 @@ class OrderRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getOrderListForEmailByDomainId($email, $domainId)
+    public function getOrderListForEmailByDomainId($email, $domainId): array
     {
         return $this->getOrderListQueryBuilder()
             ->andWhere('o.domainId = :domain')
@@ -187,9 +174,8 @@ class OrderRepository
     /**
      * @param string $urlHash
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByUrlHashAndDomain($urlHash, $domainId)
+    public function getByUrlHashAndDomain($urlHash, $domainId): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->createOrderQueryBuilder()
             ->andWhere('o.urlHash = :urlHash')->setParameter(':urlHash', $urlHash)
@@ -206,9 +192,8 @@ class OrderRepository
 
     /**
      * @param string $orderNumber
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByOrderNumberAndUser($orderNumber, User $user)
+    public function getByOrderNumberAndUser($orderNumber, User $user): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->createOrderQueryBuilder()
             ->andWhere('o.number = :number')->setParameter(':number', $orderNumber)
@@ -226,9 +211,8 @@ class OrderRepository
 
     /**
      * @param string $urlHash
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    public function findByUrlHashIncludingDeletedOrders($urlHash)
+    public function findByUrlHashIncludingDeletedOrders($urlHash): ?\Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->getOrderRepository()->findOneBy(['urlHash' => $urlHash]);
     }
@@ -236,7 +220,7 @@ class OrderRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[]
      */
-    public function getCurrenciesUsedInOrders()
+    public function getCurrenciesUsedInOrders(): array
     {
         return $this->em->createQueryBuilder()
             ->select('c')
@@ -249,9 +233,8 @@ class OrderRepository
     /**
      * @param string $email
      * @param int $domainId
-     * @return int
      */
-    public function getOrdersCountByEmailAndDomainId($email, $domainId)
+    public function getOrdersCountByEmailAndDomainId($email, $domainId): int
     {
         return $this->getOrderListQueryBuilder()
             ->select('count(o)')
@@ -262,10 +245,7 @@ class OrderRepository
             ->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function getOrderListQueryBuilder()
+    protected function getOrderListQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('o, oi, os, ost, c')

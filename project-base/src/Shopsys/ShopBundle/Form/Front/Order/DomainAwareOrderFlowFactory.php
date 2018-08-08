@@ -58,10 +58,7 @@ class DomainAwareOrderFlowFactory implements OrderFlowFactoryInterface
         $this->dataManager = $dataManager;
     }
 
-    /**
-     * @return \Shopsys\ShopBundle\Form\Front\Order\OrderFlow
-     */
-    public function create()
+    public function create(): \Shopsys\ShopBundle\Form\Front\Order\OrderFlow
     {
         $orderFlow = new OrderFlow();
         $orderFlow->setDomainId($this->domain->getId());

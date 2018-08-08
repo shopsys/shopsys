@@ -20,10 +20,7 @@ class UserRepository
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getUserRepository()
+    protected function getUserRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(User::class);
     }
@@ -31,9 +28,8 @@ class UserRepository
     /**
      * @param string $email
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
      */
-    public function findUserByEmailAndDomain($email, $domainId)
+    public function findUserByEmailAndDomain($email, $domainId): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->getUserRepository()->findOneBy([
             'email' => mb_strtolower($email),
@@ -44,9 +40,8 @@ class UserRepository
     /**
      * @param string $email
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
      */
-    public function getUserByEmailAndDomain($email, $domainId)
+    public function getUserByEmailAndDomain($email, $domainId): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->findUserByEmailAndDomain($email, $domainId);
 
@@ -62,9 +57,8 @@ class UserRepository
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    public function getUserById($id)
+    public function getUserById($id): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->findById($id);
         if ($user === null) {
@@ -75,9 +69,8 @@ class UserRepository
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
      */
-    public function findById($id)
+    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->getUserRepository()->find($id);
     }
@@ -85,9 +78,8 @@ class UserRepository
     /**
      * @param int $id
      * @param string $loginToken
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
      */
-    public function findByIdAndLoginToken($id, $loginToken)
+    public function findByIdAndLoginToken($id, $loginToken): ?\Shopsys\FrameworkBundle\Model\Customer\User
     {
         return $this->getUserRepository()->findOneBy([
             'id' => $id,
@@ -97,12 +89,11 @@ class UserRepository
 
     /**
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getCustomerListQueryBuilderByQuickSearchData(
         $domainId,
         QuickSearchFormData $quickSearchData
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('
                 u.id,

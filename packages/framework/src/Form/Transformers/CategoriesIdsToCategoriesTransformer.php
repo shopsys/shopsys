@@ -22,7 +22,7 @@ class CategoriesIdsToCategoriesTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[]|null $categories
      * @return int[]
      */
-    public function transform($categories)
+    public function transform($categories): array
     {
         $categoriesIds = [];
 
@@ -39,7 +39,7 @@ class CategoriesIdsToCategoriesTransformer implements DataTransformerInterface
      * @param int[] $categoriesIds
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]|null
      */
-    public function reverseTransform($categoriesIds)
+    public function reverseTransform($categoriesIds): ?array
     {
         $categories = [];
 

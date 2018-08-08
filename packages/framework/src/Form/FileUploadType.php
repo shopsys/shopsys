@@ -53,18 +53,16 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
 
     /**
      * @param array $value
-     * @return string
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): string
     {
         return $value['uploadedFiles'];
     }
 
     /**
      * @param string $value
-     * @return array
      */
-    public function transform($value)
+    public function transform($value): array
     {
         return ['uploadedFiles' => (array)$value];
     }

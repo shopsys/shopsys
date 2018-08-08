@@ -41,10 +41,7 @@ class LocalizationListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function isAdminRequest(Request $request)
+    private function isAdminRequest(Request $request): bool
     {
         return preg_match('/^admin_/', $request->attributes->get('_route')) === 1;
     }

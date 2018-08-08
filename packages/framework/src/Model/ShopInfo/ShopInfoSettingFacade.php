@@ -22,27 +22,24 @@ class ShopInfoSettingFacade
 
     /**
      * @param int $domainId
-     * @return string|null
      */
-    public function getPhoneNumber($domainId)
+    public function getPhoneNumber($domainId): ?string
     {
         return $this->setting->getForDomain(self::SHOP_INFO_PHONE_NUMBER, $domainId);
     }
 
     /**
      * @param int $domainId
-     * @return string|null
      */
-    public function getEmail($domainId)
+    public function getEmail($domainId): ?string
     {
         return $this->setting->getForDomain(self::SHOP_INFO_EMAIL, $domainId);
     }
 
     /**
      * @param int $domainId
-     * @return string|null
      */
-    public function getPhoneHours($domainId)
+    public function getPhoneHours($domainId): ?string
     {
         return $this->setting->getForDomain(self::SHOP_INFO_PHONE_HOURS, $domainId);
     }

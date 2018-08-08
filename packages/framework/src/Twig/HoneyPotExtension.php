@@ -20,10 +20,7 @@ class HoneyPotExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'honey_pot';
     }
@@ -37,10 +34,7 @@ class HoneyPotExtension extends Twig_Extension
         }
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormView
-     */
-    private function getRootFormView(FormView $formView)
+    private function getRootFormView(FormView $formView): \Symfony\Component\Form\FormView
     {
         $rootFormView = $formView;
 
@@ -51,10 +45,7 @@ class HoneyPotExtension extends Twig_Extension
         return $rootFormView;
     }
 
-    /**
-     * @return bool
-     */
-    private function containsNotRenderedPassword(FormView $formView)
+    private function containsNotRenderedPassword(FormView $formView): bool
     {
         foreach ($formView->children as $childForm) {
             if (strpos($childForm->vars['name'], self::PASSWORD_FIELD_NAME) !== false && !$childForm->isRendered()) {

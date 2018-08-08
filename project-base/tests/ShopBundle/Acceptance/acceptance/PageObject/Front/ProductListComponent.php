@@ -27,9 +27,8 @@ class ProductListComponent extends AbstractPage
 
     /**
      * @param string $productName
-     * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function findProductListItemByName($productName, WebDriverElement $context)
+    private function findProductListItemByName($productName, WebDriverElement $context): \Facebook\WebDriver\WebDriverElement
     {
         $productItems = $context->findElements(WebDriverBy::cssSelector('.js-list-products-item'));
 

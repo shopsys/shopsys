@@ -54,18 +54,12 @@ class Brand extends AbstractTranslatableEntity
         $this->createDomains($brandData);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -86,10 +80,7 @@ class Brand extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation
     {
         return new BrandTranslation();
     }
@@ -116,10 +107,7 @@ class Brand extends AbstractTranslatableEntity
         $this->setDomains($brandData);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDomain
-     */
-    protected function getBrandDomain(int $domainId)
+    protected function getBrandDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDomain
     {
         foreach ($this->domains as $domain) {
             if ($domain->getDomainId() === $domainId) {
@@ -130,35 +118,25 @@ class Brand extends AbstractTranslatableEntity
         throw new BrandDomainNotFoundException($this->id, $domainId);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoTitle(int $domainId)
+    public function getSeoTitle(int $domainId): ?string
     {
         return $this->getBrandDomain($domainId)->getSeoTitle();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
+    public function getSeoMetaDescription(int $domainId): ?string
     {
         return $this->getBrandDomain($domainId)->getSeoMetaDescription();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoH1(int $domainId)
+    public function getSeoH1(int $domainId): ?string
     {
         return $this->getBrandDomain($domainId)->getSeoH1();
     }
 
     /**
      * @param string $locale
-     * @return string
      */
-    public function getDescription($locale = null)
+    public function getDescription($locale = null): string
     {
         return $this->translation($locale)->getDescription();
     }

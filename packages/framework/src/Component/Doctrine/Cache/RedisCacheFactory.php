@@ -7,10 +7,7 @@ use Redis;
 
 class RedisCacheFactory
 {
-    /**
-     * @return \Doctrine\Common\Cache\RedisCache
-     */
-    public function create(Redis $redis)
+    public function create(Redis $redis): \Doctrine\Common\Cache\RedisCache
     {
         $redisCache = new RedisCache();
         $redisCache->setRedis($redis);

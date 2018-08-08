@@ -54,10 +54,7 @@ class PriceTableType extends AbstractType
             ]);
     }
 
-    /**
-     * @return null|string
-     */
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }

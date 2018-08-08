@@ -45,10 +45,7 @@ class MoneyTypeExtension extends AbstractTypeExtension
         $view->vars['money_pattern'] = $this->getPattern($options['currency']);
     }
 
-    /**
-     * @return string
-     */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return MoneyType::class;
     }
@@ -58,9 +55,8 @@ class MoneyTypeExtension extends AbstractTypeExtension
      * The pattern contains the placeholder "{{ widget }}" where the HTML tag should be inserted
      * @see \Symfony\Component\Form\Extension\Core\Type\MoneyType::getPattern()
      * @param string|bool $currency
-     * @return string
      */
-    private function getPattern($currency)
+    private function getPattern($currency): string
     {
         if (!$currency) {
             return '{{ widget }}';

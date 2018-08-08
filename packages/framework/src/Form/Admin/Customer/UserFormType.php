@@ -173,7 +173,7 @@ class UserFormType extends AbstractType
      * @param bool $isCreatingNewUser
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getFirstPasswordConstraints($isCreatingNewUser)
+    private function getFirstPasswordConstraints($isCreatingNewUser): array
     {
         $constraints = [
             new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer then {{ limit }} characters']),

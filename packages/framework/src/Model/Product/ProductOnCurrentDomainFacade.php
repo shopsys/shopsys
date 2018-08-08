@@ -70,9 +70,8 @@ class ProductOnCurrentDomainFacade
 
     /**
      * @param int $productId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getVisibleProductById($productId)
+    public function getVisibleProductById($productId): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->productRepository->getVisible(
             $productId,
@@ -84,7 +83,7 @@ class ProductOnCurrentDomainFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAccessoriesForProduct(Product $product)
+    public function getAccessoriesForProduct(Product $product): array
     {
         return $this->productAccessoryRepository->getAllOfferedAccessoriesByProduct(
             $product,
@@ -96,7 +95,7 @@ class ProductOnCurrentDomainFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getVariantsForProduct(Product $product)
+    public function getVariantsForProduct(Product $product): array
     {
         return $this->productRepository->getAllSellableVariantsByMainVariant(
             $product,
@@ -110,7 +109,6 @@ class ProductOnCurrentDomainFacade
      * @param int $page
      * @param int $limit
      * @param int $categoryId
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginatedProductDetailsInCategory(
         ProductFilterData $productFilterData,
@@ -118,7 +116,7 @@ class ProductOnCurrentDomainFacade
         $page,
         $limit,
         $categoryId
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult {
         $category = $this->categoryRepository->getById($categoryId);
 
         $paginationResult = $this->productRepository->getPaginationResultForListableInCategory(
@@ -146,14 +144,13 @@ class ProductOnCurrentDomainFacade
      * @param int $page
      * @param int $limit
      * @param int $brandId
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginatedProductDetailsForBrand(
         $orderingModeId,
         $page,
         $limit,
         $brandId
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult {
         $brand = $this->brandRepository->getById($brandId);
 
         $paginationResult = $this->productRepository->getPaginationResultForListableForBrand(
@@ -180,7 +177,6 @@ class ProductOnCurrentDomainFacade
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginatedProductDetailsForSearch(
         $searchText,
@@ -188,7 +184,7 @@ class ProductOnCurrentDomainFacade
         $orderingModeId,
         $page,
         $limit
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult {
         $paginationResult = $this->productRepository->getPaginationResultForSearchListable(
             $searchText,
             $this->domain->getId(),
@@ -212,9 +208,8 @@ class ProductOnCurrentDomainFacade
     /**
      * @param string|null $searchText
      * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getSearchAutocompleteProducts($searchText, $limit)
+    public function getSearchAutocompleteProducts($searchText, $limit): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
     {
         $emptyProductFilterData = new ProductFilterData();
 
@@ -236,13 +231,12 @@ class ProductOnCurrentDomainFacade
 
     /**
      * @param int $categoryId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataInCategory(
         $categoryId,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $this->domain->getId(),
             $this->currentCustomer->getPricingGroup(),
@@ -260,13 +254,12 @@ class ProductOnCurrentDomainFacade
 
     /**
      * @param string|null $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataForSearch(
         $searchText,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData {
         $productsQueryBuilder = $this->productRepository->getListableBySearchTextQueryBuilder(
             $this->domain->getId(),
             $this->currentCustomer->getPricingGroup(),

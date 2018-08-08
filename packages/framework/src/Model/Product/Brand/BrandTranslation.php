@@ -24,10 +24,7 @@ class BrandTranslation extends AbstractTranslation
      */
     protected $description;
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }

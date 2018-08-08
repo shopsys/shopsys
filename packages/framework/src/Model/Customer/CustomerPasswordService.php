@@ -46,9 +46,8 @@ class CustomerPasswordService
 
     /**
      * @param string|null $hash
-     * @return bool
      */
-    public function isResetPasswordHashValid(User $user, $hash)
+    public function isResetPasswordHashValid(User $user, $hash): bool
     {
         if ($hash === null || $user->getResetPasswordHash() !== $hash) {
             return false;

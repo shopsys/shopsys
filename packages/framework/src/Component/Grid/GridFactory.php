@@ -43,9 +43,8 @@ class GridFactory
 
     /**
      * @param string $gridId
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create($gridId, DataSourceInterface $dataSource)
+    public function create($gridId, DataSourceInterface $dataSource): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         return new Grid(
             $gridId,

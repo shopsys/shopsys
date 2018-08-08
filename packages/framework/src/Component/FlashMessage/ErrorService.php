@@ -9,7 +9,7 @@ class ErrorService
     /**
      * @return string[]
      */
-    public function getAllErrorsAsArray(Form $form, Bag $flashMessageBag)
+    public function getAllErrorsAsArray(Form $form, Bag $flashMessageBag): array
     {
         $errors = $flashMessageBag->getErrorMessages();
         foreach ($form->getErrors(true) as $error) {

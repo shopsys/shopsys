@@ -29,10 +29,7 @@ class CartFactory
         $this->cartWatcherFacade = $cartWatcherFacade;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
-     */
-    public function get(CustomerIdentifier $customerIdentifier)
+    public function get(CustomerIdentifier $customerIdentifier): \Shopsys\FrameworkBundle\Model\Cart\Cart
     {
         $customerIdentifierHash = $customerIdentifier->getObjectHash();
         if (!array_key_exists($customerIdentifierHash, $this->carts)) {
@@ -45,10 +42,7 @@ class CartFactory
         return $cart;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
-     */
-    private function createNewCart(CustomerIdentifier $customerIdentifier)
+    private function createNewCart(CustomerIdentifier $customerIdentifier): \Shopsys\FrameworkBundle\Model\Cart\Cart
     {
         $cartItems = $this->cartItemRepository->getAllByCustomerIdentifier($customerIdentifier);
 

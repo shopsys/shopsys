@@ -26,10 +26,7 @@ abstract class ExtendedOrderItem extends OrderItem
      */
     protected $stringField;
 
-    /**
-     * @return string|null
-     */
-    public function getStringField()
+    public function getStringField(): ?string
     {
         return $this->stringField;
     }

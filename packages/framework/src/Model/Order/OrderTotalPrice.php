@@ -31,26 +31,17 @@ class OrderTotalPrice
         $this->productPriceWithVat = $productPriceWithVat;
     }
 
-    /**
-     * @return string
-     */
-    public function getPriceWithVat()
+    public function getPriceWithVat(): string
     {
         return $this->priceWithVat;
     }
 
-    /**
-     * @return string
-     */
-    public function getPriceWithoutVat()
+    public function getPriceWithoutVat(): string
     {
         return $this->priceWithoutVat;
     }
 
-    /**
-     * @return string
-     */
-    public function getProductPriceWithVat()
+    public function getProductPriceWithVat(): string
     {
         return $this->productPriceWithVat;
     }

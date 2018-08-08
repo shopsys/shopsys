@@ -35,10 +35,7 @@ class OrderNumberSequence
         $this->number = $number;
     }
 
-    /**
-     * @return string
-     */
-    public function getNumber()
+    public function getNumber(): string
     {
         return $this->number;
     }

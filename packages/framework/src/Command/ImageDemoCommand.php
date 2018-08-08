@@ -103,10 +103,7 @@ class ImageDemoCommand extends Command
             ->setDescription('Download demo images');
     }
 
-    /**
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $localArchiveFilepath = sys_get_temp_dir() . '/' . 'demoImages.zip';
         $temporaryImagesDirectory = sys_get_temp_dir() . '/img/';
@@ -147,9 +144,8 @@ class ImageDemoCommand extends Command
     /**
      * @param string $imagesPath
      * @param string $localArchiveFilepath
-     * @return bool
      */
-    private function unpackImages(OutputInterface $output, $imagesPath, $localArchiveFilepath)
+    private function unpackImages(OutputInterface $output, $imagesPath, $localArchiveFilepath): bool
     {
         $zipArchive = new ZipArchive();
 
@@ -190,9 +186,8 @@ class ImageDemoCommand extends Command
     /**
      * @param string $archiveUrl
      * @param string $localArchiveFilepath
-     * @return bool
      */
-    private function downloadImages(OutputInterface $output, $archiveUrl, $localArchiveFilepath)
+    private function downloadImages(OutputInterface $output, $archiveUrl, $localArchiveFilepath): bool
     {
         $output->writeln('Start downloading demo images');
 
@@ -244,10 +239,7 @@ class ImageDemoCommand extends Command
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function isImagesTableEmpty()
+    private function isImagesTableEmpty(): bool
     {
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('total_count', 'totalCount');

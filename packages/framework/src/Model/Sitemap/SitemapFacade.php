@@ -71,7 +71,7 @@ class SitemapFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
-    public function getSitemapItemsForVisibleProducts(DomainConfig $domainConfig)
+    public function getSitemapItemsForVisibleProducts(DomainConfig $domainConfig): array
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());
 
@@ -81,7 +81,7 @@ class SitemapFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
-    public function getSitemapItemsForVisibleCategories(DomainConfig $domainConfig)
+    public function getSitemapItemsForVisibleCategories(DomainConfig $domainConfig): array
     {
         return $this->sitemapRepository->getSitemapItemsForVisibleCategories($domainConfig);
     }
@@ -89,7 +89,7 @@ class SitemapFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
-    public function getSitemapItemsForArticlesOnDomain(DomainConfig $domainConfig)
+    public function getSitemapItemsForArticlesOnDomain(DomainConfig $domainConfig): array
     {
         return $this->sitemapRepository->getSitemapItemsForArticlesOnDomain($domainConfig);
     }

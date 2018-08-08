@@ -161,9 +161,8 @@ class Version20180702111020 extends AbstractMigration
 
     /**
      * Copy pasted, @see \Shopsys\FrameworkBundle\Component\String\HashGenerator::generateHash()
-     * @return string
      */
-    private function generateTenCharactersHash()
+    private function generateTenCharactersHash(): string
     {
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
         $numberOfChars = strlen($characters);

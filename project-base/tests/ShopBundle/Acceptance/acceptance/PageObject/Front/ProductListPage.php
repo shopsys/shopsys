@@ -48,10 +48,7 @@ class ProductListPage extends AbstractPage
         Assert::assertSame($expectedCount, $actualCount, $message);
     }
 
-    /**
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
-    private function getProductListCompomentContext()
+    private function getProductListCompomentContext(): \Facebook\WebDriver\WebDriverElement
     {
         return $this->webDriver->findElement(WebDriverBy::cssSelector('.web__main__content'));
     }

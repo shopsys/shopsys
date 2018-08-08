@@ -35,7 +35,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
     /**
      * @return string[]
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => 'onKernelController',
@@ -57,18 +57,16 @@ class RouteCsrfProtector implements EventSubscriberInterface
 
     /**
      * @param string $routeName
-     * @return string
      */
-    public function getCsrfTokenId($routeName)
+    public function getCsrfTokenId($routeName): string
     {
         return self::CSRF_TOKEN_ID_PREFIX . $routeName;
     }
 
     /**
      * @param string $routeName
-     * @return string
      */
-    public function getCsrfTokenByRoute($routeName)
+    public function getCsrfTokenByRoute($routeName): string
     {
         return $this->tokenManager->getToken($this->getCsrfTokenId($routeName))->getValue();
     }
@@ -76,19 +74,15 @@ class RouteCsrfProtector implements EventSubscriberInterface
     /**
      * @param string $routeName
      * @param string $csrfToken
-     * @return bool
      */
-    private function isCsrfTokenValid($routeName, $csrfToken)
+    private function isCsrfTokenValid($routeName, $csrfToken): bool
     {
         $token = new CsrfToken($this->getCsrfTokenId($routeName), $csrfToken);
 
         return $this->tokenManager->isTokenValid($token);
     }
 
-    /**
-     * @return bool
-     */
-    private function isProtected(FilterControllerEvent $event)
+    private function isProtected(FilterControllerEvent $event): bool
     {
         if (!$event->isMasterRequest()) {
             return false;

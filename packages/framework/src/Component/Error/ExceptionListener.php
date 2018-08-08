@@ -16,10 +16,7 @@ class ExceptionListener
         $this->lastException = $event->getException();
     }
 
-    /**
-     * @return \Exception|null
-     */
-    public function getLastException()
+    public function getLastException(): ?\Exception
     {
         return $this->lastException;
     }

@@ -11,25 +11,19 @@ class JoinNoneEmptyExtension extends Twig_Extension
     /**
      * @return \Twig_SimpleFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new Twig_SimpleFilter('joinNoneEmpty', [$this, 'getArray']),
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getArray(array $array, $glue = ', ')
+    public function getArray(array $array, $glue = ', '): string
     {
         return implode($glue, array_filter($array));
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'join_none_empty';
     }

@@ -56,10 +56,7 @@ class ChangeAdminPasswordCommand extends Command
         $output->writeln(sprintf('Password for administrator "%s" was successfully changed', $adminUsername));
     }
 
-    /**
-     * @return string
-     */
-    private function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io)
+    private function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io): string
     {
         $question = new Question('Enter new password');
         $question->setHidden(true);

@@ -31,9 +31,8 @@ class ImageConfigLoader
 
     /**
      * @param string $filename
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      */
-    public function loadFromYaml($filename)
+    public function loadFromYaml($filename): \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
     {
         $yamlParser = new Parser();
 
@@ -58,7 +57,7 @@ class ImageConfigLoader
      * @param array $outputConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
-    public function loadFromArray($outputConfig)
+    public function loadFromArray($outputConfig): array
     {
         $this->foundEntityConfigs = [];
         $this->foundEntityNames = [];
@@ -104,7 +103,7 @@ class ImageConfigLoader
      * @param array $sizesConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
-    private function prepareSizes($sizesConfig)
+    private function prepareSizes($sizesConfig): array
     {
         $result = [];
         foreach ($sizesConfig as $sizeConfig) {
@@ -131,9 +130,8 @@ class ImageConfigLoader
 
     /**
      * @param array $typesConfig
-     * @return array
      */
-    private function prepareTypes($typesConfig)
+    private function prepareTypes($typesConfig): array
     {
         $result = [];
         foreach ($typesConfig as $typeConfig) {
@@ -148,10 +146,7 @@ class ImageConfigLoader
         return $result;
     }
 
-    /**
-     * @return array
-     */
-    private function getMultipleByType(array $entityConfig)
+    private function getMultipleByType(array $entityConfig): array
     {
         $multipleByType = [];
         $multipleByType[ImageEntityConfig::WITHOUT_NAME_KEY] = $entityConfig[ImageConfigDefinition::CONFIG_MULTIPLE];

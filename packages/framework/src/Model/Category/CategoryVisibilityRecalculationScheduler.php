@@ -32,10 +32,7 @@ class CategoryVisibilityRecalculationScheduler
         $this->recalculate = true;
     }
 
-    /**
-     * @return bool
-     */
-    public function isRecalculationScheduled()
+    public function isRecalculationScheduled(): bool
     {
         return $this->recalculate;
     }

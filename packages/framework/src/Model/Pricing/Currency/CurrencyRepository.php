@@ -16,28 +16,23 @@ class CurrencyRepository
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getCurrencyRepository()
+    protected function getCurrencyRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Currency::class);
     }
 
     /**
      * @param int $currencyId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|null
      */
-    public function findById($currencyId)
+    public function findById($currencyId): ?\Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->getCurrencyRepository()->find($currencyId);
     }
 
     /**
      * @param string $code
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|null
      */
-    public function findByCode($code)
+    public function findByCode($code): ?\Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->getCurrencyRepository()->findOneBy([
             'code' => $code,
@@ -46,9 +41,8 @@ class CurrencyRepository
 
     /**
      * @param int $currencyId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function getById($currencyId)
+    public function getById($currencyId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency = $this->findById($currencyId);
 
@@ -63,7 +57,7 @@ class CurrencyRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getCurrencyRepository()->findAll();
     }

@@ -21,10 +21,7 @@ class TranslationExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'translation';
     }
@@ -38,9 +35,8 @@ class TranslationExtension extends \Twig_Extension
      * @param string $message
      * @param string|null $domain
      * @param string|null $locale
-     * @return string
      */
-    public function transHtml(Twig_Environment $twig, $message, array $arguments = [], $domain = null, $locale = null)
+    public function transHtml(Twig_Environment $twig, $message, array $arguments = [], $domain = null, $locale = null): string
     {
         $defaultTransCallable = $twig->getFilter('trans')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);
@@ -58,9 +54,8 @@ class TranslationExtension extends \Twig_Extension
      * @param int $count
      * @param string|null $domain
      * @param string|null $locale
-     * @return string
      */
-    public function transchoiceHtml(Twig_Environment $twig, $message, $count, array $arguments = [], $domain = null, $locale = null)
+    public function transchoiceHtml(Twig_Environment $twig, $message, $count, array $arguments = [], $domain = null, $locale = null): string
     {
         $defaultTranschoiceCallable = $twig->getFilter('transchoice')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);
@@ -70,10 +65,8 @@ class TranslationExtension extends \Twig_Extension
 
     /**
      * Escapes all elements in array with default twig "escape" filter
-     *
-     * @return array
      */
-    private function getEscapedElements(Twig_Environment $twig, array $elements)
+    private function getEscapedElements(Twig_Environment $twig, array $elements): array
     {
         $defaultEscapeFilterCallable = $twig->getFilter('escape')->getCallable();
         $escapedElements = [];

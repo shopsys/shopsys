@@ -29,10 +29,7 @@ class OrderPriceCalculation
         $this->rounding = $rounding;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderTotalPrice
-     */
-    public function getOrderTotalPrice(Order $order)
+    public function getOrderTotalPrice(Order $order): \Shopsys\FrameworkBundle\Model\Order\OrderTotalPrice
     {
         $priceWithVat = 0;
         $priceWithoutVat = 0;
@@ -52,14 +49,11 @@ class OrderPriceCalculation
         return new OrderTotalPrice($priceWithVat, $priceWithoutVat, $productPriceWithVat);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
-     */
     public function calculateOrderRoundingPrice(
         Payment $payment,
         Currency $currency,
         Price $orderTotalPrice
-    ) {
+    ): ?\Shopsys\FrameworkBundle\Model\Pricing\Price {
         if (!$payment->isCzkRounding() || $currency->getCode() !== Currency::CODE_CZK) {
             return null;
         }

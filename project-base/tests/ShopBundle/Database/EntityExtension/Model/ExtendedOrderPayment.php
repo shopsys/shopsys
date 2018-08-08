@@ -59,10 +59,7 @@ class ExtendedOrderPayment extends ExtendedOrderItem
         $this->payment = $payment;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    public function getPayment()
+    public function getPayment(): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->payment;
     }
@@ -79,10 +76,7 @@ class ExtendedOrderPayment extends ExtendedOrderItem
         }
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPaymentStringField()
+    public function getPaymentStringField(): ?string
     {
         return $this->paymentStringField;
     }

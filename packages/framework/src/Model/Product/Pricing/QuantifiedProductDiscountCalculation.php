@@ -29,9 +29,8 @@ class QuantifiedProductDiscountCalculation
 
     /**
      * @param float $discountPercent
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    private function calculateDiscount(QuantifiedItemPrice $quantifiedItemPrice, $discountPercent)
+    private function calculateDiscount(QuantifiedItemPrice $quantifiedItemPrice, $discountPercent): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         $vat = $quantifiedItemPrice->getVat();
         $priceWithVat = $this->rounding->roundPriceWithVat(
@@ -48,7 +47,7 @@ class QuantifiedProductDiscountCalculation
      * @param float|null $discountPercent
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    public function calculateDiscounts(array $quantifiedItemsPrices, $discountPercent)
+    public function calculateDiscounts(array $quantifiedItemsPrices, $discountPercent): array
     {
         $quantifiedItemsDiscounts = [];
         foreach ($quantifiedItemsPrices as $quantifiedItemIndex => $quantifiedItemPrice) {

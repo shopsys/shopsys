@@ -38,7 +38,7 @@ class ImageService
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getUploadedImages(ImageEntityConfig $imageEntityConfig, $entityId, array $temporaryFilenames, $type)
+    public function getUploadedImages(ImageEntityConfig $imageEntityConfig, $entityId, array $temporaryFilenames, $type): array
     {
         if (!$imageEntityConfig->isMultiple($type)) {
             $message = 'Entity ' . $imageEntityConfig->getEntityClass()
@@ -58,14 +58,13 @@ class ImageService
      * @param int $entityId
      * @param string $temporaryFilename
      * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
     public function createImage(
         ImageEntityConfig $imageEntityConfig,
         $entityId,
         $temporaryFilename,
         $type
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Image\Image {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
 
         $image = $this->imageFactory->create(

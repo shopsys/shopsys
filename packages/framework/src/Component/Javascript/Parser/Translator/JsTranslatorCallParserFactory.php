@@ -29,10 +29,7 @@ class JsTranslatorCallParserFactory
         $this->jsStringParser = $jsStringParser;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCallParser
-     */
-    public function create()
+    public function create(): \Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCallParser
     {
         $transMethodSpecifications = [
             new TransMethodSpecification(self::METHOD_NAME_TRANS, 0, 2),

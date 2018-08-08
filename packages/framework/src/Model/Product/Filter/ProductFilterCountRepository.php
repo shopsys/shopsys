@@ -31,7 +31,6 @@ class ProductFilterCountRepository
 
     /**
      * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountData(
         QueryBuilder $productsQueryBuilder,
@@ -39,7 +38,7 @@ class ProductFilterCountRepository
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData {
         $productFilterCountData = new ProductFilterCountData();
         $productFilterCountData->countInStock = $this->getCountInStock(
             $productsQueryBuilder,
@@ -69,14 +68,11 @@ class ProductFilterCountRepository
         return $productFilterCountData;
     }
 
-    /**
-     * @return int
-     */
     private function getCountInStock(
         QueryBuilder $productsQueryBuilder,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): int {
         $productsInStockQueryBuilder = clone $productsQueryBuilder;
         $productInStockFilterData = clone $productFilterData;
 
@@ -104,7 +100,7 @@ class ProductFilterCountRepository
         array $brandFilterChoices,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): array {
         if (count($brandFilterChoices) === 0) {
             return [];
         }
@@ -154,7 +150,7 @@ class ProductFilterCountRepository
         array $flagFilterChoices,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): array {
         if (count($flagFilterChoices) === 0) {
             return [];
         }

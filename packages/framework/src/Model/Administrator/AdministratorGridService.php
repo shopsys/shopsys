@@ -17,10 +17,7 @@ class AdministratorGridService
         $this->administratorGridLimitFactory = $administratorGridLimitFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit|null
-     */
-    public function rememberGridLimit(Administrator $administrator, Grid $grid)
+    public function rememberGridLimit(Administrator $administrator, Grid $grid): ?\Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit
     {
         if (!$grid->isEnabledPaging()) {
             throw new \Shopsys\FrameworkBundle\Model\Administrator\Exception\RememberGridLimitException($grid->getId());

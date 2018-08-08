@@ -55,9 +55,8 @@ class ImageProcessingService
 
     /**
      * @param string $filepath
-     * @return \Intervention\Image\Image
      */
-    public function createInterventionImage($filepath)
+    public function createInterventionImage($filepath): \Intervention\Image\Image
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
 
@@ -81,9 +80,8 @@ class ImageProcessingService
 
     /**
      * @param string $filepath
-     * @return string
      */
-    public function convertToShopFormatAndGetNewFilename($filepath)
+    public function convertToShopFormatAndGetNewFilename($filepath): string
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
         $newFilepath = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . pathinfo($filepath, PATHINFO_FILENAME) . '.';
@@ -110,9 +108,8 @@ class ImageProcessingService
      * @param int|null $width
      * @param int|null $height
      * @param bool $crop
-     * @return \Intervention\Image\Image
      */
-    public function resize(Image $image, $width, $height, $crop = false)
+    public function resize(Image $image, $width, $height, $crop = false): \Intervention\Image\Image
     {
         if ($crop) {
             $image->fit($width, $height, function (Constraint $constraint) {
@@ -137,7 +134,7 @@ class ImageProcessingService
     /**
      * @return string[]
      */
-    public function getSupportedImageExtensions()
+    public function getSupportedImageExtensions(): array
     {
         return $this->supportedImageExtensions;
     }

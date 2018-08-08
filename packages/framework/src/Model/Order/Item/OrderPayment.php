@@ -45,10 +45,7 @@ class OrderPayment extends OrderItem
         $this->payment = $payment;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    public function getPayment()
+    public function getPayment(): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->payment;
     }

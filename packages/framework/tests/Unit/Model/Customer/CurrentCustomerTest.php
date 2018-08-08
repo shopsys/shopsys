@@ -65,10 +65,7 @@ class CurrentCustomerTest extends TestCase
         return $pricingGroupSettingFacadeMock;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
-     */
-    private function getUserWithPricingGroup(PricingGroup $pricingGroup)
+    private function getUserWithPricingGroup(PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $billingAddress = $this->createMock(BillingAddress::class);
         $userData = new UserData();

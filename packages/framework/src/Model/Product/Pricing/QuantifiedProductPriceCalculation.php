@@ -55,9 +55,8 @@ class QuantifiedProductPriceCalculation
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice
      */
-    public function calculatePrice(QuantifiedProduct $quantifiedProduct, $domainId, User $user = null)
+    public function calculatePrice(QuantifiedProduct $quantifiedProduct, $domainId, User $user = null): \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice
     {
         $product = $quantifiedProduct->getProduct();
         if (!$product instanceof Product) {
@@ -85,26 +84,17 @@ class QuantifiedProductPriceCalculation
         return $quantifiedItemPrice;
     }
 
-    /**
-     * @return string
-     */
-    private function getTotalPriceWithoutVat()
+    private function getTotalPriceWithoutVat(): string
     {
         return $this->getTotalPriceWithVat() - $this->getTotalPriceVatAmount();
     }
 
-    /**
-     * @return string
-     */
-    private function getTotalPriceWithVat()
+    private function getTotalPriceWithVat(): string
     {
         return $this->productPrice->getPriceWithVat() * $this->quantifiedProduct->getQuantity();
     }
 
-    /**
-     * @return string
-     */
-    private function getTotalPriceVatAmount()
+    private function getTotalPriceVatAmount(): string
     {
         $vatPercent = $this->product->getVat()->getPercent();
 
@@ -119,7 +109,7 @@ class QuantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[]
      */
-    public function calculatePrices(array $quantifiedProducts, $domainId, User $user = null)
+    public function calculatePrices(array $quantifiedProducts, $domainId, User $user = null): array
     {
         $quantifiedItemsPrices = [];
         foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {

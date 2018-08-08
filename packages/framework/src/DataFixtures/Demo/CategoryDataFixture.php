@@ -179,9 +179,8 @@ class CategoryDataFixture extends AbstractReferenceFixture
 
     /**
      * @param string|null $referenceName
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    private function createCategory(CategoryData $categoryData, $referenceName = null)
+    private function createCategory(CategoryData $categoryData, $referenceName = null): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         $category = $this->categoryFacade->create($categoryData);
         if ($referenceName !== null) {

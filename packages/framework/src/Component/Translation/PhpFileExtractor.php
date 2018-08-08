@@ -94,9 +94,8 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 
     /**
      * @param \PhpParser\Node\Expr\MethodCall|\PhpParser\Node\Expr\FuncCall $node
-     * @return string
      */
-    private function getMessageId($node)
+    private function getMessageId($node): string
     {
         $methodName = $this->getNormalizedMethodName($this->getNodeName($node));
         $messageIdArgumentIndex = $this->transMethodSpecifications[$methodName]->getMessageIdArgumentIndex();
@@ -110,9 +109,8 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 
     /**
      * @param \PhpParser\Node\Expr\MethodCall|\PhpParser\Node\Expr\FuncCall $node
-     * @return string
      */
-    private function getDomain($node)
+    private function getDomain($node): string
     {
         $methodName = $this->getNormalizedMethodName($this->getNodeName($node));
         $domainArgumentIndex = $this->transMethodSpecifications[$methodName]->getDomainArgumentIndex();
@@ -124,10 +122,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function isTransMethodOrFuncCall(Node $node)
+    private function isTransMethodOrFuncCall(Node $node): bool
     {
         if ($node instanceof MethodCall || $node instanceof FuncCall) {
             try {
@@ -144,10 +139,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    private function isIgnored(Node $node)
+    private function isIgnored(Node $node): bool
     {
         foreach ($this->getAnnotations($node) as $annotation) {
             if ($annotation instanceof Ignore) {
@@ -161,7 +153,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @return \Doctrine\Common\Annotations\Annotation[]
      */
-    private function getAnnotations(Node $node)
+    private function getAnnotations(Node $node): array
     {
         $docComment = $this->getDocComment($node);
 
@@ -172,10 +164,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         return [];
     }
 
-    /**
-     * @return \PhpParser\Comment\Doc|null
-     */
-    private function getDocComment(Node $node)
+    private function getDocComment(Node $node): ?\PhpParser\Comment\Doc
     {
         $docComment = $node->getDocComment();
 
@@ -190,17 +179,13 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 
     /**
      * @param string $methodName
-     * @return string
      */
-    private function getNormalizedMethodName($methodName)
+    private function getNormalizedMethodName($methodName): string
     {
         return mb_strtolower($methodName);
     }
 
-    /**
-     * @return string
-     */
-    private function getNodeName(Node $node)
+    private function getNodeName(Node $node): string
     {
         if ($node instanceof MethodCall) {
             return $node->name;

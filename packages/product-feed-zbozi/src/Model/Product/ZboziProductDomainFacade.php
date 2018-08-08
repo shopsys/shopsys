@@ -37,7 +37,7 @@ class ZboziProductDomainFacade
      * @param int $productId
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]|null
      */
-    public function findByProductId($productId)
+    public function findByProductId($productId): ?array
     {
         return $this->zboziProductDomainRepository->findByProductId($productId);
     }
@@ -46,7 +46,7 @@ class ZboziProductDomainFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]
      */
-    public function getZboziProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
+    public function getZboziProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain): array
     {
         $productIds = [];
         foreach ($products as $product) {

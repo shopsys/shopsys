@@ -29,10 +29,7 @@ class LoginFormType extends AbstractType
             ->add('login', SubmitType::class);
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'admin_login_form';
     }

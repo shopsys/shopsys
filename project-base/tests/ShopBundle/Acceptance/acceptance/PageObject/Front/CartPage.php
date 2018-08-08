@@ -77,9 +77,8 @@ class CartPage extends AbstractPage
 
     /**
      * @param string $productName
-     * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getQuantityFieldByProductName($productName)
+    private function getQuantityFieldByProductName($productName): \Facebook\WebDriver\WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 
@@ -88,9 +87,8 @@ class CartPage extends AbstractPage
 
     /**
      * @param string $productName
-     * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function findProductRowInCartByName($productName)
+    private function findProductRowInCartByName($productName): \Facebook\WebDriver\WebDriverElement
     {
         $rows = $this->webDriver->findElements(WebDriverBy::cssSelector('.js-cart-item'));
 
@@ -112,19 +110,15 @@ class CartPage extends AbstractPage
 
     /**
      * @param string $productName
-     * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getProductPriceCellByName($productName)
+    private function getProductPriceCellByName($productName): \Facebook\WebDriver\WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 
         return $row->findElement(WebDriverBy::cssSelector('.js-cart-item-total-price'));
     }
 
-    /**
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
-    private function getTotalProductsPriceCell()
+    private function getTotalProductsPriceCell(): \Facebook\WebDriver\WebDriverElement
     {
         return $this->webDriver->findElement(WebDriverBy::cssSelector('.js-cart-total-price'));
     }

@@ -22,10 +22,7 @@ class CustomerIdentifierFactory
         $this->session = $session;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier
-     */
-    public function get()
+    public function get(): \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier
     {
         $cartIdentifier = $this->session->getId();
 
@@ -42,9 +39,8 @@ class CustomerIdentifierFactory
 
     /**
      * @param string $cartIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier
      */
-    public function getOnlyWithCartIdentifier($cartIdentifier)
+    public function getOnlyWithCartIdentifier($cartIdentifier): \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier
     {
         return new CustomerIdentifier($cartIdentifier, null);
     }

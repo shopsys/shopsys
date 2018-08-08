@@ -30,18 +30,12 @@ class BreadcrumbItem
         $this->routeParameters = $routeParameters;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getRouteName()
+    public function getRouteName(): ?string
     {
         return $this->routeName;
     }

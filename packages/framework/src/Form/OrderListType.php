@@ -37,10 +37,7 @@ class OrderListType extends AbstractType
         $view->vars['orders'] = $this->orderFacade->getCustomerOrderList($options['user']);
     }
 
-    /**
-     * @return null|string
-     */
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }

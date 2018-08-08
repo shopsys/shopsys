@@ -57,9 +57,8 @@ class ContactFormFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData $contactFormData
-     * @return string
      */
-    protected function getMailBody($contactFormData)
+    protected function getMailBody($contactFormData): string
     {
         return $this->twig->render('@ShopsysFramework/Mail/ContactForm/mail.html.twig', [
             'contactFormData' => $contactFormData,

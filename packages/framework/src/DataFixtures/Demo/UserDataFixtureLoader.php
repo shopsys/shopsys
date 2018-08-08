@@ -102,7 +102,7 @@ class UserDataFixtureLoader
      * @param int $domainId
      * @return  \Shopsys\FrameworkBundle\Model\Customer\CustomerData[]
      */
-    public function getCustomersDataByDomainId($domainId)
+    public function getCustomersDataByDomainId($domainId): array
     {
         $rows = $this->csvReader->getRowsFromCsv($this->path);
         $filteredRows = $this->filterRowsByDomainId($rows, $domainId);
@@ -118,9 +118,8 @@ class UserDataFixtureLoader
 
     /**
      * @param int $domainId
-     * @return array
      */
-    private function filterRowsByDomainId(array $rows, $domainId)
+    private function filterRowsByDomainId(array $rows, $domainId): array
     {
         $filteredRows = [];
         $rowId = 0;
@@ -142,10 +141,7 @@ class UserDataFixtureLoader
         return $filteredRows;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
-     */
-    private function getCustomerDataFromCsvRow(array $row)
+    private function getCustomerDataFromCsvRow(array $row): \Shopsys\FrameworkBundle\Model\Customer\CustomerData
     {
         $customerData = $this->customerDataFactory->create();
         $domainId = (int)$row[self::COLUMN_DOMAIN_ID];
@@ -191,9 +187,8 @@ class UserDataFixtureLoader
 
     /**
      * @param string $countryName
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    private function getCountryByName($countryName)
+    private function getCountryByName($countryName): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         foreach ($this->countries as $country) {
             if ($country->getName() === $countryName) {

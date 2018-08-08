@@ -22,9 +22,8 @@ class JsCompiler
 
     /**
      * @param string $content
-     * @return string
      */
-    public function compile($content)
+    public function compile($content): string
     {
         $node = JParser::parse_string($content, true, JParser::class, JTokenizer::class);
         /* @var $node \PLUG\JavaScript\JNodes\nonterminal\JProgramNode */

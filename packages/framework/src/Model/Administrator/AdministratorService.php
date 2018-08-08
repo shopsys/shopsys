@@ -53,13 +53,12 @@ class AdministratorService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administratorByUserName
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
     public function edit(
         AdministratorData $administratorData,
         Administrator $administrator,
         Administrator $administratorByUserName = null
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Administrator\Administrator {
         if ($administratorByUserName !== null
             && $administratorByUserName !== $administrator
             && $administratorByUserName->getUsername() === $administratorData->username

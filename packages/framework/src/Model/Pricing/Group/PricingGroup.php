@@ -50,34 +50,22 @@ class PricingGroup
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
 
-    /**
-     * @return string
-     */
-    public function getCoefficient()
+    public function getCoefficient(): string
     {
         return $this->coefficient;
     }

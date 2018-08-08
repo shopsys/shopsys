@@ -45,42 +45,27 @@ class FileForUpload
         $this->nameConventionType = $nameConventionType;
     }
 
-    /**
-     * @return string
-     */
-    public function getTemporaryFilename()
+    public function getTemporaryFilename(): string
     {
         return $this->temporaryFilename;
     }
 
-    /**
-     * @return bool
-     */
-    public function isImage()
+    public function isImage(): bool
     {
         return $this->isImage;
     }
 
-    /**
-     * @return string
-     */
-    public function getCategory()
+    public function getCategory(): string
     {
         return $this->category;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTargetDirectory()
+    public function getTargetDirectory(): ?string
     {
         return $this->targetDirectory;
     }
 
-    /**
-     * @return int
-     */
-    public function getNameConventionType()
+    public function getNameConventionType(): int
     {
         return $this->nameConventionType;
     }

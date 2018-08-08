@@ -24,10 +24,7 @@ class NormalizeFunction extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
-    /**
-     * @return string
-     */
-    public function getSql(SqlWalker $sqlWalker)
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return self::FUNCTION_NORMALIZE . '(' . $this->stringExpression->dispatch($sqlWalker) . ')';
     }

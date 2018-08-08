@@ -85,10 +85,7 @@ class PaymentFacade
         $this->paymentPriceFactory = $paymentPriceFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
-    public function create(PaymentData $paymentData)
+    public function create(PaymentData $paymentData): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         $payment = $this->paymentFactory->create($paymentData);
         $this->em->persist($payment);
@@ -108,9 +105,8 @@ class PaymentFacade
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function getById($id)
+    public function getById($id): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->paymentRepository->getById($id);
     }
@@ -136,7 +132,7 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getVisibleOnCurrentDomain()
+    public function getVisibleOnCurrentDomain(): array
     {
         return $this->getVisibleByDomainId($this->domain->getId());
     }
@@ -145,7 +141,7 @@ class PaymentFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getVisibleByDomainId($domainId)
+    public function getVisibleByDomainId($domainId): array
     {
         $allPayments = $this->paymentRepository->getAll();
 
@@ -166,7 +162,7 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getAllIncludingDeleted()
+    public function getAllIncludingDeleted(): array
     {
         return $this->paymentRepository->getAllIncludingDeleted();
     }
@@ -174,7 +170,7 @@ class PaymentFacade
     /**
      * @return string[]
      */
-    public function getPaymentPricesWithVatIndexedByPaymentId(Currency $currency)
+    public function getPaymentPricesWithVatIndexedByPaymentId(Currency $currency): array
     {
         $paymentPricesWithVatByPaymentId = [];
         $payments = $this->getAllIncludingDeleted();
@@ -189,7 +185,7 @@ class PaymentFacade
     /**
      * @return string[]
      */
-    public function getPaymentVatPercentsIndexedByPaymentId()
+    public function getPaymentVatPercentsIndexedByPaymentId(): array
     {
         $paymentVatPercentsByPaymentId = [];
         $payments = $this->getAllIncludingDeleted();
@@ -203,7 +199,7 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->paymentRepository->getAll();
     }
@@ -211,7 +207,7 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    public function getIndependentBasePricesIndexedByCurrencyId(Payment $payment)
+    public function getIndependentBasePricesIndexedByCurrencyId(Payment $payment): array
     {
         $prices = [];
         foreach ($payment->getPrices() as $paymentInputPrice) {

@@ -72,9 +72,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param string $referenceName
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    private function createProduct($referenceName, ProductData $productData)
+    private function createProduct($referenceName, ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $product = $this->productFacade->create($productData);
 

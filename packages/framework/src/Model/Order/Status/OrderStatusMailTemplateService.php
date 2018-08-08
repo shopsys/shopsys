@@ -27,9 +27,8 @@ class OrderStatusMailTemplateService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[] $mailTemplates
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
      */
-    private function getMailTemplateByOrderStatus(array $mailTemplates, OrderStatus $orderStatus)
+    private function getMailTemplateByOrderStatus(array $mailTemplates, OrderStatus $orderStatus): ?\Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         foreach ($mailTemplates as $mailTemplate) {
             if ($mailTemplate->getName() === $this->orderMailService->getMailTemplateNameByStatus($orderStatus)) {
@@ -45,7 +44,7 @@ class OrderStatusMailTemplateService
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[] $mailTemplates
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData[]
      */
-    public function getOrderStatusMailTemplatesData(array $orderStatuses, array $mailTemplates)
+    public function getOrderStatusMailTemplatesData(array $orderStatuses, array $mailTemplates): array
     {
         $orderStatusMailTemplatesData = [];
         foreach ($orderStatuses as $orderStatus) {
@@ -68,7 +67,7 @@ class OrderStatusMailTemplateService
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[] $mailTemplates
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
      */
-    public function getFilteredOrderStatusMailTemplatesIndexedByOrderStatusId(array $orderStatuses, array $mailTemplates)
+    public function getFilteredOrderStatusMailTemplatesIndexedByOrderStatusId(array $orderStatuses, array $mailTemplates): array
     {
         $orderStatusMailTemplates = [];
         foreach ($orderStatuses as $orderStatus) {

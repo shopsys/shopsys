@@ -46,9 +46,8 @@ class UniqueCollectionValidator extends ConstraintValidator
     /**
      * @param mixed $value1
      * @param mixed $value2
-     * @return bool
      */
-    private function areValuesEqual(UniqueCollection $constraint, $value1, $value2)
+    private function areValuesEqual(UniqueCollection $constraint, $value1, $value2): bool
     {
         if ($constraint->allowEmpty) {
             if ($value1 === null || $value2 === null) {
@@ -66,9 +65,8 @@ class UniqueCollectionValidator extends ConstraintValidator
     /**
      * @param mixed $value1
      * @param mixed $value2
-     * @return bool
      */
-    private function areValuesEqualInFields(array $fields, $value1, $value2)
+    private function areValuesEqualInFields(array $fields, $value1, $value2): bool
     {
         foreach ($fields as $field) {
             $fieldValue1 = $this->getFieldValue($value1, $field);

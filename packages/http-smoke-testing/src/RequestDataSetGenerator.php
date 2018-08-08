@@ -26,10 +26,7 @@ class RequestDataSetGenerator implements RouteConfig
         $this->extraRequestDataSets = [];
     }
 
-    /**
-     * @return \Shopsys\HttpSmokeTesting\RouteInfo
-     */
-    public function getRouteInfo()
+    public function getRouteInfo(): \Shopsys\HttpSmokeTesting\RouteInfo
     {
         return $this->routeInfo;
     }
@@ -37,7 +34,7 @@ class RequestDataSetGenerator implements RouteConfig
     /**
      * @return \Shopsys\HttpSmokeTesting\RequestDataSet[]
      */
-    public function generateRequestDataSets()
+    public function generateRequestDataSets(): array
     {
         $requestDataSets = [clone $this->defaultRequestDataSet];
         foreach ($this->extraRequestDataSets as $extraRequestDataSet) {
@@ -50,9 +47,8 @@ class RequestDataSetGenerator implements RouteConfig
 
     /**
      * @param string|null $debugNote
-     * @return \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
      */
-    public function skipRoute($debugNote = null)
+    public function skipRoute($debugNote = null): \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
     {
         $this->defaultRequestDataSet->skip();
 
@@ -65,9 +61,8 @@ class RequestDataSetGenerator implements RouteConfig
 
     /**
      * @param string|null $debugNote
-     * @return \Shopsys\HttpSmokeTesting\RequestDataSet
      */
-    public function changeDefaultRequestDataSet($debugNote = null)
+    public function changeDefaultRequestDataSet($debugNote = null): \Shopsys\HttpSmokeTesting\RequestDataSet
     {
         $requestDataSet = $this->defaultRequestDataSet;
 
@@ -80,9 +75,8 @@ class RequestDataSetGenerator implements RouteConfig
 
     /**
      * @param string|null $debugNote
-     * @return \Shopsys\HttpSmokeTesting\RequestDataSet
      */
-    public function addExtraRequestDataSet($debugNote = null)
+    public function addExtraRequestDataSet($debugNote = null): \Shopsys\HttpSmokeTesting\RequestDataSet
     {
         $requestDataSet = new RequestDataSet($this->routeInfo->getRouteName());
         $this->extraRequestDataSets[] = $requestDataSet;

@@ -19,10 +19,7 @@ class CartItemRepository
         $this->em = $em;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getCartItemRepository()
+    protected function getCartItemRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(CartItem::class);
     }
@@ -30,7 +27,7 @@ class CartItemRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
-    public function getAllByCustomerIdentifier(CustomerIdentifier $customerIdentifier)
+    public function getAllByCustomerIdentifier(CustomerIdentifier $customerIdentifier): array
     {
         $criteria = [];
         if ($customerIdentifier->getUser() !== null) {

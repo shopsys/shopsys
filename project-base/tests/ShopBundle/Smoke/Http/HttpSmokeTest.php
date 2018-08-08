@@ -23,10 +23,7 @@ class HttpSmokeTest extends HttpSmokeTestCase
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function handleRequest(Request $request)
+    protected function handleRequest(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $entityManager = self::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         /* @var $entityManager \Doctrine\ORM\EntityManager */

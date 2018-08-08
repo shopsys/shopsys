@@ -32,10 +32,7 @@ class CategoryWithPreloadedChildren
         $this->children = $children;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    public function getCategory()
+    public function getCategory(): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->category;
     }
@@ -43,7 +40,7 @@ class CategoryWithPreloadedChildren
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[]
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->children;
     }

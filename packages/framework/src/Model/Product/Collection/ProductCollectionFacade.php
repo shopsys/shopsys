@@ -79,7 +79,7 @@ class ProductCollectionFacade
      * @param string|null $sizeName
      * @return string[]
      */
-    public function getImagesUrlsIndexedByProductId(array $products, DomainConfig $domainConfig, $sizeName = null)
+    public function getImagesUrlsIndexedByProductId(array $products, DomainConfig $domainConfig, $sizeName = null): array
     {
         $imagesUrlsByProductId = [];
         foreach ($this->getMainImagesIndexedByProductId($products) as $productId => $image) {
@@ -101,7 +101,7 @@ class ProductCollectionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    protected function getMainImagesIndexedByProductId(array $products)
+    protected function getMainImagesIndexedByProductId(array $products): array
     {
         $productEntityName = $this->imageConfig->getImageEntityConfigByClass(Product::class)->getEntityName();
         $imagesByProductId = $this->imageRepository->getMainImagesByEntitiesIndexedByEntityId($products, $productEntityName);
@@ -113,7 +113,7 @@ class ProductCollectionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return string[]
      */
-    public function getAbsoluteUrlsIndexedByProductId(array $products, DomainConfig $domainConfig)
+    public function getAbsoluteUrlsIndexedByProductId(array $products, DomainConfig $domainConfig): array
     {
         $mainFriendlyUrlsByProductId = $this->friendlyUrlRepository->getMainFriendlyUrlsByEntitiesIndexedByEntityId(
             $products,

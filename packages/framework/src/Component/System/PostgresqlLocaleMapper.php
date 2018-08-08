@@ -169,27 +169,24 @@ class PostgresqlLocaleMapper
 
     /**
      * @param string $collationName
-     * @return string
      */
-    public function getLinuxLocale($collationName)
+    public function getLinuxLocale($collationName): string
     {
         return $collationName . '.utf8';
     }
 
     /**
      * @param string $collationName
-     * @return string
      */
-    public function getMacOsxLocale($collationName)
+    public function getMacOsxLocale($collationName): string
     {
         return $collationName . '.UTF-8';
     }
 
     /**
      * @param string $collationName
-     * @return string
      */
-    public function getWindowsLocale($collationName)
+    public function getWindowsLocale($collationName): string
     {
         if (!array_key_exists($collationName, self::$windowsLocalesIndexedByCollation)) {
             throw new \Shopsys\FrameworkBundle\Component\System\Exception\UnknownWindowsLocaleException($collationName);

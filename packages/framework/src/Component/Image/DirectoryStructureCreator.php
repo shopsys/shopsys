@@ -87,7 +87,7 @@ class DirectoryStructureCreator
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
      * @return string[]
      */
-    private function getTargetDirectoriesFromSizeConfigs($entityName, $type, array $sizeConfigs)
+    private function getTargetDirectoriesFromSizeConfigs($entityName, $type, array $sizeConfigs): array
     {
         $directories = [];
         foreach ($sizeConfigs as $sizeConfig) {

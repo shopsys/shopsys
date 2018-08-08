@@ -34,10 +34,7 @@ class HomepagePage extends AbstractPage
         $this->productListComponent->addProductToCartByName($productName, $quantity, $topProductsContext);
     }
 
-    /**
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
-    private function getTopProductsContext()
+    private function getTopProductsContext(): \Facebook\WebDriver\WebDriverElement
     {
         return $this->webDriver->findElement(WebDriverBy::cssSelector('#top-products'));
     }

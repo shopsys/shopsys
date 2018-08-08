@@ -25,9 +25,8 @@ class RouteConfigCustomizer
      * @see \Shopsys\HttpSmokeTesting\RouteConfig
      * @see \Shopsys\HttpSmokeTesting\RouteInfo
      * @param callable $callback
-     * @return \Shopsys\HttpSmokeTesting\RouteConfigCustomizer
      */
-    public function customize($callback)
+    public function customize($callback): \Shopsys\HttpSmokeTesting\RouteConfigCustomizer
     {
         foreach ($this->requestDataSetGenerators as $requestDataSetGenerator) {
             $callback($requestDataSetGenerator, $requestDataSetGenerator->getRouteInfo());
@@ -43,9 +42,8 @@ class RouteConfigCustomizer
      * @see \Shopsys\HttpSmokeTesting\RouteInfo
      * @param string|string[] $routeName
      * @param callable $callback
-     * @return \Shopsys\HttpSmokeTesting\RouteConfigCustomizer
      */
-    public function customizeByRouteName($routeName, $callback)
+    public function customizeByRouteName($routeName, $callback): \Shopsys\HttpSmokeTesting\RouteConfigCustomizer
     {
         $routeNames = (array)$routeName;
         $foundRouteNames = [];

@@ -42,14 +42,13 @@ class ParameterFilterRepository
     /**
      * @param int $parameterIndex
      * @param int $valueIndex
-     * @return \Doctrine\ORM\QueryBuilder
      */
     private function getParameterQueryBuilder(
         ParameterFilterData $parameterFilterData,
         EntityManagerInterface $em,
         $parameterIndex,
         &$valueIndex
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $ppvAlias = 'ppv' . $parameterIndex;
         $parameterPlaceholder = ':parameter' . $parameterIndex;
 
@@ -81,14 +80,13 @@ class ParameterFilterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
      * @param string $ppvAlias
      * @param int $valueIndex
-     * @return \Doctrine\ORM\Query\Expr
      */
     private function getValuesExpr(
         array $parameterValues,
         QueryBuilder $parameterQueryBuilder,
         $ppvAlias,
         &$valueIndex
-    ) {
+    ): \Doctrine\ORM\Query\Expr {
         $valuesExpr = $parameterQueryBuilder->expr()->orX();
 
         foreach ($parameterValues as $parameterValue) {

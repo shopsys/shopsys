@@ -7,5 +7,5 @@ interface DomainIdsProviderInterface
     /**
      * @return int[]
      */
-    public function getAllIds();
+    public function getAllIds(): array;
 }

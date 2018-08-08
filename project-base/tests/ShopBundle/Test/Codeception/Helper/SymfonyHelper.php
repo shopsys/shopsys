@@ -36,9 +36,8 @@ class SymfonyHelper extends Module
 
     /**
      * @param string $serviceId
-     * @return object
      */
-    public function grabServiceFromContainer($serviceId)
+    public function grabServiceFromContainer($serviceId): object
     {
         return $this->kernel->getContainer()->get($serviceId);
     }

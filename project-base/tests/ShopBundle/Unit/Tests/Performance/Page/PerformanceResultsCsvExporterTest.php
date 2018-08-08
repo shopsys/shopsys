@@ -49,10 +49,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
         $this->assertEquals(1000, $line[1]);
     }
 
-    /**
-     * @return string
-     */
-    private function getTemporaryFilename()
+    private function getTemporaryFilename(): string
     {
         return tempnam(sys_get_temp_dir(), 'test');
     }
@@ -60,7 +57,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
     /**
      * @return \Tests\ShopBundle\Performance\Page\PerformanceTestSample[]
      */
-    private function getPerformanceTestSamples()
+    private function getPerformanceTestSamples(): array
     {
         $performanceTestSamples = [];
 
@@ -98,9 +95,8 @@ class PerformanceResultsCsvExporterTest extends TestCase
     /**
      * @param string $filename
      * @param int $lineIndex
-     * @return array
      */
-    private function getCsvLine($filename, $lineIndex)
+    private function getCsvLine($filename, $lineIndex): array
     {
         $handle = fopen($filename, 'r');
 
@@ -112,10 +108,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
         return fgetcsv($handle);
     }
 
-    /**
-     * @return \Tests\ShopBundle\Performance\Page\PerformanceResultsCsvExporter
-     */
-    private function createPerformanceResultsCsvExporter()
+    private function createPerformanceResultsCsvExporter(): \Tests\ShopBundle\Performance\Page\PerformanceResultsCsvExporter
     {
         return new PerformanceResultsCsvExporter(new JmeterCsvReporter());
     }

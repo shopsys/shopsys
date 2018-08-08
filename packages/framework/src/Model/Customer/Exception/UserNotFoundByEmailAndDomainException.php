@@ -29,18 +29,12 @@ class UserNotFoundByEmailAndDomainException extends UserNotFoundException
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }

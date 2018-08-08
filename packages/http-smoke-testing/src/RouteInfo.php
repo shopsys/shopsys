@@ -25,35 +25,25 @@ class RouteInfo
         $this->route = $route;
     }
 
-    /**
-     * @return string
-     */
-    public function getRouteName()
+    public function getRouteName(): string
     {
         return $this->routeName;
     }
 
-    /**
-     * @return string
-     */
-    public function getRoutePath()
+    public function getRoutePath(): string
     {
         return $this->route->getPath();
     }
 
-    /**
-     * @return string
-     */
-    public function getRouteCondition()
+    public function getRouteCondition(): string
     {
         return $this->route->getCondition();
     }
 
     /**
      * @param string $method
-     * @return bool
      */
-    public function isHttpMethodAllowed($method)
+    public function isHttpMethodAllowed($method): bool
     {
         $methods = $this->route->getMethods();
 
@@ -62,9 +52,8 @@ class RouteInfo
 
     /**
      * @param string $name
-     * @return bool
      */
-    public function isRouteParameterRequired($name)
+    public function isRouteParameterRequired($name): bool
     {
         return !$this->route->hasDefault($name) && in_array($name, $this->getRouteParameterNames(), true);
     }
@@ -72,7 +61,7 @@ class RouteInfo
     /**
      * @return string[]
      */
-    public function getRouteParameterNames()
+    public function getRouteParameterNames(): array
     {
         $compiledRoute = $this->route->compile();
 

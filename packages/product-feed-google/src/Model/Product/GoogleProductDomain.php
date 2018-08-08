@@ -56,18 +56,12 @@ class GoogleProductDomain
         $this->domainId = $googleProductDomainData->domainId;
     }
 
-    /**
-     * @return bool
-     */
-    public function getShow()
+    public function getShow(): bool
     {
         return $this->show;
     }
 
-    /**
-     * @return int
-     */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }

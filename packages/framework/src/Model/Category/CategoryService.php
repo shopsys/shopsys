@@ -15,10 +15,7 @@ class CategoryService
         $this->categoryFactory = $categoryFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    public function create(CategoryData $categoryData, Category $rootCategory)
+    public function create(CategoryData $categoryData, Category $rootCategory): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         $category = $this->categoryFactory->create($categoryData);
         if ($category->getParent() === null) {
@@ -28,10 +25,7 @@ class CategoryService
         return $category;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    public function edit(Category $category, CategoryData $categoryData, Category $rootCategory)
+    public function edit(Category $category, CategoryData $categoryData, Category $rootCategory): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         $category->edit($categoryData);
         if ($category->getParent() === null) {

@@ -73,7 +73,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload[]
      */
-    public function getTemporaryFilesForUpload()
+    public function getTemporaryFilesForUpload(): array
     {
         if ($this->temporaryFilename === null) {
             return [];
@@ -113,42 +113,27 @@ class UploadedFile implements EntityFileUploadInterface
         $this->modifiedAt = new DateTime();
     }
 
-    /**
-     * @return string
-     */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->id . '.' . $this->extension;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getEntityName()
+    public function getEntityName(): string
     {
         return $this->entityName;
     }
 
-    /**
-     * @return int
-     */
-    public function getEntityId()
+    public function getEntityId(): int
     {
         return $this->entityId;
     }
 
-    /**
-     * @return string
-     */
-    public function getExtension()
+    public function getExtension(): string
     {
         return $this->extension;
     }

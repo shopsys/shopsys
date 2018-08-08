@@ -30,7 +30,7 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
     /**
      * @return string[]
      */
-    private function getEmailData()
+    private function getEmailData(): array
     {
         return [
             'anna.anina@no-reply.com',

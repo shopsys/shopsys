@@ -35,7 +35,7 @@ class TopProductFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct[]
      */
-    public function getAll($domainId)
+    public function getAll($domainId): array
     {
         return $this->topProductRepository->getAll($domainId);
     }
@@ -45,7 +45,7 @@ class TopProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllOfferedProducts($domainId, $pricingGroup)
+    public function getAllOfferedProducts($domainId, $pricingGroup): array
     {
         return $this->topProductRepository->getOfferedProductsForTopProductsOnDomain($domainId, $pricingGroup);
     }

@@ -20,28 +20,23 @@ class AvailabilityRepository
         $this->em = $entityManager;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getAvailabilityRepository()
+    protected function getAvailabilityRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Availability::class);
     }
 
     /**
      * @param int $availabilityId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
      */
-    public function findById($availabilityId)
+    public function findById($availabilityId): ?\Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         return $this->getAvailabilityRepository()->find($availabilityId);
     }
 
     /**
      * @param int $availabilityId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    public function getById($availabilityId)
+    public function getById($availabilityId): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         $availability = $this->findById($availabilityId);
 
@@ -56,7 +51,7 @@ class AvailabilityRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -73,7 +68,7 @@ class AvailabilityRepository
      * @param int $availabilityId
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability[]
      */
-    public function getAllExceptId($availabilityId)
+    public function getAllExceptId($availabilityId): array
     {
         $qb = $this->getAvailabilityRepository()->createQueryBuilder('a')
             ->where('a.id != :id')
@@ -82,10 +77,7 @@ class AvailabilityRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @return bool
-     */
-    public function isAvailabilityUsed(Availability $availability)
+    public function isAvailabilityUsed(Availability $availability): bool
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder

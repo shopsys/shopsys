@@ -28,9 +28,8 @@ class CurrentCategoryResolver
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
      */
-    public function findCurrentCategoryByRequest(Request $request, $domainId)
+    public function findCurrentCategoryByRequest(Request $request, $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         $routeName = $request->get('_route');
 

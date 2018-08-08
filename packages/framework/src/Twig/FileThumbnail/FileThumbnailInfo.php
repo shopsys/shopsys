@@ -24,18 +24,12 @@ class FileThumbnailInfo
         $this->imageUri = $imageUri;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getIconType()
+    public function getIconType(): ?string
     {
         return $this->iconType;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getImageUri()
+    public function getImageUri(): ?string
     {
         return $this->imageUri;
     }

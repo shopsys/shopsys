@@ -7,7 +7,7 @@ class DummyMailType implements MailTypeInterface
     /**
      * @return string[]
      */
-    public function getBodyVariables()
+    public function getBodyVariables(): array
     {
         return [];
     }
@@ -15,7 +15,7 @@ class DummyMailType implements MailTypeInterface
     /**
      * @return string[]
      */
-    public function getSubjectVariables()
+    public function getSubjectVariables(): array
     {
         return [];
     }
@@ -23,7 +23,7 @@ class DummyMailType implements MailTypeInterface
     /**
      * @return string[]
      */
-    public function getRequiredBodyVariables()
+    public function getRequiredBodyVariables(): array
     {
         return [];
     }
@@ -31,7 +31,7 @@ class DummyMailType implements MailTypeInterface
     /**
      * @return string[]
      */
-    public function getRequiredSubjectVariables()
+    public function getRequiredSubjectVariables(): array
     {
         return [];
     }

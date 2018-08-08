@@ -31,9 +31,8 @@ class Environment
 
     /**
      * @param bool $console
-     * @return string
      */
-    public static function getEnvironment($console)
+    public static function getEnvironment($console): string
     {
         return self::getEnvironmentFileSetting()->getEnvironment($console);
     }
@@ -43,10 +42,7 @@ class Environment
         $io->write("\nEnvironment is <info>" . self::getEnvironment(false) . "</info>\n");
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting
-     */
-    private static function getEnvironmentFileSetting()
+    private static function getEnvironmentFileSetting(): \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting
     {
         if (self::$environmentFileSetting === null) {
             self::$environmentFileSetting = new EnvironmentFileSetting(__DIR__ . '/..');

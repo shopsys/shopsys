@@ -114,10 +114,7 @@ class SuperadminController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @return array
-     */
-    private function loadDataForUrls(array $locales)
+    private function loadDataForUrls(array $locales): array
     {
         $data = [];
         $requestContext = new RequestContext();

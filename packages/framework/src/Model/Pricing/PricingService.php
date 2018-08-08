@@ -6,9 +6,8 @@ class PricingService
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $prices
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getMinimumPriceByPriceWithoutVat(array $prices)
+    public function getMinimumPriceByPriceWithoutVat(array $prices): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         if (count($prices) === 0) {
             throw new \Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException('Array can not be empty.');
@@ -26,9 +25,8 @@ class PricingService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $prices
-     * @return bool
      */
-    public function arePricesDifferent(array $prices)
+    public function arePricesDifferent(array $prices): bool
     {
         if (count($prices) === 0) {
             throw new \Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException('Array can not be empty.');

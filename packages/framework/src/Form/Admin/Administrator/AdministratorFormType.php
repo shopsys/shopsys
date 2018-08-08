@@ -92,7 +92,7 @@ class AdministratorFormType extends AbstractType
      * @param string $scenario
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getFirstPasswordConstraints($scenario)
+    private function getFirstPasswordConstraints($scenario): array
     {
         $constraints = [
             new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer then {{ limit }} characters']),

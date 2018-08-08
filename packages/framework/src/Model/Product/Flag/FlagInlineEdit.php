@@ -37,9 +37,8 @@ class FlagInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     * @return int
      */
-    protected function createEntityAndGetId($flagData)
+    protected function createEntityAndGetId($flagData): int
     {
         $flag = $this->flagFacade->create($flagData);
 
@@ -57,9 +56,8 @@ class FlagInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param int|null $flagId
-     * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($flagId)
+    public function getForm($flagId): \Symfony\Component\Form\FormInterface
     {
         if ($flagId !== null) {
             $flag = $this->flagFacade->getById((int)$flagId);

@@ -108,9 +108,8 @@ class UploadedFileFacade
 
     /**
      * @param object $entity
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
-    public function getUploadedFileByEntity($entity)
+    public function getUploadedFileByEntity($entity): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         return $this->uploadedFileRepository->getUploadedFileByEntity(
             $this->uploadedFileConfig->getEntityName($entity),
@@ -120,9 +119,8 @@ class UploadedFileFacade
 
     /**
      * @param object $entity
-     * @return int
      */
-    protected function getEntityId($entity)
+    protected function getEntityId($entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
         $identifier = $entityMetadata->getIdentifierValues($entity);
@@ -136,18 +134,16 @@ class UploadedFileFacade
 
     /**
      * @param int $uploadedFileId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
-    public function getById($uploadedFileId)
+    public function getById($uploadedFileId): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
     {
         return $this->uploadedFileRepository->getById($uploadedFileId);
     }
 
     /**
      * @param Object $entity
-     * @return bool
      */
-    public function hasUploadedFile($entity)
+    public function hasUploadedFile($entity): bool
     {
         try {
             $uploadedFile = $this->getUploadedFileByEntity($entity);
@@ -158,18 +154,12 @@ class UploadedFileFacade
         return $this->uploadedFileLocator->fileExists($uploadedFile);
     }
 
-    /**
-     * @return string
-     */
-    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile)
+    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile): string
     {
         return $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFile);
     }
 
-    /**
-     * @return string
-     */
-    public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile)
+    public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
         return $this->uploadedFileLocator->getUploadedFileUrl($domainConfig, $uploadedFile);
     }

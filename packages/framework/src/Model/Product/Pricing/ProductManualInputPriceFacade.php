@@ -52,7 +52,7 @@ class ProductManualInputPriceFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[]
      */
-    public function getAllByProduct(Product $product)
+    public function getAllByProduct(Product $product): array
     {
         return $this->productManualInputPriceRepository->getByProduct($product);
     }

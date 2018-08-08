@@ -8,10 +8,7 @@ use Tests\ShopBundle\Test\Codeception\Module\StrictWebDriver;
 
 class WebDriverHelper extends Module
 {
-    /**
-     * @return \Tests\ShopBundle\Test\Codeception\Module\StrictWebDriver
-     */
-    private function getWebDriver()
+    private function getWebDriver(): \Tests\ShopBundle\Test\Codeception\Module\StrictWebDriver
     {
         return $this->getModule(StrictWebDriver::class);
     }

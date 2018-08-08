@@ -42,7 +42,7 @@ class ParameterFilterChoiceRepository
         PricingGroup $pricingGroup,
         $locale,
         Category $category
-    ) {
+    ): array {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -80,7 +80,7 @@ class ParameterFilterChoiceRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
-    private function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale)
+    private function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale): array
     {
         $parameterIds = [];
         foreach ($rows as $row) {
@@ -136,7 +136,7 @@ class ParameterFilterChoiceRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    private function getParameterValuesIndexedByIdOrderedByText(array $rows, $locale)
+    private function getParameterValuesIndexedByIdOrderedByText(array $rows, $locale): array
     {
         $valueIds = [];
         foreach ($rows as $row) {

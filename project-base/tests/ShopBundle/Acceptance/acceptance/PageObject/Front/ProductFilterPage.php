@@ -65,9 +65,8 @@ class ProductFilterPage extends AbstractPage
 
     /**
      * @param string $parameterLabel
-     * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function findParameterElementByLabel($parameterLabel)
+    private function findParameterElementByLabel($parameterLabel): \Facebook\WebDriver\WebDriverElement
     {
         $parameterItems = $this->webDriver->findElements(
             WebDriverBy::cssSelector('#product_filter_form_parameters .js-product-filter-parameter')
@@ -92,9 +91,8 @@ class ProductFilterPage extends AbstractPage
     /**
      * @param \Facebook\WebDriver\WebDriverElement $parameterElement
      * @param string $parameterValueText
-     * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getLabelElementByParameterValueText($parameterElement, $parameterValueText)
+    private function getLabelElementByParameterValueText($parameterElement, $parameterValueText): \Facebook\WebDriver\WebDriverElement
     {
         $labelElements = $parameterElement->findElements(WebDriverBy::cssSelector('.js-product-filter-parameter-value'));
 

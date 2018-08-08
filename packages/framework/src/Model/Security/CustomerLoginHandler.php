@@ -24,10 +24,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
         $this->router = $router;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token): \Symfony\Component\HttpFoundation\Response
     {
         $referer = $request->headers->get('referer');
         if ($request->isXmlHttpRequest()) {
@@ -42,10 +39,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
         }
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): \Symfony\Component\HttpFoundation\Response
     {
         if ($request->isXmlHttpRequest()) {
             $responseData = [

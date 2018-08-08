@@ -34,10 +34,7 @@ class OrderItemPriceCalculation
         $this->vatDataFactory = $vatDataFactory;
     }
 
-    /**
-     * @return string
-     */
-    public function calculatePriceWithoutVat(OrderItemData $orderItemData)
+    public function calculatePriceWithoutVat(OrderItemData $orderItemData): string
     {
         $vatData = $this->vatDataFactory->create();
         $vatData->name = 'orderItemVat';
@@ -48,10 +45,7 @@ class OrderItemPriceCalculation
         return $orderItemData->priceWithVat - $vatAmount;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    public function calculateTotalPrice(OrderItem $orderItem)
+    public function calculateTotalPrice(OrderItem $orderItem): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         $vatData = $this->vatDataFactory->create();
         $vatData->name = 'orderItemVat';
@@ -69,7 +63,7 @@ class OrderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderItems
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    public function calculateTotalPricesIndexedById($orderItems)
+    public function calculateTotalPricesIndexedById($orderItems): array
     {
         $prices = [];
 

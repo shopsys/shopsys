@@ -25,10 +25,7 @@ class GeneratorResult
         $this->writtenBytes = $writtenBytes;
     }
 
-    /**
-     * @return string
-     */
-    public function getMigrationFilePath()
+    public function getMigrationFilePath(): string
     {
         return $this->migrationFilePath;
     }
@@ -41,10 +38,7 @@ class GeneratorResult
         return $this->writtenBytes;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasError()
+    public function hasError(): bool
     {
         return $this->writtenBytes === false || $this->writtenBytes === 0;
     }

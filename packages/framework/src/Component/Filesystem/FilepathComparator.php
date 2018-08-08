@@ -7,9 +7,8 @@ class FilepathComparator
     /**
      * @param string $path
      * @param string $directoryPath
-     * @return bool
      */
-    public function isPathWithinDirectory($path, $directoryPath)
+    public function isPathWithinDirectory($path, $directoryPath): bool
     {
         $directoryPathRealpath = realpath($directoryPath);
         if ($directoryPathRealpath === false) {
@@ -24,9 +23,8 @@ class FilepathComparator
     /**
      * @param string $path
      * @param string $directoryRealpath
-     * @return bool
      */
-    private function isPathWithinDirectoryRealpathRecursive($path, $directoryRealpath)
+    private function isPathWithinDirectoryRealpathRecursive($path, $directoryRealpath): bool
     {
         if (realpath($path) === $directoryRealpath) {
             return true;
@@ -41,9 +39,8 @@ class FilepathComparator
 
     /**
      * @param string $path
-     * @return bool
      */
-    private function hasAncestorPath($path)
+    private function hasAncestorPath($path): bool
     {
         return dirname($path) !== $path;
     }

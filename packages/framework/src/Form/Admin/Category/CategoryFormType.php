@@ -254,9 +254,8 @@ class CategoryFormType extends AbstractType
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
-     * @return string
      */
-    private function getCategoryNameForPlaceholder(DomainConfig $domainConfig, Category $category = null)
+    private function getCategoryNameForPlaceholder(DomainConfig $domainConfig, Category $category = null): string
     {
         $domainLocale = $domainConfig->getLocale();
 

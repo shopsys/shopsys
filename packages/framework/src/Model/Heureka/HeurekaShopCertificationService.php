@@ -8,9 +8,8 @@ class HeurekaShopCertificationService
 {
     /**
      * @param string $locale
-     * @return bool
      */
-    public function isDomainLocaleSupported($locale)
+    public function isDomainLocaleSupported($locale): bool
     {
         try {
             $this->getLanguageIdByLocale($locale);
@@ -22,9 +21,8 @@ class HeurekaShopCertificationService
 
     /**
      * @param string $locale
-     * @return int
      */
-    public function getLanguageIdByLocale($locale)
+    public function getLanguageIdByLocale($locale): int
     {
         $supportedLanguagesByLocale = [
             'cs' => ShopCertification::HEUREKA_CZ,
@@ -41,9 +39,8 @@ class HeurekaShopCertificationService
 
     /**
      * @param string $locale
-     * @return string|null
      */
-    public function getServerNameByLocale($locale)
+    public function getServerNameByLocale($locale): ?string
     {
         if ($locale === 'cs') {
             return 'Heureka.cz';

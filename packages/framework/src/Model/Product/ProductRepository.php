@@ -58,28 +58,23 @@ class ProductRepository
         $this->productSearchRepository = $productSearchRepository;
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getProductRepository()
+    protected function getProductRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Product::class);
     }
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
      */
-    public function findById($id)
+    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->getProductRepository()->find($id);
     }
 
     /**
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllListableQueryBuilder($domainId, PricingGroup $pricingGroup)
+    public function getAllListableQueryBuilder($domainId, PricingGroup $pricingGroup): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->getAllOfferedQueryBuilder($domainId, $pricingGroup);
         $queryBuilder->andWhere('p.variantType != :variantTypeVariant')
@@ -90,9 +85,8 @@ class ProductRepository
 
     /**
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllSellableQueryBuilder($domainId, PricingGroup $pricingGroup)
+    public function getAllSellableQueryBuilder($domainId, PricingGroup $pricingGroup): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->getAllOfferedQueryBuilder($domainId, $pricingGroup);
         $queryBuilder->andWhere('p.variantType != :variantTypeMain')
@@ -103,9 +97,8 @@ class ProductRepository
 
     /**
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllOfferedQueryBuilder($domainId, PricingGroup $pricingGroup)
+    public function getAllOfferedQueryBuilder($domainId, PricingGroup $pricingGroup): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->getAllVisibleQueryBuilder($domainId, $pricingGroup);
         $queryBuilder->andWhere('p.calculatedSellingDenied = FALSE');
@@ -115,9 +108,8 @@ class ProductRepository
 
     /**
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllVisibleQueryBuilder($domainId, PricingGroup $pricingGroup)
+    public function getAllVisibleQueryBuilder($domainId, PricingGroup $pricingGroup): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
@@ -158,13 +150,12 @@ class ProductRepository
 
     /**
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getListableInCategoryQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
         Category $category
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
         $this->filterByCategory($queryBuilder, $category, $domainId);
         return $queryBuilder;
@@ -172,13 +163,12 @@ class ProductRepository
 
     /**
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getListableForBrandQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
         Brand $brand
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
         $this->filterByBrand($queryBuilder, $brand);
         return $queryBuilder;
@@ -186,13 +176,12 @@ class ProductRepository
 
     /**
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getSellableInCategoryQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
         Category $category
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
         $this->filterByCategory($queryBuilder, $category, $domainId);
         return $queryBuilder;
@@ -200,13 +189,12 @@ class ProductRepository
 
     /**
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getOfferedInCategoryQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
         Category $category
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->getAllOfferedQueryBuilder($domainId, $pricingGroup);
         $this->filterByCategory($queryBuilder, $category, $domainId);
 
@@ -217,14 +205,13 @@ class ProductRepository
      * @param int $domainId
      * @param string $locale
      * @param string|null $searchText
-     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getListableBySearchTextQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
         $locale,
         $searchText
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
 
         $this->addTranslation($queryBuilder, $locale);
@@ -257,7 +244,6 @@ class ProductRepository
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginationResultForListableInCategory(
         Category $category,
@@ -268,7 +254,7 @@ class ProductRepository
         PricingGroup $pricingGroup,
         $page,
         $limit
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult {
         $queryBuilder = $this->getFilteredListableInCategoryQueryBuilder(
             $category,
             $domainId,
@@ -290,7 +276,6 @@ class ProductRepository
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginationResultForListableForBrand(
         Brand $brand,
@@ -300,7 +285,7 @@ class ProductRepository
         PricingGroup $pricingGroup,
         $page,
         $limit
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult {
         $queryBuilder = $this->getListableForBrandQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -319,7 +304,6 @@ class ProductRepository
     /**
      * @param int $domainId
      * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getFilteredListableInCategoryQueryBuilder(
         Category $category,
@@ -327,7 +311,7 @@ class ProductRepository
         $locale,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -352,7 +336,6 @@ class ProductRepository
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginationResultForSearchListable(
         $searchText,
@@ -363,7 +346,7 @@ class ProductRepository
         PricingGroup $pricingGroup,
         $page,
         $limit
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult {
         $queryBuilder = $this->getFilteredListableForSearchQueryBuilder(
             $searchText,
             $domainId,
@@ -384,7 +367,6 @@ class ProductRepository
      * @param string|null $searchText
      * @param int $domainId
      * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getFilteredListableForSearchQueryBuilder(
         $searchText,
@@ -392,7 +374,7 @@ class ProductRepository
         $locale,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->getListableBySearchTextQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -472,9 +454,8 @@ class ProductRepository
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getById($id)
+    public function getById($id): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $product = $this->findById($id);
 
@@ -489,7 +470,7 @@ class ProductRepository
      * @param int[] $ids
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllByIds($ids)
+    public function getAllByIds($ids): array
     {
         return $this->getProductRepository()->findBy(['id' => $ids]);
     }
@@ -497,9 +478,8 @@ class ProductRepository
     /**
      * @param int $id
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getVisible($id, $domainId, PricingGroup $pricingGroup)
+    public function getVisible($id, $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $qb = $this->getAllVisibleQueryBuilder($domainId, $pricingGroup);
         $qb->andWhere('p.id = :productId');
@@ -517,9 +497,8 @@ class ProductRepository
     /**
      * @param int $id
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getSellableById($id, $domainId, PricingGroup $pricingGroup)
+    public function getSellableById($id, $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $qb = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
         $qb->andWhere('p.id = :productId');
@@ -598,7 +577,7 @@ class ProductRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllSellableVariantsByMainVariant(Product $mainVariant, $domainId, PricingGroup $pricingGroup)
+    public function getAllSellableVariantsByMainVariant(Product $mainVariant, $domainId, PricingGroup $pricingGroup): array
     {
         $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
         $queryBuilder
@@ -611,9 +590,8 @@ class ProductRepository
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllSellableUsingStockInStockQueryBuilder($domainId, $pricingGroup)
+    public function getAllSellableUsingStockInStockQueryBuilder($domainId, $pricingGroup): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
         $queryBuilder
@@ -626,7 +604,7 @@ class ProductRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAtLeastSomewhereSellableVariantsByMainVariant(Product $mainVariant)
+    public function getAtLeastSomewhereSellableVariantsByMainVariant(Product $mainVariant): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
@@ -644,7 +622,7 @@ class ProductRepository
      * @param int[] $productIds
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getOfferedByIds($domainId, PricingGroup $pricingGroup, array $productIds)
+    public function getOfferedByIds($domainId, PricingGroup $pricingGroup, array $productIds): array
     {
         if (count($productIds) === 0) {
             return [];
@@ -658,9 +636,8 @@ class ProductRepository
 
     /**
      * @param string $productCatnum
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getOneByCatnumExcludeMainVariants($productCatnum)
+    public function getOneByCatnumExcludeMainVariants($productCatnum): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $queryBuilder = $this->getProductRepository()->createQueryBuilder('p')
             ->andWhere('p.catnum = :catnum')

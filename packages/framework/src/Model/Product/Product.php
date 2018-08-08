@@ -342,19 +342,15 @@ class Product extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public static function create(ProductData $productData)
+    public static function create(ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return new self($productData, null);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public static function createMainVariant(ProductData $productData, array $variants)
+    public static function createMainVariant(ProductData $productData, array $variants): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return new self($productData, $variants);
     }
@@ -423,28 +419,23 @@ class Product extends AbstractTranslatableEntity
         $this->price = Utils::ifNull($price, 0);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * @param string|null $locale
-     * @return string|null
      */
-    public function getName($locale = null)
+    public function getName($locale = null): ?string
     {
         return $this->translation($locale)->getName();
     }
 
     /**
      * @param string|null $locale
-     * @return string|null
      */
-    public function getVariantAlias($locale = null)
+    public function getVariantAlias($locale = null): ?string
     {
         return $this->translation($locale)->getVariantAlias();
     }
@@ -452,7 +443,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return string[]
      */
-    public function getNames()
+    public function getNames(): array
     {
         $namesByLocale = [];
 
@@ -463,154 +454,97 @@ class Product extends AbstractTranslatableEntity
         return $namesByLocale;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCatnum()
+    public function getCatnum(): ?string
     {
         return $this->catnum;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPartno()
+    public function getPartno(): ?string
     {
         return $this->partno;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getEan()
+    public function getEan(): ?string
     {
         return $this->ean;
     }
 
-    /**
-     * @return string
-     */
-    public function getPrice()
+    public function getPrice(): string
     {
         return $this->price;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    public function getVat()
+    public function getVat(): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->vat;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getSellingFrom()
+    public function getSellingFrom(): ?DateTime
     {
         return $this->sellingFrom;
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function getSellingTo()
+    public function getSellingTo(): ?DateTime
     {
         return $this->sellingTo;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @return bool
-     */
-    public function getCalculatedHidden()
+    public function getCalculatedHidden(): bool
     {
         return $this->calculatedHidden;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSellingDenied()
+    public function isSellingDenied(): bool
     {
         return $this->sellingDenied;
     }
 
-    /**
-     * @return bool
-     */
-    public function getCalculatedSellingDenied()
+    public function getCalculatedSellingDenied(): bool
     {
         return $this->calculatedSellingDenied;
     }
 
-    /**
-     * @return bool
-     */
-    public function isUsingStock()
+    public function isUsingStock(): bool
     {
         return $this->usingStock;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getStockQuantity()
+    public function getStockQuantity(): ?int
     {
         return $this->stockQuantity;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
-     */
-    public function getUnit()
+    public function getUnit(): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         return $this->unit;
     }
 
-    /**
-     * @return string
-     */
-    public function getOutOfStockAction()
+    public function getOutOfStockAction(): string
     {
         return $this->outOfStockAction;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     */
-    public function getAvailability()
+    public function getAvailability(): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         return $this->availability;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
-     */
-    public function getOutOfStockAvailability()
+    public function getOutOfStockAvailability(): ?\Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         return $this->outOfStockAvailability;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     */
-    public function getCalculatedAvailability()
+    public function getCalculatedAvailability(): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         return $this->calculatedAvailability;
     }
 
-    /**
-     * @return int
-     */
-    public function getOrderingPriority()
+    public function getOrderingPriority(): int
     {
         return $this->orderingPriority;
     }
@@ -684,7 +618,7 @@ class Product extends AbstractTranslatableEntity
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[]
      */
-    protected function getProductCategoryDomainsByDomainIdIndexedByCategoryId($domainId)
+    protected function getProductCategoryDomainsByDomainIdIndexedByCategoryId($domainId): array
     {
         $productCategoryDomainsByCategoryId = [];
 
@@ -700,7 +634,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getFlags()
+    public function getFlags(): array
     {
         return $this->flags;
     }
@@ -719,34 +653,22 @@ class Product extends AbstractTranslatableEntity
         return $categoriesByDomainId;
     }
 
-    /**
-     * @return string
-     */
-    public function getPriceCalculationType()
+    public function getPriceCalculationType(): string
     {
         return $this->priceCalculationType;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
-     */
-    public function getBrand()
+    public function getBrand(): ?\Shopsys\FrameworkBundle\Model\Product\Brand\Brand
     {
         return $this->brand;
     }
 
-    /**
-     * @return bool
-     */
-    protected function getCalculatedVisibility()
+    protected function getCalculatedVisibility(): bool
     {
         return $this->calculatedVisibility;
     }
 
-    /**
-     * @return bool
-     */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return $this->getCalculatedVisibility();
     }
@@ -766,26 +688,17 @@ class Product extends AbstractTranslatableEntity
         $this->recalculateAvailability = true;
     }
 
-    /**
-     * @return bool
-     */
-    public function isMainVariant()
+    public function isMainVariant(): bool
     {
         return $this->variantType === self::VARIANT_TYPE_MAIN;
     }
 
-    /**
-     * @return bool
-     */
-    public function isVariant()
+    public function isVariant(): bool
     {
         return $this->variantType === self::VARIANT_TYPE_VARIANT;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    public function getMainVariant()
+    public function getMainVariant(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         if (!$this->isVariant()) {
             throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsNotVariantException();
@@ -831,7 +744,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getVariants()
+    public function getVariants(): array
     {
         return $this->variants->toArray();
     }
@@ -893,10 +806,7 @@ class Product extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductDomain
-     */
-    protected function getProductDomain(int $domainId)
+    protected function getProductDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Product\ProductDomain
     {
         foreach ($this->domains as $domain) {
             if ($domain->getDomainId() === $domainId) {
@@ -907,50 +817,32 @@ class Product extends AbstractTranslatableEntity
         throw new ProductDomainNotFoundException($this->id, $domainId);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getShortDescription(int $domainId)
+    public function getShortDescription(int $domainId): ?string
     {
         return $this->getProductDomain($domainId)->getShortDescription();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getDescription(int $domainId)
+    public function getDescription(int $domainId): ?string
     {
         return $this->getProductDomain($domainId)->getDescription();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoH1(int $domainId)
+    public function getSeoH1(int $domainId): ?string
     {
         return $this->getProductDomain($domainId)->getSeoH1();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoTitle(int $domainId)
+    public function getSeoTitle(int $domainId): ?string
     {
         return $this->getProductDomain($domainId)->getSeoTitle();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSeoMetaDescription(int $domainId)
+    public function getSeoMetaDescription(int $domainId): ?string
     {
         return $this->getProductDomain($domainId)->getSeoMetaDescription();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductTranslation
-     */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\ProductTranslation
     {
         return new ProductTranslation();
     }

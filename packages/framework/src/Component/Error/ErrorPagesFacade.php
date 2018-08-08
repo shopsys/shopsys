@@ -62,9 +62,8 @@ class ErrorPagesFacade
     /**
      * @param int $domainId
      * @param int $statusCode
-     * @return string
      */
-    public function getErrorPageContentByDomainIdAndStatusCode($domainId, $statusCode)
+    public function getErrorPageContentByDomainIdAndStatusCode($domainId, $statusCode): string
     {
         $errorPageContent = file_get_contents($this->getErrorPageFilename($domainId, $statusCode));
         if ($errorPageContent === false) {
@@ -76,9 +75,8 @@ class ErrorPagesFacade
 
     /**
      * @param int $statusCode
-     * @return int
      */
-    public function getErrorPageStatusCodeByStatusCode($statusCode)
+    public function getErrorPageStatusCodeByStatusCode($statusCode): int
     {
         if ($statusCode === Response::HTTP_NOT_FOUND || $statusCode === Response::HTTP_FORBIDDEN) {
             return self::PAGE_STATUS_CODE_404;
@@ -114,9 +112,8 @@ class ErrorPagesFacade
     /**
      * @param int $domainId
      * @param int $statusCode
-     * @return string
      */
-    protected function getErrorPageFilename($domainId, $statusCode)
+    protected function getErrorPageFilename($domainId, $statusCode): string
     {
         return $this->errorPagesDir . $statusCode . '_ ' . $domainId . '.html';
     }
@@ -124,9 +121,8 @@ class ErrorPagesFacade
     /**
      * @param string $errorPageUrl
      * @param int $expectedStatusCode
-     * @return string
      */
-    protected function getUrlContent($errorPageUrl, $expectedStatusCode)
+    protected function getUrlContent($errorPageUrl, $expectedStatusCode): string
     {
         $errorPageKernel = new AppKernel(EnvironmentType::PRODUCTION, false);
 
