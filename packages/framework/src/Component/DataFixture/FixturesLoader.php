@@ -65,8 +65,11 @@ class FixturesLoader extends Loader
 
         parent::addFixture($fixture);
     }
-    
-    protected function createFixture(string $class): \Doctrine\Common\DataFixtures\FixtureInterface
+
+    /**
+     * @param string $class
+     */
+    protected function createFixture($class): \Doctrine\Common\DataFixtures\FixtureInterface
     {
         /*
          * We don't actually need to create the fixture. We just
@@ -112,8 +115,11 @@ class FixturesLoader extends Loader
             }
         }
     }
-    
-    public function loadFromDirectory(string $dir): void
+
+    /**
+     * @param string $dir
+     */
+    public function loadFromDirectory($dir): void
     {
         $fixtures = $this->symfonyFixturesLoader->loadFromDirectory($dir);
         $this->addFixtures($fixtures);

@@ -25,7 +25,7 @@ class ProductPriceCronModule implements IteratedCronModuleInterface
     /**
      * @inheritdoc
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
@@ -41,7 +41,7 @@ class ProductPriceCronModule implements IteratedCronModuleInterface
     /**
      * @inheritdoc
      */
-    public function iterate()
+    public function iterate(): bool
     {
         if ($this->productPriceRecalculator->runBatchOfScheduledDelayedRecalculations()) {
             $this->logger->debug('Batch is recalculated.');

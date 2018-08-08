@@ -25,8 +25,11 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
         $this->domain = $domain;
         $this->domainRouterFactory = $domainRouterFactory;
     }
-    
-    public function validate(array $values, Constraint $constraint): void
+
+    /**
+     * @param mixed $values
+     */
+    public function validate($values, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueSlugsOnDomains) {
             throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, UniqueSlugsOnDomains::class);
@@ -53,7 +56,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
             }
         }
     }
-    
+
     private function validateExists(array $values, UniqueSlugsOnDomains $constraint): void
     {
         foreach ($values as $urlData) {

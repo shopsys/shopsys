@@ -43,13 +43,21 @@ class CurrentDomainRouter implements RouterInterface
     {
         return $this->getDomainRouter()->getRouteCollection();
     }
-    
-    public function generate(string $routeName, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
+
+    /**
+     * @param string $routeName
+     * @param array $parameters
+     * @param int $referenceType
+     */
+    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->getDomainRouter()->generate($routeName, $parameters, $referenceType);
     }
-    
-    public function match(string $pathinfo): array
+
+    /**
+     * @param string $pathinfo
+     */
+    public function match($pathinfo): array
     {
         return $this->getDomainRouter()->match($pathinfo);
     }

@@ -101,11 +101,7 @@ class ImageConfig
         return false;
     }
 
-    /**
-     * @param string $entityName
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
-     */
-    public function getEntityConfigByEntityName(string $entityName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
+    public function getEntityConfigByEntityName(string $entityName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig
     {
         foreach ($this->imageEntityConfigsByClass as $entityConfig) {
             if ($entityConfig->getEntityName() === $entityName) {

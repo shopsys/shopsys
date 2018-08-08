@@ -34,14 +34,22 @@ class ParameterInlineEdit extends AbstractGridInlineEdit
         $this->formFactory = $formFactory;
         $this->parameterDataFactory = $parameterDataFactory;
     }
-    protected function createEntityAndGetId(\Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData): int
+
+    /**
+     * @param ParameterData $parameterData
+     */
+    protected function createEntityAndGetId($parameterData): int
     {
         $parameter = $this->parameterFacade->create($parameterData);
 
         return $parameter->getId();
     }
-    
-    protected function editEntity(int $parameterId, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData): void
+
+    /**
+     * @param int $parameterId
+     * @param ParameterData $parameterData
+     */
+    protected function editEntity($parameterId, $parameterData): void
     {
         $this->parameterFacade->edit($parameterId, $parameterData);
     }
@@ -49,7 +57,7 @@ class ParameterInlineEdit extends AbstractGridInlineEdit
     /**
      * @param int|null $parameterId
      */
-    public function getForm(?int $parameterId): \Symfony\Component\Form\FormInterface
+    public function getForm($parameterId): \Symfony\Component\Form\FormInterface
     {
         if ($parameterId !== null) {
             $parameter = $this->parameterFacade->getById((int)$parameterId);

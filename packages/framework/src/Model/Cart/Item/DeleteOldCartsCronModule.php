@@ -21,7 +21,8 @@ class DeleteOldCartsCronModule implements SimpleCronModuleInterface
     /**
      * @inheritdoc
      */
-    public function setLogger(Logger $logger)
+
+    public function setLogger(Logger $logger): void
     {
     }
 

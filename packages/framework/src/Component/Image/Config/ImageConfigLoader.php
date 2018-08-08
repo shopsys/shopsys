@@ -28,7 +28,7 @@ class ImageConfigLoader
     {
         $this->filesystem = $filesystem;
     }
-    
+
     public function loadFromYaml(string $filename): \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
     {
         $yamlParser = new Parser();
@@ -71,7 +71,7 @@ class ImageConfigLoader
 
         return $this->foundEntityConfigs;
     }
-    
+
     private function processEntityConfig(array $entityConfig): void
     {
         $entityClass = $entityConfig[ImageConfigDefinition::CONFIG_CLASS];
@@ -119,7 +119,7 @@ class ImageConfigLoader
 
         return $result;
     }
-    
+
     private function prepareTypes(array $typesConfig): array
     {
         $result = [];

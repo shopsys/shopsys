@@ -19,17 +19,26 @@ use PHP_CodeSniffer\Util\Common;
  */
 final class ValidVariableNameSniff extends AbstractVariableSniff
 {
-    protected function processVariable(File $file, int $position): void
+    /**
+     * @param int $position
+     */
+    protected function processVariable(File $file, $position): void
     {
         $errorMessageFormat = 'Variable "$%s" should be camel case';
         $this->checkCamelCaseFormatViolation($file, $position, $errorMessageFormat);
     }
-    
-    protected function processVariableInString(File $file, int $position): void
+
+    /**
+     * @param int $position
+     */
+    protected function processVariableInString(File $file, $position): void
     {
     }
-    
-    protected function processMemberVar(File $file, int $position): void
+
+    /**
+     * @param int $position
+     */
+    protected function processMemberVar(File $file, $position): void
     {
         $errorMessageFormat = 'Class member variable "$%s" should be camel case';
         $this->checkCamelCaseFormatViolation($file, $position, $errorMessageFormat);

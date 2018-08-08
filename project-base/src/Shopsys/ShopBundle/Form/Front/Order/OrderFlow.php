@@ -16,7 +16,7 @@ class OrderFlow extends FormFlow
      * @var int
      */
     private $domainId;
-    
+
     public function setDomainId(int $domainId): void
     {
         $this->domainId = $domainId;
@@ -50,8 +50,11 @@ class OrderFlow extends FormFlow
         // Make instance ID constant as we do not want multiple instances of OrderFlow.
         return $this->getInstanceId();
     }
-    
-    public function getFormOptions(int $step, array $options = []): array
+
+    /**
+     * @param int $step
+     */
+    public function getFormOptions($step, array $options = []): array
     {
         $options = parent::getFormOptions($step, $options);
 

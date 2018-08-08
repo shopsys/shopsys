@@ -30,8 +30,11 @@ class AdministratorUserProvider implements UserProviderInterface
         $this->administratorRepository = $administratorRepository;
         $this->administratorActivityFacade = $administratorActivityFacade;
     }
-    
-    public function loadUserByUsername(string $username): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+
+    /**
+     * @param string $username
+     */
+    public function loadUserByUsername($username): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         $administrator = $this->administratorRepository->findByUserName($username);
 
@@ -82,8 +85,11 @@ class AdministratorUserProvider implements UserProviderInterface
 
         return $freshAdministrator;
     }
-    
-    public function supportsClass(string $class): bool
+
+    /**
+     * @param string $class
+     */
+    public function supportsClass($class): bool
     {
         return Administrator::class === $class || is_subclass_of($class, Administrator::class);
     }

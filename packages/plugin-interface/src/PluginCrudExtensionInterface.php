@@ -26,9 +26,9 @@ interface PluginCrudExtensionInterface
     /**
      * Saves the data of an entity with provided id after submitting of the sub-form
      *
-     * @param mixed $data
+     * @param mixed[] $data
      */
-    public function saveData(int $id, $data): void;
+    public function saveData(int $id, array $data): void;
 
     /**
      * Removes all saved data of an entity with provided id after deleting the entity

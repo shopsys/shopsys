@@ -12,7 +12,7 @@ class ProductNameFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'productName';
     }
@@ -20,7 +20,7 @@ class ProductNameFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_CONTAINS,
@@ -39,7 +39,7 @@ class ProductNameFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions():array
     {
         return [];
     }
@@ -47,7 +47,7 @@ class ProductNameFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             if ($ruleData->value === null) {
@@ -61,7 +61,7 @@ class ProductNameFilter implements AdvancedSearchFilterInterface
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
     }
-    
+
     private function getDqlOperator(string $operator): string
     {
         switch ($operator) {

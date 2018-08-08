@@ -9,10 +9,10 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct;
 
 class OrderProductFilter implements AdvancedSearchFilterInterface
 {
-    /**
+/**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'orderProduct';
     }
@@ -20,8 +20,8 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
-    {
+    public function getAllowedOperators(): array
+{
         return [
             self::OPERATOR_CONTAINS,
             self::OPERATOR_NOT_CONTAINS,
@@ -36,10 +36,10 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
         return ProductType::class;
     }
 
-    /**
+/**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions():array
     {
         return [];
     }
@@ -47,7 +47,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             if ($ruleData->operator === self::OPERATOR_CONTAINS || $ruleData->operator === self::OPERATOR_NOT_CONTAINS) {
@@ -65,7 +65,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
             }
         }
     }
-    
+
     private function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {

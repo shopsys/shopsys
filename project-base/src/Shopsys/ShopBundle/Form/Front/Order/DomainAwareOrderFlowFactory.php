@@ -2,6 +2,7 @@
 
 namespace Shopsys\ShopBundle\Form\Front\Order;
 
+use Craue\FormFlowBundle\Form\FormFlow;
 use Craue\FormFlowBundle\Storage\DataManager;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface;
@@ -58,7 +59,10 @@ class DomainAwareOrderFlowFactory implements OrderFlowFactoryInterface
         $this->dataManager = $dataManager;
     }
 
-    public function create(): \Shopsys\ShopBundle\Form\Front\Order\OrderFlow
+    /**
+     * @return \Shopsys\ShopBundle\Form\Front\Order\OrderFlow
+     */
+    public function create(): FormFlow
     {
         $orderFlow = new OrderFlow();
         $orderFlow->setDomainId($this->domain->getId());

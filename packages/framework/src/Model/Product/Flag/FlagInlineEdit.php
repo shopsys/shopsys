@@ -34,15 +34,22 @@ class FlagInlineEdit extends AbstractGridInlineEdit
         $this->formFactory = $formFactory;
         $this->flagDataFactory = $flagDataFactory;
     }
-    
-    protected function createEntityAndGetId(\Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData): int
+
+    /**
+     * @param FlagData $flagData
+     */
+    protected function createEntityAndGetId($flagData): int
     {
         $flag = $this->flagFacade->create($flagData);
 
         return $flag->getId();
     }
-    
-    protected function editEntity(int $flagId, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData): void
+
+    /**
+     * @param int $flagId
+     * @param FlagData $flagData
+     */
+    protected function editEntity($flagId, $flagData): void
     {
         $this->flagFacade->edit($flagId, $flagData);
     }
@@ -50,7 +57,7 @@ class FlagInlineEdit extends AbstractGridInlineEdit
     /**
      * @param int|null $flagId
      */
-    public function getForm(?int $flagId): \Symfony\Component\Form\FormInterface
+    public function getForm($flagId): \Symfony\Component\Form\FormInterface
     {
         if ($flagId !== null) {
             $flag = $this->flagFacade->getById((int)$flagId);

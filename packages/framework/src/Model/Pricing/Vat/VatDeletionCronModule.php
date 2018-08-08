@@ -32,7 +32,7 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
     /**
      * @inheritdoc
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
         $this->logger = $logger;
     }
@@ -50,7 +50,7 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
     /**
      * @inheritdoc
      */
-    public function iterate()
+    public function iterate(): bool
     {
         $batchResult = $this->productInputPriceFacade->replaceBatchVatAndRecalculateInputPrices();
 

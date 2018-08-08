@@ -80,8 +80,11 @@ class PersonalDataAccessMail implements MailTypeInterface, MessageFactoryInterfa
            self::VARIABLE_URL,
         ];
     }
-    
-    public function createMessage(MailTemplate $template, \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest): \Shopsys\FrameworkBundle\Model\Mail\MessageData
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
+     */
+    public function createMessage(MailTemplate $template, $personalDataAccessRequest): \Shopsys\FrameworkBundle\Model\Mail\MessageData
     {
         return new MessageData(
             $personalDataAccessRequest->getEmail(),
@@ -100,7 +103,7 @@ class PersonalDataAccessMail implements MailTypeInterface, MessageFactoryInterfa
             $this->getSubjectValuesIndexedByVariableName($this->domain->getName())
         );
     }
-    
+
     private function getBodyValuesIndexedByVariableName(string $url, string $email, string $domainName): array
     {
         return [
@@ -109,14 +112,14 @@ class PersonalDataAccessMail implements MailTypeInterface, MessageFactoryInterfa
             self::VARIABLE_DOMAIN => $domainName,
         ];
     }
-    
+
     private function getSubjectValuesIndexedByVariableName(string $domainName): array
     {
         return [
             self::VARIABLE_DOMAIN => $domainName,
         ];
     }
-    
+
     private function getVariablePersonalDataAccessUrl(string $hash): string
     {
         $router = $this->domainRouterFactory->getRouter($this->domain->getId());

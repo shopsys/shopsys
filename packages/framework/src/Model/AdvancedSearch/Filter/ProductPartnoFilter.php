@@ -12,7 +12,7 @@ class ProductPartnoFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'productPartno';
     }
@@ -20,7 +20,7 @@ class ProductPartnoFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_CONTAINS,
@@ -40,7 +40,7 @@ class ProductPartnoFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions():array
     {
         return [];
     }
@@ -48,7 +48,7 @@ class ProductPartnoFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             if ($ruleData->operator === self::OPERATOR_NOT_SET) {
@@ -67,7 +67,7 @@ class ProductPartnoFilter implements AdvancedSearchFilterInterface
             }
         }
     }
-    
+
     private function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {
