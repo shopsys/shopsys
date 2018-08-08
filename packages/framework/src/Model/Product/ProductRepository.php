@@ -168,9 +168,6 @@ class ProductRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getListableBySearchTextQueryBuilder(
         int $domainId,
         PricingGroup $pricingGroup,
@@ -273,9 +270,6 @@ class ProductRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getPaginationResultForSearchListable(
         ?string $searchText,
         int $domainId,
@@ -302,9 +296,6 @@ class ProductRepository
         return $queryPaginator->getResult($page, $limit);
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getFilteredListableForSearchQueryBuilder(
         ?string $searchText,
         int $domainId,

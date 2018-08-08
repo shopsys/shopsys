@@ -193,9 +193,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         return $this->id;
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
@@ -226,17 +223,11 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         return $this->vat;
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function getDescription(?string $locale = null): ?string
     {
         return $this->translation($locale)->getDescription();
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function getInstructions(?string $locale = null): ?string
     {
         return $this->translation($locale)->getInstructions();

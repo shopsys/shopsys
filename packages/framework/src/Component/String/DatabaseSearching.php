@@ -16,9 +16,6 @@ class DatabaseSearching
         return $string;
     }
 
-    /**
-     * @param string|null $string
-     */
     public static function getFullTextLikeSearchString(?string $string): string
     {
         return '%' . self::getLikeSearchString($string) . '%';

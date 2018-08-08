@@ -18,9 +18,6 @@ class ProductSearchRepository
         $this->tsqueryFactory = $tsqueryFactory;
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function filterBySearchText(QueryBuilder $productQueryBuilder, ?string $searchText): void
     {
         if ($this->tsqueryFactory->isValidSearchText($searchText)) {
@@ -35,9 +32,6 @@ class ProductSearchRepository
         }
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function addRelevance(QueryBuilder $productQueryBuilder, ?string $searchText): void
     {
         $productQueryBuilder->addSelect('

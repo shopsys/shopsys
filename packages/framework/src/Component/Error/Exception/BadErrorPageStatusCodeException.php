@@ -6,9 +6,6 @@ use Exception;
 
 class BadErrorPageStatusCodeException extends Exception implements ErrorException
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $url, int $expectedStatusCode, int $actualStatusCode, Exception $previous = null)
     {
         $message = sprintf(

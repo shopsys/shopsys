@@ -93,9 +93,6 @@ class DomainController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/domain/edit/{id}", requirements={"id" = "\d+"}, condition="request.isXmlHttpRequest()")
-     */
     public function editAction(Request $request, int $id)
     {
         $id = (int)$id;

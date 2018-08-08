@@ -19,9 +19,6 @@ class TransMethodSpecification
      */
     private $domainArgumentIndex;
 
-    /**
-     * @param int|null $domainArgumentIndex
-     */
     public function __construct(string $methodName, int $messageIdArgumentIndex = 0, ?int $domainArgumentIndex = null)
     {
         $this->methodName = $methodName;

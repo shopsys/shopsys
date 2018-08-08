@@ -58,9 +58,6 @@ class UploadedFile implements EntityFileUploadInterface
      */
     protected $temporaryFilename;
 
-    /**
-     * @param string|null $temporaryFilename
-     */
     public function __construct(string $entityName, int $entityId, ?string $temporaryFilename)
     {
         $this->entityName = $entityName;
@@ -97,9 +94,6 @@ class UploadedFile implements EntityFileUploadInterface
         }
     }
 
-    /**
-     * @param string|null $temporaryFilename
-     */
     public function setTemporaryFilename(?string $temporaryFilename): void
     {
         $this->temporaryFilename = $temporaryFilename;

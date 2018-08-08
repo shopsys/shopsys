@@ -113,9 +113,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
         );
     }
 
-    /**
-     * @param string|null $descriptionDomain2
-     */
     private function editCategoryOnDomain2(string $referenceName, ?string $descriptionDomain2): void
     {
         $category = $this->getReference($referenceName);

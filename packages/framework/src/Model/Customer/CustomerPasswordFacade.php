@@ -48,9 +48,6 @@ class CustomerPasswordFacade
         $this->resetPasswordMailFacade->sendMail($user);
     }
 
-    /**
-     * @param string|null $hash
-     */
     public function isResetPasswordHashValid(string $email, int $domainId, ?string $hash): bool
     {
         $user = $this->userRepository->getUserByEmailAndDomain($email, $domainId);
@@ -58,9 +55,6 @@ class CustomerPasswordFacade
         return $this->customerPasswordService->isResetPasswordHashValid($user, $hash);
     }
 
-    /**
-     * @param string|null $hash
-     */
     public function setNewPassword(string $email, int $domainId, ?string $hash, string $newPassword): \Shopsys\FrameworkBundle\Model\Customer\User
     {
         $user = $this->userRepository->getUserByEmailAndDomain($email, $domainId);

@@ -25,10 +25,6 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
         return call_user_func($this->manipulateRowCallback, $row);
     }
 
-    /**
-     * @param int|null $limit
-     * @param string|null $orderSourceColumnName
-     */
     public function getPaginatedRows(?int $limit = null, int $page = 1, ?string $orderSourceColumnName = null, string $orderDirection = self::ORDER_ASC): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
     {
         $originalPaginationResult = parent::getPaginatedRows($limit, $page, $orderSourceColumnName, $orderDirection);

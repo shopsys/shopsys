@@ -144,10 +144,6 @@ class ImageExtension extends Twig_Extension
         return $this->domain->getUrl() . $this->frontDesignImageUrlPrefix . self::NOIMAGE_FILENAME;
     }
 
-    /**
-     * @param string|null $type
-     * @param string|null $sizeName
-     */
     private function getImageCssClass(string $entityName, ?string $type, ?string $sizeName): string
     {
         $allClassParts = [

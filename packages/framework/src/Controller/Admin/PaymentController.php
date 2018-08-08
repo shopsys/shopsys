@@ -85,9 +85,6 @@ class PaymentController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/payment/edit/{id}", requirements={"id" = "\d+"})
-     */
     public function editAction(Request $request, int $id)
     {
         $payment = $this->paymentFacade->getById($id);
@@ -124,10 +121,6 @@ class PaymentController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/payment/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {

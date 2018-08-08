@@ -14,9 +14,6 @@ class FriendlyUrlUniqueResult
      */
     private $friendlyUrlForPersist;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null $friendlyUrl
-     */
     public function __construct(bool $unique, FriendlyUrl $friendlyUrl = null)
     {
         $this->unique = $unique;

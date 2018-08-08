@@ -11,9 +11,6 @@ class EntityParseException extends Exception implements ImageConfigException
      */
     private $entityClass;
 
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $entityClass, Exception $previous = null)
     {
         $this->entityClass = $entityClass;

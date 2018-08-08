@@ -127,25 +127,16 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         return $this->id;
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function getDescription(?string $locale = null): ?string
     {
         return $this->translation($locale)->getDescription();
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function getInstructions(?string $locale = null): ?string
     {
         return $this->translation($locale)->getInstructions();

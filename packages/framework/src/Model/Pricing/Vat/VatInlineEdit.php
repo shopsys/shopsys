@@ -54,9 +54,6 @@ class VatInlineEdit extends AbstractGridInlineEdit
         $this->vatFacade->edit($vatId, $vatData);
     }
 
-    /**
-     * @param int|null $vatIdvailabilityInlineEdi
-     */
     public function getForm($vatId): \Symfony\Component\Form\FormInterface
     {
         if ($vatId !== null) {

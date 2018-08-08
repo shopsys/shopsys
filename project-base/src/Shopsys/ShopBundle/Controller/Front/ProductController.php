@@ -276,9 +276,6 @@ class ProductController extends FrontBaseController
         );
     }
 
-    /**
-     * @param string|null $searchText
-     */
     private function createProductFilterConfigForSearch(?string $searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         return $this->productFilterConfigFactory->createForSearch(
@@ -346,9 +343,6 @@ class ProductController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param string|null $page
-     */
     private function isRequestPageValid(?string $page): bool
     {
         return $page === null || (preg_match('@^([2-9]|[1-9][0-9]+)$@', $page));

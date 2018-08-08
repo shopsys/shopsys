@@ -75,9 +75,6 @@ class ScriptController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/script/edit/{scriptId}")
-     */
     public function editAction(Request $request, int $scriptId)
     {
         $script = $this->scriptFacade->getById($scriptId);
@@ -131,9 +128,6 @@ class ScriptController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/script/delete/{scriptId}")
-     */
     public function deleteAction(int $scriptId)
     {
         try {

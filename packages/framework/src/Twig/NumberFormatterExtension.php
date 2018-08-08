@@ -94,9 +94,6 @@ class NumberFormatterExtension extends Twig_Extension
         return $numberFormatter->format($number);
     }
 
-    /**
-     * @param string|null $locale
-     */
     private function getLocale(?string $locale = null): string
     {
         if ($locale === null) {

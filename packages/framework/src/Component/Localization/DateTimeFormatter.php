@@ -36,10 +36,6 @@ class DateTimeFormatter
         return $intlDateFormatter->format($value);
     }
 
-    /**
-     * @param int|null $dateType
-     * @param int|null $timeType
-     */
     private function getCustomPattern(string $locale, ?int $dateType, ?int $timeType): ?string
     {
         $dateTimePattern = $this->customDateTimeFormatPatternRepository->findDateTimePattern($locale, $dateType, $timeType);

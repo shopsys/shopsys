@@ -157,9 +157,6 @@ class ProductOnCurrentDomainFacade
         );
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getPaginatedProductDetailsForSearch(
         ?string $searchText,
         ProductFilterData $productFilterData,
@@ -187,9 +184,6 @@ class ProductOnCurrentDomainFacade
         );
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getSearchAutocompleteProducts(?string $searchText, int $limit): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
     {
         $emptyProductFilterData = new ProductFilterData();
@@ -230,9 +224,6 @@ class ProductOnCurrentDomainFacade
         );
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getProductFilterCountDataForSearch(
         ?string $searchText,
         ProductFilterConfig $productFilterConfig,

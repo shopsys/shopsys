@@ -117,9 +117,6 @@ class CustomerService
         return $deliveryAddress;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $userByEmail
-     */
     public function changeEmail(User $user, string $email, User $userByEmail = null): void
     {
         if ($email !== null) {

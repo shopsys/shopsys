@@ -37,9 +37,6 @@ class NewsletterController extends FrontBaseController
         $this->domain = $domain;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response|NULL
-     */
     public function subscribeEmailAction(Request $request): ?\Symfony\Component\HttpFoundation\Response
     {
         $form = $this->createSubscriptionForm();

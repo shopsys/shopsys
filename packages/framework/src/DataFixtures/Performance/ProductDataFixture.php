@@ -111,9 +111,6 @@ class ProductDataFixture
      */
     private $progressBarFactory;
 
-    /**
-     * @param \Faker\Generator $faker
-     */
     public function __construct(
         int $productTotalCount,
         EntityManagerInterface $em,

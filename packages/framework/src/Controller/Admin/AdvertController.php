@@ -71,9 +71,6 @@ class AdvertController extends AdminBaseController
         $this->advertDataFactory = $advertDataFactory;
     }
 
-    /**
-     * @Route("/advert/edit/{id}", requirements={"id" = "\d+"})
-     */
     public function editAction(Request $request, int $id)
     {
         $advert = $this->advertFacade->getById($id);
@@ -201,10 +198,6 @@ class AdvertController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/advert/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {

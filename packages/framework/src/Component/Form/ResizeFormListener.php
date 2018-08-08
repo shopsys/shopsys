@@ -39,9 +39,6 @@ class ResizeFormListener implements EventSubscriberInterface
      */
     private $deleteEmpty;
 
-    /**
-     * @param string|null $type
-     */
     public function __construct(
         ?string $type,
         array $options = [],

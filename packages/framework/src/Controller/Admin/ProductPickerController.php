@@ -55,9 +55,6 @@ class ProductPickerController extends AdminBaseController
         $this->productFacade = $productFacade;
     }
 
-    /**
-     * @Route("/product-picker/pick-multiple/{jsInstanceId}/")
-     */
     public function pickMultipleAction(Request $request, string $jsInstanceId)
     {
         return $this->getPickerResponse(
@@ -74,9 +71,6 @@ class ProductPickerController extends AdminBaseController
         );
     }
 
-    /**
-     * @Route("/product-picker/pick-single/{parentInstanceId}/", defaults={"parentInstanceId"="__instance_id__"})
-     */
     public function pickSingleAction(Request $request, string $parentInstanceId)
     {
         return $this->getPickerResponse(

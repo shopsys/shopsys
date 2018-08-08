@@ -119,25 +119,16 @@ class CategoryDomain
         return $this->enabled;
     }
 
-    /**
-     * @param string|null $seoTitle
-     */
     public function setSeoTitle(?string $seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
 
-    /**
-     * @param string|null $seoMetaDescription
-     */
     public function setSeoMetaDescription(?string $seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
 
-    /**
-     * @param string|null $seoH1
-     */
     public function setSeoH1(?string $seoH1): void
     {
         $this->seoH1 = $seoH1;

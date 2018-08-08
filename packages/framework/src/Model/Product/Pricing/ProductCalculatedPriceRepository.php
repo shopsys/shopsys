@@ -30,9 +30,6 @@ class ProductCalculatedPriceRepository
         return $this->em->getRepository(ProductCalculatedPrice::class);
     }
 
-    /**
-     * @param string|null $priceWithVat
-     */
     public function saveCalculatedPrice(Product $product, PricingGroup $pricingGroup, ?string $priceWithVat): void
     {
         $productCalculatedPrice = $this->getProductCalculatedPriceRepository()->find([

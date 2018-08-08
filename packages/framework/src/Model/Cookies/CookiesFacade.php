@@ -65,9 +65,6 @@ class CookiesFacade
         return null;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $cookiesArticle
-     */
     public function setCookiesArticleOnDomain(?Article $cookiesArticle, int $domainId): void
     {
         $cookiesArticleId = null;

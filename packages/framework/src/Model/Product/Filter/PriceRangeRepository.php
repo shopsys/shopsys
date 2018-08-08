@@ -38,9 +38,6 @@ class PriceRangeRepository
         return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getPriceRangeForSearch(int $domainId, PricingGroup $pricingGroup, string $locale, ?string $searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
     {
         $productsQueryBuilder = $this->productRepository

@@ -80,9 +80,6 @@ class ArticleController extends AdminBaseController
         $this->cookiesFacade = $cookiesFacade;
     }
 
-    /**
-     * @Route("/article/edit/{id}", requirements={"id" = "\d+"})
-     */
     public function editAction(Request $request, int $id)
     {
         $article = $this->articleFacade->getById($id);
@@ -170,10 +167,6 @@ class ArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/article/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {
@@ -194,9 +187,6 @@ class ArticleController extends AdminBaseController
         return $this->redirectToRoute('admin_article_list');
     }
 
-    /**
-     * @Route("/article/delete-confirm/{id}", requirements={"id" = "\d+"})
-     */
     public function deleteConfirmAction(int $id)
     {
         $article = $this->articleFacade->getById($id);

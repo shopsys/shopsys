@@ -37,9 +37,6 @@ class FeedController extends AdminBaseController
         $this->domain = $domain;
     }
 
-    /**
-     * @Route("/feed/generate/{feedName}/{domainId}", requirements={"domainId" = "\d+"})
-     */
     public function generateAction(string $feedName, int $domainId)
     {
         $domainConfig = $this->domain->getDomainConfigById((int)$domainId);

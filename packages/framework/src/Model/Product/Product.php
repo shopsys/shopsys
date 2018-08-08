@@ -411,9 +411,6 @@ class Product extends AbstractTranslatableEntity
         $this->recalculatePrice = true;
     }
 
-    /**
-     * @param string|null $price
-     */
     public function setPrice(?string $price): void
     {
         $this->price = Utils::ifNull($price, 0);
@@ -424,17 +421,11 @@ class Product extends AbstractTranslatableEntity
         return $this->id;
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function getName(?string $locale = null): ?string
     {
         return $this->translation($locale)->getName();
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function getVariantAlias(?string $locale = null): ?string
     {
         return $this->translation($locale)->getVariantAlias();

@@ -11,9 +11,6 @@ class UploadedFileEntityConfigNotFoundException extends Exception implements Upl
      */
     private $entityClassOrName;
 
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $entityClassOrName, Exception $previous = null)
     {
         $this->entityClassOrName = $entityClassOrName;

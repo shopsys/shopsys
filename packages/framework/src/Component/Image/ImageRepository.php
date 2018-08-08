@@ -21,9 +21,6 @@ class ImageRepository
         return $this->em->getRepository(Image::class);
     }
 
-    /**
-     * @param string|null $type
-     */
     public function findImageByEntity(string $entityName, int $entityId, ?string $type): ?\Shopsys\FrameworkBundle\Component\Image\Image
     {
         $image = $this->getImageRepository()->findOneBy(
@@ -41,9 +38,6 @@ class ImageRepository
         return $image;
     }
 
-    /**
-     * @param string|null $type
-     */
     public function getImageByEntity(string $entityName, int $entityId, ?string $type): \Shopsys\FrameworkBundle\Component\Image\Image
     {
         $image = $this->findImageByEntity($entityName, $entityId, $type);

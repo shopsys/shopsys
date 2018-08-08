@@ -63,9 +63,6 @@ class BrandController extends AdminBaseController
         $this->brandDataFactory = $brandDataFactory;
     }
 
-    /**
-     * @Route("/brand/edit/{id}", requirements={"id" = "\d+"})
-     */
     public function editAction(Request $request, int $id)
     {
         $brand = $this->brandFacade->getById($id);
@@ -162,10 +159,6 @@ class BrandController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/brand/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {

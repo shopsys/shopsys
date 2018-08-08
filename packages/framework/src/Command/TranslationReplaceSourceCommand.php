@@ -476,9 +476,6 @@ class TranslationReplaceSourceCommand extends Command
         }
     }
 
-    /**
-     * @param int|null $realCount
-     */
     private function logReplacementError(
         string $filePath,
         TranslationSourceReplacement $replacement,

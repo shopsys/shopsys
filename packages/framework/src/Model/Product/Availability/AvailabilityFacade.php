@@ -69,9 +69,6 @@ class AvailabilityFacade
         return $availability;
     }
 
-    /**
-     * @param int|null $newAvailabilityId
-     */
     public function deleteById(int $availabilityId, ?int $newAvailabilityId = null): void
     {
         $availability = $this->availabilityRepository->getById($availabilityId);

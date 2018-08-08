@@ -45,9 +45,6 @@ class RequestDataSetGenerator implements RouteConfig
         return $requestDataSets;
     }
 
-    /**
-     * @param string|null $debugNote
-     */
     public function skipRoute(?string $debugNote = null): \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
     {
         $this->defaultRequestDataSet->skip();
@@ -59,9 +56,6 @@ class RequestDataSetGenerator implements RouteConfig
         return $this;
     }
 
-    /**
-     * @param string|null $debugNote
-     */
     public function changeDefaultRequestDataSet(?string $debugNote = null): \Shopsys\HttpSmokeTesting\RequestDataSet
     {
         $requestDataSet = $this->defaultRequestDataSet;
@@ -73,9 +67,6 @@ class RequestDataSetGenerator implements RouteConfig
         return $requestDataSet;
     }
 
-    /**
-     * @param string|null $debugNote
-     */
     public function addExtraRequestDataSet(?string $debugNote = null): \Shopsys\HttpSmokeTesting\RequestDataSet
     {
         $requestDataSet = new RequestDataSet($this->routeInfo->getRouteName());

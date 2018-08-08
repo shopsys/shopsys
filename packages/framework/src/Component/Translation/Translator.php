@@ -97,9 +97,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
         return $message;
     }
 
-    /**
-     * @param string|null $locale
-     */
     private function resolveLocale(?string $locale): ?string
     {
         if ($locale === null) {
@@ -109,9 +106,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
         return $locale;
     }
 
-    /**
-     * @param string|null $domain
-     */
     private function resolveDomain(?string $domain): string
     {
         if ($domain === null) {
@@ -154,10 +148,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
         self::$self = $translator;
     }
 
-    /**
-     * @param string|null $domain
-     * @param string|null $locale
-     */
     public static function staticTrans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         if (self::$self === null) {
@@ -167,10 +157,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
         return self::$self->trans($id, $parameters, $domain, $locale);
     }
 
-    /**
-     * @param string|null $domain
-     * @param string|null $locale
-     */
     public static function staticTransChoice(string $id, int $number, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         if (self::$self === null) {

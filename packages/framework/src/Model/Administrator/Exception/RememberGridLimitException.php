@@ -11,9 +11,6 @@ class RememberGridLimitException extends Exception implements AdministratorExcep
      */
     private $gridId;
 
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $gridId, Exception $previous = null)
     {
         $this->gridId = $gridId;

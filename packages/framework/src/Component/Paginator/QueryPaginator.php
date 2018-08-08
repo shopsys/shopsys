@@ -20,9 +20,6 @@ class QueryPaginator implements PaginatorInterface
      */
     private $hydrationMode;
 
-    /**
-     * @param string|null $hydrationMode
-     */
     public function __construct(QueryBuilder $queryBuilder, ?string $hydrationMode = null)
     {
         $this->queryBuilder = $queryBuilder;

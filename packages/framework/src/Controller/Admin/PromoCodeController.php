@@ -51,10 +51,6 @@ class PromoCodeController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/promo-code/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {

@@ -6,9 +6,6 @@ use Exception;
 
 class UnableToResolveDomainException extends Exception implements DomainException
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $url, ?\Exception $previous = null)
     {
         $message = sprintf(

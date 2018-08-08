@@ -88,9 +88,6 @@ class LoginController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/sso/{originalDomainId}", requirements={"originalDomainId" = "\d+"})
-     */
     public function ssoAction(Request $request, int $originalDomainId)
     {
         $administrator = $this->getUser();

@@ -73,9 +73,6 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
         ]);
     }
 
-    /**
-     * @param int|null $currencyId
-     */
     protected function isDefaultCurrencyId(?int $currencyId): bool
     {
         if ($currencyId !== null) {

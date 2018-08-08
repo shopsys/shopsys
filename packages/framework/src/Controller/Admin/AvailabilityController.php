@@ -47,10 +47,6 @@ class AvailabilityController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/availability/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');
@@ -84,9 +80,6 @@ class AvailabilityController extends AdminBaseController
         return $this->redirectToRoute('admin_availability_list');
     }
 
-    /**
-     * @Route("/product/availability/delete-confirm/{id}", requirements={"id" = "\d+"})
-     */
     public function deleteConfirmAction(int $id)
     {
         try {

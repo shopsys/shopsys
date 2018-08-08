@@ -6,9 +6,6 @@ use Exception;
 
 class UnsupportedCurrencyException extends Exception implements LocalizationException
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $currencyCode, Exception $previous = null)
     {
         $message = sprintf('Currency code %s is not supported', $currencyCode);

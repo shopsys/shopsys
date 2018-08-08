@@ -126,9 +126,6 @@ class ScriptFacade
         return !empty($this->setting->getForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $domainId));
     }
 
-    /**
-     * @param string|null $trackingId
-     */
     public function setGoogleAnalyticsTrackingId(?string $trackingId, int $domainId): void
     {
         $this->setting->setForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $trackingId, $domainId);

@@ -29,9 +29,6 @@ class RegistrationPage extends AbstractPage
         $this->seeErrorForField('.js-validation-error-list-registration_form_password_first', $text);
     }
 
-    /**
-     * @param $fieldClass $text
-     */
     private function seeErrorForField($fieldClass, string $text): void
     {
         // Error message might be in popup - wait for animation

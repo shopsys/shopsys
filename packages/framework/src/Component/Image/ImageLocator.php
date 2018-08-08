@@ -29,9 +29,6 @@ class ImageLocator
         $this->filesystem = $filesystem;
     }
 
-    /**
-     * @param string|null $sizeName
-     */
     public function getRelativeImageFilepath(Image $image, ?string $sizeName): string
     {
         $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType(), $sizeName);
@@ -39,9 +36,6 @@ class ImageLocator
         return $path . $image->getFilename();
     }
 
-    /**
-     * @param string|null $sizeName
-     */
     public function getAbsoluteImageFilepath(Image $image, ?string $sizeName): string
     {
         $relativePath = $this->getRelativeImageFilepath($image, $sizeName);
@@ -56,10 +50,6 @@ class ImageLocator
         return $this->filesystem->has($imageFilepath);
     }
 
-    /**
-     * @param string|null $type
-     * @param string|null $sizeName
-     */
     public function getRelativeImagePath(string $entityName, ?string $type, ?string $sizeName): string
     {
         $this->imageConfig->assertImageSizeConfigByEntityNameExists($entityName, $type, $sizeName);

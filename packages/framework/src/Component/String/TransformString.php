@@ -21,9 +21,6 @@ class TransformString
         return $value === '' ? null : $value;
     }
 
-    /**
-     * @link http://php.vrana.cz/vytvoreni-pratelskeho-url.php
-     */
     public static function stringToFriendlyUrlSlug(string $string): string
     {
         $slug = $string;

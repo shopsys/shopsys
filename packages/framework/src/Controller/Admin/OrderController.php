@@ -105,9 +105,6 @@ class OrderController extends AdminBaseController
         $this->orderDataFactory = $orderDataFactory;
     }
 
-    /**
-     * @Route("/order/edit/{id}", requirements={"id" = "\d+"})
-     */
     public function editAction(Request $request, int $id)
     {
         $order = $this->orderFacade->getById($id);
@@ -161,9 +158,6 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/order/add-product/{orderId}", requirements={"orderId" = "\d+"}, condition="request.isXmlHttpRequest()")
-     */
     public function addProductAction(Request $request, int $orderId)
     {
         $productId = $request->get('productId');
@@ -250,10 +244,6 @@ class OrderController extends AdminBaseController
         return $row;
     }
 
-    /**
-     * @Route("/order/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {
@@ -283,9 +273,6 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/order/preview/{id}", requirements={"id" = "\d+"})
-     */
     public function previewAction(int $id)
     {
         $order = $this->orderFacade->getById($id);

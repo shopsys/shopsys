@@ -105,9 +105,6 @@ class FileUpload
         return $this->temporaryDir . '/' . self::TEMPORARY_DIRECTORY;
     }
 
-    /**
-     * @param string|null $targetDirectory
-     */
     public function getUploadDirectory(string $isImage, string $category, ?string $targetDirectory): string
     {
         return ($isImage ? $this->imageDir : $this->uploadedFileDir)
@@ -115,9 +112,6 @@ class FileUpload
             . ($targetDirectory !== null ? '/' . $targetDirectory : '');
     }
 
-    /**
-     * @param string|null $targetDirectory
-     */
     private function getTargetFilepath(string $filename, bool $isImage, string $category, ?string $targetDirectory): string
     {
         return $this->getUploadDirectory($isImage, $category, $targetDirectory) . '/' . $filename;

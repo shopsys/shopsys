@@ -143,9 +143,6 @@ class ImageFacade
         }
     }
 
-    /**
-     * @param string|null $type
-     */
     public function getImageByEntity(object $entity, ?string $type): \Shopsys\FrameworkBundle\Component\Image\Image
     {
         return $this->imageRepository->getImageByEntity(

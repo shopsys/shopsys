@@ -19,9 +19,6 @@ class BreadcrumbItem
      */
     private $routeParameters;
 
-    /**
-     * @param string|null $routeName
-     */
     public function __construct(string $name, ?string $routeName = null, array $routeParameters = [])
     {
         $this->name = $name;

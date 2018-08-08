@@ -55,9 +55,6 @@ class CurrencyController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/currency/delete-confirm/{id}", requirements={"id" = "\d+"})
-     */
     public function deleteConfirmAction(int $id)
     {
         try {
@@ -73,10 +70,6 @@ class CurrencyController extends AdminBaseController
         }
     }
 
-    /**
-     * @Route("/currency/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {

@@ -6,9 +6,6 @@ use Exception;
 
 class CannotParseDateTimeException extends Exception
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $format, string $time, Exception $previous = null)
     {
         $message = sprintf(

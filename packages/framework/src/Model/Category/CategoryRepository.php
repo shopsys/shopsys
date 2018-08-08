@@ -245,9 +245,6 @@ class CategoryRepository extends NestedTreeRepository
             ->setParameter('locale', $locale);
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getPaginationResultForSearchVisible(
         ?string $searchText,
         int $domainId,
@@ -278,9 +275,6 @@ class CategoryRepository extends NestedTreeRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    /**
-     * @param string|null $searchText
-     */
     protected function getVisibleByDomainIdAndSearchTextQueryBuilder(
         int $domainId,
         string $locale,
@@ -357,9 +351,6 @@ class CategoryRepository extends NestedTreeRepository
         return $listableProductCountsIndexedByCategoryId;
     }
 
-    /**
-     * @param string|null $searchText
-     */
     protected function filterBySearchText(QueryBuilder $queryBuilder, ?string $searchText): void
     {
         $queryBuilder->andWhere(

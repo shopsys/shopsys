@@ -14,9 +14,6 @@ class CustomerIdentifier
      */
     private $user;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
-     */
     public function __construct(string $cartIdentifier, User $user = null)
     {
         if ($cartIdentifier === '' && $user === null) {

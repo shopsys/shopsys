@@ -6,9 +6,6 @@ use Exception;
 
 class EntityNotFoundException extends Exception implements DataFixtureException
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $referenceName, Exception $previous = null)
     {
         parent::__construct('Entity from reference  "' . $referenceName . '" not found.', 0, $previous);

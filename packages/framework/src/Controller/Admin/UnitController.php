@@ -49,9 +49,6 @@ class UnitController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/unit/delete-confirm/{id}", requirements={"id" = "\d+"})
-     */
     public function deleteConfirmAction(int $id)
     {
         try {
@@ -92,10 +89,6 @@ class UnitController extends AdminBaseController
         }
     }
 
-    /**
-     * @Route("/product/unit/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');

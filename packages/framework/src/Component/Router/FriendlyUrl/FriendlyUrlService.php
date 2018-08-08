@@ -79,9 +79,6 @@ class FriendlyUrlService
         return new FriendlyUrlUniqueResult(false, $newIndexedFriendlyUrl);
     }
 
-    /**
-     * @param int|null $indexPostfix
-     */
     public function createFriendlyUrlIfValid(
         string $routeName,
         int $entityId,

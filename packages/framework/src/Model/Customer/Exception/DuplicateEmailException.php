@@ -11,9 +11,6 @@ class DuplicateEmailException extends Exception implements CustomerException
      */
     private $email;
 
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $email, ?\Exception $previous = null)
     {
         $this->email = $email;

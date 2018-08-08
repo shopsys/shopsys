@@ -23,49 +23,34 @@ class ImageConfig
     }
 
     /**
-     * @param Object $entity
+     * @param object $entity
      */
-    public function getEntityName(Object $entity): string
+    public function getEntityName($entity): string
     {
         $entityConfig = $this->getImageEntityConfig($entity);
         return $entityConfig->getEntityName();
     }
 
     /**
-     * @param Object $entity
-     * @param string|null $type
-     * @param string|null $sizeName
+     * @param object $entity
      */
-    public function getImageSizeConfigByEntity(Object $entity, ?string $type, ?string $sizeName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
+    public function getImageSizeConfigByEntity($entity, ?string $type, ?string $sizeName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
     {
         $entityConfig = $this->getImageEntityConfig($entity);
         return $entityConfig->getSizeConfigByType($type, $sizeName);
     }
 
-    /**
-     * @param string $entityName
-     * @param string|null $type
-     * @param string|null $sizeName
-     */
     public function getImageSizeConfigByEntityName(string $entityName, ?string $type, ?string $sizeName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
     {
         $entityConfig = $this->getEntityConfigByEntityName($entityName);
         return $entityConfig->getSizeConfigByType($type, $sizeName);
     }
 
-    /**
-     * @param string $entityName
-     * @param string|null $type
-     * @param string|null $sizeName
-     */
     public function assertImageSizeConfigByEntityNameExists(string $entityName, ?string $type, ?string $sizeName): void
     {
         $this->getImageSizeConfigByEntityName($entityName, $type, $sizeName);
     }
 
-    /**
-     * @param string|null $sizeName
-     */
     public function getImageSizeConfigByImage(Image $image, ?string $sizeName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
     {
         $entityConfig = $this->getEntityConfigByEntityName($image->getEntityName());
@@ -73,9 +58,9 @@ class ImageConfig
     }
 
     /**
-     * @param Object $entity
+     * @param object $entity
      */
-    public function getImageEntityConfig(Object $entity): \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig
+    public function getImageEntityConfig($entity): \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig
     {
         foreach ($this->imageEntityConfigsByClass as $className => $entityConfig) {
             if ($entity instanceof $className) {
@@ -88,9 +73,6 @@ class ImageConfig
         );
     }
 
-    /**
-     * @param object $entity
-     */
     public function hasImageConfig(object $entity): bool
     {
         foreach ($this->imageEntityConfigsByClass as $className => $entityConfig) {
@@ -120,9 +102,6 @@ class ImageConfig
         return $this->imageEntityConfigsByClass;
     }
 
-    /**
-     * @param string $class
-     */
     public function getImageEntityConfigByClass(string $class): \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig
     {
         if (array_key_exists($class, $this->imageEntityConfigsByClass)) {

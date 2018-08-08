@@ -60,9 +60,6 @@ class ProductFilterConfigFactory
         return new ProductFilterConfig($parameterFilterChoices, $flagFilterChoices, $brandFilterChoices, $priceRange);
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function createForSearch(int $domainId, string $locale, ?string $searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         $parameterFilterChoices = [];

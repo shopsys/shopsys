@@ -77,9 +77,6 @@ class OrderStatusFacade
         return $orderStatus;
     }
 
-    /**
-     * @param int|null $newOrderStatusId
-     */
     public function deleteById(int $orderStatusId, ?int $newOrderStatusId = null): void
     {
         $orderStatus = $this->orderStatusRepository->getById($orderStatusId);

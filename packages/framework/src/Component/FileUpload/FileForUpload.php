@@ -29,9 +29,6 @@ class FileForUpload
      */
     private $nameConventionType;
 
-    /**
-     * @param string|null $targetDirectory
-     */
     public function __construct(string $temporaryFilename, bool $isImage, string $category, ?string $targetDirectory, int $nameConventionType)
     {
         $this->temporaryFilename = $temporaryFilename;

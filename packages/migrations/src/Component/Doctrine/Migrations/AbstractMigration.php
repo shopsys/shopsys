@@ -18,9 +18,6 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         throw new \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException($message);
     }
 
-    /**
-     * @param \Doctrine\DBAL\Cache\QueryCacheProfile|null $qcp
-     */
     public function sql(string $query, array $params = [], array $types = [], QueryCacheProfile $qcp = null): \Doctrine\DBAL\Driver\Statement
     {
         return $this->connection->executeQuery($query, $params, $types, $qcp);

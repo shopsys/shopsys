@@ -63,10 +63,6 @@ class PricingGroupController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/pricing/group/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');
@@ -101,9 +97,6 @@ class PricingGroupController extends AdminBaseController
         return $this->redirectToRoute('admin_pricinggroup_list');
     }
 
-    /**
-     * @Route("/pricing/group/delete-confirm/{id}", requirements={"id" = "\d+"})
-     */
     public function deleteConfirmAction(int $id)
     {
         try {

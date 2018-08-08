@@ -46,10 +46,6 @@ class OrderStatusController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/order-status/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(Request $request, int $id)
     {
         $newId = $request->get('newId');
@@ -89,9 +85,6 @@ class OrderStatusController extends AdminBaseController
         return $this->redirectToRoute('admin_orderstatus_list');
     }
 
-    /**
-     * @Route("/order-status/delete-confirm/{id}", requirements={"id" = "\d+"})
-     */
     public function deleteConfirmAction(int $id)
     {
         try {

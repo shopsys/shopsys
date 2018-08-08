@@ -62,9 +62,6 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
         $this->createAvailability($availabilityData, self::AVAILABILITY_OUT_OF_STOCK);
     }
 
-    /**
-     * @param string|null $referenceName
-     */
     private function createAvailability(AvailabilityData $availabilityData, ?string $referenceName = null): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         $availability = $this->availabilityFacade->create($availabilityData);

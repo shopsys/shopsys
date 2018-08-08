@@ -37,9 +37,6 @@ class ProductManualInputPrice
      */
     protected $inputPrice;
 
-    /**
-     * @param string|null $inputPrice
-     */
     public function __construct(Product $product, PricingGroup $pricingGroup, ?string $inputPrice)
     {
         $this->product = $product;

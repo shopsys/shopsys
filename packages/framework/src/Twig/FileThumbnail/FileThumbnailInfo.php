@@ -14,10 +14,6 @@ class FileThumbnailInfo
      */
     private $imageUri;
 
-    /**
-     * @param string|null $iconType
-     * @param string|null $imageUri
-     */
     public function __construct(?string $iconType, ?string $imageUri = null)
     {
         $this->iconType = $iconType;

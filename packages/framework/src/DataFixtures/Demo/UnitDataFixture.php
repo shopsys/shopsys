@@ -52,9 +52,6 @@ class UnitDataFixture extends AbstractReferenceFixture
         $this->setPiecesAsDefaultUnit();
     }
 
-    /**
-     * @param string|null $referenceName
-     */
     private function createUnit(UnitData $unitData, ?string $referenceName = null): void
     {
         $unit = $this->unitFacade->create($unitData);

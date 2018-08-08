@@ -48,9 +48,6 @@ class Availability extends AbstractTranslatableEntity
         return $this->id;
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();

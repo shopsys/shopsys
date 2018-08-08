@@ -33,9 +33,6 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
         return null;
     }
 
-    /**
-     * @param string|null $locale
-     */
     protected function translation(?string $locale = null): \Prezent\Doctrine\Translatable\TranslationInterface
     {
         if ($locale === null) {
@@ -67,5 +64,5 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
     /**
      * @return \Prezent\Doctrine\Translatable\TranslationInterface
      */
-    abstract protected function createTranslation();
+    abstract protected function createTranslation(): \Prezent\Doctrine\Translatable\TranslationInterface;
 }

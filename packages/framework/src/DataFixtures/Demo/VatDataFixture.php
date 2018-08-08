@@ -69,9 +69,6 @@ class VatDataFixture extends AbstractReferenceFixture
         $this->setHighVatAsDefault();
     }
 
-    /**
-     * @param string|null $referenceName
-     */
     private function createVat(VatData $vatData, ?string $referenceName = null): void
     {
         $vat = $this->vatFacade->create($vatData);

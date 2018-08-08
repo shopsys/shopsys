@@ -4,9 +4,6 @@ namespace Shopsys\FrameworkBundle\Component\String;
 
 class TsqueryFactory
 {
-    /**
-     * @param string|null $searchText
-     */
     public function getTsqueryWithAndConditions(?string $searchText): string
     {
         $tokens = $this->splitToTokens($searchText);
@@ -14,9 +11,6 @@ class TsqueryFactory
         return implode(' & ', $tokens);
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getTsqueryWithAndConditionsAndPrefixMatchForLastWord(?string $searchText): string
     {
         $tokens = $this->splitToTokensWithPrefixMatchForLastToken($searchText);
@@ -24,9 +18,6 @@ class TsqueryFactory
         return implode(' & ', $tokens);
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getTsqueryWithOrConditions(?string $searchText): string
     {
         $tokens = $this->splitToTokens($searchText);
@@ -34,9 +25,6 @@ class TsqueryFactory
         return implode(' | ', $tokens);
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getTsqueryWithOrConditionsAndPrefixMatchForLastWord(?string $searchText): string
     {
         $tokens = $this->splitToTokensWithPrefixMatchForLastToken($searchText);
@@ -57,9 +45,6 @@ class TsqueryFactory
         return $tokens;
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function isValidSearchText(?string $searchText): bool
     {
         return count($this->splitToTokens($searchText)) > 0;

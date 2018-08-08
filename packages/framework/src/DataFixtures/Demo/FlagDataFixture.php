@@ -52,9 +52,6 @@ class FlagDataFixture extends AbstractReferenceFixture
         $this->createFlag($flagData, self::FLAG_ACTION_PRODUCT);
     }
 
-    /**
-     * @param string|null $referenceName
-     */
     private function createFlag(FlagData $flagData, ?string $referenceName = null): void
     {
         $flag = $this->flagFacade->create($flagData);

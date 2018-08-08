@@ -103,9 +103,6 @@ class CartItem
         return $this->product;
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function getName(?string $locale = null): ?string
     {
         return $this->getProduct()->getName($locale);
@@ -121,9 +118,6 @@ class CartItem
         return $this->watchedPrice;
     }
 
-    /**
-     * @param string|null $watchedPrice
-     */
     public function setWatchedPrice(?string $watchedPrice): void
     {
         $this->watchedPrice = $watchedPrice;

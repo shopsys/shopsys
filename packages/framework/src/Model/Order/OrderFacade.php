@@ -220,9 +220,6 @@ class OrderFacade
         return $order;
     }
 
-    /**
-     * @param bool|null $disallowHeurekaVerifiedByCustomers
-     */
     public function sendHeurekaOrderInfo(Order $order, ?bool $disallowHeurekaVerifiedByCustomers): void
     {
         $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());

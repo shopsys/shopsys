@@ -53,9 +53,6 @@ class ProductTranslation extends AbstractTranslation
         return $this->variantAlias;
     }
 
-    /**
-     * @param string|null $variantAlias
-     */
     public function setVariantAlias(?string $variantAlias): void
     {
         $this->variantAlias = $variantAlias;

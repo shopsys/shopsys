@@ -7,10 +7,6 @@ interface DataSourceInterface
     const ORDER_ASC = 'asc';
     const ORDER_DESC = 'desc';
 
-    /**
-     * @param int|null $limit
-     * @param string|null $orderSourceColumnName
-     */
     public function getPaginatedRows(
         ?int $limit = null,
         int $page = 1,

@@ -31,9 +31,6 @@ abstract class ExtendedOrderItem extends OrderItem
         return $this->stringField;
     }
 
-    /**
-     * @param string|null $stringField
-     */
     public function setStringField(?string $stringField): void
     {
         $this->stringField = $stringField;

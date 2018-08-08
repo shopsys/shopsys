@@ -7,9 +7,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 
 class ReachMaxUrlUniqueResolveAttemptException extends Exception implements FriendlyUrlException
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(FriendlyUrl $friendlyUrl, int $attempt, Exception $previous = null)
     {
         $message = 'Route "' . $friendlyUrl->getRouteName() . '" (param id = "' . $friendlyUrl->getEntityId() . '")'

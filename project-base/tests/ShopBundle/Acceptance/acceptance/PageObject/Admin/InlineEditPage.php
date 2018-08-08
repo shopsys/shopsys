@@ -6,9 +6,6 @@ use Tests\ShopBundle\Acceptance\acceptance\PageObject\AbstractPage;
 
 class InlineEditPage extends AbstractPage
 {
-    /**
-     * @param int|null $rowId
-     */
     public function startInlineEdit(?int $rowId): void
     {
         $this->tester->clickByCss($this->getRowCssLocator($rowId) . ' .js-inline-edit-edit');
@@ -30,9 +27,6 @@ class InlineEditPage extends AbstractPage
         $this->tester->waitForAjax();
     }
 
-    /**
-     * @param int|null $rowId
-     */
     public function changeInputValue(?int $rowId, string $columnName, string $value): void
     {
         $this->tester->fillFieldByCss(
@@ -41,9 +35,6 @@ class InlineEditPage extends AbstractPage
         );
     }
 
-    /**
-     * @param int|null $rowId
-     */
     public function save(?int $rowId): void
     {
         $this->tester->clickByCss($this->getRowCssLocator($rowId) . ' .js-inline-edit-save');
@@ -66,9 +57,6 @@ class InlineEditPage extends AbstractPage
         return is_numeric($highestId) ? (int)$highestId : null;
     }
 
-    /**
-     * @param int|null $rowId
-     */
     public function assertSeeInColumn(?int $rowId, string $columnName, string $text): void
     {
         $this->tester->seeInCss($text, $this->getRowCssLocator($rowId) . ' .js-grid-column-' . $columnName);
@@ -79,9 +67,6 @@ class InlineEditPage extends AbstractPage
         $this->tester->dontSeeElement(['css' => $this->getRowCssLocator($rowId)]);
     }
 
-    /**
-     * @param int|null $rowId
-     */
     private function getRowCssLocator(?int $rowId): string
     {
         if ($rowId === null) {

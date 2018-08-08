@@ -76,9 +76,6 @@ class ExtendedOrderTransport extends ExtendedOrderItem
         return $this->transportStringField;
     }
 
-    /**
-     * @param string|null $transportStringField
-     */
     public function setTransportStringField(?string $transportStringField): void
     {
         $this->transportStringField = $transportStringField;

@@ -100,9 +100,6 @@ class OrderFacadeHeurekaTest extends TestCase
         return $orderFacade;
     }
 
-    /**
-     * @param bool|null $disallowHeurekaVerifiedByCustomers
-     */
     private function runHeurekaTest(HeurekaFacade $heurekaFacade, ?bool $disallowHeurekaVerifiedByCustomers): void
     {
         $orderFacade = $this->createOrderFacade($heurekaFacade);

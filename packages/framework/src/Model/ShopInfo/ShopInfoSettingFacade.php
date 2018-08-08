@@ -35,25 +35,16 @@ class ShopInfoSettingFacade
         return $this->setting->getForDomain(self::SHOP_INFO_PHONE_HOURS, $domainId);
     }
 
-    /**
-     * @param string|null $value
-     */
     public function setPhoneNumber(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(self::SHOP_INFO_PHONE_NUMBER, $value, $domainId);
     }
 
-    /**
-     * @param string|null $value
-     */
     public function setEmail(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(self::SHOP_INFO_EMAIL, $value, $domainId);
     }
 
-    /**
-     * @param string|null $value
-     */
     public function setPhoneHours(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(self::SHOP_INFO_PHONE_HOURS, $value, $domainId);

@@ -37,9 +37,6 @@ class ProductCalculatedPrice
      */
     protected $priceWithVat;
 
-    /**
-     * @param string|null $priceWithVat
-     */
     public function __construct(Product $product, PricingGroup $pricingGroup, ?string $priceWithVat)
     {
         $this->product = $product;
@@ -57,9 +54,6 @@ class ProductCalculatedPrice
         return $this->pricingGroup;
     }
 
-    /**
-     * @param string|null $priceWithVat
-     */
     public function setPriceWithVat(?string $priceWithVat): void
     {
         $this->priceWithVat = $priceWithVat;

@@ -113,17 +113,11 @@ class ProductDomain
         return $this->seoH1;
     }
 
-    /**
-     * @param string|null $seoTitle
-     */
     public function setSeoTitle(?string $seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
 
-    /**
-     * @param string|null $seoMetaDescription
-     */
     public function setSeoMetaDescription(?string $seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
@@ -144,17 +138,11 @@ class ProductDomain
         return $this->shortDescription;
     }
 
-    /**
-     * @param string|null $description
-     */
     public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @param string|null $shortDescription
-     */
     public function setShortDescription(?string $shortDescription): void
     {
         $this->shortDescription = $shortDescription;

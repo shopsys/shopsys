@@ -294,9 +294,6 @@ class Order
      */
     protected $createdAsAdministratorName;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
-     */
     public function __construct(
         OrderData $orderData,
         string $orderNumber,
@@ -422,11 +419,6 @@ class Order
         $this->status = $status;
     }
 
-    /**
-     * @param string|null $companyName
-     * @param string|null $companyNumber
-     * @param string|null $companyTaxNumber
-     */
     public function setCompanyInfo(?string $companyName = null, ?string $companyNumber = null, ?string $companyTaxNumber = null): void
     {
         $this->companyName = $companyName;

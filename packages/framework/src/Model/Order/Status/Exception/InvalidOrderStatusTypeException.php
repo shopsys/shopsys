@@ -11,9 +11,6 @@ class InvalidOrderStatusTypeException extends Exception implements OrderStatusEx
      */
     private $orderStatusType;
 
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(int $orderStatusType, Exception $previous = null)
     {
         $this->orderStatusType = $orderStatusType;

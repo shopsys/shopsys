@@ -80,9 +80,6 @@ class UserDataFixture
      */
     private $deliveryAddressDataFactory;
 
-    /**
-     * @param \Faker\Generator $faker
-     */
     public function __construct(
         int $userCountPerDomain,
         EntityManagerInterface $em,

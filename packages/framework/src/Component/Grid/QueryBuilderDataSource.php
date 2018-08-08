@@ -24,10 +24,6 @@ class QueryBuilderDataSource implements DataSourceInterface
         $this->rowIdSourceColumnName = $rowIdSourceColumnName;
     }
 
-    /**
-     * @param int|null $limit
-     * @param string|null $orderSourceColumnName
-     */
     public function getPaginatedRows(
         ?int $limit = null,
         int $page = 1,

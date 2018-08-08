@@ -6,9 +6,6 @@ use Exception;
 
 class InvalidPriceCalculationTypeException extends Exception implements ProductException
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $priceCalculationType, Exception $previous = null)
     {
         $message = 'Price calculation type "' . $priceCalculationType . '" is not valid.';

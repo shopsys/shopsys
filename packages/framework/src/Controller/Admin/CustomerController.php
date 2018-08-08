@@ -109,9 +109,6 @@ class CustomerController extends AdminBaseController
         $this->customerDataFactory = $customerDataFactory;
     }
 
-    /**
-     * @Route("/customer/edit/{id}", requirements={"id" = "\d+"})
-     */
     public function editAction(Request $request, int $id)
     {
         $user = $this->customerFacade->getUserById($id);
@@ -235,10 +232,6 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/customer/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {
@@ -259,9 +252,6 @@ class CustomerController extends AdminBaseController
         return $this->redirectToRoute('admin_customer_list');
     }
 
-    /**
-     * @Route("/customer/login-as-user/{userId}/", requirements={"id" = "\d+"})
-     */
     public function loginAsUserAction(int $userId)
     {
         $user = $this->customerFacade->getUserById($userId);

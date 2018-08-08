@@ -20,11 +20,6 @@ class OrderProduct extends OrderItem
      */
     protected $product;
 
-    /**
-     * @param string|null $unitName
-     * @param string|null $catnum
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     */
     public function __construct(
         Order $order,
         string $name,

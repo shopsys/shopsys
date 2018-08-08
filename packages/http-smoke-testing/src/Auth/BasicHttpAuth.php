@@ -16,9 +16,6 @@ class BasicHttpAuth implements AuthInterface
      */
     private $password;
 
-    /**
-     * @param string|null $password
-     */
     public function __construct(string $username, ?string $password = null)
     {
         $this->username = $username;

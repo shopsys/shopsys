@@ -52,9 +52,6 @@ class QuantifiedProductPriceCalculation
         $this->priceCalculation = $priceCalculation;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
-     */
     public function calculatePrice(QuantifiedProduct $quantifiedProduct, int $domainId, User $user = null): \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice
     {
         $product = $quantifiedProduct->getProduct();

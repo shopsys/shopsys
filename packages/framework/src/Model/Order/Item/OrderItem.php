@@ -85,10 +85,6 @@ abstract class OrderItem
      */
     protected $catnum;
 
-    /**
-     * @param string|null $unitName
-     * @param string|null $catnum
-     */
     public function __construct(
         Order $order,
         string $name,

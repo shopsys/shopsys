@@ -36,10 +36,6 @@ class ParameterController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/parameter/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {

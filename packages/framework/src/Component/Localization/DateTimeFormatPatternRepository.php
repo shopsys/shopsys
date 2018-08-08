@@ -34,10 +34,6 @@ class DateTimeFormatPatternRepository
         return null;
     }
 
-    /**
-     * @param int|null $dateType
-     * @param int|null $timeType
-     */
     private function isMatching(DateTimeFormatPattern $dateTimePattern, string $locale, ?int $dateType, ?int $timeType): bool
     {
         if ($dateTimePattern->getLocale() !== $locale) {

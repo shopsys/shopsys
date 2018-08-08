@@ -6,9 +6,6 @@ use Exception;
 
 class InvalidServiceException extends Exception implements InlineEditException
 {
-    /**
-     * @param \Exception|null $previous
-     */
     public function __construct(string $serviceName, Exception $previous = null)
     {
         $message = 'Service with name "' . $serviceName . '" does not exist or not implement necessary interface.';

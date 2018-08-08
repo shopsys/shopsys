@@ -177,10 +177,6 @@ class CategoryController extends AdminBaseController
         return new Response('OK - dummy');
     }
 
-    /**
-     * @Route("/category/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {
@@ -211,9 +207,6 @@ class CategoryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/category/branch/{domainId}/{id}", requirements={"domainId" = "\d+", "id" = "\d+"}, condition="request.isXmlHttpRequest()")
-     */
     public function loadBranchJsonAction(int $domainId, int $id)
     {
         $domainId = (int)$domainId;

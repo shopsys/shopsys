@@ -38,10 +38,6 @@ class FlagController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/flag/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {

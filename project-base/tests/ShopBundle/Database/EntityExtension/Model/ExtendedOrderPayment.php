@@ -76,9 +76,6 @@ class ExtendedOrderPayment extends ExtendedOrderItem
         return $this->paymentStringField;
     }
 
-    /**
-     * @param string|null $paymentStringField
-     */
     public function setPaymentStringField(?string $paymentStringField): void
     {
         $this->paymentStringField = $paymentStringField;

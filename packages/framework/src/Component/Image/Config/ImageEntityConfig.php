@@ -88,18 +88,11 @@ class ImageEntityConfig
         }
     }
 
-    /**
-     * @param string|null $sizeName
-     */
     public function getSizeConfig(?string $sizeName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
     {
         return $this->getSizeConfigFromSizeConfigs($this->sizeConfigs, $sizeName);
     }
 
-    /**
-     * @param string|null $type
-     * @param string|null $sizeName
-     */
     public function getSizeConfigByType(?string $type, ?string $sizeName): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
     {
         if ($type === null) {
@@ -110,9 +103,6 @@ class ImageEntityConfig
         return $this->getSizeConfigFromSizeConfigs($typeSizes, $sizeName);
     }
 
-    /**
-     * @param string|null $type
-     */
     public function isMultiple(?string $type): bool
     {
         $key = Utils::ifNull($type, self::WITHOUT_NAME_KEY);

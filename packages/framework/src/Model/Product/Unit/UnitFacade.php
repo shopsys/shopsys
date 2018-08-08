@@ -62,9 +62,6 @@ class UnitFacade
         return $unit;
     }
 
-    /**
-     * @param int|null $newUnitId
-     */
     public function deleteById(int $unitId, ?int $newUnitId = null): void
     {
         $oldUnit = $this->unitRepository->getById($unitId);

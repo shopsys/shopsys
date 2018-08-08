@@ -98,10 +98,6 @@ class ImageProcessingService
         return $image->filename . '.' . $image->extension;
     }
 
-    /**
-     * @param int|null $width
-     * @param int|null $height
-     */
     public function resize(Image $image, ?int $width, ?int $height, bool $crop = false): \Intervention\Image\Image
     {
         if ($crop) {

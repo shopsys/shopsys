@@ -112,9 +112,6 @@ class PricingGroupFacade
         return $pricingGroup;
     }
 
-    /**
-     * @param int|null $newPricingGroupId
-     */
     public function delete(int $oldPricingGroupId, ?int $newPricingGroupId = null): void
     {
         $oldPricingGroup = $this->pricingGroupRepository->getById($oldPricingGroupId);

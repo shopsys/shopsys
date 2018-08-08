@@ -4,9 +4,6 @@ namespace Shopsys\FrameworkBundle\Component\Grid\Ordering;
 
 class GridOrderingService
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface|null $entity
-     */
     public function setPosition(?\Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface $entity, int $position): void
     {
         if ($entity instanceof OrderableEntityInterface) {

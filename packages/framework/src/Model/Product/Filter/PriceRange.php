@@ -14,10 +14,6 @@ class PriceRange
      */
     private $maximalPrice;
 
-    /**
-     * @param string|null $minimalPrice
-     * @param string|null $maximalPrice
-     */
     public function __construct(?string $minimalPrice, ?string $maximalPrice)
     {
         $this->minimalPrice = $minimalPrice === null ? '0' : $minimalPrice;

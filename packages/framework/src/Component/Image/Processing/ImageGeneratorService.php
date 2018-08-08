@@ -41,9 +41,6 @@ class ImageGeneratorService
         $this->filesystem = $filesystem;
     }
 
-    /**
-     * @param string|null $sizeName
-     */
     public function generateImageSizeAndGetFilepath(Image $image, ?string $sizeName): string
     {
         if ($sizeName === ImageConfig::ORIGINAL_SIZE_NAME) {

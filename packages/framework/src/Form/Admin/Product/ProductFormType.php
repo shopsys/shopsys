@@ -398,9 +398,6 @@ class ProductFormType extends AbstractType
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     */
     private function getTitlePlaceholder(string $locale, Product $product = null): string
     {
         return $product !== null ? $product->getName($locale) : '';

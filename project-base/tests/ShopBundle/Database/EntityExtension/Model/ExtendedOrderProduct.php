@@ -32,10 +32,6 @@ class ExtendedOrderProduct extends ExtendedOrderItem
      */
     protected $productStringField;
 
-    /**
-     * @param string|null $catnum
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     */
     public function __construct(
         Order $order,
         string $name,
@@ -78,9 +74,6 @@ class ExtendedOrderProduct extends ExtendedOrderItem
         return $this->productStringField;
     }
 
-    /**
-     * @param string|null $productStringField
-     */
     public function setProductStringField(?string $productStringField): void
     {
         $this->productStringField = $productStringField;

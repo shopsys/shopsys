@@ -100,9 +100,6 @@ class OrderDataFixture
      */
     private $orderDataFactory;
 
-    /**
-     * @param \Faker\Generator $faker
-     */
     public function __construct(
         int $orderTotalCount,
         int $orderItemCountPerOrder,

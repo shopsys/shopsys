@@ -53,9 +53,6 @@ class ImageService
         return $images;
     }
 
-    /**
-     * @param string|null $type
-     */
     public function createImage(
         ImageEntityConfig $imageEntityConfig,
         int $entityId,

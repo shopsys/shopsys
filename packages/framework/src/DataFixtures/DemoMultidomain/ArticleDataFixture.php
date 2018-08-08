@@ -67,9 +67,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
         $this->createArticle($articleData);
     }
 
-    /**
-     * @param string|null $referenceName
-     */
     private function createArticle(ArticleData $articleData, ?string $referenceName = null): void
     {
         $article = $this->articleFacade->create($articleData);

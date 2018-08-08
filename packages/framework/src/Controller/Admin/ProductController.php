@@ -256,10 +256,6 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {
@@ -355,9 +351,6 @@ class ProductController extends AdminBaseController
         return $grid;
     }
 
-    /**
-     * @Route("/product/visibility/{productId}")
-     */
     public function visibilityAction(int $productId)
     {
         $product = $this->productFacade->getById($productId);

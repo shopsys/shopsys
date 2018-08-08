@@ -87,9 +87,6 @@ class PricingSetting
         return $this->setting->getForDomain(self::FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT, $domainId);
     }
 
-    /**
-     * @param string|null $priceLimit
-     */
     public function setFreeTransportAndPaymentPriceLimit(int $domainId, ?string $priceLimit = null): void
     {
         $this->setting->setForDomain(self::FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT, $priceLimit, $domainId);

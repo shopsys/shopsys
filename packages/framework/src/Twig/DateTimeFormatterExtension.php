@@ -122,9 +122,6 @@ class DateTimeFormatterExtension extends Twig_Extension
         );
     }
 
-    /**
-     * @param string|null $locale
-     */
     private function getLocale(?string $locale = null): string
     {
         if ($locale === null) {

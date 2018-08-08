@@ -85,9 +85,6 @@ class TransportController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/transport/edit/{id}", requirements={"id" = "\d+"})
-     */
     public function editAction(Request $request, int $id)
     {
         $transport = $this->transportFacade->getById($id);
@@ -124,10 +121,6 @@ class TransportController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/transport/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     */
     public function deleteAction(int $id)
     {
         try {

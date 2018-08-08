@@ -267,9 +267,6 @@ class CategoryFacade
         return $this->categoryRepository->getTranslatedAllWithoutBranch($category, $domainConfig);
     }
 
-    /**
-     * @param string|null $searchText
-     */
     public function getSearchAutocompleteCategories(?string $searchText, int $limit): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
     {
         $page = 1;
