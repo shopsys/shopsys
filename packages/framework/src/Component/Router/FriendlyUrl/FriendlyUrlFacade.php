@@ -40,14 +40,6 @@ class FriendlyUrlFacade
      */
     protected $friendlyUrlFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlService $friendlyUrlService
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface $friendlyUrlFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         DomainRouterFactory $domainRouterFactory,
@@ -190,9 +182,6 @@ class FriendlyUrlFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $mainFriendlyUrl
-     */
     protected function setFriendlyUrlAsMain(FriendlyUrl $mainFriendlyUrl)
     {
         $friendlyUrls = $this->friendlyUrlRepository->getAllByRouteNameAndEntityIdAndDomainId(

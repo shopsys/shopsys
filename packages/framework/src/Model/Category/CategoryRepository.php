@@ -29,11 +29,6 @@ class CategoryRepository extends NestedTreeRepository
      */
     protected $productRepository;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         EntityManagerInterface $em,
         ProductRepository $productRepository,

@@ -31,9 +31,6 @@ class HoneyPotExtension extends Twig_Extension
         return 'honey_pot';
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $formView
-     */
     public function formHoneyPotCheckPasswordAlreadyRendered(FormView $formView)
     {
         $rootFormView = $this->getRootFormView($formView);

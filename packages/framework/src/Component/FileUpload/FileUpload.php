@@ -171,9 +171,6 @@ class FileUpload
         return $temporaryFilename;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface $entity
-     */
     public function preFlushEntity(EntityFileUploadInterface $entity)
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
@@ -183,9 +180,6 @@ class FileUpload
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface $entity
-     */
     public function postFlushEntity(EntityFileUploadInterface $entity)
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();

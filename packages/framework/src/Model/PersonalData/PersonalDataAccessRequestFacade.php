@@ -28,12 +28,6 @@ class PersonalDataAccessRequestFacade
      */
     protected $personalDataAccessRequestFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestRepository $personalDataAccessRequestRepository
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactoryInterface $personalDataAccessRequestFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         HashGenerator $hashGenerator,

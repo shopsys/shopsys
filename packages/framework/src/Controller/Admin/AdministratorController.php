@@ -57,9 +57,6 @@ class AdministratorController extends AdminBaseController
         $this->administratorDataFactory = $administratorDataFactory;
     }
 
-    /**
-     * @Route("/administrator/list/")
-     */
     public function listAction()
     {
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
@@ -153,9 +150,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/administrator/my-account/")
-     */
     public function myAccountAction()
     {
         $loggedUser = $this->getUser();
@@ -166,10 +160,6 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/administrator/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [

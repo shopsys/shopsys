@@ -21,10 +21,6 @@ class PriceRangeRepository
      */
     private $queryBuilderService;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderService $queryBuilderService
-     */
     public function __construct(ProductRepository $productRepository, QueryBuilderService $queryBuilderService)
     {
         $this->productRepository = $productRepository;

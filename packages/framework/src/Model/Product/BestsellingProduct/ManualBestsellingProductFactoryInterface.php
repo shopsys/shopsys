@@ -8,13 +8,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 interface ManualBestsellingProductFactoryInterface
 {
 
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $position
-     * @return \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProduct
-     */
     public function create(
         int $domainId,
         Category $category,

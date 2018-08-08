@@ -76,11 +76,6 @@ class GoogleFeedItemTest extends TestCase
         $this->mockProductUrl($this->defaultProduct, $this->defaultDomain, 'https://example.com/product-1');
     }
 
-    /**
-     * @param int $id
-     * @param string $code
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|\PHPUnit\Framework\MockObject\MockObject
-     */
     private function createCurrencyMock(int $id, string $code): Currency
     {
         $currencyMock = $this->createMock(Currency::class);
@@ -112,11 +107,6 @@ class GoogleFeedItemTest extends TestCase
         return $domainConfigMock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     */
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
         $productPrice = new ProductPrice($price, false);
@@ -124,22 +114,12 @@ class GoogleFeedItemTest extends TestCase
             ->with($product, $domain->getId(), null)->willReturn($productPrice);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockProductUrl(Product $product, DomainConfig $domain, string $url): void
     {
         $this->productUrlsBatchLoaderMock->method('getProductUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
-     * @param string $url
-     */
     private function mockProductImageUrl(Product $product, DomainConfig $domain, string $url): void
     {
         $this->productUrlsBatchLoaderMock->method('getProductImageUrl')

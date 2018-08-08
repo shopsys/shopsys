@@ -37,9 +37,6 @@ class OrderStatusController extends AdminBaseController
         $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
     }
 
-    /**
-     * @Route("/order-status/list/")
-     */
     public function listAction()
     {
         $grid = $this->orderStatusInlineEdit->getGrid();

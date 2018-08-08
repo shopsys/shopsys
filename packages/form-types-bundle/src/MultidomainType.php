@@ -15,9 +15,6 @@ class MultidomainType extends AbstractType
      */
     private $domainIdsProvider;
 
-    /**
-     * @param \Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface $domainIdsProvider
-     */
     public function __construct(DomainIdsProviderInterface $domainIdsProvider)
     {
         $this->domainIdsProvider = $domainIdsProvider;
@@ -45,9 +42,6 @@ class MultidomainType extends AbstractType
         }
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

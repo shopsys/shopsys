@@ -31,9 +31,6 @@ class CurrencyDataFixture extends AbstractReferenceFixture
         $this->currencyDataFactory = $currencyDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         /**

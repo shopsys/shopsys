@@ -19,9 +19,6 @@ class CountryController extends AdminBaseController
         $this->countryInlineEdit = $countryInlineEdit;
     }
 
-    /**
-     * @Route("/country/list/")
-     */
     public function listAction()
     {
         $countryInlineEdit = $this->countryInlineEdit;

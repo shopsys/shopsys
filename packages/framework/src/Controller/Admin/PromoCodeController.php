@@ -35,9 +35,6 @@ class PromoCodeController extends AdminBaseController
         $this->administratorGridFacade = $administratorGridFacade;
     }
 
-    /**
-     * @Route("/promo-code/list")
-     */
     public function listAction()
     {
         $administrator = $this->getUser();

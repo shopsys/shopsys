@@ -23,9 +23,6 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture
         $this->manualBestsellingProductFacade = $manualBestsellingProductFacade;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $domainId = 2;

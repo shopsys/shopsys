@@ -41,9 +41,6 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $availabilityData = $this->availabilityDataFactory->create();

@@ -25,9 +25,6 @@ class TransactionalMasterRequestService
         $this->em = $em;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-     */
     public function onKernelRequest(GetResponseEvent $event)
     {
         if ($event->isMasterRequest() && !$this->inTransaction) {
@@ -36,9 +33,6 @@ class TransactionalMasterRequestService
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
     public function onKernelResponse(FilterResponseEvent $event)
     {
         if ($event->isMasterRequest() && $this->inTransaction) {
@@ -47,9 +41,6 @@ class TransactionalMasterRequestService
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
-     */
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         if ($event->isMasterRequest() && $this->inTransaction) {

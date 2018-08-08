@@ -82,9 +82,6 @@ class BillingAddress
      */
     protected $country;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     */
     public function __construct(BillingAddressData $billingAddressData)
     {
         $this->street = $billingAddressData->street;
@@ -100,9 +97,6 @@ class BillingAddress
         $this->country = $billingAddressData->country;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     */
     public function edit(BillingAddressData $billingAddressData)
     {
         $this->street = $billingAddressData->street;

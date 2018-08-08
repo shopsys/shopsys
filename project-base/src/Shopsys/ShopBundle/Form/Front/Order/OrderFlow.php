@@ -149,9 +149,6 @@ class OrderFlow extends FormFlow
         return $step->getFormType() === null;
     }
 
-    /**
-     * @param \Craue\FormFlowBundle\Form\StepInterface $step
-     */
     private function changeRequestToStep(StepInterface $step)
     {
         $stepsData = $this->retrieveStepData();

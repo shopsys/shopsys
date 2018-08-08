@@ -22,10 +22,6 @@ class CartService
      */
     protected $cartItemFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
-     */
     public function __construct(
         ProductPriceCalculationForUser $productPriceCalculation,
         CartItemFactoryInterface $cartItemFactory
@@ -90,19 +86,11 @@ class CartService
         throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException($message);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     public function cleanCart(Cart $cart)
     {
         $cart->clean();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $resultingCart
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $mergedCart
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
-     */
     public function mergeCarts(Cart $resultingCart, Cart $mergedCart, CustomerIdentifier $customerIdentifier)
     {
         foreach ($mergedCart->getItems() as $cartItem) {

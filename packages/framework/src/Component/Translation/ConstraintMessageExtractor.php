@@ -88,9 +88,6 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
         return $node instanceof FullyQualified && is_subclass_of((string)$node, Constraint::class);
     }
 
-    /**
-     * @param \PhpParser\Node $optionsNode
-     */
     private function extractMessagesFromOptions(Node $optionsNode)
     {
         if ($optionsNode instanceof Array_) {

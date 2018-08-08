@@ -15,17 +15,11 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
      */
     private $topProductFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
-     */
     public function __construct(TopProductFacade $topProductFacade)
     {
         $this->topProductFacade = $topProductFacade;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $topProductReferenceNames = [

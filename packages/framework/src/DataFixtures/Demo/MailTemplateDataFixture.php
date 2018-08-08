@@ -30,9 +30,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
         $this->mailTemplateDataFactory = $mailTemplateDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();

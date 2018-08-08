@@ -30,9 +30,6 @@ class UploadedFileDeleteDoctrineListener
         $this->uploadedFileFacade = $uploadedFileFacade;
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     */
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();

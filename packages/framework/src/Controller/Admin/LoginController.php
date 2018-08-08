@@ -50,12 +50,6 @@ class LoginController extends AdminBaseController
         $this->administratorLoginFacade = $administratorLoginFacade;
     }
 
-    /**
-     * @Route("/", name="admin_login")
-     * @Route("/login-check/", name="admin_login_check")
-     * @Route("/logout/", name="admin_logout")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function loginAction(Request $request)
     {
         $currentDomainId = $this->domain->getId();
@@ -117,10 +111,6 @@ class LoginController extends AdminBaseController
         return $this->redirect($redirectTo);
     }
 
-    /**
-     * @Route("/authorization/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function authorizationAction(Request $request)
     {
         $multidomainLoginToken = $request->get(self::MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME);

@@ -76,9 +76,6 @@ class CartController extends FrontBaseController
         $this->errorService = $errorService;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function indexAction(Request $request)
     {
         $cart = $this->cartFacade->getCartOfCurrentCustomer();
@@ -166,9 +163,6 @@ class CartController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function addProductAction(Request $request)
     {
         $form = $this->createForm(AddProductFormType::class);
@@ -210,9 +204,6 @@ class CartController extends FrontBaseController
         return $this->redirect($redirectTo);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function addProductAjaxAction(Request $request)
     {
         $form = $this->createForm(AddProductFormType::class);
@@ -260,9 +251,6 @@ class CartController extends FrontBaseController
         return $this->forward('ShopsysShopBundle:Front/FlashMessage:index');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\AddProductResult $addProductResult
-     */
     private function sendAddProductResultFlashMessage(
         AddProductResult $addProductResult
     ) {

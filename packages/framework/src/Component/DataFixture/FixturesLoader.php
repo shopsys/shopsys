@@ -48,9 +48,6 @@ class FixturesLoader extends Loader
         }
     }
 
-    /**
-     * @param \Doctrine\Common\DataFixtures\FixtureInterface $fixture
-     */
     public function addFixture(FixtureInterface $fixture)
     {
         $class = get_class($fixture);

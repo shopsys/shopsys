@@ -14,9 +14,6 @@ class ProductVariantService
         $this->productFactory = $productFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     public function checkProductIsNotMainVariant(Product $product)
     {
         if ($product->isMainVariant()) {

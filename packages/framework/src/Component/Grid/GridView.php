@@ -176,9 +176,6 @@ class GridView
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
-     */
     public function renderTitleCell(Column $column)
     {
         $posibleBlocks = [

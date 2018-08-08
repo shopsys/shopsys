@@ -50,10 +50,6 @@ class PerformanceTestSummaryPrinter
         }
     }
 
-    /**
-     * @param \Tests\ShopBundle\Performance\Page\PerformanceTestSample $performanceTestSample
-     * @param \Symfony\Component\Console\Output\ConsoleOutput $consoleOutput
-     */
     private function printSample(
         PerformanceTestSample $performanceTestSample,
         ConsoleOutput $consoleOutput

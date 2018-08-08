@@ -23,11 +23,6 @@ class ZboziProductDomainFacade
      */
     protected $productRepository;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainRepository $zboziProductDomainRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(
         EntityManagerInterface $em,
         ZboziProductDomainRepository $zboziProductDomainRepository,
@@ -100,10 +95,6 @@ class ZboziProductDomainFacade
         }
     }
 
-    /**
-     * @param $productId
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
-     */
     public function saveZboziProductDomain($productId, ZboziProductDomainData $zboziProductDomainData)
     {
         $product = $this->productRepository->getById($productId);
@@ -124,9 +115,6 @@ class ZboziProductDomainFacade
         $this->em->flush();
     }
 
-    /**
-     * @param $productId
-     */
     public function delete($productId)
     {
         $zboziProductDomains = $this->zboziProductDomainRepository->findByProductId($productId);

@@ -65,9 +65,6 @@ class TransportDomain
         return $this->domainId;
     }
 
-    /**
-     * @param bool $enabled
-     */
     public function setEnabled(bool $enabled)
     {
         $this->enabled = $enabled;

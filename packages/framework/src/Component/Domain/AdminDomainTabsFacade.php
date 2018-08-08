@@ -18,10 +18,6 @@ class AdminDomainTabsFacade
      */
     protected $session;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     */
     public function __construct(Domain $domain, SessionInterface $session)
     {
         $this->domain = $domain;

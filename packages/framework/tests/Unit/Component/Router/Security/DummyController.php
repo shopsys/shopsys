@@ -10,9 +10,6 @@ class DummyController
     {
     }
 
-    /**
-     * @CsrfProtection
-     */
     public function withProtectionAction()
     {
     }

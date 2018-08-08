@@ -56,9 +56,6 @@ class ZboziProductDomain
      */
     protected $domainId;
 
-    /**
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
-     */
     public function __construct(ZboziProductDomainData $zboziProductDomainData)
     {
         $this->product = $zboziProductDomainData->product;
@@ -68,9 +65,6 @@ class ZboziProductDomain
         $this->domainId = $zboziProductDomainData->domainId;
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
-     */
     public function edit(ZboziProductDomainData $zboziProductDomainData)
     {
         $this->product = $zboziProductDomainData->product;

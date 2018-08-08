@@ -80,9 +80,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $this->traverser->traverse($ast);
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     */
     public function enterNode(Node $node)
     {
         if ($this->isTransMethodOrFuncCall($node)) {
@@ -233,9 +230,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         return null;
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     */
     public function leaveNode(Node $node)
     {
         return null;
@@ -249,20 +243,11 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         return null;
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     */
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
         return null;
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     * @param \Twig_Node $ast
-     */
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Twig_Node $ast)
     {
         return null;

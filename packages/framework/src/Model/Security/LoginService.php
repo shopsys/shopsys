@@ -54,10 +54,6 @@ class LoginService
         return true;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function loginUser(User $user, Request $request)
     {
         $token = new UsernamePasswordToken($user, $user->getPassword(), 'frontend', $user->getRoles());

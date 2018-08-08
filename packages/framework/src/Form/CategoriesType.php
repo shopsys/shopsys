@@ -42,9 +42,6 @@ class CategoriesType extends AbstractType
         $builder->addViewTransformer($this->categoriesTypeTransformer);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $entryOptionsNormalizer = function (Options $options, $value) {

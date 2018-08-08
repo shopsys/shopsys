@@ -84,9 +84,6 @@ class CategoryDataFixture
         $this->progressBarFactory = $progressBarFactory;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function load(OutputInterface $output)
     {
         $progressBar = $this->progressBarFactory->create($output, array_sum($this->categoryCountsByLevel));

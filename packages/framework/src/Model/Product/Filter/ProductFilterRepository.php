@@ -32,11 +32,6 @@ class ProductFilterRepository
         $this->parameterFilterRepository = $parameterFilterRepository;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     */
     public function applyFiltering(
         QueryBuilder $productsQueryBuilder,
         ProductFilterData $productFilterData,

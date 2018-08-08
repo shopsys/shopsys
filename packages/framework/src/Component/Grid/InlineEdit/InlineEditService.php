@@ -19,10 +19,6 @@ class InlineEditService
      */
     private $gridInlineEditRegistry;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry $gridInlineEditRegistry
-     */
     public function __construct(
         ContainerInterface $container,
         GridInlineEditRegistry $gridInlineEditRegistry

@@ -56,9 +56,6 @@ class OrderPayment extends OrderItem
         return $this->payment;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderPaymentData
-     */
     public function edit(OrderItemData $orderPaymentData)
     {
         if ($orderPaymentData instanceof OrderPaymentData) {

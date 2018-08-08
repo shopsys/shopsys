@@ -41,9 +41,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
         $this->categoryDataFactory = $categoryDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         /**

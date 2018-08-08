@@ -31,12 +31,6 @@ class ScriptFacade
      */
     protected $scriptFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptRepository $scriptRepository
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFactoryInterface $scriptFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         ScriptRepository $scriptRepository,

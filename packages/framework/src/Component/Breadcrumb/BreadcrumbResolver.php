@@ -14,9 +14,6 @@ class BreadcrumbResolver
         $this->breadcrumbGeneratorsByRouteName = [];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface $breadcrumbGenerator
-     */
     public function registerGenerator(BreadcrumbGeneratorInterface $breadcrumbGenerator)
     {
         foreach ($breadcrumbGenerator->getRouteNames() as $routeName) {

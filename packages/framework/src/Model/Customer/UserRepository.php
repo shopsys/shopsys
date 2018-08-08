@@ -15,9 +15,6 @@ class UserRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
@@ -149,10 +146,6 @@ class UserRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $oldPricingGroup
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $newPricingGroup
-     */
     public function replaceUsersPricingGroup(PricingGroup $oldPricingGroup, PricingGroup $newPricingGroup)
     {
         $this->em->createQueryBuilder()

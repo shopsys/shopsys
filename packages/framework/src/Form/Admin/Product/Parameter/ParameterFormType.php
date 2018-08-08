@@ -31,9 +31,6 @@ class ParameterFormType extends AbstractType
             ->add('visible', CheckboxType::class, ['required' => false]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

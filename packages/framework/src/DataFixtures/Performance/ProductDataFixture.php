@@ -161,9 +161,6 @@ class ProductDataFixture
         $this->progressBarFactory = $progressBarFactory;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function load(OutputInterface $output)
     {
         // Sql logging during mass data import makes memory leak
@@ -252,9 +249,6 @@ class ProductDataFixture
         return $this->productsByCatnum[$catnum];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     private function makeProductDataUnique(ProductData $productData)
     {
         $matches = [];
@@ -304,9 +298,6 @@ class ProductDataFixture
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     private function setRandomPerformanceCategoriesToProductData(ProductData $productData)
     {
         $this->cleanPerformanceCategoriesFromProductDataByDomainId($productData, 1);

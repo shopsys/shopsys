@@ -29,9 +29,6 @@ class CountryDataFixture extends AbstractReferenceFixture
         $this->countryDataFactory = $countryDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $domainId = 1;

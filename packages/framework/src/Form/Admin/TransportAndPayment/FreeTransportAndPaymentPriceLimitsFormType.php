@@ -87,9 +87,6 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
         return $formBuilderForDomains;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

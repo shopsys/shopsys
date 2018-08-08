@@ -284,9 +284,6 @@ class PersonalInfoFormType extends AbstractType
         return 'order_personal_info_form';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

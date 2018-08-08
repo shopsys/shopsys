@@ -81,9 +81,6 @@ class Vat
         return $this->replaceWith;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     */
     public function edit(VatData $vatData)
     {
         $this->name = $vatData->name;

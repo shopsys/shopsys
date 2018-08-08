@@ -50,9 +50,6 @@ class ProductVisibilityRepository
         $this->markAllProductsVisibilityAsRecalculated();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
     public function markProductsForRecalculationAffectedByCategory(Category $category)
     {
         $affectedProductsDql = $this->em->createQueryBuilder()

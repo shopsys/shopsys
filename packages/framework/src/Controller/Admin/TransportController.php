@@ -53,10 +53,6 @@ class TransportController extends AdminBaseController
         $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
-    /**
-     * @Route("/transport/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $transportData = $this->transportDataFactory->create();

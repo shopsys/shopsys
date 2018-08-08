@@ -21,9 +21,6 @@ class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
         $view->vars['empty_message'] = $options['empty_message'];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired('empty_message')

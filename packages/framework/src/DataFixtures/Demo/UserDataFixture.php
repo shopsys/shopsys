@@ -53,9 +53,6 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $this->em = $em;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $countries = [
@@ -88,9 +85,6 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         ];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $customer
-     */
     private function resetPassword(User $customer)
     {
         $this->customerPasswordService->resetPassword($customer);

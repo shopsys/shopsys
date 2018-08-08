@@ -67,10 +67,6 @@ class AllFeedsTest extends FunctionalTestCase
         $this->cleanUp($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     private function cleanUp(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): void
     {
         $feedFilepath = $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig);

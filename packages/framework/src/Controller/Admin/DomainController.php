@@ -62,10 +62,6 @@ class DomainController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/multidomain/select-domain/{id}", requirements={"id" = "\d+"})
-     * @param Request $request
-     */
     public function selectDomainAction(Request $request, $id)
     {
         $id = (int)$id;
@@ -80,9 +76,6 @@ class DomainController extends AdminBaseController
         }
     }
 
-    /**
-     * @Route("/domain/list")
-     */
     public function listAction()
     {
         $dataSource = new ArrayDataSource($this->loadData(), 'id');

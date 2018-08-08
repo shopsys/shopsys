@@ -29,9 +29,6 @@ class TimedSpamValidationListener implements EventSubscriberInterface
         $this->options = $options;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     */
     public function preSubmit(FormEvent $event)
     {
         $form = $event->getForm();

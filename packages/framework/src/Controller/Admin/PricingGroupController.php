@@ -54,9 +54,6 @@ class PricingGroupController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @Route("/pricing/group/list/")
-     */
     public function listAction()
     {
         $grid = $this->pricingGroupInlineEdit->getGrid();
@@ -148,9 +145,6 @@ class PricingGroupController extends AdminBaseController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingsAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

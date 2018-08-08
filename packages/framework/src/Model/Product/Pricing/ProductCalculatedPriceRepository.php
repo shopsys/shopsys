@@ -19,10 +19,6 @@ class ProductCalculatedPriceRepository
      */
     protected $productCalculatedPriceFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory
-     */
     public function __construct(EntityManagerInterface $em, ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory)
     {
         $this->em = $em;
@@ -59,9 +55,6 @@ class ProductCalculatedPriceRepository
         $this->em->flush($productCalculatedPrice);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     */
     public function createProductCalculatedPricesForPricingGroup(PricingGroup $pricingGroup)
     {
         $query = $this->em->createNativeQuery(

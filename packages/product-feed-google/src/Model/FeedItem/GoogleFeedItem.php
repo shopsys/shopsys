@@ -95,81 +95,51 @@ class GoogleFeedItem implements FeedItemInterface
         $this->currency = $currency;
     }
 
-    /**
-     * @return int
-     */
     public function getSeekId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getBrand(): ?string
     {
         return $this->brandName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
     public function getLink(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return string|null
-     */
     public function getImageLink(): ?string
     {
         return $this->imgUrl;
     }
 
-    /**
-     * @return string
-     */
     public function getAvailability(): string
     {
         return $this->sellingDenied ? self::AVAILABILITY_OUT_OF_STOCK : self::AVAILABILITY_IN_STOCK;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
     public function getPrice(): Price
     {
         return $this->price;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
     public function getCurrency(): Currency
     {
         return $this->currency;

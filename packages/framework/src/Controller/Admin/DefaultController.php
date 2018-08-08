@@ -58,9 +58,6 @@ class DefaultController extends AdminBaseController
         $this->availabilityFacade = $availabilityFacade;
     }
 
-    /**
-     * @Route("/dashboard/")
-     */
     public function dashboardAction()
     {
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();

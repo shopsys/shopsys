@@ -13,9 +13,6 @@ class CurrencyService
      */
     protected $currencyFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface $currencyFactory
-     */
     public function __construct(CurrencyFactoryInterface $currencyFactory)
     {
         $this->currencyFactory = $currencyFactory;

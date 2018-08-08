@@ -44,9 +44,6 @@ class ImageDeleteDoctrineListener
         return $this->imageFacade;
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     */
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();

@@ -344,9 +344,6 @@ class ProductDataFixtureLoader
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     private function createDefaultManualPriceForAllPricingGroups(ProductData $productData)
     {
         foreach ($this->pricingGroups as $pricingGroupReferenceName => $pricingGroup) {

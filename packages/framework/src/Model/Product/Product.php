@@ -362,10 +362,6 @@ class Product extends AbstractTranslatableEntity
         return new self($productData, $variants);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     public function edit(
         ProductCategoryDomainFactoryInterface $productCategoryDomainFactory,
         ProductData $productData
@@ -416,9 +412,6 @@ class Product extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     */
     public function changeVat(Vat $vat)
     {
         $this->vat = $vat;
@@ -625,27 +618,18 @@ class Product extends AbstractTranslatableEntity
         return $this->orderingPriority;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
-     */
     public function setAvailability(Availability $availability)
     {
         $this->availability = $availability;
         $this->recalculateAvailability = true;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null $outOfStockAvailability
-     */
     public function setOutOfStockAvailability(Availability $outOfStockAvailability = null)
     {
         $this->outOfStockAvailability = $outOfStockAvailability;
         $this->recalculateAvailability = true;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $calculatedAvailability
-     */
     public function setCalculatedAvailability(Availability $calculatedAvailability)
     {
         $this->calculatedAvailability = $calculatedAvailability;
@@ -892,9 +876,6 @@ class Product extends AbstractTranslatableEntity
         $this->stockQuantity -= $quantity;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     protected function setTranslations(ProductData $productData)
     {
         foreach ($productData->name as $locale => $name) {
@@ -905,9 +886,6 @@ class Product extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     protected function setDomains(ProductData $productData)
     {
         foreach ($this->domains as $productDomain) {
@@ -988,9 +966,6 @@ class Product extends AbstractTranslatableEntity
         return new ProductTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     protected function createDomains(ProductData $productData)
     {
         $domainIds = array_keys($productData->seoTitles);

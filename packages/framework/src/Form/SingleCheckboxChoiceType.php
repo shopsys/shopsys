@@ -15,9 +15,6 @@ class SingleCheckboxChoiceType extends AbstractType
         return ChoiceType::class;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

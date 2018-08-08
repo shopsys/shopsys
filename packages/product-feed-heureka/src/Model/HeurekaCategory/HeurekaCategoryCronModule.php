@@ -22,10 +22,6 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
      */
     private $heurekaCategoryFacade;
 
-    /**
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownloader $heurekaCategoryDownloader
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
-     */
     public function __construct(
         HeurekaCategoryDownloader $heurekaCategoryDownloader,
         HeurekaCategoryFacade $heurekaCategoryFacade

@@ -38,14 +38,6 @@ class VatFacade
      */
     protected $vatFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository $vatRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatService $vatService
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface $vatFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         VatRepository $vatRepository,
@@ -174,9 +166,6 @@ class VatFacade
         return $this->vatRepository->getById($defaultVatId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     */
     public function setDefaultVat(Vat $vat)
     {
         $this->setting->set(Vat::SETTING_DEFAULT_VAT, $vat->getId());

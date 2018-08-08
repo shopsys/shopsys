@@ -17,10 +17,6 @@ class HeurekaCategoryRepository
      */
     protected $queryBuilderService;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderService $queryBuilderService
-     */
     public function __construct(
         EntityManagerInterface $em,
         QueryBuilderService $queryBuilderService

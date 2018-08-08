@@ -32,11 +32,6 @@ class TransportAndPaymentWatcherService
      */
     private $transportPriceCalculation;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     */
     public function __construct(
         SessionInterface $session,
         PaymentPriceCalculation $paymentPriceCalculation,

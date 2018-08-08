@@ -6,9 +6,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 interface FeedInterface
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface
-     */
     public function getInfo(): FeedInfoInterface;
 
     /**

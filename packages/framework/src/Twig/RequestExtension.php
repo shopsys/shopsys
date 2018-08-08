@@ -13,9 +13,6 @@ class RequestExtension extends Twig_Extension
      */
     private $requestStack;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;

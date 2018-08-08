@@ -246,9 +246,6 @@ class OrderController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function previewAction(Request $request)
     {
         $transportId = $request->get('transportId');

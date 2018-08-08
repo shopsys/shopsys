@@ -132,10 +132,6 @@ class ProductController extends AdminBaseController
         $this->domain = $domain;
     }
 
-    /**
-     * @Route("/product/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function editAction(Request $request, $id)
     {
         $product = $this->productFacade->getById($id);
@@ -181,10 +177,6 @@ class ProductController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Product/edit.html.twig', $viewParameters);
     }
 
-    /**
-     * @Route("/product/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $productData = $this->productDataFactory->create();
@@ -214,10 +206,6 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function listAction(Request $request)
     {
         $administrator = $this->getUser();
@@ -293,10 +281,6 @@ class ProductController extends AdminBaseController
         return $this->redirectToRoute('admin_product_list');
     }
 
-    /**
-     * @Route("/product/get-advanced-search-rule-form/", methods={"post"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function getRuleFormAction(Request $request)
     {
         $ruleForm = $this->advancedSearchFacade->createRuleForm($request->get('filterName'), $request->get('newIndex'));
@@ -306,10 +290,6 @@ class ProductController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/product/create-variant/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function createVariantAction(Request $request)
     {
         $form = $this->createForm(VariantFormType::class);

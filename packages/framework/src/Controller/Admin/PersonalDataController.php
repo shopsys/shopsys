@@ -28,9 +28,6 @@ class PersonalDataController extends AdminBaseController
         $this->setting = $setting;
     }
 
-    /**
-     * @Route("/personal-data/setting/")
-     */
     public function settingAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

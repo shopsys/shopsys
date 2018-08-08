@@ -15,9 +15,6 @@ class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscr
      */
     private $entityNameResolver;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(EntityNameResolver $entityNameResolver)
     {
         $this->entityNameResolver = $entityNameResolver;
@@ -31,9 +28,6 @@ class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscr
         return [Events::loadClassMetadata];
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs
-     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs): void
     {
         $meta = $eventArgs->getClassMetadata();

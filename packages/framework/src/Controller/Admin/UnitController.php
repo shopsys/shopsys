@@ -38,9 +38,6 @@ class UnitController extends AdminBaseController
         $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
     }
 
-    /**
-     * @Route("/product/unit/list/")
-     */
     public function listAction()
     {
         $unitInlineEdit = $this->unitInlineEdit;
@@ -135,10 +132,6 @@ class UnitController extends AdminBaseController
         return $this->redirectToRoute('admin_unit_list');
     }
 
-    /**
-     * @Route("/product/unit/setting/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingAction(Request $request)
     {
         try {

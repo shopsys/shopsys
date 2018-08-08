@@ -44,9 +44,6 @@ class Script
      */
     protected $placement;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
-     */
     public function __construct(ScriptData $scriptData)
     {
         $this->name = $scriptData->name;
@@ -86,9 +83,6 @@ class Script
         return $this->placement;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
-     */
     public function edit(ScriptData $scriptData)
     {
         $this->name = $scriptData->name;

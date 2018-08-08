@@ -23,10 +23,6 @@ class CartFactory
      */
     private $cartWatcherFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemRepository $cartItemRepository
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
-     */
     public function __construct(CartItemRepository $cartItemRepository, CartWatcherFacade $cartWatcherFacade)
     {
         $this->cartItemRepository = $cartItemRepository;

@@ -8,12 +8,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 class ProductCalculatedPriceFactory implements ProductCalculatedPriceFactoryInterface
 {
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string|null $priceWithVat
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice
-     */
     public function create(
         Product $product,
         PricingGroup $pricingGroup,

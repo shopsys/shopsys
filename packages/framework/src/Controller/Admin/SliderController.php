@@ -55,9 +55,6 @@ class SliderController extends AdminBaseController
         $this->sliderItemDataFactory = $sliderItemDataFactory;
     }
 
-    /**
-     * @Route("/slider/list/")
-     */
     public function listAction()
     {
         $queryBuilder = $this->getDoctrine()->getManager()->createQueryBuilder();
@@ -84,10 +81,6 @@ class SliderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/slider/item/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $sliderItemData = $this->sliderItemDataFactory->create();

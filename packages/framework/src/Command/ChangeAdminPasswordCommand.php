@@ -24,9 +24,6 @@ class ChangeAdminPasswordCommand extends Command
      */
     private $administratorFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
-     */
     public function __construct(AdministratorFacade $administratorFacade)
     {
         $this->administratorFacade = $administratorFacade;

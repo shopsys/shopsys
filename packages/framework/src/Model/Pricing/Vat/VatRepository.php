@@ -15,9 +15,6 @@ class VatRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -175,20 +172,12 @@ class VatRepository
         return $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $oldVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat
-     */
     public function replaceVat(Vat $oldVat, Vat $newVat)
     {
         $this->replacePaymentsVat($oldVat, $newVat);
         $this->replaceTransportsVat($oldVat, $newVat);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $oldVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat
-     */
     protected function replacePaymentsVat(Vat $oldVat, Vat $newVat)
     {
         $this->em->createQueryBuilder()
@@ -198,10 +187,6 @@ class VatRepository
             ->getQuery()->execute();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $oldVat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat
-     */
     protected function replaceTransportsVat(Vat $oldVat, Vat $newVat)
     {
         $this->em->createQueryBuilder()

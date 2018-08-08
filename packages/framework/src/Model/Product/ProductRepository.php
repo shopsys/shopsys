@@ -262,10 +262,6 @@ class ProductRepository
         $queryBuilder->setParameter('domainId', $domainId);
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     */
     protected function filterByBrand(QueryBuilder $queryBuilder, Brand $brand)
     {
         $queryBuilder->andWhere('p.brand = :brand');

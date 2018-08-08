@@ -28,9 +28,6 @@ class ShopInfoController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @Route("/shop-info/setting/")
-     */
     public function settingAction(Request $request)
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();

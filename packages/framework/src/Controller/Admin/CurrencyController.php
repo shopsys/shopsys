@@ -46,9 +46,6 @@ class CurrencyController extends AdminBaseController
         $this->domain = $domain;
     }
 
-    /**
-     * @Route("/currency/list/")
-     */
     public function listAction()
     {
         $grid = $this->currencyInlineEdit->getGrid();
@@ -105,9 +102,6 @@ class CurrencyController extends AdminBaseController
         return $this->redirectToRoute('admin_currency_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingsAction(Request $request)
     {
         $domainNames = [];

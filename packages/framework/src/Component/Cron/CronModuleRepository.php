@@ -16,10 +16,6 @@ class CronModuleRepository
      */
     protected $cronModuleFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFactoryInterface $cronModuleFactory
-     */
     public function __construct(EntityManagerInterface $em, CronModuleFactoryInterface $cronModuleFactory)
     {
         $this->em = $em;

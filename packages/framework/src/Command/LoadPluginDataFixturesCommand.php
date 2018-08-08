@@ -20,9 +20,6 @@ class LoadPluginDataFixturesCommand extends Command
      */
     private $pluginDataFixtureFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureFacade $pluginDataFixtureFacade
-     */
     public function __construct(PluginDataFixtureFacade $pluginDataFixtureFacade)
     {
         $this->pluginDataFixtureFacade = $pluginDataFixtureFacade;

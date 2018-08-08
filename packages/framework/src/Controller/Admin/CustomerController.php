@@ -155,10 +155,6 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/customer/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function listAction(Request $request)
     {
         $administrator = $this->getUser();
@@ -204,10 +200,6 @@ class CustomerController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/customer/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $customerData = $this->customerDataFactory->create();

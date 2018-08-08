@@ -96,9 +96,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     protected $domains;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
     public function __construct(PaymentData $paymentData)
     {
         $this->translations = new ArrayCollection();
@@ -114,9 +111,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->position = self::GEDMO_SORTABLE_LAST_POSITION;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     */
     public function addTransport(Transport $transport)
     {
         if (!$this->transports->contains($transport)) {
@@ -141,9 +135,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     */
     public function removeTransport(Transport $transport)
     {
         if ($this->transports->contains($transport)) {
@@ -160,9 +151,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         return $this->transports;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
     protected function setTranslations(PaymentData $paymentData)
     {
         foreach ($paymentData->name as $locale => $name) {
@@ -176,9 +164,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
     public function edit(PaymentData $paymentData)
     {
         $this->vat = $paymentData->vat;
@@ -338,9 +323,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         return new PaymentTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
     protected function setDomains(PaymentData $paymentData)
     {
         foreach ($this->domains as $paymentDomain) {
@@ -349,9 +331,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
     protected function createDomains(PaymentData $paymentData)
     {
         $domainIds = array_keys($paymentData->enabled);

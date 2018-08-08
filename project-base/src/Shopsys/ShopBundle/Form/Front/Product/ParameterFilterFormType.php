@@ -47,9 +47,6 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         $builder->addViewTransformer($this);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

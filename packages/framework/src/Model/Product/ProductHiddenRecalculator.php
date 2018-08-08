@@ -17,9 +17,6 @@ class ProductHiddenRecalculator
         $this->em = $entityManager;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     public function calculateHiddenForProduct(Product $product)
     {
         $this->executeQuery($product);
@@ -30,9 +27,6 @@ class ProductHiddenRecalculator
         $this->executeQuery();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     */
     private function executeQuery(Product $product = null)
     {
         $qb = $this->em->createQueryBuilder()

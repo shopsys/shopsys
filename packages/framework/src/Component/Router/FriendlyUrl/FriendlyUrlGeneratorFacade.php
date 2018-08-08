@@ -42,9 +42,6 @@ class FriendlyUrlGeneratorFacade
         $this->friendlyUrlDataProviderConfig = $friendlyUrlDataProviderConfig;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function generateUrlsForSupportedEntities(OutputInterface $output)
     {
         foreach ($this->domain->getAll() as $domainConfig) {

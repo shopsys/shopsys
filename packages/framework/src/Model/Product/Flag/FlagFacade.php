@@ -21,11 +21,6 @@ class FlagFacade
      */
     protected $flagService;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository $flagRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagService $flagService
-     */
     public function __construct(
         EntityManagerInterface $em,
         FlagRepository $flagRepository,

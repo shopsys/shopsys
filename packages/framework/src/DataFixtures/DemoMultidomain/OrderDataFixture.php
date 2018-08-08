@@ -61,9 +61,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->orderDataFactory = $orderDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $orderData = $this->orderDataFactory->create();

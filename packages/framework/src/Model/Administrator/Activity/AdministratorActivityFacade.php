@@ -22,11 +22,6 @@ class AdministratorActivityFacade
      */
     protected $administratorActivityFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityRepository $administratorActivityRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactoryInterface $administratorActivityFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         AdministratorActivityRepository $administratorActivityRepository,
@@ -54,9 +49,6 @@ class AdministratorActivityFacade
         return $administratorActivity;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     */
     public function updateCurrentActivityLastActionTime(Administrator $administrator)
     {
         $currentAdministratorActivity = $this->administratorActivityRepository->getCurrent($administrator);

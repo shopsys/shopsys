@@ -29,9 +29,6 @@ class LegalConditionsController extends AdminBaseController
         $this->legalConditionsFacade = $legalConditionsFacade;
     }
 
-    /**
-     * @Route("/legal-conditions/setting/")
-     */
     public function settingAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

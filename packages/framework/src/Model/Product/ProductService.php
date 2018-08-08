@@ -95,10 +95,6 @@ class ProductService
         $this->setInputPrice($product, $inputPrice);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     public function edit(Product $product, ProductData $productData)
     {
         $product->edit($this->productCategoryDomainFactory, $productData);
@@ -116,10 +112,6 @@ class ProductService
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     */
     public function changeVat(Product $product, Vat $vat)
     {
         $product->changeVat($vat);
@@ -162,9 +154,6 @@ class ProductService
         return new ProductDeleteResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     public function markProductForVisibilityRecalculation(Product $product)
     {
         $product->markForVisibilityRecalculation();

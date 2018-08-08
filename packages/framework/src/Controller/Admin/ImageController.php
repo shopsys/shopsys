@@ -17,9 +17,6 @@ class ImageController extends AdminBaseController
         $this->imageFacade = $imageFacade;
     }
 
-    /**
-     * @Route("/image/overview/")
-     */
     public function overviewAction()
     {
         $imageEntityConfigs = $this->imageFacade->getAllImageEntityConfigsByClass();

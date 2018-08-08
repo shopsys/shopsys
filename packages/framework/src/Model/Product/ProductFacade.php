@@ -216,10 +216,6 @@ class ProductFacade
         return $product;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     public function setAdditionalDataAfterCreate(Product $product, ProductData $productData)
     {
         // Persist of ProductCategoryDomain requires known primary key of Product
@@ -359,9 +355,6 @@ class ProductFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     protected function createProductVisibilities(Product $product)
     {
         $toFlush = [];

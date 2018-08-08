@@ -118,9 +118,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     private function createPersonalInfoForm(): FormInterface
     {
         $personalInfoForm = $this->factory->create(PersonalInfoFormType::class, null, [

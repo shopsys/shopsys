@@ -13,17 +13,11 @@ class ClearSettingsCacheDoctrineSubscriber implements EventSubscriber
      */
     private $setting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(Setting $setting)
     {
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\OnClearEventArgs $args
-     */
     public function onClear(OnClearEventArgs $args): void
     {
         $class = $args->getEntityClass();

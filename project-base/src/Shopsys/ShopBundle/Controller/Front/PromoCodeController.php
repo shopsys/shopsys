@@ -28,9 +28,6 @@ class PromoCodeController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function applyAction(Request $request)
     {
         $promoCode = $request->get(self::PROMO_CODE_PARAMETER);

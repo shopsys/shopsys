@@ -72,9 +72,6 @@ class PricingSetting
         return $this->setting->getForDomain(self::DEFAULT_DOMAIN_CURRENCY, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     */
     public function setDefaultCurrency(Currency $currency)
     {
         $currency->setExchangeRate(Currency::DEFAULT_EXCHANGE_RATE);

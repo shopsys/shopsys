@@ -39,14 +39,6 @@ class OrderStatusFacade
      */
     protected $orderStatusFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusService $orderStatusService
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface $orderStatusFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         OrderStatusRepository $orderStatusRepository,

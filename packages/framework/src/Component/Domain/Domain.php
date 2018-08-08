@@ -138,9 +138,6 @@ class Domain implements DomainIdsProviderInterface
         $this->currentDomainConfig = $this->getDomainConfigById($domainId);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function switchDomainByRequest(Request $request)
     {
         // Request::getBasePath() never contains script file name (/index.php)

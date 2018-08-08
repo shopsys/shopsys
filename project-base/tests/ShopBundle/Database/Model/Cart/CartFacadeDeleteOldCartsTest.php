@@ -139,11 +139,6 @@ class CartFacadeDeleteOldCartsTest extends DatabaseTestCase
         return $customerIdentifierFactoryMock;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \DateTime $addedAt
-     */
     private function addProductToCartAtTime(CartFacade $cartFacade, Product $product, DateTime $addedAt)
     {
         $cartItemResult = $cartFacade->addProductToCart($product->getId(), 1);

@@ -20,9 +20,6 @@ class CreateDatabaseSchemaCommand extends Command
      */
     private $databaseSchemaFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
-     */
     public function __construct(DatabaseSchemaFacade $databaseSchemaFacade)
     {
         $this->databaseSchemaFacade = $databaseSchemaFacade;
@@ -36,10 +33,6 @@ class CreateDatabaseSchemaCommand extends Command
             ->setDescription('Create database public schema');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Initializing database schema');

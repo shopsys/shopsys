@@ -14,9 +14,6 @@ class TwigFileExtractor implements FileVisitorInterface
      */
     private $originalTwigFileExtractor;
 
-    /**
-     * @param \JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor $originalTwigFileExtractor
-     */
     public function __construct(OriginalTwigFileExtractor $originalTwigFileExtractor)
     {
         $this->originalTwigFileExtractor = $originalTwigFileExtractor;

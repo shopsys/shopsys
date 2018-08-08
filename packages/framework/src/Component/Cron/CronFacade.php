@@ -36,9 +36,6 @@ class CronFacade
         $this->cronModuleFacade = $cronModuleFacade;
     }
 
-    /**
-     * @param \DateTimeInterface $roundedTime
-     */
     public function scheduleModulesByTime(DateTimeInterface $roundedTime)
     {
         $cronModuleConfigsToSchedule = $this->cronConfig->getCronModuleConfigsByTime($roundedTime);
@@ -83,10 +80,6 @@ class CronFacade
         $this->runModule($cronModuleExecutor, $cronModuleConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor $cronModuleExecutor
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
-     */
     protected function runModule(CronModuleExecutor $cronModuleExecutor, CronModuleConfig $cronModuleConfig)
     {
         $this->logger->addInfo('Start of ' . $cronModuleConfig->getServiceId());

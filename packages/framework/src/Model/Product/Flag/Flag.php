@@ -43,9 +43,6 @@ class Flag extends AbstractTranslatableEntity
      */
     protected $visible;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
     public function __construct(FlagData $flagData)
     {
         $this->translations = new ArrayCollection();
@@ -87,9 +84,6 @@ class Flag extends AbstractTranslatableEntity
         return $this->visible;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
     protected function setTranslations(FlagData $flagData)
     {
         foreach ($flagData->name as $locale => $name) {
@@ -105,9 +99,6 @@ class Flag extends AbstractTranslatableEntity
         return new FlagTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
-     */
     public function edit(FlagData $flagData)
     {
         $this->setTranslations($flagData);

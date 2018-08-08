@@ -5,10 +5,6 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 interface ProductFactoryInterface
 {
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $data
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
     public function create(ProductData $data): Product;
 
     /**

@@ -31,9 +31,6 @@ class MigrationsLockTest extends TestCase
         unlink(self::MIGRATION_LOCK);
     }
 
-    /**
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
-     */
     private function createNewMigrationsLock(): MigrationsLock
     {
         return new MigrationsLock(self::MIGRATION_LOCK);

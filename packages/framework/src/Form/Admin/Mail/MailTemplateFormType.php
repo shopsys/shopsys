@@ -116,9 +116,6 @@ class MailTemplateFormType extends AbstractType
         return $bodyConstraints;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

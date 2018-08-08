@@ -19,9 +19,6 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
      */
     private $router;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $router
-     */
     public function __construct(CurrentDomainRouter $router)
     {
         $this->router = $router;

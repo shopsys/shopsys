@@ -18,10 +18,6 @@ class FriendlyUrlService
      */
     protected $friendlyUrlFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface $friendlyUrlFactory
-     */
     public function __construct(Domain $domain, FriendlyUrlFactoryInterface $friendlyUrlFactory)
     {
         $this->domain = $domain;

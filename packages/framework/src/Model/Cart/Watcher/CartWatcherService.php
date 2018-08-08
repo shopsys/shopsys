@@ -25,11 +25,6 @@ class CartWatcherService
      */
     private $domain;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculationForUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     public function __construct(
         ProductPriceCalculationForUser $productPriceCalculationForUser,
         ProductVisibilityRepository $productVisibilityRepository,

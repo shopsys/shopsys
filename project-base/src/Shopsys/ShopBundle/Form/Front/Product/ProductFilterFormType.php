@@ -80,9 +80,6 @@ class ProductFilterFormType extends AbstractType
             ->add('search', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

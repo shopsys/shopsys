@@ -26,12 +26,6 @@ class AdministratorFacade
      */
     protected $administratorFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorService $administratorService
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface
-     */
     public function __construct(
         EntityManagerInterface $em,
         AdministratorRepository $administratorRepository,

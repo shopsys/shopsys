@@ -23,11 +23,6 @@ class ImageService
      */
     protected $imageFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessingService $imageProcessingService
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
-     */
     public function __construct(
         ImageProcessingService $imageProcessingService,
         FileUpload $fileUpload,

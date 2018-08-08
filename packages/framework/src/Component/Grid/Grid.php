@@ -264,9 +264,6 @@ class Grid
         return $this->addActionColumn(ActionColumn::TYPE_DELETE, t('Delete'), $route, $bindingRouteParams, $additionalRouteParams);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface $inlineEditService
-     */
     public function setInlineEditService(GridInlineEditInterface $inlineEditService)
     {
         $this->inlineEditService = $inlineEditService;

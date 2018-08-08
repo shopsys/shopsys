@@ -34,33 +34,21 @@ class CategoryOneToOneBidirectionalEntity
      */
     protected $name;
 
-    /**
-     * @param string $name
-     */
     public function __construct(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedCategory
-     */
     public function getCategory(): ExtendedCategory
     {
         return $this->category;
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedCategory $category
-     */
     public function setCategory(ExtendedCategory $category): void
     {
         $this->category = $category;

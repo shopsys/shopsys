@@ -20,10 +20,6 @@ class CategoryFormType extends AbstractType
      */
     private $heurekaCategoryFacade;
 
-    /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
-     */
     public function __construct(
         TranslatorInterface $translator,
         HeurekaCategoryFacade $heurekaCategoryFacade

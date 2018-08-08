@@ -36,10 +36,6 @@ class TranslationReplaceSourceCommand extends Command
             ->addUsage('./src/Resources/translations ./src en');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $translationsDirectory = new DirectoryIterator($input->getArgument(self::ARG_TRANSLATIONS_DIR));

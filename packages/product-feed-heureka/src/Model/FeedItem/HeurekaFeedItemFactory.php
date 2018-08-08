@@ -48,11 +48,6 @@ class HeurekaFeedItemFactory
         $this->categoryFacade = $categoryFacade;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItem
-     */
     public function create(Product $product, DomainConfig $domainConfig): HeurekaFeedItem
     {
         $mainVariantId = $product->isVariant() ? $product->getMainVariant()->getId() : null;
@@ -74,10 +69,6 @@ class HeurekaFeedItemFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string|null
-     */
     protected function getBrandName(Product $product): ?string
     {
         $brand = $product->getBrand();
@@ -85,11 +76,6 @@ class HeurekaFeedItemFactory
         return $brand !== null ? $brand->getName() : null;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
     protected function getPrice(Product $product, DomainConfig $domainConfig): Price
     {
         return $this->productPriceCalculationForUser->calculatePriceForUserAndDomainId(
@@ -99,11 +85,6 @@ class HeurekaFeedItemFactory
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string|null
-     */
     protected function getHeurekaCategoryFullName(Product $product, DomainConfig $domainConfig): ?string
     {
         $mainCategory = $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainConfig->getId());
@@ -115,10 +96,6 @@ class HeurekaFeedItemFactory
         }
     }
 
-    /**
-     * @param int $categoryId
-     * @return string|null
-     */
     protected function findHeurekaCategoryFullNameByCategoryIdUsingCache(int $categoryId): ?string
     {
         if (!array_key_exists($categoryId, $this->heurekaCategoryFullNamesCache)) {
@@ -128,10 +105,6 @@ class HeurekaFeedItemFactory
         return $this->heurekaCategoryFullNamesCache[$categoryId];
     }
 
-    /**
-     * @param int $categoryId
-     * @return string|null
-     */
     protected function findHeurekaCategoryFullNameByCategoryId(int $categoryId): ?string
     {
         $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);

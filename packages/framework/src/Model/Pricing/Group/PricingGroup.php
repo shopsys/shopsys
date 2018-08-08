@@ -83,9 +83,6 @@ class PricingGroup
         return $this->coefficient;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     */
     public function edit(PricingGroupData $pricingGroupData)
     {
         $this->name = $pricingGroupData->name;

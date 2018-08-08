@@ -28,9 +28,6 @@ class AdministratorDataFixture extends AbstractReferenceFixture
         $this->administratorDataFactory = $administratorDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $this->createAdministratorReference(1, self::SUPERADMINISTRATOR);

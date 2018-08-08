@@ -50,10 +50,6 @@ class FeedFacade
         $this->filesystem = $filesystem;
     }
 
-    /**
-     * @param string $feedName
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     public function generateFeed(string $feedName, DomainConfig $domainConfig): void
     {
         $feedExport = $this->createFeedExport($feedName, $domainConfig);
@@ -63,12 +59,6 @@ class FeedFacade
         }
     }
 
-    /**
-     * @param string $feedName
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int|null $lastSeekId
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExport
-     */
     public function createFeedExport(string $feedName, DomainConfig $domainConfig, int $lastSeekId = null): FeedExport
     {
         /*
@@ -113,31 +103,16 @@ class FeedFacade
         return $feedNames;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $this->feedPathProvider->getFeedUrl($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $this->feedPathProvider->getFeedFilepath($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return int|null
-     */
     public function getFeedTimestamp(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): ?int
     {
         $filePath = $this->feedPathProvider->getFeedFilepath($feedInfo, $domainConfig);

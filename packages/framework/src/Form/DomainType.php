@@ -16,9 +16,6 @@ class DomainType extends AbstractType
      */
     private $domain;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(Domain $domain)
     {
         $this->domain = $domain;
@@ -33,9 +30,6 @@ class DomainType extends AbstractType
         $view->vars['displayUrl'] = $options['displayUrl'];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

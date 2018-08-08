@@ -33,18 +33,12 @@ class PromoCode
      */
     protected $percent;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     */
     public function __construct(PromoCodeData $promoCodeData)
     {
         $this->code = $promoCodeData->code;
         $this->percent = $promoCodeData->percent;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     */
     public function edit(PromoCodeData $promoCodeData)
     {
         $this->code = $promoCodeData->code;

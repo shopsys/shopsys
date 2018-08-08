@@ -132,10 +132,6 @@ class Configuration extends DoctrineConfiguration
         return !$isVersionInstalled;
     }
 
-    /**
-     * @param string $message
-     * @throws \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException
-     */
     private function throwMethodIsNotAllowedException(string $message): void
     {
         $message .= ' Only up migration of all registered versions is supported because of multiple sources of migrations.';

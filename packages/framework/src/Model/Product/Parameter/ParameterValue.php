@@ -33,9 +33,6 @@ class ParameterValue
      */
     protected $locale;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
-     */
     public function __construct(ParameterValueData $parameterData)
     {
         $this->text = $parameterData->text;
@@ -66,9 +63,6 @@ class ParameterValue
         return $this->locale;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
-     */
     public function edit(ParameterValueData $parameterData)
     {
         $this->text = $parameterData->text;

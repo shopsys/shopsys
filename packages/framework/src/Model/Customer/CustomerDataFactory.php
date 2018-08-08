@@ -29,9 +29,6 @@ class CustomerDataFactory implements CustomerDataFactoryInterface
         $this->userDataFactory = $userDataFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
-     */
     public function create(): CustomerData
     {
         return new CustomerData(
@@ -41,10 +38,6 @@ class CustomerDataFactory implements CustomerDataFactoryInterface
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
-     */
     public function createFromUser(User $user): CustomerData
     {
         $customerData = new CustomerData(
@@ -56,10 +49,6 @@ class CustomerDataFactory implements CustomerDataFactoryInterface
         return $customerData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
-     */
     protected function getDeliveryAddressDataFromUser(User $user): DeliveryAddressData
     {
         if ($user->getDeliveryAddress()) {

@@ -42,9 +42,6 @@ class GoogleProductDomain
      */
     protected $domainId;
 
-    /**
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
-     */
     public function __construct(GoogleProductDomainData $googleProductDomainData)
     {
         $this->product = $googleProductDomainData->product;
@@ -52,9 +49,6 @@ class GoogleProductDomain
         $this->domainId = $googleProductDomainData->domainId;
     }
 
-    /**
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
-     */
     public function edit(GoogleProductDomainData $googleProductDomainData)
     {
         $this->product = $googleProductDomainData->product;

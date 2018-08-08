@@ -56,10 +56,6 @@ class CategoryController extends AdminBaseController
         $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
-    /**
-     * @Route("/category/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function editAction(Request $request, $id)
     {
         $category = $this->categoryFacade->getById($id);
@@ -96,10 +92,6 @@ class CategoryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/category/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $categoryData = $this->categoryDataFactory->create();
@@ -135,10 +127,6 @@ class CategoryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/category/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function listAction(Request $request)
     {
         if (count($this->domain->getAll()) > 1) {
@@ -173,10 +161,6 @@ class CategoryController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/category/save-order/", methods={"post"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function saveOrderAction(Request $request)
     {
         $categoriesOrderingData = $request->get('categoriesOrderingData');

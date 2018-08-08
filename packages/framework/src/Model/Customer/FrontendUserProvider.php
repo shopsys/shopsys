@@ -21,10 +21,6 @@ class FrontendUserProvider implements UserProviderInterface
      */
     private $domain;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(UserRepository $userRepository, Domain $domain)
     {
         $this->userRepository = $userRepository;

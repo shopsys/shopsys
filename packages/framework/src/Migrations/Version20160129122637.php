@@ -8,9 +8,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20160129122637 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function up(Schema $schema)
     {
         $sql = 'INSERT INTO setting_values (name, domain_id, value, type) VALUES
@@ -37,9 +34,6 @@ class Version20160129122637 extends AbstractMigration
             $$ LANGUAGE plpgsql IMMUTABLE;');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function down(Schema $schema)
     {
     }

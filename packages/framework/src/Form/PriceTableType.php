@@ -46,9 +46,6 @@ class PriceTableType extends AbstractType
         $view->vars['currencies'] = $options['currencies'];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

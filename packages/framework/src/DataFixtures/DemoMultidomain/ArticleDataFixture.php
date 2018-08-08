@@ -31,9 +31,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
         $this->articleDataFactory = $articleDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $articleData = $this->articleDataFactory->create();

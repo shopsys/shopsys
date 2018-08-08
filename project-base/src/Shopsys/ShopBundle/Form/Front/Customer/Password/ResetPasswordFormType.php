@@ -29,9 +29,6 @@ class ResetPasswordFormType extends AbstractType
             ->add('submit', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

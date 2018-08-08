@@ -12,9 +12,6 @@ class CookiesExtension extends \Twig_Extension
      */
     private $cookiesFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade
-     */
     public function __construct(CookiesFacade $cookiesFacade)
     {
         $this->cookiesFacade = $cookiesFacade;

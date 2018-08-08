@@ -102,10 +102,6 @@ class TransportFacade
         return $transport;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     */
     public function edit(Transport $transport, TransportData $transportData)
     {
         $transport->edit($transportData);

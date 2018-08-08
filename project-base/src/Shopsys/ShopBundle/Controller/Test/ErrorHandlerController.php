@@ -8,9 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ErrorHandlerController extends FrontBaseController
 {
-    /**
-     * @Route("/error-handler/notice")
-     */
     public function noticeAction()
     {
         $undefined[42];
@@ -18,9 +15,6 @@ class ErrorHandlerController extends FrontBaseController
         return new Response('');
     }
 
-    /**
-     * @Route("/error-handler/exception")
-     */
     public function exceptionAction()
     {
         throw new \Shopsys\ShopBundle\Controller\Test\ExpectedTestException('Expected exception');

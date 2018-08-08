@@ -32,9 +32,6 @@ class TransportDataFactory implements TransportDataFactoryInterface
         $this->domain = $domain;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportData
-     */
     public function create(): TransportData
     {
         $transportData = new TransportData();
@@ -43,9 +40,6 @@ class TransportDataFactory implements TransportDataFactoryInterface
         return $transportData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     */
     protected function fillNew(TransportData $transportData)
     {
         $transportData->vat = $this->vatFacade->getDefaultVat();
@@ -55,10 +49,6 @@ class TransportDataFactory implements TransportDataFactoryInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportData
-     */
     public function createFromTransport(Transport $transport): TransportData
     {
         $transportData = new TransportData();
@@ -67,10 +57,6 @@ class TransportDataFactory implements TransportDataFactoryInterface
         return $transportData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     */
     protected function fillFromTransport(TransportData $transportData, Transport $transport)
     {
         $names = [];

@@ -168,9 +168,6 @@ class DeliveryAddressFormType extends AbstractType
         $builder->add($builderDeliveryAdress);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

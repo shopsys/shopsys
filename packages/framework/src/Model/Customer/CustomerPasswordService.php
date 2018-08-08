@@ -39,9 +39,6 @@ class CustomerPasswordService
         $user->changePassword($passwordHash);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
     public function resetPassword(User $user)
     {
         $hash = $this->hashGenerator->generateHash(self::RESET_PASSWORD_HASH_LENGTH);

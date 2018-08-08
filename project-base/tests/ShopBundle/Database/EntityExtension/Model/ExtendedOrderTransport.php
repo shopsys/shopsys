@@ -70,9 +70,6 @@ class ExtendedOrderTransport extends ExtendedOrderItem
         return $this->transport;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderTransportData
-     */
     public function edit(OrderItemData $orderTransportData)
     {
         if ($orderTransportData instanceof OrderTransportData) {

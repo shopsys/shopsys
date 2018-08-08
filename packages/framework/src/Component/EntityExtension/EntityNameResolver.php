@@ -17,10 +17,6 @@ class EntityNameResolver
         $this->entityExtensionMap = $entityExtensionMap;
     }
 
-    /**
-     * @param string $entityName
-     * @return string
-     */
     public function resolve(string $entityName): string
     {
         return $this->entityExtensionMap[$entityName] ?? $entityName;

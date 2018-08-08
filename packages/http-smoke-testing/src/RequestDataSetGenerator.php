@@ -19,9 +19,6 @@ class RequestDataSetGenerator implements RouteConfig
      */
     private $extraRequestDataSets;
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteInfo $routeInfo
-     */
     public function __construct(RouteInfo $routeInfo)
     {
         $this->routeInfo = $routeInfo;

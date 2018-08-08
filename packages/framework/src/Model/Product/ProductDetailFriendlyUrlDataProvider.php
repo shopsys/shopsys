@@ -62,9 +62,6 @@ class ProductDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
         return $friendlyUrlsData;
     }
 
-    /**
-     * @return string
-     */
     public function getRouteName(): string
     {
         return self::ROUTE_NAME;

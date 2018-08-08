@@ -16,10 +16,6 @@ class BasePriceCalculation
      */
     private $rounding;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     */
     public function __construct(PriceCalculation $priceCalculation, Rounding $rounding)
     {
         $this->priceCalculation = $priceCalculation;

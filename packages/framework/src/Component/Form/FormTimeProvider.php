@@ -12,9 +12,6 @@ class FormTimeProvider
      */
     private $session;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     */
     public function __construct(SessionInterface $session)
     {
         $this->session = $session;

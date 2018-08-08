@@ -17,9 +17,6 @@ class FriendlyUrlDataFactory implements FriendlyUrlDataFactoryInterface
         return $friendlyUrlData;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData
-     */
     public function create(): FriendlyUrlData
     {
         return new FriendlyUrlData();

@@ -128,10 +128,6 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         return static::$kernel->handle($request);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
-     */
     protected function assertResponse(Response $response, RequestDataSet $requestDataSet)
     {
         $failMessage = sprintf(

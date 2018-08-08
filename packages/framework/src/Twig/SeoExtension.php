@@ -24,11 +24,6 @@ class SeoExtension extends \Twig_Extension
      */
     private $domain;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         ContainerInterface $container,
         SeoSettingFacade $seoSettingFacade,

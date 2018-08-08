@@ -13,9 +13,6 @@ class UnitRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
@@ -97,10 +94,6 @@ class UnitRepository
         return $qb->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $oldUnit
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $newUnit
-     */
     public function replaceUnit(Unit $oldUnit, Unit $newUnit)
     {
         $this->em->createQueryBuilder()

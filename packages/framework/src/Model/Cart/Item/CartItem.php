@@ -176,9 +176,6 @@ class CartItem
         return $this->addedAt;
     }
 
-    /**
-     * @param \DateTime $addedAt
-     */
     public function changeAddedAt(DateTime $addedAt)
     {
         $this->addedAt = $addedAt;

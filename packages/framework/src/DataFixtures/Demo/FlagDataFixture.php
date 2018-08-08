@@ -32,9 +32,6 @@ class FlagDataFixture extends AbstractReferenceFixture
         $this->flagDataFactory = $flagDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $flagData = $this->flagDataFactory->create();

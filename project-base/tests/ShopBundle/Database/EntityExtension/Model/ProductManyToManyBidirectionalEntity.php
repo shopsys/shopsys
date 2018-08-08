@@ -34,18 +34,12 @@ class ProductManyToManyBidirectionalEntity
      */
     protected $name;
 
-    /**
-     * @param string $name
-     */
     public function __construct(string $name)
     {
         $this->name = $name;
         $this->products = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -59,9 +53,6 @@ class ProductManyToManyBidirectionalEntity
         return $this->products->getValues();
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedProduct $product
-     */
     public function addProduct(ExtendedProduct $product): void
     {
         $this->products->add($product);

@@ -28,10 +28,6 @@ class GridController extends AdminBaseController
         $this->inlineEditService = $inlineEditService;
     }
 
-    /**
-     * @Route("/_grid/get-form/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function getFormAction(Request $request)
     {
         $renderedFormRow = $this->inlineEditService->getRenderedFormRow(
@@ -42,10 +38,6 @@ class GridController extends AdminBaseController
         return new JsonResponse($renderedFormRow);
     }
 
-    /**
-     * @Route("/_grid/save-form/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function saveFormAction(Request $request)
     {
         $responseData = [];
@@ -65,10 +57,6 @@ class GridController extends AdminBaseController
         return new JsonResponse($responseData);
     }
 
-    /**
-     * @Route("/_grid/save-ordering/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function saveOrderingAction(Request $request)
     {
         $this->gridOrderingFacade->saveOrdering(

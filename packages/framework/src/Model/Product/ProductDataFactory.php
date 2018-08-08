@@ -96,9 +96,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $this->productParameterValueDataFactory = $productParameterValueDataFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     public function create(): ProductData
     {
         $productData = new ProductData();
@@ -129,10 +126,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->accessories = [];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
-     */
     public function createFromProduct(Product $product): ProductData
     {
         $productData = new ProductData();
@@ -141,10 +134,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         return $productData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     protected function fillFromProduct(ProductData $productData, Product $product)
     {
         $translations = $product->getTranslations();

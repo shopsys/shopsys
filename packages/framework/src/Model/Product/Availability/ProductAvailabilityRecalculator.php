@@ -80,9 +80,6 @@ class ProductAvailabilityRecalculator
         $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     private function recalculateProductAvailability(Product $product)
     {
         $calculatedAvailability = $this->productAvailabilityCalculation->calculateAvailability($product);
@@ -93,9 +90,6 @@ class ProductAvailabilityRecalculator
         $this->em->flush($product);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
     public function onKernelResponse(FilterResponseEvent $event)
     {
         if ($event->isMasterRequest()) {

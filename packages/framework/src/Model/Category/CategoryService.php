@@ -10,9 +10,6 @@ class CategoryService
      */
     protected $categoryFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
-     */
     public function __construct(CategoryFactoryInterface $categoryFactory)
     {
         $this->categoryFactory = $categoryFactory;
@@ -49,9 +46,6 @@ class CategoryService
         return $category;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
     public function setChildrenAsSiblings(Category $category)
     {
         foreach ($category->getChildren() as $child) {

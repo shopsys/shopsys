@@ -39,10 +39,6 @@ class FeedRegistry
         $this->defaultType = $defaultType;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed
-     * @param string|null $type
-     */
     public function registerFeed(FeedInterface $feed, string $type = null): void
     {
         $type = Utils::ifNull($type, $this->defaultType);
@@ -74,10 +70,6 @@ class FeedRegistry
         return $this->feedsByName;
     }
 
-    /**
-     * @param string $name
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInterface
-     */
     public function getFeedByName(string $name): FeedInterface
     {
         if (!array_key_exists($name, $this->feedsByName)) {
@@ -87,9 +79,6 @@ class FeedRegistry
         return $this->feedsByName[$name];
     }
 
-    /**
-     * @param string $type
-     */
     private function assertTypeIsKnown(string $type): void
     {
         if (!in_array($type, $this->knownTypes, true)) {
@@ -97,9 +86,6 @@ class FeedRegistry
         }
     }
 
-    /**
-     * @param string $name
-     */
     private function assertNameIsUnique(string $name): void
     {
         if (array_key_exists($name, $this->feedsByName)) {

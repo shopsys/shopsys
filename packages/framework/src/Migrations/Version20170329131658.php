@@ -7,9 +7,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20170329131658 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function up(Schema $schema)
     {
         $this->sql('ALTER TABLE cron_modules DROP CONSTRAINT "cron_modules_pkey"');
@@ -17,9 +14,6 @@ class Version20170329131658 extends AbstractMigration
         $this->sql('ALTER TABLE cron_modules ADD PRIMARY KEY (service_id)');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function down(Schema $schema)
     {
     }

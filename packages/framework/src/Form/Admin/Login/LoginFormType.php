@@ -41,9 +41,6 @@ class LoginFormType extends AbstractType
         return 'admin_login_form';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

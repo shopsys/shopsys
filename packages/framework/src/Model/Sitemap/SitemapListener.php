@@ -61,9 +61,6 @@ class SitemapListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Presta\SitemapBundle\Event\SitemapPopulateEvent $event
-     */
     public function populateSitemap(SitemapPopulateEvent $event)
     {
         $section = $event->getSection();

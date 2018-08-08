@@ -15,9 +15,6 @@ class AvailabilityRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
@@ -102,10 +99,6 @@ class AvailabilityRepository
         return $queryBuilder->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR) !== null;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $oldAvailability
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $newAvailability
-     */
     public function replaceAvailability(Availability $oldAvailability, Availability $newAvailability)
     {
         $this->em->createQueryBuilder()

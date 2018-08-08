@@ -38,9 +38,6 @@ class AvailabilityController extends AdminBaseController
         $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
     }
 
-    /**
-     * @Route("/product/availability/list/")
-     */
     public function listAction()
     {
         $grid = $this->availabilityInlineEdit->getGrid();
@@ -132,10 +129,6 @@ class AvailabilityController extends AdminBaseController
         }
     }
 
-    /**
-     * @Route("/product/availability/setting/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingAction(Request $request)
     {
         try {

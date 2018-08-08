@@ -67,9 +67,6 @@ class FeedController extends AdminBaseController
         return $this->redirectToRoute('admin_feed_list');
     }
 
-    /**
-     * @Route("/feed/list/")
-     */
     public function listAction()
     {
         $feedsData = [];

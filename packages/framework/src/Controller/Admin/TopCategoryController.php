@@ -28,9 +28,6 @@ class TopCategoryController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @Route("/category/top-category/list/")
-     */
     public function listAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

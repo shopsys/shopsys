@@ -16,9 +16,6 @@ class FriendlyUrlDataProviderRegistry
         $this->friendlyUrlDataProviders = [];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\CompilerPass\FriendlyUrlDataProviderInterface $service
-     */
     public function registerFriendlyUrlDataProvider(FriendlyUrlDataProviderInterface $service)
     {
         $this->friendlyUrlDataProviders[] = $service;

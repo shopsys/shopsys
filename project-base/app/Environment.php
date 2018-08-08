@@ -14,9 +14,6 @@ class Environment
      */
     private static $environmentFileSetting;
 
-    /**
-     * @param \Composer\Script\Event $event
-     */
     public static function checkEnvironment(Event $event)
     {
         $io = $event->getIO();
@@ -42,9 +39,6 @@ class Environment
     }
 
 
-    /**
-     * @param \Composer\IO\IOInterface $io
-     */
     public static function printEnvironmentInfo(IOInterface $io)
     {
         $io->write("\nEnvironment is <info>" . self::getEnvironment(false) . "</info>\n");

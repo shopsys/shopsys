@@ -143,9 +143,6 @@ class TransportFormType extends AbstractType
             ->add($builderImageGroup);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired('transport')

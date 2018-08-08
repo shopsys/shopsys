@@ -27,9 +27,6 @@ class FlagController extends AdminBaseController
         $this->flagInlineEdit = $flagInlineEdit;
     }
 
-    /**
-     * @Route("/product/flag/list/")
-     */
     public function listAction()
     {
         $productInlineEdit = $this->flagInlineEdit;

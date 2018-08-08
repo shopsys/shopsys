@@ -60,11 +60,6 @@ class HeurekaProductDataBatchLoader
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return float|null
-     */
     public function getProductCpc(Product $product, DomainConfig $domainConfig): ?float
     {
         $key = $this->getKey($product, $domainConfig);
@@ -89,11 +84,6 @@ class HeurekaProductDataBatchLoader
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getProductUrl(Product $product, DomainConfig $domainConfig): string
     {
         try {
@@ -103,11 +93,6 @@ class HeurekaProductDataBatchLoader
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string|null
-     */
     public function getProductImageUrl(Product $product, DomainConfig $domainConfig): ?string
     {
         try {
@@ -117,11 +102,6 @@ class HeurekaProductDataBatchLoader
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     protected function getKey(Product $product, DomainConfig $domainConfig): string
     {
         return $domainConfig->getId() . '-' . $product->getId();

@@ -122,9 +122,6 @@ class ArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/article/list/")
-     */
     public function listAction()
     {
         $gridTop = $this->getGrid(Article::PLACEMENT_TOP_MENU);
@@ -140,10 +137,6 @@ class ArticleController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/article/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $articleData = $this->articleDataFactory->create();

@@ -38,14 +38,6 @@ class CustomerFacade
      */
     private $billingAddressDataFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerService $customerService
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         UserRepository $userRepository,
@@ -224,10 +216,6 @@ class CustomerFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function amendCustomerDataFromOrder(User $user, Order $order)
     {
         $this->edit(

@@ -14,10 +14,6 @@ abstract class AbstractNativeFixture extends AbstractFixture
      */
     private $entityManager;
 
-    /**
-     * @required
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function autowireEntityManager(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;

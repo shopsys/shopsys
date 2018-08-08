@@ -303,10 +303,6 @@ class OrderFacade
         return strtr($orderSentPageContent, $variables);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
     public function prefillFrontOrderData(FrontOrderData $orderData, User $user)
     {
         $order = $this->orderRepository->findLastByUserId($user->getId());
@@ -386,9 +382,6 @@ class OrderFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function setOrderDataAdministrator(OrderData $orderData)
     {
         if ($this->administratorFrontSecurityFacade->isAdministratorLoggedAsCustomer()) {

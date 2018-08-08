@@ -19,10 +19,6 @@ class PaymentPriceCalculation
      */
     private $pricingSetting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
     public function __construct(
         BasePriceCalculation $basePriceCalculation,
         PricingSetting $pricingSetting

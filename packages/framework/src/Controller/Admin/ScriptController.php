@@ -47,10 +47,6 @@ class ScriptController extends AdminBaseController
         $this->scriptDataFactory = $scriptDataFactory;
     }
 
-    /**
-     * @Route("/script/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $form = $this->createForm(ScriptFormType::class, $this->scriptDataFactory->create());
@@ -115,9 +111,6 @@ class ScriptController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/script/list/")
-     */
     public function listAction()
     {
         $dataSource = new QueryBuilderDataSource($this->scriptFacade->getAllQueryBuilder(), 's.id');
@@ -164,10 +157,6 @@ class ScriptController extends AdminBaseController
         return $this->redirectToRoute('admin_script_list');
     }
 
-    /**
-     * @Route("/script/google-analytics/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function googleAnalyticsAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

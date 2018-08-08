@@ -27,12 +27,6 @@ class UnitFacade
      */
     protected $unitFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitRepository $unitRepository
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface $unitFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         UnitRepository $unitRepository,
@@ -145,9 +139,6 @@ class UnitFacade
         return $this->unitRepository->getById($defaultUnitId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     */
     public function setDefaultUnit(Unit $unit)
     {
         $this->setting->set(Setting::DEFAULT_UNIT, $unit->getId());

@@ -24,9 +24,6 @@ class ImageConfigLoader
      */
     private $foundEntityNames;
 
-    /**
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     */
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;

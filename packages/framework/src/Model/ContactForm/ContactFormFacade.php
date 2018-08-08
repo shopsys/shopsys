@@ -30,12 +30,6 @@ class ContactFormFacade
      */
     protected $twig;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerService $mailerService
-     * @param \Twig_Environment $twig
-     */
     public function __construct(
         MailSettingFacade $mailSettingFacade,
         Domain $domain,
@@ -48,9 +42,6 @@ class ContactFormFacade
         $this->twig = $twig;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData $contactFormData
-     */
     public function sendMail(ContactFormData $contactFormData)
     {
         $messageData = new MessageData(

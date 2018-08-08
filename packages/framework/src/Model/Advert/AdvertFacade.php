@@ -33,13 +33,6 @@ class AdvertFacade
      */
     protected $advertFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertRepository $advertRepository
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFactoryInterface $advertFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         AdvertRepository $advertRepository,

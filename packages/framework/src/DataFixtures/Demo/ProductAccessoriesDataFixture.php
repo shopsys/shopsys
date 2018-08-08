@@ -16,10 +16,6 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
     /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
     private $productFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface $productDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     */
     public function __construct(
         ProductDataFactoryInterface $productDataFactory,
         ProductFacade $productFacade
@@ -28,9 +24,6 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
         $this->productFacade = $productFacade;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');

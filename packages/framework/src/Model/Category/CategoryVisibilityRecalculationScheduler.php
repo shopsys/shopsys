@@ -21,9 +21,6 @@ class CategoryVisibilityRecalculationScheduler
         $this->productVisibilityFacade = $productVisibilityFacade;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
     public function scheduleRecalculation(Category $category)
     {
         $this->recalculate = true;

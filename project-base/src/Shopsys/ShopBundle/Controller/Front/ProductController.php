@@ -221,9 +221,6 @@ class ProductController extends FrontBaseController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function searchAction(Request $request)
     {
         $searchText = $request->query->get(self::SEARCH_TEXT_PARAMETER);

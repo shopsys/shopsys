@@ -46,9 +46,6 @@ class LoginFormType extends AbstractType
         return 'front_login_form';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

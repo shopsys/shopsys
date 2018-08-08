@@ -112,9 +112,6 @@ class UrlListType extends AbstractType
         $view->vars['domainUrlsById'] = $this->getDomainUrlsIndexedById();
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

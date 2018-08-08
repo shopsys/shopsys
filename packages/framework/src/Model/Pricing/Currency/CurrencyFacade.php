@@ -172,9 +172,6 @@ class CurrencyFacade
         return $this->getById($this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId));
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     */
     public function setDefaultCurrency(Currency $currency)
     {
         $this->pricingSetting->setDefaultCurrency($currency);
@@ -234,9 +231,6 @@ class CurrencyFacade
         return $currenciesIndexedById;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     */
     protected function createTransportAndPaymentPrices(Currency $currency)
     {
         $toFlush = [];

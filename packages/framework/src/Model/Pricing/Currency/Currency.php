@@ -45,9 +45,6 @@ class Currency
      */
     protected $exchangeRate;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     */
     public function __construct(CurrencyData $currencyData)
     {
         $this->name = $currencyData->name;
@@ -103,9 +100,6 @@ class Currency
         $this->exchangeRate = $exchangeRate;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
-     */
     public function edit(CurrencyData $currencyData)
     {
         $this->name = $currencyData->name;

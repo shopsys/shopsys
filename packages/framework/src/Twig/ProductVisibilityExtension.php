@@ -25,11 +25,6 @@ class ProductVisibilityExtension extends \Twig_Extension
      */
     private $domain;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         ProductVisibilityRepository $productVisibilityRepository,
         PricingGroupSettingFacade $pricingGroupSettingFacade,

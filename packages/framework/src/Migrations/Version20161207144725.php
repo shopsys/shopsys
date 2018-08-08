@@ -9,9 +9,6 @@ class Version20161207144725 extends AbstractMigration
 {
     use MultidomainMigrationTrait;
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function up(Schema $schema)
     {
         foreach ($this->getAllDomainIds() as $domainId) {
@@ -28,9 +25,6 @@ class Version20161207144725 extends AbstractMigration
         }
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function down(Schema $schema)
     {
     }

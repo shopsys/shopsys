@@ -23,11 +23,6 @@ class NewsletterFacade
      */
     protected $newsletterSubscriberFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository $newsletterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         NewsletterRepository $newsletterRepository,
@@ -89,9 +84,6 @@ class NewsletterFacade
         return $this->newsletterRepository->getNewsletterSubscriberById($id);
     }
 
-    /**
-     * @param int $id
-     */
     public function deleteById(int $id)
     {
         $newsletterSubscriber = $this->getNewsletterSubscriberById($id);

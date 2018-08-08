@@ -24,10 +24,6 @@ class JsConstantCallParser
      */
     private $jsStringParser;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\JsFunctionCallParser $jsFunctionCallParser
-     * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\JsStringParser $jsStringParser
-     */
     public function __construct(
         JsFunctionCallParser $jsFunctionCallParser,
         JsStringParser $jsStringParser

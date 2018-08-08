@@ -15,9 +15,6 @@ class FormThemeExtension extends \Twig_Extension
      */
     protected $requestStack;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;

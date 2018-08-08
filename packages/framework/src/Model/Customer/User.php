@@ -106,11 +106,6 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
      */
     protected $resetPasswordHashValidThrough;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     */
     public function __construct(
         UserData $userData,
         BillingAddress $billingAddress,
@@ -130,9 +125,6 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         $this->pricingGroup = $userData->pricingGroup;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     */
     public function edit(UserData $userData)
     {
         $this->firstName = $userData->firstName;
@@ -167,9 +159,6 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         $this->resetPasswordHashValidThrough = new DateTime('+48 hours');
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     */
     public function setDeliveryAddress(DeliveryAddress $deliveryAddress = null)
     {
         $this->deliveryAddress = $deliveryAddress;

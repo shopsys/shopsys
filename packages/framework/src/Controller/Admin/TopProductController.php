@@ -28,9 +28,6 @@ class TopProductController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @Route("/product/top-product/list/")
-     */
     public function listAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

@@ -28,9 +28,6 @@ class SlowLogSubscriber implements EventSubscriberInterface
         $this->startTime = 0;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-     */
     public function initStartTime(GetResponseEvent $event)
     {
         if ($event->isMasterRequest()) {
@@ -38,9 +35,6 @@ class SlowLogSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\PostResponseEvent $event
-     */
     public function addNotice(PostResponseEvent $event)
     {
         $requestTime = $this->getRequestTime();

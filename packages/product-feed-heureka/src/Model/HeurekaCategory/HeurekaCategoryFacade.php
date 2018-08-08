@@ -22,11 +22,6 @@ class HeurekaCategoryFacade
      */
     protected $categoryRepository;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryRepository $heurekaCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     */
     public function __construct(
         EntityManagerInterface $em,
         HeurekaCategoryRepository $heurekaCategoryRepository,

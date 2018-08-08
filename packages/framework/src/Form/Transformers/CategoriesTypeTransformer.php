@@ -12,9 +12,6 @@ class CategoriesTypeTransformer implements DataTransformerInterface
      */
     private $categoryFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     */
     public function __construct(CategoryFacade $categoryFacade)
     {
         $this->categoryFacade = $categoryFacade;

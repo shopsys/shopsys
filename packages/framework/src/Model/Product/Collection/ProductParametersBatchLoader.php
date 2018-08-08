@@ -53,11 +53,6 @@ class ProductParametersBatchLoader
         return $this->loadedProductParametersByName[$key];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     protected function getKey(Product $product, DomainConfig $domainConfig): string
     {
         return $domainConfig->getId() . '-' . $product->getId();

@@ -17,9 +17,6 @@ class ProductVisibilityFacade
      */
     protected $recalcVisibilityForMarked = false;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
-     */
     public function __construct(ProductVisibilityRepository $productVisibilityRepository)
     {
         $this->productVisibilityRepository = $productVisibilityRepository;
@@ -40,17 +37,11 @@ class ProductVisibilityFacade
         $this->productVisibilityRepository->refreshProductsVisibility(true);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
     public function markProductsForRecalculationAffectedByCategory(Category $category)
     {
         $this->productVisibilityRepository->markProductsForRecalculationAffectedByCategory($category);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
     public function onKernelResponse(FilterResponseEvent $event)
     {
         if (!$event->isMasterRequest()) {

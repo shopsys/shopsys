@@ -29,9 +29,6 @@ class SeoController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @Route("/seo/")
-     */
     public function indexAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

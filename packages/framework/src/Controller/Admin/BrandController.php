@@ -103,9 +103,6 @@ class BrandController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/brand/list/")
-     */
     public function listAction()
     {
         $administrator = $this->getUser();
@@ -136,10 +133,6 @@ class BrandController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/brand/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $brandData = $this->brandDataFactory->create();

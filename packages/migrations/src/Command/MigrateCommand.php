@@ -46,10 +46,6 @@ class MigrateCommand extends AbstractCommand
             );
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
@@ -69,9 +65,6 @@ class MigrateCommand extends AbstractCommand
         $this->migrationsLock->saveNewMigrations($migrationVersions);
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     private function executeDoctrineMigrateCommand(OutputInterface $output)
     {
         $doctrineMigrateCommand = $this->getApplication()->find('doctrine:migrations:migrate');

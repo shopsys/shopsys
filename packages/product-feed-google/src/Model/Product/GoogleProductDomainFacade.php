@@ -22,11 +22,6 @@ class GoogleProductDomainFacade
      */
     protected $productRepository;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainRepository $googleProductDomainRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(
         EntityManagerInterface $em,
         GoogleProductDomainRepository $googleProductDomainRepository,
@@ -83,10 +78,6 @@ class GoogleProductDomainFacade
         }
     }
 
-    /**
-     * @param $productId
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
-     */
     public function saveGoogleProductDomain($productId, GoogleProductDomainData $googleProductDomainData)
     {
         $product = $this->productRepository->getById($productId);
@@ -107,9 +98,6 @@ class GoogleProductDomainFacade
         $this->em->flush();
     }
 
-    /**
-     * @param $productId
-     */
     public function delete($productId)
     {
         $googleProductDomains = $this->googleProductDomainRepository->findByProductId($productId);

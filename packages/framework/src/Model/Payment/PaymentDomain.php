@@ -73,9 +73,6 @@ class PaymentDomain
         return $this->enabled;
     }
 
-    /**
-     * @param bool $enabled
-     */
     public function setEnabled(bool $enabled)
     {
         $this->enabled = $enabled;

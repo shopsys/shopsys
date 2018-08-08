@@ -32,9 +32,6 @@ class ImageUploadType extends AbstractType
         $this->imagesIdsToImagesTransformer = $imagesIdsToImagesTransformer;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

@@ -24,11 +24,6 @@ class ResetPasswordMailFacade
      */
     protected $resetPasswordMail;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerService $mailer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail $resetPasswordMail
-     */
     public function __construct(
         MailerService $mailer,
         MailTemplateFacade $mailTemplateFacade,
@@ -39,9 +34,6 @@ class ResetPasswordMailFacade
         $this->resetPasswordMail = $resetPasswordMail;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
     public function sendMail(User $user)
     {
         $mailTemplate = $this->mailTemplateFacade->get(MailTemplate::RESET_PASSWORD_NAME, $user->getDomainId());

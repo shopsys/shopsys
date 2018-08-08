@@ -26,11 +26,6 @@ class CurrencyGridFactory implements GridFactoryInterface
      */
     private $currencyFacade;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     */
     public function __construct(
         EntityManagerInterface $em,
         GridFactory $gridFactory,

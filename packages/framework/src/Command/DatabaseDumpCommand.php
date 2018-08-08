@@ -24,9 +24,6 @@ class DatabaseDumpCommand extends Command
      */
     private $connection;
 
-    /**
-     * @param \Doctrine\DBAL\Connection $connection
-     */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;

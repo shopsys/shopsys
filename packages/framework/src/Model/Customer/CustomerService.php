@@ -37,14 +37,6 @@ class CustomerService
      */
     private $deliveryAddressDataFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordService $customerPasswordService
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface $deliveryAddressFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface $userFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
-     */
     public function __construct(
         CustomerPasswordService $customerPasswordService,
         DeliveryAddressFactoryInterface $deliveryAddressFactory,
@@ -92,10 +84,6 @@ class CustomerService
         return $user;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData
-     */
     public function edit(User $user, UserData $userData)
     {
         $user->edit($userData);

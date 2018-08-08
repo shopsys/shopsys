@@ -50,14 +50,6 @@ class RecalculationsCommand extends Command
      */
     private $productSellingDeniedRecalculator;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository $categoryVisibilityRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator $productPriceRecalculator
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator $productAvailabilityRecalculator
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
-     */
     public function __construct(
         CategoryVisibilityRepository $categoryVisibilityRepository,
         ProductHiddenRecalculator $productHiddenRecalculator,
@@ -82,10 +74,6 @@ class RecalculationsCommand extends Command
             ->setDescription('Run all recalculations.');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Running recalculations:');

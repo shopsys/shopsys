@@ -61,18 +61,6 @@ class PaymentFacade
      */
     protected $paymentPriceFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository $paymentRepository
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface $paymentFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         PaymentRepository $paymentRepository,
@@ -112,10 +100,6 @@ class PaymentFacade
         return $payment;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
     public function edit(Payment $payment, PaymentData $paymentData)
     {
         $payment->edit($paymentData);
@@ -142,10 +126,6 @@ class PaymentFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
     protected function setAdditionalDataAndFlush(Payment $payment, PaymentData $paymentData)
     {
         $transports = $this->transportRepository->getAllByIds($paymentData->transports);

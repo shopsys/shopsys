@@ -122,9 +122,6 @@ class UserDataFixture
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function load(OutputInterface $output)
     {
         // Sql logging during mass data import makes memory leak

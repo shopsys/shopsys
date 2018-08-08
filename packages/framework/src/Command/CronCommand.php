@@ -32,10 +32,6 @@ class CronCommand extends Command
      */
     private $mutexFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
-     */
     public function __construct(
         CronFacade $cronFacade,
         MutexFactory $mutexFactory
@@ -54,10 +50,6 @@ class CronCommand extends Command
             ->addOption(self::OPTION_MODULE, null, InputOption::VALUE_OPTIONAL, 'Service ID');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $optionList = $input->getOption(self::OPTION_LIST);
@@ -68,10 +60,6 @@ class CronCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     */
     private function listAllCronModulesSortedByServiceId(OutputInterface $output, CronFacade $cronFacade)
     {
         $cronModuleConfigs = $cronFacade->getAll();
@@ -85,11 +73,6 @@ class CronCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
-     */
     private function runCron(InputInterface $input, CronFacade $cronFacade, MutexFactory $mutexFactory)
     {
         $requestedModuleServiceId = $input->getOption(self::OPTION_MODULE);

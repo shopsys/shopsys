@@ -194,9 +194,6 @@ abstract class OrderItem
         return $this->priceWithVat * $this->quantity;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     */
     public function edit(OrderItemData $orderItemData)
     {
         $this->name = $orderItemData->name;

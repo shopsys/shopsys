@@ -130,10 +130,6 @@ class ImageProcessingService
         return $image;
     }
 
-    /**
-     * @param \Intervention\Image\Image $image
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
-     */
     public function resizeBySizeConfig(Image $image, ImageSizeConfig $sizeConfig)
     {
         $this->resize($image, $sizeConfig->getWidth(), $sizeConfig->getHeight(), $sizeConfig->getCrop());

@@ -189,10 +189,6 @@ class OrderController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/order/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function listAction(Request $request)
     {
         $administrator = $this->getUser();

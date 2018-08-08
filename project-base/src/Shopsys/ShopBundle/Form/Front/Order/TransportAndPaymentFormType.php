@@ -27,10 +27,6 @@ class TransportAndPaymentFormType extends AbstractType
      */
     private $paymentFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     */
     public function __construct(TransportFacade $transportFacade, PaymentFacade $paymentFacade)
     {
         $this->transportFacade = $transportFacade;
@@ -68,9 +64,6 @@ class TransportAndPaymentFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -84,10 +77,6 @@ class TransportAndPaymentFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
     public function validateTransportPaymentRelation(OrderData $orderData, ExecutionContextInterface $context)
     {
         $payment = $orderData->payment;

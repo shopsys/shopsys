@@ -52,9 +52,6 @@ class Country
         $this->code = $countryData->code;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
     public function edit(CountryData $countryData)
     {
         $this->name = $countryData->name;

@@ -14,9 +14,6 @@ class AdvancedSearchConfig
         $this->filters = [];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $filter
-     */
     public function registerFilter(AdvancedSearchFilterInterface $filter)
     {
         if (array_key_exists($filter->getName(), $this->filters)) {

@@ -113,9 +113,6 @@ class AvailabilityFacade
         return $this->getById($availabilityId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
-     */
     public function setDefaultInStockAvailability(Availability $availability)
     {
         $this->setting->set(Setting::DEFAULT_AVAILABILITY_IN_STOCK, $availability->getId());

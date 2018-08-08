@@ -224,9 +224,6 @@ class MailController extends AdminBaseController
         ];
     }
 
-    /**
-     * @Route("/mail/template/")
-     */
     public function templateAction(Request $request)
     {
         $allMailTemplatesData = $this->mailTemplateFacade->getAllMailTemplatesDataByDomainId(
@@ -258,9 +255,6 @@ class MailController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Mail/template.html.twig', $templateParameters);
     }
 
-    /**
-     * @Route("/mail/setting/")
-     */
     public function settingAction(Request $request)
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();

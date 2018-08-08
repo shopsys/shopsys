@@ -9,9 +9,6 @@ class FlagService
      */
     protected $flagFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactoryInterface $flagFactory
-     */
     public function __construct(FlagFactoryInterface $flagFactory)
     {
         $this->flagFactory = $flagFactory;

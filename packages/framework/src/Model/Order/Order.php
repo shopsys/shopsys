@@ -340,9 +340,6 @@ class Order
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     public function edit(OrderData $orderData)
     {
         $this->firstName = $orderData->firstName;
@@ -367,9 +364,6 @@ class Order
         $this->editOrderPayment($orderData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function editOrderTransport(OrderData $orderData)
     {
         $orderTransportData = $orderData->orderTransport;
@@ -377,9 +371,6 @@ class Order
         $this->getOrderTransport()->edit($orderTransportData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function editOrderPayment(OrderData $orderData)
     {
         $orderPaymentData = $orderData->orderPayment;
@@ -387,9 +378,6 @@ class Order
         $this->getOrderPayment()->edit($orderPaymentData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function setDeliveryAddress(OrderData $orderData)
     {
         $this->deliveryAddressSameAsBillingAddress = $orderData->deliveryAddressSameAsBillingAddress;
@@ -414,9 +402,6 @@ class Order
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $item
-     */
     public function addItem(OrderItem $item)
     {
         if (!$this->items->contains($item)) {
@@ -424,9 +409,6 @@ class Order
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $item
-     */
     public function removeItem(OrderItem $item)
     {
         if ($item instanceof OrderTransport) {
@@ -438,9 +420,6 @@ class Order
         $this->items->removeElement($item);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $status
-     */
     public function setStatus(OrderStatus $status)
     {
         $this->status = $status;
@@ -570,9 +549,6 @@ class Order
         return $this->currency;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderTotalPrice $orderTotalPrice
-     */
     public function setTotalPrice(OrderTotalPrice $orderTotalPrice)
     {
         $this->totalPriceWithVat = $orderTotalPrice->getPriceWithVat();

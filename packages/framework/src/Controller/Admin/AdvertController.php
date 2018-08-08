@@ -115,9 +115,6 @@ class AdvertController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/advert/list/")
-     */
     public function listAction()
     {
         $administrator = $this->getUser();
@@ -170,10 +167,6 @@ class AdvertController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/advert/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function newAction(Request $request)
     {
         $advertData = $this->advertDataFactory->create();

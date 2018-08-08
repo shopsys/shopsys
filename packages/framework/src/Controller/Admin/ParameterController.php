@@ -27,9 +27,6 @@ class ParameterController extends AdminBaseController
         $this->parameterInlineEdit = $parameterInlineEdit;
     }
 
-    /**
-     * @Route("/product/parameter/list/")
-     */
     public function listAction()
     {
         $grid = $this->parameterInlineEdit->getGrid();

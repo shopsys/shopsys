@@ -186,9 +186,6 @@ class ImageFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     */
     public function deleteImageFiles(Image $image)
     {
         $entityName = $image->getEntityName();

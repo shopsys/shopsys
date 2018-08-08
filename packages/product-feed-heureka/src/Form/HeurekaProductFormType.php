@@ -16,9 +16,6 @@ class HeurekaProductFormType extends AbstractType
      */
     private $translator;
 
-    /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;

@@ -46,9 +46,6 @@ class VatController extends AdminBaseController
         $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
     }
 
-    /**
-     * @Route("/vat/list/")
-     */
     public function listAction()
     {
         $grid = $this->vatInlineEdit->getGrid();
@@ -132,9 +129,6 @@ class VatController extends AdminBaseController
         return $this->redirectToRoute('admin_vat_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingsAction(Request $request)
     {
         $vatSettingsFormData = [

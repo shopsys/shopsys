@@ -41,9 +41,6 @@ class NewsletterController extends AdminBaseController
         $this->gridFactory = $gridFactory;
     }
 
-    /**
-     * @Route("/newsletter/list/")
-     */
     public function listAction(Request $request)
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -75,11 +72,6 @@ class NewsletterController extends AdminBaseController
         );
     }
 
-    /**
-     * @Route("/newsletter/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     */
     public function deleteAction(int $id)
     {
         try {
@@ -100,9 +92,6 @@ class NewsletterController extends AdminBaseController
         return $this->redirectToRoute('admin_newsletter_list');
     }
 
-    /**
-     * @Route("/newsletter/export-csv/")
-     */
     public function exportAction()
     {
         $response = new StreamedResponse();

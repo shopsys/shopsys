@@ -162,9 +162,6 @@ class BillingAddressFormType extends AbstractType
             ->add($builderAddressGroup);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

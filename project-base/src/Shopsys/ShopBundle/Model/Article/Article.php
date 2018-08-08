@@ -38,9 +38,6 @@ class Article extends BaseArticle
         parent::edit($articleData);
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;

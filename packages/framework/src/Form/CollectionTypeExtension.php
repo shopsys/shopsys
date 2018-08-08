@@ -41,9 +41,6 @@ class CollectionTypeExtension extends AbstractTypeExtension
         return CollectionType::class;
     }
 
-    /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     */
     private function removeOriginalResizeFormListener(EventDispatcherInterface $eventDispatcher)
     {
         $listenersByEventName = $eventDispatcher->getListeners();

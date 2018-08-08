@@ -17,10 +17,6 @@ class ProductSellingPrice
      */
     private $sellingPrice;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $sellingPrice
-     */
     public function __construct(PricingGroup $pricingGroup, Price $sellingPrice)
     {
         $this->pricingGroup = $pricingGroup;

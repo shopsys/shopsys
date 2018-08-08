@@ -17,10 +17,6 @@ class ProductListAdminFacade
      */
     protected $pricingGroupSettingFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminRepository $productListAdminRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     */
     public function __construct(
         ProductListAdminRepository $productListAdminRepository,
         PricingGroupSettingFacade $pricingGroupSettingFacade

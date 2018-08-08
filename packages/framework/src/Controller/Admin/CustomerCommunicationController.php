@@ -29,9 +29,6 @@ class CustomerCommunicationController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-    /**
-     * @Route("/customer-communication/order-submitted/")
-     */
     public function orderSubmittedAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
