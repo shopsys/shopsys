@@ -10,9 +10,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         $pluginDataFixtureRegistryDefinition = $container->findDefinition(
@@ -25,7 +22,6 @@ class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\Definition $pluginDataFixtureRegistryDefinition
      * @param string $serviceId
      */
     private function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, $serviceId)

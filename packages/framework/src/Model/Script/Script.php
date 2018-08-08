@@ -44,9 +44,6 @@ class Script
      */
     protected $placement;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
-     */
     public function __construct(ScriptData $scriptData)
     {
         $this->name = $scriptData->name;
@@ -62,33 +59,21 @@ class Script
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getCode()
     {
         return $this->code;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getPlacement()
     {
         return $this->placement;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
-     */
     public function edit(ScriptData $scriptData)
     {
         $this->name = $scriptData->name;

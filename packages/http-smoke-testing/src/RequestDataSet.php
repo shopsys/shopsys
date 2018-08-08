@@ -57,17 +57,11 @@ class RequestDataSet implements RequestDataSetConfig
         $this->callsDuringTestExecution = [];
     }
 
-    /**
-     * @return string
-     */
     public function getRouteName()
     {
         return $this->routeName;
     }
 
-    /**
-     * @return bool
-     */
     public function isSkipped()
     {
         return $this->skipped;
@@ -85,9 +79,6 @@ class RequestDataSet implements RequestDataSetConfig
         return $this->auth;
     }
 
-    /**
-     * @return int
-     */
     public function getExpectedStatusCode()
     {
         if ($this->expectedStatusCode === null) {
@@ -114,7 +105,6 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @return $this
      */
     public function executeCallsDuringTestExecution(ContainerInterface $container)
@@ -137,7 +127,6 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\Auth\AuthInterface $auth
      * @return $this
      */
     public function setAuth(AuthInterface $auth)

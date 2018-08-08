@@ -25,7 +25,6 @@ class TransportVisibilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $allPaymentsOnDomain
      * @param int $domainId
      * @return bool
@@ -41,7 +40,6 @@ class TransportVisibilityCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param int $domainId
      * @return bool
      */

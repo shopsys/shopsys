@@ -27,12 +27,6 @@ class CountryFacade
      */
     protected $countryFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryRepository $countryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFactoryInterface $countryFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         CountryRepository $countryRepository,
@@ -55,7 +49,6 @@ class CountryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
@@ -70,7 +63,6 @@ class CountryFacade
 
     /**
      * @param int $countryId
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
     public function edit($countryId, CountryData $countryData)

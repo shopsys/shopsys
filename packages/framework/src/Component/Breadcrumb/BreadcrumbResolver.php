@@ -14,9 +14,6 @@ class BreadcrumbResolver
         $this->breadcrumbGeneratorsByRouteName = [];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface $breadcrumbGenerator
-     */
     public function registerGenerator(BreadcrumbGeneratorInterface $breadcrumbGenerator)
     {
         foreach ($breadcrumbGenerator->getRouteNames() as $routeName) {
@@ -26,7 +23,6 @@ class BreadcrumbResolver
 
     /**
      * @param string $routeName
-     * @param array $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     public function resolveBreadcrumbItems($routeName, array $routeParameters = [])

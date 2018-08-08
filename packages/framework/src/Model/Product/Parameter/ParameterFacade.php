@@ -21,11 +21,6 @@ class ParameterFacade
      */
     protected $parameterFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         ParameterRepository $parameterRepository,
@@ -54,7 +49,6 @@ class ParameterFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
     public function create(ParameterData $parameterData)
@@ -77,7 +71,6 @@ class ParameterFacade
 
     /**
      * @param int $parameterId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
     public function edit($parameterId, ParameterData $parameterData)

@@ -33,8 +33,6 @@ class CategoryWithLazyLoadedVisibleChildren
     private $children;
 
     /**
-     * @param \Closure $lazyLoadChildrenCallback
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param bool $hasChildren
      */
     public function __construct(
@@ -55,9 +53,6 @@ class CategoryWithLazyLoadedVisibleChildren
         return $this->category;
     }
 
-    /**
-     * @return bool
-     */
     public function hasChildren()
     {
         return $this->hasChildren;

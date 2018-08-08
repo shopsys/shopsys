@@ -62,7 +62,6 @@ class BrandDomain
     protected $seoH1;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @param int $domainId
      */
     public function __construct(Brand $brand, $domainId)
@@ -71,9 +70,6 @@ class BrandDomain
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return int
-     */
     public function getDomainId()
     {
         return $this->domainId;

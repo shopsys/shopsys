@@ -20,11 +20,6 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     /** @var \Faker\Generator */
     private $faker;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\UserDataFixtureLoader $loaderService
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Faker\Generator $faker
-     */
     public function __construct(
         UserDataFixtureLoader $loaderService,
         CustomerFacade $customerFacade,
@@ -35,9 +30,6 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $this->faker = $faker;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $countries = [

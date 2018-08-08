@@ -13,9 +13,6 @@ class PersonalDataAccessRequestRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -23,7 +20,6 @@ class PersonalDataAccessRequestRepository
 
     /**
      * @param string $hash
-     * @param string $type
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest|null
      */

@@ -38,8 +38,6 @@ class TransportAndPaymentController extends AdminBaseController
 
     /**
      * @Route("/transport-and-payment/free-transport-and-payment-limit/")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function freeTransportAndPaymentLimitAction(Request $request)
     {

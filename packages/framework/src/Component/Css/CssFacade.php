@@ -22,9 +22,6 @@ class CssFacade
         file_put_contents($this->cssVersionFilepath, $cssVersion);
     }
 
-    /**
-     * @return string
-     */
     public function getCssVersion()
     {
         if (!file_exists($this->cssVersionFilepath)) {

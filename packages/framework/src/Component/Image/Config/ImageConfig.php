@@ -67,7 +67,6 @@ class ImageConfig
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      * @param string|null $sizeName
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
      */

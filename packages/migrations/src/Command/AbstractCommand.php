@@ -36,9 +36,6 @@ abstract class AbstractCommand extends Command
 
     /**
      * @required
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsFinder $migrationsFinder
      */
     public function autowireDependencies(
         EntityManagerInterface $em,
@@ -50,10 +47,6 @@ abstract class AbstractCommand extends Command
         $this->migrationsFinder = $migrationsFinder;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $outputWriter = new OutputWriter(

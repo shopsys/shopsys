@@ -8,7 +8,6 @@ class PaymentDomainNotFoundException extends Exception implements PaymentExcepti
 {
     /**
      * @param int|null $paymentId
-     * @param int $domainId
      * @param \Exception|null $previous
      */
     public function __construct(int $paymentId = null, int $domainId, Exception $previous = null)

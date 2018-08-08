@@ -14,17 +14,12 @@ class StatisticsRepository
      */
     private $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }
 
     /**
-     * @param DateTime $start
-     * @param DateTime $end
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
     public function getCustomersRegistrationsCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end)
@@ -54,8 +49,6 @@ class StatisticsRepository
     }
 
     /**
-     * @param DateTime $start
-     * @param DateTime $end
      * @return \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint[]
      */
     public function getNewOrdersCountByDayBetweenTwoDateTimes(DateTime $start, DateTime $end)

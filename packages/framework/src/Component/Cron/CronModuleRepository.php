@@ -16,10 +16,6 @@ class CronModuleRepository
      */
     protected $cronModuleFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFactoryInterface $cronModuleFactory
-     */
     public function __construct(EntityManagerInterface $em, CronModuleFactoryInterface $cronModuleFactory)
     {
         $this->em = $em;
@@ -34,10 +30,6 @@ class CronModuleRepository
         return $this->em->getRepository(CronModule::class);
     }
 
-    /**
-     * @param string $serviceId
-     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule
-     */
     public function getCronModuleByServiceId($serviceId)
     {
         $cronModule = $this->getCronModuleRepository()->find($serviceId);

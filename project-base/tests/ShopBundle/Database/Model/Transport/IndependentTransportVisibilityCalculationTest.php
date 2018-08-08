@@ -114,7 +114,6 @@ class IndependentTransportVisibilityCalculationTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param array $enabledForDomains
      * @param bool $hidden
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport

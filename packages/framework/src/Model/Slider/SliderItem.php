@@ -56,9 +56,6 @@ class SliderItem implements OrderableEntityInterface
      */
     protected $hidden;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
     public function __construct(SliderItemData $sliderItemData)
     {
         $this->domainId = $sliderItemData->domainId;
@@ -67,9 +64,6 @@ class SliderItem implements OrderableEntityInterface
         $this->hidden = $sliderItemData->hidden;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
-     */
     public function edit(SliderItemData $sliderItemData)
     {
         $this->name = $sliderItemData->name;
@@ -85,17 +79,11 @@ class SliderItem implements OrderableEntityInterface
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getLink()
     {
         return $this->link;
@@ -109,9 +97,6 @@ class SliderItem implements OrderableEntityInterface
         return $this->domainId;
     }
 
-    /**
-     * @return int|null
-     */
     public function getPosition()
     {
         return $this->position;
@@ -125,9 +110,6 @@ class SliderItem implements OrderableEntityInterface
         $this->position = $position;
     }
 
-    /**
-     * @return bool
-     */
     public function isHidden()
     {
         return $this->hidden;

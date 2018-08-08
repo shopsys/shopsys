@@ -51,10 +51,6 @@ class FileUpload
      * @param string $temporaryDir
      * @param string $uploadedFileDir
      * @param string $imageDir
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
-     * @param \Symfony\Component\Filesystem\Filesystem $symfonyFilesystem
-     * @param \League\Flysystem\MountManager $mountManager
-     * @param \League\Flysystem\FilesystemInterface $filesystem
      */
     public function __construct(
         $temporaryDir,
@@ -75,7 +71,6 @@ class FileUpload
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      * @return string
      */
     public function upload(UploadedFile $file)
@@ -125,9 +120,6 @@ class FileUpload
         return $this->getTemporaryDirectory() . '/' . TransformString::safeFilename($temporaryFilename);
     }
 
-    /**
-     * @return string
-     */
     public function getTemporaryDirectory()
     {
         return $this->temporaryDir . '/' . self::TEMPORARY_DIRECTORY;
@@ -171,9 +163,6 @@ class FileUpload
         return $temporaryFilename;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface $entity
-     */
     public function preFlushEntity(EntityFileUploadInterface $entity)
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
@@ -183,9 +172,6 @@ class FileUpload
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface $entity
-     */
     public function postFlushEntity(EntityFileUploadInterface $entity)
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();

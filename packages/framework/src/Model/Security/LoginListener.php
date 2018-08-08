@@ -37,9 +37,6 @@ class LoginListener
         $this->administratorActivityFacade = $administratorActivityFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Security\Http\Event\InteractiveLoginEvent $event
-     */
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
         $token = $event->getAuthenticationToken();

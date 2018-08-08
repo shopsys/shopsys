@@ -45,9 +45,6 @@ class MoneyTypeExtension extends AbstractTypeExtension
         $view->vars['money_pattern'] = $this->getPattern($options['currency']);
     }
 
-    /**
-     * @return string
-     */
     public function getExtendedType()
     {
         return MoneyType::class;

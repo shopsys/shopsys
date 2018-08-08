@@ -32,9 +32,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         $this->domain = $domain;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     public function create(): PaymentData
     {
         $paymentData = new PaymentData();
@@ -55,10 +52,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     */
     public function createFromPayment(Payment $payment): PaymentData
     {
         $paymentData = new PaymentData();
@@ -69,7 +62,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      */
     protected function fillFromPayment(PaymentData $paymentData, Payment $payment)
     {

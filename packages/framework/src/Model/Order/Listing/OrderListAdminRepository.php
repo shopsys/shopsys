@@ -19,7 +19,6 @@ class OrderListAdminRepository
     }
 
     /**
-     * @param $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getOrderListQueryBuilder($locale)

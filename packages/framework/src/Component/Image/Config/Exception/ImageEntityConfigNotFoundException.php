@@ -22,9 +22,6 @@ class ImageEntityConfigNotFoundException extends Exception implements ImageConfi
         parent::__construct('Not found image config for entity "' . $entityClassOrName . '".', 0, $previous);
     }
 
-    /**
-     * @return string
-     */
     public function getEntityClassOrName()
     {
         return $this->entityClassOrName;

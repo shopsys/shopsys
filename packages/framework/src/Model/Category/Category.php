@@ -80,9 +80,6 @@ class Category extends AbstractTranslatableEntity
      */
     protected $domains;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
     public function __construct(CategoryData $categoryData)
     {
         $this->setParent($categoryData->parent);
@@ -93,9 +90,6 @@ class Category extends AbstractTranslatableEntity
         $this->createDomains($categoryData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
     public function edit(CategoryData $categoryData)
     {
         $this->setParent($categoryData->parent);
@@ -206,9 +200,6 @@ class Category extends AbstractTranslatableEntity
         throw new CategoryDomainNotFoundException($this->id, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
     protected function setTranslations(CategoryData $categoryData)
     {
         foreach ($categoryData->name as $locale => $name) {
@@ -217,7 +208,6 @@ class Category extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoTitle(int $domainId)
@@ -226,7 +216,6 @@ class Category extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoH1(int $domainId)
@@ -235,7 +224,6 @@ class Category extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isEnabled(int $domainId)
@@ -244,7 +232,6 @@ class Category extends AbstractTranslatableEntity
     }
 
     /**
-     * @param $domainId
      * @return bool
      */
     public function isVisible(int $domainId)
@@ -253,7 +240,6 @@ class Category extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoMetaDescription(int $domainId)
@@ -262,7 +248,6 @@ class Category extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getDescription(int $domainId)
@@ -278,9 +263,6 @@ class Category extends AbstractTranslatableEntity
         return new CategoryTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
     protected function setDomains(CategoryData $categoryData)
     {
         foreach ($this->domains as $categoryDomain) {
@@ -293,9 +275,6 @@ class Category extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     */
     protected function createDomains(CategoryData $categoryData)
     {
         $domainIds = array_keys($categoryData->seoTitles);

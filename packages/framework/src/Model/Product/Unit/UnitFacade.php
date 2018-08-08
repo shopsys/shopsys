@@ -27,12 +27,6 @@ class UnitFacade
      */
     protected $unitFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitRepository $unitRepository
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface $unitFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         UnitRepository $unitRepository,
@@ -55,7 +49,6 @@ class UnitFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
     public function create(UnitData $unitData)
@@ -69,7 +62,6 @@ class UnitFacade
 
     /**
      * @param int $unitId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
     public function edit($unitId, UnitData $unitData)
@@ -110,7 +102,6 @@ class UnitFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      * @return bool
      */
     public function isUnitUsed(Unit $unit)
@@ -127,9 +118,6 @@ class UnitFacade
         return $this->unitRepository->getAllExceptId($unitId);
     }
 
-    /**
-     * @return int
-     */
     protected function getDefaultUnitId()
     {
         return $this->setting->get(Setting::DEFAULT_UNIT);
@@ -145,16 +133,12 @@ class UnitFacade
         return $this->unitRepository->getById($defaultUnitId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     */
     public function setDefaultUnit(Unit $unit)
     {
         $this->setting->set(Setting::DEFAULT_UNIT, $unit->getId());
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      * @return bool
      */
     public function isUnitDefault(Unit $unit)

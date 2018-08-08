@@ -33,8 +33,6 @@ class JsTranslatorCall
     private $functionName;
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
-     * @param \PLUG\JavaScript\JNodes\JNodeBase $messageIdArgumentNode
      * @param string $messageId
      * @param string $domain
      * @param string $functionName
@@ -69,25 +67,16 @@ class JsTranslatorCall
         return $this->messageIdArgumentNode;
     }
 
-    /**
-     * @return string
-     */
     public function getMessageId()
     {
         return $this->messageId;
     }
 
-    /**
-     * @return string
-     */
     public function getDomain()
     {
         return $this->domain;
     }
 
-    /**
-     * @return string
-     */
     public function getFunctionName()
     {
         return $this->functionName;

@@ -24,17 +24,11 @@ class UploadedFileEntityConfig
         $this->entityClass = $entityClass;
     }
 
-    /**
-     * @return string
-     */
     public function getEntityName()
     {
         return $this->entityName;
     }
 
-    /**
-     * @return string
-     */
     public function getEntityClass()
     {
         return $this->entityClass;

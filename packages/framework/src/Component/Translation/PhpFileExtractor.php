@@ -52,7 +52,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     private $previousNode;
 
     /**
-     * @param \Doctrine\Common\Annotations\DocParser $docParser
      * @param \Shopsys\FrameworkBundle\Component\Translation\TransMethodSpecification[] $transMethodSpecifications
      */
     public function __construct(DocParser $docParser, array $transMethodSpecifications)
@@ -68,11 +67,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         }
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     * @param array $ast
-     */
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {
         $this->file = $file;
@@ -80,9 +74,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $this->traverser->traverse($ast);
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     */
     public function enterNode(Node $node)
     {
         if ($this->isTransMethodOrFuncCall($node)) {
@@ -134,7 +125,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return bool
      */
     private function isTransMethodOrFuncCall(Node $node)
@@ -155,7 +145,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return bool
      */
     private function isIgnored(Node $node)
@@ -170,7 +159,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return \Doctrine\Common\Annotations\Annotation[]
      */
     private function getAnnotations(Node $node)
@@ -185,7 +173,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return \PhpParser\Comment\Doc|null
      */
     private function getDocComment(Node $node)
@@ -211,7 +198,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
      * @return string
      */
     private function getNodeName(Node $node)
@@ -225,44 +211,26 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         }
     }
 
-    /**
-     * @param array $nodes
-     */
     public function beforeTraverse(array $nodes)
     {
         return null;
     }
 
-    /**
-     * @param \PhpParser\Node $node
-     */
     public function leaveNode(Node $node)
     {
         return null;
     }
 
-    /**
-     * @param array $nodes
-     */
     public function afterTraverse(array $nodes)
     {
         return null;
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     */
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
         return null;
     }
 
-    /**
-     * @param \SplFileInfo $file
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     * @param \Twig_Node $ast
-     */
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Twig_Node $ast)
     {
         return null;

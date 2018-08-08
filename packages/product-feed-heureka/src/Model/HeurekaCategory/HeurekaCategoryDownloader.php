@@ -18,7 +18,6 @@ class HeurekaCategoryDownloader
 
     /**
      * @param string $heurekaCategoryFeedUrl
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory
      */
     public function __construct(
         $heurekaCategoryFeedUrl,
@@ -51,7 +50,6 @@ class HeurekaCategoryDownloader
     }
 
     /**
-     * @param \SimpleXMLElement[] $categoryDataObjects
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData[]
      */
     private function convertToShopEntities(array $xmlCategoryDataObjects)

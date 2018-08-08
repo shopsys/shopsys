@@ -16,10 +16,6 @@ use Symfony\Component\Validator\Constraints;
 
 class ProductFilterFormType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $priceScale = 2;
@@ -80,9 +76,6 @@ class ProductFilterFormType extends AbstractType
             ->add('search', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

@@ -27,9 +27,6 @@ class OrderHashGeneratorRepository
         $this->hashGenerator = $hashGenerator;
     }
 
-    /**
-     * @return string
-     */
     public function getUniqueHash()
     {
         $triesCount = 0;

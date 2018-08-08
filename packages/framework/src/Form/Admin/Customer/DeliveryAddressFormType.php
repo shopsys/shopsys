@@ -30,10 +30,6 @@ class DeliveryAddressFormType extends AbstractType
         $this->countryFacade = $countryFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $countries = $this->countryFacade->getAllByDomainId($options['domain_id']);
@@ -168,9 +164,6 @@ class DeliveryAddressFormType extends AbstractType
         $builder->add($builderDeliveryAdress);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

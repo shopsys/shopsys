@@ -32,7 +32,6 @@ class PromoCodeFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
     public function create(PromoCodeData $promoCodeData)
@@ -46,7 +45,6 @@ class PromoCodeFacade
 
     /**
      * @param int $promoCodeId
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
     public function edit($promoCodeId, PromoCodeData $promoCodeData)

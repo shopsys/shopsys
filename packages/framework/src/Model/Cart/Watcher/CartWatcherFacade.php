@@ -41,18 +41,12 @@ class CartWatcherFacade
         $this->currentCustomer = $currentCustomer;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     public function checkCartModifications(Cart $cart)
     {
         $this->checkNotListableItems($cart);
         $this->checkModifiedPrices($cart);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkModifiedPrices(Cart $cart)
     {
         $modifiedItems = $this->cartWatcherService->getModifiedPriceItemsAndUpdatePrices($cart);
@@ -69,9 +63,6 @@ class CartWatcherFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     protected function checkNotListableItems(Cart $cart)
     {
         $notVisibleItems = $this->cartWatcherService->getNotListableItems($cart, $this->currentCustomer);

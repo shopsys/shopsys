@@ -72,9 +72,6 @@ class PricingSetting
         return $this->setting->getForDomain(self::DEFAULT_DOMAIN_CURRENCY, $domainId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     */
     public function setDefaultCurrency(Currency $currency)
     {
         $currency->setExchangeRate(Currency::DEFAULT_EXCHANGE_RATE);
@@ -82,7 +79,6 @@ class PricingSetting
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      */
     public function setDomainDefaultCurrency(Currency $currency, $domainId)
@@ -106,7 +102,6 @@ class PricingSetting
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getFreeTransportAndPaymentPriceLimit($domainId)

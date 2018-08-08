@@ -23,10 +23,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private $paymentDataFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface $paymentDataFactory
-     */
     public function __construct(
         PaymentFacade $paymentFacade,
         PaymentDataFactoryInterface $paymentDataFactory
@@ -35,9 +31,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->paymentDataFactory = $paymentDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $paymentData = $this->paymentDataFactory->create();
@@ -91,8 +84,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param string $referenceName
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     * @param array $transportsReferenceNames
      */
     private function createPayment(
         $referenceName,

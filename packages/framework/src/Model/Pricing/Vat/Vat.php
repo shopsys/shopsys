@@ -57,17 +57,11 @@ class Vat
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getPercent()
     {
         return $this->percent;
@@ -81,9 +75,6 @@ class Vat
         return $this->replaceWith;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
-     */
     public function edit(VatData $vatData)
     {
         $this->name = $vatData->name;

@@ -45,11 +45,6 @@ class FriendlyUrlRouter implements RouterInterface
     private $collection;
 
     /**
-     * @param \Symfony\Component\Routing\RequestContext $context
-     * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGenerator $friendlyUrlGenerator
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlMatcher $friendlyUrlMatcher
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $friendlyUrlRouterResourceFilepath
      */
     public function __construct(
@@ -111,8 +106,6 @@ class FriendlyUrlRouter implements RouterInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
      * @param int $referenceType
      * @return string
      */

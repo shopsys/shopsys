@@ -57,7 +57,6 @@ class ProductPickerController extends AdminBaseController
 
     /**
      * @Route("/product-picker/pick-multiple/{jsInstanceId}/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $jsInstanceId
      */
     public function pickMultipleAction(Request $request, $jsInstanceId)
@@ -78,7 +77,6 @@ class ProductPickerController extends AdminBaseController
 
     /**
      * @Route("/product-picker/pick-single/{parentInstanceId}/", defaults={"parentInstanceId"="__instance_id__"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $parentInstanceId
      */
     public function pickSingleAction(Request $request, $parentInstanceId)
@@ -97,11 +95,6 @@ class ProductPickerController extends AdminBaseController
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $viewParameters
-     * @param array $gridViewParameters
-     */
     private function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters)
     {
         $administrator = $this->getUser();

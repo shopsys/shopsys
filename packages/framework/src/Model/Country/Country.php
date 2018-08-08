@@ -42,7 +42,6 @@ class Country
     protected $domainId;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
      * @param int $domainId
      */
     public function __construct(CountryData $countryData, $domainId)
@@ -52,9 +51,6 @@ class Country
         $this->code = $countryData->code;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
-     */
     public function edit(CountryData $countryData)
     {
         $this->name = $countryData->name;

@@ -10,7 +10,6 @@ class QueryBuilderService
     const REQUIRED_ALIASES_COUNT = 1;
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $class
      * @param string $alias
      * @param string $condition
@@ -45,7 +44,6 @@ class QueryBuilderService
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return string
      */
     private function getRootAlias(QueryBuilder $queryBuilder)

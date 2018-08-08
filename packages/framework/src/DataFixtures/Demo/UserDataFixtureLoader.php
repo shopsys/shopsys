@@ -73,11 +73,6 @@ class UserDataFixtureLoader
 
     /**
      * @param string $path
-     * @param \Shopsys\FrameworkBundle\Component\Csv\CsvReader $csvReader
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface $userDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      */
     public function __construct(
         $path,
@@ -122,7 +117,6 @@ class UserDataFixtureLoader
     }
 
     /**
-     * @param array $rows
      * @param int $domainId
      * @return array
      */
@@ -149,7 +143,6 @@ class UserDataFixtureLoader
     }
 
     /**
-     * @param array $row
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
      */
     private function getCustomerDataFromCsvRow(array $row)

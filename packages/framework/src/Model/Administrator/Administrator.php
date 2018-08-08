@@ -95,9 +95,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
      */
     protected $multidomainLoginTokenExpiration;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     */
     public function __construct(AdministratorData $administratorData)
     {
         $this->email = $administratorData->email;
@@ -112,9 +109,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         $this->multidomainLoginTokenExpiration = new DateTime();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
-     */
     public function edit(AdministratorData $administratorData)
     {
         $this->email = $administratorData->email;
@@ -132,9 +126,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit $gridLimit
-     */
     public function removeGridLimit(AdministratorGridLimit $gridLimit)
     {
         $this->gridLimits->removeElement($gridLimit);
@@ -289,7 +280,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
 
     /**
      * @param string $multidomainLoginToken
-     * @param \DateTime $multidomainLoginTokenExpiration
      */
     public function setMultidomainLoginTokenWithExpiration(
         $multidomainLoginToken,

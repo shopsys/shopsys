@@ -23,11 +23,6 @@ class ImageService
      */
     protected $imageFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessingService $imageProcessingService
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
-     */
     public function __construct(
         ImageProcessingService $imageProcessingService,
         FileUpload $fileUpload,
@@ -39,9 +34,7 @@ class ImageService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig $imageEntityConfig
      * @param int $entityId
-     * @param array $temporaryFilenames
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
@@ -62,7 +55,6 @@ class ImageService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig $imageEntityConfig
      * @param int $entityId
      * @param string $temporaryFilename
      * @param string|null $type
@@ -101,7 +93,6 @@ class ImageService
     /**
      * @param string $entityName
      * @param int $entityId
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      */
     private function deleteImage($entityName, $entityId, Image $image)
     {

@@ -18,17 +18,11 @@ class JoinNoneEmptyExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getArray(array $array, $glue = ', ')
     {
         return implode($glue, array_filter($array));
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'join_none_empty';

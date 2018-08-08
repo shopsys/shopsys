@@ -58,8 +58,6 @@ class FormDetailExtension extends Twig_Extension
 
     /**
      * @param mixed $object
-     * @param \Symfony\Component\Form\FormView $formView
-     * @param array $vars
      * @return string
      */
     public function formSave($object, FormView $formView, array $vars = [])
@@ -80,9 +78,6 @@ class FormDetailExtension extends Twig_Extension
         return $template->render($parameters);
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'shopsys.twig.form_detail_extension';

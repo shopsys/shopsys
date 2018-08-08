@@ -13,7 +13,6 @@ abstract class AbstractReferenceFixture implements FixtureInterface
 
     /**
      * @required
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      */
     public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade)
     {

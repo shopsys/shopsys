@@ -21,11 +21,6 @@ class ModuleFacade
      */
     protected $enabledModuleFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Module\EnabledModuleRepository $enabledModuleRepository
-     * @param \Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactoryInterface $enabledModuleFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         EnabledModuleRepository $enabledModuleRepository,

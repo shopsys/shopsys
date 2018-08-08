@@ -15,7 +15,6 @@ class OrderDataMapper
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
      * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
      */
     public function getOrderDataFromFrontOrderData(FrontOrderData $frontOrderData)

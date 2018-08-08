@@ -93,9 +93,6 @@ class Article implements OrderableEntityInterface
      */
     protected $hidden;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     */
     public function __construct(ArticleData $articleData)
     {
         $this->domainId = $articleData->domainId;
@@ -109,9 +106,6 @@ class Article implements OrderableEntityInterface
         $this->hidden = $articleData->hidden;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
-     */
     public function edit(ArticleData $articleData)
     {
         $this->name = $articleData->name;
@@ -179,9 +173,6 @@ class Article implements OrderableEntityInterface
         return $this->seoH1;
     }
 
-    /**
-     * @return string
-     */
     public function getPlacement()
     {
         return $this->placement;

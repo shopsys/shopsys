@@ -52,7 +52,6 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @param string $referenceName
      */
     private function createPricingGroup(

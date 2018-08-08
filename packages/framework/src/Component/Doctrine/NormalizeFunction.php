@@ -16,9 +16,6 @@ class NormalizeFunction extends FunctionNode
      */
     public $stringExpression;
 
-    /**
-     * @param \Doctrine\ORM\Query\Parser $parser
-     */
     public function parse(Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);
@@ -28,7 +25,6 @@ class NormalizeFunction extends FunctionNode
     }
 
     /**
-     * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
      * @return string
      */
     public function getSql(SqlWalker $sqlWalker)

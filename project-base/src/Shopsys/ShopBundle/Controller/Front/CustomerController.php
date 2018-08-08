@@ -159,7 +159,6 @@ class CustomerController extends FrontBaseController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function loginAsRememberedUserAction(Request $request)

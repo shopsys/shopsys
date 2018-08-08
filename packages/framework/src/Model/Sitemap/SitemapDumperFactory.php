@@ -51,7 +51,6 @@ class SitemapDumperFactory
     }
 
     /**
-     * @param $domainId
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumper
      */
     public function createForDomain($domainId)

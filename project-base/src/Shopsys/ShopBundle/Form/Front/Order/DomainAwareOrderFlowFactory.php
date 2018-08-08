@@ -42,10 +42,6 @@ class DomainAwareOrderFlowFactory implements OrderFlowFactoryInterface
      */
     private $dataManager;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         ContainerInterface $container,
         Domain $domain,

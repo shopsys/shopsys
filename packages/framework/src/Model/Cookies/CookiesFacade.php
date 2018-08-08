@@ -40,10 +40,6 @@ class CookiesFacade
 
     /**
      * @param string $environment
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(
         $environment,
@@ -60,7 +56,6 @@ class CookiesFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
     public function findCookiesArticleByDomainId(int $domainId)
@@ -94,7 +89,6 @@ class CookiesFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
      * @return bool
      */
     public function isArticleUsedAsCookiesInfo(Article $article)

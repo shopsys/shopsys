@@ -82,7 +82,6 @@ class ArticleController extends AdminBaseController
 
     /**
      * @Route("/article/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function editAction(Request $request, $id)
@@ -142,7 +141,6 @@ class ArticleController extends AdminBaseController
 
     /**
      * @Route("/article/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function newAction(Request $request)
     {
@@ -230,7 +228,6 @@ class ArticleController extends AdminBaseController
 
     /**
      * @Route("/article/save-ordering/", condition="request.isXmlHttpRequest()")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function saveOrderingAction(Request $request)

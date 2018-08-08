@@ -16,10 +16,6 @@ class FeedRendererFactory
         $this->twig = $twig;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedRenderer
-     */
     public function create(FeedInterface $feed): FeedRenderer
     {
         $templateFilepath = $feed->getTemplateFilepath();

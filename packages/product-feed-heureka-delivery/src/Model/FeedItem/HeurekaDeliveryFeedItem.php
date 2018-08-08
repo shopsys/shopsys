@@ -22,25 +22,16 @@ class HeurekaDeliveryFeedItem implements FeedItemInterface
         $this->stockQuantity = $stockQuantity;
     }
 
-    /**
-     * @return int
-     */
     public function getSeekId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getStockQuantity(): int
     {
         return $this->stockQuantity;

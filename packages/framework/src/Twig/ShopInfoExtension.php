@@ -24,11 +24,6 @@ class ShopInfoExtension extends \Twig_Extension
      */
     private $domain;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Shopsys\FrameworkBundle\Model\ShopInfo\ShopInfoSettingFacade $shopInfoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         ContainerInterface $container,
         ShopInfoSettingFacade $shopInfoSettingFacade,
@@ -61,9 +56,6 @@ class ShopInfoExtension extends \Twig_Extension
         return $this->domain;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'shopInfo';

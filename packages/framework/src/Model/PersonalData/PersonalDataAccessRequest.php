@@ -56,9 +56,6 @@ class PersonalDataAccessRequest
      */
     protected $type;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData $personalDataAccessRequestData
-     */
     public function __construct(PersonalDataAccessRequestData $personalDataAccessRequestData)
     {
         $this->email = $personalDataAccessRequestData->email;
@@ -76,9 +73,6 @@ class PersonalDataAccessRequest
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail()
     {
         return $this->email;
@@ -92,9 +86,6 @@ class PersonalDataAccessRequest
         return $this->createdAt;
     }
 
-    /**
-     * @return string
-     */
     public function getHash()
     {
         return $this->hash;
@@ -108,9 +99,6 @@ class PersonalDataAccessRequest
         return $this->domainId;
     }
 
-    /**
-     * @return string
-     */
     public function getType()
     {
         return $this->type;

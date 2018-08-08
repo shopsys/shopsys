@@ -12,7 +12,6 @@ class InvalidFormDataException extends Exception implements InlineEditException
     private $formErrors;
 
     /**
-     * @param array $formErrors
      * @param \Exception|null $previous
      */
     public function __construct(array $formErrors, Exception $previous = null)

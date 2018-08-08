@@ -20,7 +20,6 @@ class PluginCrudExtensionRegistry
     private $crudExtensionsByTypeAndServiceId = [];
 
     /**
-     * @param \Shopsys\Plugin\PluginCrudExtensionInterface $crudExtension
      * @param string $type
      * @param string $serviceId
      */
@@ -45,9 +44,6 @@ class PluginCrudExtensionRegistry
         return $this->crudExtensionsByTypeAndServiceId[$type] ?? [];
     }
 
-    /**
-     * @param string $type
-     */
     public static function assertTypeIsKnown($type)
     {
         if (!in_array($type, self::KNOWN_TYPES, true)) {

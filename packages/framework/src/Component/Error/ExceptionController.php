@@ -19,17 +19,11 @@ class ExceptionController extends BaseController
         $this->debug = $bool;
     }
 
-    /**
-     * @return bool
-     */
     public function getDebug()
     {
         return $this->debug;
     }
 
-    /**
-     * @return bool
-     */
     public function isShownErrorPagePrototype()
     {
         return $this->showErrorPagePrototype;

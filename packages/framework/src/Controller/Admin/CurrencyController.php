@@ -105,9 +105,6 @@ class CurrencyController extends AdminBaseController
         return $this->redirectToRoute('admin_currency_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingsAction(Request $request)
     {
         $domainNames = [];

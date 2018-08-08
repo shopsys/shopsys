@@ -35,9 +35,6 @@ class DirectoryStructureCreator
     /**
      * @param string $imageDir
      * @param string $domainImageDir
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \League\Flysystem\FilesystemInterface $filesystem
      */
     public function __construct(
         $imageDir,

@@ -59,8 +59,6 @@ class ManualBestsellingProduct
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $position
      */
     public function __construct($domainId, Category $category, Product $product, $position)
@@ -71,9 +69,6 @@ class ManualBestsellingProduct
         $this->position = $position;
     }
 
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
@@ -95,17 +90,11 @@ class ManualBestsellingProduct
         return $this->category;
     }
 
-    /**
-     * @return int
-     */
     public function getDomainId()
     {
         return $this->domainId;
     }
 
-    /**
-     * @return int
-     */
     public function getPosition()
     {
         return $this->position;

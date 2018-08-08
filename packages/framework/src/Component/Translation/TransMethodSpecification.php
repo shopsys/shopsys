@@ -31,25 +31,16 @@ class TransMethodSpecification
         $this->domainArgumentIndex = $domainArgumentIndex;
     }
 
-    /**
-     * @return string
-     */
     public function getMethodName()
     {
         return $this->methodName;
     }
 
-    /**
-     * @return int
-     */
     public function getMessageIdArgumentIndex()
     {
         return $this->messageIdArgumentIndex;
     }
 
-    /**
-     * @return int|null
-     */
     public function getDomainArgumentIndex()
     {
         return $this->domainArgumentIndex;

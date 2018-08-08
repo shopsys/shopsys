@@ -31,9 +31,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
         $this->articleDataFactory = $articleDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $articleData = $this->articleDataFactory->create();
@@ -71,7 +68,6 @@ class ArticleDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @param string|null $referenceName
      */
     private function createArticle(ArticleData $articleData, $referenceName = null)

@@ -18,7 +18,6 @@ class DateTimeFormatter
     }
 
     /**
-     * @param \DateTime $value
      * @param int $dateType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param int $timeType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param string $locale

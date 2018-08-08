@@ -49,9 +49,6 @@ class PerformanceResultsCsvExporterTest extends TestCase
         $this->assertEquals(1000, $line[1]);
     }
 
-    /**
-     * @return string
-     */
     private function getTemporaryFilename()
     {
         return tempnam(sys_get_temp_dir(), 'test');
@@ -85,7 +82,6 @@ class PerformanceResultsCsvExporterTest extends TestCase
     }
 
     /**
-     * @param array $expectedLine
      * @param string $filename
      * @param int $lineIndex
      */

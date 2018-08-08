@@ -21,17 +21,11 @@ class SettingValueShopInfoDataFixture extends AbstractReferenceFixture
         ShopInfoSettingFacade::SHOP_INFO_EMAIL => 'no-reply@shopsys.com',
     ];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(Setting $setting)
     {
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         foreach (self::SETTING_VALUES as $key => $value) {

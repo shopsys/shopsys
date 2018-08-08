@@ -174,9 +174,6 @@ class PersonalDataController extends FrontBaseController
         throw new NotFoundHttpException();
     }
 
-    /**
-     * @param $hash
-     */
     public function accessExportAction($hash)
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
@@ -210,9 +207,6 @@ class PersonalDataController extends FrontBaseController
         throw new NotFoundHttpException();
     }
 
-    /**
-     * @param $hash
-     */
     public function exportXmlAction($hash)
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(

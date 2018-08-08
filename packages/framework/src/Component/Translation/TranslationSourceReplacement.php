@@ -38,25 +38,16 @@ class TranslationSourceReplacement
         $this->sourceFileReferences = $sourceFileReferences;
     }
 
-    /**
-     * @return string
-     */
     public function getOldSource()
     {
         return $this->oldSource;
     }
 
-    /**
-     * @return string
-     */
     public function getNewSource()
     {
         return $this->newSource;
     }
 
-    /**
-     * @return string
-     */
     public function getDomain()
     {
         return $this->domain;

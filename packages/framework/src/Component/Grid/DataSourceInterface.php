@@ -27,13 +27,7 @@ interface DataSourceInterface
      */
     public function getOneRow($rowId);
 
-    /**
-     * @return int
-     */
     public function getTotalRowsCount();
 
-    /**
-     * @return string
-     */
     public function getRowIdSourceColumnName();
 }

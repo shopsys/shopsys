@@ -35,7 +35,6 @@ class LegalConditionsFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
     public function findTermsAndConditions($domainId)
@@ -52,16 +51,12 @@ class LegalConditionsFacade
         $this->setArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $termsAndConditions, $domainId);
     }
 
-    /**
-     * @return string
-     */
     public function getTermsAndConditionsDownloadFilename()
     {
         return t('Terms-and-conditions.html');
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
     public function findPrivacyPolicy($domainId)
@@ -79,7 +74,6 @@ class LegalConditionsFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
      * @return bool
      */
     public function isArticleUsedAsLegalConditions(Article $article)

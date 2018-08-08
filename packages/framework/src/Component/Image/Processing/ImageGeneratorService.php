@@ -42,7 +42,6 @@ class ImageGeneratorService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      * @param string|null $sizeName
      * @return string
      */

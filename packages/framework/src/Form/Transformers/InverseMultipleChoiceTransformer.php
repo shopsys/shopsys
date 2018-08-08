@@ -44,7 +44,6 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array $inputValues
      * @return array
      */
     private function getInvertedValues(array $inputValues)

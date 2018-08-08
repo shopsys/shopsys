@@ -103,9 +103,6 @@ class UploadedFileExtension extends Twig_Extension
         return $this->uploadedFileFacade->getUploadedFileByEntity($entity);
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'file_extension';

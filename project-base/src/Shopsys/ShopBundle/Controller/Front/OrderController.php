@@ -246,9 +246,6 @@ class OrderController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function previewAction(Request $request)
     {
         $transportId = $request->get('transportId');
@@ -274,8 +271,6 @@ class OrderController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
      */
@@ -350,9 +345,6 @@ class OrderController extends FrontBaseController
         );
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     private function getTermsAndConditionsResponse()
     {
         return $this->render('@ShopsysShop/Front/Content/Order/legalConditions.html.twig', [

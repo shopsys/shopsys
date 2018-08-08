@@ -86,7 +86,6 @@ class SliderController extends AdminBaseController
 
     /**
      * @Route("/slider/item/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function newAction(Request $request)
     {
@@ -124,7 +123,6 @@ class SliderController extends AdminBaseController
 
     /**
      * @Route("/slider/item/edit/{id}", requirements={"id"="\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function editAction(Request $request, $id)

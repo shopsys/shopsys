@@ -28,12 +28,6 @@ class PersonalDataAccessRequestFacade
      */
     protected $personalDataAccessRequestFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestRepository $personalDataAccessRequestRepository
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactoryInterface $personalDataAccessRequestFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         HashGenerator $hashGenerator,
@@ -47,7 +41,6 @@ class PersonalDataAccessRequestFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData $personalDataAccessRequestData
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
      */
@@ -79,9 +72,6 @@ class PersonalDataAccessRequestFacade
         return $this->personalDataAccessRequestRepository->findByHashAndDomainId($hash, $domainId);
     }
 
-    /**
-     * @return string
-     */
     protected function getUniqueHash()
     {
         do {

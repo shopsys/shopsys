@@ -24,11 +24,6 @@ class SeoExtension extends \Twig_Extension
      */
     private $domain;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         ContainerInterface $container,
         SeoSettingFacade $seoSettingFacade,
@@ -50,26 +45,17 @@ class SeoExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'seo';
     }
 
-    /**
-     * @return string
-     */
     public function getSeoTitleAddOn()
     {
         $currentDomainId = $this->domain->getId();
         return $this->seoSettingFacade->getTitleAddOn($currentDomainId);
     }
 
-    /**
-     * @return string
-     */
     public function getSeoMetaDescription()
     {
         $currentDomainId = $this->domain->getId();

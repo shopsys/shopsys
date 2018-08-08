@@ -50,9 +50,6 @@ class CategoryController extends FrontBaseController
         $this->currentCustomer = $currentCustomer;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function panelAction(Request $request)
     {
         $categoriesWithLazyLoadedVisibleChildren = $this->categoryFacade->getCategoriesWithLazyLoadedVisibleChildrenForParent(

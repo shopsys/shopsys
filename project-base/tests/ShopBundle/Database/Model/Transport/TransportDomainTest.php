@@ -77,7 +77,6 @@ class TransportDomainTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
     private function getRefreshedTransportFromDatabase(Transport $transport)

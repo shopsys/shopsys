@@ -27,12 +27,6 @@ class ManualBestsellingProductFacade
      */
     protected $manualBestsellingProductFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductRepository $manualBestsellingProductRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactoryInterface $manualBestsellingProductFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         ManualBestsellingProductRepository $manualBestsellingProductRepository,
@@ -46,7 +40,6 @@ class ManualBestsellingProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $productsIndexedByPosition
      */

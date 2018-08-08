@@ -39,13 +39,6 @@ class OrderService
      */
     protected $orderProductFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFactoryInterface $orderProductFactory
-     */
     public function __construct(
         Domain $domain,
         OrderItemPriceCalculation $orderItemPriceCalculation,
@@ -61,8 +54,6 @@ class OrderService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\OrderEditResult
      */
     public function editOrder(Order $order, OrderData $orderData)
@@ -113,9 +104,6 @@ class OrderService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productPrice
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct
      */
     public function createOrderProductInOrder(Order $order, Product $product, Price $productPrice)
@@ -139,9 +127,6 @@ class OrderService
         return $orderProduct;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function calculateTotalPrice(Order $order)
     {
         $orderTotalPrice = $this->orderPriceCalculation->getOrderTotalPrice($order);
@@ -149,7 +134,6 @@ class OrderService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
     public function getOrderDetailUrl(Order $order)

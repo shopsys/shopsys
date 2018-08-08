@@ -19,10 +19,6 @@ class InlineEditService
      */
     private $gridInlineEditRegistry;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry $gridInlineEditRegistry
-     */
     public function __construct(
         ContainerInterface $container,
         GridInlineEditRegistry $gridInlineEditRegistry
@@ -46,7 +42,6 @@ class InlineEditService
 
     /**
      * @param string $serviceName
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $rowId
      * @return mixed
      */
@@ -78,9 +73,7 @@ class InlineEditService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface $gridInlineEditService
      * @param mixed $rowId
-     * @param \Symfony\Component\Form\Form $form
      * @return string
      */
     private function renderFormAsRow(GridInlineEditInterface $gridInlineEditService, $rowId, Form $form)
@@ -96,8 +89,6 @@ class InlineEditService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
-     * @param \Symfony\Component\Form\Form $form
      * @return array
      */
     private function getFormRowTemplateParameters(Grid $grid, Form $form)

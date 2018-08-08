@@ -28,7 +28,6 @@ class Domain implements DomainIdsProviderInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
     public function __construct(array $domainConfigs, Setting $setting)
     {
@@ -36,41 +35,26 @@ class Domain implements DomainIdsProviderInterface
         $this->setting = $setting;
     }
 
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->getCurrentDomainConfig()->getId();
     }
 
-    /**
-     * @return string
-     */
     public function getLocale()
     {
         return $this->getCurrentDomainConfig()->getLocale();
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->getCurrentDomainConfig()->getName();
     }
 
-    /**
-     * @return string
-     */
     public function getUrl()
     {
         return $this->getCurrentDomainConfig()->getUrl();
     }
 
-    /**
-     * @return bool
-     */
     public function isHttps()
     {
         return $this->getCurrentDomainConfig()->isHttps();
@@ -138,9 +122,6 @@ class Domain implements DomainIdsProviderInterface
         $this->currentDomainConfig = $this->getDomainConfigById($domainId);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function switchDomainByRequest(Request $request)
     {
         // Request::getBasePath() never contains script file name (/index.php)
@@ -156,9 +137,6 @@ class Domain implements DomainIdsProviderInterface
         throw new \Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException($url);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getCurrentDomainConfig()
     {
         if ($this->currentDomainConfig === null) {
@@ -168,9 +146,6 @@ class Domain implements DomainIdsProviderInterface
         return $this->currentDomainConfig;
     }
 
-    /**
-     * @return bool
-     */
     public function isMultidomain()
     {
         return count($this->getAll()) > 1;

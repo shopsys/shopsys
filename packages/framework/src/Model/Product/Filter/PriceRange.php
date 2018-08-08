@@ -24,17 +24,11 @@ class PriceRange
         $this->maximalPrice = $maximalPrice === null ? '0' : $maximalPrice;
     }
 
-    /**
-     * @return string
-     */
     public function getMinimalPrice()
     {
         return $this->minimalPrice;
     }
 
-    /**
-     * @return string
-     */
     public function getMaximalPrice()
     {
         return $this->maximalPrice;

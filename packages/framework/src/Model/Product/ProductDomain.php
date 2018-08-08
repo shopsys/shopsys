@@ -88,7 +88,6 @@ class ProductDomain
     protected $seoH1;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      */
     public function __construct(Product $product, $domainId)
@@ -97,9 +96,6 @@ class ProductDomain
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return int
-     */
     public function getDomainId()
     {
         return $this->domainId;

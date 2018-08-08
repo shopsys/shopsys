@@ -13,9 +13,6 @@ class PricingGroupRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -85,7 +82,6 @@ class PricingGroupRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return bool
      */
     public function existsUserWithPricingGroup(PricingGroup $pricingGroup)

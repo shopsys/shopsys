@@ -105,33 +105,21 @@ class FeedExport
         $this->em->clear();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface
-     */
     public function getFeedInfo(): FeedInfoInterface
     {
         return $this->feed->getInfo();
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     public function getDomainConfig(): DomainConfig
     {
         return $this->domainConfig;
     }
 
-    /**
-     * @return int|null
-     */
     public function getLastSeekId(): ?int
     {
         return $this->lastSeekId;
     }
 
-    /**
-     * @return bool
-     */
     public function isFinished(): bool
     {
         return $this->finished;
@@ -163,9 +151,6 @@ class FeedExport
         $this->finished = true;
     }
 
-    /**
-     * @return string
-     */
     protected function getTemporaryFilepath(): string
     {
         return $this->feedFilepath . self::TEMPORARY_FILENAME_SUFFIX;

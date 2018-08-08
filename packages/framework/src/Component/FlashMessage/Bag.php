@@ -24,7 +24,6 @@ class Bag
 
     /**
      * @param string $bagName
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
     public function __construct($bagName, SessionInterface $session)
     {
@@ -88,9 +87,6 @@ class Bag
         return $this->getMessages(self::KEY_SUCCESS);
     }
 
-    /**
-     * @return bool
-     */
     public function isEmpty()
     {
         $flashBag = $this->session->getFlashBag();

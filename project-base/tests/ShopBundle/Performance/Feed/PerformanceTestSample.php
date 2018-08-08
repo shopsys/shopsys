@@ -42,13 +42,6 @@ class PerformanceTestSample
      */
     private $failMessages = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param $generationUri
-     * @param $duration
-     * @param $statusCode
-     */
     public function __construct(
         FeedInfoInterface $feedInfo,
         DomainConfig $domainConfig,
@@ -79,9 +72,6 @@ class PerformanceTestSample
         $this->failMessages[] = $failMessage;
     }
 
-    /**
-     * @return string
-     */
     public function getFeedName()
     {
         return $this->feedInfo->getName();
@@ -95,9 +85,6 @@ class PerformanceTestSample
         return $this->domainConfig;
     }
 
-    /**
-     * @return string
-     */
     public function getGenerationUri()
     {
         return $this->generationUri;

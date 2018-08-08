@@ -17,7 +17,6 @@ class ArrayDataSource implements DataSourceInterface
     private $rowIdSourceColumnName;
 
     /**
-     * @param array $data
      * @param string $rowIdSourceColumnName
      */
     public function __construct(array $data, $rowIdSourceColumnName = null)
@@ -26,9 +25,6 @@ class ArrayDataSource implements DataSourceInterface
         $this->rowIdSourceColumnName = $rowIdSourceColumnName;
     }
 
-    /**
-     * @return string
-     */
     public function getRowIdSourceColumnName()
     {
         return $this->rowIdSourceColumnName;
@@ -73,9 +69,6 @@ class ArrayDataSource implements DataSourceInterface
         return new PaginationResult(1, count($this->data), count($this->data), $this->data);
     }
 
-    /**
-     * @return int
-     */
     public function getTotalRowsCount()
     {
         return count($this->data);

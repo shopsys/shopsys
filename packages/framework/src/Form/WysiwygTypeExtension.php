@@ -28,9 +28,6 @@ class WysiwygTypeExtension extends AbstractTypeExtension
         $this->localization = $localization;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $cssVersion = $this->cssFacade->getCssVersion();
@@ -46,9 +43,6 @@ class WysiwygTypeExtension extends AbstractTypeExtension
         ]);
     }
 
-    /**
-     * @return string
-     */
     public function getExtendedType()
     {
         return CKEditorType::class;

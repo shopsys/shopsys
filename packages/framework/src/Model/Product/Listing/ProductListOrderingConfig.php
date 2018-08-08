@@ -39,17 +39,11 @@ class ProductListOrderingConfig
         return $this->supportedOrderingModesNamesById;
     }
 
-    /**
-     * @return string
-     */
     public function getCookieName()
     {
         return $this->cookieName;
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultOrderingModeId()
     {
         return $this->defaultOrderingModeId;

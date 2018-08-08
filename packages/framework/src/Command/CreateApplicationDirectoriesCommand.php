@@ -44,9 +44,6 @@ class CreateApplicationDirectoriesCommand extends Command
     private $projectDir;
 
     /**
-     * @param string $projectDir
-     * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator $imageDirectoryStructureCreator
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator $uploadedFileDirectoryStructureCreator
      */
@@ -72,10 +69,6 @@ class CreateApplicationDirectoriesCommand extends Command
             ->setDescription('Create application directories for locks, docs, content, images, uploaded files, etc.');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->createMiscellaneousDirectories($output);
@@ -112,9 +105,6 @@ class CreateApplicationDirectoriesCommand extends Command
         $output->writeln('<fg=green>Miscellaneous application directories were successfully created.</fg=green>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     private function createImageDirectories(OutputInterface $output)
     {
         $this->imageDirectoryStructureCreator->makeImageDirectories();
@@ -122,9 +112,6 @@ class CreateApplicationDirectoriesCommand extends Command
         $output->writeln('<fg=green>Directories for images were successfully created.</fg=green>');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     private function createUploadedFileDirectories(OutputInterface $output)
     {
         $this->uploadedFileDirectoryStructureCreator->makeUploadedFileDirectories();

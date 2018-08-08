@@ -6,11 +6,8 @@ class ImageFactory implements ImageFactoryInterface
 {
 
     /**
-     * @param string $entityName
-     * @param int $entityId
      * @param string|null $type
      * @param string|null $temporaryFilename
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
     public function create(
         string $entityName,

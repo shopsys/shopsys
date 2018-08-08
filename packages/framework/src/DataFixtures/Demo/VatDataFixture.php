@@ -42,9 +42,6 @@ class VatDataFixture extends AbstractReferenceFixture
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
 
@@ -73,7 +70,6 @@ class VatDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @param string|null $referenceName
      */
     private function createVat(VatData $vatData, $referenceName = null)

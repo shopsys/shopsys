@@ -27,7 +27,6 @@ class OrderStatusMailTemplateService
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[] $mailTemplates
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
      */
     private function getMailTemplateByOrderStatus(array $mailTemplates, OrderStatus $orderStatus)

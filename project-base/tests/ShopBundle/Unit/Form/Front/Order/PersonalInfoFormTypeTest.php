@@ -30,9 +30,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      */
     private $domain;
 
-    /**
-     * @return array
-     */
     public function getTermsAndConditionsAgreementIsMandatoryData()
     {
         return [
@@ -42,8 +39,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     }
 
     /**
-     * @param array $personalInfoFormData
-     * @param $isExpectedValid
      * @dataProvider getTermsAndConditionsAgreementIsMandatoryData
      */
     public function testTermsAndConditionsAgreementIsMandatory(array $personalInfoFormData, $isExpectedValid)
@@ -92,9 +87,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $this->assertTrue($data->disallowHeurekaVerifiedByCustomers);
     }
 
-    /**
-     * @return array
-     */
     protected function getExtensions(): array
     {
         return [
@@ -118,9 +110,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         parent::setUp();
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     private function createPersonalInfoForm(): FormInterface
     {
         $personalInfoForm = $this->factory->create(PersonalInfoFormType::class, null, [

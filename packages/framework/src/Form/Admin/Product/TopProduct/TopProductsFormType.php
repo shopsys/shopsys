@@ -16,18 +16,11 @@ class TopProductsFormType extends AbstractType
      */
     private $removeDuplicatesTransformer;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
-     */
     public function __construct(RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer)
     {
         $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -42,9 +35,6 @@ class TopProductsFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

@@ -54,7 +54,6 @@ class LoginController extends AdminBaseController
      * @Route("/", name="admin_login")
      * @Route("/login-check/", name="admin_login_check")
      * @Route("/logout/", name="admin_logout")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function loginAction(Request $request)
     {
@@ -96,7 +95,6 @@ class LoginController extends AdminBaseController
 
     /**
      * @Route("/sso/{originalDomainId}", requirements={"originalDomainId" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $originalDomainId
      */
     public function ssoAction(Request $request, $originalDomainId)
@@ -119,7 +117,6 @@ class LoginController extends AdminBaseController
 
     /**
      * @Route("/authorization/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function authorizationAction(Request $request)
     {

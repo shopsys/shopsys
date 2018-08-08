@@ -47,7 +47,6 @@ class PaymentDomain
     protected $enabled;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param int $domainId
      */
     public function __construct(Payment $payment, $domainId)
@@ -65,17 +64,11 @@ class PaymentDomain
         return $this->domainId;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled()
     {
         return $this->enabled;
     }
 
-    /**
-     * @param bool $enabled
-     */
     public function setEnabled(bool $enabled)
     {
         $this->enabled = $enabled;

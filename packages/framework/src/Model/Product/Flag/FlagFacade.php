@@ -21,11 +21,6 @@ class FlagFacade
      */
     protected $flagService;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository $flagRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagService $flagService
-     */
     public function __construct(
         EntityManagerInterface $em,
         FlagRepository $flagRepository,
@@ -46,7 +41,6 @@ class FlagFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
     public function create(FlagData $flagData)
@@ -60,7 +54,6 @@ class FlagFacade
 
     /**
      * @param int $flagId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
     public function edit($flagId, FlagData $flagData)

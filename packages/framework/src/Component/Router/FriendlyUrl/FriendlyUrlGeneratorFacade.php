@@ -42,9 +42,6 @@ class FriendlyUrlGeneratorFacade
         $this->friendlyUrlDataProviderConfig = $friendlyUrlDataProviderConfig;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     public function generateUrlsForSupportedEntities(OutputInterface $output)
     {
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -61,8 +58,6 @@ class FriendlyUrlGeneratorFacade
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return int
      */
     protected function generateUrlsByDomainConfig(OutputInterface $output, DomainConfig $domainConfig)
@@ -86,7 +81,6 @@ class FriendlyUrlGeneratorFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $routeName
      * @return int
      */

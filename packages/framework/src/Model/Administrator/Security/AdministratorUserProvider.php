@@ -51,7 +51,6 @@ class AdministratorUserProvider implements UserProviderInterface
     }
 
     /**
-     * @param \Symfony\Component\Security\Core\User\UserInterface $administrator
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
     public function refreshUser(UserInterface $administrator)

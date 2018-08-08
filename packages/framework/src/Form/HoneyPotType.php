@@ -9,17 +9,11 @@ use Symfony\Component\Validator\Constraints;
 
 class HoneyPotType extends AbstractType
 {
-    /**
-     * @return string
-     */
     public function getParent()
     {
         return TextType::class;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

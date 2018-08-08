@@ -24,11 +24,6 @@ class OrderMailFacade
      */
     protected $orderMailService;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerService $mailer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailService $orderMailService
-     */
     public function __construct(
         MailerService $mailer,
         MailTemplateFacade $mailTemplateFacade,
@@ -39,9 +34,6 @@ class OrderMailFacade
         $this->orderMailService = $orderMailService;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function sendEmail(Order $order)
     {
         $mailTemplate = $this->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
@@ -50,7 +42,6 @@ class OrderMailFacade
         $this->mailer->send($messageData);
     }
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */

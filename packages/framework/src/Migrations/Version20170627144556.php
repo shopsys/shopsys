@@ -7,9 +7,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20170627144556 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function up(Schema $schema)
     {
         $this->replaceProductDomainFulltextTriggerOnProduct();
@@ -20,9 +17,6 @@ class Version20170627144556 extends AbstractMigration
         $this->sql('UPDATE product_domains SET short_description = short_description');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function down(Schema $schema)
     {
     }

@@ -12,9 +12,6 @@ class OrderStatusRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
@@ -103,10 +100,6 @@ class OrderStatusRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $oldOrderStatus
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $newOrderStatus
-     */
     public function replaceOrderStatus(OrderStatus $oldOrderStatus, OrderStatus $newOrderStatus)
     {
         $this->em->createQueryBuilder()

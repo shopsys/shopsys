@@ -28,9 +28,6 @@ class TranslatableListener extends PrezentTranslatableListener
         ];
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();

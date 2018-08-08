@@ -29,11 +29,6 @@ class CategoryRepository extends NestedTreeRepository
      */
     protected $productRepository;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
     public function __construct(
         EntityManagerInterface $em,
         ProductRepository $productRepository,
@@ -156,8 +151,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $categoryBranch
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getTranslatedAllWithoutBranch(Category $categoryBranch, DomainConfig $domainConfig)
@@ -257,8 +250,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getTranslatedVisibleSubcategoriesByDomain(Category $parentCategory, DomainConfig $domainConfig)
@@ -274,7 +265,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $categoriesQueryBuilder
      * @param string $locale
      */
     protected function addTranslation(QueryBuilder $categoriesQueryBuilder, $locale)
@@ -360,7 +350,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
@@ -375,7 +364,6 @@ class CategoryRepository extends NestedTreeRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      * @return int[]
      */
@@ -416,7 +404,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string|null $searchText
      */
     protected function filterBySearchText(QueryBuilder $queryBuilder, $searchText)
@@ -428,7 +415,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
      */
@@ -455,7 +441,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
@@ -470,7 +455,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
@@ -485,8 +469,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param  \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
     public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(Product $product, DomainConfig $domainConfig)
@@ -542,7 +524,6 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param  \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getTranslatedAll(DomainConfig $domainConfig)

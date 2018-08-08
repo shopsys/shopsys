@@ -24,10 +24,6 @@ class JsConstantCallParser
      */
     private $jsStringParser;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\JsFunctionCallParser $jsFunctionCallParser
-     * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\JsStringParser $jsStringParser
-     */
     public function __construct(
         JsFunctionCallParser $jsFunctionCallParser,
         JsStringParser $jsStringParser
@@ -37,7 +33,6 @@ class JsConstantCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JProgramNode $node
      * @return \Shopsys\FrameworkBundle\Component\Javascript\Parser\Constant\JsConstantCall[]
      */
     public function parse(JProgramNode $node)
@@ -62,7 +57,6 @@ class JsConstantCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
      * @return bool
      */
     private function isConstantFunctionCall(JCallExprNode $callExprNode)
@@ -73,7 +67,6 @@ class JsConstantCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\JNodeBase $constantNameArgumentNode
      * @return string
      */
     private function getConstantName(JNodeBase $constantNameArgumentNode)
@@ -93,7 +86,6 @@ class JsConstantCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
      * @return \PLUG\JavaScript\JNodes\JNodeBase
      */
     private function getConstantNameArgumentNode(JCallExprNode $callExprNode)

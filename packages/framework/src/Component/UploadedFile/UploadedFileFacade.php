@@ -97,9 +97,6 @@ class UploadedFileFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     */
     public function deleteFileFromFilesystem(UploadedFile $uploadedFile)
     {
         $filepath = $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFile);
@@ -162,7 +159,6 @@ class UploadedFileFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
     public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile)
@@ -171,8 +167,6 @@ class UploadedFileFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
     public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile)

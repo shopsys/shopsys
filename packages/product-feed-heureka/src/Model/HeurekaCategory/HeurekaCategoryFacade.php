@@ -22,11 +22,6 @@ class HeurekaCategoryFacade
      */
     protected $categoryRepository;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryRepository $heurekaCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     */
     public function __construct(
         EntityManagerInterface $em,
         HeurekaCategoryRepository $heurekaCategoryRepository,
@@ -83,7 +78,6 @@ class HeurekaCategoryFacade
 
     /**
      * @param int $categoryId
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory $heurekaCategory
      */
     public function changeHeurekaCategoryForCategoryId($categoryId, HeurekaCategory $heurekaCategory)
     {

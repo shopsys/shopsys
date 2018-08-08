@@ -12,11 +12,6 @@ class FormRenderingConfigurationExtension extends AbstractTypeExtension
 {
     const DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING = 'multidomain_form_rows_no_padding';
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
@@ -28,9 +23,6 @@ class FormRenderingConfigurationExtension extends AbstractTypeExtension
         $view->vars['is_group_container_to_render_as_the_last_one'] = $options['is_group_container_to_render_as_the_last_one'];
         $view->vars['render_form_row'] = $options['render_form_row'];
     }
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -43,9 +35,6 @@ class FormRenderingConfigurationExtension extends AbstractTypeExtension
             'render_form_row' => true,
         ]);
     }
-    /**
-     * @return string
-     */
     public function getExtendedType()
     {
         return FormType::class;

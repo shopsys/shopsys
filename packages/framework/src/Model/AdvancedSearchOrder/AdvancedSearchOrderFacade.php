@@ -36,7 +36,6 @@ class AdvancedSearchOrderFacade
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createAdvancedSearchOrderForm(Request $request)
@@ -74,7 +73,6 @@ class AdvancedSearchOrderFacade
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
     public function isAdvancedSearchOrderFormSubmitted(Request $request)

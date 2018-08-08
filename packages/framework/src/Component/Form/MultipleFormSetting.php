@@ -26,9 +26,6 @@ class MultipleFormSetting
         $this->isCurrentFormMultiple = self::DEFAULT_MULTIPLE;
     }
 
-    /**
-     * @return bool
-     */
     public function isCurrentFormMultiple()
     {
         return $this->isCurrentFormMultiple;

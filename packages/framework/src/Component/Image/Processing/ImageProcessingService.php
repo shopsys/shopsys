@@ -107,7 +107,6 @@ class ImageProcessingService
     }
 
     /**
-     * @param \Intervention\Image\Image $image
      * @param int|null $width
      * @param int|null $height
      * @param bool $crop
@@ -130,10 +129,6 @@ class ImageProcessingService
         return $image;
     }
 
-    /**
-     * @param \Intervention\Image\Image $image
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
-     */
     public function resizeBySizeConfig(Image $image, ImageSizeConfig $sizeConfig)
     {
         $this->resize($image, $sizeConfig->getWidth(), $sizeConfig->getHeight(), $sizeConfig->getCrop());

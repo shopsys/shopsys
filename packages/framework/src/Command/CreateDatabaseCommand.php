@@ -46,12 +46,6 @@ class CreateDatabaseCommand extends Command
      */
     private $doctrineRegistry;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Component\System\System $system
-     * @param \Shopsys\FrameworkBundle\Component\System\PostgresqlLocaleMapper $postgresqlLocaleMapper
-     * @param \Doctrine\Common\Persistence\ManagerRegistry $managerRegistry
-     */
     public function __construct(
         Localization $localization,
         System $system,
@@ -73,8 +67,6 @@ class CreateDatabaseCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -97,9 +89,6 @@ class CreateDatabaseCommand extends Command
         return 0;
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
-     */
     private function createDatabaseIfNotExists(SymfonyStyle $symfonyStyleIo)
     {
         $defaultConnection = $this->getDefaultConnection();
@@ -128,9 +117,6 @@ class CreateDatabaseCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
-     */
     private function createExtensionsIfNotExist(SymfonyStyle $symfonyStyleIo)
     {
         // Extensions are created in schema "pg_catalog" in order to be able to DROP
@@ -141,9 +127,6 @@ class CreateDatabaseCommand extends Command
         $symfonyStyleIo->success('Extension unaccent is created');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
-     */
     private function createSystemSpecificCollationsIfNotExist(SymfonyStyle $symfonyStyleIo)
     {
         $missingLocaleExceptions = [];
@@ -209,9 +192,6 @@ class CreateDatabaseCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
-     */
     private function switchConnectionToSuperuser(SymfonyStyle $symfonyStyleIo)
     {
         if (!$this->isConnectedAsSuperuser()) {
@@ -236,9 +216,6 @@ class CreateDatabaseCommand extends Command
         }
     }
 
-    /**
-     * @return bool
-     */
     private function isConnectedAsSuperuser()
     {
         $stmt = $this->createDatabaselessConnection()

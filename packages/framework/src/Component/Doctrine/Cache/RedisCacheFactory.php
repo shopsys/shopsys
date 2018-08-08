@@ -8,7 +8,6 @@ use Redis;
 class RedisCacheFactory
 {
     /**
-     * @param \Redis $redis
      * @return \Doctrine\Common\Cache\RedisCache
      */
     public function create(Redis $redis)

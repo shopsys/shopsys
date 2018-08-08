@@ -45,8 +45,6 @@ class ProductVisibility
     protected $visible;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      */
     public function __construct(

@@ -35,7 +35,6 @@ class AdvancedSearchFacade
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createAdvancedSearchForm(Request $request)
@@ -73,7 +72,6 @@ class AdvancedSearchFacade
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
     public function isAdvancedSearchFormSubmitted(Request $request)

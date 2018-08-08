@@ -28,7 +28,6 @@ class DatabaseHelper extends Module
     }
 
     /**
-     * @param \Doctrine\DBAL\Connection $connection
      * @return string
      */
     private function getConnectionDsn(Connection $connection)

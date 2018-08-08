@@ -13,7 +13,6 @@ class OrderStatusDeletionForbiddenException extends Exception implements OrderSt
     private $orderStatus;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @param \Exception|null $previous
      */
     public function __construct(OrderStatus $orderStatus, Exception $previous = null)

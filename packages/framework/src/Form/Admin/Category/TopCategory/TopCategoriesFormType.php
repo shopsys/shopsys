@@ -28,11 +28,6 @@ class TopCategoriesFormType extends AbstractType
      */
     private $categoriesIdsToCategoriesTransformer;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
-     */
     public function __construct(
         CategoryFacade $categoryFacade,
         RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
@@ -43,10 +38,6 @@ class TopCategoriesFormType extends AbstractType
         $this->categoriesIdsToCategoriesTransformer = $categoriesIdsToCategoriesTransformer;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $categoryPaths = $this->categoryFacade->getFullPathsIndexedByIdsForDomain(
@@ -67,9 +58,6 @@ class TopCategoriesFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

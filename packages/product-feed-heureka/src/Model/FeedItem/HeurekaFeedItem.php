@@ -102,97 +102,61 @@ class HeurekaFeedItem implements FeedItemInterface
         $this->cpc = $cpc;
     }
 
-    /**
-     * @return int
-     */
     public function getSeekId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int|null
-     */
     public function getGroupId(): ?int
     {
         return $this->mainVariantId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return string|null
-     */
     public function getImgUrl(): ?string
     {
         return $this->imgUrl;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
     public function getPrice(): Price
     {
         return $this->price;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEan(): ?string
     {
         return $this->ean;
     }
 
-    /**
-     * @return int|null
-     */
     public function getDeliveryDate(): ?int
     {
         return $this->availabilityDispatchTime;
     }
 
-    /**
-     * @return string|null
-     */
     public function getManufacturer(): ?string
     {
         return $this->brandName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCategoryText(): ?string
     {
         return $this->heurekaCategoryFullName;
@@ -206,9 +170,6 @@ class HeurekaFeedItem implements FeedItemInterface
         return $this->parametersByName;
     }
 
-    /**
-     * @return float|null
-     */
     public function getCpc(): ?float
     {
         return $this->cpc;

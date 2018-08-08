@@ -52,7 +52,6 @@ class OrderStatusController extends AdminBaseController
     /**
      * @Route("/order-status/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function deleteAction(Request $request, $id)

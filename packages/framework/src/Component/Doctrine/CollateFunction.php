@@ -19,9 +19,6 @@ class CollateFunction extends FunctionNode
      */
     private $collation;
 
-    /**
-     * @param \Doctrine\ORM\Query\Parser $parser
-     */
     public function parse(Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);
@@ -34,7 +31,6 @@ class CollateFunction extends FunctionNode
     }
 
     /**
-     * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
      * @return string
      */
     public function getSql(SqlWalker $sqlWalker)

@@ -7,9 +7,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180206151021 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function up(Schema $schema)
     {
         $this->sql('
@@ -20,9 +17,6 @@ class Version20180206151021 extends AbstractMigration
         $this->sql('COMMENT ON COLUMN newsletter_subscribers.created_at IS \'(DC2Type:datetime_immutable)\'');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function down(Schema $schema)
     {
     }

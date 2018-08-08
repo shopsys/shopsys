@@ -32,11 +32,6 @@ class ReplaceDomainsUrlsCommand extends Command
      */
     private $setting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\DomainUrlService $domainUrlService
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         Domain $domain,
         DomainUrlService $domainUrlService,
@@ -55,10 +50,6 @@ class ReplaceDomainsUrlsCommand extends Command
             ->setDescription('Replace domains urls in database by urls in domains config');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         foreach ($this->domain->getAll() as $domainConfig) {

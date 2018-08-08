@@ -292,7 +292,6 @@ class Product extends AbstractTranslatableEntity
     protected $domains;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
     protected function __construct(ProductData $productData, array $variants = null)
@@ -344,7 +343,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     public static function create(ProductData $productData)
@@ -353,7 +351,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
@@ -363,7 +360,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData
      */
     public function edit(
@@ -416,9 +412,6 @@ class Product extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     */
     public function changeVat(Vat $vat)
     {
         $this->vat = $vat;
@@ -433,9 +426,6 @@ class Product extends AbstractTranslatableEntity
         $this->price = Utils::ifNull($price, 0);
     }
 
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
@@ -497,9 +487,6 @@ class Product extends AbstractTranslatableEntity
         return $this->ean;
     }
 
-    /**
-     * @return string
-     */
     public function getPrice()
     {
         return $this->price;
@@ -529,49 +516,31 @@ class Product extends AbstractTranslatableEntity
         return $this->sellingTo;
     }
 
-    /**
-     * @return bool
-     */
     public function isHidden()
     {
         return $this->hidden;
     }
 
-    /**
-     * @return bool
-     */
     public function getCalculatedHidden()
     {
         return $this->calculatedHidden;
     }
 
-    /**
-     * @return bool
-     */
     public function isSellingDenied()
     {
         return $this->sellingDenied;
     }
 
-    /**
-     * @return bool
-     */
     public function getCalculatedSellingDenied()
     {
         return $this->calculatedSellingDenied;
     }
 
-    /**
-     * @return bool
-     */
     public function isUsingStock()
     {
         return $this->usingStock;
     }
 
-    /**
-     * @return int|null
-     */
     public function getStockQuantity()
     {
         return $this->stockQuantity;
@@ -585,9 +554,6 @@ class Product extends AbstractTranslatableEntity
         return $this->unit;
     }
 
-    /**
-     * @return string
-     */
     public function getOutOfStockAction()
     {
         return $this->outOfStockAction;
@@ -617,17 +583,11 @@ class Product extends AbstractTranslatableEntity
         return $this->calculatedAvailability;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderingPriority()
     {
         return $this->orderingPriority;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
-     */
     public function setAvailability(Availability $availability)
     {
         $this->availability = $availability;
@@ -643,9 +603,6 @@ class Product extends AbstractTranslatableEntity
         $this->recalculateAvailability = true;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $calculatedAvailability
-     */
     public function setCalculatedAvailability(Availability $calculatedAvailability)
     {
         $this->calculatedAvailability = $calculatedAvailability;
@@ -653,7 +610,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categoriesByDomainId
      */
     public function setCategories(
@@ -667,7 +623,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $newCategories
      * @param int $domainId
      */
@@ -740,9 +695,6 @@ class Product extends AbstractTranslatableEntity
         return $categoriesByDomainId;
     }
 
-    /**
-     * @return string
-     */
     public function getPriceCalculationType()
     {
         return $this->priceCalculationType;
@@ -756,17 +708,11 @@ class Product extends AbstractTranslatableEntity
         return $this->brand;
     }
 
-    /**
-     * @return bool
-     */
     protected function getCalculatedVisibility()
     {
         return $this->calculatedVisibility;
     }
 
-    /**
-     * @return bool
-     */
     public function isVisible()
     {
         return $this->getCalculatedVisibility();
@@ -787,17 +733,11 @@ class Product extends AbstractTranslatableEntity
         $this->recalculateAvailability = true;
     }
 
-    /**
-     * @return bool
-     */
     public function isMainVariant()
     {
         return $this->variantType === self::VARIANT_TYPE_MAIN;
     }
 
-    /**
-     * @return bool
-     */
     public function isVariant()
     {
         return $this->variantType === self::VARIANT_TYPE_VARIANT;
@@ -892,9 +832,6 @@ class Product extends AbstractTranslatableEntity
         $this->stockQuantity -= $quantity;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     protected function setTranslations(ProductData $productData)
     {
         foreach ($productData->name as $locale => $name) {
@@ -905,9 +842,6 @@ class Product extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     protected function setDomains(ProductData $productData)
     {
         foreach ($this->domains as $productDomain) {
@@ -921,7 +855,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductDomain
      */
     protected function getProductDomain(int $domainId)
@@ -936,7 +869,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getShortDescription(int $domainId)
@@ -945,7 +877,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getDescription(int $domainId)
@@ -954,7 +885,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoH1(int $domainId)
@@ -963,7 +893,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoTitle(int $domainId)
@@ -972,7 +901,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoMetaDescription(int $domainId)
@@ -988,9 +916,6 @@ class Product extends AbstractTranslatableEntity
         return new ProductTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     protected function createDomains(ProductData $productData)
     {
         $domainIds = array_keys($productData->seoTitles);

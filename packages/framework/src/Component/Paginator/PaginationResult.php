@@ -71,25 +71,16 @@ class PaginationResult
         }
     }
 
-    /**
-     * @return int
-     */
     public function getPage()
     {
         return $this->page;
     }
 
-    /**
-     * @return int
-     */
     public function getPageSize()
     {
         return $this->pageSize;
     }
 
-    /**
-     * @return int
-     */
     public function getTotalCount()
     {
         return $this->totalCount;
@@ -103,25 +94,16 @@ class PaginationResult
         return $this->results;
     }
 
-    /**
-     * @return int
-     */
     public function getPageCount()
     {
         return $this->pageCount;
     }
 
-    /**
-     * @return int
-     */
     public function getFromItem()
     {
         return $this->fromItem;
     }
 
-    /**
-     * @return int
-     */
     public function getToItem()
     {
         return $this->toItem;

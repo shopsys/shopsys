@@ -44,9 +44,6 @@ class Brand extends AbstractTranslatableEntity
      */
     protected $domains;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     */
     public function __construct(BrandData $brandData)
     {
         $this->name = $brandData->name;
@@ -57,25 +54,16 @@ class Brand extends AbstractTranslatableEntity
         $this->createDomains($brandData);
     }
 
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     */
     public function edit(BrandData $brandData)
     {
         $this->name = $brandData->name;
@@ -83,9 +71,6 @@ class Brand extends AbstractTranslatableEntity
         $this->setDomains($brandData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     */
     protected function setTranslations(BrandData $brandData)
     {
         foreach ($brandData->descriptions as $locale => $description) {
@@ -103,9 +88,6 @@ class Brand extends AbstractTranslatableEntity
         return new BrandTranslation();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     */
     protected function setDomains(BrandData $brandData)
     {
         foreach ($this->domains as $brandDomain) {
@@ -116,9 +98,6 @@ class Brand extends AbstractTranslatableEntity
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
-     */
     protected function createDomains(BrandData $brandData)
     {
         $domainIds = array_keys($brandData->seoTitles);
@@ -132,7 +111,6 @@ class Brand extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDomain
      */
     protected function getBrandDomain(int $domainId)
@@ -147,7 +125,6 @@ class Brand extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoTitle(int $domainId)
@@ -156,7 +133,6 @@ class Brand extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoMetaDescription(int $domainId)
@@ -165,7 +141,6 @@ class Brand extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $domainId
      * @return string|null
      */
     public function getSeoH1(int $domainId)

@@ -38,14 +38,6 @@ class VatFacade
      */
     protected $vatFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository $vatRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatService $vatService
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface $vatFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         VatRepository $vatRepository,
@@ -88,7 +80,6 @@ class VatFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
     public function create(VatData $vatData)
@@ -102,7 +93,6 @@ class VatFacade
 
     /**
      * @param int $vatId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
     public function edit($vatId, VatData $vatData)
@@ -174,16 +164,12 @@ class VatFacade
         return $this->vatRepository->getById($defaultVatId);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     */
     public function setDefaultVat(Vat $vat)
     {
         $this->setting->set(Vat::SETTING_DEFAULT_VAT, $vat->getId());
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return bool
      */
     public function isVatUsed(Vat $vat)

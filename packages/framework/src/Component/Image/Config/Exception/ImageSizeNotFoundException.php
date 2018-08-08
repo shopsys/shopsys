@@ -29,17 +29,11 @@ class ImageSizeNotFoundException extends Exception implements ImageConfigExcepti
         parent::__construct('Image size "' . $sizeName . '" not found for entity "' . $entityClass . '".', 0, $previous);
     }
 
-    /**
-     * @return string
-     */
     public function getEntityClass()
     {
         return $this->entityClass;
     }
 
-    /**
-     * @return string
-     */
     public function getSizeName()
     {
         return $this->sizeName;

@@ -33,17 +33,11 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
      */
     private $fileConstraints;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     */
     public function __construct(FileUpload $fileUpload)
     {
         $this->fileUpload = $fileUpload;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired('info_text')
@@ -81,10 +75,6 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
         $view->vars['info_text'] = $options['info_text'];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->fileConstraints = array_merge(
@@ -114,7 +104,6 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
 
     /**
      * @param string[]|null $uploadedFiles
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function validateUploadedFiles($uploadedFiles, ExecutionContextInterface $context)
     {
@@ -130,9 +119,6 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
         }
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     */
     public function onPreSubmit(FormEvent $event)
     {
         $data = $event->getData();

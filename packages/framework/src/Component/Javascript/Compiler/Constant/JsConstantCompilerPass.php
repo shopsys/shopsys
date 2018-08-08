@@ -19,9 +19,6 @@ class JsConstantCompilerPass implements JsCompilerPassInterface
         $this->jsConstantCallParser = $jsConstantCallParser;
     }
 
-    /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JProgramNode $node
-     */
     public function process(JProgramNode $node)
     {
         $jsConstantCalls = $this->jsConstantCallParser->parse($node);

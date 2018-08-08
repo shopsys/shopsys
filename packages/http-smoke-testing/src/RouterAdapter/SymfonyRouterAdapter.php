@@ -13,9 +13,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
      */
     private $router;
 
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
@@ -35,7 +32,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     }
 
     /**
-     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return string
      */
     public function generateUri(RequestDataSet $requestDataSet)

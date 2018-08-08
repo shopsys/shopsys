@@ -40,14 +40,6 @@ class FriendlyUrlFacade
      */
     protected $friendlyUrlFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlService $friendlyUrlService
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface $friendlyUrlFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         DomainRouterFactory $domainRouterFactory,
@@ -93,7 +85,6 @@ class FriendlyUrlFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param string $entityName
      */
     protected function resolveUniquenessOfFriendlyUrlAndFlush(FriendlyUrl $friendlyUrl, $entityName)
@@ -155,7 +146,6 @@ class FriendlyUrlFacade
     /**
      * @param string $routeName
      * @param int $entityId
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData $urlListData
      */
     public function saveUrlListFormData($routeName, $entityId, UrlListData $urlListData)
     {
@@ -190,9 +180,6 @@ class FriendlyUrlFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $mainFriendlyUrl
-     */
     protected function setFriendlyUrlAsMain(FriendlyUrl $mainFriendlyUrl)
     {
         $friendlyUrls = $this->friendlyUrlRepository->getAllByRouteNameAndEntityIdAndDomainId(

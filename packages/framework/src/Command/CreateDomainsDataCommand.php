@@ -44,13 +44,6 @@ class CreateDomainsDataCommand extends Command
      */
     private $dbIndexesFacade;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\DomainDbFunctionsFacade $domainDbFunctionsFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator $domainDataCreator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Localization\DbIndexesFacade $dbIndexesFacade
-     */
     public function __construct(
         EntityManagerInterface $em,
         DomainDbFunctionsFacade $domainDbFunctionsFacade,
@@ -73,10 +66,6 @@ class CreateDomainsDataCommand extends Command
             ->setDescription('Create new domains data');
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em->transactional(function () use ($output) {

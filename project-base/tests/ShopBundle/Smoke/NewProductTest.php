@@ -51,9 +51,6 @@ class NewProductTest extends FunctionalTestCase
         $this->assertEmpty($flashMessageBag->getErrorMessages());
     }
 
-    /**
-     * @param \Symfony\Component\DomCrawler\Form $form
-     */
     private function fillForm(Form $form)
     {
         $nameForms = $form->get('product_edit_form[productData][name]');
@@ -74,10 +71,6 @@ class NewProductTest extends FunctionalTestCase
         $form['product_edit_form[productData][availability]']->select($this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK)->getId());
     }
 
-    /**
-     * @param \Symfony\Component\DomCrawler\Form $form
-     * @param \Symfony\Component\Security\Csrf\CsrfToken $token
-     */
     private function setFormCsrfToken(Form $form, CsrfToken $token)
     {
         $form['product_edit_form[_token]'] = $token->getValue();

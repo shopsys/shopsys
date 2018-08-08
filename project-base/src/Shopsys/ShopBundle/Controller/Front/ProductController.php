@@ -123,7 +123,6 @@ class ProductController extends FrontBaseController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function listByCategoryAction(Request $request, $id)
@@ -185,7 +184,6 @@ class ProductController extends FrontBaseController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function listByBrandAction(Request $request, $id)
@@ -221,9 +219,6 @@ class ProductController extends FrontBaseController
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function searchAction(Request $request)
     {
         $searchText = $request->query->get(self::SEARCH_TEXT_PARAMETER);
@@ -282,7 +277,6 @@ class ProductController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
     private function createProductFilterConfigForCategory(Category $category)

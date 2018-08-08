@@ -23,10 +23,6 @@ class CartFactory
      */
     private $cartWatcherFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemRepository $cartItemRepository
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
-     */
     public function __construct(CartItemRepository $cartItemRepository, CartWatcherFacade $cartWatcherFacade)
     {
         $this->cartItemRepository = $cartItemRepository;
@@ -34,7 +30,6 @@ class CartFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
     public function get(CustomerIdentifier $customerIdentifier)
@@ -51,7 +46,6 @@ class CartFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
     private function createNewCart(CustomerIdentifier $customerIdentifier)

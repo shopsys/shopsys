@@ -19,7 +19,6 @@ class QueryBuilderDataSource implements DataSourceInterface
     private $rowIdSourceColumnName;
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $rowIdSourceColumnName
      */
     public function __construct(QueryBuilder $queryBuilder, $rowIdSourceColumnName)
@@ -66,9 +65,6 @@ class QueryBuilderDataSource implements DataSourceInterface
         return $queryBuilder->getQuery()->getSingleResult(GroupedScalarHydrator::HYDRATION_MODE);
     }
 
-    /**
-     * @return int
-     */
     public function getTotalRowsCount()
     {
         $queryPaginator = new QueryPaginator($this->queryBuilder, GroupedScalarHydrator::HYDRATION_MODE);
@@ -76,7 +72,6 @@ class QueryBuilderDataSource implements DataSourceInterface
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $orderSourceColumnName
      * @param string $orderDirection
      */
@@ -86,7 +81,6 @@ class QueryBuilderDataSource implements DataSourceInterface
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param int $rowId
      */
     private function prepareQueryWithOneRow(QueryBuilder $queryBuilder, $rowId)
@@ -99,9 +93,6 @@ class QueryBuilderDataSource implements DataSourceInterface
             ->resetDQLPart('orderBy');
     }
 
-    /**
-     * @return string
-     */
     public function getRowIdSourceColumnName()
     {
         return $this->rowIdSourceColumnName;

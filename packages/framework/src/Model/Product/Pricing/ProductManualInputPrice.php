@@ -38,8 +38,6 @@ class ProductManualInputPrice
     protected $inputPrice;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string|null $inputPrice
      */
     public function __construct(Product $product, PricingGroup $pricingGroup, $inputPrice)
@@ -65,9 +63,6 @@ class ProductManualInputPrice
         return $this->pricingGroup;
     }
 
-    /**
-     * @return string
-     */
     public function getInputPrice()
     {
         return $this->inputPrice;

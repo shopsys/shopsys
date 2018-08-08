@@ -142,8 +142,6 @@ class OrderTest extends TestCase
     }
 
     /**
-     * @param \DateTimeInterface $expected
-     * @param \DateTimeInterface $actual
      * @param int $deltaInSeconds
      */
     private function assertDateTimeIsCloseTo(DateTimeInterface $expected, DateTimeInterface $actual, $deltaInSeconds)

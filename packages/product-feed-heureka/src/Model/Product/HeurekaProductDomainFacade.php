@@ -23,11 +23,6 @@ class HeurekaProductDomainFacade
      */
     protected $productRepository;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainRepository $heurekaProductDomainRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(
         EntityManagerInterface $em,
         HeurekaProductDomainRepository $heurekaProductDomainRepository,
@@ -49,7 +44,6 @@ class HeurekaProductDomainFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]
      */
     public function getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
@@ -65,9 +59,6 @@ class HeurekaProductDomainFacade
         );
     }
 
-    /**
-     * @param $productId
-     */
     public function delete($productId)
     {
         $heurekaProductDomains = $this->heurekaProductDomainRepository->findByProductId($productId);
@@ -79,7 +70,6 @@ class HeurekaProductDomainFacade
     }
 
     /**
-     * @param $productId
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData[] $heurekaProductDomainsData
      */
     public function saveHeurekaProductDomainsForProductId($productId, array $heurekaProductDomainsData)
@@ -93,10 +83,6 @@ class HeurekaProductDomainFacade
         }
     }
 
-    /**
-     * @param $productId
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData $heurekaProductDomainData
-     */
     public function saveHeurekaProductDomain($productId, HeurekaProductDomainData $heurekaProductDomainData)
     {
         $product = $this->productRepository->getById($productId);

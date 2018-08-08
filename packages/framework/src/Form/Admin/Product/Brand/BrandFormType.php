@@ -33,10 +33,6 @@ class BrandFormType extends AbstractType
      */
     private $seoSettingFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     */
     public function __construct(
         Domain $domain,
         SeoSettingFacade $seoSettingFacade
@@ -45,10 +41,6 @@ class BrandFormType extends AbstractType
         $this->seoSettingFacade = $seoSettingFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $brand = $options['brand'];
@@ -176,9 +168,6 @@ class BrandFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

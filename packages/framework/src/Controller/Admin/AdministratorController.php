@@ -85,7 +85,6 @@ class AdministratorController extends AdminBaseController
 
     /**
      * @Route("/administrator/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function editAction(Request $request, $id)
@@ -168,7 +167,6 @@ class AdministratorController extends AdminBaseController
 
     /**
      * @Route("/administrator/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function newAction(Request $request)
     {

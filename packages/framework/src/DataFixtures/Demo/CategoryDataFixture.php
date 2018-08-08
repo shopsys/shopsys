@@ -41,9 +41,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
         $this->categoryDataFactory = $categoryDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         /**
@@ -181,7 +178,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      * @param string|null $referenceName
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */

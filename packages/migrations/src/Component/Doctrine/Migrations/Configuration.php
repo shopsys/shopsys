@@ -121,7 +121,6 @@ class Configuration extends DoctrineConfiguration
     }
 
     /**
-     * @param \Doctrine\DBAL\Migrations\Version $version
      * @param \Doctrine\DBAL\Migrations\Version[] $migratedVersions
      * @return bool
      */
@@ -133,7 +132,6 @@ class Configuration extends DoctrineConfiguration
     }
 
     /**
-     * @param string $message
      * @throws \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException
      */
     private function throwMethodIsNotAllowedException(string $message): void

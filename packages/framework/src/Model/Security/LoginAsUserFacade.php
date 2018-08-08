@@ -42,13 +42,6 @@ class LoginAsUserFacade
      */
     protected $administratorFrontSecurityFacade;
 
-    /**
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
-     */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         EventDispatcherInterface $eventDispatcher,
@@ -63,17 +56,11 @@ class LoginAsUserFacade
         $this->administratorFrontSecurityFacade = $administratorFrontSecurityFacade;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
     public function rememberLoginAsUser(User $user)
     {
         $this->session->set(self::SESSION_LOGIN_AS, serialize($user));
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function loginAsRememberedUser(Request $request)
     {
         if (!$this->administratorFrontSecurityFacade->isAdministratorLogged()) {

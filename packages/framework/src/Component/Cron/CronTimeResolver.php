@@ -7,8 +7,6 @@ use DateTimeInterface;
 class CronTimeResolver
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface $cronTime
-     * @param \DateTimeInterface $dateTime
      * @return bool
      */
     public function isValidAtTime(CronTimeInterface $cronTime, DateTimeInterface $dateTime)

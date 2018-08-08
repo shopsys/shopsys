@@ -18,7 +18,6 @@ class RouteInfo
 
     /**
      * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
      */
     public function __construct($routeName, Route $route)
     {
@@ -26,25 +25,16 @@ class RouteInfo
         $this->route = $route;
     }
 
-    /**
-     * @return string
-     */
     public function getRouteName()
     {
         return $this->routeName;
     }
 
-    /**
-     * @return string
-     */
     public function getRoutePath()
     {
         return $this->route->getPath();
     }
 
-    /**
-     * @return string
-     */
     public function getRouteCondition()
     {
         return $this->route->getCondition();

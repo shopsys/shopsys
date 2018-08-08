@@ -42,25 +42,16 @@ class Localization
      */
     private $allLocales;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(Domain $domain)
     {
         $this->domain = $domain;
     }
 
-    /**
-     * @return string
-     */
     public function getLocale()
     {
         return $this->domain->getLocale();
     }
 
-    /**
-     * @return string
-     */
     public function getAdminLocale()
     {
         return 'en';

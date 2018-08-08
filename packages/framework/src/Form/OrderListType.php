@@ -22,9 +22,6 @@ class OrderListType extends AbstractType
         $this->orderFacade = $orderFacade;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired('user')

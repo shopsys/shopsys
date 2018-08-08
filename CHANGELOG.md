@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 #### Fixed
 - [#260 - JS validation: dynamically added form inputs are now validated](https://github.com/shopsys/shopsys/pull/260)
 
+* [shopsys/coding-standards]
+#### Added
+- [#XXX - Added fixers to remove redundant annotations](https://github.com/shopsys/shopsys/pull/XXX)
+    - for details about these fixers see https://www.tomasvotruba.cz/blog/2017/12/17/new-in-symplify-3-doc-block-cleaner-fixer/
+
 ## [7.0.0-alpha4] - 2018-08-02
 ### [shopsys/framework]
 #### Added

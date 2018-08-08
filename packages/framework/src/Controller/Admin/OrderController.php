@@ -107,7 +107,6 @@ class OrderController extends AdminBaseController
 
     /**
      * @Route("/order/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function editAction(Request $request, $id)
@@ -165,7 +164,6 @@ class OrderController extends AdminBaseController
 
     /**
      * @Route("/order/add-product/{orderId}", requirements={"orderId" = "\d+"}, condition="request.isXmlHttpRequest()")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $orderId
      */
     public function addProductAction(Request $request, $orderId)
@@ -191,7 +189,6 @@ class OrderController extends AdminBaseController
 
     /**
      * @Route("/order/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function listAction(Request $request)
     {
@@ -252,7 +249,6 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @param array $row
      * @return array
      */
     private function addOrderEntityToDataSource(array $row)
@@ -289,7 +285,6 @@ class OrderController extends AdminBaseController
 
     /**
      * @Route("/order/get-advanced-search-rule-form/", methods={"post"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getRuleFormAction(Request $request)

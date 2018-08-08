@@ -29,11 +29,6 @@ class PersonalDataAccessMailFacade
      */
     protected $personalDataExportMail;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerService $mailer
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail $personalDataAccessMail
-     */
     public function __construct(
         MailerService $mailer,
         MailTemplateFacade $mailTemplateFacade,
@@ -46,9 +41,6 @@ class PersonalDataAccessMailFacade
         $this->personalDataExportMail = $personalDataExportMail;
     }
 
-    /**
-     * @param PersonalDataAccessRequest $personalDataAccessRequest
-     */
     public function sendMail(PersonalDataAccessRequest $personalDataAccessRequest)
     {
         if ($personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY) {

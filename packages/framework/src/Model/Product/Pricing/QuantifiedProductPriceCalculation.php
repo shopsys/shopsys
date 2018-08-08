@@ -53,7 +53,6 @@ class QuantifiedProductPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice
@@ -86,25 +85,16 @@ class QuantifiedProductPriceCalculation
         return $quantifiedItemPrice;
     }
 
-    /**
-     * @return string
-     */
     private function getTotalPriceWithoutVat()
     {
         return $this->getTotalPriceWithVat() - $this->getTotalPriceVatAmount();
     }
 
-    /**
-     * @return string
-     */
     private function getTotalPriceWithVat()
     {
         return $this->productPrice->getPriceWithVat() * $this->quantifiedProduct->getQuantity();
     }
 
-    /**
-     * @return string
-     */
     private function getTotalPriceVatAmount()
     {
         $vatPercent = $this->product->getVat()->getPercent();

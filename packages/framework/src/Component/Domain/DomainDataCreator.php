@@ -50,9 +50,6 @@ class DomainDataCreator
         $this->translatableEntityDataCreator = $translatableEntityDataCreator;
     }
 
-    /**
-     * @return int
-     */
     public function createNewDomainsData()
     {
         $newDomainsCount = 0;
@@ -95,9 +92,6 @@ class DomainDataCreator
         return true;
     }
 
-    /**
-     * @return string
-     */
     private function getTemplateLocale()
     {
         return $this->domain->getDomainConfigById(self::TEMPLATE_DOMAIN_ID)->getLocale();

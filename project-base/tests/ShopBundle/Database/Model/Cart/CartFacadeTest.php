@@ -130,7 +130,6 @@ class CartFacadeTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      */
     private function createCartFacade(CustomerIdentifier $customerIdentifier)
@@ -149,7 +148,6 @@ class CartFacadeTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
     private function getCartByCustomerIdentifier(CustomerIdentifier $customerIdentifier)
@@ -159,10 +157,6 @@ class CartFacadeTest extends DatabaseTestCase
         return $cartFactory->get($customerIdentifier);
     }
 
-    /**
-     * @param array $expected
-     * @param array $actual
-     */
     private function assertArrayHasSameElements(array $expected, array $actual)
     {
         foreach ($expected as $expectedElement) {
@@ -181,7 +175,6 @@ class CartFacadeTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     private function getCustomerIdentifierFactoryMock(CustomerIdentifier $customerIdentifier)

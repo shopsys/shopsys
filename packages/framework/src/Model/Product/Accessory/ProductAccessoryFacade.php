@@ -18,9 +18,7 @@ class ProductAccessoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */

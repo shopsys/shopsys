@@ -110,9 +110,6 @@ class NumberFormatterExtension extends Twig_Extension
         return $locale;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'number_formatter_extension';

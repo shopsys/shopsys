@@ -86,9 +86,7 @@ abstract class OrderItem
     protected $catnum;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @param string $vatPercent
      * @param int $quantity
      * @param string|null $unitName
@@ -130,33 +128,21 @@ abstract class OrderItem
         return $this->order;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getPriceWithoutVat()
     {
         return $this->priceWithoutVat;
     }
 
-    /**
-     * @return string
-     */
     public function getPriceWithVat()
     {
         return $this->priceWithVat;
     }
 
-    /**
-     * @return string
-     */
     public function getVatPercent()
     {
         return $this->vatPercent;
@@ -186,17 +172,11 @@ abstract class OrderItem
         return $this->catnum;
     }
 
-    /**
-     * @return string
-     */
     public function getTotalPriceWithVat()
     {
         return $this->priceWithVat * $this->quantity;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
-     */
     public function edit(OrderItemData $orderItemData)
     {
         $this->name = $orderItemData->name;

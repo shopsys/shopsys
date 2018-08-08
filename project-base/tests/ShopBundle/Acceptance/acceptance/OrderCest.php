@@ -96,7 +96,6 @@ class OrderCest
 
     /**
      * @param string $trackingId
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade
      */
     private function setGoogleAnalyticsTrackingId($trackingId, ScriptFacade $scriptFacade)
     {

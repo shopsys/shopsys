@@ -39,10 +39,6 @@ class PaymentFormType extends AbstractType
         $this->vatFacade = $vatFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $payment = $options['payment'];
@@ -146,9 +142,6 @@ class PaymentFormType extends AbstractType
             ->add($builderImageGroup);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired('payment')

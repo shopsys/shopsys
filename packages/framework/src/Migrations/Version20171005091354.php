@@ -8,9 +8,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20171005091354 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function up(Schema $schema)
     {
         $this->transferDroppedHeurekaCategoryDataToPluginDataValues();
@@ -55,7 +52,6 @@ class Version20171005091354 extends AbstractMigration
     }
 
     /**
-     * @param array $valuesByKey
      * @param string $context
      */
     private function insertHeurekaDataValues(array $valuesByKey, $context)
@@ -74,9 +70,6 @@ class Version20171005091354 extends AbstractMigration
         }
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function down(Schema $schema)
     {
     }

@@ -25,9 +25,6 @@ class AutomaticBestsellingProductRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \DateTime $ordersCreatedAtLimit
      * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */

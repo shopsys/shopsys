@@ -17,9 +17,6 @@ class HttpSmokeTest extends HttpSmokeTestCase
             ->switchDomainById(1);
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $routeConfigCustomization = new RouteConfigCustomization(self::$kernel->getContainer());
@@ -27,7 +24,6 @@ class HttpSmokeTest extends HttpSmokeTestCase
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleRequest(Request $request)

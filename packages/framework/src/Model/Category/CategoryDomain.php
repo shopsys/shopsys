@@ -82,7 +82,6 @@ class CategoryDomain
     protected $description;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      */
     public function __construct(Category $category, $domainId)
@@ -133,9 +132,6 @@ class CategoryDomain
         return $this->description;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabled()
     {
         return $this->enabled;
@@ -165,9 +161,6 @@ class CategoryDomain
         $this->seoH1 = $seoH1;
     }
 
-    /**
-     * @param bool $enabled
-     */
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
@@ -181,9 +174,6 @@ class CategoryDomain
         $this->description = $description;
     }
 
-    /**
-     * @return bool
-     */
     public function isVisible()
     {
         return $this->visible;

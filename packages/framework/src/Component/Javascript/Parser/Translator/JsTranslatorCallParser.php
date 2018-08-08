@@ -29,8 +29,6 @@ class JsTranslatorCallParser
     private $transMethodSpecifications;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\JsFunctionCallParser $jsFunctionCallParser
-     * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\JsStringParser $jsStringParser
      * @param \Shopsys\FrameworkBundle\Component\Translation\TransMethodSpecification[] $transMethodSpecifications
      */
     public function __construct(
@@ -49,7 +47,6 @@ class JsTranslatorCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JProgramNode $node
      * @return \Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCall[]
      */
     public function parse(JProgramNode $node)
@@ -76,7 +73,6 @@ class JsTranslatorCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
      * @return bool
      */
     private function isTransFunctionCall(JCallExprNode $callExprNode)
@@ -93,7 +89,6 @@ class JsTranslatorCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\JNodeBase $messageIdArgumentNode
      * @return string
      */
     private function getMessageId(JNodeBase $messageIdArgumentNode)
@@ -113,7 +108,6 @@ class JsTranslatorCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
      * @return string
      */
     private function getDomain(JCallExprNode $callExprNode)
@@ -141,7 +135,6 @@ class JsTranslatorCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
      * @return \PLUG\JavaScript\JNodes\JNodeBase
      */
     private function getMessageIdArgumentNode(JCallExprNode $callExprNode)

@@ -21,11 +21,6 @@ class CategoryCheckboxType extends AbstractType
         $this->categoryFacade = $categoryFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $categoryId = $form->getName();
@@ -44,9 +39,6 @@ class CategoryCheckboxType extends AbstractType
         }
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -54,9 +46,6 @@ class CategoryCheckboxType extends AbstractType
             ->setAllowedTypes('domain_id', 'int');
     }
 
-    /**
-     * @return string
-     */
     public function getParent()
     {
         return CheckboxType::class;

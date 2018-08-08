@@ -29,9 +29,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
         $this->mailTemplateDataFactory = $mailTemplateDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
@@ -137,9 +134,6 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
         $this->updateMailTemplate($mailTemplateData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
-     */
     private function updateMailTemplate(MailTemplateData $mailTemplateData)
     {
         $domainId = 2;

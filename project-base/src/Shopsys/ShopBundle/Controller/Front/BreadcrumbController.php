@@ -19,7 +19,6 @@ class BreadcrumbController extends FrontBaseController
 
     /**
      * @param string $routeName
-     * @param array $routeParameters
      */
     public function indexAction($routeName, array $routeParameters = [])
     {

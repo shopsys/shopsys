@@ -14,9 +14,6 @@ class RouterExtension extends Twig_Extension
      */
     private $domainRouterFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
     public function __construct(DomainRouterFactory $domainRouterFactory)
     {
         $this->domainRouterFactory = $domainRouterFactory;
@@ -37,7 +34,6 @@ class RouterExtension extends Twig_Extension
 
     /**
      * @param string $route
-     * @param array $routeParams
      * @param int $domainId
      * @return string|null
      */
@@ -52,9 +48,6 @@ class RouterExtension extends Twig_Extension
         }
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'router_extension';

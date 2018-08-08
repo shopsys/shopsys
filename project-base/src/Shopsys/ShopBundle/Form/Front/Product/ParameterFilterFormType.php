@@ -17,10 +17,6 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
      */
     private $parameterChoicesIndexedByParameterId;
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $config = $options['product_filter_config'];
@@ -47,9 +43,6 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         $builder->addViewTransformer($this);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

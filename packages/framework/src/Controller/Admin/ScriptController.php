@@ -49,7 +49,6 @@ class ScriptController extends AdminBaseController
 
     /**
      * @Route("/script/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function newAction(Request $request)
     {
@@ -81,7 +80,6 @@ class ScriptController extends AdminBaseController
 
     /**
      * @Route("/script/edit/{scriptId}")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $scriptId
      */
     public function editAction(Request $request, $scriptId)
@@ -166,7 +164,6 @@ class ScriptController extends AdminBaseController
 
     /**
      * @Route("/script/google-analytics/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function googleAnalyticsAction(Request $request)
     {

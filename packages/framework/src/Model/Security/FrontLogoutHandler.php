@@ -20,10 +20,6 @@ class FrontLogoutHandler implements LogoutSuccessHandlerInterface
      */
     private $router;
 
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade $orderFlowFacade
-     */
     public function __construct(RouterInterface $router, OrderFlowFacade $orderFlowFacade)
     {
         $this->router = $router;
@@ -31,7 +27,6 @@ class FrontLogoutHandler implements LogoutSuccessHandlerInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function onLogoutSuccess(Request $request)

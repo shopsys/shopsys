@@ -65,7 +65,6 @@ class OrderFlow extends FormFlow
 
     /**
      * @param int $step
-     * @param array $options
      * @return array
      */
     public function getFormOptions($step, array $options = [])
@@ -133,7 +132,6 @@ class OrderFlow extends FormFlow
     }
 
     /**
-     * @param \Craue\FormFlowBundle\Form\StepInterface $step
      * @return bool
      */
     private function isStepValid(StepInterface $step)
@@ -149,9 +147,6 @@ class OrderFlow extends FormFlow
         return $step->getFormType() === null;
     }
 
-    /**
-     * @param \Craue\FormFlowBundle\Form\StepInterface $step
-     */
     private function changeRequestToStep(StepInterface $step)
     {
         $stepsData = $this->retrieveStepData();

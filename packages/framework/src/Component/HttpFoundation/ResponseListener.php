@@ -6,9 +6,6 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class ResponseListener
 {
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $event->getResponse()->headers->set('X-Frame-Options', 'sameorigin');

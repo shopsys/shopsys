@@ -12,17 +12,12 @@ class AdministratorGridService
      */
     protected $administratorGridLimitFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactoryInterface $administratorGridLimitFactory
-     */
     public function __construct(AdministratorGridLimitFactoryInterface $administratorGridLimitFactory)
     {
         $this->administratorGridLimitFactory = $administratorGridLimitFactory;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
      * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit|null
      */
     public function rememberGridLimit(Administrator $administrator, Grid $grid)
@@ -44,10 +39,6 @@ class AdministratorGridService
         return $gridLimit;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
-     */
     public function restoreGridLimit(Administrator $administrator, Grid $grid)
     {
         $customLimit = $administrator->getLimitByGridId($grid->getId());

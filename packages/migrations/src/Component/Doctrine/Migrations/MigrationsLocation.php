@@ -24,17 +24,11 @@ class MigrationsLocation
         $this->namespace = $namespace;
     }
 
-    /**
-     * @return string
-     */
     public function getDirectory()
     {
         return $this->directory;
     }
 
-    /**
-     * @return string
-     */
     public function getNamespace()
     {
         return $this->namespace;

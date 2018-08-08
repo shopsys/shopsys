@@ -58,7 +58,6 @@ class CategoryController extends AdminBaseController
 
     /**
      * @Route("/category/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function editAction(Request $request, $id)
     {
@@ -98,7 +97,6 @@ class CategoryController extends AdminBaseController
 
     /**
      * @Route("/category/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function newAction(Request $request)
     {
@@ -137,7 +135,6 @@ class CategoryController extends AdminBaseController
 
     /**
      * @Route("/category/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function listAction(Request $request)
     {
@@ -175,7 +172,6 @@ class CategoryController extends AdminBaseController
 
     /**
      * @Route("/category/save-order/", methods={"post"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function saveOrderAction(Request $request)
     {

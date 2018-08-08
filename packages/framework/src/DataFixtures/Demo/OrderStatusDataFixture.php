@@ -18,17 +18,11 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
      */
     private $orderStatusFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     */
     public function __construct(OrderStatusFacade $orderStatusFacade)
     {
         $this->orderStatusFacade = $orderStatusFacade;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $this->createOrderStatusReference(1, self::ORDER_STATUS_NEW);

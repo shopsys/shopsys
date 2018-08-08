@@ -59,7 +59,6 @@ class AdministratorLoginFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @return string
      */
     public function generateMultidomainLoginTokenWithExpiration(Administrator $administrator)
@@ -73,7 +72,6 @@ class AdministratorLoginFacade
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $multidomainLoginToken
      */
     public function loginByMultidomainToken(Request $request, $multidomainLoginToken)

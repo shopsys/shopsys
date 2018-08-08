@@ -134,7 +134,6 @@ class ProductController extends AdminBaseController
 
     /**
      * @Route("/product/edit/{id}", requirements={"id" = "\d+"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function editAction(Request $request, $id)
     {
@@ -183,7 +182,6 @@ class ProductController extends AdminBaseController
 
     /**
      * @Route("/product/new/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function newAction(Request $request)
     {
@@ -216,7 +214,6 @@ class ProductController extends AdminBaseController
 
     /**
      * @Route("/product/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function listAction(Request $request)
     {
@@ -295,7 +292,6 @@ class ProductController extends AdminBaseController
 
     /**
      * @Route("/product/get-advanced-search-rule-form/", methods={"post"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function getRuleFormAction(Request $request)
     {
@@ -308,7 +304,6 @@ class ProductController extends AdminBaseController
 
     /**
      * @Route("/product/create-variant/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function createVariantAction(Request $request)
     {
@@ -342,7 +337,6 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
     private function getGrid(QueryBuilder $queryBuilder)

@@ -106,8 +106,6 @@ class CronFacadeTest extends TestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronFacade
      */
     private function createCronFacade(CronConfig $cronConfig, CronModuleFacade $cronModuleFacade)
@@ -139,7 +137,6 @@ class CronFacadeTest extends TestCase
     }
 
     /**
-     * @param array $servicesIndexedById
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver|\PHPUnit\Framework\MockObject\MockObject|null $cronTimeResolverMock
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig
      */

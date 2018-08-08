@@ -23,17 +23,11 @@ class HoneyPotExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'honey_pot';
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormView $formView
-     */
     public function formHoneyPotCheckPasswordAlreadyRendered(FormView $formView)
     {
         $rootFormView = $this->getRootFormView($formView);
@@ -44,7 +38,6 @@ class HoneyPotExtension extends Twig_Extension
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $formView
      * @return \Symfony\Component\Form\FormView
      */
     private function getRootFormView(FormView $formView)
@@ -59,7 +52,6 @@ class HoneyPotExtension extends Twig_Extension
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $formView
      * @return bool
      */
     private function containsNotRenderedPassword(FormView $formView)

@@ -53,7 +53,6 @@ class AvailabilityController extends AdminBaseController
     /**
      * @Route("/product/availability/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function deleteAction(Request $request, $id)
@@ -134,7 +133,6 @@ class AvailabilityController extends AdminBaseController
 
     /**
      * @Route("/product/availability/setting/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function settingAction(Request $request)
     {

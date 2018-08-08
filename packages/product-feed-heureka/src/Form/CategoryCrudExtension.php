@@ -19,10 +19,6 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
      */
     private $heurekaCategoryFacade;
 
-    /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
-     */
     public function __construct(
         TranslatorInterface $translator,
         HeurekaCategoryFacade $heurekaCategoryFacade
@@ -31,17 +27,11 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
         $this->heurekaCategoryFacade = $heurekaCategoryFacade;
     }
 
-    /**
-     * @return string
-     */
     public function getFormTypeClass()
     {
         return CategoryFormType::class;
     }
 
-    /**
-     * @return string
-     */
     public function getFormLabel()
     {
         return $this->translator->trans('Heureka.cz product feed');

@@ -15,8 +15,5 @@ interface EntityFileUploadInterface
      */
     public function setFileAsUploaded($key, $originalFilename);
 
-    /**
-     * @return int
-     */
     public function getId();
 }

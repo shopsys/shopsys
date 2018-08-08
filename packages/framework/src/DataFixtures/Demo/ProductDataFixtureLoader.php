@@ -153,10 +153,6 @@ class ProductDataFixtureLoader
         return $variantCatnumsByMainVariantCatnum;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param array $row
-     */
     private function updateProductDataFromCsvRowForFirstDomain(ProductData $productData, array $row)
     {
         $domainId = 1;
@@ -220,7 +216,6 @@ class ProductDataFixtureLoader
     }
 
     /**
-     * @param array $row
      * @return string
      */
     public function getCatnumFromRow($row)
@@ -228,10 +223,6 @@ class ProductDataFixtureLoader
         return $row[self::COLUMN_CATNUM];
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param array $row
-     */
     public function updateProductDataFromCsvRowForSecondDomain(ProductData $productData, array $row)
     {
         $domainId = 2;
@@ -297,7 +288,6 @@ class ProductDataFixtureLoader
 
     /**
      * @param string $keyString
-     * @param array $valuesByKey
      * @return string[]
      */
     private function getValuesByKeyString($keyString, array $valuesByKey)
@@ -314,8 +304,6 @@ class ProductDataFixtureLoader
     }
 
     /**
-     * @param array $row
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param int $domainId
      */
     private function setProductDataPricesFromCsv(array $row, ProductData $productData, $domainId)
@@ -344,9 +332,6 @@ class ProductDataFixtureLoader
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     private function createDefaultManualPriceForAllPricingGroups(ProductData $productData)
     {
         foreach ($this->pricingGroups as $pricingGroupReferenceName => $pricingGroup) {

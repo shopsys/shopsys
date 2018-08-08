@@ -20,9 +20,6 @@ class GenerateFriendlyUrlCommand extends Command
      */
     private $friendlyUrlGeneratorFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGeneratorFacade $friendlyUrlGeneratorFacade
-     */
     public function __construct(FriendlyUrlGeneratorFacade $friendlyUrlGeneratorFacade)
     {
         $this->friendlyUrlGeneratorFacade = $friendlyUrlGeneratorFacade;

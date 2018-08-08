@@ -126,7 +126,6 @@ class CategoryDomainTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
     private function getRefreshedCategoryFromDatabase(Category $category)

@@ -78,7 +78,6 @@ class NewsletterController extends AdminBaseController
     /**
      * @Route("/newsletter/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param int $id
      */
     public function deleteAction(int $id)
     {

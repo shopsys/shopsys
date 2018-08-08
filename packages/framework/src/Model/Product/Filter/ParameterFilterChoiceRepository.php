@@ -34,9 +34,7 @@ class ParameterFilterChoiceRepository
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
     public function getParameterFilterChoicesInCategory(
@@ -79,7 +77,6 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
@@ -111,7 +108,6 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]
      */
@@ -137,7 +133,6 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */

@@ -34,7 +34,6 @@ class UploadedFileLocator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
     public function getRelativeUploadedFileFilepath(UploadedFile $uploadedFile)
@@ -43,7 +42,6 @@ class UploadedFileLocator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
     public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile)
@@ -52,8 +50,6 @@ class UploadedFileLocator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
     public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile)
@@ -68,7 +64,6 @@ class UploadedFileLocator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return bool
      */
     public function fileExists(UploadedFile $uploadedFile)

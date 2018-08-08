@@ -295,7 +295,6 @@ class Order
     protected $createdAsAdministratorName;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
@@ -340,9 +339,6 @@ class Order
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     public function edit(OrderData $orderData)
     {
         $this->firstName = $orderData->firstName;
@@ -367,9 +363,6 @@ class Order
         $this->editOrderPayment($orderData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function editOrderTransport(OrderData $orderData)
     {
         $orderTransportData = $orderData->orderTransport;
@@ -377,9 +370,6 @@ class Order
         $this->getOrderTransport()->edit($orderTransportData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function editOrderPayment(OrderData $orderData)
     {
         $orderPaymentData = $orderData->orderPayment;
@@ -387,9 +377,6 @@ class Order
         $this->getOrderPayment()->edit($orderPaymentData);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function setDeliveryAddress(OrderData $orderData)
     {
         $this->deliveryAddressSameAsBillingAddress = $orderData->deliveryAddressSameAsBillingAddress;
@@ -414,9 +401,6 @@ class Order
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $item
-     */
     public function addItem(OrderItem $item)
     {
         if (!$this->items->contains($item)) {
@@ -424,9 +408,6 @@ class Order
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $item
-     */
     public function removeItem(OrderItem $item)
     {
         if ($item instanceof OrderTransport) {
@@ -438,9 +419,6 @@ class Order
         $this->items->removeElement($item);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $status
-     */
     public function setStatus(OrderStatus $status)
     {
         $this->status = $status;
@@ -474,9 +452,6 @@ class Order
         return $this->payment;
     }
 
-    /**
-     * @return string
-     */
     public function getPaymentName()
     {
         return $this->getOrderPayment()->getName();
@@ -502,9 +477,6 @@ class Order
         return $this->transport;
     }
 
-    /**
-     * @return string
-     */
     public function getTransportName()
     {
         return $this->getOrderTransport()->getName();
@@ -530,33 +502,21 @@ class Order
         return $this->status;
     }
 
-    /**
-     * @return string
-     */
     public function getTotalPriceWithVat()
     {
         return $this->totalPriceWithVat;
     }
 
-    /**
-     * @return string
-     */
     public function getTotalPriceWithoutVat()
     {
         return $this->totalPriceWithoutVat;
     }
 
-    /**
-     * @return string
-     */
     public function getTotalVatAmount()
     {
         return $this->totalPriceWithVat - $this->totalPriceWithoutVat;
     }
 
-    /**
-     * @return string
-     */
     public function getTotalProductPriceWithVat()
     {
         return $this->totalProductPriceWithVat;
@@ -570,9 +530,6 @@ class Order
         return $this->currency;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderTotalPrice $orderTotalPrice
-     */
     public function setTotalPrice(OrderTotalPrice $orderTotalPrice)
     {
         $this->totalPriceWithVat = $orderTotalPrice->getPriceWithVat();
@@ -580,9 +537,6 @@ class Order
         $this->totalProductPriceWithVat = $orderTotalPrice->getProductPriceWithVat();
     }
 
-    /**
-     * @return bool
-     */
     public function isDeleted()
     {
         return $this->deleted;
@@ -601,9 +555,6 @@ class Order
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getNumber()
     {
         return $this->number;
@@ -693,81 +644,51 @@ class Order
         throw new \Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException(['id' => $orderItemId]);
     }
 
-    /**
-     * @return string
-     */
     public function getFirstName()
     {
         return $this->firstName;
     }
 
-    /**
-     * @return string
-     */
     public function getLastName()
     {
         return $this->lastName;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail()
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
     public function getTelephone()
     {
         return $this->telephone;
     }
 
-    /**
-     * @return string
-     */
     public function getCompanyName()
     {
         return $this->companyName;
     }
 
-    /**
-     * @return string
-     */
     public function getCompanyNumber()
     {
         return $this->companyNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getCompanyTaxNumber()
     {
         return $this->companyTaxNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getStreet()
     {
         return $this->street;
     }
 
-    /**
-     * @return string
-     */
     public function getCity()
     {
         return $this->city;
     }
 
-    /**
-     * @return string
-     */
     public function getPostcode()
     {
         return $this->postcode;
@@ -781,65 +702,41 @@ class Order
         return $this->country;
     }
 
-    /**
-     * @return bool
-     */
     public function isDeliveryAddressSameAsBillingAddress()
     {
         return $this->deliveryAddressSameAsBillingAddress;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryFirstName()
     {
         return $this->deliveryFirstName;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryLastName()
     {
         return $this->deliveryLastName;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryCompanyName()
     {
         return $this->deliveryCompanyName;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryTelephone()
     {
         return $this->deliveryTelephone;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryStreet()
     {
         return $this->deliveryStreet;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryCity()
     {
         return $this->deliveryCity;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryPostcode()
     {
         return $this->deliveryPostcode;
@@ -853,9 +750,6 @@ class Order
         return $this->deliveryCountry;
     }
 
-    /**
-     * @return string
-     */
     public function getNote()
     {
         return $this->note;
@@ -869,9 +763,6 @@ class Order
         return $this->domainId;
     }
 
-    /**
-     * @return string
-     */
     public function getUrlHash()
     {
         return $this->urlHash;
@@ -916,9 +807,6 @@ class Order
         return $this->createdAsAdministratorName;
     }
 
-    /**
-     * @return bool
-     */
     public function isCancelled()
     {
         return $this->status === OrderStatus::TYPE_CANCELED;

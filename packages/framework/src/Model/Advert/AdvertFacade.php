@@ -34,11 +34,7 @@ class AdvertFacade
     protected $advertFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertRepository $advertRepository
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFactoryInterface $advertFactory
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -73,7 +69,6 @@ class AdvertFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
      */
     public function create(AdvertData $advertData)
@@ -90,7 +85,6 @@ class AdvertFacade
 
     /**
      * @param int $advertId
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
      */
     public function edit($advertId, AdvertData $advertData)

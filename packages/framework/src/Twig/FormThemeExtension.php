@@ -15,9 +15,6 @@ class FormThemeExtension extends \Twig_Extension
      */
     protected $requestStack;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     */
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
@@ -33,9 +30,6 @@ class FormThemeExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultFormTheme()
     {
         $masterRequest = $this->requestStack->getMasterRequest();
@@ -46,9 +40,6 @@ class FormThemeExtension extends \Twig_Extension
         }
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'form_theme';

@@ -28,9 +28,6 @@ class AdministratorDataFixture extends AbstractReferenceFixture
         $this->administratorDataFactory = $administratorDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $this->createAdministratorReference(1, self::SUPERADMINISTRATOR);
@@ -40,8 +37,6 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     /**
      * Administrators are created (with specific ids) in database migration.
      *
-     * @param int $administratorId
-     * @param string $referenceName
      * @see \Shopsys\FrameworkBundle\Migrations\Version20180702111015
      */
     private function createAdministratorReference(int $administratorId, string $referenceName)

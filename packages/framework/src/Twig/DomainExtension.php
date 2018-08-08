@@ -70,9 +70,6 @@ class DomainExtension extends \Twig_Extension
         return $this->domain;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'domain';
@@ -120,9 +117,6 @@ class DomainExtension extends \Twig_Extension
         }
     }
 
-    /**
-     * @return bool
-     */
     public function isMultidomain()
     {
         return $this->getDomain()->isMultidomain();

@@ -23,10 +23,6 @@ class AdministratorFormType extends AbstractType
     const SCENARIO_CREATE = 'create';
     const SCENARIO_EDIT = 'edit';
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
@@ -111,9 +107,6 @@ class AdministratorFormType extends AbstractType
         return $constraints;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

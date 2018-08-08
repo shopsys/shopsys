@@ -73,7 +73,6 @@ class PerformanceTestSampleQualifier
     }
 
     /**
-     * @param \Tests\ShopBundle\Performance\Page\PerformanceTestSample $performanceTestSample
      * @return int
      */
     public function getSampleStatus(PerformanceTestSample $performanceTestSample)

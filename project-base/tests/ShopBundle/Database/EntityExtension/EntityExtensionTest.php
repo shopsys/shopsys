@@ -267,10 +267,6 @@ class EntityExtensionTest extends DatabaseTestCase
         $this->assertSame($foundProduct, $foundManyToManySelfReferencingInverseEntity);
     }
 
-    /**
-     * @param int $id
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedProduct
-     */
     private function getProduct(int $id): ExtendedProduct
     {
         $qb = $this->em->createQueryBuilder();
@@ -392,10 +388,6 @@ class EntityExtensionTest extends DatabaseTestCase
         $this->assertSame($foundCategory, $foundManyToManySelfReferencingInverseEntity);
     }
 
-    /**
-     * @param int $id
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedCategory
-     */
     public function getCategory(int $id): ExtendedCategory
     {
         $qb = $this->em->createQueryBuilder();
@@ -443,7 +435,6 @@ class EntityExtensionTest extends DatabaseTestCase
     }
 
     /**
-     * @param int $id
      * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedCategory
      */
     private function getOrderTransport(int $id): ExtendedOrderTransport
@@ -453,10 +444,6 @@ class EntityExtensionTest extends DatabaseTestCase
         return $orderItem;
     }
 
-    /**
-     * @param int $id
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedOrderPayment
-     */
     private function getOrderPayment(int $id): ExtendedOrderPayment
     {
         $orderItem = $this->getOrderItem($id);
@@ -464,20 +451,12 @@ class EntityExtensionTest extends DatabaseTestCase
         return $orderItem;
     }
 
-    /**
-     * @param int $id
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedOrderProduct
-     */
     private function getOrderProduct(int $id): ExtendedOrderProduct
     {
         $orderItem = $this->getOrderItem($id);
         $this->assertInstanceOf(ExtendedOrderProduct::class, $orderItem);
         return $orderItem;
     }
-    /**
-     * @param int $id
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedOrderItem
-     */
     private function getOrderItem(int $id): ExtendedOrderItem
     {
         $qb = $this->em->createQueryBuilder();
@@ -491,11 +470,6 @@ class EntityExtensionTest extends DatabaseTestCase
         return $result;
     }
 
-    /**
-     * @param string $parentEntityName
-     * @param string $extendedEntityName
-     * @param int $entityId
-     */
     private function doTestExtendedEntityInstantiation(
         string $parentEntityName,
         string $extendedEntityName,

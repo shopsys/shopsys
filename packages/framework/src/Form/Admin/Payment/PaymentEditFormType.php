@@ -31,10 +31,6 @@ class PaymentEditFormType extends AbstractType
         $this->paymentFacade = $paymentFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $payment = $options['payment'];
@@ -60,9 +56,6 @@ class PaymentEditFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired('payment')

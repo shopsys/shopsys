@@ -57,9 +57,6 @@ class CronModuleExecutor
         }
     }
 
-    /**
-     * @return bool
-     */
     public function canRun()
     {
         return $this->canRunTo > new DateTimeImmutable();

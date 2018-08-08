@@ -25,7 +25,6 @@ class IndependentTransportVisibilityCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param int $domainId
      * @return bool
      */

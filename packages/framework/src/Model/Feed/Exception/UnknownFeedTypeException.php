@@ -7,7 +7,6 @@ use Exception;
 class UnknownFeedTypeException extends Exception implements FeedException
 {
     /**
-     * @param string $type
      * @param string[] $knownTypes
      * @param \Exception|null $previous
      */

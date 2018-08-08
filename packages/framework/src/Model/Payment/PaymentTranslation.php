@@ -38,33 +38,21 @@ class PaymentTranslation extends AbstractTranslation
      */
     protected $instructions;
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
     public function getInstructions()
     {
         return $this->instructions;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName($name)
     {
         $this->name = $name;

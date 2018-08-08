@@ -31,7 +31,6 @@ class FileUploadController extends AdminBaseController
 
     /**
      * @Route("/file-upload/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function uploadAction(Request $request)
@@ -69,7 +68,6 @@ class FileUploadController extends AdminBaseController
 
     /**
      * @Route("/file-upload/delete-temporary-file/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function deleteTemporaryFileAction(Request $request)

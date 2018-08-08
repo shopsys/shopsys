@@ -33,14 +33,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     /** @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface */
     private $productDataFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureLoader $productDataFixtureLoader
-     * @param \Shopsys\FrameworkBundle\DataFixtures\ProductDataFixtureReferenceInjector $referenceInjector
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureCsvReader $productDataFixtureCsvReader
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface $productDataFactory
-     */
     public function __construct(
         ProductDataFixtureLoader $productDataFixtureLoader,
         ProductDataFixtureReferenceInjector $referenceInjector,
@@ -57,9 +49,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->productDataFactory = $productDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $onlyForFirstDomain = false;
@@ -77,10 +66,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param array $row
-     */
     private function editProduct(Product $product, array $row)
     {
         $productData = $this->productDataFactory->createFromProduct($product);

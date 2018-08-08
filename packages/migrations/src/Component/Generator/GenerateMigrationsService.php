@@ -24,10 +24,6 @@ class GenerateMigrationsService
      */
     private $filesystem;
 
-    /**
-     * @param \Symfony\Component\Templating\EngineInterface $twigEngine
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     */
     public function __construct(
         EngineInterface $twigEngine,
         Filesystem $filesystem
@@ -37,8 +33,6 @@ class GenerateMigrationsService
     }
 
     /**
-     * @param array $sqlCommands
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation $migrationsLocation
      * @return \Shopsys\MigrationBundle\Component\Generator\GeneratorResult
      */
     public function generate(array $sqlCommands, MigrationsLocation $migrationsLocation)
@@ -127,9 +121,6 @@ class GenerateMigrationsService
         }, $sqlCommands);
     }
 
-    /**
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation $migrationLocation
-     */
     private function createMigrationLocationDirectoryIfNotExists(MigrationsLocation $migrationLocation)
     {
         if (!$this->filesystem->exists($migrationLocation->getDirectory())) {

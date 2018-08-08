@@ -46,7 +46,6 @@ class BestsellingProductController extends AdminBaseController
 
     /**
      * @Route("/product/bestselling-product/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function listAction(Request $request)
     {

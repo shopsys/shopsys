@@ -52,15 +52,6 @@ class OrderCreationService
      */
     protected $orderTransportFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderPaymentFactoryInterface $orderPaymentFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFactoryInterface $orderProductFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderTransportFactoryInterface $orderTransportFactory
-     */
     public function __construct(
         PaymentPriceCalculation $paymentPriceCalculation,
         TransportPriceCalculation $transportPriceCalculation,
@@ -79,11 +70,6 @@ class OrderCreationService
         $this->orderTransportFactory = $orderTransportFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function prefillFrontFormData(FrontOrderData $frontOrderData, User $user, Order $order = null)
     {
         if ($order instanceof Order) {
@@ -92,20 +78,12 @@ class OrderCreationService
         $this->prefillFrontFormDataFromCustomer($frontOrderData, $user);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     private function prefillTransportAndPaymentFromOrder(FrontOrderData $frontOrderData, Order $order)
     {
         $frontOrderData->transport = $order->getTransport();
         $frontOrderData->payment = $order->getPayment();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
     private function prefillFrontFormDataFromCustomer(FrontOrderData $frontOrderData, User $user)
     {
         $frontOrderData->firstName = $user->getFirstName();
@@ -135,10 +113,6 @@ class OrderCreationService
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
-     */
     public function fillOrderItems(Order $order, OrderPreview $orderPreview)
     {
         $locale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
@@ -149,8 +123,6 @@ class OrderCreationService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
     private function fillOrderTransportAndPayment(Order $order, OrderPreview $orderPreview, $locale)
@@ -191,8 +163,6 @@ class OrderCreationService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
     private function fillOrderProducts(Order $order, OrderPreview $orderPreview, $locale)
@@ -230,8 +200,6 @@ class OrderCreationService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
     private function fillOrderRounding(Order $order, OrderPreview $orderPreview, $locale)
@@ -251,8 +219,6 @@ class OrderCreationService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $discount
      * @param string $locale
      * @param float $discountPercent
      */

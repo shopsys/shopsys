@@ -4,9 +4,6 @@ namespace Shopsys\FrameworkBundle\Model\Advert;
 
 class AdvertDataFactory implements AdvertDataFactoryInterface
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Advert\AdvertData
-     */
     public function create(): AdvertData
     {
         return new AdvertData();
@@ -14,7 +11,6 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Advert\Advert
-     * @return \Shopsys\FrameworkBundle\Model\Advert\AdvertData
      */
     public function createFromAdvert(Advert $advert): AdvertData
     {
@@ -23,10 +19,6 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
         return $advertData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
-     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
-     */
     protected function fillFromAdvert(AdvertData $advertData, Advert $advert)
     {
         $advertData->name = $advert->getName();

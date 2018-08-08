@@ -42,7 +42,6 @@ class JavascriptExtension extends Twig_Extension
     }
 
     /**
-     * @param array $javascriptLinks
      * @return string
      */
     private function getHtmlJavascriptImports(array $javascriptLinks)
@@ -55,9 +54,6 @@ class JavascriptExtension extends Twig_Extension
         return $html;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'javascript_extension';

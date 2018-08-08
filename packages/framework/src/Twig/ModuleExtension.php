@@ -37,9 +37,6 @@ class ModuleExtension extends Twig_Extension
         return $this->moduleFacade->isEnabled($moduleName);
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'module';

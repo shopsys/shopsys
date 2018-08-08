@@ -36,17 +36,11 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         $this->googleProductDomainDataFactory = $googleProductDomainDataFactory;
     }
 
-    /**
-     * @return string
-     */
     public function getFormTypeClass()
     {
         return GoogleProductFormType::class;
     }
 
-    /**
-     * @return string
-     */
     public function getFormLabel()
     {
         return $this->translator->trans('Google Shopping product feed');
@@ -100,7 +94,6 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     }
 
     /**
-     * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
      * @param string $propertyName
      * @param string $propertyValue
      */

@@ -14,9 +14,6 @@ class DomainsConfigLoader
      */
     private $filesystem;
 
-    /**
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     */
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
@@ -62,7 +59,6 @@ class DomainsConfigLoader
     }
 
     /**
-     * @param array $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
     private function processDomainConfigArray(array $domainConfig)
@@ -94,7 +90,6 @@ class DomainsConfigLoader
 
     /**
      * @param string $filepath
-     * @param \Symfony\Component\Config\Definition\ConfigurationInterface $configDefinition
      * @return array
      */
     private function getProcessedConfig($filepath, ConfigurationInterface $configDefinition)

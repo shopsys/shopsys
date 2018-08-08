@@ -8,7 +8,6 @@ class CategoryDomainNotFoundException extends Exception implements CategoryExcep
 {
     /**
      * @param int|null $categoryId
-     * @param int $domainId
      * @param \Exception|null $previous
      */
     public function __construct(int $categoryId = null, int $domainId, Exception $previous = null)
