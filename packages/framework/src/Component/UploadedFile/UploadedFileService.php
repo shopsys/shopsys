@@ -26,7 +26,6 @@ class UploadedFileService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig $uploadedFileEntityConfig
      * @param int $entityId
      * @param string[] $temporaryFilenames
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile

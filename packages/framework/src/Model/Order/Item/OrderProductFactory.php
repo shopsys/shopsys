@@ -10,15 +10,9 @@ class OrderProductFactory implements OrderProductFactoryInterface
 {
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
      * @param string|null $unitName
      * @param string|null $catnum
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderProduct
      */
     public function create(
         Order $order,

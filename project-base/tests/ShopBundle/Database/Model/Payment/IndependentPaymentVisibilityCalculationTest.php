@@ -111,7 +111,6 @@ class IndependentPaymentVisibilityCalculationTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param bool[] $enabledForDomains
      * @param bool $hidden
      * @return Payment

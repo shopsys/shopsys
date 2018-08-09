@@ -10,7 +10,6 @@ class UniqueCollectionValidator extends ConstraintValidator
 {
     /**
      * @param array $values
-     * @param \Symfony\Component\Validator\Constraint $constraint
      */
     public function validate($values, Constraint $constraint)
     {
@@ -45,7 +44,6 @@ class UniqueCollectionValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueCollection $constraint
      * @param mixed $value1
      * @param mixed $value2
      * @return bool
@@ -66,7 +64,6 @@ class UniqueCollectionValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $fields
      * @param mixed $value1
      * @param mixed $value2
      * @return bool

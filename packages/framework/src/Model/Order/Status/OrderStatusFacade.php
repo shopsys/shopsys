@@ -39,14 +39,6 @@ class OrderStatusFacade
      */
     protected $orderStatusFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusService $orderStatusService
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface $orderStatusFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         OrderStatusRepository $orderStatusRepository,
@@ -64,7 +56,6 @@ class OrderStatusFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusFormData
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
     public function create(OrderStatusData $orderStatusFormData)
@@ -82,7 +73,6 @@ class OrderStatusFacade
 
     /**
      * @param int $orderStatusId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
     public function edit($orderStatusId, OrderStatusData $orderStatusData)
@@ -130,7 +120,6 @@ class OrderStatusFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return bool
      */
     public function isOrderStatusUsed(OrderStatus $orderStatus)

@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 class ParameterFilterRepository
 {
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $parameters
      */
     public function filterByParameters(QueryBuilder $productsQueryBuilder, array $parameters)
@@ -41,8 +40,6 @@ class ParameterFilterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData $parameterFilterData
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param int $parameterIndex
      * @param int $valueIndex
      * @return \Doctrine\ORM\QueryBuilder
@@ -82,7 +79,6 @@ class ParameterFilterRepository
      * ppv.value = :parameterValueM OR ppv.value = :parameterValueN OR ...
      *
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
-     * @param \Doctrine\ORM\QueryBuilder $parameterQueryBuilder
      * @param string $ppvAlias
      * @param int $valueIndex
      * @return \Doctrine\ORM\Query\Expr

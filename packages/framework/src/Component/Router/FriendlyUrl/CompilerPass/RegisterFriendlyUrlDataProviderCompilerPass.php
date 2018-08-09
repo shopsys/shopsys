@@ -8,9 +8,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterFriendlyUrlDataProviderCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         $friendlyUrlDataProviderConfigDefinition = $container->findDefinition(FriendlyUrlDataProviderRegistry::class);

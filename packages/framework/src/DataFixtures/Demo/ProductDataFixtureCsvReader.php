@@ -20,7 +20,6 @@ class ProductDataFixtureCsvReader
 
     /**
      * @param string $path
-     * @param \Shopsys\FrameworkBundle\Component\Csv\CsvReader $csvReader
      */
     public function __construct(
         $path,

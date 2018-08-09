@@ -23,9 +23,6 @@ class UploadedFileConfigurationParseException extends Exception implements Uploa
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @return string
-     */
     public function getEntityClass()
     {
         return $this->entityClass;

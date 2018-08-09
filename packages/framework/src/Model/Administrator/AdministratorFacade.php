@@ -26,12 +26,6 @@ class AdministratorFacade
      */
     protected $administratorFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorService $administratorService
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface
-     */
     public function __construct(
         EntityManagerInterface $em,
         AdministratorRepository $administratorRepository,
@@ -45,7 +39,6 @@ class AdministratorFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
     public function create(AdministratorData $administratorData)
@@ -65,7 +58,6 @@ class AdministratorFacade
 
     /**
      * @param int $administratorId
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
     public function edit($administratorId, AdministratorData $administratorData)

@@ -17,7 +17,6 @@ class ProductSearchRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
     public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText)
@@ -33,7 +32,6 @@ class ProductSearchRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
     public function addRelevance(QueryBuilder $productQueryBuilder, $searchText)

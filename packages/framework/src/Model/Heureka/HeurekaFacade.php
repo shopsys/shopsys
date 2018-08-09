@@ -28,12 +28,6 @@ class HeurekaFacade
      */
     protected $heurekaSetting;
 
-    /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationFactory $heurekaShopCertificationFactory
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationService $heurekaShopCertificationService
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting $heurekaSetting
-     */
     public function __construct(
         Logger $logger,
         HeurekaShopCertificationFactory $heurekaShopCertificationFactory,
@@ -46,9 +40,6 @@ class HeurekaFacade
         $this->heurekaSetting = $heurekaSetting;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function sendOrderInfo(Order $order)
     {
         try {
@@ -62,7 +53,6 @@ class HeurekaFacade
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isHeurekaShopCertificationActivated($domainId)
@@ -71,7 +61,6 @@ class HeurekaFacade
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isHeurekaWidgetActivated($domainId)
@@ -97,10 +86,6 @@ class HeurekaFacade
         return $this->heurekaShopCertificationService->getServerNameByLocale($locale);
     }
 
-    /**
-     * @param \Exception $ex
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     protected function logError(Exception $ex, Order $order)
     {
         $message = 'Sending order (ID = "' . $order->getId() . '") to Heureka failed - ' . get_class($ex) . ': ' . $ex->getMessage();

@@ -45,10 +45,6 @@ class UserFormType extends AbstractType
         $this->dateTimeFormatterExtension = $dateTimeFormatterExtension;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $user = $options['user'];
@@ -192,9 +188,6 @@ class UserFormType extends AbstractType
         return $constraints;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

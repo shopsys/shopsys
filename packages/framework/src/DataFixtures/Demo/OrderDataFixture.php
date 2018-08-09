@@ -58,9 +58,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->orderDataFactory = $orderDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $user = $this->userRepository->findUserByEmailAndDomain('no-reply@shopsys.com', 1);
@@ -550,11 +547,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param array $products
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
     private function createOrder(
         OrderData $orderData,
         array $products,

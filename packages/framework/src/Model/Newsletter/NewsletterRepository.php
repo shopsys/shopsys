@@ -54,8 +54,6 @@ class NewsletterRepository
     }
 
     /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getQueryBuilderForQuickSearch(int $domainId, QuickSearchFormData $searchData)
@@ -75,7 +73,6 @@ class NewsletterRepository
     }
 
     /**
-     * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
      */
     public function getNewsletterSubscriberById(int $id)

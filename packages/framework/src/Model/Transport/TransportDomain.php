@@ -47,7 +47,6 @@ class TransportDomain
     protected $enabled = false;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param int $domainId
      */
     public function __construct(Transport $transport, $domainId)
@@ -65,9 +64,6 @@ class TransportDomain
         return $this->domainId;
     }
 
-    /**
-     * @param bool $enabled
-     */
     public function setEnabled(bool $enabled)
     {
         $this->enabled = $enabled;

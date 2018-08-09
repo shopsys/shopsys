@@ -25,7 +25,6 @@ class AdminProductPriceCalculationFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public function calculateProductBasePrice(Product $product)

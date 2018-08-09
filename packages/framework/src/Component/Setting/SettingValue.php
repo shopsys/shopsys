@@ -76,9 +76,6 @@ class SettingValue
         $this->setValue($value);
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
@@ -107,9 +104,6 @@ class SettingValue
         }
     }
 
-    /**
-     * @return int|null
-     */
     public function getDomainId()
     {
         return $this->domainId;

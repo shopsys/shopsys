@@ -69,7 +69,6 @@ abstract class AbstractAdvancedSearchFormFactory
 
     /**
      * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $ruleFilter
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createRuleFormBuilder($name, AdvancedSearchFilterInterface $ruleFilter)
@@ -93,7 +92,6 @@ abstract class AbstractAdvancedSearchFormFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $filter
      * @return string[]
      */
     private function getFilterOperatorChoices(AdvancedSearchFilterInterface $filter)

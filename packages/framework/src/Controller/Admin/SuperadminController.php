@@ -81,7 +81,6 @@ class SuperadminController extends AdminBaseController
 
     /**
      * @Route("/superadmin/pricing/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function pricingAction(Request $request)
     {
@@ -126,7 +125,6 @@ class SuperadminController extends AdminBaseController
     }
 
     /**
-     * @param array $locales
      * @return array
      */
     private function loadDataForUrls(array $locales)

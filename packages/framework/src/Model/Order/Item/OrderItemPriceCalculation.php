@@ -35,7 +35,6 @@ class OrderItemPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @return string
      */
     public function calculatePriceWithoutVat(OrderItemData $orderItemData)
@@ -50,7 +49,6 @@ class OrderItemPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public function calculateTotalPrice(OrderItem $orderItem)

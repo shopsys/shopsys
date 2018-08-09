@@ -33,13 +33,6 @@ class ArticleFacade
      */
     protected $articleFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         ArticleRepository $articleRepository,
@@ -82,7 +75,6 @@ class ArticleFacade
     }
 
     /**
-     * @param $domainId
      * @return int
      */
     public function getAllArticlesCountByDomainId($domainId)
@@ -110,7 +102,6 @@ class ArticleFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
     public function create(ArticleData $articleData)
@@ -132,7 +123,6 @@ class ArticleFacade
 
     /**
      * @param int $articleId
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
     public function edit($articleId, ArticleData $articleData)

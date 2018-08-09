@@ -68,9 +68,6 @@ class ProductPriceRecalculator
         $this->productService = $productService;
     }
 
-    /**
-     * @return bool
-     */
     public function runBatchOfScheduledDelayedRecalculations()
     {
         if ($this->productRowsIterator === null) {
@@ -129,9 +126,6 @@ class ProductPriceRecalculator
         return $this->allPricingGroups;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     private function recalculateProductPrices(Product $product)
     {
         foreach ($this->getAllPricingGroups() as $pricingGroup) {
@@ -148,9 +142,6 @@ class ProductPriceRecalculator
         $this->em->flush($product);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
     public function onKernelResponse(FilterResponseEvent $event)
     {
         if ($event->isMasterRequest()) {

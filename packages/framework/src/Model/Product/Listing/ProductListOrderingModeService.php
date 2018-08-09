@@ -14,8 +14,6 @@ class ProductListOrderingModeService
     const ORDER_BY_PRIORITY = 'priority';
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig $productListOrderingConfig
      * @return string
      */
     public function getOrderingModeIdFromRequest(
@@ -32,7 +30,6 @@ class ProductListOrderingModeService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig $productListOrderingConfig
      * @return string[]
      */
     private function getSupportedOrderingModeIds(ProductListOrderingConfig $productListOrderingConfig)

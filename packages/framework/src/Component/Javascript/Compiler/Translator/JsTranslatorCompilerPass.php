@@ -28,9 +28,6 @@ class JsTranslatorCompilerPass implements JsCompilerPassInterface
         $this->translator = $translator;
     }
 
-    /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JProgramNode $node
-     */
     public function process(JProgramNode $node)
     {
         $jsTranslatorsCalls = $this->jsTranslatorCallParser->parse($node);

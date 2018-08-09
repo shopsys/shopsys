@@ -83,7 +83,6 @@ class PaymentGridFactory implements GridFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @return string
      */
     private function getDisplayPrice(Payment $payment)

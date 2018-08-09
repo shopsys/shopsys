@@ -4,9 +4,6 @@ namespace Shopsys\FrameworkBundle\Model\Security;
 
 interface UniqueLoginInterface
 {
-    /**
-     * @return string
-     */
     public function getLoginToken();
 
     /**
@@ -14,9 +11,6 @@ interface UniqueLoginInterface
      */
     public function setLoginToken($loginToken);
 
-    /**
-     * @return bool
-     */
     public function isMultidomainLogin();
 
     /**

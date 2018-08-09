@@ -70,9 +70,6 @@ class MigrationsLock
         $this->save();
     }
 
-    /**
-     * @return array
-     */
     private function load(): array
     {
         if ($this->parsedMigrationsLock === null) {

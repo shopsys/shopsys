@@ -22,10 +22,6 @@ class CartService
      */
     protected $cartItemFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
-     */
     public function __construct(
         ProductPriceCalculationForUser $productPriceCalculation,
         CartItemFactoryInterface $cartItemFactory
@@ -35,9 +31,6 @@ class CartService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
      * @return \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
      */
@@ -61,10 +54,6 @@ class CartService
         return new AddProductResult($newCartItem, true, $quantity);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param array $quantitiesByCartItemId
-     */
     public function changeQuantities(Cart $cart, array $quantitiesByCartItemId)
     {
         foreach ($cart->getItems() as $cartItem) {
@@ -75,7 +64,6 @@ class CartService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @param int $cartItemId
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
      */
@@ -90,19 +78,11 @@ class CartService
         throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException($message);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
     public function cleanCart(Cart $cart)
     {
         $cart->clean();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $resultingCart
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $mergedCart
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
-     */
     public function mergeCarts(Cart $resultingCart, Cart $mergedCart, CustomerIdentifier $customerIdentifier)
     {
         foreach ($mergedCart->getItems() as $cartItem) {
@@ -122,8 +102,6 @@ class CartService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem|null
      */
     private function findSimilarCartItemByCartItem(Cart $cart, CartItem $cartItem)
@@ -138,7 +116,6 @@ class CartService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
     public function getQuantifiedProductsIndexedByCartItemId(Cart $cart)

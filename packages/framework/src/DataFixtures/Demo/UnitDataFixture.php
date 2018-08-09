@@ -39,9 +39,6 @@ class UnitDataFixture extends AbstractReferenceFixture
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $unitData = $this->unitDataFactory->create();
@@ -56,7 +53,6 @@ class UnitDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @param string|null $referenceName
      */
     private function createUnit(UnitData $unitData, $referenceName = null)

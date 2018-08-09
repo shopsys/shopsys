@@ -34,8 +34,6 @@ class FriendlyUrlRouterFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Symfony\Component\Routing\RequestContext $context
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
      */
     public function createRouter(DomainConfig $domainConfig, RequestContext $context)

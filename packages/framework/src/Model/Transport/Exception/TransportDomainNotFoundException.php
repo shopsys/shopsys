@@ -8,7 +8,6 @@ class TransportDomainNotFoundException extends Exception implements TransportExc
 {
     /**
      * @param int|null $transportId
-     * @param int $domainId
      * @param \Exception|null $previous
      */
     public function __construct(int $transportId = null, int $domainId, Exception $previous = null)

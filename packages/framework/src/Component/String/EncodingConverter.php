@@ -13,10 +13,6 @@ class EncodingConverter
         return iconv('CP1250', 'UTF-8//TRANSLIT', $stringCp1250);
     }
 
-    /**
-     * @param array $array
-     * @return array
-     */
     private static function arrayCp1250ToUtf8(array $array)
     {
         foreach ($array as $key => $value) {

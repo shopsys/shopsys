@@ -56,25 +56,16 @@ class PersistentReference
         $this->entityId = $entityId;
     }
 
-    /**
-     * @return string
-     */
     public function getReferenceName()
     {
         return $this->referenceName;
     }
 
-    /**
-     * @return string
-     */
     public function getEntityName()
     {
         return $this->entityName;
     }
 
-    /**
-     * @return int
-     */
     public function getEntityId()
     {
         return $this->entityId;

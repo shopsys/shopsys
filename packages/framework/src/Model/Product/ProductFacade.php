@@ -194,7 +194,6 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     public function create(ProductData $productData)
@@ -216,10 +215,6 @@ class ProductFacade
         return $product;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     public function setAdditionalDataAfterCreate(Product $product, ProductData $productData)
     {
         // Persist of ProductCategoryDomain requires known primary key of Product
@@ -244,7 +239,6 @@ class ProductFacade
 
     /**
      * @param int $productId
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     public function edit($productId, ProductData $productData)
@@ -298,7 +292,6 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
      */
     protected function saveParameters(Product $product, array $productParameterValuesData)
@@ -333,7 +326,6 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[]
      */
     public function getAllProductSellingPricesIndexedByDomainId(Product $product)
@@ -345,7 +337,6 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param string[] $manualInputPrices
      */
     protected function refreshProductManualInputPrices(Product $product, array $manualInputPrices)
@@ -359,9 +350,6 @@ class ProductFacade
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     protected function createProductVisibilities(Product $product)
     {
         $toFlush = [];
@@ -380,7 +368,6 @@ class ProductFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $accessories
      */
     protected function refreshProductAccessories(Product $product, array $accessories)

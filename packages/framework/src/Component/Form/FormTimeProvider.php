@@ -12,9 +12,6 @@ class FormTimeProvider
      */
     private $session;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     */
     public function __construct(SessionInterface $session)
     {
         $this->session = $session;
@@ -34,7 +31,6 @@ class FormTimeProvider
 
     /**
      * @param string $name
-     * @param array $options
      * @return bool
      */
     public function isFormTimeValid($name, array $options)
@@ -75,9 +71,6 @@ class FormTimeProvider
         return null;
     }
 
-    /**
-     * @param string $name
-     */
     public function removeFormTime($name)
     {
         $key = $this->getSessionKey($name);

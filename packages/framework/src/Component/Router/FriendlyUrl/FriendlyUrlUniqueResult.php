@@ -24,9 +24,6 @@ class FriendlyUrlUniqueResult
         $this->friendlyUrlForPersist = $friendlyUrl;
     }
 
-    /**
-     * @return bool
-     */
     public function isUnique()
     {
         return $this->unique;

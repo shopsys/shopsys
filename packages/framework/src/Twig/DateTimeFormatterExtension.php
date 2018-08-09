@@ -173,9 +173,6 @@ class DateTimeFormatterExtension extends Twig_Extension
         return $startDate . ' - ' . $endDate;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'date_formatter_extension';

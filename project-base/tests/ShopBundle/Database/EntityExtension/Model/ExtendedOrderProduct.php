@@ -33,9 +33,7 @@ class ExtendedOrderProduct extends ExtendedOrderItem
     protected $productStringField;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @param string $vatPercent
      * @param int $quantity
      * @param string $unitName

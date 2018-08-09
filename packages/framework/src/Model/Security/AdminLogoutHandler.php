@@ -19,10 +19,6 @@ class AdminLogoutHandler implements LogoutSuccessHandlerInterface
      */
     private $administratorLoginFacade;
 
-    /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade
-     */
     public function __construct(RouterInterface $router, AdministratorLoginFacade $administratorLoginFacade)
     {
         $this->router = $router;
@@ -30,7 +26,6 @@ class AdminLogoutHandler implements LogoutSuccessHandlerInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function onLogoutSuccess(Request $request)

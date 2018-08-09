@@ -59,7 +59,6 @@ class ProductService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice[] $productManualInputPrices
      * @param string $newVatPercent
      */
@@ -95,10 +94,6 @@ class ProductService
         $this->setInputPrice($product, $inputPrice);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
     public function edit(Product $product, ProductData $productData)
     {
         $product->edit($this->productCategoryDomainFactory, $productData);
@@ -107,7 +102,6 @@ class ProductService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param string $inputPrice
      */
     public function setInputPrice(Product $product, $inputPrice)
@@ -116,10 +110,6 @@ class ProductService
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     */
     public function changeVat(Product $product, Vat $vat)
     {
         $product->changeVat($vat);
@@ -127,7 +117,6 @@ class ProductService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $pricingGroups
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[]
      */
@@ -145,7 +134,6 @@ class ProductService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductDeleteResult
      */
     public function delete(Product $product)
@@ -162,9 +150,6 @@ class ProductService
         return new ProductDeleteResult();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     public function markProductForVisibilityRecalculation(Product $product)
     {
         $product->markForVisibilityRecalculation();

@@ -28,9 +28,6 @@ class SliderItemDataFixture extends AbstractReferenceFixture
         $this->sliderItemDataFactory = $sliderItemDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $sliderItemData = $this->sliderItemDataFactory->create();

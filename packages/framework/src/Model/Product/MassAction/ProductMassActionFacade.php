@@ -34,8 +34,6 @@ class ProductMassActionFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionData $productMassActionData
-     * @param \Doctrine\ORM\QueryBuilder $selectQueryBuilder
      * @param int[] $checkedProductIds
      */
     public function doMassAction(
@@ -62,8 +60,6 @@ class ProductMassActionFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionData $productMassActionData
-     * @param \Doctrine\ORM\QueryBuilder $selectQueryBuilder
      * @param int[] $checkedProductIds
      * @return int[]
      */

@@ -32,10 +32,6 @@ class CurrencyFormType extends AbstractType
         $this->localization = $localization;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $intlCurrencies = $this->intlCurrencyRepository->getAll($this->localization->getLocale());
@@ -77,9 +73,6 @@ class CurrencyFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

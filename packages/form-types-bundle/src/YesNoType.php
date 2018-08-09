@@ -19,9 +19,6 @@ class YesNoType extends AbstractType
         $this->translator = $translator;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

@@ -37,7 +37,6 @@ class DateTimeFormatPatternRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPattern $dateTimePattern
      * @param string $locale
      * @param int|null $dateType
      * @param int|null $timeType

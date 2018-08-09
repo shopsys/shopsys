@@ -13,7 +13,6 @@ class SendMailFailedException extends Exception implements MailException
     private $failedRecipients;
 
     /**
-     * @param array $failedRecipients
      * @param \Exception|null $previous
      */
     public function __construct(array $failedRecipients, Exception $previous = null)

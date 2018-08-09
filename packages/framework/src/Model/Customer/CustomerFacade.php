@@ -38,14 +38,6 @@ class CustomerFacade
      */
     private $billingAddressDataFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerService $customerService
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         UserRepository $userRepository,
@@ -82,7 +74,6 @@ class CustomerFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     public function register(UserData $userData)
@@ -109,7 +100,6 @@ class CustomerFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     public function create(CustomerData $customerData)
@@ -150,7 +140,6 @@ class CustomerFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     protected function edit($userId, CustomerData $customerData)
@@ -181,7 +170,6 @@ class CustomerFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     public function editByAdmin($userId, CustomerData $customerData)
@@ -201,7 +189,6 @@ class CustomerFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerData $customerData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     public function editByCustomer($userId, CustomerData $customerData)
@@ -224,10 +211,6 @@ class CustomerFacade
         $this->em->flush();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function amendCustomerDataFromOrder(User $user, Order $order)
     {
         $this->edit(

@@ -75,9 +75,6 @@ class DeliveryAddress
      */
     protected $country;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     */
     public function __construct(DeliveryAddressData $deliveryAddressData)
     {
         $this->street = $deliveryAddressData->street;
@@ -90,9 +87,6 @@ class DeliveryAddress
         $this->country = $deliveryAddressData->country;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     */
     public function edit(DeliveryAddressData $deliveryAddressData)
     {
         $this->street = $deliveryAddressData->street;

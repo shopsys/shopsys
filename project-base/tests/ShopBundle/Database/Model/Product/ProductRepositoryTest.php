@@ -181,7 +181,6 @@ class ProductRepositoryTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $priority
      */
     private function setProductOrderingPriority(Product $product, $priority)
@@ -222,7 +221,6 @@ class ProductRepositoryTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     private function getProductsInCategoryOrderedByPriority(Category $category)

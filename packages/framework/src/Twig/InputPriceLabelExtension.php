@@ -29,9 +29,6 @@ class InputPriceLabelExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getInputPriceLabel()
     {
         $inputPriceType = $this->pricingSetting->getInputPriceType();
@@ -50,9 +47,6 @@ class InputPriceLabelExtension extends Twig_Extension
         }
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'input_price_label_extension';

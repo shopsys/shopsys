@@ -79,7 +79,6 @@ class ProductParametersFixtureLoader
     }
 
     /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $productParameterValuesDataCollection
      * @param string $serializedParameterNames
      * @param string $serializedValueTexts
      */

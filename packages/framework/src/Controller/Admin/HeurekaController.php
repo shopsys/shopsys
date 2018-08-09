@@ -35,7 +35,6 @@ class HeurekaController extends AdminBaseController
 
     /**
      * @Route("/heureka/setting/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function settingAction(Request $request)
     {

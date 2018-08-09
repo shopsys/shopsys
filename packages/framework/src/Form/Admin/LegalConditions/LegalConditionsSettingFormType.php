@@ -22,10 +22,6 @@ class LegalConditionsSettingFormType extends AbstractType
         $this->articleFacade = $articleFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $articles = $this->articleFacade->getAllByDomainId($options['domain_id']);
@@ -60,9 +56,6 @@ class LegalConditionsSettingFormType extends AbstractType
             ->add('save', SubmitType::class);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

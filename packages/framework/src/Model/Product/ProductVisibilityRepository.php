@@ -50,9 +50,6 @@ class ProductVisibilityRepository
         $this->markAllProductsVisibilityAsRecalculated();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
     public function markProductsForRecalculationAffectedByCategory(Category $category)
     {
         $affectedProductsDql = $this->em->createQueryBuilder()
@@ -100,7 +97,6 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      */
     public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, $domainId)
@@ -126,12 +122,6 @@ class ProductVisibilityRepository
         return $this->em->getRepository(ProductVisibility::class);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
-     */
     public function getProductVisibility(
         Product $product,
         PricingGroup $pricingGroup,

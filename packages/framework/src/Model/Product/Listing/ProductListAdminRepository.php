@@ -54,10 +54,6 @@ class ProductListAdminRepository
         return $queryBuilder;
     }
 
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     */
     public function extendQueryBuilderByQuickSearchData(
         QueryBuilder $queryBuilder,
         QuickSearchFormData $quickSearchData

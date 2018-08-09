@@ -43,8 +43,7 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
 //        $visibleTransports = $transportFacade->getVisibleOnCurrentDomain($visiblePayments);
 //
 //        $this->assertContains($transport, $visibleTransports);
-//    }
-
+    //    }
     public function testVisibleTransportHiddenTransport()
     {
         $em = $this->getEntityManager();
@@ -370,7 +369,6 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param bool[] $enabledForDomains
      * @param bool $hidden
      * @return Payment
@@ -392,7 +390,6 @@ class OrderTransportAndPaymentTest extends DatabaseTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param bool[] $enabledForDomains
      * @param bool $hidden
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport

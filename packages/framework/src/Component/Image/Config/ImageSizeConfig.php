@@ -53,25 +53,16 @@ class ImageSizeConfig
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
     public function getWidth()
     {
         return $this->width;
     }
 
-    /**
-     * @return int
-     */
     public function getHeight()
     {
         return $this->height;
     }
 
-    /**
-     * @return int
-     */
     public function getCrop()
     {
         return $this->crop;

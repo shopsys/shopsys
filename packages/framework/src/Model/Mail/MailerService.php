@@ -13,17 +13,11 @@ class MailerService
      */
     private $mailer;
 
-    /**
-     * @param Swift_Mailer $mailer
-     */
     public function __construct(Swift_Mailer $mailer)
     {
         $this->mailer = $mailer;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
-     */
     public function send(MessageData $messageData)
     {
         $message = $this->getMessageWithReplacedVariables($messageData);
@@ -40,7 +34,6 @@ class MailerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
      * @return \Swift_Message
      */
     private function getMessageWithReplacedVariables(MessageData $messageData)

@@ -28,9 +28,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
         $this->categoryDataFacade = $categoryDataFacade;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $this->editCategoryOnDomain2(

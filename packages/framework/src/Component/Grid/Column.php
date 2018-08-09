@@ -50,41 +50,26 @@ class Column
         $this->orderSourceColumnName = $sourceColumnName;
     }
 
-    /**
-     * @return string
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getSourceColumnName()
     {
         return $this->sourceColumnName;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle()
     {
         return $this->title;
     }
 
-    /**
-     * @return bool
-     */
     public function isSortable()
     {
         return $this->sortable;
     }
 
-    /**
-     * @return string
-     */
     public function getClassAttribute()
     {
         return $this->classAttribute;
@@ -101,9 +86,6 @@ class Column
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getOrderSourceColumnName()
     {
         return $this->orderSourceColumnName;

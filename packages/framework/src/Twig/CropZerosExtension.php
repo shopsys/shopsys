@@ -26,9 +26,6 @@ class CropZerosExtension extends Twig_Extension
         return preg_replace('/(?:[,.]0+|([,.]\d*?)0+)$/', '$1', $value);
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'cropZeros';

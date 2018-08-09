@@ -88,10 +88,6 @@ class ProductFormType extends AbstractType
         $this->seoSettingFacade = $seoSettingFacade;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $vats = $this->vatFacade->getAllIncludingMarkedForDeletion();
@@ -343,9 +339,6 @@ class ProductFormType extends AbstractType
         }
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -376,10 +369,6 @@ class ProductFormType extends AbstractType
             ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     private function disableIrrelevantFields(FormBuilderInterface $builder, Product $product)
     {
         $irrelevantFields = [];

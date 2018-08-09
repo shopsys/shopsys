@@ -41,9 +41,6 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $availabilityData = $this->availabilityDataFactory->create();
@@ -66,7 +63,6 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
      * @param string|null $referenceName
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */

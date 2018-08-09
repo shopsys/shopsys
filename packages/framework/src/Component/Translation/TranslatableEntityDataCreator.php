@@ -25,11 +25,6 @@ class TranslatableEntityDataCreator
      */
     private $sqlQuoter;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder $notNullableColumnsFinder
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter $sqlQuoter
-     */
     public function __construct(
         EntityManagerInterface $em,
         NotNullableColumnsFinder $notNullableColumnsFinder,

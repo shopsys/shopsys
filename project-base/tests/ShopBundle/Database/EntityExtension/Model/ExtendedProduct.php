@@ -124,7 +124,6 @@ class ExtendedProduct extends Product
     protected $manyToManySelfReferencingInverseEntities;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
     protected function __construct(ProductData $productData, array $variants = null)
@@ -139,58 +138,37 @@ class ExtendedProduct extends Product
         $this->manyToManySelfReferencingInverseEntities = new ArrayCollection();
     }
 
-    /**
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity
-     */
     public function getManyToOneUnidirectionalEntity(): UnidirectionalEntity
     {
         return $this->manyToOneUnidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity $manyToOneUnidirectionalEntity
-     */
     public function setManyToOneUnidirectionalEntity(UnidirectionalEntity $manyToOneUnidirectionalEntity): void
     {
         $this->manyToOneUnidirectionalEntity = $manyToOneUnidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity
-     */
     public function getOneToOneUnidirectionalEntity(): UnidirectionalEntity
     {
         return $this->oneToOneUnidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity $oneToOneUnidirectionalEntity
-     */
     public function setOneToOneUnidirectionalEntity(UnidirectionalEntity $oneToOneUnidirectionalEntity): void
     {
         $this->oneToOneUnidirectionalEntity = $oneToOneUnidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\ProductOneToOneBidirectionalEntity
-     */
     public function getOneToOneBidirectionalEntity(): ProductOneToOneBidirectionalEntity
     {
         return $this->oneToOneBidirectionalEntity;
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity
-     */
     public function setOneToOneBidirectionalEntity(ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity): void
     {
         $oneToOneBidirectionalEntity->setProduct($this);
         $this->oneToOneBidirectionalEntity = $oneToOneBidirectionalEntity;
     }
 
-    /**
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedProduct
-     */
     public function getOneToOneSelfReferencingEntity(): self
     {
         return $this->oneToOneSelfReferencingEntity;
@@ -212,9 +190,6 @@ class ExtendedProduct extends Product
         return $this->oneToManyBidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\ProductOneToManyBidirectionalEntity $oneToManyBidirectionalEntity
-     */
     public function addOneToManyBidirectionalEntity(ProductOneToManyBidirectionalEntity $oneToManyBidirectionalEntity): void
     {
         $oneToManyBidirectionalEntity->setProduct($this);
@@ -229,9 +204,6 @@ class ExtendedProduct extends Product
         return $this->oneToManyUnidirectionalWithJoinTableEntities->getValues();
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity
-     */
     public function addOneToManyUnidirectionalWithJoinTableEntity(UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity): void
     {
         $this->oneToManyUnidirectionalWithJoinTableEntities->add($oneToManyUnidirectionalWithJoinTableEntity);
@@ -245,9 +217,6 @@ class ExtendedProduct extends Product
         return $this->oneToManySelfReferencingEntities->getValues();
     }
 
-    /**
-     * @return \Tests\ShopBundle\Database\EntityExtension\Model\ExtendedProduct
-     */
     public function getOneToManySelfReferencingInverseEntity(): self
     {
         return $this->oneToManySelfReferencingInverseEntity;
@@ -270,9 +239,6 @@ class ExtendedProduct extends Product
         return $this->manyToManyUnidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\UnidirectionalEntity $manyToManyUnidirectionalEntity
-     */
     public function addManyToManyUnidirectionalEntity(UnidirectionalEntity $manyToManyUnidirectionalEntity): void
     {
         $this->manyToManyUnidirectionalEntities->add($manyToManyUnidirectionalEntity);
@@ -286,9 +252,6 @@ class ExtendedProduct extends Product
         return $this->manyToManyBidirectionalEntities->getValues();
     }
 
-    /**
-     * @param \Tests\ShopBundle\Database\EntityExtension\Model\ProductManyToManyBidirectionalEntity $manyToManyBidirectionalEntity
-     */
     public function addManyToManyBidirectionalEntity(ProductManyToManyBidirectionalEntity $manyToManyBidirectionalEntity): void
     {
         $manyToManyBidirectionalEntity->addProduct($this);

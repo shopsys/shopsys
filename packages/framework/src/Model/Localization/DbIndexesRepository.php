@@ -17,10 +17,6 @@ class DbIndexesRepository
         $this->em = $em;
     }
 
-    /**
-     * @param string $locale
-     * @param string $collation
-     */
     public function updateProductTranslationNameIndexForLocaleAndCollation(string $locale, string $collation)
     {
         $this->em->createNativeQuery(

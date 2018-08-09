@@ -49,7 +49,6 @@ class ProductFilterConfigFactory
     /**
      * @param int $domainId
      * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
     public function createForCategory($domainId, $locale, Category $category)

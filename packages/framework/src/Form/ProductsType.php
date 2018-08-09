@@ -18,9 +18,6 @@ class ProductsType extends AbstractType
      */
     private $productsIdsToProductsTransformer;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductsIdsToProductsTransformer $productsIdsToProductsTransformer
-     */
     public function __construct(ProductsIdsToProductsTransformer $productsIdsToProductsTransformer)
     {
         $this->productsIdsToProductsTransformer = $productsIdsToProductsTransformer;
@@ -46,9 +43,6 @@ class ProductsType extends AbstractType
         $view->vars['allow_variants'] = $options['allow_variants'];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

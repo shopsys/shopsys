@@ -38,9 +38,6 @@ class ErrorPagesFacade
 
     /**
      * @param string $errorPagesDir
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      */
     public function __construct(
         $errorPagesDir,

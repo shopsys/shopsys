@@ -4,18 +4,11 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
-     */
     public function create(): DeliveryAddressData
     {
         return new DeliveryAddressData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
-     */
     public function createFromDeliveryAddress(DeliveryAddress $deliveryAddress): DeliveryAddressData
     {
         $deliveryAddressData = new DeliveryAddressData();
@@ -24,10 +17,6 @@ class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
         return $deliveryAddressData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
-     */
     protected function fillFromDeliveryAddress(DeliveryAddressData $deliveryAddressData, DeliveryAddress $deliveryAddress)
     {
         $deliveryAddressData->addressFilled = true;

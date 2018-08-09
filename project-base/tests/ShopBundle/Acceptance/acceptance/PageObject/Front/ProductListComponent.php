@@ -11,7 +11,6 @@ class ProductListComponent extends AbstractPage
     /**
      * @param string $productName
      * @param int $quantity
-     * @param \Facebook\WebDriver\WebDriverElement $context
      */
     public function addProductToCartByName($productName, $quantity, WebDriverElement $context)
     {
@@ -28,7 +27,6 @@ class ProductListComponent extends AbstractPage
 
     /**
      * @param string $productName
-     * @param \Facebook\WebDriver\WebDriverElement $context
      * @return \Facebook\WebDriver\WebDriverElement
      */
     private function findProductListItemByName($productName, WebDriverElement $context)

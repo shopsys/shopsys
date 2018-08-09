@@ -43,9 +43,6 @@ class SideMenuBuilder
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     public function createMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('root');
@@ -64,9 +61,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createDashboardMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('dashboard', ['route' => 'admin_default_dashboard', 'label' => t('Dashboard')]);
@@ -77,9 +71,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createOrdersMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('orders', ['route' => 'admin_order_list', 'label' => t('Orders')]);
@@ -92,9 +83,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createCustomersMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('customers', ['route' => 'admin_customer_list', 'label' => t('Customers')]);
@@ -108,9 +96,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createProductsMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('products', ['label' => t('Products')]);
@@ -130,9 +115,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createPricingMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('pricing', ['label' => t('Pricing')]);
@@ -149,9 +131,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createMarketingMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('marketing', ['label' => t('Marketing')]);
@@ -184,9 +163,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createAdministratorsMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('administrators', ['route' => 'admin_administrator_list', 'label' => t('Administrators')]);
@@ -200,9 +176,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @return \Knp\Menu\ItemInterface
-     */
     protected function createSettingsMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('settings', ['label' => t('Settings')]);
@@ -271,11 +244,6 @@ class SideMenuBuilder
         return $menu;
     }
 
-    /**
-     * @param string $eventName
-     * @param \Knp\Menu\ItemInterface $menu
-     * @return \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent
-     */
     protected function dispatchConfigureMenuEvent(string $eventName, ItemInterface $menu): ConfigureMenuEvent
     {
         $event = new ConfigureMenuEvent($this->menuFactory, $menu);

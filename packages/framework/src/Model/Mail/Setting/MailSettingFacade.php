@@ -11,9 +11,6 @@ class MailSettingFacade
      */
     protected $setting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(
         Setting $setting
     ) {

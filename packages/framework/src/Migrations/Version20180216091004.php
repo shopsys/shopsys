@@ -9,9 +9,6 @@ class Version20180216091004 extends AbstractMigration
 {
     use MultidomainMigrationTrait;
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function up(Schema $schema)
     {
         $this->sql('
@@ -41,9 +38,6 @@ class Version20180216091004 extends AbstractMigration
         $this->sql('CREATE UNIQUE INDEX newsletter_subscribers_uni ON newsletter_subscribers (email, domain_id)');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function down(Schema $schema)
     {
     }

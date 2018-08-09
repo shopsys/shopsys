@@ -8,7 +8,6 @@ class ProductDomainNotFoundException extends Exception implements ProductExcepti
 {
     /**
      * @param int|null $productId
-     * @param int $domainId
      * @param \Exception|null $previous
      */
     public function __construct(int $productId = null, int $domainId, Exception $previous = null)

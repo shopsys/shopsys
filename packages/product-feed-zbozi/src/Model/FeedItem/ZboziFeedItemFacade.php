@@ -58,10 +58,7 @@ class ZboziFeedItemFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int|null $lastSeekId
-     * @param int $maxResults
-     * @return iterable
      */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {

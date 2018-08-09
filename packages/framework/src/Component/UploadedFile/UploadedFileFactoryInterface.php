@@ -6,10 +6,7 @@ interface UploadedFileFactoryInterface
 {
 
     /**
-     * @param string $entityName
-     * @param int $entityId
      * @param string|null $temporaryFilename
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
     public function create(
         string $entityName,

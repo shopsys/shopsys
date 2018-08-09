@@ -54,8 +54,6 @@ class CachedBestsellingProductFacade
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getAllOfferedBestsellingProducts($domainId, Category $category, PricingGroup $pricingGroup)
@@ -79,7 +77,6 @@ class CachedBestsellingProductFacade
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
     public function invalidateCacheByDomainIdAndCategory($domainId, Category $category)
     {
@@ -106,7 +103,6 @@ class CachedBestsellingProductFacade
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int[] $sortedProductIds
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
@@ -119,8 +115,6 @@ class CachedBestsellingProductFacade
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return string
      */
     protected function getCacheId($domainId, Category $category, PricingGroup $pricingGroup)

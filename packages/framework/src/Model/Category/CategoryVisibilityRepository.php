@@ -42,9 +42,6 @@ class CategoryVisibilityRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     private function refreshCategoriesVisibilityOnDomain(DomainConfig $domainConfig)
     {
         $this->setRootCategoryVisibleOnDomain($domainConfig);
@@ -56,9 +53,6 @@ class CategoryVisibilityRepository
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     private function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig)
     {
         $this->em->getConnection()->executeUpdate(
@@ -77,7 +71,6 @@ class CategoryVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return int
      */
     private function getMaxLevelOnDomain(DomainConfig $domainConfig)
@@ -94,7 +87,6 @@ class CategoryVisibilityRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int $level
      */
     private function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level)
@@ -124,9 +116,6 @@ class CategoryVisibilityRepository
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
     public function onKernelResponse(FilterResponseEvent $event)
     {
         if (!$event->isMasterRequest()) {

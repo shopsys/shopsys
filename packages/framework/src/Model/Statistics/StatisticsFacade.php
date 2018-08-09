@@ -17,10 +17,6 @@ class StatisticsFacade
      */
     protected $statisticsService;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsRepository $statisticsRepository
-     * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsService $statisticsService
-     */
     public function __construct(
         StatisticsRepository $statisticsRepository,
         StatisticsService $statisticsService

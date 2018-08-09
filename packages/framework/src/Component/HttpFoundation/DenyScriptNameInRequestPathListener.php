@@ -9,9 +9,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
 {
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-     */
     public function onKernelRequest(GetResponseEvent $event)
     {
         if ($event->isMasterRequest()) {

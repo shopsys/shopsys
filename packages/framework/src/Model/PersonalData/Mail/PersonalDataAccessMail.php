@@ -33,11 +33,6 @@ class PersonalDataAccessMail implements MailTypeInterface, MessageFactoryInterfa
      */
     private $domainRouterFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
     public function __construct(
         Domain $domain,
         Setting $setting,
@@ -87,7 +82,6 @@ class PersonalDataAccessMail implements MailTypeInterface, MessageFactoryInterfa
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */

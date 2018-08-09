@@ -23,9 +23,6 @@ class EntityParseException extends Exception implements ImageConfigException
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @return string
-     */
     public function getEntityClass()
     {
         return $this->entityClass;

@@ -18,7 +18,6 @@ class CustomerListAdminFacade
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getCustomerListQueryBuilderByQuickSearchData(

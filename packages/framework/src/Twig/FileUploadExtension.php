@@ -13,9 +13,6 @@ class FileUploadExtension extends Twig_Extension
      */
     private $fileUpload;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     */
     public function __construct(FileUpload $fileUpload)
     {
         $this->fileUpload = $fileUpload;
@@ -46,9 +43,6 @@ class FileUploadExtension extends Twig_Extension
         return '';
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'fileupload_extension';

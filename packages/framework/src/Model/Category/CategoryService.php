@@ -10,17 +10,12 @@ class CategoryService
      */
     protected $categoryFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
-     */
     public function __construct(CategoryFactoryInterface $categoryFactory)
     {
         $this->categoryFactory = $categoryFactory;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $rootCategory
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
     public function create(CategoryData $categoryData, Category $rootCategory)
@@ -34,9 +29,6 @@ class CategoryService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $rootCategory
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
     public function edit(Category $category, CategoryData $categoryData, Category $rootCategory)
@@ -49,9 +41,6 @@ class CategoryService
         return $category;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
     public function setChildrenAsSiblings(Category $category)
     {
         foreach ($category->getChildren() as $child) {

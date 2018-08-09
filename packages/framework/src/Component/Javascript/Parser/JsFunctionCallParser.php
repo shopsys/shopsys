@@ -8,7 +8,6 @@ use PLUG\JavaScript\JNodes\nonterminal\JCallExprNode;
 class JsFunctionCallParser
 {
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
      * @return string|null
      */
     public function getFunctionName(JCallExprNode $callExprNode)
@@ -24,7 +23,6 @@ class JsFunctionCallParser
     }
 
     /**
-     * @param \PLUG\JavaScript\JNodes\nonterminal\JCallExprNode $callExprNode
      * @return \PLUG\JavaScript\JNodes\JNodeBase[]
      */
     public function getArgumentNodes(JCallExprNode $callExprNode)

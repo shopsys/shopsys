@@ -58,17 +58,11 @@ class PerformanceTestSample
         $this->isSuccessful = $isSuccessful;
     }
 
-    /**
-     * @return string
-     */
     public function getRouteName()
     {
         return $this->routeName;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl()
     {
         return $this->url;

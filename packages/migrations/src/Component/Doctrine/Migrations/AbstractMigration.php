@@ -20,7 +20,6 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
 
     /**
      * @param string $query
-     * @param array $params
      * @param array $types
      * @param \Doctrine\DBAL\Cache\QueryCacheProfile|null $qcp
      * @return \Doctrine\DBAL\Driver\Statement

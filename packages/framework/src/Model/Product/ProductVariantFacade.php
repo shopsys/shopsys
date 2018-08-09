@@ -63,7 +63,6 @@ class ProductVariantFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainProduct
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */

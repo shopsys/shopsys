@@ -23,9 +23,6 @@ class ServerRunForDomainCommand extends Command
      */
     private $domain;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(Domain $domain)
     {
         $this->domain = $domain;
@@ -40,8 +37,6 @@ class ServerRunForDomainCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -62,7 +57,6 @@ class ServerRunForDomainCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
     private function chooseDomainConfig(SymfonyStyle $io)
@@ -96,8 +90,6 @@ class ServerRunForDomainCommand extends Command
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
     private function runServerForDomain(DomainConfig $domainConfig, OutputInterface $output)

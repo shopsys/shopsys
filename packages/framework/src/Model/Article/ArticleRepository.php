@@ -11,9 +11,6 @@ class ArticleRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -72,7 +69,6 @@ class ArticleRepository
     }
 
     /**
-     * @param $domainId
      * @return int
      */
     public function getAllArticlesCountByDomainId($domainId)

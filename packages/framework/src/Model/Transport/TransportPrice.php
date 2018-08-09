@@ -37,8 +37,6 @@ class TransportPrice
     protected $price;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param string $price
      */
     public function __construct(Transport $transport, Currency $currency, $price)

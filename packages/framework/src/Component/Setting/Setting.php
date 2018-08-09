@@ -37,10 +37,6 @@ class Setting
      */
     private $values;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository $settingValueRepository
-     */
     public function __construct(EntityManagerInterface $em, SettingValueRepository $settingValueRepository)
     {
         $this->em = $em;

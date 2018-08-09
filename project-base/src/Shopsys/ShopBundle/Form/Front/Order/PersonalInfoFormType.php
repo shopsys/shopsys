@@ -48,10 +48,6 @@ class PersonalInfoFormType extends AbstractType
         $this->domain = $domain;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $countries = $this->countryFacade->getAllByDomainId($options['domain_id']);
@@ -284,9 +280,6 @@ class PersonalInfoFormType extends AbstractType
         return 'order_personal_info_form';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

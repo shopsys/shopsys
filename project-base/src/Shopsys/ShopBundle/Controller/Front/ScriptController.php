@@ -45,9 +45,6 @@ class ScriptController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function embedOrderSentPageScriptsAction(Order $order)
     {
         return $this->render('@ShopsysShop/Front/Inline/MeasuringScript/scripts.html.twig', [
@@ -55,9 +52,6 @@ class ScriptController extends FrontBaseController
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     public function embedOrderSentPageGoogleAnalyticsScriptAction(Order $order)
     {
         if (!$this->scriptFacade->isGoogleAnalyticsActivated($this->domain->getId())) {

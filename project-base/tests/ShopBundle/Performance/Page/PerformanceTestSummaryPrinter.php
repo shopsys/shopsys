@@ -18,7 +18,6 @@ class PerformanceTestSummaryPrinter
 
     /**
      * @param \Tests\ShopBundle\Performance\Page\PerformanceTestSample[] $performanceTestSamples
-     * @param \Symfony\Component\Console\Output\ConsoleOutput $consoleOutput
      */
     public function printSummary(
         array $performanceTestSamples,
@@ -50,10 +49,6 @@ class PerformanceTestSummaryPrinter
         }
     }
 
-    /**
-     * @param \Tests\ShopBundle\Performance\Page\PerformanceTestSample $performanceTestSample
-     * @param \Symfony\Component\Console\Output\ConsoleOutput $consoleOutput
-     */
     private function printSample(
         PerformanceTestSample $performanceTestSample,
         ConsoleOutput $consoleOutput
@@ -99,9 +94,6 @@ class PerformanceTestSummaryPrinter
         return 'fg=' . $this->getStatusConsoleTextColor($status);
     }
 
-    /**
-     * @return string
-     */
     private function getFormatterTagForError()
     {
         return 'fg=' . $this->getStatusConsoleTextColor(PerformanceTestSampleQualifier::STATUS_CRITICAL);

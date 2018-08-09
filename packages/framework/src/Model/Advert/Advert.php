@@ -76,9 +76,6 @@ class Advert
      */
     protected $hidden;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advert
-     */
     public function __construct(AdvertData $advert)
     {
         $this->domainId = $advert->domainId;
@@ -90,9 +87,6 @@ class Advert
         $this->hidden = $advert->hidden;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advert
-     */
     public function edit(AdvertData $advert)
     {
         $this->domainId = $advert->domainId;

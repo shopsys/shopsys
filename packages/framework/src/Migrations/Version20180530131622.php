@@ -7,9 +7,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180530131622 extends AbstractMigration
 {
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function up(Schema $schema)
     {
         $this->sql('ALTER TABLE product_domains DROP CONSTRAINT "product_domains_pkey"');
@@ -18,9 +15,6 @@ class Version20180530131622 extends AbstractMigration
         $this->sql('CREATE UNIQUE INDEX product_domain ON product_domains (product_id, domain_id)');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
     public function down(Schema $schema)
     {
     }

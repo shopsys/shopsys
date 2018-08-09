@@ -12,9 +12,6 @@ class CookiesExtension extends \Twig_Extension
      */
     private $cookiesFacade;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade
-     */
     public function __construct(CookiesFacade $cookiesFacade)
     {
         $this->cookiesFacade = $cookiesFacade;
@@ -31,24 +28,17 @@ class CookiesExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'cookies';
     }
 
-    /**
-     * @return bool
-     */
     public function isCookiesConsentGiven()
     {
         return $this->cookiesFacade->isCookiesConsentGiven();
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
     public function findCookiesArticleByDomainId($domainId)

@@ -32,9 +32,6 @@ class ImageUploadType extends AbstractType
         $this->imagesIdsToImagesTransformer = $imagesIdsToImagesTransformer;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -73,7 +70,6 @@ class ImageUploadType extends AbstractType
     }
 
     /**
-     * @param array $options
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     private function getImagesIndexedById(array $options)
@@ -85,9 +81,6 @@ class ImageUploadType extends AbstractType
         return $this->imageFacade->getImagesByEntityIndexedById($options['entity'], null);
     }
 
-    /**
-     * @return string
-     */
     public function getParent()
     {
         return FileUploadType::class;

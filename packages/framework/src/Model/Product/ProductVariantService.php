@@ -14,9 +14,6 @@ class ProductVariantService
         $this->productFactory = $productFactory;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     public function checkProductIsNotMainVariant(Product $product)
     {
         if ($product->isMainVariant()) {
@@ -25,7 +22,6 @@ class ProductVariantService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainProduct
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $currentVariants
      */
     public function refreshProductVariants(Product $mainProduct, array $currentVariants)
@@ -35,7 +31,6 @@ class ProductVariantService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainProduct
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $currentVariants
      */
     private function unsetRemovedVariants(Product $mainProduct, array $currentVariants)
@@ -48,7 +43,6 @@ class ProductVariantService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainProduct
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $currentVariants
      */
     private function addNewVariants(Product $mainProduct, array $currentVariants)
@@ -61,8 +55,6 @@ class ProductVariantService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $mainVariantData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainProduct
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */

@@ -113,41 +113,26 @@ class UploadedFile implements EntityFileUploadInterface
         $this->modifiedAt = new DateTime();
     }
 
-    /**
-     * @return string
-     */
     public function getFilename()
     {
         return $this->id . '.' . $this->extension;
     }
 
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getEntityName()
     {
         return $this->entityName;
     }
 
-    /**
-     * @return int
-     */
     public function getEntityId()
     {
         return $this->entityId;
     }
 
-    /**
-     * @return string
-     */
     public function getExtension()
     {
         return $this->extension;

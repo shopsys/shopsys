@@ -26,9 +26,6 @@ class AdvertDataFixture extends AbstractReferenceFixture
         $this->advertDataFactory = $advertDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $advertData = $this->advertDataFactory->create();

@@ -28,7 +28,6 @@ class StringColumnsFinder
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadataInfo
      * @return string[]
      */
     private function getStringColumnNames(ClassMetadataInfo $classMetadataInfo)

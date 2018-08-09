@@ -96,7 +96,6 @@ class VatController extends AdminBaseController
     /**
      * @Route("/vat/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function deleteAction(Request $request, $id)
@@ -132,9 +131,6 @@ class VatController extends AdminBaseController
         return $this->redirectToRoute('admin_vat_list');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
     public function settingsAction(Request $request)
     {
         $vatSettingsFormData = [

@@ -74,11 +74,6 @@ class ImageDemoCommand extends Command
      * @param string $demoImagesSqlUrl
      * @param string $imagesDirectory
      * @param string $domainImagesDirectory
-     * @param \League\Flysystem\FilesystemInterface $localFilesystem
-     * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $symfonyFilesystem
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \League\Flysystem\MountManager $mountManager
      */
     public function __construct(
         $demoImagesArchiveUrl,
@@ -109,8 +104,6 @@ class ImageDemoCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -152,7 +145,6 @@ class ImageDemoCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string $imagesPath
      * @param string $localArchiveFilepath
      * @return bool
@@ -175,7 +167,6 @@ class ImageDemoCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string $sqlUrl
      */
     private function loadDbChanges(OutputInterface $output, $sqlUrl)
@@ -197,7 +188,6 @@ class ImageDemoCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string $archiveUrl
      * @param string $localArchiveFilepath
      * @return bool
@@ -220,7 +210,6 @@ class ImageDemoCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string[] $pathsToRemove
      */
     private function cleanUp(OutputInterface $output, $pathsToRemove)
@@ -255,9 +244,6 @@ class ImageDemoCommand extends Command
         }
     }
 
-    /**
-     * @return bool
-     */
     private function isImagesTableEmpty()
     {
         $rsm = new ResultSetMapping();

@@ -57,9 +57,6 @@ class FileThumbnailExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'file_thumbnail_extension';

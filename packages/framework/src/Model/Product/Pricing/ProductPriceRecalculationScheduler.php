@@ -17,17 +17,11 @@ class ProductPriceRecalculationScheduler
      */
     private $products = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     */
     public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     public function scheduleProductForImmediateRecalculation(Product $product)
     {
         $this->products[$product->getId()] = $product;

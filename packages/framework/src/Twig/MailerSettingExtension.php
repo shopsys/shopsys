@@ -54,17 +54,11 @@ class MailerSettingExtension extends Twig_Extension
         ];
     }
 
-    /**
-     * @return bool
-     */
     public function isMailerSettingUnusual()
     {
         return $this->isDeliveryDisabled || (!$this->isDeliveryDisabled && $this->mailerMasterEmailAddress !== null);
     }
 
-    /**
-     * @return string
-     */
     public function getMailerSettingInfo()
     {
         return $this->templating->render('@ShopsysFramework/Common/Mailer/settingInfo.html.twig', [
@@ -74,9 +68,6 @@ class MailerSettingExtension extends Twig_Extension
         ]);
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'shopsys.twig.mailer_setting_extension';

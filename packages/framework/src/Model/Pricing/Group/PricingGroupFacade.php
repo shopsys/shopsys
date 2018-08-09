@@ -88,7 +88,6 @@ class PricingGroupFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
@@ -111,7 +110,6 @@ class PricingGroupFacade
 
     /**
      * @param int $pricingGroupId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
     public function edit($pricingGroupId, PricingGroupData $pricingGroupData)

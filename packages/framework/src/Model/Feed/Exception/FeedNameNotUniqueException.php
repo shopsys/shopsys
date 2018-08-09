@@ -7,7 +7,6 @@ use Exception;
 class FeedNameNotUniqueException extends Exception implements FeedException
 {
     /**
-     * @param string $name
      * @param \Exception|null $previous
      */
     public function __construct(string $name, Exception $previous = null)

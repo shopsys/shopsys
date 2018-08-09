@@ -41,7 +41,6 @@ class PricingGroup
     protected $coefficient;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @param int $domainId
      */
     public function __construct(PricingGroupData $pricingGroupData, $domainId)
@@ -51,9 +50,6 @@ class PricingGroup
         $this->domainId = $domainId;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
@@ -75,17 +71,11 @@ class PricingGroup
         return $this->domainId;
     }
 
-    /**
-     * @return string
-     */
     public function getCoefficient()
     {
         return $this->coefficient;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     */
     public function edit(PricingGroupData $pricingGroupData)
     {
         $this->name = $pricingGroupData->name;

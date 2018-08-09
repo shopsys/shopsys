@@ -35,12 +35,9 @@ class ExtendedOrderTransport extends ExtendedOrderItem
     protected $transportStringField;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @param string $vatPercent
      * @param int $quantity
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      */
     public function __construct(
         Order $order,
@@ -70,9 +67,6 @@ class ExtendedOrderTransport extends ExtendedOrderItem
         return $this->transport;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderTransportData
-     */
     public function edit(OrderItemData $orderTransportData)
     {
         if ($orderTransportData instanceof OrderTransportData) {

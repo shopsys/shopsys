@@ -17,9 +17,6 @@ class ProductSellingDeniedRecalculator
         $this->em = $entityManager;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
     public function calculateSellingDeniedForProduct(Product $product)
     {
         $products = $this->getProductsForCalculations($product);
@@ -42,7 +39,6 @@ class ProductSellingDeniedRecalculator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     private function getProductsForCalculations(Product $product)

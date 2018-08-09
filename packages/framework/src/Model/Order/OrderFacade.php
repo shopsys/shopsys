@@ -173,8 +173,6 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
@@ -209,7 +207,6 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function createOrderFromFront(OrderData $orderData)
@@ -231,7 +228,6 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param bool|null $disallowHeurekaVerifiedByCustomers
      */
     public function sendHeurekaOrderInfo(Order $order, $disallowHeurekaVerifiedByCustomers)
@@ -249,7 +245,6 @@ class OrderFacade
 
     /**
      * @param int $orderId
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function edit($orderId, OrderData $orderData)
@@ -303,10 +298,6 @@ class OrderFacade
         return strtr($orderSentPageContent, $variables);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     */
     public function prefillFrontOrderData(FrontOrderData $orderData, User $user)
     {
         $order = $this->orderRepository->findLastByUserId($user->getId());
@@ -327,7 +318,6 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getCustomerOrderList(User $user)
@@ -366,7 +356,6 @@ class OrderFacade
 
     /**
      * @param string $orderNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function getByOrderNumberAndUser($orderNumber, User $user)
@@ -375,7 +364,6 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData)
@@ -386,9 +374,6 @@ class OrderFacade
         );
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
     protected function setOrderDataAdministrator(OrderData $orderData)
     {
         if ($this->administratorFrontSecurityFacade->isAdministratorLoggedAsCustomer()) {

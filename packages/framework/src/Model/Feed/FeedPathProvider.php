@@ -29,31 +29,16 @@ class FeedPathProvider
         $this->setting = $setting;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
     {
         return $domainConfig->getUrl() . $this->feedUrlPrefix . $this->getFeedFilename($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
     {
         return $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
     protected function getFeedFilename(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
     {
         $feedHash = $this->setting->get(Setting::FEED_HASH);

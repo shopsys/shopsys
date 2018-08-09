@@ -23,11 +23,6 @@ class NewsletterFacade
      */
     protected $newsletterSubscriberFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository $newsletterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         NewsletterRepository $newsletterRepository,
@@ -71,8 +66,6 @@ class NewsletterFacade
     }
 
     /**
-     * @param int $selectedDomainId
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getQueryBuilderForQuickSearch(int $selectedDomainId, QuickSearchFormData $searchData)
@@ -81,7 +74,6 @@ class NewsletterFacade
     }
 
     /**
-     * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
      */
     public function getNewsletterSubscriberById(int $id)
@@ -89,9 +81,6 @@ class NewsletterFacade
         return $this->newsletterRepository->getNewsletterSubscriberById($id);
     }
 
-    /**
-     * @param int $id
-     */
     public function deleteById(int $id)
     {
         $newsletterSubscriber = $this->getNewsletterSubscriberById($id);

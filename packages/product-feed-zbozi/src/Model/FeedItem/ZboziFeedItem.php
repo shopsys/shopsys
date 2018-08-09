@@ -118,105 +118,66 @@ class ZboziFeedItem implements FeedItemInterface
         $this->cpcSearch = $cpcSearch;
     }
 
-    /**
-     * @return int
-     */
     public function getSeekId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int|null
-     */
     public function getGroupId(): ?int
     {
         return $this->mainVariantId;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return string|null
-     */
     public function getImgUrl(): ?string
     {
         return $this->imgUrl;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
     public function getPrice(): Price
     {
         return $this->price;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEan(): ?string
     {
         return $this->ean;
     }
 
-    /**
-     * @return string|null
-     */
     public function getProductno(): ?string
     {
         return $this->partno;
     }
 
-    /**
-     * @return int|null
-     */
     public function getDeliveryDate(): ?int
     {
         return $this->availabilityDispatchTime;
     }
 
-    /**
-     * @return string|null
-     */
     public function getManufacturer(): ?string
     {
         return $this->brandName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCategoryText(): ?string
     {
         return implode(self::CATEGORY_PATH_SEPARATOR, $this->pathToMainCategory);
@@ -230,17 +191,11 @@ class ZboziFeedItem implements FeedItemInterface
         return $this->parametersByName;
     }
 
-    /**
-     * @return float|null
-     */
     public function getMaxCpc(): ?float
     {
         return $this->cpc;
     }
 
-    /**
-     * @return float|null
-     */
     public function getMaxCpcSearch(): ?float
     {
         return $this->cpcSearch;

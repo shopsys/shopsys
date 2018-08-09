@@ -99,7 +99,6 @@ class UnitController extends AdminBaseController
     /**
      * @Route("/product/unit/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
     public function deleteAction(Request $request, $id)
@@ -137,7 +136,6 @@ class UnitController extends AdminBaseController
 
     /**
      * @Route("/product/unit/setting/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function settingAction(Request $request)
     {

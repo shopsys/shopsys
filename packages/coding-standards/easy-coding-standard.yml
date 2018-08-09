@@ -119,6 +119,9 @@ services:
     PhpCsFixer\Fixer\ArrayNotation\TrimArraySpacesFixer: ~
     PhpCsFixer\Fixer\Operator\UnaryOperatorSpacesFixer: ~
     PhpCsFixer\Fixer\ArrayNotation\WhitespaceAfterCommaInArrayFixer: ~
+    Symplify\CodingStandard\Fixer\Commenting\RemoveEmptyDocBlockFixer: ~
+    Symplify\CodingStandard\Fixer\Commenting\RemoveSuperfluousDocBlockWhitespaceFixer: ~
+    Symplify\CodingStandard\Fixer\Commenting\RemoveUselessDocBlockFixer: ~
 
     # Code Metrics
     ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:

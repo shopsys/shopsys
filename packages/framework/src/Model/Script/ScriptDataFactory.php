@@ -4,18 +4,11 @@ namespace Shopsys\FrameworkBundle\Model\Script;
 
 class ScriptDataFactory implements ScriptDataFactoryInterface
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Script\ScriptData
-     */
     public function create(): ScriptData
     {
         return new ScriptData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Script\Script $script
-     * @return \Shopsys\FrameworkBundle\Model\Script\ScriptData
-     */
     public function createFromScript(Script $script): ScriptData
     {
         $scriptData = new ScriptData();
@@ -24,10 +17,6 @@ class ScriptDataFactory implements ScriptDataFactoryInterface
         return $scriptData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
-     * @param \Shopsys\FrameworkBundle\Model\Script\Script $script
-     */
     protected function fillFromScript(ScriptData $scriptData, Script $script)
     {
         $scriptData->name = $script->getName();

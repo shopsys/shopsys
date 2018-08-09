@@ -25,11 +25,6 @@ class ProductVisibilityExtension extends \Twig_Extension
      */
     private $domain;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
     public function __construct(
         ProductVisibilityRepository $productVisibilityRepository,
         PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -54,16 +49,12 @@ class ProductVisibilityExtension extends \Twig_Extension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'product_visibility';
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return bool
      */
@@ -76,7 +67,6 @@ class ProductVisibilityExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return bool
      */
     public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product)

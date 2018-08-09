@@ -14,9 +14,6 @@ class OrderNumberSequenceRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -30,9 +27,6 @@ class OrderNumberSequenceRepository
         return $this->em->getRepository(OrderNumberSequence::class);
     }
 
-    /**
-     * @return string
-     */
     public function getNextNumber()
     {
         try {

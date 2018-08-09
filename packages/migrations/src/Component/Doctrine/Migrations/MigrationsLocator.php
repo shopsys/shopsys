@@ -29,8 +29,6 @@ class MigrationsLocator
     private $relativeNamespace;
 
     /**
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param string $relativeDirectory
      * @param string $relativeNamespace
      */
@@ -63,7 +61,6 @@ class MigrationsLocator
     /**
      * Creates a locations of migration classes for a particular bundle.
      *
-     * @param \Symfony\Component\HttpKernel\Bundle\BundleInterface $bundle
      * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
      */
     public function createMigrationsLocation(BundleInterface $bundle)

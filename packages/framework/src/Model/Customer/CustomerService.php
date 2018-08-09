@@ -37,14 +37,6 @@ class CustomerService
      */
     private $deliveryAddressDataFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordService $customerPasswordService
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface $deliveryAddressFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface $userFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
-     */
     public function __construct(
         CustomerPasswordService $customerPasswordService,
         DeliveryAddressFactoryInterface $deliveryAddressFactory,
@@ -62,8 +54,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $userByEmail
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
@@ -92,10 +82,6 @@ class CustomerService
         return $user;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData
-     */
     public function edit(User $user, UserData $userData)
     {
         $user->edit($userData);
@@ -106,7 +92,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
     public function createDeliveryAddress(DeliveryAddressData $deliveryAddressData)
@@ -121,8 +106,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
@@ -147,7 +130,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @param string $email
      * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $userByEmail
      */
@@ -167,8 +149,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
      */
     public function getAmendedCustomerDataByOrder(User $user, Order $order)
@@ -187,8 +167,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
      */
     private function getAmendedBillingAddressDataByOrder(Order $order, BillingAddress $billingAddress)
@@ -214,7 +192,6 @@ class CustomerService
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      */

@@ -72,9 +72,6 @@ class LocalizationExtension extends \Twig_Extension
         return $title;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'localization';

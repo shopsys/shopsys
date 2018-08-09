@@ -48,9 +48,6 @@ class FixturesLoader extends Loader
         }
     }
 
-    /**
-     * @param \Doctrine\Common\DataFixtures\FixtureInterface $fixture
-     */
     public function addFixture(FixtureInterface $fixture)
     {
         $class = get_class($fixture);
@@ -95,8 +92,6 @@ class FixturesLoader extends Loader
      * For doctrine/data-fixtures 1.2 or lower, this detects an unsupported
      * feature with DependentFixtureInterface so that we can throw a
      * clear exception.
-     *
-     * @param \Doctrine\Common\DataFixtures\FixtureInterface $fixture
      */
     private function checkForNonInstantiableFixtures(FixtureInterface $fixture)
     {

@@ -22,7 +22,6 @@ class OrderEditResult
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderItemsToCreate
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderItemsToDelete
-     * @param $statusChanged
      */
     public function __construct(array $orderItemsToCreate, array $orderItemsToDelete, $statusChanged)
     {
@@ -47,9 +46,6 @@ class OrderEditResult
         return $this->orderItemsToDelete;
     }
 
-    /**
-     * @return bool
-     */
     public function isStatusChanged()
     {
         return $this->statusChanged;

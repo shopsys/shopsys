@@ -17,7 +17,6 @@ class QuantifiedProduct
     private $quantity;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
      */
     public function __construct(Product $product, $quantity)

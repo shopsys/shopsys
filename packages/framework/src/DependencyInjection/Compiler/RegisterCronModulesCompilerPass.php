@@ -9,9 +9,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterCronModulesCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         $cronConfigDefinition = $container->findDefinition(CronConfig::class);

@@ -56,7 +56,6 @@ class FlashMessageSender
 
     /**
      * @param string $template
-     * @param array $parameters
      * @return string
      */
     private function renderStringTwigTemplate($template, array $parameters)

@@ -59,11 +59,6 @@ class ErrorController extends FrontBaseController
         throw new \Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException($code);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
-     */
     public function showAction(
         Request $request,
         FlattenException $exception,
@@ -79,9 +74,6 @@ class ErrorController extends FrontBaseController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
      * @return \Symfony\Component\HttpFoundation\Response
      */
     private function createErrorPagePrototypeResponse(
@@ -118,9 +110,6 @@ class ErrorController extends FrontBaseController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
      * @return \Symfony\Component\HttpFoundation\Response
      */
     private function createExceptionResponse(Request $request, FlattenException $exception, DebugLoggerInterface $logger)
@@ -134,7 +123,6 @@ class ErrorController extends FrontBaseController
     }
 
     /**
-     * @param \Exception $exception
      * @return \Symfony\Component\HttpFoundation\Response
      */
     private function getPrettyExceptionResponse(Exception $exception)

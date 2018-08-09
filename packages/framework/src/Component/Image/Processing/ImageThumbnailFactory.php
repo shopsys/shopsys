@@ -12,9 +12,6 @@ class ImageThumbnailFactory
      */
     private $imageProcessingService;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessingService $imageProcessingService
-     */
     public function __construct(ImageProcessingService $imageProcessingService)
     {
         $this->imageProcessingService = $imageProcessingService;

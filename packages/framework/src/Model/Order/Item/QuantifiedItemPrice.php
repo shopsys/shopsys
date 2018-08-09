@@ -22,11 +22,6 @@ class QuantifiedItemPrice
      */
     private $vat;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     */
     public function __construct(
         Price $unitPrice,
         Price $totalPrice,

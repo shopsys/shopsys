@@ -19,9 +19,6 @@ class Cart
         $this->cartItems = $cartItems;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $item
-     */
     public function addItem(CartItem $item)
     {
         $this->cartItems[] = $item;
@@ -63,9 +60,6 @@ class Cart
         return count($this->getItems());
     }
 
-    /**
-     * @return bool
-     */
     public function isEmpty()
     {
         return $this->getItemsCount() === 0;

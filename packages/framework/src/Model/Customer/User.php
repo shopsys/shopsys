@@ -107,8 +107,6 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
     protected $resetPasswordHashValidThrough;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
     public function __construct(
@@ -130,9 +128,6 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         $this->pricingGroup = $userData->pricingGroup;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     */
     public function edit(UserData $userData)
     {
         $this->firstName = $userData->firstName;

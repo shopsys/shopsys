@@ -156,11 +156,6 @@ class Grid
 
     /**
      * @param string $id
-     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
-     * @param \Twig_Environment $twig
      */
     public function __construct(
         $id,
@@ -217,8 +212,6 @@ class Grid
      * @param string $type
      * @param string $name
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addActionColumn(
@@ -244,8 +237,6 @@ class Grid
 
     /**
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addEditActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
@@ -255,8 +246,6 @@ class Grid
 
     /**
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addDeleteActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
@@ -264,17 +253,11 @@ class Grid
         return $this->addActionColumn(ActionColumn::TYPE_DELETE, t('Delete'), $route, $bindingRouteParams, $additionalRouteParams);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface $inlineEditService
-     */
     public function setInlineEditService(GridInlineEditInterface $inlineEditService)
     {
         $this->inlineEditService = $inlineEditService;
     }
 
-    /**
-     * @return bool
-     */
     public function isInlineEdit()
     {
         return $this->inlineEditService !== null;
@@ -307,7 +290,6 @@ class Grid
 
     /**
      * @param string|string[] $viewTheme
-     * @param array $viewParameters
      */
     public function setTheme($viewTheme, array $viewParameters = [])
     {
@@ -391,9 +373,6 @@ class Grid
         }
     }
 
-    /**
-     * @return string
-     */
     public function getId()
     {
         return $this->id;
@@ -432,24 +411,17 @@ class Grid
         return $this->rows;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabledPaging()
     {
         return $this->enablePaging;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnabledSelecting()
     {
         return $this->enableSelecting;
     }
 
     /**
-     * @param array $row
      * @return bool
      */
     public function isRowSelected(array $row)
@@ -466,9 +438,6 @@ class Grid
         return $this->selectedRowIds;
     }
 
-    /**
-     * @return int
-     */
     public function getLimit()
     {
         return $this->limit;
@@ -492,25 +461,16 @@ class Grid
         return $this->allowedLimits;
     }
 
-    /**
-     * @return int|null
-     */
     public function getTotalCount()
     {
         return $this->totalCount;
     }
 
-    /**
-     * @return int
-     */
     public function getPage()
     {
         return $this->page;
     }
 
-    /**
-     * @return int
-     */
     public function getPageCount()
     {
         return $this->pageCount;
@@ -545,9 +505,6 @@ class Grid
         return $this->orderDirection;
     }
 
-    /**
-     * @return string
-     */
     public function getActionColumnClassAttribute()
     {
         return $this->actionColumnClassAttribute;
@@ -698,7 +655,6 @@ class Grid
     }
 
     /**
-     * @param array $row
      * @param string $sourceColumnName
      * @return mixed
      */
@@ -736,9 +692,6 @@ class Grid
         $this->multipleDragAndDrop = true;
     }
 
-    /**
-     * @return bool
-     */
     public function isDragAndDrop()
     {
         return $this->orderingEntityClass !== null;
@@ -752,9 +705,6 @@ class Grid
         return $this->orderingEntityClass;
     }
 
-    /**
-     * @return bool
-     */
     public function isMultipleDragAndDrop()
     {
         return $this->multipleDragAndDrop;

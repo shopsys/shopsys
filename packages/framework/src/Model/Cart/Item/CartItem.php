@@ -67,8 +67,6 @@ class CartItem
     protected $addedAt;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
      * @param string $watchedPrice
      */
@@ -160,9 +158,6 @@ class CartItem
         return $this->getProduct()->getId() === $cartItem->getProduct()->getId();
     }
 
-    /**
-     * @return string
-     */
     public function getCartIdentifier()
     {
         return $this->cartIdentifier;
@@ -176,9 +171,6 @@ class CartItem
         return $this->addedAt;
     }
 
-    /**
-     * @param \DateTime $addedAt
-     */
     public function changeAddedAt(DateTime $addedAt)
     {
         $this->addedAt = $addedAt;

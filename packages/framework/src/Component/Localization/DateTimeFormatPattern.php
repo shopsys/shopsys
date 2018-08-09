@@ -40,17 +40,11 @@ class DateTimeFormatPattern
         $this->timeType = $timeType;
     }
 
-    /**
-     * @return string
-     */
     public function getPattern()
     {
         return $this->pattern;
     }
 
-    /**
-     * @return string
-     */
     public function getLocale()
     {
         return $this->locale;

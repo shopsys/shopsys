@@ -14,9 +14,7 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
     private $manipulateRowCallback;
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $rowIdSourceColumnName
-     * @param \Closure $manipulateRowCallback
      */
     public function __construct(QueryBuilder $queryBuilder, $rowIdSourceColumnName, Closure $manipulateRowCallback)
     {

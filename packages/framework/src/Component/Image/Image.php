@@ -136,33 +136,21 @@ class Image implements EntityFileUploadInterface
         $this->position = $position;
     }
 
-    /**
-     * @return string
-     */
     public function getFilename()
     {
         return $this->id . '.' . $this->extension;
     }
 
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getEntityName()
     {
         return $this->entityName;
     }
 
-    /**
-     * @return int
-     */
     public function getEntityId()
     {
         return $this->entityId;
@@ -176,9 +164,6 @@ class Image implements EntityFileUploadInterface
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
     public function getExtension()
     {
         return $this->extension;

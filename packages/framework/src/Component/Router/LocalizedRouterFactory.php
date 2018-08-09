@@ -32,7 +32,6 @@ class LocalizedRouterFactory
 
     /**
      * @param string $locale
-     * @param \Symfony\Component\Routing\RequestContext $context
      * @return \Symfony\Component\Routing\Router
      */
     public function getRouter($locale, RequestContext $context)

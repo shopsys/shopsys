@@ -11,9 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortableValuesType extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -26,9 +23,6 @@ class SortableValuesType extends AbstractType
         ]);
     }
 
-    /**
-     * @return string
-     */
     public function getParent()
     {
         return CollectionType::class;

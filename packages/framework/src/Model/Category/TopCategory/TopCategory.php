@@ -36,7 +36,6 @@ class TopCategory
     protected $position;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $domainId
      * @param int $position
      */

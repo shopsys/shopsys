@@ -23,9 +23,6 @@ class DuplicateEntityNameException extends Exception implements ImageConfigExcep
         parent::__construct($message, 0, $previous);
     }
 
-    /**
-     * @return string
-     */
     public function getEntityName()
     {
         return $this->entityName;

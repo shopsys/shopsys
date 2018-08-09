@@ -170,7 +170,6 @@ class PriceExtension extends Twig_Extension
 
     /**
      * @param string $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return string
      */
     public function priceWithCurrencyFilter($price, Currency $currency)
@@ -210,7 +209,6 @@ class PriceExtension extends Twig_Extension
 
     /**
      * @param string $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param string|null $locale
      * @return string
      */
@@ -285,9 +283,6 @@ class PriceExtension extends Twig_Extension
         return $intlCurrency->getSymbol();
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultCurrencySymbol()
     {
         $locale = $this->localization->getLocale();
@@ -331,9 +326,6 @@ class PriceExtension extends Twig_Extension
         return $intlCurrency->getSymbol();
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'price_extension';

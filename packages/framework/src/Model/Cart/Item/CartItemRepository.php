@@ -14,9 +14,6 @@ class CartItemRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -31,7 +28,6 @@ class CartItemRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
     public function getAllByCustomerIdentifier(CustomerIdentifier $customerIdentifier)

@@ -158,7 +158,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
 
     /**
      * @param string $id
-     * @param array $parameters
      * @param string|null $domain
      * @param string|null $locale
      * @return string
@@ -175,7 +174,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     /**
      * @param string $id
      * @param int $number
-     * @param array $parameters
      * @param string|null $domain
      * @param string|null $locale
      * @return string

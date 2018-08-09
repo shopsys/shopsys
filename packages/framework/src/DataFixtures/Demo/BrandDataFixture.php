@@ -40,19 +40,12 @@ class BrandDataFixture extends AbstractReferenceFixture
     /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface */
     private $brandDataFactory;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface $brandDataFactory
-     */
     public function __construct(BrandFacade $brandFacade, BrandDataFactoryInterface $brandDataFactory)
     {
         $this->brandFacade = $brandFacade;
         $this->brandDataFactory = $brandDataFactory;
     }
 
-    /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
-     */
     public function load(ObjectManager $manager)
     {
         $brandData = $this->brandDataFactory->create();

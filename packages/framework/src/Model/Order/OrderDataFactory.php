@@ -33,18 +33,11 @@ class OrderDataFactory implements OrderDataFactoryInterface
         $this->orderPaymentDataFactory = $orderPaymentDataFactory;
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     public function create(): OrderData
     {
         return new OrderData();
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
-     */
     public function createFromOrder(Order $order): OrderData
     {
         $orderData = new OrderData();
@@ -53,10 +46,6 @@ class OrderDataFactory implements OrderDataFactoryInterface
         return $orderData;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
     protected function fillFromOrder(OrderData $orderData, Order $order)
     {
         $orderData->orderNumber = $order->getNumber();

@@ -172,10 +172,6 @@ class InputPriceRecalculator
         });
     }
 
-    /**
-     * @param \Doctrine\ORM\Query $query
-     * @param \Closure $callback
-     */
     private function batchProcessQuery(Query $query, Closure $callback)
     {
         $iteration = 0;

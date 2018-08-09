@@ -22,7 +22,6 @@ class CategoryWithPreloadedChildren
     private $children;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[] $children
      */
     public function __construct(

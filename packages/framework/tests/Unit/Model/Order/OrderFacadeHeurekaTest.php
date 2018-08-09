@@ -73,10 +73,6 @@ class OrderFacadeHeurekaTest extends TestCase
         $this->runHeurekaTest($heurekaFacade, false);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
     private function createOrderFacade(HeurekaFacade $heurekaFacade): OrderFacade
     {
         $orderFacade = new OrderFacade(
@@ -105,7 +101,6 @@ class OrderFacadeHeurekaTest extends TestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @param bool|null $disallowHeurekaVerifiedByCustomers
      */
     private function runHeurekaTest(HeurekaFacade $heurekaFacade, $disallowHeurekaVerifiedByCustomers): void
@@ -115,9 +110,6 @@ class OrderFacadeHeurekaTest extends TestCase
         $orderFacade->sendHeurekaOrderInfo($order, $disallowHeurekaVerifiedByCustomers);
     }
 
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     private function createDomain(): Domain
     {
         $domainConfig = new DomainConfig(1, '', '', 'cs');

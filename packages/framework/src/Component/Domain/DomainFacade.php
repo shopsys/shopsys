@@ -65,7 +65,6 @@ class DomainFacade
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function existsDomainIcon($domainId)

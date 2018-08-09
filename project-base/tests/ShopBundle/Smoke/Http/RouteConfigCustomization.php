@@ -29,17 +29,11 @@ class RouteConfigCustomization
      */
     private $container;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     public function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $this->filterRoutesForTesting($routeConfigCustomizer);
@@ -48,9 +42,6 @@ class RouteConfigCustomization
         $this->configureFrontendRoutes($routeConfigCustomizer);
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     private function filterRoutesForTesting(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $routeConfigCustomizer
@@ -102,9 +93,6 @@ class RouteConfigCustomization
             });
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     private function configureGeneralRules(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $routeConfigCustomizer
@@ -140,9 +128,6 @@ class RouteConfigCustomization
             });
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     private function configureAdminRoutes(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $routeConfigCustomizer
@@ -236,9 +221,6 @@ class RouteConfigCustomization
             });
     }
 
-    /**
-     * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
-     */
     private function configureFrontendRoutes(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $routeConfigCustomizer

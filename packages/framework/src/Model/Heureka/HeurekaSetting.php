@@ -14,9 +14,6 @@ class HeurekaSetting
      */
     private $setting;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     */
     public function __construct(Setting $setting)
     {
         $this->setting = $setting;
@@ -59,7 +56,6 @@ class HeurekaSetting
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isHeurekaShopCertificationActivated($domainId)
@@ -68,7 +64,6 @@ class HeurekaSetting
     }
 
     /**
-     * @param int $domainId
      * @return bool
      */
     public function isHeurekaWidgetActivated($domainId)

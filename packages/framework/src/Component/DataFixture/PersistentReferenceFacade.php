@@ -21,11 +21,6 @@ class PersistentReferenceFacade
      */
     protected $persistentReferenceFactory;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceRepository $persistentReferenceRepository
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactoryInterface $persistentReferenceFactory
-     */
     public function __construct(
         EntityManagerInterface $em,
         PersistentReferenceRepository $persistentReferenceRepository,

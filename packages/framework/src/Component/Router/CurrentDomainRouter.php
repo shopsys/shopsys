@@ -37,9 +37,6 @@ class CurrentDomainRouter implements RouterInterface
         return $this->context;
     }
 
-    /**
-     * @param \Symfony\Component\Routing\RequestContext $context
-     */
     public function setContext(RequestContext $context)
     {
         $this->context = $context;

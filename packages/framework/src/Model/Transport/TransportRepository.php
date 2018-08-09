@@ -12,9 +12,6 @@ class TransportRepository
      */
     protected $em;
 
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -48,7 +45,6 @@ class TransportRepository
     }
 
     /**
-     * @param array $transportIds
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
     public function getAllByIds(array $transportIds)
