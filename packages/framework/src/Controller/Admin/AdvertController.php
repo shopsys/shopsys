@@ -159,6 +159,7 @@ class AdvertController extends AdminBaseController
                 Advert::POSITION_FOOTER => t('above footer'),
                 Advert::POSITION_PRODUCT_LIST => t('in category (above the category name)'),
                 Advert::POSITION_LEFT_SIDEBAR => t('in left panel (under category tree)'),
+                Advert::POSITION_ABOVE_LEFT_SIDEBAR => t('in left panel (above category tree)'),
             ],
             'TYPE_IMAGE' => Advert::TYPE_IMAGE,
         ]);
