@@ -32,6 +32,8 @@ services:
                 www_data_gid: 20
                 github_oauth_token: place-your-token-here
         container_name: shopsys-framework-php-fpm
+        environment:
+            - COMPOSER_AUTH={"github-oauth":{"github.com":"place-your-token-here"}}
         volumes:
             - shopsys-framework-sync:/var/www/html
             - shopsys-framework-vendor-sync:/var/www/html/vendor
