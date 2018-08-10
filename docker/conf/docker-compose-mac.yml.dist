@@ -16,8 +16,8 @@ services:
         image: nginx:1.13-alpine
         container_name: shopsys-framework-webserver
         volumes:
-            - shopsys-framework-webserver-sync:/var/www/html/project-base/web
-            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:delegated
+            - shopsys-framework-webserver-sync:/var/www/html/web
+            - ./project-base/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:delegated
         ports:
             - "8000:8080"
         links:
