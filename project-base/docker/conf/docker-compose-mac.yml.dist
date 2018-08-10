@@ -16,8 +16,8 @@ services:
         image: nginx:1.13-alpine
         container_name: shopsys-framework-webserver
         volumes:
-            - shopsys-framework-sync:/var/www/html
-            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+            - shopsys-framework-webserver-sync:/var/www/html/web
+            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:delegated
         ports:
             - "8000:8080"
         links:
@@ -26,7 +26,7 @@ services:
 
     php-fpm:
         build:
-            context: docker/php-fpm
+            context: project-base/docker/php-fpm
             args:
                 www_data_uid: 501
                 www_data_gid: 20
@@ -34,7 +34,9 @@ services:
         container_name: shopsys-framework-php-fpm
         volumes:
             - shopsys-framework-sync:/var/www/html
-            - ./docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
+            - shopsys-framework-vendor-sync:/var/www/html/vendor
+            - shopsys-framework-webserver-sync:/var/www/html/project-base/web
+            - ./project-base/docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini:delegated
         links:
             - postgres
             - redis
@@ -117,6 +119,12 @@ services:
 
 volumes:
     shopsys-framework-sync:
+        external: true
+
+    shopsys-framework-vendor-sync:
+        external: true
+
+    shopsys-framework-webserver-sync:
         external: true
 
     shopsys-framework-postgres-data-sync:

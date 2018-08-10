@@ -3,7 +3,23 @@ syncs:
     shopsys-framework-sync:
         sync_userid: 501
         src: './'
-        sync_excludes: ['project-base/docker/', 'microservices/']
+        sync_excludes: [
+            '.git',
+            '.idea',
+            '.docker-sync',
+            '.DS_Store',
+            'project-base/docker',
+            'project-base/node_modules',
+            'project-base/var/cache',
+            'project-base/var/postgres-data',
+            'project-base/web',
+            'vendor',
+            'microservices/'
+        ]
+        host_disk_mount_mode: 'delegated'
+        monit_enable: true
+        monit_interval: 10
+        monit_high_cpu_cycles: 6
 
     shopsys-framework-microservice-product-search-sync:
         sync_userid: 501
@@ -13,8 +29,20 @@ syncs:
         sync_userid: 501
         src: './microservices/product-search-export/'
 
+    shopsys-framework-web-sync:
+        sync_userid: 501
+        src: './project-base/web'
+        host_disk_mount_mode: 'cached'
+
+    shopsys-framework-vendor-sync:
+        sync_userid: 501
+        src: './vendor'
+        host_disk_mount_mode: 'cached'
+
     shopsys-framework-postgres-data-sync:
         src: './project-base/var/postgres-data/'
+        host_disk_mount_mode: 'cached'
 
     shopsys-framework-elasticsearch-data-sync:
         src: './project-base/var/elasticsearch-data/'
+        host_disk_mount_mode: 'cached'
