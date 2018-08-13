@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  webserver
+spec:
+  selector:
+    app: webserver
+  type: NodePort
+  ports:
+  - name: http
+    port:  8080
+    targetPort:  8080

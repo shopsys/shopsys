@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: shopsys
+spec:
+  rules:
+  - host: $HOSTNAME
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: webserver
+          servicePort: 8080
+  - host: $HOSTNAME
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: webserver
+          servicePort: 8080
