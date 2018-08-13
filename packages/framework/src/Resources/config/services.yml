@@ -929,16 +929,6 @@ services:
 
   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ElasticsearchProductDataConverter: ~
 
-  Shopsys\FrameworkBundle\Model\Product\Search\ElasticsearchSearchClient: ~
-
-  Shopsys\FrameworkBundle\Model\Product\Search\CachedSearchClient:
-    class: Shopsys\FrameworkBundle\Model\Product\Search\CachedSearchClient
-    arguments:
-      - '@Shopsys\FrameworkBundle\Model\Product\Search\ElasticsearchSearchClient'
-
-  Shopsys\FrameworkBundle\Model\Product\Search\SearchClient:
-    alias: Shopsys\FrameworkBundle\Model\Product\Search\CachedSearchClient
-
   shopsys.microservice_client.product_search:
     factory: 'Shopsys\FrameworkBundle\Component\Microservice\MicroserviceClientFactory:create'
     arguments:
