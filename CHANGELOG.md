@@ -34,6 +34,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - added CRON module for exporting products' data into Elasticsearch
     - product search uses Elasticsearch
     - docs: added [article](./docs/introduction/product-search-via-elasticsearch.md) with Elasticsearch overview
+- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
+    - added [Microservice Product Search](/microservices/product-search/README.md), microservice is used for the searching of products on Shopsys Framework 
+    - added MicroserviceClient component
 
 #### Fixed
 - [#260 - JS validation: dynamically added form inputs are now validated](https://github.com/shopsys/shopsys/pull/260)
@@ -43,9 +46,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 #### Added
 - [#335 - Possibility to add a new administration page](https://github.com/shopsys/shopsys/pull/335)
     - added cookbook [Adding a New Administration Page](/docs/cookbook/adding-a-new-administration-page.md) along with the side menu and breadcrumbs
-- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
-    - added [Microservice Product Search](/microservices/product-search/README.md), microservice is used for the searching of products on Shopsys Framework 
-    - added MicroserviceClient component
+
 #### Changed
 - [#302 - All persistent files like uploads are now stored using abstract filesystem (Flysystem)](https://github.com/shopsys/shopsys/pull/302)
     - abstract filesystem is used to store:

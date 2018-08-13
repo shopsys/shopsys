@@ -23,6 +23,9 @@ There is a list of all the repositories maintained by monorepo, changes in log b
     - update composer dependencies `composer update`
     - create Elasticsearch indexes by running `php phing elasticsearch-indexes-create`
     - export products into Elasticsearch by `php phing elasticsearch-products-export`
+    
+### [shopsys/framework]
+- since the fully installed and ready [Microservice Product Search](https://github.com/shopsys/shopsys/blob/master/microservices/product-search/README.md) is a necessary condition for the Shopsys Framework to run, the installation procedure of this microservice is a part of Shopsys Framework [installation guide](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-application-setup.md)
 
 ## [From 7.0.0-alpha3 to 7.0.0-alpha4]
 
