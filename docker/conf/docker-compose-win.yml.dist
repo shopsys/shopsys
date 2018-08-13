@@ -54,9 +54,9 @@ services:
             - ./microservices/product-search:/var/www/html
             - ./microservices/product-search/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
         links:
-            - postgres
+            - elasticsearch
         depends_on:
-            - postgres
+            - elasticsearch
 
     redis:
         image: redis:4.0-alpine

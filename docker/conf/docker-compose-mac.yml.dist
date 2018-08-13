@@ -53,9 +53,9 @@ services:
             - shopsys-framework-microservice-product-search-sync:/var/www/html
             - ./microservices/product-search/docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
         links:
-            - postgres
+            - elasticsearch
         depends_on:
-            - postgres
+            - elasticsearch
 
     redis:
         image: redis:4.0-alpine
