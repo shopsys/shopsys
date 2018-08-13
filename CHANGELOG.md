@@ -34,13 +34,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - added CRON module for exporting products' data into Elasticsearch
     - product search uses Elasticsearch
     - docs: added [article](./docs/introduction/product-search-via-elasticsearch.md) with Elasticsearch overview
-- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
-    - added [Microservice Product Search](/microservices/product-search/README.md), microservice is used for the searching of products on Shopsys Framework 
+- [#401 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/401)
+    - added [Microservice Product Search](https://github.com/shopsys/microservice-product-search), microservice is used for the searching of products on Shopsys Framework 
     - added MicroserviceClient component
 
 #### Fixed
 - [#260 - JS validation: dynamically added form inputs are now validated](https://github.com/shopsys/shopsys/pull/260)
 
+### [shopsys/shopsys]
+#### Added
+- [#401 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/401)
+    - added [Microservice Product Search](https://github.com/shopsys/microservice-product-search), microservice is used for the searching of products on Shopsys Framework 
+              
+### [shopsys/project-base]
+#### Changed
+- [#401 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/401)
+    - added [Microservice Product Search](https://github.com/shopsys/microservice-product-search), microservice is used for the searching of products on Shopsys Framework 
+    - now the following phing targets are also triggered over the microservice
+        - standards
+        - standards-diff
+        - standards-fix
+        - standards-fix-diff
+        - standards-packages
+        - standards-fix-packages
+        - standards-fix-packages-diff
+              
 ## [7.0.0-alpha4] - 2018-08-02
 ### [shopsys/framework]
 #### Added
@@ -88,8 +106,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#341 - Category entity in constructor of CategoryRepository is resolved via EntityNameResolver](https://github.com/shopsys/shopsys/pull/341)
 - [#364 - Admin: brand form is rendered via BrandFormType](https://github.com/shopsys/shopsys/pull/364)
 - [#370 - MultidomainEntityClassFinderFacade: metadata are checked on class name resolved by EntityNameResolver](https://github.com/shopsys/shopsys/pull/370)
-- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
-    - added [Microservice Product Search](/microservices/product-search/README.md), microservice is used for the searching of products on Shopsys Framework 
 
 #### Fixed
 - [#304 - Unnecessary SQL queries on category detail in admin](https://github.com/shopsys/shopsys/pull/304):
@@ -122,21 +138,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 #### Added
 - [#320 - Docs: overview of possible and impossible glassbox customizations](https://github.com/shopsys/shopsys/pull/320)
     - added [framework-extensibility.md](/docs/introduction/framework-extensibility.md) article
-- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
-    - added [Microservice Product Search](/microservices/product-search/README.md), microservice is used for the searching of products on Shopsys Framework 
 
 #### Changed
 - [#296 - normalize phing target "timezones-check"](https://github.com/shopsys/shopsys/pull/296): [@pk16011990]
-- [#368 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/368)
-    - now the following phing targets are also triggered over the microservice
-        - standards
-        - standards-diff
-        - standards-fix
-        - standards-fix-diff
-        - standards-packages
-        - standards-fix-packages
-        - standards-fix-packages-diff
-
     
 ### [shopsys/monorepo-tools]
 #### Added

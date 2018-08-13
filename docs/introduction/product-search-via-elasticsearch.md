@@ -9,7 +9,7 @@ Therefore, relevant product attributes are also stored in Elasticsearch index un
 When the product search action is performed on frontend, the query is send to Elasticsearch.
 As a result, found product IDs are returned from Elasticsearch and then the product data are loaded from PostgreSQL database into entities using Doctrine ORM.
 
-The search process itself is provided through the microservice. For more information about the microservice, see [Microservice Product Search](https://github.com/shopsys/shopsys/blob/master/microservices/product-search/README.md).
+The search process itself is provided through a microservice. For more information about the microservice, see [Microservice Product Search](https://github.com/shopsys/microservice-product-search).
 
 ### Elasticsearch index setting
 Elasticsearch [index](https://www.elastic.co/blog/what-is-an-elasticsearch-index) is a logical namespace, you can imagine single index as a single database in terms of relational databases.

@@ -5,7 +5,10 @@ If you haven't already done that check the [Installation Using Docker](installat
 
 ## 1. Setup the microservice for product search
 Installing of Shopsys Framework from a project-base requires manual cloning of the [repository of the microservice](https://github.com/shopsys/microservice-product-search).
-Clone the repository inside a separate directory and configure the container in your `docker-compose.yml`:
+
+Clone the repository inside a separate directory and configure the new container `microservice-product-search` in your `docker-compose.yml` according to the updated templates in [project-base/docker/conf](https://github.com/shopsys/project-base/tree/master/docker/conf).
+
+For example:
 ```yaml
     microservice-product-search:
         build:
@@ -25,10 +28,10 @@ Clone the repository inside a separate directory and configure the container in 
 Edit the path `../microservices/product-search` in such a way as to direct it to the directory with the cloned microservice.
 
 *Note: There can be differences in the configuration on different OS.
-For example the configuration for mac requires changes in `docker-sync.yml` too.
+For example the configuration for mac requires changes in `docker-sync.yml`, uid and guid can be different across platforms, etc. .
 It should be similar to the `php-fpm`'s configuration.*
 
-*Note: If you have edited the docker-compose.yml, you should re-run the docker-compose command --force-recreate -d*
+*Note: If you have edited the docker-compose.yml, you should re-run the command `docker-compose --force-recreate -d`.*
 
 ### 1.1. Connect into terminal of the Docker container
 ```

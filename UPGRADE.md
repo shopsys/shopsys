@@ -17,16 +17,28 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 * [shopsys/microservice-product-search]
 
 ## [From 7.0.0-alpha4 to Unreleased]
+
+### [shopsys/framework]
 - for [product search via Elasticsearch](/docs/introduction/product-search-via-elasticsearch.md), you'll have to:
     - check changes in the `docker-compose.yml` template you used and replicate them, there is a new container with Elasticsearch
     - run `docker-compose up -d`
     - update composer dependencies `composer update`
     - create Elasticsearch indexes by running `php phing elasticsearch-indexes-create`
     - export products into Elasticsearch by `php phing elasticsearch-products-export`
-    
-### [shopsys/framework]
-- since the fully installed and ready [Microservice Product Search](https://github.com/shopsys/shopsys/blob/master/microservices/product-search/README.md) is a necessary condition for the Shopsys Framework to run, the installation procedure of this microservice is a part of Shopsys Framework [installation guide](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-application-setup.md)
-
+- since the fully installed and ready [Microservice Product Search](https://github.com/shopsys/microservice-product-search) is a necessary condition for the Shopsys Framework to run, the installation procedure of this microservice is a part of Shopsys Framework [installation guide](/docs/installation/installation-using-docker-application-setup.md)
+ 
+### [shopsys/project-base] 
+- added [Microservice Product Search](https://github.com/shopsys/microservice-product-search)
+    - check changes in the `docker-compose.yml` template you used and replicate them, there is a new container `microservice-product-search`
+    - `parameters.yml.dist` contains new parameter `microservice_product_search_url`
+    - modify a configuration in `services.yml` for:
+        - `Shopsys\FrameworkBundle\Model\Product\Search\ProductSearchRepository`
+        - `shopsys.microservice_client.product_search`
+    - remove a configuration in `services.yml` for:
+        - `Shopsys\FrameworkBundle\Model\Product\Search\ElasticsearchSearchClient`
+        - `Shopsys\FrameworkBundle\Model\Product\Search\CachedSearchClient`
+        - `Shopsys\FrameworkBundle\Model\Product\Search\SearchClient`
+        
 ## [From 7.0.0-alpha3 to 7.0.0-alpha4]
 
 ### [shopsys/framework]
@@ -47,10 +59,6 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 ### [shopsys/product-feed-zbozi]
 - move creation of data objects into factories
 - already existing data object factories changed their signatures
-
-### [shopsys/microservice-product-search]
-- a new experimental microservice was added to the Shopsys Framework
-- it needs to be [installed and run](/docs/installation/installation-using-docker-application-setup.md) (and [configured if installed natively](/docs/installation/native-installation.md)) for the product search to work
 
 ## [From 7.0.0-alpha2 to 7.0.0-alpha3]
 
