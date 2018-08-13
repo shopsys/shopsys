@@ -9,21 +9,26 @@ Clone the repository inside a separate directory and configure the container in 
 ```yaml
     microservice-product-search:
         build:
-            context: ../microservice-product-search/docker
+            context: ../microservices/product-search/docker
             args:
                 www_data_uid: 1000
                 www_data_gid: 1000
         container_name: shopsys-framework-microservice-product-search
         volumes:
-            - ../microservice-product-search:/var/www/html
-            - ../microservice-product-search/docker/php-ini-overrides.ini:/usr/local/etc/php/php.ini
+            - ../microservices/product-search:/var/www/html
+            - ../microservices/product-search/docker/php-ini-overrides.ini:/usr/local/etc/php/php.ini
         links:
-            - postgres
+            - elasticsearch
         depends_on:
-            - postgres
+            - elasticsearch
 ```
-*Note: If you have edited the docker-compose.yml, you should re-run the docker-compose command --force-recreate -d
-*Note: There can be differences in the configuration on different OS. It should be similar to the `php-fpm`'s configuration.*
+Edit the path `../microservices/product-search` in such a way as to direct it to the directory with the cloned microservice.
+
+*Note: There can be differences in the configuration on different OS.
+For example the configuration for mac requires changes in `docker-sync.yml` too.
+It should be similar to the `php-fpm`'s configuration.*
+
+*Note: If you have edited the docker-compose.yml, you should re-run the docker-compose command --force-recreate -d*
 
 ### 1.1. Connect into terminal of the Docker container
 ```

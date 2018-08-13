@@ -1,6 +1,6 @@
 # Microservice Product Search
 
-Microservice responsible for product search on [Shopsys Framework](https://www.shopsys-framework.com).
+Microservice responsible for product search via Elasticsearch on [Shopsys Framework](https://www.shopsys-framework.com).
 
 This repository is maintained by [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo, information about the changes are in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
@@ -12,6 +12,8 @@ This container is configured in [docker-compose.yml](https://github.com/shopsys/
 
 As the base of the microservice, we used micro-kernel which is made up of [Symfony 4](https://symfony.com/4).
 This leanest Symfony version is highly optimized and it is suitable for this type of project.
+
+For the search process is used a super fast no-SQL database Elasticsearch. For more information about the Elasticsearch on Shopsys Framework, see [Product search via Elasticsearch]((https://github.com/shopsys/shopsys/blob/master/docs/introduction/product-search-via-elasticsearch.md).) 
 
 ## Installation
 Since the fully installed and ready microservice is a necessary condition for the Shopsys Framework to run, the installation procedure of this microservice is a part of Shopsys Framework [installation guide](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-application-setup.md).
@@ -73,6 +75,11 @@ To see the logs simply run:
 ```
 docker-compose logs
 ```
+
+## How to modify the behavior of microservice in a custom project
+One of the main ideas of implementing the microservice is to keep its scope as small as possible.
+This makes it possible to completely change the behaviour of the microservice by overwriting its code without having to deal with the complex dependencies.
+The only thing that must remain preserved is the original minimalist interface.
 
 ## Contributing
 Thank you for your contributions to Microservice Product Search.

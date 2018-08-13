@@ -57,14 +57,14 @@ monolog:
 For the product search to be working correctly, you'll have to install a [microservice for product search](https://github.com/shopsys/microservice-product-search).
 It will act as a fully independent unit with a separate web server and repository.
 
-Just clone the repository into a separate directory, install all its dependencies, configure connection to the Postgres by setting up the PG_CONNECTION_STRING environment variable (or the [.env file](http://symfony.com/doc/current/components/dotenv.html)) and run the server.
+Just clone the repository into a separate directory, install all its dependencies, configure connection to the Elasticsearch by setting up the ELASTICSEARCH_HOSTS_STRING environment variable (or the [.env file](http://symfony.com/doc/current/components/dotenv.html)) and run the server.
 In the current version of this experimental microservice, the PHP's built-in Web Server is used.
 
 ```
 git clone https://github.com/shopsys/microservice-product-search.git
 cd microservice-product-search
 composer install
-# open ".env" and set up connection to Postgres in "PG_CONNECTION_STRING" 
+# open ".env" and set up connection to Elasticsearch in "ELASTICSEARCH_HOSTS_STRING" 
 php bin/console server:run 127.0.0.1:8001
 ```
 
