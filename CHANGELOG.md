@@ -24,6 +24,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### [shopsys/framework]
+#### Fixed
+- [#420 - Order flow fix](https://github.com/shopsys/shopsys/pull/420)
+    - fix fatal error in OrderFlow (issue #419): function call on string, also method getName does not exists since upgrade to Symfony 3 [@jDolba]
 ### [shopsys/coding-standards]
 #### Added
 - [#384 - cs: keep class spacing consistent](https://github.com/shopsys/shopsys/pull/384) [@TomasVotruba]
@@ -60,8 +64,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#401 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/401)
     - added [Microservice Product Search](https://github.com/shopsys/microservice-product-search), microservice is used for the searching of products on Shopsys Framework 
     - added MicroserviceClient component
-- [#420 - Order flow fix](https://github.com/shopsys/shopsys/pull/420)
-    - fix fatal error in OrderFlow (issue #419): function call on string, also method getName does not exists since upgrade to Symfony 3
 
 #### Changed
 - [#385 - AccessDeniedHttpException replaced by AccessDeniedException](https://github.com/shopsys/shopsys/pull/385)
@@ -1433,3 +1435,4 @@ That's why is this section formatted differently.
 [@lukaso]: https://github.com/lukaso
 [@TomasVotruba]: https://github.com/TomasVotruba
 [@drekbour]: https://github.com/drekbour
+[@jDolba]: https://github.com/jDolba
