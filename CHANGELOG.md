@@ -17,6 +17,7 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 * [shopsys/product-feed-heureka-delivery]
 * [shopsys/product-feed-zbozi]
 * [shopsys/microservice-product-search]
+* [shopsys/microservice-product-search-export]
 
 Packages are formatted by release version. You can see all the changes done to package that you carry about with this tree.
 
@@ -25,13 +26,49 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### [shopsys/framework]
+#### Changed
+- [#428 - *EditFromTypes removal](https://github.com/shopsys/shopsys/pull/428)
+    - `TransportEditFormType` was removed and it's attributes were moved to `TransportFormType`
+    - `PaymentEditFormType` was removed and it's attributes were moved to `PaymentFormType`
+    - `ProductEditFormType` was removed and it's attributes were moved to `ProductFormType`
+- [#429 - Microservice Product Search Export](https://github.com/shopsys/shopsys/pull/429)
+    - framework doesn't use Elasticsearch directly anymore
+    - feeds Elasticsearch via Product Search Export microservice
 #### Fixed
 - [#420 - Order flow fix](https://github.com/shopsys/shopsys/pull/420)
     - fix fatal error in OrderFlow (issue #419): function call on string, also method getName does not exists since upgrade to Symfony 3 [@jDolba]
+
+### [shopsys/project-base]
+#### Added
+- [#409 - Project-base: framework models extension](https://github.com/shopsys/shopsys/pull/409)
+    - Category is extended
+    - Administrator is extended
+    - Transport is extended
+    - Product is extended
+    - Brand is extended
+    - Payment is extended
+    - User is extended
+    - Order is extended
+
+### [shopsys/shopsys]
+#### Added
+- [#429 - Microservice Product Search Export](https://github.com/shopsys/shopsys/pull/429)
+    - added [Microservice Product Search Export](https://github.com/shopsys/microservice-product-search-export), microservice is used for feeding Elasticsearch by products
+- [#409 - Project-base: framework models extension](https://github.com/shopsys/shopsys/pull/409)
+    - factories use EntityNameResolver to create their entities for simplification of extensibility
+#### Fixed
+- [#436 - Symfony >=3.4.15 marked as conflicting in composer.json](https://github.com/shopsys/shopsys/pull/436)
+    - bug https://github.com/symfony/symfony/issues/28296 in Symfony 3.4.15 version causes application build to fail
+
 ### [shopsys/coding-standards]
 #### Added
 - [#384 - cs: keep class spacing consistent](https://github.com/shopsys/shopsys/pull/384) [@TomasVotruba]
     - added new rule (along with fixer `ClassAttributesSeparationFixer`) into `easy-coding-standard.yml`
+
+### [shopsys/microservice-product-search-export]
+#### Added
+- [#429 - Microservice Product Search Export](https://github.com/shopsys/shopsys/pull/429)
+    - the repository was added, extracting product search export functionality from the Shopsys Framework
 
 ## [7.0.0-alpha5] - 2018-08-22
 ### [shopsys/framework]
@@ -1427,6 +1464,7 @@ That's why is this section formatted differently.
 [shopsys/migrations]: https://github.com/shopsys/migrations
 [shopsys/monorepo-tools]: https://github.com/shopsys/monorepo-tools
 [shopsys/microservice-product-search]: https://github.com/shopsys/microservice-product-search
+[shopsys/microservice-product-search-export]: https://github.com/shopsys/microservice-product-search-export
 
 [@pk16011990]: https://github.com/pk16011990
 [@stanoMilan]: https://github.com/stanoMilan
