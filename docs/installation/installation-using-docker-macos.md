@@ -61,8 +61,8 @@ Also you need to insert your UID into `docker-sync.yml` into value `sync_userid`
 Shopsys Framework includes a lot of dependencies installed via Composer.
 During `composer install` the GitHub API Rate Limit is reached and it is necessary to provide GitHub OAuth token to overcome this limit.
 This token can be generated on [Github -> Settings -> Developer Settings -> Personal access tokens](https://github.com/settings/tokens/new?scopes=repo&description=Composer+API+token)
-Save your token into the `docker-compose.yml` file.
-Token is located in `services -> php-fpm -> build -> args -> github_oauth_token`.
+Save your token into the `docker-compose.yml` file - 
+token should be placed in `services -> php-fpm -> build -> args -> github_oauth_token`.
 
 ### 3. Compose Docker container
 On MacOS you need to synchronize folders using docker-sync.
