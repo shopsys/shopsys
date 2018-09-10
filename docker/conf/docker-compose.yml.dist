@@ -16,8 +16,8 @@ services:
         image: nginx:1.13-alpine
         container_name: shopsys-framework-webserver
         volumes:
-            - .:/var/www/html
-            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./project-base/web:/var/www/html/web
+            - ./project-base/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         ports:
             - "8000:8080"
         links:
@@ -31,6 +31,8 @@ services:
                 www_data_gid: 1000
                 github_oauth_token: place-your-token-here
         container_name: shopsys-framework-php-fpm
+        environment:
+            - COMPOSER_AUTH={"github-oauth":{"github.com":"place-your-token-here"}}
         volumes:
             - .:/var/www/html
             - ./project-base/docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
