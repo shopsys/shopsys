@@ -20,9 +20,9 @@ cd project-base
 ```
 **Important note:** 
 
-**Due to changes in installation process (for more see [changelog](../../CHANGELOG.md)) we recommend to use current dev-master as base for your project.**
-**Therefore there is used stability=dev in composer command above.**
-**After next release we will again move to our standard recommended stability (see notes below).**
+**Due to changes in the installation process (see [changelog](/CHANGELOG.md) for details), we recommend using the current `dev-master` as a base for your project.**
+**Therefore there is the `stability=dev` flag used in the `composer` command above.**
+**After the next release, we will again return to our standard recommended stability (see notes below).**
 
 <!--- TODO Remove important note after tag release and change stability in composer line to standard -->
 
