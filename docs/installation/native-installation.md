@@ -32,7 +32,7 @@ After that, you can follow the steps below in order to install and configure Sho
 ## Steps
 ### 1. Create new project from Shopsys Framework sources
 ```
-composer create-project shopsys/project-base --stability=dev --no-install --keep-vcs
+composer create-project shopsys/project-base --stability=dev --keep-vcs
 cd project-base
 ```
 **Important note:** 
