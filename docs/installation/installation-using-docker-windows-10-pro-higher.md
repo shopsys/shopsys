@@ -15,9 +15,16 @@
 ## Steps
 ### 1. Create new project from Shopsys Framework sources
 ```
-composer create-project shopsys/project-base --stability=alpha --no-install --keep-vcs
+composer create-project shopsys/project-base --stability=dev --no-install --keep-vcs
 cd project-base
 ```
+**Important note:** 
+
+**Due to changes in installation process (for more see [changelog](../../CHANGELOG.md)) we recommend to use current dev-master as base for your project.**
+**Therefore there is used stability=dev in composer command above.**
+**After next release we will again move to our standard recommended stability (see notes below).**
+
+<!--- TODO Remove important note after tag release and change stability in composer line to standard -->
 
 *Notes:* 
 - *The `--no-install` option disables installation of the vendors - this will be done later in the Docker container.*
