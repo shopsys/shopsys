@@ -16,11 +16,8 @@ syncs:
             'vendor'
         ]
         host_disk_mount_mode: 'delegated'
-        monit_enable: true
-        monit_interval: 10
-        monit_high_cpu_cycles: 6
 
-    shopsys-framework-web-sync:
+    shopsys-framework-webserver-sync:
         sync_userid: 501
         src: './project-base/web'
         host_disk_mount_mode: 'cached'

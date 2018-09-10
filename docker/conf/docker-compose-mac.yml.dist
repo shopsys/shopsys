@@ -4,7 +4,7 @@ services:
         image: postgres:10.5-alpine
         container_name: shopsys-framework-postgres
         volumes:
-            - shopsys-framework-postgres-data-sync:/var/lib/postgresql/data
+            - ./project-base/var/postgres-data:/var/lib/postgresql/data:cached
             - ./project-base/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
@@ -131,7 +131,7 @@ services:
         ports:
             - "9200:9200"
         volumes:
-            - shopsys-framework-elasticsearch-data-sync:/usr/share/elasticsearch/data
+            - ./project-base/var/elasticsearch-data:/usr/share/elasticsearch/data:cached
         environment:
             - discovery.type=single-node
 
