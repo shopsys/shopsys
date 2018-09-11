@@ -143,3 +143,6 @@ volumes:
 
     shopsys-framework-elasticsearch-data-sync:
         external: true
+
+    shopsys-framework-microservice-product-search-export-sync
+        external: true
