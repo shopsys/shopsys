@@ -12,9 +12,20 @@ spec:
             labels:
                 app: postgres
         spec:
+            volumes:
+            -   name: postgres-configuration
+                configMap:
+                    name: postgres-configuration
+                    items:
+                    -   key: postgres.conf
+                        path: postgres.conf
             containers:
             -   name: postgres
                 image: postgres:10.5-alpine
+                volumeMounts:
+                -   name: postgres-configuration
+                    mountPath: /var/lib/postgresql/data/postgresql.conf
+                    subPath: postgres.conf
                 ports:
                 -   name: postgres
                     containerPort: 5432
@@ -26,3 +37,5 @@ spec:
                         value: root
                     -   name: POSTGRES_DB
                         value: shopsys
+                    -   name: PGDATA
+                        value: /var/lib/postgresql/data/pgdata
