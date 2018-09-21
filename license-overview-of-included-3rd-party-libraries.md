@@ -57,52 +57,52 @@ https://github.com/kenwheeler/slick/blob/master/LICENSE
 These images and packages are configured in `docker-compose.yml` and in `Dockerfile`.
 
 ### Postgres
-Image: Postgres:10.5-alpine  
+Image: `Postgres:10.5-alpine`  
 License: PostgreSQL License  
 https://www.postgresql.org/about/licence/
 
 ### Nginx
-Image: Nginx:1.13-alpine  
+Image: `Nginx:1.13-alpine`  
 License: BSD-2-Clause  
 http://nginx.org/LICENSE
 
 ### Redis
-Image: Redis:4.0-alpine  
+Image: `Redis:4.0-alpine`  
 License: BSD-3-Clause  
 https://redis.io/topics/license
 
 ### phpRedisAdmin
-Image: Erikdubbelboer/phpredisadmin:v1.10.2  
-License: Creative Commons Attribution 3.0 BY
+Image: `Erikdubbelboer/phpredisadmin:v1.10.2`  
+License: Creative Commons Attribution 3.0 BY  
 https://github.com/erikdubbelboer/phpRedisAdmin/blob/master/README.markdown
 
 ### Selenium Docker
-Image: Selenium/standalone-chrome:3.11  
+Image: `Selenium/standalone-chrome:3.11`  
 License: Apache License 2.0  
 https://github.com/SeleniumHQ/docker-selenium/blob/master/LICENSE.md
 
 ### Adminer
-Image: Adminer:4.6  
+Image: `Adminer:4.6`  
 License: Apache License 2.0 or GPL 2  
 https://github.com/vrana/adminer/blob/master/readme.txt
 
 ### Elasticsearch
-Image: Docker.elastic.co/elasticsearch/elasticsearch-oss  
+Image: `Docker.elastic.co/elasticsearch/elasticsearch-oss`  
 License: Apache License 2.0  
 https://github.com/elastic/elasticsearch/blob/66b5ed86f7adede8102cd4d979b9f4924e5bd837/LICENSE.txt
 
 ### Php
-Image: php:7.2-fpm-alpine  
+Image: `php:7.2-fpm-alpine`  
 License: The PHP License  
 http://php.net/license/
 
 ### GNU libiconv
-Package: gnu-libiconv  
+Package: `gnu-libiconv`  
 License: LGPL  
 https://pkgs.alpinelinux.org/package/edge/testing/x86/gnu-libiconv
 
 ### Composer - Dependency Management for PHP
-License: MIT
+License: MIT  
 https://github.com/composer/composer/blob/master/LICENSE
 
 ### grunt-cli
@@ -118,11 +118,11 @@ License: MIT
 https://github.com/hirak/prestissimo/blob/master/LICENSE
 
 ### libpng-dev
-License: GPL
+License: GPL  
 https://pkgs.alpinelinux.org/package/v3.3/main/x86/libpng-dev
 
 ### icu-dev
-License: MIT ICU Unicode-TOU  
+License: MIT ICU Unicode-TOU    
 https://pkgs.alpinelinux.org/package/edge/main/x86/icu-dev
 
 ### postgresql-dev
@@ -159,72 +159,72 @@ JS libraries can be found primarily in the `ShopBundle/Resources/scripts/*/plugi
 CSS libraries can be found primarily in the `ShopBundle/Resources/styles/*/libs/` and `FrameworkBundle/Resources/styles/*/libs/` directories.
 
 ### Magnific Popup Repository
-Library: FrameworkBundle/Resources/scripts/common/plugins/jquery.magnific-popup.js
+Library: `FrameworkBundle/Resources/scripts/common/plugins/jquery.magnific-popup.js`  
 License: MIT  
 https://github.com/dimsemenov/Magnific-Popup/blob/master/LICENSE
 
 ### Bootstrap - front-end framework
-Library: FrameworkBundle/Resources/scripts/common/bootstrap/
+Library: `FrameworkBundle/Resources/scripts/common/bootstrap/`  
 License: MIT  
 https://github.com/twbs/bootstrap/blob/master/LICENSE
 
 ### Chart.js
-Library: FrameworkBundle/Resources/scripts/admin/plugins/chart.bundle.min.js
+Library: `FrameworkBundle/Resources/scripts/admin/plugins/chart.bundle.min.js`  
 License: MIT  
 https://github.com/chartjs/Chart.js/blob/master/LICENSE.md
 
 ### BazingaJsTranslationBundle
-Library: FrameworkBundle/Resources/scripts/common/plugins/BazingaJsTranslationBundle.translator.js
+Library: `FrameworkBundle/Resources/scripts/common/plugins/BazingaJsTranslationBundle.translator.js`  
 License: MIT  
 https://github.com/willdurand/BazingaJsTranslationBundle/blob/master/LICENSE
 
 ### jQuery Ajax File Uploader Widget
-Library: FrameworkBundle/Resources/scripts/admin/components/jquery.dmuploader.js
+Library: `FrameworkBundle/Resources/scripts/admin/components/jquery.dmuploader.js`  
 License: MIT  
 https://github.com/danielm/uploader/blob/master/LICENSE.txt
 
 ### jquery.fix.clone
-Library: FrameworkBundle/Resources/scripts/common/plugins/jquery.fix.clone.js
+Library: `FrameworkBundle/Resources/scripts/common/plugins/jquery.fix.clone.js`  
 License: MIT  
 https://github.com/spencertipping/jquery.fix.clone/blob/master/README
 
 ### jQuery MiniColors: A tiny color picker built on jQuery
-Library: FrameworkBundle/Resources/scripts/admin/plugins/jquery.colorpicker.js
+Library: `FrameworkBundle/Resources/scripts/admin/plugins/jquery.colorpicker.js`  
 License: MIT  
 https://github.com/claviska/jquery-minicolors/blob/master/LICENSE.md
 
 ### FastClick
-Library: FrameworkBundle/Resources/scripts/common/plugins/fastclick.js  
+Library: `FrameworkBundle/Resources/scripts/common/plugins/fastclick.js`  
 License: MIT  
 https://github.com/ftlabs/fastclick/blob/master/LICENSE
 
 ### hoverIntent jQuery Plugin
-Library: FrameworkBundle/Resources/scripts/admin/plugins/jquery.hoverIntent.js  
+Library: `FrameworkBundle/Resources/scripts/admin/plugins/jquery.hoverIntent.js`  
 License: MIT  
 https://github.com/briancherne/jquery-hoverIntent/blob/master/jquery.hoverIntent.js
 
 ### nestedSortable jQuery Plugin
-Library: FrameworkBundle/Resources/scripts/admin/plugins/jquery.mjs.nestedSortable.js
+Library: `FrameworkBundle/Resources/scripts/admin/plugins/jquery.mjs.nestedSortable.js`  
 License: MIT  
 https://github.com/ilikenwf/nestedSortable/blob/master/README.md
 
 ### normalize.css
-Library: ShopBundle/Resources/styles/front/common/core/reset.less  
+Library: `ShopBundle/Resources/styles/front/common/core/reset.less`  
 License: MIT  
 https://github.com/necolas/normalize.css/blob/master/LICENSE.md
 
 ### jQuery UI Touch Punch 0.2.3
-Library: ShopBundle/Resources/scripts/frontend/plugins/jquery.ui.touch-punch.js  
+Library: `ShopBundle/Resources/scripts/frontend/plugins/jquery.ui.touch-punch.js`  
 License: MIT or GPL Version 2  
 https://github.com/furf/jquery-ui-touch-punch/blob/master/jquery.ui.touch-punch.js
 
 ### Modernizr
-Library: ShopBundle/Resources/scripts/frontend/plugins/modernizr.js  
+Library: `ShopBundle/Resources/scripts/frontend/plugins/modernizr.js`  
 License: MIT  
 https://github.com/Modernizr/Modernizr/blob/master/LICENSE
 
 ### jquery.cookie
-Library: ShopBundle/Resources/scripts/frontend/plugins/jquery.cookie.js  
+Library: `ShopBundle/Resources/scripts/frontend/plugins/jquery.cookie.js`  
 License: MIT  
 https://github.com/carhartl/jquery-cookie/blob/master/MIT-LICENSE.txt
 
