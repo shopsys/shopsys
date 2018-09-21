@@ -46,7 +46,7 @@ class DomainChoiceHandler
             $domainChoices[$domainConfig->getId()] = $domainConfig->getName();
         }
         $chosenDomainName = $io->choice(
-            'There are more than one domain. Which domain do you want to use?',
+            'There is more than one domain. Which domain do you want to use?',
             $domainChoices,
             $firstDomainConfig->getName()
         );
