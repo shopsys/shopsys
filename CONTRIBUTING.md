@@ -16,7 +16,7 @@ php phing standards tests tests-acceptance
 ```
 
 Your code may not infringe the copyrights of any third party.
-If you are changing a composer's dependency in composer.json or you are changing the npm dependencies in package.json, you need to reflect this change into a list of 3rd party licenses.
+If you are changing a composer's dependency in composer.json or you are changing the npm dependencies in package.json, you need to reflect this change into a list of License Overview of Included 3rd Party Libraries.
 Apply the same procedure if you make the changes in Dockerfile or docker-compose.yml files.
 
 These rules ensure that the code will remain consistent and the project is maintainable in the future.
