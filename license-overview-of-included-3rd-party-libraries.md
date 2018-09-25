@@ -234,3 +234,13 @@ npm install --no-save license-checker
 
 ./node_modules/.bin/license-checker
 ``` 
+## Sources of information about licenses
+For the packages installed through the composer, the composer.lock file is the source of the information about licenses. In some cases also the package license information directly in the GitHub repository of the given package is used.
+
+For the packages installed through the npm, the GitHub repositories of these packages are used as the source of the information about licenses.
+
+As a source of information about licenses of images and libraries downloaded and installed through Dockerfile and docker-compose.yml, there are used the GitHub repositories of these images and packages. Licenses of some libraries are mentioned also in a description of used Linux distribution https://pkgs.alpinelinux.org/
+
+Sources of information about licenses of libraries and components that are not downloaded and installed dynamically are the source files of libraries itself or the GitHub repositories of these libraries.
+
+The transitive dependencies of the dependencies and images of 3rd parties are not included.
