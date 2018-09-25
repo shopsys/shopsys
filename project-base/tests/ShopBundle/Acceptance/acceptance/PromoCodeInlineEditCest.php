@@ -47,6 +47,6 @@ class PromoCodeInlineEditCest
         $inlineEditPage->delete(1);
 
         $inlineEditPage->assertDontSeeRow(1);
-        $me->see('Promo code test deleted.');
+        $me->see('Promo code test edited deleted.');
     }
 }
