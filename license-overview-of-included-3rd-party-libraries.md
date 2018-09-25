@@ -133,17 +133,9 @@ https://pkgs.alpinelinux.org/package/edge/main/x86/postgresql-dev
 License: BSD-3-clause  
 https://pkgs.alpinelinux.org/package/edge/community/x86/libzip-dev
 
-### autoconf
-License: GPL2+  
-https://pkgs.alpinelinux.org/package/v3.3/main/x86/autoconf
-
 ### freetype-dev
 License: FTL or GPL2+  
 https://pkgs.alpinelinux.org/package/edge/main/x86/freetype-dev
-
-### libjpeg-turbo-dev
-License: GPL  
-https://pkgs.alpinelinux.org/package/edge/main/x86/libjpeg-turbo-dev
 
 ### pecl
 License: The PHP License  
