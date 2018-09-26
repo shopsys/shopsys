@@ -15,8 +15,8 @@ The search process itself is provided through a microservice. For more informati
 Elasticsearch [index](https://www.elastic.co/blog/what-is-an-elasticsearch-index) is a logical namespace, you can imagine single index as a single database in terms of relational databases.
 
 The Elasticsearch indexes are created during application build.
-You can also create or delete indexes manually using phing targets `elasticsearch-indexes-create`, and `elasticsearch-indexes-delete` respectively,
-or you can use `elasticsearch-indexes-recreate` that encapsulates the previous two.
+You can also create or delete indexes manually using phing targets `microservice-product-search-create-structure`, and `microservice-product-search-delete-structure`. 
+For exporting all products for searching via elasticsearch use phing target `microservice-product-search-export-products`
 
 Unique index is created for each domain as some product attributes can have distinct values for each domain.
 To discover the exact mapping setting, you can look at the JSON configuration files
