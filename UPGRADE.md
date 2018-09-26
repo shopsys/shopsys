@@ -20,9 +20,9 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 ## [From 7.0.0-beta1 to Unreleased]
 ### [shopsys/shopsys]
 - [#497 adding php.ini to image is now done only in dockerfiles](https://github.com/shopsys/shopsys/pull/497)
-    - deleted mounting of `php.ini` in `docker-compose.yml` [files](/docker/conf) because it would not load changes instantly and there was need to restart php process
-    - loading of `php.ini` is now done during dockerimage build
-    - delete the mounting of `php.ini` files in your `docker-compose.yml`
+    - deleted mounting of `php-ini-overrides.ini` in `docker-compose.yml` [files](/docker/conf) because it would not load changes instantly and there was need to restart php process
+    - loading of `php-ini-overrides.ini` is now done during dockerimage build so any change in `php-ini-overrides.ini` is now only loaded by rebuilding the image
+    - delete the mounting of `php-ini-overrides.ini` files in your `docker-compose.yml`
 
 ### [shopsys/project-base]
 - [#494 Microservices webserver using nginx + php-fpm](https://github.com/shopsys/shopsys/pull/494)
