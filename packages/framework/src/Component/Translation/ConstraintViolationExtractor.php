@@ -21,8 +21,6 @@ use Twig_Node;
 
 class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
 {
-    private const CONSTRAINT_MESSAGE_METHOD_NAME = 'addViolation';
-
     /**
      * @var \PhpParser\NodeTraverser
      */
@@ -39,16 +37,16 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     private $file;
 
     /**
-     * @var string
+     * @var string[]
      */
-    private $interfaceInstanceName;
+    private $currentExecutionContextVariableNames;
 
     public function __construct()
     {
         $this->traverser = new NodeTraverser();
         $this->traverser->addVisitor(new NameResolver());
         $this->traverser->addVisitor($this);
-        $this->interfaceInstanceName = '';
+        $this->currentExecutionContextVariableNames = [];
     }
 
     /**
@@ -66,40 +64,37 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
      */
     public function enterNode(Node $node)
     {
-        if ($node instanceof ClassMethod && $this->haveMethodContextInterfaceImplemented($node) === true) {
-            foreach ($node->stmts as $stmt) {
-                $this->recursiveFindMessages($stmt);
+        $this->setCurrentExecutionContextVariableNamesFromNode($node);
+        if ($node instanceof MethodCall && $this->isAddViolationMethodCall($node)) {
+            $this->extractMessage($node);
+        }
+    }
+
+    /**
+     * @param \PhpParser\Node $node
+     */
+    private function setCurrentExecutionContextVariableNamesFromNode(Node $node)
+    {
+        if ($node instanceof ClassMethod) {
+            foreach ($node->getParams() as $parameter) {
+                if ($this->isParameterExecutionContextInterfaceSubclass($parameter)) {
+                    $this->currentExecutionContextVariableNames[] = $parameter->name;
+                }
             }
         }
     }
 
     /**
-     * @param \PhpParser\Node\Stmt\ClassMethod $node
-     * @return bool
+     * @param \PhpParser\Node\Param $parameter
+     * @return string
      */
-    private function haveMethodContextInterfaceImplemented(ClassMethod $node)
+    private function isParameterExecutionContextInterfaceSubclass(Node\Param $parameter)
     {
-        foreach ($node->getParams() as $param) {
-            if ($this->haveParamExecutionContextInterface($param) === true) {
-                return true;
-            }
-        }
+        if ($parameter->type instanceof FullyQualified) {
+            $fullyQualifiedName = implode('\\', $parameter->type->parts);
 
-        return false;
-    }
-
-    /**
-     * @param \PhpParser\Node\Param $param
-     * @return bool
-     */
-    private function haveParamExecutionContextInterface(Node\Param $param)
-    {
-        if ($param->type instanceof FullyQualified) {
-            $className = implode('\\', $param->type->parts);
-            $interfaceName = ExecutionContextInterface::class;
-            $this->interfaceInstanceName = $param->name;
-
-            return $className === $interfaceName;
+            return $fullyQualifiedName === ExecutionContextInterface::class
+                || is_subclass_of($fullyQualifiedName, ExecutionContextInterface::class);
         }
 
         return false;
@@ -107,29 +102,13 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
 
     /**
      * @param \PhpParser\Node $node
+     * @return bool
      */
-    private function recursiveFindMessages(Node $node)
+    private function isAddViolationMethodCall(Node $node): bool
     {
-        if ($node instanceof MethodCall &&
-            $node->var instanceof Variable &&
-            $node->var->name === $this->interfaceInstanceName &&
-            $node->name === self::CONSTRAINT_MESSAGE_METHOD_NAME
-        ) {
-            $this->extractMessage($node);
-        }
-
-        $variables = get_object_vars($node);
-        foreach ($variables as $variable) {
-            if (is_object($variable)) {
-                $this->recursiveFindMessages($variable);
-            } elseif (is_array($variable)) {
-                foreach ($variable as $value) {
-                    if (is_object($value)) {
-                        $this->recursiveFindMessages($value);
-                    }
-                }
-            }
-        }
+        return $node->var instanceof Variable
+            && in_array($node->var->name, $this->currentExecutionContextVariableNames, true)
+            && $node->name === 'addViolation';
     }
 
     /**
@@ -161,7 +140,9 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
      */
     public function leaveNode(Node $node)
     {
-        return null;
+        if ($node instanceof ClassMethod) {
+            $this->currentExecutionContextVariableNames = [];
+        }
     }
 
     /**
