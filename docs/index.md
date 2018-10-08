@@ -25,6 +25,7 @@
 * [Adding New Attribute to an Entity](./cookbook/adding-new-attribute-to-an-entity.md)
 * [Adding a New Administration Page](./cookbook/adding-a-new-administration-page.md)
 * [Adding a New Advert Position](./cookbook/adding-a-new-advert-position.md)
+* How to upgrade to new version of Shopsys Framework - please see instructions in [UPGRADE.md file](../UPGRADE.md)
 
 ## Microservices
 One of the explored ideas of Shopsys Framework is the idea of a product, that some of its parts are designed as the microservices.
