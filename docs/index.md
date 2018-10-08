@@ -1,8 +1,8 @@
 # Shopsys Framework Knowledge Base
 
 ## What is new and how to upgrade
-* For step by step instuctions see [UPGRADE.md](../UPGRADE.md)
-* In [CHANGELOG.md](../CHANGELOG.md) you can find list of all changes in all repositories
+* In [CHANGELOG.md](../CHANGELOG.md) you can find the list of all important changes in all repositories maintained in [shopsys/shopsys monorepo](https://github.com/shopsys/shopsys/)
+* For step by step upgrade instuctions see [UPGRADE.md](../UPGRADE.md)
 
 ## Introduction
 * [Installation Using Docker](installation/installation-using-docker.md) and [Native Installation](installation/native-installation.md)
