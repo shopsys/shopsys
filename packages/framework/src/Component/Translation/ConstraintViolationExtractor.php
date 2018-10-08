@@ -19,6 +19,23 @@ use SplFileInfo;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Twig_Node;
 
+/**
+ * Extracts custom message from constraint callback function.
+ *
+ * Examples:
+ *     Working example
+ *     public function workingExample(ExecutionContextInterface $context)
+ *      {
+ *          $context->addViolation('This message will be extracted into "validators" translation domain');
+ *      }
+ *
+ *      non-working example
+ *      public function nonWorkingExample(ExecutionContextInterface $context)
+ *      {
+ *          $message = 'This message will be not extracted into "validators" translation domain';
+ *          $context->addViolation($message);
+ *      }
+ */
 class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
 {
     /**
