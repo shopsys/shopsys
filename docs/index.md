@@ -1,5 +1,9 @@
 # Shopsys Framework Knowledge Base
 
+## What is new and how to upgrade
+* For step by step instuctions see [UPGRADE.md](../UPGRADE.md)
+* In [CHANGELOG.md](../CHANGELOG.md) you can find list of all changes in all repositories
+
 ## Introduction
 * [Installation Using Docker](installation/installation-using-docker.md) and [Native Installation](installation/native-installation.md)
 * [Phing Targets](./introduction/phing-targets.md)
@@ -25,7 +29,6 @@
 * [Adding New Attribute to an Entity](./cookbook/adding-new-attribute-to-an-entity.md)
 * [Adding a New Administration Page](./cookbook/adding-a-new-administration-page.md)
 * [Adding a New Advert Position](./cookbook/adding-a-new-advert-position.md)
-* How to upgrade to new version of Shopsys Framework - please see instructions in [UPGRADE.md file](../UPGRADE.md)
 
 ## Microservices
 One of the explored ideas of Shopsys Framework is the idea of a product, that some of its parts are designed as the microservices.
