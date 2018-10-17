@@ -67,7 +67,7 @@ Drops all data in the test database and creates a new one with demo data.
 Recreates Elasticsearch indexes structure.
 Consists of two subtasks that can be run independently:
 * `microservice-product-search-delete-structure` - deletes existing indexes structure
-* `microservice-product-search-create-structure` - creates new indexes structure by json definitions stored in [the microservice resources directory](../../microservices/product-search-export/src/Resources/definition).
+* `microservice-product-search-create-structure` - creates new indexes structure by json definitions stored in [the microservice resources directory](/microservices/product-search-export/src/Resources/definition).
 
 #### microservice-product-search-export-products
 Exports all visible products to Elasticsearch.
