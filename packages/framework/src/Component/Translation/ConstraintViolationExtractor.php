@@ -81,22 +81,22 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
      */
     public function enterNode(Node $node)
     {
-        $this->setCurrentExecutionContextVariableNamesFromNode($node);
-        if ($node instanceof MethodCall && $this->isAddViolationMethodCall($node)) {
+        if ($node instanceof ClassMethod) {
+            $this->setCurrentExecutionContextVariableNamesFromNode($node);
+        } elseif ($node instanceof MethodCall && $this->isAddViolationMethodCall($node)) {
             $this->extractMessage($node);
         }
     }
 
     /**
-     * @param \PhpParser\Node $node
+     * @param \PhpParser\Node\Stmt\ClassMethod $node
      */
-    private function setCurrentExecutionContextVariableNamesFromNode(Node $node)
+    private function setCurrentExecutionContextVariableNamesFromNode(ClassMethod $node)
     {
-        if ($node instanceof ClassMethod) {
-            foreach ($node->getParams() as $parameter) {
-                if ($this->isParameterExecutionContextInterfaceSubclass($parameter)) {
-                    $this->currentExecutionContextVariableNames[] = $parameter->name;
-                }
+        $this->currentExecutionContextVariableNames = [];
+        foreach ($node->getParams() as $parameter) {
+            if ($this->isParameterExecutionContextInterfaceSubclass($parameter)) {
+                $this->currentExecutionContextVariableNames[] = $parameter->name;
             }
         }
     }
