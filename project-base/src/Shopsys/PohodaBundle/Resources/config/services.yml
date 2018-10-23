@@ -1,0 +1,11 @@
+services:
+
+    Shopsys\PohodaBundle\Component\Doctrine\PohodaEntityManager: '@doctrine.orm.pohoda_entity_manager'
+
+    doctrine.orm.pohoda_entity_manager:
+        class: Shopsys\PohodaBundle\Component\Doctrine\PohodaEntityManager
+        lazy: true # important, frontend does not need PohodaEntityManager, see ocramius/proxy-manager
+        factory: [Shopsys\PohodaBundle\Component\Doctrine\PohodaEntityManager, create]
+        arguments:
+            - '@doctrine.dbal.pohoda_connection'
+            - '@doctrine.orm.pohoda_configuration'

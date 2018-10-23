@@ -15,6 +15,20 @@ ENV ELASTIC_SEARCH_INDEX_PREFIX=''
 # git for computing diffs and for npm to download packages
 RUN apt-get update && apt-get install -y wget gnupg g++ locales unzip dialog apt-utils git && apt-get clean
 
+RUN apt-get install apt-transport-https
+
+### SQLSRVSTART
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update -yqq \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql17 unixodbc-dev unixodbc \
+    && rm -r /var/lib/apt/lists/*
+
+RUN pecl install sqlsrv pdo_sqlsrv
+
+RUN /usr/local/bin/docker-php-ext-enable sqlsrv pdo_sqlsrv
+###SQLSRVEND
+
 # Install NodeJS
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
 RUN apt-get update && apt-get install -y nodejs && apt-get clean
@@ -62,8 +76,12 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     apt-get update && apt-get install -y postgresql-10 postgresql-client-10 && apt-get clean
 
 # install redis extension
-RUN pecl install redis-4.1.1 && \
-    docker-php-ext-enable redis
+RUN pecl install redis-4.1.1
+
+RUN docker-php-ext-enable \
+    redis \
+    sqlsrv \
+    pdo_sqlsrv
 
 # install locales and switch to en_US.utf8 in order to enable UTF-8 support
 # see http://jaredmarkell.com/docker-and-locales/ from where was this code taken

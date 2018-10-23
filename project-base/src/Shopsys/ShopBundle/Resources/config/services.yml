@@ -92,3 +92,8 @@ services:
     Shopsys\ShopBundle\DataFixtures\Demo\UserDataFixtureLoader:
         arguments:
             - '%shopsys.data_fixtures.resource_customers_filepath%'
+
+    Shopsys\ShopBundle\Model\Order\Pohoda\ImportPohodaOrderCronModule:
+        class: Shopsys\ShopBundle\Model\Order\Pohoda\ImportPohodaOrderCronModule
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*' }

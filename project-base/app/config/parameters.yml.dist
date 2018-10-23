@@ -22,3 +22,12 @@ parameters:
     trusted_proxies:
         - "127.0.0.1"
     env(REDIS_PREFIX): ''
+
+    pohoda_database_driver: pdo_sqlsrv
+    pohoda_database_host: 10.10.11.189
+    pohoda_database_port: 1433
+    pohoda_database_name: StwPh_12345678_2018
+    pohoda_database_user: pohodasql
+    pohoda_database_password: pohoda123
+    pohoda_database_charset: UTF8
+    pohoda_database_server_version: !!float 12
