@@ -224,7 +224,6 @@ docker build \
     --target production \
     -t production-php-fpm \
     --compress \
-    --build-arg github_oauth_token=PERSONAL_ACCESS_TOKEN_FROM_GITHUB \
     .
 ```
 Replace the `PERSONAL_ACCESS_TOKEN_FROM_GITHUB` string by the token generated on [Github -> Settings -> Developer Settings -> Personal access tokens](https://github.com/settings/tokens/new?scopes=repo&description=Composer+API+token).
