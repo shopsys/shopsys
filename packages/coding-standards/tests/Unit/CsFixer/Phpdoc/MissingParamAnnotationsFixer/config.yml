@@ -1,0 +1,3 @@
+services:
+    Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer: ~
+

@@ -1,0 +1,4 @@
+services:
+    Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer: ~
+    Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer: ~
+    Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer: ~
