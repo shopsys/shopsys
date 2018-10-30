@@ -20,23 +20,8 @@ final class MissingReturnAnnotationFixer extends AbstractMissingAnnotationsFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Methods and functions has to have @return annotation',
-            [new CodeSample(
-<<<'SAMPLE'
-function someFunction(): int
-{
-}
-SAMPLE
-            ), new CodeSample(
-<<<'SAMPLE'
-/**
- * @return int
- */
-function someFunction(): int
-{
-}
-SAMPLE
-            )]
+            'Methods and functions have to have @return annotation',
+            [new CodeSample('function someFunction(): int {}')]
         );
     }
 
@@ -62,7 +47,7 @@ SAMPLE
             $this->whitespacesFixerConfig->getLineEnding()
         ));
 
-        if ($docToken) {
+        if ($docToken !== null) {
             $this->updateDocWithLines($tokens, $index, $docToken, [$newLine]);
             return;
         }
@@ -77,7 +62,7 @@ SAMPLE
      */
     private function shouldSkip(string $type, ?Token $docToken): bool
     {
-        if (!$type || $type === 'void') {
+        if (in_array($type, ['', 'void', 'mixed'], true)) {
             return true;
         }
 

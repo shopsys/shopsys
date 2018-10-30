@@ -12,24 +12,25 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
-use PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use Shopsys\CodingStandards\Helper\PhpdocRegex;
-use Shopsys\CodingStandards\Helper\ShopsysFixerNaming;
 use SplFileInfo;
 
 final class OrderedParamAnnotationsFixer implements FixerInterface, DefinedFixerInterface
 {
     /**
-     * @var FunctionsAnalyzer
+     * @var \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer
      */
     private $functionsAnalyzer;
 
-    public function __construct()
+    /**
+     * @param \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer $functionsAnalyzer
+     */
+    public function __construct(FunctionsAnalyzer $functionsAnalyzer)
     {
-        $this->functionsAnalyzer = new FunctionsAnalyzer();
+        $this->functionsAnalyzer = $functionsAnalyzer;
     }
 
     /**
@@ -44,16 +45,6 @@ final class OrderedParamAnnotationsFixer implements FixerInterface, DefinedFixer
 /**
  * @param int $value2
  * @param int $value
- */
-function someFunction($value, $value2)
-{
-}
-SAMPLE
-            ), new CodeSample(
-                <<<'SAMPLE'
-/**
- * @param int $value
- * @param int $value2
  */
 function someFunction($value, $value2)
 {
@@ -91,12 +82,12 @@ SAMPLE
             }
 
             $functionTokenPosition = $tokens->getNextTokenOfKind($index, [new Token([T_FUNCTION, 'function'])]);
-            if (!$functionTokenPosition) {
+            if ($functionTokenPosition === null) {
                 continue;
             }
 
             $argumentAnalyses = $this->functionsAnalyzer->getFunctionArguments($tokens, $functionTokenPosition);
-            if (!count($argumentAnalyses)) {
+            if (count($argumentAnalyses) === 0) {
                 continue;
             }
 
@@ -124,7 +115,7 @@ SAMPLE
      */
     public function getName(): string
     {
-        return ShopsysFixerNaming::createFromClass(self::class);
+        return self::class;
     }
 
     /**
@@ -165,9 +156,9 @@ SAMPLE
     }
 
     /**
-     * @param Line[] $lines
-     * @param ArgumentAnalysis[] $argumentAnalyses
-     * @return Line[]
+     * @param \PhpCsFixer\DocBlock\Line[] $lines
+     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis[] $argumentAnalyses
+     * @return \PhpCsFixer\DocBlock\Line[]
      */
     private function sortParamLinesByArgumentOrder(array $lines, array $argumentAnalyses): array
     {
@@ -175,13 +166,13 @@ SAMPLE
 
         foreach ($lines as $key => $line) {
             $paramName = $this->getParamNameFromLine($line);
-            if ($paramName && isset($argumentAnalyses[$paramName])) {
+            if ($paramName !== null && isset($argumentAnalyses[$paramName])) {
                 // use argument name as key, for sorting
                 $docParamNamesToKeys[$paramName] = $key;
             }
         }
 
-        if (!$docParamNamesToKeys) {
+        if (count($docParamNamesToKeys) === 0) {
             return $lines;
         }
 
@@ -191,7 +182,7 @@ SAMPLE
         $newLines = [];
         foreach ($lines as $position => $line) {
             $paramName = $this->getParamNameFromLine($line);
-            if ($paramName && isset($properParamOrder[$paramName])) {
+            if ($paramName !== null && isset($properParamOrder[$paramName])) {
                 $newPosition = $properParamOrder[$paramName];
                 $newLines[$newPosition] = $line;
             } else {
@@ -211,7 +202,7 @@ SAMPLE
     private function getParamNameFromLine(Line $line): ?string
     {
         $matches = Strings::match($line->getContent(), PhpdocRegex::ARGUMENT_NAME_PATTERN);
-        if ($matches[1]) {
+        if (isset($matches[1]) && !empty($matches[1])) {
             return $matches[1];
         }
 
@@ -219,7 +210,7 @@ SAMPLE
     }
 
     /**
-     * @param int[] $argumentAnalyses
+     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis[] $argumentAnalyses
      * @param int[] $docParamNamesToKeys
      * @return int[]
      */

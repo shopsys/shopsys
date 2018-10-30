@@ -7,9 +7,8 @@ namespace Shopsys\CodingStandards\Helper;
 final class PhpdocRegex
 {
     /**
-     * "@param typ $value"
-     * ↓
-     * "$value"
+     * This matches the "$value" part in:
+     * "@param type $value"
      *
      * @var string
      */

@@ -22,23 +22,8 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Methods and functions has to have @param annotation for all params and @return annotation',
-            [new CodeSample(
-                <<<'SAMPLE'
-function someFunction(int $value)
-{
-}
-SAMPLE
-            ), new CodeSample(
-                <<<'SAMPLE'
-/**
- * @param int
- */
-function someFunction(int $value)
-{
-}
-SAMPLE
-            )]
+            'Methods and functions have to have @param annotation for all params',
+            [new CodeSample('function someFunction(int $value) {}')]
         );
     }
 
@@ -50,49 +35,72 @@ SAMPLE
     protected function processFunctionToken(Tokens $tokens, int $index, ?Token $docToken): void
     {
         $argumentAnalyses = $this->functionsAnalyzer->getFunctionArguments($tokens, $index);
-        if (!count($argumentAnalyses)) {
+        if (count($argumentAnalyses) === 0) {
             return;
         }
 
-        if ($docToken) {
-            $doc = new DocBlock($docToken->getContent());
-            $lastParamLine = null;
-
-            foreach ($doc->getAnnotationsOfType('param') as $annotation) {
-                $matches = Strings::match($annotation->getContent(), PhpdocRegex::ARGUMENT_NAME_PATTERN);
-                if (isset($matches[1])) {
-                    unset($argumentAnalyses[$matches[1]]);
-                }
-
-                $lastParamLine = max($lastParamLine, $annotation->getEnd());
-            }
+        if ($docToken !== null) {
+            $argumentAnalyses = $this->filterArgumentAnalysesFromExistingParamAnnotations($argumentAnalyses, $docToken);
         }
 
         // all arguments have annotations → skip
-        if (!count($argumentAnalyses)) {
+        if (count($argumentAnalyses) === 0) {
             return;
         }
 
         $indent = $this->resolveIndent($tokens, $index);
 
-        $newLines = [];
+        $newLines = $this->createParamLinesFromArgumentAnalyses($tokens, $argumentAnalyses, $indent);
+
+        if ($docToken !== null) {
+            $this->updateDocWithLines($tokens, $index, $docToken, $newLines);
+            return;
+        }
+
+        $this->addDocWithLines($tokens, $index, $newLines, $indent);
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis[] $argumentAnalyses
+     * @param \PhpCsFixer\Tokenizer\Token $docToken
+     * @return array
+     */
+    private function filterArgumentAnalysesFromExistingParamAnnotations(array $argumentAnalyses, Token $docToken): array
+    {
+        $doc = new DocBlock($docToken->getContent());
+
+        foreach ($doc->getAnnotationsOfType('param') as $annotation) {
+            $matches = Strings::match($annotation->getContent(), PhpdocRegex::ARGUMENT_NAME_PATTERN);
+            if (isset($matches[1])) {
+                unset($argumentAnalyses[$matches[1]]);
+            }
+        }
+
+        return $argumentAnalyses;
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis $argumentAnalyses
+     * @param string $indent
+     * @return \PhpCsFixer\DocBlock\Line[]
+     */
+    private function createParamLinesFromArgumentAnalyses(Tokens $tokens, array $argumentAnalyses, string $indent): array
+    {
+        $lines = [];
+
         foreach ($argumentAnalyses as $argumentAnalysis) {
             $type = $this->phpToDocTypeTransformer->transform($tokens, $argumentAnalysis->getTypeAnalysis(), $argumentAnalysis->getDefault());
 
-            $newLines[] = new Line(sprintf(
+            $lines[] = new Line(sprintf(
                 '%s * @param %s %s%s',
                 $indent,
-                $type,
+                $type ?: 'mixed',
                 $argumentAnalysis->getName(),
                 $this->whitespacesFixerConfig->getLineEnding()
             ));
         }
 
-        if ($docToken) {
-            $this->updateDocWithLines($tokens, $index, $docToken, $newLines, $lastParamLine);
-            return;
-        }
-
-        $this->addDocWithLines($tokens, $index, $newLines, $indent);
+        return $lines;
     }
 }

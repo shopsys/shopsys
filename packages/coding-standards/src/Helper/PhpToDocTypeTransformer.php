@@ -11,13 +11,16 @@ use PhpCsFixer\Tokenizer\Tokens;
 final class PhpToDocTypeTransformer
 {
     /**
-     * @var FqnNameResolver
+     * @var \Shopsys\CodingStandards\Helper\FqnNameResolver
      */
     private $fqnNameResolver;
 
-    public function __construct()
+    /**
+     * @param \Shopsys\CodingStandards\Helper\FqnNameResolver $fqnNameResolver
+     */
+    public function __construct(FqnNameResolver $fqnNameResolver)
     {
-        $this->fqnNameResolver = new FqnNameResolver();
+        $this->fqnNameResolver = $fqnNameResolver;
     }
 
     /**
@@ -29,14 +32,14 @@ final class PhpToDocTypeTransformer
     public function transform(Tokens $tokens, ?TypeAnalysis $typeAnalysis, $default = null): string
     {
         if ($typeAnalysis === null) {
-            return '';
-        }
+            $type = 'mixed';
+        } else {
+            if ($typeAnalysis->isReservedType() && $default === null) {
+                return $typeAnalysis->getName();
+            }
 
-        if ($typeAnalysis->isReservedType() && $default === null) {
-            return $typeAnalysis->getName();
+            $type = $typeAnalysis->getName();
         }
-
-        $type = $typeAnalysis->getName();
 
         // nullable
         if ($type[0] === '?' || (is_string($default) && strtolower($default) === 'null')) {

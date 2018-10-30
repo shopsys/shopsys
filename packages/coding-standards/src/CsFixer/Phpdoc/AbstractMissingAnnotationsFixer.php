@@ -6,7 +6,6 @@ namespace Shopsys\CodingStandards\CsFixer\Phpdoc;
 
 use Nette\Utils\Strings;
 use PhpCsFixer\DocBlock\DocBlock;
-use PhpCsFixer\DocBlock\Line;
 use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
@@ -14,7 +13,6 @@ use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 use Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer;
-use Shopsys\CodingStandards\Helper\ShopsysFixerNaming;
 use SplFileInfo;
 use Symplify\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
 
@@ -29,34 +27,41 @@ use Symplify\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
 abstract class AbstractMissingAnnotationsFixer implements FixerInterface, DefinedFixerInterface
 {
     /**
-     * @var WhitespacesFixerConfig
+     * @var \PhpCsFixer\WhitespacesFixerConfig
      */
     protected $whitespacesFixerConfig;
 
     /**
-     * @var FunctionsAnalyzer
+     * @var \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer
      */
     protected $functionsAnalyzer;
 
     /**
-     * @var IndentDetector
+     * @var \Symplify\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector
      */
     private $indentDetector;
 
     /**
-     * @var PhpToDocTypeTransformer
+     * @var \Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer
      */
     protected $phpToDocTypeTransformer;
 
     /**
      * @param \PhpCsFixer\WhitespacesFixerConfig $whitespacesFixerConfig
+     * @param \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer $functionsAnalyzer
+     * @param \Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer $phpToDocTypeTransformer
+     * @param \Symplify\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector $indentDetector
      */
-    public function __construct(WhitespacesFixerConfig $whitespacesFixerConfig)
-    {
+    public function __construct(
+        WhitespacesFixerConfig $whitespacesFixerConfig,
+        FunctionsAnalyzer $functionsAnalyzer,
+        PhpToDocTypeTransformer $phpToDocTypeTransformer,
+        IndentDetector $indentDetector
+    ) {
         $this->whitespacesFixerConfig = $whitespacesFixerConfig;
-        $this->functionsAnalyzer = new FunctionsAnalyzer();
-        $this->indentDetector = new IndentDetector($whitespacesFixerConfig);
-        $this->phpToDocTypeTransformer = new PhpToDocTypeTransformer();
+        $this->functionsAnalyzer = $functionsAnalyzer;
+        $this->indentDetector = $indentDetector;
+        $this->phpToDocTypeTransformer = $phpToDocTypeTransformer;
     }
 
     /**
@@ -78,7 +83,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
             }
 
             $docToken = $this->getDocToken($tokens, $index);
-            if ($docToken && $this->shouldSkipDocToken($docToken)) {
+            if ($docToken !== null && $this->shouldSkipDocToken($docToken)) {
                 continue;
             }
 
@@ -115,7 +120,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
      */
     public function getName(): string
     {
-        return ShopsysFixerNaming::createFromClass(self::class);
+        return static::class;
     }
 
     /**
@@ -175,17 +180,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
     /**
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @param int $index
-     * @return bool
-     */
-    protected function hasDoc(Tokens $tokens, int $index): bool
-    {
-        $docIndex = $this->getDocIndex($tokens, $index);
-        return $tokens[$docIndex]->isGivenKind(T_DOC_COMMENT);
-    }
-
-    /**
-     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param int $index
      * @return int
      */
     protected function getDocIndex(Tokens $tokens, int $index): int
@@ -198,7 +192,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
     }
 
     /**
-     * @param Line[] $newLines
+     * @param \PhpCsFixer\DocBlock\Line[] $newLines
      * @param string $indent
      * @return string
      */
@@ -214,20 +208,18 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
 
     /**
      * @param \PhpCsFixer\Tokenizer\Token $docToken
-     * @param Line[] $newLines
+     * @param \PhpCsFixer\DocBlock\Line[] $newLines
      * @param int|null $offset
      * @return string
      */
-    protected function createDocContentFromDocTokenAndNewLines(Token $docToken, array $newLines, ?int $offset = null): string
+    protected function createDocContentFromDocTokenAndNewLines(Token $docToken, array $newLines): string
     {
         $doc = new DocBlock($docToken->getContent());
         $lines = $doc->getLines();
 
-        $offset = $offset ?: (count($lines) - 1);
-
         array_splice(
             $lines,
-            $offset,
+            $this->resolveOffset($docToken, $newLines),
             0,
             $newLines
         );
@@ -252,24 +244,23 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
     }
 
     /**
-     * @param Tokens $tokens
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @param int $index
-     * @param Token $docToken
-     * @param Line[] $newLines
-     * @param int|null $lastParamLine
+     * @param \PhpCsFixer\Tokenizer\Token $docToken
+     * @param \PhpCsFixer\DocBlock\Line[] $newLines
      */
-    protected function updateDocWithLines(Tokens $tokens, int $index, Token $docToken, array $newLines, ?int $lastParamLine = null): void
+    protected function updateDocWithLines(Tokens $tokens, int $index, Token $docToken, array $newLines): void
     {
         $docBlockIndex = $this->getDocIndex($tokens, $index);
-        $docContent = $this->createdocContentFromDocTokenAndNewLines($docToken, $newLines, $lastParamLine);
+        $docContent = $this->createDocContentFromDocTokenAndNewLines($docToken, $newLines);
 
         $tokens[$docBlockIndex] = new Token([T_DOC_COMMENT, $docContent]);
     }
 
     /**
-     * @param Tokens $tokens
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @param int $index
-     * @param Line[] $newLines
+     * @param \PhpCsFixer\DocBlock\Line[] $newLines
      * @param string $indent
      */
     protected function addDocWithLines(Tokens $tokens, int $index, array $newLines, string $indent): void
@@ -278,8 +269,8 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
         $docContent = $this->createDocContentFromLinesAndIndent($newLines, $indent);
 
         $tokens->insertAt($docBlockIndex, new Token([T_DOC_COMMENT, $docContent]));
-        $whitespaceAfterDocblock = $this->whitespacesFixerConfig->getLineEnding() . $indent;
-        $tokens->ensureWhitespaceAtIndex($docBlockIndex, 1, $whitespaceAfterDocblock);
+        $whitespaceAfterDocBlock = $this->whitespacesFixerConfig->getLineEnding() . $indent;
+        $tokens->ensureWhitespaceAtIndex($docBlockIndex, 1, $whitespaceAfterDocBlock);
     }
 
     /**
@@ -313,5 +304,38 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
         $content = $tokens[$index]->getContent();
 
         return Strings::contains($content, $this->whitespacesFixerConfig->getLineEnding());
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Token $docToken
+     * @param \PhpCsFixer\DocBlock\Line[] $newLines
+     * @return int
+     */
+    private function resolveOffset(Token $docToken, array $newLines): int
+    {
+        foreach ($newLines as $newLine) {
+            if (Strings::contains($newLine->getContent(), '@param') && Strings::contains($docToken->getContent(), '@param')) {
+                return $this->getLastParamLinePosition($docToken);
+            }
+        }
+
+        $doc = new DocBlock($docToken->getContent());
+        return count($doc->getLines()) - 1;
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Token $docToken
+     * @return int|null
+     */
+    private function getLastParamLinePosition(Token $docToken): ?int
+    {
+        $doc = new DocBlock($docToken->getContent());
+
+        $lastParamLine = null;
+        foreach ($doc->getAnnotationsOfType('param') as $annotation) {
+            $lastParamLine = max($lastParamLine, $annotation->getEnd());
+        }
+
+        return $lastParamLine;
     }
 }

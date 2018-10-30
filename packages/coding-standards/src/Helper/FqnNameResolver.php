@@ -10,13 +10,16 @@ use PhpCsFixer\Tokenizer\Tokens;
 final class FqnNameResolver
 {
     /**
-     * @var NamespaceUsesAnalyzer
+     * @var \PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer
      */
     private $namespaceUsesAnalyzer;
 
-    public function __construct()
+    /**
+     * @param \PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer $namespaceUsesAnalyzer
+     */
+    public function __construct(NamespaceUsesAnalyzer $namespaceUsesAnalyzer)
     {
-        $this->namespaceUsesAnalyzer = new NamespaceUsesAnalyzer();
+        $this->namespaceUsesAnalyzer = $namespaceUsesAnalyzer;
     }
 
     /**
@@ -35,18 +38,57 @@ final class FqnNameResolver
             return $className;
         }
 
+        $matchedClassName = $this->matchUseImports($tokens, $className);
+        if ($matchedClassName !== null) {
+            return $matchedClassName;
+        }
+
+        if ($this->hasNamespace($tokens)) {
+            return $this->getNamespaceAsString($tokens) . '\\' . $className;
+        }
+
+        // no namespace, return the class
+        return $className;
+    }
+
+    /**
+     * Tries to match names against use imports, e.g. "SomeClass" returns "SomeNamespace\SomeClass" for:
+     *
+     * use SomeNamespace\AnotherClass;
+     * use SomeNamespace\SomeClass;
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param string $className
+     * @return string|null
+     */
+    private function matchUseImports(Tokens $tokens, string $className): ?string
+    {
         $namespaceUseAnalyses = $this->namespaceUsesAnalyzer->getDeclarationsFromTokens($tokens);
+
         foreach ($namespaceUseAnalyses as $namespaceUseAnalysis) {
             if ($className === $namespaceUseAnalysis->getShortName()) {
                 return $namespaceUseAnalysis->getFullName();
             }
         }
 
-        $namespaceTokens = $tokens->findGivenKind([T_NAMESPACE], 0);
-        if (!count($namespaceTokens[T_NAMESPACE])) {
-            return $className;
-        }
+        return null;
+    }
 
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @return bool
+     */
+    private function hasNamespace(Tokens $tokens): bool
+    {
+        return (bool) $tokens->findGivenKind([T_NAMESPACE], 0);
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @return string
+     */
+    private function getNamespaceAsString(Tokens $tokens): string
+    {
+        $namespaceTokens = $tokens->findGivenKind([T_NAMESPACE], 0);
         $namespaceToken = array_pop($namespaceTokens);
         reset($namespaceToken);
 
@@ -59,6 +101,6 @@ final class FqnNameResolver
             ++$position;
         }
 
-        return $namespaceName . '\\' . $className;
+        return $namespaceName;
     }
 }
