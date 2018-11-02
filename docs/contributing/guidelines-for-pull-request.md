@@ -40,7 +40,7 @@ It would be good if you could respond to each comment so that we knew you were r
 We use fixup commits for correcting pull request so the reviewer can see what edits were made. Once the changes are done, the branch must be pushed. Comments to commit message should be corrected after the fixup commit squash.
 
 #### Fixup commit usage:
-* Changes which you want to add to previous commits commit independently with ```git commit --fixup=hash```. Commit messages will be automatically completed.     
+* Changes which you want to add to previous commits commit independently with ```git commit --fixup=hash```. Commit messages will be automatically completed.  
 
 #### Hash commit on GitHub (in right):
 

@@ -53,7 +53,7 @@ All `<button>` HTML tags in `.html` and `.html.twig` files must have explicit `t
 
 If the `type` is not specified it will be fixed to `type="button""` because the implicit value is `submit` which makes it behave differently based on the context (`<button>` inside `<form>` element submits the form).
 
-#### `Shopsys/orm_join_column_require_nullable`    
+#### `Shopsys/orm_join_column_require_nullable`  
 
 Doctrine annotations `@ORM\ManyToOne` and `@ORM\OneToOne` must have `nullable` option defined explicitly in `@ORM\JoinColumn`.
 

@@ -442,7 +442,7 @@ parameters:
     - https://symfony.com/blog/twig-how-to-upgrade-to-2-0-deprecation-notices-to-the-rescue
 
 ## [From 7.0.0-alpha1 to 7.0.0-alpha2]
-### [shopsys/project-base]   
+### [shopsys/project-base]  
 - check changes in the `docker-compose.yml` template you used, there were a couple of important changes you need to replicate
     - easiest way is to overwrite your `docker-compose.yml` with by the appropriate template
 - on *nix systems, fill your UID and GID (you can run `id -u` and `id -g` to obtain them) into Docker build arguments `www_data_uid` and `www_data_gid` and rebuild your image via `docker-compose up --build`
@@ -512,7 +512,7 @@ in your product feed plugin because the instances of `StandardFeedItemInterface`
 - all implementations of `DataStorageInterface` now must have implemented method `getAll()` for getting all saved data indexed by keys
 
 ### [shopsys/project-base]
-#### From 2.0.0-beta.21.0 to 7.0.0-alpha1      
+#### From 2.0.0-beta.21.0 to 7.0.0-alpha1  
 - manual upgrade from this version will be very hard because of BC-breaking extraction of [shopsys/framework](https://github.com/shopsys/framework)  
     - at this moment the core is not easily extensible by your individual functionality  
     - before upgrading to the new architecture you should upgrade to Dockerized architecture of `2.0.0-beta.21.0`  

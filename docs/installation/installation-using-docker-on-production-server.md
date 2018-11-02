@@ -255,7 +255,7 @@ We log into the server using ssh.
 Now we need to copy [`docker-compose-prod-deploy.yml.dist`](../../project-base/docker/conf/docker-compose.prod.yml.dist) into folder on the production server as `docker-compose.yml`.  
 After the image is in the registry of the production server we create docker containers and build application for production with clean DB and base data.  
 We use parameter `-p` to specify the name of the project and prefix for the volumes so these will be easily accessible.
-There are named volumes created under path `/var/lib/docker/volumes/` and one persisted folder `production-content` for all uploaded images and generated files that should not be removed.    
+There are named volumes created under path `/var/lib/docker/volumes/` and one persisted folder `production-content` for all uploaded images and generated files that should not be removed.  
 We create persisted folder with correct owner id `82` so internal docker `php-fpm` container user has access into the folder.
 ```
 mkdir /var/www/production-content
@@ -299,7 +299,7 @@ To preserve created data we need to use phing target `build-deploy-part-2-db-dep
 
 With each update of master branch in our repository we need to rebuild image based on [Docker Image Building](./installation-using-docker-on-production-server.md#docker-image-building) section.
 
-We log into the server using ssh.    
+We log into the server using ssh.  
 Now we are logged in production server and we start to deploy newly built production image.
 ```
 cd <PROJECT_ROOT_PATH> (e.g. /var/www/html)

@@ -43,7 +43,7 @@ Search with the usage of Microservice Product Search is done by calling the meth
 ```php
 public function get(string $resource, array $parameters = [])
 {
-    // ...   
+    // ...  
 }
 ```
 A resource is represented with the specific uri address.

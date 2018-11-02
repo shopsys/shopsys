@@ -216,11 +216,11 @@ psql --username postgres --dbname <test_database_name> --command "ALTER SCHEMA p
 ### Phing target db-create fails on MissingLocaleException
 Error message:
 ```
-[Shopsys\FrameworkBundle\Command\Exception\MissingLocaleException]                                                                                    
+[Shopsys\FrameworkBundle\Command\Exception\MissingLocaleException]  
 It looks like your operating system does not support locale "cs_CZ.utf8". Please visit docs/installation/native-installation.md#troubleshooting for more details.
 
-[Doctrine\DBAL\Exception\DriverException]                                                                           
-An exception occurred while executing 'CREATE COLLATION pg_catalog."cs_CZ" (LOCALE="cs_CZ"."utf8")':                  
+[Doctrine\DBAL\Exception\DriverException]  
+An exception occurred while executing 'CREATE COLLATION pg_catalog."cs_CZ" (LOCALE="cs_CZ"."utf8")':  
 SQLSTATE[22023]: Invalid parameter value: 7 ERROR:  could not create locale "cs_CZ.utf8": No such file or directory  
 DETAIL:  The operating system could not find any locale data for the locale name "cs_CZ.utf8".
 ```

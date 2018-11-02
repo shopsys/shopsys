@@ -122,7 +122,7 @@ License: GPL
 https://pkgs.alpinelinux.org/package/v3.3/main/x86/libpng-dev
 
 ### icu-dev
-License: MIT or ICU or Unicode-TOU    
+License: MIT or ICU or Unicode-TOU  
 https://pkgs.alpinelinux.org/package/edge/main/x86/icu-dev
 
 ### postgresql-dev
