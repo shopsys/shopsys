@@ -37,7 +37,7 @@ If you want to add a new custom position, let us say on the product detail page,
 
 2. In your `services.yml`, set your new class as an alias for the base one.
     ```yaml
-    Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry: 
+    Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry:
         class: Shopsys\ShopBundle\Model\Advert\AdvertPositionRegistry
     ```
 

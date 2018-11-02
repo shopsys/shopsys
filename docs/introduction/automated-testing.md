@@ -9,7 +9,7 @@ For this reason Shopsys Framework comes with 5 types of automated tests:
 * [Performance tests](#performance-tests)
 
 Software testing, in general, is a very broad topic and requires learning and practice.
-The following paragraphs should help you in your path to answering questions like *"What should I test?"*, *"Which type of tests should I use for this particular functionality?"* or *"How many tests is enough?"* 
+The following paragraphs should help you in your path to answering questions like *"What should I test?"*, *"Which type of tests should I use for this particular functionality?"* or *"How many tests is enough?"*
 
 ## The purpose(s) of automated tests
 

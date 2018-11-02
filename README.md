@@ -1,11 +1,11 @@
 # Shopsys Framework
-Shopsys Framework is a **fully functional ecommerce platform for businesses transitioning into tech-companies with their own software development team**. 
+Shopsys Framework is a **fully functional ecommerce platform for businesses transitioning into tech-companies with their own software development team**.
 It contains the most common B2C and B2B features for online stores, and its infrastructure is prepared for high scalability.
 
-Shopsys Framework is **the fruit of our 15 years of experience in creating custom-made online stores and it’s dedicated to best in-house devs teams who work with online stores with tens of millions of Euros of turnover per year**. 
+Shopsys Framework is **the fruit of our 15 years of experience in creating custom-made online stores and it’s dedicated to best in-house devs teams who work with online stores with tens of millions of Euros of turnover per year**.
 
-Our platform’s **architecture is modern and corresponds to the latest trends in the production of software for leading ecommerce solutions**. 
-Deployment and scaling of our system are comfortable thanks to the use of the containerization and orchestration concepts (**Docker, Kubernetes**). 
+Our platform’s **architecture is modern and corresponds to the latest trends in the production of software for leading ecommerce solutions**.
+Deployment and scaling of our system are comfortable thanks to the use of the containerization and orchestration concepts (**Docker, Kubernetes**).
 The platform is based on one of the best PHP frameworks on the market - **Symfony**.
 
 ## Shopsys Framework Infrastructure
@@ -81,7 +81,7 @@ If you have some ideas or you want to help to improve Shopsys Framework, let us 
 We are looking forward to your insights, feedback, and improvements.
 Thank you for helping us making Shopsys Framework better.
 
-You can find all the necessary information in our [Contribution Guide](./CONTRIBUTING.md). 
+You can find all the necessary information in our [Contribution Guide](./CONTRIBUTING.md).
 
 ## Support
 What to do when you are in troubles or need some help?
@@ -95,14 +95,14 @@ Or ultimately, just [report an issue](https://github.com/shopsys/shopsys/issues/
 ## License
 We distribute our main parts of Shopsys Framework
 [shopsys/project-base](https://github.com/shopsys/project-base) and
-[shopsys/framework](https://github.com/shopsys/framework) under two different licenses: 
+[shopsys/framework](https://github.com/shopsys/framework) under two different licenses:
 
 * [Community License](./LICENSE) in MIT style for growing small to mid-size e-commerce sites with total online sales less than 12.000.000 EUR / year (3.000.000 EUR / quarter)
 * Commercial License
 
 Learn the principles on which we distribute our product on our website at [Licenses and Pricing section](https://www.shopsys.com/licensing).
 
-The rest of modules of Shopsys Framework including [HTTP smoke testing](https://github.com/shopsys/http-smoke-testing) are distributed under standard MIT license. 
+The rest of modules of Shopsys Framework including [HTTP smoke testing](https://github.com/shopsys/http-smoke-testing) are distributed under standard MIT license.
 
 Shopsys Framework also uses some third-party components and images which are licensed under their own respective licenses.
 The list of these licenses is summarized in [License overview of included 3rd party libraries](./license-overview-of-included-3rd-party-libraries.md).

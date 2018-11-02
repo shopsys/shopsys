@@ -15,8 +15,8 @@ For specific functionality, such as generating product feeds, there are [separat
 For example usage see the `AcmeProductCrudExtension` in the CRUD extension section below.
 
 ### Storing data
-Best way to store your plugin data is to use Doctrine entities. 
-Create a folder (e.g. `src/Entity`) in your plugin and put your entities there. 
+Best way to store your plugin data is to use Doctrine entities.
+Create a folder (e.g. `src/Entity`) in your plugin and put your entities there.
 Then you need to create `DoctrineOrmMappingPass` and add it as `CompilerPass` in your `YourBundleNameBundle` class. This can be done like this:
 
 ```php
@@ -162,7 +162,7 @@ class AcmeDataFixture implements PluginDataFixtureInterface
 ```
 
 ## CRON modules
-When your plugin needs to execute some task periodically, for example downloading currency exchange rates every six hours, you can use a CRON module. 
+When your plugin needs to execute some task periodically, for example downloading currency exchange rates every six hours, you can use a CRON module.
 
 There are 2 types of CRON module interfaces:
 - [`SimpleCronModuleInterface`](./src/Cron/SimpleCronModuleInterface.php)

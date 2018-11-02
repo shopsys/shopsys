@@ -25,8 +25,8 @@ php composer require shopsys/coding-standards
 
 ## Usage
 
-Create `easy-coding-standard.yml` config file in your project which includes predefined ruleset. 
-You can also [customize the rules](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md#shopsyscoding-standards) 
+Create `easy-coding-standard.yml` config file in your project which includes predefined ruleset.
+You can also [customize the rules](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md#shopsyscoding-standards)
 and even add your own sniffs and fixers in the config.
 
 ```yaml
@@ -77,7 +77,7 @@ Instantiation of objects that can be created by their factories is not allowed o
 #### `ValidVariableNameSniff`
 
 Default `\PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff`
-does not report method parameters in `$_var` format as an violation but it should. 
+does not report method parameters in `$_var` format as an violation but it should.
 It also skips checking of private members when `PrivateNoUnderscore` property is disabled.
 
 This sniff provides the missing functionality and is intended to be used as an addition to the default `ValidVariableNameSniff`.

@@ -55,7 +55,7 @@ There is a list of all the repositories maintained by monorepo, changes in log b
     - to simplify installation, add `"Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postInstall"` to `post-install-cmd` and `"Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postUpdate"` to  `post-update-cmd` scripts in your `composer.json`
     - you will not have to copy the `domains_urls.yml.dist` during the installation anymore
     - you can also remove the now redundant Phing target `domains-urls-check` from your `build.xml` and `build-dev.xml`
-- *(optional)* [#428 Removed depends_on and links from docker-compose.yml files](https://github.com/shopsys/shopsys/pull/528) 
+- *(optional)* [#428 Removed depends_on and links from docker-compose.yml files](https://github.com/shopsys/shopsys/pull/528)
     - remove all `depends_on` and `links` from your docker-compose files because they are unnecessary
 - [#538 - phing targets: create-domains-data is now dependent on create-domains-db-functions](https://github.com/shopsys/shopsys/pull/538)
     - modify your `build.xml` and `build-dev.xml` according to this pull request
@@ -85,7 +85,7 @@ There is a list of all the repositories maintained by monorepo, changes in log b
     - *(monorepo only)* add `shopsys-framework-microservice-product-search-sync` and `shopsys-framework-microservice-product-search-export-sync` volumes to `docker-compose.yml` for `php-fpm` service
         ```
         services:
-            # ... 
+            # ...
             php-fpm:
                 # ...
                 volumes:
@@ -94,7 +94,7 @@ There is a list of all the repositories maintained by monorepo, changes in log b
                     - shopsys-framework-microservice-product-search-export-sync:/var/www/html/microservices/product-search-export
         ```
     - run `docker-sync start` to create volumes
-    - run `docker-compose up -d --force-recreate` to start application again 
+    - run `docker-compose up -d --force-recreate` to start application again
 - [#533 main php-fpm container now uses multi-stage build feature](https://github.com/shopsys/shopsys/pull/533)
     - the Dockerfile for `php-fpm` has changed, update your `docker-compose.yml` and `docker/php-fpm/Dockerfile` accordingly
         - copy [`docker/php-fpm/Dockerfile`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/php-fpm/Dockerfile) from GitHub
@@ -276,7 +276,7 @@ We decided to move onto a newer version of PostgreSQL.
 
 These steps are for migrating your data onto newer version of postgres and are inspired by [official documentation](https://www.postgresql.org/docs/10/static/upgrading.html):
 
-If you are running your project natively then just follow [official instructions](https://www.postgresql.org/docs/10/static/upgrading.html), 
+If you are running your project natively then just follow [official instructions](https://www.postgresql.org/docs/10/static/upgrading.html),
 if you are using docker infrastructure you can follow steps written below.
 
 1. create a backup of your database by executing::
@@ -323,7 +323,7 @@ if you are using docker infrastructure you can follow steps written below.
 
     `docker exec shopsys-framework-php-fpm ./phing db-create test-db-create`
 
-### [shopsys/project-base] 
+### [shopsys/project-base]
 - added [Microservice Product Search](https://github.com/shopsys/microservice-product-search)
     - check changes in the [`docker-compose.yml`](https://github.com/shopsys/shopsys/blob/v7.0.0-alpha5/docker/conf) template you used and replicate them, there is a new container `microservice-product-search`
         - *since `docker-compose.yml` is not versioned, apply changes also in your `docker-compose.yml.dist` templates so it is easier to upgrade for your team members or for server upgrade*
@@ -384,7 +384,7 @@ if you are using docker infrastructure you can follow steps written below.
 - Twig has been updated to version 2.4.8
     - https://symfony.com/blog/twig-how-to-upgrade-to-2-0-deprecation-notices-to-the-rescue
 - access multi-domain attributes of entities via their main entity (instead of the usual entity detail)
-    - entity domains (eg. `BrandDomain`) should be created, edited and directly accessed only in their main entities (eg. `Brand`) 
+    - entity domains (eg. `BrandDomain`) should be created, edited and directly accessed only in their main entities (eg. `Brand`)
     - see [#165 Different approach to multidomain entities](https://github.com/shopsys/shopsys/pull/165) for details
 - `DomainsType` now uses array of booleans indexed by domain IDs instead of array of domain IDs, original behavior can be restored by adding model data transformer `IndexedBooleansToArrayOfIndexesTransformer`
 - `CategoryDomain::$hidden` was changed to `CategoryDomain::$enabled` along with related methods (with negated value)
@@ -409,7 +409,7 @@ if you are using docker infrastructure you can follow steps written below.
     - https://symfony.com/blog/twig-how-to-upgrade-to-2-0-deprecation-notices-to-the-rescue
 
 ### [shopsys/coding-standards]
-- create your custom `easy-coding-standard.yml` in your project root with your ruleset (you can use predefined ruleset as shown below) 
+- create your custom `easy-coding-standard.yml` in your project root with your ruleset (you can use predefined ruleset as shown below)
 - in order to run all checks, there is new unified way - execute `php vendor/bin/ecs check /path/to/project`
 - see [EasyCodingStandard docs](https://github.com/Symplify/EasyCodingStandard#usage) for more information
 #### Example of custom configuration file
@@ -443,17 +443,17 @@ parameters:
 
 ## [From 7.0.0-alpha1 to 7.0.0-alpha2]
 ### [shopsys/project-base]   
-- check changes in the `docker-compose.yml` template you used, there were a couple of important changes you need to replicate 
-    - easiest way is to overwrite your `docker-compose.yml` with by the appropriate template 
-- on *nix systems, fill your UID and GID (you can run `id -u` and `id -g` to obtain them) into Docker build arguments `www_data_uid` and `www_data_gid` and rebuild your image via `docker-compose up --build` 
-- change owner of the files in shared volume to `www-data` from the container by running `docker exec -u root shopsys-framework-php-fpm chown -R www-data /var/www/html` 
-    - the user has shared UID, so you will be able to access it as well from the host machine 
-    - shared volume with postgres data should be owned by `postgres` user: `docker exec -u root shopsys-framework-php-fpm chown -R postgres /var/www/html/var/postgres-data` 
-- if you were using a mounted volume to share Composer cache with the container, change the target directory from `/root/.composer` to `/home/www-data/.composer` 
-    - in such case, you should change the owner as well by running `docker exec -u root shopsys-framework-php-fpm chown -R www-data /home/www-data/.composer` 
+- check changes in the `docker-compose.yml` template you used, there were a couple of important changes you need to replicate
+    - easiest way is to overwrite your `docker-compose.yml` with by the appropriate template
+- on *nix systems, fill your UID and GID (you can run `id -u` and `id -g` to obtain them) into Docker build arguments `www_data_uid` and `www_data_gid` and rebuild your image via `docker-compose up --build`
+- change owner of the files in shared volume to `www-data` from the container by running `docker exec -u root shopsys-framework-php-fpm chown -R www-data /var/www/html`
+    - the user has shared UID, so you will be able to access it as well from the host machine
+    - shared volume with postgres data should be owned by `postgres` user: `docker exec -u root shopsys-framework-php-fpm chown -R postgres /var/www/html/var/postgres-data`
+- if you were using a mounted volume to share Composer cache with the container, change the target directory from `/root/.composer` to `/home/www-data/.composer`
+    - in such case, you should change the owner as well by running `docker exec -u root shopsys-framework-php-fpm chown -R www-data /home/www-data/.composer`
 
-## Before monorepo 
-Before we managed to implement monorepo for our packages, we had slightly different versions for each of our package, 
+## Before monorepo
+Before we managed to implement monorepo for our packages, we had slightly different versions for each of our package,
 that's why is this section formatted differently.  
 
 ### [shopsys/product-feed-heureka]
@@ -494,7 +494,7 @@ and [shopsys/product-feed-interface](https://github.com/shopsys/product-feed-int
 
 #### From 0.3.0 to 0.4.0
 - implement method `isSellingDenied()` for all implementations of `StandardFeedItemInterface`.
-- you have to take care of filtering of non-sellable items in implementations of `FeedConfigInterface::processItems()` 
+- you have to take care of filtering of non-sellable items in implementations of `FeedConfigInterface::processItems()`
 in your product feed plugin because the instances of `StandardFeedItemInterface` passed as an argument can be non-sellable now.
 - implement method `getAdditionalInformation()` in your implementations of `FeedConfigInterface`.
 - implement method `getCurrencyCode()` in your implementations of `StandardFeedItemInterface`.
@@ -519,13 +519,13 @@ in your product feed plugin because the instances of `StandardFeedItemInterface`
     - the upgrade will require overriding or extending of all classes now located in  
     [shopsys/framework](https://github.com/shopsys/framework) that you customized in your forked repository  
     - it would be wise to wait with the upgrade until the newly build architecture has matured  
-- update custom tests to be compatible with phpunit 7. For further details visit phpunit release announcements [phpunit 6](https://phpunit.de/announcements/phpunit-6.html) and [phpunit 7](https://phpunit.de/announcements/phpunit-7.html) 
+- update custom tests to be compatible with phpunit 7. For further details visit phpunit release announcements [phpunit 6](https://phpunit.de/announcements/phpunit-6.html) and [phpunit 7](https://phpunit.de/announcements/phpunit-7.html)
 
 #### From 2.0.0-beta.20.0 to 2.0.0-beta.21.0  
-- do not longer use Phing targets standards-ci and standards-ci-diff, use standards and standards-diff instead 
+- do not longer use Phing targets standards-ci and standards-ci-diff, use standards and standards-diff instead
 
-#### From 2.0.0-beta.17.0 to 2.0.0-beta.18.0 
-- use `SimpleCronModuleInterface` and `IteratedCronModuleInterface` from their new namespace `Shopsys\Plugin\Cron` (instead of `Shopsys\FrameworkBundle\Component\Cron`) 
+#### From 2.0.0-beta.17.0 to 2.0.0-beta.18.0
+- use `SimpleCronModuleInterface` and `IteratedCronModuleInterface` from their new namespace `Shopsys\Plugin\Cron` (instead of `Shopsys\FrameworkBundle\Component\Cron`)
 
 #### From 2.0.0-beta.16.0 to 2.0.0-beta.17.0  
 - coding standards for JS files were added, make sure `phing eslint-check` passes  
@@ -536,7 +536,7 @@ in your product feed plugin because the instances of `StandardFeedItemInterface`
     - the interface was moved from [shopsys/product-feed-interface](https://github.com/shopsys/product-feed-interface/) to core  
 - parameter `email_for_error_reporting` was renamed to `error_reporting_email_to` in `app/config/parameter.yml.dist`,  
     you will be prompted to fill it out again during `composer install`  
-- all implementations of `StandardFeedItemInterface` must implement methods `isSellingDenied()` and `getCurrencyCode()`, see [product-feed-interface](https://github.com/shopsys/product-feed-interface/blob/master/UPGRADE.md#from-030-to-040) 
+- all implementations of `StandardFeedItemInterface` must implement methods `isSellingDenied()` and `getCurrencyCode()`, see [product-feed-interface](https://github.com/shopsys/product-feed-interface/blob/master/UPGRADE.md#from-030-to-040)
 
 ### [shopsys/coding-standards]
 #### From 3.x to 4.0
@@ -576,19 +576,19 @@ parameters:
 [From 7.0.0-alpha2 to 7.0.0-alpha3]: https://github.com/shopsys/shopsys/compare/v7.0.0-alpha2...v7.0.0-alpha3
 [From 7.0.0-alpha1 to 7.0.0-alpha2]: https://github.com/shopsys/shopsys/compare/v7.0.0-alpha1...v7.0.0-alpha2
 
-[shopsys/shopsys]: https://github.com/shopsys/shopsys 
-[shopsys/project-base]: https://github.com/shopsys/project-base 
-[shopsys/framework]: https://github.com/shopsys/framework 
-[shopsys/product-feed-zbozi]: https://github.com/shopsys/product-feed-zbozi 
-[shopsys/product-feed-google]: https://github.com/shopsys/product-feed-google 
-[shopsys/product-feed-heureka]: https://github.com/shopsys/product-feed-heureka 
-[shopsys/product-feed-heureka-delivery]: https://github.com/shopsys/product-feed-heureka-delivery 
-[shopsys/product-feed-interface]: https://github.com/shopsys/product-feed-interface 
-[shopsys/plugin-interface]: https://github.com/shopsys/plugin-interface 
-[shopsys/coding-standards]: https://github.com/shopsys/coding-standards 
-[shopsys/http-smoke-testing]: https://github.com/shopsys/http-smoke-testing 
-[shopsys/form-types-bundle]: https://github.com/shopsys/form-types-bundle 
-[shopsys/migrations]: https://github.com/shopsys/migrations 
+[shopsys/shopsys]: https://github.com/shopsys/shopsys
+[shopsys/project-base]: https://github.com/shopsys/project-base
+[shopsys/framework]: https://github.com/shopsys/framework
+[shopsys/product-feed-zbozi]: https://github.com/shopsys/product-feed-zbozi
+[shopsys/product-feed-google]: https://github.com/shopsys/product-feed-google
+[shopsys/product-feed-heureka]: https://github.com/shopsys/product-feed-heureka
+[shopsys/product-feed-heureka-delivery]: https://github.com/shopsys/product-feed-heureka-delivery
+[shopsys/product-feed-interface]: https://github.com/shopsys/product-feed-interface
+[shopsys/plugin-interface]: https://github.com/shopsys/plugin-interface
+[shopsys/coding-standards]: https://github.com/shopsys/coding-standards
+[shopsys/http-smoke-testing]: https://github.com/shopsys/http-smoke-testing
+[shopsys/form-types-bundle]: https://github.com/shopsys/form-types-bundle
+[shopsys/migrations]: https://github.com/shopsys/migrations
 [shopsys/monorepo-tools]: https://github.com/shopsys/monorepo-tools
 [shopsys/microservice-product-search]: https://github.com/shopsys/microservice-product-search
 [shopsys/microservice-product-search-export]: https://github.com/shopsys/microservice-product-search-export

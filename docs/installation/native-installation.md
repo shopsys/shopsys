@@ -25,7 +25,7 @@ First of all, you need to install the following software on your system:
 * [Redis](https://github.com/MicrosoftArchive/redis/releases)
 * [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html)
 
-*Note: The names link to the appropriate installation guide or download page.* 
+*Note: The names link to the appropriate installation guide or download page.*
 
 After that, you can follow the steps below in order to install and configure Shopsys Framework.
 
@@ -36,7 +36,7 @@ composer create-project shopsys/project-base --stability=beta --keep-vcs
 cd project-base
 ```
 
-*Notes:* 
+*Notes:*
 - *The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`.*
 - *The `--stability=beta` option enables you to install the project from the last beta release. Default value for the option is `stable` but there is no stable release yet.*
 
@@ -173,7 +173,7 @@ php phing db-create
 php phing test-db-create
 ```
 
-*Note: In this step you were using multiple Phing targets. 
+*Note: In this step you were using multiple Phing targets.
 More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
 
 ### 6. Build application
@@ -195,7 +195,7 @@ You can also login into the administration section on [http://127.0.0.1:8000/adm
 * Password: `admin123`
 
 ## Troubleshooting
-Here are some issues you may encounter during installation and how to solve them: 
+Here are some issues you may encounter during installation and how to solve them:
 
 ### Phing target db-drop fails because database user is not an owner of schema "public"
 Error message:
