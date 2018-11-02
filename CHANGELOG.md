@@ -237,7 +237,7 @@ The changelog is generated during the release process using [ChangelogLinker](ht
     - templates for pull requests and issues were moved into [.github](/.github) folder
 - [#401 - Microservice Product Search](https://github.com/shopsys/shopsys/pull/401)
     - added [Microservice Product Search](https://github.com/shopsys/microservice-product-search), microservice is used for the searching of products on Shopsys Framework
-       
+
 #### Changed
 - [#389 - Standardized YAML files indentation to 4 spaces](https://github.com/shopsys/shopsys/pull/389)
 
@@ -328,7 +328,7 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 #### Changed
 - [#296 - normalize phing target "timezones-check"](https://github.com/shopsys/shopsys/pull/296): [@pk16011990]
-    
+
 ### [shopsys/monorepo-tools]
 #### Added
 - [#345 - monorepo-tools: allow incremental build of monorepo](https://github.com/shopsys/shopsys/pull/345) [@lukaso]
@@ -396,7 +396,7 @@ It was only important with [the original open-box architecture](https://blog.sho
 #### Fixed
 - [#323 - Packages that depend on shopsys/framework need redis extension enabled](https://github.com/shopsys/shopsys/pull/323)
     - redis extension in travis config was enabled
-    
+
 ### [shopsys/project-base]
 #### Added
 - configuration for admin controllers as a part of [#335 - Possibility to add a new administration page](https://github.com/shopsys/shopsys/pull/335)
@@ -818,7 +818,7 @@ from its open-box repository [shopsys/project-base](https://github.com/shopsys/p
         - ArticleFormType
         - AdvertFormType
         - AdministratorFormType
-        
+
 ### [shopsys/http-smoke-testing]
 #### Changed
 - added support of phpunit/phpunit ^6.0 and ^7.0 (@simara-svatopluk)

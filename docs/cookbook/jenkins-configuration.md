@@ -280,7 +280,7 @@ cp $WORKSPACE/project-base/app/config/parameters_test.yml.dist $WORKSPACE/projec
 #### Set domains
 Now we just create domain file, in this case, we use branch name for domain name, and we add domain number into beginning of URL,
 that way domain names are related with the git branches, this makes jenkins more organized.
-    
+
 ```
 # Copy domains_urls.yml from the template
 cp $WORKSPACE/project-base/app/config/domains_urls.yml.dist $WORKSPACE/project-base/app/config/domains_urls.yml
@@ -489,9 +489,9 @@ for WORKSPACE in $WORKSPACES; do
 
     cd $JENKINS_HOME/workspace/$WORKSPACE
     /usr/local/bin/docker-compose down
-    
+
     rm -f /etc/nginx/conf.d/$WORKSPACE.conf
-    
+
     sudo /opt/bin/wipe_workspace.sh $WORKSPACE
   fi
 done

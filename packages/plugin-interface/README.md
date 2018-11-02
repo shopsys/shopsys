@@ -37,7 +37,7 @@ Then you need to create `DoctrineOrmMappingPass` and add it as `CompilerPass` in
             )
         );
     }
-    
+
 // ...
 
 ```
@@ -91,11 +91,11 @@ class AcmeProductCrudExtension implements PluginCrudExtensionInterface
     public function getData($productId)
     {
         $acmeProduct = $this->acmeProductFacade->findByProductId($productId);
-        
+
         $pluginData = [
             'attribute' => $acmeProduct->getAttribute(),
         ];
-        
+
         return $pluginData;
     }
 
@@ -103,7 +103,7 @@ class AcmeProductCrudExtension implements PluginCrudExtensionInterface
     {
         $acmeProductData = new AcmeProductData();
         $acmeProductData->attribute = $data['attribute'];
-        
+
         $this->acmeProductFacade->save($productId, $acmeProductData);
     }
 
@@ -147,14 +147,14 @@ class AcmeDataFixture implements PluginDataFixtureInterface
         $firstAcmeProductData->enableWeightCalculation = true;
         $firstAcmeProductData->weight = 42;
         $firstAcmeProductData->domainId = 1;
-        
+
         $this->acmeProductFacade->save($firstAcmeProductData);
-        
+
         $secondAcmeProductData = new AcmeProductData();
         $secondAcmeProductData->enableWeightCalculation = false;
         $secondAcmeProductData->weight = null;
         $secondAcmeProductData->domainId = 2;
-        
+
         $this->acmeProductFacade->save($secondAcmeProductData);
     }
 
@@ -193,12 +193,12 @@ class AcmeDataDownloadCronModule implements SimpleCronModuleInterface
      * @var \Symfony\Bridge\Monolog\Logger
      */
     private $logger;
-    
+
     public function setLogger(Logger $logger)
     {
         $this->logger = $logger;
     }
-    
+
     public function run()
     {
         $data = $this->downloadData();

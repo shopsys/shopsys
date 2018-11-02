@@ -31,12 +31,12 @@ class AppKernel extends Kernel
             new Shopsys\FormTypesBundle\ShopsysFormTypesBundle(),
             // ...
         ];
-        
+
         // ...
 
         return $bundles;
     }
-    
+
     // ...
 }
 ```

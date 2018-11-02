@@ -33,12 +33,12 @@ class AppKernel extends Kernel
             new Shopsys\ProductFeed\HeurekaDeliveryBundle\ShopsysProductFeedHeurekaDeliveryBundle(),
             // ...
         ];
-        
+
         // ...
 
         return $bundles;
     }
-    
+
     // ...
 }
 ```

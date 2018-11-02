@@ -33,12 +33,12 @@ class AppKernel extends Kernel
             new Shopsys\ProductFeed\GoogleBundle\ShopsysProductFeedGoogleBundle(),
             // ...
         ];
-        
+
         // ...
 
         return $bundles;
     }
-    
+
     // ...
 }
 ```

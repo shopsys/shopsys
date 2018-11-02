@@ -351,7 +351,7 @@ if you are using docker infrastructure you can follow steps written below.
         - '@ShopsysFramework/Admin/Form/productParameterValue.html.twig'
         - '@ShopsysFramework/Admin/Form/productCalculatedPrices.html.twig'
     ```
-        
+
 ## [From 7.0.0-alpha3 to 7.0.0-alpha4]
 
 ### [shopsys/framework]
@@ -428,15 +428,15 @@ parameters:
 ### [shopsys/product-feed-google]
 - Twig has been updated to version 2.4.8
     - https://symfony.com/blog/twig-how-to-upgrade-to-2-0-deprecation-notices-to-the-rescue
-    
+
 ### [shopsys/product-feed-heureka]
 - Twig has been updated to version 2.4.8
     - https://symfony.com/blog/twig-how-to-upgrade-to-2-0-deprecation-notices-to-the-rescue
-    
+
 ### [shopsys/product-feed-heureka-delivery]
 - Twig has been updated to version 2.4.8
     - https://symfony.com/blog/twig-how-to-upgrade-to-2-0-deprecation-notices-to-the-rescue
-    
+
 ### [shopsys/product-feed-zbozi]
 - Twig has been updated to version 2.4.8
     - https://symfony.com/blog/twig-how-to-upgrade-to-2-0-deprecation-notices-to-the-rescue

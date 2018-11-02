@@ -8,7 +8,7 @@
 1. Create a new branch from `master` branch e.g. `my-new-feature`
 1. Develop your feature
 1. Check and automatically fix your code standards using `php phing standards-fix-diff`
-    
+
     *Note: In this step you were using Phing target `standards-fix-diff`.
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
 1. Check if all tests are passing using `php phing tests`
