@@ -79,7 +79,7 @@ final class FqnNameResolver
      */
     private function hasNamespace(Tokens $tokens): bool
     {
-        return (bool) $tokens->findGivenKind([T_NAMESPACE], 0);
+        return (bool)$tokens->findGivenKind([T_NAMESPACE], 0);
     }
 
     /**
