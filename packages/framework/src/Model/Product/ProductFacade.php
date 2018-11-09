@@ -379,11 +379,6 @@ class ProductFacade
         foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
             $this->productManualInputPriceFacade->refresh($product, $pricingGroup, $manualInputPrices[$pricingGroup->getId()]);
         }
-        
-        //remove block
-        if (false) {
-            $this->productManualInputPriceFacade->deleteByProduct($product);
-        }
     }
 
     /**

@@ -64,16 +64,4 @@ class ProductManualInputPriceFacade
     {
         return $this->productManualInputPriceRepository->getByProduct($product);
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    public function deleteByProduct(Product $product)
-    {
-        $manualInputPrices = $this->productManualInputPriceRepository->getByProduct($product);
-        foreach ($manualInputPrices as $manualInputPrice) {
-            $this->em->remove($manualInputPrice);
-        }
-        $this->em->flush($manualInputPrices);
-    }
 }
