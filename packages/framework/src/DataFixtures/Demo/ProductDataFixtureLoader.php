@@ -335,7 +335,6 @@ class ProductDataFixtureLoader
     {
         switch ($row[self::COLUMN_PRICE_CALCULATION_TYPE]) {
             case 'auto':
-                //remove
                 break;
             case 'manual':
                 if ($domainId === 1) {
