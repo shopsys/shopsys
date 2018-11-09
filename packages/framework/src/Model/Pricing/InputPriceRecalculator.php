@@ -93,36 +93,8 @@ class InputPriceRecalculator
      */
     private function recalculateInputPriceForNewType($newInputPriceType)
     {
-        $this->recalculateProductsInputPriceForNewType($newInputPriceType);
         $this->recalculateTransportsInputPriceForNewType($newInputPriceType);
         $this->recalculatePaymentsInputPriceForNewType($newInputPriceType);
-    }
-
-    /**
-     * @param string $toInputPriceType
-     */
-    private function recalculateProductsInputPriceForNewType($toInputPriceType)
-    {
-        $query = $this->em->createQueryBuilder()
-            ->select('p')
-            ->from(Product::class, 'p')
-            ->getQuery();
-
-        $this->batchProcessQuery($query, function (Product $product) use ($toInputPriceType) {
-            $productPrice = $this->basePriceCalculation->calculateBasePrice(
-                null,//remove
-                $this->pricingSetting->getInputPriceType(),
-                $product->getVat()
-            );
-
-            $newInputPrice = $this->inputPriceCalculation->getInputPrice(
-                $toInputPriceType,
-                $productPrice->getPriceWithVat(),
-                $product->getVat()->getPercent()
-            );
-
-            $this->productService->setInputPrice($product, $newInputPrice);
-        });
     }
 
     /**

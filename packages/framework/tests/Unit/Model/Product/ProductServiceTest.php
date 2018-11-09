@@ -70,8 +70,6 @@ class ProductServiceTest extends TestCase
 
         $productData = new ProductData();
         $product = Product::create($productData);
-
-        $productService->setInputPrice($product, 100);
     }
 
     public function testChangeVatSchedulesPriceRecalculation()
