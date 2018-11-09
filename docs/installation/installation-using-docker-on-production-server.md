@@ -226,7 +226,6 @@ docker build \
     --compress \
     .
 ```
-Replace the `PERSONAL_ACCESS_TOKEN_FROM_GITHUB` string by the token generated on [Github -> Settings -> Developer Settings -> Personal access tokens](https://github.com/settings/tokens/new?scopes=repo&description=Composer+API+token).
 With `f` parameter we set path to Dockerfile that builds image.
 With `t` parameter we set the name of built image.
 
