@@ -225,13 +225,6 @@ class Product extends AbstractTranslatableEntity
      *
      * @ORM\Column(type="boolean", options={"default" = true})
      */
-    protected $recalculatePrice; //remove
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", options={"default" = true})
-     */
     protected $recalculateVisibility;
 
     /**
@@ -307,7 +300,6 @@ class Product extends AbstractTranslatableEntity
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
         $this->flags = new ArrayCollection($productData->flags);
-        $this->recalculatePrice = true;
         $this->recalculateVisibility = true;
         $this->calculatedHidden = true;
         $this->calculatedSellingDenied = true;
@@ -397,7 +389,6 @@ class Product extends AbstractTranslatableEntity
     public function changeVat(Vat $vat)
     {
         $this->vat = $vat;
-        $this->recalculatePrice = true;
     }
 
     /**
@@ -721,11 +712,6 @@ class Product extends AbstractTranslatableEntity
     public function isVisible()
     {
         return $this->getCalculatedVisibility();
-    }
-
-    public function markPriceAsRecalculated()
-    {
-        $this->recalculatePrice = false;
     }
 
     public function markForVisibilityRecalculation()

@@ -126,6 +126,7 @@ class ProductPriceRecalculator
      */
     private function recalculateProductPrices(Product $product)
     {
+        //remove
         foreach ($this->getAllPricingGroups() as $pricingGroup) {
             try {
                 $price = $this->productPriceCalculation->calculatePrice($product, $pricingGroup->getDomainId(), $pricingGroup);
@@ -135,7 +136,6 @@ class ProductPriceRecalculator
             }
             $this->productCalculatedPriceRepository->saveCalculatedPrice($product, $pricingGroup, $priceWithVat);
         }
-        $product->markPriceAsRecalculated();
         $this->productService->markProductForVisibilityRecalculation($product);
         $this->em->flush($product);
     }
