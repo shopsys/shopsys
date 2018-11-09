@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Model\Pricing;
 
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 
 class PricingSetting
 {
@@ -27,20 +26,12 @@ class PricingSetting
     private $setting;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    private $productPriceRecalculationScheduler;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      */
     public function __construct(
-        Setting $setting,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
+        Setting $setting
     ) {
         $this->setting = $setting;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
     }
 
     /**
@@ -106,7 +97,6 @@ class PricingSetting
         }
 
         $this->setting->set(self::ROUNDING_TYPE, $roundingType);
-        $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
     }
 
     /**

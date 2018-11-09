@@ -28,11 +28,6 @@ class ProductPriceRecalculator
     private $productCalculatedPriceRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    private $productPriceRecalculationScheduler;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      */
     private $pricingGroupFacade;
@@ -56,7 +51,6 @@ class ProductPriceRecalculator
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository $productCalculatedPriceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductService $productService
      */
@@ -64,14 +58,13 @@ class ProductPriceRecalculator
         EntityManagerInterface $em,
         ProductPriceCalculation $productPriceCalculation,
         ProductCalculatedPriceRepository $productCalculatedPriceRepository,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         PricingGroupFacade $pricingGroupFacade,
         ProductService $productService
     ) {
+        //remove class
         $this->em = $em;
         $this->productPriceCalculation = $productPriceCalculation;
         $this->productCalculatedPriceRepository = $productCalculatedPriceRepository;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->pricingGroupFacade = $pricingGroupFacade;
         $this->productService = $productService;
     }
@@ -81,10 +74,6 @@ class ProductPriceRecalculator
      */
     public function runBatchOfScheduledDelayedRecalculations()
     {
-        if ($this->productRowsIterator === null) {
-            $this->productRowsIterator = $this->productPriceRecalculationScheduler->getProductsIteratorForDelayedRecalculation();
-        }
-
         for ($count = 0; $count < self::BATCH_SIZE; $count++) {
             $row = $this->productRowsIterator->next();
             if ($row === false) {
@@ -112,12 +101,7 @@ class ProductPriceRecalculator
 
     public function runImmediateRecalculations()
     {
-        $products = $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation();
-        foreach ($products as $product) {
-            $this->recalculateProductPrices($product);
-        }
-        $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
-        $this->clearCache();
+        //remove
     }
 
     private function clearCache()

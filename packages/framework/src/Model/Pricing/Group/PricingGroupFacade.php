@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\UserRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
 class PricingGroupFacade
@@ -25,11 +24,6 @@ class PricingGroupFacade
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     protected $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    protected $productPriceRecalculationScheduler;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
@@ -60,7 +54,6 @@ class PricingGroupFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository $productCalculatedPriceRepository
@@ -71,7 +64,6 @@ class PricingGroupFacade
         EntityManagerInterface $em,
         PricingGroupRepository $pricingGroupRepository,
         Domain $domain,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         PricingGroupSettingFacade $pricingGroupSettingFacade,
         ProductVisibilityRepository $productVisibilityRepository,
         ProductCalculatedPriceRepository $productCalculatedPriceRepository,
@@ -81,7 +73,6 @@ class PricingGroupFacade
         $this->em = $em;
         $this->pricingGroupRepository = $pricingGroupRepository;
         $this->domain = $domain;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
         $this->productVisibilityRepository = $productVisibilityRepository;
         $this->productCalculatedPriceRepository = $productCalculatedPriceRepository;
@@ -110,7 +101,6 @@ class PricingGroupFacade
         $this->em->persist($pricingGroup);
         $this->em->flush();
 
-        $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
         $this->productVisibilityRepository->createAndRefreshProductVisibilitiesForPricingGroup(
             $pricingGroup,
             $pricingGroup->getDomainId()
@@ -131,8 +121,6 @@ class PricingGroupFacade
         $pricingGroup->edit($pricingGroupData);
 
         $this->em->flush();
-
-        $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
 
         return $pricingGroup;
     }

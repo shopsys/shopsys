@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalc
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 
 class ProductFacade
 {
@@ -53,11 +52,6 @@ class ProductFacade
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
      */
     protected $imageFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    protected $productPriceRecalculationScheduler;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository
@@ -142,7 +136,6 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductService $productService
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
@@ -167,7 +160,6 @@ class ProductFacade
         Domain $domain,
         ProductService $productService,
         ImageFacade $imageFacade,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         PricingGroupRepository $pricingGroupRepository,
         ProductManualInputPriceFacade $productManualInputPriceFacade,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
@@ -191,7 +183,6 @@ class ProductFacade
         $this->domain = $domain;
         $this->productService = $productService;
         $this->imageFacade = $imageFacade;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->pricingGroupRepository = $pricingGroupRepository;
         $this->productManualInputPriceFacade = $productManualInputPriceFacade;
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
@@ -264,7 +255,6 @@ class ProductFacade
 
         $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
-        $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
     /**
@@ -298,7 +288,6 @@ class ProductFacade
 
         $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
-        $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         return $product;
     }
@@ -312,7 +301,6 @@ class ProductFacade
         $productDeleteResult = $this->productService->delete($product);
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
         foreach ($productsForRecalculations as $productForRecalculations) {
-            $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
             $this->productService->markProductForVisibilityRecalculation($productForRecalculations);
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
         }

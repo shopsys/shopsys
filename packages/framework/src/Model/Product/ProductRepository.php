@@ -601,31 +601,6 @@ class ProductRepository
             ->execute();
     }
 
-    public function markAllProductsForPriceRecalculation()
-    {
-        // Performance optimization:
-        // Main variant price recalculation is triggered by variants visibility recalculation
-        // and visibility recalculation is triggered by variant price recalculation.
-        // Therefore main variant price recalculation is useless here.
-        $this->em
-            ->createQuery('UPDATE ' . Product::class . ' p SET p.recalculatePrice = TRUE
-                WHERE p.variantType != :variantTypeMain AND p.recalculateAvailability = FALSE')
-            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
-            ->execute();
-    }
-
-    /**
-     * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]
-     */
-    public function getProductsForPriceRecalculationIterator()
-    {
-        return $this->getProductRepository()
-            ->createQueryBuilder('p')
-            ->where('p.recalculatePrice = TRUE')
-            ->getQuery()
-            ->iterate();
-    }
-
     /**
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]
      */

@@ -5,7 +5,6 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 
 class ProductVariantFacade
 {
@@ -35,11 +34,6 @@ class ProductVariantFacade
     protected $productVariantService;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    protected $productPriceRecalculationScheduler;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler
      */
     protected $productAvailabilityRecalculationScheduler;
@@ -50,7 +44,6 @@ class ProductVariantFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface $productDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantService $productVariantService
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      */
     public function __construct(
@@ -59,7 +52,6 @@ class ProductVariantFacade
         ProductDataFactoryInterface $productDataFactory,
         ImageFacade $imageFacade,
         ProductVariantService $productVariantService,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
     ) {
         $this->em = $em;
@@ -67,7 +59,6 @@ class ProductVariantFacade
         $this->productDataFactory = $productDataFactory;
         $this->imageFacade = $imageFacade;
         $this->productVariantService = $productVariantService;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
     }
 
@@ -92,7 +83,6 @@ class ProductVariantFacade
             $this->imageFacade->copyImages($mainProduct, $mainVariant);
         } catch (\Exception $exception) {
             $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
-            $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
 
             throw $exception;
         }

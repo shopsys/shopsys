@@ -225,7 +225,7 @@ class Product extends AbstractTranslatableEntity
      *
      * @ORM\Column(type="boolean", options={"default" = true})
      */
-    protected $recalculatePrice;
+    protected $recalculatePrice; //remove
 
     /**
      * @var bool

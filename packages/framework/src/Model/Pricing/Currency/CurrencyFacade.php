@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
@@ -45,11 +44,6 @@ class CurrencyFacade
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    protected $productPriceRecalculationScheduler;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository
      */
     protected $paymentRepository;
@@ -76,7 +70,6 @@ class CurrencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository $paymentRepository
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
@@ -89,7 +82,6 @@ class CurrencyFacade
         PricingSetting $pricingSetting,
         OrderRepository $orderRepository,
         Domain $domain,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         PaymentRepository $paymentRepository,
         TransportRepository $transportRepository,
         PaymentPriceFactoryInterface $paymentPriceFactory,
@@ -101,7 +93,6 @@ class CurrencyFacade
         $this->pricingSetting = $pricingSetting;
         $this->orderRepository = $orderRepository;
         $this->domain = $domain;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->paymentRepository = $paymentRepository;
         $this->transportRepository = $transportRepository;
         $this->paymentPriceFactory = $paymentPriceFactory;
@@ -141,7 +132,6 @@ class CurrencyFacade
         $currency = $this->currencyRepository->getById($currencyId);
         $this->currencyService->edit($currency, $currencyData, $this->isDefaultCurrency($currency));
         $this->em->flush();
-        $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
 
         return $currency;
     }
@@ -201,7 +191,6 @@ class CurrencyFacade
     public function setDomainDefaultCurrency(Currency $currency, $domainId)
     {
         $this->pricingSetting->setDomainDefaultCurrency($currency, $domainId);
-        $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
     }
 
     /**

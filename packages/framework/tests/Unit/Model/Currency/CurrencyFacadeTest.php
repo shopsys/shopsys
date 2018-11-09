@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyService;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
@@ -27,7 +26,6 @@ class CurrencyFacadeTest extends TestCase
         $currencyRepositoryMock = $this->createMock(CurrencyRepository::class);
         $currencyServiceMock = $this->createMock(CurrencyService::class);
         $orderRepoistoryMock = $this->createMock(OrderRepository::class);
-        $productPriceRecalculationShedulerMock = $this->createMock(ProductPriceRecalculationScheduler::class);
         $paymentRepositoryMock = $this->createMock(PaymentRepository::class);
         $transportRepositoryMock = $this->createMock(TransportRepository::class);
         $paymentPriceFactoryMock = $this->createMock(PaymentPriceFactory::class);
@@ -62,7 +60,6 @@ class CurrencyFacadeTest extends TestCase
             $pricingSettingMock,
             $orderRepoistoryMock,
             $domain,
-            $productPriceRecalculationShedulerMock,
             $paymentRepositoryMock,
             $transportRepositoryMock,
             $paymentPriceFactoryMock,

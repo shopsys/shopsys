@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatService;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use stdClass;
 
 class VatFacadeTest extends TestCase
@@ -42,16 +41,11 @@ class VatFacadeTest extends TestCase
             ->with($this->equalTo(1))
             ->will($this->returnValue($expected));
 
-        $productPriceRecalculationSchedulerMock = $this->getMockBuilder(ProductPriceRecalculationScheduler::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $vatFacade = new VatFacade(
             $emMock,
             $vatRepositoryMock,
             $vatService,
             $settingMock,
-            $productPriceRecalculationSchedulerMock,
             new VatFactory(new EntityNameResolver([]))
         );
 
@@ -79,16 +73,11 @@ class VatFacadeTest extends TestCase
             ->method('set')
             ->with($this->equalTo(Vat::SETTING_DEFAULT_VAT), $this->equalTo(1));
 
-        $productPriceRecalculationSchedulerMock = $this->getMockBuilder(ProductPriceRecalculationScheduler::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $vatFacade = new VatFacade(
             $emMock,
             $vatRepositoryMock,
             $vatService,
             $settingMock,
-            $productPriceRecalculationSchedulerMock,
             new VatFactory(new EntityNameResolver([]))
         );
         $vatFacade->setDefaultVat($vatMock);

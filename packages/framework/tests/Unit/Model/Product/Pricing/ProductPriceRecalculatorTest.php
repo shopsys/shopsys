@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductService;
@@ -36,11 +35,6 @@ class ProductPriceRecalculatorTest extends TestCase
             ->disableOriginalConstructor()
             ->setMethods(['saveCalculatedPrice'])
             ->getMock();
-        $productPriceRecalculationSchedulerMock = $this->getMockBuilder(ProductPriceRecalculationScheduler::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getProductsForImmediateRecalculation'])
-            ->getMock();
-        $productPriceRecalculationSchedulerMock->expects($this->once())->method('getProductsForImmediateRecalculation')->will($this->returnValue([$productMock]));
         $pricingGroupFacadeMock = $this->getMockBuilder(PricingGroupFacade::class)
             ->disableOriginalConstructor()
             ->setMethods(['getAll'])
@@ -51,7 +45,6 @@ class ProductPriceRecalculatorTest extends TestCase
             $emMock,
             $productPriceCalculationMock,
             $productCalculatedPriceRepositoryMock,
-            $productPriceRecalculationSchedulerMock,
             $pricingGroupFacadeMock,
             $productServiceMock
         );

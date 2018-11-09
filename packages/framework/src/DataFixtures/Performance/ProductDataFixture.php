@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\DataFixtures\ProductDataFixtureReferenceInjector;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -97,11 +96,6 @@ class ProductDataFixture
     private $productAvailabilityRecalculationScheduler;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    private $productPriceRecalculationScheduler;
-
-    /**
      * @var \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureCsvReader
      */
     private $productDataFixtureCsvReader;
@@ -123,7 +117,6 @@ class ProductDataFixture
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixtureCsvReader $productDataFixtureCsvReader
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      */
@@ -139,7 +132,6 @@ class ProductDataFixture
         CategoryRepository $categoryRepository,
         Faker $faker,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         ProductDataFixtureCsvReader $productDataFixtureCsvReader,
         ProgressBarFactory $progressBarFactory
     ) {
@@ -156,7 +148,6 @@ class ProductDataFixture
         $this->demoDataIterationCounter = 0;
         $this->faker = $faker;
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->productDataFixtureCsvReader = $productDataFixtureCsvReader;
         $this->progressBarFactory = $progressBarFactory;
     }
@@ -286,7 +277,6 @@ class ProductDataFixture
     private function clearResources()
     {
         $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
-        $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
         $this->em->clear();
         gc_collect_cycles();
     }

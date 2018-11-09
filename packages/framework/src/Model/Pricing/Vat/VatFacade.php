@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 
 class VatFacade
 {
@@ -29,11 +28,6 @@ class VatFacade
     protected $setting;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    protected $productPriceRecalculationScheduler;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface
      */
     protected $vatFactory;
@@ -43,7 +37,6 @@ class VatFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository $vatRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatService $vatService
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface $vatFactory
      */
     public function __construct(
@@ -51,14 +44,12 @@ class VatFacade
         VatRepository $vatRepository,
         VatService $vatService,
         Setting $setting,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         VatFactoryInterface $vatFactory
     ) {
         $this->em = $em;
         $this->vatRepository = $vatRepository;
         $this->vatService = $vatService;
         $this->setting = $setting;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->vatFactory = $vatFactory;
     }
 
@@ -110,8 +101,6 @@ class VatFacade
         $vat = $this->vatRepository->getById($vatId);
         $vat->edit($vatData);
         $this->em->flush();
-
-        $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
 
         return $vat;
     }
