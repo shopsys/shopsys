@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Form;
 
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\AdminProductPriceCalculationFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Symfony\Component\Form\AbstractType;
@@ -13,11 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductCalculatedPricesType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\AdminProductPriceCalculationFacade
-     */
-    private $adminProductPriceCalculationFacade;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      */
@@ -29,16 +23,14 @@ class ProductCalculatedPricesType extends AbstractType
     private $productFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\AdminProductPriceCalculationFacade $adminProductPriceCalculationFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
-        AdminProductPriceCalculationFacade $adminProductPriceCalculationFacade,
         PricingGroupFacade $pricingGroupFacade,
         ProductFacade $productFacade
     ) {
-        $this->adminProductPriceCalculationFacade = $adminProductPriceCalculationFacade;
+        //remove class
         $this->pricingGroupFacade = $pricingGroupFacade;
         $this->productFacade = $productFacade;
     }
@@ -61,11 +53,6 @@ class ProductCalculatedPricesType extends AbstractType
         $product = $options['product'];
 
         if ($product !== null) {
-            if (false) {
-                //remove
-                $view->vars['productBasePrice'] = $this->adminProductPriceCalculationFacade->calculateProductBasePrice($product);
-            }
-
             try {
                 $productSellingPricesIndexedByDomainId = $this->productFacade->getAllProductSellingPricesIndexedByDomainId($product);
                 $view->vars['productSellingPricesIndexedByDomainId'] = $productSellingPricesIndexedByDomainId;

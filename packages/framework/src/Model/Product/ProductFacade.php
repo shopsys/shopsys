@@ -363,6 +363,7 @@ class ProductFacade
      */
     public function getAllProductSellingPricesIndexedByDomainId(Product $product)
     {
+        //remove unused
         return $this->productService->getProductSellingPricesIndexedByDomainIdAndPricingGroupId(
             $product,
             $this->pricingGroupRepository->getAll()

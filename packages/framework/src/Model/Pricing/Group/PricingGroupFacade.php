@@ -191,6 +191,7 @@ class PricingGroupFacade
      */
     public function getAllIndexedByDomainId()
     {
+        //remove unused
         $pricingGroupsByDomainId = [];
         foreach ($this->domain->getAll() as $domain) {
             $domainId = $domain->getId();
