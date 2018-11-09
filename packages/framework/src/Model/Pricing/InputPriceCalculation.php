@@ -12,6 +12,7 @@ class InputPriceCalculation
      */
     public function getInputPrice($inputPriceType, $basePriceWithVat, $vatPercent)
     {
+        //remove candidate
         if ($inputPriceType === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
             $inputPrice = $this->getInputPriceWithoutVat(
                 $basePriceWithVat,

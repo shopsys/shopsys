@@ -34,14 +34,10 @@ class AdminProductPriceCalculationFacade
      */
     public function calculateProductBasePrice(Product $product)
     {
-        if ($product->getPriceCalculationType() !== Product::PRICE_CALCULATION_TYPE_AUTO) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\ProductBasePriceCalculationException(
-                'Base price can be calculated only for products with auto calculation type.'
-            );
-        }
+        //remove function
 
         return $this->basePriceCalculation->calculateBasePrice(
-            $product->getPrice(),
+            null,//remove
             $this->pricingSetting->getInputPriceType(),
             $product->getVat()
         );

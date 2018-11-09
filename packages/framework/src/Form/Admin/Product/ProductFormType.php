@@ -233,13 +233,12 @@ class ProductFormType extends AbstractType
                         $validationGroups[] = self::VALIDATION_GROUP_NOT_USING_STOCK;
                     }
 
-                    if ($productData->priceCalculationType === Product::PRICE_CALCULATION_TYPE_AUTO) {
+                    if (false) {
+                        //remove
                         $validationGroups[] = self::VALIDATION_GROUP_AUTO_PRICE_CALCULATION;
                     }
-
-                    if ($productData->priceCalculationType === Product::PRICE_CALCULATION_TYPE_MANUAL) {
-                        $validationGroups[] = self::VALIDATION_GROUP_MANUAL_PRICE_CALCULATION;
-                    }
+                    
+                    $validationGroups[] = self::VALIDATION_GROUP_MANUAL_PRICE_CALCULATION;
 
                     return $validationGroups;
                 },

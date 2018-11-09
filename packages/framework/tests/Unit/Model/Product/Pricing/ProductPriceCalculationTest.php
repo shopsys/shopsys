@@ -117,7 +117,7 @@ class ProductPriceCalculationTest extends TestCase
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     private function getProductWithInputPriceAndVatPercentAndAutoCalculationPriceType(
-        $inputPrice,
+        $inputPrice,//remove
         $vatPercent
     ) {
         $vatData = new VatData();
@@ -127,7 +127,6 @@ class ProductPriceCalculationTest extends TestCase
 
         $productData = new ProductData();
         $productData->name = ['cs' => 'anyProductName'];
-        $productData->price = $inputPrice;
         $productData->vat = $vat;
 
         return Product::create($productData);

@@ -32,9 +32,7 @@ class CartWatcherServiceTest extends FunctionalTestCase
         $vat = new Vat($vatData);
         $productData1 = $productDataFactory->create();
         $productData1->name = [];
-        $productData1->price = 100;
         $productData1->vat = $vat;
-        $productData1->priceCalculationType = Product::PRICE_CALCULATION_TYPE_AUTO;
         $productMock = Product::create($productData1);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculationForUser */
@@ -52,7 +50,6 @@ class CartWatcherServiceTest extends FunctionalTestCase
 
         $productData2 = $productDataFactory->create();
         $productData2->name = [];
-        $productData2->price = 200;
         $productData2->vat = $vat;
 
         $productMock->edit(new ProductCategoryDomainFactory(), $productData2);
@@ -96,7 +93,6 @@ class CartWatcherServiceTest extends FunctionalTestCase
 
         $productData = $productDataFactory->create();
         $productData->name = [];
-        $productData->price = 100;
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = 21;

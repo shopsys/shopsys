@@ -12,6 +12,7 @@ class InvalidPriceCalculationTypeException extends Exception implements ProductE
      */
     public function __construct($priceCalculationType, Exception $previous = null)
     {
+        //remove class
         $message = 'Price calculation type "' . $priceCalculationType . '" is not valid.';
         parent::__construct($message, 0, $previous);
     }

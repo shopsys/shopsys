@@ -90,7 +90,7 @@ class ProductService
         }
 
         $productBasePrice = $this->basePriceCalculation->calculateBasePrice(
-            $product->getPrice(),
+            null,//remove
             $inputPriceType,
             $product->getVat()
         );
@@ -120,7 +120,7 @@ class ProductService
      */
     public function setInputPrice(Product $product, $inputPrice)
     {
-        $product->setPrice($inputPrice);
+        //remove
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 

@@ -75,20 +75,12 @@ class ProductPriceCalculation
      */
     public function calculatePrice(Product $product, $domainId, PricingGroup $pricingGroup)
     {
+        //remove candicate
         if ($product->isMainVariant()) {
             return $this->calculateMainVariantPrice($product, $domainId, $pricingGroup);
         }
-
-        $priceCalculationType = $product->getPriceCalculationType();
-        if ($priceCalculationType === Product::PRICE_CALCULATION_TYPE_AUTO) {
-            return $this->calculateProductPriceForPricingGroupAuto($product, $pricingGroup, $domainId);
-        } elseif ($priceCalculationType === Product::PRICE_CALCULATION_TYPE_MANUAL) {
-            return $this->calculateProductPriceForPricingGroupManual($product, $pricingGroup);
-        } else {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\InvalidPriceCalculationTypeException(
-                $priceCalculationType
-            );
-        }
+        
+        return $this->calculateProductPriceForPricingGroupManual($product, $pricingGroup);
     }
 
     /**
@@ -160,7 +152,8 @@ class ProductPriceCalculation
      */
     private function calculateProductPriceForPricingGroupAuto(Product $product, PricingGroup $pricingGroup, $domainId)
     {
-        $basePrice = $this->calculateBasePrice($product->getPrice(), $product->getVat());
+        //remove function
+        $basePrice = $this->calculateBasePrice(null, $product->getVat());//remove
 
         $price = $this->basePriceCalculation->applyCoefficients(
             $basePrice,

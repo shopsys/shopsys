@@ -61,7 +61,8 @@ class ProductCalculatedPricesType extends AbstractType
         $product = $options['product'];
 
         if ($product !== null) {
-            if ($product->getPriceCalculationType() === Product::PRICE_CALCULATION_TYPE_AUTO) {
+            if (false) {
+                //remove
                 $view->vars['productBasePrice'] = $this->adminProductPriceCalculationFacade->calculateProductBasePrice($product);
             }
 

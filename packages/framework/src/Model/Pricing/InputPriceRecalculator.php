@@ -110,7 +110,7 @@ class InputPriceRecalculator
 
         $this->batchProcessQuery($query, function (Product $product) use ($toInputPriceType) {
             $productPrice = $this->basePriceCalculation->calculateBasePrice(
-                $product->getPrice(),
+                null,//remove
                 $this->pricingSetting->getInputPriceType(),
                 $product->getVat()
             );

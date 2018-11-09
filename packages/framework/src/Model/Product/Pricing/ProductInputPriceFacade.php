@@ -100,6 +100,7 @@ class ProductInputPriceFacade
      */
     public function getInputPrice(Product $product)
     {
+        //remove candidate
         $inputPriceType = $this->pricingSetting->getInputPriceType();
         $defaultCurrency = $this->currencyFacade->getDefaultCurrency();
         $manualInputPricesInDefaultCurrency = $this->productManualInputPriceRepository->getByProductAndDomainConfigs(
