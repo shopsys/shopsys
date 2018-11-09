@@ -12,10 +12,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*' }
 
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*' }
-
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityImmediateCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*' }
