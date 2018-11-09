@@ -13,23 +13,11 @@ class ProductPriceCronModule implements IteratedCronModuleInterface
     private $logger;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator
-     */
-    private $productPriceRecalculator;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator $productPriceRecalculator
-     */
-    public function __construct(ProductPriceRecalculator $productPriceRecalculator)
-    {
-        $this->productPriceRecalculator = $productPriceRecalculator;
-    }
-
-    /**
      * @inheritdoc
      */
     public function setLogger(Logger $logger)
     {
+        //remove class
         $this->logger = $logger;
     }
 
@@ -46,12 +34,5 @@ class ProductPriceCronModule implements IteratedCronModuleInterface
      */
     public function iterate()
     {
-        if ($this->productPriceRecalculator->runBatchOfScheduledDelayedRecalculations()) {
-            $this->logger->debug('Batch is recalculated.');
-            return true;
-        } else {
-            $this->logger->debug('All prices are recalculated.');
-            return false;
-        }
     }
 }

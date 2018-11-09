@@ -25,6 +25,7 @@ class ProductCalculatedPriceRepository
      */
     public function __construct(EntityManagerInterface $em, ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory)
     {
+        //remove
         $this->em = $em;
         $this->productCalculatedPriceFactory = $productCalculatedPriceFactory;
     }
@@ -44,6 +45,7 @@ class ProductCalculatedPriceRepository
      */
     public function saveCalculatedPrice(Product $product, PricingGroup $pricingGroup, $priceWithVat)
     {
+        //remove unused
         $productCalculatedPrice = $this->getProductCalculatedPriceRepository()->find([
             'product' => $product->getId(),
             'pricingGroup' => $pricingGroup->getId(),

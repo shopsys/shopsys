@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -30,11 +29,6 @@ class RecalculationsCommand extends Command
     private $productHiddenRecalculator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator
-     */
-    private $productPriceRecalculator;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
      */
     private $productVisibilityFacade;
@@ -52,7 +46,6 @@ class RecalculationsCommand extends Command
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository $categoryVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator $productPriceRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator $productAvailabilityRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
@@ -60,14 +53,12 @@ class RecalculationsCommand extends Command
     public function __construct(
         CategoryVisibilityRepository $categoryVisibilityRepository,
         ProductHiddenRecalculator $productHiddenRecalculator,
-        ProductPriceRecalculator $productPriceRecalculator,
         ProductVisibilityFacade $productVisibilityFacade,
         ProductAvailabilityRecalculator $productAvailabilityRecalculator,
         ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
     ) {
         $this->categoryVisibilityRepository = $categoryVisibilityRepository;
         $this->productHiddenRecalculator = $productHiddenRecalculator;
-        $this->productPriceRecalculator = $productPriceRecalculator;
         $this->productVisibilityFacade = $productVisibilityFacade;
         $this->productAvailabilityRecalculator = $productAvailabilityRecalculator;
         $this->productSellingDeniedRecalculator = $productSellingDeniedRecalculator;
@@ -91,18 +82,11 @@ class RecalculationsCommand extends Command
         $output->writeln('<fg=green>Categories visibility.</fg=green>');
         $this->categoryVisibilityRepository->refreshCategoriesVisibility();
 
-        $output->writeln('<fg=green>Products price.</fg=green>');
-        $this->productPriceRecalculator->runAllScheduledRecalculations();
-
         $output->writeln('<fg=green>Products hiding.</fg=green>');
         $this->productHiddenRecalculator->calculateHiddenForAll();
 
         $output->writeln('<fg=green>Products visibility.</fg=green>');
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
-
-        $output->writeln('<fg=green>Products price again (because of variants).</fg=green>');
-        // Main variant is set for recalculations after change of variants visibility.
-        $this->productPriceRecalculator->runAllScheduledRecalculations();
 
         $output->writeln('<fg=green>Products availability.</fg=green>');
         $this->productAvailabilityRecalculator->runAllScheduledRecalculations();

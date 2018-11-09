@@ -44,6 +44,7 @@ class ProductCalculatedPrice
      */
     public function __construct(Product $product, PricingGroup $pricingGroup, $priceWithVat)
     {
+        //remove
         $this->product = $product;
         $this->pricingGroup = $pricingGroup;
         $this->priceWithVat = $priceWithVat;

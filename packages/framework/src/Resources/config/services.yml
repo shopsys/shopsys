@@ -512,14 +512,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator:
-        tags:
-            # must be run before ProductVisibilityFacade
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
-
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade:
         tags:
-            # must be ran after CategoryVisibilityRepository and ProductPriceRecalculator
+            # must be ran after CategoryVisibilityRepository
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 10 }
 
     # Define RedirectController explicitly to prevent creating it on-the-fly

@@ -31,9 +31,6 @@ Some attributes that are used on the Shopsys Framework are not set directly, but
 For example, if a category of products does not have a name for a locale of the specific domain, this category will be automatically set as not visible on this domain.
 The recalculations of these special attributes can be initialized as `immediate` or `scheduled`:
 
-**immediate** - recalculation is initialized when the event `kernel.response` is caught.
-See a class `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator` and a method `onKernelResponse`.
-
 **scheduled** - recalculation is initialized later.
 A product or a category of products can be marked for scheduled recalculation, the recalculation itself is initialized with a cron module, see a class `Shopsys\FrameworkBundle\Command\RecalculationsCommand`.
 

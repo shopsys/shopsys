@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class PricingGroupFacadeTest extends TransactionFunctionalTestCase
@@ -23,14 +22,11 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade */
         $pricingGroupFacade = $this->getContainer()->get(PricingGroupFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator $productPriceRecalculator */
-        $productPriceRecalculator = $this->getContainer()->get(ProductPriceRecalculator::class);
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'pricing_group_name';
         $pricingGroupData->coefficient = 1;
         $domainId = 1;
         $pricingGroup = $pricingGroupFacade->create($pricingGroupData, $domainId);
-        $productPriceRecalculator->runAllScheduledRecalculations();
         $productCalculatedPrice = $em->getRepository(ProductCalculatedPrice::class)->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroup,
@@ -48,8 +44,6 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade */
         $pricingGroupFacade = $this->getContainer()->get(PricingGroupFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator $productPriceRecalculator */
-        $productPriceRecalculator = $this->getContainer()->get(ProductPriceRecalculator::class);
         $productCalculatedPrice = $em->getRepository(ProductCalculatedPrice::class)->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroup,
@@ -65,7 +59,6 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         $pricingGroupData->name = $pricingGroup->getName();
         $pricingGroupData->coefficient = $pricingGroup->getCoefficient() * 2;
         $pricingGroupFacade->edit($pricingGroup->getId(), $pricingGroupData);
-        $productPriceRecalculator->runAllScheduledRecalculations();
 
         $newProductCalculatedPrice = $em->getRepository(ProductCalculatedPrice::class)->findOneBy([
             'product' => $product,
