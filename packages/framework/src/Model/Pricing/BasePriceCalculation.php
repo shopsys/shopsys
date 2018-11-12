@@ -49,6 +49,7 @@ class BasePriceCalculation
      */
     public function applyCoefficients(Price $price, Vat $vat, $coefficients)
     {
+        //remove function
         $priceWithVatBeforeRounding = $price->getPriceWithVat();
         foreach ($coefficients as $coefficient) {
             $priceWithVatBeforeRounding *= $coefficient;

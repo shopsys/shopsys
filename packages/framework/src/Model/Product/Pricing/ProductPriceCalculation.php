@@ -143,36 +143,4 @@ class ProductPriceCalculation
 
         return new ProductPrice($basePrice, false);
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    private function calculateProductPriceForPricingGroupAuto(Product $product, PricingGroup $pricingGroup, $domainId)
-    {
-        //remove function
-        $basePrice = $this->calculateBasePrice(null, $product->getVat());//remove
-
-        $price = $this->basePriceCalculation->applyCoefficients(
-            $basePrice,
-            $product->getVat(),
-            [$pricingGroup->getCoefficient(), $this->getDomainDefaultCurrencyReversedExchangeRate($domainId)]
-        );
-
-        return new ProductPrice($price, false);
-    }
-
-    /**
-     * @param int $domainId
-     * @return string
-     */
-    private function getDomainDefaultCurrencyReversedExchangeRate($domainId)
-    {
-        $domainDefaultCurrencyId = $this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId);
-        $currency = $this->currencyFacade->getById($domainDefaultCurrencyId);
-
-        return $currency->getReversedExchangeRate();
-    }
 }
