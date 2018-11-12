@@ -5,7 +5,6 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
-use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
@@ -27,7 +26,7 @@ class Product extends AbstractTranslatableEntity
     //remove
     const PRICE_CALCULATION_TYPE_AUTO = 'auto';
     const PRICE_CALCULATION_TYPE_MANUAL = 'manual';
-    
+
     const OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY = 'setAlternateAvailability';
     const OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE = 'excludeFromSale';
     const OUT_OF_STOCK_ACTION_HIDE = 'hide';

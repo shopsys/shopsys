@@ -41,7 +41,7 @@ class ProductServiceTest extends TransactionFunctionalTestCase
         $productManualInputPrice = new ProductManualInputPrice($product, $pricingGroup, 1000);
 
         $productService->recalculateInputPriceForNewVatPercent($product, [$productManualInputPrice], 15);
-        
+
         $this->assertSame('1052.173913', (string)$productManualInputPrice->getInputPrice());
     }
 
@@ -70,7 +70,7 @@ class ProductServiceTest extends TransactionFunctionalTestCase
         $productManualInputPrice = new ProductManualInputPrice($product, $pricingGroup, 1000);
 
         $productService->recalculateInputPriceForNewVatPercent($product, [$productManualInputPrice], 15);
-        
+
         $this->assertSame('1000', (string)$productManualInputPrice->getInputPrice());
     }
 }

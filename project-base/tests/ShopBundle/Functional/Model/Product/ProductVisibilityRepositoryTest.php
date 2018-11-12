@@ -51,12 +51,10 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
-        
 
         $productData = $this->getDefaultProductData();
         $productData->hidden = true;
         $product = $productFacade->create($productData);
-        
 
         $em->flush();
         $id = $product->getId();
@@ -87,11 +85,9 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
-        
 
         $productData = $this->getDefaultProductData();
         $product = $productFacade->create($productData);
-        
 
         $em->flush();
         $id = $product->getId();
@@ -122,7 +118,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
-        
 
         $sellingFrom = new DateTime('now');
         $sellingFrom->modify('+1 day');
@@ -130,7 +125,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData = $this->getDefaultProductData();
         $productData->sellingFrom = $sellingFrom;
         $product = $productFacade->create($productData);
-        
 
         $em->flush();
         $id = $product->getId();
@@ -150,7 +144,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
-        
 
         $sellingTo = new DateTime('now');
         $sellingTo->modify('-1 day');
@@ -158,7 +151,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData = $this->getDefaultProductData();
         $productData->sellingTo = $sellingTo;
         $product = $productFacade->create($productData);
-        
 
         $em->flush();
         $id = $product->getId();
@@ -178,7 +170,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     {
         $em = $this->getEntityManager();
         $productFacade = $this->getContainer()->get(ProductFacade::class);
-        
 
         $sellingFrom = new DateTime('now');
         $sellingFrom->modify('-1 day');
@@ -189,7 +180,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->sellingFrom = $sellingFrom;
         $productData->sellingTo = $sellingTo;
         $product = $productFacade->create($productData);
-        
 
         $em->flush();
         $id = $product->getId();
@@ -237,12 +227,10 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $em = $this->getEntityManager();
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade */
         $productFacade = $this->getContainer()->get(ProductFacade::class);
-        
 
         $productData = $this->getDefaultProductData();
         $productData->name = ['cs' => 'Name', 'en' => 'Name'];
         $product = $productFacade->create($productData);
-        
 
         $em->clear();
 

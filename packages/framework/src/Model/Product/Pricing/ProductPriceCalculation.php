@@ -2,8 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
-use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;ProductVisibilityRepositoryTest
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingService;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -29,11 +28,6 @@ class ProductPriceCalculation
     private $productManualInputPriceRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private $currencyFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
      */
     private $productRepository;
@@ -47,7 +41,6 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingService $pricingService
      */
@@ -55,14 +48,12 @@ class ProductPriceCalculation
         BasePriceCalculation $basePriceCalculation,
         PricingSetting $pricingSetting,
         ProductManualInputPriceRepository $productManualInputPriceRepository,
-        CurrencyFacade $currencyFacade,
         ProductRepository $productRepository,
         PricingService $pricingService
     ) {
         $this->pricingSetting = $pricingSetting;
         $this->basePriceCalculation = $basePriceCalculation;
         $this->productManualInputPriceRepository = $productManualInputPriceRepository;
-        $this->currencyFacade = $currencyFacade;
         $this->productRepository = $productRepository;
         $this->pricingService = $pricingService;
     }
@@ -79,7 +70,7 @@ class ProductPriceCalculation
         if ($product->isMainVariant()) {
             return $this->calculateMainVariantPrice($product, $domainId, $pricingGroup);
         }
-        
+
         return $this->calculateProductPriceForPricingGroupManual($product, $pricingGroup);
     }
 

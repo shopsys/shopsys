@@ -237,7 +237,7 @@ class ProductFormType extends AbstractType
                         //remove
                         $validationGroups[] = self::VALIDATION_GROUP_AUTO_PRICE_CALCULATION;
                     }
-                    
+
                     $validationGroups[] = self::VALIDATION_GROUP_MANUAL_PRICE_CALCULATION;
 
                     return $validationGroups;
