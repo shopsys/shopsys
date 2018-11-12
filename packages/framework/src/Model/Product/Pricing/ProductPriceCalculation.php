@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
-use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;ProductVisibilityRepositoryTest
+use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingService;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
