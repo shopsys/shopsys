@@ -264,6 +264,7 @@ class CurrencyFacade
      */
     public function getDomainConfigsByCurrency(Currency $currency)
     {
+        //remove unused
         $domainConfigs = [];
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainCurrencyId = $this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainConfig->getId());

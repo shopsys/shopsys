@@ -45,6 +45,7 @@ class ProductManualInputPriceRepository
      */
     public function getByProductAndDomainConfigs(Product $product, array $domainConfigs)
     {
+        //remove unused
         if (count($domainConfigs) === 0) {
             return [];
         }

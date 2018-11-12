@@ -58,6 +58,7 @@ class ProductInputPriceService
      */
     public function getInputPrice(Product $product, $inputPriceType, array $manualInputPricesInDefaultCurrency)
     {
+        //remove unused
         $maxSellingPriceWithVatInDefaultCurrency = $this->getMaxSellingPriceWithVatInDefaultCurrency(
             $product,
             $manualInputPricesInDefaultCurrency
