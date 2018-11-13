@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Yaml\Yaml;
 
 require_once __DIR__ . '/autoload.php';
 
@@ -53,7 +54,11 @@ class Bootstrap
         }
 
         $kernel = new AppKernel($this->environment, EnvironmentType::isDebug($this->environment));
-        Request::setTrustedProxies(['127.0.0.1'], Request::HEADER_X_FORWARDED_ALL);
+
+        $parameters = $this->loadParametersConfigFile($kernel);
+        $trustedProxies = array_values($parameters['parameters']['trusted_proxies']);
+
+        Request::setTrustedProxies($trustedProxies, Request::HEADER_X_FORWARDED_ALL);
         if ($this->console) {
             $input = new ArgvInput();
             $output = new ConsoleOutput();
@@ -83,5 +88,18 @@ class Bootstrap
             $dirs = [__DIR__ . '/../vendor/doctrine/orm/lib/'];
             AnnotationRegistry::registerAutoloadNamespace('Doctrine\ORM', $dirs);
         }
+    }
+
+    /**
+     * @param \AppKernel $kernel
+     * @return mixed
+     */
+    private function loadParametersConfigFile(Appkernel $kernel)
+    {
+        $projectDir = $kernel->getRootDir();
+
+        $yamlReader = new Yaml();
+
+        return $yamlReader->parseFile($projectDir . '/config/parameters.yml');
     }
 }

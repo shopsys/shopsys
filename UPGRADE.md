@@ -100,6 +100,8 @@ There is a list of all the repositories maintained by monorepo, changes in log b
     - the last parameter is no longer `bool`, but `integer` - domain ID
 
 ### [shopsys/project-base]
+- *(optional)* [#596 Trusted proxies are now configurable in parameters.yml file](https://github.com/shopsys/shopsys/pull/596)
+    - implement the same patches as in commits, later will be used for production.
 - *(optional)* [#592 phpunit: remove unsupported syntaxCheck attribute](https://github.com/shopsys/shopsys/pull/592)
     - remove unsupported `syntaxCheck` attribute from your `phpunit.xml` configuration file
 - `Shopsys\FrameworkBundle\Model\Product\ProductFacade::create()` and `Shopsys\FrameworkBundle\Model\Product\ProductFactory` were modified
