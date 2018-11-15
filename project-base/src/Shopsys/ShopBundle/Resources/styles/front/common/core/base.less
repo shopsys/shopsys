@@ -19,10 +19,18 @@ h1, h2, h3, h4, h5, h6, img,
 table, tr, td, th, input, textarea {
     color: @color-base;
     font-family: @font-base;
-    font-size: @font-size-mobile;
+    font-size: @font-size-mobile-xs;
+
+    @media @query-md {
+        font-size: @font-size-mobile;
+    }
 
     @media @query-lg {
-        font-size: @font-size;
+        font-size: @font-size-tablet;
+    }
+
+    @media @query-vl {
+      font-size: @font-size;
     }
 }
 
