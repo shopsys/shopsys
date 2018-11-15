@@ -107,4 +107,4 @@ Learn the principles on which we distribute our product on our website at [Licen
 The rest of modules of Shopsys Framework including [HTTP smoke testing](https://github.com/shopsys/http-smoke-testing) are distributed under standard MIT license. 
 
 Shopsys Framework also uses some third-party components and images which are licensed under their own respective licenses.
-The list of these licenses is summarized in  [Open Source License Acknowledgements and Third Party Copyrights](./open-source-license-acknowledgements-and-third-party-copyrights.md).
+The list of these licenses is summarized in [Open Source License Acknowledgements and Third Party Copyrights](./open-source-license-acknowledgements-and-third-party-copyrights.md).
