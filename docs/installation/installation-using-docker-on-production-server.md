@@ -26,6 +26,10 @@ firewall-cmd --permanent --direct --add-chain ipv4 filter DOCKER
 firewall-cmd --permanent --direct --add-rule ipv4 filter DOCKER 0 ! -s 127.0.0.1 -j RETURN
 ```
 
+When `firewalld` is started or restarted it will remove the `DOCKER` chain from iptables, preventing Docker from working properly.
+
+When using Systemd, `firewalld` is started before Docker, but if you start or restart `firewalld` after Docker, you will have to restart the Docker daemon.
+
 ### Nginx
 
 Let's presume that we want to have our site running on `HTTPS` protocol and everything that concerns domain and its `certificates` is already setup.
