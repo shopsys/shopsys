@@ -19,19 +19,7 @@ h1, h2, h3, h4, h5, h6, img,
 table, tr, td, th, input, textarea {
     color: @color-base;
     font-family: @font-base;
-    font-size: @font-size-mobile-xs;
-
-    @media @query-md {
-        font-size: @font-size-mobile;
-    }
-
-    @media @query-lg {
-        font-size: @font-size-tablet;
-    }
-
-    @media @query-vl {
-      font-size: @font-size;
-    }
+    font-size: @font-size;
 }
 
 fieldset {
@@ -77,17 +65,40 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
     margin: 0 0 10px 0;
 
-    font-size: 24px;
+    font-size: 38px;
     font-weight: normal;
 
     @media @query-md {
-        font-size: 28px;
+        font-size: 40px;
     }
 
     @media @query-lg {
         margin-bottom: 15px;
 
-        font-size: 32px;
+        font-size: 42px;
+    }
+
+    @media @query-vl {
+        margin-bottom: 20px;
+
+        font-size: 48px;
+    }
+}
+
+h2 {
+    margin: 0 0 10px 0;
+
+    font-size: 36px;
+    font-weight: normal;
+
+    @media @query-md {
+        font-size: 36px;
+    }
+
+    @media @query-lg {
+        margin-bottom: 15px;
+
+        font-size: 36px;
     }
 
     @media @query-vl {
@@ -97,20 +108,20 @@ h1 {
     }
 }
 
-h2 {
+h3 {
     margin: 0 0 10px 0;
 
-    font-size: 23px;
+    font-size: 25px;
     font-weight: normal;
 
     @media @query-md {
-        font-size: 25px;
+        font-size: 27px;
     }
 
     @media @query-lg {
         margin-bottom: 15px;
 
-        font-size: 27px;
+        font-size: 28px;
     }
 
     @media @query-vl {
@@ -120,20 +131,20 @@ h2 {
     }
 }
 
-h3 {
+h4 {
     margin: 0 0 10px 0;
 
-    font-size: 16px;
-    font-weight: normal;
+    font-size: 24px;
+    font-weight: bold;
 
     @media @query-md {
-        font-size: 19px;
+        font-size: 24px;
     }
 
     @media @query-lg {
         margin-bottom: 15px;
 
-        font-size: 21px;
+        font-size: 24px;
     }
 
     @media @query-vl {
@@ -143,20 +154,21 @@ h3 {
     }
 }
 
-h4 {
+h5 {
     margin: 0 0 10px 0;
 
-    font-size: 15px;
+    font-size: 17px;
+    text-transform: uppercase;
     font-weight: bold;
 
     @media @query-md {
-        font-size: 17px;
+        font-size: 18px;
     }
 
     @media @query-lg {
         margin-bottom: 15px;
 
-        font-size: 18px;
+        font-size: 19px;
     }
 
     @media @query-vl {
@@ -166,47 +178,11 @@ h4 {
     }
 }
 
-h5 {
-    margin: 0 0 10px 0;
-
-    font-size: 11px;
-    text-transform: uppercase;
-    font-weight: bold;
-
-    @media @query-md {
-        font-size: 12px;
-    }
-
-    @media @query-lg {
-        margin-bottom: 15px;
-
-        font-size: 14px;
-    }
-
-    @media @query-vl {
-        margin-bottom: 20px;
-
-        font-size: 16px;
-    }
-}
-
 h6 {
     margin: 0 0 10px 0;
 
-    font-size: @font-size-mobile-xs;
+    font-size: @font-size;
     font-weight: bold;
-
-    @media @query-md {
-        font-size: @font-size-mobile;
-    }
-
-    @media @query-lg {
-        font-size: @font-size-tablet;
-    }
-
-    @media @query-vl {
-        font-size: @font-size;
-    }
 }
 
 a {
