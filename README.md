@@ -1,6 +1,6 @@
 # Shopsys Framework
 Shopsys Framework is a **fully functional ecommerce platform for businesses transitioning into tech-companies with their own software development team**. 
-It contains the most common B2C and B2B features for online stores, and its infrastructure is prepared for high scalability.
+It contains theasfasf asfas asf  most common B2C and B2B features for online stores, and its infrastructure is prepared for high scalability.
 
 Shopsys Framework is **the fruit of our 15 years of experience in creating custom-made online stores and it’s dedicated to best in-house devs teams who work with online stores with tens of millions of Euros of turnover per year**. 
 
