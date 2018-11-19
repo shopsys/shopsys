@@ -19,7 +19,11 @@ h1, h2, h3, h4, h5, h6, img,
 table, tr, td, th, input, textarea {
     color: @color-base;
     font-family: @font-base;
-    font-size: @font-size;
+    font-size: @font-size-mobile;
+
+    @media @query-lg {
+        font-size: @font-size;
+    }
 }
 
 fieldset {
@@ -65,63 +69,40 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
     margin: 0 0 10px 0;
 
-    font-size: 38px;
+    font-size: 29px;
     font-weight: normal;
 
     @media @query-md {
-        font-size: 40px;
+        font-size: 31px;
     }
 
     @media @query-lg {
         margin-bottom: 15px;
 
-        font-size: 42px;
+        font-size: 34px;
     }
 
     @media @query-vl {
         margin-bottom: 20px;
 
-        font-size: 48px;
+        font-size: 36px;
     }
 }
 
 h2 {
     margin: 0 0 10px 0;
 
-    font-size: 36px;
+    font-size: 28px;
     font-weight: normal;
 
     @media @query-md {
-        font-size: 36px;
+        font-size: 29px;
     }
 
     @media @query-lg {
         margin-bottom: 15px;
 
-        font-size: 36px;
-    }
-
-    @media @query-vl {
-        margin-bottom: 20px;
-
-        font-size: 36px;
-    }
-}
-
-h3 {
-    margin: 0 0 10px 0;
-
-    font-size: 25px;
-    font-weight: normal;
-
-    @media @query-md {
-        font-size: 27px;
-    }
-
-    @media @query-lg {
-        margin-bottom: 15px;
-
-        font-size: 28px;
+        font-size: 29px;
     }
 
     @media @query-vl {
@@ -131,20 +112,20 @@ h3 {
     }
 }
 
-h4 {
+h3 {
     margin: 0 0 10px 0;
 
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 21px;
+    font-weight: normal;
 
     @media @query-md {
-        font-size: 24px;
+        font-size: 20px;
     }
 
     @media @query-lg {
         margin-bottom: 15px;
 
-        font-size: 24px;
+        font-size: 23px;
     }
 
     @media @query-vl {
@@ -154,21 +135,20 @@ h4 {
     }
 }
 
-h5 {
+h4 {
     margin: 0 0 10px 0;
 
-    font-size: 17px;
-    text-transform: uppercase;
+    font-size: 19px;
     font-weight: bold;
 
     @media @query-md {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     @media @query-lg {
         margin-bottom: 15px;
 
-        font-size: 19px;
+        font-size: 21px;
     }
 
     @media @query-vl {
@@ -178,11 +158,35 @@ h5 {
     }
 }
 
+h5 {
+    margin: 0 0 10px 0;
+
+    font-size: @font-size-mobile;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    @media @query-lg {
+        margin-bottom: 15px;
+
+        font-size: 15px;
+    }
+
+    @media @query-vl {
+        margin-bottom: 20px;
+
+        font-size: 16px;
+    }
+}
+
 h6 {
     margin: 0 0 10px 0;
 
-    font-size: @font-size;
+    font-size: @font-size-mobile;
     font-weight: bold;
+
+    @media @query-lg {
+        font-size: @font-size;
+    }
 }
 
 a {
