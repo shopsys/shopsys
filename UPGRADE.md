@@ -122,6 +122,8 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 - *(optional)* [#551 - github token erase](https://github.com/shopsys/shopsys/pull/551)
     - remove the lines mentioning `github_oauth_token` from your `docker/php-fpm/Dockerfile` and `docker-compose.yml`
     - rebuild `php-fpm` container
+- [#616 - services.yml: automatic registration of classes with suffix "Repository" in namespace ShopBundle\Model\ ](https://github.com/shopsys/shopsys/pull/616)
+    - modify your `src/Shopsys/ShopBundle/Resources/config/services.yml`, change the resource for automatic registration of Model services from `resource: '../../Model/**/*{Facade,Factory}.php'` to `resource: '../../Model/**/*{Facade,Factory,Repository}.php'`
 
 ### [shopsys/shopsys]
 - *(MacOS only)* [#503 updated docker-sync configuration](https://github.com/shopsys/shopsys/pull/503/)
