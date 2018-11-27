@@ -111,13 +111,13 @@ su - postgres -c "createuser --createdb --superuser --pwprompt root"
 ```
 Now we need to allow connection between docker containers and database via local network and PostgresSQL port.
 ```
-echo <<EOT | cat >> /usr/lib/firewalld/services/postgresql.xml
-<?xml version=""1.0"" encoding=""utf-8""?>
+cat <<EOT > /etc/firewalld/services/postgresql.xml
+<?xml version="1.0" encoding="utf-8"?>
 <service>
   <short>PostgreSQL</short>
   <description>PostgreSQL Database Server</description>
-  <port protocol=""tcp"" port=""5432""/>
-  <destination ipv4=""192.168.0.1/16""/>
+  <port protocol="tcp" port="5432"/>
+  <destination ipv4="192.168.0.1/16"/>
 </service>
 EOT
 firewall-cmd --permanent --zone=public --add-service=postgresql
@@ -141,15 +141,15 @@ service redis_6379 restart
 ```
 Now we just need to allow communication between docker containers and Redis server.
 ```
-"echo <<EOT | cat >> /usr/lib/firewalld/services/redis.xml
-<?xml version=""1.0"" encoding=""utf-8""?>
+cat <<EOT > /etc/firewalld/services/redis.xml
+<?xml version="1.0" encoding="utf-8"?>
 <service>
   <short>Redis</short>
   <description>Cache tool.</description>
-  <port protocol=""tcp"" port=""6379""/>
-  <destination ipv4=""192.168.0.1/16""/>
+  <port protocol="tcp" port="6379"/>
+  <destination ipv4="192.168.0.1/16"/>
 </service>
-EOT"
+EOT
 firewall-cmd --permanent --zone=public --add-service=redis
 firewall-cmd --reload
 ```
@@ -163,14 +163,14 @@ yum install java-1.8.0-openjdk
 
 Next we [install](https://www.elastic.co/guide/en/elasticsearch/reference/current/rpm.html) elasticsearch and allow connecting to it via local network.
 ```
-echo <<EOT | cat >> /usr/lib/firewalld/services/elasticsearch.xml
-<?xml version=""1.0"" encoding=""utf-8""?>
+cat <<EOT > /etc/firewalld/services/elasticsearch.xml
+<?xml version="1.0" encoding="utf-8"?>
 <service>
   <short>Elasticsearch</short>
   <description>Elasticsearch is a distributed, open source search and analytics engine, designed for horizontal scalability, reliability, and easy management.</description>
-  <port protocol=""tcp"" port=""9300""/>
-  <port protocol=""tcp"" port=""9200""/>
-  <destination ipv4=""192.168.0.0/16 ""/>
+  <port protocol="tcp" port="9300"/>
+  <port protocol="tcp" port="9200"/>
+  <destination ipv4="192.168.0.0/16"/>
 </service>
 EOT
 firewall-cmd --permanent --zone=public --add-service=elasticsearch
@@ -224,14 +224,10 @@ docker build \
     --target production \
     -t production-php-fpm \
     --compress \
-    --build-arg github_oauth_token=PERSONAL_ACCESS_TOKEN_FROM_GITHUB \
     .
 ```
-Replace the `PERSONAL_ACCESS_TOKEN_FROM_GITHUB` string by the token generated on [Github -> Settings -> Developer Settings -> Personal access tokens](https://github.com/settings/tokens/new?scopes=repo&description=Composer+API+token).
 With `f` parameter we set path to Dockerfile that builds image.
 With `t` parameter we set the name of built image.
-
-<!--- TODO When releasing new version, remove all notices about "github_oauth_token" as (in current master) docker-compose.yml and dockerfiles don't contain or operate with such attribute -->
 
 If we are building the image on different server than production server, we can push built image into docker registry of production server via ssh.
 We use `-oStrictHostKeyChecking=no` argument to have ssh connection without the prompt that asks about adding target server record into `known_hosts` ssh configuration.
@@ -307,7 +303,7 @@ docker rm -f build-php-fpm-container
 
 # launch container for building the application image
 docker run --detach --name build-php-fpm-container \
-    --add-host redis:192.168.0.1 --add-host postgres:192.168.0.1 --add-host elasticsearch:192.168.0.1 --add-host smpt-server:192.168.0.1 \
+    --add-host redis:192.168.0.1 --add-host postgres:192.168.0.1 --add-host elasticsearch:192.168.0.1 --add-host smtp-server:192.168.0.1 \
     --network production_shopsys-network \
     production-php-fpm \
     docker-php-entrypoint php-fpm

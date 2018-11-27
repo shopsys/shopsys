@@ -49,8 +49,55 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 * [shopsys/microservice-product-search]
 * [shopsys/microservice-product-search-export]
 
-## [From 7.0.0-beta2 to Unreleased]
+## [From v7.0.0-beta3 to Unreleased]
+### [shopsys/project-base]
+- [#616 - services.yml: automatic registration of classes with suffix "Repository" in namespace ShopBundle\Model\ ](https://github.com/shopsys/shopsys/pull/616)
+    - modify your `src/Shopsys/ShopBundle/Resources/config/services.yml`, change the resource for automatic registration of Model services from `resource: '../../Model/**/*{Facade,Factory}.php'` to `resource: '../../Model/**/*{Facade,Factory,Repository}.php'`
+
+## [From 7.0.0-beta2 to v7.0.0-beta3]
 ### [shopsys/framework]
+- [#595 automatic product price calculation has been removed along with pricing group coefficients](https://github.com/shopsys/shopsys/pull/595)
+    - after running database migrations, all your products will be using manual pricing and will have set prices for all pricing groups in a fashion that will keep the final price as same as before
+        - we strongly recommend to review `Version20181114134959` and `Version20181114145250` migrations before executing them on your real data, especially if there were any modifications in your product pricing implementation on the project.
+        If any of the migrations does not suit you, there is an option to skip it, see [our Database Migrations docs](https://github.com/shopsys/shopsys/blob/master/docs/introduction/database-migrations.md#reordering-and-skipping-migrations)
+    - `ProductPriceCalculation::calculatePrice()` is still available, however, it always uses the manual price calculation
+    - following (public and protected) constants, properties and methods are not available anymore:
+        - `Currency::getReversedExchangeRate()`
+        - `CurrencyFacade::getDomainConfigsByCurrency()`
+        - `PricingGroup::$coefficient`
+        - `PricingGroup::getCoefficient()`
+        - `PricingGroupData::$coefficient`
+        - `Product::PRICE_CALCULATION_TYPE_AUTO`
+        - `Product::PRICE_CALCULATION_TYPE_MANUAL`
+        - `Product::$price`
+        - `Product::$priceCalculationType`
+        - `Product::setPrice()`
+        - `Product::getPrice()`
+        - `Product::getPriceCalculationType()`
+        - `ProductData::$priceCalculationType`
+        - `ProductData::$price`
+        - `ProductDataFixtureLoader::COLUMN_MAIN_PRICE`
+        - `ProductDataFixtureLoader::COLUMN_PRICE_CALCULATION_TYPE`
+        - `ProductFormType::VALIDATION_GROUP_AUTO_PRICE_CALCULATION`
+        - `ProductFormType::VALIDATION_GROUP_MANUAL_PRICE_CALCULATION`
+        - `ProductInputPriceFacade::getInputPrice()`
+        - `ProductManualInputPriceFacade::getAllByProduct()`
+        - `ProductManualInputPriceFacade::deleteByProduct()`
+        - `ProductManualInputPriceRepository::getByProductAndDomainConfigs()`
+        - `ProductService::setInputPrice()`
+    - interfaces of following (public and protected) methods have changed:
+        - `InputPriceRecalculator::__construct()`
+        - `ProductDataFactory::__construct()`
+        - `ProductCalculatedPricesType::_construct()`
+        - `ProductPriceCalculation::__construct()`
+    - following classes have been removed:
+        - `AdminProductPriceCalculationFacade`
+        - `InvalidPriceCalculationTypeException`
+        - `ProductBasePriceCalculationException`
+        - `ProductInputPriceService`
+    - due to the removal of `Product::$price` and `PricingGroup::$coefficient` you have to fix your tests
+        - we cannot provide exact instruction for fixing tests as we don't know what do you test
+        - please find hints in tests that we fixed during [#595](https://github.com/shopsys/shopsys/pull/595/files)
 - remove all usages of `\Shopsys\FrameworkBundle\Command\LoadDataFixturesCommand` and `\Shopsys\FrameworkBundle\Component\DataFixture\FixturesLoader` as we no longer support data fixtures in multiple directories
 - we moved multidomain data fixtures in namespace `\Shopsys\FrameworkBundle\DataFixtures\DemoMultidomain` to `\Shopsys\FrameworkBundle\DataFixtures\Demo`
     - check for their usage in your code and change the namespace appropriately
@@ -84,6 +131,7 @@ There is a list of all the repositories maintained by monorepo, changes in log b
     - you can also remove the now redundant Phing target `domains-urls-check` from your `build.xml` and `build-dev.xml`
 - *(optional)* [#428 Removed depends_on and links from docker-compose.yml files](https://github.com/shopsys/shopsys/pull/528)
     - remove all `depends_on` and `links` from your docker-compose files because they are unnecessary
+    - the only exception is the `webserver` container that should depend on `php-fpm` in the production configuration `docker-compose.prod.yml.dist`, otherwise a volume will not mount properly (see [PR #598](https://github.com/shopsys/shopsys/pull/598))
 - [#538 - phing targets: create-domains-data is now dependent on create-domains-db-functions](https://github.com/shopsys/shopsys/pull/538)
     - in your `build.xml`, make your `create-domains-data` task dependent on `create-domains-db-functions` task
     - in your `build-dev.xml`, make your `test-create-domains-data` task dependent on `test-create-domains-db-functions` task
@@ -122,8 +170,8 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 - *(optional)* [#551 - github token erase](https://github.com/shopsys/shopsys/pull/551)
     - remove the lines mentioning `github_oauth_token` from your `docker/php-fpm/Dockerfile` and `docker-compose.yml`
     - rebuild `php-fpm` container
-- [#616 - services.yml: automatic registration of classes with suffix "Repository" in namespace ShopBundle\Model\ ](https://github.com/shopsys/shopsys/pull/616)
-    - modify your `src/Shopsys/ShopBundle/Resources/config/services.yml`, change the resource for automatic registration of Model services from `resource: '../../Model/**/*{Facade,Factory}.php'` to `resource: '../../Model/**/*{Facade,Factory,Repository}.php'`
+- *(optional)* you can change your `Shopsys\Environment` class for consistent env setting during `composer install` ([see diff](https://github.com/shopsys/shopsys/pull/543/files#diff-02efa1bf1cc55b01e582e2b8bff3f2f7))
+    - you should add a command to change the environment to the `ci` stage in `docker/php-fpm/Dockerfile` to keep it building in `prod` environment, otherwise it will be built in `dev` ([see diff](https://github.com/shopsys/shopsys/pull/543/files#diff-50a0e02c146dc64c2a172b42022589fa))
 
 ### [shopsys/shopsys]
 - *(MacOS only)* [#503 updated docker-sync configuration](https://github.com/shopsys/shopsys/pull/503/)
@@ -661,7 +709,8 @@ parameters:
         - *_generated/*
 
 ```
-[From 7.0.0-beta2 to Unreleased]: https://github.com/shopsys/shopsys/compare/v7.0.0-beta2...HEAD
+[From v7.0.0-beta3 to Unreleased]: https://github.com/shopsys/shopsys/compare/v7.0.0-beta3...HEAD
+[From 7.0.0-beta2 to v7.0.0-beta3]: https://github.com/shopsys/shopsys/compare/v7.0.0-beta2...v7.0.0-beta3
 [From 7.0.0-beta1 to 7.0.0-beta2]: https://github.com/shopsys/shopsys/compare/v7.0.0-beta1...v7.0.0-beta2
 [From 7.0.0-alpha6 to 7.0.0-beta1]: https://github.com/shopsys/shopsys/compare/v7.0.0-alpha6...v7.0.0-beta1
 [From 7.0.0-alpha5 to 7.0.0-alpha6]: https://github.com/shopsys/shopsys/compare/v7.0.0-alpha5...v7.0.0-alpha6
