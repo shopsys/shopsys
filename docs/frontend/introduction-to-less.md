@@ -5,14 +5,14 @@ This document describes behavior of CSS pre-processor `LESS`.
 In Shopsys Framework we implement `LESS` by dividing styles into many `LESS components`. Each component has its own file. Filename and component name are the same. We use `@import` command for joining all components contents into one compiled `CSS` file.
 
 Here we can see syntax of `@import` command.
-```css
+```less
 @import 'path/to/directory/component-filename.less';
 ```
 
 ### Usage @import
 Best way how to import all related files is to create one file, for example named as `main.less`. This file will contain only `@import` commands. Keep in mind where you place this file. Imported path depends on where this file is placed.
 
-#### Unexcepted behavior
+#### Unexpected behavior
 There is one thing which you should keep in mind. When you try to import file which does not exist in given file path, compiler will try to find missing file in root directories of files, where is used `@import`.
 
 Let us show this at example. Assuming you have folder structure and files as it is shown below.
@@ -23,13 +23,13 @@ Let us show this at example. Assuming you have folder structure and files as it 
     └── b-main.less
 ```
 
-```css
+```less
 /** B/b-main.less */
 
 @import "some-component.less";
 ```
 
-```css
+```less
 /* some-component.less */
 
 .some-component {
@@ -37,14 +37,14 @@ Let us show this at example. Assuming you have folder structure and files as it 
 }
 ```
 
-```css
+```less
 /* root-main.less */
 
 @import "B/b-main.less";
 ```
 
 Result CSS of this example will be:
-```css
+```less
 .some-component {
     color: red;
 }
@@ -64,7 +64,7 @@ Let us have for this example following folder structure.
 ```
 
 For importing of all files in folder `common` there will exist file `main.less` with following code.
-```css
+```less
 /* Import helper classes from current directory */
 @import 'helpers.less';
 
@@ -98,7 +98,7 @@ We can see two files named `main.less` located in two different folders.
 
 Now we want to extend styles for *domain2* by changing default colors defined in `core/variables.less` and add styles for footer.
 Code below shows up how would `domain2/main.less` looks like:
-```css
+```less
 @import '../common/main.less';
 
 /* In order to extend, create or modify behavior of CSS
