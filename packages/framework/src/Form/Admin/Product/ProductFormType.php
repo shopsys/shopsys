@@ -38,6 +38,7 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -191,6 +192,42 @@ class ProductFormType extends AbstractType
         if ($this->isProductVariant($product) || $this->isProductMainVariant($product)) {
             $builder->add($this->createVariantGroup($builder, $product));
         }
+
+        $builder->add(
+            $builder
+                ->create('testCollectionGroup', GroupType::class, [
+                    'label' => 'Test Collection Group',
+                ])
+                ->add('testCollection', CollectionType::class, [
+                    'entry_type' => TextType::class,
+                    'required' => false,
+                    'label' => 'Non-rendered label',
+                    'render_form_row' => false,
+                    'attr' => [
+                        'class' => 'js-test-collection',
+                    ],
+                    'entry_options' => [
+                        'label' => 'Item',
+                        'required' => true,
+                        'attr' => [
+                            'class' => 'js-test-collection-item',
+                        ],
+                        'constraints' => [
+                            new Constraints\NotBlank(),
+                            new Constraints\Length([
+                                'min' => 3,
+                            ]),
+                        ],
+                    ],
+                    'constraints' => [
+                        new Constraints\Count([
+                            'min' => 3,
+                        ]),
+                    ],
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ])
+        );
 
         $builder->add($this->createBasicInformationGroup($builder, $product, $disabledItemInMainVariantAttr));
         $builder->add($this->createDisplayAvailabilityGroup($builder, $product, $disabledItemInMainVariantAttr));

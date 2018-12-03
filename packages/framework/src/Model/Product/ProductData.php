@@ -167,6 +167,11 @@ class ProductData
      */
     public $pluginData;
 
+    /**
+     * @var string[]
+     */
+    public $testCollection;
+
     public function __construct()
     {
         $this->name = [];
@@ -189,5 +194,6 @@ class ProductData
         $this->variants = [];
         $this->seoH1s = [];
         $this->pluginData = [];
+        $this->testCollection = ['default', 'second default', 'third default'];
     }
 }

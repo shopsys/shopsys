@@ -137,6 +137,8 @@ class ProductController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->productFacade->edit($id, $form->getData());
 
+            $this->getFlashMessageSender()->addInfoFlash($form->getData()->testCollection);
+
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Product <strong>{{ product|productDisplayName }}</strong> modified'),
                 [
