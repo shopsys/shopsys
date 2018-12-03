@@ -1,22 +1,21 @@
 # Indtroduction to LESS
-This document serves for describing specific behavior of CSS pre-processors LESS.
+This document describes behavior of CSS pre-processor `LESS`.
 
 ## Import files
-In Shopsys framework we implement LESS by dividing styles into many LESS components. Every component has its own file. File name is same as component name. Getting all these components into one CSS file we accomplish by `@import` command.
+In Shopsys Framework we implement `LESS` by dividing styles into many `LESS components`. Each component has its own file. Filename and component name are the same. We use `@import` command for joining all components contents into one compiled `CSS` file.
 
-In example bellow we can see how looks syntax of this command:
-
+Here we can see syntax of `@import` command.
 ```css
 @import 'path/to/directory/component-filename.less';
 ```
 
-#### Using @import
-Best way to import all related files is create one file, for example named as `main.less`. This file will contain only `@import` commands. Keep in mind where do you place this file. Imported path depends on where this file is placed.
+### Usage @import
+Best way how to import all related files is to create one file, for example named as `main.less`. This file will contain only `@import` commands. Keep in mind where you place this file. Imported path depends on where this file is placed.
 
-###### Unexcepted behavior
+#### Unexcepted behavior
 There is one thing which you should keep in mind. When you try to import file which does not exist in given file path, compiler will try to find missing file in root directories of files, where is used `@import`.
 
-Let us show this at example. Assuming you have folder structure and files as is shown below:
+Let us show this at example. Assuming you have folder structure and files as it is shown below.
 ```
 │── root-main.less
 │── some-component.less
@@ -24,20 +23,23 @@ Let us show this at example. Assuming you have folder structure and files as is 
     └── b-main.less
 ```
 
-`B/b-main.less`:
 ```css
+/** B/b-main.less */
+
 @import "some-component.less";
 ```
 
-`some-component.less`:
 ```css
+/* some-component.less */
+
 .some-component {
     color: red;
 }
 ```
 
-`root-main.less`:
 ```css
+/* root-main.less */
+
 @import "B/b-main.less";
 ```
 
@@ -47,12 +49,10 @@ Result CSS of this example will be:
     color: red;
 }
 ```
-As a explanation of this behavior, given in example above, is that compiler is trying to find file `some-component.less` firstly in folder where is placed `b-main.less`, then in directory of `root-main.less`. When it could not find required file in any directory, then it will thrown an error during compiling.
+As an explanation of this behavior, given in example above, is that compiler is trying to find a file `some-component.less` firstly in folder where is placed `b-main.less`, then in directory of `root-main.less`. When it could not find required file in any directory, then it will thrown an error during compiling.
 
-
-
-###### Example 1 - Importing files from current folder and its subfolders
-Let us have for this example following folder structure:
+#### Example 1 - Importing files from current folder and its subfolders
+Let us have for this example following folder structure.
 ```
 └── common
    └─── core
@@ -63,8 +63,7 @@ Let us have for this example following folder structure:
    └── main.less
 ```
 
-For import all files in folder `common` there will be exist file `main.less` with following code:
-
+For importing of all files in folder `common` there will exist file `main.less` with following code.
 ```css
 /* Import helper classes from current directory */
 @import 'helpers.less';
@@ -76,8 +75,8 @@ For import all files in folder `common` there will be exist file `main.less` wit
 @import 'layout/header.less';
 ```
 
-###### Example 2 - Importing files from another directory
-Let us have for this example following folder structure:
+#### Example 2 - Importing files from another directory
+Let us have for this example following folder structure.
 ```
 └─── common
 |   └─── core
@@ -93,9 +92,8 @@ Let us have for this example following folder structure:
     |   └── footer.less
     └── main.less
 ```
-We can see two files named `main.less` located in two different folders:
+We can see two files named `main.less` located in two different folders.
 - `common/main.less` will import only that type of files which defines common styles for all domains
-
 - `domain2/main.less` will import files which extend, add or modify styles for *domain2*
 
 Now we want to extend styles for *domain2* by changing default colors defined in `core/variables.less` and add styles for footer.
