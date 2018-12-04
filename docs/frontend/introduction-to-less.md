@@ -9,7 +9,7 @@ Here we can see syntax of `@import` command.
 @import 'path/to/directory/component-filename.less';
 ```
 
-### Usage @import
+### Usage of @import command
 Best way how to import all related files is to create one file, for example named as `main.less`. This file will contain only `@import` commands. Keep in mind where you place this file. Imported path depends on where this file is placed.
 
 #### Unexpected behavior
@@ -43,7 +43,7 @@ Let us show this at example. Assuming you have folder structure and files as it 
 @import "B/b-main.less";
 ```
 
-Result CSS of this example will be:
+Result CSS of this example will be.
 ```less
 .some-component {
     color: red;
