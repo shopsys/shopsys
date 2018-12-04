@@ -100,7 +100,8 @@ composer require-dev symfony/web-server-bundle
 composer install
 ```
 
-Configure connection to the Elasticsearch by setting up the ELASTICSEARCH_HOSTS_STRING environment variable and if you have multiple instances of Shopsys Framework using the same Elasticsearch ELASTIC_SEARCH_INDEX_PREFIX environment variable.
+Configure connection to the Elasticsearch by setting up the ELASTICSEARCH_HOSTS_STRING environment variable and if you have multiple instances of Shopsys Framework using the same Elasticsearch set up ELASTIC_SEARCH_INDEX_PREFIX environment variable as well.
+ELASTIC_SEARCH_INDEX_PREFIX needs to be the same as ELASTIC_SEARCH_INDEX_PREFIX in microservice for product search.
 
 ```
 php bin/console server:run 127.0.0.1:8002
