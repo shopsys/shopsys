@@ -1,5 +1,7 @@
 # Installation Using Docker for MacOS
 
+This guide covers building a new projects based on Shopsys Framework. Maybe you want to contribute to the framework itself. In that case don't forget to take a look at an article about [Monorepo](../introduction/monorepo.md).
+
 This solution uses [*docker-sync*](http://docker-sync.io/) (for fast two-way synchronization of the application files between the host machine and Docker volume).
 
 ## Requirements

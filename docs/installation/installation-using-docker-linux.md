@@ -1,5 +1,7 @@
 # Installation Using Docker for Linux
 
+This guide covers building a new projects based on Shopsys Framework. Maybe you want to contribute to the framework itself. In that case don't forget to take a look at an article about [Monorepo](../introduction/monorepo.md).
+
 ## Requirements
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * [PHP](http://php.net/manual/en/install.unix.php)
