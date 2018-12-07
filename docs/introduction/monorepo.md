@@ -64,7 +64,7 @@ Installation of Shopsys Framework is almost the same as is described in [Install
 but instead of creating a new project based on `project-base` repository, you have to clone [`shopsys/shopsys`](https://github.com/shopsys/shopsys).
 
 Please keep in mind that all commands have to be executed from the monorepo root directory.
-Also templates of a configuration files should be copied from `docker/` folder in root.
+Also templates of a configuration files should be copied from `docker/` folder in root, not from `project-base` folder.
 
 ## Development in monorepo
 During the development in monorepo, it is necessary to ensure that the changes made in specific package
