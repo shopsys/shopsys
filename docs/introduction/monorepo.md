@@ -18,7 +18,7 @@ Monorepo approach provides a single development environment for management of al
 We use [Monorepo tool](https://github.com/shopsys/monorepo-tools) that splits code in appropriate repositories
 after some changes are made in monorepo. This splitting is initiated automatically once a day.
 
-If you are interested, you can read more about monorepo here https://gomonorepo.org
+If you are interested, you can read more about the monorepo approach here - https://gomonorepo.org
 
 ## Repositories maintained by monorepo
 `project-base/`
