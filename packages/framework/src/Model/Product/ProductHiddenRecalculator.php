@@ -50,6 +50,7 @@ class ProductHiddenRecalculator
                         AND p.outOfStockAction = :outOfStockActionHide
                         ) OR (
                             p.variantType = :mainType 
+                            AND p.usingStock = TRUE
                             AND 
                             ( 
                                 SELECT SUM(pv.stockQuantity)
