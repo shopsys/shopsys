@@ -42,23 +42,10 @@ class ProductHiddenRecalculator
             ->update(Product::class, 'p')
             ->set('p.calculatedHidden', '
                 CASE
-                    WHEN 
-                        (
-                        p.variantType <> :mainType
-                        AND p.usingStock = TRUE
+                    WHEN p.usingStock = TRUE
+                        AND p.variantType <> :mainType
                         AND p.stockQuantity <= 0
                         AND p.outOfStockAction = :outOfStockActionHide
-                        ) OR (
-                            p.variantType = :mainType 
-                            AND p.usingStock = TRUE
-                            AND 
-                            ( 
-                                SELECT SUM(pv.stockQuantity)
-                                FROM '.Product::class.' AS pv
-                                WHERE pv.mainVariant = p.id
-                                AND pv.usingStock = TRUE
-                            ) <= 0
-                        )
                     THEN TRUE
                     ELSE p.hidden
                 END
