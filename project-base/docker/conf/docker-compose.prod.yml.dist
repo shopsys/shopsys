@@ -9,7 +9,7 @@ services:
         volumes:
             - /var/www/production-content:/var/www/html/web/content
             - web-volume:/var/www/html/web
-            - nginx-conf:/etc/nginx/conf.d/
+            - nginx-conf:/etc/nginx/conf.d
         ports:
             - 8000:8080
         networks:

@@ -68,10 +68,17 @@ There is a list of all the repositories maintained by monorepo, changes in log b
     - to display svg icons collection correctly in grunt generated document for all browsers please add `src/Shopsys/ShopBundle/Resources/views/Grunt/htmlDocumentTemplate.html` file and update `src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig` based on changes in this pull request
 - [#674 - Dockerignore needs to accept nginx configuration for production on docker](https://github.com/shopsys/shopsys/pull/674)
     - add `!docker/nginx` line into `.dockerignore` file so `docker/nginx` directory is not excluded during building `php-fpm` image
+- [#680 - docker infrastructure is simplified](https://github.com/shopsys/shopsys/pull/680)
+    - all containers with exposed ports are now proxied via `webserver docker container` so `docker/nginx` folder and also `docker-compose*.yml.*` files need to be updated
+    - recreate `docker-compose.yml` file and run `docker-compose down -v --remove-orphans` followed by `docker-compose up -d`
+    - `base.html.twig` has changed, please replace livereload app accesspoint with `live-reload.{{ app.request.getHttpHost() }}`
 
 ### [shopsys/shopsys]
 - [#651 It's possible to add index prefix to elastic search](https://github.com/shopsys/shopsys/pull/651)
     - either rebuild your Docker images with `docker-compose up -d --build` or add `ELASTIC_SEARCH_INDEX_PREFIX=''` to your `.env` files in the microservice root directories, otherwise all requests to the microservices will throw `EnvNotFoundException` 
+- [#680 - docker infrastructure is simplified](https://github.com/shopsys/shopsys/pull/680)
+    - all containers with exposed ports are now proxied via `webserver docker container` so `docker-compose.yml` file need to be recreated
+    - run `docker-compose down -v --remove-orphans` followed by `docker-compose up -d`
 
 ## [From v7.0.0-beta3 to v7.0.0-beta4]
 ### [shopsys/project-base]

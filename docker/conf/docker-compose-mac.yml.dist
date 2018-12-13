@@ -21,9 +21,15 @@ services:
     webserver:
         image: nginx:1.13-alpine
         container_name: shopsys-framework-webserver
+        depends_on:
+            - adminer
+            - elasticsearch
+            - php-fpm
+            - redis-admin
+            - selenium-server
         volumes:
             - shopsys-framework-web-sync:/var/www/html/project-base/web
-            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:delegated
+            - ./docker/nginx:/etc/nginx/conf.d:delegated
         ports:
             - "8000:8080"
 
@@ -42,8 +48,6 @@ services:
             - shopsys-framework-web-sync:/var/www/html/project-base/web
             - shopsys-framework-microservice-product-search-sync:/var/www/html/microservices/product-search
             - shopsys-framework-microservice-product-search-export-sync:/var/www/html/microservices/product-search-export
-        ports:
-            - "35729:35729"
 
     microservice-product-search:
         build:
@@ -76,14 +80,10 @@ services:
         container_name: shopsys-framework-redis-admin
         environment:
             - REDIS_1_HOST=redis
-        ports:
-            - "1600:80"
 
     selenium-server:
         image: selenium/standalone-chrome:3.11
         container_name: shopsys-framework-acceptance-tests
-        ports:
-            - "4400:4444"
         environment:
             - HUB_PORT_4444_TCP_ADDR=hub
             - HUB_PORT_4444_TCP_PORT=4444
@@ -91,8 +91,6 @@ services:
     adminer:
         image: adminer:4.6
         container_name: shopsys-framework-adminer
-        ports:
-            - "1100:8080"
 
     smtp-server:
         image: namshi/smtp:latest
@@ -105,8 +103,6 @@ services:
             nofile:
                 soft: 65536
                 hard: 65536
-        ports:
-            - "9200:9200"
         volumes:
             - ./project-base/var/elasticsearch-data:/usr/share/elasticsearch/data:cached
         environment:
