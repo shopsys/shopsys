@@ -67,7 +67,7 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 - *(optional)* [#645 SVG icons in generated document](https://github.com/shopsys/shopsys/pull/645)
     - to display svg icons collection correctly in grunt generated document for all browsers please add `src/Shopsys/ShopBundle/Resources/views/Grunt/htmlDocumentTemplate.html` file and update `src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig` based on changes in this pull request
 - [#674 - Dockerignore needs to accept nginx configuration for porduction on docker](https://github.com/shopsys/shopsys/pull/674)
-    - add `!docker/nginx` line into `.dockerignore` file so during production deployment nginx configuration can be exported from `php-fpm` image for use of `webserver` container
+    - add `!docker/nginx` line into `.dockerignore` file so during production deployment nginx configuration can be exported from `php-fpm` image for use in `webserver` container
 
 ### [shopsys/shopsys]
 - [#651 It's possible to add index prefix to elastic search](https://github.com/shopsys/shopsys/pull/651)
