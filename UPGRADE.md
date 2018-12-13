@@ -75,10 +75,17 @@ There is a list of all the repositories maintained by monorepo, changes in log b
 - [#685 - fix wrong variable name in flash message](https://github.com/shopsys/shopsys/pull/685)
     - in `Front/OrderController::checkTransportAndPaymentChanges()`, fix the variable name in the flash message in `$transportAndPaymentCheckResult->isPaymentPriceChanged()` condition 
     - dump translations using `php phing dump-translations` and fill in your translations for the new message ID 
+- [#680 - docker infrastructure is simplified](https://github.com/shopsys/shopsys/pull/680)
+    - all containers with exposed ports are now proxied via `webserver docker container` so `docker/nginx` folder and also `docker-compose*.yml.*` files need to be updated
+    - recreate `docker-compose.yml` file and run `docker-compose down -v --remove-orphans` followed by `docker-compose up -d`
+    - `base.html.twig` has changed, please replace livereload app accesspoint with `live-reload.{{ app.request.getHttpHost() }}`
 
 ### [shopsys/shopsys]
 - [#651 It's possible to add index prefix to elastic search](https://github.com/shopsys/shopsys/pull/651)
     - either rebuild your Docker images with `docker-compose up -d --build` or add `ELASTIC_SEARCH_INDEX_PREFIX=''` to your `.env` files in the microservice root directories, otherwise all requests to the microservices will throw `EnvNotFoundException` 
+- [#680 - docker infrastructure is simplified](https://github.com/shopsys/shopsys/pull/680)
+    - all containers with exposed ports are now proxied via `webserver docker container` so `docker-compose.yml` file need to be recreated
+    - run `docker-compose down -v --remove-orphans` followed by `docker-compose up -d`
 
 ### [shopsys/migrations]
  - [#627 model service layer removal](https://github.com/shopsys/shopsys/pull/627)

@@ -56,7 +56,7 @@
         {% block html_body %}{% endblock %}
 
         {% if app.environment == 'dev' %}
-            <script async src="//localhost:35729/livereload.js"></script>
+            <script async src="//live-reload.{{ app.request.getHttpHost() }}/livereload.js"></script>
         {% endif %}
 
     </body>
