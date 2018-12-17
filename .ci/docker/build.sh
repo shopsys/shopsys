@@ -22,7 +22,7 @@ sed -i "s/container_name:\s*\b/container_name: $JOB_NAME-/" $WORKSPACE/docker-co
 # remove exposed port for webserver and use any available one
 PORT_BASE_WEB=8000;
 
-# Allow docker to choose available public port on hostmachine for each container
+# Allow docker to choose available public port on host machine for each container
 # think about to remove ports except webserver service
 sed -i "s/\- \"$PORT_BASE_WEB\:*/\- \"/" $WORKSPACE/docker-compose.yml
 
