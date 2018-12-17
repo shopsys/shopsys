@@ -1,19 +1,17 @@
 #!/bin/sh
 
-SCRIPT_ABS_PATH=`dirname $0 | pwd`
-
 ## Configure docker-compose.yml
 
 # Copy docker-compose.yml.dist into root of project
 # Adds mounting of composer cache into php-fpm container using sed with regular expression
 # Set UID and GID of jenkins user into docker-compose to assure correct rights for Jenkins
 # Sed does not handle \n well, so we change format of new lines using tr and change it back at the end
-cat docker/conf/docker-compose.yml.dist |
+cat $WORKSPACE/docker/conf/docker-compose.yml.dist |
 	tr '\n' '\r' |
     sed -r 's#(php-fpm:(\r[^\r]+)+volumes:)(\s+- )#\1\3~/.composer:/home/www-data/.composer\3#' |
     sed "s#www_data_uid: 1000#www_data_uid: $(id -u)#" |
     sed "s#www_data_gid: 1000#www_data_gid: $(id -g)#" |
-    tr '\r' '\n' > docker-compose.yml
+    tr '\r' '\n' > $WORKSPACE/docker-compose.yml
 
 # Uniquely rename all containers based on $JOB_NAME
 # e.g. 'container_name: shopsys-framework-webserver' => 'container_name: job-name-shopsys-framework-webserver'
@@ -40,7 +38,7 @@ PORT_WEB=$(/usr/local/bin/docker-compose port webserver 8080)
 # Copy nginx configuration from a jenkins-wide template
 # it contains definition of a proxy that redirects given URLs to the "webserver" container
 # Note: The template is used by all jobs - changes in the template should be backward-compatible, or you can create a new template (effectively versioning it)
-cp -f $SCRIPT_ABS_PATH/templates/nginx.conf /etc/nginx/conf.d/$JOB_NAME.conf
+cp -f $WORKSPACE/.ci/docker/templates/nginx.conf /etc/nginx/conf.d/$JOB_NAME.conf
 
 # Replace $SERVER_VIRTUAL_HOST and $JOB_NAME and $PORT_WEB in the nginx configuration
 sed -i "s/{{SERVER_VIRTUAL_HOST}}/$SERVER_VIRTUAL_HOST/" /etc/nginx/conf.d/$JOB_NAME.conf
