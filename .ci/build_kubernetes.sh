@@ -11,7 +11,12 @@ SECOND_DOMAIN_HOSTNAME=2.${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 
 # Set domain name into ingress controller so ingress can listen on domain name
 yq write --inplace project-base/kubernetes/ingress.yml spec.rules[0].host ${FIRST_DOMAIN_HOSTNAME}
-yq write --inplace project-base/kubernetes/ingress.yml spec.rules[1].host ${SECOND_DOMAIN_HOSTNAME}
+if [ "`yq r project-base/app/config/domains.yml domains[1]`" = "null" ];
+    then
+        yq d --inplace project-base/kubernetes/ingress.yml spec.rules[1]
+    else
+        yq write --inplace project-base/kubernetes/ingress.yml spec.rules[1].host ${SECOND_DOMAIN_HOSTNAME}
+fi
 
 # Set domain into webserver hostnames
 yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.hostAliases[0].hostnames[+] ${FIRST_DOMAIN_HOSTNAME}
@@ -22,7 +27,13 @@ cp project-base/app/config/domains_urls.yml.dist project-base/app/config/domains
 cp project-base/app/config/parameters_test.yml.dist project-base/app/config/parameters_test.yml
 cp project-base/app/config/parameters.yml.dist project-base/app/config/parameters.yml
 yq write --inplace project-base/app/config/domains_urls.yml domains_urls[0].url http://${FIRST_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
-yq write --inplace project-base/app/config/domains_urls.yml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
+if [ "`yq r project-base/app/config/domains.yml domains[1]`" = "null" ];
+    then
+        yq d --inplace project-base/app/config/domains_urls.yml domain_urls[1]
+    else
+        yq write --inplace project-base/app/config/domains_urls.yml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
+fi
+
 
 # Change "overwrite_domain_url" parameter for Selenium tests as containers "webserver" and "php-fpm" are bundled together in a pod "webserver-php-fpm"
 yq write --inplace project-base/app/config/parameters_test.yml parameters.overwrite_domain_url http://webserver-php-fpm:8080
