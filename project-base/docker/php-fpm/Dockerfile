@@ -1,6 +1,7 @@
 FROM php:7.2-fpm-alpine as base
 
 ARG project_root=.
+ENV REDIS_PREFIX=''
 
 # install git for computing diffs
 RUN apk add --update git
@@ -109,7 +110,7 @@ FROM base as ci
 
 COPY --chown=www-data:www-data / /var/www/html
 
-RUN composer install --optimize-autoloader --no-interaction --no-progress
+RUN composer install --optimize-autoloader --no-interaction --no-progress --dev
 
 RUN php phing composer-dev npm dirs-create test-dirs-create assets standards tests-static tests-acceptance-build
 
