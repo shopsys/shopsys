@@ -18,6 +18,12 @@ configMapGenerator:
     -   name: postgres-configuration
         files:
         -   ../../../docker/postgres/postgres.conf
+    -   name: build
+        files:
+        -   ../../../build.xml
+    -   name: domains
+        files:
+        -   ../../../app/config/domains.yml
     -   name: domains-urls
         files:
         -   ../../../app/config/domains_urls.yml

@@ -1,5 +1,8 @@
 #!/bin/sh -ex
 
+# check whether project-base is singledomain (value 1)
+IS_SINGLE_DOMAIN=$(grep -E '"is-multidomain".+="false"'  project-base/build.xml | wc -l)
+
 # For details about this script, see /docs/kubernetes/continuous-integration-using-kubernetes.md
 
 # Login to Docker Hub for pushing images into register
@@ -11,18 +14,31 @@ SECOND_DOMAIN_HOSTNAME=2.${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 
 # Set domain name into ingress controller so ingress can listen on domain name
 yq write --inplace project-base/kubernetes/ingress.yml spec.rules[0].host ${FIRST_DOMAIN_HOSTNAME}
-yq write --inplace project-base/kubernetes/ingress.yml spec.rules[1].host ${SECOND_DOMAIN_HOSTNAME}
+if [ $IS_SINGLE_DOMAIN -eq 1 ];
+    then
+        yq d --inplace project-base/kubernetes/ingress.yml spec.rules[1]
+    else
+        yq write --inplace project-base/kubernetes/ingress.yml spec.rules[1].host ${SECOND_DOMAIN_HOSTNAME}
+fi
 
 # Set domain into webserver hostnames
 yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.hostAliases[0].hostnames[+] ${FIRST_DOMAIN_HOSTNAME}
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.hostAliases[0].hostnames[+] ${SECOND_DOMAIN_HOSTNAME}
-
+if [ $IS_SINGLE_DOMAIN -eq 0 ];
+    then
+        yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.hostAliases[0].hostnames[+] ${SECOND_DOMAIN_HOSTNAME}
+fi
 # Set parameters.yml file and domains_urls
 cp project-base/app/config/domains_urls.yml.dist project-base/app/config/domains_urls.yml
 cp project-base/app/config/parameters_test.yml.dist project-base/app/config/parameters_test.yml
 cp project-base/app/config/parameters.yml.dist project-base/app/config/parameters.yml
 yq write --inplace project-base/app/config/domains_urls.yml domains_urls[0].url http://${FIRST_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
-yq write --inplace project-base/app/config/domains_urls.yml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
+if [ $IS_SINGLE_DOMAIN -eq 1 ];
+    then
+        yq d --inplace project-base/app/config/domains_urls.yml domain_urls[1]
+    else
+        yq write --inplace project-base/app/config/domains_urls.yml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
+fi
+
 
 # Change "overwrite_domain_url" parameter for Selenium tests as containers "webserver" and "php-fpm" are bundled together in a pod "webserver-php-fpm"
 yq write --inplace project-base/app/config/parameters_test.yml parameters.overwrite_domain_url http://webserver-php-fpm:8080
@@ -72,12 +88,18 @@ yq write --inplace project-base/kubernetes/deployments/microservice-product-sear
 yq write --inplace project-base/kubernetes/deployments/microservice-product-search-export.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/microservice-product-search-export:${DOCKER_IMAGE_TAG}
 
 # Set different path to parameters and domain configmap paths, as default context is that root of the project is project-base, here it is monorepo so we need to check it
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].volumeMounts[1].mountPath /var/www/html/project-base/app/config/domains_urls.yml
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].volumeMounts[2].mountPath /var/www/html/project-base/app/config/parameters.yml
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].volumeMounts[1].mountPath /var/www/html/project-base/app/config/domains_urls.yml
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].volumeMounts[2].mountPath /var/www/html/project-base/app/config/parameters.yml
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].volumeMounts[1].mountPath /var/www/html/project-base/app/config/domains_urls.yml
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].volumeMounts[2].mountPath /var/www/html/project-base/app/config/parameters.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].volumeMounts[1].mountPath /var/www/html/project-base/build.xml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].volumeMounts[2].mountPath /var/www/html/project-base/app/config/domains.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].volumeMounts[3].mountPath /var/www/html/project-base/app/config/domains_urls.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].volumeMounts[4].mountPath /var/www/html/project-base/app/config/parameters.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].volumeMounts[1].mountPath /var/www/html/project-base/app/config/build.xml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].volumeMounts[2].mountPath /var/www/html/project-base/app/config/domains.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].volumeMounts[3].mountPath /var/www/html/project-base/app/config/domains_urls.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].volumeMounts[4].mountPath /var/www/html/project-base/app/config/parameters.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].volumeMounts[1].mountPath /var/www/html/project-base/build.xml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].volumeMounts[2].mountPath /var/www/html/project-base/app/config/domains.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].volumeMounts[3].mountPath /var/www/html/project-base/app/config/domains_urls.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].volumeMounts[4].mountPath /var/www/html/project-base/app/config/parameters.yml
 
 # Deploy application using kubectl
 kubectl delete namespace ${JOB_NAME} || true

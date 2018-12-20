@@ -28,6 +28,12 @@ spec:
             volumes:
                 -   name: source-codes
                     emptyDir: {}
+                -   name: build
+                    configMap:
+                        name: build
+                -   name: domains
+                    configMap:
+                        name: domains
                 -   name: domains-urls
                     configMap:
                         name: domains-urls
@@ -47,6 +53,12 @@ spec:
                 volumeMounts:
                 -   name: source-codes
                     mountPath: /tmp/source-codes
+                -   name: build
+                    mountPath: /var/www/html/build.xml
+                    subPath: build.xml
+                -   name: domains
+                    mountPath: /var/www/html/app/config/domains.yml
+                    subPath: domains.yml
                 -   name: domains-urls
                     mountPath: /var/www/html/app/config/domains_urls.yml
                     subPath: domains_urls.yml
@@ -59,6 +71,12 @@ spec:
                 volumeMounts:
                 -   name: source-codes
                     mountPath: /var/www/html
+                -   name: build
+                    mountPath: /var/www/html/build.xml
+                    subPath: build.xml
+                -   name: domains
+                    mountPath: /var/www/html/app/config/domains.yml
+                    subPath: domains.yml
                 -   name: domains-urls
                     mountPath: /var/www/html/app/config/domains_urls.yml
                     subPath: domains_urls.yml
@@ -74,6 +92,12 @@ spec:
                 volumeMounts:
                 -   name: source-codes
                     mountPath: /var/www/html
+                -   name: build
+                    mountPath: /var/www/html/build.xml
+                    subPath: build.xml
+                -   name: domains
+                    mountPath: /var/www/html/app/config/domains.yml
+                    subPath: domains.yml
                 -   name: domains-urls
                     mountPath: /var/www/html/app/config/domains_urls.yml
                     subPath: domains_urls.yml
