@@ -1,0 +1,4 @@
+parameters:
+    google_cloud_project_id: ~
+    google_cloud_storage_bucket_name: ~
+    google_cloud_service_account_file_path: ~

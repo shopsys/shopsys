@@ -1,0 +1,2 @@
+imports:
+    - { resource: packages/prod/*.yml }

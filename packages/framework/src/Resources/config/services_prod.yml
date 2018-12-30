@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    shopsys.google_storage_client:
+        class: Google\Cloud\Storage\StorageClient
+        lazy: true
+        arguments:
+        -   projectId: '%google_cloud_project_id%'
+
+    shopsys.google_storage_bucket:
+        class: Google\Cloud\Storage\Bucket
+        lazy: true
+        factory: 'shopsys.google_storage_client:bucket'
+        arguments:
+        - '%google_cloud_storage_bucket_name%'

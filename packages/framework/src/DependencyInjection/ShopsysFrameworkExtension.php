@@ -20,8 +20,13 @@ class ShopsysFrameworkExtension extends Extension
         $loader->load('services.yml');
         $loader->load('paths.yml');
 
-        if ($container->getParameter('kernel.environment') === EnvironmentType::TEST) {
-            $loader->load('services_test.yml');
+        switch ($container->getParameter('kernel.environment')) {
+            case EnvironmentType::TEST:
+                $loader->load('services_test.yml');
+                break;
+            case EnvironmentType::PRODUCTION:
+                $loader->load('services_prod.yml');
+                break;
         }
 
         $container->registerForAutoconfiguration(GridInlineEditInterface::class)

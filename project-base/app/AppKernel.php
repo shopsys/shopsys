@@ -95,6 +95,10 @@ class AppKernel extends Kernel
                 $configs[] = __DIR__ . '/config/parameters_test.yml';
                 $configs[] = __DIR__ . '/config/config_test.yml';
                 break;
+            case EnvironmentType::PRODUCTION:
+                $configs[] = __DIR__ . '/config/config_prod.yml';
+                $configs[] = __DIR__ . '/config/parameters_prod.yml';
+                break;
         }
 
         if (file_exists(__DIR__ . '/../../parameters_monorepo.yml')) {
