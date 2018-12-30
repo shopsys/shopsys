@@ -50,11 +50,15 @@ class AppKernel extends Kernel
         ];
 
         if ($this->getEnvironment() === EnvironmentType::DEVELOPMENT) {
-            $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-            $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
-            $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
+            $developmentBundles = [
+                new Sensio\Bundle\DistributionBundle\SensioDistributionBundle(),
+                new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
+                new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
+                new Symfony\Bundle\DebugBundle\DebugBundle(),
+                new Symfony\Bundle\WebServerBundle\WebServerBundle(),
+            ];
+
+            $bundles = array_merge($bundles, $developmentBundles);
         }
 
         return $bundles;
