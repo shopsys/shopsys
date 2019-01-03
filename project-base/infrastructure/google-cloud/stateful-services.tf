@@ -1,6 +1,7 @@
 resource "google_storage_bucket" "file-store" {
   name     = "${var.GOOGLE_CLOUD_STORAGE_BUCKET_NAME}"
   location = "EU"
+  force_destroy = true
 }
 
 data "google_service_account" "gcs-service-account" {
