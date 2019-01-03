@@ -24,8 +24,8 @@ class ShopsysFrameworkExtension extends Extension
             case EnvironmentType::TEST:
                 $loader->load('services_test.yml');
                 break;
-            case EnvironmentType::PRODUCTION:
-                $loader->load('services_prod.yml');
+            case EnvironmentType::GOOGLE_CLOUD:
+                $loader->load('services_google_cloud.yml');
                 break;
         }
 

@@ -1,0 +1,2 @@
+imports:
+    - { resource: packages/google_cloud/*.yml }

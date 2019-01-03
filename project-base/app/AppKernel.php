@@ -95,9 +95,9 @@ class AppKernel extends Kernel
                 $configs[] = __DIR__ . '/config/parameters_test.yml';
                 $configs[] = __DIR__ . '/config/config_test.yml';
                 break;
-            case EnvironmentType::PRODUCTION:
-                $configs[] = __DIR__ . '/config/config_prod.yml';
-                $configs[] = __DIR__ . '/config/parameters_prod.yml';
+            case EnvironmentType::GOOGLE_CLOUD:
+                $configs[] = __DIR__ . '/config/config_google_cloud.yml';
+                $configs[] = __DIR__ . '/config/parameters_google_cloud.yml';
                 break;
         }
 

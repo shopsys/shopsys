@@ -6,11 +6,10 @@ echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-
 # Create unique docker image tag with commit hash
 DOCKER_IMAGE_TAG=production-commit-${GIT_COMMIT}
 
-cp app/config/parameters_prod.yml.dist app/config/parameters_prod.yml
+cp app/config/parameters_google_cloud.yml.dist app/config/parameters_google_cloud.yml
 
-yq write --inplace app/config/parameters_prod.yml parameters.google_cloud_project_id ${PROJECT_ID}
-yq write --inplace app/config/parameters_prod.yml parameters.google_cloud_storage_bucket_name ${GOOGLE_CLOUD_STORAGE_BUCKET_NAME}
-yq write --inplace app/config/parameters_prod.yml parameters.google_cloud_service_account_file_path /tmp/infrastructure/google-cloud/service-account.json
+yq write --inplace app/config/parameters_google_cloud.yml parameters.google_cloud_project_id ${PROJECT_ID}
+yq write --inplace app/config/parameters_google_cloud.yml parameters.google_cloud_storage_bucket_name ${GOOGLE_CLOUD_STORAGE_BUCKET_NAME}
 
 export GOOGLE_APPLICATION_CREDENTIALS=/tmp/infrastructure/google-cloud/service-account.json
 
@@ -19,7 +18,7 @@ docker image pull ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG} || (
     echo "Image not found (see warning above), building it instead..." &&
     docker image build \
         --tag ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG} \
-        --target production \
+        --target google_cloud \
         -f docker/php-fpm/Dockerfile \
         . &&
     docker image push ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}

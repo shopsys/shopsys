@@ -102,7 +102,7 @@ COPY --chown=www-data:www-data / /var/www/html
 
 RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev
 
-RUN php phing composer npm assets
+RUN php phing composer npm dirs-create assets
 
 ########################################################################################################################
 
@@ -115,3 +115,15 @@ RUN composer install --optimize-autoloader --no-interaction --no-progress --dev
 RUN php phing composer-dev npm dirs-create test-dirs-create assets standards tests-static tests-acceptance-build
 
 RUN ./bin/console shopsys:environment:change prod
+
+########################################################################################################################
+
+FROM base as google_cloud
+
+COPY --chown=www-data:www-data / /var/www/html
+
+RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev
+
+RUN ./bin/console shopsys:environment:change google_cloud
+
+RUN php phing composer npm assets

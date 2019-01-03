@@ -8,10 +8,11 @@ class EnvironmentFileSetting
         EnvironmentType::DEVELOPMENT => 'DEVELOPMENT',
         EnvironmentType::PRODUCTION => 'PRODUCTION',
         EnvironmentType::TEST => 'TEST',
+        EnvironmentType::GOOGLE_CLOUD => 'GOOGLE_CLOUD',
     ];
 
-    const ENVIRONMENTS_CONSOLE = [EnvironmentType::DEVELOPMENT, EnvironmentType::PRODUCTION];
-    const ENVIRONMENTS_DEFAULT = [EnvironmentType::TEST, EnvironmentType::DEVELOPMENT, EnvironmentType::PRODUCTION];
+    const ENVIRONMENTS_CONSOLE = [EnvironmentType::DEVELOPMENT, EnvironmentType::PRODUCTION, EnvironmentType::GOOGLE_CLOUD,];
+    const ENVIRONMENTS_DEFAULT = [EnvironmentType::TEST, EnvironmentType::DEVELOPMENT, EnvironmentType::PRODUCTION, EnvironmentType::GOOGLE_CLOUD,];
 
     /**
      * @var string
