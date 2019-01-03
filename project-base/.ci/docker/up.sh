@@ -1,12 +1,13 @@
 #!/bin/sh
 
+# set default value for the root of the project
 PROJECT_ROOT=$WORKSPACE/${PROJECT_ROOT:-project-base}
 
-### Build containers and allocate ports on hostmachine
-### ORPHAN is container with unlisted service in docker-compose file
+# Build containers and allocate ports on hostmachine
+# ORPHAN is container with unlisted service in docker-compose file
 /usr/local/bin/docker-compose up --force-recreate --remove-orphans -d
 
-### store allocated port of webserver container
+# store allocated port of webserver container in form of 0.0.0.0:0000
 PORT_WEB=$(/usr/local/bin/docker-compose port webserver 8080)
 
 # Configure nginx to redirect web access to the container

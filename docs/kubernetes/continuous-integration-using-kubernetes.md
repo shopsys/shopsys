@@ -109,6 +109,26 @@ This image is then pushed and tagged into Docker Hub and these tags are then set
 
 In the end, Kubernetes applies these manifests onto the node server where pods are created as a running application.
 
+### CI Special Jobs
+We need to verify whether the application can be launched with different parameters setup or different verions of php that Shopsys Framework supports.  
+So the repository contains some scripts that help to check functionality of these special jobs.
+
+#### [change-php-version](/.ci/special-jobs/change-php-version.sh)
+This script is used to modify php version for php-fpm and microservices docker images.
+
+You must provide additional environment variables:
+
+| Environment variable   | Explanation
+| --------------------   | -----------
+| **$PHP_VERSION**       | version number of php that will replace current php version in Dockerfiles
+
+After this script is applied on cloned repository, [`build_kubernetes.sh`](/.ci/build_kubernetes.sh) needs to be executed based on [build section](#build) with modified `$GIT_COMMIT` variable, because the hash of the commit is still based on previous php version.  
+For instance by modifying `-e GIT_COMMIT=php71-$GIT_COMMIT` parameter.
+
+#### [set-single-domain](/.ci/special-jobs/set-single-domain.sh)
+This script is used to have running single domain application.  
+After this script is applied on cloned repository, [`build_kubernetes.sh`](/.ci/build_kubernetes.sh) needs to be executed based on [build section](#build).
+
 ## Limits of CI using Kubernetes
 Since our CI is running on the same machine as our cluster, we can get into a situation where there are too many running applications which may overload the server.
 

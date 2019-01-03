@@ -46,7 +46,7 @@ sed -ir "s/.+\/var/postgres-data/\/var\/postgres-data/$JOB_NAME#" $PROJECT_ROOT/
 ### ORPHAN is container with unlisted service in docker-compose file
 /usr/local/bin/docker-compose up --build --force-recreate --remove-orphans -d
 
-### store allocated port of webserver container
+### store allocated port of webserver container in form of 0.0.0.0:0000
 PORT_WEB=$(/usr/local/bin/docker-compose port webserver 8080)
 
 # Configure nginx to redirect web access to the container
