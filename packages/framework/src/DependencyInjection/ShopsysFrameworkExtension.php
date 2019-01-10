@@ -11,6 +11,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class ShopsysFrameworkExtension extends Extension
 {
+    const GOOGLE_CLOUD_STORAGE_BUCKET_NAME_ENV = 'GOOGLE_CLOUD_STORAGE_BUCKET_NAME';
+
     /**
      * {@inheritDoc}
      */
@@ -20,13 +22,12 @@ class ShopsysFrameworkExtension extends Extension
         $loader->load('services.yml');
         $loader->load('paths.yml');
 
-        switch ($container->getParameter('kernel.environment')) {
-            case EnvironmentType::TEST:
-                $loader->load('services_test.yml');
-                break;
-            case EnvironmentType::GOOGLE_CLOUD:
-                $loader->load('services_google_cloud.yml');
-                break;
+        if ($container->getParameter('kernel.environment') === EnvironmentType::TEST) {
+            $loader->load('services_test.yml');
+        }
+
+        if (getenv(self::GOOGLE_CLOUD_STORAGE_BUCKET_NAME_ENV)) {
+            $loader->load('services_google_cloud.yml');
         }
 
         $container->registerForAutoconfiguration(GridInlineEditInterface::class)

@@ -95,11 +95,13 @@ class AppKernel extends Kernel
                 $configs[] = __DIR__ . '/config/parameters_test.yml';
                 $configs[] = __DIR__ . '/config/config_test.yml';
                 break;
-            case EnvironmentType::GOOGLE_CLOUD:
-                $configs[] = __DIR__ . '/config/config_google_cloud.yml';
-                $configs[] = __DIR__ . '/config/parameters_google_cloud.yml';
-                break;
         }
+
+        if (getenv(\Shopsys\FrameworkBundle\DependencyInjection\ShopsysFrameworkExtension::GOOGLE_CLOUD_STORAGE_BUCKET_NAME_ENV)) {
+            $configs[] = __DIR__ . '/config/config_google_cloud.yml';
+            $configs[] = __DIR__ . '/config/parameters_google_cloud.yml';
+        }
+
 
         if (file_exists(__DIR__ . '/../../parameters_monorepo.yml')) {
             $configs[] = __DIR__ . '/../../parameters_monorepo.yml';
