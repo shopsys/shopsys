@@ -1564,6 +1564,9 @@ msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů"
 msgid "Please check the entered values.<br><br>"
 msgstr "Překontrolujte prosím zadané hodnoty.<br><br>"
 
+msgid "Please fill all default values before creating a product"
+msgstr "Prosím vyplňte všechny výchozí hodnoty před vytvořením produktu"
+
 msgid "Please wait until all files are uploaded and try again."
 msgstr "Prosím počkejte dokud nebudou nahrány všechny soubory a zkuste to znovu."
 
@@ -1941,6 +1944,9 @@ msgstr "Byla upravena stránka slideru <strong><a href=\"{{ url }}\">{{ name }}<
 
 msgid "Slider pages"
 msgstr "Stránky slideru"
+
+msgid "Some settings are missing. Go to Dashboard for more information."
+msgstr "Některá nastavení chybí. Pro více informací navštivte Nástěnku."
 
 msgid "Sorting priority"
 msgstr "Priorita řazení"
