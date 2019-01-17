@@ -15,7 +15,9 @@ BLUE="\e[34m"
 NC="\e[0m"
 
 SPLIT_BRANCH=$1
-WORKSPACE=${WORKSPACE:-.}
+
+# Default value for WORKSPACE is the current working directory
+WORKSPACE=${WORKSPACE:-$PWD}
 
 if [[ "$SPLIT_BRANCH" == "" ]]; then
     printf "${RED}$(date +%T) > You must provide branch name to remove!${NC}\n\n"

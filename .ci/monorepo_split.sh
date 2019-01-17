@@ -12,7 +12,8 @@ GREEN="\e[32m"
 BLUE="\e[34m"
 NC="\e[0m"
 
-WORKSPACE=${WORKSPACE:-.}
+# Default value for WORKSPACE is the current working directory
+WORKSPACE=${WORKSPACE:-$PWD}
 
 # Relatively new version of git must be installed
 printf "\n${BLUE}Using $(git --version). The package shopsys/monorepo-tools was tested on 2.16.1.${NC}\n\n"
