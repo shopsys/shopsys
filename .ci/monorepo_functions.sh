@@ -30,3 +30,10 @@ get_package_subdirectory() {
         echo "packages/$PACKAGE"
     fi
 }
+
+# Gets a remote into which a package should be pushed
+get_package_remote() {
+    PACKAGE=$1
+
+    echo "git@github.com:shopsys/$PACKAGE.git"
+}

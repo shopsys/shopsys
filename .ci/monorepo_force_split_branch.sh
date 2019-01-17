@@ -39,7 +39,7 @@ for PACKAGE in $(get_all_packages); do
     # Preparing the variables to be used for splitting
     LOG_FILE="$WORKSPACE/split/$PACKAGE.log"
     SUBDIRECTORY=$(get_package_subdirectory "$PACKAGE")
-    
+
     # Cloning the repository as bare into separate directory, so it can be split in a parallel process
     cd $WORKSPACE
     git clone --bare .git $WORKSPACE/split/$PACKAGE
@@ -61,7 +61,7 @@ EXIT_STATUS=0
 printf "\n${BLUE}$(date +%T) > Splitting of all packages finished. Checking the ability to push the split repositories...${NC}\n\n"
 for PACKAGE in $(get_all_packages); do
     cd $WORKSPACE/split/$PACKAGE
-    REMOTE="git@github.com:shopsys/$PACKAGE.git"
+    REMOTE=$(get_package_remote "$PACKAGE")
     
     git push $REMOTE $SPLIT_BRANCH --dry-run --force
     
@@ -78,7 +78,7 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
     printf "\n${GREEN}$(date +%T) > All repositories can be pushed! Pushing them into their remotes now...${NC}\n\n"
     for PACKAGE in $(get_all_packages); do
         cd $WORKSPACE/split/$PACKAGE
-        git push git@github.com:shopsys/$PACKAGE.git $SPLIT_BRANCH --force
+        git push $(get_package_remote "$PACKAGE") $SPLIT_BRANCH --force
     done
 else
     printf "\n${RED}$(date +%T) > Repositories were not pushed into their remotes due to an error.${NC}\n\n"

@@ -47,7 +47,7 @@ EXIT_STATUS=0
 printf "\n${BLUE}$(date +%T) > Splitting of all packages finished. Checking the ability to push the split repositories...${NC}\n\n"
 for PACKAGE in $(get_all_packages); do
     cd $WORKSPACE/split/$PACKAGE
-    REMOTE="git@github.com:shopsys/$PACKAGE.git"
+    REMOTE=$(get_package_remote "$PACKAGE")
 
     git push --tags $REMOTE master --dry-run
 
@@ -64,7 +64,7 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
     printf "\n${GREEN}$(date +%T) > All repositories can be pushed! Pushing them into their remotes now...${NC}\n\n"
     for PACKAGE in $(get_all_packages); do
         cd $WORKSPACE/split/$PACKAGE
-        git push --tags git@github.com:shopsys/$PACKAGE.git master
+        git push --tags $(get_package_remote "$PACKAGE") master
     done
 else
     printf "\n${RED}$(date +%T) > Repositories were not pushed into their remotes due to an error.${NC}\n\n"

@@ -30,7 +30,7 @@ fi
 # Remove the branch from all repositories
 EXIT_STATUS=0
 for PACKAGE in $(get_all_packages); do
-    git push --delete git@github.com:shopsys/$PACKAGE.git $SPLIT_BRANCH
+    git push --delete $(get_package_remote "$PACKAGE") $SPLIT_BRANCH
 
     if [[ $? -eq 0 ]]; then
         printf "${GREEN}Branch '$SPLIT_BRANCH' was removed from the package '$PACKAGE'!${NC}\n"
