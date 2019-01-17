@@ -44,10 +44,10 @@ for PACKAGE in $(get_all_packages); do
     cd $WORKSPACE
     git clone --bare .git $WORKSPACE/split/$PACKAGE
     cd $WORKSPACE/split/$PACKAGE
-    
+
     printf "${BLUE}$(date +%T) > Splitting package '$PACKAGE' from directory '$SUBDIRECTORY'...${NC}\n"
     printf "The progress will be logged into '$LOG_FILE'.\n\n"
-    
+
     # Running the splitting processes in parallel
     $WORKSPACE/packages/monorepo-tools/rewrite_history_from.sh $SUBDIRECTORY $SPLIT_BRANCH > $LOG_FILE 2>&1 &&
         printf "${GREEN}$(date +%T) > Splitting package '$PACKAGE' from directory '$SUBDIRECTORY' finished!${NC}\n" ||
@@ -62,9 +62,9 @@ printf "\n${BLUE}$(date +%T) > Splitting of all packages finished. Checking the 
 for PACKAGE in $(get_all_packages); do
     cd $WORKSPACE/split/$PACKAGE
     REMOTE=$(get_package_remote "$PACKAGE")
-    
+
     git push $REMOTE $SPLIT_BRANCH --dry-run --force
-    
+
     if [[ $? -eq 0 ]]; then
         printf "${GREEN}The split package '$PACKAGE' can be pushed into '$REMOTE'!${NC}\n"
     else
