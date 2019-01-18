@@ -550,7 +550,6 @@
 
         $.each(Shopsys.allFormsOfType('Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType'), function (key, value) {
             if (formType === value) {
-                console.log(formType);
                 isCollectionType = true;
             }
         });
