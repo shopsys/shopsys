@@ -35,6 +35,11 @@ printf "\n${BLUE}Using $(git --version). The package shopsys/monorepo-tools was 
 # Import functions
 . $(dirname "$0")/monorepo_functions.sh
 
+# Try to mount the splitting directory as a RAM-disk
+mkdir "$WORKSPACE/split"
+sudo mount -t tmpfs -o size=256M tmpfs "$WORKSPACE/split"
+MOUNT_EXIT_STATUS=$?
+
 for PACKAGE in $(get_all_packages); do
     # Preparing the variables to be used for splitting
     LOG_FILE="$WORKSPACE/split/$PACKAGE.log"
@@ -82,6 +87,13 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
     done
 else
     printf "\n${RED}$(date +%T) > Repositories were not pushed into their remotes due to an error.${NC}\n\n"
+fi
+
+# Dismount the RAM-disk and persist the data (logs and repos), if it was successfully mounted
+if [[ $MOUNT_EXIT_STATUS -eq 0 ]]; then
+    cp -ru "$WORKSPACE/split" "$WORKSPACE/split-backup"
+    sudo umount "$WORKSPACE/split"
+    mv -f "$WORKSPACE/split-backup" "$WORKSPACE/split"
 fi
 
 exit $EXIT_STATUS
