@@ -191,6 +191,20 @@
         Shopsys.validation.elementBind(element);
     };
 
+    // Overridden to use Shopsys.validation.isCollectionType
+    FpJsFormValidator._shouldValidEmbedded = FpJsFormValidator.shouldValidEmbedded;
+    FpJsFormValidator.shouldValidEmbedded = function (element) {
+        if (this.getElementValidConstraint(element)) {
+            return true;
+        } else if (element.parent && Shopsys.validation.isCollectionType(element.parent.type)) {
+            var validConstraint = this.getElementValidConstraint(element);
+
+            return !validConstraint || validConstraint.traverse;
+        }
+
+        return false;
+    };
+
     FpJsFormValidator._getElementValue = FpJsFormValidator.getElementValue;
     FpJsFormValidator.getElementValue = function (element) {
         var i = element.transformers.length;
@@ -199,7 +213,7 @@
         if (i && undefined === value) {
             value = this.getMappedValue(element);
         } else if (
-            element.type === Shopsys.constant('\\Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType::class')
+            Shopsys.validation.isCollectionType(element.type)
             || (Object.keys(element.children).length > 0 && element.type !== Shopsys.constant('\\Shopsys\\FrameworkBundle\\Form\\FileUploadType::class') && element.type !== Shopsys.constant('\\Shopsys\\FrameworkBundle\\Form\\ImageUploadType::class'))
         ) {
             value = {};
@@ -529,6 +543,19 @@
 
     Shopsys.validation.normalizeLabelText = function (labelText) {
         return labelText.replace(/^\s*(.*)[\s:*]*$/, '$1');
+    };
+
+    Shopsys.validation.isCollectionType = function (formType) {
+        var isCollectionType = false;
+
+        $.each(Shopsys.allFormsOfType('Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType'), function (key, value) {
+            if (formType === value) {
+                console.log(formType);
+                isCollectionType = true;
+            }
+        });
+
+        return isCollectionType;
     };
 
 })(jQuery);

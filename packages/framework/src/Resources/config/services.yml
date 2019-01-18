@@ -269,12 +269,17 @@ services:
 
     Shopsys\FrameworkBundle\Component\Javascript\Compiler\Constant\JsConstantCompilerPass: ~
 
+    Shopsys\FrameworkBundle\Component\Javascript\Compiler\Form\JsFormCompilerPass:
+        arguments:
+            $knownFormTypes: !tagged form.type
+
     Shopsys\FrameworkBundle\Component\Javascript\Compiler\Translator\JsTranslatorCompilerPass: ~
 
     Shopsys\FrameworkBundle\Component\Javascript\Compiler\JsCompiler:
         arguments:
             -
                 - '@Shopsys\FrameworkBundle\Component\Javascript\Compiler\Translator\JsTranslatorCompilerPass'
+                - '@Shopsys\FrameworkBundle\Component\Javascript\Compiler\Form\JsFormCompilerPass'
                 - '@Shopsys\FrameworkBundle\Component\Javascript\Compiler\Constant\JsConstantCompilerPass'
 
     Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCallParser:
