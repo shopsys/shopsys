@@ -37,7 +37,7 @@ printf "\n${BLUE}Using $(git --version). The package shopsys/monorepo-tools was 
 
 # Try to mount the splitting directory as a RAM-disk
 mkdir "$WORKSPACE/split"
-sudo mount -t tmpfs -o size=256M tmpfs "$WORKSPACE/split"
+sudo mount -t tmpfs -o size=2G tmpfs "$WORKSPACE/split"
 MOUNT_EXIT_STATUS=$?
 
 for PACKAGE in $(get_all_packages); do
