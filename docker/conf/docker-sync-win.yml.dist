@@ -13,6 +13,7 @@ syncs:
             '.docker-sync',
             '.DS_Store',
             'docker',
+            'microservices',
             'nbproject',
             'project-base/docker',
             'project-base/docs',
