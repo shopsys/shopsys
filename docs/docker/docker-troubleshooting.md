@@ -151,3 +151,14 @@ When `composer install` or `composer update` fails on an error with exceeding th
 
 *Note: Since `v7.0.0-beta4` we have set the Composer memory limit to `-1` (which means unlimited) in the php-fpm's `Dockerfile`.*
 *If you still encounter memory issues while using Docker for Windows (or Mac), try increasing the limits in `Docker -> Preferences… -> Advanced`.*
+
+## Starting up the Docker containers fails due to invalid reference format
+Docker images may fail to build during `docker-compose up -d` due to invalid reference format, eg.:
+```
+Building php-fpm
+Step 1/41 : FROM php:7.2-fpm-stretch as base
+ERROR: Service 'php-fpm' failed to build: Error parsing reference: "php:7.2-fpm-stretch as base" is not a valid repository/tag: invalid reference format
+```
+This is because you have a version of Docker which does not support [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/).
+
+Upgrade your Docker to version **17.05 or higher** and try running the command again.
