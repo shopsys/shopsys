@@ -545,6 +545,8 @@ docker exec -it master-shopsys-framework-php-fpm composer install -o
 This will prompt you to set `composer token` in github, click on a link and set it. Now we got it set up for all branches,
 since our composer folder is mounted on localhost.
 
+***Note:** During composer installation there will be installed 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+
 ### Done
 Now just start `Jenkins autojobs` tool again.
 

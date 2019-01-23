@@ -33,6 +33,8 @@ First of all, you need to install the following software on your system:
 
 *Note: The names link to the appropriate installation guide or download page.*
 
+***Note:** During installation there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/), [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+
 After that, you can follow the steps below in order to install and configure Shopsys Framework.
 
 ## Steps

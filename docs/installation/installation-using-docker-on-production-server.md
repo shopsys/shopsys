@@ -6,6 +6,8 @@ We use docker containers, built from docker images and php source code from git 
 As we do not want to lose data after deploying a new version of the project, we install all the data storages (postgres, elasticsearch, redis) natively.
 This guide also shows you how to setup first built image of the project on production server and how to deploy new versions of the project.  
 
+***Note:** During installation there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/), [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+
 ## Server Setup
 
 CentOS is very common OS for production servers so we use it on our production server.
