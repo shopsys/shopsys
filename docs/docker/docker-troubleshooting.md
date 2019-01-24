@@ -8,6 +8,7 @@
 1. [Docker Sync does not Synchronize File Consistently](#docker-sync-does-not-synchronize-file-consistently)
 1. [A docker container is not running](#a-docker-container-is-not-running)
 1. [Composer dependencies installation fails on memory limit](#composer-dependencies-installation-fails-on-memory-limit)
+1. [Starting up the Docker containers fails due to invalid reference format](#starting-up-the-docker-containers-fails-due-to-invalid-reference-format)
 
 If you are developing on Shopsys Framework using docker, you might run into some problems during the process.
 
