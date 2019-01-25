@@ -9,7 +9,7 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * [PHP](http://php.net/manual/en/install.unix.php)
 * [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
-* [Docker 17.05 or higher](https://docs.docker.com/engine/installation/)
+* [Docker](https://docs.docker.com/engine/installation/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Steps
