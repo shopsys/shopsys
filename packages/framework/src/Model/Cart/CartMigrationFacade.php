@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Cart;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -76,12 +77,15 @@ class CartMigrationFacade
     {
         $session = $filterControllerEvent->getRequest()->getSession();
 
-        $previousCartIdentifier = $session->get(self::SESSION_PREVIOUS_CART_IDENTIFIER);
-        if (!empty($previousCartIdentifier) && $previousCartIdentifier !== $session->getId()) {
-            $previousCustomerIdentifier = $this->customerIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
-            $cart = $this->cartFactory->get($previousCustomerIdentifier);
-            $this->mergeCurrentCartWithCart($cart);
+        if ($session !== null) {
+            $previousCartIdentifier = $session->get(self::SESSION_PREVIOUS_CART_IDENTIFIER);
+            $previousCartIdentifier = TransformString::emptyToNull($previousCartIdentifier);
+            if ($previousCartIdentifier !== null && $previousCartIdentifier !== $session->getId()) {
+                $previousCustomerIdentifier = $this->customerIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
+                $cart = $this->cartFactory->get($previousCustomerIdentifier);
+                $this->mergeCurrentCartWithCart($cart);
+            }
+            $session->set(self::SESSION_PREVIOUS_CART_IDENTIFIER, $session->getId());
         }
-        $session->set(self::SESSION_PREVIOUS_CART_IDENTIFIER, $session->getId());
     }
 }
