@@ -44,6 +44,8 @@ Here we can see that this target deletes all dirs in folder `/var/cache/` and `/
 
 More information about working with Phing can be found in its [documentation](https://www.phing.info/phing/guide/en/output/hlhtml/#d5e795).
 
+***Note:** During execution of phing targets there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+
 ## Most Used Phing Targets
 Every Phing target is a task that can be executed simply by `php phing <target-name>` command.
 
