@@ -156,6 +156,7 @@
                             <tr class="table-variants__row">
                                 <th class="table-variants__cell table-variants__cell--image"></th>
                                 <th class="table-variants__cell table-variants__cell--name">{{ 'Name'|trans }}</th>
+                                <th class="table-variants__cell">{{ 'Availability'|trans }}</th>
                                 <th class="table-variants__cell table-variants__cell--price">
                                     {{ 'Price including VAT'|trans }}
                                     {% if getProductSellingPrice(product) is not null %}
@@ -192,6 +193,11 @@
                                             {{ variant.variantAlias }}
                                         {% else %}
                                             {{ variant.name }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="table-variants__cell">
+                                        {% if variant.calculatedAvailability %}
+                                            {{ variant.calculatedAvailability.name }}
                                         {% endif %}
                                     </td>
                                     <td class="table-variants__cell table-variants__cell--price">

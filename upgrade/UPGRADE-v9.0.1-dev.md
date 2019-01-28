@@ -59,3 +59,6 @@ There you can find links to upgrade notes for other versions too.
 
 - order can now be completed when successful flash message exists ([#1644](https://github.com/shopsys/shopsys/pull/1644))
     - see #project-base-diff to update your project
+
+- add variant visibility on product detail ([#771](https://github.com/shopsys/shopsys/pull/771))
+    - see #project-base-diff to update your project
