@@ -356,6 +356,8 @@ Now we can build our images and create containers:
 /usr/local/bin/docker-compose up --force-recreate -d
 ```
 
+***Note:** During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+
 Install the application:
 ```
 /usr/bin/docker exec $JOB_NAME-shopsys-framework-php-fpm composer install -o
