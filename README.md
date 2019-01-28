@@ -110,3 +110,5 @@ The rest of modules of Shopsys Framework including [HTTP smoke testing](https://
 
 Shopsys Framework also uses some third-party components and images which are licensed under their own respective licenses.
 The list of these licenses is summarized in [Open Source License Acknowledgements and Third Party Copyrights](./open-source-license-acknowledgements-and-third-party-copyrights.md).
+
+TEST
