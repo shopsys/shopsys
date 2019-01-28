@@ -3,8 +3,6 @@
 These guides show how to use prepared Docker Compose configuration to simplify the installation process.
 You do not need to install and configure the whole server stack (Nginx, PostgreSQL, etc.) in order to run and develop Shopsys Framework on your machine.
 
-***Note:** During installation there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/), [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
-
 ## How it works
 All the services needed by Shopsys Framework like Nginx or PostgreSQL are run in Docker.
 Your source code is automatically synchronized between your local machine and Docker container in both ways.

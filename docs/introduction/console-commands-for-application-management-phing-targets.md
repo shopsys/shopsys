@@ -27,6 +27,9 @@ Let us take look at the first one, that is located in the same file:
 <target name="build-deploy-part-1-db-independent" depends="clean,composer,npm,dirs-create,domains-urls-check,assets" description="First part of application build for production preserving your DB (can be run without maintenance page)."/>
 ```
 Target `build-deploy-part-1-db-independent` also executes subset of Phing targets (`clean`,`composer`,`npm`,`dirs-create`,`domains-urls-check`,`assets`).
+
+***Note:** During the execution of `composer and npm targets`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+
 Let us move a little deeper and take a look at the first one, `clean`:
 ```xml
 <target name="clean" description="Cleans up directories with cache and scripts which are generated on demand.">
@@ -43,8 +46,6 @@ Let us move a little deeper and take a look at the first one, `clean`:
 Here we can see that this target deletes all dirs in folder `/var/cache/` and `/web/scripts/`.
 
 More information about working with Phing can be found in its [documentation](https://www.phing.info/phing/guide/en/output/hlhtml/#d5e795).
-
-***Note:** During execution of phing targets there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
 ## Most Used Phing Targets
 Every Phing target is a task that can be executed simply by `php phing <target-name>` command.
