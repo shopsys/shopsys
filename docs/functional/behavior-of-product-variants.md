@@ -1,7 +1,6 @@
 # Behavior of Product Variants
-
+Product variants are specific type of product and this article describes their specific behavior.
 Variants are used for products that are suitable to associate. These are products that vary for example by size, pattern, color, etc. A typical example of using variants can be clothing where one model of t-shirt differs only in size.
-The use of variants show the specific behavior described below.
 
 ## Dictionary of terms
 **Main product** - An abstract product that groups specific variations into one product detail. The main product is for example T-shirt. This product is displayed in the product list and can’t be purchased. You can buy a specific variant on the detail of the main product.
