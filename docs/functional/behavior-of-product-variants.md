@@ -46,11 +46,11 @@ Specific variants are not displayed in the product list.
   - the main product displays the name, image, flag, availability, manufacturer, description, technical parameters and product variants
   - each variant displays the image, name, price, option to enter the number of pieces and button to buy
 - ### Front-end -  visibility of variants:
-  - conditions are same as for a regular product are applied ([Visibility and Exclude from Sale](./visibility-and-exclude-from-sale.md)) + these cases:
+  - conditions are same as for a regular product are applied ([Product Visibility and Exclude from Sale](./product-visibility-and-exclude-from-sale.md)) + these cases:
       - if the main product is set as hidden, its variants are hidden too
       - if all product variants are hidden, then the main product is hidden too
 - ### Front-end - exclude from sale:
-  - conditions are same as for a regular product are applied ([Visibility and Exclude from Sale](./visibility-and-exclude-from-sale.md)) + these cases:
+  - conditions are same as for a regular product are applied ([Product Visibility and Exclude from Sale](./product-visibility-and-exclude-from-sale.md)) + these cases:
       - if the main product is excluded from sale, then variants are not shown on the detail of the main product either
       - if all variants are excluded from the sale, then the behavior is the same to the previous point
 - ### XML feeds:
