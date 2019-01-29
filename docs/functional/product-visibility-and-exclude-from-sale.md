@@ -1,9 +1,6 @@
 # Product Visibility and Exclude from Sale
 This article describes visibility of products and what can make product invisible.
 
-## Visibility of products
-If the product is not visible on the eshop, then you will see the 404 error page when you will enter its URL. The invisible product is not reachable within the eshop at all. This actually means the product is not displayed in product overview, search results, filtering and is not generated to XML feeds.
-
 ## Product states
 **Visible product** - is displayed on the Front-end of the e-shop in products overview, search results, XML feeds etc.
 
