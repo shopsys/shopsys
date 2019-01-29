@@ -39,6 +39,7 @@
 * [Implementing a basic data import](./cookbook/basic-data-import.md)
 
 ## Functional documentation
+* [Behavior of variants](./functional/behavior-of-variants.md)
 * [Visibility and Exclude from Sale](./functional/visibility-and-exclude-from-sale.md)
 
 ## Frontend
