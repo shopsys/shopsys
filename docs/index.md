@@ -40,7 +40,7 @@
 
 ## Functional documentation
 * [Behavior of Product Variants](./functional/behavior-of-product-variants.md)
-* [Visibility and Exclude from Sale](./functional/visibility-and-exclude-from-sale.md)
+* [Product Visibility and Exclude from Sale](./functional/product-visibility-and-exclude-from-sale.md)
 
 ## Frontend
 * [Introduction to LESS](./frontend/introduction-to-less.md)
