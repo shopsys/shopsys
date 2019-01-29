@@ -1,4 +1,4 @@
-# Visibility and Exclude from Sale
+# Product Visibility and Exclude from Sale
 This article describes visibility of products and what can make product invisible.
 
 ## Visibility of products
