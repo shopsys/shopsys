@@ -1945,8 +1945,8 @@ msgstr "Byla upravena stránka slideru <strong><a href=\"{{ url }}\">{{ name }}<
 msgid "Slider pages"
 msgstr "Stránky slideru"
 
-msgid "You cannot create a product because some settings are missing. Go to Dashboard for more information."
-msgstr "Nelze vytvořit product, protože některá nastavení chybí. Pro více informací navštivte Nástěnku."
+msgid "Fill missing settings to enable creating products. More information here."
+msgstr "Pro vytvoření produktu doplňte chybějící nastavení. Více informací zde."
 
 msgid "Sorting priority"
 msgstr "Priorita řazení"
