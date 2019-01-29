@@ -38,6 +38,9 @@
 * [Adding Ajax Load More Button into Pagination](./cookbook/adding-ajax-load-more-button-into-pagination.md)
 * [Implementing a basic data import](./cookbook/basic-data-import.md)
 
+## Functional documentation
+* [Visibility and Exclude from Sale](./functional/visibility-and-exclude-from-sale.md)
+
 ## Frontend
 * [Introduction to LESS](./frontend/introduction-to-less.md)
 * [Frontend Troubleshooting](./frontend/frontend-troubleshooting.md)
