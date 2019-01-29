@@ -1945,7 +1945,7 @@ msgstr ""
 msgid "Slider pages"
 msgstr ""
 
-msgid "Some settings are missing. Go to Dashboard for more information."
+msgid "You cannot create a product because some settings are missing. Go to Dashboard for more information."
 msgstr ""
 
 msgid "Sorting priority"

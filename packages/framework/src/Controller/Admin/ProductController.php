@@ -414,12 +414,10 @@ class ProductController extends AdminBaseController
      */
     protected function productCanBeCreated()
     {
-        $productCanBeCreated = true;
-
         if (empty($this->unitFacade->getAll()) || $this->setting->get(Setting::DEFAULT_UNIT) === 0 || empty($this->availabilityFacade->getAll())) {
-            $productCanBeCreated = false;
+            return false;
         }
 
-        return $productCanBeCreated;
+        return true;
     }
 }
