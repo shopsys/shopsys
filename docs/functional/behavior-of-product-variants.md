@@ -1,4 +1,4 @@
-# Behavior of variants
+# Behavior of Product Variants
 
 Variants are used for products that are suitable to associate. These are products that vary for example by size, pattern, color, etc. A typical example of using variants can be clothing where one model of t-shirt differs only in size.
 The use of variants show the specific behavior described below.
@@ -17,7 +17,7 @@ Specific variants are not displayed in the product list.
 5. The original main product is also added to the list of variants and can be purchased.
 6. We have created the main product, which is abstract and specific variants assigned to that product.
 
-## Behavior of variants
+## Behavior of product variants
 - ### Administration - main product:
   - there is the icon "H" for the main product on the products overview
   - it is possible to add/remove variants on the main product card
