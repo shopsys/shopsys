@@ -1,4 +1,6 @@
 version: '2'
+options:
+    max_attempt: 15
 syncs:
     shopsys-framework-sync:
         sync_userid: 1000
