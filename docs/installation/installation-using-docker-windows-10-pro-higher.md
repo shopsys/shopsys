@@ -23,7 +23,7 @@ This solution uses [*docker-sync*](http://docker-sync.io/) (for fast two-way syn
 
 ### Installation of Docker-sync for Windows
 
-* In settings of Windows docker check `Expose daemon on localhost:2375` and check drive option in `Shared Drives` tab, where the project will be installed, you will be prompted for your Windows credentials.
+* In settings of Windows docker check `Expose daemon on localhost:2375` in `General` tab and check drive option in `Shared Drives` tab, where the project will be installed, you will be prompted for your Windows credentials.
 * Enable WSL - Open the `Windows Control Panel`, `Programs and Features`, click on the left on `Turn Windows features on or off` and check `Windows Subsystem for Linux` near the bottom, restart of Windows is required.
 * Install `Debian` app form `Microsoft Store` and launch it, so console window is opened.
 * Execute following commands in console window.
