@@ -1,4 +1,6 @@
 # UPGRADING
+The releases of Shopsys Framework adhere to [Our Backward Compatibility Promise](/docs/contributing/our-backward-compatibility-promise.md) to make upgrades to new versions easier and help long-term maintainability.
+
 ## Recommended way of upgrading
 Since these are 3 possible scenarios how you can use shopsys, instructions are divided by these scenarios.
 
