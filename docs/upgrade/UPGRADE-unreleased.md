@@ -136,7 +136,7 @@ for instance:
 - *(optional)* upgrade npm packages to the latest version ([#755](https://github.com/shopsys/shopsys/pull/755))
     - remove all npm packages by removing folder `project-base/node_modules` and `project-base/package-lock.json`
     - run command `php phing npm`
-    - in order to pass standards tests you also need to run `php phing eslint-fix` to let ESlint npm package update your JavaScript files. After that your syntax should be updated to latest JavaScript standards checked by ESLint.
+    - in order to pass standards tests you also need to run `php phing eslint-fix` to let ESlint npm package update your JavaScript files. After that your syntax should be updated to latest JavaScript standards checked by ESLint. There could be error about `no-self-assign` for `window.location` in `src/Shopsys/ShopBundle/Resources/scripts/frontend/promoCode.js` and it could be solved by replacing `window.location = window.location` into `windows.location.reload()` ([#809](https://github.com/shopsys/shopsys/pull/809))
 - unify countries across domains with translations and domain dependency ([#762](https://github.com/shopsys/shopsys/pull/762))
     - fix new entity `Country` creation (either using factory or directly) as it changed its constructor and `CountryFactory::create` method signature (removed argument `domainId`)
         - do not forget to fix `PersonalDataExportXmlTest`
