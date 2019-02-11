@@ -120,5 +120,20 @@ The style of the front-end is in the `project-base` repository, which means that
 ## Summary
 
 ### If You Are a User of Shopsys Framework...
+- we use [Semantic Versioning](http://semver.org/spec/v2.0.0.html) (`MAJOR.MINOR.PATCH`)
+- all higher `MINOR` and `PATCH` version should be compatible with your project
+- read the [section Using Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#using-symfony-code) in their BC Promise for a nice clarification about BC in PHP
+- use [caret version ranges](https://getcomposer.org/doc/articles/versions.md#caret-version-range-) in your `composer.json` (eg. `^7.0.0`)
+- watch for changes marked as `BC-BREAK` in the [change log](/CHANGELOG.md)
+- don't forget to execute new DB migrations via `./phing db-migrations` during upgrades
+- when upgrading to a new major release, read the [upgrade notes](/UPGRADE.md)
+- it's recommended to always upgrade to the highest minor version first, fix all deprecation notices, and then upgrade to the next major release
+- upgrade often, it will be easier
 
 ### If You Are a Contributor to Shopsys Framework...
+- read about [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
+- when making a change, always think about backward compatibility
+- read the [section Working on Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#working-on-symfony-code) in their BC Promise for a nice clarification about BC in PHP
+- try the changes using an older version of `project-base`, it shouldn't cause issue
+- never change [translation message IDs](#translation-messages) except in `MAJOR` releases
+- take your time when explaining how to use new features or upgrade to a BC-breaking change in [upgrade notes](/UPGRADE.md)
