@@ -46,7 +46,7 @@ Rules for PHP code are fully covered by [Symfony Backward Compatibility Promise]
 A new version may include database migrations if the structure of [the entities](/docs/introduction/entities.md) changed.
 
 Only `MAJOR` and `MINOR` versions may include DB migrations.
-Migrations in `MINOR` versions may not change types of existing columns, rename columns and tables, and remove nullability of a column.
+Migrations in `MINOR` versions are backward compatible. It means they may not change types of existing columns, rename columns and tables, and remove nullability of a column.
 
 You should always check and test the database migrations before running them on your production data.
 
