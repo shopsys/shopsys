@@ -46,7 +46,7 @@ Shopsys Framework is fully functional e-commerce platform with all basic functio
 * Best practice manuals
 * Basic API
 
-The releases of Shopsys Framework adhere to [Our Backward Compatibility Promise](/docs/contributing/our-backward-compatibility-promise.md) to make upgrades to new versions easier and help long-term maintainability.
+The releases of Shopsys Framework adhere to the [Backward Compatibility Promise](/docs/contributing/backward-compatibility-promise.md) to make upgrades to new versions easier and help long-term maintainability.
 
 ## Sites Built on Shopsys Framework
 List of typical projects built on previous versions of Shopsys Framework:

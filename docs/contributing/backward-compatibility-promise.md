@@ -1,4 +1,4 @@
-# Our Backward Compatibility Promise
+# Backward Compatibility Promise
 
 Smooth and safe upgrades of your own e-commerce project are very important to us.
 In the same time, we need to be able to improve Shopsys Framework for you by adding functionality, enhancing or simplifying current functions and fixing bugs.
