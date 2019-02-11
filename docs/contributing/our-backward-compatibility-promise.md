@@ -1,8 +1,8 @@
 # Our Backward Compatibility Promise
 
 Smooth and safe upgrades of your own e-commerce project are very important to us.
-In the same time, we need to be able to improve Shopsys Framework for you by adding functionality, enhancing or simplifying current functions and fixing bugs. 
-This is why we've written this page explaining what amount of backward compatibility should be expected and how we plan to make changes in the future. 
+In the same time, we need to be able to improve Shopsys Framework for you by adding functionality, enhancing or simplifying current functions and fixing bugs.
+This is why we've written this page explaining what amount of backward compatibility should be expected and how we plan to make changes in the future.
 
 Shopsys Framework is built on the shoulders of giants so we've based our BC promise on the [Symfony Backward Compatibility Promise](https://symfony.com/doc/3.4/contributing/code/bc.html).
 Exceptions from adhering to Symfony's promise and clarifications for non-PHP source codes can be found below.
@@ -17,7 +17,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - `PATCH` version contains only backward-compatible bug fixes
 
 Released versions will be always marked using git tags with `v` prefix (eg. `v7.0.0`).
-Once created git tag will never be removed or edited (eg. `v7.0.0` will always point to the same commit).
+Once created, a git tag marking a release will never be removed or edited.
 
 *Note: Pre-release versions may introduce incompatible changes and can be used to try out the new functions and changes.
 Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc>n`, eg. `7.0.0-beta5`.*
@@ -32,7 +32,7 @@ We expect this period to increase in the future to yearly releases.
 The [project-base repository](https://github.com/shopsys/project-base) is excepted for the BC promise because it is not meant to be depended upon or extended.
 It should be viewed as a template for your own e-commerce projects built on top of Shopsys Framework.
 
-Changes to the [project-base repository](https://github.com/shopsys/project-base) may contain new features for front-end or examples of newly implemented features and configuration option. 
+Changes to the [project-base repository](https://github.com/shopsys/project-base) may contain new features for front-end or examples of newly implemented features and configuration option.
 Follow the changes in the repository to see how working with Shopsys Framework changes between the versions and to keep in touch with best practices and recommendations.
 
 This means that the [project-base repository](https://github.com/shopsys/project-base) should run with any higher version of Shopsys Framework, up to the next `MAJOR` version.
