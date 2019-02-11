@@ -88,6 +88,10 @@ msgstr ""
 ```
 
 ### Routing
+New routes may be added in any release.
+Existing routes should not be modified, except for adding a new [optional placeholder](https://symfony.com/doc/3.4/routing/optional_placeholders.html).
+
+Route names may be changed only in a `MAJOR` release.
 
 ### Docker Configuration and Orchestration Manifests
 
