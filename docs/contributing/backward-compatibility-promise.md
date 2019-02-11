@@ -4,9 +4,6 @@ Smooth and safe upgrades of your own e-commerce project are very important to us
 In the same time, we need to be able to improve Shopsys Framework for you by adding functionality, enhancing or simplifying current functions and fixing bugs.
 After reading this promise you'll understand backward compatibility, what changes you can expect and how we plan to make changes in the future.
 
-Shopsys Framework is built on the shoulders of giants so we've based our BC promise on the [**Symfony Backward Compatibility Promise**](https://symfony.com/doc/3.4/contributing/code/bc.html).
-Exceptions from adhering to Symfony's promise and clarifications for non-PHP source codes can be found below.
-
 *Note: This BC promise becomes effective with the release first non-beta release (`7.0.0`).*
 
 ## Releases and Versioning
@@ -26,7 +23,9 @@ Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc><n>`, eg. `7.0.0
 To be able to develop and improve Shopsys Framework we plan to release `MAJOR` versions almost quarterly, aiming to release a new `MAJOR` every 3-4 months.
 We expect this period to increase in the future to yearly releases.
 
-## Clarifications and Exceptions
+## The BC Promise in Detail
+Shopsys Framework is built on the shoulders of giants so we've based our BC promise on the [**Symfony Backward Compatibility Promise**](https://symfony.com/doc/3.4/contributing/code/bc.html).
+Exceptions from adhering to Symfony's promise and clarifications for non-PHP source codes can be found below.
 
 ### Project-base Repository
 The [project-base repository](https://github.com/shopsys/project-base) is excepted for the BC promise because it is not meant to be depended upon or extended.
