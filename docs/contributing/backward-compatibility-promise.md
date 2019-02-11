@@ -70,21 +70,24 @@ This might be unintuitive for contributors because we use English text as messag
 See an example of fixing a typo in an English translation message:
 
 Initially, there is only the message ID in the `messages.en.po` (translation doesn't have to be filled):
-```
-msgid "Exaple translation"
-msgstr ""
+```diff
+  msgid "Exaple translation"
+  msgstr ""
 ```
 
 In a `PATCH` or `MINOR` version, the original message ID may not be removed:
-```
-msgid "Exaple translation"
-msgstr "Example translation"
+```diff
+  msgid "Exaple translation"
+- msgstr ""
++ msgstr "Example translation"
 ```
 
 In a `MAJOR` version, the original message ID with the typo may be removed:
-```
-msgid "Example translation"
-msgstr ""
+```diff
+- msgid "Exaple translation"
+- msgstr "Example translation"
++ msgid "Example translation"
++ msgstr ""
 ```
 
 ### Routing
