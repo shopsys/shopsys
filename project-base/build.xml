@@ -256,6 +256,7 @@
     <target name="error-pages-generate" description="Generates error pages displayed in production environment.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />
+            <arg value="--env=prod" />
             <arg value="shopsys:error-page:generate-all" />
         </exec>
     </target>

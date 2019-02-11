@@ -190,6 +190,8 @@ for instance:
     - `ProductSearchExportRepositoryTest` move from `Tests\ShopBundle\Functional\Model\Product\ProductSearchExport` to `Tests\ShopBundle\Functional\Model\Product\Search`
     - in production you will need to run `product-search-recreate-structure` Phing target while next build to create indexes again with new name
         - after that remove previous indexes used for Product search, so they do not consume any memory ([link to Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html))
+- force generating of error pages in production environment ([#816](https://github.com/shopsys/shopsys/pull/816))
+    - update your phing target `error-pages-generate` in `build.xml` to include `<arg value="--env=prod" />`
 
 ## [shopsys/product-feed-heureka]
 - if you have extended class HeurekaCategoryDownloader or HeurekaCategoryCronModule ([#788](https://github.com/shopsys/shopsys/pull/788))
