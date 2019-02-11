@@ -20,7 +20,7 @@ Released versions will be always marked using git tags with `v` prefix (eg. `v7.
 Once created, a git tag marking a release will never be removed or edited.
 
 *Note: Pre-release versions may introduce incompatible changes and can be used to try out the new functions and changes.
-Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc>n`, eg. `7.0.0-beta5`.*
+Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc><n>`, eg. `7.0.0-beta5`.*
 
 ### Current Release Plan
 To be able to develop and improve Shopsys Framework we plan to release `MAJOR` versions almost quarterly, aiming to release a new `MAJOR` every 3-4 months.
