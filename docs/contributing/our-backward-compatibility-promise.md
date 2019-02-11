@@ -2,7 +2,7 @@
 
 Smooth and safe upgrades of your own e-commerce project are very important to us.
 In the same time, we need to be able to improve Shopsys Framework for you by adding functionality, enhancing or simplifying current functions and fixing bugs.
-This is why we've written this page explaining what amount of backward compatibility should be expected and how we plan to make changes in the future.
+After reading this promise you'll understand backward compatibility, what changes you can expect and how we plan to make changes in the future.
 
 Shopsys Framework is built on the shoulders of giants so we've based our BC promise on the [Symfony Backward Compatibility Promise](https://symfony.com/doc/3.4/contributing/code/bc.html).
 Exceptions from adhering to Symfony's promise and clarifications for non-PHP source codes can be found below.
