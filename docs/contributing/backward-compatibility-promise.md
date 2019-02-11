@@ -61,6 +61,31 @@ You should always check and test the database migrations before running them on 
 *Tip: Read about the possibilities of altering the execution of DB migration using the [`migrations-lock.yml` file](/docs/introduction/database-migrations.md#locking-the-order-of-migrations).*
 
 ### Translation Messages
+New [translation messages](/docs/introduction/translations.md) may be added or have its translation changed in any release.
+However, they may be removed or have their message ID changed only in `MAJOR` releases.
+
+When changing the message (eg. because of a typo) in a `MINOR` or `PATCH` release, only its translation may be changed.
+In such instances, it is preferred to keep using the original message ID to ensure backward compatibility with existing user-defined translation.
+This might be unintuitive for contributors because we use English text as message IDs.
+See an example of fixing a typo in an English translation message:
+
+Initially, there is only the message ID in the `messages.en.po` (translation doesn't have to be filled if):
+```
+msgid "Exaple translation"
+msgstr ""
+```
+
+In a `PATCH` or `MINOR` version, the original message ID may not be removed:
+```
+msgid "Exaple translation"
+msgstr "Example translation"
+```
+
+In a `MAJOR` version, the original message ID with the typo may be removed:
+```
+msgid "Example translation"
+msgstr ""
+```
 
 ### Routing
 
