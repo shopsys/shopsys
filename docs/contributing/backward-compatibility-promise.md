@@ -69,7 +69,7 @@ In such instances, it is preferred to keep using the original message ID to ensu
 This might be unintuitive for contributors because we use English text as message IDs.
 See an example of fixing a typo in an English translation message:
 
-Initially, there is only the message ID in the `messages.en.po` (translation doesn't have to be filled if):
+Initially, there is only the message ID in the `messages.en.po` (translation doesn't have to be filled):
 ```
 msgid "Exaple translation"
 msgstr ""
