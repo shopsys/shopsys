@@ -13,6 +13,10 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - `MINOR` version may add new functionality in a backward-compatible manner
 - `PATCH` version contains only backward-compatible bug fixes
 
+Even though we will try to follow these rules the best we can, it could happen that a BC breaking change is introduced in a `MINOR` or `PATCH` release.
+For example, because of an important security fix or a critical bug fix.
+If this would be the case, we will mark the Pull Request with `[BC-BREAK]` in the title and explain the reasons for it in its description.
+
 Released versions will be always marked using git tags with `v` prefix (eg. `v7.0.0`).
 Once created, a git tag marking a release will never be removed or edited.
 
