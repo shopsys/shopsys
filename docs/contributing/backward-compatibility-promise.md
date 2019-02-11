@@ -28,13 +28,16 @@ Shopsys Framework is built on the shoulders of giants so we've based our BC prom
 Exceptions from adhering to Symfony's promise and clarifications for non-PHP source codes can be found below.
 
 ### Project-base Repository
-The [project-base repository](https://github.com/shopsys/project-base) is excepted for the BC promise because it is not meant to be depended upon or extended.
+The [project-base repository](https://github.com/shopsys/project-base) in not meant to be extended or depended upon.
+For this reason the changes in it are not subject to the rules of this BC promise.
 It should be viewed as a template for your own e-commerce projects built on top of Shopsys Framework.
 
-Changes to the `project-base` may contain new features for front-end or examples of newly implemented features and configuration option.
-Follow the changes in the repository to see how working with Shopsys Framework changes between the versions and to keep in touch with best practices and recommendations.
-
 This means that the `project-base` should run with any higher minor version of Shopsys Framework, up to the next `MAJOR` version.
+
+Changes to the `project-base` may contain new features for front-end or examples of newly implemented features and configuration option.
+You can follow the changes in the repository to see how working with Shopsys Framework changes between the versions and to keep in touch with best practices and recommendations.
+
+During upgrade, you have to make the changes yourself according to the advice in [UPGRADE.md](/UPGRADE.md).
 
 *Note: The same holds true for the [demoshop repository](https://github.com/shopsys/demoshop) which is a complex example of an e-commerce project using a custom design and modifications.*
 
