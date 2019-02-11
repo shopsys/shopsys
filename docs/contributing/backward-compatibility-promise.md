@@ -97,7 +97,7 @@ Existing routes should not be modified, except for adding a new [optional placeh
 Route names may be changed only in a `MAJOR` release.
 
 ### Docker Configuration and Orchestration Manifests
-Configuration of containers and orchestration is mostly in the `project-base` repository, which means that [these rules do not apply](#project-base-repository).
+Configuration of containers and orchestration is mostly in the `project-base` repository, which means that [it's excluded form the BC promise](#project-base-repository).
 
 The changes should always be described in [upgrade notes](/UPGRADE.md) (in the *Infrastructure* section).
 
@@ -107,9 +107,15 @@ Twig blocks, functions, filters and the templates themselves can be removed or r
 Changes of Twig functions and filters in `MINOR` and `PATCH` releases must be backward-compatible.
 This means only a new optional argument or a support for new data type of existing argument may be added.
 
+### LESS / CSS
+Classes can be renamed only in a `MAJOR` release.
+
+Changes of the visual style of the administration are not considered a BC break and may be introduced in any version.
+
+The style of the front-end is in the `project-base` repository, which means that [it's excluded form the BC promise](#project-base-repository).
+
 ### Javascript
 
-### CSS
 
 ## Summary
 
