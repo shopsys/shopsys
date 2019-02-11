@@ -10,7 +10,7 @@
 
         {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
             {% block fixed_bar_content %}
-                <a href="{{ url('shopsys_framework_admin_country_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                <a href="{{ url('admin_country_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
                 {{ form_save(country|default(null), form) }}
             {% endblock %}
         {% endembed %}
