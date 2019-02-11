@@ -102,7 +102,7 @@ Configuration of containers and orchestration is mostly in the `project-base` re
 The changes should always be described in [upgrade notes](/UPGRADE.md) (in the *Infrastructure* section).
 
 ### Twig
-Twig blocks, functions, filters and the templates themselves can be removed or renamed only in `MAJOR` version.
+Twig blocks, functions, filters and the templates themselves can be removed or renamed only in a `MAJOR` release.
 
 Changes of Twig functions and filters in `MINOR` and `PATCH` releases must be backward-compatible.
 This means only a new optional argument or a support for new data type of existing argument may be added.
@@ -115,7 +115,11 @@ Changes of the visual style of the administration are not considered a BC break 
 The style of the front-end is in the `project-base` repository, which means that [it's excluded form the BC promise](#project-base-repository).
 
 ### Javascript
+Javascript code should adhere to similar rules as the PHP code ([except in project-base repository](#project-base-repository)).
 
+Behavior of elements with classes prefixed with `.js-` should change only in a `MAJOR` release.
+New keys in a `options` map or a new expected data attribute may be added in a `MINOR` or `PATCH` release only if it has a default value.
+Adding a new optional argument to a method is considered a BC break (as it the method might be overridden by the user with the new argument already in use).  
 
 ## Summary
 
