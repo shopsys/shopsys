@@ -74,15 +74,19 @@ class CartMigrationFacade
     {
         $session = $filterControllerEvent->getRequest()->getSession();
 
-        $previousCartIdentifier = $session->get(self::SESSION_PREVIOUS_CART_IDENTIFIER);
-        if (!empty($previousCartIdentifier) && $previousCartIdentifier !== $session->getId()) {
-            $previousCustomerIdentifier = $this->customerIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
-            $cart = $this->cartFacade->findCartByCustomerIdentifier($previousCustomerIdentifier);
+        if ($session !== null) {
+            $previousCartIdentifier = $session->get(self::SESSION_PREVIOUS_CART_IDENTIFIER);
+            if (!empty($previousCartIdentifier) && $previousCartIdentifier !== $session->getId()) {
+                $previousCustomerIdentifier = $this->customerIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
+                $cart = $this->cartFacade->findCartByCustomerIdentifier($previousCustomerIdentifier);
 
-            if ($cart !== null) {
-                $this->mergeCurrentCartWithCart($cart);
+                if ($cart !== null) {
+                    $this->mergeCurrentCartWithCart($cart);
+                }
             }
+            $session->set(self::SESSION_PREVIOUS_CART_IDENTIFIER, $session->getId());
+        } else {
+            throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\SessionIsNullException();
         }
-        $session->set(self::SESSION_PREVIOUS_CART_IDENTIFIER, $session->getId());
     }
 }
