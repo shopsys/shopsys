@@ -37,7 +37,7 @@ This means that the `project-base` should run with any higher minor version of S
 Changes to the `project-base` may contain new features for front-end or examples of newly implemented features and configuration option.
 You can follow the changes in the repository to see how working with Shopsys Framework changes between the versions and to keep in touch with best practices and recommendations.
 
-During upgrade, you have to make the changes yourself according to the advice in [UPGRADE.md](/UPGRADE.md).
+During upgrade to next major version, you have to make the changes yourself according to the advice in [UPGRADE.md](/UPGRADE.md).
 
 *Note: The same holds true for the [demoshop repository](https://github.com/shopsys/demoshop) which is a complex example of an e-commerce project using a custom design and modifications.*
 
