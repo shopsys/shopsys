@@ -32,8 +32,8 @@ Shopsys Framework is built on the shoulders of giants so we've based our BC prom
 Exceptions from adhering to Symfony's promise and clarifications for non-PHP source codes can be found below.
 
 ### Project-base Repository
-The [project-base repository](https://github.com/shopsys/project-base) in not meant to be extended or depended upon.
-For this reason the changes in it are not subject to the rules of this BC promise.
+The [project-base repository](https://github.com/shopsys/project-base) is not meant to be extended or depended upon.
+For this reason, the changes in it are not subject to the rules of this BC promise.
 It should be viewed as a template for your own e-commerce projects built on top of Shopsys Framework.
 
 This means that the `project-base` should run with any higher minor version of Shopsys Framework, up to the next `MAJOR` version.
@@ -41,7 +41,7 @@ This means that the `project-base` should run with any higher minor version of S
 Changes to the `project-base` may contain new features for front-end or examples of newly implemented features and configuration option.
 You can follow the changes in the repository to see how working with Shopsys Framework changes between the versions and to keep in touch with best practices and recommendations.
 
-During upgrade to next major version, you have to make the changes yourself according to the advice in [UPGRADE.md](/UPGRADE.md).
+During an upgrade to the next major version, you have to make the changes yourself according to the advice in [UPGRADE.md](/UPGRADE.md).
 
 *Note: The same holds true for the [demoshop repository](https://github.com/shopsys/demoshop) which is a complex example of an e-commerce project using a custom design and modifications.*
 
@@ -97,7 +97,7 @@ Existing routes should not be modified in a `MINOR` or `PATCH` release, except f
 Routes may be changed or removed only in a `MAJOR` release.
 
 ### Docker Configuration and Orchestration Manifests
-Configuration of containers and orchestration is mostly in the `project-base` repository, which means that [it's excluded from the BC promise](#project-base-repository).
+The configuration of containers and orchestration is mostly in the `project-base` repository, which means that [it's excluded from the BC promise](#project-base-repository).
 
 The changes should always be described in [upgrade notes](/UPGRADE.md) (in the *Infrastructure* section).
 
@@ -128,7 +128,7 @@ Javascript code should adhere to similar rules as the PHP code ([except in proje
 New keys in a `options` map or a new expected data attribute may be added in a `MINOR` or `PATCH` release only if it has a default value.
 Adding a new optional argument to a method is considered a BC break (as it the method might be overridden by the user with the new argument already in use) and is not allowed in a `MINOR` or `PATCH` release.
 
-Behavior of elements with classes prefixed with `.js-` should change only in a `MAJOR` release.
+The behavior of elements with classes prefixed with `.js-` should change only in a `MAJOR` release.
 
 ## Summary
 
