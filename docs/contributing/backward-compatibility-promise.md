@@ -51,10 +51,10 @@ Rules for PHP code are fully covered by [Symfony Backward Compatibility Promise]
 ### Database Migrations
 A new version may include database migrations if the structure of [the entities](/docs/introduction/entities.md) changed.
 
-Migrations in `MINOR` versions are backward-compatible.
+Migrations in `MINOR` releases are backward-compatible.
 It means they may not change types of existing columns, rename columns and tables, and remove nullability of a column.
 
-Migrations in `PATCH` versions are backward-compatible and may be used only for bug fixes.
+Migrations in `PATCH` releases are backward-compatible and may be used only for bug fixes.
 
 You should always check and test the database migrations before running them on your production data.
 
@@ -75,14 +75,14 @@ Initially, there is only the message ID in the `messages.en.po` (translation doe
   msgstr ""
 ```
 
-In a `PATCH` or `MINOR` version, the original message ID may not be removed:
+In a `PATCH` or `MINOR` release, the original message ID may not be removed:
 ```diff
   msgid "Exaple translation"
 - msgstr ""
 + msgstr "Example translation"
 ```
 
-In a `MAJOR` version, the original message ID with the typo may be removed:
+In a `MAJOR` release, the original message ID with the typo may be removed:
 ```diff
 - msgid "Exaple translation"
 - msgstr "Example translation"
@@ -134,7 +134,7 @@ Behavior of elements with classes prefixed with `.js-` should change only in a `
 
 ### If You Are a User of Shopsys Framework...
 - we use [Semantic Versioning](http://semver.org/spec/v2.0.0.html) (`MAJOR.MINOR.PATCH`)
-- all higher `MINOR` and `PATCH` versions should be compatible with your project
+- all higher `MINOR` and `PATCH` releases should be compatible with your project
 - use [caret version ranges](https://getcomposer.org/doc/articles/versions.md#caret-version-range-) in your `composer.json` (eg. `^7.0.0`)
 - when upgrading to a new major release, read the [upgrade notes](/UPGRADE.md)
 - watch for changes marked as `BC-BREAK` in the [changelog](/CHANGELOG.md)
