@@ -7,7 +7,7 @@ After reading this promise you'll understand backward compatibility, what change
 *Note: This BC promise becomes effective with the first stable release (`7.0.0`).*
 
 ## Releases and Versioning
-This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), which means it's release versions are in format `MAJOR.MINOR.PATCH`:
+This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), which means its release versions are in format `MAJOR.MINOR.PATCH`:
 
 - `MAJOR` version may contain incompatible changes
 - `MINOR` version may add new functionality in a backward-compatible manner
