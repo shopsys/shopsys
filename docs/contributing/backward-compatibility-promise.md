@@ -127,12 +127,12 @@ Behavior of elements with classes prefixed with `.js-` should change only in a `
 ### If You Are a User of Shopsys Framework...
 - we use [Semantic Versioning](http://semver.org/spec/v2.0.0.html) (`MAJOR.MINOR.PATCH`)
 - all higher `MINOR` and `PATCH` versions should be compatible with your project
-- read the [section Using Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#using-symfony-code) in their BC Promise for a nice clarification about BC in PHP
 - use [caret version ranges](https://getcomposer.org/doc/articles/versions.md#caret-version-range-) in your `composer.json` (eg. `^7.0.0`)
+- when upgrading to a new major release, read the [upgrade notes](/UPGRADE.md)
 - watch for changes marked as `BC-BREAK` in the [changelog](/CHANGELOG.md)
 - don't forget to execute new DB migrations via `./phing db-migrations` during upgrades
-- when upgrading to a new major release, read the [upgrade notes](/UPGRADE.md)
 - we recommend to always upgrade to the highest minor version first, fix all deprecation notices, and then upgrade to the next major release
+- read the [section Using Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#using-symfony-code) in their BC Promise for a nice clarification about BC in PHP
 - upgrade often, it will be easier
 
 ### If You Are a Contributor to Shopsys Framework...
