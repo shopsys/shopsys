@@ -142,4 +142,4 @@ Behavior of elements with classes prefixed with `.js-` should change only in a `
 - read the [section Working on Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#working-on-symfony-code) in their BC Promise for a nice clarification about BC in PHP
 - test changes using an older version of `project-base`, it shouldn't cause any issues
 - never change [translation message IDs](#translation-messages) except in `MAJOR` releases
-- take your time when explaining how to use new features or upgrade to a BC-breaking change in [upgrade notes](/UPGRADE.md)
+- take your time when [explaining](/docs/contributing/guidelines-for-writing-upgrade.md) how to upgrade to a BC-breaking change in [upgrade notes](/UPGRADE.md)
