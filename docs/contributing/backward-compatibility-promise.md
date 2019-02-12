@@ -151,4 +151,4 @@ The behavior of elements with classes prefixed with `.js-` should be changed onl
 - test changes using an older version of `project-base`, it shouldn't cause any issues
 - never change [translation message IDs](#translation-messages) except in `MAJOR` releases
 - take your time when [explaining](/docs/contributing/guidelines-for-writing-upgrade.md) how to upgrade to a BC-breaking change in [upgrade notes](/UPGRADE.md)
-- test new [database migrations](#database-migrations) heavily
+- test new [database migrations](#database-migrations) thoroughly
