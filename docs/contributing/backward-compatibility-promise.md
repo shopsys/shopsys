@@ -118,7 +118,7 @@ The style of the front-end is in the `project-base` repository, which means that
 Javascript code should adhere to similar rules as the PHP code ([except in project-base repository](#project-base-repository)).
 
 New keys in a `options` map or a new expected data attribute may be added in a `MINOR` or `PATCH` release only if it has a default value.
-Adding a new optional argument to a method is considered a BC break (as it the method might be overridden by the user with the new argument already in use).
+Adding a new optional argument to a method is considered a BC break (as it the method might be overridden by the user with the new argument already in use) and is not allowed in a `MINOR` or `PATCH` release.
 
 Behavior of elements with classes prefixed with `.js-` should change only in a `MAJOR` release.
 
