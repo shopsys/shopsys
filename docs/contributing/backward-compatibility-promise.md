@@ -140,6 +140,6 @@ Behavior of elements with classes prefixed with `.js-` should change only in a `
 - when making a change, always think about backward compatibility
 - instead of removing you can add a deprecation
 - read the [section Working on Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#working-on-symfony-code) in their BC Promise for a nice clarification about BC in PHP
-- try the changes using an older version of `project-base`, it shouldn't cause issue
+- test changes using an older version of `project-base`, it shouldn't cause any issues
 - never change [translation message IDs](#translation-messages) except in `MAJOR` releases
 - take your time when explaining how to use new features or upgrade to a BC-breaking change in [upgrade notes](/UPGRADE.md)
