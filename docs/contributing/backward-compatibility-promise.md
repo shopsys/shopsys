@@ -132,7 +132,7 @@ Behavior of elements with classes prefixed with `.js-` should change only in a `
 - watch for changes marked as `BC-BREAK` in the [changelog](/CHANGELOG.md)
 - don't forget to execute new DB migrations via `./phing db-migrations` during upgrades
 - when upgrading to a new major release, read the [upgrade notes](/UPGRADE.md)
-- it's recommended to always upgrade to the highest minor version first, fix all deprecation notices, and then upgrade to the next major release
+- we recommend to always upgrade to the highest minor version first, fix all deprecation notices, and then upgrade to the next major release
 - upgrade often, it will be easier
 
 ### If You Are a Contributor to Shopsys Framework...
