@@ -39,7 +39,7 @@
 
         var onApplyPromoCode = function (response) {
             if (response.result === true) {
-                window.location.reload();
+                document.location.reload();
             } else {
                 Shopsys.window({
                     content: response.message
