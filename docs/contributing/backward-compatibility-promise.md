@@ -107,6 +107,14 @@ This means only a new optional argument or a support for new data type of existi
 
 Twig blocks, functions, filters and the templates themselves can be removed or renamed only in a `MAJOR` release.
 
+### HTML
+Backward-compatible changes and additions to the HTML structure may be introduced in any release.
+
+Significant changes of the HTML structure should be avoided in `MINOR` and `PATCH` release.
+They may be introduced in a `MAJOR` release and they must always be described in detail in [upgrade notes](/UPGRADE.md) (in the *Application* section).
+
+The templates of the front-end are in the `project-base` repository, which means that [they're excluded form the BC promise](#project-base-repository).
+
 ### LESS / CSS
 Classes can be renamed only in a `MAJOR` release.
 
