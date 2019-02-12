@@ -92,9 +92,9 @@ In a `MAJOR` version, the original message ID with the typo may be removed:
 
 ### Routing
 New routes may be added in any release.
-Existing routes should not be modified, except for adding a new [optional placeholder](https://symfony.com/doc/3.4/routing/optional_placeholders.html).
+Existing routes should not be modified in a `MINOR` or `PATCH` release, except for adding a new [optional placeholder](https://symfony.com/doc/3.4/routing/optional_placeholders.html).
 
-Route names may be changed only in a `MAJOR` release.
+Routes may be changed or removed only in a `MAJOR` release.
 
 ### Docker Configuration and Orchestration Manifests
 Configuration of containers and orchestration is mostly in the `project-base` repository, which means that [it's excluded from the BC promise](#project-base-repository).
