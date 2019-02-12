@@ -97,7 +97,7 @@ Existing routes should not be modified, except for adding a new [optional placeh
 Route names may be changed only in a `MAJOR` release.
 
 ### Docker Configuration and Orchestration Manifests
-Configuration of containers and orchestration is mostly in the `project-base` repository, which means that [it's excluded form the BC promise](#project-base-repository).
+Configuration of containers and orchestration is mostly in the `project-base` repository, which means that [it's excluded from the BC promise](#project-base-repository).
 
 The changes should always be described in [upgrade notes](/UPGRADE.md) (in the *Infrastructure* section).
 
