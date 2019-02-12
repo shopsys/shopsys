@@ -138,7 +138,7 @@ Behavior of elements with classes prefixed with `.js-` should change only in a `
 ### If You Are a Contributor to Shopsys Framework...
 - read about [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 - when making a change, always think about backward compatibility
-- instead of removing you can add a deprecation
+- [add a deprecation](https://symfony.com/doc/3.4/contributing/code/conventions.html#deprecations) instead of removing code
 - read the [section Working on Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#working-on-symfony-code) in their BC Promise for a nice clarification about BC in PHP
 - test changes using an older version of `project-base`, it shouldn't cause any issues
 - never change [translation message IDs](#translation-messages) except in `MAJOR` releases
