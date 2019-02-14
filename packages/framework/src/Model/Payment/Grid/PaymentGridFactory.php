@@ -3,8 +3,11 @@
 namespace Shopsys\FrameworkBundle\Model\Payment\Grid;
 
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -58,11 +61,20 @@ class PaymentGridFactory implements GridFactoryInterface
      */
     public function create()
     {
+        $dataSource = $this->getDataSource();
+        return $this->getGridForDataSource($dataSource);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource
+     */
+    protected function getDataSource(): DataSourceInterface
+    {
         $queryBuilder = $this->paymentRepository->getQueryBuilderForAll()
             ->addSelect('pt')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameter('locale', $this->localization->getAdminLocale());
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
+        return new QueryBuilderWithRowManipulatorDataSource(
             $queryBuilder,
             'p.id',
             function ($row) {
@@ -71,7 +83,14 @@ class PaymentGridFactory implements GridFactoryInterface
                 return $row;
             }
         );
+    }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource $dataSource
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGridForDataSource(QueryBuilderDataSource $dataSource): Grid
+    {
         $grid = $this->gridFactory->create('paymentList', $dataSource);
         $grid->enableDragAndDrop(Payment::class);
 

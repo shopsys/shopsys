@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -37,12 +39,28 @@ class PromoCodeGridFactory implements GridFactoryInterface
      */
     public function create()
     {
+        $dataSource = $this->getDataSource();
+        return $this->getGridForDataSource($dataSource);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
+     */
+    protected function getDataSource(): DataSourceInterface
+    {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
             ->select('pc')
             ->from(PromoCode::class, 'pc');
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'pc.id');
+        return new QueryBuilderDataSource($queryBuilder, 'pc.id');
+    }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGridForDataSource(DataSourceInterface $dataSource): Grid
+    {
         $grid = $this->gridFactory->create('promoCodeList', $dataSource);
         $grid->setDefaultOrder('code');
         $grid->addColumn('code', 'pc.code', t('Code'), true);

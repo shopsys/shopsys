@@ -4,6 +4,8 @@ namespace Shopsys\FrameworkBundle\Model\Order\Status\Grid;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -47,14 +49,31 @@ class OrderStatusGridFactory implements GridFactoryInterface
      */
     public function create()
     {
+        $dataSource = $this->getDataSource();
+        return $this->getGridForDataSource($dataSource);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
+     */
+    protected function getDataSource(): DataSourceInterface
+    {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
             ->select('os, ost')
             ->from(OrderStatus::class, 'os')
             ->join('os.translations', 'ost', Join::WITH, 'ost.locale = :locale')
             ->setParameter('locale', $this->localization->getAdminLocale());
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'os.id');
+        return new QueryBuilderDataSource($queryBuilder, 'os.id');
+    }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
+     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGridForDataSource(DataSourceInterface $dataSource): Grid
+    {
         $grid = $this->gridFactory->create('orderStatusList', $dataSource);
         $grid->setDefaultOrder('name');
 

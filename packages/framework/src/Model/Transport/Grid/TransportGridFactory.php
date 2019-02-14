@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Transport\Grid;
 
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
@@ -58,11 +60,20 @@ class TransportGridFactory implements GridFactoryInterface
      */
     public function create()
     {
+        $dataSource = $this->getDataSource();
+        return $this->getGridForDataSource($dataSource);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
+     */
+    protected function getDataSource(): DataSourceInterface
+    {
         $queryBuilder = $this->transportRepository->getQueryBuilderForAll()
             ->addSelect('tt')
             ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
             ->setParameter('locale', $this->localization->getAdminLocale());
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
+        return new QueryBuilderWithRowManipulatorDataSource(
             $queryBuilder,
             't.id',
             function ($row) {
@@ -71,7 +82,14 @@ class TransportGridFactory implements GridFactoryInterface
                 return $row;
             }
         );
+    }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGridForDataSource(DataSourceInterface $dataSource): Grid
+    {
         $grid = $this->gridFactory->create('transportList', $dataSource);
         $grid->enableDragAndDrop(Transport::class);
 

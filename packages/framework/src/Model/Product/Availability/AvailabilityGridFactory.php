@@ -4,6 +4,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -46,14 +48,32 @@ class AvailabilityGridFactory implements GridFactoryInterface
      */
     public function create()
     {
+        $dataSource = $this->getDataSource();
+        return $this->getGridForDataSource($dataSource);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource
+     */
+    protected function getDataSource(): DataSourceInterface
+    {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
             ->select('a, at')
             ->from(Availability::class, 'a')
             ->join('a.translations', 'at', Join::WITH, 'at.locale = :locale')
             ->setParameter('locale', $this->localization->getAdminLocale());
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
 
+        return new QueryBuilderDataSource($queryBuilder, 'a.id');
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
+     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGridForDataSource(DataSourceInterface $dataSource): Grid
+    {
         $grid = $this->gridFactory->create('availabilityList', $dataSource);
         $grid->setDefaultOrder('dispatchTime');
 

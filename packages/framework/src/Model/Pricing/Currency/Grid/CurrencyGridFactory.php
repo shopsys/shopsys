@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -46,12 +48,29 @@ class CurrencyGridFactory implements GridFactoryInterface
      */
     public function create()
     {
+        $dataSource = $this->getDataSource();
+        return $this->getGridForDataSource($dataSource);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource
+     */
+    protected function getDataSource(): DataSourceInterface
+    {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
             ->select('c')
             ->from(Currency::class, 'c');
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'c.id');
+        return new QueryBuilderDataSource($queryBuilder, 'c.id');
+    }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
+     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGridForDataSource(DataSourceInterface $dataSource): Grid
+    {
         $grid = $this->gridFactory->create('currencyList', $dataSource);
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'c.name', t('Name'), true);

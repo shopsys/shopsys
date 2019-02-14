@@ -4,6 +4,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Unit;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -46,14 +48,30 @@ class UnitGridFactory implements GridFactoryInterface
      */
     public function create()
     {
+        $dataSource = $this->getDataSource();
+        return $this->getGridForDataSource($dataSource);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
+     */
+    protected function getDataSource(): DataSourceInterface
+    {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
             ->select('u, ut')
             ->from(Unit::class, 'u')
             ->join('u.translations', 'ut', Join::WITH, 'ut.locale = :locale')
             ->setParameter('locale', $this->localization->getAdminLocale());
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
+        return new QueryBuilderDataSource($queryBuilder, 'u.id');
+    }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGridForDataSource(DataSourceInterface $dataSource): Grid
+    {
         $grid = $this->gridFactory->create('unitList', $dataSource);
         $grid->setDefaultOrder('name');
 

@@ -4,6 +4,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -46,9 +48,46 @@ class ParameterGridFactory implements GridFactoryInterface
      */
     public function create()
     {
+        $dataSource = $this->getDataSource();
+        return $this->getGridForDataSource($dataSource);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource
+     */
+    protected function getDataSource(): QueryBuilderDataSource
+    {
+        $locales = $this->localization->getLocalesOfAllDomains();
+        $queryBuilder = $this->em->createQueryBuilder();
+        $queryBuilder
+            ->select('p, pt')
+            ->from(Parameter::class, 'p')
+            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->setParameter('locale', $this->localization->getAdminLocale());
+
+        foreach ($locales as $locale) {
+            if ($locale !== $this->localization->getAdminLocale()) {
+                $queryBuilder
+                    ->addSelect('pt_' . $locale)
+                    ->leftJoin('p.translations', 'pt_' . $locale, Join::WITH, 'pt_' . $locale . '.locale = :locale_' . $locale)
+                    ->setParameter('locale_' . $locale, $locale);
+            }
+        }
+
+        return new QueryBuilderDataSource($queryBuilder, 'p.id');
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
+     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
+     * @throws \Shopsys\FrameworkBundle\Model\Localization\Exception\InvalidLocaleException
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGridForDataSource(DataSourceInterface $dataSource): Grid
+    {
         $locales = $this->localization->getLocalesOfAllDomains();
         $adminLocale = $this->localization->getAdminLocale();
-        $grid = $this->gridFactory->create('parameterList', $this->getParametersDataSource());
+        $grid = $this->gridFactory->create('parameterList', $dataSource);
         $grid->setDefaultOrder('pt.name');
 
         if (count($locales) > 1) {
@@ -86,30 +125,5 @@ class ParameterGridFactory implements GridFactoryInterface
         $grid->setTheme('@ShopsysFramework/Admin/Content/Parameter/listGrid.html.twig');
 
         return $grid;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource
-     */
-    protected function getParametersDataSource()
-    {
-        $locales = $this->localization->getLocalesOfAllDomains();
-        $queryBuilder = $this->em->createQueryBuilder();
-        $queryBuilder
-            ->select('p, pt')
-            ->from(Parameter::class, 'p')
-            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocale());
-
-        foreach ($locales as $locale) {
-            if ($locale !== $this->localization->getAdminLocale()) {
-                $queryBuilder
-                    ->addSelect('pt_' . $locale)
-                    ->leftJoin('p.translations', 'pt_' . $locale, Join::WITH, 'pt_' . $locale . '.locale = :locale_' . $locale)
-                    ->setParameter('locale_' . $locale, $locale);
-            }
-        }
-
-        return new QueryBuilderDataSource($queryBuilder, 'p.id');
     }
 }

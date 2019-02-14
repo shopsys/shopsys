@@ -4,6 +4,8 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group\Grid;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -46,14 +48,30 @@ class PricingGroupGridFactory implements GridFactoryInterface
      */
     public function create()
     {
+        $dataSource = $this->getDataSource();
+        return $this->getGridForDataSource($dataSource);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
+     */
+    protected function getDataSource(): DataSourceInterface
+    {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
             ->select('pg')
             ->from(PricingGroup::class, 'pg')
             ->where('pg.domainId = :selectedDomainId')
             ->setParameter('selectedDomainId', $this->adminDomainTabsFacade->getSelectedDomainId());
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'pg.id');
+        return new QueryBuilderDataSource($queryBuilder, 'pg.id');
+    }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGridForDataSource(DataSourceInterface $dataSource): Grid
+    {
         $grid = $this->gridFactory->create('pricingGroupList', $dataSource);
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'pg.name', t('Name'), true);

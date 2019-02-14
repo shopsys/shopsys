@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Country\Grid;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
@@ -53,14 +54,31 @@ class CountryGridFactory implements GridFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(): Grid
+    public function create()
+    {
+        $dataSource = $this->getDataSource();
+        return $this->getGridForDataSource($dataSource);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource
+     */
+    protected function getDataSource(): DataSourceInterface
     {
         $queryBuilder = $this->countryRepository
             ->createSortedJoinedQueryBuilder($this->localization->getAdminLocale(), $this->domain->getId())
             ->addSelect('ct');
 
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'c.id');
+        return new QueryBuilderDataSource($queryBuilder, 'c.id');
+    }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
+     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGridForDataSource(DataSourceInterface $dataSource): Grid
+    {
         $grid = $this->gridFactory->create('CountryList', $dataSource);
 
         $grid->addColumn('name', 'ct.name', t('Name'), true);
