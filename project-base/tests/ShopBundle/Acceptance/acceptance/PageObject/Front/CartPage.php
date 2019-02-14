@@ -130,28 +130,36 @@ class CartPage extends AbstractPage
     }
 
     /**
-     * @param string $couponName
+     * @param string $promoCodeName
      */
-    public function applyCoupon($couponName)
+    public function applyPromoCode($promoCodeName)
     {
-        $couponField = $this->webDriver->findElement(WebDriverBy::cssSelector('#js-promo-code-input'));
-        $this->tester->fillFieldByElement($couponField, $couponName);
-        $this->tester->pressKeysByElement($couponField, WebDriverKeys::ENTER);
+        $promoCodeField = $this->webDriver->findElement(WebDriverBy::cssSelector('#js-promo-code-input'));
+        $this->tester->fillFieldByElement($promoCodeField, $promoCodeName);
+        $this->tester->pressKeysByElement($promoCodeField, WebDriverKeys::ENTER);
         $this->tester->waitForAjax();
     }
 
-    public function removeCoupon()
+    public function removePromoCode()
     {
-        $removeCouponButton = $this->webDriver->findElement(WebDriverBy::cssSelector('.box-promo-code__added__remove'));
-        $this->tester->clickByElement($removeCouponButton);
+        $removePromoCodeButton = $this->webDriver->findElement(WebDriverBy::cssSelector('.box-promo-code__added__remove'));
+        $this->tester->clickByElement($removePromoCodeButton);
         $this->tester->waitForAjax();
     }
 
     /**
-     * @param string $string
+     * @return \Facebook\WebDriver\WebDriverElement
      */
-    public function assertCouponBoxContainsText($string)
+    public function canSeePromoCodeSubmitButtonElement()
     {
-        $this->tester->see($string, WebDriverBy::cssSelector('.box-promo-code'));
+        return $this->tester->seeElement(WebDriverBy::cssSelector('#js-promo-code-submit-button'));
+    }
+
+    /**
+     * @return \Facebook\WebDriver\WebDriverElement
+     */
+    public function cantSeePromoCodeSubmitButtonElement()
+    {
+        return $this->tester->cantSeeElement(WebDriverBy::cssSelector('#js-promo-code-submit-button'));
     }
 }

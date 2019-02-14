@@ -220,7 +220,7 @@ class CartCest
      * @param \Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\ProductDetailPage $productDetailPage
      * @param \Tests\ShopBundle\Test\Codeception\AcceptanceTester $me
      */
-    public function testApplyingCouponInCart(
+    public function testPromoCodeFlowInCart(
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me
@@ -234,14 +234,14 @@ class CartCest
 
         $me->amOnPage('/cart/');
 
-        $cartPage->applyCoupon('test');
+        $cartPage->applyPromoCode('test');
 
-        $cartPage->assertCouponBoxContainsText('Your discount: 10%');
+        $cartPage->cantSeePromoCodeSubmitButtonElement();
         $cartPage->assertTotalPriceWithVat('CZK122.00');
 
-        $cartPage->removeCoupon();
+        $cartPage->removePromoCode();
 
-        $cartPage->assertCouponBoxContainsText('Discount code:');
+        $cartPage->canSeePromoCodeSubmitButtonElement();
         $cartPage->assertTotalPriceWithVat('CZK136.00');
     }
 }
