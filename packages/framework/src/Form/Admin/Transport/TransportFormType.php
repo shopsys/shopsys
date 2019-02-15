@@ -4,12 +4,14 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Transport;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\PriceTableType;
+use Shopsys\FrameworkBundle\Form\Transformers\NumericToMoneyTransformer;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
@@ -17,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -170,6 +173,11 @@ class TransportFormType extends AbstractType
                 'currencies' => $this->currencyFacade->getAllIndexedById(),
                 'base_prices' => $transport !== null ? $this->transportFacade->getIndependentBasePricesIndexedByCurrencyId($transport) : [],
             ]);
+        $priceTable = $builderPricesGroup->get('pricesByCurrencyId');
+        foreach ($priceTable->all() as $price) {
+            /** @var \Symfony\Component\Form\FormBuilderInterface $price */
+            $price->addModelTransformer(new NumericToMoneyTransformer(6));
+        }
 
         $builder
             ->add($builderBasicInformationGroup)

@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -173,9 +174,9 @@ class TransportFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param string[] $pricesByCurrencyId
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money[] $pricesByCurrencyId
      */
-    protected function updateTransportPrices(Transport $transport, $pricesByCurrencyId)
+    protected function updateTransportPrices(Transport $transport, array $pricesByCurrencyId)
     {
         foreach ($this->currencyFacade->getAll() as $currency) {
             $price = $pricesByCurrencyId[$currency->getId()];

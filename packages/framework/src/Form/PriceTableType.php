@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Validation;
 
 class PriceTableType extends AbstractType
 {
@@ -29,10 +30,10 @@ class PriceTableType extends AbstractType
                     'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter price']),
-                        new Constraints\GreaterThanOrEqual([
-                            'value' => 0,
-                            'message' => 'Price must be greater or equal to {{ compared_value }}',
-                        ]),
+//                        new Constraints\GreaterThanOrEqual([
+//                            'value' => 0,
+//                            'message' => 'Price must be greater or equal to {{ compared_value }}',
+//                        ]),
                     ],
                 ]);
         }

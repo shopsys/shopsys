@@ -2,6 +2,7 @@
 
 namespace Tests\ShopBundle\Functional\Model\Pricing;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\DataFixtures\Demo\CurrencyDataFixture;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
@@ -105,7 +106,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $transportData = $transportDataFactory->create();
         $transportData->name = ['cs' => 'name'];
         $transportData->description = ['cs' => 'desc'];
-        $transportData->pricesByCurrencyId = [$currency1->getId() => $inputPriceWithVat, $currency2->getId() => $inputPriceWithVat];
+        $transportData->pricesByCurrencyId = [$currency1->getId() => Money::fromValue($inputPriceWithVat), $currency2->getId() => Money::fromValue($inputPriceWithVat)];
         $transportData->vat = $vat;
         /** @var \Shopsys\ShopBundle\Model\Transport\Transport $transport */
         $transport = $transportFacade->create($transportData);
@@ -180,7 +181,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
 
         $transportData = $transportDataFactory->create();
         $transportData->name = ['cs' => 'name'];
-        $transportData->pricesByCurrencyId = [$currency1->getId() => $inputPriceWithoutVat, $currency2->getId() => $inputPriceWithoutVat];
+        $transportData->pricesByCurrencyId = [$currency1->getId() => Money::fromValue($inputPriceWithoutVat), $currency2->getId() => Money::fromValue($inputPriceWithoutVat)];
         $transportData->vat = $vat;
         /** @var \Shopsys\ShopBundle\Model\Transport\Transport $transport */
         $transport = $transportFacade->create($transportData);
