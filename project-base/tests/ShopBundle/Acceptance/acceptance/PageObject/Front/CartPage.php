@@ -142,7 +142,7 @@ class CartPage extends AbstractPage
 
     public function removePromoCode()
     {
-        $removePromoCodeButton = $this->webDriver->findElement(WebDriverBy::cssSelector('.box-promo-code__added__remove'));
+        $removePromoCodeButton = $this->webDriver->findElement(WebDriverBy::cssSelector('#js-promo-code-remove-button'));
         $this->tester->clickByElement($removePromoCodeButton);
         $this->tester->waitForAjax();
     }
@@ -158,8 +158,8 @@ class CartPage extends AbstractPage
     /**
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    public function cantSeePromoCodeSubmitButtonElement()
+    public function canSeePromoCodeRemoveButtonElement()
     {
-        return $this->tester->cantSeeElement(WebDriverBy::cssSelector('#js-promo-code-submit-button'));
+        return $this->tester->canSeeElement(WebDriverBy::cssSelector('#js-promo-code-remove-button'));
     }
 }

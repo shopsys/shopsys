@@ -236,7 +236,7 @@ class CartCest
 
         $cartPage->applyPromoCode('test');
 
-        $cartPage->cantSeePromoCodeSubmitButtonElement();
+        $cartPage->canSeePromoCodeRemoveButtonElement();
         $cartPage->assertTotalPriceWithVat('CZK122.00');
 
         $cartPage->removePromoCode();
