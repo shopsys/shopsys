@@ -506,7 +506,7 @@ msgid "Create pricing group"
 msgstr "Vytvořit cenovou skupinu"
 
 msgid "Create promo code"
-msgstr "Vytvořit slevový kupón"
+msgstr "Vytvořit slevový kód"
 
 msgid "Create record"
 msgstr "Vytvořit záznam"
@@ -722,7 +722,7 @@ msgid "Do you really want to remove this product?"
 msgstr "Opravdu chcete odstranit toto zboží?"
 
 msgid "Do you really want to remove this promo code?"
-msgstr "Opravdu chcete odstranit tento slevový kupón?"
+msgstr "Opravdu chcete odstranit tento slevový kód?"
 
 msgid "Do you really want to remove this script?"
 msgstr "Opravdu chcete odstranit tento skript?"
@@ -1388,7 +1388,7 @@ msgid "No product found."
 msgstr "Nebylo nalezeno žádné zboží."
 
 msgid "No promo codes found. You have to create some first."
-msgstr "Nebyly nalezeny žádné slevové kupóny. Nejprve musíte nějaký vytvořit."
+msgstr "Nebyly nalezeny žádné slevové kódy. Nejprve musíte nějaký vytvořit."
 
 msgid "No records found."
 msgstr "Nebyly nalezeny žádné záznamy."
@@ -1706,13 +1706,13 @@ msgid "Products overview"
 msgstr "Přehled zboží"
 
 msgid "Promo code"
-msgstr "Slevový kupón"
+msgstr "Slevový kód"
 
 msgid "Promo code <strong>{{ code }}</strong> deleted."
-msgstr "Slevový kupón <strong>{{ code }}</strong> byl smazán"
+msgstr "Slevový kód <strong>{{ code }}</strong> byl smazán"
 
 msgid "Promo codes"
-msgstr "Slevové kupóny"
+msgstr "Slevové kódy"
 
 msgid "Published data"
 msgstr "Zveřejněné údaje"
@@ -1868,7 +1868,7 @@ msgid "Selected product doesn't exist."
 msgstr "Zvolený produkt neexistuje."
 
 msgid "Selected promo code doesn't exist."
-msgstr "Zvolený slevový kupón neexistuje."
+msgstr "Zvolený slevový kód neexistuje."
 
 msgid "Selected script doesn't exist."
 msgstr "Zvolený skript neexistuje"
@@ -2216,7 +2216,7 @@ msgid "Value"
 msgstr "Hodnota"
 
 msgid "Value of bought products with VAT after application of all discounts and promo codes without price of shipping and payment"
-msgstr "Jde o hodnotu nakoupeného zboží s DPH po uplatnění všech slev a kupónů bez hodnoty dopravy a platby"
+msgstr "Jde o hodnotu nakoupeného zboží s DPH po uplatnění všech slev a slevových kódú bez hodnoty dopravy a platby"
 
 msgid "Variant"
 msgstr "Varianta"
@@ -2411,7 +2411,7 @@ msgid "products"
 msgstr "zboží"
 
 msgid "promo codes"
-msgstr "slevové kupóny"
+msgstr "slevové kódy"
 
 msgid "records"
 msgstr "záznamů"
