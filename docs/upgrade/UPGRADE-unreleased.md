@@ -8,11 +8,11 @@ There you can find links to upgrade notes for other versions too.
 ## [shopsys/framework]
 ### Application
 - naming of promo code and discount code was unified ([#844](https://github.com/shopsys/shopsys/pull/844)) 
-    - dump translations using `php phing dump-translations` and fill in the translations based on the changes from pull request
     - rename occurrences of `discount code` into `promo code` based on the changes from pull request in following files
         - `src/Shopsys/ShopBundle/Controller/Front/PromoCodeController.php`
         - `src/Shopsys/ShopBundle/Resources/scripts/frontend/promoCode.js`
         - `src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/PromoCode/index.html.twig`
+    - dump translations using `php phing dump-translations` and fill in the translations based on the changes from pull request
 
 ### Tools
 - *(low priority)* add `product-search-export-products` as a dependency of `build-demo` phing target in your `build.xml`
