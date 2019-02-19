@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
@@ -137,6 +138,44 @@ class CartFacadeTest extends TransactionFunctionalTestCase
         $cartItems = $cart->getItems();
 
         $this->assertArrayHasSameElements([$cartItem2], $cartItems);
+    }
+
+    /**
+     * @dataProvider productCartDataProvider
+     * @param int $productId
+     * @param bool $cartShouldBeNull
+     */
+    public function testCartNotExistIfNoListableProductIsInCart(int $productId, bool $cartShouldBeNull): void
+    {
+        $cartFacade = $this->getContainer()->get(CartFacade::class);
+
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId);
+
+        $cart = $cartFacade->getCartOfCurrentCustomerCreateIfNotExists();
+        $cartItem = new CartItem($cart, $product, 1, 10);
+        $cart->addItem($cartItem);
+
+        $this->getEntityManager()->persist($cartItem);
+        $this->getEntityManager()->flush();
+
+        $this->assertFalse($cart->isEmpty(), 'Cart should not be empty');
+
+        $cart = $cartFacade->findCartOfCurrentCustomer();
+
+        if ($cartShouldBeNull) {
+            $this->assertNull($cart);
+        } else {
+            $this->assertEquals(1, $cart->getItemsCount());
+        }
+    }
+
+    public function productCartDataProvider()
+    {
+        return [
+            ['productId' => 1, 'cartShouldBeNull' => false],
+            ['productId' => 34, 'cartShouldBeNull' => true], // not listable product
+
+        ];
     }
 
     /**
