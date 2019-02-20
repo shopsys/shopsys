@@ -1,9 +1,9 @@
 # Working with Multiple Cron Instances
 This cookbook will help you to set up independent processing of [cron jobs](/docs/introduction/cron.md).
-We learn, how to work with multiple cron instances, how to register a new instance for modules and how to run them.
+We will learn, how to work with multiple cron instances, how to register a new instance for modules and how to run them.
 
 Let's presume, we want to run import of products, created for [Basic Data Import](./basic-data-import.md).
-But this import takes some time and we do not want to block processing of the other cron modules.
+But this import might take some time and we do not want to block processing of the other cron modules.
 
 ## Configuration
 When you register cron job in your configuration with tags mandatory for cron module, you can add the optional tag `instanceName`,
@@ -56,6 +56,8 @@ default
  php bin/console shopsys:cron --module="Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule" --instance-name=default
 ```
 
+*Note: More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+
 # Running cron jobs manually
 We now can run any cron jobs manually by running `php phing cron`.
 And because we have several cron instances registered, job asks what cron instance should be run.
@@ -63,7 +65,7 @@ And because we have several cron instances registered, job asks what cron instan
 *Note: If only one instance is registered, no question is asked and this instance will run immediately.*
 
 # Running cron jobs automatically
-To be able to run cron instances automatically, we first have to create new Phing targets.
+To be able to run cron instances automatically, we first have to create new Phing targets in `build.xml` configuration file.
 These targets have to be able to run without asking any interactive questions (`--instance-name` argument do the trick).
 
 New targets would look like
