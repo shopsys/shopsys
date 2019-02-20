@@ -66,7 +66,7 @@ And because we have several cron instances registered, job asks what cron instan
 
 # Running cron jobs automatically
 To be able to run cron instances automatically, we first have to create new Phing targets in `build.xml` configuration file.
-These targets have to be able to run without asking any interactive questions (`--instance-name` argument do the trick).
+These targets have to be able to run without asking any interactive questions (`--instance-name` argument does the trick).
 
 New targets would look like
 
