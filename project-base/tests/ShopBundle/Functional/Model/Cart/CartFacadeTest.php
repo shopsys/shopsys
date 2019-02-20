@@ -7,7 +7,6 @@ use Shopsys\FrameworkBundle\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
@@ -148,11 +147,12 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     public function testCartNotExistIfNoListableProductIsInCart(int $productId, bool $cartShouldBeNull): void
     {
         $cartFacade = $this->getContainer()->get(CartFacade::class);
+        $cartItemFactory = $this->getContainer()->get(CartItemFactory::class);
 
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId);
 
         $cart = $cartFacade->getCartOfCurrentCustomerCreateIfNotExists();
-        $cartItem = new CartItem($cart, $product, 1, 10);
+        $cartItem = $cartItemFactory->create($cart, $product, 1, 10);
         $cart->addItem($cartItem);
 
         $this->getEntityManager()->persist($cartItem);
