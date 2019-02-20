@@ -186,13 +186,12 @@ For example:
 </target>
 ```
 
-You can read more about cron instances in [the separate article](/docs/introduction/multiple-cron.md).
+For more information, see [Working with Multiple Cron Instances](/docs/cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](/docs/introduction/cron.md).
 
 #### cron-list
-Lists all available background jobs.
+Lists all available background jobs. If there is more than one cron instance registered, jobs are grouped by instance.
 
-If there is more than one cron instance registered, jobs are grouped by instance.
-You can read more about cron instances in [the separate article](/docs/introduction/multiple-cron.md).
+For more information, see [Working with Multiple Cron Instances](/docs/cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](/docs/introduction/cron.md).
 
 #### grunt
 Builds CSS from LESS via Grunt.
