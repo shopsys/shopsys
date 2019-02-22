@@ -65,6 +65,7 @@ for instance:
     - if you had implemented your individual directories in `CreateApplicationDirectoriesCommand`, delete your extension of a class and add the directories into `app/config/directories.yml` and fill them into sections, you can read more about sections [here](https://github.com/shopsys/shopsys/blob/v7.0.0-beta6/docs/intruduction/directories.yml)
 - if you were using `oneup/flysystembundle` for using different adapter than the local one, you must now implement `FilesystemFactoryInterface` and init the adapter by yourself ([#730](https://github.com/shopsys/shopsys/pull/730))
 - *(low priority)* delete dependency on `oneup/flysystembundle` from your `composer.json` ([#730](https://github.com/shopsys/shopsys/pull/730))
+    - delete `app/config/packages/oneup_flysystem.yml`
 - remove usages of inherited `OrderItem` classes ([#715](https://github.com/shopsys/shopsys/pull/715))
     - replace usages of `OrderProduct`, `OrderPayment`, and `OrderTransport` with common `OrderItem`
         - use `isType<type>()` method instead of `instanceof`
@@ -80,6 +81,8 @@ for instance:
         - `OrderDataFactory`
         - `OrderItemFacade`
         - `OrderFacade`
+    - add a extension for `OrderItemData` and `OrderItemDataFactory` and register them in `services.yml`
+        - for inspiration follow changes done in [pull request](https://github.com/shopsys/shopsys/pull/715/files)
     - remove non-existing test cases from `EntityExtensionTest`
         - remove `ExtendedOrder*` classes
         - remove calling `doTestExtendedEntityInstantiation` with classes that are removed
@@ -128,6 +131,12 @@ for instance:
         - it has four new methods for working with `Cart`
             - methods `findCartOfCurrentCustomer` and `findCartByCustomerIdentifier` will return `Cart` if it contains at least one `CartItem` or `null` if it is empty
             - methods `getCartOfCurrentCustomerCreateIfNotExists` and `getCartByCustomerIdentifierIfNotExists` will return `Cart` if it contains at least one `CartItem` or create one if it does not
+            - instead `getCartOfCurrentCustomer` use `getCartOfCurrentCustomerCreateIfNotExists`
+        - set default locale for test environment, add a `app/config/packages/test/prezent_doctrine_translatable.yml` with content
+            ```
+            prezent_doctrine_translatable:
+                fallback_locale: en
+            ```
         - the implementation of methods `addProductToCart`, `changeQuantities`, `deleteCartItem`, `getQuantifiedProductsOfCurrentCustomerIndexedByCartItemId` and `deleteOldCarts` has been changed so revise them if you extended them
         - method `cleanCart` has been removed, use method `deleteCart` instead
     - `CartMigrationFacade` has been refactored, so change your usages appropriately:
@@ -159,7 +168,6 @@ for instance:
             - use new methods `getAllEnabledOnDomain` and `getAllEnabledOnCurrentDomain` (methods returns only enabled countries)
             - change usages in `BillingAddressFormType`, `DeliveryAddressFormType` and `PersonalInfoFormType` in your implementation
             - fix `CountryFacade` mock in `PersonalInfoFormTypeTest` – mock method `getAllEnabledOnDomain` instead of `getAllByDomainId`
-    - fix usages of method `Country::getName` as it now needs proper locale as an argument
     - change usages of property `name` in `CountryData` to array because it is now localized
     - remove usages of method `CountryRepository::getAllByDomainId` – use `CountryRepository::getAllEnabledByDomainIdWithLocale` instead
     - if you have extended `CountryDataFactory` revise your changes as countries are now localized and domain dependent
@@ -170,6 +178,7 @@ for instance:
     - if you have extended `CountryGridFactory`, revise your changes because class changed its namespace
     - if you have extended `CountryFormType`, revise your changes – new fields are available
     - if you have extended `CountryController` revise your changes – `new` and `edit` actions were added
+    - constant `CountryDataFixture::COUNTRY_CZECH_REPUBLIC_1` was renamed to `CountryDataFixture::COUNTRY_CZECH_REPUBLIC`
 - if you have extended `Localization` class, you have to add type-hints to extended methods because they were added in the parent class ([#806](https://github.com/shopsys/shopsys/pull/806))
     - if you have extended method `Localization::getAdminLocale()` only to have administration in a different language than english, you can delete it and set parameter `shopsys.admin_locale` in your `parameters.yml` file instead
 - fixed JS validation of forms in popup windows ([#782](https://github.com/shopsys/shopsys/pull/782))
