@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
+use Shopsys\FrameworkBundle\Model\Mail\Mailer;
 use Symfony\Bridge\Monolog\Logger;
 
 class CronFacade
@@ -27,18 +28,26 @@ class CronFacade
     protected $cronModuleFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Mail\Mailer
+     */
+    protected $mailer;
+
+    /**
      * @param \Symfony\Bridge\Monolog\Logger $logger
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
+     * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
      */
     public function __construct(
         Logger $logger,
         CronConfig $cronConfig,
-        CronModuleFacade $cronModuleFacade
+        CronModuleFacade $cronModuleFacade,
+        Mailer $mailer
     ) {
         $this->logger = $logger;
         $this->cronConfig = $cronConfig;
         $this->cronModuleFacade = $cronModuleFacade;
+        $this->mailer = $mailer;
     }
 
     /**
@@ -129,6 +138,8 @@ class CronFacade
             $cronModuleService,
             $this->cronModuleFacade->isModuleSuspended($cronModuleConfig)
         );
+
+        $this->mailer->flushSpoolQueue();
 
         if ($status === CronModuleExecutor::RUN_STATUS_OK) {
             $this->cronModuleFacade->unscheduleModule($cronModuleConfig);
