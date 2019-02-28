@@ -23,28 +23,26 @@ For more info see the article [Basics About Package Architecture](./docs/introdu
 ### Current State
 
 Shopsys Framework is fully functional e-commerce platform with all basic functionality all e-commerce sites needs:
-* product catalogue
-* registered customers
-* basic orders management
-* back-end administration
-* front-end full-text search and product filtering
+* Product catalogue
+* Registered customers
+* Basic orders management
+* Back-end administration
+* Front-end [full-text search](./docs/introduction/product-search-via-elasticsearch.md) and product filtering
 * 3-step ordering process
-* basic CMS
-* support for several currencies, languages, and domains
-* full friendly URL for main entities
+* Basic CMS
+* Support for several currencies, [languages, and domains](./docs/introduction/domain-multidomain-multilanguage.md)
+* Full friendly URL for main entities
 * Performance optimization through Elasticsearch, Redis, PostgreSQL
 * Full core upgradability
 * GDPR compliance
 * Preparation for scalability
-* Manifest for orchestration via Kubernetes
+* Manifest for orchestration via [Kubernetes](./docs/kubernetes/introduction-to-kubernetes.md) and [deployment to Google Cloud via Terraform](./docs/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform.md)
 
-### Further Plan for Stable Release (February 2019)
+### Plans for next releases
 
-* More performance optimizations
+* Further performance optimizations
+* Modularization of pricing
 * Modulestore with first modules
-* Asynchronous Processing (RabbitMQ)
-* Best practice manuals
-* Basic API
 
 ## Sites Built on Shopsys Framework
 List of typical projects built on previous versions of Shopsys Framework:
@@ -65,7 +63,7 @@ which is fully ready as the base for building your Shopsys Framework project.
 
 We recommend to choose **installation via Docker** because it is the easiest and fastest way to start using Shopsys Framework.
 Docker contains complete development environment necessary for running your application.
-In the future we want to add new technologies to Shopsys Framework (e.g. ElasticSearch).
+In the future we want to add new technologies to Shopsys Framework.
 **Updating your development environment to use these technologies will be very easy with Docker**
 because such an update will be done just by running `docker-compose build`.
 And that is all!
@@ -74,6 +72,8 @@ For more detailed instructions, follow one of the installation guides:
 
 * [Installation via Docker (recommended)](docs/installation/installation-using-docker.md)
 * [Native installation](docs/installation/native-installation.md)
+* [Deployment to Google Cloud](docs/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform.md)
+* [Installation on production server](docs/installation/installation-using-docker-on-production-server.md)
 
 ## Documentation
 For documentation of Shopsys Framework itself, see [Shopsys Framework Knowledge Base](./docs/index.md).
