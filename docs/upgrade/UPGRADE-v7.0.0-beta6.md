@@ -178,7 +178,7 @@ for instance:
     - if you have extended `CountryGridFactory`, revise your changes because class changed its namespace
     - if you have extended `CountryFormType`, revise your changes – new fields are available
     - if you have extended `CountryController` revise your changes – `new` and `edit` actions were added
-    - constant `CountryDataFixture::COUNTRY_CZECH_REPUBLIC_1` was renamed to `CountryDataFixture::COUNTRY_CZECH_REPUBLIC`
+    - rename `CountryDataFixture::COUNTRY_CZECH_REPUBLIC_1` constant to `CountryDataFixture::COUNTRY_CZECH_REPUBLIC`
 - if you have extended `Localization` class, you have to add type-hints to extended methods because they were added in the parent class ([#806](https://github.com/shopsys/shopsys/pull/806))
     - if you have extended method `Localization::getAdminLocale()` only to have administration in a different language than english, you can delete it and set parameter `shopsys.admin_locale` in your `parameters.yml` file instead
 - fixed JS validation of forms in popup windows ([#782](https://github.com/shopsys/shopsys/pull/782))
