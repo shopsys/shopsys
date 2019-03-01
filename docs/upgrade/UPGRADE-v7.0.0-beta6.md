@@ -81,7 +81,7 @@ for instance:
         - `OrderDataFactory`
         - `OrderItemFacade`
         - `OrderFacade`
-    - add a extension for `OrderItemData` and `OrderItemDataFactory` and register them in `services.yml`
+    - add an extension for `OrderItemData` and `OrderItemDataFactory` and register them in `services.yml`
         - for inspiration follow changes done in [pull request](https://github.com/shopsys/shopsys/pull/715/files)
     - remove non-existing test cases from `EntityExtensionTest`
         - remove `ExtendedOrder*` classes
