@@ -167,6 +167,7 @@ for instance:
             - use new methods `getAllEnabledOnDomain` and `getAllEnabledOnCurrentDomain` (methods returns only enabled countries)
             - change usages in `BillingAddressFormType`, `DeliveryAddressFormType` and `PersonalInfoFormType` in your implementation
             - fix `CountryFacade` mock in `PersonalInfoFormTypeTest` – mock method `getAllEnabledOnDomain` instead of `getAllByDomainId`
+            - fix all usages of method `Country::getName` if exist, as it now needs proper locale as an argument
     - change usages of property `name` in `CountryData` to array because it is now localized
     - remove usages of method `CountryRepository::getAllByDomainId` – use `CountryRepository::getAllEnabledByDomainIdWithLocale` instead
     - if you have extended `CountryDataFactory` revise your changes as countries are now localized and domain dependent
