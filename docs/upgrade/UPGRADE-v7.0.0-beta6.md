@@ -81,7 +81,7 @@ for instance:
         - `OrderDataFactory`
         - `OrderItemFacade`
         - `OrderFacade`
-    - add an extension for `OrderItemData` and `OrderItemDataFactory` and register them in `services.yml`
+    - *(low priority)* add an extension for `OrderItemData` and `OrderItemDataFactory` and register them in `services.yml`
     - remove non-existing test cases from `EntityExtensionTest`
         - remove `ExtendedOrder*` classes
         - remove calling `doTestExtendedEntityInstantiation` with classes that are removed
