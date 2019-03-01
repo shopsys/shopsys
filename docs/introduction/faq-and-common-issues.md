@@ -19,7 +19,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [Are some periodic tasks part of the Shopsys Framework (cron)?](#are-some-periodic-tasks-part-of-the-shopsys-framework-cron)
 - [Why are you using entity data instead of entities for Symfony forms?](#why-are-you-using-entity-data-instead-of-entities-for-symfony-forms)
 - [What is the configuration file `services_test.yml` good for?](#what-is-the-configuration-file-services_testyml-good-for)
-- [Why are e-mails not sent immediately but at the end of the script](#why-are-e-mails-not-sent-immediately-but-at-the-end-of-the-script)
+- [Why are e-mails not sent immediately but at the end of the script](#why-are-e-mails-sent-before-end-of-the-script-and-not-immediately)
 
 ## What are the phing targets?
 Every phing target is a task that can be executed simply by `php phing <target-name>` command.
