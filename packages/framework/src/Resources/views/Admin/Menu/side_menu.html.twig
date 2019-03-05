@@ -74,7 +74,7 @@
             {%- set classes = ['side-menu__submenu__item'] -%}
         {%- endif -%}
         {%- if matcher.isCurrent(item) or matcher.isAncestor(item, options.matchingDepth) -%}
-            {%- set classes = classes|merge([classes[0] ~ '--active']) -%}
+            {%- set classes = classes|merge([classes[0] ~ '--active open']) -%}
         {%- endif -%}
         {%- if superadmin %}
             {%- set classes = classes|merge([classes[0] ~ '--superadmin']) -%}

@@ -8,8 +8,11 @@
             var $items = $sideMenu.filterAllNodes('.js-side-menu-item');
 
             $items.click(function () {
+                if (!$(this).hasClass('open')) {
+                    $(this).addClass('open');
+                }
+
                 $(this).filterAllNodes('.js-side-menu-submenu').show();
-                $(this).addClass('open');
             });
         };
     };
