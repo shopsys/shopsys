@@ -8,7 +8,7 @@ The cart is the first step of order and can be in these states:
 ## Add to cart
 - the product can be added to cart from the product detail or from the product listing (except for the product with variants)
 ## Cart overview in header
-- shows the amount and total price with VAT of products in the cart 
+- shows the amount and total price with VAT of products in the cart
 - shows the information about empty cart
 ## Page cart
 ### Price
