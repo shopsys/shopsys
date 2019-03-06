@@ -16,7 +16,6 @@
 
 @import "selectize";
 
-@selectize-height-control: 32px;
 @selectize-color-dropdown-item-active: @color-message-info;
 @selectize-color-dropdown-item-active-text: @color-base;
 @selectize-color-highlight: @color-message-info;
@@ -24,8 +23,8 @@
 @selectize-right-padding-input: 25px;
 
 .selectize-control {
-    height: @selectize-height-control;
-    line-height: @selectize-height-control;
+    height: @input-height;
+    line-height: @input-height;
     max-width: 100%;
     padding: 0;
 
@@ -45,8 +44,8 @@
     overflow: hidden;
 
     > * {
-        line-height: calc(~"@{selectize-height-control} - 2 * @{selectize-padding-input}");
-        height: calc(~"@{selectize-height-control} - 2 * @{selectize-padding-input}");
+        line-height: calc(~"@{input-height} - 2 * @{selectize-padding-input}");
+        height: calc(~"@{input-height} - 2 * @{selectize-padding-input}");
         overflow: hidden;
     }
 
