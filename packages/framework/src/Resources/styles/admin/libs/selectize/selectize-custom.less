@@ -16,27 +16,48 @@
 
 @import "selectize";
 
+@selectize-height-control: 32px;
 @selectize-color-dropdown-item-active: @color-message-info;
 @selectize-color-dropdown-item-active-text: @color-base;
 @selectize-color-highlight: @color-message-info;
+@selectize-padding-input: 6px;
+@selectize-right-padding-input: 25px;
 
 .selectize-control {
-    height: 32px;
-    line-height: 32px;
+    height: @selectize-height-control;
+    line-height: @selectize-height-control;
     max-width: 100%;
     padding: 0;
 
     border: none;
 
     box-shadow: none;
+
+    &.input {
+        width: auto;
+        min-width: @input-width;
+    }
 }
 
 .selectize-input {
-    padding: 6px;
+    height: 100%;
+    padding: @selectize-padding-input @selectize-right-padding-input @selectize-padding-input @selectize-padding-input;
+    overflow: hidden;
+
+    > * {
+        line-height: calc(~"@{selectize-height-control} - 2 * @{selectize-padding-input}");
+        height: calc(~"@{selectize-height-control} - 2 * @{selectize-padding-input}");
+        overflow: hidden;
+    }
+
+    input {
+        display: none !important;
+    }
 }
 
 .selectize-control.single .selectize-input::after {
     right: 6px;
+    margin-top: 0;
 }
 
 .selectize-dropdown {
