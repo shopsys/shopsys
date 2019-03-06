@@ -106,4 +106,4 @@ E.g., by default, all our services are defined as private. However, in tests, we
 ## Why are e-mails sent before end of the script and not immediately
 Project uses `SwiftMailer` package for sending e-mails and defaultly it has set `spool queue` that stores all mails into `memory` until the script execution is at the end.  
 However, based on implementations of many projects, project gained functionality that releases spool after the `*cronModule` run is ended in case of `cron` phing target that runs all cron modules at once.
-It is also possible to turn the spool off by removing it from [swiftmailer.yml](../../project-base/app/config/packages/swiftmailer.yml) or changing the behavior of storing e-mails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html).
+It is also possible to turn the spool off by removing it from [swiftmailer.yml](../../project-base/app/config/packages/swiftmailer.yml) or changing the behavior of storing e-mails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html) or [snc_redis docs](https://github.com/snc/SncRedisBundle/blob/master/Resources/doc/index.md#swiftmailer-spooling).

@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
+use Swift_TransportException;
 use Symfony\Bridge\Monolog\Logger;
 
 class CronFacade
@@ -139,7 +140,11 @@ class CronFacade
             $this->cronModuleFacade->isModuleSuspended($cronModuleConfig)
         );
 
-        $this->mailer->flushSpoolQueue();
+        try {
+            $this->mailer->flushSpoolQueue();
+        } catch (Swift_TransportException $exception) {
+            $this->logger->error(sprintf('Exception occurred while flushing email queue: %s', $exception->getMessage()));
+        }
 
         if ($status === CronModuleExecutor::RUN_STATUS_OK) {
             $this->cronModuleFacade->unscheduleModule($cronModuleConfig);
