@@ -9,7 +9,7 @@
 
             $items.click(function () {
                 if (!$(this).hasClass('open')) {
-                    $(this).addClass('open');
+                    $(this).addClass('open animated');
                 }
 
                 $(this).filterAllNodes('.js-side-menu-submenu').show();
