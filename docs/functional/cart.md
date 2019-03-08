@@ -12,7 +12,7 @@ This article describes functional behavior of a cart. Article shortly summarize 
 ### URL
 - URL has format youreshopurl/cart (in English version)
 ### The cart can be in these states:
-- **empty** - nothing was added to the cart yet, cart shows an image of empty cart and  the customer is informed that the cart is empty 
+- **empty** - nothing was added to the cart yet, cart shows an image of empty cart and  the customer is informed that the cart is empty
 - **contains products** - the customer can see a list of products which have been added to the cart, customer can change quantity of products or remove product from the cart - these changes are modified by Ajax
 ### Price
 - total price including VAT is automatically recalculated (without page refresh) if the product is removed or the amount is changed
