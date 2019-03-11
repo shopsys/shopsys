@@ -3,7 +3,7 @@ This article describes functional behavior of a cart. Article shortly summarizes
 
 ## Add to cart
 - a user can add the product to cart from the product detail or from the product listing (except for the product with variants as described in [another article](./behavior-of-product-variants.md))
-- after adding the product to the cart, a pop up window is displayed. 
+- after adding the product to the cart, a pop up window is displayed.
 There is information about adding the product to the cart together with the button “Go to cart”.
 When the product is no longer available there is information about that in pop up window.
 ## Cart overview in header
