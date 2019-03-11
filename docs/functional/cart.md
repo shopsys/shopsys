@@ -1,5 +1,5 @@
 # Cart
-This article describes functional behavior of a cart. Article shortly summarizes its discount codes, behavior of cart content when user logs in and others.
+This article describes functional behavior of a cart. Article shortly summarizes its promo codes, behavior of cart content when user logs in and others.
 
 ## Add to cart
 - a user can add the product to cart from the product detail or from the product listing (except for the product with variants as described in [another article](./behavior-of-product-variants.md))
@@ -18,11 +18,11 @@ When the product is no longer available there is information about that in pop u
 - **contains products** - the customer can see a list of products which have been added to the cart, customer can change quantity of products or remove product from the cart - these changes are modified by Ajax
 ### Price
 - total price including VAT is automatically recalculated (without page refresh) if the product is removed or the amount is changed
-### Discount coupon
-- the input for entering the discount code is in the cart on the Front-end
-- after entering the discount code in the cart, total price with VAT is recalculated using the button "Apply"
-- the coupon is applied for every cart item individually so the number of items doubles
-- discount code can be removed from the cart and total price with VAT will be recalculated automatically
+### Promo code
+- the input for entering the promo code is in the cart on the Front-end
+- after entering the promo code in the cart, total price with VAT is recalculated using the button "Apply"
+- the coupon is applied for every cart item individually
+- promo code can be removed from the cart and total price with VAT will be recalculated automatically
 ## Order flow
 - the cart is the first step of order followed by a choice of shipping and payment
 ## Persistence
