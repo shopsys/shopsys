@@ -21,7 +21,7 @@ When the product is no longer available there is information about that in pop u
 ### Promo code
 - the input for entering the promo code is in the cart on the Front-end
 - after entering the promo code in the cart, total price with VAT is recalculated using the button "Apply"
-- the coupon is applied for every cart item individually
+- the discount is applied for every cart item individually
 - promo code can be removed from the cart and total price with VAT will be recalculated automatically
 ## Order flow
 - the cart is the first step of order followed by a choice of shipping and payment
