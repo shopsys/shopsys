@@ -34,7 +34,7 @@ class Mailer
         $transport = $this->swiftMailer->getTransport();
         if ($transport instanceof \Swift_Transport_SpoolTransport) {
             $spool = $transport->getSpool();
-            if ($spool instanceof \Swift_MemorySpool) {
+            if ($spool instanceof \Swift_Spool) {
                 $spool->flushQueue($this->realSwiftTransport);
             }
         }
