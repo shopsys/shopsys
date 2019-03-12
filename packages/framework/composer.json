@@ -99,6 +99,6 @@
     },
     "conflict": {
         "symfony/dependency-injection": "3.4.15|3.4.16",
-        "twig/twig": "2.6.1"
+        "twig/twig": "2.6.1|>=2.7.0"
     }
 }
