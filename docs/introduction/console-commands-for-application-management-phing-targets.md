@@ -100,7 +100,7 @@ The difference between [clean-redis](#clean-redis) is that `clean-redis` cleans 
 
 Useful in a development environment and during deploying to production.
 
-### generate-build-version
+#### generate-build-version
 
 Generates a Symfony configuration `build-version` variable that is used to distinguish different application builds.
 The variable itself contains current datetime in PHP format `YmdHis` (16 digits, eg. `20190311135223`) and you can use it in any configuration file by `'%build-version%'`.
