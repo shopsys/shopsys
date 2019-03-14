@@ -8,7 +8,7 @@ parameters:
     faker.seed: 1234
     shopsys.entity_extension.map: {}
     shopsys.admin_locale: en
-    build-version: "0000000000000000"
+    build-version: '0000000000000000'
 
 services:
     _defaults:
