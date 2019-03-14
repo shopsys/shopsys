@@ -22,4 +22,3 @@ parameters:
     trusted_proxies:
         - "127.0.0.1"
     env(REDIS_PREFIX): ''
-    build-version: "0000000000000000"
