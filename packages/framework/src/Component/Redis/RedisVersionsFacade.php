@@ -30,23 +30,27 @@ class RedisVersionsFacade
 
     public function cleanOldCache(): void
     {
-        $versionPattern = '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'; // redis pattern is a glob style and doesn't support repetitions
-
         $prefix = (string)$this->globalClient->getOption(Redis::OPT_PREFIX);
+
+        $versionPattern = $prefix . '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'; // redis pattern is a glob style and doesn't support repetitions
         $currentVersionPrefix = $prefix . $this->currentVersion;
 
-        $this->globalClient->setOption(Redis::OPT_SCAN, Redis::SCAN_RETRY);
         $iterator = null;
 
-        while ($keys = $this->globalClient->scan($iterator, $versionPattern, 10000)) {
-            $toRemove = [];
-            foreach ($keys as $key) {
-                if (strpos($key, $currentVersionPrefix) === false) {
-                    $keyWithoutPrefix = substr($key, strlen($prefix)); // redis returns keys including prefix but needs them without prefix during removing
-                    $toRemove[] = $keyWithoutPrefix;
+        do {
+            $keys = $this->globalClient->scan($iterator, $versionPattern);
+
+            if ($keys !== false) {
+                $toRemove = [];
+
+                foreach ($keys as $key) {
+                    if (strpos($key, $currentVersionPrefix) === false) {
+                        $keyWithoutPrefix = substr($key, strlen($prefix)); // redis returns keys including prefix but needs them without prefix during removing
+                        $toRemove[] = $keyWithoutPrefix;
+                    }
                 }
+                $this->globalClient->unlink($toRemove);
             }
-            $this->globalClient->unlink($toRemove);
-        }
+        } while ($iterator > 0);
     }
 }
