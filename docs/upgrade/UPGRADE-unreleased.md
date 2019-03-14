@@ -148,6 +148,7 @@ There you can find links to upgrade notes for other versions too.
             </copy>
         </target>
         ```
+    - download [`RedisVersionsFacadeTest.php`](https://github.com/shopsys/project-base/tree/master/tests/ShopBundle/Functional/Component/Redis/RedisVersionsFacadeTest.php) to your tests directory `tests/ShopBundle/Functional/Component/Redis/`
     - run `php phing generate-build-version`
     - and include `generate-build-version` and `clean-redis-old` to your build phing targets. Please find inspiration in [#886](https://github.com/shopsys/shopsys/pull/886/files)
     - once you finish this change (include the `build-version` into caches), you still should deal with older redis cache keys that don't use `build-version` prefix (16 digits).
