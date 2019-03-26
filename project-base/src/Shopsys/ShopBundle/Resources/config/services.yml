@@ -93,6 +93,3 @@ services:
         arguments:
             - '%shopsys.data_fixtures.resource_customers_filepath%'
 
-    Shopsys\ShopBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: '@Shopsys\ShopBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig'

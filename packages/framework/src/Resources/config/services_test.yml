@@ -181,3 +181,8 @@ services:
     Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade:
         arguments:
             - '@shopsys.shop.component.flash_message.sender.front'
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig:
+        calls:
+        - method: registerFilter
+          arguments: ['@Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCategoryFilter']
