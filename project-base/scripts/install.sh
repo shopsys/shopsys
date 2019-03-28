@@ -5,7 +5,7 @@ allowedValues=(1 2 3)
 projectPathPrefix=""
 echo This is installation script that will install demo Shopsys Framework application on docker with all required containers and with demo database created.
 
-docker ps -q > /dev/null 2> /dev/null
+docker ps -q &> /dev/null
 if [[ "$?" != 0 ]]; then
     1>&2 echo -e "\e[31mERROR:\e[0m Unable to connect to docker. Either the docker service is not running, or the current user is not allowed to run docker."
     exit 1
