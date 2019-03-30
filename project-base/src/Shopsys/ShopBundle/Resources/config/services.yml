@@ -55,11 +55,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@Shopsys\ShopBundle\Model\Product\Brand\BrandDataFactory'
 
-    Shopsys\ShopBundle\DataFixtures\ProductDataFixtureReferenceInjector: ~
+    Shopsys\ShopBundle\DataFixtures\Loader\ProductDataFixtureReferenceLoader: ~
 
-    Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureLoader: ~
+    Shopsys\ShopBundle\DataFixtures\Loader\ProductDataFixtureLoader: ~
 
-    Shopsys\ShopBundle\DataFixtures\Demo\ProductParametersFixtureLoader: ~
+    Shopsys\ShopBundle\DataFixtures\Loader\ProductParameterValueDataLoader: ~
 
     Shopsys\ShopBundle\DataFixtures\Performance\CategoryDataFixture:
         arguments:

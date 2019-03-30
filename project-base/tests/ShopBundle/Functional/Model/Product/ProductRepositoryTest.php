@@ -19,7 +19,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 {
     public function testVisibleAndNotSellingDeniedProductIsListed()
     {
-        $this->getAllListableQueryBuilderTest(1, true);
+        $this->getAllListableQueryBuilderTest(1, false);
     }
 
     public function testVisibleAndSellingDeniedProductIsNotListed()

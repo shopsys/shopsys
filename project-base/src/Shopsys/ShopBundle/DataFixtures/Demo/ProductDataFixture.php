@@ -4,57 +4,65 @@ namespace Shopsys\ShopBundle\DataFixtures\Demo;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
-use Shopsys\ShopBundle\DataFixtures\ProductDataFixtureReferenceInjector;
+use Shopsys\ShopBundle\DataFixtures\Loader\ProductDataFixtureLoader;
+use Shopsys\ShopBundle\DataFixtures\Loader\ProductDataFixtureReferenceLoader;
+use Shopsys\ShopBundle\DataFixtures\Loader\ProductParameterValueDataLoader;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     const PRODUCT_PREFIX = 'product_';
-
-    /** @var \Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureLoader */
-    protected $productDataFixtureLoader;
-
-    /** @var \Shopsys\ShopBundle\DataFixtures\ProductDataFixtureReferenceInjector */
-    protected $referenceInjector;
-
-    /** @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade */
-    protected $persistentReferenceFacade;
-
-    /** @var \Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureCsvReader */
-    protected $productDataFixtureCsvReader;
-
-    /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
-    protected $productFacade;
-
-    /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade */
-    protected $productVariantFacade;
+    const FAKER_SEED_NUMBER = 1;
+    const PRODUCT_COUNT = 150;
+    const VARIANTS_PER_PRODUCT = 3;
 
     /**
-     * @param \Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureLoader $productDataFixtureLoader
-     * @param \Shopsys\ShopBundle\DataFixtures\ProductDataFixtureReferenceInjector $referenceInjector
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureCsvReader $productDataFixtureCsvReader
+     * @var \Faker\Generator
+     */
+    private $faker;
+
+    /**
+     * @var \Shopsys\ShopBundle\DataFixtures\Loader\ProductDataFixtureLoader
+     */
+    private $productDataFixtureLoader;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     */
+    private $productFacade;
+
+    /**
+     * @var \Shopsys\ShopBundle\DataFixtures\Loader\ProductParameterValueDataLoader
+     */
+    private $productParameterValueDataLoader;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade
+     */
+    private $productVariantFacade;
+
+    /**
+     * @param \Faker\Generator $faker
+     * @param \Shopsys\ShopBundle\DataFixtures\Loader\ProductDataFixtureLoader $productDataFixtureLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\ShopBundle\DataFixtures\Loader\ProductParameterValueDataLoader $productParameterValueDataLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      */
     public function __construct(
+        Generator $faker,
         ProductDataFixtureLoader $productDataFixtureLoader,
-        ProductDataFixtureReferenceInjector $referenceInjector,
-        PersistentReferenceFacade $persistentReferenceFacade,
-        ProductDataFixtureCsvReader $productDataFixtureCsvReader,
         ProductFacade $productFacade,
+        ProductParameterValueDataLoader $productParameterValueDataLoader,
         ProductVariantFacade $productVariantFacade
     ) {
+        $this->faker = $faker;
         $this->productDataFixtureLoader = $productDataFixtureLoader;
-        $this->referenceInjector = $referenceInjector;
-        $this->persistentReferenceFacade = $persistentReferenceFacade;
-        $this->productDataFixtureCsvReader = $productDataFixtureCsvReader;
         $this->productFacade = $productFacade;
+        $this->productParameterValueDataLoader = $productParameterValueDataLoader;
         $this->productVariantFacade = $productVariantFacade;
     }
 
@@ -63,22 +71,29 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     public function load(ObjectManager $manager)
     {
-        $this->referenceInjector->loadReferences($this->productDataFixtureLoader, $this->persistentReferenceFacade, Domain::FIRST_DOMAIN_ID);
+        $this->productDataFixtureLoader->loadReferences();
+        $counter = 0;
+        while (++$counter < self::PRODUCT_COUNT) {
+            $this->faker->seed($counter);
+            $productData = $this->productDataFixtureLoader->getProductsDataForFakerSeed($counter);
 
-        $csvRows = $this->productDataFixtureCsvReader->getProductDataFixtureCsvRows();
-        $productNo = 1;
-        $productsByCatnum = [];
-        foreach ($csvRows as $row) {
-            $productData = $this->productDataFixtureLoader->createProductDataFromRowForFirstDomain($row);
-            $product = $this->createProduct(self::PRODUCT_PREFIX . $productNo, $productData);
-
-            if ($product->getCatnum() !== null) {
-                $productsByCatnum[$product->getCatnum()] = $product;
+            $hasParameters = $this->faker->boolean(40);
+            if ($hasParameters) {
+                $productData->parameters = $this->productParameterValueDataLoader->getParameterValueDataParametersForFakerSeed($counter);
             }
-            $productNo++;
-        }
+            $product = $this->createProduct(self::PRODUCT_PREFIX . $counter, $productData);
 
-        $this->createVariants($productsByCatnum, $productNo);
+            $hasVariants = $this->faker->boolean(30);
+            if ($hasVariants) {
+                $variantsData = $this->productDataFixtureLoader->createVariantsProductDataForProduct($product, self::VARIANTS_PER_PRODUCT);
+                $variants = [];
+                foreach ($variantsData as $variantData) {
+                    $variants[] = $this->productFacade->create($variantData);
+                }
+
+                $this->productVariantFacade->createVariant($product, $variants);
+            }
+        }
     }
 
     /**
@@ -96,34 +111,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $productsByCatnum
-     * @param int $productNo
-     */
-    protected function createVariants(array $productsByCatnum, $productNo)
-    {
-        $csvRows = $this->productDataFixtureCsvReader->getProductDataFixtureCsvRows();
-        $variantCatnumsByMainVariantCatnum = $this->productDataFixtureLoader->getVariantCatnumsIndexedByMainVariantCatnum($csvRows);
-
-        foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
-            $mainProduct = $productsByCatnum[$mainVariantCatnum];
-            /* @var $mainProduct \Shopsys\FrameworkBundle\Model\Product\Product */
-
-            $variants = [];
-            foreach ($variantsCatnums as $variantCatnum) {
-                $variants[] = $productsByCatnum[$variantCatnum];
-            }
-
-            $mainVariant = $this->productVariantFacade->createVariant($mainProduct, $variants);
-            $this->addReference(self::PRODUCT_PREFIX . $productNo, $mainVariant);
-            $productNo++;
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function getDependencies()
     {
-        return ProductDataFixtureReferenceInjector::getDependenciesForFirstDomain();
+        return ProductDataFixtureReferenceLoader::getDataFixtureDependenciesForProduct();
     }
 }
