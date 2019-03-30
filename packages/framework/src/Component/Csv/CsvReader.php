@@ -2,6 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\Csv;
 
+/**
+ * @deprecated
+ */
 class CsvReader
 {
     /**
