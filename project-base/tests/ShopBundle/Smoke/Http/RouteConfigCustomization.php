@@ -243,8 +243,8 @@ class RouteConfigCustomization
     {
         $routeConfigCustomizer
             ->customizeByRouteName(['front_customer_edit', 'front_customer_orders'], function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Log as demo user "Jaromír Jágr" on pages in client section.')
-                    ->setAuth(new BasicHttpAuth('no-reply@shopsys.com', 'user123'));
+                $config->changeDefaultRequestDataSet('Log as demo user "Adah Reichel" on pages in client section.')
+                    ->setAuth(new BasicHttpAuth('no-reply1@shopsys.com', 'user123'));
             })
             ->customizeByRouteName(['front_customer_login_as_remembered_user', 'front_promo_code_remove'], function (RouteConfig $config, RouteInfo $info) {
                 $debugNote = sprintf('Route "%s" should always just redirect.', $info->getRouteName());
@@ -290,9 +290,9 @@ class RouteConfigCustomization
                 /** @var \Shopsys\ShopBundle\Model\Order\Order $order */
                 $order = $this->getPersistentReference(OrderDataFixture::ORDER_PREFIX . '1');
 
-                $debugNote = sprintf('Log as demo user "Jaromír Jágr" on front-end to access order n. %s.', $order->getNumber());
+                $debugNote = sprintf('Log as demo user "Adah Reichel" on front-end to access order n. %s.', $order->getNumber());
                 $config->changeDefaultRequestDataSet($debugNote)
-                    ->setAuth(new BasicHttpAuth('no-reply@shopsys.com', 'user123'))
+                    ->setAuth(new BasicHttpAuth('no-reply1@shopsys.com', 'user123'))
                     ->setParameter('orderNumber', $order->getNumber());
             })
             ->customizeByRouteName('front_product_detail', function (RouteConfig $config) {

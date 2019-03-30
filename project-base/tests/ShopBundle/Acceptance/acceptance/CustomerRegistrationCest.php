@@ -38,7 +38,7 @@ class CustomerRegistrationCest
     {
         $me->wantTo('use already used email while registration');
         $me->amOnPage('/registration/');
-        $registrationPage->register('Roman', 'Štěpánek', 'no-reply@shopsys.com', 'user123', 'user123');
+        $registrationPage->register('Roman', 'Štěpánek', 'no-reply1@shopsys.com', 'user123', 'user123');
         $registrationPage->seeEmailError('This e-mail is already registered');
     }
 
