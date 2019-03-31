@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
+use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
 class AvailabilityDataFixture extends AbstractReferenceFixture
 {
@@ -32,18 +33,26 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
     protected $setting;
 
     /**
+     * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
+     */
+    private $dataFixturesTranslations;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface $availabilityDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations $dataFixturesTranslations
      */
     public function __construct(
         AvailabilityFacade $availabilityFacade,
         AvailabilityDataFactoryInterface $availabilityDataFactory,
-        Setting $setting
+        Setting $setting,
+        DataFixturesTranslations $dataFixturesTranslations
     ) {
         $this->availabilityFacade = $availabilityFacade;
         $this->availabilityDataFactory = $availabilityDataFactory;
         $this->setting = $setting;
+        $this->dataFixturesTranslations = $dataFixturesTranslations;
     }
 
     /**
@@ -52,20 +61,36 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
     public function load(ObjectManager $manager)
     {
         $availabilityData = $this->availabilityDataFactory->create();
-        $availabilityData->name = ['cs' => 'Připravujeme', 'en' => 'Preparing'];
+        $availabilityData->name = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_AVAILABILITY,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::AVAILABILITY_PREPARING
+        );
         $availabilityData->dispatchTime = 14;
         $this->createAvailability($availabilityData, self::AVAILABILITY_PREPARING);
 
-        $availabilityData->name = ['cs' => 'Skladem', 'en' => 'In stock'];
+        $availabilityData->name = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_AVAILABILITY,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::AVAILABILITY_IN_STOCK
+        );
         $availabilityData->dispatchTime = 0;
         $inStockAvailability = $this->createAvailability($availabilityData, self::AVAILABILITY_IN_STOCK);
         $this->setting->set(Setting::DEFAULT_AVAILABILITY_IN_STOCK, $inStockAvailability->getId());
 
-        $availabilityData->name = ['cs' => 'Na dotaz', 'en' => 'On request'];
+        $availabilityData->name = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_AVAILABILITY,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::AVAILABILITY_ON_REQUEST
+        );
         $availabilityData->dispatchTime = 7;
         $this->createAvailability($availabilityData, self::AVAILABILITY_ON_REQUEST);
 
-        $availabilityData->name = ['cs' => 'Nedostupné', 'en' => 'Out of stock'];
+        $availabilityData->name = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_AVAILABILITY,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::AVAILABILITY_OUT_OF_STOCK
+        );
         $availabilityData->dispatchTime = null;
         $this->createAvailability($availabilityData, self::AVAILABILITY_OUT_OF_STOCK);
     }
