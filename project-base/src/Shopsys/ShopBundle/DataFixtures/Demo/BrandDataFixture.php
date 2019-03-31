@@ -6,6 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
 class BrandDataFixture extends AbstractReferenceFixture
 {
@@ -41,13 +42,23 @@ class BrandDataFixture extends AbstractReferenceFixture
     protected $brandDataFactory;
 
     /**
+     * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
+     */
+    private $dataFixturesTranslations;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface $brandDataFactory
+     * @param \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations $dataFixturesTranslations
      */
-    public function __construct(BrandFacade $brandFacade, BrandDataFactoryInterface $brandDataFactory)
-    {
+    public function __construct(
+        BrandFacade $brandFacade,
+        BrandDataFactoryInterface $brandDataFactory,
+        DataFixturesTranslations $dataFixturesTranslations
+    ) {
         $this->brandFacade = $brandFacade;
         $this->brandDataFactory = $brandDataFactory;
+        $this->dataFixturesTranslations = $dataFixturesTranslations;
     }
 
     /**
@@ -59,10 +70,15 @@ class BrandDataFixture extends AbstractReferenceFixture
 
         foreach ($this->getBrandNamesIndexedByBrandConstants() as $brandConstant => $brandName) {
             $brandData->name = $brandName;
-            $brandData->descriptions = [
-                'cs' => 'Toto je popis značky ' . $brandData->name . '.',
-                'en' => 'This is description of brand ' . $brandData->name . '.',
-            ];
+
+            $brandDescriptions = $this->dataFixturesTranslations->getEntityAttributeTranslations(
+                DataFixturesTranslations::TRANSLATED_ENTITY_BRAND,
+                DataFixturesTranslations::TRANSLATED_ATTRIBUTE_DESCRIPTION
+            );
+            foreach ($brandDescriptions as $key => $brandDescription) {
+                $brandDescriptions[$key] = sprintf($brandDescription, $brandData->name);
+            }
+            $brandData->descriptions = $brandDescriptions;
 
             $brand = $this->brandFacade->create($brandData);
             $this->addReference($brandConstant, $brand);

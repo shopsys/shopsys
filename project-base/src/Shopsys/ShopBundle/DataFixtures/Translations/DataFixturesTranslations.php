@@ -9,7 +9,10 @@ use Shopsys\ShopBundle\DataFixtures\Translations\Exception\DataFixturesAttribute
 class DataFixturesTranslations
 {
     public const TRANSLATED_ENTITY_AVAILABILITY = 'availability';
+    public const TRANSLATED_ENTITY_BRAND = 'brand';
+
     public const TRANSLATED_ATTRIBUTE_NAME = 'name';
+    public const TRANSLATED_ATTRIBUTE_DESCRIPTION = 'description';
 
     /**
      * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface[]

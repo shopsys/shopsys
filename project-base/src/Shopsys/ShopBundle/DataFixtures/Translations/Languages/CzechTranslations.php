@@ -38,6 +38,7 @@ class CzechTranslations implements DataFixturesTranslationInterface
     protected function initTranslations(): void
     {
         $this->initAvailabilityTranslations();
+        $this->initBrandTranslations();
     }
 
     private function initAvailabilityTranslations(): void
@@ -54,5 +55,12 @@ class CzechTranslations implements DataFixturesTranslationInterface
         $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_AVAILABILITY] = $translationsAvailability;
     }
 
+    private function initBrandTranslations(): void
+    {
+        $translationsBrand = [
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_DESCRIPTION => 'Toto je popis značky %s.',
+        ];
 
+        $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_BRAND] = $translationsBrand;
+    }
 }

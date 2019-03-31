@@ -38,6 +38,7 @@ class EnglishTranslations implements DataFixturesTranslationInterface
     private function initTranslations(): void
     {
         $this->initAvailabilityTranslations();
+        $this->initBrandTranslations();
     }
 
     private function initAvailabilityTranslations(): void
@@ -52,5 +53,14 @@ class EnglishTranslations implements DataFixturesTranslationInterface
         ];
 
         $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_AVAILABILITY] = $translationsAvailability;
+    }
+
+    private function initBrandTranslations(): void
+    {
+        $translationsBrand = [
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_DESCRIPTION => 'This is description of brand %s.',
+        ];
+
+        $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_BRAND] = $translationsBrand;
     }
 }
