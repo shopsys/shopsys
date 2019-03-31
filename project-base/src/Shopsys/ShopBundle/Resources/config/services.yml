@@ -100,3 +100,5 @@ services:
     Shopsys\ShopBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: '@Shopsys\ShopBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig'
+
+    Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations: ~

@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        tags: ['shopsys.datafixtures.translations']
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Shopsys\ShopBundle\DataFixtures\Translations\Languages\:
+        resource: '../../../DataFixtures/Translations/Languages/*{Translations}.php'
