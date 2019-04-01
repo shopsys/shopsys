@@ -5,7 +5,6 @@ namespace Tests\ShopBundle\Acceptance\acceptance;
 use Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\CartBoxPage;
 use Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\CartPage;
 use Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\FloatingWindowPage;
-use Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\HomepagePage;
 use Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\ProductDetailPage;
 use Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\ProductListPage;
 use Tests\ShopBundle\Test\Codeception\AcceptanceTester;
