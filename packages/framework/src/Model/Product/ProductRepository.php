@@ -74,6 +74,14 @@ class ProductRepository
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function getAll()
+    {
+        return $this->getProductRepository()->findAll();
+    }
+
+    /**
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
      */

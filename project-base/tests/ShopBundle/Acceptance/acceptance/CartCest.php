@@ -27,19 +27,19 @@ class CartCest
         FloatingWindowPage $floatingWindowPage
     ) {
         $me->wantTo('have more pieces of the same product as one item in cart');
-        $me->amOnPage('/22-sencor-sle-22f46dm4-hello-kitty/');
+        $me->amOnPage('/brother-383dui/');
 
         $productDetailPage->addProductIntoCart(3);
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('1 item for CZK10,497.00');
+        $cartBoxPage->seeInCartBox('1 item for CZK13,884.00');
 
         $productDetailPage->addProductIntoCart(3);
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('1 item for CZK20,994.00');
+        $cartBoxPage->seeInCartBox('1 item for CZK27,768.00');
 
         $me->amOnPage('/cart/');
 
-        $cartPage->assertProductQuantity('22" Sencor SLE 22F46DM4 HELLO KITTY', 6);
+        $cartPage->assertProductQuantity('Brother 383dui', 6);
     }
 
     /**
@@ -58,36 +58,12 @@ class CartCest
     ) {
         $me->wantTo('add product to cart from product list');
         $me->amOnPage('/tv-audio/');
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480', 1);
-        $me->see('Product Defender 2.0 SPK-480 (1 pcs) added to the cart');
+        $productListPage->addProductToCartByName('Microsoft 061qoh', 1);
+        $me->see('Product Microsoft 061qoh (1 pcs) added to the cart');
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeInCartBox('1 item');
         $me->amOnPage('/cart/');
-        $cartPage->assertProductPrice('Defender 2.0 SPK-480', 'CZK119.00');
-    }
-
-    /**
-     * @param \Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\CartPage $cartPage
-     * @param \Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\HomepagePage $homepagePage
-     * @param \Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\CartBoxPage $cartBoxPage
-     * @param \Tests\ShopBundle\Test\Codeception\AcceptanceTester $me
-     * @param \Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\FloatingWindowPage $floatingWindowPage
-     */
-    public function testAddToCartFromHomepage(
-        CartPage $cartPage,
-        HomepagePage $homepagePage,
-        CartBoxPage $cartBoxPage,
-        AcceptanceTester $me,
-        FloatingWindowPage $floatingWindowPage
-    ) {
-        $me->wantTo('add product to cart from homepage');
-        $me->amOnPage('/');
-        $homepagePage->addTopProductToCartByName('22" Sencor SLE 22F46DM4 HELLO KITTY', 1);
-        $me->see('Product 22" Sencor SLE 22F46DM4 HELLO KITTY (1 pcs) added to the cart');
-        $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('1 item');
-        $me->amOnPage('/cart/');
-        $cartPage->assertProductPrice('22" Sencor SLE 22F46DM4 HELLO KITTY', 'CZK3,499.00');
+        $cartPage->assertProductPrice('Microsoft 061qoh', 'CZK10.00');
     }
 
     /**
@@ -103,14 +79,14 @@ class CartCest
         FloatingWindowPage $floatingWindowPage
     ) {
         $me->wantTo('add product to cart from product detail');
-        $me->amOnPage('/22-sencor-sle-22f46dm4-hello-kitty/');
+        $me->amOnPage('/microsoft-061qoh/');
         $me->see('Add to cart');
         $productDetailPage->addProductIntoCart(3);
-        $me->see('Product 22" Sencor SLE 22F46DM4 HELLO KITTY (3 pcs) added to the cart');
+        $me->see('Product Microsoft 061qoh (3 pcs) added to the cart');
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('1 item for CZK10,497.00');
+        $cartBoxPage->seeInCartBox('1 item for CZK30.00');
         $me->amOnPage('/cart/');
-        $me->see('22" Sencor SLE 22F46DM4 HELLO KITTY');
+        $me->see('Microsoft 061qoh');
     }
 
     /**
@@ -124,13 +100,13 @@ class CartCest
         AcceptanceTester $me
     ) {
         $me->wantTo('change items in cart and recalculate price');
-        $me->amOnPage('/22-sencor-sle-22f46dm4-hello-kitty/');
+        $me->amOnPage('/microsoft-061qoh/');
         $me->see('Add to cart');
         $productDetailPage->addProductIntoCart(3);
         $me->clickByText('Go to cart');
 
-        $cartPage->changeProductQuantity('22" Sencor SLE 22F46DM4 HELLO KITTY', 10);
-        $cartPage->assertTotalPriceWithVat('CZK34,990.00');
+        $cartPage->changeProductQuantity('Microsoft 061qoh', 10);
+        $cartPage->assertTotalPriceWithVat('CZK100.00');
     }
 
     /**
@@ -145,19 +121,19 @@ class CartCest
     ) {
         $me->wantTo('add some items to cart and remove them');
 
-        $me->amOnPage('/panasonic-dmc-ft5ep/');
+        $me->amOnPage('/brother-383dui/');
         $productDetailPage->addProductIntoCart();
-        $me->amOnPage('/jura-impressa-j9-tft-carbon/');
+        $me->amOnPage('/gigabyte-947onk/');
         $productDetailPage->addProductIntoCart();
 
         $me->amOnPage('/cart/');
-        $cartPage->assertProductIsInCartByName('JURA Impressa J9 TFT Carbon');
-        $cartPage->assertProductIsInCartByName('PANASONIC DMC FT5EP');
+        $cartPage->assertProductIsInCartByName('Brother 383dui');
+        $cartPage->assertProductIsInCartByName('Gigabyte 947onk');
 
-        $cartPage->removeProductFromCart('JURA Impressa J9 TFT Carbon');
-        $cartPage->assertProductIsNotInCartByName('JURA Impressa J9 TFT Carbon');
+        $cartPage->removeProductFromCart('Gigabyte 947onk');
+        $cartPage->assertProductIsNotInCartByName('JGigabyte 947onk');
 
-        $cartPage->removeProductFromCart('PANASONIC DMC FT5EP');
+        $cartPage->removeProductFromCart('Brother 383dui');
         $me->see('Your cart is unfortunately empty.');
     }
 
@@ -177,19 +153,19 @@ class CartCest
     ) {
         $me->wantTo('add distinct products to cart');
 
-        $me->amOnPage('/22-sencor-sle-22f46dm4-hello-kitty/');
+        $me->amOnPage('/brother-383dui/');
         $productDetailPage->addProductIntoCart();
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('1 item for CZK3,499.00');
+        $cartBoxPage->seeInCartBox('1 item for CZK4,628.00');
 
-        $me->amOnPage('/canon-pixma-ip7250/');
+        $me->amOnPage('/dlink-418qlz/');
         $productDetailPage->addProductIntoCart();
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('2 items for CZK27,687.00');
+        $cartBoxPage->seeInCartBox('2 items for CZK4,633.00');
 
         $me->amOnPage('/cart/');
-        $cartPage->assertProductIsInCartByName('22" Sencor SLE 22F46DM4 HELLO KITTY');
-        $cartPage->assertProductIsInCartByName('Canon PIXMA iP7250');
+        $cartPage->assertProductIsInCartByName('Brother 383dui');
+        $cartPage->assertProductIsInCartByName('Dlink 418qlz');
     }
 
     /**
@@ -204,15 +180,15 @@ class CartCest
     ) {
         $me->wantTo('see that prices of products in cart are calculated well');
 
-        $me->amOnPage('/aquila-aquagym-non-carbonated-spring-water/');
+        $me->amOnPage('/brother-383dui/');
         $productDetailPage->addProductIntoCart(10);
-        $me->amOnPage('/100-czech-crowns-ticket/');
+        $me->amOnPage('/dlink-418qlz/');
         $productDetailPage->addProductIntoCart(100);
-        $me->amOnPage('/premiumcord-micro-usb-a-b-1m/');
+        $me->amOnPage('/verbatim-173jqs/');
         $productDetailPage->addProductIntoCart(75);
 
         $me->amOnPage('/cart/');
-        $cartPage->assertTotalPriceWithVat('CZK17,350.00');
+        $cartPage->assertTotalPriceWithVat('CZK185,763,955.00');
     }
 
     /**
@@ -227,9 +203,9 @@ class CartCest
     ) {
         $me->wantTo('see that flow of promocode in cart is correct');
 
-        $me->amOnPage('/aquila-aquagym-non-carbonated-spring-water/');
+        $me->amOnPage('/brother-383dui/');
         $productDetailPage->addProductIntoCart();
-        $me->amOnPage('/100-czech-crowns-ticket/');
+        $me->amOnPage('/dlink-418qlz/');
         $productDetailPage->addProductIntoCart();
 
         $me->amOnPage('/cart/');
@@ -237,11 +213,11 @@ class CartCest
         $cartPage->applyPromoCode('test');
 
         $cartPage->canSeePromoCodeRemoveButtonElement();
-        $cartPage->assertTotalPriceWithVat('CZK122.00');
+        $cartPage->assertTotalPriceWithVat('CZK4,169.00');
 
         $cartPage->removePromoCode();
 
         $cartPage->canSeePromoCodeSubmitButtonElement();
-        $cartPage->assertTotalPriceWithVat('CZK136.00');
+        $cartPage->assertTotalPriceWithVat('CZK4,633.00');
     }
 }

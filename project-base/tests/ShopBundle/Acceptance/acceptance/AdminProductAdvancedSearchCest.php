@@ -21,9 +21,9 @@ class AdminProductAdvancedSearchCest
         $me->wantTo('search for product by catnum');
         $loginPage->loginAsAdmin();
 
-        $productAdvancedSearchPage->search(ProductAdvancedSearchPage::SEARCH_SUBJECT_CATNUM, '9176544MG');
+        $productAdvancedSearchPage->search(ProductAdvancedSearchPage::SEARCH_SUBJECT_CATNUM, 'ym39676wk');
 
-        $productAdvancedSearchPage->assertFoundProductByName('Aquila Aquagym non-carbonated spring water');
+        $productAdvancedSearchPage->assertFoundProductByName('Gigabyte 868szw');
         $productAdvancedSearchPage->assertFoundProductCount(1);
     }
 }

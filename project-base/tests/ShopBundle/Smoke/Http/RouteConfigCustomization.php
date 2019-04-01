@@ -299,7 +299,7 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('Use ID 1 as default product.')
                     ->setParameter('id', 1);
                 $config->addExtraRequestDataSet('See detail of a product that is main variant')
-                    ->setParameter('id', 150);
+                    ->setParameter('id', 12);
             })
             ->customizeByRouteName('front_product_list', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Use ID 2 as default category (ID 1 is the root).')

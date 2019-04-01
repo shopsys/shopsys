@@ -32,7 +32,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
             Domain::FIRST_DOMAIN_ID,
             [
                 0 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7'),
-                2 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8'),
+                2 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1'),
                 8 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5'),
             ]
         );

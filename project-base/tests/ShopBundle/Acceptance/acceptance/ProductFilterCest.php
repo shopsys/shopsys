@@ -20,27 +20,21 @@ class ProductFilterCest
     ) {
         $me->wantTo('test all product filters');
         $me->amOnPage('/tv-audio/');
-        $productListPage->assertProductsTotalCount(28);
+        $productListPage->assertProductsTotalCount(10);
 
         $productFilterPage->setMinimalPrice(1000);
-        $productListPage->assertProductsTotalCount(22);
+        $productListPage->assertProductsTotalCount(5);
 
         $productFilterPage->setMaximalPrice(10000);
-        $productListPage->assertProductsTotalCount(16);
-
-        $productFilterPage->filterByBrand('LG');
         $productListPage->assertProductsTotalCount(3);
 
-        $productFilterPage->filterByBrand('Hyundai');
-        $productListPage->assertProductsTotalCount(7);
+        $productFilterPage->filterByBrand('Verbatim');
+        $productListPage->assertProductsTotalCount(1);
 
-        $productFilterPage->filterByParameter('HDMI', 'Yes');
-        $productListPage->assertProductsTotalCount(6);
-
-        $productFilterPage->filterByParameter('Screen size', '27"');
+        $productFilterPage->filterByBrand('Microsoft');
         $productListPage->assertProductsTotalCount(2);
 
-        $productFilterPage->filterByParameter('Screen size', '30"');
-        $productListPage->assertProductsTotalCount(4);
+        $productFilterPage->filterByParameter('Color', 'blue');
+        $productListPage->assertProductsTotalCount(1);
     }
 }

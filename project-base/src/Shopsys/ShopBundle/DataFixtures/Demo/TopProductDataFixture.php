@@ -30,7 +30,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
     {
         $topProductReferenceNames = [
             ProductDataFixture::PRODUCT_PREFIX . '1',
-            ProductDataFixture::PRODUCT_PREFIX . '17',
+            ProductDataFixture::PRODUCT_PREFIX . '2',
             ProductDataFixture::PRODUCT_PREFIX . '9',
         ];
 

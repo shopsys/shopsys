@@ -11,7 +11,7 @@ class ProductImageUploadCest
     const IMAGE_UPLOAD_FIELD_ID = 'product_form_imageGroup_images_file';
     const SAVE_BUTTON_NAME = 'product_form[save]';
 
-    const EXPECTED_SUCCESS_MESSAGE = 'Product 22" Sencor SLE 22F46DM4 HELLO KITTY modified';
+    const EXPECTED_SUCCESS_MESSAGE = 'Gigabyte 868szw modified';
 
     const TEST_IMAGE_NAME = 'productTestImage.png';
 

@@ -24,7 +24,7 @@ class OrderCest
         $me->wantTo('have my payment and transport remembered by order');
 
         $me->amOnPage('/tv-audio/');
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName('Brother 383dui');
         $me->clickByText('Go to cart');
         $me->clickByText('Order');
 
@@ -53,7 +53,7 @@ class OrderCest
         $me->wantTo('have my payment and transport remembered by order');
 
         $me->amOnPage('/tv-audio/');
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName('Brother 383dui');
         $me->clickByText('Go to cart');
         $me->clickByText('Order');
 
@@ -79,7 +79,7 @@ class OrderCest
         $me->wantTo('have my first name remembered by order');
 
         $me->amOnPage('/tv-audio/');
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName('Brother 383dui');
         $me->clickByText('Go to cart');
         $me->clickByText('Order');
         $orderPage->selectTransport('Czech post');
@@ -135,7 +135,7 @@ class OrderCest
         AcceptanceTester $me
     ) {
         $me->amOnPage('/tv-audio/');
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName('Brother 383dui');
         $me->clickByText('Go to cart');
         $me->clickByText('Order');
 

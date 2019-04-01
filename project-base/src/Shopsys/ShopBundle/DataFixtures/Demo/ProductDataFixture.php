@@ -6,8 +6,8 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 use Shopsys\ShopBundle\DataFixtures\Loader\ProductDataFixtureLoader;
 use Shopsys\ShopBundle\DataFixtures\Loader\ProductDataFixtureReferenceLoader;
@@ -41,6 +41,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $productParameterValueDataLoader;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
+     */
+    private $productRepository;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade
      */
     private $productVariantFacade;
@@ -50,6 +55,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Shopsys\ShopBundle\DataFixtures\Loader\ProductDataFixtureLoader $productDataFixtureLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\ShopBundle\DataFixtures\Loader\ProductParameterValueDataLoader $productParameterValueDataLoader
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      */
     public function __construct(
@@ -57,11 +63,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ProductDataFixtureLoader $productDataFixtureLoader,
         ProductFacade $productFacade,
         ProductParameterValueDataLoader $productParameterValueDataLoader,
+        ProductRepository $productRepository,
         ProductVariantFacade $productVariantFacade
     ) {
         $this->faker = $faker;
         $this->productDataFixtureLoader = $productDataFixtureLoader;
         $this->productFacade = $productFacade;
+        $this->productRepository = $productRepository;
         $this->productParameterValueDataLoader = $productParameterValueDataLoader;
         $this->productVariantFacade = $productVariantFacade;
     }
@@ -81,33 +89,31 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             if ($hasParameters) {
                 $productData->parameters = $this->productParameterValueDataLoader->getParameterValueDataParametersForFakerSeed($counter);
             }
-            $product = $this->createProduct(self::PRODUCT_PREFIX . $counter, $productData);
+            $product = $this->productFacade->create($productData);
 
             $hasVariants = $this->faker->boolean(30);
             if ($hasVariants) {
                 $variantsData = $this->productDataFixtureLoader->createVariantsProductDataForProduct($product, self::VARIANTS_PER_PRODUCT);
                 $variants = [];
                 foreach ($variantsData as $variantData) {
+                    $counter++;
                     $variants[] = $this->productFacade->create($variantData);
                 }
 
                 $this->productVariantFacade->createVariant($product, $variants);
             }
         }
+
+        $this->setReferencesByProductId();
     }
 
-    /**
-     * @param string $referenceName
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    protected function createProduct($referenceName, ProductData $productData)
+    protected function setReferencesByProductId()
     {
-        $product = $this->productFacade->create($productData);
+        $allProducts = $this->productRepository->getAll();
 
-        $this->addReference($referenceName, $product);
-
-        return $product;
+        foreach ($allProducts as $product) {
+            $this->addReference(self::PRODUCT_PREFIX . $product->getId(), $product);
+        }
     }
 
     /**

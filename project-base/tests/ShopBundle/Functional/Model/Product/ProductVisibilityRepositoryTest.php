@@ -480,13 +480,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
 
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant1 */
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
+        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '31');
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant2 */
-        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
+        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '32');
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant3 */
-        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
+        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '33');
         /** @var \Shopsys\ShopBundle\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '34');
 
         $variant1productData = $productDataFactory->createFromProduct($variant1);
         $variant1productData->hidden = true;
@@ -516,13 +516,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
 
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant1 */
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
+        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '37');
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant2 */
-        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
+        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '38');
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant3 */
-        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
+        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '39');
         /** @var \Shopsys\ShopBundle\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '40');
 
         $variant1productData = $productDataFactory->createFromProduct($variant1);
         $variant1productData->hidden = true;
@@ -560,13 +560,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
 
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant1 */
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
+        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '46');
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant2 */
-        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
+        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '47');
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant3 */
-        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
+        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '48');
         /** @var \Shopsys\ShopBundle\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '49');
 
         $mainVariantproductData = $productDataFactory->createFromProduct($mainVariant);
         $mainVariantproductData->hidden = true;

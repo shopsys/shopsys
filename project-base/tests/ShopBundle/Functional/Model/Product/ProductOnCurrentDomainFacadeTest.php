@@ -25,7 +25,7 @@ class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
         $productFilterData->minimalPrice = Money::create(1000);
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(11, $paginationResult->getResults());
+        $this->assertCount(5, $paginationResult->getResults());
     }
 
     public function testFilterByMaximalPrice()
@@ -36,7 +36,7 @@ class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
         $productFilterData->maximalPrice = Money::create(10000);
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(14, $paginationResult->getResults());
+        $this->assertCount(8, $paginationResult->getResults());
     }
 
     public function testFilterByStockAvailability()
@@ -47,7 +47,7 @@ class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
         $productFilterData->inStock = true;
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(15, $paginationResult->getResults());
+        $this->assertCount(8, $paginationResult->getResults());
     }
 
     public function testFilterByFlag()
@@ -59,7 +59,7 @@ class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
         $productFilterData->flags = [$flagTopProduct];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(5, $paginationResult->getResults());
+        $this->assertCount(4, $paginationResult->getResults());
     }
 
     public function testFilterByFlagsReturnsProductsWithAnyOfUsedFlags()
@@ -72,7 +72,7 @@ class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
         $productFilterData->flags = [$flagTopProduct, $flagActionProduct];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(19, $paginationResult->getResults());
+        $this->assertCount(15, $paginationResult->getResults());
     }
 
     public function testFilterByBrand()
@@ -114,7 +114,7 @@ class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
 
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(2, $paginationResult->getResults());
+        $this->assertCount(1, $paginationResult->getResults());
     }
 
     public function testFilterByParametersUsesOrWithinTheSameParameter()
@@ -132,7 +132,7 @@ class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
         $productFilterData->parameters = [$parameterFilterData];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(5, $paginationResult->getResults());
+        $this->assertCount(3, $paginationResult->getResults());
     }
 
     public function testFilterByParametersUsesAndWithinDistinctParameters()
@@ -151,7 +151,7 @@ class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
         $productFilterData->parameters = [$parameterFilterData1, $parameterFilterData2];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(2, $paginationResult->getResults());
+        $this->assertCount(1, $paginationResult->getResults());
     }
 
     /**

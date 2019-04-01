@@ -47,7 +47,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     public function testCannotAddUnsellableProductToCart()
     {
         /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '6');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
         $productId = $product->getId();
         $quantity = 1;
 
@@ -68,7 +68,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\ShopBundle\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         /** @var \Shopsys\ShopBundle\Model\Product\Product $product2 */
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5');
 
         $customerIdentifier = new CustomerIdentifier('secretSessionHash');
         $cartFacade = $this->createCartFacade($customerIdentifier);
@@ -176,7 +176,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     {
         return [
             ['productId' => 1, 'cartShouldBeNull' => false],
-            ['productId' => 34, 'cartShouldBeNull' => true], // not listable product
+            ['productId' => 3, 'cartShouldBeNull' => true], // not listable product
 
         ];
     }

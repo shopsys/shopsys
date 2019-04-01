@@ -19,22 +19,22 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 {
     public function testVisibleAndNotSellingDeniedProductIsListed()
     {
-        $this->getAllListableQueryBuilderTest(1, false);
+        $this->getAllListableQueryBuilderTest(1, true);
     }
 
     public function testVisibleAndSellingDeniedProductIsNotListed()
     {
-        $this->getAllListableQueryBuilderTest(6, false);
+        $this->getAllListableQueryBuilderTest(3, false);
     }
 
     public function testProductVariantIsNotListed()
     {
-        $this->getAllListableQueryBuilderTest(53, false);
+        $this->getAllListableQueryBuilderTest(60, false);
     }
 
     public function testProductMainVariantIsListed()
     {
-        $this->getAllListableQueryBuilderTest(148, true);
+        $this->getAllListableQueryBuilderTest(8, true);
     }
 
     /**
@@ -53,6 +53,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 
         /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId);
+
         $productId = $product->getId();
 
         $queryBuilder = $productRepository->getAllListableQueryBuilder($domain->getId(), $pricingGroup);
@@ -70,17 +71,12 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 
     public function testVisibleAndSellingDeniedProductIsNotSellable()
     {
-        $this->getAllSellableQueryBuilderTest(6, false);
+        $this->getAllSellableQueryBuilderTest(3, false);
     }
 
     public function testProductVariantIsSellable()
     {
-        $this->getAllSellableQueryBuilderTest(53, true);
-    }
-
-    public function testProductMainVariantIsNotSellable()
-    {
-        $this->getAllSellableQueryBuilderTest(148, false);
+        $this->getAllSellableQueryBuilderTest(11, true);
     }
 
     /**
@@ -116,17 +112,17 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 
     public function testVisibleAndSellingDeniedProductIsNotOfferred()
     {
-        $this->getAllOfferedQueryBuilderTest(6, false);
+        $this->getAllOfferedQueryBuilderTest(3, false);
     }
 
     public function testProductVariantIsOfferred()
     {
-        $this->getAllOfferedQueryBuilderTest(53, true);
+        $this->getAllOfferedQueryBuilderTest(11, true);
     }
 
     public function testProductMainVariantIsOfferred()
     {
-        $this->getAllOfferedQueryBuilderTest(69, true);
+        $this->getAllOfferedQueryBuilderTest(8, true);
     }
 
     /**
@@ -156,19 +152,18 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 
     public function testOrderingByProductPriorityInCategory()
     {
-        /** @var \Shopsys\ShopBundle\DataFixtures\Demo\CategoryDataFixture $category */
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_FOOD);
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 70);
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 71);
-
-        $this->setProductOrderingPriority($product1, 0);
-        $this->setProductOrderingPriority($product2, -1);
+        /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_TOYS);
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 29);
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 170);
+        $this->setProductOrderingPriority($product1, 2);
+        $this->setProductOrderingPriority($product2, 1);
 
         $results = $this->getProductsInCategoryOrderedByPriority($category);
         $this->assertSame($product1, $results[0]);
         $this->assertSame($product2, $results[1]);
 
-        $this->setProductOrderingPriority($product2, 1);
+        $this->setProductOrderingPriority($product2, 3);
 
         $results = $this->getProductsInCategoryOrderedByPriority($category);
         $this->assertSame($product2, $results[0]);
@@ -177,8 +172,8 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 
     public function testOrderingByProductPriorityInSearch()
     {
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 45);
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 30);
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 28);
 
         $this->setProductOrderingPriority($product1, 2);
         $this->setProductOrderingPriority($product2, 3);
@@ -206,8 +201,8 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2);
-        $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3);
-        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 4);
+        $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 5);
+        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 6);
 
         $sortedProducts = [
             $product4,

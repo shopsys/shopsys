@@ -223,7 +223,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '15' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '16' => 1,
-                ProductDataFixture::PRODUCT_PREFIX . '17' => 1,
+                ProductDataFixture::PRODUCT_PREFIX . '1' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '18' => 1,
             ],
             $user
@@ -248,9 +248,9 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->createOrder(
             $orderData,
             [
+                ProductDataFixture::PRODUCT_PREFIX . '1' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '7' => 1,
-                ProductDataFixture::PRODUCT_PREFIX . '8' => 1,
-                ProductDataFixture::PRODUCT_PREFIX . '12' => 2,
+                ProductDataFixture::PRODUCT_PREFIX . '13' => 2,
             ]
         );
 
@@ -276,7 +276,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             [
                 ProductDataFixture::PRODUCT_PREFIX . '1' => 6,
                 ProductDataFixture::PRODUCT_PREFIX . '2' => 1,
-                ProductDataFixture::PRODUCT_PREFIX . '12' => 1,
+                ProductDataFixture::PRODUCT_PREFIX . '13' => 1,
             ]
         );
 
@@ -475,7 +475,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '7' => 1,
-                ProductDataFixture::PRODUCT_PREFIX . '17' => 6,
+                ProductDataFixture::PRODUCT_PREFIX . '1' => 6,
                 ProductDataFixture::PRODUCT_PREFIX . '9' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 2,
@@ -514,7 +514,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '7' => 1,
-                ProductDataFixture::PRODUCT_PREFIX . '17' => 6,
+                ProductDataFixture::PRODUCT_PREFIX . '1' => 6,
                 ProductDataFixture::PRODUCT_PREFIX . '9' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 2,
@@ -553,7 +553,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '7' => 1,
-                ProductDataFixture::PRODUCT_PREFIX . '17' => 6,
+                ProductDataFixture::PRODUCT_PREFIX . '1' => 6,
                 ProductDataFixture::PRODUCT_PREFIX . '9' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 2,
