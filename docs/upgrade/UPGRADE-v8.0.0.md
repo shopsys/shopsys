@@ -25,7 +25,7 @@ There you can find links to upgrade notes for other versions too.
     - ProductVisibilityFactory
     - ScriptFactory
     - SliderItemFactory
-    
-    In case of extending one of these classes, you should add a `EntityNameResolver` to a constructor and use it in a `create()` method to resolve correct class to return.
+
+    In case of extending one of these classes, you should add an `EntityNameResolver` to a constructor and use it in a `create()` method to resolve correct class to return.
 
 [shopsys/framework]: https://github.com/shopsys/framework
