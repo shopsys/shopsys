@@ -113,6 +113,12 @@ services:
                 - '@Doctrine\Common\Cache\ArrayCache'
                 - '@shopsys.shop.component.doctrine.cache.metadata.redis_cache'
 
+    shopsys.framework.cache_driver.annotations_cache:
+        class: Doctrine\Common\Cache\RedisCache
+        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
+        arguments:
+            - '@snc_redis.framework_annotations'
+
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:
