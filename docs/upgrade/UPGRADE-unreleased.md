@@ -9,8 +9,8 @@ There you can find links to upgrade notes for other versions too.
 
 ## [shopsys/framework]
 ### Configuration
- - *(low priority)* Use standard format for redis prefixes (#928)
-    - change prefixes in `app/config/packages/snc_redis.yml` and `app/config/packages/test/snc_redis.yml`. Please find inspiration in https://github.com/shopsys/shopsys/pull/928/files
+ - *(low priority)* use standard format for redis prefixes ([#928](https://github.com/shopsys/shopsys/pull/928))
+    - change prefixes in `app/config/packages/snc_redis.yml` and `app/config/packages/test/snc_redis.yml`. Please find inspiration in [#928](https://github.com/shopsys/shopsys/pull/928/files)
 
     **Be careful, this upgrade will remove sessions**
 
