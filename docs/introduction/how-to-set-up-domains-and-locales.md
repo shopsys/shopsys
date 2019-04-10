@@ -16,14 +16,10 @@ This configuration file contains informations about the domain ID, the domain id
 #### 1.2 Set up the url address
 Set the url address for the domain in `app/config/domains_urls.yml`.
 
-#### 1.3 Set up the application as "singledomain"
-Modify the value of the parameter `is-multidomain` in `build.xml` to `false`.
-Based on this parameter, smoke and functional tests are run for a single domain, or multiple domains, respectively.
-
-#### 1.4 Locale settings
+#### 1.3 Locale settings
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
 
-#### 1.5 Build
+#### 1.4 Build
 Start the build, for example using a phing target
 ```
 php phing build-demo-dev
@@ -35,7 +31,7 @@ More information about what Phing targets are and how they work can be found in 
 
 After the build is completed, a singledomain application is created.
 
-#### 1.6 Tests
+#### 1.5 Tests
 Some tests are prepared for the configuration with the first domain with `en` locale.
 For example `Tests\ShopBundle\Functional\Twig\PriceExtensionTest` is expecting the specific format of displayed currency.
 If you want to use already created tests for your specific configuration, you may need to modify these tests to be able to test your specific configuration of the domain.
@@ -51,14 +47,10 @@ Set the url address for the domain in `app/config/domains_urls.yml`.
 
 *Note: When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)*
 
-#### 2.3 Set up the application as "multidomain"
-Modify the value of the parameter `is-multidomain` in `build.xml` to `true` (this is the default value).
-Based on this parameter, smoke and functional tests are run for a single domain, or multiple domains, respectively.
-
-#### 2.4 Locale settings
+#### 2.3 Locale settings
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
 
-#### 2.5 Create multidomains data
+#### 2.4 Create multidomains data
 There need to be created some multidomain data for the newly added domain.
 Run the phing target
 ```
@@ -70,17 +62,17 @@ This command performs multiple actions:
 - pricing group with the name Default is created for every new domain
 - the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
 
-#### 2.6 Multilang attributes
+#### 2.5 Multilang attributes
 Demo data of Shopsys Framework are prepared only for `en` and `cs` locales.
 This means that if you are using a different locale, these multilang attributes will be empty for this new locale even after the installation of demo data.
 
-#### 2.7 Generate assets for the new domain
+#### 2.6 Generate assets for the new domain
 In order to properly display the new domain, assets need to be generated
 ```
 php phing grunt
 ```
 
-#### 2.8. Create elasticsearch definition for the new domain
+#### 2.7. Create elasticsearch definition for the new domain
 The configuration for elasticsearch must be created for each domain in a separate json file.
 By default, the configurations for the domain 1 and 2 are already parts of a project-base.
 Configuration for elasticsearch can be found in `src/Shopsys/ShopBundle/Resources/Resources/definition/`.
