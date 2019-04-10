@@ -39,7 +39,20 @@
 
     <property name="path.bin-console" value="bin/console"/>
 
-    <property name="is-multidomain" value="true" />
+    <loadfile property="domains" file="${path.app}/config/domains.yml"/>
+
+    <exec executable="${path.php.executable}" outputProperty="domains.count">
+        <arg value="-r echo substr_count('${domains}','-');"/>
+    </exec>
+    <if>
+        <equals arg1="${domains.count}" arg2="1" trim="true"/>
+        <then>
+            <property name="is-multidomain" value="false" />
+        </then>
+        <else>
+            <property name="is-multidomain" value="true" />
+        </else>
+    </if>
 
     <if>
         <os family="windows" />

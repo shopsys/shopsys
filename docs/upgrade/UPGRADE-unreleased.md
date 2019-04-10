@@ -13,5 +13,25 @@ There you can find links to upgrade notes for other versions too.
 
     **Be careful, this upgrade will remove sessions**
 
+### Tools
+ - *(low priority)* improve Phing property `is-multidomain` in `build.xml` to detect domains automatically ([#941](https://github.com/shopsys/shopsys/pull/941))
+    ```diff
+    -    <property name="is-multidomain" value="true" />
+    +    <loadfile property="domains" file="${path.app}/config/domains.yml"/>
+    +  
+    +    <exec executable="${path.php.executable}" outputProperty="domains.count">
+    +        <arg value="-r echo substr_count('${domains}','-');"/>
+    +    </exec>
+    +    <if>
+    +        <equals arg1="${domains.count}" arg2="1" trim="true"/>
+    +        <then>
+    +            <property name="is-multidomain" value="false" />
+    +        </then>
+    +        <else>
+    +            <property name="is-multidomain" value="true" />
+    +        </else>
+    +    </if>
+    ```
+
 
 [Upgrade from v7.1.0 to Unreleased]: https://github.com/shopsys/shopsys/compare/v7.1.0...HEAD
