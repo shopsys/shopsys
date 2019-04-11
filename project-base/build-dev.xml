@@ -22,7 +22,7 @@
     <target name="tests" depends="test-db-demo,tests-static,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests on a newly built test database."/>
 
     <target name="tests-performance-run" depends="clean,redis-check,clean-redis,test-db-performance,tests-performance-warmup,tests-performance" description="Runs performance tests on a newly built test database with performance data."/>
-    <target name="test-product-search-recreate-structure" depends="test-product-search-delete-structure,test-product-search-create-structure" description="Recreates structure for searching via elasticsearch in test environment (deletes existing structure and creates new one)" />
+    <target name="test-product-search-recreate-structure" depends="test-product-search-delete-structure,test-product-search-create-structure" description="Recreates structure for searching via elasticsearch in test environment (deletes existing structure and creates new one)." />
 
     <target name="composer-check" description="Checks if Composer lock file is valid.">
         <exec
