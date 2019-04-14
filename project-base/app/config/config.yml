@@ -1,2 +1,12 @@
 imports:
     - { resource: packages/*.yml }
+
+shopsys_pohoda:
+    jshopsys:
+        web_dir: '%shopsys.web_dir%'
+        verification_password: '%pohoda_jshopsys_verification_password%'
+        actions_routes:
+            objednavky:
+                objednavky_export: 'Shopsys\PohodaBundle\Model\Order\JShopsys\JShopsysOrderExportFacade'
+            zbozi:
+                zbozi_import: 'Shopsys\PohodaBundle\Model\Product\JShopsys\JShopsysProductImportFacade'

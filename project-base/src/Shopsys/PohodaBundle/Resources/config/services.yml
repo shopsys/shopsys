@@ -1,4 +1,6 @@
 services:
+    Shopsys\PohodaBundle\Model\:
+        resource: '../../Model/**/*{Facade,Repository}.php'
 
     Shopsys\PohodaBundle\Component\Doctrine\PohodaEntityManager: '@doctrine.orm.pohoda_entity_manager'
 
@@ -9,3 +11,7 @@ services:
         arguments:
             - '@doctrine.dbal.pohoda_connection'
             - '@doctrine.orm.pohoda_configuration'
+
+    Shopsys\PohodaBundle\Model\Order\JShopsys\JShopsysOrderExportFacade:
+        arguments:
+            $ordersExportDirectory: '%shopsys.web_dir%/db/pohoda/data/export_xml'

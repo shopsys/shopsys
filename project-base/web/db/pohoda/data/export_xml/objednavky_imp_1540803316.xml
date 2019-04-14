@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"  ?> 
+			<dat:dataPack id="a55" ico="25358511" application="Objednávka přijatá SHOPSYS" version="2.0" note="Import Objednávky přijaté"
+				xmlns:dat="http://www.stormware.cz/schema/version_2/data.xsd"
+				xmlns:adb="http://www.stormware.cz/schema/version_2/addressbook.xsd" 
+				xmlns:ord="http://www.stormware.cz/schema/version_2/order.xsd" 
+				xmlns:ftr="http://www.stormware.cz/schema/version_2/filter.xsd"
+				xmlns:typ="http://www.stormware.cz/schema/version_2/type.xsd" >
+				<dat:dataPackItem id="1540803316" version="2.0"> <!-- ID dokumentu, Pohoda by měla následně zabránit pokusu o import stejného dokumentu 2x -->
+				<!--
+					V rámci jednoho XML je možné najednou odeslat i nový záznam do Adresáře, i nový záznam do agendy Objednávky.
+					Tento stav je žádoucí např v případě, že se zákazník při vytvoření objednávky i registroval.
+					A tedy chceme, aby se při přenosu objednávky nejdříve přenesl nový záznam zákazníka do agendy Adresář,
+					a až pak se přenese samotná objendávka, která se již v Pohodě prováže s tímto novým záznamem v adresáři
+				-->
+				
+				<!-- adb:addressbook - zde je začátek XML pro adresář --> 
+				<adb:addressbook version="2.0">
+					<adb:actionType>
+						<adb:add update="true"> <!-- typ akce, kterou chceme v pohodě vykonat --> 
+							<ftr:filter>
+								<!-- 
+									Obsah tagu filter muže mít dvě varianty. 
+									
+									1. varianta
+									- když přeneseme XML se zákazníkem do Pohody, Pohoda zákazníka založí ale eshop neví, jaké ID tento
+									zákazník v Pohodě obdržel. To by mohlo přinést komplikace, kdyby jsme se pokusili zákazníka následně
+									aktualizovat. Proto si Pohoda interně udržuje nějakou vazební pomocnou tabulku, ve které má napárované
+									IDčka z Pohody na IDčka eshopu. Pomocí sekvence tagu:
+									
+									<ftr:extId> 
+										<typ:ids>766</typ:ids>
+										<typ:exSystemName>Shopsys</typ:exSystemName>
+										<typ:exSystemText>Shopsys</typ:exSystemText>
+									</ftr:extId>
+									
+									říkame, že aktualizujeme zákazníka, který má v externím systému Shopsys hodnotu ID=766.
+									Pohoda si následně ve svojí pomocné tabulce vyhledá - existuje tu nejaký zákazník,
+									který je z aplikace Shopsys a má v dané aplikaci ID 766? Když ano, tak mi vrať jeho POHODA_ID,
+									a dále již používá interně toto POHODA_ID
+									
+									2. varianta
+									- v případě, že v eshopu známe i PohodaId zákazníka, mužeme při exportu zákazníka do Pohody 
+									(např při aktualizaci) použít přímo toto PohodaId. XML by v tomto případě nevyužívalo tag extId 
+									ale využívalo by jen tag id
+									
+									<ftr:id>HODNOTA_POHODA_ID_ZAKAZNIKA</ftr:id>
+									
+								-->
+								<ftr:extId> 
+									<typ:ids>766</typ:ids>
+									<typ:exSystemName>Shopsys</typ:exSystemName>
+									<typ:exSystemText>Shopsys</typ:exSystemText>
+								</ftr:extId>
+							</ftr:filter>
+						</adb:add>
+					</adb:actionType>
+					<adb:addressbookHeader> <!-- samotné tělo záznamu pro adresář-->
+						<adb:identity>
+							<typ:extId> 
+								<!-- 
+									Znovu, zpusob, jak má Pohoda vědět, jaký záznam má aktualizovat.
+									V případě, že by jsme v eshopu měli k dispozici přímo Pohoda_ID zákazníka,
+									nepoužili by jsme tag extId ale přímo tag id s hodnotou Pohoda_ID
+								-->
+								<typ:ids>766</typ:ids>
+								<typ:exSystemName>Shopsys</typ:exSystemName>
+								<typ:exSystemText>Shopsys</typ:exSystemText>
+							</typ:extId>
+							<typ:address>
+								
+								<typ:name><![CDATA[Miroslav Stopka]]></typ:name>
+								<typ:city><![CDATA[Ostrava]]></typ:city>
+								<typ:street><![CDATA[Koksární 10]]></typ:street>
+								<typ:zip><![CDATA[70200]]></typ:zip>
+								<typ:ico></typ:ico>
+								<typ:dic></typ:dic>
+								<typ:country>
+									<typ:ids><![CDATA[CZ]]></typ:ids>
+								</typ:country>
+								<typ:phone><![CDATA[+420777777777]]></typ:phone>
+		
+							</typ:address>
+							<typ:shipToAddress>
+								<typ:defaultShipAddress>true</typ:defaultShipAddress>
+								<typ:name><![CDATA[Miroslav Stopka]]></typ:name>
+								<typ:city></typ:city>
+								<typ:street><![CDATA[Koksární 10]]></typ:street>
+								<typ:zip><![CDATA[70200]]></typ:zip>
+								<typ:country>
+									<typ:ids><![CDATA[CZ]]></typ:ids>
+								</typ:country>
+							</typ:shipToAddress>
+						</adb:identity>
+						<adb:phone>+420777777777</adb:phone>
+						<adb:fax></adb:fax>
+						<adb:email>miroslav.stopka@shopsys.com</adb:email>
+					</adb:addressbookHeader>
+				</adb:addressbook> <!-- adb:addressbook - zde je konec XML pro adresář --> 
+			</dat:dataPackItem>
+			
+			<!-- adb:addressbook - zde je začátek XML pro objednávku --> 
+			<dat:dataPackItem id="1540803078o" version="2.0"> <!-- ID dokumentu, Pohoda by měla následně zabránit pokusu o import stejného dokumentu 2x -->
+			<ord:order version="2.0">
+				<ord:orderHeader>
+					<ord:orderType>receivedOrder</ord:orderType> <!-- typ dokladu, objednávku chceme mít v Přijatých objednávkach v Pohodě --> 
+					<ord:numberOrder>1540803078</ord:numberOrder> <!-- číslo objednávky v eshopu --> 
+					<ord:date>2018-10-29</ord:date> <!-- datum vytvoření objednávky --> 
+					<ord:dateFrom>2018-10-29</ord:dateFrom> <!-- datum vytvoření objednávky --> 
+					<ord:dateTo>2018-10-29</ord:dateTo> <!-- datum vytvoření objednávky --> 
+					<ord:text>ESHOP </ord:text> <!-- text pro zobrazení objendávky v přehledu v Pohodě --> 
+						
+					<ord:partnerIdentity>
+						<!-- 
+							Pomocí tagu partnerIdentity je možné k objednávce přiřadit informace o zákazníkovi.
+							Jsou možné tři varianty:
+							
+							1. Objednávku vytvořil registrovaný zákazník, u kterého neznáme jeho POHODA_ID.
+							Do těla tagu partnerIdentity přidáme tag extId, díky kterému se objednávka v
+							Pohodě prováže na záznam v Adresáři
+							
+							2. Objednávku vytvořil registrovaný zákazník, u kterého známe jeho POHODA_ID.
+							Do těla tagu partnerIdentity přidáme tag id, díky kterému se objednávka v
+							Pohodě prováže na záznam v Adresáři
+							
+							3. Objednávku vytvořil neregistrovaný zákazník. V tomto případě nepoužijeme ani tag
+							id ani tag extId a tělo tagu partnerIdentity bude začínat tagem address. V tomto
+							případě se objednávka v Pohodě neprováže na Adresář-
+						-->
+						
+						<typ:extId>
+							<typ:ids>766</typ:ids>
+							<typ:exSystemName>Shopsys</typ:exSystemName>
+							<typ:exSystemText>Shopsys</typ:exSystemText>
+						</typ:extId>
+			 
+						<typ:address>
+							<!-- Fakturační adresa objednávky -->
+							<typ:name><![CDATA[Miroslav Stopka]]></typ:name>
+							<typ:city><![CDATA[Ostrava]]></typ:city>
+							<typ:street><![CDATA[Koksární 50]]></typ:street>
+							<typ:zip><![CDATA[70200]]></typ:zip>
+							<typ:ico></typ:ico>
+							<typ:dic></typ:dic>
+							<typ:country>
+								<typ:ids><![CDATA[CZ]]></typ:ids>
+							</typ:country>
+							<typ:phone><![CDATA[+420777777777]]></typ:phone>
+						</typ:address>
+						
+						<typ:shipToAddress>
+							<!-- Dodací adresa objednávky -->	
+							<typ:defaultShipAddress>true</typ:defaultShipAddress>
+							<typ:name><![CDATA[Miroslav Stopka]]></typ:name>
+							<typ:city><![CDATA[Ostrava]]></typ:city>
+							<typ:street><![CDATA[Koksární 50]]></typ:street>
+							<typ:zip><![CDATA[70200]]></typ:zip>
+							<typ:country>
+								<typ:ids><![CDATA[CZ]]></typ:ids>
+							</typ:country>
+						</typ:shipToAddress>
+					</ord:partnerIdentity>
+					
+					<ord:paymentType>
+						<!-- Propojení objednávky v Pohodě na konkrétní typ platby z číselníku plateb v Pohodě -->
+						<typ:paymentType>draft</typ:paymentType>
+					</ord:paymentType>
+					
+					<ord:note></ord:note>
+					<ord:intNote></ord:intNote>
+						
+				</ord:orderHeader>
+			<ord:orderDetail>
+			<ord:orderItem>
+				<!-- Položky objendávky -->
+				<ord:text><![CDATA[Řetěz vysokopevnostní, třída 8, černý, 6-8, nosnost 1120kg, 6x18mm]]></ord:text>
+				<ord:quantity>10</ord:quantity>
+				<ord:delivered>1</ord:delivered> <!-- Ponechte klidně hodnotu 1 vždy -->
+				<ord:unit>m</ord:unit>
+				<ord:payVAT>false</ord:payVAT> <!-- Ponechte klidně hodnotu FALSE vždy -->
+				
+				<!-- Hodnota DPH položky z číselníku hodnot z POHODY.
+				Pohoda nepracuje s konkrétními numerickými hodnotami ale jen se sekupinami:
+				high, low, none,...
+				-->
+				<ord:rateVAT>high</ord:rateVAT> 
+				
+				<ord:homeCurrency>
+					<!-- Cena v základní měně, existuje i tag foreignCurrency -->
+					<typ:unitPrice>92.000000</typ:unitPrice>
+				</ord:homeCurrency>
+			
+				<ord:note></ord:note>
+				<ord:stockItem>
+					<!-- provázaní se skladem, v tomto případě je provázaní na HL. SKLAD podle katalogového čísla-->
+					<typ:store>
+						<typ:ids><![CDATA[HL. SKLAD]]></typ:ids>
+					</typ:store>
+					<typ:stockItem>
+						<typ:ids><![CDATA[1360RV01-0006]]></typ:ids> 
+					</typ:stockItem>
+				</ord:stockItem>
+			</ord:orderItem>
+		
+			<ord:orderItem>
+				<ord:text><![CDATA[Doprava - PPL - B2B]]></ord:text>
+				<ord:quantity>1</ord:quantity>
+				<ord:delivered>1</ord:delivered>
+				<ord:unit>ks</ord:unit>
+				<ord:payVAT>false</ord:payVAT>
+				<ord:rateVAT>high</ord:rateVAT>
+				<ord:homeCurrency>
+					<typ:unitPrice>99.000000</typ:unitPrice>
+				</ord:homeCurrency>
+			
+				<ord:note></ord:note>
+				<ord:stockItem>
+					<typ:store>
+						<typ:ids><![CDATA[HL. SKLAD]]></typ:ids>
+					</typ:store>
+					<typ:stockItem>
+						<typ:ids><![CDATA[DB PPL]]></typ:ids> 
+					</typ:stockItem>
+				</ord:stockItem>
+			</ord:orderItem>
+		
+			<ord:orderItem>
+				<ord:text><![CDATA[Platba - Dobírka]]></ord:text>
+				<ord:quantity>1</ord:quantity>
+				<ord:delivered>1</ord:delivered>
+				<ord:unit>ks</ord:unit>
+				<ord:payVAT>false</ord:payVAT>
+				<ord:rateVAT>high</ord:rateVAT>
+				<ord:homeCurrency>
+					<typ:unitPrice>30.000000</typ:unitPrice>
+				</ord:homeCurrency>
+			
+				<ord:note></ord:note>
+				<ord:stockItem>
+					<typ:store>
+						<typ:ids><![CDATA[HL. SKLAD]]></typ:ids>
+					</typ:store>
+					<typ:stockItem>
+						<typ:ids></typ:ids> 
+					</typ:stockItem>
+				</ord:stockItem>
+			</ord:orderItem>
+		
+			</ord:orderDetail>
+			<ord:orderSummary>
+				
+				<!-- Zaokrouhlování cen -->
+				<ord:roundingDocument>math2one</ord:roundingDocument>
+				<ord:roundingVAT>noneEveryRate</ord:roundingVAT>
+			
+			</ord:orderSummary>
+		</ord:order>
+		</dat:dataPackItem>
+		
+			</dat:dataPack>
+		

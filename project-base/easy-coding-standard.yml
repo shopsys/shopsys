@@ -28,9 +28,15 @@ parameters:
         Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff:
             - '*/tests/ShopBundle/Functional/EntityExtension/EntityExtensionTest.php'
             - '*/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php'
+            - '*/src/Shopsys/PohodaBundle/DependencyInjection/ShopsysPohodaExtension.php'
+            - '*/src/Shopsys/PohodaBundle/Controller/JShopsysController.php'
 
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff:
             - '*/tests/ShopBundle/Functional/Model/Cart/CartFacadeTest.php'
+
+        PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff:
+            - '*/src/Shopsys/PohodaBundle/DependencyInjection/ShopsysPohodaExtension.php'
+            - '*/src/Shopsys/PohodaBundle/Controller/JShopsysController.php'

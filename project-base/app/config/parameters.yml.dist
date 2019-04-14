@@ -31,3 +31,5 @@ parameters:
     pohoda_database_password: pohoda123
     pohoda_database_charset: UTF8
     pohoda_database_server_version: !!float 12
+
+    pohoda_jshopsys_verification_password: cellyshop

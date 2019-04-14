@@ -1,3 +1,6 @@
+shopsys_pohoda:
+    resource: "@ShopsysPohodaBundle/Resources/config/routing.yml"
+
 shopsys_shop:
     resource: "@ShopsysShopBundle/Resources/config/routing.yml"
     prefix: /

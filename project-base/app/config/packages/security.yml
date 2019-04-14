@@ -15,9 +15,14 @@ security:
             id: Shopsys\FrameworkBundle\Model\Customer\FrontendUserProvider
 
     firewalls:
+        jshopsys:
+            pattern: ^/admin/espohoda/
+            anonymous: ~
+            security: false
+
         # see Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
         administration:
-            pattern: ^/(admin/|efconnect|elfinder)
+            pattern: ^/(admin/(?!espohoda/)|efconnect|elfinder)
             anonymous: ~
             provider: administrators
             logout_on_user_change: true

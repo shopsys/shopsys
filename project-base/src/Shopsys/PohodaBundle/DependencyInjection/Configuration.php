@@ -13,7 +13,16 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pohoda');
+        $rootNode = $treeBuilder->root('shopsys_pohoda');
+
+        $rootNode->children()
+            ->arrayNode('jshopsys')
+                ->children()
+                    ->scalarNode('web_dir')->end()
+                    ->scalarNode('verification_password')->end()
+                    ->arrayNode('actions_routes')->ignoreExtraKeys(false)->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

@@ -1,0 +1,4 @@
+shopsys_pohoda:
+    resource: "@ShopsysPohodaBundle/Controller"
+    prefix: /admin/espohoda
+    type: annotation
