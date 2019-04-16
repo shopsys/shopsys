@@ -28,22 +28,23 @@ class PluginCrudExtensionFacade
      */
     public function extendForm(FormBuilderInterface $builder, $type, $name)
     {
-        $builder->add($name, FormType::class, [
-            'compound' => true,
-            'render_form_row' => false,
-        ]);
-
         $crudExtensions = $this->pluginCrudExtensionRegistry->getCrudExtensions($type);
+
         foreach ($crudExtensions as $key => $crudExtension) {
             $builderExtensionGroup = $builder->create($key . 'Group', GroupType::class, [
                 'label' => $crudExtension->getFormLabel(),
             ]);
 
-            $builderExtensionGroup->add($key, $crudExtension->getFormTypeClass(), [
+            $builderExtensionGroup->add($name, FormType::class, [
+                'compound' => true,
                 'render_form_row' => false,
             ]);
 
-            $builder->get($name)->add($builderExtensionGroup);
+            $builderExtensionGroup->get($name)->add($key, $crudExtension->getFormTypeClass(), [
+                'render_form_row' => false,
+            ]);
+
+            $builder->add($builderExtensionGroup);
         }
     }
 

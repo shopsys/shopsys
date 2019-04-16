@@ -895,9 +895,6 @@ class ProductFormType extends AbstractType
                 'main_product' => $product,
                 'sortable' => true,
                 'label' => t('Accessories'),
-                'attr' => [
-                    'class' => 'wrap-border',
-                ],
             ])
             ->addViewTransformer($this->removeDuplicatesTransformer);
     }
