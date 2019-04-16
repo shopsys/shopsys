@@ -16,7 +16,7 @@ There you can find links to upgrade notes for other versions too.
             $finder->files()->in($origin);
             foreach ($finder as $file) {
         -        $filepath = $file->getPathname();
-        +        $filepath = TransformString::removeDriveLetterFromPath           ($file->getPathname());
+        +        $filepath = TransformString::removeDriveLetterFromPath($file->getPathname());
         ```
 
 
