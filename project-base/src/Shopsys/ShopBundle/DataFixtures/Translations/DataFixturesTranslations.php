@@ -12,6 +12,7 @@ class DataFixturesTranslations
     public const TRANSLATED_ENTITY_AVAILABILITY = 'availability';
     public const TRANSLATED_ENTITY_BRAND = 'brand';
     public const TRANSLATED_ENTITY_CATEGORY = 'category';
+    public const TRANSLATED_ENTITY_COUNTRY = 'country';
 
     public const TRANSLATED_ATTRIBUTE_NAME = 'name';
     public const TRANSLATED_ATTRIBUTE_DESCRIPTION = 'description';

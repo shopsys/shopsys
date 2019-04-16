@@ -6,6 +6,7 @@ namespace Shopsys\ShopBundle\DataFixtures\Translations\Languages;
 
 use Shopsys\ShopBundle\DataFixtures\Demo\AvailabilityDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\CategoryDataFixture;
+use Shopsys\ShopBundle\DataFixtures\Demo\CountryDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface;
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
@@ -41,6 +42,7 @@ class EnglishTranslations implements DataFixturesTranslationInterface
         $this->initAvailabilityTranslations();
         $this->initBrandTranslations();
         $this->initCategoryTranslations();
+        $this->initCountryTranslations();
     }
 
     private function initAvailabilityTranslations(): void
@@ -123,5 +125,17 @@ class EnglishTranslations implements DataFixturesTranslationInterface
         ];
 
         $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_CATEGORY] = $translationsCategory;
+    }
+
+    private function initCountryTranslations(): void
+    {
+        $translationsCountry = [
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME => [
+                CountryDataFixture::COUNTRY_CZECH_REPUBLIC => 'Czech republic',
+                CountryDataFixture::COUNTRY_SLOVAKIA => 'Slovakia',
+            ],
+        ];
+
+        $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_COUNTRY] = $translationsCountry;
     }
 }

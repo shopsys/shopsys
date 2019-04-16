@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
+use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
 class CountryDataFixture extends AbstractReferenceFixture
 {
@@ -24,13 +25,23 @@ class CountryDataFixture extends AbstractReferenceFixture
     protected $countryDataFactory;
 
     /**
+     * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
+     */
+    private $dataFixturesTranslations;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface $countryDataFactory
+     * @param \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations $dataFixturesTranslations
      */
-    public function __construct(CountryFacade $countryFacade, CountryDataFactoryInterface $countryDataFactory)
-    {
+    public function __construct(
+        CountryFacade $countryFacade,
+        CountryDataFactoryInterface $countryDataFactory,
+        DataFixturesTranslations $dataFixturesTranslations
+    ) {
         $this->countryFacade = $countryFacade;
         $this->countryDataFactory = $countryDataFactory;
+        $this->dataFixturesTranslations = $dataFixturesTranslations;
     }
 
     /**
@@ -39,18 +50,20 @@ class CountryDataFixture extends AbstractReferenceFixture
     public function load(ObjectManager $manager): void
     {
         $countryData = $this->countryDataFactory->create();
-        $countryData->names = [
-            'cs' => 'Česká republika',
-            'en' => 'Czech republic',
-        ];
+        $countryData->names = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_COUNTRY,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::COUNTRY_CZECH_REPUBLIC
+        );
         $countryData->code = 'CZ';
         $this->createCountry($countryData, self::COUNTRY_CZECH_REPUBLIC);
 
         $countryData = $this->countryDataFactory->create();
-        $countryData->names = [
-            'cs' => 'Slovenská republika',
-            'en' => 'Slovakia',
-        ];
+        $countryData->names = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_COUNTRY,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::COUNTRY_SLOVAKIA
+        );
         $countryData->code = 'SK';
 
         $this->createCountry($countryData, self::COUNTRY_SLOVAKIA);
