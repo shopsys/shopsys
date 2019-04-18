@@ -8,7 +8,7 @@ services:
 
     # helper services
     PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer: ~
-    Symplify\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector: ~
+    Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector: ~
     Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer: ~
     Shopsys\CodingStandards\Helper\FqnNameResolver: ~
     PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer: ~

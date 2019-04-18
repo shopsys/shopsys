@@ -2,12 +2,12 @@
 
 namespace Shopsys\CodingStandards\Tests;
 
-use Symplify\TokenRunner\Analyzer\SnifferAnalyzer\Naming;
+use Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming;
 
 final class ObjectIsCreatedByFactorySniff
 {
     /**
-     * @var \Symplify\TokenRunner\Analyzer\SnifferAnalyzer\Naming
+     * @var \Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming
      */
     private $naming;
 

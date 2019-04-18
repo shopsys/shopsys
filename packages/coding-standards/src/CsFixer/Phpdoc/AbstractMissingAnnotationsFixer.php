@@ -14,7 +14,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
 use Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer;
 use SplFileInfo;
-use Symplify\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
+use Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
 
 /**
  * Some code used from:
@@ -37,7 +37,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
     protected $functionsAnalyzer;
 
     /**
-     * @var \Symplify\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector
+     * @var \Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector
      */
     private $indentDetector;
 
@@ -50,7 +50,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
      * @param \PhpCsFixer\WhitespacesFixerConfig $whitespacesFixerConfig
      * @param \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer $functionsAnalyzer
      * @param \Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer $phpToDocTypeTransformer
-     * @param \Symplify\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector $indentDetector
+     * @param \Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector $indentDetector
      */
     public function __construct(
         WhitespacesFixerConfig $whitespacesFixerConfig,
