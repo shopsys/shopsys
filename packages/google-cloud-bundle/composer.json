@@ -30,6 +30,6 @@
         "symfony/options-resolver": "^3.4"
     },
     "require-dev": {
-        "shopsys/coding-standards": "dev-master"
+        "shopsys/coding-standards": "dev-rv-upgrade-ecs"
     }
 }

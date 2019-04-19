@@ -34,7 +34,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0|^7.0",
-        "shopsys/coding-standards": "dev-master",
+        "shopsys/coding-standards": "dev-rv-upgrade-ecs",
         "twig/extensions": "^1.5.1",
         "twig/twig": "^2.4.8"
     },
