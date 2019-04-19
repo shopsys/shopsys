@@ -19,7 +19,8 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [Are some periodic tasks part of the Shopsys Framework (cron)?](#are-some-periodic-tasks-part-of-the-shopsys-framework-cron)
 - [Why are you using entity data instead of entities for Symfony forms?](#why-are-you-using-entity-data-instead-of-entities-for-symfony-forms)
 - [What is the configuration file `services_test.yml` good for?](#what-is-the-configuration-file-services_testyml-good-for)
-- [How to change behavior of product search on front-end?](#how-to-change-behavior-of-product-search-on-front-end)
+- [How to change the behavior of the product search on the front-end?](#how-to-change-the-behavior-of-the-product-search-on-the-front-end)
+
 
 ## What are the phing targets?
 Every phing target is a task that can be executed simply by `php phing <target-name>` command.
@@ -103,5 +104,5 @@ is a service configuration file that is loaded in TEST environment in addition t
 the standard configuration defined in [`services.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services.yml) as sometimes the configuration differs from the standard one and we need to override it.
 E.g., by default, all our services are defined as private. However, in tests, we are retrieving some services directly from the container hence we need to have them public in TEST environment.
 
-## How to change behavior of product search on front-end?
-Full-text product search on front-end is handled via Elasticsearch. If you want to change its behavior e.g. EAN is not so important or change the way of handling search string (use a n-gram or not) please see [Product Searching via Elasticsearch](/docs/introduction/product-search-via-elasticsearch.md#how-to-change-the-default-index-data-export-setting-and-searching-behavior).
+## How to change the behavior of the product search on the front-end?
+Full-text product search on the front-end is handled via Elasticsearch. If you want to change its behavior e.g. EAN is not so important or to change the way of handling the search string (use an n-gram or not) please see [Product Searching via Elasticsearch](/docs/introduction/product-search-via-elasticsearch.md#how-to-change-the-default-index-data-export-setting-and-searching-behavior).
