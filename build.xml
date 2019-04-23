@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Shopsys Framework" default="list">
+<project name="Shopsys Framework (monorepo)" default="list">
 
     <property name="path.root" value="./project-base"/>
     <property name="path.vendor" value="./vendor"/>
@@ -33,8 +33,8 @@
         <phingcall target="composer-check" />
     </target>
 
-    <target name="standards" depends="phplint,ecs,phpstan-packages,twig-lint,yaml-lint,eslint-check,standards-packages,standards-utils" description="Checks coding standards in the project-base, packages and utils folder."/>
-    <target name="standards-diff" depends="phplint-diff,ecs-diff,phpstan-packages,twig-lint-diff,yaml-lint,eslint-check-diff,standards-packages, standards-utils" description="Checks coding standards on changed files in the project-base, packages and utils folder."/>
+    <target name="standards" depends="phplint,ecs,twig-lint,yaml-lint,eslint-check,standards-packages,standards-utils" description="Checks coding standards in the project-base, packages and utils folder."/>
+    <target name="standards-diff" depends="phplint-diff,ecs-diff,twig-lint-diff,yaml-lint,eslint-check-diff,standards-packages, standards-utils" description="Checks coding standards on changed files in the project-base, packages and utils folder."/>
 
     <target name="clean" description="Cleans up directories with cache and scripts which are generated on demand.">
         <delete failonerror="false" includeemptydirs="true">
@@ -175,7 +175,9 @@
         </exec>
     </target>
 
-    <target name="phpstan-packages" depends="phpstan" description="Performs static analysis of PHP files using PHPStan on all packages.">
+    <target name="phpstan" description="Performs static analysis of PHP files using PHPStan across the monorepo.">
+        <phingcall target="shopsys_framework__dev_.phpstan"/>
+
         <exec executable="${path.phpstan.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="analyze"/>
             <arg value="-c"/>
@@ -189,15 +191,9 @@
         </exec>
     </target>
 
-    <target name="tests-static" depends="tests-unit,tests-packages,tests-utils" description="Runs unit tests and tests of all packages and utils."/>
+    <target name="tests-unit" description="Runs unit tests across the monorepo.">
+        <phingcall target="shopsys_framework__dev_.tests-unit"/>
 
-    <target name="tests-utils">
-        <exec executable="${path.vendor}/bin/phpunit" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="./utils/releaser/tests/"/>
-        </exec>
-    </target>
-
-    <target name="tests-packages" description="Runs tests of packages.">
         <exec executable="${path.vendor}/bin/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="${path.packages}/product-feed-google/tests"/>
         </exec>
@@ -223,6 +219,10 @@
         <exec executable="${path.vendor}/bin/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--configuration"/>
             <arg value="${path.packages}/coding-standards/phpunit.xml"/>
+        </exec>
+
+        <exec executable="${path.vendor}/bin/phpunit" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="./utils/releaser/tests/"/>
         </exec>
     </target>
 
