@@ -105,4 +105,5 @@ the standard configuration defined in [`services.yml`](../../project-base/src/Sh
 E.g., by default, all our services are defined as private. However, in tests, we are retrieving some services directly from the container hence we need to have them public in TEST environment.
 
 ## How to change the behavior of the product search on the front-end?
-Full-text product search on the front-end is handled via Elasticsearch. If you want to change its behavior e.g. EAN is not so important or to change the way of handling the search string (use an n-gram or not) please see [Product Searching via Elasticsearch](/docs/introduction/product-search-via-elasticsearch.md#how-to-change-the-default-index-data-export-setting-and-searching-behavior).
+Full-text product search on the front-end is handled via Elasticsearch.
+If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching via Elasticsearch](/docs/introduction/product-search-via-elasticsearch.md#how-to-change-the-default-index-data-export-setting-and-searching-behavior).
