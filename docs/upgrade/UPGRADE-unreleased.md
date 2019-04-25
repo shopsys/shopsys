@@ -83,6 +83,16 @@ There you can find links to upgrade notes for other versions too.
         server_tokens off;
     +   client_max_body_size 32M;
     ```
+    - update your [ingress.yml](../../project-base/kubernetes/ingress.yml) config file
+        ```diff
+        metadata:
+            name: shopsys
+        +   annotations:
+        +       nginx.ingress.kubernetes.io/proxy-body-size: "32m"
+        spec:
+            rules:
+        ```
+    - check and update also all parent proxy servers for each project
 
 [Upgrade from v7.1.0 to Unreleased]: https://github.com/shopsys/shopsys/compare/v7.1.0...HEAD
 [shopsys/framework]: https://github.com/shopsys/framework
