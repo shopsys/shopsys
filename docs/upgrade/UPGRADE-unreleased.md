@@ -88,7 +88,7 @@ There you can find links to upgrade notes for other versions too.
         metadata:
             name: shopsys
         +   annotations:
-        +       nginx.ingress.kubernetes.io/proxy-body-size: "32m"
+        +       nginx.ingress.kubernetes.io/proxy-body-size: 32m
         spec:
             rules:
         ```
