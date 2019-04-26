@@ -35,13 +35,9 @@ class PluginCrudExtensionFacade
                 'label' => $crudExtension->getFormLabel(),
             ]);
 
-            $builderExtensionGroup->add($name, FormType::class, [
-                'compound' => true,
+            $builderExtensionGroup->add($key, $crudExtension->getFormTypeClass(), [
                 'render_form_row' => false,
-            ]);
-
-            $builderExtensionGroup->get($name)->add($key, $crudExtension->getFormTypeClass(), [
-                'render_form_row' => false,
+                'property_path' => sprintf('%s[%s]', $name, $key),
             ]);
 
             $builder->add($builderExtensionGroup);
