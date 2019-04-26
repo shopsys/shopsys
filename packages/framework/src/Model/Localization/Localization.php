@@ -124,8 +124,10 @@ class Localization
      */
     public function getCollationByLocale(string $locale): string
     {
-        if (array_key_exists($locale, $this->collationsByLocale)) {
-            return $this->collationsByLocale[$locale];
+        $collationsByLocale = $this->getAllDefinedCollations();
+
+        if (array_key_exists($locale, $collationsByLocale)) {
+            return $collationsByLocale[$locale];
         } else {
             return static::DEFAULT_COLLATION;
         }
