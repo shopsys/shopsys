@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Form;
 
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +27,12 @@ class FormRenderingConfigurationExtension extends AbstractTypeExtension
         $view->vars['js_container'] = $options['js_container'];
         $view->vars['is_plugin_data_group'] = $options['is_plugin_data_group'];
         $view->vars['render_form_row'] = $options['render_form_row'];
+
+        if ($options['is_plugin_data_group']) {
+            $message = 'Using the "is_plugin_data_group" option in forms has been deprecated since Shopsys Framework 7.2 and it will be removed eventually.';
+
+            trigger_error($message, E_USER_DEPRECATED);
+        }
     }
 
     /**
