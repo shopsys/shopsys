@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Component\Plugin;
 
 use Shopsys\FrameworkBundle\Form\GroupType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class PluginCrudExtensionFacade
