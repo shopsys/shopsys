@@ -7,6 +7,7 @@ namespace Shopsys\ShopBundle\DataFixtures\Translations\Languages;
 use Shopsys\ShopBundle\DataFixtures\Demo\AvailabilityDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\CategoryDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\CountryDataFixture;
+use Shopsys\ShopBundle\DataFixtures\Demo\FlagDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface;
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
@@ -43,6 +44,7 @@ class CzechTranslations implements DataFixturesTranslationInterface
         $this->initBrandTranslations();
         $this->initCategoryTranslations();
         $this->initCountryTranslations();
+        $this->initFlagTranslations();
     }
 
     private function initAvailabilityTranslations(): void
@@ -137,5 +139,18 @@ class CzechTranslations implements DataFixturesTranslationInterface
         ];
 
         $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_COUNTRY] = $translationsCountry;
+    }
+
+    private function initFlagTranslations(): void
+    {
+        $translationsFlag = [
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME => [
+                FlagDataFixture::FLAG_NEW_PRODUCT => 'Novinka',
+                FlagDataFixture::FLAG_TOP_PRODUCT => 'Nejprodávanější',
+                FlagDataFixture::FLAG_ACTION_PRODUCT => 'Akce',
+            ],
+        ];
+
+        $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_FLAG] = $translationsFlag;
     }
 }
