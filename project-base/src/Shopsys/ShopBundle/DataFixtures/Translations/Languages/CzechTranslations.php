@@ -8,6 +8,7 @@ use Shopsys\ShopBundle\DataFixtures\Demo\AvailabilityDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\CategoryDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\CountryDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\FlagDataFixture;
+use Shopsys\ShopBundle\DataFixtures\Demo\PaymentDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface;
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
@@ -45,6 +46,7 @@ class CzechTranslations implements DataFixturesTranslationInterface
         $this->initCategoryTranslations();
         $this->initCountryTranslations();
         $this->initFlagTranslations();
+        $this->initPaymentTranslations();
     }
 
     private function initAvailabilityTranslations(): void
@@ -152,5 +154,30 @@ class CzechTranslations implements DataFixturesTranslationInterface
         ];
 
         $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_FLAG] = $translationsFlag;
+    }
+
+    private function initPaymentTranslations(): void
+    {
+        $translationsPayment = [];
+
+        $translationsPayment[DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME] = [
+            PaymentDataFixture::PAYMENT_CARD => 'Kreditní kartou',
+            PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY => 'Dobírka',
+            PaymentDataFixture::PAYMENT_CASH => 'Hotově',
+        ];
+
+        $translationsPayment[DataFixturesTranslations::TRANSLATED_ATTRIBUTE_DESCRIPTION] = [
+            PaymentDataFixture::PAYMENT_CARD => 'Rychle, levně a spolehlivě!',
+            PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY => '',
+            PaymentDataFixture::PAYMENT_CASH => '',
+        ];
+
+        $translationsPayment[DataFixturesTranslations::TRANSLATED_ATTRIBUTE_INSTRUCTIONS] = [
+            PaymentDataFixture::PAYMENT_CARD => '<b>Zvolili jste platbu kreditní kartou. Prosím proveďte ji do dvou pracovních dnů.</b>',
+            PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY => '',
+            PaymentDataFixture::PAYMENT_CASH => '',
+
+        ];
+        $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_PAYMENT] = $translationsPayment;
     }
 }

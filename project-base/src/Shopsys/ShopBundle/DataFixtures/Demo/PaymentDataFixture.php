@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
 class PaymentDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -25,15 +26,23 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     protected $paymentDataFactory;
 
     /**
+     * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
+     */
+    private $dataFixturesTranslations;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface $paymentDataFactory
+     * @param \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations $dataFixturesTranslations
      */
     public function __construct(
         PaymentFacade $paymentFacade,
-        PaymentDataFactoryInterface $paymentDataFactory
+        PaymentDataFactoryInterface $paymentDataFactory,
+        DataFixturesTranslations $dataFixturesTranslations
     ) {
         $this->paymentFacade = $paymentFacade;
         $this->paymentDataFactory = $paymentDataFactory;
+        $this->dataFixturesTranslations = $dataFixturesTranslations;
     }
 
     /**
@@ -42,22 +51,25 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public function load(ObjectManager $manager)
     {
         $paymentData = $this->paymentDataFactory->create();
-        $paymentData->name = [
-            'cs' => 'Kreditní kartou',
-            'en' => 'Credit card',
-        ];
+        $paymentData->name = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_PAYMENT,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::PAYMENT_CARD
+        );
         $paymentData->pricesByCurrencyId = [
             $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::create('99.95'),
             $this->getReference(CurrencyDataFixture::CURRENCY_EUR)->getId() => Money::create('2.95'),
         ];
-        $paymentData->description = [
-            'cs' => 'Rychle, levně a spolehlivě!',
-            'en' => 'Quick, cheap and reliable!',
-        ];
-        $paymentData->instructions = [
-            'cs' => '<b>Zvolili jste platbu kreditní kartou. Prosím proveďte ji do dvou pracovních dnů.</b>',
-            'en' => '<b>You have chosen payment by credit card. Please finish it in two business days.</b>',
-        ];
+        $paymentData->description = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_PAYMENT,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_DESCRIPTION,
+            self::PAYMENT_CARD
+        );
+        $paymentData->instructions = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_PAYMENT,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_INSTRUCTIONS,
+            self::PAYMENT_CARD
+        );
         $paymentData->vat = $this->getReference(VatDataFixture::VAT_ZERO);
         $this->createPayment(self::PAYMENT_CARD, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
@@ -65,10 +77,11 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         ]);
 
         $paymentData = $this->paymentDataFactory->create();
-        $paymentData->name = [
-            'cs' => 'Dobírka',
-            'en' => 'Cash on delivery',
-        ];
+        $paymentData->name = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_PAYMENT,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::PAYMENT_CASH_ON_DELIVERY
+        );
         $paymentData->pricesByCurrencyId = [
             $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::create('49.90'),
             $this->getReference(CurrencyDataFixture::CURRENCY_EUR)->getId() => Money::create('1.95'),
@@ -77,10 +90,11 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createPayment(self::PAYMENT_CASH_ON_DELIVERY, $paymentData, [TransportDataFixture::TRANSPORT_CZECH_POST]);
 
         $paymentData = $this->paymentDataFactory->create();
-        $paymentData->name = [
-            'cs' => 'Hotově',
-            'en' => 'Cash',
-        ];
+        $paymentData->name = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_PAYMENT,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::PAYMENT_CASH
+        );
         $paymentData->czkRounding = true;
         $paymentData->pricesByCurrencyId = [
             $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::zero(),
