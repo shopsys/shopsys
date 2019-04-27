@@ -9,6 +9,7 @@ use Shopsys\ShopBundle\DataFixtures\Demo\CategoryDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\CountryDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\FlagDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\PaymentDataFixture;
+use Shopsys\ShopBundle\DataFixtures\Demo\TransportDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface;
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
@@ -47,6 +48,7 @@ class CzechTranslations implements DataFixturesTranslationInterface
         $this->initCountryTranslations();
         $this->initFlagTranslations();
         $this->initPaymentTranslations();
+        $this->initTransportTranslations();
     }
 
     private function initAvailabilityTranslations(): void
@@ -179,5 +181,30 @@ class CzechTranslations implements DataFixturesTranslationInterface
 
         ];
         $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_PAYMENT] = $translationsPayment;
+    }
+
+    private function initTransportTranslations(): void
+    {
+        $translationsTransport = [];
+
+        $translationsTransport[DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME] = [
+            TransportDataFixture::TRANSPORT_CZECH_POST => 'Česká pošta - balík do ruky',
+            TransportDataFixture::TRANSPORT_PPL => 'PPL',
+            TransportDataFixture::TRANSPORT_PERSONAL => 'Osobní převzetí',
+        ];
+
+        $translationsTransport[DataFixturesTranslations::TRANSLATED_ATTRIBUTE_DESCRIPTION] = [
+            TransportDataFixture::TRANSPORT_CZECH_POST => '',
+            TransportDataFixture::TRANSPORT_PPL => '',
+            TransportDataFixture::TRANSPORT_PERSONAL => 'Uvítá Vás milý personál!',
+        ];
+
+        $translationsTransport[DataFixturesTranslations::TRANSLATED_ATTRIBUTE_INSTRUCTIONS] = [
+            TransportDataFixture::TRANSPORT_CZECH_POST => '',
+            TransportDataFixture::TRANSPORT_PPL => '',
+            TransportDataFixture::TRANSPORT_PERSONAL => 'Těšíme se na Vaši návštěvu.',
+        ];
+
+        $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_TRANSPORT] = $translationsTransport;
     }
 }

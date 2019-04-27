@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
 class TransportDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -25,15 +26,23 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     protected $transportDataFactory;
 
     /**
+     * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
+     */
+    private $dataFixturesTranslations;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface $transportDataFactory
+     * @param \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations $dataFixturesTranslations
      */
     public function __construct(
         TransportFacade $transportFacade,
-        TransportDataFactoryInterface $transportDataFactory
+        TransportDataFactoryInterface $transportDataFactory,
+        DataFixturesTranslations $dataFixturesTranslations
     ) {
         $this->transportFacade = $transportFacade;
         $this->transportDataFactory = $transportDataFactory;
+        $this->dataFixturesTranslations = $dataFixturesTranslations;
     }
 
     /**
@@ -42,10 +51,11 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public function load(ObjectManager $manager)
     {
         $transportData = $this->transportDataFactory->create();
-        $transportData->name = [
-            'cs' => 'Česká pošta - balík do ruky',
-            'en' => 'Czech post',
-        ];
+        $transportData->name = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_TRANSPORT,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::TRANSPORT_CZECH_POST
+        );
         $transportData->pricesByCurrencyId = [
             $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::create('99.95'),
             $this->getReference(CurrencyDataFixture::CURRENCY_EUR)->getId() => Money::create('3.95'),
@@ -54,10 +64,11 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
         $transportData = $this->transportDataFactory->create();
-        $transportData->name = [
-            'cs' => 'PPL',
-            'en' => 'PPL',
-        ];
+        $transportData->name = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_TRANSPORT,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::TRANSPORT_PPL
+        );
         $transportData->pricesByCurrencyId = [
             $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::create('199.95'),
             $this->getReference(CurrencyDataFixture::CURRENCY_EUR)->getId() => Money::create('6.95'),
@@ -66,22 +77,25 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
-        $transportData->name = [
-            'cs' => 'Osobní převzetí',
-            'en' => 'Personal collection',
-        ];
+        $transportData->name = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_TRANSPORT,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME,
+            self::TRANSPORT_PERSONAL
+        );
         $transportData->pricesByCurrencyId = [
             $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::zero(),
             $this->getReference(CurrencyDataFixture::CURRENCY_EUR)->getId() => Money::zero(),
         ];
-        $transportData->description = [
-            'cs' => 'Uvítá Vás milý personál!',
-            'en' => 'You will be welcomed by friendly staff!',
-        ];
-        $transportData->instructions = [
-            'cs' => 'Těšíme se na Vaši návštěvu.',
-            'en' => 'We are looking forward to your visit.',
-        ];
+        $transportData->description = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_TRANSPORT,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_DESCRIPTION,
+            self::TRANSPORT_PERSONAL
+        );
+        $transportData->instructions = $this->dataFixturesTranslations->getEntityAttributeTranslationsByReferenceName(
+            DataFixturesTranslations::TRANSLATED_ENTITY_TRANSPORT,
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_INSTRUCTIONS,
+            self::TRANSPORT_PERSONAL
+        );
         $transportData->vat = $this->getReference(VatDataFixture::VAT_ZERO);
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
     }
