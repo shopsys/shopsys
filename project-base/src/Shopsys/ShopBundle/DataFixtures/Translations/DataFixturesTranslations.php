@@ -16,6 +16,7 @@ class DataFixturesTranslations
     public const TRANSLATED_ENTITY_FLAG = 'flag';
     public const TRANSLATED_ENTITY_PAYMENT = 'payment';
     public const TRANSLATED_ENTITY_TRANSPORT = 'transport';
+    public const TRANSLATED_ENTITY_UNIT = 'unit';
 
     public const TRANSLATED_ATTRIBUTE_NAME = 'name';
     public const TRANSLATED_ATTRIBUTE_DESCRIPTION = 'description';

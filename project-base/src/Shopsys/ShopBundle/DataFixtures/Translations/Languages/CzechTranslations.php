@@ -10,6 +10,7 @@ use Shopsys\ShopBundle\DataFixtures\Demo\CountryDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\FlagDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\PaymentDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\TransportDataFixture;
+use Shopsys\ShopBundle\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface;
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
@@ -49,6 +50,7 @@ class CzechTranslations implements DataFixturesTranslationInterface
         $this->initFlagTranslations();
         $this->initPaymentTranslations();
         $this->initTransportTranslations();
+        $this->initUnitTranslations();
     }
 
     private function initAvailabilityTranslations(): void
@@ -206,5 +208,17 @@ class CzechTranslations implements DataFixturesTranslationInterface
         ];
 
         $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_TRANSPORT] = $translationsTransport;
+    }
+
+    private function initUnitTranslations(): void
+    {
+        $translationsUnit = [
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME => [
+                UnitDataFixture::UNIT_CUBIC_METERS => 'm³',
+                UnitDataFixture::UNIT_PIECES => 'ks',
+            ],
+        ];
+
+        $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_UNIT] = $translationsUnit;
     }
 }
