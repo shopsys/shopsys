@@ -35,11 +35,20 @@ class DataFixturesTranslations
     private $domain;
 
     /**
+     * @var string
+     */
+    private $defaultLocaleIfNotAvailableRequestedLocale;
+
+    /**
+     * @param string $defaultLocaleIfNotAvailableRequestedLocale
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Domain $domain)
-    {
+    public function __construct(
+        string $defaultLocaleIfNotAvailableRequestedLocale,
+        Domain $domain
+    ) {
         $this->domain = $domain;
+        $this->defaultLocaleIfNotAvailableRequestedLocale = $defaultLocaleIfNotAvailableRequestedLocale;
     }
 
     /**
@@ -134,7 +143,7 @@ class DataFixturesTranslations
             return $entityAttributeTranslationsIndexedByLocale[$localeByDomainId];
         }
 
-        return $entityAttributeTranslationsIndexedByLocale[self::DEFAULT_LOCALE_IF_NOT_AVAILABLE_REQUESTED_LOCALE];
+        return $entityAttributeTranslationsIndexedByLocale[$this->defaultLocaleIfNotAvailableRequestedLocale];
     }
 
     /**
@@ -161,6 +170,6 @@ class DataFixturesTranslations
             return $entityAttributeTranslationsIndexedByLocale[$localeByDomainId];
         }
 
-        return $entityAttributeTranslationsIndexedByLocale[self::DEFAULT_LOCALE_IF_NOT_AVAILABLE_REQUESTED_LOCALE];
+        return $entityAttributeTranslationsIndexedByLocale[$this->defaultLocaleIfNotAvailableRequestedLocale];
     }
 }

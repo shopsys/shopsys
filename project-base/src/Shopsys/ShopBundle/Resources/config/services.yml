@@ -101,4 +101,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: '@Shopsys\ShopBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig'
 
-    Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations: ~
+    Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations:
+        arguments:
+            - '%shopsys.data_fixtures.default_locale_if_not_available_requested_locale%'
