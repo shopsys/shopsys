@@ -60,6 +60,14 @@ class DataFixturesTranslations
     }
 
     /**
+     * @return string
+     */
+    public function getDefaultLocaleIfNotAvailableRequestedLocale(): string
+    {
+        return $this->defaultLocaleIfNotAvailableRequestedLocale;
+    }
+
+    /**
      * @param string $translatedEntity
      * @param string $translatedAttribute
      * @param string $referenceName

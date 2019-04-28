@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
 
 class ProductDataFixtureLoader
 {
@@ -93,21 +94,29 @@ class ProductDataFixtureLoader
     protected $pricingGroupFacade;
 
     /**
+     * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
+     */
+    private $dataFixturesTranslations;
+
+    /**
      * @param \Shopsys\ShopBundle\DataFixtures\Demo\ProductParametersFixtureLoader $productParametersFixtureLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface $productDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
+     * @param \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations $dataFixturesTranslations
      */
     public function __construct(
         ProductParametersFixtureLoader $productParametersFixtureLoader,
         ProductDataFactoryInterface $productDataFactory,
         Domain $domain,
-        PricingGroupFacade $pricingGroupFacade
+        PricingGroupFacade $pricingGroupFacade,
+        DataFixturesTranslations $dataFixturesTranslations
     ) {
         $this->productParametersFixtureLoader = $productParametersFixtureLoader;
         $this->productDataFactory = $productDataFactory;
         $this->domain = $domain;
         $this->pricingGroupFacade = $pricingGroupFacade;
+        $this->dataFixturesTranslations = $dataFixturesTranslations;
     }
 
     /**
@@ -251,7 +260,7 @@ class ProductDataFixtureLoader
         $domainId = 2;
         $productData->descriptions[$domainId] = $row[$this->getDescriptionColumnForDomain($domainId)];
         $productData->shortDescriptions[$domainId] = $row[$this->getShortDescriptionColumnForDomain($domainId)];
-        $productData->name['cs'] = $row[self::COLUMN_NAME_CS];
+        $productData->name[$this->domain->getDomainConfigById($domainId)->getLocale()] = $row[$this->getCsvProductColumnNameByDomainId($domainId)];
         $this->setProductDataPricesFromCsv($row, $productData, $domainId);
         $productData->categoriesByDomainId[$domainId] =
             $this->getValuesByKeyString($row[self::COLUMN_CATEGORIES_2], $this->categories);
@@ -263,15 +272,15 @@ class ProductDataFixtureLoader
      */
     protected function getShortDescriptionColumnForDomain($domainId)
     {
-        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+        $supportedLocaleForProductDataFixture = $this->getSupportedLocaleForProductDataFixtureForDomainId($domainId);
 
-        switch ($locale) {
+        switch ($supportedLocaleForProductDataFixture) {
             case 'cs':
                 return self::COLUMN_SHORT_DESCRIPTION_CS;
             case 'en':
                 return self::COLUMN_SHORT_DESCRIPTION_EN;
             default:
-                throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnsupportedLocaleException($locale);
+                throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnsupportedLocaleException($supportedLocaleForProductDataFixture);
         }
     }
 
@@ -281,15 +290,15 @@ class ProductDataFixtureLoader
      */
     protected function getDescriptionColumnForDomain($domainId)
     {
-        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+        $supportedLocaleForProductDataFixture = $this->getSupportedLocaleForProductDataFixtureForDomainId($domainId);
 
-        switch ($locale) {
+        switch ($supportedLocaleForProductDataFixture) {
             case 'cs':
                 return self::COLUMN_DESCRIPTION_CS;
             case 'en':
                 return self::COLUMN_DESCRIPTION_EN;
             default:
-                throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnsupportedLocaleException($locale);
+                throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnsupportedLocaleException($supportedLocaleForProductDataFixture);
         }
     }
 
@@ -374,7 +383,9 @@ class ProductDataFixtureLoader
      */
     protected function getCsvProductColumnNameByDomainId(int $domainId)
     {
-        switch ($this->domain->getDomainConfigById($domainId)->getLocale()) {
+        $supportedLocaleForProductDataFixture = $this->getSupportedLocaleForProductDataFixtureForDomainId($domainId);
+
+        switch ($supportedLocaleForProductDataFixture) {
             case 'cs':
                 return self::COLUMN_NAME_CS;
             case 'en':
@@ -382,5 +393,24 @@ class ProductDataFixtureLoader
             default:
                 throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnsupportedLocaleException($this->domain->getDomainConfigById($domainId)->getLocale());
         }
+    }
+
+    /**
+     * @param int $domainId
+     * @return string
+     */
+    private function getSupportedLocaleForProductDataFixtureForDomainId(int $domainId): string
+    {
+        $supportedLocalesByCsvDataFixturesData = ['cs', 'en'];
+
+        if (in_array($this->domain->getDomainConfigById($domainId)->getLocale(), $supportedLocalesByCsvDataFixturesData, true)) {
+            return $this->domain->getDomainConfigById($domainId)->getLocale();
+        }
+
+        if (in_array($this->dataFixturesTranslations->getDefaultLocaleIfNotAvailableRequestedLocale(), $supportedLocalesByCsvDataFixturesData, true)) {
+            return $this->dataFixturesTranslations->getDefaultLocaleIfNotAvailableRequestedLocale();
+        }
+
+        throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnsupportedLocaleException($this->domain->getDomainConfigById($domainId)->getLocale());
     }
 }
