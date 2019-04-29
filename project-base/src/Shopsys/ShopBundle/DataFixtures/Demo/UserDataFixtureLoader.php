@@ -26,7 +26,7 @@ class UserDataFixtureLoader
     protected const COLUMN_CITY = 9;
     protected const COLUMN_POSTCODE = 10;
     protected const COLUMN_TELEPHONE = 11;
-    protected const COLUMN_COUNTRY = 12;
+    protected const COLUMN_COUNTRY_CODE = 12;
     protected const COLUMN_DELIVERY_ADDRESS_FILLED = 13;
     protected const COLUMN_DELIVERY_CITY = 14;
     protected const COLUMN_DELIVERY_COMPANY_NAME = 15;
@@ -35,7 +35,7 @@ class UserDataFixtureLoader
     protected const COLUMN_DELIVERY_POSTCODE = 18;
     protected const COLUMN_DELIVERY_STREET = 19;
     protected const COLUMN_DELIVERY_TELEPHONE = 20;
-    protected const COLUMN_DELIVERY_COUNTRY = 21;
+    protected const COLUMN_DELIVERY_COUNTRY_CODE = 21;
     protected const COLUMN_DOMAIN_ID = 22;
 
     /**
@@ -183,7 +183,7 @@ class UserDataFixtureLoader
         $billingAddressData->street = $row[self::COLUMN_STREET];
         $billingAddressData->city = $row[self::COLUMN_CITY];
         $billingAddressData->postcode = $row[self::COLUMN_POSTCODE];
-        $billingAddressData->country = $this->getCountryByNameAndDomain($row[self::COLUMN_COUNTRY], $domainId);
+        $billingAddressData->country = $this->getCountryByCountryCodeAndDomain($row[self::COLUMN_COUNTRY_CODE], $domainId);
         if ($row[self::COLUMN_DELIVERY_ADDRESS_FILLED] === 'true') {
             $deliveryAddressData = $this->deliveryAddressDataFactory->create();
             $deliveryAddressData->addressFilled = true;
@@ -194,7 +194,7 @@ class UserDataFixtureLoader
             $deliveryAddressData->postcode = $row[self::COLUMN_DELIVERY_POSTCODE];
             $deliveryAddressData->street = $row[self::COLUMN_DELIVERY_STREET];
             $deliveryAddressData->telephone = $row[self::COLUMN_DELIVERY_TELEPHONE];
-            $deliveryAddressData->country = $this->getCountryByNameAndDomain($row[self::COLUMN_DELIVERY_COUNTRY], $domainId);
+            $deliveryAddressData->country = $this->getCountryByCountryCodeAndDomain($row[self::COLUMN_DELIVERY_COUNTRY_CODE], $domainId);
             $customerData->deliveryAddressData = $deliveryAddressData;
         } else {
             $customerData->deliveryAddressData = $this->deliveryAddressDataFactory->create();
@@ -208,21 +208,19 @@ class UserDataFixtureLoader
     }
 
     /**
-     * @param string $countryName
+     * @param string $countryCode
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    protected function getCountryByNameAndDomain(string $countryName, int $domainId): Country
+    protected function getCountryByCountryCodeAndDomain(string $countryCode, int $domainId): Country
     {
-        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
-
         foreach ($this->countries as $country) {
-            if ($country->getName($locale) === $countryName) {
+            if ($country->getCode() === $countryCode && $country->isEnabled($domainId)) {
                 return $country;
             }
         }
 
-        $message = 'Country with name "' . $countryName . '" was not found.';
+        $message = 'Country with code "' . $countryCode . '" was not found for domain ' . $domainId . '.';
         throw new \Shopsys\FrameworkBundle\Model\Country\Exception\CountryNotFoundException($message);
     }
 }
