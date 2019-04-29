@@ -209,6 +209,10 @@
     </target>
 
     <target name="db-fixtures-demo" description="Loads demo data fixtures.">
+        <echo message="Language translations are installed for each configured domain locale.${line.separator}
+            If the requested locale is not available, the default locale is used instead.${line.separator}
+            See 'shopsys.data_fixtures.default_locale_if_not_available_requested_locale' in parameters_common.yml" />
+
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />
             <arg value="doctrine:fixtures:load" />
