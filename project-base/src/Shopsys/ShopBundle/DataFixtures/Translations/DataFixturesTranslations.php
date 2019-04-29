@@ -54,9 +54,12 @@ class DataFixturesTranslations
     /**
      * @param \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface $translationService
      */
-    public function registerTranslation($translationService): void
+    public function registerTranslation(DataFixturesTranslationInterface $translationService): void
     {
-        $this->registeredLanguageTranslations[] = new $translationService();
+        /** @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface $translationService */
+        $translationService = new $translationService();
+
+        $this->registeredLanguageTranslations[$translationService->getLocale()] = $translationService;
     }
 
     /**
@@ -65,6 +68,19 @@ class DataFixturesTranslations
     public function getDefaultLocaleIfNotAvailableRequestedLocale(): string
     {
         return $this->defaultLocaleIfNotAvailableRequestedLocale;
+    }
+
+    /**
+     * @param string $locale
+     * @return \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface
+     */
+    private function getRegisteredTranslationByLocaleOrDefaultTranslation(string $locale): DataFixturesTranslationInterface
+    {
+        if (array_key_exists($locale, $this->registeredLanguageTranslations)) {
+            return $this->registeredLanguageTranslations[$locale];
+        }
+
+        return $this->registeredLanguageTranslations[$this->getDefaultLocaleIfNotAvailableRequestedLocale()];
     }
 
     /**
@@ -79,7 +95,9 @@ class DataFixturesTranslations
         string $referenceName
     ): array {
         $entityAttributeTranslationsIndexedByLocale = [];
-        foreach ($this->registeredLanguageTranslations as $registeredLanguageTranslation) {
+        foreach ($this->domain->getAllLocales() as $domainLocale) {
+            $registeredLanguageTranslation = $this->getRegisteredTranslationByLocaleOrDefaultTranslation($domainLocale);
+
             $translations = $registeredLanguageTranslation->getTranslations();
 
             if (!isset($translations[$translatedEntity][$translatedAttribute][$referenceName])) {
@@ -94,7 +112,7 @@ class DataFixturesTranslations
                 );
             }
 
-            $entityAttributeTranslationsIndexedByLocale[$registeredLanguageTranslation->getLocale()] = $translations[$translatedEntity][$translatedAttribute][$referenceName];
+            $entityAttributeTranslationsIndexedByLocale[$domainLocale] = $translations[$translatedEntity][$translatedAttribute][$referenceName];
         }
 
         return $entityAttributeTranslationsIndexedByLocale;
@@ -110,7 +128,9 @@ class DataFixturesTranslations
         string $translatedAttribute
     ): array {
         $entityAttributeTranslationsIndexedByLocale = [];
-        foreach ($this->registeredLanguageTranslations as $registeredLanguageTranslation) {
+        foreach ($this->domain->getAllLocales() as $domainLocale) {
+            $registeredLanguageTranslation = $this->getRegisteredTranslationByLocaleOrDefaultTranslation($domainLocale);
+
             $translations = $registeredLanguageTranslation->getTranslations();
 
             if (!isset($translations[$translatedEntity][$translatedAttribute])) {
@@ -124,7 +144,7 @@ class DataFixturesTranslations
                 );
             }
 
-            $entityAttributeTranslationsIndexedByLocale[$registeredLanguageTranslation->getLocale()] = $translations[$translatedEntity][$translatedAttribute];
+            $entityAttributeTranslationsIndexedByLocale[$domainLocale] = $translations[$translatedEntity][$translatedAttribute];
         }
 
         return $entityAttributeTranslationsIndexedByLocale;
@@ -147,11 +167,7 @@ class DataFixturesTranslations
         );
 
         $localeByDomainId = $this->domain->getDomainConfigById($domainId)->getLocale();
-        if (array_key_exists($localeByDomainId, $entityAttributeTranslationsIndexedByLocale)) {
-            return $entityAttributeTranslationsIndexedByLocale[$localeByDomainId];
-        }
-
-        return $entityAttributeTranslationsIndexedByLocale[$this->defaultLocaleIfNotAvailableRequestedLocale];
+        return $entityAttributeTranslationsIndexedByLocale[$localeByDomainId];
     }
 
     /**
@@ -174,10 +190,6 @@ class DataFixturesTranslations
         );
 
         $localeByDomainId = $this->domain->getDomainConfigById($domainId)->getLocale();
-        if (array_key_exists($localeByDomainId, $entityAttributeTranslationsIndexedByLocale)) {
-            return $entityAttributeTranslationsIndexedByLocale[$localeByDomainId];
-        }
-
-        return $entityAttributeTranslationsIndexedByLocale[$this->defaultLocaleIfNotAvailableRequestedLocale];
+        return $entityAttributeTranslationsIndexedByLocale[$localeByDomainId];
     }
 }
