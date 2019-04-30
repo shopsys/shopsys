@@ -131,7 +131,7 @@ There you can find links to upgrade notes for other versions too.
     +   id: shopsys.doctrine.cache_driver.metadata_cache
     query_cache_driver:
         type: service
-    -   id: Doctrine\Common\Cache\RedisCache
+    -   id: Doctrine\Common\Cache\ChainCache
     +   id: shopsys.doctrine.cache_driver.query_cache
     ```
     - update `app/config/packages/test/doctrine.yml`:
