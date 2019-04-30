@@ -104,7 +104,7 @@ There you can find links to upgrade notes for other versions too.
             rules:
         ```
     - check and update also all parent proxy servers for each project
-- *(low priority)* use redis as cache for doctrine and framework ([#930](https://github.com/shopsys/shopsys/pull/930))
+- use redis as cache for doctrine and framework ([#930](https://github.com/shopsys/shopsys/pull/930))
     - update `app/config/packages/framework.yml`:
     ```diff
     framework:
