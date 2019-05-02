@@ -18,6 +18,7 @@ There you can find links to upgrade notes for other versions too.
         -        $filepath = $file->getPathname();
         +        $filepath = TransformString::removeDriveLetterFromPath($file->getPathname());
         ```
+- always provide first parameter `$categoryId` of `CategoryDomainNotFoundException` because it is set as mandatory now ([#981](https://github.com/shopsys/shopsys/issues/981))
 
 
 ### Configuration
