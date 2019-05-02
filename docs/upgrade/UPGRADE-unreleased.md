@@ -187,7 +187,7 @@ There you can find links to upgrade notes for other versions too.
         +    - config_file=/var/lib/postgresql/data/postgresql.conf
         ```
 ### Tools
-- add path for tests folder into `ecs-fix` phing target ([#980](https://github.com/shopsys/shopsys/pull/980))
+- add path for tests folder into `ecs-fix` phing target of `build-dev.xml` file ([#980](https://github.com/shopsys/shopsys/pull/980))
     ```diff
       <arg path="${path.src}" />
     + <arg path="${path.tests}" />
