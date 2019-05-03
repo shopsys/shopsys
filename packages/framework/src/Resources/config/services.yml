@@ -1,15 +1,6 @@
 imports:
     - { resource: services/*.yml }
 
-parameters:
-    fp_js_form_validator.factory.class: Shopsys\FrameworkBundle\Form\JsFormValidatorFactory
-    knp_menu.factory_extension.routing.class: Shopsys\FrameworkBundle\Model\AdminNavigation\RoutingExtension
-    prezent_doctrine_translatable.listener.class: Shopsys\FrameworkBundle\Model\Localization\TranslatableListener
-    faker.seed: 1234
-    shopsys.entity_extension.map: {}
-    shopsys.admin_locale: en
-    build-version: '0000000000000000'
-
 services:
     _defaults:
         autowire: true
