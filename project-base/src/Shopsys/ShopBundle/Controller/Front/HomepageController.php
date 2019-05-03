@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
+use Shopsys\FrameworkBundle\Model\Product\View\ListedProductViewFacade;
 
 class HomepageController extends FrontBaseController
 {
@@ -36,6 +37,11 @@ class HomepageController extends FrontBaseController
     private $domain;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\View\ListedProductViewFacade
+     */
+    private $listedProductsFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade $sliderItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductsFacade
@@ -47,22 +53,21 @@ class HomepageController extends FrontBaseController
         SliderItemFacade $sliderItemFacade,
         TopProductFacade $topProductsFacade,
         SeoSettingFacade $seoSettingFacade,
-        Domain $domain
+        Domain $domain,
+        ListedProductViewFacade $listedProductsFacade
     ) {
         $this->currentCustomer = $currentCustomer;
         $this->sliderItemFacade = $sliderItemFacade;
         $this->topProductFacade = $topProductsFacade;
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
+        $this->listedProductsFacade = $listedProductsFacade;
     }
 
     public function indexAction()
     {
         $sliderItems = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
-        $topProducts = $this->topProductFacade->getAllOfferedProducts(
-            $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
-        );
+        $topProducts = $this->listedProductsFacade->getTop();
 
         return $this->render('@ShopsysShop/Front/Content/Default/index.html.twig', [
             'sliderItems' => $sliderItems,

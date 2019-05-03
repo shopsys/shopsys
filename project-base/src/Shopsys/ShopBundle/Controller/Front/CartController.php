@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
+use Shopsys\FrameworkBundle\Model\Product\View\ListedProductViewFacade;
+use Shopsys\FrameworkBundle\Model\Product\View\ProductActionView;
 use Shopsys\ShopBundle\Form\Front\Cart\AddProductFormType;
 use Shopsys\ShopBundle\Form\Front\Cart\CartFormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,6 +61,11 @@ class CartController extends FrontBaseController
     private $errorExtractor;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\View\ListedProductViewFacade
+     */
+    private $listedProductsFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
@@ -66,6 +73,7 @@ class CartController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
+     * @param \Shopsys\FrameworkBundle\Model\Product\View\ListedProductViewFacade $listedProductsFacade
      */
     public function __construct(
         ProductAccessoryFacade $productAccessoryFacade,
@@ -74,7 +82,8 @@ class CartController extends FrontBaseController
         Domain $domain,
         FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
         OrderPreviewFactory $orderPreviewFactory,
-        ErrorExtractor $errorExtractor
+        ErrorExtractor $errorExtractor,
+        ListedProductViewFacade $listedProductsFacade
     ) {
         $this->productAccessoryFacade = $productAccessoryFacade;
         $this->cartFacade = $cartFacade;
@@ -83,6 +92,7 @@ class CartController extends FrontBaseController
         $this->freeTransportAndPaymentFacade = $freeTransportAndPaymentFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->errorExtractor = $errorExtractor;
+        $this->listedProductsFacade = $listedProductsFacade;
     }
 
     /**
@@ -157,6 +167,7 @@ class CartController extends FrontBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param string $type
+     * @deprecated This action is deprecated since 7.2.0, use ShopsysShopBundle:Front/Cart:productAction instead
      */
     public function addProductFormAction(Product $product, $type = 'normal')
     {
@@ -167,6 +178,23 @@ class CartController extends FrontBaseController
         return $this->render('@ShopsysShop/Front/Inline/Cart/addProduct.html.twig', [
             'form' => $form->createView(),
             'product' => $product,
+            'type' => $type,
+        ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\View\ProductActionView $productActionView
+     * @param string $type
+     */
+    public function productActionAction(ProductActionView $productActionView, $type = 'normal')
+    {
+        $form = $this->createForm(AddProductFormType::class, ['productId' => $productActionView->getId()], [
+            'action' => $this->generateUrl('front_cart_add_product'),
+        ]);
+
+        return $this->render('@ShopsysShop/Front/Inline/Cart/productAction.html.twig', [
+            'form' => $form->createView(),
+            'productActionView' => $productActionView,
             'type' => $type,
         ]);
     }
@@ -231,10 +259,8 @@ class CartController extends FrontBaseController
 
                 $this->sendAddProductResultFlashMessage($addProductResult);
 
-                $accessories = $this->productAccessoryFacade->getTopOfferedAccessories(
-                    $addProductResult->getCartItem()->getProduct(),
-                    $this->domain->getId(),
-                    $this->currentCustomer->getPricingGroup(),
+                $accessories = $this->listedProductsFacade->getAccessories(
+                    $addProductResult->getCartItem()->getProduct()->getId(),
                     self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
                 );
 
