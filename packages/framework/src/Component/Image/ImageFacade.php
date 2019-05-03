@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ImageFacade
 {
@@ -368,5 +369,28 @@ class ImageFacade
             $image->setPosition($position);
             $position++;
         }
+    }
+
+    /**
+     * @param int[] $entityIds
+     * @param string $entityClass FQCN
+     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
+     */
+    public function getImagesOrNullsByEntitiesIndexedByEntityId(array $entityIds, string $entityClass)
+    {
+        $entityName = $this->imageConfig->getImageEntityConfigByClass($entityClass)->getEntityName();
+        $imagesByEntityId = $this->imageRepository->getMainImagesByEntitiesIndexedByEntityId($entityIds, $entityName);
+
+        $imagesOrNullByEntityId = [];
+
+        foreach ($entityIds as $entityId) {
+            if (array_key_exists($entityId, $imagesByEntityId)) {
+                $imagesOrNullByEntityId[$entityId] = $imagesByEntityId[$entityId];
+            } else {
+                $imagesOrNullByEntityId[$entityId] = null;
+            }
+        }
+
+        return $imagesOrNullByEntityId;
     }
 }
