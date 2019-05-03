@@ -33,20 +33,6 @@ class ProductActionView
     protected $detailUrl;
 
     /**
-     * @param int $id
-     * @param bool $sellingDenied
-     * @param bool $mainVariant
-     * @param string $detailUrl
-     */
-    public function __construct(int $id, bool $sellingDenied, bool $mainVariant, string $detailUrl)
-    {
-        $this->id = $id;
-        $this->sellingDenied = $sellingDenied;
-        $this->mainVariant = $mainVariant;
-        $this->detailUrl = $detailUrl;
-    }
-
-    /**
      * @return int
      */
     public function getId(): int
@@ -76,5 +62,37 @@ class ProductActionView
     public function getDetailUrl(): string
     {
         return $this->detailUrl;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param bool $sellingDenied
+     */
+    public function setSellingDenied(bool $sellingDenied): void
+    {
+        $this->sellingDenied = $sellingDenied;
+    }
+
+    /**
+     * @param bool $mainVariant
+     */
+    public function setMainVariant(bool $mainVariant): void
+    {
+        $this->mainVariant = $mainVariant;
+    }
+
+    /**
+     * @param string $detailUrl
+     */
+    public function setDetailUrl(string $detailUrl): void
+    {
+        $this->detailUrl = $detailUrl;
     }
 }

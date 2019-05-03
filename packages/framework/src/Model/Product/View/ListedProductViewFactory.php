@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\View;
 
+use Shopsys\FrameworkBundle\Component\Normalizer\Normalizer;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Image\View\ImageViewFactory;
 
@@ -23,16 +24,25 @@ class ListedProductViewFactory
     protected $productActionViewsFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Normalizer\Normalizer
+     */
+    protected $normalizer;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Image\View\ImageViewFactory $imageViewFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\View\ProductActionViewFactory $productActionViewsFactory
+     * @param \Shopsys\FrameworkBundle\Component\Normalizer\Normalizer $normalizer
      */
     public function __construct(
         ImageViewFactory $imageViewFactory,
-        ProductActionViewFactory $productActionViewsFactory
+        ProductActionViewFactory $productActionViewsFactory,
+        Normalizer $normalizer
     ) {
         $this->imageViewFactory = $imageViewFactory;
         $this->productActionViewsFactory = $productActionViewsFactory;
+        $this->normalizer = $normalizer;
     }
+
     /**
      * @param array $listedProductViewsData
      * @return \Shopsys\FrameworkBundle\Model\Product\View\ListedProductView[]
@@ -45,23 +55,21 @@ class ListedProductViewFactory
         );
         $actionViewsIndexedByProductIds = $this->productActionViewsFactory->getProductActionViewsIndexedByProductIds($listedProductViewsData);
 
-        $listedProductsViews = [];
-        foreach ($listedProductViewsData as $listedProductViewData) {
+        foreach ($listedProductViewsData as $index => $listedProductViewData) {
             $productId = $listedProductViewData['id'];
-            $actionView = $actionViewsIndexedByProductIds[$productId];
-            $listedProductsViews[] = new ListedProductView(
-                $productId,
-                $listedProductViewData['name'],
-                $imageViewsIndexedByProductIds[$productId],
-                $listedProductViewData['availabilityName'],
-                $listedProductViewData['sellingPrice'],
-                $listedProductViewData['shortDescription'],
-                $listedProductViewData['flagIds'],
-                $actionView
-            );
+            $listedProductViewsData[$index]['action'] = $actionViewsIndexedByProductIds[$productId];
+            $listedProductViewsData[$index]['image'] = $imageViewsIndexedByProductIds[$productId];
         }
 
-        return $listedProductsViews;
+        return $this->normalizer->denormalizeArray($listedProductViewsData, $this->getViewObjectName());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getViewObjectName(): string
+    {
+        return ListedProductView::class;
     }
 
     /**

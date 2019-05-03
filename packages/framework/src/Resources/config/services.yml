@@ -1005,3 +1005,5 @@ services:
             - '@snc_redis.doctrine_metadata'
             - '@snc_redis.doctrine_query'
             - '@snc_redis.session'
+
+    Shopsys\FrameworkBundle\Component\Normalizer\Normalizer: ~

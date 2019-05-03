@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\View;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Normalizer\Normalizer;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * @experimental
@@ -23,15 +25,23 @@ class ProductActionViewFactory
     protected $domain;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Normalizer\Normalizer
+     */
+    private $normalizer;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Normalizer\Normalizer $normalizer
      */
     public function __construct(
         ProductCollectionFacade $productCollectionFacade,
-        Domain $domain
+        Domain $domain,
+        Normalizer $normalizer
     ) {
         $this->productCollectionFacade = $productCollectionFacade;
         $this->domain = $domain;
+        $this->normalizer = $normalizer;
     }
 
     /**
@@ -44,18 +54,27 @@ class ProductActionViewFactory
             $this->getAllIds($listedProductViewsData),
             $this->domain->getCurrentDomainConfig()
         );
-        $productActionViews = [];
+        $productActionData = [];
         foreach ($listedProductViewsData as $listedProductViewData) {
             $productId = $listedProductViewData['id'];
-            $productActionViews[$productId] = new ProductActionView(
-                $productId,
-                $listedProductViewData['sellingDenied'],
-                $listedProductViewData['mainVariant'],
-                $absoluteUrlsIndexedByProductId[$productId]
-            );
+
+            $productActionData[$productId] = [
+                'id' => $productId,
+                'sellingDenied' => $listedProductViewData['sellingDenied'],
+                'mainVariant' => $listedProductViewData['mainVariant'],
+                'detailUrl' => $absoluteUrlsIndexedByProductId[$productId],
+            ];
         }
 
-        return $productActionViews;
+        return $this->normalizer->denormalizeArray($productActionData, $this->getViewObjectName());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getViewObjectName(): string
+    {
+        return ProductActionView::class;
     }
 
     /**
