@@ -33,6 +33,7 @@
 * [Product Feeds](./model/product-feeds.md)
 * [Custom Entities](./model/custom-entities.md)
 * [Product Searching via Elasticsearch](./model/product-search-via-elasticsearch.md)
+* [Introduction to Read Model](./model/introduction-to-read-model.md)
 
 ## Cookbook
 * [Dumping and Importing the Database](./cookbook/dumping-and-importing-the-database.md)
