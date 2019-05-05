@@ -1,0 +1,60 @@
+dist: xenial
+sudo: true
+
+stages:
+  - Build
+  - Tests
+
+cache:
+  timeout: 1000
+  directories:
+    - $CACHE_DIR
+
+env:
+  global:
+    - CACHE_DIR=$HOME/.cache/docker
+    - CACHE_FILE_IMAGE=$CACHE_DIR/php-fpm.tar.gz
+    - ES_VERSION=6.3.2
+
+before_install:
+  - if [ -f ${CACHE_FILE_IMAGE} ]; then gunzip -c ${CACHE_FILE_IMAGE} | docker load; fi
+  - if [ $TRAVIS_BUILD_STAGE_NAME = Tests ]; then sudo apt-get update; fi
+  - if [ $TRAVIS_BUILD_STAGE_NAME = Tests ]; then sudo apt-get install language-pack-cs language-pack-hu language-pack-pl language-pack-sk; fi
+  - if [ $TRAVIS_BUILD_STAGE_NAME = Tests ]; then sudo /etc/init.d/postgresql stop; fi
+  - if [ $TRAVIS_BUILD_STAGE_NAME = Tests ]; then sudo /etc/init.d/postgresql start 10; fi
+  - if [ $TRAVIS_BUILD_STAGE_NAME = Tests ]; then curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$ES_VERSION.deb && sudo dpkg -i --force-confnew elasticsearch-$ES_VERSION.deb && sudo service elasticsearch start; fi
+  - if [ $TRAVIS_BUILD_STAGE_NAME = Tests ]; then psql -c "CREATE USER root WITH SUPERUSER PASSWORD 'root';" -U postgres; fi
+
+addons:
+  postgresql: "10"
+
+services:
+  - redis-server
+  - docker
+
+jobs:
+  include:
+    - stage: Build
+      before_script:
+        - mkdir -p $CACHE_DIR
+      script:
+        - docker image build
+          --build-arg project_root=project-base
+          --tag php-fpm
+          --target production
+          --cache-from php-fpm
+          -f project-base/docker/php-fpm/Dockerfile . &&
+          docker save php-fpm | gzip > ${CACHE_FILE_IMAGE}
+    - stage: Tests
+      name: Standards
+      script: docker run --rm php-fpm php phing composer-dev standards
+    - name: Unit tests
+      script: docker run --rm php-fpm php phing composer-dev tests-static
+    - name: Functional and Smoke tests
+      script:
+        - docker run
+          --add-host postgres:127.0.0.1
+          --add-host elasticsearch:127.0.0.1
+          --add-host redis:127.0.0.1
+          --network=host
+          --rm php-fpm php phing travis-tests-functional

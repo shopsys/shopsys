@@ -309,4 +309,7 @@
         </exec>
     </target>
 
+    <target name="travis-tests-functional" depends="composer-dev,db-create,db-import-basic-structure,db-migrations,create-domains-data,db-fixtures-demo,load-plugin-demo-data,generate-friendly-urls,test-db-create,grunt,error-pages-generate,test-db-demo,product-search-recreate-structure,product-search-export-products,tests-smoke,tests-functional" description="Run functional and smoke tests."/>
+    <target name="travis-tests-acceptance" depends="composer-dev,db-create,db-import-basic-structure,db-migrations,test-db-create,grunt,error-pages-generate,test-db-demo,product-search-recreate-structure,product-search-export-products,tests-acceptance" description="Run acceptance tests."/>
+
 </project>
