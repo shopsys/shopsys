@@ -175,11 +175,11 @@ There you can find links to upgrade notes for other versions too.
     +       - -c
     +       - config_file=/var/lib/postgresql/data/postgresql.conf
     ```
-    - update definition of postgres service in your `kubernetes/deployments/postgres.yml`
+    - update postgres deployment manifest in your `kubernetes/deployments/postgres.yml`
         ```diff
                 -   name: PGDATA
                     value: /var/lib/postgresql/data/pgdata
-        + command:
+        + args:
         +    - postgres
         +    - -c
         +    - config_file=/var/lib/postgresql/data/postgresql.conf
