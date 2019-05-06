@@ -31,10 +31,12 @@ final class PhpToDocTypeTransformer
      */
     public function transform(Tokens $tokens, ?TypeAnalysis $typeAnalysis, $default = null): string
     {
+        $isNullable = false;
         if ($typeAnalysis === null) {
             $type = 'mixed';
         } else {
-            if ($typeAnalysis->isReservedType() && $default === null) {
+            $isNullable = method_exists($typeAnalysis, 'isNullable') && $typeAnalysis->isNullable();
+            if ($typeAnalysis->isReservedType() && !$isNullable && $default === null) {
                 return $typeAnalysis->getName();
             }
 
@@ -42,7 +44,7 @@ final class PhpToDocTypeTransformer
         }
 
         // nullable
-        if ($type[0] === '?' || (is_string($default) && strtolower($default) === 'null')) {
+        if ($type[0] === '?' || (is_string($default) && strtolower($default) === 'null') || $isNullable) {
             return $this->createFromNullable($tokens, $type);
         }
 
