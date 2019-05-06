@@ -171,7 +171,6 @@ There you can find links to upgrade notes for other versions too.
             - POSTGRES_PASSWORD=root
             - POSTGRES_DB=shopsys
     +   command:
-    +       - docker-entrypoint.sh
     +       - postgres
     +       - -c
     +       - config_file=/var/lib/postgresql/data/postgresql.conf
@@ -181,7 +180,6 @@ There you can find links to upgrade notes for other versions too.
                 -   name: PGDATA
                     value: /var/lib/postgresql/data/pgdata
         + command:
-        +    - docker-entrypoint.sh
         +    - postgres
         +    - -c
         +    - config_file=/var/lib/postgresql/data/postgresql.conf
