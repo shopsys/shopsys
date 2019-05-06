@@ -23,7 +23,6 @@ Typical upgrade sequence should be:
             - POSTGRES_PASSWORD=root
             - POSTGRES_DB=shopsys
     +   command:
-    +       - docker-entrypoint.sh
     +       - postgres
     +       - -c
     +       - config_file=/var/lib/postgresql/data/postgresql.conf
