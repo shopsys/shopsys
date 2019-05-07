@@ -94,7 +94,7 @@ services:
 +   Shopsys\ShopBundle\Model\Product\ImportProductsCronModule:
 +       class: Shopsys\ShopBundle\Model\Product\ImportProductsCronModule
 +       tags:
-+           - { name: shopsys.cron, hours: '*/3', minutes: '0' }
++           - { name: shopsys.cron, hours: '*', minutes: '*' }
 ```
 
 *Note: You can schedule cron modules to run at any time you want using [cron expression](https://en.wikipedia.org/wiki/Cron#CRON_expression). This example module will be run every 3 hours.*
