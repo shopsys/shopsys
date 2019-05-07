@@ -179,13 +179,14 @@ There you can find links to upgrade notes for other versions too.
         ```diff
                 -   name: PGDATA
                     value: /var/lib/postgresql/data/pgdata
-        + args:a
+        + args:
         +    - postgres
         +    - -c
         +    - config_file=/var/lib/postgresql/data/postgresql.conf
         ```
-- create configuration file for your crons in your project base ([#989](https://github.com/shopsys/shopsys/pull/989))
-    - create new file `src/ShopBundle/Resources/config/services/cron.yml` with following code:
+- create or move if you already have configuration file for crons in your project base ([#989](https://github.com/shopsys/shopsys/pull/989))
+    - create or move your `cron.yml` file to location `src/ShopBundle/Resources/config/services/`
+    - if you created new file, insert following code:
         ```
         services:
             _defaults:
