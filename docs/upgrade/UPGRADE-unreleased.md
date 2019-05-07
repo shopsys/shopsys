@@ -179,7 +179,7 @@ There you can find links to upgrade notes for other versions too.
         ```diff
                 -   name: PGDATA
                     value: /var/lib/postgresql/data/pgdata
-        + args:
+        + args:a
         +    - postgres
         +    - -c
         +    - config_file=/var/lib/postgresql/data/postgresql.conf
@@ -201,7 +201,7 @@ There you can find links to upgrade notes for other versions too.
     - update `src/Shopsys/ShopBundle/Resources/config/services.yml`:
         ```diff
         imports:
-        -   - { resource: forms.yml }
+            - { resource: forms.yml }
         -   - { resource: services/commands.yml }
         -   - { resource: services/data_fixtures.yml }
         +   - { resource: services/*.yml }
