@@ -4,9 +4,8 @@ php:
   - 7.1
 
 cache:
-  directories:
-    - ~/.composer/cache
-    - ~/.npm
+  composer: true
+  npm: true
 
 before_install:
   - phpenv config-add project-base/docker/php-fpm/php-ini-overrides.ini
