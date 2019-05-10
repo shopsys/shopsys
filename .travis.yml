@@ -15,7 +15,7 @@ before_install:
   - composer global require hirak/prestissimo
 
 install:
-  - composer install --optimize-autoloader --no-interaction --no-progress --dev
+  - composer install --optimize-autoloader --no-interaction --no-progress
   - php phing npm
 
 script:
