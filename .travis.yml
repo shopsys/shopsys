@@ -8,9 +8,6 @@ cache:
     - ~/.composer/cache
     - ~/.npm
 
-env:
-  - ELASTIC_SEARCH_INDEX_PREFIX=""
-
 before_install:
   - phpenv config-add project-base/docker/php-fpm/php-ini-overrides.ini
   - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
