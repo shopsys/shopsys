@@ -10,3 +10,6 @@
 /project-base/composer.lock
 /project-base/package-lock.json
 /project-base/migrations-lock.yml
+
+/project-base/docker/conf/mutagen
+/project-base/scripts/mutagen-sync.sh

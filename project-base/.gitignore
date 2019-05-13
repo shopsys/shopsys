@@ -15,3 +15,6 @@
 .DS_Store
 /docker-compose.yml
 /docker-sync.yml
+
+/docker/conf/mutagen
+/scripts/mutagen-sync.sh
