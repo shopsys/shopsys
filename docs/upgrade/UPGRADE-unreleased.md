@@ -217,6 +217,11 @@ There you can find links to upgrade notes for other versions too.
         +   database_server_version: 10.5
         ...
         ```
+- *(Windows only)* remove mounting of `docker/php-fpm/php-ini-overrides.ini` via `docker-compose.yml` using Windows OS ([#1017](https://github.com/shopsys/shopsys/pull/1017))
+    ```diff
+    -            - ./docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
+    ```
+
 ### Tools
 - add path for tests folder into `ecs-fix` phing target of `build-dev.xml` file to be able to fix files that were found by `ecs` phing target ([#980](https://github.com/shopsys/shopsys/pull/980))
     ```diff

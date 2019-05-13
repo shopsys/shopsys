@@ -11,7 +11,7 @@ services:
         container_name: shopsys-framework-postgres
         volumes:
             - ./project-base/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf:delegated
-            - ./project-base/var/postgres-data:/var/lib/postgresql/data:cached
+            - postgres-data:/var/lib/postgresql/data
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=root

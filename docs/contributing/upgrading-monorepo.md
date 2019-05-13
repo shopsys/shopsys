@@ -28,6 +28,10 @@ Typical upgrade sequence should be:
     +       - config_file=/var/lib/postgresql/data/postgresql.conf
     ```
 - remove `database_server_version` parameter from `parameters.yml` and `parameters.yml.dist` ([#1001](https://github.com/shopsys/shopsys/pull/1001))
+- *(Windows only)* remove mounting of `docker/php-fpm/php-ini-overrides.ini` via `docker-compose.yml` using Windows OS ([#1017](https://github.com/shopsys/shopsys/pull/1017))
+    ```diff
+    -            - ./project-base/docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
+    ```
 
 ## [From v7.0.0 to v7.1.0]
 
