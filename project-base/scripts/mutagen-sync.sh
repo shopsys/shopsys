@@ -1,3 +1,5 @@
+#!/bin/bash
+numberRegex="^[0-9]+([.][0-9]+)?$"
 projectPathPrefix=''
 dockerComposeOS=''
 allowedValues=(1 2 3)
