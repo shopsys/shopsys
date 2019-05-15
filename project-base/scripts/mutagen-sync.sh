@@ -46,7 +46,7 @@ case "$operatingSystem" in
         ;;
 esac
 
-docker-compose down -v
+docker-compose down
 docker-compose up -d
 docker-compose exec webserver mkdir -p /var/www/html/${projectPathPrefix}web
 docker-compose exec php-fpm mkdir -p /var/www/html/{vendor,${projectPathPrefix}node_modules}
