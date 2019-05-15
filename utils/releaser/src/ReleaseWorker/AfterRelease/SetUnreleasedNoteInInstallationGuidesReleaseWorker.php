@@ -10,7 +10,6 @@ use Shopsys\Releaser\FileManipulator\InstallationGuideFileManipulator;
 use Shopsys\Releaser\FilesProvider\InstallationGuideFilesProvider;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
-use Symplify\MonorepoBuilder\Release\Message;
 
 final class SetUnreleasedNoteInInstallationGuidesReleaseWorker extends AbstractShopsysReleaseWorker
 {
