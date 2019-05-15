@@ -15,3 +15,7 @@ services:
     Shopsys\PohodaBundle\Model\Order\JShopsys\JShopsysOrderExportFacade:
         arguments:
             $ordersExportDirectory: '%shopsys.web_dir%/db/pohoda/data/export_xml'
+
+    Shopsys\PohodaBundle\Model\Product\JShopsys\JShopsysProductImportFacade:
+        arguments:
+            $productsImportDirectory: '%shopsys.web_dir%/db/pohoda/data/import_zbozi'
