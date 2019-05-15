@@ -65,7 +65,7 @@ mutagen flush -a
 
 # move web content from php-fpm into webserver container
 # no need to wait
-mutagen create --sync-mode one-way-replica --ignore-vcs docker://www-data@shopsys-framework-php-fpm/var/www/html/${projectPathPrefix}web docker://root@shopsys-framework-webserver/var/www/html/${projectPathPrefix}web
+mutagen create --sync-mode one-way-replica --default-directory-mode-beta 0755 --default-file-mode-beta 0666 --ignore-vcs docker://www-data@shopsys-framework-php-fpm/var/www/html/${projectPathPrefix}web docker://root@shopsys-framework-webserver/var/www/html/${projectPathPrefix}web
 
 ### build process
 # docker-compose exec php-fpm composer install -n
