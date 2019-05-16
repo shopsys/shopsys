@@ -49,23 +49,34 @@ esac
 docker-compose down
 docker-compose up -d
 docker-compose exec webserver mkdir -p /var/www/html/${projectPathPrefix}web
-docker-compose exec php-fpm mkdir -p /var/www/html/{vendor,${projectPathPrefix}node_modules}
+docker-compose exec php-fpm mkdir -p /var/www/html/{.git,vendor,${projectPathPrefix}node_modules}
 
 mutagen create --ignore-vcs -i ./vendor \
+    --watch-mode force-poll \
+    --watch-polling-interval 5 \
     -i ./${projectPathPrefix}web \
     -i ./${projectPathPrefix}node_modules \
     ./ docker://www-data@shopsys-framework-php-fpm/var/www/html
+    
 mutagen create --ignore-vcs \
-    -i ./${projectPathPrefix}node_modules \
+    --watch-mode force-poll \
+    --watch-polling-interval 5 \
     ./${projectPathPrefix}web docker://www-data@shopsys-framework-php-fpm/var/www/html/${projectPathPrefix}web
-mutagen create ./vendor docker://www-data@shopsys-framework-php-fpm/var/www/html/vendor
+
+mutagen create \
+    --watch-mode force-poll \
+    --watch-polling-interval 10 \
+    ./vendor docker://www-data@shopsys-framework-php-fpm/var/www/html/vendor
 
 # wait till all sync sessions are filled with files
 mutagen flush -a
 
 # move web content from php-fpm into webserver container
 # no need to wait
-mutagen create --sync-mode one-way-replica --default-directory-mode-beta 0755 --default-file-mode-beta 0666 --ignore-vcs docker://www-data@shopsys-framework-php-fpm/var/www/html/${projectPathPrefix}web docker://root@shopsys-framework-webserver/var/www/html/${projectPathPrefix}web
+mutagen create --sync-mode one-way-replica \
+    --watch-mode force-poll \
+    --watch-polling-interval 5 \
+    --default-directory-mode-beta 0755 --default-file-mode-beta 0666 --ignore-vcs docker://www-data@shopsys-framework-php-fpm/var/www/html/${projectPathPrefix}web docker://root@shopsys-framework-webserver/var/www/html/${projectPathPrefix}web
 
 ### build process
 # docker-compose exec php-fpm composer install -n
