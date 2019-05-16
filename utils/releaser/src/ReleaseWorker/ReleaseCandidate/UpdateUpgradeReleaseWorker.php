@@ -127,13 +127,12 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $upgradeFilePath = getcwd() . '/docs/upgrade/UPGRADE-unreleased.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
-        $newUpgradeFilePath = getcwd() . '/docs/upgrade/UPGRADE-' . $version->getVersionString() . '.md';
         $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version);
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
-        FileSystem::rename($upgradeFilePath, $newUpgradeFilePath);
+        FileSystem::rename($upgradeFilePath, getcwd() . '/docs/upgrade/UPGRADE-' . $version->getVersionString() . '.md');
 
-        $this->processRunner->run('git add ' . $newUpgradeFilePath);
+        $this->processRunner->run('git add .');
     }
 
     /**
