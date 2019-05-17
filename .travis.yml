@@ -1,6 +1,8 @@
 language: bash
 dist: xenial
-
+stages:
+-  Tests
+-  Third party services dependent tests
 services:
 -   docker
 
@@ -20,7 +22,6 @@ env:
     -   TRAVIS_GROUP_ID=$(id -g)
 
 before_install:
--   sudo rm /usr/local/bin/docker-compose
 -   sudo add-apt-repository ppa:rmescandon/yq -y
 -   sudo apt-get update
 -   sudo apt-get install -y yq
@@ -34,11 +35,22 @@ before_install:
 
 install:
 -   docker load < $CACHE_FILE_IMAGE || true
+-   sudo ionice -c 2 -n 0 nice -n -20 docker-compose pull postgres elasticsearch redis selenium-server webserver
 -   docker-compose up -d postgres elasticsearch redis selenium-server php-fpm webserver
 -   if [[ ! -f "$CACHE_FILE_IMAGE" ]]; then docker save $(docker-compose images php-fpm | tail -1 | awk '{print $2}') | gzip -1 -c > $CACHE_FILE_IMAGE; fi
 -   docker ps
-
-
-script:
+-   docker --version
 -   docker-compose exec php-fpm composer install --no-interaction
--   docker-compose exec php-fpm ./phing db-create test-db-create build-demo-dev tests-acceptance
+-   docker-compose exec php-fpm ./phing npm
+
+jobs:
+    include:
+    -   stage: Tests
+        name: "Smoke, Functional and Acceptance Tests"
+        script: docker-compose exec php-fpm ./phing db-create test-db-create build-demo-dev-quick error-pages-generate checks-ci
+
+    -   name: "Standards"
+        script: docker-compose exec php-fpm ./phing standards
+
+    -   name: "Unit Tests"
+        script: docker-compose exec php-fpm ./phing tests-unit
