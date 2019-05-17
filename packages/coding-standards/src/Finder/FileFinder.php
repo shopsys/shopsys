@@ -23,18 +23,22 @@ final class FileFinder implements CustomSourceProviderInterface
         foreach ($source as $singleSource) {
             if (is_file($singleSource)) {
                 $fileInfo = new SplFileInfo($singleSource);
-                $files[$fileInfo->getPath()] = new SymfonySplFileInfo($singleSource, $fileInfo->getPath(), $fileInfo->getPathname());
+                $files[] = new SymfonySplFileInfo($singleSource, $fileInfo->getPath(), $fileInfo->getPathname());
             } else {
                 $directories[] = $singleSource;
             }
         }
 
         $finder = Finder::create()->files()
+            ->ignoreUnreadableDirs(true)
+            ->notPath('app/')
+            ->notPath('node_modules/')
+            ->notPath('var/')
+            ->notPath('vendor/')
+            ->notPath('web/')
             ->name('#\.(twig|html(\.twig)?|php|md)$#')
-            ->in($directories);
-
-        // ArrayIterator will be fixed in new release
-        $finder->append(new \ArrayIterator($files));
+            ->in($directories)
+            ->append($files);
 
         return $finder;
     }

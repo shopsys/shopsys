@@ -34,7 +34,7 @@
     </target>
 
     <target name="standards" depends="phplint,ecs,phpstan-packages,twig-lint,yaml-lint,eslint-check,standards-packages,standards-utils" description="Checks coding standards in the project-base, packages and utils folder."/>
-    <target name="standards-diff" depends="phplint-diff,ecs-diff,phpstan-packages,twig-lint-diff,yaml-lint,eslint-check-diff,standards-packages, standards-utils" description="Checks coding standards on changed files in the project-base, packages and utils folder."/>
+    <target name="standards-diff" depends="phplint-diff,ecs-diff,phpstan-packages,twig-lint-diff,yaml-lint,eslint-check-diff,standards-packages,standards-utils" description="Checks coding standards on changed files in the project-base, packages and utils folder."/>
 
     <target name="clean" description="Cleans up directories with cache and scripts which are generated on demand.">
         <delete failonerror="false" includeemptydirs="true">
@@ -71,11 +71,9 @@
         </exec>
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check" />
-            <arg path="./packages/*/src"/>
-            <arg path="./packages/*/tests" />
-            <arg path="./packages/*/*.md"/>
-            <arg path="./*.md"/>
+            <arg path="./packages"/>
             <arg path="./docs"/>
+            <arg path="./*.md"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />
@@ -103,11 +101,9 @@
             <arg value="check" />
             <arg value="--clear-cache" />
             <arg value="--fix" />
-            <arg path="./packages/*/src"/>
-            <arg path="./packages/*/tests" />
-            <arg path="./packages/*/*.md"/>
-            <arg path="./*.md"/>
+            <arg path="./packages"/>
             <arg path="./docs"/>
+            <arg path="./*.md"/>
         </exec>
         <exec executable="${path.eslint.executable}" passthru="true" checkreturn="true">
             <arg value="--color" />
@@ -124,11 +120,9 @@
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check" />
             <arg value="--fix" />
-            <arg path="./packages/*/src"/>
-            <arg path="./packages/*/tests" />
-            <arg path="./packages/*/*.md"/>
-            <arg path="./*.md"/>
+            <arg path="./packages"/>
             <arg path="./docs"/>
+            <arg path="./*.md"/>
         </exec>
         <exec executable="${path.eslint.executable}" passthru="true" checkreturn="true">
             <arg value="--color" />
@@ -148,8 +142,7 @@
         </exec>
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check" />
-            <arg path="./utils/*/src"/>
-            <arg path="./utils/*/tests"/>
+            <arg path="./utils"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />
@@ -170,8 +163,7 @@
             <arg value="check" />
             <arg value="--clear-cache" />
             <arg value="--fix" />
-            <arg path="./utils/*/src"/>
-            <arg path="./utils/*/tests"/>
+            <arg path="./utils"/>
         </exec>
     </target>
 
