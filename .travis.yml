@@ -34,12 +34,11 @@ before_install:
 -   yq write --inplace docker-compose.yml services.php-fpm.build.args.www_data_uid $TRAVIS_GROUP_ID
 
 install:
--   docker load < $CACHE_FILE_IMAGE || true
+-   if [[ -f "$CACHE_FILE_IMAGE" ]]; then gzip -dc $CACHE_FILE_IMAGE | docker load; fi
 -   sudo ionice -c 2 -n 0 nice -n -20 docker-compose pull postgres elasticsearch redis selenium-server webserver
 -   docker-compose up -d postgres elasticsearch redis selenium-server php-fpm webserver
--   if [[ ! -f "$CACHE_FILE_IMAGE" ]]; then docker save $(docker-compose images php-fpm | tail -1 | awk '{print $2}') | gzip -1 -c > $CACHE_FILE_IMAGE; fi
+-   if [[ ! -f "$CACHE_FILE_IMAGE" ]]; then docker save $(docker-compose images php-fpm | tail -1 | awk '{print $2}') | gzip -1 > $CACHE_FILE_IMAGE; fi
 -   docker ps
--   docker --version
 -   docker-compose exec php-fpm composer install --no-interaction
 -   docker-compose exec php-fpm ./phing npm
 

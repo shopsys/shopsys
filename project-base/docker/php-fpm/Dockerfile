@@ -19,12 +19,6 @@ RUN apt-get update && apt-get install -y wget gnupg g++ locales unzip dialog apt
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
 RUN apt-get update && apt-get install -y nodejs && apt-get clean
 
-# install Composer
-COPY ${project_root}/docker/php-fpm/docker-install-composer /usr/local/bin/docker-install-composer
-
-RUN chmod +x /usr/local/bin/docker-install-composer && \
-    docker-install-composer
-
 # libpng-dev needed by "gd" extension
 # libzip-dev needed by "zip" extension
 # libicu-dev for intl extension
@@ -79,6 +73,11 @@ COPY ${project_root}/docker/php-fpm/php-ini-overrides.ini /usr/local/etc/php/php
 # overwrite the original entry-point from the PHP Docker image with our own
 COPY ${project_root}/docker/php-fpm/docker-php-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
+
+# install Composer
+COPY ${project_root}/docker/php-fpm/docker-install-composer /usr/local/bin/docker-install-composer
+RUN chmod +x /usr/local/bin/docker-install-composer && \
+    docker-install-composer
 
 # set www-data user his home directory
 # the user "www-data" is used when running the image, and therefore should own the workdir
