@@ -2,7 +2,7 @@ language: bash
 dist: xenial
 stages:
 -  Tests
--  Third party services dependent tests
+
 services:
 -   docker
 
