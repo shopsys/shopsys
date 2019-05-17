@@ -91,8 +91,8 @@ This leads to safer code.
 
 ### Reasons
 
-We use scalar type hints (`int`, `float`, `string`, `bool`) as much as possible in new code.
-Using scalar type hints without strict mode leads to automatic type cast that can be even harmful (eg. input string `""` is cast to integer `0`).
+We use scalar type declarations (`int`, `float`, `string`, `bool`) as much as possible in new code.
+Using scalar type declarations without strict mode leads to automatic type cast that can be even harmful (eg. input string `""` is cast to integer `0`).
 We prevent this risky automatic type cast by declaring strict types.
 
 Please read more about scalar types and strict mode in [Scalar Type Declarations](https://wiki.php.net/rfc/scalar_type_hints_v5).
