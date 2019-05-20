@@ -49,8 +49,5 @@ jobs:
         name: "Smoke, Functional and Acceptance Tests"
         script: docker-compose exec php-fpm ./phing db-create test-db-create build-demo-dev-quick error-pages-generate checks-ci
 
-    -   name: "Standards"
-        script: docker-compose exec php-fpm ./phing standards
-
-    -   name: "Unit Tests"
-        script: docker-compose exec php-fpm ./phing tests-unit
+    -   name: "Standards, Unit Tests"
+        script: docker-compose exec php-fpm ./phing standards tests-unit
