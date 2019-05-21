@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class CountryFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\Country
+     * @var \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
     protected $country;
 
@@ -119,18 +119,21 @@ class CountryFormType extends AbstractType
     }
 
     /**
-     * @param $countryCodeValue
+     * @param mixed $countryCodeValue
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function validateUniqueCode($countryCodeValue, ExecutionContextInterface $context): void
     {
-        if ($this->country === null || $countryCodeValue !== $this->country->getCode()) {
-            $country = $this->countryFacade->findByCode($countryCodeValue);
+        if (!is_string($countryCodeValue)) {
+            return;
+        }
 
-            if ($country !== null) {
-                $this->country = $country;
-                $context->addViolation('Country code with this code already exists');
-            }
+        if ($this->country instanceof Country && $countryCodeValue === $this->country->getCode()) {
+            return;
+        }
+
+        if ($this->countryFacade->findByCode($countryCodeValue) !== null) {
+            $context->addViolation('Country code with this code already exists');
         }
     }
 }
