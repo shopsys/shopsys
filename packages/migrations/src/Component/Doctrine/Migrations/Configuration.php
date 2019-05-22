@@ -11,8 +11,8 @@ use Doctrine\DBAL\Migrations\Version;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException;
 
 /**
- * @see https://github.com/doctrine/migrations/pull/824
  * @method string[] getMigratedVersions()
+ * @see https://github.com/doctrine/migrations/pull/824
  */
 class Configuration extends DoctrineConfiguration
 {
