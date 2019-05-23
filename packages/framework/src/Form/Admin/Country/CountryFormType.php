@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Form\Admin\Country;
 
 use Shopsys\FormTypesBundle\MultidomainType;
+use Shopsys\FrameworkBundle\Form\Constraints\NotInArray;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
@@ -73,7 +74,10 @@ class CountryFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter country code']),
                     new Constraints\Length(['max' => 2, 'maxMessage' => 'Country code cannot be longer than {{ limit }} characters']),
-                    new Constraints\Callback([$this, 'validateUniqueCode']),
+                    new NotInArray([
+                        'array' => $this->getOtherCountryCodes(),
+                        'message' => 'Country code with this code already exists',
+                    ]),
                 ],
                 'label' => t('Code'),
                 'attr' => [
@@ -121,19 +125,32 @@ class CountryFormType extends AbstractType
     /**
      * @param mixed $countryCodeValue
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     * @deprecated Validation using this method as callback is deprecated since SSFW 7.3, use NotInArray instead
      */
     public function validateUniqueCode($countryCodeValue, ExecutionContextInterface $context): void
     {
-        if (!is_string($countryCodeValue)) {
-            return;
-        }
+        @trigger_error(
+            sprintf('Validation using method "%s" as callback is deprecated since SSFW 7.3, use %s instead', __METHOD__, NotInArray::class),
+            E_USER_DEPRECATED
+        );
 
-        if ($this->country instanceof Country && $countryCodeValue === $this->country->getCode()) {
-            return;
-        }
-
-        if ($this->countryFacade->findByCode($countryCodeValue) !== null) {
+        if (in_array($countryCodeValue, $this->getOtherCountryCodes(), true)) {
             $context->addViolation('Country code with this code already exists');
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getOtherCountryCodes(): array
+    {
+        $otherCountryCodes = [];
+        foreach ($this->countryFacade->getAll() as $country) {
+            if ($country !== $this->country) {
+                $otherCountryCodes[] = $country->getCode();
+            }
+        }
+
+        return $otherCountryCodes;
     }
 }
