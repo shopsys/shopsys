@@ -23,7 +23,7 @@ final class FileFinder implements CustomSourceProviderInterface
         foreach ($source as $singleSource) {
             if (is_file($singleSource)) {
                 $fileInfo = new SplFileInfo($singleSource);
-                $files[] = new SymfonySplFileInfo($singleSource, $fileInfo->getPath(), $fileInfo->getPathname());
+                $files[$fileInfo->getPathName()] = new SymfonySplFileInfo($singleSource, $fileInfo->getPath(), $fileInfo->getPathname());
             } else {
                 $directories[] = $singleSource;
             }
