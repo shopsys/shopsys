@@ -51,7 +51,7 @@
     }
   },
   "require": {
-    "php": "^7.1",
+    "php": "^7.2",
     "ext-bcmath": "*",
     "ext-ctype": "*",
     "ext-curl": "*",
@@ -177,7 +177,7 @@
     "preferred-install": "dist",
     "component-dir": "project-base/web/components",
     "platform": {
-      "php": "7.1"
+      "php": "7.2"
     }
   },
   "extra": {
