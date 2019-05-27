@@ -9,6 +9,31 @@ Typical upgrade sequence should be:
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
 ## [From v7.2.0 to Unreleased]
+- update definition of webserver volumes in `docker-compose.yml` ([#1075](https://github.com/shopsys/shopsys/pull/1075))
+    ```diff
+    volumes:
+    -   - .:/var/www/html
+    -   - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    +   - ./project-base:/var/www/html
+    +   - ./project-base/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+
+    volumes:
+    -   - shopsys-framework-web-sync:/var/www/html/project-base/web
+    -   - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    +   - shopsys-framework-web-sync:/var/www/html/web
+    +   - ./project-base/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+
+    volumes:
+    -   - shopsys-framework-web-sync:/var/www/html/project-base/web
+    -   - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:delegated
+    +   - shopsys-framework-web-sync:/var/www/html/web
+    +   - ./project-base/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:delegated
+    ports:
+    ```
+    - run `docker-compose down -v`
+    - run `docker-compose up -d`
 
 ## [From v7.1.0 to v7.2.0]
 - update definition of postgres service in your `docker-compose.yml` file to use customized configuration ([#946](https://github.com/shopsys/shopsys/pull/946))

@@ -100,6 +100,7 @@ spec:
                     mountPath: /etc/nginx/conf.d
                 -   name: source-codes
                     mountPath: /var/www/html
+                    subPath: project-base
                 lifecycle:
                     preStop:
                         exec:
