@@ -24,7 +24,6 @@ class RegisterDataFixturesTranslationsCompilerPass implements CompilerPassInterf
                 'registerTranslation',
                 [
                     new Reference($serviceId),
-                    $serviceId,
                 ]
             );
         }

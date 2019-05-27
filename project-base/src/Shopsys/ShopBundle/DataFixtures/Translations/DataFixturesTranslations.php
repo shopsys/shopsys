@@ -56,9 +56,6 @@ class DataFixturesTranslations
      */
     public function registerTranslation(DataFixturesTranslationInterface $translationService): void
     {
-        /** @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface $translationService */
-        $translationService = new $translationService();
-
         $this->registeredLanguageTranslations[$translationService->getLocale()] = $translationService;
     }
 
