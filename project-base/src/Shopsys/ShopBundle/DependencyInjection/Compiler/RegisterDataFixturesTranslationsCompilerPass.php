@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Shopsys\ShopBundle\DependencyInjection\Compiler;
 
 use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
@@ -12,7 +14,7 @@ class RegisterDataFixturesTranslationsCompilerPass implements CompilerPassInterf
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $dataFixturesTranslationsDefinition = $container->findDefinition(DataFixturesTranslations::class);
 
