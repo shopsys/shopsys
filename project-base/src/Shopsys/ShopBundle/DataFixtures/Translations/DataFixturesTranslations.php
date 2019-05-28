@@ -22,8 +22,6 @@ class DataFixturesTranslations
     public const TRANSLATED_ATTRIBUTE_DESCRIPTION = 'description';
     public const TRANSLATED_ATTRIBUTE_INSTRUCTIONS = 'instructions';
 
-    public const DEFAULT_LOCALE_IF_NOT_AVAILABLE_REQUESTED_LOCALE = 'en';
-
     /**
      * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface[]
      */
