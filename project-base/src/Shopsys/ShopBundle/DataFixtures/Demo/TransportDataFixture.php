@@ -28,7 +28,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
      */
-    private $dataFixturesTranslations;
+    protected $dataFixturesTranslations;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
