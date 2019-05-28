@@ -96,7 +96,7 @@ class ProductDataFixtureLoader
     /**
      * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
      */
-    private $dataFixturesTranslations;
+    protected $dataFixturesTranslations;
 
     /**
      * @param \Shopsys\ShopBundle\DataFixtures\Demo\ProductParametersFixtureLoader $productParametersFixtureLoader
