@@ -163,8 +163,8 @@ class ProductSearchExportWithFilterRepository extends ProductSearchExportReposit
     protected function extractPrices(int $domainId, Product $product): array
     {
         $prices = [];
-        $productSellingPrices = $this->productFacade->getAllProductSellingPricesIndexedByDomainId($product)[$domainId];
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice $productSellingPrice */
+        $productSellingPrices = $this->productFacade->getAllProductSellingPricesByDomainId($product, $domainId);
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[] $productSellingPrices */
         foreach ($productSellingPrices as $productSellingPrice) {
             $prices[] = [
                 'pricing_group_id' => $productSellingPrice->getPricingGroup()->getId(),
