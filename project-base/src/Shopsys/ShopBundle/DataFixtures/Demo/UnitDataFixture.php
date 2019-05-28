@@ -33,7 +33,7 @@ class UnitDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
      */
-    private $dataFixturesTranslations;
+    protected $dataFixturesTranslations;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
