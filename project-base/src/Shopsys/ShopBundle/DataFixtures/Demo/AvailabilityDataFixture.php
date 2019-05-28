@@ -35,7 +35,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
      */
-    private $dataFixturesTranslations;
+    protected $dataFixturesTranslations;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
