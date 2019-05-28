@@ -28,7 +28,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations
      */
-    private $dataFixturesTranslations;
+    protected $dataFixturesTranslations;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
