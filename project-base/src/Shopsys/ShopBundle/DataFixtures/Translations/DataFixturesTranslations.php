@@ -25,7 +25,7 @@ class DataFixturesTranslations
     /**
      * @var \Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface[]
      */
-    private $registeredLanguageTranslations;
+    private $registeredLanguageTranslationsIndexedByLocale;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -54,7 +54,7 @@ class DataFixturesTranslations
      */
     public function registerTranslation(DataFixturesTranslationInterface $translationService): void
     {
-        $this->registeredLanguageTranslations[$translationService->getLocale()] = $translationService;
+        $this->registeredLanguageTranslationsIndexedByLocale[$translationService->getLocale()] = $translationService;
     }
 
     /**
@@ -71,11 +71,11 @@ class DataFixturesTranslations
      */
     private function getRegisteredTranslationByLocaleOrDefaultTranslation(string $locale): DataFixturesTranslationInterface
     {
-        if (array_key_exists($locale, $this->registeredLanguageTranslations)) {
-            return $this->registeredLanguageTranslations[$locale];
+        if (array_key_exists($locale, $this->registeredLanguageTranslationsIndexedByLocale)) {
+            return $this->registeredLanguageTranslationsIndexedByLocale[$locale];
         }
 
-        return $this->registeredLanguageTranslations[$this->getDefaultLocaleIfNotAvailableRequestedLocale()];
+        return $this->registeredLanguageTranslationsIndexedByLocale[$this->getDefaultLocaleIfNotAvailableRequestedLocale()];
     }
 
     /**
