@@ -3,7 +3,8 @@
 This article describes how to work with domains and languages during the development of your project.
 For an explanation of the basic terms, please read [domain, multidomain and multilanguage](domain-multidomain-multilanguage.md) article first.
 
-*Note: Demo data on the Shopsys Framework contains data only in `en` and `cs` locales*
+*Note: Demo data on the Shopsys Framework contain data only in `en` and `cs` locales.*
+*See the section [Multilang attributes](#35-multilang-attributes) for more information.*
 
 ## Settings and working with domains
 
@@ -70,17 +71,13 @@ This command performs multiple actions:
 - pricing group with the name Default is created for every new domain
 - the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
 
-#### 2.6 Multilang attributes
-Demo data of Shopsys Framework are prepared only for `en` and `cs` locales.
-This means that if you are using a different locale, these multilang attributes will be empty for this new locale even after the installation of demo data.
-
-#### 2.7 Generate assets for the new domain
+#### 2.6 Generate assets for the new domain
 In order to properly display the new domain, assets need to be generated
 ```
 php phing grunt
 ```
 
-#### 2.8. Create elasticsearch definition for the new domain
+#### 2.7 Create elasticsearch definition for the new domain
 The configuration for elasticsearch must be created for each domain in a separate json file.
 By default, the configurations for the domain 1 and 2 are already parts of a project-base.
 Configuration for elasticsearch can be found in `src/Shopsys/ShopBundle/Resources/Resources/definition/`.
@@ -124,7 +121,77 @@ php phing create-domains-db-functions
 
 #### 3.5 Multilang attributes
 Demo data of Shopsys Framework are prepared only for `en` and `cs` locales.
-This means that if you are using a different locale, these multilang attributes will be empty for this new locale even after the installation of demo data.
+This means that if you are using a different locale, you need to provide the new translations for the multilanguage attributes.
+This can be achieved by adding a new class implementing [`DataFixturesTranslationInterface`](/project-base/src/Shopsys/ShopBundle/DataFixtures/Translations/DataFixturesTranslationInterface.php).
+You can simply copy an existing implementation (e.g. [`EnglishTranslations`](/project-base/src/Shopsys/ShopBundle/DataFixtures/Translations/Languages/EnglishTranslations.php)) and provide the translations for your locale, e.g. for `sk` locale you would do something like this:
+```diff
+declare(strict_types = 1);
+
+namespace Shopsys\ShopBundle\DataFixtures\Translations\Languages;
+
+use Shopsys\ShopBundle\DataFixtures\Demo\AvailabilityDataFixture;
+use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslationInterface;
+use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
+
+- class EnglishTranslations implements DataFixturesTranslationInterface
++ class SlovakTranslations implements DataFixturesTranslationInterface
+{
+    /**
+     * @var array
+     */
+    private $translations = [];
+
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        - return 'en';
+        + return 'sk';
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslations(): array
+    {
+        if (empty($this->translations)) {
+            $this->initTranslations();
+        }
+
+        return $this->translations;
+    }
+
+    private function initTranslations(): void
+    {
+        $this->initAvailabilityTranslations();
+        // ...
+    }
+
+    private function initAvailabilityTranslations(): void
+    {
+        $translationsAvailability = [
+            DataFixturesTranslations::TRANSLATED_ATTRIBUTE_NAME => [
+-                AvailabilityDataFixture::AVAILABILITY_IN_STOCK => 'In stock',
+-                AvailabilityDataFixture::AVAILABILITY_PREPARING => 'Preparing',
+-                AvailabilityDataFixture::AVAILABILITY_ON_REQUEST => 'On request',
+-                AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK => 'Out of stock',
++                AvailabilityDataFixture::AVAILABILITY_IN_STOCK => 'Skladom',
++                AvailabilityDataFixture::AVAILABILITY_PREPARING => 'Pripravujeme',
++                AvailabilityDataFixture::AVAILABILITY_ON_REQUEST => 'Na požadanie',
++                AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK => 'Vypredané',
+            ],
+        ];
+
+        $this->translations[DataFixturesTranslations::TRANSLATED_ENTITY_AVAILABILITY] = $translationsAvailability;
+    }
+
+    // ...
+}
+```
+
+If you do not provide translations for your locale, translations for fallback locale will be used instead.
+The fallback locale can be set by `shopsys.data_fixtures.default_locale_if_not_available_requested_locale` in `parameters_common.yml` config file.
 
 #### 3.6 Locale in administration
 Administration is by default in `en` locale.

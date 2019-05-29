@@ -20,6 +20,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [Why are you using entity data instead of entities for Symfony forms?](#why-are-you-using-entity-data-instead-of-entities-for-symfony-forms)
 - [What is the configuration file `services_test.yml` good for?](#what-is-the-configuration-file-services_testyml-good-for)
 - [How to change the behavior of the product search on the front-end?](#how-to-change-the-behavior-of-the-product-search-on-the-front-end)
+- [How to add translations for a new locale in data fixtures?](#how-to-add-translations-for-a-new-locale-in-data-fixtures)
 
 
 ## What are the phing targets?
@@ -107,3 +108,7 @@ E.g., by default, all our services are defined as private. However, in tests, we
 ## How to change the behavior of the product search on the front-end?
 Full-text product search on the front-end is handled via Elasticsearch.
 If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](/docs/model/front-end-product-searching.md).
+
+## How to add translations for a new locale in data fixtures?
+By default, there are only `cs` and `en` translations for multilanguage attributes in data fixtures.
+If you want to add translations for a new locale, follow the instructions in [Multilanguage attributes section in How to Set Up Domains and Locales (Languages)](/docs/introduction/how-to-set-up-domains-and-locales.md#35-multilang-attributes) article.
