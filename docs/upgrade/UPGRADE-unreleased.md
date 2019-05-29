@@ -26,9 +26,9 @@ There you can find links to upgrade notes for other versions too.
     - $filter = $filterQueryFactory->create(self::ELASTICSEARCH_INDEX);
     + /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager $elasticSearchStructureManager */
     + $elasticSearchStructureManager = $elasticSearchIndexName = $this->getContainer()->get(ElasticsearchStructureManager::class);
-    + 
+    +
     + $elasticSearchIndexName = $elasticSearchStructureManager->getIndexName(1, self::ELASTICSEARCH_INDEX);
-    + 
+    +
     + $filter = $filterQueryFactory->create($elasticSearchIndexName);
     ```
 
