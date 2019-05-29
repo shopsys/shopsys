@@ -111,4 +111,4 @@ If you want to change its behavior (e.g. make the EAN not as important or change
 
 ## How to add translations for a new locale in data fixtures?
 By default, there are only `cs` and `en` translations for multilanguage attributes in data fixtures.
-If you want to add translations for a new locale, follow the instructions in [Multilanguage attributes section in How to Set Up Domains and Locales (Languages)](/docs/introduction/how-to-set-up-domains-and-locales.md#35-multilang-attributes) article.
+If you want to add translations for a new locale, follow the instructions in [Multilanguage attributes section in How to Set Up Domains and Locales (Languages)](/docs/introduction/how-to-set-up-domains-and-locales.md#35-multilanguage-attributes) article.

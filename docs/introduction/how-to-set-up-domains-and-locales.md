@@ -4,7 +4,7 @@ This article describes how to work with domains and languages during the develop
 For an explanation of the basic terms, please read [domain, multidomain and multilanguage](domain-multidomain-multilanguage.md) article first.
 
 *Note: Demo data on the Shopsys Framework contain data only in `en` and `cs` locales.*
-*See the section [Multilang attributes](#35-multilang-attributes) for more information.*
+*See the section [Multilanguage attributes](#35-multilanguage-attributes) for more information.*
 
 ## Settings and working with domains
 
@@ -67,7 +67,7 @@ php phing create-domains-data
 ```
 This command performs multiple actions:
 - multidomain attributes from the first domain are copied for this new domain, see `FrameworkBundle/Component/Domain/DomainDataCreator.php`, where the `TEMPLATE_DOMAIN_ID` constant is defined.
-- if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilang attributes
+- if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilanguage attributes
 - pricing group with the name Default is created for every new domain
 - the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
 
@@ -119,7 +119,7 @@ Regenerate database functions by running a phing target
 php phing create-domains-db-functions
 ```
 
-#### 3.5 Multilang attributes
+#### 3.5 Multilanguage attributes
 Demo data of Shopsys Framework are prepared only for `en` and `cs` locales.
 This means that if you are using a different locale, you need to provide the new translations for the multilanguage attributes.
 This can be achieved by adding a new class implementing [`DataFixturesTranslationInterface`](/project-base/src/Shopsys/ShopBundle/DataFixtures/Translations/DataFixturesTranslationInterface.php).
