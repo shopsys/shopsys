@@ -146,8 +146,8 @@ use Shopsys\ShopBundle\DataFixtures\Translations\DataFixturesTranslations;
      */
     public function getLocale(): string
     {
-        - return 'en';
-        + return 'sk';
+-         return 'en';
++         return 'sk';
     }
 
     /**
