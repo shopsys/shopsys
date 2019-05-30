@@ -67,6 +67,7 @@ class ImageConfigDefinition implements ConfigurationInterface
     protected function addSizesNode()
     {
         $treeBuilder = new TreeBuilder();
+        /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
         $rootNode = $treeBuilder->root(self::CONFIG_SIZES);
 
         return $rootNode
