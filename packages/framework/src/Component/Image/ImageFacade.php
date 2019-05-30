@@ -217,7 +217,7 @@ class ImageFacade
     {
         $entityName = $image->getEntityName();
         $imageConfig = $this->imageConfig->getEntityConfigByEntityName($entityName);
-        $sizeConfigs = $image->getType() === null ? $imageConfig->getSizeConfigs() ? $imageConfig->getSizeConfigsByType($image->getType());
+        $sizeConfigs = $image->getType() === null ? $imageConfig->getSizeConfigs() : $imageConfig->getSizeConfigsByType($image->getType());
         foreach ($sizeConfigs as $sizeConfig) {
             $filepath = $this->imageLocator->getAbsoluteImageFilepath($image, $sizeConfig->getName());
 
