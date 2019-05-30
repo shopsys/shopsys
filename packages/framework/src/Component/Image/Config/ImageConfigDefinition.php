@@ -31,7 +31,7 @@ class ImageConfigDefinition implements ConfigurationInterface
         /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
         $rootNode = $treeBuilder->root('images');
 
-        $this->buildItemsNode($rootNode->prototype('array'))->end();
+        $this->buildItemsNode($rootNode->arrayPrototype());
 
         return $treeBuilder;
     }
@@ -51,11 +51,12 @@ class ImageConfigDefinition implements ConfigurationInterface
                 ->append($this->addSizesNode())
                 ->arrayNode(self::CONFIG_TYPES)
                     ->defaultValue([])
-                    ->prototype('array')
-                    ->children()
-                        ->scalarNode(self::CONFIG_TYPE_NAME)->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode(self::CONFIG_MULTIPLE)->defaultFalse()->end()
-                        ->append($this->addSizesNode())
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode(self::CONFIG_TYPE_NAME)->isRequired()->cannotBeEmpty()->end()
+                            ->scalarNode(self::CONFIG_MULTIPLE)->defaultFalse()->end()
+                            ->append($this->addSizesNode())
+                        ->end()
                     ->end()
                 ->end()
             ->end();
@@ -72,7 +73,7 @@ class ImageConfigDefinition implements ConfigurationInterface
 
         return $rootNode
             ->defaultValue([])
-            ->prototype('array')
+            ->arrayPrototype()
                 ->children()
                     ->scalarNode(self::CONFIG_SIZE_NAME)->isRequired()->end()
                     ->scalarNode(self::CONFIG_SIZE_WIDTH)->defaultNull()->end()
@@ -81,7 +82,7 @@ class ImageConfigDefinition implements ConfigurationInterface
                     ->scalarNode(self::CONFIG_SIZE_OCCURRENCE)->defaultNull()->end()
                     ->arrayNode(self::CONFIG_SIZE_ADDITIONAL_SIZES)
                         ->defaultValue([])
-                        ->prototype('array')
+                        ->arrayPrototype()
                             ->children()
                                 ->scalarNode(self::CONFIG_SIZE_ADDITIONAL_SIZE_MEDIA)->isRequired()->end()
                                 ->scalarNode(self::CONFIG_SIZE_WIDTH)->defaultNull()->end()
