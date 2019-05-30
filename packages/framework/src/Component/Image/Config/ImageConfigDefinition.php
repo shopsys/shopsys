@@ -48,14 +48,14 @@ class ImageConfigDefinition implements ConfigurationInterface
                 ->scalarNode(self::CONFIG_ENTITY_NAME)->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode(self::CONFIG_CLASS)->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode(self::CONFIG_MULTIPLE)->defaultFalse()->end()
-                ->append($this->addSizesNode())
+                ->append($this->createSizesNode())
                 ->arrayNode(self::CONFIG_TYPES)
                     ->defaultValue([])
                     ->arrayPrototype()
                         ->children()
                             ->scalarNode(self::CONFIG_TYPE_NAME)->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode(self::CONFIG_MULTIPLE)->defaultFalse()->end()
-                            ->append($this->addSizesNode())
+                            ->append($this->createSizesNode())
                         ->end()
                     ->end()
                 ->end()
@@ -65,7 +65,7 @@ class ImageConfigDefinition implements ConfigurationInterface
     /**
      * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
      */
-    protected function addSizesNode()
+    protected function createSizesNode()
     {
         $treeBuilder = new TreeBuilder();
         /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
