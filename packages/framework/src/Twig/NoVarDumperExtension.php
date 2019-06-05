@@ -10,13 +10,15 @@ use Twig\TwigFunction;
 class NoVarDumperExtension extends AbstractExtension
 {
     /**
-     * @return Twig\TwigFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('d', function () {}),
-            new TwigFunction('dump', function () {}),
+            new TwigFunction('d', function () {
+            }),
+            new TwigFunction('dump', function () {
+            }),
         ];
     }
 
