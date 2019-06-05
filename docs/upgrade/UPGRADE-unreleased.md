@@ -122,5 +122,10 @@ There you can find links to upgrade notes for other versions too.
         - don't forget to update your Dockerfiles, Kubernetes manifests, scripts and other files that might reference the phing targets above
 - we recommend upgrading PHPStan to level 4 [#1040](https://github.com/shopsys/shopsys/pull/1040)
     - you'll find detailed instructions in separate article [Upgrade Instructions for Upgrading PHPStan to Level 4](/docs/upgrade/phpstan-level-4.md)
+- add conflict with `prezent/doctrine-translatable-bundle` in version `1.0.6` to your `composer.json` [#1107](https://github.com/shopsys/shopsys/pull/1107)
+    ```diff
+    "conflict": {
+    +     "prezent/doctrine-translatable-bundle": "1.0.6",
+    ```
 
 [shopsys/framework]: https://github.com/shopsys/framework
