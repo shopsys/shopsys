@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Twig\Extension\AbstractExtension;
@@ -8,9 +10,9 @@ use Twig\TwigFunction;
 class NoVarDumperExtension extends AbstractExtension
 {
     /**
-     * @return array
+     * @return Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('d', function () {}),
@@ -18,7 +20,10 @@ class NoVarDumperExtension extends AbstractExtension
         ];
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return 'no_var_dumper_extension';
     }
