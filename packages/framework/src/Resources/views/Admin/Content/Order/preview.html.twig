@@ -13,9 +13,9 @@
             {% for item in order.items %}
                 <tr>
                     <td>
-                        {% if item.isTypeTransport() %}
+                        {% if item.typeTransport %}
                             {{ 'Shipping'|trans }} -
-                        {% elseif item.isTypePayment() %}
+                        {% elseif item.typePayment %}
                             {{ 'Payment'|trans }} -
                         {% endif %}
                         {{ item.name }}
