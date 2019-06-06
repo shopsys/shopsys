@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\DependencyInjection;
 
+use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
 use Shopsys\FrameworkBundle\Twig\NoVarDumperExtension;
@@ -31,6 +32,8 @@ class ShopsysFrameworkExtension extends Extension
 
         $container->registerForAutoconfiguration(GridInlineEditInterface::class)
             ->addTag('shopsys.grid_inline_edit');
+        $container->registerForAutoconfiguration(BreadcrumbGeneratorInterface::class)
+            ->addTag('shopsys.breadcrumb_generator');
     }
 
     /**

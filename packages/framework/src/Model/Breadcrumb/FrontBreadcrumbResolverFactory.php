@@ -9,6 +9,9 @@ use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataBreadcrumbGenerator;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandBreadcrumbGenerator;
 use Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator;
 
+/**
+ * @deprecated Using this class is deprecated since SSFW 7.3, use GenericBreadcrumbResolverFactory instead which is easier to use
+ */
 class FrontBreadcrumbResolverFactory
 {
     /**
@@ -34,6 +37,11 @@ class FrontBreadcrumbResolverFactory
         ErrorPageBreadcrumbGenerator $errorPageBreadcrumbGenerator,
         PersonalDataBreadcrumbGenerator $personalDataBreadcrumbGenerator
     ) {
+        @trigger_error(
+            sprintf('Using "%s" is deprecated since SSFW 7.3, use "%s" instead which is easier to use', self::class, GenericBreadcrumbResolverFactory::class),
+            E_USER_DEPRECATED
+        );
+
         $this->breadcrumbGenerators = [
             $articleBreadcrumbGenerator,
             $categoryBreadcrumbGenerator,

@@ -128,10 +128,13 @@ services:
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
 
+    Shopsys\FrameworkBundle\Model\Breadcrumb\GenericBreadcrumbResolverFactory:
+        arguments: [!tagged shopsys.breadcrumb_generator]
+
     Shopsys\FrameworkBundle\Model\Module\ModuleList: ~
 
     Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver:
-        factory: ['@Shopsys\FrameworkBundle\Model\Breadcrumb\FrontBreadcrumbResolverFactory', create]
+        factory: ['@Shopsys\FrameworkBundle\Model\Breadcrumb\GenericBreadcrumbResolverFactory', create]
 
     Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade:
         tags:
