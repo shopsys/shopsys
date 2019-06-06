@@ -351,4 +351,47 @@
         </exec>
     </target>
 
+    <target name="yaml-standards" description="Run yaml standards checks">
+        <exec executable="${path.yaml-standards}" logoutput="true" passthru="true" checkreturn="true">
+            <arg path="${path.root}/app"/>
+            <arg path="${path.root}/build"/>
+            <arg path="${path.root}/docker"/>
+            <arg path="${path.root}/kubernetes"/>
+            <arg path="${path.root}/*.y*ml"/>
+            <arg path="${path.src}"/>
+            <arg path="${path.tests}"/>
+            <arg path="${path.packages}"/>
+            <arg path="${path.utils}"/>
+            <arg path="${project.basedir}/*.y*ml"/>
+            <arg path="${project.basedir}/.*.y*ml"/>
+            <arg path="${project.basedir}/.github"/>
+            <arg path="${project.basedir}/docker"/>
+            <arg path="--exclude-file=${project.basedir}/docker-compose.yml"/>
+            <arg path="--exclude-file=${project.basedir}/docker-sync.yml"/>
+            <arg value="--check-indents-count-of-indents=4"/>
+        </exec>
+    </target>
+
+    <target name="yaml-standards-fix" description="Fix violations of standards in yaml files">
+        <exec executable="${path.yaml-standards}" logoutput="true" passthru="true" checkreturn="true">
+            <arg path="${path.root}/app"/>
+            <arg path="${path.root}/build"/>
+            <arg path="${path.root}/docker"/>
+            <arg path="${path.root}/kubernetes"/>
+            <arg path="${path.root}/*.y*ml"/>
+            <arg path="${path.src}"/>
+            <arg path="${path.tests}"/>
+            <arg path="${path.packages}"/>
+            <arg path="${path.utils}"/>
+            <arg path="${project.basedir}/*.y*ml"/>
+            <arg path="${project.basedir}/.*.y*ml"/>
+            <arg path="${project.basedir}/.github"/>
+            <arg path="${project.basedir}/docker"/>
+            <arg path="--exclude-file=${project.basedir}/docker-compose.yml"/>
+            <arg path="--exclude-file=${project.basedir}/docker-sync.yml"/>
+            <arg value="--check-indents-count-of-indents=4"/>
+            <arg value="--fix"/>
+        </exec>
+    </target>
+
 </project>
