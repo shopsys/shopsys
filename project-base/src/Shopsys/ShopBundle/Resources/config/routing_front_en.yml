@@ -23,8 +23,8 @@ front_login:
     defaults: { _controller: ShopsysShopBundle:Front\Login:login }
 
 front_logout:
-    path: /logout/{_csrf_token}
     # controller's action is unnecessary, because firewall processes whole request
+    path: /logout/{_csrf_token}
 
 front_order_index:
     path: /order/
