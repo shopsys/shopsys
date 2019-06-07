@@ -59,7 +59,7 @@ There you can find links to upgrade notes for other versions too.
             +     return $entityManagerMock;
             + }
             ```
-    - you can copy-paste a new functional test [`ProductVariantCreationTest.php`](/project-base/tests/ShopBundle/Functional/Model/Product/ProductVariantCreationTest.php) into `tests/ShopBundle/Functional/Model/Product/` to avoid regression of issues with creating product variants in the future
+    - you can copy-paste a new functional test [`ProductVariantCreationTest.php`](https://github.com/shopsys/project-base/blob/master/tests/ShopBundle/Functional/Model/Product/ProductVariantCreationTest.php) into `tests/ShopBundle/Functional/Model/Product/` to avoid regression of issues with creating product variants in the future
 
 ### Configuration
 - update `phpstan.neon` with following change to skip phpstan error ([#1086](https://github.com/shopsys/shopsys/pull/1086))
