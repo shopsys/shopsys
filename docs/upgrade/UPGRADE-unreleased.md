@@ -164,5 +164,6 @@ There you can find links to upgrade notes for other versions too.
         - don't forget to update your Dockerfiles, Kubernetes manifests, scripts and other files that might reference the phing targets above
 - we recommend upgrading PHPStan to level 4 [#1040](https://github.com/shopsys/shopsys/pull/1040)
     - you'll find detailed instructions in separate article [Upgrade Instructions for Upgrading PHPStan to Level 4](/docs/upgrade/phpstan-level-4.md)
+- standardize indents in your `yaml` files using `php phing yaml-standards-fix` command [#539](https://github.com/shopsys/shopsys/pull/539)
 
 [shopsys/framework]: https://github.com/shopsys/framework
