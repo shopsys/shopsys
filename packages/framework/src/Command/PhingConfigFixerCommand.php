@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class SortPhingTargetsCommand extends Command
+class PhingConfigFixerCommand extends Command
 {
     protected const RETURN_CODE_OK = 0;
     protected const RETURN_CODE_ERROR = 1;
@@ -23,14 +23,14 @@ class SortPhingTargetsCommand extends Command
     /**
      * @var string
      */
-    protected static $defaultName = 'shopsys:phing-targets:sort';
+    protected static $defaultName = 'shopsys:phing-config:fix';
 
     protected function configure(): void
     {
         $this
-            ->setDescription('Sort Phing targets alphabetically')
+            ->setDescription('Fixes syntax of Phing configuration automatically (sorts targets alphabetically and normalizes whitespace).')
             ->addArgument(static::ARG_XML_PATH, InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'Path(-s) to the Phing XML configuration')
-            ->addOption(static::OPTION_ONLY_CHECK, null, InputOption::VALUE_NONE, 'Will not modify the XML, only fail if the output would be different');
+            ->addOption(static::OPTION_ONLY_CHECK, null, InputOption::VALUE_NONE, 'Will not modify the XML, only fails if the output would be different');
     }
 
     /**
@@ -48,24 +48,24 @@ class SortPhingTargetsCommand extends Command
         foreach ($paths as $path) {
             $content = file_get_contents($path);
 
-            $sortedContent = $this->sortTargetBlocks($content, $io);
+            $sortedContent = $this->fixConfiguration($content, $io);
 
             $isContentChanged = $content !== $sortedContent;
             if ($checkOnly && $isContentChanged) {
                 $returnCode = static::RETURN_CODE_ERROR;
 
-                $io->error(sprintf('The targets in "%s" are not alphabetically sorted.', $path));
+                $io->error(sprintf('The Phing configuration in "%s" in not OK.', $path));
             } elseif ($isContentChanged) {
                 file_put_contents($path, $sortedContent);
 
-                $io->success(sprintf('The targets in "%s" were alphabetically sorted.', $path));
+                $io->success(sprintf('The Phing configuration in "%s" was fixed.', $path));
             }
         }
 
         if ($returnCode === static::RETURN_CODE_OK) {
-            $io->success('All targets are alphabetically sorted.');
+            $io->success('All Phing configuration files are OK.');
         } elseif ($returnCode === static::RETURN_CODE_ERROR) {
-            $io->error('Some targets are not alphabetically sorted.');
+            $io->error('Some Phing configuration files are not OK.');
 
             $io->comment(sprintf('Re-run the command without the "%s" option to fix it automatically.', static::OPTION_ONLY_CHECK));
         }
@@ -75,10 +75,9 @@ class SortPhingTargetsCommand extends Command
 
     /**
      * @param string $content
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return string
      */
-    protected function sortTargetBlocks(string $content, SymfonyStyle $io): string
+    protected function fixConfiguration(string $content): string
     {
         $content = $this->normalizeXml($content);
         $targetBlocks = $this->extractTargetBlocksIndexedByName($content);
