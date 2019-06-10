@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
-use Exception;
+use RuntimeException;
 use SimpleXMLElement;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -48,7 +48,7 @@ class PhingConfigFixerCommand extends Command
         foreach ($paths as $path) {
             $content = file_get_contents($path);
 
-            $sortedContent = $this->fixConfiguration($content, $io);
+            $sortedContent = $this->fixConfiguration($content);
 
             $isContentChanged = $content !== $sortedContent;
             if ($checkOnly && $isContentChanged) {
@@ -152,7 +152,7 @@ class PhingConfigFixerCommand extends Command
             $replacedContent = str_replace($targetBlock, $targetPlaceholder, $content);
 
             if ($content === $replacedContent) {
-                throw new Exception("This block was not found in the XML content and could not be replaced:\n\n" . $targetBlock);
+                throw new RuntimeException("This block was not found in the XML content and could not be replaced:\n\n" . $targetBlock);
             }
 
             $content = $replacedContent;
@@ -175,7 +175,7 @@ class PhingConfigFixerCommand extends Command
             $replacedContent = str_replace($targetPlaceholder, $targetBlock, $content);
 
             if ($content === $replacedContent) {
-                throw new Exception(sprintf('The placeholder for target #%d was not found in the XML content and could not be replaced.', $position));
+                throw new RuntimeException(sprintf('The placeholder for target #%d was not found in the XML content and could not be replaced.', $position));
             }
 
             $content = $replacedContent;
