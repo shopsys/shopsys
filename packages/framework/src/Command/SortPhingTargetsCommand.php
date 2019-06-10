@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Exception;
 use SimpleXMLElement;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -79,8 +80,9 @@ class SortPhingTargetsCommand extends Command
      */
     protected function sortTargetBlocks(string $content, SymfonyStyle $io): string
     {
+        $content = $this->normalizeXml($content);
         $targetBlocks = $this->extractTargetBlocksIndexedByName($content);
-        $content = $this->replaceTargetsByPlaceholders($content, $targetBlocks, $io);
+        $content = $this->replaceTargetsByPlaceholders($content, $targetBlocks);
         $content = $this->normalizeWhitespaceBetweenPlaceholders($content);
 
         ksort($targetBlocks);
@@ -88,6 +90,17 @@ class SortPhingTargetsCommand extends Command
         $content = $this->replacePlaceholdersByTargets($content, $targetBlocks);
 
         return $content;
+    }
+
+    /**
+     * @param string $content
+     * @return string
+     */
+    protected function normalizeXml(string $content): string
+    {
+        $xml = new SimpleXMLElement($content);
+
+        return $xml->asXML();
     }
 
     /**
@@ -129,10 +142,9 @@ class SortPhingTargetsCommand extends Command
     /**
      * @param string $content
      * @param string[] $targetBlocks
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return string
      */
-    protected function replaceTargetsByPlaceholders(string $content, array $targetBlocks, SymfonyStyle $io): string
+    protected function replaceTargetsByPlaceholders(string $content, array $targetBlocks): string
     {
         $position = 1;
         foreach ($targetBlocks as $targetBlock) {
@@ -141,9 +153,7 @@ class SortPhingTargetsCommand extends Command
             $replacedContent = str_replace($targetBlock, $targetPlaceholder, $content);
 
             if ($content === $replacedContent) {
-                $io->warning("This target block was not found in the original XML:\n\n" . $targetBlock);
-
-                $io->warning('This is probably because of unexpected formatting (eg. excessive whitespace). Position of this target will not be checked nor fixed.');
+                throw new Exception("This block was not found in the XML content and could not be replaced:\n\n" . $targetBlock);
             }
 
             $content = $replacedContent;
@@ -163,8 +173,15 @@ class SortPhingTargetsCommand extends Command
         foreach ($targetBlocks as $targetBlock) {
             $targetPlaceholder = $this->getTargetPlaceholder($position++);
 
-            $content = str_replace($targetPlaceholder, $targetBlock, $content);
+            $replacedContent = str_replace($targetPlaceholder, $targetBlock, $content);
+
+            if ($content === $replacedContent) {
+                throw new Exception(sprintf('The placeholder for target #%d was not found in the XML content and could not be replaced.', $position));
+            }
+
+            $content = $replacedContent;
         }
+
         return $content;
     }
 }
