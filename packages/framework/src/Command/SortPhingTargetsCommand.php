@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Command;
 
 use SimpleXMLElement;
@@ -22,7 +24,7 @@ class SortPhingTargetsCommand extends Command
      */
     protected static $defaultName = 'shopsys:phing-targets:sort';
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Sort Phing targets alphabetically')
