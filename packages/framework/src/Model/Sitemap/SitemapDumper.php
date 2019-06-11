@@ -79,8 +79,7 @@ class SitemapDumper extends Dumper
      */
     protected function deleteExistingSitemaps($targetDir)
     {
-        $files = array_filter($this->abstractFilesystem->listContents($targetDir), function ($file)
-        {
+        $files = array_filter($this->abstractFilesystem->listContents($targetDir), function ($file) {
             return strpos($file['filename'], $this->sitemapFilePrefix) === 0;
         });
         foreach ($files as $file) {
