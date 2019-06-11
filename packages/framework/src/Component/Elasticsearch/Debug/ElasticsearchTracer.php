@@ -39,7 +39,9 @@ class ElasticsearchTracer extends AbstractLogger
     {
         $matches = null;
 
-        if(preg_match('/^.* -d \'(?<json>.*)\'$/U', $requestMessage, $matches) === 0) return null;
+        if (preg_match('/^.* -d \'(?<json>.*)\'$/U', $requestMessage, $matches) === 0) {
+            return null;
+        }
 
         return \GuzzleHttp\json_decode($matches['json'], true);
     }
@@ -50,7 +52,7 @@ class ElasticsearchTracer extends AbstractLogger
      */
     protected function formatData($requestData): string
     {
-        return  \GuzzleHttp\json_encode($requestData, JSON_PRETTY_PRINT);
+        return \GuzzleHttp\json_encode($requestData, JSON_PRETTY_PRINT);
     }
 
     /**
