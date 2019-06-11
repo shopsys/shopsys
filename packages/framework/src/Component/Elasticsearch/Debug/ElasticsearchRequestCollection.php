@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Debug;
 
-class ElasticsearchDebugStack
+class ElasticsearchRequestCollection
 {
     /**
      * @var array
@@ -17,6 +17,28 @@ class ElasticsearchDebugStack
     public function getCollectedData(): array
     {
         return $this->collectedData;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCollectedDataCount(): int
+    {
+        return count($this->collectedData);
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalTime(): float
+    {
+        $totalRequestsTime = 0;
+        $collectedData = $this->getCollectedData();
+        foreach ($collectedData as $requestData) {
+            $totalRequestsTime += $requestData['duration'];
+        }
+
+        return $totalRequestsTime;
     }
 
     /**

@@ -14,9 +14,9 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\Exception\NotSupported
 class ElasticsearchTracer extends AbstractLogger
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchDebugStack
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection
      */
-    protected $elasticsearchDebugStack;
+    protected $elasticsearchRequestCollection;
 
     /**
      * @var string|null
@@ -24,11 +24,33 @@ class ElasticsearchTracer extends AbstractLogger
     protected $lastRequestCurl;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchDebugStack $elasticsearchDebugStack
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection $elasticsearchRequestCollection
      */
-    public function __construct(ElasticsearchDebugStack $elasticsearchDebugStack)
+    public function __construct(ElasticsearchRequestCollection $elasticsearchRequestCollection)
     {
-        $this->elasticsearchDebugStack = $elasticsearchDebugStack;
+        $this->elasticsearchRequestCollection = $elasticsearchRequestCollection;
+    }
+
+    /**
+     * @param string $requestMessage
+     * @return mixed
+     */
+    protected function extractData(string $requestMessage)
+    {
+        $matches = null;
+
+        if(preg_match('/^.* -d \'(?<json>.*)\'$/U', $requestMessage, $matches) === 0) return null;
+
+        return \GuzzleHttp\json_decode($matches['json'], true);
+    }
+
+    /**
+     * @param mixed $requestData
+     * @return string
+     */
+    protected function formatData($requestData): string
+    {
+        return  \GuzzleHttp\json_encode($requestData, JSON_PRETTY_PRINT);
     }
 
     /**
@@ -63,21 +85,17 @@ class ElasticsearchTracer extends AbstractLogger
             throw new NotSupportedException($exceptionMessage);
         }
 
-        $matches = null;
         $requestJson = null;
         $requestData = null;
 
-        if (preg_match('/^.* -d \'(?<json>.*)\'$/U', $this->lastRequestCurl, $matches) !== 0) {
-            $requestJson = $matches['json'];
-            try {
-                $requestData = \GuzzleHttp\json_decode($requestJson, true);
-                $requestJson = \GuzzleHttp\json_encode($requestData, JSON_PRETTY_PRINT);
-            } catch (\InvalidArgumentException $exception) {
-                // It's ok, It'll not have formatted dump.
-            }
+        try {
+            $requestData = $this->extractData($this->lastRequestCurl);
+            $requestJson = $this->formatData($requestData);
+        } catch (\InvalidArgumentException $exception) {
+            // It's ok, It'll not have formatted dump.
         }
 
-        $this->elasticsearchDebugStack->addRequest(
+        $this->elasticsearchRequestCollection->addRequest(
             $this->lastRequestCurl,
             $requestJson,
             $requestData,

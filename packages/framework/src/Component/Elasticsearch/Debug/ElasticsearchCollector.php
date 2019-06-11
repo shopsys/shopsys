@@ -12,16 +12,16 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 class ElasticsearchCollector extends DataCollector
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchDebugStack
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection
      */
-    protected $elasticsearchDebugStack;
+    protected $elasticsearchRequestCollection;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchDebugStack $elasticSearchDebugStack
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection $elasticsearchRequestCollection
      */
-    public function __construct(ElasticsearchDebugStack $elasticSearchDebugStack)
+    public function __construct(ElasticsearchRequestCollection $elasticsearchRequestCollection)
     {
-        $this->elasticsearchDebugStack = $elasticSearchDebugStack;
+        $this->elasticsearchRequestCollection = $elasticsearchRequestCollection;
     }
 
     /**
@@ -29,16 +29,10 @@ class ElasticsearchCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, Exception $exception = null): void
     {
-        $totalRequestsTime = 0;
-        $collectedData = $this->elasticsearchDebugStack->getCollectedData();
-        foreach ($collectedData as $requestData) {
-            $totalRequestsTime += $requestData['duration'];
-        }
-
         $this->data = [
-            'requests' => $collectedData,
-            'requestsCount' => count($collectedData),
-            'totalRequestsTime' => $totalRequestsTime,
+            'requests' => $this->elasticsearchRequestCollection->getCollectedData(),
+            'requestsCount' => $this->elasticsearchRequestCollection->getCollectedDataCount(),
+            'totalRequestsTime' => $this->elasticsearchRequestCollection->getTotalTime() * 1000,
         ];
     }
 

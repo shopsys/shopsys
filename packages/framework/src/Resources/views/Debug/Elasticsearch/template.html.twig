@@ -2,9 +2,11 @@
 
 {% block toolbar %}
     {% if collector.data.requestsCount > 0 %}
-        {% if collector.data.totalRequestsTime * 1000 > 200 %}
+        {# >200ms as elasticsearch response time will be marked as critical state #}
+        {% if collector.data.totalRequestsTime > 200 %}
             {% set status = 'red' %}
-        {% elseif collector.data.totalRequestsTime * 1000 > 100 %}
+        {# >100ms as elasticsearch response time will be marked as warning state #}
+        {% elseif collector.data.totalRequestsTime > 100 %}
             {% set status = 'yellow' %}
         {% else %}
             {% set status = 'normal' %}
@@ -18,7 +20,7 @@
             <span class="sf-toolbar-value">{{ collector.data.requestsCount }}</span>
             <span class="sf-toolbar-info-piece-additional-detail">
                 <span class="sf-toolbar-label">in</span>
-                <span class="sf-toolbar-value">{{ '%0.2f'|format(collector.data.totalRequestsTime * 1000) }}</span>
+                <span class="sf-toolbar-value">{{ '%0.2f'|format(collector.data.totalRequestsTime) }}</span>
                 <span class="sf-toolbar-label">ms</span>
             </span>
         {% endset %}
@@ -26,11 +28,12 @@
         {% set text %}
             <div class="sf-toolbar-info-piece">
                 <b>Requests</b>
+                {# we would set limit of 4 requests to elasticsearch for 1 http request as  #}
                 <span class="sf-toolbar-status {{ collector.data.requestsCount > 5 ? 'sf-toolbar-status-yellow' : '' }}">{{ collector.data.requestsCount }}</span>
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Total time</b>
-                <span class="sf-toolbar-status-{{ status }}">{{ '%0.2f'|format(collector.data.totalRequestsTime * 1000) }} ms</span>
+                <span class="sf-toolbar-status-{{ status }}">{{ '%0.2f'|format(collector.data.totalRequestsTime) }} ms</span>
             </div>
         {% endset %}
 
@@ -67,7 +70,7 @@
         }
     </style>
 
-    <h1>Elasticsearch - total {{ collector.data.requestsCount }} queries in {{ '%0.2f'|format(collector.data.totalRequestsTime * 1000) }} ms</h1>
+    <h1>Elasticsearch - total {{ collector.data.requestsCount }} queries in {{ '%0.2f'|format(collector.data.totalRequestsTime) }} ms</h1>
 
     {% for index, request in collector.data.requests %}
         {% if request.statusCode is null or request.statusCode >= 500 %}
@@ -84,17 +87,17 @@
                 <th class="{{ statusClass }}">{{ request.uri }}</th>
                 <td class="{{ statusClass }}" style="width: 200px;">
                     {% if request.requestJson is not null %}
-                        <button type="button" style="float: right;" onclick="this.style.display = 'none'; document.getElementById('js-elasticsearch-response-data-{{ index }}').style.display = ''; return false;">
+                        <button type="button" style="float: right;" onclick="document.getElementById('js-elasticsearch-response-data-{{ index }}').classList.toggle('hidden'); return false;">
                             Response
                         </button>
                     {% endif %}
                     {% if request.requestData is not null %}
-                        <button type="button" style="float: right;" onclick="this.style.display = 'none'; document.getElementById('js-elasticsearch-request-data-{{ index }}').style.display = ''; return false;">
-                            Request
-                        </button>
+                    <button type="button" style="float: right;" onclick="document.getElementById('js-elasticsearch-request-data-{{ index }}').classList.toggle('hidden'); return false;">
+                        Request
+                    </button>
                     {% endif %}
                     {% if request.response is not null %}
-                        <button type="button" style="float: right;" onclick="this.style.display = 'none'; document.getElementById('js-elasticsearch-request-json-{{ index }}').style.display = ''; return false;">
+                        <button type="button" style="float: right;" onclick="document.getElementById('js-elasticsearch-request-json-{{ index }}').classList.toggle('hidden'); return false;">
                             Json
                         </button>
                     {% endif %}
@@ -107,13 +110,13 @@
             </tr>
 
             {% if request.requestJson is not null %}
-                <tr id="js-elasticsearch-request-json-{{ index }}" style="display: none;">
+                <tr id="js-elasticsearch-request-json-{{ index }}" class="hidden">
                     <td colspan="4"><pre>{{ request.requestJson }}</pre></td>
                 </tr>
             {% endif %}
 
             {% if request.requestData is not null %}
-                <tr id="js-elasticsearch-request-data-{{ index }}" style="display: none;">
+                <tr id="js-elasticsearch-request-data-{{ index }}" class="hidden">
                     <td colspan="4">
                         <b>Request:</b><br>
                         {{ dump(request.requestData) }}
@@ -122,7 +125,7 @@
             {% endif %}
 
             {% if request.response is not null %}
-                <tr id="js-elasticsearch-response-data-{{ index }}" style="display: none;">
+                <tr id="js-elasticsearch-response-data-{{ index }}" class="hidden">
                     <td colspan="4">
                         <b>Response:</b><br>
                         {{ dump(request.response) }}
