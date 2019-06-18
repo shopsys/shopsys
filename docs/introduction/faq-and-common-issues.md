@@ -22,7 +22,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [How to change the behavior of the product search on the front-end?](#how-to-change-the-behavior-of-the-product-search-on-the-front-end)
 - [Why are e-mails not sent immediately but at the end of the script](#why-are-e-mails-sent-before-end-of-the-script-and-not-immediately)
 - [Where does the business logic belong?](#where-does-the-business-logic-belong)
-- [How can I create a friendly URL for my entity?](#how-can-i-create-a-friendly-url-for-my-entity)
+- [How can I create a friendly URL or Breadcrumb navigation for my entity?](#how-can-i-create-a-friendly-url-or-breadcrumb-navigation-for-my-entity)
 
 ## What are the phing targets?
 Every phing target is a task that can be executed simply by `php phing <target-name>` command.
@@ -120,5 +120,5 @@ It is also possible to turn the spool off by removing it from [swiftmailer.yml](
 The business logic should be implemented directly in an entity every time when there is no need for external services.
 Otherwise, the logic is in facades (resp. the facades are used as delegates to other services, e.g. another *Facade*, *Repository*, *Calculation*, etc.). You can read more about the model architecture in [Introduction to model architecture](/docs/model/introduction-to-model-architecture.md).
 
-## How can I create a friendly URL for my entity?
-See [Friendly URL](/docs/introduction/friendly-url.md#friendly-url) article.
+## How can I create a friendly URL or Breadcrumb navigation for my entity?
+See [Friendly URL, Breadcrumb navigation](/docs/introduction/friendly-url-breadcrumb-navigation.md) article.
