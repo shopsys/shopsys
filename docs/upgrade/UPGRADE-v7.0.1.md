@@ -20,7 +20,7 @@ There you can find links to upgrade notes for other versions too.
     - if you have customized e-mailing on your project (eg. by implementing Twig templates for mail content), you should check your code to avoid double escaping (eg. execute `htmlspecialchars_decode($value, ENT_QUOTES)` before passing the variables replacements to you implementation)
 
 ### Configuration
-- do not update `symfony/monolog-bundle` to the version than `3.4.0` and higher before [symfony/monolog-bundle#309](https://github.com/symfony/monolog-bundle/issues/309) is resolved ([#1148](https://github.com/shopsys/shopsys/pull/1148))
+- do not update `symfony/monolog-bundle` to the version `3.4.0` and higher before [symfony/monolog-bundle#309](https://github.com/symfony/monolog-bundle/issues/309) is resolved ([#1148](https://github.com/shopsys/shopsys/pull/1148))
 
 [shopsys/framework]: https://github.com/shopsys/framework
 [Upgrade from v7.0.0 to v7.0.1]: https://github.com/shopsys/shopsys/compare/v7.0.0...v7.0.1
