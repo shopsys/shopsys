@@ -19,4 +19,7 @@ There you can find links to upgrade notes for other versions too.
     - if you haven't extended any of these methods and haven't called `new MessageData(...)` in your code, you should be protected by the upgrade alone
     - if you have customized e-mailing on your project (eg. by implementing Twig templates for mail content), you should check your code to avoid double escaping (eg. execute `htmlspecialchars_decode($value, ENT_QUOTES)` before passing the variables replacements to you implementation)
 
+### Configuration
+- do not update `symfony/monolog-bundle` to the higher version than `3.3.1` ([#1148](https://github.com/shopsys/shopsys/pull/1148))
+
 [shopsys/framework]: https://github.com/shopsys/framework
