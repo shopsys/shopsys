@@ -11,6 +11,10 @@ services:
         arguments:
             - '%overwrite_domain_url%'
 
+    Shopsys\FrameworkBundle\Controller\Admin\ProductController:
+        calls:
+            - method: setProductSearchExportScheduler
+
     Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade: ~
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository: ~
