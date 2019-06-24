@@ -117,23 +117,23 @@ There you can find links to upgrade notes for other versions too.
     ```
 - unset the incompatible `excluded_404s` configuration from monolog handlers that don't use the `fingers_crossed` type ([#1154](https://github.com/shopsys/shopsys/pull/1154))
     - in `app/config/packages/dev/monolog.yml`:
-    ```diff
-        monolog:
-           handlers:
-               main:
-                   # change "fingers_crossed" handler to "group" that works as a passthrough to "nested"
-                   type: group
-                   members: [ nested ]
-    +              excluded_404s: false
-    ```
+        ```diff
+            monolog:
+               handlers:
+                   main:
+                       # change "fingers_crossed" handler to "group" that works as a passthrough to "nested"
+                       type: group
+                       members: [ nested ]
+        +              excluded_404s: false
+        ```
     - in `app/config/packages/test/monolog.yml`:
-    ```diff
-        monolog:
-            handlers:
-                main:
-                    type: "null"
-    +               excluded_404s: false
-    ```
+        ```diff
+            monolog:
+                handlers:
+                    main:
+                        type: "null"
+        +               excluded_404s: false
+        ```
 
 ### Tools
 - use the `build.xml` [Phing configuration](/docs/introduction/console-commands-for-application-management-phing-targets.md) from the `shopsys/framework` package ([#1068](https://github.com/shopsys/shopsys/pull/1068))
