@@ -134,7 +134,7 @@ There you can find links to upgrade notes for other versions too.
                         type: "null"
         +               excluded_404s: false
         ```
-- if you have `Shopsys\FrameworkBundle\Model\Product\ProductFacade` re-registered in your `services.yml` and/or `services_test.yml`, add proper setter calls ([#1153](https://github.com/shopsys/shopsys/pull/1153))
+- if you have `Shopsys\FrameworkBundle\Model\Product\ProductFacade` extended in your `services.yml` and/or `services_test.yml`, add proper setter calls ([#1153](https://github.com/shopsys/shopsys/pull/1153))
     ```diff
         Shopsys\FrameworkBundle\Model\Product\ProductFacade
     +       calls:
