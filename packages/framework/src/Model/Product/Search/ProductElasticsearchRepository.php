@@ -47,27 +47,35 @@ class ProductElasticsearchRepository
      * @param \Elasticsearch\Client $client
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager $elasticsearchStructureManager
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory|null $filterQueryFactory
      */
     public function __construct(
         string $indexPrefix,
         Client $client,
         ProductElasticsearchConverter $productElasticsearchConverter,
-        ElasticsearchStructureManager $elasticsearchStructureManager
+        ElasticsearchStructureManager $elasticsearchStructureManager,
+        ?FilterQueryFactory $filterQueryFactory = null
     ) {
         $this->indexPrefix = $indexPrefix;
         $this->client = $client;
         $this->productElasticsearchConverter = $productElasticsearchConverter;
         $this->elasticsearchStructureManager = $elasticsearchStructureManager;
-        $this->filterQueryFactory = $this->createFilterQueryFactory();
+        $this->filterQueryFactory = $filterQueryFactory;
     }
 
     /**
+     * @required
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory
-     * @deprecated Will be replaced with constructor injection in the next major release
+     * @internal Will be replaced with constructor injection in the next major release
+     * @deprecated
      */
     protected function createFilterQueryFactory(): FilterQueryFactory
     {
-        return new FilterQueryFactory();
+        if ($this->filterQueryFactory === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+
+            $this->filterQueryFactory = new FilterQueryFactory();
+        }
     }
 
     /**
