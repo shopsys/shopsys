@@ -39,10 +39,7 @@ class ProductSearchExportListener
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $filterResponseEvent
-     */
-    public function onKernelResponse(FilterResponseEvent $filterResponseEvent): void
+    public function exportScheduledProducts(): void
     {
         if ($this->productSearchExportScheduler->hasAnyProductIdsForImmediateExport()) {
             // to be sure the recalculated data are fetched from database properly
@@ -51,5 +48,13 @@ class ProductSearchExportListener
             $productIds = $this->productSearchExportScheduler->getProductIdsForImmediateExport();
             $this->productSearchExportFacade->exportIds($productIds);
         }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $filterResponseEvent
+     */
+    public function onKernelResponse(FilterResponseEvent $filterResponseEvent): void
+    {
+        $this->exportScheduledProducts();
     }
 }
