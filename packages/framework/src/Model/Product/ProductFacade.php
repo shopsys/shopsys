@@ -214,6 +214,7 @@ class ProductFacade
     }
 
     /**
+     * @required
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
      * @internal Will be replaced with constructor injection in the next major release
      * @deprecated
