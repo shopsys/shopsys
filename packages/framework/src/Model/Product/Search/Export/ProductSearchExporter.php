@@ -160,7 +160,15 @@ class ProductSearchExporter
      */
     public function exportIds(int $domainId, string $locale, array $productIds): void
     {
-        $exportedIds = $this->exportBatchIds($domainId, $locale, $productIds);
+        $productsData = $this->productSearchExportRepository->getProductsDataForIds($domainId, $locale, $productIds);
+        if (count($productsData) === 0) {
+            $this->productElasticsearchRepository->deletePresent($domainId, $productIds);
+
+            return;
+        }
+
+        $this->exportProductsData($domainId, $productsData);
+        $exportedIds = $this->productElasticsearchConverter->extractIds($productsData);
 
         $idsToDelete = array_diff($productIds, $exportedIds);
 
@@ -171,21 +179,13 @@ class ProductSearchExporter
 
     /**
      * @param int $domainId
-     * @param string $locale
-     * @param int[] $productIds
-     * @return int[]
+     * @param array $productsData
+     * @return void
      */
-    protected function exportBatchIds(int $domainId, string $locale, array $productIds): array
+    protected function exportProductsData(int $domainId, array $productsData): void
     {
-        $productsData = $this->productSearchExportRepository->getProductsDataForIds($domainId, $locale, $productIds);
-        if (count($productsData) === 0) {
-            return [];
-        }
-
         $data = $this->productElasticsearchConverter->convertExportBulk($productsData);
         $this->productElasticsearchRepository->bulkUpdate($domainId, $data);
-
-        return $this->productElasticsearchConverter->extractIds($productsData);
     }
 
     /**

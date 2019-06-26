@@ -118,6 +118,9 @@ class ProductVariantFacade
             throw $exception;
         }
 
+        $this->validateInjectedDependencies();
+        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($mainVariant->getId());
+
         return $mainVariant;
     }
 
