@@ -53,27 +53,37 @@ class DomainRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory $friendlyUrlRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Symfony\Component\HttpFoundation\RequestStack|null $requestStack
      */
     public function __construct(
         $routerConfiguration,
         LoaderInterface $configLoader,
         LocalizedRouterFactory $localizedRouterFactory,
         FriendlyUrlRouterFactory $friendlyUrlRouterFactory,
-        Domain $domain
+        Domain $domain,
+        ?RequestStack $requestStack = null
     ) {
         $this->routerConfiguration = $routerConfiguration;
         $this->configLoader = $configLoader;
         $this->localizedRouterFactory = $localizedRouterFactory;
         $this->domain = $domain;
         $this->friendlyUrlRouterFactory = $friendlyUrlRouterFactory;
+        $this->requestStack = $requestStack;
     }
 
     /**
+     * @required
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @internal Will be replaced with constructor injection in the next major release
+     * @deprecated
      */
     public function setRequestStack(RequestStack $requestStack)
     {
-        $this->requestStack = $requestStack;
+        if ($this->requestStack === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+
+            $this->requestStack = $requestStack;
+        }
     }
 
     /**

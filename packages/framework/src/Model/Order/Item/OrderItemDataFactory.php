@@ -13,13 +13,26 @@ class OrderItemDataFactory implements OrderItemDataFactoryInterface
     protected $orderItemPriceCalculation;
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation|null $orderItemPriceCalculation
+     */
+    public function __construct(?OrderItemPriceCalculation $orderItemPriceCalculation = null)
+    {
+        $this->orderItemPriceCalculation = $orderItemPriceCalculation;
+    }
+
+    /**
      * @required
-     * @internal Will be replaced with constructor injection in the next major release
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
+     * @internal Will be replaced with constructor injection in the next major release
+     * @deprecated
      */
     public function setOrderItemPriceCalculation(OrderItemPriceCalculation $orderItemPriceCalculation)
     {
-        $this->orderItemPriceCalculation = $orderItemPriceCalculation;
+        if ($this->orderItemPriceCalculation === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+
+            $this->orderItemPriceCalculation = $orderItemPriceCalculation;
+        }
     }
 
     /**
