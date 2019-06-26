@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
-use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -251,7 +250,6 @@ class ProductFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
-        $this->validateInjectedDependencies();
         $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($product->getId());
 
         return $product;
@@ -320,7 +318,7 @@ class ProductFacade
         if ($product->isVariant()) {
             $productIdToExport = $product->getMainVariant()->getId();
         }
-        $this->validateInjectedDependencies();
+
         $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productIdToExport);
 
         return $product;
@@ -331,8 +329,6 @@ class ProductFacade
      */
     public function delete($productId)
     {
-        $this->validateInjectedDependencies();
-
         $product = $this->productRepository->getById($productId);
         $productDeleteResult = $product->getProductDeleteResult();
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
@@ -483,16 +479,5 @@ class ProductFacade
     public function getOneByCatnumExcludeMainVariants($productCatnum)
     {
         return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
-    }
-
-    /**
-     * @internal Will be removed in the next major release
-     * @deprecated
-     */
-    protected function validateInjectedDependencies(): void
-    {
-        if (!$this->productSearchExportScheduler instanceof ProductSearchExportScheduler) {
-            throw new BadMethodCallException(sprintf('Method "%s::setProductSearchExportScheduler()" has to be called in "services.yml" definition.', __CLASS__));
-        }
     }
 }

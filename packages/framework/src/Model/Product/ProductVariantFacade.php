@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
-use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
@@ -122,20 +121,8 @@ class ProductVariantFacade
             throw $exception;
         }
 
-        $this->validateInjectedDependencies();
         $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($mainVariant->getId());
 
         return $mainVariant;
-    }
-
-    /**
-     * @internal Will be removed in the next major release
-     * @deprecated
-     */
-    protected function validateInjectedDependencies(): void
-    {
-        if (!$this->productSearchExportScheduler instanceof ProductSearchExportScheduler) {
-            throw new BadMethodCallException(sprintf('Method "%s::setProductSearchExportScheduler()" has to be called in "services.yml" definition.', __CLASS__));
-        }
     }
 }
