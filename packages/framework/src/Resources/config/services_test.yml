@@ -162,9 +162,7 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\ProductDataFactory
 
-    Shopsys\FrameworkBundle\Model\Product\ProductFacade:
-        calls:
-            - method: setProductSearchExportScheduler
+    Shopsys\FrameworkBundle\Model\Product\ProductFacade: ~
 
     Shopsys\FrameworkBundle\Model\Product\ProductFactory: ~ # @deprecated
 
@@ -177,9 +175,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: ~
 
-    Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade:
-        calls:
-            - method: setProductSearchExportScheduler
+    Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade: ~
 
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade: ~
 
