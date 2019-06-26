@@ -186,7 +186,7 @@ class ProductFacade
         ProductParameterValueFactoryInterface $productParameterValueFactory,
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
-        ProductSearchExportScheduler $productSearchExportScheduler = null
+        ?ProductSearchExportScheduler $productSearchExportScheduler = null
     ) {
         $this->em = $em;
         $this->productRepository = $productRepository;

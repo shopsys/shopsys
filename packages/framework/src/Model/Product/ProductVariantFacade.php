@@ -69,7 +69,7 @@ class ProductVariantFacade
         ProductFactoryInterface $productFactory,
         ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        ProductSearchExportScheduler $productSearchExportScheduler = null
+        ?ProductSearchExportScheduler $productSearchExportScheduler = null
     ) {
         $this->em = $em;
         $this->productFacade = $productFacade;
