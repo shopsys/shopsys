@@ -115,7 +115,18 @@ There you can find links to upgrade notes for other versions too.
     +           - method: setSqlLoggerFacade
     +           - method: setEntityManager
     ```
-- unset the incompatible `excluded_404s` configuration from monolog handlers that don't use the `fingers_crossed` type ([#1154](https://github.com/shopsys/shopsys/pull/1154))
+- use the monolog configuration option `excluded_http_codes` instead of deprecated `excluded_404s` ([#1163](https://github.com/shopsys/shopsys/pull/1163))
+    - in `app/config/packages/monolog.yml`, in the `main` handler:
+        ```diff
+          type: fingers_crossed
+          buffer_size: 1000
+          action_level: warning
+          handler: nested
+        - excluded_404s:
+        -     - ^/
+        + excluded_http_codes: [404]
+        ```
+- unset the incompatible `excluded_404s`/`excluded_http_codes` configuration from monolog handlers that don't use the `fingers_crossed` type ([#1154](https://github.com/shopsys/shopsys/pull/1154))
     - in `app/config/packages/dev/monolog.yml`:
         ```diff
             monolog:
@@ -124,7 +135,7 @@ There you can find links to upgrade notes for other versions too.
                        # change "fingers_crossed" handler to "group" that works as a passthrough to "nested"
                        type: group
                        members: [ nested ]
-        +              excluded_404s: false
+        +              excluded_http_codes: false
         ```
     - in `app/config/packages/test/monolog.yml`:
         ```diff
@@ -132,7 +143,7 @@ There you can find links to upgrade notes for other versions too.
                 handlers:
                     main:
                         type: "null"
-        +               excluded_404s: false
+        +               excluded_http_codes: false
         ```
 
 ### Tools
