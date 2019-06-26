@@ -59,6 +59,7 @@ class ProductVariantFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler|null $productSearchExportScheduler
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -67,7 +68,8 @@ class ProductVariantFacade
         ImageFacade $imageFacade,
         ProductFactoryInterface $productFactory,
         ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
+        ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
+        ProductSearchExportScheduler $productSearchExportScheduler = null
     ) {
         $this->em = $em;
         $this->productFacade = $productFacade;
@@ -76,6 +78,7 @@ class ProductVariantFacade
         $this->productFactory = $productFactory;
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
+        $this->productSearchExportScheduler = $productSearchExportScheduler;
     }
 
     /**
@@ -85,11 +88,11 @@ class ProductVariantFacade
      */
     public function setProductSearchExportScheduler(ProductSearchExportScheduler $productSearchExportScheduler): void
     {
-        if ($this->productSearchExportScheduler !== null) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
+        if ($this->productSearchExportScheduler === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
 
-        $this->productSearchExportScheduler = $productSearchExportScheduler;
+            $this->productSearchExportScheduler = $productSearchExportScheduler;
+        }
     }
 
     /**

@@ -180,7 +180,6 @@ class ProductSearchExporter
     /**
      * @param int $domainId
      * @param array $productsData
-     * @return void
      */
     protected function exportProductsData(int $domainId, array $productsData): void
     {

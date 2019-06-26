@@ -161,6 +161,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler|null $productSearchExportScheduler
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -184,7 +185,8 @@ class ProductFacade
         ProductCategoryDomainFactoryInterface $productCategoryDomainFactory,
         ProductParameterValueFactoryInterface $productParameterValueFactory,
         ProductVisibilityFactoryInterface $productVisibilityFactory,
-        ProductPriceCalculation $productPriceCalculation
+        ProductPriceCalculation $productPriceCalculation,
+        ProductSearchExportScheduler $productSearchExportScheduler = null
     ) {
         $this->em = $em;
         $this->productRepository = $productRepository;
@@ -208,6 +210,7 @@ class ProductFacade
         $this->productParameterValueFactory = $productParameterValueFactory;
         $this->productVisibilityFactory = $productVisibilityFactory;
         $this->productPriceCalculation = $productPriceCalculation;
+        $this->productSearchExportScheduler = $productSearchExportScheduler;
     }
 
     /**
@@ -217,11 +220,11 @@ class ProductFacade
      */
     public function setProductSearchExportScheduler(ProductSearchExportScheduler $productSearchExportScheduler): void
     {
-        if ($this->productSearchExportScheduler !== null) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
+        if ($this->productSearchExportScheduler === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
 
-        $this->productSearchExportScheduler = $productSearchExportScheduler;
+            $this->productSearchExportScheduler = $productSearchExportScheduler;
+        }
     }
 
     /**

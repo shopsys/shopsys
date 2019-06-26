@@ -137,10 +137,14 @@ There you can find links to upgrade notes for other versions too.
 - if you have `Shopsys\FrameworkBundle\Model\Product\ProductFacade` or `Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade` extended in your `services.yml` and/or `services_test.yml`, add proper setter calls ([#1153](https://github.com/shopsys/shopsys/pull/1153))
     ```diff
         Shopsys\FrameworkBundle\Model\Product\ProductFacade
+    -       alias: Shopsys\ShopBundle\Model\Product\ProductFacade
+    +       class: Shopsys\ShopBundle\Model\Product\ProductFacade
     +       calls:
     +           - method: setProductSearchExportScheduler
 
         Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade
+    -       alias: Shopsys\ShopBundle\Model\Product\ProductVariantFacade
+    +       class: Shopsys\ShopBundle\Model\Product\ProductVariantFacade
     +       calls:
     +           - method: setProductSearchExportScheduler
     ```
