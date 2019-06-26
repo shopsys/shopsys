@@ -13,7 +13,7 @@ class ProductSearchExportScheduler
      */
     public function scheduleProductIdForImmediateExport(int $productId): void
     {
-        $this->productIds[$productId] = $productId;
+        $this->productIds[] = $productId;
     }
 
     /**
@@ -29,7 +29,7 @@ class ProductSearchExportScheduler
      */
     public function getProductIdsForImmediateExport(): array
     {
-        return array_values($this->productIds);
+        return array_unique($this->productIds);
     }
 
     public function cleanScheduleForImmediateExport(): void

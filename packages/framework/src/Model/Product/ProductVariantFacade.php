@@ -2,10 +2,12 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler;
 
 class ProductVariantFacade
 {
@@ -45,6 +47,11 @@ class ProductVariantFacade
     protected $productAvailabilityRecalculationScheduler;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler
+     */
+    protected $productSearchExportScheduler;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface $productDataFactory
@@ -69,6 +76,20 @@ class ProductVariantFacade
         $this->productFactory = $productFactory;
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
+     * @internal Will be replaced with constructor injection in the next major release
+     * @deprecated
+     */
+    public function setProductSearchExportScheduler(ProductSearchExportScheduler $productSearchExportScheduler): void
+    {
+        if ($this->productSearchExportScheduler !== null) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+
+        $this->productSearchExportScheduler = $productSearchExportScheduler;
     }
 
     /**
@@ -98,5 +119,16 @@ class ProductVariantFacade
         }
 
         return $mainVariant;
+    }
+
+    /**
+     * @internal Will be removed in the next major release
+     * @deprecated
+     */
+    protected function validateInjectedDependencies(): void
+    {
+        if (!$this->productSearchExportScheduler instanceof ProductSearchExportScheduler) {
+            throw new BadMethodCallException(sprintf('Method "%s::setProductSearchExportScheduler()" has to be called in "services.yml" definition.', __CLASS__));
+        }
     }
 }

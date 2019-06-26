@@ -115,10 +115,6 @@ services:
         arguments:
             - '@snc_redis.framework_annotations'
 
-    Shopsys\FrameworkBundle\Controller\Admin\ProductController:
-        calls:
-            - method: setProductSearchExportScheduler
-
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:
@@ -510,6 +506,14 @@ services:
         tags:
             # must be run before ProductVisibilityFacade
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
+
+    Shopsys\FrameworkBundle\Model\Product\ProductFacade:
+        calls:
+            - method: setProductSearchExportScheduler
+
+    Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade:
+        calls:
+            - method: setProductSearchExportScheduler
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade:
         tags:

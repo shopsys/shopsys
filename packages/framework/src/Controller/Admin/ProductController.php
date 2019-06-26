@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use BadMethodCallException;
 use Doctrine\ORM\QueryBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -25,7 +24,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
-use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Twig\ProductExtension;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,11 +102,6 @@ class ProductController extends AdminBaseController
     protected $availabilityFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler
-     */
-    protected $productSearchExportScheduler;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade $productMassActionFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
@@ -157,19 +150,6 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
-     * @internal Will be replaced with constructor injection in the next major release
-     */
-    public function setProductSearchExportScheduler(ProductSearchExportScheduler $productSearchExportScheduler): void
-    {
-        if ($this->productSearchExportScheduler !== null) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-
-        $this->productSearchExportScheduler = $productSearchExportScheduler;
-    }
-
-    /**
      * @Route("/product/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $id
@@ -184,8 +164,6 @@ class ProductController extends AdminBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->productFacade->edit($id, $form->getData());
-
-            $this->scheduleProductOrMainVariantForImmediateExport($id, $product);
 
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Product <strong>{{ product|productDisplayName }}</strong> modified'),
@@ -229,8 +207,6 @@ class ProductController extends AdminBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $this->productFacade->create($form->getData());
-
-            $this->scheduleProductOrMainVariantForImmediateExport($product->getId(), $product);
 
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Product <strong>{{ product|productDisplayName }}</strong> created'),
@@ -322,8 +298,6 @@ class ProductController extends AdminBaseController
 
             $this->productFacade->delete($id);
 
-            $this->scheduleProductOrMainVariantForImmediateExport($id, $product);
-
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Product <strong>{{ product|productDisplayName }}</strong> deleted'),
                 [
@@ -364,8 +338,6 @@ class ProductController extends AdminBaseController
             $mainVariant = $formData[VariantFormType::MAIN_VARIANT];
             try {
                 $newMainVariant = $this->productVariantFacade->createVariant($mainVariant, $formData[VariantFormType::VARIANTS]);
-
-                $this->scheduleProductOrMainVariantForImmediateExport($newMainVariant->getId(), $newMainVariant);
 
                 $this->getFlashMessageSender()->addSuccessFlashTwig(
                     t('Variant <strong>{{ productVariant|productDisplayName }}</strong> successfully created.'),
@@ -450,31 +422,5 @@ class ProductController extends AdminBaseController
         }
 
         return true;
-    }
-
-    /**
-     * @internal Will be removed in the next major release
-     */
-    protected function validateInjectedDependencies(): void
-    {
-        if (!$this->productSearchExportScheduler instanceof ProductSearchExportScheduler) {
-            throw new BadMethodCallException(sprintf('Method "%s::setProductSearchExportScheduler()" has to be called in "services.yml" definition.', __CLASS__));
-        }
-    }
-
-    /**
-     * @param int $productId Id of deleted product is null, so it needs to be passed separately
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    protected function scheduleProductOrMainVariantForImmediateExport(int $productId, Product $product): void
-    {
-        $productIdToExport = $productId;
-
-        if ($product->isVariant()) {
-            $productIdToExport = $product->getMainVariant()->getId();
-        }
-
-        $this->validateInjectedDependencies();
-        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productIdToExport);
     }
 }
