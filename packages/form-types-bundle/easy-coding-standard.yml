@@ -6,6 +6,15 @@ services:
 
     Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff: ~
 
+    # this package is meant to be extensible using class inheritance, so we want to avoid private visibilities in these namespaces
+    forbidden_private_visibility_fixer.form_types:
+        class: Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer
+        calls:
+            - method: configure
+              arguments:
+                  - analyzed_namespaces:
+                        - Shopsys\FormTypesBundle
+
 parameters:
     skip:
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:

@@ -13,7 +13,7 @@ class MultidomainType extends AbstractType
     /**
      * @var \Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface
      */
-    private $domainIdsProvider;
+    protected $domainIdsProvider;
 
     /**
      * @param \Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface $domainIdsProvider
