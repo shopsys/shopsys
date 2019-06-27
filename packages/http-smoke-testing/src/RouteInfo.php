@@ -9,12 +9,12 @@ class RouteInfo
     /**
      * @var string
      */
-    private $routeName;
+    protected $routeName;
 
     /**
      * @var \Symfony\Component\Routing\Route
      */
-    private $route;
+    protected $route;
 
     /**
      * @param string $routeName

@@ -7,17 +7,17 @@ class RequestDataSetGenerator implements RouteConfig
     /**
      * @var \Shopsys\HttpSmokeTesting\RouteInfo
      */
-    private $routeInfo;
+    protected $routeInfo;
 
     /**
      * @var \Shopsys\HttpSmokeTesting\RequestDataSet
      */
-    private $defaultRequestDataSet;
+    protected $defaultRequestDataSet;
 
     /**
      * @var \Shopsys\HttpSmokeTesting\RequestDataSet[]
      */
-    private $extraRequestDataSets;
+    protected $extraRequestDataSets;
 
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteInfo $routeInfo

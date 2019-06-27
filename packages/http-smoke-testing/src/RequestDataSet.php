@@ -14,37 +14,37 @@ class RequestDataSet implements RequestDataSetConfig
     /**
      * @var string
      */
-    private $routeName;
+    protected $routeName;
 
     /**
      * @var bool
      */
-    private $skipped;
+    protected $skipped;
 
     /**
      * @var \Shopsys\HttpSmokeTesting\Auth\AuthInterface|null
      */
-    private $auth;
+    protected $auth;
 
     /**
      * @var int|null
      */
-    private $expectedStatusCode;
+    protected $expectedStatusCode;
 
     /**
      * @var array
      */
-    private $parameters;
+    protected $parameters;
 
     /**
      * @var string[]
      */
-    private $debugNotes;
+    protected $debugNotes;
 
     /**
      * @var callable[]
      */
-    private $callsDuringTestExecution;
+    protected $callsDuringTestExecution;
 
     /**
      * @param string $routeName

@@ -9,7 +9,7 @@ class RouteConfigCustomizer
     /**
      * @var \Shopsys\HttpSmokeTesting\RequestDataSetGenerator[]
      */
-    private $requestDataSetGenerators;
+    protected $requestDataSetGenerators;
 
     /**
      * @param \Shopsys\HttpSmokeTesting\RequestDataSetGenerator[] $requestDataSetGenerators

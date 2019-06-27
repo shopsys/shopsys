@@ -9,12 +9,12 @@ class BasicHttpAuth implements AuthInterface
     /**
      * @var string
      */
-    private $username;
+    protected $username;
 
     /**
      * @var null|string
      */
-    private $password;
+    protected $password;
 
     /**
      * @param string $username

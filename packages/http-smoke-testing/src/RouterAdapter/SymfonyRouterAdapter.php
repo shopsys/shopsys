@@ -11,7 +11,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     /**
      * @var \Symfony\Component\Routing\RouterInterface
      */
-    private $router;
+    protected $router;
 
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router
