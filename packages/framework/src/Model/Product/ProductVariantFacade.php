@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
@@ -83,11 +84,14 @@ class ProductVariantFacade
     /**
      * @required
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
-     * @internal Will be replaced with constructor injection in the next major release
-     * @deprecated
+     * @deprecated Will be replaced with constructor injection in the next major release
      */
     public function setProductSearchExportScheduler(ProductSearchExportScheduler $productSearchExportScheduler): void
     {
+        if ($this->productSearchExportScheduler !== null && $this->productSearchExportScheduler !== $productSearchExportScheduler) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+
         if ($this->productSearchExportScheduler === null) {
             @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
 
