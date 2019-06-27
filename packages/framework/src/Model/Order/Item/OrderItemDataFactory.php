@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemPriceCalculationNotInjectedException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException;
 
@@ -23,11 +24,14 @@ class OrderItemDataFactory implements OrderItemDataFactoryInterface
     /**
      * @required
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @internal Will be replaced with constructor injection in the next major release
-     * @deprecated
+     * @deprecated Will be replaced with constructor injection in the next major release
      */
     public function setOrderItemPriceCalculation(OrderItemPriceCalculation $orderItemPriceCalculation)
     {
+        if ($this->orderItemPriceCalculation !== null && $this->orderItemPriceCalculation !== $orderItemPriceCalculation) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+
         if ($this->orderItemPriceCalculation === null) {
             @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
 

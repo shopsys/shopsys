@@ -60,22 +60,18 @@ class ProductElasticsearchRepository
         $this->client = $client;
         $this->productElasticsearchConverter = $productElasticsearchConverter;
         $this->elasticsearchStructureManager = $elasticsearchStructureManager;
-        $this->filterQueryFactory = $filterQueryFactory;
+        $this->filterQueryFactory = $filterQueryFactory ?? $this->createFilterQueryFactory();
     }
 
     /**
-     * @required
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory
-     * @internal Will be replaced with constructor injection in the next major release
-     * @deprecated
+     * @deprecated Will be replaced with constructor injection in the next major release
      */
     protected function createFilterQueryFactory(): FilterQueryFactory
     {
-        if ($this->filterQueryFactory === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
 
-            $this->filterQueryFactory = new FilterQueryFactory();
-        }
+        return new FilterQueryFactory();
     }
 
     /**
