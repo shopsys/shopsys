@@ -31,12 +31,6 @@
 {% block breadcrumb %}{% endblock %}
 
 {% block main_content %}
-    {% if isMultidomain() %}
-        {% set cssClassOnMultidomainInputs = 'input--domain' %}
-    {% else %}
-        {% set cssClassOnMultidomainInputs = '' %}
-    {% endif %}
-
     {{ form_start(form) }}
         {{ form_errors(form) }}
 

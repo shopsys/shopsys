@@ -38,12 +38,6 @@ For the extensions of the forms, see [Enable administrator to edit the `extId` f
         {% block breadcrumb %}{% endblock %}
 
         {% block main_content %}
-            {% if isMultidomain() %}
-                {% set cssClassOnMultidomainInputs = 'input--domain' %}
-            {% else %}
-                {% set cssClassOnMultidomainInputs = '' %}
-            {% endif %}
-
             {{ form_start(form) }}
                 {{ form_errors(form) }}
 
@@ -92,12 +86,6 @@ For the extensions of the forms, see [Enable administrator to edit the `extId` f
         {% block breadcrumb %}{% endblock %}
 
         {% block main_content %}
-            {% if isMultidomain() %}
-                {% set cssClassOnMultidomainInputs = 'input--domain' %}
-            {% else %}
-                {% set cssClassOnMultidomainInputs = '' %}
-            {% endif %}
-
             <div class="form-line">
                 <div class="form-line__line form-line__line--no-space">
                     <div class="form-line__item form-line__item--text">
