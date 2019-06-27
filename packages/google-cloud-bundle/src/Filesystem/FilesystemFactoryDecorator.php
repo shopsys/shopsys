@@ -13,17 +13,17 @@ class FilesystemFactoryDecorator implements FilesystemFactoryInterface
     /**
      * @var \Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface
      */
-    private $inner;
+    protected $inner;
 
     /**
      * @var string
      */
-    private $googleCloudProjectId;
+    protected $googleCloudProjectId;
 
     /**
      * @var string
      */
-    private $googleCloudStorageBucketName;
+    protected $googleCloudStorageBucketName;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface $inner
