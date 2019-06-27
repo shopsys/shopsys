@@ -75,6 +75,18 @@ There you can find links to upgrade notes for other versions too.
     - stop using the deprecated method `\Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation::getVatCoefficientByPercent()`, use `PriceCalculation::getVatAmountByPriceWithVat()` for VAT calculation instead
     - if you want to customize the VAT calculation (eg. revert it back to the previous implementation), extend the service `@Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation` and override the method `getVatAmountByPriceWithVat()`
     - if you created new tests regarding the price calculation they might start failing after the upgrade - in such case, please see the new VAT calculation and change the tests expectations accordingly
+- to fix problem with dumping translations ([#1169](https://github.com/shopsys/shopsys/pull/1169))
+    - update your `autoload.php` file accordingly:
+    ```diff
+    +   use Doctrine\Common\Annotations\AnnotationReader;
+        use Doctrine\Common\Annotations\AnnotationRegistry;
+
+        $loader = file_exists(__DIR__ . '/../vendor/autoload.php') ? require __DIR__ . '/../vendor/autoload.php' : require __DIR__ . '/../../vendor/autoload.php';
+        /* @var $loader \Composer\Autoload\ClassLoader */
+
+        AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+    +   AnnotationReader::addGlobalIgnoredName('returnv');
+    ```
 
 ### Configuration
 - update `phpstan.neon` with following change to skip phpstan error ([#1086](https://github.com/shopsys/shopsys/pull/1086))
