@@ -12,7 +12,7 @@ final class FqnNameResolver
     /**
      * @var \PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer
      */
-    private $namespaceUsesAnalyzer;
+    protected $namespaceUsesAnalyzer;
 
     /**
      * @param \PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer $namespaceUsesAnalyzer
@@ -60,7 +60,7 @@ final class FqnNameResolver
      * @param string $className
      * @return string|null
      */
-    private function matchUseImports(Tokens $tokens, string $className): ?string
+    protected function matchUseImports(Tokens $tokens, string $className): ?string
     {
         $namespaceUseAnalyses = $this->namespaceUsesAnalyzer->getDeclarationsFromTokens($tokens);
 
@@ -77,7 +77,7 @@ final class FqnNameResolver
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @return bool
      */
-    private function hasNamespace(Tokens $tokens): bool
+    protected function hasNamespace(Tokens $tokens): bool
     {
         return (bool)$tokens->findGivenKind([T_NAMESPACE], 0);
     }
@@ -86,7 +86,7 @@ final class FqnNameResolver
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @return string
      */
-    private function getNamespaceAsString(Tokens $tokens): string
+    protected function getNamespaceAsString(Tokens $tokens): string
     {
         $namespaceTokens = $tokens->findGivenKind([T_NAMESPACE], 0);
         $namespaceToken = array_pop($namespaceTokens);

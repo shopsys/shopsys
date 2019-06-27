@@ -105,7 +105,7 @@ SAMPLE
      * @param \PhpCsFixer\DocBlock\Annotation $annotation
      * @return bool
      */
-    private function isRelationAnnotation(Annotation $annotation): bool
+    protected function isRelationAnnotation(Annotation $annotation): bool
     {
         return preg_match('~@ORM\\\(ManyToOne|OneToOne)\\(~', $annotation->getContent()) === 1;
     }
@@ -114,7 +114,7 @@ SAMPLE
      * @param \PhpCsFixer\DocBlock\DocBlock $doc
      * @param \PhpCsFixer\DocBlock\Annotation $relationAnnotation
      */
-    private function fixRelationAnnotation(DocBlock $doc, Annotation $relationAnnotation): void
+    protected function fixRelationAnnotation(DocBlock $doc, Annotation $relationAnnotation): void
     {
         $joinColumnAnnotation = $this->findJoinColumnAnnotation($doc);
         if ($joinColumnAnnotation === null) {
@@ -128,7 +128,7 @@ SAMPLE
      * @param \PhpCsFixer\DocBlock\DocBlock $doc
      * @return \PhpCsFixer\DocBlock\Annotation|null
      */
-    private function findJoinColumnAnnotation(DocBlock $doc): ?Annotation
+    protected function findJoinColumnAnnotation(DocBlock $doc): ?Annotation
     {
         foreach ($doc->getAnnotations() as $annotation) {
             if (preg_match('~@ORM\\\JoinColumn\\(~', $annotation->getContent()) === 1) {
@@ -143,7 +143,7 @@ SAMPLE
      * @param \PhpCsFixer\DocBlock\DocBlock $doc
      * @param \PhpCsFixer\DocBlock\Annotation $relationAnnotation
      */
-    private function addJoinColumnAnnotation(DocBlock $doc, Annotation $relationAnnotation): void
+    protected function addJoinColumnAnnotation(DocBlock $doc, Annotation $relationAnnotation): void
     {
         $matches = null;
         preg_match_all('~\\s*\*~', $relationAnnotation->getContent(), $matches);
@@ -155,7 +155,7 @@ SAMPLE
      * @param \PhpCsFixer\DocBlock\DocBlock $doc
      * @param \PhpCsFixer\DocBlock\Annotation $joinColumnAnnotation
      */
-    private function extendJoinColumnAnnotation(DocBlock $doc, Annotation $joinColumnAnnotation): void
+    protected function extendJoinColumnAnnotation(DocBlock $doc, Annotation $joinColumnAnnotation): void
     {
         $firstLine = $doc->getLine($joinColumnAnnotation->getStart());
         if (preg_match('~\\)\\s*$~', $firstLine->getContent()) === 1) {

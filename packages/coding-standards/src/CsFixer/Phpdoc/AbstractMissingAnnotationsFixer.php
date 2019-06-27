@@ -39,7 +39,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
     /**
      * @var \Symplify\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector
      */
-    private $indentDetector;
+    protected $indentDetector;
 
     /**
      * @var \Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer
@@ -278,7 +278,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
      * @param int $index
      * @return \PhpCsFixer\Tokenizer\Token|null
      */
-    private function getDocToken(Tokens $tokens, int $index): ?Token
+    protected function getDocToken(Tokens $tokens, int $index): ?Token
     {
         $docIndex = $this->getDocIndex($tokens, $index);
         $docToken = $tokens[$docIndex];
@@ -295,7 +295,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
      * @param int $index
      * @return bool
      */
-    private function isWhitespaceWithNewline(Tokens $tokens, int $index): bool
+    protected function isWhitespaceWithNewline(Tokens $tokens, int $index): bool
     {
         if (!$tokens[$index]->isWhitespace()) {
             return false;
@@ -311,7 +311,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
      * @param \PhpCsFixer\DocBlock\Line[] $newLines
      * @return int
      */
-    private function resolveOffset(Token $docToken, array $newLines): int
+    protected function resolveOffset(Token $docToken, array $newLines): int
     {
         foreach ($newLines as $newLine) {
             if (Strings::contains($newLine->getContent(), '@param') && Strings::contains($docToken->getContent(), '@param')) {
@@ -327,7 +327,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface, Define
      * @param \PhpCsFixer\Tokenizer\Token $docToken
      * @return int|null
      */
-    private function getLastParamLinePosition(Token $docToken): ?int
+    protected function getLastParamLinePosition(Token $docToken): ?int
     {
         $doc = new DocBlock($docToken->getContent());
 

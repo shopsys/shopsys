@@ -14,7 +14,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class NoUselessAccessFixer implements FixerInterface, DefinedFixerInterface
 {
-    private const ACCESS_TOKENS = [
+    protected const ACCESS_TOKENS = [
         \T_PUBLIC,
         \T_PROTECTED,
         \T_PRIVATE,
@@ -49,7 +49,7 @@ class Foo
      */
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isTokenKindFound(\T_DOC_COMMENT) && $tokens->isAnyTokenKindsFound(self::ACCESS_TOKENS);
+        return $tokens->isTokenKindFound(\T_DOC_COMMENT) && $tokens->isAnyTokenKindsFound(static::ACCESS_TOKENS);
     }
 
     /**
@@ -80,7 +80,7 @@ class Foo
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @return \PhpCsFixer\DocBlock\DocBlock[]
      */
-    private function findAllDocBlocks(Tokens $tokens): array
+    protected function findAllDocBlocks(Tokens $tokens): array
     {
         return \array_map(function (Token $token) {
             return new DocBlock($token->getContent());
@@ -91,7 +91,7 @@ class Foo
      * @param \PhpCsFixer\DocBlock\DocBlock $docBlock
      * @return bool
      */
-    private function areThereAnyAccessAnnotation(DocBlock $docBlock): bool
+    protected function areThereAnyAccessAnnotation(DocBlock $docBlock): bool
     {
         $annotations = $docBlock->getAnnotationsOfType('access');
 
@@ -102,7 +102,7 @@ class Foo
      * @param \PhpCsFixer\DocBlock\DocBlock $docBlock
      * @return bool
      */
-    private function areThereAnyEmptyAccessAnnotation(DocBlock $docBlock): bool
+    protected function areThereAnyEmptyAccessAnnotation(DocBlock $docBlock): bool
     {
         $annotations = $docBlock->getAnnotationsOfType('access');
 
@@ -118,7 +118,7 @@ class Foo
     /**
      * @param \PhpCsFixer\DocBlock\DocBlock $docBlock
      */
-    private function removeEmptyAccessAnnotations(DocBlock $docBlock): void
+    protected function removeEmptyAccessAnnotations(DocBlock $docBlock): void
     {
         $annotations = $docBlock->getAnnotationsOfType('access');
 
@@ -134,17 +134,17 @@ class Foo
      * @param int $position
      * @return bool
      */
-    private function followingTokenIsAccessModifier(Tokens $tokens, int $position): bool
+    protected function followingTokenIsAccessModifier(Tokens $tokens, int $position): bool
     {
         $nextMeaningfulTokenId = $tokens[$tokens->getNextMeaningfulToken($position)]->getId();
 
-        return \in_array($nextMeaningfulTokenId, self::ACCESS_TOKENS, true);
+        return \in_array($nextMeaningfulTokenId, static::ACCESS_TOKENS, true);
     }
 
     /**
      * @param \PhpCsFixer\DocBlock\DocBlock $docBlock
      */
-    private function removeAllAccessAnnotations(DocBlock $docBlock): void
+    protected function removeAllAccessAnnotations(DocBlock $docBlock): void
     {
         $annotations = $docBlock->getAnnotationsOfType('access');
 
@@ -158,7 +158,7 @@ class Foo
      * @param \PhpCsFixer\DocBlock\DocBlock $docBlock
      * @param int $position
      */
-    private function rewriteDocBlock(Tokens $tokens, DocBlock $docBlock, int $position): void
+    protected function rewriteDocBlock(Tokens $tokens, DocBlock $docBlock, int $position): void
     {
         if ($docBlock->getContent() === '' || $this->isDocBlockEmpty($docBlock)) {
             $tokens->clearTokenAndMergeSurroundingWhitespace($position);
@@ -171,7 +171,7 @@ class Foo
      * @param \PhpCsFixer\DocBlock\DocBlock $docBlock
      * @return bool
      */
-    private function isDocBlockEmpty(DocBlock $docBlock): bool
+    protected function isDocBlockEmpty(DocBlock $docBlock): bool
     {
         foreach ($docBlock->getLines() as $line) {
             if ($line->containsUsefulContent()) {

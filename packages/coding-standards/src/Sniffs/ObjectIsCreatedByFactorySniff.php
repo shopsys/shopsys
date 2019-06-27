@@ -14,7 +14,7 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
     /**
      * @var \Symplify\TokenRunner\Analyzer\SnifferAnalyzer\Naming
      */
-    private $naming;
+    protected $naming;
 
     /**
      * @param \Symplify\TokenRunner\Analyzer\SnifferAnalyzer\Naming $naming
@@ -68,7 +68,7 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @return string|null
      */
-    private function getFirstClassNameInFile(File $file): ?string
+    protected function getFirstClassNameInFile(File $file): ?string
     {
         $position = $file->findNext(T_CLASS, 0);
 

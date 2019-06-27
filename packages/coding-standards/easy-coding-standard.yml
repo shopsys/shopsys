@@ -19,6 +19,7 @@ services:
     # Slevomat Checkers
     SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff: ~
     SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff: ~
+    SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff: ~
 
     # Shopsys Checkers
     Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer: ~
@@ -38,7 +39,15 @@ services:
     Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer: ~
     Shopsys\CodingStandards\CsFixer\Phpdoc\NoUselessAccessFixer: ~
     Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer: ~
-    SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff: ~
+
+    # this package is meant to be extensible using class inheritance, so we want to avoid private visibilities in these namespaces
+    forbidden_private_visibility_fixer.coding_standards:
+        class: Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer
+        calls:
+            - method: configure
+              arguments:
+                  - analyzed_namespaces:
+                        - Shopsys\CodingStandards
 
     # Custom Shopsys standards
     PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff: ~

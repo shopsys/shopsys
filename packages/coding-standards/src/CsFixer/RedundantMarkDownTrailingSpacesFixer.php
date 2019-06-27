@@ -47,7 +47,7 @@ final class RedundantMarkDownTrailingSpacesFixer implements FixerInterface, Defi
      * @param string $code
      * @return string
      */
-    private function removeRedundantTrailingSpaces(string $code): string
+    protected function removeRedundantTrailingSpaces(string $code): string
     {
         return preg_replace(
             '/(?:^|(  )?) *$/m',

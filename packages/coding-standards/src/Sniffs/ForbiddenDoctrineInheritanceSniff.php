@@ -47,7 +47,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
      * @param int $phpDocStartPosition
      * @return array
      */
-    private function findPhpDocTags(File $file, int $classPosition, int $phpDocStartPosition): array
+    protected function findPhpDocTags(File $file, int $classPosition, int $phpDocStartPosition): array
     {
         $phpDocEndPosition = $file->findPrevious(T_DOC_COMMENT_CLOSE_TAG, $classPosition);
 
@@ -65,7 +65,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
     /**
      * @param array $token
      */
-    private function isDoctrineInheritanceAnnotation(array $token)
+    protected function isDoctrineInheritanceAnnotation(array $token)
     {
         $content = $token['content'];
         return preg_match('~^.*ORM.*InheritanceType~', $content) === 1;

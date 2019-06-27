@@ -60,7 +60,7 @@ final class MissingReturnAnnotationFixer extends AbstractMissingAnnotationsFixer
      * @param \PhpCsFixer\Tokenizer\Token|null $docToken
      * @return bool
      */
-    private function shouldSkip(string $type, ?Token $docToken): bool
+    protected function shouldSkip(string $type, ?Token $docToken): bool
     {
         if (in_array($type, ['', 'void', 'mixed'], true)) {
             return true;

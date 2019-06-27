@@ -55,7 +55,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
      * @param int $selfPosition
      * @return string|null
      */
-    private function findConstantNameFromSelfCall(File $file, int $selfPosition): ?string
+    protected function findConstantNameFromSelfCall(File $file, int $selfPosition): ?string
     {
         $tokens = $file->getTokens();
 
@@ -85,7 +85,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @return string[]
      */
-    private function getAllProtectedConstantsInClass(File $file): array
+    protected function getAllProtectedConstantsInClass(File $file): array
     {
         $constPositions = TokenHelper::findNextAll($file, \T_CONST, 0);
 
@@ -113,7 +113,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
      * @param int $constPosition
      * @return bool
      */
-    private function isProtectedVisibility(File $file, int $constPosition): bool
+    protected function isProtectedVisibility(File $file, int $constPosition): bool
     {
         $protectedModifierPosition = TokenHelper::findPreviousLocal($file, \T_PROTECTED, $constPosition);
 
@@ -125,7 +125,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
      * @param int $constPosition
      * @return bool
      */
-    private function hasProtectedAccess(File $file, int $constPosition): bool
+    protected function hasProtectedAccess(File $file, int $constPosition): bool
     {
         $accessAnnotations = AnnotationHelper::getAnnotationsByName($file, $constPosition, '@access');
         foreach ($accessAnnotations as $accessAnnotation) {

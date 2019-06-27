@@ -23,7 +23,7 @@ final class OrderedParamAnnotationsFixer implements FixerInterface, DefinedFixer
     /**
      * @var \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer
      */
-    private $functionsAnalyzer;
+    protected $functionsAnalyzer;
 
     /**
      * @param \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer $functionsAnalyzer
@@ -140,7 +140,7 @@ SAMPLE
      * @param \PhpCsFixer\Tokenizer\Token $docToken
      * @return bool
      */
-    private function shouldSkipDocToken(Token $docToken): bool
+    protected function shouldSkipDocToken(Token $docToken): bool
     {
         if (stripos($docToken->getContent(), 'inheritdoc') !== false) {
             return true;
@@ -160,7 +160,7 @@ SAMPLE
      * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis[] $argumentAnalyses
      * @return \PhpCsFixer\DocBlock\Line[]
      */
-    private function sortParamLinesByArgumentOrder(array $lines, array $argumentAnalyses): array
+    protected function sortParamLinesByArgumentOrder(array $lines, array $argumentAnalyses): array
     {
         $docParamNamesToKeys = [];
 
@@ -199,7 +199,7 @@ SAMPLE
      * @param \PhpCsFixer\DocBlock\Line $line
      * @return string|null
      */
-    private function getParamNameFromLine(Line $line): ?string
+    protected function getParamNameFromLine(Line $line): ?string
     {
         $matches = Strings::match($line->getContent(), PhpdocRegex::ARGUMENT_NAME_PATTERN);
         if (isset($matches[1]) && !empty($matches[1])) {
@@ -214,7 +214,7 @@ SAMPLE
      * @param int[] $docParamNamesToKeys
      * @return int[]
      */
-    private function resolveArgumentNamesToKeys(array $argumentAnalyses, array $docParamNamesToKeys): array
+    protected function resolveArgumentNamesToKeys(array $argumentAnalyses, array $docParamNamesToKeys): array
     {
         $paramStartingKey = min($docParamNamesToKeys);
 

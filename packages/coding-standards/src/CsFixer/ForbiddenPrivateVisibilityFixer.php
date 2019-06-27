@@ -17,9 +17,9 @@ use SplFileInfo;
 
 final class ForbiddenPrivateVisibilityFixer implements DefinedFixerInterface, ConfigurableFixerInterface
 {
-    private const OPTION_ANALYZED_NAMESPACE = 'analyzed_namespaces';
+    protected const OPTION_ANALYZED_NAMESPACE = 'analyzed_namespaces';
 
-    private $analyzedNamespaces = [];
+    protected $analyzedNamespaces = [];
 
     /**
      * {@inheritdoc}
@@ -35,17 +35,17 @@ final class ForbiddenPrivateVisibilityFixer implements DefinedFixerInterface, Co
      * @param array $configuration
      * @return array
      */
-    private function extractNamespaces(array $configuration): array
+    protected function extractNamespaces(array $configuration): array
     {
-        if (!array_key_exists(self::OPTION_ANALYZED_NAMESPACE, $configuration)) {
+        if (!array_key_exists(static::OPTION_ANALYZED_NAMESPACE, $configuration)) {
             return [];
         }
 
-        if (!is_array($configuration[self::OPTION_ANALYZED_NAMESPACE])) {
+        if (!is_array($configuration[static::OPTION_ANALYZED_NAMESPACE])) {
             throw new InvalidFixerConfigurationException($this->getName(), 'Namespace configuration has to be an array');
         }
 
-        return $configuration[self::OPTION_ANALYZED_NAMESPACE];
+        return $configuration[static::OPTION_ANALYZED_NAMESPACE];
     }
 
     /**
@@ -91,7 +91,7 @@ private function method()
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
      * @return bool
      */
-    private function checkNamespace(Tokens $tokens): bool
+    protected function checkNamespace(Tokens $tokens): bool
     {
         try {
             $namespace = $this->getNamespace($tokens);
@@ -113,7 +113,7 @@ private function method()
      * @throws \Shopsys\CodingStandards\Exception\NamespaceNotFoundException
      * @return string
      */
-    private function getNamespace(Tokens $tokens): string
+    protected function getNamespace(Tokens $tokens): string
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind(T_NAMESPACE)) {
@@ -134,7 +134,7 @@ private function method()
      * @param string $namespacePrefix
      * @return bool
      */
-    private function namespaceStartsWith(string $fullNamespace, string $namespacePrefix): bool
+    protected function namespaceStartsWith(string $fullNamespace, string $namespacePrefix): bool
     {
         return strncmp($fullNamespace, $namespacePrefix, strlen($namespacePrefix)) === 0;
     }

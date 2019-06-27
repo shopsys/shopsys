@@ -13,7 +13,7 @@ final class PhpToDocTypeTransformer
     /**
      * @var \Shopsys\CodingStandards\Helper\FqnNameResolver
      */
-    private $fqnNameResolver;
+    protected $fqnNameResolver;
 
     /**
      * @param \Shopsys\CodingStandards\Helper\FqnNameResolver $fqnNameResolver
@@ -58,7 +58,7 @@ final class PhpToDocTypeTransformer
      * @param string $type
      * @return string
      */
-    private function preSlashType(string $type): string
+    protected function preSlashType(string $type): string
     {
         if (Strings::startsWith($type, '\\')) {
             return $type;
@@ -76,7 +76,7 @@ final class PhpToDocTypeTransformer
      * @param string $type
      * @return string
      */
-    private function createFromNullable(Tokens $tokens, string $type): string
+    protected function createFromNullable(Tokens $tokens, string $type): string
     {
         // cleanup from "?"
         $type = $type[0] === '?' ? substr($type, 1) : $type;

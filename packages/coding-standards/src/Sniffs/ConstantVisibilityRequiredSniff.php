@@ -44,7 +44,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
      * @param int $constPosition
      * @return bool
      */
-    private function isConstInsideClass(File $file, int $constPosition): bool
+    protected function isConstInsideClass(File $file, int $constPosition): bool
     {
         $classStartPosition = $file->findPrevious(\T_CLASS, $constPosition);
         if ($classStartPosition === false) {
@@ -62,7 +62,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
      * @param int $constPosition
      * @return bool
      */
-    private function isConstWithAccessModifier(File $file, int $constPosition): bool
+    protected function isConstWithAccessModifier(File $file, int $constPosition): bool
     {
         $previousTokenEndPosition = $this->findScopeSearchEndPosition($file, $constPosition);
 
@@ -76,7 +76,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
      * @param int $constPosition
      * @return bool
      */
-    private function isConstWithAccessAnnotation(File $file, int $constPosition): bool
+    protected function isConstWithAccessAnnotation(File $file, int $constPosition): bool
     {
         $previousTokenEndPosition = $this->findScopeSearchEndPosition($file, $constPosition);
 
@@ -93,7 +93,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
      * @param int $phpDocStartPosition
      * @return bool
      */
-    private function phpDocContainsAccessTag(File $file, int $phpDocStartPosition): bool
+    protected function phpDocContainsAccessTag(File $file, int $phpDocStartPosition): bool
     {
         $tokens = $file->getTokens();
 
@@ -119,7 +119,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
      * @param int $constPosition
      * @return int
      */
-    private function findScopeSearchEndPosition(File $file, int $constPosition): int
+    protected function findScopeSearchEndPosition(File $file, int $constPosition): int
     {
         return $file->findPrevious([\T_SEMICOLON, \T_CLOSE_CURLY_BRACKET], $constPosition) ?: 0;
     }
