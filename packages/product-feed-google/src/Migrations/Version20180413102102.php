@@ -29,7 +29,7 @@ class Version20180413102102 extends AbstractMigration
     {
     }
 
-    private function migrateProducts(): void
+    protected function migrateProducts(): void
     {
         $rows = $this->sql(
             'SELECT key, json_value

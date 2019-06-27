@@ -10,7 +10,7 @@ class GoogleFeedInfo implements FeedInfoInterface
     /**
      * @var \Symfony\Component\Translation\TranslatorInterface
      */
-    private $translator;
+    protected $translator;
 
     /**
      * @param \Symfony\Component\Translation\TranslatorInterface $translator

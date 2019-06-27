@@ -13,17 +13,17 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @var \Symfony\Component\Translation\TranslatorInterface
      */
-    private $translator;
+    protected $translator;
 
     /**
      * @var \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainFacade
      */
-    private $googleProductDomainFacade;
+    protected $googleProductDomainFacade;
 
     /**
      * @var \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactoryInterface
      */
-    private $googleProductDomainDataFactory;
+    protected $googleProductDomainDataFactory;
 
     /**
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
@@ -108,7 +108,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
      * @param string $propertyName
      * @param bool $propertyValue
      */
-    private function setGoogleProductDomainDataProperty(
+    protected function setGoogleProductDomainDataProperty(
         GoogleProductDomainData $googleProductDomainData,
         $propertyName,
         $propertyValue
