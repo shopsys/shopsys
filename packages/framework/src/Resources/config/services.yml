@@ -115,6 +115,16 @@ services:
         arguments:
             - '@snc_redis.framework_annotations'
 
+    # empty instance of a Redis client that can be provided as a service, will be removed in 8.0 (@deprecated)
+    # the client was added in shopsys/project-base in v7.2.0 via configuration
+    snc_redis.framework_annotations:
+        class: Redis
+
+    # empty instance of a Redis client that can be provided as a service, will be removed in 8.0 (@deprecated)
+    # the client was added in shopsys/project-base in v7.1.0 via configuration
+    snc_redis.global:
+        class: Redis
+
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:
