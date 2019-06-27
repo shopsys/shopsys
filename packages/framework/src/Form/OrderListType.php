@@ -15,7 +15,7 @@ class OrderListType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      */
-    private $orderFacade;
+    protected $orderFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade

@@ -17,7 +17,7 @@ class RedisCleanCacheOldCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade
      */
-    private $redisVersionsFacade;
+    protected $redisVersionsFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade $redisVersionsFacade

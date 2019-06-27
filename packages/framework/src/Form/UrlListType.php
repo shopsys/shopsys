@@ -22,17 +22,17 @@ class UrlListType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
      */
-    private $friendlyUrlFacade;
+    protected $friendlyUrlFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
      */
-    private $domainRouterFactory;
+    protected $domainRouterFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -135,7 +135,7 @@ class UrlListType extends AbstractType
      * @param string $entityId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[][]
      */
-    private function getFriendlyUrlsIndexedByDomain($routeName, $entityId)
+    protected function getFriendlyUrlsIndexedByDomain($routeName, $entityId)
     {
         $friendlyUrlsByDomain = [];
         if ($entityId !== null) {
@@ -153,7 +153,7 @@ class UrlListType extends AbstractType
      * @param string $entityId
      * @return string[][]
      */
-    private function getAbsoluteUrlsIndexedByDomainIdAndSlug($routeName, $entityId)
+    protected function getAbsoluteUrlsIndexedByDomainIdAndSlug($routeName, $entityId)
     {
         $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain($routeName, $entityId);
         $absoluteUrlsByDomainIdAndSlug = [];
@@ -178,7 +178,7 @@ class UrlListType extends AbstractType
      * @param int $entityId
      * @return string[]
      */
-    private function getMainFriendlyUrlSlugsIndexedByDomainId($routeName, $entityId)
+    protected function getMainFriendlyUrlSlugsIndexedByDomainId($routeName, $entityId)
     {
         $mainFriendlyUrlsSlugsByDomainId = [];
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -201,7 +201,7 @@ class UrlListType extends AbstractType
     /**
      * @return string[]
      */
-    private function getDomainUrlsIndexedById()
+    protected function getDomainUrlsIndexedById()
     {
         $domainUrlsById = [];
         foreach ($this->domain->getAll() as $domainConfig) {

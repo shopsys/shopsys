@@ -22,32 +22,32 @@ class RecalculationsCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository
      */
-    private $categoryVisibilityRepository;
+    protected $categoryVisibilityRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator
      */
-    private $productHiddenRecalculator;
+    protected $productHiddenRecalculator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator
      */
-    private $productPriceRecalculator;
+    protected $productPriceRecalculator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
      */
-    private $productVisibilityFacade;
+    protected $productVisibilityFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator
      */
-    private $productAvailabilityRecalculator;
+    protected $productAvailabilityRecalculator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator
      */
-    private $productSellingDeniedRecalculator;
+    protected $productSellingDeniedRecalculator;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository $categoryVisibilityRepository

@@ -22,17 +22,17 @@ class OrderItemsType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      */
-    private $transportFacade;
+    protected $transportFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
      */
-    private $paymentFacade;
+    protected $paymentFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation
      */
-    private $orderItemPriceCalculation;
+    protected $orderItemPriceCalculation;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade

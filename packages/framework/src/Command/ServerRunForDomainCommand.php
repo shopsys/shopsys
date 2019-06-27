@@ -20,7 +20,7 @@ class ServerRunForDomainCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler
      */
-    private $domainChoiceHelper;
+    protected $domainChoiceHelper;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler $domainChoiceHelper
@@ -65,7 +65,7 @@ class ServerRunForDomainCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
-    private function runServerForDomain(DomainConfig $domainConfig, OutputInterface $output)
+    protected function runServerForDomain(DomainConfig $domainConfig, OutputInterface $output)
     {
         $command = $this->getApplication()->find('server:run');
 

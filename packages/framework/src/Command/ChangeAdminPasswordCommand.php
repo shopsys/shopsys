@@ -23,7 +23,7 @@ class ChangeAdminPasswordCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade
      */
-    private $administratorFacade;
+    protected $administratorFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
@@ -65,7 +65,7 @@ class ChangeAdminPasswordCommand extends Command
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return string
      */
-    private function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io)
+    protected function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io)
     {
         $question = new Question('Enter new password');
         $question->setHidden(true);

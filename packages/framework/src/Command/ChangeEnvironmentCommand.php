@@ -23,7 +23,7 @@ class ChangeEnvironmentCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting
      */
-    private $environmentFileSetting;
+    protected $environmentFileSetting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting $environmentFileSetting

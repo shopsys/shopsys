@@ -16,17 +16,17 @@ class TopCategoriesFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      */
-    private $categoryFacade;
+    protected $categoryFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
      */
-    private $removeDuplicatesTransformer;
+    protected $removeDuplicatesTransformer;
 
     /**
      * @var \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer
      */
-    private $categoriesIdsToCategoriesTransformer;
+    protected $categoriesIdsToCategoriesTransformer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade

@@ -25,7 +25,7 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -50,7 +50,7 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function getPriceLimitsBuilder(FormBuilderInterface $builder)
+    protected function getPriceLimitsBuilder(FormBuilderInterface $builder)
     {
         $formBuilderForDomains = $builder->create(self::DOMAINS_SUBFORM_NAME, null, ['compound' => true]);
 

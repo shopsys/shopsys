@@ -33,7 +33,7 @@ class Version20180603135340 extends AbstractMigration
     {
     }
 
-    private function createGetDomainIdsByLocaleFunction(): void
+    protected function createGetDomainIdsByLocaleFunction(): void
     {
         $this->sql('CREATE OR REPLACE FUNCTION get_domain_ids_by_locale(locale text) RETURNS SETOF integer AS $$
             BEGIN
@@ -45,7 +45,7 @@ class Version20180603135340 extends AbstractMigration
             $$ LANGUAGE plpgsql IMMUTABLE;');
     }
 
-    private function createGetDomainLocaleFunction(): void
+    protected function createGetDomainLocaleFunction(): void
     {
         $this->sql('CREATE OR REPLACE FUNCTION get_domain_locale(domain_id integer) RETURNS text AS $$
             BEGIN
@@ -57,7 +57,7 @@ class Version20180603135340 extends AbstractMigration
             $$ LANGUAGE plpgsql IMMUTABLE;');
     }
 
-    private function createImmutableUnaccentFunction(): void
+    protected function createImmutableUnaccentFunction(): void
     {
         $this->sql('CREATE OR REPLACE FUNCTION immutable_unaccent(text)
             RETURNS text AS
@@ -67,7 +67,7 @@ class Version20180603135340 extends AbstractMigration
             LANGUAGE SQL IMMUTABLE');
     }
 
-    private function createNormalizeFunction(): void
+    protected function createNormalizeFunction(): void
     {
         $this->sql('CREATE OR REPLACE FUNCTION normalize(text)
             RETURNS text AS
@@ -77,7 +77,7 @@ class Version20180603135340 extends AbstractMigration
             LANGUAGE SQL IMMUTABLE');
     }
 
-    private function createDefaultDbIndexes(): void
+    protected function createDefaultDbIndexes(): void
     {
         $this->sql('CREATE INDEX IF NOT EXISTS product_translations_name_normalize_idx
             ON product_translations (NORMALIZE(name))');
@@ -95,7 +95,7 @@ class Version20180603135340 extends AbstractMigration
             ON users (NORMALIZE(email))');
     }
 
-    private function createProductCatnumTrigger(): void
+    protected function createProductCatnumTrigger(): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION set_product_catnum_tsvector() RETURNS trigger AS $$
@@ -116,7 +116,7 @@ class Version20180603135340 extends AbstractMigration
         ');
     }
 
-    private function createProductPartnoTrigger(): void
+    protected function createProductPartnoTrigger(): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION set_product_partno_tsvector() RETURNS trigger AS $$
@@ -137,7 +137,7 @@ class Version20180603135340 extends AbstractMigration
         ');
     }
 
-    private function createProductTranslationNameTrigger(): void
+    protected function createProductTranslationNameTrigger(): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION set_product_translation_name_tsvector() RETURNS trigger AS $$
@@ -158,7 +158,7 @@ class Version20180603135340 extends AbstractMigration
         ');
     }
 
-    private function createProductDomainDescriptionTrigger(): void
+    protected function createProductDomainDescriptionTrigger(): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION set_product_domain_description_tsvector() RETURNS trigger AS $$
@@ -179,7 +179,7 @@ class Version20180603135340 extends AbstractMigration
         ');
     }
 
-    private function createProductDomainFulltextTriggerOnProduct(): void
+    protected function createProductDomainFulltextTriggerOnProduct(): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION update_product_domain_fulltext_tsvector_by_product() RETURNS trigger AS $$
@@ -216,7 +216,7 @@ class Version20180603135340 extends AbstractMigration
         ');
     }
 
-    private function createProductDomainFulltextTriggerOnProductTranslation(): void
+    protected function createProductDomainFulltextTriggerOnProductTranslation(): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION update_product_domain_fulltext_tsvector_by_product_translation() RETURNS trigger AS $$
@@ -253,7 +253,7 @@ class Version20180603135340 extends AbstractMigration
         ');
     }
 
-    private function createProductDomainFulltextTriggerOnProductDomain(): void
+    protected function createProductDomainFulltextTriggerOnProductDomain(): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION set_product_domain_fulltext_tsvector() RETURNS trigger AS $$

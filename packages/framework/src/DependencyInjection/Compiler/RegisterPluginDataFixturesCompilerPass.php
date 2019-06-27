@@ -28,7 +28,7 @@ class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
      * @param \Symfony\Component\DependencyInjection\Definition $pluginDataFixtureRegistryDefinition
      * @param string $serviceId
      */
-    private function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, $serviceId)
+    protected function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, $serviceId)
     {
         $pluginDataFixtureRegistryDefinition->addMethodCall('registerDataFixture', [new Reference($serviceId)]);
     }

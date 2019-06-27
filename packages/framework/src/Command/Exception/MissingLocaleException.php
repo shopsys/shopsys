@@ -10,7 +10,7 @@ class MissingLocaleException extends Exception
     /**
      * @var string
      */
-    private $locale;
+    protected $locale;
 
     /**
      * @param mixed $missingLocale

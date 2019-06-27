@@ -18,12 +18,12 @@ class MoneyTypeExtension extends AbstractTypeExtension
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      */
-    private $localization;
+    protected $localization;
 
     /**
      * @var \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface
      */
-    private $intlCurrencyRepository;
+    protected $intlCurrencyRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
@@ -77,7 +77,7 @@ class MoneyTypeExtension extends AbstractTypeExtension
      * @param string|bool $currency
      * @return string
      */
-    private function getPattern($currency)
+    protected function getPattern($currency)
     {
         if (!$currency) {
             return '{{ widget }}';

@@ -9,12 +9,12 @@ class CountryDataModifierVersion20190121094400
     /**
      * @var array
      */
-    private $data;
+    protected $data;
 
     /**
      * @var array
      */
-    private $tmpIds;
+    protected $tmpIds;
 
     /**
      * @param array $data
@@ -91,7 +91,7 @@ class CountryDataModifierVersion20190121094400
         return $this->tmpIds[$oldId];
     }
 
-    private function loadIdPairs(): void
+    protected function loadIdPairs(): void
     {
         $pair = $this->getNewIdCodePair();
 
@@ -105,7 +105,7 @@ class CountryDataModifierVersion20190121094400
      * @param string $countryCode
      * @return bool
      */
-    private function codeExistsForDomain($domainId, $countryCode): bool
+    protected function codeExistsForDomain($domainId, $countryCode): bool
     {
         foreach ($this->data as $row) {
             if ($row['code'] === $countryCode && $row['domain_id'] === $domainId) {
@@ -153,7 +153,7 @@ class CountryDataModifierVersion20190121094400
      * @param string $countryCode
      * @return string
      */
-    private function getNameForCountryAndDomain(int $domainId, string $countryCode): string
+    protected function getNameForCountryAndDomain(int $domainId, string $countryCode): string
     {
         foreach ($this->data as $row) {
             if ($row['code'] === $countryCode && $row['domain_id'] === $domainId) {
@@ -183,7 +183,7 @@ class CountryDataModifierVersion20190121094400
      * @param array $data
      * @return array
      */
-    private function groupDataIntoDomains(array $data): array
+    protected function groupDataIntoDomains(array $data): array
     {
         $tmp = [];
         foreach ($data as $row) {

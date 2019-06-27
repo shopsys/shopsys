@@ -17,7 +17,7 @@ class RedisCleanCacheCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Component\Redis\RedisFacade
      */
-    private $redisFacade;
+    protected $redisFacade;
 
     /**
      * RedisCleanCacheCommand constructor.

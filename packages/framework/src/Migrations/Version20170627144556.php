@@ -27,7 +27,7 @@ class Version20170627144556 extends AbstractMigration
     {
     }
 
-    private function replaceProductDomainFulltextTriggerOnProduct()
+    protected function replaceProductDomainFulltextTriggerOnProduct()
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION update_product_domain_fulltext_tsvector_by_product() RETURNS trigger AS $$
@@ -55,7 +55,7 @@ class Version20170627144556 extends AbstractMigration
         ');
     }
 
-    private function replaceProductDomainFulltextTriggerOnProductTranslation()
+    protected function replaceProductDomainFulltextTriggerOnProductTranslation()
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION update_product_domain_fulltext_tsvector_by_product_translation() RETURNS trigger AS $$
@@ -83,7 +83,7 @@ class Version20170627144556 extends AbstractMigration
         ');
     }
 
-    private function replaceProductDomainFulltextTriggerOnProductDomain()
+    protected function replaceProductDomainFulltextTriggerOnProductDomain()
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION set_product_domain_fulltext_tsvector() RETURNS trigger AS $$

@@ -25,12 +25,12 @@ class BrandFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
      */
-    private $seoSettingFacade;
+    protected $seoSettingFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -191,7 +191,7 @@ class BrandFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null $brand
      * @return string
      */
-    private function getTitlePlaceholder(?Brand $brand = null)
+    protected function getTitlePlaceholder(?Brand $brand = null)
     {
         return $brand !== null ? $brand->getName() : '';
     }

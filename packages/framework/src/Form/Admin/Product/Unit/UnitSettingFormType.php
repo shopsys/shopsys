@@ -15,7 +15,7 @@ class UnitSettingFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
      */
-    private $unitFacade;
+    protected $unitFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade

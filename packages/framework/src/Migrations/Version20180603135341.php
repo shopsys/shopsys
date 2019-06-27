@@ -29,7 +29,7 @@ class Version20180603135341 extends AbstractMigration
      * @param string $orderStatusEnglishName
      * @param string $orderStatusCzechName
      */
-    private function createOrderStatusWithEnglishAndCzechTranslations(
+    protected function createOrderStatusWithEnglishAndCzechTranslations(
         $orderStatusId,
         $orderStatusType,
         $orderStatusEnglishName,

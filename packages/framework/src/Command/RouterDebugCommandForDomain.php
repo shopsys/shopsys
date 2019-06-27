@@ -18,7 +18,7 @@ class RouterDebugCommandForDomain extends RouterDebugCommand
     /**
      * @var \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler
      */
-    private $domainChoiceHelper;
+    protected $domainChoiceHelper;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler $domainChoiceHelper

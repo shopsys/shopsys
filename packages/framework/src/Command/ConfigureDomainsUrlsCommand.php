@@ -17,12 +17,12 @@ class ConfigureDomainsUrlsCommand extends Command
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
      */
-    private $localFilesystem;
+    protected $localFilesystem;
 
     /**
      * @var string
      */
-    private $configFilepath;
+    protected $configFilepath;
 
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem

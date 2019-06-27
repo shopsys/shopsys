@@ -17,12 +17,12 @@ class CurrencyFormType extends AbstractType
     /**
      * @var \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface
      */
-    private $intlCurrencyRepository;
+    protected $intlCurrencyRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      */
-    private $localization;
+    protected $localization;
 
     /**
      * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository

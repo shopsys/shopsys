@@ -26,12 +26,12 @@ class ArticleFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
      */
-    private $seoSettingFacade;
+    protected $seoSettingFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
@@ -177,7 +177,7 @@ class ArticleFormType extends AbstractType
      * @param array $options
      * @return string[]
      */
-    private function getSeoMetaDescriptionAttributes(array $options)
+    protected function getSeoMetaDescriptionAttributes(array $options)
     {
         $seoMetaDescriptionAttributes = [];
 

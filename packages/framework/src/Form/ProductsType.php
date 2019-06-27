@@ -16,7 +16,7 @@ class ProductsType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Form\Transformers\ProductsIdsToProductsTransformer
      */
-    private $productsIdsToProductsTransformer;
+    protected $productsIdsToProductsTransformer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductsIdsToProductsTransformer $productsIdsToProductsTransformer

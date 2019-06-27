@@ -15,22 +15,22 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @var array
      */
-    private $defaultInternalDirectories;
+    protected $defaultInternalDirectories;
 
     /**
      * @var array
      */
-    private $defaultPublicDirectories;
+    protected $defaultPublicDirectories;
 
     /**
      * @var array|null
      */
-    private $internalDirectories;
+    protected $internalDirectories;
 
     /**
      * @var array|null
      */
-    private $publicDirectories;
+    protected $publicDirectories;
 
     /**
      * @var string
@@ -40,22 +40,22 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @var \League\Flysystem\FilesystemInterface
      */
-    private $filesystem;
+    protected $filesystem;
 
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
      */
-    private $localFilesystem;
+    protected $localFilesystem;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator
      */
-    private $imageDirectoryStructureCreator;
+    protected $imageDirectoryStructureCreator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator
      */
-    private $uploadedFileDirectoryStructureCreator;
+    protected $uploadedFileDirectoryStructureCreator;
 
     /**
      * @param array $defaultInternalDirectories
@@ -109,7 +109,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function createMiscellaneousDirectories(OutputInterface $output)
+    protected function createMiscellaneousDirectories(OutputInterface $output)
     {
         $publicDirectories = $this->getPublicDirectories();
         $internalDirectories = $this->getInternalDirectories();
@@ -126,7 +126,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function createImageDirectories(OutputInterface $output)
+    protected function createImageDirectories(OutputInterface $output)
     {
         $this->imageDirectoryStructureCreator->makeImageDirectories();
 
@@ -136,7 +136,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function createUploadedFileDirectories(OutputInterface $output)
+    protected function createUploadedFileDirectories(OutputInterface $output)
     {
         $this->uploadedFileDirectoryStructureCreator->makeUploadedFileDirectories();
 
@@ -146,7 +146,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * return array
      */
-    private function getPublicDirectories()
+    protected function getPublicDirectories()
     {
         $directories = $this->defaultPublicDirectories;
 
@@ -160,7 +160,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @return array
      */
-    private function getInternalDirectories()
+    protected function getInternalDirectories()
     {
         $directories = $this->defaultInternalDirectories;
 

@@ -13,7 +13,7 @@ final class NumericToMoneyTransformer implements DataTransformerInterface
     /**
      * @var int
      */
-    private $floatScale;
+    protected $floatScale;
 
     /**
      * @param int $floatScale

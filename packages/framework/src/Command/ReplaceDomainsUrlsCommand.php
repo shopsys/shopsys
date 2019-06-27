@@ -19,17 +19,17 @@ class ReplaceDomainsUrlsCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer
      */
-    private $domainUrlReplacer;
+    protected $domainUrlReplacer;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
      */
-    private $setting;
+    protected $setting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

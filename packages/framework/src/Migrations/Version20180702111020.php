@@ -34,7 +34,7 @@ class Version20180702111020 extends AbstractMigration
     {
     }
 
-    private function setInputPriceType()
+    protected function setInputPriceType()
     {
         $inputPriceTypeSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'inputPriceType\' AND domain_id = 0;')->fetchColumn(0);
         if ($inputPriceTypeSettingCount <= 0) {
@@ -46,7 +46,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setRoundingType()
+    protected function setRoundingType()
     {
         $roundingTypeSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'roundingType\' AND domain_id = 0;')->fetchColumn(0);
         if ($roundingTypeSettingCount <= 0) {
@@ -58,7 +58,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setOrderSubmittedText()
+    protected function setOrderSubmittedText()
     {
         $orderSubmittedTextSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'orderSubmittedText\' AND domain_id = 1;')->fetchColumn(0);
         if ($orderSubmittedTextSettingCount <= 0) {
@@ -77,7 +77,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setMainAdminMail()
+    protected function setMainAdminMail()
     {
         $mailAdminMailSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMail\' AND domain_id = 1;')->fetchColumn(0);
         if ($mailAdminMailSettingCount <= 0) {
@@ -85,7 +85,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setMainAdminMailName()
+    protected function setMainAdminMailName()
     {
         $mainAdminMailNameSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMailName\' AND domain_id = 1;')->fetchColumn(0);
         if ($mainAdminMailNameSettingCount <= 0) {
@@ -93,7 +93,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setFreeTransportAndPaymentPriceLimit(): void
+    protected function setFreeTransportAndPaymentPriceLimit(): void
     {
         $freeTransportAndPaymentPriceLimitSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'freeTransportAndPaymentPriceLimit\' AND domain_id = 1;')->fetchColumn(0);
         if ($freeTransportAndPaymentPriceLimitSettingCount <= 0) {
@@ -101,7 +101,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setSeoMetaDescriptionMainPage()
+    protected function setSeoMetaDescriptionMainPage()
     {
         $seoMetaDescriptionMainPageSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'seoMetaDescriptionMainPage\' AND domain_id = 1;')->fetchColumn(0);
         if ($seoMetaDescriptionMainPageSettingCount <= 0) {
@@ -111,7 +111,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setSeoTitleMainPage()
+    protected function setSeoTitleMainPage()
     {
         $seoTitleMainPageSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleMainPage\' AND domain_id = 1;')->fetchColumn(0);
         if ($seoTitleMainPageSettingCount <= 0) {
@@ -121,7 +121,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setSeoTitleAddOn()
+    protected function setSeoTitleAddOn()
     {
         $seoTitleAddOnSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleAddOn\' AND domain_id = 1;')->fetchColumn(0);
         if ($seoTitleAddOnSettingCount <= 0) {
@@ -131,7 +131,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setTermsAndConditionsArticleId()
+    protected function setTermsAndConditionsArticleId()
     {
         $termsAndConditionsArticleIdSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'termsAndConditionsArticleId\' AND domain_id = 1;')->fetchColumn(0);
         if ($termsAndConditionsArticleIdSettingCount <= 0) {
@@ -139,7 +139,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setCookiesArticleId()
+    protected function setCookiesArticleId()
     {
         $cookiesArticleIdSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'cookiesArticleId\' AND domain_id = 1;')->fetchColumn(0);
         if ($cookiesArticleIdSettingCount <= 0) {
@@ -147,7 +147,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setDomainDataCreated()
+    protected function setDomainDataCreated()
     {
         $domainDataCreatedSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'domainDataCreated\' AND domain_id = 1;')->fetchColumn(0);
         if ($domainDataCreatedSettingCount <= 0) {
@@ -155,7 +155,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setFeedHash()
+    protected function setFeedHash()
     {
         $feedHashSettingCount = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'feedHash\' AND domain_id = 0;')->fetchColumn(0);
         if ($feedHashSettingCount <= 0) {
@@ -169,7 +169,7 @@ class Version20180702111020 extends AbstractMigration
      * Copy pasted, @see \Shopsys\FrameworkBundle\Component\String\HashGenerator::generateHash()
      * @return string
      */
-    private function generateTenCharactersHash()
+    protected function generateTenCharactersHash()
     {
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
         $numberOfChars = strlen($characters);

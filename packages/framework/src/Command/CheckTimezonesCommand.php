@@ -18,7 +18,7 @@ class CheckTimezonesCommand extends Command
     /**
      * @var \Doctrine\DBAL\Connection
      */
-    private $connection;
+    protected $connection;
 
     /**
      * @param \Doctrine\DBAL\Connection $connection
@@ -48,7 +48,7 @@ class CheckTimezonesCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function checkUniformityOfTimezones(OutputInterface $output)
+    protected function checkUniformityOfTimezones(OutputInterface $output)
     {
         $output->writeln('Checks uniformity of PHP and Postgres timezones...');
 

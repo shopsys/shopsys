@@ -18,17 +18,17 @@ class AllMailTemplatesFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail
      */
-    private $resetPasswordMail;
+    protected $resetPasswordMail;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail
      */
-    private $personalDataAccessMail;
+    protected $personalDataAccessMail;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail
      */
-    private $personalDataExportMail;
+    protected $personalDataExportMail;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail $resetPasswordMail

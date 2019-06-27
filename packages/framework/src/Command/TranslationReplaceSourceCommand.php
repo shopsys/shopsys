@@ -73,7 +73,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param string $targetLocale
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
-    private function getAllReplacements(DirectoryIterator $translationsDirectory, $targetLocale)
+    protected function getAllReplacements(DirectoryIterator $translationsDirectory, $targetLocale)
     {
         $allReplacements = [];
         foreach ($translationsDirectory as $translationsDirectoryItem) {
@@ -91,7 +91,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param string $targetLocale
      * @return bool
      */
-    private function isTranslationFileInLocale(DirectoryIterator $directoryIterator, $targetLocale)
+    protected function isTranslationFileInLocale(DirectoryIterator $directoryIterator, $targetLocale)
     {
         $translationFilePattern = '~\.' . preg_quote($targetLocale, '~') . '\.po~';
 
@@ -103,7 +103,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \SplFileInfo $file
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
-    private function extractReplacementsFromPoFile(SplFileInfo $file)
+    protected function extractReplacementsFromPoFile(SplFileInfo $file)
     {
         $stream = fopen($file->getPathname(), 'r');
 
@@ -164,7 +164,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $translationSourceReplacements
      * @param array $item
      */
-    private function parsePoFileItem(array &$translationSourceReplacements, array $item)
+    protected function parsePoFileItem(array &$translationSourceReplacements, array $item)
     {
         $sourceFileReferences = [];
         foreach ($item['comments'] as $comment) {
@@ -213,7 +213,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
-    private function filterReplacementsWithUniqueOldSource(array $replacements, OutputInterface $output)
+    protected function filterReplacementsWithUniqueOldSource(array $replacements, OutputInterface $output)
     {
         $oldSourceUsageCounts = [];
         foreach ($replacements as $replacement) {
@@ -251,7 +251,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
-    private function filterFilledReplacements(array $replacements, OutputInterface $output)
+    protected function filterFilledReplacements(array $replacements, OutputInterface $output)
     {
         foreach ($replacements as $index => $replacement) {
             if ($replacement->getNewSource() === '') {
@@ -272,7 +272,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
-    private function filterReplacementsWithUniqueNewSource(array $replacements, OutputInterface $output)
+    protected function filterReplacementsWithUniqueNewSource(array $replacements, OutputInterface $output)
     {
         $newSourceUsageCounts = [];
         foreach ($replacements as $replacement) {
@@ -311,7 +311,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
-    private function filterNonEqualReplacements($replacements, $output)
+    protected function filterNonEqualReplacements($replacements, $output)
     {
         foreach ($replacements as $index => $replacement) {
             if ($replacement->getOldSource() === $replacement->getNewSource()) {
@@ -331,7 +331,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
      */
-    private function sortBySourceLengthDesc($replacements)
+    protected function sortBySourceLengthDesc($replacements)
     {
         usort($replacements, function (TranslationSourceReplacement $replacementLeft, TranslationSourceReplacement $replacementRight) {
             $lengthLeft = strlen($replacementLeft->getOldSource());
@@ -353,7 +353,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param string $searchedDirectoryPath
      * @return string[]
      */
-    private function getAllPathNames($searchedDirectoryPath)
+    protected function getAllPathNames($searchedDirectoryPath)
     {
         $recursiveIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($searchedDirectoryPath));
         $pathNames = [];
@@ -371,7 +371,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param string[] $searchedPathNames
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function replaceAllInFiles(array $replacements, array $searchedPathNames, OutputInterface $output)
+    protected function replaceAllInFiles(array $replacements, array $searchedPathNames, OutputInterface $output)
     {
         if (file_exists(self::FILE_NAME_REPLACEMENT_ERRORS)) {
             rename(self::FILE_NAME_REPLACEMENT_ERRORS, sprintf('%s.%d.bak', self::FILE_NAME_REPLACEMENT_ERRORS, time()));
@@ -412,7 +412,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param string $sourceFilePath
      * @return int|null
      */
-    private function makeReplacements(TranslationSourceReplacement $replacement, array $searchedPathNames, $sourceFilePath)
+    protected function makeReplacements(TranslationSourceReplacement $replacement, array $searchedPathNames, $sourceFilePath)
     {
         $fileFound = false;
         $totalCount = 0;
@@ -457,7 +457,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
      * @param \DirectoryIterator $directory
      */
-    private function replaceSourcesInPoFiles(array $replacements, DirectoryIterator $directory)
+    protected function replaceSourcesInPoFiles(array $replacements, DirectoryIterator $directory)
     {
         foreach ($directory as $item) {
             if ($item->isFile() && $item->getExtension() === 'po') {
@@ -510,7 +510,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param bool $isExpectedCountExact
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function logReplacementError(
+    protected function logReplacementError(
         $filePath,
         TranslationSourceReplacement $replacement,
         $realCount,

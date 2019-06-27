@@ -17,7 +17,7 @@ class CreateDatabaseSchemaCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade
      */
-    private $databaseSchemaFacade;
+    protected $databaseSchemaFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade

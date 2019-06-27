@@ -35,22 +35,22 @@ class CategoryFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      */
-    private $categoryFacade;
+    protected $categoryFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
      */
-    private $seoSettingFacade;
+    protected $seoSettingFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade
      */
-    private $pluginCrudExtensionFacade;
+    protected $pluginCrudExtensionFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
@@ -263,7 +263,7 @@ class CategoryFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return string
      */
-    private function getCategoryNameForPlaceholder(DomainConfig $domainConfig, ?Category $category = null)
+    protected function getCategoryNameForPlaceholder(DomainConfig $domainConfig, ?Category $category = null)
     {
         $domainLocale = $domainConfig->getLocale();
 

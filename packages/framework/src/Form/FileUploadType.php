@@ -26,12 +26,12 @@ class FileUploadType extends AbstractType implements DataTransformerInterface
     /**
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
      */
-    private $fileUpload;
+    protected $fileUpload;
 
     /**
      * @var \Symfony\Component\Validator\Constraint[]
      */
-    private $fileConstraints;
+    protected $fileConstraints;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload

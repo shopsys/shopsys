@@ -17,12 +17,12 @@ class PromoCodeFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade
      */
-    private $promoCodeFacade;
+    protected $promoCodeFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
-    private $promoCode;
+    protected $promoCode;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade

@@ -19,7 +19,7 @@ class CronCommand extends Command
     const OPTION_MODULE = 'module';
     /** @access private */
     const OPTION_LIST = 'list';
-    private const OPTION_INSTANCE_NAME = 'instance-name';
+    protected const OPTION_INSTANCE_NAME = 'instance-name';
 
     /**
      * @var string
@@ -29,12 +29,12 @@ class CronCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Component\Cron\CronFacade
      */
-    private $cronFacade;
+    protected $cronFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Cron\MutexFactory
      */
-    private $mutexFactory;
+    protected $mutexFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
@@ -56,7 +56,7 @@ class CronCommand extends Command
             ->setDescription('Runs background jobs. Should be executed periodically by system CRON every 5 minutes.')
             ->addOption(self::OPTION_LIST, null, InputOption::VALUE_NONE, 'List all Service commands')
             ->addOption(self::OPTION_MODULE, null, InputOption::VALUE_OPTIONAL, 'Service ID')
-            ->addOption(self::OPTION_INSTANCE_NAME, null, InputOption::VALUE_REQUIRED, 'specific cron instance identifier');
+            ->addOption(static::OPTION_INSTANCE_NAME, null, InputOption::VALUE_REQUIRED, 'specific cron instance identifier');
     }
 
     /**
@@ -66,7 +66,7 @@ class CronCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $optionList = $input->getOption(self::OPTION_LIST);
-        $optionInstanceName = $input->getOption(self::OPTION_INSTANCE_NAME);
+        $optionInstanceName = $input->getOption(static::OPTION_INSTANCE_NAME);
 
         if ($optionList === true) {
             $this->listAllCronModulesSortedByServiceId($input, $output, $this->cronFacade);
@@ -82,7 +82,7 @@ class CronCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      */
-    private function listAllCronModulesSortedByServiceId(InputInterface $input, OutputInterface $output, CronFacade $cronFacade)
+    protected function listAllCronModulesSortedByServiceId(InputInterface $input, OutputInterface $output, CronFacade $cronFacade)
     {
         $instanceNames = $cronFacade->getInstanceNames();
         $io = new SymfonyStyle($input, $output);
@@ -107,7 +107,7 @@ class CronCommand extends Command
      * @param bool $includeInstance
      * @return string[]
      */
-    private function getCronCommands(array $cronModuleConfigs, bool $includeInstance = false): array
+    protected function getCronCommands(array $cronModuleConfigs, bool $includeInstance = false): array
     {
         uasort($cronModuleConfigs, function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB) {
             return $cronModuleConfigA->getServiceId() > $cronModuleConfigB->getServiceId();
@@ -119,7 +119,7 @@ class CronCommand extends Command
             $command = sprintf('php bin/console %s --%s="%s"', $this->getName(), self::OPTION_MODULE, $cronModuleConfig->getServiceId());
 
             if ($includeInstance) {
-                $command .= sprintf(' --%s=%s', self::OPTION_INSTANCE_NAME, $cronModuleConfig->getInstanceName());
+                $command .= sprintf(' --%s=%s', static::OPTION_INSTANCE_NAME, $cronModuleConfig->getInstanceName());
             }
 
             $commands[] = $command;
@@ -134,7 +134,7 @@ class CronCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
      * @param string $instanceName
      */
-    private function runCron(InputInterface $input, CronFacade $cronFacade, MutexFactory $mutexFactory, string $instanceName)
+    protected function runCron(InputInterface $input, CronFacade $cronFacade, MutexFactory $mutexFactory, string $instanceName)
     {
         $requestedModuleServiceId = $input->getOption(self::OPTION_MODULE);
         $runAllModules = $requestedModuleServiceId === null;
@@ -160,7 +160,7 @@ class CronCommand extends Command
     /**
      * @return \DateTimeImmutable
      */
-    private function getCurrentRoundedTime()
+    protected function getCurrentRoundedTime()
     {
         $time = new DateTime(null);
         $time->modify('-' . $time->format('s') . ' sec');
@@ -174,7 +174,7 @@ class CronCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return string
      */
-    private function chooseInstance(InputInterface $input, OutputInterface $output): string
+    protected function chooseInstance(InputInterface $input, OutputInterface $output): string
     {
         $instanceNames = $this->cronFacade->getInstanceNames();
 

@@ -14,7 +14,7 @@ class LocalizedType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      */
-    private $localization;
+    protected $localization;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization

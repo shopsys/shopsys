@@ -16,7 +16,7 @@ class CustomerFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
      */
-    private $customerDataFactory;
+    protected $customerDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory

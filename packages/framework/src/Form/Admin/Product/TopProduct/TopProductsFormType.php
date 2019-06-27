@@ -14,7 +14,7 @@ class TopProductsFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
      */
-    private $removeDuplicatesTransformer;
+    protected $removeDuplicatesTransformer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer

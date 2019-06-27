@@ -16,7 +16,7 @@ class CategoriesType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Form\Transformers\CategoriesTypeTransformer
      */
-    private $categoriesTypeTransformer;
+    protected $categoriesTypeTransformer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesTypeTransformer $categoryTransformer

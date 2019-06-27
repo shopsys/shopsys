@@ -20,22 +20,22 @@ class CreateDomainsDataCommand extends Command
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    private $em;
+    protected $em;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator
      */
-    private $domainDataCreator;
+    protected $domainDataCreator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade
      */
-    private $multidomainEntityClassFinderFacade;
+    protected $multidomainEntityClassFinderFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\DbIndexesFacade
      */
-    private $dbIndexesFacade;
+    protected $dbIndexesFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -77,7 +77,7 @@ class CreateDomainsDataCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function doExecute(OutputInterface $output)
+    protected function doExecute(OutputInterface $output)
     {
         $output->writeln('Start of creating new domains data.');
 

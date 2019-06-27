@@ -34,12 +34,12 @@ class AdvertFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry
      */
-    private $advertPositionRegistry;
+    protected $advertPositionRegistry;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

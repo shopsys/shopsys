@@ -10,7 +10,7 @@ class ImagesIdsToImagesTransformer implements DataTransformerInterface
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
      */
-    private $imageFacade;
+    protected $imageFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageRepository

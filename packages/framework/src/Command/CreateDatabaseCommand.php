@@ -20,12 +20,12 @@ class CreateDatabaseCommand extends Command
     /**
      * @var \Doctrine\DBAL\Connection|null
      */
-    private $connection;
+    protected $connection;
 
     /**
      * @var \Doctrine\Common\Persistence\ManagerRegistry
      */
-    private $doctrineRegistry;
+    protected $doctrineRegistry;
 
     /**
      * @param \Doctrine\Common\Persistence\ManagerRegistry $managerRegistry
@@ -64,7 +64,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
      */
-    private function createDatabaseIfNotExists(SymfonyStyle $symfonyStyleIo)
+    protected function createDatabaseIfNotExists(SymfonyStyle $symfonyStyleIo)
     {
         $defaultConnection = $this->getDefaultConnection();
 
@@ -95,7 +95,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
      */
-    private function createExtensionsIfNotExist(SymfonyStyle $symfonyStyleIo)
+    protected function createExtensionsIfNotExist(SymfonyStyle $symfonyStyleIo)
     {
         // Extensions are created in schema "pg_catalog" in order to be able to DROP
         // schema "public" without dropping the extension.
@@ -110,7 +110,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
      */
-    private function switchConnectionToSuperuser(SymfonyStyle $symfonyStyleIo)
+    protected function switchConnectionToSuperuser(SymfonyStyle $symfonyStyleIo)
     {
         if (!$this->isConnectedAsSuperuser()) {
             $symfonyStyleIo->note('Current database user does not have a superuser permission');
@@ -137,7 +137,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @return bool
      */
-    private function isConnectedAsSuperuser()
+    protected function isConnectedAsSuperuser()
     {
         $stmt = $this->createDatabaselessConnection()
             ->executeQuery('SELECT rolsuper FROM pg_roles WHERE rolname = current_user');
@@ -148,7 +148,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @return \Doctrine\DBAL\Connection
      */
-    private function getDefaultConnection()
+    protected function getDefaultConnection()
     {
         $defaultConnectionName = $this->doctrineRegistry->getDefaultConnectionName();
 
@@ -160,7 +160,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @return \Doctrine\DBAL\Connection
      */
-    private function getConnection()
+    protected function getConnection()
     {
         if ($this->connection === null) {
             $this->connection = $this->getDefaultConnection();
@@ -172,7 +172,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @return \Doctrine\DBAL\Connection
      */
-    private function createDatabaselessConnection()
+    protected function createDatabaselessConnection()
     {
         $connection = $this->getConnection();
 

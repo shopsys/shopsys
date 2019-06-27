@@ -69,7 +69,7 @@ class MailTemplateFormType extends AbstractType
      * @param array $options
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getSubjectConstraints(array $options)
+    protected function getSubjectConstraints(array $options)
     {
         $subjectConstraints = [];
 
@@ -97,7 +97,7 @@ class MailTemplateFormType extends AbstractType
      * @param array $options
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getBodyConstraints(array $options)
+    protected function getBodyConstraints(array $options)
     {
         $bodyConstraints = [];
 

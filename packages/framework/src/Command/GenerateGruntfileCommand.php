@@ -19,32 +19,32 @@ class GenerateGruntfileCommand extends Command
     /**
      * @var string
      */
-    private $customResourcesDirectory;
+    protected $customResourcesDirectory;
 
     /**
      * @var string
      */
-    private $frameworkResourcesDirectory;
+    protected $frameworkResourcesDirectory;
 
     /**
      * @var string
      */
-    private $rootDirectory;
+    protected $rootDirectory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @var \Twig\Environment
      */
-    private $twig;
+    protected $twig;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Css\CssFacade
      */
-    private $cssFacade;
+    protected $cssFacade;
 
     /**
      * @param string $customResourcesDirectory

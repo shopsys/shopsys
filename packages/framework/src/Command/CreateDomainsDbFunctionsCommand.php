@@ -18,12 +18,12 @@ class CreateDomainsDbFunctionsCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\DomainDbFunctionsFacade
      */
-    private $domainDbFunctionsFacade;
+    protected $domainDbFunctionsFacade;
 
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    private $em;
+    protected $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -57,7 +57,7 @@ class CreateDomainsDbFunctionsCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function doExecute(OutputInterface $output)
+    protected function doExecute(OutputInterface $output)
     {
         $output->writeln('Start of creating db functions.');
 

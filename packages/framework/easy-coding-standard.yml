@@ -9,10 +9,7 @@ services:
             - method: configure
               arguments:
                 - analyzed_namespaces:
-                    - Shopsys\FrameworkBundle\Model
-                    - Shopsys\FrameworkBundle\Component
-                    - Shopsys\FrameworkBundle\Controller
-                    - Shopsys\FrameworkBundle\Twig
+                    - Shopsys\FrameworkBundle
 
     Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff: ~
 

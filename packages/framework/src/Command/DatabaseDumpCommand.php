@@ -24,7 +24,7 @@ class DatabaseDumpCommand extends Command
     /**
      * @var \Doctrine\DBAL\Connection
      */
-    private $connection;
+    protected $connection;
 
     /**
      * @param \Doctrine\DBAL\Connection $connection
@@ -105,7 +105,7 @@ class DatabaseDumpCommand extends Command
     /**
      * @return array
      */
-    private function getDescriptorSpec()
+    protected function getDescriptorSpec()
     {
         return [
             0 => ['pipe', 'r'], // stdin

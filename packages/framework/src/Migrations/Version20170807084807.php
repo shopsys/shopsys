@@ -21,7 +21,7 @@ class Version20170807084807 extends AbstractMigration
         $this->sql('ALTER TABLE product_domains DROP zbozi_cpc_search');
     }
 
-    private function transferDroppedProductDataToPluginDataValues()
+    protected function transferDroppedProductDataToPluginDataValues()
     {
         $heurekaDataValues = [];
         $zboziDataValues = [];
@@ -51,7 +51,7 @@ class Version20170807084807 extends AbstractMigration
      * @param array $valuesByKey
      * @param string $pluginName
      */
-    private function insertPluginDataValues(array $valuesByKey, $pluginName)
+    protected function insertPluginDataValues(array $valuesByKey, $pluginName)
     {
         foreach ($valuesByKey as $key => $value) {
             $this->sql(

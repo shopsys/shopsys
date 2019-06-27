@@ -19,12 +19,12 @@ class ImageUploadType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
      */
-    private $imageFacade;
+    protected $imageFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Form\Transformers\ImagesIdsToImagesTransformer
      */
-    private $imagesIdsToImagesTransformer;
+    protected $imagesIdsToImagesTransformer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
@@ -91,7 +91,7 @@ class ImageUploadType extends AbstractType
      * @param array $options
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    private function getImagesIndexedById(array $options)
+    protected function getImagesIndexedById(array $options)
     {
         if ($options['entity'] === null) {
             return [];

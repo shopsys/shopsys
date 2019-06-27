@@ -24,7 +24,7 @@ class DeliveryAddressFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
      */
-    private $countryFacade;
+    protected $countryFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade

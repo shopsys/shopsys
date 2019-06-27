@@ -12,12 +12,12 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface
      */
-    private $productParameterValueDataFactory;
+    protected $productParameterValueDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface
      */
-    private $parameterValueDataFactory;
+    protected $parameterValueDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory

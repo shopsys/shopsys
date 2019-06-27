@@ -18,7 +18,7 @@ class ProductSearchExportProductsCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportFacade
      */
-    private $productSearchExportFacade;
+    protected $productSearchExportFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportFacade $productSearchExportFacade

@@ -29,12 +29,12 @@ class UserFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      */
-    private $pricingGroupFacade;
+    protected $pricingGroupFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension
      */
-    private $dateTimeFormatterExtension;
+    protected $dateTimeFormatterExtension;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -193,7 +193,7 @@ class UserFormType extends AbstractType
      * @param bool $isCreatingNewUser
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getFirstPasswordConstraints($isCreatingNewUser)
+    protected function getFirstPasswordConstraints($isCreatingNewUser)
     {
         $constraints = [
             new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer then {{ limit }} characters']),

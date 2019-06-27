@@ -18,7 +18,7 @@ class ProductSearchDeleteStructureCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportStructureFacade
      */
-    private $productSearchExportStructureFacade;
+    protected $productSearchExportStructureFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportStructureFacade $productSearchExportStructureFacade

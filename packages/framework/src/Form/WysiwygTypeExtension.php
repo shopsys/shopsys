@@ -16,12 +16,12 @@ class WysiwygTypeExtension extends AbstractTypeExtension
     /**
      * @var \Shopsys\FrameworkBundle\Component\Css\CssFacade
      */
-    private $cssFacade;
+    protected $cssFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      */
-    private $localization;
+    protected $localization;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Css\CssFacade $cssFacade

@@ -17,7 +17,7 @@ class LoadPluginDataFixturesCommand extends Command
     /**
      * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureFacade
      */
-    private $pluginDataFixtureFacade;
+    protected $pluginDataFixtureFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureFacade $pluginDataFixtureFacade
