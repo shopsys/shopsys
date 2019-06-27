@@ -7,12 +7,12 @@ class GeneratorResult
     /**
      * @var string
      */
-    private $migrationFilePath;
+    protected $migrationFilePath;
 
     /**
      * @var int|false
      */
-    private $writtenBytes;
+    protected $writtenBytes;
 
     /**
      * @param string $migrationFilePath

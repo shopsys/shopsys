@@ -9,12 +9,12 @@ class MigrationsLock
     /**
      * @var string
      */
-    private $migrationsLockFilePath;
+    protected $migrationsLockFilePath;
 
     /**
      * @var array|null
      */
-    private $parsedMigrationsLock;
+    protected $parsedMigrationsLock;
 
     /**
      * @param string $migrationsLockFilePath
@@ -76,7 +76,7 @@ class MigrationsLock
     /**
      * @return array
      */
-    private function load(): array
+    protected function load(): array
     {
         if ($this->parsedMigrationsLock === null) {
             $this->parsedMigrationsLock = [];
@@ -89,7 +89,7 @@ class MigrationsLock
         return $this->parsedMigrationsLock;
     }
 
-    private function save(): void
+    protected function save(): void
     {
         $content = Yaml::dump($this->parsedMigrationsLock);
 

@@ -10,12 +10,12 @@ class MigrationsFinder implements MigrationFinderInterface
     /**
      * @var \Doctrine\DBAL\Migrations\Finder\RecursiveRegexFinder
      */
-    private $finder;
+    protected $finder;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocator
      */
-    private $migrationsLocator;
+    protected $migrationsLocator;
 
     /**
      * @param \Doctrine\DBAL\Migrations\Finder\RecursiveRegexFinder $finder

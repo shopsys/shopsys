@@ -17,22 +17,22 @@ abstract class AbstractCommand extends Command
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    private $em;
+    protected $em;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
      */
-    private $migrationsLock;
+    protected $migrationsLock;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsFinder
      */
-    private $migrationsFinder;
+    protected $migrationsFinder;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Configuration
      */
-    private $migrationsConfiguration;
+    protected $migrationsConfiguration;
 
     /**
      * @required

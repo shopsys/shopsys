@@ -23,12 +23,12 @@ class MigrateCommand extends AbstractCommand
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    private $em;
+    protected $em;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
      */
-    private $migrationsLock;
+    protected $migrationsLock;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -78,7 +78,7 @@ class MigrateCommand extends AbstractCommand
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function executeDoctrineMigrateCommand(OutputInterface $output)
+    protected function executeDoctrineMigrateCommand(OutputInterface $output)
     {
         $doctrineMigrateCommand = $this->getApplication()->find('doctrine:migrations:migrate');
         $arguments = [
@@ -100,7 +100,7 @@ class MigrateCommand extends AbstractCommand
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function executeCheckSchemaCommand(OutputInterface $output)
+    protected function executeCheckSchemaCommand(OutputInterface $output)
     {
         $checkSchemaCommand = $this->getApplication()->find('shopsys:migrations:check-schema');
         $arguments = [

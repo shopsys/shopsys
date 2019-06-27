@@ -6,6 +6,15 @@ services:
 
     Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff: ~
 
+    # this package is meant to be extensible using class inheritance, so we want to avoid private visibilities in these namespaces
+    forbidden_private_visibility_fixer.migrations:
+        class: Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer
+        calls:
+            - method: configure
+              arguments:
+                  - analyzed_namespaces:
+                        - Shopsys\MigrationBundle
+
 parameters:
     exclude_files:
         - '*/src/Resources/views/Migration/migration.php.twig'

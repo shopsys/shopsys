@@ -21,12 +21,12 @@ class MigrationsGenerator
     /**
      * @var \Symfony\Component\Templating\EngineInterface
      */
-    private $twigEngine;
+    protected $twigEngine;
 
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
      */
-    private $filesystem;
+    protected $filesystem;
 
     /**
      * @param \Symfony\Component\Templating\EngineInterface $twigEngine
@@ -67,7 +67,7 @@ class MigrationsGenerator
      * @param string[] $filteredSchemaDiffSqlCommands
      * @return string[]
      */
-    private function formatSqlCommandsIfLengthOverflow(array $filteredSchemaDiffSqlCommands)
+    protected function formatSqlCommandsIfLengthOverflow(array $filteredSchemaDiffSqlCommands)
     {
         $formattedSqlCommands = [];
         foreach ($filteredSchemaDiffSqlCommands as $key => $filteredSchemaDiffSqlCommand) {
@@ -85,7 +85,7 @@ class MigrationsGenerator
      * @param string $filteredSchemaDiffSqlCommand
      * @return string
      */
-    private function formatSqlCommand($filteredSchemaDiffSqlCommand)
+    protected function formatSqlCommand($filteredSchemaDiffSqlCommand)
     {
         $formattedQuery = $this->formatSqlQueryWithTabs($filteredSchemaDiffSqlCommand);
         $formattedQueryLines = array_map('rtrim', explode("\n", $formattedQuery));
@@ -97,7 +97,7 @@ class MigrationsGenerator
      * @param string $query
      * @return string
      */
-    private function formatSqlQueryWithTabs($query)
+    protected function formatSqlQueryWithTabs($query)
     {
         $previousTab = SqlFormatter::$tab;
         SqlFormatter::$tab = static::INDENT_CHARACTERS;
@@ -113,7 +113,7 @@ class MigrationsGenerator
      * @param string[] $queryLines
      * @return string[]
      */
-    private function indentSqlCommandLines(array $queryLines)
+    protected function indentSqlCommandLines(array $queryLines)
     {
         return array_map(function ($queryLine) {
             return str_repeat(static::INDENT_CHARACTERS, static::INDENT_TABULATOR_COUNT) . $queryLine;
@@ -124,7 +124,7 @@ class MigrationsGenerator
      * @param string[] $sqlCommands
      * @return string[]
      */
-    private function escapeSqlCommands(array $sqlCommands)
+    protected function escapeSqlCommands(array $sqlCommands)
     {
         return array_map(function ($sqlCommand) {
             return str_replace('\'', "\\'", $sqlCommand);
@@ -134,7 +134,7 @@ class MigrationsGenerator
     /**
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation $migrationLocation
      */
-    private function createMigrationLocationDirectoryIfNotExists(MigrationsLocation $migrationLocation)
+    protected function createMigrationLocationDirectoryIfNotExists(MigrationsLocation $migrationLocation)
     {
         if (!$this->filesystem->exists($migrationLocation->getDirectory())) {
             $this->filesystem->mkdir($migrationLocation->getDirectory());

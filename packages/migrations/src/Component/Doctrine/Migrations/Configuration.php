@@ -19,17 +19,17 @@ class Configuration extends DoctrineConfiguration
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
      */
-    private $migrationsLock;
+    protected $migrationsLock;
 
     /**
      * @var \Doctrine\DBAL\Migrations\OutputWriter
      */
-    private $outputWriter;
+    protected $outputWriter;
 
     /**
      * @var \Doctrine\DBAL\Migrations\Version[]
      */
-    private $migrationVersions = null;
+    protected $migrationVersions = null;
 
     /**
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
@@ -136,7 +136,7 @@ class Configuration extends DoctrineConfiguration
      * @param string[] $migratedVersions
      * @return bool
      */
-    private function shouldExecuteMigration(Version $version, array $migratedVersions)
+    protected function shouldExecuteMigration(Version $version, array $migratedVersions)
     {
         return !in_array($version->getVersion(), $migratedVersions, true);
     }
@@ -145,7 +145,7 @@ class Configuration extends DoctrineConfiguration
      * @param string $message
      * @throws \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException
      */
-    private function throwMethodIsNotAllowedException(string $message): void
+    protected function throwMethodIsNotAllowedException(string $message): void
     {
         $message .= ' Only up migration of all registered versions is supported because of multiple sources of migrations.';
 

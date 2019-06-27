@@ -26,27 +26,27 @@ class GenerateMigrationCommand extends AbstractCommand
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade
      */
-    private $databaseSchemaFacade;
+    protected $databaseSchemaFacade;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Generator\MigrationsGenerator
      */
-    private $migrationsGenerator;
+    protected $migrationsGenerator;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocator
      */
-    private $migrationsLocator;
+    protected $migrationsLocator;
 
     /**
      * @var \Symfony\Component\HttpKernel\KernelInterface
      */
-    private $kernel;
+    protected $kernel;
 
     /**
      * @var string
      */
-    private $vendorDirectoryPath;
+    protected $vendorDirectoryPath;
 
     /**
      * @param string $vendorDirectoryPath
@@ -121,7 +121,7 @@ class GenerateMigrationCommand extends AbstractCommand
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
      */
-    private function chooseMigrationLocation(SymfonyStyle $io)
+    protected function chooseMigrationLocation(SymfonyStyle $io)
     {
         $bundles = $this->getAllBundleNamesExceptVendor();
 
@@ -140,7 +140,7 @@ class GenerateMigrationCommand extends AbstractCommand
     /**
      * @return string[]
      */
-    private function getAllBundleNamesExceptVendor()
+    protected function getAllBundleNamesExceptVendor()
     {
         $bundles = [];
         foreach ($this->kernel->getBundles() as $bundle) {
@@ -155,7 +155,7 @@ class GenerateMigrationCommand extends AbstractCommand
      * @param \Symfony\Component\HttpKernel\Bundle\BundleInterface $bundle
      * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
      */
-    private function getMigrationLocation(BundleInterface $bundle)
+    protected function getMigrationLocation(BundleInterface $bundle)
     {
         return $this->migrationsLocator->createMigrationsLocation($bundle);
     }

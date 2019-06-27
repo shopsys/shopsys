@@ -21,7 +21,7 @@ class CheckDatabaseSchemaCommand extends AbstractCommand
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade
      */
-    private $databaseSchemaFacade;
+    protected $databaseSchemaFacade;
 
     /**
      * @param \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade

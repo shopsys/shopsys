@@ -11,22 +11,22 @@ class MigrationsLocator
     /**
      * @var \Symfony\Component\HttpKernel\KernelInterface
      */
-    private $kernel;
+    protected $kernel;
 
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
      */
-    private $filesystem;
+    protected $filesystem;
 
     /**
      * @var string
      */
-    private $relativeDirectory;
+    protected $relativeDirectory;
 
     /**
      * @var string
      */
-    private $relativeNamespace;
+    protected $relativeNamespace;
 
     /**
      * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
