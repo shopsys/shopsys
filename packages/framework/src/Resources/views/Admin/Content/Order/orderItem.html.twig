@@ -5,7 +5,7 @@
         <td>
             {% if productItem and productItem.product %}
                 {{ form_widget(orderItemForm.name, { attr: { class: 'js-order-item-name'}}) }}
-                <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" target="_blank">
+                <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}">
                     <i class="svg svg-arrow-simple in-icon in-icon--detail"></i>
                 </a>
             {% elseif productItem and not productItem.product %}
