@@ -162,7 +162,7 @@ class ProductSearchExporter
     {
         $productsData = $this->productSearchExportRepository->getProductsDataForIds($domainId, $locale, $productIds);
         if (count($productsData) === 0) {
-            $this->productElasticsearchRepository->deletePresent($domainId, $productIds);
+            $this->productElasticsearchRepository->delete($domainId, $productIds);
 
             return;
         }
@@ -173,7 +173,7 @@ class ProductSearchExporter
         $idsToDelete = array_diff($productIds, $exportedIds);
 
         if ($idsToDelete !== []) {
-            $this->productElasticsearchRepository->deletePresent($domainId, $productIds);
+            $this->productElasticsearchRepository->delete($domainId, $idsToDelete);
         }
     }
 

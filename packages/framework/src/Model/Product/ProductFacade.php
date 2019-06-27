@@ -318,12 +318,8 @@ class ProductFacade
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
-        $productIdToExport = $product->getId();
-        if ($product->isVariant()) {
-            $productIdToExport = $product->getMainVariant()->getId();
-        }
-
-        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productIdToExport);
+        $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
+        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productToExport->getId());
 
         return $product;
     }
@@ -336,9 +332,6 @@ class ProductFacade
         $product = $this->productRepository->getById($productId);
         $productDeleteResult = $product->getProductDeleteResult();
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
-
-        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productId);
-
         foreach ($productsForRecalculations as $productForRecalculations) {
             $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
             $productForRecalculations->markForVisibilityRecalculation();
@@ -348,6 +341,8 @@ class ProductFacade
 
         $this->em->remove($product);
         $this->em->flush();
+
+        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productId);
 
         $this->pluginCrudExtensionFacade->removeAllData('product', $product->getId());
     }

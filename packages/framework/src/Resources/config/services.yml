@@ -484,8 +484,6 @@ services:
             # must be run after all recalculations
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -30}
 
-    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler: ~
-
     shopsys.shop.product.bestselling_product.cache_provider:
         class: Doctrine\Common\Cache\RedisCache
         factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'

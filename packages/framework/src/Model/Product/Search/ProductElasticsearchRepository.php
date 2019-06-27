@@ -232,7 +232,7 @@ class ProductElasticsearchRepository
      * @param int $domainId
      * @param int[] $deleteIds
      */
-    public function deletePresent(int $domainId, array $deleteIds): void
+    public function delete(int $domainId, array $deleteIds): void
     {
         $this->client->deleteByQuery([
             'index' => $this->elasticsearchStructureManager->getIndexName($domainId, self::ELASTICSEARCH_INDEX),
@@ -242,7 +242,7 @@ class ProductElasticsearchRepository
                     'bool' => [
                         'must' => [
                             'ids' => [
-                                'values' => $deleteIds,
+                                'values' => array_values($deleteIds),
                             ],
                         ],
                     ],

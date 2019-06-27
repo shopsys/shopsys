@@ -126,6 +126,9 @@ class ProductVariantFacade
         }
 
         $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($mainVariant->getId());
+        foreach ($mainVariant->getVariants() as $variant) {
+            $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($variant->getId());
+        }
 
         return $mainVariant;
     }
