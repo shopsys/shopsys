@@ -13,12 +13,12 @@ class CategoryFormType extends AbstractType
     /**
      * @var \Symfony\Component\Translation\TranslatorInterface
      */
-    private $translator;
+    protected $translator;
 
     /**
      * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade
      */
-    private $heurekaCategoryFacade;
+    protected $heurekaCategoryFacade;
 
     /**
      * @param \Symfony\Component\Translation\TranslatorInterface $translator

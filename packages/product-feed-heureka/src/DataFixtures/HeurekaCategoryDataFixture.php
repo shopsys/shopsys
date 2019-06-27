@@ -29,12 +29,12 @@ class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
     /**
      * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade
      */
-    private $heurekaCategoryFacade;
+    protected $heurekaCategoryFacade;
 
     /**
      * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface
      */
-    private $heurekaCategoryDataFactory;
+    protected $heurekaCategoryDataFactory;
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade

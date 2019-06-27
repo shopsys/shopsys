@@ -12,17 +12,17 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @var \Symfony\Component\Translation\TranslatorInterface
      */
-    private $translator;
+    protected $translator;
 
     /**
      * @var \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade
      */
-    private $heurekaProductDomainFacade;
+    protected $heurekaProductDomainFacade;
 
     /**
      * @var \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactoryInterface
      */
-    private $heurekaProductDomainDataFactory;
+    protected $heurekaProductDomainDataFactory;
 
     /**
      * @param \Symfony\Component\Translation\TranslatorInterface $translator

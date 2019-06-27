@@ -31,7 +31,7 @@ class Version20180413102103 extends AbstractMigration
     {
     }
 
-    private function migrateProducts(): void
+    protected function migrateProducts(): void
     {
         $rows = $this->sql(
             'SELECT key, json_value
@@ -58,7 +58,7 @@ class Version20180413102103 extends AbstractMigration
         }
     }
 
-    private function migrateHeurekaCategories(): void
+    protected function migrateHeurekaCategories(): void
     {
         $rows = $this->sql(
             'SELECT key, json_value
@@ -79,7 +79,7 @@ class Version20180413102103 extends AbstractMigration
         }
     }
 
-    private function migrateHeurekaCategoryToCategoryLinks(): void
+    protected function migrateHeurekaCategoryToCategoryLinks(): void
     {
         $rows = $this->sql(
             'SELECT key, json_value
