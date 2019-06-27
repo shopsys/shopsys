@@ -27,12 +27,12 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
     /**
      * @var \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade
      */
-    private $zboziProductDomainFacade;
+    protected $zboziProductDomainFacade;
 
     /**
      * @var \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface
      */
-    private $zboziProductDomainDataFactory;
+    protected $zboziProductDomainDataFactory;
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade $zboziProductDomainFacade

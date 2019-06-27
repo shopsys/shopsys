@@ -13,17 +13,17 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @var \Symfony\Component\Translation\TranslatorInterface
      */
-    private $translator;
+    protected $translator;
 
     /**
      * @var \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade
      */
-    private $zboziProductDomainFacade;
+    protected $zboziProductDomainFacade;
 
     /**
      * @var \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface
      */
-    private $zboziProductDomainDataFactory;
+    protected $zboziProductDomainDataFactory;
 
     /**
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
@@ -103,7 +103,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
      * @param string $propertyName
      * @param mixed $propertyValue
      */
-    private function setZboziProductDomainDataProperty(
+    protected function setZboziProductDomainDataProperty(
         ZboziProductDomainData $zboziProductDomainData,
         $propertyName,
         $propertyValue
@@ -125,7 +125,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[] $zboziProductDomains
      * @return array
      */
-    private function getZboziProductDomainsAsPluginDataArray(array $zboziProductDomains)
+    protected function getZboziProductDomainsAsPluginDataArray(array $zboziProductDomains)
     {
         $pluginData = [
             'show' => [],

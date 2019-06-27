@@ -9,7 +9,7 @@ services:
             - method: configure
               arguments:
                   - analyzed_namespaces:
-                        - Shopsys\ProductFeed\ZboziBundle\Model
+                        - Shopsys\ProductFeed\ZboziBundle
 
     Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff: ~
 
