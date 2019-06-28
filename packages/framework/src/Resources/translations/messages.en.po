@@ -1657,9 +1657,6 @@ msgstr ""
 msgid "Product <strong>{{ product|productDisplayName }}</strong> deleted"
 msgstr ""
 
-msgid "Product detail"
-msgstr ""
-
 msgid "Product excluded from sale"
 msgstr ""
 
