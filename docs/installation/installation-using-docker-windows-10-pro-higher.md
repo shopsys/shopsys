@@ -11,7 +11,7 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
 
 This solution uses [*docker-sync*](http://docker-sync.io/) (for relatively fast two-way synchronization of the application files between the host machine and Docker volume).
 
-**Warning: Docker-sync might be a burden for intensive project development, especially when you switch between branches or even between projects often. In such a case, you should consider using [native installation](./native-installation.md).**
+**Warning: Docker-sync might be a burden for intensive project development, especially when there is a huge amount of files in shared volumes of virtualized docker and when switching between branches or even between projects often. In such a case, you should consider using [native installation](./native-installation.md).**
 
 ## Supported systems
 - Windows 10 Pro
