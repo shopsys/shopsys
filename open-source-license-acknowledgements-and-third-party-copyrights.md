@@ -100,7 +100,7 @@ https://github.com/vrana/adminer/blob/master/readme.txt
 ### Elasticsearch
 Image: `Docker.elastic.co/elasticsearch/elasticsearch-oss`  
 License: Apache License 2.0  
-https://github.com/elastic/elasticsearch/blob/master/LICENSE.txt
+https://github.com/elastic/elasticsearch/blob/v6.3.2/LICENSE.txt  
 Copyright 2009-2018 Elasticsearch
 
 ### Php
