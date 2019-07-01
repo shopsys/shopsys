@@ -6,7 +6,7 @@ use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
@@ -30,7 +30,7 @@ class CartTest extends TransactionFunctionalTestCase
 
         $vatData = new VatData();
         $vatData->name = 'vat';
-        $vatData->percent = 21;
+        $vatData->percent = '21';
         $vat = new Vat($vatData);
         $availabilityData = new AvailabilityData();
         $availabilityData->dispatchTime = 0;
@@ -123,7 +123,7 @@ class CartTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return \Shopsys\ShopBundle\Model\Product\Product
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     private function createProduct()
     {
@@ -132,7 +132,7 @@ class CartTest extends TransactionFunctionalTestCase
         $price = 100;
         $vatData = new VatData();
         $vatData->name = 'vat';
-        $vatData->percent = 21;
+        $vatData->percent = '21';
         $vat = new Vat($vatData);
 
         $productData = $productDataFactory->create();
@@ -261,7 +261,7 @@ class CartTest extends TransactionFunctionalTestCase
      */
     private function getCartItemFactory()
     {
-        return $this->getContainer()->get(CartItemFactory::class);
+        return $this->getContainer()->get(CartItemFactoryInterface::class);
     }
 
     /**

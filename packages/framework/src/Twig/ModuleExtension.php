@@ -11,7 +11,7 @@ class ModuleExtension extends Twig_Extension
     /**
      * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
      */
-    private $moduleFacade;
+    protected $moduleFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
@@ -32,8 +32,8 @@ class ModuleExtension extends Twig_Extension
     }
 
     /**
-     * @param int $moduleName
-     * @return string
+     * @param string $moduleName
+     * @return bool
      */
     public function isModuleEnabled($moduleName)
     {

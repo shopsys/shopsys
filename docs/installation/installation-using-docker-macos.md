@@ -1,13 +1,15 @@
 # Installation Using Docker for MacOS
 
-**This guide is for the version which is not released yet. See the [version for `v7.1.0`](https://github.com/shopsys/shopsys/blob/v7.1.0/docs/installation/installation-using-docker-macos.md).**
+**This guide is for the version which is not released yet. See the [version for `v7.2.2`](https://github.com/shopsys/shopsys/blob/v7.2.2/docs/installation/installation-using-docker-macos.md).**
 
 This guide covers building new projects based on Shopsys Framework.
 If you want to contribute to the framework itself,
 you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
 Take a look at the article about [Monorepo](../introduction/monorepo.md) for more information.
 
-This solution uses [*docker-sync*](http://docker-sync.io/) (for fast two-way synchronization of the application files between the host machine and Docker volume).
+This solution uses [*docker-sync*](http://docker-sync.io/) (for relatively fast two-way synchronization of the application files between the host machine and Docker volume).
+
+**Warning: Docker-sync might be a burden for intensive project development, especially when there is a huge amount of files in shared volumes of virtualized docker and when switching between branches or even between projects often. In such a case, you should consider using [native installation](./native-installation.md).**
 
 ## Requirements
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)

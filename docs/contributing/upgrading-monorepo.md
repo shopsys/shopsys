@@ -1,14 +1,48 @@
 # Upgrading monorepo
 
 Typical upgrade sequence should be:
-* when you update your `docker-compose.yml`, you need to apply the changes by using command `docker-compose up -d`
-* *(Windows, MacOS only)* any changes in `docker-sync.yml` file should follow with `docker-sync stop`, `docker-sync clean` and `docker-sync start` to restart synchronization
+* run `docker-compose down` to turn off your containers
+* *(MacOS, Windows only)* run `docker-sync clean` so your volumes will be stopped and removed
+* update your `docker-compose.yml` by `docker-compose` file specific for your operating system from `docker/conf` folder
+* *(MacOS, Windows only)* update your `docker-sync.yml` by `docker-sync` file specific for your operating system from `docker/conf` folder
+* *(MacOS, Windows only)* run `docker-sync start` to create volumes
+* run `docker-compose build --no-cache --pull` to build your images without cache and with latest version
+* run `docker-compose up -d --force-recreate --remove-orphans` to start the application again
 * run `php phing composer-dev clean db-migrations` in `php-fpm` container
 * if you're experiencing some errors, you can always rebuild application and load demo data with `php phing build-demo-dev`
 
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
-## [From v7.1.0 to Unreleased]
+## [From v7.2.1 to Unreleased]
+- update definition of Elasticsearch service in your `docker-compose.yml` file to use Dockerfile that installs ICU analysis plugin ([#1069](https://github.com/shopsys/shopsys/pull/1069))
+    ```diff
+    elasticsearch:
+    -   image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.2
+    +   build:
+    +       context: .
+    +       dockerfile: project-base/docker/elasticsearch/Dockerfile
+        container_name: shopsys-framework-elasticsearch
+        ulimits:
+            nofile:
+                soft: 65536
+                hard: 65536
+        ports:
+            - "9200:9200"
+        volumes:
+            - elasticsearch-data:/usr/share/elasticsearch/data
+        environment:
+            - discovery.type=single-node
+    ```
+- use the restructured phing targets ([#1068](https://github.com/shopsys/shopsys/pull/1068))
+    - don't use targets with suffix `-packages` or `-utils`, the targets without the suffixes now work in the whole monorepo
+        - eg. you can use `tests-unit` to run unit tests in the whole monorepo instead of running `tests-unit`, `tests-packages` and `tests-utils`
+        - you can even use coding standards subtargets in the whole monorepo, such as `ecs`, `eslint-fix`, etc.
+    - read [the new guidelines for phing targets](/docs/contributing/guidelines-for-phing-targets.md) before suggesting changes via pull requests
+- remove `'project-base/docs',` line from your `docker-sync.yml` ([#1172](https://github.com/shopsys/shopsys/pull/1172))
+
+## [From v7.2.0 to v7.2.1]
+
+## [From v7.1.0 to v7.2.0]
 - update definition of postgres service in your `docker-compose.yml` file to use customized configuration ([#946](https://github.com/shopsys/shopsys/pull/946))
     ```diff
     postgres:
@@ -27,7 +61,7 @@ Typical upgrade sequence should be:
     +       - -c
     +       - config_file=/var/lib/postgresql/data/postgresql.conf
     ```
-- remove `database_server_version` parameter from `parameters.yml` and `parameters.yml.dist` ([#1001](https://github.com/shopsys/shopsys/pull/1001))
+- remove `database_server_version` parameter from `parameters.yml` ([#1001](https://github.com/shopsys/shopsys/pull/1001))
 
 ## [From v7.0.0 to v7.1.0]
 
@@ -108,7 +142,9 @@ Typical upgrade sequence should be:
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running
 
-[From v7.1.0 to Unreleased]: https://github.com/shopsys/shopsys/compare/v7.1.0...HEAD
+[From v7.2.1 to Unreleased]: https://github.com/shopsys/shopsys/compare/v7.2.1...HEAD
+[From v7.2.0 to v7.2.1]: https://github.com/shopsys/shopsys/compare/v7.2.0...v7.2.1
+[From v7.1.0 to v7.2.0]: https://github.com/shopsys/shopsys/compare/v7.1.0...v7.2.0
 [From v7.0.0 to v7.1.0]: https://github.com/shopsys/shopsys/compare/v7.0.0...v7.1.0
 [From v7.0.0-beta5 to v7.0.0-beta6]: https://github.com/shopsys/shopsys/compare/v7.0.0-beta5...v7.0.0-beta6
 [From v7.0.0-beta4 to v7.0.0-beta5]: https://github.com/shopsys/shopsys/compare/v7.0.0-beta4...v7.0.0-beta5

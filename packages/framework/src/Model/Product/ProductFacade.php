@@ -2,12 +2,14 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -15,9 +17,11 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalc
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice;
+use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler;
 
 class ProductFacade
 {
@@ -132,6 +136,11 @@ class ProductFacade
     protected $productPriceCalculation;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler
+     */
+    protected $productSearchExportScheduler;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
@@ -154,6 +163,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler|null $productSearchExportScheduler
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -177,7 +187,8 @@ class ProductFacade
         ProductCategoryDomainFactoryInterface $productCategoryDomainFactory,
         ProductParameterValueFactoryInterface $productParameterValueFactory,
         ProductVisibilityFactoryInterface $productVisibilityFactory,
-        ProductPriceCalculation $productPriceCalculation
+        ProductPriceCalculation $productPriceCalculation,
+        ?ProductSearchExportScheduler $productSearchExportScheduler = null
     ) {
         $this->em = $em;
         $this->productRepository = $productRepository;
@@ -201,6 +212,25 @@ class ProductFacade
         $this->productParameterValueFactory = $productParameterValueFactory;
         $this->productVisibilityFactory = $productVisibilityFactory;
         $this->productPriceCalculation = $productPriceCalculation;
+        $this->productSearchExportScheduler = $productSearchExportScheduler;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
+     * @deprecated Will be replaced with constructor injection in the next major release
+     */
+    public function setProductSearchExportScheduler(ProductSearchExportScheduler $productSearchExportScheduler): void
+    {
+        if ($this->productSearchExportScheduler !== null && $this->productSearchExportScheduler !== $productSearchExportScheduler) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+
+        if ($this->productSearchExportScheduler === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+
+            $this->productSearchExportScheduler = $productSearchExportScheduler;
+        }
     }
 
     /**
@@ -225,6 +255,8 @@ class ProductFacade
         $this->setAdditionalDataAfterCreate($product, $productData);
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
+
+        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($product->getId());
 
         return $product;
     }
@@ -288,6 +320,9 @@ class ProductFacade
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
+        $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
+        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productToExport->getId());
+
         return $product;
     }
 
@@ -303,9 +338,13 @@ class ProductFacade
             $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
             $productForRecalculations->markForVisibilityRecalculation();
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
+            $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productForRecalculations->getId());
         }
+
         $this->em->remove($product);
         $this->em->flush();
+
+        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productId);
 
         $this->pluginCrudExtensionFacade->removeAllData('product', $product->getId());
     }
@@ -347,17 +386,35 @@ class ProductFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][]
      */
     public function getAllProductSellingPricesIndexedByDomainId(Product $product)
     {
         $productSellingPrices = [];
 
-        foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
-            $productSellingPrices[$pricingGroup->getDomainId()][$pricingGroup->getId()] = new ProductSellingPrice(
-                $pricingGroup,
-                $this->productPriceCalculation->calculatePrice($product, $pricingGroup->getDomainId(), $pricingGroup)
-            );
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productSellingPrices[$domainId] = $this->getAllProductSellingPricesByDomainId($product, $domainId);
+        }
+
+        return $productSellingPrices;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[]
+     */
+    public function getAllProductSellingPricesByDomainId(Product $product, int $domainId): array
+    {
+        $productSellingPrices = [];
+
+        foreach ($this->pricingGroupRepository->getPricingGroupsByDomainId($domainId) as $pricingGroup) {
+            try {
+                $sellingPrice = $this->productPriceCalculation->calculatePrice($product, $domainId, $pricingGroup);
+            } catch (\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException $e) {
+                $sellingPrice = new ProductPrice(Price::zero(), false);
+            }
+            $productSellingPrices[$pricingGroup->getId()] = new ProductSellingPrice($pricingGroup, $sellingPrice);
         }
 
         return $productSellingPrices;

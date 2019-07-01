@@ -5,7 +5,7 @@ namespace Tests\ShopBundle\Functional\Model\Order;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -44,7 +44,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculation */
         $productPriceCalculation = $this->getContainer()->get(ProductPriceCalculationForUser::class);
         /** @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory */
-        $cartItemFactory = $this->getContainer()->get(CartItemFactory::class);
+        $cartItemFactory = $this->getContainer()->get(CartItemFactoryInterface::class);
 
         $cart = $cartFacade->getCartOfCurrentCustomerCreateIfNotExists();
         $product = $productRepository->getById(1);
@@ -137,14 +137,14 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderItemData1->name = 'itemName1';
         $orderItemData1->priceWithoutVat = Money::create(100);
         $orderItemData1->priceWithVat = Money::create(121);
-        $orderItemData1->vatPercent = 21;
+        $orderItemData1->vatPercent = '21';
         $orderItemData1->quantity = 3;
 
         $orderItemData2 = new OrderItemData();
         $orderItemData2->name = 'itemName2';
         $orderItemData2->priceWithoutVat = Money::create(333);
         $orderItemData2->priceWithVat = Money::create(333);
-        $orderItemData2->vatPercent = 0;
+        $orderItemData2->vatPercent = '0';
         $orderItemData2->quantity = 1;
 
         $orderItemsData[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData1;

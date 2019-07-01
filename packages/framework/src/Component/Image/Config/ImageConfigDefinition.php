@@ -28,9 +28,10 @@ class ImageConfigDefinition implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
+        /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
         $rootNode = $treeBuilder->root('images');
 
-        $this->buildItemsNode($rootNode->prototype('array'))->end();
+        $this->buildItemsNode($rootNode->arrayPrototype());
 
         return $treeBuilder;
     }
@@ -47,43 +48,45 @@ class ImageConfigDefinition implements ConfigurationInterface
                 ->scalarNode(self::CONFIG_ENTITY_NAME)->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode(self::CONFIG_CLASS)->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode(self::CONFIG_MULTIPLE)->defaultFalse()->end()
-                ->arrayNode(self::CONFIG_SIZES)
+                ->append($this->createSizesNode())
+                ->arrayNode(self::CONFIG_TYPES)
                     ->defaultValue([])
-                    ->prototype('array')
-                    ->children()
-                        ->scalarNode(self::CONFIG_SIZE_NAME)->isRequired()->end()
-                        ->scalarNode(self::CONFIG_SIZE_WIDTH)->defaultNull()->end()
-                        ->scalarNode(self::CONFIG_SIZE_HEIGHT)->defaultNull()->end()
-                        ->scalarNode(self::CONFIG_SIZE_CROP)->defaultFalse()->end()
-                        ->scalarNode(self::CONFIG_SIZE_OCCURRENCE)->defaultNull()->end()
-                        ->arrayNode(self::CONFIG_SIZE_ADDITIONAL_SIZES)
-                            ->defaultValue([])
-                            ->prototype('array')
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode(self::CONFIG_TYPE_NAME)->isRequired()->cannotBeEmpty()->end()
+                            ->scalarNode(self::CONFIG_MULTIPLE)->defaultFalse()->end()
+                            ->append($this->createSizesNode())
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    protected function createSizesNode()
+    {
+        $treeBuilder = new TreeBuilder();
+        /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
+        $rootNode = $treeBuilder->root(self::CONFIG_SIZES);
+
+        return $rootNode
+            ->defaultValue([])
+            ->arrayPrototype()
+                ->children()
+                    ->scalarNode(self::CONFIG_SIZE_NAME)->isRequired()->end()
+                    ->scalarNode(self::CONFIG_SIZE_WIDTH)->defaultNull()->end()
+                    ->scalarNode(self::CONFIG_SIZE_HEIGHT)->defaultNull()->end()
+                    ->scalarNode(self::CONFIG_SIZE_CROP)->defaultFalse()->end()
+                    ->scalarNode(self::CONFIG_SIZE_OCCURRENCE)->defaultNull()->end()
+                    ->arrayNode(self::CONFIG_SIZE_ADDITIONAL_SIZES)
+                        ->defaultValue([])
+                        ->arrayPrototype()
                             ->children()
                                 ->scalarNode(self::CONFIG_SIZE_ADDITIONAL_SIZE_MEDIA)->isRequired()->end()
                                 ->scalarNode(self::CONFIG_SIZE_WIDTH)->defaultNull()->end()
                                 ->scalarNode(self::CONFIG_SIZE_HEIGHT)->defaultNull()->end()
-                            ->end()
-                        ->end()
-                        ->end()
-                    ->end()
-                ->end()
-                ->end()
-                ->arrayNode(self::CONFIG_TYPES)
-                    ->defaultValue([])
-                    ->prototype('array')
-                    ->children()
-                        ->scalarNode(self::CONFIG_TYPE_NAME)->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode(self::CONFIG_MULTIPLE)->defaultFalse()->end()
-                        ->arrayNode(self::CONFIG_SIZES)
-                            ->defaultValue([])
-                            ->prototype('array')
-                            ->children()
-                                ->scalarNode(self::CONFIG_SIZE_NAME)->isRequired()->end()
-                                ->scalarNode(self::CONFIG_SIZE_WIDTH)->defaultNull()->end()
-                                ->scalarNode(self::CONFIG_SIZE_HEIGHT)->defaultNull()->end()
-                                ->scalarNode(self::CONFIG_SIZE_CROP)->defaultFalse()->end()
-                                ->scalarNode(self::CONFIG_SIZE_OCCURRENCE)->defaultNull()->end()
                             ->end()
                         ->end()
                     ->end()

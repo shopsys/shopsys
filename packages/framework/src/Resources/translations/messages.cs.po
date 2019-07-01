@@ -166,6 +166,9 @@ msgstr "Všechny maily budou doručeny pouze na uvedené adresy."
 msgid "All pages"
 msgstr "Všechny stránky"
 
+msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
+msgstr "Pokud je zaškrtnuto, všechny ceny je třeba nastavovat ručně, jinak se jednotková cena bez DPH a celkové ceny pro tuto položku přepočítají automaticky."
+
 msgid "All search results"
 msgstr "Všechny výsledky hledání"
 
@@ -1237,6 +1240,9 @@ msgstr "Zboží na titulní stránce"
 msgid "Main variant"
 msgstr "Hlavní varianta"
 
+msgid "Main variant [abbreviation]"
+msgstr "H"
+
 msgid "Make modification"
 msgstr "Provést úpravu"
 
@@ -1912,6 +1918,9 @@ msgstr "Nastavit"
 msgid "Set alternative availability"
 msgstr "Nastavit alternativní dostupnost"
 
+msgid "Set prices manually"
+msgstr "Manuálně nastavené ceny"
+
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -2146,6 +2155,9 @@ msgstr "Jednotka <strong>{{ name }}</strong> byla smazána"
 msgid "Unit <strong>{{ name }}</strong> deleted and replaced by unit <strong>{{ newName }}</strong>"
 msgstr "Jednotka <strong>{{ name }}</strong> byla smazána a byla nahrazena jednotkou <strong>{{ newName }}</strong>."
 
+msgid "Unit price excluding VAT"
+msgstr "Jednotková cena bez DPH"
+
 msgid "Unit price including VAT"
 msgstr "Jednotková cena s DPH"
 
@@ -2184,6 +2196,9 @@ msgstr "Využito: %currentLength% znaků. Doporučeno max. %recommendedLength%"
 
 msgid "Username"
 msgstr "Uživatelské jméno"
+
+msgid "Using price calculation has been disabled, don't forget to edit all prices."
+msgstr "Přepočítávání cen bylo zakázáno, nezapomeňte upravovat všechny ceny."
 
 msgid "VAT"
 msgstr "DPH"
@@ -2226,6 +2241,9 @@ msgstr "Varianta <strong>{{ productVariant|productDisplayName }}</strong> byla �
 
 msgid "Variant <strong><a href=\"{{ url }}\" target=\"_blank\">{{ productVariant|productDisplayName }}</a></strong> successfully created."
 msgstr "Varianta <strong><a href=\"{{ url }}\" target=\"_blank\">{{ productVariant|productDisplayName }}</a></strong> byla úspěšně vytvořena."
+
+msgid "Variant [abbreviation]"
+msgstr "V"
 
 msgid "Variant alias"
 msgstr "Alias varianty"

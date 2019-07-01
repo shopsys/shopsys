@@ -1,283 +1,222 @@
-# [Upgrade from v7.1.0 to Unreleased]
+# [Upgrade from v7.2.2 to Unreleased](https://github.com/shopsys/shopsys/compare/v7.2.2...HEAD)
 
-This guide contains instructions to upgrade from version v7.1.0 to Unreleased.
+This guide contains instructions to upgrade from version v7.2.2 to Unreleased.
 
 **Before you start, don't forget to take a look at [general instructions](/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
 
 ## [shopsys/framework]
+
+### Infrastructure
+- update Elasticsearch build configuration ([#1069](https://github.com/shopsys/shopsys/pull/1069))
+    - copy new [Dockerfile from shopsys/project-base](https://github.com/shopsys/project-base/blob/master/docker/elasticsearch/Dockerfile)
+    - update `docker-compose.yml` and `docker-compose.yml.dist`
+        ```diff
+            elasticsearch:
+        -       image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.2
+        +       build:
+        +           context: .
+        +           dockerfile: docker/elasticsearch/Dockerfile
+                container_name: shopsys-framework-elasticsearch
+                ulimits:
+                    nofile:
+                        soft: 65536
+                        hard: 65536
+                ports:
+                    - "9200:9200"
+                volumes:
+                    - elasticsearch-data:/usr/share/elasticsearch/data
+                environment:
+                    - discovery.type=single-node
+        ```
+    - if you deploy to the google cloud, copy new [`.ci/deploy-to-google-cloud.sh`](https://github.com/shopsys/project-base/blob/master/.ci/deploy-to-google-cloud.sh) script from `shopsys/project-base` ([#1126](https://github.com/shopsys/shopsys/pull/1126))
+
 ### Application
-- add `TransformString::removeDriveLetterFromPath` transformer for all absolute paths that could be based with drive letter file systems and used by `local_filesystem` service ([#942](https://github.com/shopsys/shopsys/pull/942))
-    - add TransformString::removeDriveLetterFromPath into `src/Shopsys/ShopBundle/DataFixtures/Demo/ImageDataFixture.php`
-        ```diff
-        protected function moveFilesFromLocalFilesystemToFilesystem(string $origin, string $target)
-        {
-            $finder = new Finder();
-            $finder->files()->in($origin);
-            foreach ($finder as $file) {
-        -        $filepath = $file->getPathname();
-        +        $filepath = TransformString::removeDriveLetterFromPath($file->getPathname());
+- follow instructions in [the separate article](upgrade-instructions-for-read-model-for-product-lists.md) to introduce read model for frontend product lists into your project ([#1018](https://github.com/shopsys/shopsys/pull/1018))
+    - we recommend to read [Introduction to Read Model](/docs/model/introduction-to-read-model.md) article
+- copy a new functional test to avoid regression of issues with creating product variants in the future ([#1113](https://github.com/shopsys/shopsys/pull/1113))
+    - you can copy-paste the class [`ProductVariantCreationTest.php`](https://github.com/shopsys/project-base/blob/master/tests/ShopBundle/Functional/Model/Product/ProductVariantCreationTest.php) into `tests/ShopBundle/Functional/Model/Product/` in your project
+- prevent indexing `CustomerPassword:setNewPassword` by robots ([#1119](https://github.com/shopsys/shopsys/pull/1119))
+    - add a `meta_robots` Twig block to your `@ShopsysShop/Front/Content/Registration/setNewPassword.html.twig` template:
+        ```twig
+        {% block meta_robots -%}
+            <meta name="robots" content="noindex, follow">
+        {% endblock %}
         ```
-- if you extended one of these form fields listed below, you need to change group from `basicInformation` to `prices` ([#956](https://github.com/shopsys/shopsys/pull/956))
-    - in `PaymentFormType` fields `vat` and `czkRounding`
-    - in `TransportFormType` field `vat`
-- change all occurences of `->will($this->returnValue(` into `->willReturn(` in all `TestCase` tests ([#939](https://github.com/shopsys/shopsys/pull/939))
-    - example:
+    - you should prevent indexing by robots using this block on all pages that are secured by an URL hash
+- use `autocomplete="new-password"` attribute for password changing inputs to prevent filling it by browser ([#1121](https://github.com/shopsys/shopsys/pull/1121))
+    - in `shopsys/project-base` repository this change was needed in 3 form classes (`NewPasswordFormType`, `UserFormType` and `RegistrationFormType`):
         ```diff
-        - $emMock->expects($this->once())->method('find')->will($this->returnValue($expectedObject));
-        + $emMock->expects($this->once())->method('find')->willReturn($expectedObject);
+          'type' => PasswordType::class,
+          'options' => [
+        -     'attr' => ['autocomplete' => 'off'],
+        +     'attr' => ['autocomplete' => 'new-password'],
+          ],
         ```
-- remove unused dataProvider annotation from `Tests\ShopBundle\Functional\Twig\PriceExtensionTest:checkPriceFilter` method ([#939](https://github.com/shopsys/shopsys/pull/939))
-    ```diff
-      /**
-    -   * @dataProvider priceFilterDataProvider
-        * @param mixed $input
-    ```
-- reconfigure fm_elfinder to use main_filesystem ([#932](https://github.com/shopsys/shopsys/pull/932))
-    - upgrade version of `helios-ag/fm-elfinder-bundle` to `^9.2` in `composer.json`
-    - remove `barryvdh/elfinder-flysystem-driver": "^0.2"` from `composer.json`
-    - update `fm_elfinder.yml` config
-    ```diff
-        driver: Flysystem
-    -   path: '%shopsys.filemanager_upload_web_dir%'
-    +   path: 'web/%shopsys.filemanager_upload_web_dir%'
-        flysystem:
-    -       type: local
-    -       options:
-    -           local:
-    -               path: '%shopsys.web_dir%'
-    +       enabled: true
-    +       filesystem: 'main_filesystem'
-        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
-    -   tmb_path: '%shopsys.filemanager_upload_web_dir%/_thumbnails'
-    +   tmb_path: 'web/%shopsys.filemanager_upload_web_dir%/_thumbnails'
-        url: '%shopsys.filemanager_upload_web_dir%'
-        tmb_url: '%shopsys.filemanager_upload_web_dir%/_thumbnails'
-        attributes:
-            thumbnails:
-    -           pattern: '/^\/content\/wysiwyg\/_thumbnails$/'
-    +           pattern: '/^\/web\/content\/wysiwyg\/_thumbnails$/'
-                hidden: true
-    ```
-    - read the section about proxying the URL content subpaths via webserver domain [`docs/introduction/abstract-filesystem.md`](https://github.com/shopsys/shopsys/blob/master/docs/introduction/abstract-filesystem.md)
-- to be more descriptive about error caused by active TEST environment ([#701](https://github.com/shopsys/shopsys/pull/701))
-    - modify `ErrorController::createUnableToResolveDomainResponse()` by these [changes](https://github.com/shopsys/shopsys/pull/701/files#diff-0b1aecbf82624ce474ca3cb8bd75811c).
-- use interchangeable product filtering ([#943](https://github.com/shopsys/shopsys/pull/943))
-    - you'll find detailed instructions in separate article [Upgrade Instructions for Interchangeable Filtering](/docs/upgrade/interchangeable-filtering.md)
+- update your tests to use interfaces of factories fetched from dependency injection container
+    -  update tests same way as in PR ([#970](https://github.com/shopsys/shopsys/pull/970/files))
+- check your VAT calculations after it was modified in `shopsys/framework` ([#1129](https://github.com/shopsys/shopsys/pull/1129))
+    - we strongly recommend seeing [the description of the PR](https://github.com/shopsys/shopsys/pull/1129) to understand the scope of this change
+    - ẗo ensure you data is consistent, run DB migrations on your demo data and on a copy of production database
+        - if you modified the price calculation or you altered the prices in the database directly, the migration might fail during a check sum - in that case the DB transaction will be reverted and it'll tell what to do
+    - copy the functional test [OrderEditTest.php](https://github.com/shopsys/project-base/blob/master/tests/ShopBundle/Functional/Model/Order/OrderEditTest.php) into `tests/ShopBundle/Functional/Model/Order/` to test editing of order items
+        - for the test to work, add test service definitions for `OrderItemDataFactory` and `OrderItemFactory` in your `src/Shopsys/ShopBundle/Resources/config/services_test.yml` configuration:
+            ```diff
+
+                 Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface: '@Shopsys\ShopBundle\Model\Customer\UserDataFactory'
+
+            +    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@Shopsys\ShopBundle\Model\Order\Item\OrderItemDataFactory'
+            +
+            +    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface: '@Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory'
+            +
+                 Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@Shopsys\ShopBundle\Model\Order\OrderDataFactory'
+
+            ```
+    - stop using the deprecated method `\Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation::getVatCoefficientByPercent()`, use `PriceCalculation::getVatAmountByPriceWithVat()` for VAT calculation instead
+    - if you want to customize the VAT calculation (eg. revert it back to the previous implementation), extend the service `@Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation` and override the method `getVatAmountByPriceWithVat()`
+    - if you created new tests regarding the price calculation they might start failing after the upgrade - in such case, please see the new VAT calculation and change the tests expectations accordingly
+- use automatic wiring of Redis clients for easier checking and cleaning ([#1161](https://github.com/shopsys/shopsys/pull/1161))
+    - if you have redefined the service `@Shopsys\FrameworkBundle\Component\Redis\RedisFacade` or `@Shopsys\FrameworkBundle\Command\CheckRedisCommand` in your project, or you instantiate the classes in your code:
+        - instead of instantiating `RedisFacade` with an array of cache clients to be cleaned by `php phing redis-clean`, pass an array of all redis clients and another array of redis clients you don't want to clean (eg. `global` and `session`)
+            ```diff
+                Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
+                    arguments:
+            -           - '@snc_redis.doctrine_metadata'
+            -           - '@snc_redis.doctrine_query'
+            -           - '@snc_redis.my_custom_cache'
+            +           $allClients: !tagged snc_redis.client
+            +           $persistentClients:
+            +               - '@snc_redis.global'
+            +               - '@snc_redis.session'
+            ```
+            - this allows you to use `!tagged snc_redis.client` in your DIC config for the first argument, ensuring that newly created clients will be registered by the facade
+        - instead of instantiating `CheckRedisCommand` with an array of redis clients, pass an instance of `RedisFacade` instead
+    - modify the functional test `\Tests\ShopBundle\Functional\Component\Redis\RedisFacadeTest` so it creates `RedisFacade` using the two arrays and add a new test case `testNotCleaningPersistentClient`
+        - you can copy-paste the [`RedisFacadeTest`](https://github.com/shopsys/project-base/blob/master/tests/ShopBundle/Functional/Component/Redis/RedisFacadeTest.php) from `shopsys/project-base`
 
 ### Configuration
- - use standard format for redis prefixes ([#928](https://github.com/shopsys/shopsys/pull/928))
-    - change prefixes in `app/config/packages/snc_redis.yml` and `app/config/packages/test/snc_redis.yml`. Please find inspiration in [#928](https://github.com/shopsys/shopsys/pull/928/files)
-    - once you finish this change, you still should deal with older redis cache keys that don't use new prefixes. Such keys are not removed even by `clean-redis-old`, please find and remove them manually (via console or UI)
+- update `phpstan.neon` with following change to skip phpstan error ([#1086](https://github.com/shopsys/shopsys/pull/1086))
+    ```diff
+     #ignore annotations in generated code#
+     -
+    -    message: '#(PHPDoc tag @(param|return) has invalid value .+ expected TOKEN_IDENTIFIER at offset \d+)#'
+    +    message: '#(PHPDoc tag @(param|return) has invalid value (.|\n)+ expected TOKEN_IDENTIFIER at offset \d+)#'
+         path: %currentWorkingDirectory%/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php
+    ```
+- change `name.keyword` field in Elasticsearch to sort each language properly ([#1069](https://github.com/shopsys/shopsys/pull/1069))
+    - update field `name.keyword` to type `icu_collation_keyword` in `src/Shopsys/ShopBundle/Resources/definition/product/*.json` and set its `language` parameter according to what locale does your domain have:
+        - example for English domain from [`1.json` of shopsys/project-base](https://github.com/shopsys/project-base/blob/master/src/Shopsys/ShopBundle/Resources/definition/product/1.json) repository.
+            ```diff
+                "name": {
+                    "type": "text",
+                    "analyzer": "stemming",
+                    "fields": {
+                        "keyword": {
+            -               "type": "keyword"
+            +               "type": "icu_collation_keyword",
+            +               "language": "en",
+            +               "index": false
+                        }
+                    }
+                }
+            ```
+    - change `TestFlag` and `TestFlagBrand` tests in `FilterQueryTest.php` to assert IDs correctly:
+        ```diff
+            # TestFlag()
+        -   $this->assertIdWithFilter($filter, [1, 5, 50, 16, 33, 39, 70, 40, 45]);
+        +   $this->assertIdWithFilter($filter, [1, 5, 50, 16, 33, 70, 39, 40, 45]);
 
-    **Be careful, this upgrade will remove sessions**
-- in order to have translations extracted even from overwritten templates update your `build-dev.xml` file accordingly ([#931](https://github.com/shopsys/shopsys/pull/931)):
-    ```diff
-        <target name="dump-translations-project-base" description="Extracts translatable messages from all source files in project base.">
-            <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-                <arg value="${path.bin-console}" />
-                <arg value="translation:extract" />
-                <arg value="--bundle=ShopsysShopBundle" />
-                <arg value="--dir=${path.src}/Shopsys/ShopBundle" />
-    +           <arg value="--dir=${path.app}/Resources" />
-                <arg value="--exclude-dir=frontend/plugins" />
-                <arg value="--output-format=po" />
-                <arg value="--output-dir=${path.src}/Shopsys/ShopBundle/Resources/translations" />
-                <arg value="--keep" />
-                <arg value="cs" />
-                <arg value="en" />
-            </exec>
-        </target>
-    ```
-- update your [nginx.conf](../../project-base/docker/nginx/nginx.conf) file like this to have in nginx the same limit for file size as for php from [php.ini](../../project-base/docker/php-fpm/php-ini-overrides.ini) ([#947](https://github.com/shopsys/shopsys/pull/947))
-    ```diff
-    server {
-        listen 8080;
-        access_log /var/log/nginx/shopsys-framework.access.log;
-        root /var/www/html/web;
-        server_tokens off;
-    +   client_max_body_size 32M;
-    ```
-    - update your [ingress.yml](../../project-base/kubernetes/ingress.yml) config file
+            # TestFlagBrand()
+        -   $this->assertIdWithFilter($filter, [19, 17]);
+        +   $this->assertIdWithFilter($filter, [17, 19]);
+        ```
+- extend DI configuration for your project by updating ([#1049](https://github.com/shopsys/shopsys/pull/1049))
+    - `src/Shopsys/ShopBundle/Resources/config/services.yml`
         ```diff
-        metadata:
-            name: shopsys
-        +   annotations:
-        +       nginx.ingress.kubernetes.io/proxy-body-size: 32m
-        spec:
-            rules:
+        -    Shopsys\ShopBundle\Model\:
+        -        resource: '../../Model/**/*{Facade,Factory,Repository}.php'
+        +    Shopsys\ShopBundle\:
+        +        resource: '../../**/*{Calculation,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer}.php'
+        +        exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
         ```
-    - check and update also all parent proxy servers for each project
-- use redis as cache for doctrine and framework ([#930](https://github.com/shopsys/shopsys/pull/930))
-    - update `app/config/packages/framework.yml`:
-    ```diff
-    framework:
-    +    annotations:
-    +        cache: shopsys.framework.cache_driver.annotations_cache
-    ```
-    - update `app/config/packages/snc_redis.yml`:
-    ```diff
-    snc_redis:
-        clients:
-            ...
-    +       framework_annotations:
-    +           type: 'phpredis'
-    +           alias: 'framework_annotations'
-    +           dsn: 'redis://%redis_host%'
-    +           options:
-    +               prefix: '%env(REDIS_PREFIX)%%build-version%:cache:framework:annotations:'
-    ```
-    - update `app/config/packages/doctrine.yml`:
-    ```diff
-    metadata_cache_driver:
-        type: service
-    -   id: Doctrine\Common\Cache\ChainCache
-    +   id: shopsys.doctrine.cache_driver.metadata_cache
-    query_cache_driver:
-        type: service
-    -   id: Doctrine\Common\Cache\ChainCache
-    +   id: shopsys.doctrine.cache_driver.query_cache
-    ```
-    - update `app/config/packages/test/doctrine.yml`:
-    ```diff
-    doctrine:
-        ...
-    +   orm:
-    +       metadata_cache_driver:
-    +           type: service
-    +           id: Doctrine\Common\Cache\ArrayCache
-    +       query_cache_driver:
-    +           type: service
-    +           id: Doctrine\Common\Cache\ArrayCache
-    ```
-    - update `app/config/packages/dev/doctrine.yml`:
-    ```diff
-    doctrine:
-        orm:
-            auto_generate_proxy_classes: true
-    -       metadata_cache_driver: array
-    -       query_cache_driver: array
-    ```
-- update definition of postgres service in your `docker-compose.yml` file to use customized configuration ([#946](https://github.com/shopsys/shopsys/pull/946))
-    ```diff
-    postgres:
-        image: postgres:10.5-alpine
-        container_name: shopsys-framework-postgres
-        volumes:
-            - ./docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf:delegated
-            - ./var/postgres-data:/var/lib/postgresql/data:cached
-        environment:
-            - PGDATA=/var/lib/postgresql/data/pgdata
-            - POSTGRES_USER=root
-            - POSTGRES_PASSWORD=root
-            - POSTGRES_DB=shopsys
-    +   command:
-    +       - postgres
-    +       - -c
-    +       - config_file=/var/lib/postgresql/data/postgresql.conf
-    ```
-    - update postgres deployment manifest in your `kubernetes/deployments/postgres.yml`
+    - `src/Shopsys/ShopBundle/Resources/config/services/twig.yml`
         ```diff
-                -   name: PGDATA
-                    value: /var/lib/postgresql/data/pgdata
-        + args:
-        +    - postgres
-        +    - -c
-        +    - config_file=/var/lib/postgresql/data/postgresql.conf
+        -    Shopsys\ShopBundle\Twig\FlagsExtension: ~
+        +    Shopsys\ShopBundle\Twig\:
+        +        resource: '../../Twig/'
         ```
-- create or move if you already have configuration file for crons in your project base ([#989](https://github.com/shopsys/shopsys/pull/989))
-    - create or move your `cron.yml` file to location `src/ShopBundle/Resources/config/services/`
-    - if you created new file, insert following code:
-        ```
-        services:
-            _defaults:
-                autowire: true
-                autoconfigure: true
-                public: false
-
-        #   Example:
-        #   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule:
-        #       tags:
-        #           - { name: shopsys.cron, hours: '*', minutes: '*' }
-        ```
-    - update `src/Shopsys/ShopBundle/Resources/config/services.yml`:
+- unset the incompatible `excluded_404s` configuration from monolog handlers that don't use the `fingers_crossed` type ([#1154](https://github.com/shopsys/shopsys/pull/1154))
+    - in `app/config/packages/dev/monolog.yml`:
         ```diff
-        imports:
-            - { resource: forms.yml }
-        -   - { resource: services/commands.yml }
-        -   - { resource: services/data_fixtures.yml }
-        +   - { resource: services/*.yml }
+            monolog:
+               handlers:
+                   main:
+                       # change "fingers_crossed" handler to "group" that works as a passthrough to "nested"
+                       type: group
+                       members: [ nested ]
+        +              excluded_404s: false
         ```
-- move `database_server_version` parameter to `parameters_common.yml` ([#1001](https://github.com/shopsys/shopsys/pull/1001))
-    - remove parameter from `parameters.yml` and `parameters.yml.dist`
-    - add parameter to `parameters_common.yml`:
+    - in `app/config/packages/test/monolog.yml`:
         ```diff
-        parameters:
-            database_driver: pdo_pgsql
-        +   database_server_version: 10.5
-        ...
+            monolog:
+                handlers:
+                    main:
+                        type: "null"
+        +               excluded_404s: false
         ```
-### Infrastructure
-- remove node ports from kubernetes services and add them into the ingress router ([#888](https://github.com/shopsys/shopsys/pull/888))
-    - remove `NodePort` type from `kubernetes/services/adminer.yml`, `kubernetes/services/redis-admin.yml`, `kubernetes/services/redis-admin.yml`
-        ```diff
-        -     type: NodePort
-          ports:
-          -   name: http
-        ```
-    - add ingress kustomize patch for CI deployment into `kubernetes/kustomize/overlays/ci/kustomization.yaml`
-        ```diff
-          -   ../../../services/selenium-server.yml
-        +patchesJson6902:
-        +-   target:
-        +        group: extensions
-        +        version: v1beta1
-        +        kind: Ingress
-        +        name: shopsys
-        +    path: ./ingress-patch.yaml
-          configMapGenerator:
-        ```
-    - add routes for elasticsearch, adminer and redis-admin into `kubernetes/kustomize/overlays/ci/ingress-patch.yaml`
-        ```diff
-        +- op: add
-        +  path: /spec/rules/-
-        +  value:
-        +    host: ~
-        +    http:
-        +        paths:
-        +        -   path: /
-        +            backend:
-        +                serviceName: adminer
-        +                servicePort: 80
-        +- op: add
-        +  path: /spec/rules/-
-        +  value:
-        +    host: ~
-        +    http:
-        +        paths:
-        +        -   path: /
-        +            backend:
-        +                serviceName: elasticsearch
-        +                servicePort: 9200
-        +- op: add
-        +  path: /spec/rules/-
-        +  value:
-        +    host: ~
-        +    http:
-        +        paths:
-        +        -   path: /
-        +            backend:
-        +                serviceName: redis-admin
-        +                servicePort: 80
-        ```
+- remove the useless route `front_category_panel` from your `routing_front.yml` ([#1042](https://github.com/shopsys/shopsys/pull/1042))
+    - you'll find the configuration file in `src/Shopsys/ShopBundle/Resources/config/`
 
 ### Tools
-- add path for tests folder into `ecs-fix` phing target of `build-dev.xml` file to be able to fix files that were found by `ecs` phing target ([#980](https://github.com/shopsys/shopsys/pull/980))
-    ```diff
-      <arg path="${path.src}" />
-    + <arg path="${path.tests}" />
-    ```
-- add `env(ELASTIC_SEARCH_INDEX_PREFIX): ''` into your `app/config/parameters.yml.dist` and also `app/config/parameters.yml` ([#961](https://github.com/shopsys/shopsys/pull/961))
+- use the `build.xml` [Phing configuration](/docs/introduction/console-commands-for-application-management-phing-targets.md) from the `shopsys/framework` package ([#1068](https://github.com/shopsys/shopsys/pull/1068))
+    - assuming your `build.xml` and `build-dev.xml` are the same as in `shopsys/project-base` in `v7.2.1`, just remove `build-dev.xml` and replace `build.xml` with this file:
+        ```xml
+        <?xml version="1.0" encoding="UTF-8"?>
+        <project name="Shopsys Framework" default="list">
 
-[Upgrade from v7.1.0 to Unreleased]: https://github.com/shopsys/shopsys/compare/v7.1.0...HEAD
+            <property file="${project.basedir}/build/build.local.properties"/>
+
+            <property name="path.root" value="${project.basedir}"/>
+            <property name="path.vendor" value="${path.root}/vendor"/>
+            <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
+
+            <import file="${path.framework}/build.xml"/>
+
+            <property name="is-multidomain" value="true"/>
+            <property name="phpstan.level" value="0"/>
+
+        </project>
+        ```
+    - if there are any changes in the your phing configuration, you'll need to make some customizations
+        - read about [customization of phing targets and properties](/docs/introduction/console-commands-for-application-management-phing-targets.md#customization-of-phing-targets-and-properties) in the docs
+        - if you have some own additional target definitions, copy them into your `build.xml`
+        - if you have modified any targets, overwrite them in your `build.xml`
+            - examine the target in the `shopsys/framework` package (either on [GitHub](/packages/framework/build.xml) or locally in `vendor/shopsys/framework/build.xml`)
+            - it's possible that the current target's definition suits your needs now after the upgrade - you don't have to overwrite it if that's the case
+            - for future upgradability of your project, it's better to use the original target via `shopsys_framework.TARGET_NAME` if that's possible (eg. if you want to execute a command before or after the original task)
+            - if you think we can support your use case better via [phing target extensibility](/docs/contributing/guidelines-for-phing-targets.md#extensibility), please [open an issue](https://github.com/shopsys/shopsys/issues/new) or [create a pull request](/docs/contributing/guidelines-for-pull-request.md)
+        - if you have deleted any targets, overwrite them in your `build.xml` with a fail task so it doesn't get executed by mistake:
+            ```xml
+            <target name="deleted-target" hidden="true">
+                <fail message="Target 'deleted-target' is disabled on this project."/>
+            </target>
+            ```
+    - if you modified the locales for extraction in `dump-translations`, you can now overwrite just a phing property `translations.dump.locales` instead of overwriting the whole target
+        - for example, if you want to extract locales for German and English, add `<property name="translations.dump.locales" value="de en"/>` to your `build.xml`
+    - some phing targets were marked as deprecated or were renamed, stop using them and use the new ones (the original targets will still work, but a warning message will be displayed):
+        - `dump-translations` and `dump-translations-project-base` were deprecated, use `translations-dump` instead
+        - `tests-static` was deprecated, use `tests-unit` instead
+        - `test-db-check-schema` was deprecated, it is run automatically after DB migrations are executed
+        - `build-demo-ci-diff` and `checks-ci-diff` were deprecated, use `build-demo-ci` and `checks-ci` instead
+        - `composer` was deprecated, use `composer-prod` instead
+        - `generate-build-version` was deprecated, use `build-version-generate` instead
+        - `(test-)create-domains-data` was deprecated, use `(test-)domains-data-create` instead
+        - `(test-)create-domains-db-functions` was deprecated, use `(test-)domains-db-functions-create` instead
+        - `(test-)generate-friendly-urls` was deprecated, use `(test-)friendly-urls-generate` instead
+        - `(test-)replace-domains-urls` was deprecated, use `(test-)domains-urls-replace` instead
+        - `(test-)load-plugin-demo-data` was deprecated, use `(test-)plugin-demo-data-load` instead
+        - don't forget to update your Dockerfiles, Kubernetes manifests, scripts and other files that might reference the phing targets above
+- we recommend upgrading PHPStan to level 4 [#1040](https://github.com/shopsys/shopsys/pull/1040)
+    - you'll find detailed instructions in separate article [Upgrade Instructions for Upgrading PHPStan to Level 4](/docs/upgrade/phpstan-level-4.md)
+
 [shopsys/framework]: https://github.com/shopsys/framework

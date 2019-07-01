@@ -154,6 +154,11 @@ services:
             # must be ran before ProductVisibilityFacade
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
 
+    # this explicit definition will not be needed when the @deprecated argument type is removed
+    Shopsys\FrameworkBundle\Command\CheckRedisCommand:
+        arguments:
+            - '@Shopsys\FrameworkBundle\Component\Redis\RedisFacade'
+
     Shopsys\FrameworkBundle\Component\Cron\CronFacade:
         arguments:
             - '@monolog.logger.cron'
@@ -175,8 +180,6 @@ services:
             - '%shopsys.domain_config_filepath%'
             - '%shopsys.domain_urls_config_filepath%'
         lazy: true
-
-    Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProvider: ~
 
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider
@@ -405,13 +408,9 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator }
 
-    Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorUserProvider: ~
-
     Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade:
         arguments:
             - '%kernel.environment%'
-
-    Shopsys\FrameworkBundle\Model\Customer\FrontendUserProvider: ~
 
     Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer: ~
 
@@ -420,11 +419,6 @@ services:
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail: ~
 
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail: ~
-
-    Shopsys\FrameworkBundle\Model\Feed\FeedConfigFacade:
-        arguments:
-            - '%shopsys.feed_url_prefix%'
-            - '%shopsys.feed_dir%'
 
     Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider:
         arguments:
@@ -475,6 +469,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
+    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportListener:
+        tags:
+            # must be run after all recalculations
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -30}
+
     shopsys.shop.product.bestselling_product.cache_provider:
         class: Doctrine\Common\Cache\RedisCache
         factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
@@ -519,8 +518,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
         arguments: ['%router.resource%']
-        calls:
-            - method: setRequestStack
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
         arguments: ['%shopsys.router.friendly_url_router_filepath%']
@@ -707,8 +704,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\CompilerPass\FriendlyUrlDataProviderConfig: ~
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface:
         alias: Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory
@@ -917,8 +912,6 @@ services:
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
 
-    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportDataConverter: ~
-
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer: ~
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator: ~
@@ -934,8 +927,6 @@ services:
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: ~
 
     Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer: ~
-
-    Shopsys\FrameworkBundle\Component\Image\Processing\ImageGenerator: ~
 
     Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor: ~
 
@@ -969,15 +960,18 @@ services:
 
     Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
         arguments:
-            $cacheClients:
-            - '@snc_redis.bestselling_products'
-            - '@snc_redis.doctrine_metadata'
-            - '@snc_redis.doctrine_query'
+            $allClients: !tagged snc_redis.client
+            $persistentClients:
+                - '@snc_redis.global'
+                - '@snc_redis.session'
 
     Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade:
         arguments:
             $globalClient: '@snc_redis.global'
             $currentVersion: '%build-version%'
+
+    shopsys.component.elasticsearch.tracer:
+        class: Psr\Log\NullLogger
 
     Elasticsearch\ClientBuilder:
       class: Elasticsearch\ClientBuilder
@@ -986,6 +980,9 @@ services:
         - method: setHosts
           arguments:
             - ['%elasticsearch_host%']
+        - method: setTracer
+          arguments:
+            - '@shopsys.component.elasticsearch.tracer'
 
     Elasticsearch\Client:
       class: Elasticsearch\Client
@@ -999,11 +996,3 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExporter: ~
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: ~
-
-    Shopsys\FrameworkBundle\Command\CheckRedisCommand:
-        arguments:
-            $cacheClients:
-            - '@snc_redis.bestselling_products'
-            - '@snc_redis.doctrine_metadata'
-            - '@snc_redis.doctrine_query'
-            - '@snc_redis.session'

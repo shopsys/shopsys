@@ -3,6 +3,7 @@
 namespace Tests\ShopBundle\Functional\Model\Product\Search;
 
 use Elasticsearch\Client;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
@@ -12,7 +13,7 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class FilterQueryTest extends TransactionFunctionalTestCase
 {
-    private const ELASTICSEARCH_INDEX = 'product1';
+    private const ELASTICSEARCH_INDEX = 'product';
 
     public function testBrand(): void
     {
@@ -28,7 +29,7 @@ class FilterQueryTest extends TransactionFunctionalTestCase
             ->filterByFlags([3])
             ->applyDefaultOrdering();
 
-        $this->assertIdWithFilter($filter, [1, 5, 50, 16, 33, 39, 70, 40, 45]);
+        $this->assertIdWithFilter($filter, [1, 5, 50, 16, 33, 70, 39, 40, 45]);
     }
 
     public function testFlagBrand(): void
@@ -38,7 +39,7 @@ class FilterQueryTest extends TransactionFunctionalTestCase
             ->filterByFlags([1])
             ->applyDefaultOrdering();
 
-        $this->assertIdWithFilter($filter, [19, 17]);
+        $this->assertIdWithFilter($filter, [17, 19]);
     }
 
     public function testMultiFilter(): void
@@ -165,7 +166,13 @@ class FilterQueryTest extends TransactionFunctionalTestCase
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory */
         $filterQueryFactory = $this->getContainer()->get(FilterQueryFactory::class);
-        $filter = $filterQueryFactory->create(self::ELASTICSEARCH_INDEX);
+
+        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager $elasticSearchStructureManager */
+        $elasticSearchStructureManager = $this->getContainer()->get(ElasticsearchStructureManager::class);
+
+        $elasticSearchIndexName = $elasticSearchStructureManager->getIndexName(1, self::ELASTICSEARCH_INDEX);
+
+        $filter = $filterQueryFactory->create($elasticSearchIndexName);
 
         return $filter->filterOnlySellable();
     }
