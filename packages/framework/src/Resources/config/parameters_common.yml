@@ -5,15 +5,6 @@ parameters:
     # Seed for demo data generation
     faker.seed: 1234
 
-    # Use Shopsys validator factory for fp/jsformvalidator-bundle
-    fp_js_form_validator.factory.class: Shopsys\FrameworkBundle\Form\JsFormValidatorFactory
-
-    # Use Shopsys routing for knplabs/knp-menu-bundle that ignores missing parameters in routes
-    knp_menu.factory_extension.routing.class: Shopsys\FrameworkBundle\Model\AdminNavigation\RoutingExtension
-
-    # Use Shopsys Translatable listener for prezent/doctrine-translatable to allow set fallback language on postPersist event
-    prezent_doctrine_translatable.listener.class: Shopsys\FrameworkBundle\Model\Localization\TranslatableListener
-
     # Administration locale. Must be registered in domains.yml
     shopsys.admin_locale: en
 
