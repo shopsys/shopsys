@@ -181,6 +181,21 @@ There you can find links to upgrade notes for other versions too.
         ```
 - remove the useless route `front_category_panel` from your `routing_front.yml` ([#1042](https://github.com/shopsys/shopsys/pull/1042))
     - you'll find the configuration file in `src/Shopsys/ShopBundle/Resources/config/`
+- update your services configuration tree ([#1182](https://github.com/shopsys/shopsys/pull/1182))
+    - move your `src/Shopsys/ShopBundle/Resources/config/forms.yml` into `src/Shopsys/ShopBundle/Resources/config/services/forms.yml` and update it
+        ```diff
+        Shopsys\ShopBundle\Form\:
+        -    resource: '../../Form/'
+        +    resource: '../../../Form/'
+
+        Shopsys\ShopBundle\Form\Admin\ArticleFormTypeExtension:
+        ```
+    - remove loading of forms.yml config from services.yml
+        ```diff
+        imports:
+        -   - { resource: forms.yml }
+            - { resource: services/*.yml }
+        ```
 
 ### Tools
 - use the `build.xml` [Phing configuration](/docs/introduction/console-commands-for-application-management-phing-targets.md) from the `shopsys/framework` package ([#1068](https://github.com/shopsys/shopsys/pull/1068))
