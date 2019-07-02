@@ -196,6 +196,27 @@ There you can find links to upgrade notes for other versions too.
         -   - { resource: forms.yml }
             - { resource: services/*.yml }
         ```
+    - exclude loading of DataFixtures folder from services.yml
+        ```diff
+        -        exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
+        +        exclude: '../../{Command,Controller,DataFixtures,DependencyInjection,Form,Migrations,Resources,Twig}'
+        ```
+    - move all services based on `DataFixtures` namespace into `src/Shopsys/ShopBundle/Resources/config/services/data_fixtures.yml` configuration
+    - update `src/Shopsys/ShopBundle/Resources/config/services/data_fixtures.yml` config file
+        ```diff
+        services:
+            _defaults:
+        -        tags: ['doctrine.fixture.orm']
+                autowire: true
+
+            Shopsys\ShopBundle\DataFixtures\:
+        -        resource: '../../../DataFixtures/**/*DataFixture.php'
+        +        tags: ['doctrine.fixture.orm']
+        +        resource: '../../../DataFixtures/**/*{DataFixture,Loader}.php'
+
+        -   Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureLoader: ~
+        -   Shopsys\ShopBundle\DataFixtures\Demo\ProductParametersFixtureLoader: ~
+        ```
 
 ### Tools
 - use the `build.xml` [Phing configuration](/docs/introduction/console-commands-for-application-management-phing-targets.md) from the `shopsys/framework` package ([#1068](https://github.com/shopsys/shopsys/pull/1068))
