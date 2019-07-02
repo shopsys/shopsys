@@ -149,7 +149,7 @@ Especially useful when you need to change the structure and don't need to have f
 * creates alias for the new index
 
 *Note: If you add field/s to the structure and reindex they won't be available until `product-search-export-products` is called.*
-*You application must handle the properties not being filled correctly until all products are exported.*
+*Your application must handle the properties not being filled correctly until all products are exported.*
 
 *Note: Using this phing target after changing the type of field to another in structure (eg. changing it from `bool` to `integer`) will cause an error.*
 *If you need to make this change, please add new field with the correct type and delete the old field instead.*
