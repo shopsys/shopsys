@@ -131,6 +131,18 @@ class UploadedFileFacade
 
     /**
      * @param object $entity
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile|null
+     */
+    public function findUploadedFileByEntity($entity)
+    {
+        return $this->uploadedFileRepository->findUploadedFileByEntity(
+            $this->uploadedFileConfig->getEntityName($entity),
+            $this->getEntityId($entity)
+        );
+    }
+
+    /**
+     * @param object $entity
      * @return int
      */
     protected function getEntityId($entity)
