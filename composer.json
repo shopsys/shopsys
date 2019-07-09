@@ -147,7 +147,8 @@
     "twig/twig": "^2.4.8",
     "vasek-purchart/console-errors-bundle": "^1.0.1",
     "webmozart/assert": "^1.4",
-    "trikoder/oauth2-bundle": "^1.1"
+    "trikoder/oauth2-bundle": "^1.1",
+    "php-amqplib/rabbitmq-bundle": "^1.14"
   },
   "require-dev": {
     "ext-pgsql": "*",

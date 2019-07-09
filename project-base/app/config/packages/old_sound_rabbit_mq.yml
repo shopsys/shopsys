@@ -1,0 +1,25 @@
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     'rabbitmq'
+            port:     5672
+            user:     'guest'
+            password: 'guest'
+            vhost:    '/'
+            lazy:     false
+            connection_timeout: 3
+            read_write_timeout: 3
+            keepalive: false
+            heartbeat: 0
+    producers:
+        product_reindex:
+            connection: default
+            exchange_options: { name: 'product_reindex', type: direct }
+    consumers:
+        product_reindex:
+            connection:       default
+            exchange_options: { name: 'product_reindex', type: direct }
+            queue_options:
+                name: 'product_reindex'
+            qos_options: { prefetch_count: 1 }
+            callback: Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumer

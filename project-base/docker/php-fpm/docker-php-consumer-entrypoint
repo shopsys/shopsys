@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php "$@"
+fi
+
+if [ ! "$CONSUMER_NAME" = "" ]; then
+    php bin/console rabbitmq:consumer -m $CONSUMER_RUNS_BEFORE_RESTART $CONSUMER_NAME
+fi
