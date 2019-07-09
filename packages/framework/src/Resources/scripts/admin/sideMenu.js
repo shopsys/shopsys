@@ -4,13 +4,27 @@
     Shopsys.sideMenu = Shopsys.sideMenu || {};
 
     Shopsys.sideMenu.SideMenu = function ($sideMenu) {
+        var self = this;
+        var $items;
+
         this.init = function () {
-            var $items = $sideMenu.filterAllNodes('.js-side-menu-item');
+            $items = $sideMenu.filterAllNodes('.js-side-menu-item');
 
             $items.click(function () {
                 $(this).filterAllNodes('.js-side-menu-submenu').show();
                 $(this).addClass('open');
             });
+
+            var timeout;
+            $sideMenu.hover(
+                function () { clearTimeout(timeout); },
+                function () { timeout = setTimeout(self.closeMenus, 500); }
+            );
+        };
+
+        this.closeMenus = function () {
+            $items.filterAllNodes('.js-side-menu-submenu').hide();
+            $items.removeClass('open');
         };
     };
 
