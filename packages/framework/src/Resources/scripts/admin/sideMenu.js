@@ -15,10 +15,16 @@
                 $(this).addClass('open');
             });
 
-            var timeout;
+            if ($sideMenu.hasClass('js-side-menu-close-after-mouseleave')) {
+                self.closeMenusAfterMouseleave(500);
+            }
+        };
+
+        this.closeMenusAfterMouseleave = function (timoutMilliseconds) {
+            var timeoutHandle;
             $sideMenu.hover(
-                function () { clearTimeout(timeout); },
-                function () { timeout = setTimeout(self.closeMenus, 500); }
+                function () { clearTimeout(timeoutHandle); },
+                function () { timeoutHandle = setTimeout(self.closeMenus, timoutMilliseconds); }
             );
         };
 
