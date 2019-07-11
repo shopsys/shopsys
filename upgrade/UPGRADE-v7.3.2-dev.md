@@ -20,6 +20,15 @@ There you can find links to upgrade notes for other versions too.
                 libjpeg-dev \
                 libfreetype6-dev \
     ```
+- remove `min_master_version` option from `gce-cluster.tf` config to make it set automatically and consistent with [documentation](https://www.terraform.io/docs/providers/google/r/container_cluster.html#node_version) ([#1198](https://github.com/shopsys/shopsys/pull/1198))
+    ```diff
+     resource "google_container_cluster" "primary" {
+       name               = "primary"
+       zone               = "${data.google_container_engine_versions.primary.zone}"
+    -  min_master_version = "${data.google_container_engine_versions.primary.latest_master_version}"
+       node_version       = "${data.google_container_engine_versions.primary.latest_node_version}"
+       initial_node_count = 3
+    ```
 
 ### Application
 - fix the typos in translation messages and demo data ([#1335](https://github.com/shopsys/shopsys/pull/1335))
