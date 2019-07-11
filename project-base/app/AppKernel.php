@@ -50,6 +50,7 @@ class AppKernel extends Kernel
             new Shopsys\ReadModelBundle\ShopsysReadModelBundle(), // has to be loaded after ShopsysFrameworkBundle because it overrides Twig `image` function
             new Shopsys\ShopBundle\ShopsysShopBundle(), // must be loaded as last, because translations must overwrite other bundles
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new Phobetor\RabbitMqSupervisorBundle\RabbitMqSupervisorBundle(),
         ];
 
         if ($this->getEnvironment() === EnvironmentType::DEVELOPMENT) {
