@@ -16,6 +16,10 @@
     {{ 'No customers found.'|trans }}
 {% endblock %}
 
+{% block grid_items_per_page_text %}
+    {{ 'Customers per page:'|trans }}
+{% endblock %}
+
 {% block grid_pager_totalcount %}
     {% set entityName = 'customers'|trans %}
     {{ parent() }}

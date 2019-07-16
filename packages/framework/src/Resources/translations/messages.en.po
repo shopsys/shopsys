@@ -583,6 +583,9 @@ msgstr ""
 msgid "Customers overview"
 msgstr ""
 
+msgid "Customers per page:"
+msgstr ""
+
 msgid "Dashboard"
 msgstr ""
 

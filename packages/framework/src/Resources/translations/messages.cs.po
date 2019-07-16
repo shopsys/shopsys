@@ -583,6 +583,9 @@ msgstr "Zákazníci"
 msgid "Customers overview"
 msgstr "Přehled zákazníků"
 
+msgid "Customers per page:"
+msgstr "Zákazníků na stránku:"
+
 msgid "Dashboard"
 msgstr "Nástěnka"
 
