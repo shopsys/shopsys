@@ -293,7 +293,7 @@
     <div class="in-grid-control__item in-grid-control__item--settings">
         <span class="in-grid-control__item__go">
             <span class="in-grid-control__item__go__text">
-                {{ 'Items per page:'|trans }}
+                {% block grid_items_per_page_text %}{{ 'Items per page:'|trans }}{% endblock %}
             </span>
             <div class="in-grid-control__item__go__block">
                 <select onchange="window.location = '{{ gridView.url({'limit' : '--limit--'}, 'page')|escape('js') }}'.replace('--limit--', this.value);" class="input">
