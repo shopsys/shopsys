@@ -11,6 +11,7 @@ use Shopsys\BackendApiBundle\Controller\V1\ProductController;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -34,8 +35,9 @@ class ProductControllerTest extends TestCase
         $productTransformer = new ApiProductTransformer($this->createDomain());
         $this->productFacade = $this->createMock(ProductFacade::class);
         $linksTransformer = new HeaderLinksTransformer();
+        $availabilityFacade = $this->createMock(AvailabilityFacade::class);
 
-        $this->productController = new ProductController($this->productFacade, $productTransformer, $linksTransformer);
+        $this->productController = new ProductController($this->productFacade, $productTransformer, $linksTransformer, $availabilityFacade);
     }
 
     public function testGetProductActionWithUuidIncludingInvalidCharacter()

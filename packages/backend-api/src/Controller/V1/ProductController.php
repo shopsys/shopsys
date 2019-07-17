@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\BackendApiBundle\Controller\V1;
 
+use Exception;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
 use Ramsey\Uuid\Uuid;
 use Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinksTransformer;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductQueryParams;
@@ -40,6 +43,11 @@ class ProductController extends AbstractFOSRestController
     protected $linksTransformer;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
+     */
+    protected $availabilityFacade;
+
+    /**
      * @var int
      */
     protected $pageSize = 100;
@@ -48,12 +56,18 @@ class ProductController extends AbstractFOSRestController
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\BackendApiBundle\Controller\V1\ApiProductTransformer $productTransformer
      * @param \Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinksTransformer $linksTransformer
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
-    public function __construct(ProductFacade $productFacade, ApiProductTransformer $productTransformer, HeaderLinksTransformer $linksTransformer)
-    {
+    public function __construct(
+        ProductFacade $productFacade,
+        ApiProductTransformer $productTransformer,
+        HeaderLinksTransformer $linksTransformer,
+        AvailabilityFacade $availabilityFacade
+    ) {
         $this->productFacade = $productFacade;
         $this->productTransformer = $productTransformer;
         $this->linksTransformer = $linksTransformer;
+        $this->availabilityFacade = $availabilityFacade;
     }
 
     /**
@@ -132,5 +146,30 @@ class ProductController extends AbstractFOSRestController
         } elseif (count($invalidUuids) > 1) {
             throw new BadRequestHttpException('These UUIDS are not valid: ' . implode(', ', $invalidUuids));
         }
+    }
+
+    /**
+     * @Post("/products")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createProductAction(Request $request): Response
+    {
+        $form = $this->createForm(ApiProductFormType::class);
+        $form->submit($request->request->all());
+
+        if (!$form->isValid()) {
+            throw new Exception('not implemented yet');
+        }
+
+        $productData = $form->getData();
+        $productData->uuid = Uuid::uuid4();
+        $productData->availability = $this->availabilityFacade->getDefaultInStockAvailability();
+        $this->productFacade->create($productData);
+
+        $location = sprintf('%s/%s', $request->getUri(), $productData->uuid);
+        $view = View::create([], Response::HTTP_CREATED, ['Location' => $location]);
+
+        return $this->handleView($view);
     }
 }

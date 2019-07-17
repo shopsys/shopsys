@@ -6,3 +6,24 @@ services:
         tags: ['controller.service_arguments']
 
     Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinksTransformer: ~
+
+    Shopsys\BackendApiBundle\Controller\V1\ApiProductFormType:
+        class: Shopsys\BackendApiBundle\Controller\V1\ApiProductFormType
+        arguments:
+            - '@Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface'
+        tags:
+            - { name: form.type }
+
+    Shopsys\BackendApiBundle\Component\ApiLocalizedFormType\ApiLocalizedFormType:
+        class: Shopsys\BackendApiBundle\Component\ApiLocalizedFormType\ApiLocalizedFormType
+        arguments:
+            - '@Shopsys\FrameworkBundle\Model\Localization\Localization'
+        tags:
+            - { name: form.type }
+
+    Shopsys\BackendApiBundle\Component\ApiDomainsFormType\ApiDomainsFormType:
+        class: Shopsys\BackendApiBundle\Component\ApiDomainsFormType\ApiDomainsFormType
+        arguments:
+            - '@Shopsys\FrameworkBundle\Component\Domain\Domain'
+        tags:
+            - { name: form.type }
