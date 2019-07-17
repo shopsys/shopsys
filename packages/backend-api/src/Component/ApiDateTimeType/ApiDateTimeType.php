@@ -44,6 +44,9 @@ class ApiDateTimeType extends AbstractType implements DataTransformerInterface
      */
     public function reverseTransform($data)
     {
+        if ($data === '') {
+            return null;
+        }
         if ($data === null) {
             return null;
         }

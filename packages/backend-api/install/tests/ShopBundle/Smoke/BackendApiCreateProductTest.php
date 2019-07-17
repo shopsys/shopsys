@@ -48,6 +48,42 @@ class BackendApiCreateProductTest extends OauthTestCase
         $this->assertSame($product, $foundProduct);
     }
 
+    public function testCreatePostMinimalProduct(): void
+    {
+        $product = [
+            'name' => [
+                'en' => 'X tech',
+                'cs' => 'název',
+            ],
+            'hidden' => false,
+            'sellingDenied' => false,
+            'sellingFrom' => null,
+            'sellingTo' => null,
+            'catnum' => '123456 co',
+            'ean' => 'E12346B',
+            'partno' => 'P123456',
+            'shortDescription' => [
+                1 => '<b>desc',
+                2 => '<b>popisek',
+            ],
+            'longDescription' => [
+                1 => '<b>desc long',
+                2 => '<b>popisek dlouhy',
+            ],
+        ];
+        $response = $this->runOauthRequest('POST', '/api/v1/products', $product);
+
+        $this->assertSame(201, $response->getStatusCode());
+
+        $location = $response->headers->get('Location');
+        $this->assertProductLocation($location);
+
+        $uuid = $this->extractUuid($location);
+
+        $foundProduct = $this->getProduct($uuid);
+        $this->assertSame($product, $foundProduct);
+    }
+
     /**
      * @param string $location
      */

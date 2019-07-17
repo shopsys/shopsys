@@ -37,7 +37,9 @@ class ApiProductFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('hidden', CheckboxType::class);
-        $builder->add('sellingDenied', CheckboxType::class);
+        $builder->add('sellingDenied', CheckboxType::class, [
+            'required' => true,
+        ]);
         $builder->add('sellingFrom', ApiDateTimeType::class);
         $builder->add('sellingTo', ApiDateTimeType::class);
         $builder->add('catnum', TextType::class);
