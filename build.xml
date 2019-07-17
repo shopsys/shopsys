@@ -77,6 +77,7 @@
             <arg path="${path.utils}/*/tests"/>
             <arg path="${project.basedir}/*.md"/>
             <arg path="${project.basedir}/docs"/>
+            <arg path="${path.backend-api}/install"/>
         </exec>
     </target>
 
@@ -94,6 +95,7 @@
             <arg path="${path.utils}/*/tests"/>
             <arg path="${project.basedir}/*.md"/>
             <arg path="${project.basedir}/docs"/>
+            <arg path="${path.backend-api}/install"/>
         </exec>
     </target>
 
@@ -113,6 +115,7 @@
             <arg path="${path.utils}/*/tests"/>
             <arg path="${project.basedir}/*.md"/>
             <arg path="${project.basedir}/docs"/>
+            <arg path="${path.backend-api}/install"/>
         </exec>
     </target>
 
@@ -131,6 +134,7 @@
             <arg path="${path.utils}/*/tests"/>
             <arg path="${project.basedir}/*.md"/>
             <arg path="${project.basedir}/docs"/>
+            <arg path="${path.backend-api}/install"/>
         </exec>
     </target>
 
@@ -198,6 +202,7 @@
             <arg path="${path.packages}/*/tests"/>
             <arg path="${path.utils}/*/src"/>
             <arg path="${path.utils}/*/tests"/>
+            <arg path="${path.backend-api}/install"/>
         </exec>
     </target>
 
