@@ -45,6 +45,7 @@ class AppKernel extends Kernel
             new VasekPurchart\ConsoleErrorsBundle\ConsoleErrorsBundle(),
             new FOS\CKEditorBundle\FOSCKEditorBundle(), // has to be loaded after FrameworkBundle and TwigBundle
             new Joschi127\DoctrineEntityOverrideBundle\Joschi127DoctrineEntityOverrideBundle(),
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new Shopsys\FrameworkBundle\ShopsysFrameworkBundle(),
             new Shopsys\ReadModelBundle\ShopsysReadModelBundle(), // has to be loaded after ShopsysFrameworkBundle because it overrides Twig `image` function
             new Shopsys\ShopBundle\ShopsysShopBundle(), // must be loaded as last, because translations must overwrite other bundles

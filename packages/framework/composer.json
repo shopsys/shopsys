@@ -68,6 +68,7 @@
         "league/flysystem": "^1.0",
         "litipk/php-bignumbers": "^0.8",
         "nikic/php-parser": "^4.0",
+        "php-amqplib/rabbitmq-bundle": "^1.14",
         "presta/sitemap-bundle": "^1.5.3",
         "prezent/doctrine-translatable": "^1.2",
         "prezent/doctrine-translatable-bundle": "^1.0.3",

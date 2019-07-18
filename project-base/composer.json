@@ -59,6 +59,7 @@
         "joschi127/doctrine-entity-override-bundle": "^0.5.0",
         "league/flysystem": "^1.0",
         "phing/phing": "^2.16.1",
+        "php-amqplib/rabbitmq-bundle": "^1.14",
         "presta/sitemap-bundle": "^1.5.3",
         "prezent/doctrine-translatable-bundle": "^1.0.3",
         "sensio/distribution-bundle": "^5.0.21",
