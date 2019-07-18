@@ -25,7 +25,8 @@
              new VasekPurchart\ConsoleErrorsBundle\ConsoleErrorsBundle(),
              new FOS\CKEditorBundle\FOSCKEditorBundle(), // has to be loaded after FrameworkBundle and TwigBundle
              new Joschi127\DoctrineEntityOverrideBundle\Joschi127DoctrineEntityOverrideBundle(),
-@@ -104,4 +108,8 @@
+@@ -104,6 +108,10 @@
+             $configs[] = __DIR__ . '/config/parameters_version.yml';
          }
 
 +        if (file_exists(__DIR__ . '/config/packages/oauth2/parameters_oauth.yml')) {

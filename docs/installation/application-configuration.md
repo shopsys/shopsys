@@ -18,6 +18,11 @@ From the clean project, during composer installation process it will prompt you 
 | `mailer_disable_delivery`                | set to `true` if you don't want to send any e-mails                                                          |
 | `mailer_master_email_address`            | set if you want to send all e-mails to one address (useful for development)                                  |
 | `mailer_delivery_whitelist`              | set as array with regex text items if you want to have master e-mail but allow sending to specific addresses |
+| `rabbitmq_host`                          | host of your RabbitMQ                                                                                        |
+| `rabbitmq_port`                          | port the RabbitMQ listens on                                                                                 |
+| `rabbitmq_user`                          | user name to authenticate to the RabbitMQ                                                                    |
+| `rabbitmq_pass`                          | password to authenticate to the RabbitMQ                                                                     |
+| `rabbitmq_vhost`                         | can be used to separate more projects to use the same RabbitMQ instance                                         |
 | `secret`                                 | randomly generated secret token                                                                              |
 | `trusted_proxies`                        | proxies that are trusted to pass traffic, used mainly for production                                         |
 | `env(REDIS_PREFIX)`                      | separates more projects that use the same redis service                                                      |

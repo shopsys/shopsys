@@ -10,10 +10,12 @@ use Shopsys\FrameworkBundle\Twig\NoVarDumperExtension;
 use Shopsys\FrameworkBundle\Twig\VarDumperExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Yaml\Yaml;
 
-class ShopsysFrameworkExtension extends Extension
+class ShopsysFrameworkExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritDoc}
@@ -57,5 +59,15 @@ class ShopsysFrameworkExtension extends Extension
 
         $container->getDefinition($varDumperExtensionService)
             ->addTag('twig.extension');
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        $config = Yaml::parseFile(__DIR__ . '/../Resources/config/old_sound_rabbit_mq.yml')['old_sound_rabbit_mq'];
+
+        $container->prependExtensionConfig('old_sound_rabbit_mq', $config);
     }
 }

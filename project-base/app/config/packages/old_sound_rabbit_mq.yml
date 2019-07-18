@@ -1,0 +1,9 @@
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host: '%rabbitmq_host%'
+            port: '%rabbitmq_port%'
+            user: '%rabbitmq_user%'
+            password: '%rabbitmq_pass%'
+            vhost: '%rabbitmq_vhost%'
+            lazy: true
