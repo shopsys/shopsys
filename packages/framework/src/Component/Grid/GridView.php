@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\TemplateWrapper;
 use Twig_Environment;
 
 class GridView
@@ -106,15 +107,31 @@ class GridView
                 $templateParameters = $this->twig->mergeGlobals($parameters);
 
                 if ($echo) {
-                    echo $template->renderBlock($name, $templateParameters);
+                    echo $this->renderBlockFromTemplate($template, $name, $templateParameters);
                     return;
                 } else {
-                    return $template->renderBlock($name, $templateParameters);
+                    return $this->renderBlockFromTemplate($template, $name, $templateParameters);
                 }
             }
         }
 
         throw new \InvalidArgumentException(sprintf('Block "%s" doesn\'t exist in grid template "%s".', $name, $this->theme));
+    }
+
+    /**
+     * @param \Twig\TemplateWrapper $template
+     * @param string $name
+     * @param array $parameters
+     * @return string
+     */
+    protected function renderBlockFromTemplate(TemplateWrapper $template, string $name, array $parameters): string
+    {
+        $renderedBlock = $template->renderBlock($name, $parameters);
+
+        // CSS class "form-line__side" breaks forms in inline edit
+        $renderedBlockWithoutForbiddenClass = str_replace('form-line__side', '', $renderedBlock);
+
+        return $renderedBlockWithoutForbiddenClass;
     }
 
     /**
