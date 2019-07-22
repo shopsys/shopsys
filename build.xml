@@ -206,7 +206,7 @@
         <if>
             <available file="${path.root}/vendor" type="dir" property="dir.Exists"/>
             <then>
-                <echo level="error" message="Composer dependencies are installed in ${path.root} directory which would break the monorepo autoloader. Remove ${path.root}/vendor before re-running the command,"/>
+                <echo level="error" message="Composer dependencies are installed in ${path.root} directory which would break the monorepo autoloader. Remove ${path.root}/vendor before re-running the command."/>
                 <fail message="Directory ${path.root}/vendor found."/>
             </then>
         </if>
