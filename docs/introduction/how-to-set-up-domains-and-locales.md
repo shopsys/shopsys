@@ -44,7 +44,7 @@ If you want to use already created tests for your specific configuration, you ma
 
 #### 2.1 Domain configuration
 Modify the configuration of the domain in `app/config/domains.yml`.
-This configuration file contain pieces of information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
+This configuration file contains pieces of information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
 #### 2.2 Set up the url address
 Set the url address for the domain in `app/config/domains_urls.yml`.
