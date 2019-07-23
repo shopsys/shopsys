@@ -1,4 +1,4 @@
-# [Upgrade from v7.3.1 to Unreleased](https://github.com/shopsys/shopsys/compare/v7.3.1...HEAD)
+# [Upgrade from v7.3.1 to Unreleased](https://github.com/shopsys/shopsys/compare/v7.3.1...7.3)
 
 This guide contains instructions to upgrade from version v7.3.1 to Unreleased.
 

@@ -114,7 +114,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $upgradeFilePath = getcwd() . '/docs/contributing/upgrading-monorepo.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
-        $newUpgradeContent = $this->monorepoUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version);
+        $newUpgradeContent = $this->monorepoUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version, $this->initialBranchName);
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
     }
@@ -127,7 +127,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $upgradeFilePath = getcwd() . '/docs/upgrade/UPGRADE-unreleased.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
-        $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version);
+        $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version, $this->initialBranchName);
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
         FileSystem::rename($upgradeFilePath, getcwd() . '/docs/upgrade/UPGRADE-' . $version->getVersionString() . '.md');
@@ -157,6 +157,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
             'UPGRADE-unreleased.md.twig',
             [
                 'versionString' => $version->getVersionString(),
+                'initialBranchName' => $this->initialBranchName,
             ]
         );
         FileSystem::write(getcwd() . '/docs/upgrade/UPGRADE-unreleased.md', $content);

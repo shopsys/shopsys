@@ -24,33 +24,35 @@ final class VersionUpgradeFileManipulator
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function processFileToString(SplFileInfo $splFileInfo, Version $version): string
+    public function processFileToString(SplFileInfo $splFileInfo, Version $version, string $initialBranchName): string
     {
-        $content = $this->updateHeadline($version, $splFileInfo->getContents());
+        $content = $this->updateHeadline($version, $splFileInfo->getContents(), $initialBranchName);
 
         return $this->updateFileContentInformation($version, $content);
     }
 
     /**
      * Before:
-     * # [Upgrade from v0.9.0 to Unreleased](https://github.com/shopsys/shopsys/compare/v0.9.0...HEAD)
+     * # [Upgrade from v0.9.0 to Unreleased](https://github.com/shopsys/shopsys/compare/v0.9.0...1.0)
      *
      * After:
      * # [Upgrade from v0.9.0 to v1.0.0](https://github.com/shopsys/shopsys/compare/v0.9.0...v1.0.0)
      *
      * @param \PharIo\Version\Version $version
      * @param string $content
+     * @param string $initialBranchName
      * @return string
      */
-    private function updateHeadline(Version $version, string $content): string
+    private function updateHeadline(Version $version, string $content, string $initialBranchName): string
     {
         return Strings::replace(
             $content,
             self::HEADLINE_WITH_LINK_PATTERN,
-            function ($match) use ($version) {
-                return str_replace(['Unreleased', 'HEAD'], $version->getVersionString(), $match[0]);
+            function ($match) use ($version, $initialBranchName) {
+                return str_replace(['Unreleased', '...' . $initialBranchName], [$version->getVersionString(), '...' . $version->getVersionString()], $match[0]);
             }
         );
     }

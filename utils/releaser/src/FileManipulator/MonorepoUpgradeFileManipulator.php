@@ -41,13 +41,14 @@ final class MonorepoUpgradeFileManipulator
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function processFileToString(SplFileInfo $splFileInfo, Version $version): string
+    public function processFileToString(SplFileInfo $splFileInfo, Version $version, string $initialBranchName): string
     {
         $content = $this->updateHeadlines($version, $splFileInfo->getContents());
 
-        return $this->updateFooterLinks($version, $content);
+        return $this->updateFooterLinks($version, $content, $initialBranchName);
     }
 
     /**
@@ -83,19 +84,20 @@ final class MonorepoUpgradeFileManipulator
 
     /**
      * Before:
-     * [From v0.9.0 to Unreleased]: https://github.com/shopsys/shopsys/compare/v0.9.0...HEAD
+     * [From v0.9.0 to Unreleased]: https://github.com/shopsys/shopsys/compare/v0.9.0...1.0
      *
      * After:
-     * [From v1.0.0 to Unreleased]: https://github.com/shopsys/shopsys/compare/v1.0.0...HEAD
+     * [From v1.0.0 to Unreleased]: https://github.com/shopsys/shopsys/compare/v1.0.0...1.0
      * [From v0.9.0 to v1.0.0]: https://github.com/shopsys/shopsys/compare/v0.9.0...v1.0.0
      *
      * @param \PharIo\Version\Version $version
      * @param string $content
+     * @param string $initialBranchName
      * @return string
      */
-    private function updateFooterLinks(Version $version, string $content): string
+    private function updateFooterLinks(Version $version, string $content, string $initialBranchName): string
     {
-        $newFooterLink = $this->createNewFooterLink($version);
+        $newFooterLink = $this->createNewFooterLink($version, $initialBranchName);
 
         // already done
         if (Strings::contains($content, $newFooterLink)) {
@@ -122,15 +124,17 @@ final class MonorepoUpgradeFileManipulator
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    private function createNewFooterLink(Version $version): string
+    private function createNewFooterLink(Version $version, string $initialBranchName): string
     {
         return sprintf(
-            '[From %s to Unreleased]: https://github.com/%s/compare/%s...HEAD' . PHP_EOL,
+            '[From %s to Unreleased]: https://github.com/%s/compare/%s...%s' . PHP_EOL,
             $version->getVersionString(),
             $this->monorepoPackageName,
-            $version->getVersionString()
+            $version->getVersionString(),
+            $initialBranchName
         );
     }
 }

@@ -1,4 +1,4 @@
-# [Upgrade from v7.0.0-beta4 to Unreleased](https://github.com/shopsys/shopsys/compare/v7.0.0-beta4...HEAD)
+# [Upgrade from v7.0.0-beta4 to Unreleased](https://github.com/shopsys/shopsys/compare/v7.0.0-beta4...7.0)
 
 This guide contains instructions to upgrade from version v7.0.0-beta4 to Unreleased.
 
