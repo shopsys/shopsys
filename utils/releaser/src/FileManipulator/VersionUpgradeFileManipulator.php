@@ -12,14 +12,14 @@ final class VersionUpgradeFileManipulator
 {
     /**
      * @var string
-     * @see https://regex101.com/r/izBgtv/3
+     * @see https://regex101.com/r/izBgtv/7
      */
-    private const HEADLINE_WITH_LINK_PATTERN = '#\# \[Upgrade from [\w.-]+ to Unreleased\]\(.+\)#';
+    private const HEADLINE_WITH_LINK_PATTERN = '#\# \[Upgrade from [\w.-]+ to [\w.-]+\]\(.+\)#';
 
     /**
      * @var string
      */
-    private const FILE_CONTENT_INFORMATION_PATTERN = '#This guide contains instructions to upgrade from version .* to Unreleased#';
+    private const FILE_CONTENT_INFORMATION_PATTERN = '#This guide contains instructions to upgrade from version .* to .*-dev#';
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
@@ -36,7 +36,7 @@ final class VersionUpgradeFileManipulator
 
     /**
      * Before:
-     * # [Upgrade from v0.9.0 to Unreleased](https://github.com/shopsys/shopsys/compare/v0.9.0...1.0)
+     * # [Upgrade from v0.9.0 to v1.0.0-dev](https://github.com/shopsys/shopsys/compare/v0.9.0...1.0)
      *
      * After:
      * # [Upgrade from v0.9.0 to v1.0.0](https://github.com/shopsys/shopsys/compare/v0.9.0...v1.0.0)
@@ -48,18 +48,19 @@ final class VersionUpgradeFileManipulator
      */
     private function updateHeadline(Version $version, string $content, string $initialBranchName): string
     {
+        $versionString = $version->getVersionString();
         return Strings::replace(
             $content,
             self::HEADLINE_WITH_LINK_PATTERN,
-            function ($match) use ($version, $initialBranchName) {
-                return str_replace(['Unreleased', '...' . $initialBranchName], [$version->getVersionString(), '...' . $version->getVersionString()], $match[0]);
+            function ($match) use ($versionString, $initialBranchName) {
+                return str_replace([$versionString . '-dev', '...' . $initialBranchName], [$versionString, '...' . $versionString], $match[0]);
             }
         );
     }
 
     /**
      * Before:
-     * This guide contains instructions to upgrade from version v0.9.0 to Unreleased
+     * This guide contains instructions to upgrade from version v0.9.0 to v1.0.0-dev
      *
      * After:
      * This guide contains instructions to upgrade from version v0.9.0 to v1.0.0
@@ -70,11 +71,12 @@ final class VersionUpgradeFileManipulator
      */
     private function updateFileContentInformation(Version $version, string $content): string
     {
+        $versionString = $version->getVersionString();
         return Strings::replace(
             $content,
             self::FILE_CONTENT_INFORMATION_PATTERN,
-            function ($match) use ($version) {
-                return str_replace('Unreleased', $version->getVersionString(), $match[0]);
+            function ($match) use ($versionString) {
+                return str_replace($versionString . '-dev', $versionString, $match[0]);
             }
         );
     }

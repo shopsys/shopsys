@@ -15,15 +15,15 @@ final class MonorepoUpgradeFileManipulator
 {
     /**
      * @var string
-     * @see https://regex101.com/r/cHAbva/1
+     * @see https://regex101.com/r/cHAbva/4
      */
-    private const FROM_TO_UNRELEASED_PATTERN = '#^(?<start>\#\# \[?From [\w.-]+ to )Unreleased(?<end>]?)$#m';
+    private const FROM_TO_NEXT_DEV_PATTERN = '#^(?<start>\#\# \[?From [\w.-]+ to )[\w.-]+-dev(?<end>]?)$#m';
 
     /**
      * @var string
-     * @see https://regex101.com/r/izBgtv/3
+     * @see https://regex101.com/r/izBgtv/8
      */
-    private const FROM_TO_UNRELEASED_LINK_PATTERN = '#^(?<start>\[From [\w.-]+ to )Unreleased(?<middle>.*?\.\.\.).*?\n#m';
+    private const FROM_TO_NEXT_DEV_LINK_PATTERN = '#^(?<start>\[From [\w.-]+ to )[\w.-]+-dev(?<middle>.*?\.\.\.).*?\n#m';
 
     /**
      * @var string
@@ -42,31 +42,33 @@ final class MonorepoUpgradeFileManipulator
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
+     * @param string $nextDevelopmentVersionString
      * @return string
      */
-    public function processFileToString(SplFileInfo $splFileInfo, Version $version, string $initialBranchName): string
+    public function processFileToString(SplFileInfo $splFileInfo, Version $version, string $initialBranchName, string $nextDevelopmentVersionString): string
     {
-        $content = $this->updateHeadlines($version, $splFileInfo->getContents());
+        $content = $this->updateHeadlines($version, $splFileInfo->getContents(), $nextDevelopmentVersionString);
 
-        return $this->updateFooterLinks($version, $content, $initialBranchName);
+        return $this->updateFooterLinks($version, $content, $initialBranchName, $nextDevelopmentVersionString);
     }
 
     /**
      * Before:
-     * ## [From v0.9.0 to Unreleased]
+     * ## [From v0.9.0 to v1.0.0-dev]
      *
      * After:
-     * ## [From v1.0.0 to Unreleased]
+     * ## [From v1.0.0 to v1.0.1-dev]
      *
      * ## [From v0.9.0 to v1.0.0]
      *
      * @param \PharIo\Version\Version $version
      * @param string $content
+     * @param string $nextDevelopmentVersionString
      * @return string
      */
-    private function updateHeadlines(Version $version, string $content): string
+    private function updateHeadlines(Version $version, string $content, string $nextDevelopmentVersionString): string
     {
-        $newHeadline = $this->createNewHeadline($version);
+        $newHeadline = $this->createNewHeadline($version, $nextDevelopmentVersionString);
 
         // already done
         if (Strings::contains($content, $newHeadline)) {
@@ -75,7 +77,7 @@ final class MonorepoUpgradeFileManipulator
 
         return Strings::replace(
             $content,
-            self::FROM_TO_UNRELEASED_PATTERN,
+            self::FROM_TO_NEXT_DEV_PATTERN,
             function ($match) use ($version, $newHeadline) {
                 return $newHeadline . $match['start'] . $version->getVersionString() . $match['end'];
             }
@@ -84,20 +86,21 @@ final class MonorepoUpgradeFileManipulator
 
     /**
      * Before:
-     * [From v0.9.0 to Unreleased]: https://github.com/shopsys/shopsys/compare/v0.9.0...1.0
+     * [From v0.9.0 to v1.0.0-dev]: https://github.com/shopsys/shopsys/compare/v0.9.0...1.0
      *
      * After:
-     * [From v1.0.0 to Unreleased]: https://github.com/shopsys/shopsys/compare/v1.0.0...1.0
+     * [From v1.0.0 to v1.0.1-dev]: https://github.com/shopsys/shopsys/compare/v1.0.0...1.0
      * [From v0.9.0 to v1.0.0]: https://github.com/shopsys/shopsys/compare/v0.9.0...v1.0.0
      *
      * @param \PharIo\Version\Version $version
      * @param string $content
      * @param string $initialBranchName
+     * @param string $nextDevelopmentVersionString
      * @return string
      */
-    private function updateFooterLinks(Version $version, string $content, string $initialBranchName): string
+    private function updateFooterLinks(Version $version, string $content, string $initialBranchName, string $nextDevelopmentVersionString): string
     {
-        $newFooterLink = $this->createNewFooterLink($version, $initialBranchName);
+        $newFooterLink = $this->createNewFooterLink($version, $initialBranchName, $nextDevelopmentVersionString);
 
         // already done
         if (Strings::contains($content, $newFooterLink)) {
@@ -106,7 +109,7 @@ final class MonorepoUpgradeFileManipulator
 
         return Strings::replace(
             $content,
-            self::FROM_TO_UNRELEASED_LINK_PATTERN,
+            self::FROM_TO_NEXT_DEV_LINK_PATTERN,
             function (array $match) use ($newFooterLink, $version) {
                 return $newFooterLink . $match['start'] . $version->getVersionString() . $match['middle'] . $version->getVersionString() . PHP_EOL;
             }
@@ -115,23 +118,26 @@ final class MonorepoUpgradeFileManipulator
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $nextDevelopmentVersionString
      * @return string
      */
-    private function createNewHeadline(Version $version): string
+    private function createNewHeadline(Version $version, string $nextDevelopmentVersionString): string
     {
-        return sprintf('## [From %s to Unreleased]' . PHP_EOL . PHP_EOL, $version->getVersionString());
+        return sprintf('## [From %s to %s]' . PHP_EOL . PHP_EOL, $version->getVersionString(), $nextDevelopmentVersionString);
     }
 
     /**
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
+     * @param string $nextDevelopmentVersionString
      * @return string
      */
-    private function createNewFooterLink(Version $version, string $initialBranchName): string
+    private function createNewFooterLink(Version $version, string $initialBranchName, string $nextDevelopmentVersionString): string
     {
         return sprintf(
-            '[From %s to Unreleased]: https://github.com/%s/compare/%s...%s' . PHP_EOL,
+            '[From %s to %s]: https://github.com/%s/compare/%s...%s' . PHP_EOL,
             $version->getVersionString(),
+            $nextDevelopmentVersionString,
             $this->monorepoPackageName,
             $version->getVersionString(),
             $initialBranchName
