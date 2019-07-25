@@ -4,7 +4,6 @@ namespace Tests\ShopBundle\Acceptance\acceptance\PageObject\Admin;
 
 use Facebook\WebDriver\WebDriverBy;
 use PHPUnit\Framework\Assert;
-use Tests\FrameworkBundle\Test\Codeception\AdminSelectbox;
 use Tests\ShopBundle\Acceptance\acceptance\PageObject\AbstractPage;
 
 class ProductAdvancedSearchPage extends AbstractPage
