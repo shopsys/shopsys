@@ -75,6 +75,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
         FileSystem::write($changelogFilePath, $newChangelogContent);
 
         $this->symfonyStyle->note(sprintf('You need to review the file, resolve unclassified entries, remove uninteresting entries, and commit the changes manually with "changelog is now updated for %s release"', $version->getVersionString()));
+        $this->symfonyStyle->note('Beware, there might be some entries dumped in duplicate in the changelog - you need to decide whether to keep or remove the duplicates (e.g. when a bugfix is merged to multiple branches, the duplicate entry in changelog is justified)');
 
         $this->confirm('Confirm you have checked CHANGELOG.md and the changes are committed.');
     }
