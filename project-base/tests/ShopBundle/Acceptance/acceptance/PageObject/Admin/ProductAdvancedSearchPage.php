@@ -20,7 +20,7 @@ class ProductAdvancedSearchPage extends AbstractPage
         $this->tester->amOnPage('/admin/product/list/');
 
         $this->tester->clickByText('Advanced search');
-        AdminSelectbox::createByCss($this->tester, '.js-advanced-search-rule-subject')->select($searchSubject);
+        $this->tester->selectOptionByCssAndValue('.js-advanced-search-rule-subject', $searchSubject);
         $this->tester->waitForAjax();
         $this->tester->fillFieldByCss('.js-advanced-search-rule-value input', $value);
 
