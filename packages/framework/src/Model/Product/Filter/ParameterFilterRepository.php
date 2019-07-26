@@ -75,7 +75,7 @@ class ParameterFilterRepository
 
     /**
      * Generates:
-     * ppv.value = :parameterValueM OR ppv.value = :parameterValueN OR ...
+     * ppv.value = :parameterValueX_M OR ppv.value = :parameterValueX_N OR ...
      *
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
      * @param \Doctrine\ORM\QueryBuilder $parameterQueryBuilder
