@@ -25,6 +25,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [How can I create a friendly URL for my entity?](#how-can-i-create-a-friendly-url-for-my-entity)
 - [How can I create Front-end Breadcrumb navigation?](#how-can-i-create-front-end-breadcrumb-navigation)
 - [Do you have any tips how to debug emails during development in Docker?](#do-you-have-any-tips-how-to-debug-emails-during-development-in-docker)
+- [Can I see what is really happening in the Codeception acceptance tests when using Docker?](#can-i-see-what-is-really-happening-in-the-codeception-acceptance-tests-when-using-docker)
 
 ## What are the phing targets?
 Every phing target is a task that can be executed simply by `php phing <target-name>` command.
@@ -144,3 +145,6 @@ Yes we have, you can easily use [`djfarrelly/MailDev`](https://github.com/djfarr
 
 *Note: Beware, by using this setting, no emails are delivered to their original recipients.
 See [Outgoing emails](https://github.com/djfarrelly/MailDev#outgoing-email) in the documentation of the library for more information.*
+
+## Can I see what is really happening in the Codeception acceptance tests when using Docker?
+Yes, you can! Check [the quick guide](/docs/introduction/running-acceptance-tests.md#how-to-watch-what-is-going-on-in-the-selenium-browser).
