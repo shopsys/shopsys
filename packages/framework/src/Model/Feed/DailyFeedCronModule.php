@@ -30,7 +30,7 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
     protected $logger;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedExportCreationDataQueue
+     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedExportCreationDataQueue|null
      */
     protected $feedExportCreationDataQueue;
 
@@ -156,9 +156,12 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
         );
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExportCreationDataQueue
+     */
     protected function getFeedExportCreationDataQueue(): FeedExportCreationDataQueue
     {
-        if (null === $this->feedExportCreationDataQueue) {
+        if ($this->feedExportCreationDataQueue === null) {
             $this->feedExportCreationDataQueue = new FeedExportCreationDataQueue(
                 $this->feedFacade->getFeedNames('daily'),
                 $this->domain->getAll()
