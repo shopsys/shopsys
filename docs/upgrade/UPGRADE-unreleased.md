@@ -47,8 +47,8 @@ There you can find links to upgrade notes for other versions too.
     ```
 
 ### Tools
-- get rid of not needed deprecations and BC-promise implementation from 7.x version
-    - check and get rid of the use of all removed deprecated phing targets from [v7.3.0 release](./UPGRADE-unreleased.md#tools)
+- check and get rid of the use of all removed phing targets ([#1193](https://github.com/shopsys/shopsys/pull/1193))
+    - the targets were marked as deprecated in `v7.3.0` version, see [the upgrade notes](/docs/upgrade/UPGRADE-v7.3.0.md#tools) and [#1068](https://github.com/shopsys/shopsys/pull/1068)
 
 ### Application
 - constructors of `FrameworkBundle\Model\Mail\Mailer` and `FrameworkBundle\Component\Cron\CronFacade` classes were changed so if you extend them change them accordingly: ([#875](https://github.com/shopsys/shopsys/pull/875)).
