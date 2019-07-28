@@ -116,7 +116,7 @@ There you can find links to upgrade notes for other versions too.
 - run [db-create](/docs/introduction/console-commands-for-application-management-phing-targets.md#db-create) (this one even on production) and `test-db-create` phing targets to install extension for UUID
 - if you want to use our experimental API read [introduction to backend API](/docs/backend-api/introduction-to-backend-api.md)
 - update your application and tests to correctly handle availabilities and stock ([#1115](https://github.com/shopsys/shopsys/pull/1115))
-    - copy and replace the functional test [AvailabilityFacadeTest.php](https://github.com/shopsys/project-base/blob/master/tests/ShopBundle/Functional/Model/Product/Availability/AvailabilityFacadeTest.php) in `tests/ShopBundle/Functional/Model/Product/Availability/` to test deletion and replacement of availabilities properly
+    - copy and replace the functional test [AvailabilityFacadeTest.php](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Product/Availability/AvailabilityFacadeTest.php) in `tests/ShopBundle/Functional/Model/Product/Availability/` to test deletion and replacement of availabilities properly
     - if you have made any custom changes to the test you should merge your changes with the ones described in the pull request linked above
     - add a test service definition for `AvailabilityDataFactory` in your `src/Shopsys/ShopBundle/Resources/config/services_test.yml` configuration:
         ```diff
