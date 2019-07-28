@@ -1,0 +1,19 @@
+site_name: Shopsys Framework Knowledge Base
+nav:
+    - Home: index.md
+    - Administration: administration/index.md
+    - Backend API: backend-api/index.md
+    - Contributing: contributing/index.md
+    - Cookbooks: cookbook/index.md
+    - Extensibility: extensibility/index.md
+    - Frontend: frontend/index.md
+    - Functional documentation: functional/index.md
+    - Installation: installation/index.md
+    - Introduction: introduction/index.md
+    - Orchestration: kubernetes/index.md
+    - Model: model/index.md
+    - Upgrade: upgrade/index.md
+theme: readthedocs
+markdown_extensions:
+    - toc:
+          permalink: True
