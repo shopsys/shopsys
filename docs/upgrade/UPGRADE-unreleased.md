@@ -53,25 +53,18 @@ There you can find links to upgrade notes for other versions too.
     - the targets were marked as deprecated in `v7.3.0` version, see [the upgrade notes](/docs/upgrade/UPGRADE-v7.3.0.md#tools) and [#1068](https://github.com/shopsys/shopsys/pull/1068)
 
 ### Application
-- constructors of `FrameworkBundle\Model\Mail\Mailer` and `FrameworkBundle\Component\Cron\CronFacade` classes were changed so if you extend them change them accordingly: ([#875](https://github.com/shopsys/shopsys/pull/875)).
-    - `CronFacade::__construct(Logger $logger, CronConfig $cronConfig, CronModuleFacade $cronModuleFacade, Mailer $mailer)`
-    - `Mailer::__construct(Swift_Mailer $swiftMailer, Swift_Transport $realSwiftTransport)`
-    - find all usages of the constructors and fix them
-- `EntityNameResolver` was added into constructor of these classes: ([#918](https://github.com/shopsys/shopsys/pull/918))
-    - `CronModuleFactory`
-    - `PersistentReferenceFactory`
-    - `ImageFactory`
-    - `FriendlyUrlFactory`
-    - `SettingValueFactory`
-    - `UploadedFileFactory`
-    - `AdministratorGridLimitFactory`
-    - `EnabledModuleFactory`
-    - `ProductCategoryDomainFactory`
-    - `ProductVisibilityFactory`
-    - `ScriptFactory`
-    - `SliderItemFactory`
-
-    In case of extending one of these classes, you should add an `EntityNameResolver` to a constructor and use it in a `create()` method to resolve correct class to return.
+#### 3rd party dependencies
+- upgrade `commerceguys/intl` to `^1.0.0` version ([#1192](https://github.com/shopsys/shopsys/pull/1192))
+    - in your `composer.json`, change the dependency:
+        ```diff
+        - "commerceguys/intl": "0.7.4",
+        + "commerceguys/intl": "^1.0.0",
+        ```
+    - `IntlCurrencyRepository::get()` and `::getAll()` methods no longer accept `$fallbackLocale` as the a parameter
+        - you can set the parameter using the class constructor if necessary
+    - `IntlCurrencyRepository::isSupportedCurrency()` is now strictly type hinted
+    - protected `PriceExtension::getNumberFormatter()` is renamed to `getCurrencyFormatter()` and returns an instance of `CommerceGuys\Intl\Formatter\CurrencyFormatter` now
+        - you need to change your usages accordingly
 - replace `IvoryCKEditorBundle` with `FOSCKEditorBundle` ([#1072](https://github.com/shopsys/shopsys/pull/1072))
     - replace the registration of the bundle in `app/AppKernel`
         ```diff
@@ -113,6 +106,26 @@ There you can find links to upgrade notes for other versions too.
             - use Ivory\CKEditorBundle\Form\Type\CKEditorType;
             + use FOS\CKEditorBundle\Form\Type\CKEditorType;
             ```
+#### Shopsys Framework
+- constructors of `FrameworkBundle\Model\Mail\Mailer` and `FrameworkBundle\Component\Cron\CronFacade` classes were changed so if you extend them change them accordingly: ([#875](https://github.com/shopsys/shopsys/pull/875)).
+    - `CronFacade::__construct(Logger $logger, CronConfig $cronConfig, CronModuleFacade $cronModuleFacade, Mailer $mailer)`
+    - `Mailer::__construct(Swift_Mailer $swiftMailer, Swift_Transport $realSwiftTransport)`
+    - find all usages of the constructors and fix them
+- `EntityNameResolver` was added into constructor of these classes: ([#918](https://github.com/shopsys/shopsys/pull/918))
+    - `CronModuleFactory`
+    - `PersistentReferenceFactory`
+    - `ImageFactory`
+    - `FriendlyUrlFactory`
+    - `SettingValueFactory`
+    - `UploadedFileFactory`
+    - `AdministratorGridLimitFactory`
+    - `EnabledModuleFactory`
+    - `ProductCategoryDomainFactory`
+    - `ProductVisibilityFactory`
+    - `ScriptFactory`
+    - `SliderItemFactory`
+
+    In case of extending one of these classes, you should add an `EntityNameResolver` to a constructor and use it in a `create()` method to resolve correct class to return.
 - if you want to use our experimental API read [introduction to backend API](/docs/backend-api/introduction-to-backend-api.md) ([#1055](https://github.com/shopsys/shopsys/pull/1055))
 - update your application and tests to correctly handle availabilities and stock ([#1115](https://github.com/shopsys/shopsys/pull/1115))
     - copy and replace the functional test [`AvailabilityFacadeTest.php`](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Product/Availability/AvailabilityFacadeTest.php) in `tests/ShopBundle/Functional/Model/Product/Availability/` to test deletion and replacement of availabilities properly
@@ -161,17 +174,6 @@ There you can find links to upgrade notes for other versions too.
     - we recommend encapsulating collections similarly in your own custom entities as well
 - update your `OrderDataFixture` and `UserDataFixture` to create new users and orders in last two weeks instead of one ([#1147](https://github.com/shopsys/shopsys/pull/1147))
     - this is done by changing all occurrences of `$this->faker->dateTimeBetween('-1 week', 'now');` by `$this->faker->dateTimeBetween('-2 week', 'now');`
-- upgrade `commerceguys/intl` to `^1.0.0` version ([#1192](https://github.com/shopsys/shopsys/pull/1192))
-    - in your `composer.json`, change the dependency:
-        ```diff
-        - "commerceguys/intl": "0.7.4",
-        + "commerceguys/intl": "^1.0.0",
-        ```
-    - `IntlCurrencyRepository::get()` and `::getAll()` methods no longer accept `$fallbackLocale` as the a parameter
-        - you can set the parameter using the class constructor if necessary
-    - `IntlCurrencyRepository::isSupportedCurrency()` is now strictly type hinted
-    - protected `PriceExtension::getNumberFormatter()` is renamed to `getCurrencyFormatter()` and returns an instance of `CommerceGuys\Intl\Formatter\CurrencyFormatter` now
-        - you need to change your usages accordingly
 - get rid of not needed deprecations and BC-promise implementation from 7.x version ([#1193](https://github.com/shopsys/shopsys/pull/1193))
     - remove registration of `productCategoryFilter` filter from `Shopsys\ShopBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig`, `services.yml` and `services_test.yml`
         - in the case, the class contains custom filters, move the filter into the `parent::__construct` as the last parameter
