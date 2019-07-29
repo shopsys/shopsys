@@ -17,7 +17,7 @@ There you can find links to upgrade notes for other versions too.
         -       en: '%shopsys.root_dir%/src/Shopsys/ShopBundle/Resources/config/routing_front_en.yml'
         +   locale_router_filepath_mask: '%shopsys.root_dir%/src/Shopsys/ShopBundle/Resources/config/routing_front_*.yml'
         ```
-    - update `app/config/packages/shopsys_shop.yml`
+    - update `src/Shopsys/ShopBundle/DependencyInjection/Configuration.php`
         ```diff
         ->arrayNode('router')
             ->children()
