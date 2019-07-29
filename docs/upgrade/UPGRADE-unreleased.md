@@ -70,7 +70,6 @@ There you can find links to upgrade notes for other versions too.
     - SliderItemFactory
 
     In case of extending one of these classes, you should add an `EntityNameResolver` to a constructor and use it in a `create()` method to resolve correct class to return.
-- run `php phing standards-fix` so all nullable values will be now defined using nullability (?) symbol ([#1010](https://github.com/shopsys/shopsys/pull/1010))
 - replace `IvoryCKEditorBundle` with `FOSCKEditorBundle` ([#1072](https://github.com/shopsys/shopsys/pull/1072))
     - replace the registration of the bundle in `app/AppKernel`
         ```diff
@@ -299,6 +298,7 @@ There you can find links to upgrade notes for other versions too.
 
 ## [shopsys/coding-standards]
 - run `php phing standards-fix` to fix code style as we check more rules in the Shopsys Framework coding standards:
+    - all nullable parameters must be defined using nullability (?) symbol ([#1010](https://github.com/shopsys/shopsys/pull/1010))
     - Yoda style for comparison is disallowed ([#1209](https://github.com/shopsys/shopsys/pull/1209))
     - visibility must be explicitly set for constants, methods and properties ([#1254](https://github.com/shopsys/shopsys/pull/1254))
     - there must be no space before and one space after a colon when hinting a return value ([#1255](https://github.com/shopsys/shopsys/pull/1255))
