@@ -131,7 +131,6 @@ There you can find links to upgrade notes for other versions too.
     - `SliderItemFactory`
 
     In case of extending one of these classes, you should add an `EntityNameResolver` to a constructor and use it in a `create()` method to resolve correct class to return.
-- if you want to use our experimental API read [introduction to backend API](/docs/backend-api/introduction-to-backend-api.md) ([#1055](https://github.com/shopsys/shopsys/pull/1055))
 - update your application and tests to correctly handle availabilities and stock ([#1115](https://github.com/shopsys/shopsys/pull/1115))
     - copy and replace the functional test [`AvailabilityFacadeTest.php`](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Product/Availability/AvailabilityFacadeTest.php) in `tests/ShopBundle/Functional/Model/Product/Availability/` to test deletion and replacement of availabilities properly
     - if you have made any custom changes to the test you should merge your changes with the ones described in the pull request linked above
@@ -144,7 +143,6 @@ There you can find links to upgrade notes for other versions too.
             Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@Shopsys\ShopBundle\Model\Payment\PaymentDataFactory'
         ```
     - check and fix your other tests, they might start failing if they assumed `Product::$availability` is not null when the product is using stock, or that stock quantity is not null when it's not using stock
-- follow upgrade instructions for entities simplification in the [separate article](./upgrade-instructions-for-entities-simplification.md) ([#1123](https://github.com/shopsys/shopsys/pull/1123))
 - JS functionality connected to `#js-close-without-saving` has been removed, implement your own if you relied on this ([#1168](https://github.com/shopsys/shopsys/pull/1168))
 - update your way of registration of `FriendlyUrlDataProviders` ([#1140](https://github.com/shopsys/shopsys/pull/1140))
     - the namespace of `FriendlyUrlDataProviderInterface` and `FriendlyUrlDataProviderRegistry` has changed from `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\CompilerPass` to `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl` so change all your usages accordingly
@@ -225,7 +223,6 @@ There you can find links to upgrade notes for other versions too.
         POSITION_LEFT_SIDEBAR => 'leftSidebar'
         ```
     - remove the use of `is_plugin_data_group` attribute in form extensions or customized twig templates, the functionality was also removed from `form_row` block in `@FrameworkBundle/src/Resources/views/Admin/Form/theme.html.twig`
-- follow instructions in [the separate article](/docs/upgrade/upgrade-instructions-for-read-model-for-product-lists-from-elasticsearch.md) to use Elasticsearch to get data into read model ([#1096](https://github.com/shopsys/shopsys/pull/1096))
 - update your usage of `OrderItemsType` and Twig macros from `@ShopsysFramework/Admin/Content/Order/orderItem.html.twig` ([#1229](https://github.com/shopsys/shopsys/pull/1229))
     - if you haven't customized Twig templates for editing orders in admin or used `OrderItemsType` directly you don't have to do anything
     - change your usage after the macro signatures were modified (unused parameters were removed):
@@ -297,6 +294,9 @@ There you can find links to upgrade notes for other versions too.
     - if you extend `DailyFeedCronModule` in your project use the protected method `getFeedExportCreationDataQueue()` instead of `$this->feedExportCreationDataQueue` (which now might be `null`)
 - check the usage of protected methods of `ParameterFilterRepository` if you've extended it in your project ([#1044](https://github.com/shopsys/shopsys/pull/1044))
     - the signatures of protected methods changed to remove the need of passing a parameter as a reference
+- follow instructions in the [separate article](/docs/upgrade/upgrade-instructions-for-read-model-for-product-lists-from-elasticsearch.md) to use Elasticsearch to get data into read model ([#1096](https://github.com/shopsys/shopsys/pull/1096))
+- follow upgrade instructions for entities simplification in the [separate article](./upgrade-instructions-for-entities-simplification.md) ([#1123](https://github.com/shopsys/shopsys/pull/1123))
+- if you want to use our experimental backend API, read [introduction to backend API](/docs/backend-api/introduction-to-backend-api.md) ([#1055](https://github.com/shopsys/shopsys/pull/1055))
 
 ## [shopsys/coding-standards]
 - run `php phing standards-fix` to fix code style as we check more rules in the Shopsys Framework coding standards:
