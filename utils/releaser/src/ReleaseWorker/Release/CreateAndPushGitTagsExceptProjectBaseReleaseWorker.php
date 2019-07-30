@@ -79,7 +79,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         $packageNamesWithProblems = [];
         foreach ($packages as $packageName) {
             $this->processRunner->run('cd temp && git clone https://github.com/shopsys/' . $packageName . '.git');
-            $this->processRunner->run('cd temp/' . $packageName . ' && git checkout ' . $this->initialBranchName . ' && git tag ' . $versionString);
+            $this->processRunner->run('cd temp/' . $packageName . ' && git checkout master && git tag ' . $versionString);
             $this->processRunner->run('cd temp/' . $packageName . ' && git log --graph --oneline --decorate=short --color | head', true);
             $pushTag = $this->symfonyStyle->ask('Is the tag on right commit and should be pushed?', 'yes');
 

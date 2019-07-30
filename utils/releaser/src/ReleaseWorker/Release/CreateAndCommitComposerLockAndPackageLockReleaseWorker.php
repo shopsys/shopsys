@@ -45,7 +45,7 @@ final class CreateAndCommitComposerLockAndPackageLockReleaseWorker extends Abstr
         $this->commit($message);
 
         $this->symfonyStyle->note('push last commit with composer and package locks');
-        $this->symfonyStyle->confirm(sprintf('confirm that composer.lock and package-lock.json are pushed to "%s" branch', $this->initialBranchName));
+        $this->symfonyStyle->confirm(sprintf('confirm that composer.lock and package-lock.json are pushed to master branch'));
 
         $this->processRunner->run('rm -rf project-base/vendor');
         $this->processRunner->run('rm -f project-base/composer.lock');
