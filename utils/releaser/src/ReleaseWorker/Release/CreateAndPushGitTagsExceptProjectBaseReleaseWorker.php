@@ -71,13 +71,13 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
     public function work(Version $version): void
     {
         $packages = $this->packageProvider->getPackagesByOrganization('shopsys', self::EXCLUDED_PACKAGES);
-        $packages = str_replace('shopsys/', '', $packages);
+        $packageNames = str_replace('shopsys/', '', $packages);
 
         $versionString = $version->getVersionString();
 
         $tempDirectory = trim($this->processRunner->run('mktemp -d -t shopsys-release-XXXX'));
         $packageNamesWithProblems = [];
-        foreach ($packages as $packageName) {
+        foreach ($packageNames as $packageName) {
             $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', $packageName));
             $this->processRunner->run(sprintf('cd %s && git clone https://github.com/shopsys/%s.git', $tempDirectory, $packageName));
             $this->processRunner->run(sprintf('cd %s/%s && git checkout master && git tag %s', $tempDirectory, $packageName, $versionString));
@@ -90,7 +90,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         }
 
         if (count($packageNamesWithProblems) === 0) {
-            foreach ($packages as $packageName) {
+            foreach ($packageNames as $packageName) {
                 $this->processRunner->run(sprintf('cd %s/%s && git push origin %s', $tempDirectory, $packageName, $versionString));
             }
 
