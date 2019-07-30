@@ -33,6 +33,7 @@ final class CreateAndCommitComposerLockAndPackageLockReleaseWorker extends Abstr
      */
     public function work(Version $version): void
     {
+        $this->symfonyStyle->note('Removing vendor and node_modules folders and composer.lock and package-lock.json');
         $this->processRunner->run('rm -rf project-base/vendor');
         $this->processRunner->run('rm -rf project-base/node_modules');
         $this->processRunner->run('rm -f project-base/composer.lock');
