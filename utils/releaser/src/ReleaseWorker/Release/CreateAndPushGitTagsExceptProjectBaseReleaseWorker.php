@@ -27,7 +27,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         'shopsys/postgres-search-bundle',
         'shopsys/doctrine-orm',
         'shopsys/jparser',
-        // old packages
+        // not related packages
         'shopsys/syscart',
         'shopsys/sysconfig',
         'shopsys/sysreports',
@@ -75,13 +75,13 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
         $versionString = $version->getVersionString();
 
-        $this->processRunner->run('mkdir temp');
+        $tempDirectory = trim($this->processRunner->run('mktemp -d -t shopsys-release-XXXX'));
         $packageNamesWithProblems = [];
         foreach ($packages as $packageName) {
             $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', $packageName));
-            $this->processRunner->run('cd temp && git clone https://github.com/shopsys/' . $packageName . '.git');
-            $this->processRunner->run('cd temp/' . $packageName . ' && git checkout master && git tag ' . $versionString);
-            $this->processRunner->run('cd temp/' . $packageName . ' && git log --graph --oneline --decorate=short --color | head', true);
+            $this->processRunner->run(sprintf('cd %s && git clone https://github.com/shopsys/%s.git', $tempDirectory, $packageName));
+            $this->processRunner->run(sprintf('cd %s/%s && git checkout master && git tag %s', $tempDirectory, $packageName, $versionString));
+            $this->processRunner->run(sprintf('cd %s/%s && git log --graph --oneline --decorate=short --color | head', $tempDirectory, $packageName), true);
             $pushTag = $this->symfonyStyle->ask(sprintf('Package shopsys/%s: Is the tag on right commit and should be pushed?', $packageName), 'yes');
 
             if ($pushTag !== 'yes') {
@@ -91,16 +91,16 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
         if (count($packageNamesWithProblems) === 0) {
             foreach ($packages as $packageName) {
-                $this->processRunner->run('cd temp/' . $packageName . ' && git push origin ' . $versionString);
+                $this->processRunner->run(sprintf('cd %s/%s && git push origin %s', $tempDirectory, $packageName, $versionString));
             }
 
-            $this->processRunner->run('rm -r temp');
+            $this->processRunner->run('rm -r ' . $tempDirectory);
             $this->symfonyStyle->note('Wait for packagist to get new versions of all packages excluding monorepo and project-base');
             $this->confirm('Confirm that there are new versions of all packages excluding monorepo and project-base');
         } else {
             $packageNamesWithProblemsMessage = sprintf('package%s %s', count($packageNamesWithProblems) === 1 ? '' : 's', implode(', ', $packageNamesWithProblems));
             $this->confirm(sprintf('Please fix the problem in %s and split the monorepo again. This step will be repeated after you confirm.', $packageNamesWithProblemsMessage));
-            $this->processRunner->run('rm -r temp');
+            $this->processRunner->run('rm -r ' . $tempDirectory);
             $this->work($version);
         }
     }
