@@ -82,7 +82,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         foreach ($packageNames as $packageName) {
             $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', $packageName));
             $this->processRunner->run(sprintf('cd %s && git clone https://github.com/shopsys/%s.git', $tempDirectory, $packageName));
-            $this->processRunner->run(sprintf('cd %s/%s && git checkout master && git tag %s', $tempDirectory, $packageName, $versionString));
+            $this->processRunner->run(sprintf('cd %s/%s && git checkout %s && git tag %s', $tempDirectory, $packageName, $this->initialBranchName, $versionString));
         }
 
         foreach ($packageNames as $packageName) {
