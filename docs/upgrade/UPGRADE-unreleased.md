@@ -18,5 +18,5 @@ There you can find links to upgrade notes for other versions too.
     -     -   ./docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
       ports:
     ```
-  
+
 [shopsys/framework]: https://github.com/shopsys/framework
