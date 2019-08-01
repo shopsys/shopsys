@@ -7,6 +7,16 @@ There you can find links to upgrade notes for other versions too.
 
 ## [shopsys/framework]
 
+### Infrastructure
+- add the installation of the useful tools to your `docker/php-fpm/Dockerfile` ([#1239](https://github.com/shopsys/shopsys/pull/1239))
+    ```diff
+    libpq-dev \
+    + vim \
+    + nano \
+    + mc \
+    + htop \
+    ```
+
 ### Composer dependencies
 - update the minimal PHP version in your `composer.json` in `require` and `config.platform` section to at least `7.2` because version `7.1` is no longer supported in Shopsys Framework ([#1066](https://github.com/shopsys/shopsys/pull/1066))
     - you can remove the option altogether if all developers working on your project have the same version of PHP installed (eg. using the same Docker image)
@@ -97,14 +107,6 @@ There you can find links to upgrade notes for other versions too.
     ```diff
     -   shopsys.domain_images_url_prefix: '/%shopsys.content_dir_name%/admin/images/domain'
     +   shopsys.domain_images_url_prefix: '/%shopsys.content_dir_name%/admin/images/domain/'
-    ```
-- add the installation of the useful tools to your `docker/php-fpm/Dockerfile` ([#1239](https://github.com/shopsys/shopsys/pull/1239))
-    ```diff
-    libpq-dev \
-    + vim \
-    + nano \
-    + mc \
-    + htop \
     ```
 - run [`db-create`](/docs/introduction/console-commands-for-application-management-phing-targets.md#db-create) (this one even on production) and `test-db-create` phing targets to install extension for UUID ([#1055](https://github.com/shopsys/shopsys/pull/1055))
 
