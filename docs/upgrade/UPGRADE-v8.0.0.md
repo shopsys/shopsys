@@ -8,6 +8,8 @@ There you can find links to upgrade notes for other versions too.
 ## [shopsys/framework]
 
 ### Configuration
+- update the minimal PHP version in your `composer.json` in `require` and `config.platform` section to at least `7.2` because version `7.1` is no longer supported in Shopsys Framework ([#1066](https://github.com/shopsys/shopsys/pull/1066))
+    - you can remove the option altogether if all developers working on your project have the same version of PHP installed (eg. using the same Docker image)
 - simplify local configuration ([#1004](https://github.com/shopsys/shopsys/pull/1004))
     - update `app/config/packages/shopsys_shop.yml`
         ```diff
@@ -50,7 +52,6 @@ There you can find links to upgrade notes for other versions too.
     + mc \
     + htop \
     ```
-- update the minimal PHP version in your `composer.json` in `require` and `config.platform` section to `7.2` because version `7.1` is no longer supported in Shopsys Framework ([#1066](https://github.com/shopsys/shopsys/pull/1066))
 - run [`db-create`](/docs/introduction/console-commands-for-application-management-phing-targets.md#db-create) (this one even on production) and `test-db-create` phing targets to install extension for UUID ([#1055](https://github.com/shopsys/shopsys/pull/1055))
 
 ### Tools
