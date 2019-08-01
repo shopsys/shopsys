@@ -5,7 +5,7 @@ There is `selenium-server` container with installed Selenium hub and Google Chro
 
 You should run all command mentioned below while logged into your `php-fpm` container via command:
 ```
-docker exec -it shopsys-framework-php-fpm sh
+docker exec -it shopsys-framework-php-fpm bash
 ```
 
 *Note: For `selenium-server` to be able to connect to you `webserver` container and access your application, all domains should have URL set to `http://webserver:8000`.*
