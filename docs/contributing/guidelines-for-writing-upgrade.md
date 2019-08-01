@@ -58,10 +58,12 @@ Because this section is expected to be the longest, it should contain a finer di
 * Infrastructure
     * related with Docker, Kubernetes, Environment settings, ...
     * instruction to rebuild images must occur only once
+* Composer dependencies
+    * related to composer.json
 * Configuration
     * related with parameters, YML configuration files, ...
 * Tools
-    * Phing, Composer, PHPStan, PHPUnit, ...
+    * Phing, PHPStan, PHPUnit, ...
 * Database migrations
     * Which database changes were introduced in a current version
 * Security

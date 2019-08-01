@@ -7,9 +7,63 @@ There you can find links to upgrade notes for other versions too.
 
 ## [shopsys/framework]
 
-### Configuration
+### Composer dependencies
 - update the minimal PHP version in your `composer.json` in `require` and `config.platform` section to at least `7.2` because version `7.1` is no longer supported in Shopsys Framework ([#1066](https://github.com/shopsys/shopsys/pull/1066))
     - you can remove the option altogether if all developers working on your project have the same version of PHP installed (eg. using the same Docker image)
+- upgrade `commerceguys/intl` to `^1.0.0` version ([#1192](https://github.com/shopsys/shopsys/pull/1192))
+    - in your `composer.json`, change the dependency:
+        ```diff
+        - "commerceguys/intl": "0.7.4",
+        + "commerceguys/intl": "^1.0.0",
+        ```
+    - `IntlCurrencyRepository::get()` and `::getAll()` methods no longer accept `$fallbackLocale` as the a parameter
+        - you can set the parameter using the class constructor if necessary
+    - `IntlCurrencyRepository::isSupportedCurrency()` is now strictly type hinted
+    - protected `PriceExtension::getNumberFormatter()` is renamed to `getCurrencyFormatter()` and returns an instance of `CommerceGuys\Intl\Formatter\CurrencyFormatter` now
+        - you need to change your usages accordingly
+- replace `IvoryCKEditorBundle` with `FOSCKEditorBundle` ([#1072](https://github.com/shopsys/shopsys/pull/1072))
+    - replace the registration of the bundle in `app/AppKernel`
+        ```diff
+        - new Ivory\CKEditorBundle\IvoryCKEditorBundle(), // has to be loaded after FrameworkBundle and TwigBundle
+        + new FOS\CKEditorBundle\FOSCKEditorBundle(), // has to be loaded after FrameworkBundle and TwigBundle
+        ```
+    - rename `app/config/packages/ivory_ck_editor.yml` to `app/config/packages/fos_ck_editor.yml` and change the root key in its content
+        ```diff
+        - ivory_ck_editor:
+        + fos_ck_editor:
+        ```
+    - change the package in `composer.json`
+        ```diff
+        - "egeloen/ckeditor-bundle": "^4.0.6",
+        + "friendsofsymfony/ckeditor-bundle": "^2.1",
+        ```
+    - update all usages of the old bundle in
+        - extended twig templates like
+            ```diff
+            - {% use '@IvoryCKEditor/Form/ckeditor_widget.html.twig' with ckeditor_widget as base_ckeditor_widget %}
+            + {% use '@FOSCKEditor/Form/ckeditor_widget.html.twig' with ckeditor_widget as base_ckeditor_widget %}
+            ```
+        - javascripts like
+            ```diff
+            - if (element.type === Shopsys.constant('\\Ivory\\CKEditorBundle\\Form\\Type\\CKEditorType::class')) {
+            + if (element.type === Shopsys.constant('\\FOS\\CKEditorBundle\\Form\\Type\\CKEditorType::class')) {
+            ```
+        - configuration files like
+            ```diff
+            Shopsys\FrameworkBundle\Form\WysiwygTypeExtension:
+                tags:
+            -       - { name: form.type_extension, extended_type: Ivory\CKEditorBundle\Form\Type\CKEditorType }
+            +       - { name: form.type_extension, extended_type: FOS\CKEditorBundle\Form\Type\CKEditorType }
+            ```
+        - php code like
+            ```diff
+            namespace Shopsys\FrameworkBundle\Form\Admin\Transport;
+
+            - use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+            + use FOS\CKEditorBundle\Form\Type\CKEditorType;
+            ```
+
+### Configuration
 - simplify local configuration ([#1004](https://github.com/shopsys/shopsys/pull/1004))
     - update `app/config/packages/shopsys_shop.yml`
         ```diff
@@ -88,60 +142,6 @@ There you can find links to upgrade notes for other versions too.
         - eg. `<property name="yaml-standards.args" value="--exclude-dir=./my-excluded-dir"/>` to exclude `my-excluded-dir/` from the standards
 
 ### Application
-#### 3rd party dependencies
-- upgrade `commerceguys/intl` to `^1.0.0` version ([#1192](https://github.com/shopsys/shopsys/pull/1192))
-    - in your `composer.json`, change the dependency:
-        ```diff
-        - "commerceguys/intl": "0.7.4",
-        + "commerceguys/intl": "^1.0.0",
-        ```
-    - `IntlCurrencyRepository::get()` and `::getAll()` methods no longer accept `$fallbackLocale` as the a parameter
-        - you can set the parameter using the class constructor if necessary
-    - `IntlCurrencyRepository::isSupportedCurrency()` is now strictly type hinted
-    - protected `PriceExtension::getNumberFormatter()` is renamed to `getCurrencyFormatter()` and returns an instance of `CommerceGuys\Intl\Formatter\CurrencyFormatter` now
-        - you need to change your usages accordingly
-- replace `IvoryCKEditorBundle` with `FOSCKEditorBundle` ([#1072](https://github.com/shopsys/shopsys/pull/1072))
-    - replace the registration of the bundle in `app/AppKernel`
-        ```diff
-        - new Ivory\CKEditorBundle\IvoryCKEditorBundle(), // has to be loaded after FrameworkBundle and TwigBundle
-        + new FOS\CKEditorBundle\FOSCKEditorBundle(), // has to be loaded after FrameworkBundle and TwigBundle
-        ```
-    - rename `app/config/packages/ivory_ck_editor.yml` to `app/config/packages/fos_ck_editor.yml` and change the root key in its content
-        ```diff
-        - ivory_ck_editor:
-        + fos_ck_editor:
-        ```
-    - change the package in `composer.json`
-        ```diff
-        - "egeloen/ckeditor-bundle": "^4.0.6",
-        + "friendsofsymfony/ckeditor-bundle": "^2.1",
-        ```
-    - update all usages of the old bundle in
-        - extended twig templates like
-            ```diff
-            - {% use '@IvoryCKEditor/Form/ckeditor_widget.html.twig' with ckeditor_widget as base_ckeditor_widget %}
-            + {% use '@FOSCKEditor/Form/ckeditor_widget.html.twig' with ckeditor_widget as base_ckeditor_widget %}
-            ```
-        - javascripts like
-            ```diff
-            - if (element.type === Shopsys.constant('\\Ivory\\CKEditorBundle\\Form\\Type\\CKEditorType::class')) {
-            + if (element.type === Shopsys.constant('\\FOS\\CKEditorBundle\\Form\\Type\\CKEditorType::class')) {
-            ```
-        - configuration files like
-            ```diff
-            Shopsys\FrameworkBundle\Form\WysiwygTypeExtension:
-                tags:
-            -       - { name: form.type_extension, extended_type: Ivory\CKEditorBundle\Form\Type\CKEditorType }
-            +       - { name: form.type_extension, extended_type: FOS\CKEditorBundle\Form\Type\CKEditorType }
-            ```
-        - php code like
-            ```diff
-            namespace Shopsys\FrameworkBundle\Form\Admin\Transport;
-
-            - use Ivory\CKEditorBundle\Form\Type\CKEditorType;
-            + use FOS\CKEditorBundle\Form\Type\CKEditorType;
-            ```
-#### Shopsys Framework
 - constructors of `FrameworkBundle\Model\Mail\Mailer` and `FrameworkBundle\Component\Cron\CronFacade` classes were changed so if you extend them change them accordingly: ([#875](https://github.com/shopsys/shopsys/pull/875)).
     - `CronFacade::__construct(Logger $logger, CronConfig $cronConfig, CronModuleFacade $cronModuleFacade, Mailer $mailer)`
     - `Mailer::__construct(Swift_Mailer $swiftMailer, Swift_Transport $realSwiftTransport)`
