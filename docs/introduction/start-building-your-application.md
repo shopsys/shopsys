@@ -115,3 +115,7 @@ switch ($domainId) {
     case 3: $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK); break;
     ...
 ```
+## Think about optional features of Shopsys Framework
+
+### Backend API
+Shopsys Framework provides [backend API](https://github.com/shopsys/shopsys/blob/master/docs/backend-api/introduction-to-backend-api.md) that is not installed by default to ease development of projects which doesn't need API. If you know you will use it, it is better to install it from start - just follow the easy [Backend API installation instructions](https://github.com/shopsys/shopsys/blob/master/docs/backend-api/backend-api-installation.md). Nevertheless, there is no necessity to do it now, you can install it anytime you want.  
