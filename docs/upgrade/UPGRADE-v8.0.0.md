@@ -264,6 +264,8 @@ There you can find links to upgrade notes for other versions too.
         POSITION_PRODUCT_LIST => 'productList'
         POSITION_LEFT_SIDEBAR => 'leftSidebar'
         ```
+        - don't forget uses in Twig, such as `{{ constant('Shopsys\\FrameworkBundle\\Model\\Advert\\Advert::POSITION_HEADER') }}`
+        - don't forget uses in Javascript, such as `Shopsys.constant('\\Shopsys\\FrameworkBundle\\Model\\Advert\\Advert::POSITION_HEADER')`
     - remove the use of `is_plugin_data_group` attribute in form extensions or customized twig templates, the functionality was also removed from `form_row` block in `@FrameworkBundle/src/Resources/views/Admin/Form/theme.html.twig`
 - use getter method instead of property inside `DailyFeedCronModule` ([#1207](https://github.com/shopsys/shopsys/pull/1207))
     - if you extend `DailyFeedCronModule` in your project use the protected method `getFeedExportCreationDataQueue()` instead of `$this->feedExportCreationDataQueue` (which now might be `null`)
