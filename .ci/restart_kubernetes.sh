@@ -21,6 +21,7 @@ kustomize build overlays/ci | kubectl apply -f - --namespace=${JOB_NAME}
 kubectl rollout status --namespace=${JOB_NAME} deployment/adminer --watch
 kubectl rollout status --namespace=${JOB_NAME} deployment/elasticsearch --watch
 kubectl rollout status --namespace=${JOB_NAME} deployment/postgres --watch
+kubectl rollout status --namespace=${JOB_NAME} deployment/rabbitmq --watch
 kubectl rollout status --namespace=${JOB_NAME} deployment/redis --watch
 kubectl rollout status --namespace=${JOB_NAME} deployment/redis-admin --watch
 kubectl rollout status --namespace=${JOB_NAME} deployment/selenium-server --watch

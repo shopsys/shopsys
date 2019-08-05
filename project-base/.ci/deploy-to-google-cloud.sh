@@ -39,9 +39,10 @@ cp app/config/domains_urls.yml.dist app/config/domains_urls.yml
 cp app/config/parameters.yml.dist app/config/parameters.yml
 
 # Replace docker images for php-fpm of application
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
+yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
+yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[2].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 
 # Replace docker image for elasticsearch of application
 yq write --inplace kubernetes/deployments/elasticsearch.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
@@ -59,10 +60,12 @@ yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.sp
 yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.hostAliases[0].hostnames[+] ${SECOND_DOMAIN_HOSTNAME}
 
 # Set environment variables to container and initContainer for Google Cloud Storage connection
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[0].value ${GOOGLE_CLOUD_STORAGE_BUCKET_NAME}
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[1].value ${PROJECT_ID}
 yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].env[0].value ${GOOGLE_CLOUD_STORAGE_BUCKET_NAME}
 yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].env[1].value ${PROJECT_ID}
+yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[0].value ${GOOGLE_CLOUD_STORAGE_BUCKET_NAME}
+yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[1].value ${PROJECT_ID}
+yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[2].env[0].value ${GOOGLE_CLOUD_STORAGE_BUCKET_NAME}
+yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[2].env[1].value ${PROJECT_ID}
 
 # Set domain urls
 yq write --inplace app/config/domains_urls.yml domains_urls[0].url https://${FIRST_DOMAIN_HOSTNAME}

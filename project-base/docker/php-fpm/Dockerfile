@@ -55,6 +55,7 @@ RUN docker-php-ext-install \
     opcache \
     pgsql \
     pdo_pgsql \
+    sockets \
     zip
 
 # install grunt cli used by frontend developers for continuous generating of css files
@@ -83,6 +84,10 @@ COPY ${project_root}/docker/php-fpm/php-ini-overrides.ini /usr/local/etc/php/php
 # overwrite the original entry-point from the PHP Docker image with our own
 COPY ${project_root}/docker/php-fpm/docker-php-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
+
+# copy entry-point for consumers
+COPY ${project_root}/docker/php-fpm/docker-php-consumer-entrypoint /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-php-consumer-entrypoint
 
 # set www-data user his home directory
 # the user "www-data" is used when running the image, and therefore should own the workdir

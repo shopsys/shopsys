@@ -1,11 +1,13 @@
 resources:
     - ../../deployments/elasticsearch.yml
     - ../../deployments/postgres.yml
+    - ../../deployments/rabbitmq.yml
     - ../../deployments/redis.yml
     - ../../deployments/smtp-server.yml
     - ../../deployments/webserver-php-fpm.yml
     - ../../services/elasticsearch.yml
     - ../../services/postgres.yml
+    - ../../services/rabbitmq.yml
     - ../../services/redis.yml
     - ../../services/smtp-server.yml
     - ../../services/webserver-php-fpm.yml

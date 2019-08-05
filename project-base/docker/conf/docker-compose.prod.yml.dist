@@ -1,4 +1,26 @@
 version: "3.1"
+
+x-variables:
+    common_php_configuration: &common_php_configuration
+        restart: always
+        image: production-php-fpm
+        volumes:
+            -   /var/www/production-content:/var/www/html/web/content
+            -   web-volume:/var/www/html/web
+            -   nginx-conf:/var/www/html/docker/nginx
+        extra_hosts:
+            -   postgres:192.168.0.1
+            -   redis:192.168.0.1
+        networks:
+            - shopsys-network
+
+    common_consumer_configuration: &common_consumer_configuration
+        <<: *common_php_configuration
+        entrypoint: docker-php-consumer-entrypoint
+        depends_on:
+            - rabbitmq
+            - php-fpm
+
 services:
     webserver:
         restart: always
@@ -16,25 +38,24 @@ services:
             - shopsys-network
 
     php-fpm:
-        restart: always
-        image: production-php-fpm
+        <<: *common_php_configuration
         container_name: production-php-fpm
-        volumes:
-            -   /var/www/production-content:/var/www/html/web/content
-            -   web-volume:/var/www/html/web
-            -   nginx-conf:/var/www/html/docker/nginx
-        extra_hosts:
-            -   postgres:192.168.0.1
-            -   redis:192.168.0.1
-        networks:
-            - shopsys-network
+
+    product-visibility-recalculate-consumer:
+        <<: *common_consumer_configuration
+        container_name: shopsys-framework-product-visibility-recalculate-consumer
+        command: product_visibility_recalculate
 
     smtp-server:
         restart: always
         image: namshi/smtp:latest
-        container_name: shopsys-framework-smtp-server
+        container_name: production-smtp-server
         networks:
             - shopsys-network
+
+    rabbitmq:
+        image: rabbitmq:3.7-alpine
+        container_name: production-rabbitmq
 
 volumes:
     web-volume:

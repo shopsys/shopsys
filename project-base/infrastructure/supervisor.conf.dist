@@ -1,0 +1,25 @@
+[unix_http_server]
+file = /tmp/supervisor.sock
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl = unix:///tmp/supervisor.sock
+
+[inet_http_server]
+port=*:9001
+
+[supervisord]
+nodaemon=false
+logfile=/tmp/supervisor/supervisor.log
+pidfile=/tmp/supervisor/supervisord.pid
+
+[program:product_visibility_recalculate]
+command=php ./bin/console rabbitmq:consumer product_visibility_recalculate --messages=1000
+process_name=%(program_name)s%(process_num)02d
+numprocs=1
+startsecs=2
+autorestart=true
+stdout_logfile=/tmp/product_visibility_recalculate_stdout.log
+stderr_logfile=/tmp/product_visibility_recalculate_stderr.log
