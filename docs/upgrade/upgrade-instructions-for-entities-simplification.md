@@ -161,7 +161,7 @@ and fix them appropriately (you can copy paste them from [Github](https://github
 - rename `Tests\ShopBundle\Functional\Model\Pricing\ProductManualInputPriceTest` to `Tests\ShopBundle\Functional\Model\Pricing\ProductInputPriceRecalculatorTest` and use instance of `ProductInputPriceRecalculator` for input prices recalculations
     - you can copy paste the class from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Pricing/ProductInputPriceRecalculatorTest.php)
 - rename `Tests\ShopBundle\Functional\Model\Order\OrderEditTest` to `Tests\ShopBundle\Functional\Model\Order\OrderFacadeEditTest`
-    - change the test to is uses `OrderFacade` to edit the orders instead of calling `Order::edit()` directly
+    - change the test so it uses `OrderFacade` to edit the orders instead of calling `Order::edit()` directly
     - you'll have to modify the *act* phase of the test:
         ```diff
         - $this->order->edit($orderData, $this->orderItemPriceCalculation, $this->orderItemFactory, $this->orderPriceCalculation);
