@@ -28,6 +28,8 @@
 * [Using Form Types](./introduction/using-form-types.md)
 * [Friendly URL](introduction/friendly-url.md)
 * [Front-end Breadcrumb Navigation](/docs/introduction/front-end-breadcrumb-navigation.md)
+* [Asynchronous tasks with RabbitMQ](./introduction/asynchronous-tasks-with-rabbitmq.md)
+    * [Producers and Consumers in Shopsys Framework](./introduction/producers-and-consumers-in-shopsys-framework.md)
 
 ## Model
 * [Introduction to Model Architecture](./model/introduction-to-model-architecture.md)
