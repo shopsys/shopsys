@@ -14,6 +14,64 @@ Typical upgrade sequence should be:
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
 ## [From v8.0.0 to Unreleased]
+- update your `docker-compose.yml` file using new version in [`docker/conf`](https://github.com/shopsys/shopsys/tree/master/docker/conf) folder
+    - add RabbitMQ service
+    ```diff
+    +   rabbitmq:
+    +       image: rabbitmq:3.7-management-alpine
+    +       container_name: shopsys-framework-rabbitmq
+    +       ports:
+    +           - "15672:15672"
+    ```
+    - extract common config into `common_php_configuration` and `common_consumer_configuration` (this may by slightly different for MacOS and Windows)
+    ```diff
+        php-fpm:
+    -       build:
+    -           context: .
+    -           dockerfile: project-base/docker/php-fpm/Dockerfile
+    -           target: development
+    -           args:
+    -               <<: *common_build_args
+    -               project_root: project-base
+    +       <<: *common_php_configuration
+            container_name: shopsys-framework-php-fpm
+    -       volumes:
+    -           -   .:/var/www/html
+            ports:
+                - "35729:35729"
+    ```
+    ```diff
+        x-variables:
+    -       common_build_args: &common_build_args
+    -           www_data_uid: 1000
+    -           www_data_gid: 1000
+    +       common_php_configuration: &common_php_configuration
+    +           build:
+    +               context: .
+    +               dockerfile: project-base/docker/php-fpm/Dockerfile
+    +               target: development
+    +               args:
+    +                   www_data_uid: 1000
+    +                   www_data_gid: 1000
+    +                   project_root: project-base
+    +           volumes:
+    +               -   .:/var/www/html
+    +
+    +       common_consumer_configuration: &common_consumer_configuration
+    +           <<: *common_php_configuration
+    +           entrypoint: docker-php-consumer-entrypoint
+    +           restart: always
+    +           depends_on:
+    +               - rabbitmq
+    +               - php-fpm
+    ```
+    - add `product-visibility-recalculate-consumer`
+    ```diff
+    +   product-visibility-recalculate-consumer:
+    +       <<: *common_consumer_configuration
+    +       container_name: shopsys-framework-product-visibility-recalculate-consumer
+    +       command: product_visibility_recalculate
+    ```
 
 ## [From v7.3.1 to v8.0.0]
 
