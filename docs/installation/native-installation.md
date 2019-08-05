@@ -38,6 +38,25 @@ php phing build-demo-dev
 
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
+## Run background processing with Supervisor
+
+Create [Supervisor](http://supervisord.org) configuration file `<path-to-your-project-root>/supervisord.conf` from the [sample configuration file `/infrastructure/supervisor.conf.dist`](https://github.com/shopsys/project-base/blob/9.0/infrastructure/supervisor.conf.dist).
+Supervisor then can start consumers and ensure background tasks are up and running.
+
+You should add another `program` sections for all your individual project-related consumers.
+You can find what consumers are registered in the application in `old_sound_rabbit_mq.yml` configuration files.
+
+_Note: Supervisor configuration is most likely different on every machine and therefore should not be committed to VCS._
+
+Start the background processing
+```
+supervisord -c <path-to-your-project-root>/supervisord.conf
+```
+
+_Note: Running the consumers successfully assume RabbitMQ is up and listening on a designated port._
+
+You can read more about [Supervisor configuration options here](http://supervisord.org/configuration.html).
+If you need more information about asynchronous processing in Shopsys Framework, you can read [Asynchronous tasks with RabbitMQ](../introduction/asynchronous-tasks-with-rabbitmq.md) article.
 ## Run integrated HTTP server
 
 ```

@@ -205,6 +205,25 @@ We also need to restart service so the new configuration is applied.
 service elasticsearch restart
 ```
 
+## RabbitMQ and Supervisor
+
+Background tasks are handled with the help of [RabbitMQ](https://www.rabbitmq.com) that we need to [install now](https://www.rabbitmq.com/install-rpm.html).
+
+To ensure that the consumer will always run, you need to [install Supervisor](http://supervisord.org/installing.html).
+
+Create Supervisor configuration file from the [sample configuration file `/infrastructure/supervisor.conf.dist`](https://github.com/shopsys/project-base/blob/9.0/infrastructure/supervisor.conf.dist).
+
+You should create a separate `program` section for all default framework consumers and for your individual project-related consumers.
+You can find what consumers are registered in the application in `old_sound_rabbit_mq.yml` configuration files.
+
+It's a good practice to prepare and commit `supervisor.conf.dist` file and automate the process of creating configuration file on the server.
+
+Start the supervisor process and ensure it will be running [automatically on system startup](http://supervisord.org/running.html#running-supervisord-automatically-on-startup).
+
+_Note: Running the consumers successfully assume RabbitMQ is up and listening on a designated port._
+
+To detect issues you should [monitor RabbitMQ behavior](https://www.rabbitmq.com/monitoring.html).
+
 ## Deployment On Production Server
 
 Our server is setup for production so we want to be able to deploy changes that we made in git repository of the project to production server.  

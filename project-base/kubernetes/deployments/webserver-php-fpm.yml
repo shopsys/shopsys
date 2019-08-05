@@ -109,3 +109,26 @@ spec:
                             exec:
                                 command:
                                     - nginx -s quit
+                -   image: ~
+                    name: product-search-export-consumer
+                    securityContext:
+                        runAsUser: 33
+                    workingDir: /var/www/html
+                    command:
+                        - docker-php-consumer-entrypoint
+                    args:
+                        - product_search_export
+                    volumeMounts:
+                        -   name: source-codes
+                            mountPath: /var/www/html
+                        -   name: domains-urls
+                            mountPath: /var/www/html/app/config/domains_urls.yml
+                            subPath: domains_urls.yml
+                        -   name: parameters
+                            mountPath: /var/www/html/app/config/parameters.yml
+                            subPath: parameters.yml
+                    env:
+                        -   name: GOOGLE_CLOUD_STORAGE_BUCKET_NAME
+                            value: ~
+                        -   name: GOOGLE_CLOUD_PROJECT_ID
+                            value: ~

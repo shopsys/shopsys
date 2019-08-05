@@ -28,3 +28,13 @@
                     backend:
                         serviceName: redis-admin
                         servicePort: 80
+-   op: add
+    path: /spec/rules/-
+    value:
+        host: ~
+        http:
+            paths:
+                -   path: /
+                    backend:
+                        serviceName: rabbitmq
+                        servicePort: 15672

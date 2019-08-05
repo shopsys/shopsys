@@ -32,8 +32,8 @@ before_install:
 
 install:
     - docker load < $CACHE_FILE_IMAGE || true
-    - sudo ionice -c 2 -n 0 nice -n -20 docker-compose pull postgres elasticsearch redis selenium-server webserver
-    - docker-compose up -d postgres elasticsearch redis selenium-server php-fpm webserver
+    - sudo ionice -c 2 -n 0 nice -n -20 docker-compose pull postgres elasticsearch redis rabbitmq selenium-server webserver
+    - docker-compose up -d postgres elasticsearch redis selenium-server rabbitmq php-fpm webserver
     - if [[ ! -f "$CACHE_FILE_IMAGE" ]]; then docker save $(docker-compose images php-fpm | tail -1 | awk '{print $2}') | gzip -1 -c > $CACHE_FILE_IMAGE; fi
     - docker ps
     - docker --version

@@ -17,6 +17,7 @@ yq write --inplace project-base/kubernetes/ingress.yml spec.rules[1].host ${SECO
 yq write --inplace project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml [0].value.host adminer.${FIRST_DOMAIN_HOSTNAME}
 yq write --inplace project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml [1].value.host elasticsearch.${FIRST_DOMAIN_HOSTNAME}
 yq write --inplace project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml [2].value.host redis-admin.${FIRST_DOMAIN_HOSTNAME}
+yq write --inplace project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml [3].value.host rabbitmq-management.${FIRST_DOMAIN_HOSTNAME}
 
 # Set domain into webserver hostnames
 yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.hostAliases[0].hostnames[+] ${FIRST_DOMAIN_HOSTNAME}
@@ -59,9 +60,10 @@ docker image pull ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG} |
 )
 
 # Replace docker images for php-fpm of application
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[2].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 
 # Replace docker image for elasticsearch of application
 yq write --inplace project-base/kubernetes/deployments/elasticsearch.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
@@ -73,12 +75,16 @@ yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spe
 yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].volumeMounts[2].mountPath /var/www/html/project-base/app/config/parameters.yml
 yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].volumeMounts[1].mountPath /var/www/html/project-base/app/config/domains_urls.yml
 yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].volumeMounts[2].mountPath /var/www/html/project-base/app/config/parameters.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[2].volumeMounts[1].mountPath /var/www/html/project-base/app/config/domains_urls.yml
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[2].volumeMounts[2].mountPath /var/www/html/project-base/app/config/parameters.yml
 
 # Set environment variables to container and initContainer for Google Cloud Storage connection - set it to null
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[0].value ''
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[1].value ''
 yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].env[0].value ''
 yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].env[1].value ''
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[0].value ''
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[1].value ''
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[2].env[0].value ''
+yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[2].env[1].value ''
 
 # Deploy application using kubectl
 kubectl delete namespace ${JOB_NAME} || true
@@ -95,6 +101,7 @@ kustomize build overlays/ci | kubectl apply -f - --namespace=${JOB_NAME}
 kubectl rollout status --namespace=${JOB_NAME} deployment/adminer --watch
 kubectl rollout status --namespace=${JOB_NAME} deployment/elasticsearch --watch
 kubectl rollout status --namespace=${JOB_NAME} deployment/postgres --watch
+kubectl rollout status --namespace=${JOB_NAME} deployment/rabbitmq --watch
 kubectl rollout status --namespace=${JOB_NAME} deployment/redis --watch
 kubectl rollout status --namespace=${JOB_NAME} deployment/redis-admin --watch
 kubectl rollout status --namespace=${JOB_NAME} deployment/selenium-server --watch
