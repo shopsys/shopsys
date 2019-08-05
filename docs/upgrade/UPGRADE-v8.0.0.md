@@ -152,47 +152,11 @@ There you can find links to upgrade notes for other versions too.
         - eg. `<property name="yaml-standards.args" value="--exclude-dir=./my-excluded-dir"/>` to exclude `my-excluded-dir/` from the standards
 
 ### Application
+- follow upgrade instructions for entities simplification in the [separate article](./upgrade-instructions-for-entities-simplification.md) ([#1123](https://github.com/shopsys/shopsys/pull/1123))
 - constructors of `FrameworkBundle\Model\Mail\Mailer` and `FrameworkBundle\Component\Cron\CronFacade` classes were changed so if you extend them change them accordingly: ([#875](https://github.com/shopsys/shopsys/pull/875)).
     - `CronFacade::__construct(Logger $logger, CronConfig $cronConfig, CronModuleFacade $cronModuleFacade, Mailer $mailer)`
     - `Mailer::__construct(Swift_Mailer $swiftMailer, Swift_Transport $realSwiftTransport)`
     - find all usages of the constructors and fix them
-- `EntityNameResolver` was added into constructor of these classes: ([#918](https://github.com/shopsys/shopsys/pull/918))
-    - `CronModuleFactory`
-    - `PersistentReferenceFactory`
-    - `ImageFactory`
-    - `FriendlyUrlFactory`
-    - `SettingValueFactory`
-    - `UploadedFileFactory`
-    - `AdministratorGridLimitFactory`
-    - `EnabledModuleFactory`
-    - `ProductCategoryDomainFactory`
-    - `ProductVisibilityFactory`
-    - `ScriptFactory`
-    - `SliderItemFactory`
-
-    In case of extending one of these classes, you should add an `EntityNameResolver` to a constructor and use it in a `create()` method to resolve correct class to return.
-- update your application and tests to correctly handle availabilities and stock ([#1115](https://github.com/shopsys/shopsys/pull/1115))
-    - copy and replace the functional test [`AvailabilityFacadeTest.php`](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Product/Availability/AvailabilityFacadeTest.php) in `tests/ShopBundle/Functional/Model/Product/Availability/` to test deletion and replacement of availabilities properly
-    - if you have made any custom changes to the test you should merge your changes with the ones described in the pull request linked above
-    - add a test service definition for `AvailabilityDataFactory` in your `src/Shopsys/ShopBundle/Resources/config/services_test.yml` configuration:
-        ```diff
-            Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface: '@Shopsys\ShopBundle\Model\Transport\TransportDataFactory'
-
-        +   Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface: '@Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory'
-        +
-            Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@Shopsys\ShopBundle\Model\Payment\PaymentDataFactory'
-        ```
-    - check and fix your other tests, they might start failing if they assumed `Product::$availability` is not null when the product is using stock, or that stock quantity is not null when it's not using stock
-- JS functionality connected to `#js-close-without-saving` has been removed, implement your own if you relied on this ([#1168](https://github.com/shopsys/shopsys/pull/1168))
-- update your way of registration of `FriendlyUrlDataProviders` ([#1140](https://github.com/shopsys/shopsys/pull/1140))
-    - the namespace of `FriendlyUrlDataProviderInterface` and `FriendlyUrlDataProviderRegistry` has changed from `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\CompilerPass` to `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl` so change all your usages accordingly
-    - you no longer need to tag your `FriendlyUrlDataProviders` with `shopsys.friendly_url_provider` because it is now done automatically
-    - remove the usages of `RegisterFriendlyUrlDataProviderCompilerPass` class and `FriendlyUrlDataProviderRegistry::registerFriendlyUrlDataProvider` method because they have been removed
-- update your way of registration of `BreadcrumbGenerator` classes ([#1141](https://github.com/shopsys/shopsys/pull/1140))
-    - remove the usages of `FrontBreadcrumbResolverFactory` class as it has been removed.
-    - remove the usages of `BreadcrumbResolver::registerGenerator` method as it has been removed
-    - update your usages of `BreadcrumbResolver::__contruct()` as it now requires a new parameter
-- run `php phing phpstan` in order to check, that you are not using any private, protected or removed constant from Shopsys packages ([#1181](https://github.com/shopsys/shopsys/pull/1181))
 - update your code due to collection entities encapsulation change ([#1047](https://github.com/shopsys/shopsys/pull/1047))
     - when you use values from an entity getter that has returned an `ArrayCollection` before, use the value as an array instead of an object, for example:
         - `src/Shopsys/ShopBundle/Form/Front/Order/TransportAndPaymentFormType.php`
@@ -215,8 +179,46 @@ There you can find links to upgrade notes for other versions too.
         - `Shopsys\FrameworkBundle\Model\Payment\Payment::getPrices`
         - `Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory:getCategories`
     - we recommend encapsulating collections similarly in your own custom entities as well
+- `EntityNameResolver` was added into constructor of these classes: ([#918](https://github.com/shopsys/shopsys/pull/918))
+    - `CronModuleFactory`
+    - `PersistentReferenceFactory`
+    - `ImageFactory`
+    - `FriendlyUrlFactory`
+    - `SettingValueFactory`
+    - `UploadedFileFactory`
+    - `AdministratorGridLimitFactory`
+    - `EnabledModuleFactory`
+    - `ProductCategoryDomainFactory`
+    - `ProductVisibilityFactory`
+    - `ScriptFactory`
+    - `SliderItemFactory`
+
+    In case of extending one of these classes, you should add an `EntityNameResolver` to a constructor and use it in a `create()` method to resolve correct class to return.
+- update your way of registration of `FriendlyUrlDataProviders` ([#1140](https://github.com/shopsys/shopsys/pull/1140))
+    - the namespace of `FriendlyUrlDataProviderInterface` and `FriendlyUrlDataProviderRegistry` has changed from `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\CompilerPass` to `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl` so change all your usages accordingly
+    - you no longer need to tag your `FriendlyUrlDataProviders` with `shopsys.friendly_url_provider` because it is now done automatically
+    - remove the usages of `RegisterFriendlyUrlDataProviderCompilerPass` class and `FriendlyUrlDataProviderRegistry::registerFriendlyUrlDataProvider` method because they have been removed
+- update your way of registration of `BreadcrumbGenerator` classes ([#1141](https://github.com/shopsys/shopsys/pull/1140))
+    - remove the usages of `FrontBreadcrumbResolverFactory` class as it has been removed.
+    - remove the usages of `BreadcrumbResolver::registerGenerator` method as it has been removed
+    - update your usages of `BreadcrumbResolver::__contruct()` as it now requires a new parameter
+- update your application and tests to correctly handle availabilities and stock ([#1115](https://github.com/shopsys/shopsys/pull/1115))
+    - copy and replace the functional test [`AvailabilityFacadeTest.php`](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Product/Availability/AvailabilityFacadeTest.php) in `tests/ShopBundle/Functional/Model/Product/Availability/` to test deletion and replacement of availabilities properly
+    - if you have made any custom changes to the test you should merge your changes with the ones described in the pull request linked above
+    - add a test service definition for `AvailabilityDataFactory` in your `src/Shopsys/ShopBundle/Resources/config/services_test.yml` configuration:
+        ```diff
+            Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface: '@Shopsys\ShopBundle\Model\Transport\TransportDataFactory'
+
+        +   Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface: '@Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory'
+        +
+            Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@Shopsys\ShopBundle\Model\Payment\PaymentDataFactory'
+        ```
+    - check and fix your other tests, they might start failing if they assumed `Product::$availability` is not null when the product is using stock, or that stock quantity is not null when it's not using stock
+- follow instructions in the [separate article](/docs/upgrade/upgrade-instructions-for-read-model-for-product-lists-from-elasticsearch.md) to use Elasticsearch to get data into read model ([#1096](https://github.com/shopsys/shopsys/pull/1096))
 - update your `OrderDataFixture` and `UserDataFixture` to create new users and orders in last two weeks instead of one ([#1147](https://github.com/shopsys/shopsys/pull/1147))
     - this is done by changing all occurrences of `$this->faker->dateTimeBetween('-1 week', 'now');` by `$this->faker->dateTimeBetween('-2 week', 'now');`
+- JS functionality connected to `#js-close-without-saving` has been removed, implement your own if you relied on this ([#1168](https://github.com/shopsys/shopsys/pull/1168))
+- run `php phing phpstan` in order to check, that you are not using any private, protected or removed constant from Shopsys packages ([#1181](https://github.com/shopsys/shopsys/pull/1181))
 - get rid of not needed deprecations and BC-promise implementation from 7.x version ([#1193](https://github.com/shopsys/shopsys/pull/1193))
     - remove registration of `productCategoryFilter` filter from `Shopsys\ShopBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig`, `services.yml` and `services_test.yml`
         - in the case, the class contains custom filters, move the filter into the `parent::__construct` as the last parameter
@@ -231,7 +233,7 @@ There you can find links to upgrade notes for other versions too.
         - `Shopsys\FrameworkBundle\Model\Product\ProductFacade`
         - `Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade`
         - `Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager`
-    - check wether you have overwritten methods of `Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository` class and fix their signatures
+    - check whether you have overwritten methods of `Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository` class and fix their signatures
         - `createQueryBuilder` has less parameters
         - `getProductTotalCountForDomainAndLocale` was renamed to `getProductTotalCountForDomain` and has less parameters
     - rename `ProductSearchExportRepositoryTest` into `ProductSearchExportWithFilterRepositoryTest` and [fix or replace the code](https://github.com/shopsys/shopsys/blob/v8.0.0/project-base/tests/ShopBundle/Functional/Model/Product/Search/ProductSearchExportWithFilterRepositoryTest.php)
@@ -263,6 +265,10 @@ There you can find links to upgrade notes for other versions too.
         POSITION_LEFT_SIDEBAR => 'leftSidebar'
         ```
     - remove the use of `is_plugin_data_group` attribute in form extensions or customized twig templates, the functionality was also removed from `form_row` block in `@FrameworkBundle/src/Resources/views/Admin/Form/theme.html.twig`
+- use getter method instead of property inside `DailyFeedCronModule` ([#1207](https://github.com/shopsys/shopsys/pull/1207))
+    - if you extend `DailyFeedCronModule` in your project use the protected method `getFeedExportCreationDataQueue()` instead of `$this->feedExportCreationDataQueue` (which now might be `null`)
+- check the usage of protected methods of `ParameterFilterRepository` if you've extended it in your project ([#1044](https://github.com/shopsys/shopsys/pull/1044))
+    - the signatures of protected methods changed to remove the need of passing a parameter as a reference
 - update your usage of `OrderItemsType` and Twig macros from `@ShopsysFramework/Admin/Content/Order/orderItem.html.twig` ([#1229](https://github.com/shopsys/shopsys/pull/1229))
     - if you haven't customized Twig templates for editing orders in admin or used `OrderItemsType` directly you don't have to do anything
     - change your usage after the macro signatures were modified (unused parameters were removed):
@@ -290,9 +296,6 @@ There you can find links to upgrade notes for other versions too.
         - please change your usage accordingly if you extended this class or call the constructor directly
     - if you have overridden `{% block order_items_widget %}` you don't have the variable `orderItemTotalPricesById` defined in the block anymore
         - you can use the totals defined in `OrderItemData::$totalPriceWithVat` and `OrderItemData::$totalPriceWithoutVat` instead
-- clean your project repository after administration image assets were moved from `shopsys/project-base` into `shopsys/framework` repository ([#1243](https://github.com/shopsys/shopsys/pull/1243))
-    - remove `bg/`, `flags/`, `logo.svg`, and `preloader.gif` from `web/assets/admin/images/`
-    - if you need to use these assets yourself, you can find them in `web/assets/bundles/shopsysframework/` (they are copied using `php phing assets` which is a part of standard build targets)
 - use new administration selectboxes, checkboxes and radiobuttons ([#1241](https://github.com/shopsys/shopsys/pull/1241))
     - if you have added javascripts in administration relying on `selectize.js` rewrite it to use `Select2` instead
         - the new library has a wider range of functionality, it's now used across all `select` elements, and it's easier to use than `selectize.js`
@@ -330,12 +333,9 @@ There you can find links to upgrade notes for other versions too.
     - use helper classes `AdminCheckbox` and `AdminRadiobutton` instead of directly manipulating `input[type="checkbox"]` and `input[type="radio"]` elements in your administration acceptance tests
         - when you need to work with a particular input, create an instance of the appropriate class via static method `createByCss()` and use its methods to manipulate the input or assert its values
         - run `php phing tests-acceptance` to see that your acceptance test pass
-- use getter method instead of property inside `DailyFeedCronModule` ([#1207](https://github.com/shopsys/shopsys/pull/1207))
-    - if you extend `DailyFeedCronModule` in your project use the protected method `getFeedExportCreationDataQueue()` instead of `$this->feedExportCreationDataQueue` (which now might be `null`)
-- check the usage of protected methods of `ParameterFilterRepository` if you've extended it in your project ([#1044](https://github.com/shopsys/shopsys/pull/1044))
-    - the signatures of protected methods changed to remove the need of passing a parameter as a reference
-- follow instructions in the [separate article](/docs/upgrade/upgrade-instructions-for-read-model-for-product-lists-from-elasticsearch.md) to use Elasticsearch to get data into read model ([#1096](https://github.com/shopsys/shopsys/pull/1096))
-- follow upgrade instructions for entities simplification in the [separate article](./upgrade-instructions-for-entities-simplification.md) ([#1123](https://github.com/shopsys/shopsys/pull/1123))
+- clean your project repository after administration image assets were moved from `shopsys/project-base` into `shopsys/framework` repository ([#1243](https://github.com/shopsys/shopsys/pull/1243))
+    - remove `bg/`, `flags/`, `logo.svg`, and `preloader.gif` from `web/assets/admin/images/`
+    - if you need to use these assets yourself, you can find them in `web/assets/bundles/shopsysframework/` (they are copied using `php phing assets` which is a part of standard build targets)
 - if you want to use our experimental backend API, read [introduction to backend API](/docs/backend-api/introduction-to-backend-api.md) ([#1055](https://github.com/shopsys/shopsys/pull/1055))
 
 ## [shopsys/coding-standards]
