@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class ProductPriceRecalculator
@@ -47,24 +48,32 @@ class ProductPriceRecalculator
     protected $productRowsIterator;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
+     */
+    protected $productChangeMessageProducer;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository $productCalculatedPriceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer $productChangeMessageProducer
      */
     public function __construct(
         EntityManagerInterface $em,
         ProductPriceCalculation $productPriceCalculation,
         ProductCalculatedPriceRepository $productCalculatedPriceRepository,
         ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        PricingGroupFacade $pricingGroupFacade
+        PricingGroupFacade $pricingGroupFacade,
+        ProductChangeMessageProducer $productChangeMessageProducer
     ) {
         $this->em = $em;
         $this->productPriceCalculation = $productPriceCalculation;
         $this->productCalculatedPriceRepository = $productCalculatedPriceRepository;
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->pricingGroupFacade = $pricingGroupFacade;
+        $this->productChangeMessageProducer = $productChangeMessageProducer;
     }
 
     /**
@@ -143,8 +152,8 @@ class ProductPriceRecalculator
             $this->productCalculatedPriceRepository->saveCalculatedPrice($product, $pricingGroup, $priceWithVat);
         }
         $product->markPriceAsRecalculated();
-        $product->markForVisibilityRecalculation();
         $this->em->flush($product);
+        $this->productChangeMessageProducer->productChanged($product);
     }
 
     /**

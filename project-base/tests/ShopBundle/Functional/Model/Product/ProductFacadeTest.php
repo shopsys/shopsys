@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Product;
 
-use ReflectionClass;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -111,25 +110,6 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
                 'calculatedSellingDenied' => false,
             ],
         ];
-    }
-
-    public function testEditMarkProductForVisibilityRecalculation()
-    {
-        /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade */
-        $productFacade = $this->getContainer()->get(ProductFacade::class);
-        /** @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory */
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
-
-        $reflectionClass = new ReflectionClass(Product::class);
-        $reflectionPropertyRecalculateVisibility = $reflectionClass->getProperty('recalculateVisibility');
-        $reflectionPropertyRecalculateVisibility->setAccessible(true);
-        $reflectionPropertyRecalculateVisibility->setValue($product, false);
-
-        $productFacade->edit($product->getId(), $productDataFactory->createFromProduct($product));
-
-        $this->assertSame(true, $reflectionPropertyRecalculateVisibility->getValue($product));
     }
 
     public function testEditSchedulesPriceRecalculation()

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -43,12 +44,18 @@ class OrderProductFacade
     protected $moduleFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
+     */
+    protected $productChangeMessageProducer;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer $productChangeMessageProducer
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -56,7 +63,8 @@ class OrderProductFacade
         ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         ProductVisibilityFacade $productVisibilityFacade,
-        ModuleFacade $moduleFacade
+        ModuleFacade $moduleFacade,
+        ProductChangeMessageProducer $productChangeMessageProducer
     ) {
         $this->em = $em;
         $this->productHiddenRecalculator = $productHiddenRecalculator;
@@ -64,6 +72,7 @@ class OrderProductFacade
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
         $this->productVisibilityFacade = $productVisibilityFacade;
         $this->moduleFacade = $moduleFacade;
+        $this->productChangeMessageProducer = $productChangeMessageProducer;
     }
 
     /**
@@ -113,11 +122,10 @@ class OrderProductFacade
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($relevantProduct);
             $this->productHiddenRecalculator->calculateHiddenForProduct($relevantProduct);
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($relevantProduct);
-            $relevantProduct->markForVisibilityRecalculation();
         }
         $this->em->flush($relevantProducts);
 
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
+        $this->productChangeMessageProducer->productsChanged($relevantProducts);
     }
 
     /**

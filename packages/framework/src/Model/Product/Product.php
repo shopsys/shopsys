@@ -226,13 +226,6 @@ class Product extends AbstractTranslatableEntity
     protected $recalculatePrice;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", options={"default" = true})
-     */
-    protected $recalculateVisibility;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
      *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Brand\Brand")
@@ -309,7 +302,6 @@ class Product extends AbstractTranslatableEntity
         $this->productCategoryDomains = new ArrayCollection();
         $this->flags = new ArrayCollection($productData->flags);
         $this->recalculatePrice = true;
-        $this->recalculateVisibility = true;
         $this->calculatedHidden = true;
         $this->calculatedSellingDenied = true;
         $this->brand = $productData->brand;
@@ -376,8 +368,6 @@ class Product extends AbstractTranslatableEntity
         }
 
         $this->orderingPriority = $productData->orderingPriority;
-
-        $this->markForVisibilityRecalculation();
     }
 
     /**
@@ -716,39 +706,6 @@ class Product extends AbstractTranslatableEntity
         $this->recalculatePrice = false;
     }
 
-    /**
-     * @param bool $recalculateVisibility
-     */
-    protected function setRecalculateVisibility($recalculateVisibility)
-    {
-        $this->recalculateVisibility = $recalculateVisibility;
-    }
-
-    public function markForVisibilityRecalculation()
-    {
-        $this->setRecalculateVisibility(true);
-        if ($this->isMainVariant()) {
-            foreach ($this->getVariants() as $variant) {
-                $variant->setRecalculateVisibility(true);
-            }
-        } elseif ($this->isVariant()) {
-            $mainVariant = $this->getMainVariant();
-            /**
-             * When the product is fetched from persistence, the mainVariant is only a proxy object,
-             * when we call something on this proxy object, Doctrine fetches it from persistence too.
-             *
-             * The problem is the Doctrine seems to not fetch the main variant when we only write something into it,
-             * but when we read something first, Doctrine fetches the object, and the use-case works correctly.
-             *
-             * If you think this is strange and it shouldn't work even before the code was moved to Product, you are right, this is strange.
-             * When the code is outside of Product, Doctrine does the job correctly, but once the code is inside of Product,
-             * Doctrine seems to not fetching the main variant.
-             */
-            $mainVariant->isMarkedForVisibilityRecalculation();
-            $mainVariant->setRecalculateVisibility(true);
-        }
-    }
-
     public function markForAvailabilityRecalculation()
     {
         $this->recalculateAvailability = true;
@@ -961,14 +918,6 @@ class Product extends AbstractTranslatableEntity
     public function getSeoMetaDescription(int $domainId)
     {
         return $this->getProductDomain($domainId)->getSeoMetaDescription();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMarkedForVisibilityRecalculation()
-    {
-        return $this->recalculateVisibility;
     }
 
     /**

@@ -30,7 +30,7 @@ class CategoryVisibilityRecalculationScheduler
     public function scheduleRecalculation(Category $category)
     {
         $this->recalculate = true;
-        $this->productVisibilityFacade->markProductsForRecalculationAffectedByCategory($category);
+        $this->productVisibilityFacade->refreshProductsVisibilityByCategory($category);
     }
 
     public function scheduleRecalculationWithoutDependencies()

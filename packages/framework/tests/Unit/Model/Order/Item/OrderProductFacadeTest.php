@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
@@ -41,7 +42,8 @@ final class OrderProductFacadeTest extends TestCase
             $this->createMock(ProductSellingDeniedRecalculator::class),
             $this->createMock(ProductAvailabilityRecalculationScheduler::class),
             $this->createMock(ProductVisibilityFacade::class),
-            $moduleFacadeMock
+            $moduleFacadeMock,
+            $this->createMock(ProductChangeMessageProducer::class)
         );
     }
 

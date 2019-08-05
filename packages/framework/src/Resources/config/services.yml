@@ -493,11 +493,6 @@ services:
             # must be run before ProductVisibilityFacade
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
 
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade:
-        tags:
-            # must be ran after CategoryVisibilityRepository and ProductPriceRecalculator
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 10 }
-
     # Define RedirectController explicitly to prevent creating it on-the-fly
     # when redirecting (it causes unnecessary container rebuild).
     # ContainerControllerResolver fetch RedirectController from container, therefore it must be a public service
@@ -986,3 +981,12 @@ services:
     Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureUpdateChecker: ~
 
     Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Visibility\ProductVisibilityRecalculateConsumerInterface:
+        class: Shopsys\FrameworkBundle\Model\Product\Visibility\ProductVisibilityRecalculateConsumer
+        arguments:
+            - '@old_sound_rabbit_mq.product_visibility_recalculate_consumer'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer:
+        arguments:
+            - '@old_sound_rabbit_mq.product_change_producer'

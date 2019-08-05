@@ -219,3 +219,8 @@ services:
             $indexPrefix: '%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Visibility\ProductVisibilityRecalculateConsumerInterface:
+        class: Shopsys\FrameworkBundle\Model\Product\Visibility\ProductVisibilityRecalculateConsumer
+        arguments:
+            - '@old_sound_rabbit_mq.product_visibility_recalculate_consumer'

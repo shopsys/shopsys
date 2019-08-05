@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -36,24 +37,32 @@ class ProductAvailabilityCalculation
     protected $productRepository;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
+     */
+    protected $productChangeMessageProducer;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer $productChangeMessageProducer
      */
     public function __construct(
         AvailabilityFacade $availabilityFacade,
         ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         ProductVisibilityFacade $productVisibilityFacade,
         EntityManagerInterface $em,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        ProductChangeMessageProducer $productChangeMessageProducer
     ) {
         $this->availabilityFacade = $availabilityFacade;
         $this->productSellingDeniedRecalculator = $productSellingDeniedRecalculator;
         $this->em = $em;
         $this->productVisibilityFacade = $productVisibilityFacade;
         $this->productRepository = $productRepository;
+        $this->productChangeMessageProducer = $productChangeMessageProducer;
     }
 
     /**
@@ -120,10 +129,10 @@ class ProductAvailabilityCalculation
         $allVariants = $mainVariant->getVariants();
         foreach ($allVariants as $variant) {
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($variant);
-            $variant->markForVisibilityRecalculation();
         }
         $this->em->flush($allVariants);
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
+
+        $this->productChangeMessageProducer->productsChanged($allVariants);
 
         return $this->productRepository->getAtLeastSomewhereSellableVariantsByMainVariant($mainVariant);
     }

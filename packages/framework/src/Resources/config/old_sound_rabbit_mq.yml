@@ -1,3 +1,16 @@
 old_sound_rabbit_mq:
-    producers: ~
-    consumers: ~
+    producers:
+        product_change:
+            connection: default
+            exchange_options: { name: 'product_change', type: fanout }
+    consumers:
+        product_visibility_recalculate:
+            connection: default
+            exchange_options:
+                name: 'product_change'
+                type: fanout
+            queue_options:
+                name: 'product_visibility_recalculate'
+            qos_options:
+                prefetch_count: 1
+            callback: Shopsys\FrameworkBundle\Model\Product\Visibility\ProductVisibilityRecalculateConsumerInterface

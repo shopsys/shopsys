@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer;
 
 class ProductPriceRecalculatorTest extends TestCase
 {
@@ -50,7 +51,8 @@ class ProductPriceRecalculatorTest extends TestCase
             $productPriceCalculationMock,
             $productCalculatedPriceRepositoryMock,
             $productPriceRecalculationSchedulerMock,
-            $pricingGroupFacadeMock
+            $pricingGroupFacadeMock,
+            $this->createMock(ProductChangeMessageProducer::class)
         );
 
         $productPriceRecalculator->runImmediateRecalculations();

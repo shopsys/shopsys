@@ -496,7 +496,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $variant1productData->hidden = true;
         $productFacade->edit($variant1->getId(), $variant1productData);
 
-        $productVisibilityRepository->refreshProductsVisibility(true);
+        $productVisibilityRepository->refreshProductsVisibility();
 
         $em->refresh($variant1);
         $em->refresh($variant2);
@@ -540,7 +540,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $variant3productData->hidden = true;
         $productFacade->edit($variant3->getId(), $variant3productData);
 
-        $productVisibilityRepository->refreshProductsVisibility(true);
+        $productVisibilityRepository->refreshProductsVisibility();
 
         $em->refresh($variant1);
         $em->refresh($variant2);
@@ -576,7 +576,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $mainVariantproductData->hidden = true;
         $productFacade->edit($mainVariant->getId(), $mainVariantproductData);
 
-        $productVisibilityRepository->refreshProductsVisibility(true);
+        $productVisibilityRepository->refreshProductsVisibility();
 
         $em->refresh($variant1);
         $em->refresh($variant2);

@@ -98,7 +98,7 @@ class RecalculationsCommand extends Command
         $this->productHiddenRecalculator->calculateHiddenForAll();
 
         $output->writeln('<fg=green>Products visibility.</fg=green>');
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
+        $this->productVisibilityFacade->refreshProductsVisibility();
 
         $output->writeln('<fg=green>Products price again (because of variants).</fg=green>');
         // Main variant is set for recalculations after change of variants visibility.

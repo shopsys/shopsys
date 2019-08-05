@@ -91,6 +91,7 @@ class ProductAvailabilityRecalculator
     protected function recalculateProductAvailability(Product $product)
     {
         $calculatedAvailability = $this->productAvailabilityCalculation->calculateAvailability($product);
+
         $product->setCalculatedAvailability($calculatedAvailability);
         if ($product->isVariant()) {
             $this->recalculateProductAvailability($product->getMainVariant());

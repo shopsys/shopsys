@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation;
+use Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
@@ -58,13 +59,15 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $productVisibilityFacadeMock = $this->createMock(ProductVisibilityFacade::class);
         $entityManagerMock = $this->createMock(EntityManager::class);
         $productRepositoryMock = $this->createMock(ProductRepository::class);
+        $productChangeMessageProducer = $this->createMock(ProductChangeMessageProducer::class);
 
         $productAvailabilityCalculation = new ProductAvailabilityCalculation(
             $availabilityFacadeMock,
             $productSellingDeniedRecalculatorMock,
             $productVisibilityFacadeMock,
             $entityManagerMock,
-            $productRepositoryMock
+            $productRepositoryMock,
+            $productChangeMessageProducer
         );
 
         $calculatedAvailability = $productAvailabilityCalculation->calculateAvailability($product);
@@ -156,12 +159,15 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
             ->with($this->equalTo($mainVariant))
             ->willReturn($variants);
 
+        $productChangeMessageProducer = $this->createMock(ProductChangeMessageProducer::class);
+
         $productAvailabilityCalculation = new ProductAvailabilityCalculation(
             $availabilityFacadeMock,
             $productSellingDeniedRecalculatorMock,
             $productVisibilityFacadeMock,
             $entityManagerMock,
-            $productRepositoryMock
+            $productRepositoryMock,
+            $productChangeMessageProducer
         );
 
         $variant1->setCalculatedAvailability($productAvailabilityCalculation->calculateAvailability($variant1));
@@ -204,12 +210,15 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
             ->with($this->equalTo($mainVariant))
             ->willReturn([]);
 
+        $productChangeMessageProducer = $this->createMock(ProductChangeMessageProducer::class);
+
         $productAvailabilityCalculation = new ProductAvailabilityCalculation(
             $availabilityFacadeMock,
             $productSellingDeniedRecalculatorMock,
             $productVisibilityFacadeMock,
             $entityManagerMock,
-            $productRepositoryMock
+            $productRepositoryMock,
+            $productChangeMessageProducer
         );
 
         $variant->setCalculatedAvailability($productAvailabilityCalculation->calculateAvailability($variant));

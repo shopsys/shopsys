@@ -143,6 +143,11 @@ class ProductFacade
     protected $productSearchExportScheduler;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
+     */
+    protected $productChangeMessageProducer;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
@@ -166,6 +171,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer $productChangeMessageProducer
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -190,7 +196,8 @@ class ProductFacade
         ProductParameterValueFactoryInterface $productParameterValueFactory,
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
-        ProductSearchExportScheduler $productSearchExportScheduler
+        ProductSearchExportScheduler $productSearchExportScheduler,
+        ProductChangeMessageProducer $productChangeMessageProducer
     ) {
         $this->em = $em;
         $this->productRepository = $productRepository;
@@ -215,6 +222,7 @@ class ProductFacade
         $this->productVisibilityFactory = $productVisibilityFactory;
         $this->productPriceCalculation = $productPriceCalculation;
         $this->productSearchExportScheduler = $productSearchExportScheduler;
+        $this->productChangeMessageProducer = $productChangeMessageProducer;
     }
 
     /**
@@ -268,6 +276,7 @@ class ProductFacade
 
         $this->saveParameters($product, $productData->parameters);
         $this->createProductVisibilities($product);
+
         $this->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
@@ -277,8 +286,8 @@ class ProductFacade
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
 
         $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
+        $this->productChangeMessageProducer->productChanged($product);
     }
 
     /**
@@ -313,7 +322,7 @@ class ProductFacade
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
         $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
+        $this->productChangeMessageProducer->productChanged($product);
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
@@ -332,7 +341,7 @@ class ProductFacade
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
         foreach ($productsForRecalculations as $productForRecalculations) {
             $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
-            $productForRecalculations->markForVisibilityRecalculation();
+            $this->productChangeMessageProducer->productChanged($productForRecalculations);
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
             $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productForRecalculations->getId());
         }

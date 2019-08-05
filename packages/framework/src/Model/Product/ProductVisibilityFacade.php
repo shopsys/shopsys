@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class ProductVisibilityFacade
 {
@@ -18,47 +19,41 @@ class ProductVisibilityFacade
     protected $recalcVisibilityForMarked = false;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
      */
-    public function __construct(ProductVisibilityRepository $productVisibilityRepository)
-    {
+    protected $productChangeMessageProducer;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer $productChangeMessageProducer
+     */
+    public function __construct(
+        ProductVisibilityRepository $productVisibilityRepository,
+        ProductChangeMessageProducer $productChangeMessageProducer
+    ) {
         $this->productVisibilityRepository = $productVisibilityRepository;
+        $this->productChangeMessageProducer = $productChangeMessageProducer;
     }
 
-    public function refreshProductsVisibilityForMarkedDelayed()
-    {
-        $this->recalcVisibilityForMarked = true;
-    }
-
-    public function refreshProductsVisibility()
+    public function refreshProductsVisibility(): void
     {
         $this->productVisibilityRepository->refreshProductsVisibility();
     }
 
-    public function refreshProductsVisibilityForMarked()
+    /**
+     * @param int $productId
+     */
+    public function refreshProductVisibilityById(int $productId): void
     {
-        $this->productVisibilityRepository->refreshProductsVisibility(true);
+        $this->productVisibilityRepository->refreshProductsVisibility($productId);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
-    public function markProductsForRecalculationAffectedByCategory(Category $category)
+    public function refreshProductsVisibilityByCategory(Category $category): void
     {
-        $this->productVisibilityRepository->markProductsForRecalculationAffectedByCategory($category);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
-    {
-        if (!$event->isMasterRequest()) {
-            return;
-        }
-
-        if ($this->recalcVisibilityForMarked) {
-            $this->refreshProductsVisibilityForMarked();
-        }
+        $productIds = $this->productVisibilityRepository->getProductIdsForRecalculationAffectedByCategory($category);
+        $this->productChangeMessageProducer->productsChangedByIds($productIds);
     }
 }

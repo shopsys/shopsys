@@ -19,9 +19,7 @@ This article describes visibility of products and what can make product invisibl
 
 ### Conversion of products visibility:
 1. **Midnight Cron module** - runs according to the current configuration once a day (at midnight) and recalculates all products.
-2. **Cron module** - runs every 5 minutes and converts visibility for products that have an attribute set “recalculate_visibility” = TRUE.
-3. **Immediately once the product is saved in administration** - when the product is saved in the administration, the attribute of the saved product is set to "recalculate_visibility" = TRUE. After rendering of page the event is captured by the method onKernelResponse and when captured, the conversion of visibility is triggered on products that have the attribute "recalculate_visibility" = TRUE.
-4. **The product is edited in a different way than saving as such in the administration** - by calling the Edit method from ProductFacade (for example when importing products from the IS) - there is no rendering of the page and therefore is not an immediate conversion of visibility. Even if the attribute "recalculate_visibility" = TRUE is set for product the visibility conversion itself will start within 5 minutes after product editation (see the description of the second case above).
+2. **Immediately once the product is edited** - when the product is edited, message about `Product` change is produced to queue and `ProductVisibilityRecalculateConsumer` calculates visibility as soon as possible.
 
 ## Exclude from sale
 Excluded from the sale is used if we do not want to see a 404 error page hitting the product URL.

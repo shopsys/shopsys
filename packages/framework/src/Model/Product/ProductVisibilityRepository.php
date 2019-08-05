@@ -44,50 +44,45 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param bool $onlyMarkedProducts
+     * @param int|null $productId
      */
-    public function refreshProductsVisibility($onlyMarkedProducts = false)
+    public function refreshProductsVisibility(?int $productId = null)
     {
-        $this->calculateIndependentVisibility($onlyMarkedProducts);
-        $this->hideVariantsWithInvisibleMainVariant($onlyMarkedProducts);
-        $this->hideMainVariantsWithoutVisibleVariants($onlyMarkedProducts);
-        $this->refreshGlobalProductVisibility($onlyMarkedProducts);
-        $this->markAllProductsVisibilityAsRecalculated();
+        $this->calculateIndependentVisibility($productId);
+        $this->hideVariantsWithInvisibleMainVariant($productId);
+        $this->hideMainVariantsWithoutVisibleVariants($productId);
+        $this->refreshGlobalProductVisibility($productId);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return array
      */
-    public function markProductsForRecalculationAffectedByCategory(Category $category)
+    public function getProductIdsForRecalculationAffectedByCategory(Category $category): array
     {
-        $affectedProductsDql = $this->em->createQueryBuilder()
+        $result = $this->em->createQueryBuilder()
             ->select('IDENTITY(pcd.product)')
             ->from(ProductCategoryDomain::class, 'pcd')
             ->join(Category::class, 'c', Join::WITH, 'c = pcd.category AND c.lft >= :lft AND c.rgt <= :rgt')
-            ->getDQL();
-
-        $this->em->createQueryBuilder()
-            ->update(Product::class, 'p')
-            ->set('p.recalculateVisibility', 'TRUE')
-            ->where('p.recalculateVisibility = FALSE')
-            ->andWhere('p IN (' . $affectedProductsDql . ')')
             ->setParameters([
                 'lft' => $category->getLft(),
                 'rgt' => $category->getRgt(),
             ])
             ->getQuery()
-            ->execute();
+            ->getScalarResult();
+
+        return array_unique(array_column($result, 1));
     }
 
     /**
-     * @param bool $onlyMarkedProducts
+     * @param int|null $productId
      */
-    protected function refreshGlobalProductVisibility($onlyMarkedProducts)
+    protected function refreshGlobalProductVisibility(?int $productId = null)
     {
-        if ($onlyMarkedProducts) {
-            $onlyMarkedProductsWhereClause = ' WHERE p.recalculate_visibility = TRUE';
+        if ($productId !== null) {
+            $productWhereClause = ' WHERE p.id = ' . $productId;
         } else {
-            $onlyMarkedProductsWhereClause = '';
+            $productWhereClause = '';
         }
 
         $query = $this->em->createNativeQuery(
@@ -98,7 +93,7 @@ class ProductVisibilityRepository
                     WHERE pv.product_id = p.id
                         AND pv.visible = TRUE
                 )
-            ' . $onlyMarkedProductsWhereClause,
+            ' . $productWhereClause,
             new ResultSetMapping()
         );
         $query->execute();
@@ -167,24 +162,16 @@ class ProductVisibilityRepository
         ]);
     }
 
-    protected function markAllProductsVisibilityAsRecalculated()
-    {
-        $this->em->createNativeQuery(
-            'UPDATE products SET recalculate_visibility = FALSE WHERE recalculate_visibility = TRUE',
-            new ResultSetMapping()
-        )->execute();
-    }
-
     /**
-     * @param bool $onlyMarkedProducts
+     * @param int|null $productId
      */
-    protected function calculateIndependentVisibility($onlyMarkedProducts)
+    protected function calculateIndependentVisibility(?int $productId = null)
     {
         $now = new DateTime();
-        if ($onlyMarkedProducts) {
-            $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
+        if ($productId !== null) {
+            $productWhereClause = ' AND p.id = ' . $productId;
         } else {
-            $onlyMarkedProductsCondition = '';
+            $productWhereClause = '';
         }
 
         $query = $this->em->createNativeQuery(
@@ -234,7 +221,7 @@ class ProductVisibilityRepository
                 AND pv.domain_id = :domainId
                 AND pv.domain_id = pd.domain_id
                 AND pv.pricing_group_id = :pricingGroupId
-            ' . $onlyMarkedProductsCondition,
+            ' . $productWhereClause,
             new ResultSetMapping()
         );
 
@@ -251,14 +238,14 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param bool $onlyMarkedProducts
+     * @param int|null $productId
      */
-    protected function hideVariantsWithInvisibleMainVariant($onlyMarkedProducts)
+    protected function hideVariantsWithInvisibleMainVariant(?int $productId = null)
     {
-        if ($onlyMarkedProducts) {
-            $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
+        if ($productId !== null) {
+            $productWhereClause = ' AND p.id = ' . $productId;
         } else {
-            $onlyMarkedProductsCondition = '';
+            $productWhereClause = '';
         }
 
         $query = $this->em->createNativeQuery(
@@ -276,7 +263,7 @@ class ProductVisibilityRepository
                         AND mpv.pricing_group_id = pv.pricing_group_id
                         AND mpv.visible = FALSE
                 )
-            ' . $onlyMarkedProductsCondition,
+            ' . $productWhereClause,
             new ResultSetMapping()
         );
 
@@ -286,14 +273,14 @@ class ProductVisibilityRepository
     }
 
     /**
-     * @param bool $onlyMarkedProducts
+     * @param int|null $productId
      */
-    protected function hideMainVariantsWithoutVisibleVariants($onlyMarkedProducts)
+    protected function hideMainVariantsWithoutVisibleVariants(?int $productId = null)
     {
-        if ($onlyMarkedProducts) {
-            $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
+        if ($productId !== null) {
+            $productWhereClause = ' AND p.id = ' . $productId;
         } else {
-            $onlyMarkedProductsCondition = '';
+            $productWhereClause = '';
         }
 
         $query = $this->em->createNativeQuery(
@@ -313,7 +300,7 @@ class ProductVisibilityRepository
                     WHERE vp.main_variant_id = p.id
                         AND vpv.visible = TRUE
                 )
-            ' . $onlyMarkedProductsCondition,
+            ' . $productWhereClause,
             new ResultSetMapping()
         );
 

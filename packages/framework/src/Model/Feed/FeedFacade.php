@@ -75,13 +75,6 @@ class FeedFacade
      */
     public function createFeedExport(string $feedName, DomainConfig $domainConfig, ?int $lastSeekId = null): FeedExport
     {
-        /*
-         * Product is visible, when it has at least one visible category.
-         * Hiding a category therefore could cause change of product's visibility but the visibility recalculation is not invoked immediately,
-         * so we need to recalculate product's visibility here in order to get consistent data for feed generation.
-         */
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
-
         $feed = $this->feedRegistry->getFeedByName($feedName);
 
         return $this->feedExportFactory->create($feed, $domainConfig, $lastSeekId);
