@@ -993,3 +993,8 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -30}
         arguments:
             - '@old_sound_rabbit_mq.product_change_producer'
+
+    Shopsys\FrameworkBundle\Command\CheckRabbitMqCommand:
+        arguments:
+            - '@old_sound_rabbit_mq.connection.default'
+
