@@ -36,8 +36,10 @@ class UploadedFileDeleteDoctrineListener
     {
         $entity = $args->getEntity();
         if ($this->uploadedFileConfig->hasUploadedFileEntityConfig($entity)) {
-            $uploadedFile = $this->uploadedFileFacade->getUploadedFileByEntity($entity);
-            $args->getEntityManager()->remove($uploadedFile);
+            $uploadedFile = $this->uploadedFileFacade->findUploadedFileByEntity($entity);
+            if ($uploadedFile !== null) {
+                $args->getEntityManager()->remove($uploadedFile);
+            }
         } elseif ($entity instanceof UploadedFile) {
             $this->uploadedFileFacade->deleteFileFromFilesystem($entity);
         }
