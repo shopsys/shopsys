@@ -1,3 +1,16 @@
 old_sound_rabbit_mq:
-    producers: ~
-    consumers: ~
+    producers:
+        product_change:
+            connection: default
+            exchange_options: { name: 'product_change', type: fanout }
+    consumers:
+        product_search_export:
+            connection: default
+            exchange_options:
+                name: 'product_change'
+                type: fanout
+            queue_options:
+                name: 'product_search_export'
+            qos_options:
+                prefetch_count: 1
+            callback: Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumerInterface

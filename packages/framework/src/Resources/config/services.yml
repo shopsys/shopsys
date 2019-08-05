@@ -467,11 +467,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportListener:
-        tags:
-            # must be run after all recalculations
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -30}
-
     shopsys.shop.product.bestselling_product.cache_provider:
         class: Doctrine\Common\Cache\RedisCache
         factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
@@ -986,3 +981,15 @@ services:
     Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureUpdateChecker: ~
 
     Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumerInterface:
+        class: Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumer
+        arguments:
+            - '@old_sound_rabbit_mq.product_search_export_consumer'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer:
+        tags:
+            # must be run after all recalculations
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -30}
+        arguments:
+            - '@old_sound_rabbit_mq.product_change_producer'

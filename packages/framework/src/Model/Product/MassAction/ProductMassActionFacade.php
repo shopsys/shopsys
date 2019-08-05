@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\MassAction;
 
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
@@ -24,18 +25,26 @@ class ProductMassActionFacade
     protected $productHiddenRecalculator;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
+     */
+    protected $productChangeMessageProducer;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionRepository $productMassActionRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer $productChangeMessageProducer
      */
     public function __construct(
         ProductMassActionRepository $productMassActionRepository,
         ProductVisibilityFacade $productVisibilityFacade,
-        ProductHiddenRecalculator $productHiddenRecalculator
+        ProductHiddenRecalculator $productHiddenRecalculator,
+        ProductChangeMessageProducer $productChangeMessageProducer
     ) {
         $this->productMassActionRepository = $productMassActionRepository;
         $this->productVisibilityFacade = $productVisibilityFacade;
         $this->productHiddenRecalculator = $productHiddenRecalculator;
+        $this->productChangeMessageProducer = $productChangeMessageProducer;
     }
 
     /**
@@ -62,6 +71,7 @@ class ProductMassActionFacade
                 );
                 $this->productHiddenRecalculator->calculateHiddenForAll();
                 $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
+                $this->productChangeMessageProducer->productsChangedByIds($selectedProductIds);
             }
         }
     }
