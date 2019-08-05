@@ -10,11 +10,19 @@ There you can find links to upgrade notes for other versions too.
 ### Infrastructure
 - add the installation of the useful tools to your `docker/php-fpm/Dockerfile` ([#1239](https://github.com/shopsys/shopsys/pull/1239))
     ```diff
-    libpq-dev \
-    + vim \
-    + nano \
-    + mc \
-    + htop \
+     RUN apt-get install -y \
+         libpng-dev \
+         libjpeg-dev \
+         libfreetype6-dev \
+         libzip-dev \
+         libicu-dev \
+         libpq-dev \
+    +    vim \
+    +    nano \
+    +    mc \
+    +    htop \
+         autoconf && \
+         apt-get clean
     ```
 
 ### Composer dependencies
