@@ -37,6 +37,9 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     - use `CustomerFacade::setEmail()` instead
 - `User::changePassword()`
     - use `CustomerPasswordFacade::changePassword()` instead
+- `User::resetPassword()`
+    - use `CustomerPasswordFacade::resetPassword()` instead
+    - if you need to reset password without side-effects (such as sending e-mail), instead of `$user->resetPassword($hashGenerator)` use `$user->setResetPasswordHash($hashGenerator->generateHash(CustomerPasswordFacade::RESET_PASSWORD_HASH_LENGTH))`
 - `User::setNewPassword()`
     - use `CustomerPasswordFacade::setNewPassword()` instead
 - `User::editDeliveryAddress()`
@@ -112,10 +115,6 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
 ```diff
 - User::__construct(EntityNameResolver $entityNameResolver, EncoderFactoryInterface $encoderFactory)
 + User::__construct(EntityNameResolver $entityNameResolver, CustomerPasswordFacade $customerPasswordFacade)
-```
-```diff
-- User::resetPassword(HashGenerator $hashGenerator)
-+ User::resetPassword(string $resetPasswordHash)
 ```
 ```diff
 - Administrator::edit(AdministratorData $administratorData, EncoderFactoryInterface $encoderFactory, ?self $administratorByUserName)
