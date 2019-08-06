@@ -34,23 +34,23 @@ cd project-base
 - *The `--no-install` option disables installation of the vendors - this will be done later in the Docker container.*
 - *The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`.*
 
-### 1.1 Use install script
-In case you want to start demo of the app as fast as possible, you can now execute install script.
+### 2. Installation
+Now, you have two options:
+- **Option 1:** In the case you want to start demo of the application as fast as possible, you can simply execute the installation script and that is all:
+    ```
+    ./scripts/install.sh
+    ```
+  After the script is finished with installing the application, you can skip all the other steps and see [the last chapter of Application Setup Guide](./installation-using-docker-application-setup.md#2-see-it-in-your-browser) to get all the important information you might need right after the installation.
+- **Option 2:** If you want to know more about what is happening during installation, continue with the steps [#2.1 - #2.5](#21-enable-second-domain-optional).
 
-```
-./scripts/install.sh
-```
-
-If you want to know more about what is happening during installation, continue with next step.
-
-### 1.2 Enable second domain (optional)
+#### 2.1 Enable second domain (optional)
 There are two domains each for different language in default installation. First one is available via IP adress `127.0.O.1` and second one via `127.0.0.2`.
 `127.0.0.2` is not alias of `127.0.0.1` on Mac by default. To create this alias in network interface run:
 ```
 sudo ifconfig lo0 alias 127.0.0.2 up
 ```
 
-### 2. Create docker-compose.yml and docker-sync.yml
+#### 2.2. Create docker-compose.yml and docker-sync.yml
 Create `docker-compose.yml` from template [`docker-compose-mac.yml.dist`](../../project-base/docker/conf/docker-compose-mac.yml.dist).
 ```
 cp docker/conf/docker-compose-mac.yml.dist docker-compose.yml
@@ -61,7 +61,7 @@ Create `docker-sync.yml` from template [`docker-sync.yml.dist`](../../project-ba
 cp docker/conf/docker-sync.yml.dist docker-sync.yml
 ```
 
-#### Set the UID and GID to allow file access in mounted volumes
+#### 2.3 Set the UID and GID to allow file access in mounted volumes
 Because we want both the user in host machine (you) and the user running php-fpm in the container to access shared files, we need to make sure that they both have the same UID and GID.
 This can be achieved by build arguments `www_data_uid` and `www_data_gid` that should be set to the same UID and GID as your own user in your `docker-compose.yml`.
 Also, you need to change `sync_userid` in `docker-sync.yml` file.
@@ -72,7 +72,7 @@ Once you get these values, set these values into your `docker-compose.yml` into 
 
 Also you need to insert your UID into `docker-sync.yml` into value `sync_userid`.
 
-### 3. Compose Docker container
+#### 2.4 Compose Docker container
 On MacOS you need to synchronize folders using docker-sync.
 Before starting synchronization you need to create a directory for persisting Postgres and Elasticsearch data so you won't lose it when the container is shut down.
 ```
@@ -87,5 +87,5 @@ docker-compose up -d --build
 
 ***Note:** During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
-### 4. Setup the application
+#### 2.5 Setup the application
 [Application setup guide](installation-using-docker-application-setup.md)
