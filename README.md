@@ -92,16 +92,14 @@ please see our [Docker troubleshooting](./docs/docker/docker-troubleshooting.md)
 Or ultimately, just [report an issue](https://github.com/shopsys/shopsys/issues/new).
 
 ## License
-We distribute our main parts of Shopsys Framework
-[shopsys/project-base](https://github.com/shopsys/project-base) and
-[shopsys/framework](https://github.com/shopsys/framework) under two different licenses: 
+We distribute the main parts of Shopsys Framework under two different licenses: 
 
 * [Community License](./LICENSE) in MIT style for growing small to mid-size e-commerce sites with total online sales less than 12.000.000 EUR / year (3.000.000 EUR / quarter)
 * Commercial License
 
 Learn the principles on which we distribute our product on our website at [Licenses and Pricing section](https://www.shopsys.com/licensing).
 
-The rest of modules of Shopsys Framework including [HTTP smoke testing](https://github.com/shopsys/http-smoke-testing) are distributed under standard MIT license. 
+Some of the Shopsys Framework repositories including [HTTP smoke testing](https://github.com/shopsys/http-smoke-testing) and [Monorepo Tools](https://github.com/shopsys/monorepo-tools) are distributed under standard MIT license so generally you can use it without any restriction. The infromation about license is placed in LICENSE file in root of each repository.
 
 Shopsys Framework also uses some third-party components and images which are licensed under their own respective licenses.
 The list of these licenses is summarized in [Open Source License Acknowledgements and Third Party Copyrights](./open-source-license-acknowledgements-and-third-party-copyrights.md).
