@@ -32,16 +32,11 @@ Behavior of the filter is defined in the class `Shopsys\FrameworkBundle\Model\Pr
 Each filtering method calls appropriate method in `Shopsys\FrameworkBundle\Model\Product\ProductRepository` class in which a Doctrine `QueryBuilder` object is composed to get proper products with SQL query.
 
 ## Choose an Implementation
-You can choose which one of them will be used by setting one of the previously mentioned implementations in your `services.yml` file:
-```yaml
-    # Elasticsearch filtering
-    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface: '@Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade'
-```
-or
-```yaml
-    # SQL filtering
-    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface: '@Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade'
-```
+You can choose which one of them will be used by setting one of the previously mentioned implementations in your `services.yml` and `services_test.yml` configuration.
+
+Along with filtering the choice will influence the data source for the product lists for increased performance.
+
+You can find more about this topic in [Introduction to Read Model](/docs/model/introduction-to-read-model.md#read-model-options).
 
 *Note: If you need to extend the implementation of your choice, it is possible you will need to adjust abstract test `Tests\ShopBundle\Functional\Model\Product\ProductOnCurrentDomainFacadeTest` accordingly.
 In that case is perfectly fine to skip or delete implementation of this test for the one you don't use.*
