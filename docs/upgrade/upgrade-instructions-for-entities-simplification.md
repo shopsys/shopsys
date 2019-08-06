@@ -137,6 +137,14 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     - running `php phing phpstan` should help you to discover the problems
 - remove `Tests\ShopBundle\Functional\Model\Cart\CartTest::testMergeWithCartReturnsCartWithSummedProducts()`  
     - add new `Tests\ShopBundle\Functional\Model\Cart\CartMigrationFacadeTest` class, you can copy-paste it from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Cart/CartMigrationFacadeTest.php)
+    - you'll need to skip `FunctionLengthSniff` for this class in your `easy-coding-standard.yml` as it has an excessively long method:
+        ```diff
+          parameters:
+              skip:
+                  ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
+                      # other skipped classes...
+        +             - '*/tests/ShopBundle/Functional/Model/Cart/CartMigrationFacadeTest.php'
+        ```
 - move some tests from `Tests\ShopBundle\Functional\Model\Cart\CartTest` to `Tests\ShopBundle\Functional\Model\Cart\CartFacadeTest`
 and fix them appropriately (you can copy paste them from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Cart/CartFacadeTest.php))
     - `testCannotAddProductFloatQuantityToCart()`
