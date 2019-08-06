@@ -298,6 +298,18 @@ There you can find links to upgrade notes for other versions too.
         - {% macro calculablePriceWidget(calculablePriceForm, currencySymbol) %}
         + {% macro calculablePriceWidget(calculablePriceForm) %}
         ```
+    - if you have overridden the `orderItems.html.twig`, you'll need to add the currency symbols in the table header:
+        ```diff
+        - <th class="text-right">{{ 'Unit price including VAT'|trans }}</th>
+        + <th class="text-right">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+          {# ... #}
+        - <th class="text-right">{{ 'Unit price excluding VAT'|trans }}</th>
+        - <th class="text-right">{{ 'Total including VAT'|trans }}</th>
+        - <th class="text-right">{{ 'Total excluding VAT'|trans }}</th>
+        + <th class="text-right">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+        + <th class="text-right">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+        + <th class="text-right">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+        ```
     - constructor of `OrderItemsType` no longer accepts `OrderItemPriceCalculation` as third parameter
         - please change your usage accordingly if you extended this class or call the constructor directly
     - if you have overridden `{% block order_items_widget %}` you don't have the variable `orderItemTotalPricesById` defined in the block anymore
