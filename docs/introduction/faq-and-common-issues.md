@@ -140,7 +140,7 @@ Yes we have, you can easily use [`djfarrelly/MailDev`](https://github.com/djfarr
    +            - "8025:80"
     ```
 1. Run `docker-compose up -d`
-1. Now you are able to see all the application emails in the inbox on `http://127.0.0.1:8025`
+1. Now you are able to see all the application emails in the inbox on [`http://127.0.0.1:8025`](http://127.0.0.1:8025).
 
 *Note: Beware, by using this setting, no emails are delivered to their original recipients.
 See [Outgoing emails](https://github.com/djfarrelly/MailDev#outgoing-email) in the documentation of the library for more information.*
