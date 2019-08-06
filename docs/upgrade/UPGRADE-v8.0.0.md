@@ -152,6 +152,10 @@ There you can find links to upgrade notes for other versions too.
         - eg. `<property name="yaml-standards.args" value="--exclude-dir=./my-excluded-dir"/>` to exclude `my-excluded-dir/` from the standards
 
 ### Application
+- **There are BC breaking changes in the `v8.0.0` release, which means that the full build and tests won't pass until you complete a large portion of the upgrade notes.**
+**It is recommended to first resolve incompatible class definitions and method changes by making `phing phpstan` pass using upgrade notes below as a guide.**
+**Then make `phing build-demo-dev-quick` pass as well so you can see the front-end working.**
+**After that, the upgrading will be much easier.**
 - follow upgrade instructions for entities simplification in the [separate article](./upgrade-instructions-for-entities-simplification.md) ([#1123](https://github.com/shopsys/shopsys/pull/1123))
 - constructors of `FrameworkBundle\Model\Mail\Mailer` and `FrameworkBundle\Component\Cron\CronFacade` classes were changed so if you extend them change them accordingly: ([#875](https://github.com/shopsys/shopsys/pull/875)).
     - `CronFacade::__construct(Logger $logger, CronConfig $cronConfig, CronModuleFacade $cronModuleFacade, Mailer $mailer)`
