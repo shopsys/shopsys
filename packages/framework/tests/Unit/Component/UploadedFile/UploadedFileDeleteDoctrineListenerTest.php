@@ -47,12 +47,12 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
         ]);
 
         $uploadedFileFacadeMock = $this->getMockBuilder(UploadedFileFacade::class)
-            ->setMethods(['getUploadedFileByEntity'])
+            ->setMethods(['findUploadedFileByEntity'])
             ->disableOriginalConstructor()
             ->getMock();
         $uploadedFileFacadeMock
             ->expects($this->once())
-            ->method('getUploadedFileByEntity')
+            ->method('findUploadedFileByEntity')
             ->with($this->equalTo($entity))
             ->willReturn($uploadedFile);
 

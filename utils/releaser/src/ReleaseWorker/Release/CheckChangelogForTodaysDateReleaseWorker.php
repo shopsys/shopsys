@@ -36,9 +36,10 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
     public function getDescription(Version $version): string
     {
         return sprintf(
-            'Check the release date of "%s" version is "%s" in CHANGELOG.md',
+            'Check the release date of "%s" version is "%s" in CHANGELOG.md. If necessary, the date is updated and the change is committed to "%s" branch',
             $version->getVersionString(),
-            $this->getTodayAsString()
+            $this->getTodayAsString(),
+            $this->createBranchName($version)
         );
     }
 
@@ -75,13 +76,14 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
             $newChangelogContent = $this->changelogFileManipulator->updateReleaseDateOfCurrentReleaseToToday($fileContent, $pattern, $todayInString);
             FileSystem::write($changelogFilePath, $newChangelogContent);
 
-            $this->symfonyStyle->note(sprintf(
+            $infoMessage = sprintf(
                 'CHANGELOG.md date for "%s" version was updated to "%s".',
                 $version->getVersionString(),
                 $todayInString
-            ));
+            );
+            $this->symfonyStyle->note($infoMessage);
 
-            $this->commit('CHANGELOG.md date updated to today');
+            $this->commit($infoMessage);
         }
         $this->symfonyStyle->success(Message::SUCCESS);
     }

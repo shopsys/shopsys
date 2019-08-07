@@ -8,7 +8,7 @@ use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 
-final class StopMergingToMasterReleaseWorker extends AbstractShopsysReleaseWorker
+final class StopMergingReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
@@ -16,7 +16,7 @@ final class StopMergingToMasterReleaseWorker extends AbstractShopsysReleaseWorke
      */
     public function getDescription(Version $version): string
     {
-        return '[Manually] Tell team to stop merging to `master` branch';
+        return sprintf('[Manually] Tell team to stop merging to "%s" branch', $this->initialBranchName);
     }
 
     /**
@@ -33,7 +33,7 @@ final class StopMergingToMasterReleaseWorker extends AbstractShopsysReleaseWorke
      */
     public function work(Version $version): void
     {
-        $this->symfonyStyle->note('You need to write a warning message into "team_ssfw_devs" slack channel, as well as mark the "merge" column on the whiteboard in the office with a significant red cross along with "release in progress" note.');
+        $this->symfonyStyle->note(sprintf('You need to write a warning message into "team_ssfw_devs" slack channel, as well as mark the "merge" column on the whiteboard in the office with a significant red cross along with "release in progress, do not merge to "%s" branch" note.', $this->initialBranchName));
         $this->confirm('Confirm the merging is stopped');
     }
 
