@@ -52,7 +52,7 @@ Shopsys Framework is fully functional e-commerce platform with all basic functio
 List of typical projects built on previous versions of Shopsys Framework:
 * [Prumex](https://www.prumex.cz/)
 * [Papírnictví Pavlík](https://www.papirnictvipavlik.cz/)
-* [Růžový slon](https://www.https://www.ruzovyslon.cz/.cz/)
+* [Růžový slon](https://www.ruzovyslon.cz/)
 * [AB COM CZECH](https://www.ab-com.cz/)
 * [Patro](https://www.patro.cz/)
 * [B2B Portal Démos](https://www.demos24plus.com/login/)
