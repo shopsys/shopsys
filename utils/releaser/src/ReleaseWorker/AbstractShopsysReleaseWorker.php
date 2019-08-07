@@ -6,6 +6,7 @@ namespace Shopsys\Releaser\ReleaseWorker;
 
 use Nette\Utils\Strings;
 use PharIo\Version\Version;
+use RuntimeException;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -34,16 +35,22 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
     private $questionHelper;
 
     /**
+     * @var string
+     */
+    protected $initialBranchName;
+
+    /**
      * @required
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
      * @param \Symplify\MonorepoBuilder\Release\Process\ProcessRunner $processRunner
      * @param \Symfony\Component\Console\Helper\QuestionHelper $questionHelper
      */
-    public function autowire(SymfonyStyle $symfonyStyle, ProcessRunner $processRunner, QuestionHelper $questionHelper): void
+    public function setup(SymfonyStyle $symfonyStyle, ProcessRunner $processRunner, QuestionHelper $questionHelper): void
     {
         $this->symfonyStyle = $symfonyStyle;
         $this->processRunner = $processRunner;
         $this->questionHelper = $questionHelper;
+        $this->initialBranchName = $this->getProcessResult(['git', 'rev-parse', '--abbrev-ref', 'HEAD']);
     }
 
     /**
@@ -137,5 +144,46 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
         $process->run();
 
         return trim($process->getOutput());
+    }
+
+    /**
+     * @param \PharIo\Version\Version $version
+     * @param bool $suggestWithVprefix
+     * @return \PharIo\Version\Version
+     */
+    protected function askForNextDevelopmentVersion(Version $version, bool $suggestWithVprefix = false): Version
+    {
+        $suggestedDevelopmentVersion = $this->suggestDevelopmentVersion($version, $suggestWithVprefix);
+
+        $question = new Question('Enter next development version of Shopsys Framework', $suggestedDevelopmentVersion->getVersionString());
+        $question->setValidator(static function ($answer) {
+            $version = new Version($answer);
+
+            if (!$version->hasPreReleaseSuffix()) {
+                throw new RuntimeException(
+                    'Development version must be suffixed (with \'-dev\', \'-alpha1\', ...)'
+                );
+            }
+
+            return $version;
+        });
+
+        return $this->symfonyStyle->askQuestion($question);
+    }
+
+    /**
+     * Return new development version (e.g. from 7.1.0 to 7.2.0-dev)
+     * @param \PharIo\Version\Version $version
+     * @param bool $suggestWithVprefix
+     * @return \PharIo\Version\Version
+     */
+    protected function suggestDevelopmentVersion(Version $version, bool $suggestWithVprefix = false): Version
+    {
+        $newVersionString = $version->getMajor()->getValue() . '.' . ($version->getMinor()->getValue() + 1) . '.0-dev';
+        if ($suggestWithVprefix) {
+            $newVersionString = 'v' . $newVersionString;
+        }
+
+        return new Version($newVersionString);
     }
 }

@@ -5,7 +5,7 @@ There is `selenium-server` container with installed Selenium hub and Google Chro
 
 You should run all command mentioned below while logged into your `php-fpm` container via command:
 ```
-docker exec -it shopsys-framework-php-fpm sh
+docker exec -it shopsys-framework-php-fpm bash
 ```
 
 *Note: For `selenium-server` to be able to connect to you `webserver` container and access your application, all domains should have URL set to `http://webserver:8000`.*
@@ -21,6 +21,27 @@ php phing tests-acceptance
 
 *Note: In this step you were using Phing target `tests-acceptance`.
 More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+
+### How to watch what is going on in the selenium browser
+By default, Shopsys Framework uses `selenium/standalone-chrome` image for `selenium-server` service which means you are not able to watch what is going on in the selenium browser.
+However, there is a quick solution which allows you to watch the progress of your acceptance tests:
+1. In your `docker-compose.yml`, use `standalone-chrome-debug` image for `selenium-server` service and new settings of ports:
+    ```diff
+      selenium-server:
+    -    image: selenium/standalone-chrome:3.11
+    +    image: selenium/standalone-chrome-debug:3.11
+         container_name: shopsys-framework-acceptance-tests
+             ports:
+                 - "4400:4444"
+    +            - "5900:5900"
+    ```
+
+1. Run `docker-compose up -d`
+1. From your local machine, connect to the remote desktop on `vnc://127.0.0.1:5900`
+    - for the connection, you can use e.g. *Remmina* tool that is installed by default in Ubuntu
+    - on Mac, you can run `open vnc://127.0.0.1:5900` in your terminal
+    - the default password for the connection is `secret`
+1. Run acceptance tests as described in [the paragraph above](#running-in-docker)
 
 ## Native installation
 For running acceptance tests you need to install [Google Chrome browser](https://www.google.com/chrome/browser/desktop/) and download [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/).
