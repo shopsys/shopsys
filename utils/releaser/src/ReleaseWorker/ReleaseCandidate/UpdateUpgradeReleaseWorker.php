@@ -38,6 +38,11 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     private $twigEnvironment;
 
     /**
+     * @var string
+     */
+    private $nextDevelopmentVersionString;
+
+    /**
      * @param \Shopsys\Releaser\FileManipulator\MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator
      * @param \Shopsys\Releaser\FileManipulator\GeneralUpgradeFileManipulator $generalUpgradeFileManipulator
      * @param \Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator $versionUpgradeFileManipulator
@@ -78,9 +83,11 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function work(Version $version): void
     {
+        $this->nextDevelopmentVersionString = $this->askForNextDevelopmentVersion($version, true)->getVersionString();
+
         $this->updateUpgradeFileForMonorepo($version);
-        $this->createUpgradeFileForNewVersionFromUnreleased($version);
-        $this->createUpgradeFileForUnreleased($version);
+        $this->createUpgradeFileForNewVersionFromDevelopmentVersion($version);
+        $this->createUpgradeFileForNextDevelopmentVersion($version);
         $this->updateGeneralUpgradeFile($version);
 
         $this->symfonyStyle->success(Message::SUCCESS);
@@ -114,7 +121,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $upgradeFilePath = getcwd() . '/docs/contributing/upgrading-monorepo.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
-        $newUpgradeContent = $this->monorepoUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version);
+        $newUpgradeContent = $this->monorepoUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version, $this->initialBranchName, $this->nextDevelopmentVersionString);
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
     }
@@ -122,12 +129,12 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @param \PharIo\Version\Version $version
      */
-    private function createUpgradeFileForNewVersionFromUnreleased(Version $version)
+    private function createUpgradeFileForNewVersionFromDevelopmentVersion(Version $version)
     {
-        $upgradeFilePath = getcwd() . '/docs/upgrade/UPGRADE-unreleased.md';
+        $upgradeFilePath = getcwd() . '/docs/upgrade/UPGRADE-' . $version->getVersionString() . '-dev.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
-        $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version);
+        $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version, $this->initialBranchName);
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
         FileSystem::rename($upgradeFilePath, getcwd() . '/docs/upgrade/UPGRADE-' . $version->getVersionString() . '.md');
@@ -143,7 +150,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $upgradeFilePath = getcwd() . '/UPGRADE.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
-        $newUpgradeContent = $this->generalUpgradeFileManipulator->updateLinks($upgradeFileInfo, $version);
+        $newUpgradeContent = $this->generalUpgradeFileManipulator->updateLinks($upgradeFileInfo, $version, $this->nextDevelopmentVersionString);
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
     }
@@ -151,14 +158,16 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @param \PharIo\Version\Version $version
      */
-    private function createUpgradeFileForUnreleased(Version $version)
+    private function createUpgradeFileForNextDevelopmentVersion(Version $version)
     {
         $content = $this->twigEnvironment->render(
-            'UPGRADE-unreleased.md.twig',
+            'UPGRADE-next-development-version.md.twig',
             [
                 'versionString' => $version->getVersionString(),
+                'initialBranchName' => $this->initialBranchName,
+                'nextDevelopmentVersion' => $this->nextDevelopmentVersionString,
             ]
         );
-        FileSystem::write(getcwd() . '/docs/upgrade/UPGRADE-unreleased.md', $content);
+        FileSystem::write(getcwd() . '/docs/upgrade/UPGRADE-' . $this->nextDevelopmentVersionString . '.md', $content);
     }
 }

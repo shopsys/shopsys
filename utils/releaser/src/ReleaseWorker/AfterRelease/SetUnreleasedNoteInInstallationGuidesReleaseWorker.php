@@ -65,7 +65,7 @@ final class SetUnreleasedNoteInInstallationGuidesReleaseWorker extends AbstractS
             FileSystem::write($fileInfo->getPathname(), $newContent);
         }
         $this->commit('docker installation guides: updated note about the unreleased version');
-        $this->confirm('Confirm you have pushed the new commit into the master branch');
+        $this->confirm(sprintf('Confirm you have pushed the new commit into "%s" branch', $this->initialBranchName));
     }
 
     /**
