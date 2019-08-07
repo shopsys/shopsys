@@ -25,7 +25,9 @@ final class MonorepoUpgradeFileManipulatorTest extends TestCase
     {
         $changedContent = $this->upgradeFileManipulator->processFileToString(
             new SmartFileInfo(__DIR__ . '/Source/UPGRADE-monorepo-before.md'),
-            new Version('v1.0.0')
+            new Version('v1.0.0'),
+            '1.0',
+            'v1.0.1-dev'
         );
 
         $this->assertStringMatchesFormatFile(__DIR__ . '/Source/UPGRADE-monorepo-after.md', $changedContent);
@@ -35,7 +37,9 @@ final class MonorepoUpgradeFileManipulatorTest extends TestCase
     {
         $changedContent = $this->upgradeFileManipulator->processFileToString(
             new SmartFileInfo(__DIR__ . '/Source/UPGRADE-monorepo-after.md'),
-            new Version('v1.0.0')
+            new Version('v1.0.0'),
+            '1.0',
+            'v1.0.1-dev'
         );
 
         $this->assertStringMatchesFormatFile(__DIR__ . '/Source/UPGRADE-monorepo-after.md', $changedContent);

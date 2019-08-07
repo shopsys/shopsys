@@ -58,14 +58,15 @@ final class TravisStatusReporter
 
     /**
      * @param string $organization
+     * @param string $branch
      * @return string[]
      */
-    public function getStatusForPackagesByOrganization(string $organization): array
+    public function getStatusForPackagesByOrganizationAndBranch(string $organization, string $branch): array
     {
         $packages = $this->packageProvider->getPackagesByOrganization($organization, self::EXCLUDED_PACKAGES);
         $packages = array_merge($packages, self::EXTRA_PACKAGES);
 
-        $urls = $this->createApiUrls($packages);
+        $urls = $this->createApiUrls($packages, $branch);
 
         $responses = $this->apiCaller->sendGetsAsyncToStrings($urls);
 
@@ -78,13 +79,14 @@ final class TravisStatusReporter
 
     /**
      * @param string[] $packages
+     * @param string $branch
      * @return string[]
      */
-    private function createApiUrls(array $packages): array
+    private function createApiUrls(array $packages, string $branch): array
     {
         $apiUrls = [];
         foreach ($packages as $package) {
-            $apiUrls[] = 'https://api.travis-ci.org/repos/' . $package . '/cc.xml?branch=master';
+            $apiUrls[] = 'https://api.travis-ci.org/repos/' . $package . '/cc.xml?branch=' . $branch;
         }
 
         return $apiUrls;

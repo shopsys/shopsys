@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker\AfterRelease;
 
 use PharIo\Version\Version;
-use Shopsys\Releaser\DependencyUpdater;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
+use Symplify\MonorepoBuilder\DependencyUpdater;
 use Symplify\MonorepoBuilder\Package\PackageNamesProvider;
 
-final class SetMutualDependenciesToDevMasterReleaseWorker extends AbstractShopsysReleaseWorker
+final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @var \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider
@@ -19,7 +19,7 @@ final class SetMutualDependenciesToDevMasterReleaseWorker extends AbstractShopsy
     private $composerJsonFilesProvider;
 
     /**
-     * @var \Shopsys\Releaser\DependencyUpdater
+     * @var \Symplify\MonorepoBuilder\DependencyUpdater
      */
     private $dependencyUpdater;
 
@@ -29,13 +29,8 @@ final class SetMutualDependenciesToDevMasterReleaseWorker extends AbstractShopsy
     private $packageNamesProvider;
 
     /**
-     * @var string
-     */
-    private const DEV_MASTER = 'dev-master';
-
-    /**
      * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     * @param \Shopsys\Releaser\DependencyUpdater $dependencyUpdater
+     * @param \Symplify\MonorepoBuilder\DependencyUpdater $dependencyUpdater
      * @param \Symplify\MonorepoBuilder\Package\PackageNamesProvider $packageNamesProvider
      */
     public function __construct(ComposerJsonFilesProvider $composerJsonFilesProvider, DependencyUpdater $dependencyUpdater, PackageNamesProvider $packageNamesProvider)
@@ -51,7 +46,7 @@ final class SetMutualDependenciesToDevMasterReleaseWorker extends AbstractShopsy
      */
     public function getDescription(Version $version): string
     {
-        return sprintf('Set mutual package dependencies to "%s" version', self::DEV_MASTER);
+        return sprintf('Set mutual package dependencies to "%s" version', $this->getDevelopmentVersionString($version));
     }
 
     /**
@@ -68,14 +63,15 @@ final class SetMutualDependenciesToDevMasterReleaseWorker extends AbstractShopsy
      */
     public function work(Version $version): void
     {
+        $developmentVersion = $this->getDevelopmentVersionString($version);
         $this->dependencyUpdater->updateFileInfosWithPackagesAndVersion(
             $this->composerJsonFilesProvider->provideExcludingMonorepoComposerJson(),
             $this->packageNamesProvider->provide(),
-            self::DEV_MASTER
+            $developmentVersion
         );
 
-        $this->commit('composer.json in all packages now use latest shopsys version');
-        $this->confirm('Confirm you have pushed the new commit into the master branch');
+        $this->commit(sprintf('composer.json in all packages now require other shopsys packages in "%s" version', $developmentVersion));
+        $this->confirm(sprintf('Confirm you have pushed the new commit into the "%s" branch', $this->initialBranchName));
     }
 
     /**
@@ -84,5 +80,15 @@ final class SetMutualDependenciesToDevMasterReleaseWorker extends AbstractShopsy
     public function getStage(): string
     {
         return Stage::AFTER_RELEASE;
+    }
+
+    /**
+     * Return new development version (e.g. from 7.3.1 to 7.3.x-dev)
+     * @param \PharIo\Version\Version $version
+     * @return string
+     */
+    private function getDevelopmentVersionString(Version $version): string
+    {
+        return $version->getMajor()->getValue() . '.' . $version->getMinor()->getValue() . '.x-dev';
     }
 }

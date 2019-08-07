@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Shopsys\Releaser\ReleaseWorker\AfterRelease;
 
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 
-final class EnableMergingToMasterReleaseWorker extends AbstractShopsysReleaseWorker
+final class MergeBranchToTheHigherBranchesReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
@@ -16,7 +14,7 @@ final class EnableMergingToMasterReleaseWorker extends AbstractShopsysReleaseWor
      */
     public function getDescription(Version $version): string
     {
-        return '[Manually] Enable merging to master';
+        return '[Manually] Merge the branch with the release to the higher development branches.';
     }
 
     /**
@@ -25,7 +23,7 @@ final class EnableMergingToMasterReleaseWorker extends AbstractShopsysReleaseWor
      */
     public function getPriority(): int
     {
-        return 145;
+        return 13;
     }
 
     /**
@@ -33,8 +31,9 @@ final class EnableMergingToMasterReleaseWorker extends AbstractShopsysReleaseWor
      */
     public function work(Version $version): void
     {
-        $this->symfonyStyle->note('Enable merging to master - let your colleagues know in "team_ssfw_devs" Slack channel, and erase the red cross from the "merge" column on the whiteboard in the office.');
-        $this->confirm('Confirm merging to master is enabled.');
+        $this->symfonyStyle->note('You need to gradually merge the branch with the new release to all the higher development branches.');
+        $this->symfonyStyle->note('E.g. when releasing "7.3.x" version, you need to merge the "7.3" branch to the master branch, and then merge the master branch to the "9.0" branch provided current release series is "8.0"');
+        $this->confirm('Confirm the branch with the released version is merged to all the higher development branches.');
     }
 
     /**

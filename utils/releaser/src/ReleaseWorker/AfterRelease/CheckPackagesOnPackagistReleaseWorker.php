@@ -48,7 +48,7 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
      */
     public function getDescription(Version $version): string
     {
-        return 'Check there are new versions all packages on packagist';
+        return 'Check there are new versions of all packages on packagist';
     }
 
     /**
