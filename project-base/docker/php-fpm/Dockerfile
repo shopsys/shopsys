@@ -25,24 +25,8 @@ COPY ${project_root}/docker/php-fpm/docker-install-composer /usr/local/bin/docke
 RUN chmod +x /usr/local/bin/docker-install-composer && \
     docker-install-composer
 
-# libpng-dev needed by "gd" extension
-# libzip-dev needed by "zip" extension
-# libicu-dev for intl extension
-# libpg-dev for connection to postgres database
-# autoconf needed by "redis" extension
-RUN apt-get install -y \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libzip-dev \
-    libicu-dev \
-    libpq-dev \
-    vim \
-    nano \
-    mc \
-    htop \
-    autoconf && \
-    apt-get clean
+# fail instead of installing required PHP extensions
+RUN exit 1
 
 # "gd" extension needs to have specified jpeg and freetype dir for jpg/jpeg images support
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
