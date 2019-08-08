@@ -22,10 +22,10 @@
     },
     "require": {
         "php": "^7.2",
-        "ext-simplexml": "*",
-        "ext-pdo": "*",
         "ext-json": "*",
         "ext-libxml": "*",
+        "ext-pdo": "*",
+        "ext-simplexml": "*",
         "doctrine/collections": "^1.5",
         "doctrine/dbal": "^2.7",
         "doctrine/doctrine-bundle": "^1.8",
