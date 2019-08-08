@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\ShopBundle\Form\Front\Registration\RegistrationFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,6 +78,10 @@ class RegistrationController extends FrontBaseController
      */
     public function registerAction(Request $request)
     {
+        if ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
+            return $this->redirectToRoute('front_homepage');
+        }
+
         $userData = $this->userDataFactory->createForDomainId($this->domain->getId());
 
         $form = $this->createForm(RegistrationFormType::class, $userData);
