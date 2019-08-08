@@ -37,6 +37,9 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     - use `CustomerFacade::setEmail()` instead
 - `User::changePassword()`
     - use `CustomerPasswordFacade::changePassword()` instead
+- `User::resetPassword()`
+    - use `CustomerPasswordFacade::resetPassword()` instead
+    - if you need to reset password without side-effects (such as sending e-mail), instead of `$user->resetPassword($hashGenerator)` use `$user->setResetPasswordHash($hashGenerator->generateHash(CustomerPasswordFacade::RESET_PASSWORD_HASH_LENGTH))`
 - `User::setNewPassword()`
     - use `CustomerPasswordFacade::setNewPassword()` instead
 - `User::editDeliveryAddress()`
@@ -114,10 +117,6 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
 + User::__construct(EntityNameResolver $entityNameResolver, CustomerPasswordFacade $customerPasswordFacade)
 ```
 ```diff
-- User::resetPassword(HashGenerator $hashGenerator)
-+ User::resetPassword(string $resetPasswordHash)
-```
-```diff
 - Administrator::edit(AdministratorData $administratorData, EncoderFactoryInterface $encoderFactory, ?self $administratorByUserName)
 + Administrator::edit(AdministratorData $administratorData)
 ```
@@ -138,7 +137,15 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     - running `php phing phpstan` should help you to discover the problems
 - remove `Tests\ShopBundle\Functional\Model\Cart\CartTest::testMergeWithCartReturnsCartWithSummedProducts()`  
     - add new `Tests\ShopBundle\Functional\Model\Cart\CartMigrationFacadeTest` class, you can copy-paste it from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Cart/CartMigrationFacadeTest.php)
-- move tests from `Tests\ShopBundle\Functional\Model\Cart\CartTest` to `Tests\ShopBundle\Functional\Model\Cart\CartFacadeTest`
+    - you'll need to skip `FunctionLengthSniff` for this class in your `easy-coding-standard.yml` as it has an excessively long method:
+        ```diff
+          parameters:
+              skip:
+                  ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
+                      # other skipped classes...
+        +             - '*/tests/ShopBundle/Functional/Model/Cart/CartMigrationFacadeTest.php'
+        ```
+- move some tests from `Tests\ShopBundle\Functional\Model\Cart\CartTest` to `Tests\ShopBundle\Functional\Model\Cart\CartFacadeTest`
 and fix them appropriately (you can copy paste them from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Cart/CartFacadeTest.php))
     - `testCannotAddProductFloatQuantityToCart()`
     - `testCannotAddProductZeroQuantityToCart()`
@@ -147,6 +154,7 @@ and fix them appropriately (you can copy paste them from [Github](https://github
     - `testAddProductToCartMarksRepeatedlyAddedProductAsNotNew()`
     - `testAddProductResultContainsAddedProductQuantity()`
     - `testAddProductResultDoesNotContainPreviouslyAddedProductQuantity()`
+    - test methods `testRemoveItem()` and `testCleanMakesCartEmpty()` should still remain in `CartTest`
 - fix `Tests\ShopBundle\Functional\Model\Order\OrderFacadeTest::testCreate()`:
 ```diff
 - /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculation */
@@ -156,12 +164,12 @@ and fix them appropriately (you can copy paste them from [Github](https://github
 - $cart->addProduct($product, 1, $productPriceCalculation, $cartItemFactory);
 + $cartFacade->addProductToCart($product->getId(), 1);
 ```
-- move `Tests\FrameworkBundle\Unit\Model\Product\ProductTest::testEditSchedulesPriceRecalculation` to `ProductFacadeTest`
-    - you can copy paste it from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Product/ProductFacadeTest.php#L133)
+- add new test method `testEditSchedulesPriceRecalculation()` to `ProductFacadeTest`
+    - you can copy paste it from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Product/ProductFacadeTest.php#L135-L147)
 - rename `Tests\ShopBundle\Functional\Model\Pricing\ProductManualInputPriceTest` to `Tests\ShopBundle\Functional\Model\Pricing\ProductInputPriceRecalculatorTest` and use instance of `ProductInputPriceRecalculator` for input prices recalculations
     - you can copy paste the class from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Pricing/ProductInputPriceRecalculatorTest.php)
 - rename `Tests\ShopBundle\Functional\Model\Order\OrderEditTest` to `Tests\ShopBundle\Functional\Model\Order\OrderFacadeEditTest`
-    - change the test to is uses `OrderFacade` to edit the orders instead of calling `Order::edit()` directly
+    - change the test so it uses `OrderFacade` to edit the orders instead of calling `Order::edit()` directly
     - you'll have to modify the *act* phase of the test:
         ```diff
         - $this->order->edit($orderData, $this->orderItemPriceCalculation, $this->orderItemFactory, $this->orderPriceCalculation);
@@ -171,9 +179,9 @@ and fix them appropriately (you can copy paste them from [Github](https://github
         - add `OrderFacade` from the DIC
         - remove `OrderItemPriceCalculation`, `OrderItemFactoryInterface` and `OrderPriceCalculation`
     - you can see the test class on [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Order/OrderFacadeEditTest.php)
-- remove the following tests from `Tests\FrameworkBundle\Unit\Model\Customer\UserTest` and create new `Tests\ShopBundle\Functional\Model\Customer\CustomerFacadeTest` class that will test the behavior
-(you can copy paste the class from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Customer/CustomerFacadeTest.php))
+- create new `Tests\ShopBundle\Functional\Model\Customer\CustomerFacadeTest` class that will test the behavior of `CustomerFacade`:
     - `testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException()`
     - `testCreateNotDuplicateEmail()`
     - `testCreateDuplicateEmail()`
     - `testCreateDuplicateEmailCaseInsentitive()`
+    - you can copy paste the class from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Customer/CustomerFacadeTest.php)

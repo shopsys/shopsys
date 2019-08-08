@@ -4,6 +4,11 @@ There is a new layer in Shopsys Framework, called [read model](/docs/model/intro
 
 This upgrade requires the [Upgrade Instructions for Read Model for Product Lists](/docs/upgrade/upgrade-instructions-for-read-model-for-product-lists.md) to be applied first.
 
+- if you are using Elasticsearch for filtering, you need to configure it as your data source as well in your `service.yml` and `services_test.yml`:
+    ```diff
+    +    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
+    ```
+    - if in doubt about the configuration, see the [Read Model Options](/docs/model/introduction-to-read-model.md#read-model-options).
 - update Elasticsearch structure in `src/Shopsys/ShopBundle/Resources/definition/product/*.json` like this:
     ```diff
     "mappings": {
