@@ -1,5 +1,4 @@
 {% macro list(productViews, listCssClass, productHeadingTagName) %}
-    {% import '@ShopsysShop/Front/Inline/Product/productFlagsMacro.html.twig' as productFlags %}
 
     <ul class="list-products js-list js-product-list {{ listCssClass|default('') }}">
         {% for productView in productViews %}
