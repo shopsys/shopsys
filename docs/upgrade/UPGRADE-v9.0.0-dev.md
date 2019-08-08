@@ -24,4 +24,19 @@ There you can find links to upgrade notes for other versions too.
         - `src/Resources/views/Admin/Content/Category/detail.html.twig`
         - `src/Resources/views/Admin/Content/Product/detail.html.twig`
 
+### Tools
+
+- apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
+    - add `app/router.php` to skipped files for two rules in your `easy-coding-standard.yml`:
+        ```diff
+          Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff:
+              - '*/tests/ShopBundle/Functional/EntityExtension/EntityExtensionTest.php'
+              - '*/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php'
+        +     - '*/app/router.php'
+
+        + Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff:
+        +     - '*/app/router.php'
+        ```
+  - run `php phing standards-fix` and fix possible violations that need to be fixed manually
+
 [shopsys/framework]: https://github.com/shopsys/framework

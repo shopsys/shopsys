@@ -296,6 +296,7 @@
             <arg value="--name-only"/>
             <arg value="--diff-filter=ACMR"/>
             <arg value="${git.merge.base}"/>
+            <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
         </exec>
@@ -304,6 +305,7 @@
             <arg value="ls-files"/>
             <arg value="--others"/>
             <arg value="--exclude-standard"/>
+            <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
         </exec>
@@ -422,6 +424,7 @@
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--clear-cache"/>
+            <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
             <arg path="${path.root}/*.md"/>
@@ -432,6 +435,7 @@
     <target name="ecs-diff" description="Checks coding standards in changed files by PHP easy coding standards." hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
+            <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
             <arg path="${path.root}/*.md"/>
@@ -444,6 +448,7 @@
             <arg value="check"/>
             <arg value="--clear-cache"/>
             <arg value="--fix"/>
+            <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
             <arg path="${path.root}/*.md"/>
@@ -455,6 +460,7 @@
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--fix"/>
+            <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
             <arg path="${path.root}/*.md"/>
@@ -575,6 +581,7 @@
 
     <target name="phplint" description="Checks syntax of PHP files." hidden="true">
         <exec executable="${path.phplint.executable}" logoutput="true" passthru="true" checkreturn="true">
+            <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
         </exec>
@@ -600,6 +607,7 @@
             <arg value="-c"/>
             <arg path="${path.phpstan.config}"/>
 
+            <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
