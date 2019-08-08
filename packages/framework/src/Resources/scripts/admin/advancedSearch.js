@@ -54,10 +54,13 @@
 
     Shopsys.advancedSearch.addRule = function ($rulesContainer, $ruleTemplate, newIndex) {
         var ruleHtml = $ruleTemplate.clone().wrap('<div>').parent().html().replace(/__template__/g, newIndex);
+        ruleHtml = ruleHtml.replace("no-init", "");
+        ruleHtml = ruleHtml.replace("no-init", "");
+        ruleHtml = ruleHtml.replace("no-init", "");
         var $rule = $($.parseHTML(ruleHtml));
         $rule.appendTo($rulesContainer);
-
         Shopsys.register.registerNewContent($rule);
+        Shopsys.select2.init($rulesContainer);
     };
 
     Shopsys.advancedSearch.updateAllValuesByOperator = function ($rulesContainer) {
