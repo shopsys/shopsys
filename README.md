@@ -99,7 +99,7 @@ We distribute the main parts of Shopsys Framework under two different licenses:
 
 Learn the principles on which we distribute our product on our website at [Licenses and Pricing section](https://www.shopsys.com/licensing).
 
-Some of the Shopsys Framework repositories including [HTTP smoke testing](https://github.com/shopsys/http-smoke-testing) and [Monorepo Tools](https://github.com/shopsys/monorepo-tools) are distributed under standard MIT license so generally you can use it without any restriction. The infromation about license is placed in LICENSE file in root of each repository.
+Some of the Shopsys Framework repositories including [HTTP smoke testing](https://github.com/shopsys/http-smoke-testing) and [Monorepo Tools](https://github.com/shopsys/monorepo-tools) are distributed under standard MIT license so generally you can use it without any restriction. The information about the license is placed in the LICENSE file in the root of each repository.
 
 Shopsys Framework also uses some third-party components and images which are licensed under their own respective licenses.
 The list of these licenses is summarized in [Open Source License Acknowledgements and Third Party Copyrights](./open-source-license-acknowledgements-and-third-party-copyrights.md).
