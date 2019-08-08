@@ -113,7 +113,7 @@ The changes should always be described in [upgrade notes](/UPGRADE.md) (in the *
 Changes of Twig functions and filters in `MINOR` and `PATCH` releases must be backward-compatible.
 This means only a new optional argument or a support for new data type of existing argument may be added.
 
-Twig blocks, functions, filters and the templates themselves can be removed or renamed only in a `MAJOR` release.
+Twig blocks, functions, filters, macros, imports of macros in templates, and the templates themselves can be removed or renamed only in a `MAJOR` release.
 
 ### HTML
 Backward-compatible changes and additions to the HTML structure may be introduced in any release.
