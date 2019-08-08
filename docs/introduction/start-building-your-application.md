@@ -5,13 +5,14 @@ Here are first steps you should start with.
 
 *Note: If you don't have a working application, [install it](/docs/installation/installation-guide.md) first.*
 
-## Commit lock files
+## Commit `migrations-lock.yml`
 
 Committing lock files is important because the application is then installed in the same way in all environments (most importantly in the production) and also in the same way for all team members.
+Notice that lock files for composer (`composer.lock`) and npm (`package-lock.json`) dependencies are already committed in your project.
 
 ```bash
-git add composer.lock package-lock.json migrations-lock.yml
-git commit -m'locked composer, npm and migrations'
+git add migrations-lock.yml
+git commit -m'locked migrations'
 ```
 
 ## Set up domains
