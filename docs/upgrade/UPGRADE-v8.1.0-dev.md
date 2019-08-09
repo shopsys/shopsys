@@ -18,4 +18,25 @@ There you can find links to upgrade notes for other versions too.
       ports:
     ```
 
+### Tools
+- let Phing properties `is-multidomain` and `translations.dump.locales` be auto-detected ([#1309](https://github.com/shopsys/shopsys/pull/1309))
+    - stop overriding the Phing properties `is-multidomain` and `translations.dump.locales` in your `build.xml`, these properties should not be used anymore
+        ```diff
+          <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
+
+        - <property name="is-multidomain" value="true"/>
+        - <property name="translations.dump.locales" value="cs en xx"/>
+          <property name="phpstan.level" value="1"/>
+        ```
+    - if you use the deprecated properties in your `build.xml` yourself, make the particular Phing target dependent on `domains-info-load` and use new auto-detected properties `domains-info.is-multidomain` and `domains-info.locales` instead
+        ```diff
+        - <target name="my-custom-localization-target">
+        + <target name="my-custom-localization-target" depends="domains-info-load">
+              <exec executable="${path.custom-localization.executable}" passthru="true" checkreturn="true">
+        -         <arg line="${translations.dump.locales}"/>
+        +         <arg line="${domains-info.locales}"/>
+              </exec>
+          </target>
+        ```
+
 [shopsys/framework]: https://github.com/shopsys/framework
