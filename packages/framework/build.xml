@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="shopsys_framework" default="list">
 
-    <property name="is-multidomain" value="true"/>
+    <property name="is-multidomain" value="true" description="This property is @deprecated, see 'domains-info-load' target instead."/>
     <property name="path.app" value="${path.root}/app"/>
     <property name="path.bin" value="${path.vendor}/bin"/>
     <property name="path.bin-console" value="${path.root}/bin/console"/>
@@ -37,7 +37,7 @@
     <property name="path.web.styles.front" value="${path.web}/assets/frontend/styles"/>
     <property name="path.yaml-standards.executable" value="${path.bin}/yaml-standards"/>
     <property name="phpstan.level" value="4"/>
-    <property name="translations.dump.locales" value="en cs"/>
+    <property name="translations.dump.locales" value="en cs" description="This property is @deprecated, see 'domains-info-load' target instead."/>
     <property name="translations.dump.flags" value="--keep"/>
     <property name="yaml-standards.indent-count" value="4"/>
     <property name="yaml-standards.args" value=""/>
@@ -267,6 +267,31 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:schema:create"/>
         </exec>
+    </target>
+
+    <target name="domains-info-load" description="Load info about domains configuration into Phing properties." hidden="true">
+        <exec executable="${path.php.executable}" outputProperty="domains-info.ids">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:domains:info"/>
+        </exec>
+
+        <exec executable="${path.php.executable}" outputProperty="domains-info.locales">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:domains:info"/>
+            <arg value="locale"/>
+        </exec>
+
+        <if>
+            <matches string="${domains-info.ids}" pattern="\d+\s+\d+"/>
+            <then>
+                <echo>y</echo>
+                <property name="domains-info.is-multidomain" value="true"/>
+            </then>
+            <else>
+                <echo>f</echo>
+                <property name="domains-info.is-multidomain" value="false"/>
+            </else>
+        </if>
     </target>
 
     <target name="diff-files" description="Finds changed files (against origin/master) and saves them into properties." hidden="true">
@@ -875,9 +900,9 @@
         </exec>
     </target>
 
-    <target name="tests-functional" depends="clean,clean-redis" description="Runs functional tests.">
+    <target name="tests-functional" depends="clean,clean-redis,domains-info-load" description="Runs functional tests.">
         <if>
-            <istrue value="${is-multidomain}"/>
+            <istrue value="${domains-info.is-multidomain}"/>
             <then>
                 <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
                     <arg value="--colors=always"/>
@@ -929,9 +954,9 @@
         </exec>
     </target>
 
-    <target name="tests-smoke" depends="clean,clean-redis" description="Runs smoke tests.">
+    <target name="tests-smoke" depends="clean,clean-redis,domains-info-load" description="Runs smoke tests.">
         <if>
-            <istrue value="${is-multidomain}"/>
+            <istrue value="${domains-info.is-multidomain}"/>
             <then>
                 <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
                     <arg value="--colors=always"/>
@@ -974,7 +999,7 @@
         </exec>
     </target>
 
-    <target name="translations-dump" description="Extracts translatable messages from all source files in your project.">
+    <target name="translations-dump" depends="domains-info-load" description="Extracts translatable messages from all source files in your project.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="translation:extract"/>
@@ -985,7 +1010,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.src}/Shopsys/ShopBundle/Resources/translations"/>
             <arg line="${translations.dump.flags}"/>
-            <arg line="${translations.dump.locales}"/>
+            <arg line="${domains-info.locales}"/>
         </exec>
     </target>
 
