@@ -17,7 +17,7 @@ There you can find links to upgrade notes for other versions too.
     -     -   ./docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
       ports:
     ```
- 
+
 ### Tools
 - let Phing properties `is-multidomain` and `translations.dump.locales` be auto-detected ([#1308](https://github.com/shopsys/shopsys/pull/1308))
     - stop overriding the Phing properties `is-multidomain` and `translations.dump.locales` in your `build.xml`, these properties should not be used anymore

@@ -269,31 +269,6 @@
         </exec>
     </target>
 
-    <target name="domains-info-load" description="Load info about domains configuration into Phing properties." hidden="true">
-        <exec executable="${path.php.executable}" outputProperty="domains-info.ids">
-            <arg value="${path.bin-console}"/>
-            <arg value="shopsys:domains:info"/>
-        </exec>
-
-        <exec executable="${path.php.executable}" outputProperty="domains-info.locales">
-            <arg value="${path.bin-console}"/>
-            <arg value="shopsys:domains:info"/>
-            <arg value="locale"/>
-        </exec>
-
-        <if>
-            <matches string="${domains-info.ids}" pattern="\d+\s+\d+"/>
-            <then>
-                <echo>y</echo>
-                <property name="domains-info.is-multidomain" value="true"/>
-            </then>
-            <else>
-                <echo>f</echo>
-                <property name="domains-info.is-multidomain" value="false"/>
-            </else>
-        </if>
-    </target>
-
     <target name="diff-files" description="Finds changed files (against origin/master) and saves them into properties." hidden="true">
         <exec executable="${path.git.executable}" outputProperty="git.status.output" returnProperty="git.status.returnCode">
             <arg value="status"/>
@@ -434,6 +409,31 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-db-functions:create"/>
         </exec>
+    </target>
+
+    <target name="domains-info-load" description="Load info about domains configuration into Phing properties." hidden="true">
+        <exec executable="${path.php.executable}" outputProperty="domains-info.ids">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:domains:info"/>
+        </exec>
+
+        <exec executable="${path.php.executable}" outputProperty="domains-info.locales">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:domains:info"/>
+            <arg value="locale"/>
+        </exec>
+
+        <if>
+            <matches string="${domains-info.ids}" pattern="\d+\s+\d+"/>
+            <then>
+                <echo>y</echo>
+                <property name="domains-info.is-multidomain" value="true"/>
+            </then>
+            <else>
+                <echo>f</echo>
+                <property name="domains-info.is-multidomain" value="false"/>
+            </else>
+        </if>
     </target>
 
     <target name="domains-urls-replace" description="Replaces domains urls in database by urls in configuration. You should run it when you modify domains_urls.yml">

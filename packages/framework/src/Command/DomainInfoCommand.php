@@ -33,7 +33,11 @@ class DomainInfoCommand extends Command
      */
     protected $domain;
 
-    public function __construct(Domain $domain) {
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
+    public function __construct(Domain $domain)
+    {
         parent::__construct();
 
         $this->domain = $domain;
@@ -46,9 +50,9 @@ class DomainInfoCommand extends Command
     {
         $this
             ->setDescription('Loads and displays domain info.')
-            ->addArgument(self::ARG_PROPERTY_NAME, InputArgument::OPTIONAL, 'Property that should be loaded', 'id')
-            ->addArgument(self::ARG_ID, InputArgument::OPTIONAL, 'Domain ID (if omitted, the command will output all distinct values)')
-            ->addOption(self::OPTION_ALL, 'a', InputOption::VALUE_NONE, 'Display all property values (without sorting and deduplication)');
+            ->addArgument(static::ARG_PROPERTY_NAME, InputArgument::OPTIONAL, 'Property that should be loaded', 'id')
+            ->addArgument(static::ARG_ID, InputArgument::OPTIONAL, 'Domain ID (if omitted, the command will output all distinct values)')
+            ->addOption(static::OPTION_ALL, 'a', InputOption::VALUE_NONE, 'Display all property values (without sorting and deduplication)');
     }
 
     /**
@@ -63,29 +67,29 @@ class DomainInfoCommand extends Command
         } catch (\InvalidArgumentException $e) {
             $io->error($e->getMessage());
 
-            return self::RETURN_CODE_ERROR;
+            return static::RETURN_CODE_ERROR;
         }
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
-        $propertyName = $input->getArgument(self::ARG_PROPERTY_NAME);
+        $propertyName = $input->getArgument(static::ARG_PROPERTY_NAME);
         $propertyValues = [];
         foreach ($domainConfigs as $domainConfig) {
             if (!$propertyAccessor->isReadable($domainConfig, $propertyName)) {
                 $this->outputPropertyNotAccessible($io, $domainConfig, $propertyName);
 
-                return self::RETURN_CODE_ERROR;
+                return static::RETURN_CODE_ERROR;
             }
 
             $propertyValues[] = $propertyAccessor->getValue($domainConfig, $propertyName);
         }
 
-        if (!$input->getOption(self::OPTION_ALL)) {
+        if (!$input->getOption(static::OPTION_ALL)) {
             sort($propertyValues);
             $propertyValues = array_unique($propertyValues);
         }
         $io->writeln(implode("\t", $this->formatPropertyValues($propertyValues)));
 
-        return self::RETURN_CODE_OK;
+        return static::RETURN_CODE_OK;
     }
 
     /**
@@ -96,7 +100,7 @@ class DomainInfoCommand extends Command
     {
         $domainConfigs = $this->domain->getAllIncludingDomainConfigsWithoutDataCreated();
 
-        $domainId = $input->getArgument(self::ARG_ID);
+        $domainId = $input->getArgument(static::ARG_ID);
         if ($domainId !== null) {
             foreach ($domainConfigs as $domainConfig) {
                 if ($domainId === (string)$domainConfig->getId()) {
