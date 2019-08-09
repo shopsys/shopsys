@@ -349,8 +349,8 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = Money::create(1000);
-        $filterData->maximalPrice = Money::create(80000);
+        $filterData->minimalPrice = Money::create(50);
+        $filterData->maximalPrice = Money::create(1000);
 
         $countData = new ProductFilterCountData();
         $countData->countInStock = 6;
@@ -669,9 +669,9 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
             3 => 2,
         ];
         $countData->countByFlagId = [
-            1 => 15,
+            1 => 14,
             2 => 5,
-            3 => 3,
+            3 => 2,
         ];
 
         return [
@@ -754,20 +754,23 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
     private function searchPriceTestCase(): array
     {
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = Money::create(5000);
-        $filterData->maximalPrice = Money::create(50000);
+        $filterData->minimalPrice = Money::create(50);
+        $filterData->maximalPrice = Money::create(1000);
         $countData = new ProductFilterCountData();
-        $countData->countInStock = 9;
+        $countData->countInStock = 21;
         $countData->countByBrandId = [
-            2 => 4,
-            3 => 1,
+            2 => 8,
+            3 => 2,
             4 => 1,
+            8 => 1,
             11 => 1,
+            14 => 2,
             15 => 1,
+            19 => 2,
         ];
         $countData->countByFlagId = [
-            1 => 2,
-            2 => 2,
+            1 => 8,
+            2 => 5,
         ];
 
         return [
@@ -823,10 +826,10 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_DEFENDER);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_GENIUS);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_HP);
-        $filterData->maximalPrice = Money::create(20000);
+        $filterData->maximalPrice = Money::create(1000);
 
         $countData = new ProductFilterCountData();
-        $countData->countInStock = 3;
+        $countData->countInStock = 4;
         $countData->countByBrandId = [
             2 => 3,
             3 => 1,

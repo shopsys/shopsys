@@ -56,21 +56,21 @@ class PriceExtensionTest extends FunctionalTestCase
     public function priceFilterDataProviderSingleDomain()
     {
         return [
-            ['input' => Money::create(12), 'domainId' => 1, 'result' => 'CZK12.00'],
-            ['input' => Money::create('12.00'), 'domainId' => 1, 'result' => 'CZK12.00'],
-            ['input' => Money::create('12.600'), 'domainId' => 1, 'result' => 'CZK12.60'],
-            ['input' => Money::create('12.630000'), 'domainId' => 1, 'result' => 'CZK12.63'],
-            ['input' => Money::create('12.638000'), 'domainId' => 1, 'result' => 'CZK12.638'],
-            ['input' => Money::create('12.630000'), 'domainId' => 1, 'result' => 'CZK12.63'],
+            ['input' => Money::create(12), 'domainId' => 1, 'result' => '€12.00'],
+            ['input' => Money::create('12.00'), 'domainId' => 1, 'result' => '€12.00'],
+            ['input' => Money::create('12.600'), 'domainId' => 1, 'result' => '€12.60'],
+            ['input' => Money::create('12.630000'), 'domainId' => 1, 'result' => '€12.63'],
+            ['input' => Money::create('12.638000'), 'domainId' => 1, 'result' => '€12.638'],
+            ['input' => Money::create('12.630000'), 'domainId' => 1, 'result' => '€12.63'],
             [
                 'input' => Money::create('123456789.123456789'),
                 'domainId' => 1,
-                'result' => 'CZK123,456,789.123456789',
+                'result' => '€123,456,789.123456789',
             ],
             [
                 'input' => Money::create('123456789.123456789123456789'),
                 'domainId' => 1,
-                'result' => 'CZK123,456,789.1234567891',
+                'result' => '€123,456,789.1234567891',
             ],
         ];
     }
@@ -80,21 +80,21 @@ class PriceExtensionTest extends FunctionalTestCase
         $filterDataSingleDomain = $this->priceFilterDataProviderSingleDomain();
 
         $filterDataMultiDomain = [
-            ['input' => Money::create(12), 'domainId' => 2, 'result' => '12,00' . self::NBSP . '€'],
-            ['input' => Money::create('12.00'), 'domainId' => 2, 'result' => '12,00' . self::NBSP . '€'],
-            ['input' => Money::create('12.600'), 'domainId' => 2, 'result' => '12,60' . self::NBSP . '€'],
-            ['input' => Money::create('12.630000'), 'domainId' => 2, 'result' => '12,63' . self::NBSP . '€'],
-            ['input' => Money::create('12.638000'), 'domainId' => 2, 'result' => '12,638' . self::NBSP . '€'],
-            ['input' => Money::create('12.630000'), 'domainId' => 2, 'result' => '12,63' . self::NBSP . '€'],
+            ['input' => Money::create(12), 'domainId' => 2, 'result' => '12,00' . self::NBSP . 'Kč'],
+            ['input' => Money::create('12.00'), 'domainId' => 2, 'result' => '12,00' . self::NBSP . 'Kč'],
+            ['input' => Money::create('12.600'), 'domainId' => 2, 'result' => '12,60' . self::NBSP . 'Kč'],
+            ['input' => Money::create('12.630000'), 'domainId' => 2, 'result' => '12,63' . self::NBSP . 'Kč'],
+            ['input' => Money::create('12.638000'), 'domainId' => 2, 'result' => '12,638' . self::NBSP . 'Kč'],
+            ['input' => Money::create('12.630000'), 'domainId' => 2, 'result' => '12,63' . self::NBSP . 'Kč'],
             [
                 'input' => Money::create('123456789.123456789'),
                 'domainId' => 2,
-                'result' => '123' . self::NBSP . '456' . self::NBSP . '789,123456789' . self::NBSP . '€',
+                'result' => '123' . self::NBSP . '456' . self::NBSP . '789,123456789' . self::NBSP . 'Kč',
             ],
             [
                 'input' => Money::create('123456789.123456789123456789'),
                 'domainId' => 2,
-                'result' => '123' . self::NBSP . '456' . self::NBSP . '789,1234567891' . self::NBSP . '€',
+                'result' => '123' . self::NBSP . '456' . self::NBSP . '789,1234567891' . self::NBSP . 'Kč',
             ],
         ];
 

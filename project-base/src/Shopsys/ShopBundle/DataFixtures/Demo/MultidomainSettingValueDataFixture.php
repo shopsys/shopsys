@@ -9,7 +9,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
 class MultidomainSettingValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -75,10 +74,6 @@ class MultidomainSettingValueDataFixture extends AbstractReferenceFixture implem
             </p>
         ';
         $this->setting->setForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $orderSentText, $domainId);
-
-        /* @var $defaultCurrency \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency */
-        $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_EUR);
-        $this->setting->setForDomain(PricingSetting::DEFAULT_DOMAIN_CURRENCY, $defaultCurrency->getId(), $domainId);
 
         $this->setting->setForDomain(
             SeoSettingFacade::SEO_META_DESCRIPTION_MAIN_PAGE,

@@ -14,7 +14,7 @@ class Version20180603135342 extends AbstractMigration
     {
         $currenciesCount = $this->sql('SELECT count(*) FROM currencies')->fetchColumn(0);
         if ($currenciesCount <= 0) {
-            $this->sql('INSERT INTO currencies (id, name, code, exchange_rate) VALUES (1, \'Česká koruna\', \'CZK\', 1)');
+            $this->sql('INSERT INTO currencies (id, name, code, exchange_rate) VALUES (1, \'Euro\', \'EUR\', 1)');
             $this->sql('ALTER SEQUENCE currencies_id_seq RESTART WITH 2');
 
             $defaultCurrencyId = $this->sql('SELECT COUNT(*) FROM setting_values WHERE name = \'defaultCurrencyId\' AND domain_id = 0;')->fetchColumn(0);

@@ -33,11 +33,11 @@ class CartCest
 
         $productDetailPage->addProductIntoCart(3);
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('1 item for CZK10,497.00');
+        $cartBoxPage->seeInCartBox('1 item for €420.00');
 
         $productDetailPage->addProductIntoCart(3);
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('1 item for CZK20,994.00');
+        $cartBoxPage->seeInCartBox('1 item for €840.00');
 
         $me->amOnPage('/cart/');
 
@@ -65,7 +65,7 @@ class CartCest
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeInCartBox('1 item');
         $me->amOnPage('/cart/');
-        $cartPage->assertProductPrice('Defender 2.0 SPK-480', 'CZK119.00');
+        $cartPage->assertProductPrice('Defender 2.0 SPK-480', '€5.00');
     }
 
     /**
@@ -89,7 +89,7 @@ class CartCest
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeInCartBox('1 item');
         $me->amOnPage('/cart/');
-        $cartPage->assertProductPrice('22" Sencor SLE 22F46DM4 HELLO KITTY', 'CZK3,499.00');
+        $cartPage->assertProductPrice('22" Sencor SLE 22F46DM4 HELLO KITTY', '€140.00');
     }
 
     /**
@@ -110,7 +110,7 @@ class CartCest
         $productDetailPage->addProductIntoCart(3);
         $me->see('Product 22" Sencor SLE 22F46DM4 HELLO KITTY (3 pcs) added to the cart');
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('1 item for CZK10,497.00');
+        $cartBoxPage->seeInCartBox('1 item for €420.00');
         $me->amOnPage('/cart/');
         $me->see('22" Sencor SLE 22F46DM4 HELLO KITTY');
     }
@@ -132,7 +132,7 @@ class CartCest
         $me->clickByText('Go to cart');
 
         $cartPage->changeProductQuantity('22" Sencor SLE 22F46DM4 HELLO KITTY', 10);
-        $cartPage->assertTotalPriceWithVat('CZK34,990.00');
+        $cartPage->assertTotalPriceWithVat('€1,400.00');
     }
 
     /**
@@ -182,12 +182,12 @@ class CartCest
         $me->amOnPage('/22-sencor-sle-22f46dm4-hello-kitty/');
         $productDetailPage->addProductIntoCart();
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('1 item for CZK3,499.00');
+        $cartBoxPage->seeInCartBox('1 item for €140.00');
 
         $me->amOnPage('/canon-pixma-ip7250/');
         $productDetailPage->addProductIntoCart();
         $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeInCartBox('2 items for CZK27,687.00');
+        $cartBoxPage->seeInCartBox('2 items for €1,108.00');
 
         $me->amOnPage('/cart/');
         $cartPage->assertProductIsInCartByName('22" Sencor SLE 22F46DM4 HELLO KITTY');
@@ -214,7 +214,7 @@ class CartCest
         $productDetailPage->addProductIntoCart(75);
 
         $me->amOnPage('/cart/');
-        $cartPage->assertTotalPriceWithVat('CZK17,350.00');
+        $cartPage->assertTotalPriceWithVat('€745.00');
     }
 
     /**
@@ -239,11 +239,11 @@ class CartCest
         $cartPage->applyPromoCode('test');
 
         $cartPage->canSeePromoCodeRemoveButtonElement();
-        $cartPage->assertTotalPriceWithVat('CZK122.00');
+        $cartPage->assertTotalPriceWithVat('€6.00');
 
         $cartPage->removePromoCode();
 
         $cartPage->canSeePromoCodeSubmitButtonElement();
-        $cartPage->assertTotalPriceWithVat('CZK136.00');
+        $cartPage->assertTotalPriceWithVat('€7.00');
     }
 }

@@ -24,17 +24,17 @@ class ProductFilterCest
         $me->amOnPage('/tv-audio/');
         $productListPage->assertProductsTotalCount(28);
 
-        $productFilterPage->setMinimalPrice(1000);
-        $productListPage->assertProductsTotalCount(22);
+        $productFilterPage->setMinimalPrice(10);
+        $productListPage->assertProductsTotalCount(24);
 
-        $productFilterPage->setMaximalPrice(10000);
-        $productListPage->assertProductsTotalCount(16);
+        $productFilterPage->setMaximalPrice(1000);
+        $productListPage->assertProductsTotalCount(23);
 
         $productFilterPage->filterByBrand('LG');
-        $productListPage->assertProductsTotalCount(3);
+        $productListPage->assertProductsTotalCount(5);
 
         $productFilterPage->filterByBrand('Hyundai');
-        $productListPage->assertProductsTotalCount(7);
+        $productListPage->assertProductsTotalCount(10);
 
         $productFilterPage->filterByParameter('HDMI', 'Yes');
         $productListPage->assertProductsTotalCount(6);
