@@ -297,7 +297,7 @@
         </exec>
     </target>
 
-    <target name="translations-dump" depends="domains-info-load" description="Extracts translatable messages in the whole monorepo.">
+    <target name="translations-dump" description="Extracts translatable messages in the whole monorepo.">
         <phingcall target="shopsys_framework.translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -306,7 +306,7 @@
             <arg value="--dir=${path.packages}/form-types-bundle/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/form-types-bundle/src/Resources/translations"/>
-            <arg line="${domains-info.locales}"/>
+            <arg line="${translations.dump.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -319,7 +319,7 @@
             <arg value="--exclude-name=*AnnotatedRouteControllerLoader.php"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.framework}/src/Resources/translations"/>
-            <arg line="${domains-info.locales}"/>
+            <arg line="${translations.dump.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -328,7 +328,7 @@
             <arg value="--dir=${path.packages}/product-feed-google/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-google/src/Resources/translations"/>
-            <arg line="${domains-info.locales}"/>
+            <arg line="${translations.dump.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -337,7 +337,7 @@
             <arg value="--dir=${path.packages}/product-feed-heureka/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-heureka/src/Resources/translations"/>
-            <arg line="${domains-info.locales}"/>
+            <arg line="${translations.dump.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -346,7 +346,7 @@
             <arg value="--dir=${path.packages}/product-feed-heureka-delivery/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-heureka-delivery/src/Resources/translations"/>
-            <arg line="${domains-info.locales}"/>
+            <arg line="${translations.dump.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -355,7 +355,7 @@
             <arg value="--dir=${path.packages}/product-feed-zbozi/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-zbozi/src/Resources/translations"/>
-            <arg line="${domains-info.locales}"/>
+            <arg line="${translations.dump.locales}"/>
         </exec>
     </target>
 

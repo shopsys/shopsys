@@ -1,10 +1,11 @@
-@@ -5,9 +5,16 @@
+@@ -5,10 +5,17 @@
 
      <property name="path.root" value="${project.basedir}"/>
      <property name="path.vendor" value="${path.root}/vendor"/>
 +    <property name="path.backend-api" value="${path.vendor}/shopsys/backend-api"/>
      <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
 
+     <property name="is-multidomain" value="true"/>
      <property name="phpstan.level" value="1"/>
 
      <import file="${path.framework}/build.xml"/>
