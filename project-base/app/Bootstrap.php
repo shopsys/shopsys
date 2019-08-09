@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 require_once __DIR__ . '/autoload.php';
 
 setlocale(LC_CTYPE, 'en_US.utf8');
+setlocale(LC_NUMERIC, 'en_US.utf8');
 
 class Bootstrap
 {
