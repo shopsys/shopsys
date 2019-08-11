@@ -1,6 +1,6 @@
 # Upgrade Instructions for Read Model for Product Lists
 
-There is a new layer in Shopsys Framework, called [read model](/docs/model/introduction-to-read-model.md), separating the templates and application model.
+There is a new layer in Shopsys Framework, called [read model](../model/introduction-to-read-model.md), separating the templates and application model.
 Besides better logical separation of the application, it is a first step towards usage of Elasticsearch for frontend product lists, and hence significant performance boost in the near future.
 The read model package is marked as *experimental* at the moment so there is a possibility we might introduce some BC breaking changes there.
 You do not need to perform the upgrade instantly, however, if you do so, you will be better prepared for the upcoming changes.

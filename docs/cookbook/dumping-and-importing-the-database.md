@@ -20,7 +20,7 @@ phing db-wipe-public-schema
 **Warning: This command wipes everything in `public` database schema (i.e. you will lose all application data)!**
 
 *Note: In this step you were using Phing target `db-wipe-public-schema`.
-More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)*
 
 Then you can import the dump:
 ```

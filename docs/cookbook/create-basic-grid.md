@@ -4,9 +4,9 @@ We will learn how to properly use grid factory, how to configure data displayed,
 In the end, we will be able to even sort our grid by column, paginate large result sets and delete records.
 
 ## Prerequisites
-* As we are going to list the salesmen, you need to create the Salesman entity and add some entries to the database table following [the cookbook](/docs/cookbook/adding-a-new-entity.md), first.
+* As we are going to list the salesmen, you need to create the Salesman entity and add some entries to the database table following [the cookbook](./adding-a-new-entity.md), first.
 * You should know how to work with controllers, its actions and be familiar with concepts of administration pages in Shopsys Framework.
-    * We recommend you to read [Adding a New Administration Page](/docs/cookbook/adding-a-new-administration-page.md) cookbook.
+    * We recommend you to read [Adding a New Administration Page](./adding-a-new-administration-page.md) cookbook.
 
 ## 1. Define the grid
 ### 1.1 Create grid factory
@@ -133,7 +133,7 @@ First, we add columns we want to see into `SalesmanGridFactory::create` method.
     }
 ```
 
-*Note: In the example above, the column names are translated. Do not forget to [dump translations](/docs/introduction/console-commands-for-application-management-phing-targets.md#translations-dump).*
+*Note: In the example above, the column names are translated. Do not forget to [dump translations](../introduction/console-commands-for-application-management-phing-targets.md#translations-dump).*
 
 ## 2. Display the grid
 
@@ -195,7 +195,7 @@ Now, you should be able to see the basic grid with salesmen data when accessing 
 ![Basic Grid](img/basic-grid.png)
 
 *Note: If you want to add a link to the page to the menu and proper breadcrumb navigation,
-please check the corresponding section in [Adding a New Administration Page](/docs/cookbook/adding-a-new-administration-page.md#side-menu-and-breadcrumbs) cookbook.*
+please check the corresponding section in [Adding a New Administration Page](./adding-a-new-administration-page.md#side-menu-and-breadcrumbs) cookbook.*
 
 ## 3. Modify the basic grid appearance
 As you probably noticed, dates in the third column are not printed much friendly.
@@ -204,7 +204,7 @@ To adjust appearance (e.g., let's say we are in Germany and want to format the d
 ### 3.1 Create a new template
 We create the new twig template `listGrid.html.twig` in `src/Shopsys/ShopBundle/Resources/views/Admin/Content/Salesman`.
 The template has to extend `@ShopsysFramework/Admin/Grid/Grid.html.twig` and override block `grid_value_cell_id_registeredAt` where we apply a Twig filter to the value.
-[You can read more about blocks here](/docs/administration/grid-rendering-customization.md).
+[You can read more about blocks here](../administration/grid-rendering-customization.md).
 
 ```twig
 {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
@@ -283,7 +283,7 @@ Grid eases the task with already implemented action column.
 
 ### 6.1 Implement the deletion logic
 First, we need to get the salesman entity by its id and then remove it from persistence using Doctrine entity manager.
-We will follow the basic concepts of Shopsys Framework (see ["Basics about model architecture"](/docs/introduction/basics-about-model-architecture.md) article) and create new classes - `SalesmanFacade` and `SalesmanRepository`.
+We will follow the basic concepts of Shopsys Framework (see ["Basics about model architecture"](../model/introduction-to-model-architecture.md) article) and create new classes - `SalesmanFacade` and `SalesmanRepository`.
 
 #### 6.1.1 Create `SalesmanRepository` and implement `getById` method
  ```php

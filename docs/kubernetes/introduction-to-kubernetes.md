@@ -7,9 +7,9 @@ After you change your configuration, Kubernetes will again deploy all that is ne
 
 Kubernetes architecture consists of the server part (a *cluster*), the client (*kubectl*) and the configuration (*manifests*).
 
-For local development, [we use Docker Compose](/docs/introduction/shopsys-framework-on-docker.md) to run and interconnect our containers.
+For local development, [we use Docker Compose](../introduction/shopsys-framework-on-docker.md) to run and interconnect our containers.
 But on our Continuous Integration server, we quickly encountered issues as our requirements increased.
-We had to come up with several workarounds, such as [programmatically allocating available ports](/docs/cookbook/jenkins-configuration.md#handling-ports), to enable running several builds in parallel.
+We had to come up with several workarounds, such as [programmatically allocating available ports](../cookbook/jenkins-configuration.md#handling-ports), to enable running several builds in parallel.
 This basically meant we ended up writing a simplistic orchestration ourselves...
 
 Furthermore, for deployment of a big scalable application to a production environment, Docker Compose wouldn't suffice.
@@ -41,7 +41,7 @@ Here is a summary of the basic term used in Kubernetes:
 We try to avoid using it for clarity.
 - **Kubernetes Cluster** is an abstraction over a set of servers (*nodes*).
 You can deploy your application directly into a *cluster*.
-For practical details, see [How to Get a Cluster Running](/docs/kubernetes/how-to-get-a-cluster-running.md).
+For practical details, see [How to Get a Cluster Running](./how-to-get-a-cluster-running.md).
 - **Node** is a part of a *cluster*. It is an abstraction over a single server.
 - **kubectl** is a CLI client for remotely controlling your *cluster*.
 You can run `kubectl` to deploy your application, access logs or connect directly into a running container.

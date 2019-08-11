@@ -61,7 +61,7 @@ Of course, an SSL certificate must be installed on your server.
 To set up the user translations of labels and messages, use the files `messages.en.po` and `validators.en.po`, where `en` represents the locale.
 These files are generated for each locale you use, and you can find them in the `ShopBundle/Resources/translations/` directory.
 Language settings are described more in detail in the tutorial [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md#3-locale-settings).
-For more information about translations, see [the separate article](/docs/introduction/translations.md).
+For more information about translations, see [the separate article](./translations.md).
 
 ## How to set up deployment and production server?
 We recommend installation using the Docker for production.
@@ -92,7 +92,7 @@ You can change the environment manually by using the command `php bin/console sh
 
 ## Are some periodic tasks part of the Shopsys Framework (cron)?
 Yes, there is some prepared configuration for Shopsys Framework cron commands in a file `src/Resources/config/services/cron.yml` in `FrameworkBundle`.
-Do not forget to set up a cron on your server to execute [`php phing cron`](/docs/introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
+Do not forget to set up a cron on your server to execute [`php phing cron`](./console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
 
 ## Why are you using entity data instead of entities for Symfony forms?
 We are using [entity data objects](../model/entities.md#entity-data) instead of [entities](../model/introduction-to-model-architecture.md#entity)
@@ -106,4 +106,4 @@ E.g., by default, all our services are defined as private. However, in tests, we
 
 ## How to change the behavior of the product search on the front-end?
 Full-text product search on the front-end is handled via Elasticsearch.
-If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](/docs/model/front-end-product-searching.md).
+If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](../model/front-end-product-searching.md).

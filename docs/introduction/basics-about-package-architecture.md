@@ -48,7 +48,7 @@ Install [`shopsys/project-base`](https://github.com/shopsys/project-base) using 
 ```
 composer create-project shopsys/project-base --no-install --keep-vcs
 ```
-For more detailed instructions, follow [Installation Using Docker](/docs/installation/installation-guide.md#installation-using-docker).
+For more detailed instructions, follow [Installation Using Docker](../installation/installation-guide.md#installation-using-docker).
 #### Why not clone or fork?
 `composer create-project` ensures that new project will be created from the latest release of `shopsys/project-base`.
 `git clone` creates a new project from current repository master branch.
@@ -64,14 +64,14 @@ as the project’s every customization has to work well with every new release.
 The framework and modules provide glass-box extensibility,
 ie. you can upgrade them independently via `composer update`.
 
-***Note:** During composer update there will be installed or updated 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+***Note:** During composer update there will be installed or updated 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
 #### Project base
 There is no automated way of upgrading the project base.
 If you wanted to upgrade your project base, you would need to [cherry-pick](https://git-scm.com/docs/git-cherry-pick) or [merge](https://git-scm.com/docs/git-merge) modifications from the original repository manually.
 We try to ease you the process as much as possible by maintaining clear GIT history,
-keeping up-to-date [changelog](../../project-base/CHANGELOG.md) and [upgrading instructions](../../project-base/UPGRADE.md),
-and writing [understandable commit messages](../../docs/contributing/guidelines-for-creating-commits.md).
+keeping up-to-date [changelog](https://github.com/shopsys/shopsys/blob/7.3/CHANGELOG.md) and [upgrading instructions](https://github.com/shopsys/shopsys/blob/7.3/UPGRADE.md),
+and writing [understandable commit messages](../contributing/guidelines-for-creating-commits.md).
 
 ## Conclusion
 * You learned it is necessary to use composer to initialize development of your own project based on the framework.

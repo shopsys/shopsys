@@ -9,7 +9,7 @@ php phing standards
 ```
 
 *Note: In this step you were using Phing target `standards`.
-More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)*
 
 A lot of the violations of the rules can be fixed automatically by calling
 ```
@@ -24,7 +24,7 @@ Besides the rules that are checked by automatic tools, we have few rules for whi
     <div class="js-bestselling-products list-products-line">
     ```
 
-- Names in configuration files (eg. [`parameters.yml.dist`](../../project-base/app/config/parameters.yml.dist)) are underscored
+- Names in configuration files (eg. [`parameters.yml.dist`](https://github.com/shopsys/project-base/blob/master/app/config/parameters.yml.dist)) are underscored
     ```
     shopsys.doctrine.cache_driver.query_cache
     ```

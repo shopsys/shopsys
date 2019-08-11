@@ -223,4 +223,4 @@ You can read more about them in [Model Rules](./model-rules.md).
 
 ## Read Model
 Next to the standard model described in this article, there is also an extra layer called "read model" that separates templates and the model itself in particular reading use-cases.
-You can read more in [Introduction to Read Model](/docs/model/introduction-to-read-model.md).
+You can read more in [Introduction to Read Model](./introduction-to-read-model.md).

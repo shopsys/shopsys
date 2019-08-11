@@ -1,12 +1,12 @@
 # Shopsys Framework Knowledge Base
 
 ## What is new and how to upgrade
-* In [CHANGELOG.md](../CHANGELOG.md) you can find the list of all important changes in all repositories maintained in [shopsys/shopsys monorepo](https://github.com/shopsys/shopsys/)
-* For step by step upgrade instructions see [UPGRADE.md](../UPGRADE.md)
-* Thanks to our [Backward Compatibility Promise](/docs/contributing/backward-compatibility-promise.md) it should be clear to which versions you can upgrade safely and how we plan to maintain the code in the future
+* In [CHANGELOG.md](https://github.com/shopsys/shopsys/blob/7.3/CHANGELOG.md) you can find the list of all important changes in all repositories maintained in [shopsys/shopsys monorepo](https://github.com/shopsys/shopsys/)
+* For step by step upgrade instructions see [UPGRADE.md](https://github.com/shopsys/shopsys/blob/7.3/UPGRADE.md)
+* Thanks to our [Backward Compatibility Promise](./contributing/backward-compatibility-promise.md) it should be clear to which versions you can upgrade safely and how we plan to maintain the code in the future
 
 ## Introduction
-* [Installation Guide](/docs/installation/installation-guide.md)
+* [Installation Guide](./installation/installation-guide.md)
 * [Installation Using Docker on Production Server](installation/installation-using-docker-on-production-server.md)
 * [Console Commands for Application Management (Phing Targets)](./introduction/console-commands-for-application-management-phing-targets.md)
 * [Automated Testing](./introduction/automated-testing.md)
@@ -16,7 +16,7 @@
 * [Database Migrations](./introduction/database-migrations.md)
 * [Components](./introduction/components.md)
 * [Abstract Filesystem](./introduction/abstract-filesystem.md)
-* [Product Feeds](./introduction/product-feeds.md)
+* [Product Feeds](./model/product-feeds.md)
 * [Logging](./introduction/logging.md)
 * [Domain, Multidomain, Multilanguage](./introduction/domain-multidomain-multilanguage.md)
 * [How to Set Up Domains and Locales (Languages)](./introduction/how-to-set-up-domains-and-locales.md)
@@ -74,12 +74,12 @@
 * [Understanding the Style Directory](./frontend/understanding-the-style-directory.md)
 
 ## Orchestration
-* [Introduction to Kubernetes](/docs/kubernetes/introduction-to-kubernetes.md)
-* [Continuous Integration Using Kubernetes](/docs/kubernetes/continuous-integration-using-kubernetes.md)
-* [Logging on Continuous Integration server running Kubernetes](/docs/kubernetes/logging-on-continuous-integration-server-running-kubernetes.md)
-* [How to deploy SSFW to Google Cloud platform](/docs/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform.md)
-* [Deploy Your Application to Google Cloud on your CI/CD](/docs/kubernetes/deploy-your-application-to-google-cloud-on-your-ci-cd.md)
-* [How to set SMTP Server Container](/docs/kubernetes/how-to-set-smtp-server-container.md)
+* [Introduction to Kubernetes](./kubernetes/introduction-to-kubernetes.md)
+* [Continuous Integration Using Kubernetes](./kubernetes/continuous-integration-using-kubernetes.md)
+* [Logging on Continuous Integration server running Kubernetes](./kubernetes/logging-on-continuous-integration-server-running-kubernetes.md)
+* [How to deploy SSFW to Google Cloud platform](./kubernetes/how-to-deploy-ssfw-to-google-cloud-platform.md)
+* [Deploy Your Application to Google Cloud on your CI/CD](./kubernetes/deploy-your-application-to-google-cloud-on-your-ci-cd.md)
+* [How to set SMTP Server Container](./kubernetes/how-to-set-smtp-server-container.md)
 
 ## FAQ
 For the frequently asked questions, see

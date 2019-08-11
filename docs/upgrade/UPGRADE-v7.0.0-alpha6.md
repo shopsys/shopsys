@@ -2,7 +2,7 @@
 
 This guide contains instructions to upgrade from version v7.0.0-alpha5 to v7.0.0-alpha6.
 
-**Before you start, don't forget to take a look at [general instructions](/UPGRADE.md) about upgrading.**
+**Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/7.3/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
 
 *Note: instructions marked as "low priority" are not vital, however, we recommend to perform them as well during upgrading as it might ease your work in the future.*
@@ -77,7 +77,7 @@ There you can find links to upgrade notes for other versions too.
 - run `php phing ecs-fix` to apply new coding standards - [keep class spacing consistent #384](https://github.com/shopsys/shopsys/pull/384)
 
 ## [shopsys/shopsys]
-- when upgrading your installed [monorepo](docs/introduction/monorepo.md), you'll have to change the build context for the images of the microservices in `docker-compose.yml`
+- when upgrading your installed [monorepo](../introduction/monorepo.md), you'll have to change the build context for the images of the microservices in `docker-compose.yml`
     - `build.context` should be the root of the microservice (eg. `microservices/product-search-export`)
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running

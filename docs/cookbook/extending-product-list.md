@@ -1,7 +1,7 @@
 # Extending Product List
 
-If you want add more information to product lists, you need to do a little bit more than [extending an entity](/docs/cookbook/adding-new-attribute-to-an-entity.md).
-That is because the frontend product lists leverage [the read model concept](/docs/model/introduction-to-read-model.md), i.e. special view objects are used instead of common Doctrine entities in the Twig templates.
+If you want add more information to product lists, you need to do a little bit more than [extending an entity](./adding-new-attribute-to-an-entity.md).
+That is because the frontend product lists leverage [the read model concept](../model/introduction-to-read-model.md), i.e. special view objects are used instead of common Doctrine entities in the Twig templates.
 
 This cookbook describes how to extend the frontend product lists with step by step instructions.
 

@@ -2,11 +2,11 @@
 While using just Docker Compose for our CI, we ran into problems with port allocation and IP addresses range allowed for Docker.
 We ended up with our own solution to orchestration which was not perfect and it was hard to replicate onto another server CI.
 
-More about this solution can be found in the [Jenkins Configuration cookbook](/docs/cookbook/jenkins-configuration.md).
+More about this solution can be found in the [Jenkins Configuration cookbook](../cookbook/jenkins-configuration.md).
 
 With this in mind, we decided to let go of our orchestration solution and let Kubernetes solve our problems.
 
-Introduction to Kubernetes and why we decided to use it can be found in [Introduction to Kubernetes](/docs/kubernetes/introduction-to-kubernetes.md).
+Introduction to Kubernetes and why we decided to use it can be found in [Introduction to Kubernetes](./introduction-to-kubernetes.md).
 
 ## How it works
 Our CI builds every branch pushed into the repository.
@@ -57,12 +57,12 @@ This configuration needs to be copied into `~/.kube/config` on your CI server.
 The config must be saved into the home directory of the user running the builds.
 For example, on Jenkins CI the builds are ran as a user `jenkins` so the configuration file is saved like this: `/var/lib/jenkins/.kube/config`.
 
-For more about the cluster configuration, see [How to Get a Cluster Running](/docs/kubernetes/how-to-get-a-cluster-running.md).
+For more about the cluster configuration, see [How to Get a Cluster Running](./how-to-get-a-cluster-running.md).
 
 #### Kustomize
 In `.ci/build_kubernetes.sh` we use Kustomize to generate Kubernetes manifests for our environment, which is CI. Kustomize can distinguish manifests used for each environment by selecting resources used by each environment.
 
-You can read more about what Kustomize does [here](./how-to-deploy-ssfw-to-google-cloud-platform.md#kustomize), or you can read their [official documenation](https://github.com/kubernetes-sigs/kustomize/tree/master/docs)
+You can read more about what Kustomize does [here](./how-to-deploy-ssfw-to-google-cloud-platform.md#intro-to-kustomize), or you can read their [official documenation](https://github.com/kubernetes-sigs/kustomize/tree/master/docs)
 
 #### Provide Environment Variables
 Build cannot be performed without providing some environment variables.
@@ -78,7 +78,7 @@ You must provide the following environment variables:
 | **$DOCKER_PASSWORD**                    | your password to Docker Hub
 | **$GIT_COMMIT**                         | hash of the built commit, used for tagging images
 | **$JOB_NAME**                           | branch name used for domain names and build process
-| **$NGINX_INGRESS_CONTROLLER_HOST_PORT** | port used in the ingress controller running on node, don't use 80 (for details, see [How to Get a Cluster Running](/docs/kubernetes/how-to-get-a-cluster-running.md))
+| **$NGINX_INGRESS_CONTROLLER_HOST_PORT** | port used in the ingress controller running on node, don't use 80 (for details, see [How to Get a Cluster Running](./how-to-get-a-cluster-running.md))
 
 ### Build
 Build of the application is then executed by one single command since the build process is saved into shell file which is part of the repository.

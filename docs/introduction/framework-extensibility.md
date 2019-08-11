@@ -5,23 +5,23 @@ provides a list of customizations that are not achievable now but are planned to
 as well as a list of customizations that are not (and will not be) possible at all.
 
 ## What is achievable easily
-* [Extending an entity](/docs/extensibility/entity-extension.md)
-    * [Adding a new attribute](/docs/cookbook/adding-new-attribute-to-an-entity.md)
-    * *Note: There are some limitations when extending OrderItem, for more see [the documentation](/docs/extensibility/entity-extension.md#orderitem)*
+* [Extending an entity](../extensibility/entity-extension.md)
+    * [Adding a new attribute](../cookbook/adding-new-attribute-to-an-entity.md)
+    * *Note: There are some limitations when extending OrderItem, for more see [the documentation](../extensibility/entity-extension.md#orderitem)*
 * The administration can be extended by:
-    * [Adding a new administration page](/docs/cookbook/adding-a-new-administration-page.md) along with the side menu and breadcrumbs
-    * [Extending particular forms](/docs/extensibility/form-extension.md) without the need of the template overriding
-* [Customizing database migrations](/docs/introduction/database-migrations.md)
+    * [Adding a new administration page](../cookbook/adding-a-new-administration-page.md) along with the side menu and breadcrumbs
+    * [Extending particular forms](../extensibility/form-extension.md) without the need of the template overriding
+* [Customizing database migrations](../introduction/database-migrations.md)
     * adding a new migration as well as skipping and reordering the existing ones
 * Configuring the smoke tests (see [`RouteConfigCustomization`](/project-base/tests/ShopBundle/Smoke/Http/RouteConfigCustomization.php) class)
     * *Note: This is now achievable as the configuration class is located in the open box project-base.
     However, that makes the upgrading of the component harder so the configuration is planned to be re-worked.*
-* [Implementing custom product feed or modifying an existing one](/docs/model/product-feeds.md)
-* [Implementing a basic data import](/docs/cookbook/basic-data-import.md) to import data to you e-shop from an external source
+* [Implementing custom product feed or modifying an existing one](../model/product-feeds.md)
+* [Implementing a basic data import](../cookbook/basic-data-import.md) to import data to you e-shop from an external source
     * adding a new cron module and configuring it
 * [Extending the application using standard Symfony techniques](https://symfony.com/doc/current/bundles/override.html)
     * e.g. overriding Twig templates, routes, services, ...
-* [Adding a new advert position](/docs/cookbook/adding-a-new-advert-position.md) to be used in the administration section *Marketing > Advertising system*
+* [Adding a new advert position](../cookbook/adding-a-new-advert-position.md) to be used in the administration section *Marketing > Advertising system*
 * open-box modifications in `project-base`
     * e.g. adding new entities, changing the FE design, customization of FE javascripts, adding new FE pages (routes and controllers), ...
 * [Hiding the existing features and functionality](https://github.com/shopsys/demoshop/pull/13)
@@ -46,7 +46,7 @@ as well as a list of customizations that are not (and will not be) possible at a
 * Removing an attribute from a framework entity
 * Changing a data type of an entity attribute
 * Removing existing entities and features
-* Extending [the `Money` class](/docs/model/how-to-work-with-money.md) and closely related classes (eg. `MoneyType`)
+* Extending [the `Money` class](../model/how-to-work-with-money.md) and closely related classes (eg. `MoneyType`)
 
 ## Examples of implemented features on the [Demoshop repository](https://github.com/shopsys/demoshop)
 * [Shipping method with pickup places](https://github.com/shopsys/demoshop/pull/6)

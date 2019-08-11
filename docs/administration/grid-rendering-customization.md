@@ -15,7 +15,7 @@ To customize your grid, you just need to create a new template extending the ori
      - the default (translatable) value is "No records found"
 
 ## Example
-Let's say we have a grid of salesmen (in fact, such a grid is created in ["Create basic grid"](/docs/cookbook/create-basic-grid.md) cookbook)
+Let's say we have a grid of salesmen (in fact, such a grid is created in ["Create basic grid"](../cookbook/create-basic-grid.md) cookbook)
 and we want to display all their names bold, and also, we want to be more specific when there are no salesmen in our database.
 
 1. Create a new template that extends to original one and override the blocks you need:

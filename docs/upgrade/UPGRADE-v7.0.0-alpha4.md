@@ -2,7 +2,7 @@
 
 This guide contains instructions to upgrade from version v7.0.0-alpha3 to v7.0.0-alpha4.
 
-**Before you start, don't forget to take a look at [general instructions](/UPGRADE.md) about upgrading.**
+**Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/7.3/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
 
 ## [shopsys/framework]
@@ -10,7 +10,7 @@ There you can find links to upgrade notes for other versions too.
 - already existing data object factories changed their signatures
 - to change the last item in admin breadcrumb, use `BreadcrumbOverrider:overrideLastItem(string $label)` instead of `Breadcrumb::overrideLastItem(MenuItem $item)`
 - if you've customized the admin menu by using your own `admin_menu.yml`, implement event listeners instead
-    - see the [Adding a New Administration Page](/docs/cookbook/adding-a-new-administration-page.md) cookbook for details
+    - see the [Adding a New Administration Page](../cookbook/adding-a-new-administration-page.md) cookbook for details
 
 ## [shopsys/product-feed-google]
 - move creation of data objects into factories

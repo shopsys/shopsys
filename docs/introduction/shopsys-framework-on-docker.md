@@ -22,7 +22,7 @@ system libraries, settings. Thanks to that, the containerized software will
 always run the same, regardless of the environment.
 
 An orchestration tool can further help with managing the containers (even though you don't need it for local development).
-For details, you can read the [Introduction to Kubernetes](/docs/kubernetes/introduction-to-kubernetes.md).
+For details, you can read the [Introduction to Kubernetes](../kubernetes/introduction-to-kubernetes.md).
 
 ## 3. Shopsys-framework on Docker
 

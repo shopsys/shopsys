@@ -3,7 +3,7 @@
 This article describes the upgrade instructions for [#1040 Upgrading PHPStan](https://github.com/shopsys/shopsys/pull/1040).
 Pull request updates PHPStan in framework to level 4, but recommended level for your project is 1 as level 4 does not comply with framework extensibility options.
 
-Upgrade instructions are in a separate article because there is a lot of instructions and we don't want to jam the [UPGRADE-v7.3.0](/docs/upgrade/UPGRADE-v7.3.0.md).
+Upgrade instructions are in a separate article because there is a lot of instructions and we don't want to jam the [UPGRADE-v7.3.0](./UPGRADE-v7.3.0.md).
 Instructions are meant to be followed when you upgrade from `v7.2.0` to `v7.3.0`.
 
 To upgrade level of PHPStan you need to:
@@ -11,7 +11,7 @@ To upgrade level of PHPStan you need to:
     ```xml
     <property name="phpstan.level" value="1"/>
     ```
-    - if you have [overridden the `phpstan` Phing target](/docs/introduction/console-commands-for-application-management-phing-targets.md#customization-of-phing-targets-and-properties) or don't use the `build.xml` from `shopsys/framework` package yet, look for `<arg value="--level=0"/>` in your `build.xml` and change its value instead.
+    - if you have [overridden the `phpstan` Phing target](../introduction/console-commands-for-application-management-phing-targets.md#customization-of-phing-targets-and-properties) or don't use the `build.xml` from `shopsys/framework` package yet, look for `<arg value="--level=0"/>` in your `build.xml` and change its value instead.
 - add `phpstan-doctrine` and `phpstan-phpunit` extension packages as dev dependencies to `composer.json`
     ```diff
     "require-dev": {

@@ -2,7 +2,7 @@
 
 This guide contains instructions to upgrade from version v7.2.0 to v7.2.1.
 
-**Before you start, don't forget to take a look at [general instructions](/UPGRADE.md) about upgrading.**
+**Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/7.3/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
 
 ## [shopsys/framework]
@@ -16,7 +16,7 @@ There you can find links to upgrade notes for other versions too.
         ```
 - fix the typo in Twig template `@ShopsysShop/Front/Content/Category/panel.html.twig` ([#1043](https://github.com/shopsys/shopsys/pull/1043))
     - `categoriyWithLazyLoadedVisibleChildren` ⟶ `categoryWithLazyLoadedVisibleChildren`
-- create an empty file `app/Resources/.gitkeep` to prepare a folder for [your overwritten templates](/docs/cookbook/modifying-a-template-in-administration.md) ([#1073](https://github.com/shopsys/shopsys/pull/1073))
+- create an empty file `app/Resources/.gitkeep` to prepare a folder for [your overwritten templates](../cookbook/modifying-a-template-in-administration.md) ([#1073](https://github.com/shopsys/shopsys/pull/1073))
 - fix `FilterQueryTest` to use ElasticSearch index prefix properly via `ElasticsearchStructureManager` ([#1082](https://github.com/shopsys/shopsys/pull/1082))
     ```diff
     - private const ELASTICSEARCH_INDEX = 'product1';

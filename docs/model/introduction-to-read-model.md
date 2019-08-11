@@ -1,6 +1,6 @@
 # Introduction to Read Model
 
-Read model is an extra layer that separates templates and [the application model](/docs/model/introduction-to-model-architecture.md).
+Read model is an extra layer that separates templates and [the application model](./introduction-to-model-architecture.md).
 The read model is taken from [CQRS pattern](https://martinfowler.com/bliki/CQRS.html) where the main idea is usage of different objects for reading and writing data.
 
 ![model architecture schema](./img/read-model-architecture.png 'Read model in Shopsys Framework architecture')

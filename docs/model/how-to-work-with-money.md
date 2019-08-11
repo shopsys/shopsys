@@ -120,7 +120,7 @@ $orderItemFormBuilder->add('priceWithVat', MoneyType::class, [
 ```
 
 The form type is configured with a model data transformer that converts the value into a `Money` object automatically ([`NumericToMoneyTransformer`](/packages/framework/src/Form/Transformers/NumericToMoneyTransformer.php)).
-Thanks to this approach you can use `Money` in your [data objects](/docs/model/entities.md#entity-data) directly.
+Thanks to this approach you can use `Money` in your [data objects](./entities.md#entity-data) directly.
 
 In Shopsys Framework, the default value of the `currency` option is `false` instead of `EUR`, hiding the currency symbol by default.
 
@@ -216,7 +216,7 @@ They usually differ only in the currency and locale they use.
 ### priceText
 
 Filter `priceText` formats the amount of money in a localized manner, similarly to the `price` filter.
-The only difference is that it outputs the text *"Free"* (or the corresponding [translation](/docs/introduction/translations.md)) when zero amount of money is provided.
+The only difference is that it outputs the text *"Free"* (or the corresponding [translation](../introduction/translations.md)) when zero amount of money is provided.
 
 ### priceTextWithCurrencyByCurrencyIdAndLocale
 
@@ -327,7 +327,7 @@ class MyEntity
 
 ### In Parameters
 
-When you want to use a `Money` instance as a parameter in DQL, use the `getAmount` method in your [repository class](/docs/model/introduction-to-model-architecture.md#repository):
+When you want to use a `Money` instance as a parameter in DQL, use the `getAmount` method in your [repository class](./introduction-to-model-architecture.md#repository):
 
 ```php
 use Shopsys\FrameworkBundle\Component\Money\Money;

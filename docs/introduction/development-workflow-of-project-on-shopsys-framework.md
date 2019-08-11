@@ -1,7 +1,7 @@
 # Development Workflow of Project on Shopsys Framework
 
 ## Requirements
-* Shopsys Framework [installed](/docs/installation/installation-guide.md)
+* Shopsys Framework [installed](../installation/installation-guide.md)
 * [GIT repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository) created from Shopsys Framework [project-base](https://github.com/shopsys/project-base/)
 
 ## How to develop a new feature
@@ -10,14 +10,14 @@
 1. Check and automatically fix your code standards using `php phing standards-fix-diff`
 
     *Note: In this step you were using Phing target `standards-fix-diff`.
-    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)*
 1. Check if all tests are passing using `php phing tests`
 1. Run acceptance tests `php phing tests-acceptance`
 
     *Note: We suggest you running acceptance tests on your Continuous Integration server because it takes several minutes to run them.*
 1. [Create commit](https://git-scm.com/docs/git-commit) with descriptive commit message about changes you have made.
 
-    *Note: We have [Guidelines for Creating Commits](/docs/contributing/guidelines-for-creating-commits.md) for contributors to Shopsys Framework.
+    *Note: We have [Guidelines for Creating Commits](../contributing/guidelines-for-creating-commits.md) for contributors to Shopsys Framework.
     These guidelines suggest some best practices for creating commits that you could adopt on your project.*
 1. [Push changes](https://git-scm.com/docs/git-push) to your remote GIT repository
 1. Let some colleague review your code and fix all reported problems

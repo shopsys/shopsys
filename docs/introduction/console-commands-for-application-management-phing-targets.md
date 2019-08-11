@@ -28,7 +28,7 @@ Let us take look at the first one, that is located in the same file:
 ```
 Target `build-deploy-part-1-db-independent` also executes subset of Phing targets (`clean`,`composer-prod`,`npm`,`dirs-create`,`domains-urls-check`,`assets`).
 
-***Note:** During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+***Note:** During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
 Let us move a little deeper and take a look at the first one, `clean`:
 ```xml
@@ -57,12 +57,12 @@ Builds the application for production preserving your DB.
 
 Most important build command for production. Cleans cache, installs composer dependencies, installs npm, install assets, installs database migrations and much more.
 
-*Note: More about how to install and deploy your application in production can be found in [Installation Using Docker on Production Server](/docs/installation/installation-using-docker-on-production-server.md)*
+*Note: More about how to install and deploy your application in production can be found in [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md)*
 
 #### build-demo-ci
 Most important build command for continuous integration server. Builds the whole application and after that runs all coding standards checks and all tests.
 
-*Note: More about how to build your CI and check your application there can be found in [Configuring Jenkins for Continuous Integration](/docs/cookbook/jenkins-configuration.md)*
+*Note: More about how to build your CI and check your application there can be found in [Configuring Jenkins for Continuous Integration](../cookbook/jenkins-configuration.md)*
 
 #### build-demo-dev
 Builds the application for development with clean demo DB and runs checks on changed files.
@@ -215,12 +215,12 @@ For example:
 </target>
 ```
 
-For more information, see [Working with Multiple Cron Instances](/docs/cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](/docs/introduction/cron.md).
+For more information, see [Working with Multiple Cron Instances](../cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](../introduction/cron.md).
 
 #### cron-list
 Lists all available background jobs. If there is more than one cron instance registered, jobs are grouped by instance.
 
-For more information, see [Working with Multiple Cron Instances](/docs/cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](/docs/introduction/cron.md).
+For more information, see [Working with Multiple Cron Instances](../cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](../introduction/cron.md).
 
 #### grunt
 Builds CSS from LESS via Grunt.
@@ -232,7 +232,7 @@ Extracts translatable messages from the whole project including back-end.
 
 Great tool when you want to translate your application into another language.
 
-For more information about translations, see [the separate article](/docs/introduction/translations.md).
+For more information about translations, see [the separate article](../introduction/translations.md).
 
 ## Customization of Phing targets and properties
 *If you're not yet using `v7.3.0`, all Phing targets are defined in `build.xml` in the project repository only - you can directly modify them or delete them instead of overwriting them.*
@@ -266,4 +266,4 @@ Since the `build/build.local.properties` file is not versioned, the changes will
 
 ---
 
-*Note: If you want to add new Phing targets into Shopsys Framework or modify existing ones, please read [our guidelines](/docs/contributing/guidelines-for-phing-targets.md) before contributing.*
+*Note: If you want to add new Phing targets into Shopsys Framework or modify existing ones, please read [our guidelines](../contributing/guidelines-for-phing-targets.md) before contributing.*

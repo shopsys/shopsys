@@ -3,13 +3,13 @@ This article provides step by step instructions for advanced grid configurations
 After finishing this cookbook, you will know how to create a grid with inline editing, and drag&drop sorting.
 
 ## Prerequisites
-- you have created a grid for Salesman entity following [Create Basic Grid](/docs/cookbook/create-basic-grid.md) cookbook
+- you have created a grid for Salesman entity following [Create Basic Grid](./create-basic-grid.md) cookbook
 - you are aware of Shopsys Framework model concepts like entity data classes and their factories, facades etc.
-    - we recommend you to read the [Basics about model architecture](/docs/introduction/basics-about-model-architecture.md) article.
+    - we recommend you to read the [Basics about model architecture](../model/introduction-to-model-architecture.md) article.
 - a basic knowledge of [Symfony forms](https://symfony.com/doc/3.4/forms.html) might be helpful for you
 
 ## 1. Allow inline editing
-In this step, we will allow creating and editing of salesmen entities (that we worked with in the [previous cookbook](/docs/cookbook/create-basic-grid.md)) directly using the grid.
+In this step, we will allow creating and editing of salesmen entities (that we worked with in the [previous cookbook](./create-basic-grid.md)) directly using the grid.
 As a preparation for that, we need to implement the creation and editing logic, first.
 
 ### 1.1 Create `SalesmanData` class

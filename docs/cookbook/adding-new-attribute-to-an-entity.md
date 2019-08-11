@@ -2,8 +2,8 @@
 In the following example, we will add `extId` (alias "external ID") field to the `Product` entity.
 It is a common modification when you need your e-commerce application and ERP system to co-work smoothly.
 
-*Note: if you want to display your new attribute on the frontend product list, you need to extend the [read model layer](/docs/model/introduction-to-read-model.md) as well.
-You can find instructions in [Extending Product List](./cookbook/extending-product-list.md).*
+*Note: if you want to display your new attribute on the frontend product list, you need to extend the [read model layer](../model/introduction-to-read-model.md) as well.
+You can find instructions in [Extending Product List](./extending-product-list.md).*
 
 ## Extend framework `Product` entity
 
@@ -78,7 +78,7 @@ You can find instructions in [Extending Product List](./cookbook/extending-produ
     ```
 
     *Note: In this step you were using Phing target `db-migrations-generate`.
-    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)*
 
 1. Run the migration to actually create the column in your database:
     ```

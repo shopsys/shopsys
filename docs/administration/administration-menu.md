@@ -1,7 +1,7 @@
 # Administration Menu
 
 The admin side menu is implemented by [KnpMenuBundle](https://symfony.com/doc/master/bundles/KnpMenuBundle/index.html) and to extend it, you can use [events](https://symfony.com/doc/master/bundles/KnpMenuBundle/events.html).
-An example of such an extension is described in the cookbook [Adding a New Administration Page](/docs/cookbook/adding-a-new-administration-page.md).
+An example of such an extension is described in the cookbook [Adding a New Administration Page](../cookbook/adding-a-new-administration-page.md).
 
 To see how the side menu works programmatically, you can see the [`SideMenuBuilder`](/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where it is created.
 The side menu builder is tagged with `knp_menu.menu_builder` and is accessible under the alias `admin_side_menu`.

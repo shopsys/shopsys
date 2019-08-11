@@ -1,6 +1,6 @@
 # Grid Data Sources
 
-As a data source, the [Grid Component](/docs/administration/grid.md) requires an implementation of [`DataSourceInterface`](/packages/framework/src/Component/Grid/DataSourceInterface.php).
+As a data source, the [Grid Component](./grid.md) requires an implementation of [`DataSourceInterface`](/packages/framework/src/Component/Grid/DataSourceInterface.php).
 
 You can find 4 implementations of the interface in Shopsys Framework.
 
@@ -61,7 +61,7 @@ foreach ($domain->getAll() as $domainConfig) {
 $dataSource = new ArrayDataSource($domainData, 'id');
 ```
 ## [`MoneyConvertingDataSourceDecorator`](/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecorator.php)
-A decorator that can be applied to any of the data sources described above. It provides conversion of monetary values in a data set to [`Money` value object](/docs/introduction/how-to-work-with-money.md#money-class).
+A decorator that can be applied to any of the data sources described above. It provides conversion of monetary values in a data set to [`Money` value object](../model/how-to-work-with-money.md#money-class).
 
 ### Example of usage
 ```php

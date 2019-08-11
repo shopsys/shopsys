@@ -1,9 +1,9 @@
 # Adding a New Entity
 This article provides step by step instructions on how to add a new entity to your project.
-Basic information about custom entities can be found in the [separate article](/docs/introduction/custom-entities.md).
+Basic information about custom entities can be found in the [separate article](../model/custom-entities.md).
 
 Let's say we need to keep an agenda of salesmen. After finishing this cookbook, the new salesman entity will not be presented on the FE in any fashion,
-however, you can continue with another [cookbook](/docs/cookbook/create-basic-grid.md) that will show you how to display a list of salesmen using a grid in administration.
+however, you can continue with another [cookbook](./create-basic-grid.md) that will show you how to display a list of salesmen using a grid in administration.
 
 ## 1. Create a new class `Salesman` and set it as an entity using Doctrine annotation
 ```php
@@ -151,4 +151,4 @@ php phing db-migrations
 
 ## Conclusion
 Now, there is a new entity in your system - `Salesmen` - for which exists a database table that has 4 records with salesmen.
-If you want to display a list of them in the administration, follow ["Create basic grid" cookbook](/docs/cookbook/create-basic-grid.md).
+If you want to display a list of them in the administration, follow ["Create basic grid" cookbook](./create-basic-grid.md).

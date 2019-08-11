@@ -1,7 +1,7 @@
 # Installation Using Docker - application setup
 
 This guide expects that you have already set up your Docker environment.
-If you haven't already done that check the [Installation using Docker](/docs/installation/installation-guide.md#installation-using-docker).
+If you haven't already done that check the [Installation using Docker](./installation-guide.md#installation-using-docker).
 
 ## 1. Setup the Shopsys Framework application
 Now that the Docker environment is prepared we can setup the application itself.
@@ -22,7 +22,7 @@ The optimized composer speed up your application.
 composer install -o
 ```
 
-***Note:** During composer installation there will be installed 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+***Note:** During composer installation there will be installed 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
 Composer will prompt you to set parameters ([description of parameters](application-configuration.md)).
 The default parameters suggested by composer are currently set for application running in Docker so you can just use these.
@@ -37,14 +37,14 @@ php phing test-db-create
 ```
 
 *Note: In this step you were using multiple Phing targets.
-More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)*
 
 ### 1.4. Build the application
 ```
 php phing build-demo-dev-quick error-pages-generate
 ```
 
-***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
 ## 2. See it in your browser!
 
@@ -61,4 +61,4 @@ Elasticsearch API is available on the address [http://127.0.0.1:9200](http://127
 You can use e.g. [Postman](https://www.getpostman.com/apps) or [Kibana](https://www.elastic.co/downloads/kibana) for Elasticseacrh management.
 
 If you need to inspect your application logs, use `docker-compose logs` command.
-For more information about logging see [the separate article](/docs/introduction/logging.md).
+For more information about logging see [the separate article](../introduction/logging.md).

@@ -29,9 +29,9 @@ Start the build, for example using a phing target
 php phing build-demo-dev
 ```
 *Note: In this step you were using Phing target `build-demo-dev`.
-More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](./console-commands-for-application-management-phing-targets.md)*
 
-***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
 After the build is completed, a singledomain application is created.
 
@@ -115,7 +115,7 @@ php phing translations-dump
 ```
 There will be created files for translations of messages for the new locale in `src/Shopsys/ShopBundle/Resources/translations/`.
 
-For more information about translations, see [the separate article](/docs/introduction/translations.md).
+For more information about translations, see [the separate article](./translations.md).
 
 #### 3.4 Generate database functions for the locale use
 Within the database functions, it is necessary to regenerate the default database functions for the locale use that are already created for the `en` locale as default.

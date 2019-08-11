@@ -347,7 +347,7 @@ and [`VatFacade`](../../packages/framework/src/Model/Pricing/Vat/VatFacade.php) 
 
 *Note 3: `Money::create()` can be used only for integers and numeric strings.
 If you use floats in your `$externalProductData` array you should always use `Money::createFromFloat()` and specify scale explicitly.
-Read more about monetary values in [How to Work with Money](/docs/model/how-to-work-with-money.md).*
+Read more about monetary values in [How to Work with Money](../model/how-to-work-with-money.md).*
 
 #### 3.6 - Extend [`VatRepository`](../../packages/framework/src/Model/Pricing/Vat/VatRepository.php) and implement method `getVatByPercent()` in order to load [`Vat`](../../packages/framework/src/Model/Pricing/Vat/Vat.php) by percent
 ```php
@@ -439,7 +439,7 @@ php bin/console shopsys:cron --module="Shopsys\ShopBundle\Model\Product\ImportPr
 #### 4.2 - Find your module and run appropriate console command
 `php bin/console shopsys:cron --module="Shopsys\ShopBundle\Model\Product\ImportProductsCronModule"`
 
-*Note: More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md).*
+*Note: More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md).*
 
 ## Best practices
 - Validate all incoming data before putting them into data objects.

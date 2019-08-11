@@ -396,7 +396,7 @@ If you need to transfer a collection of entities, use PHPDoc annotation `entity[
 To transfer monetary values (*prices, account balances, discount amounts, price limits etc.*) you should always use `\Shopsys\FrameworkBundle\Component\Money\Money` (optionally nullable or as an array).
 You may initialize a default value in the constructor or in the data factory (eg. with `Money::zero()`).
 
-You can read more about the `Money` class in [How to Work with Money](/docs/model/how-to-work-with-money.md).
+You can read more about the `Money` class in [How to Work with Money](../model/how-to-work-with-money.md).
 
 #### Images
 
@@ -408,7 +408,7 @@ To transfer URL addresses via the system, use PHPDoc annotation `\Shopsys\Framew
 
 #### Multidomain
 
-[Multidomain property](/docs/introduction/domain-multidomain-multilanguage.md#multidomain-attribute) is an array and has to be indexed by `domainId` - an integer ID of the given domain.
+[Multidomain property](../introduction/domain-multidomain-multilanguage.md#multidomain-attribute) is an array and has to be indexed by `domainId` - an integer ID of the given domain.
 An example of such property is a `seoH1s` in the `BrandData` example above.
 Data factory has to create an item in this array for each domain ID, otherwise domain entities would not be created correctly (a domain entity should exist for each domain, even with null values).
 
@@ -417,7 +417,7 @@ For boolean multidomain properties, we recommend using default value filled in t
 
 #### Multilanguage
 
-[Multilanguage property](/docs/introduction/domain-multidomain-multilanguage.md#multilanguage-attribute) is an array and has to be indexed by `locale` - a string identifier of language (you can find them in [`domains.yml`](/project-base/app/config/domains.yml)).
+[Multilanguage property](../introduction/domain-multidomain-multilanguage.md#multilanguage-attribute) is an array and has to be indexed by `locale` - a string identifier of language (you can find them in [`domains.yml`](/project-base/app/config/domains.yml)).
 An example of such property is a `descriptions` in the `BrandData` example above.
 Data factory has to create an item in this array for each locale, otherwise translation entities would not be created correctly (a translation entity should exist for each locale, even with null values).
 Therefore the multidomain field has PHPDoc annotation `string[]|null[]`.

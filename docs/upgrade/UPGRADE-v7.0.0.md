@@ -2,7 +2,7 @@
 
 This guide contains instructions to upgrade from version v7.0.0-beta6 to v7.0.0.
 
-**Before you start, don't forget to take a look at [general instructions](/UPGRADE.md) about upgrading.**
+**Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/7.3/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
 
 *Note: instructions marked as "low priority" are not vital, however, we recommend to perform them as well during upgrading as it might ease your work in the future.*
@@ -23,9 +23,9 @@ if you want to have products data exported to Elasticsearch after `build-demo` t
 - check whether you extended class or method `ImageFacade::copyImages` or used it in your project and make sure it works like you intended ([#851](https://github.com/shopsys/shopsys/pull/851))
     - *(low priority)* remove `/var/www/html/var/cache` folder from your `@main_filesystem` filesystem storage if exists, set as local filesystem storage in path `%kernel.project_dir%` by default
 - use `Money` class for representing monetary values in the whole application ([#821](https://github.com/shopsys/shopsys/pull/821))
-    - we recommend first reading the article [How to Work with Money](/docs/model/how-to-work-with-money.md) which explains the concept
+    - we recommend first reading the article [How to Work with Money](../model/how-to-work-with-money.md) which explains the concept
     - you can take a look at [what was modified in `shopsys/project-base` during this change](https://github.com/shopsys/project-base/compare/cb6d02f335819aeff575dec01bda5b228263a2eb...c08cac7b55ebc46b43c2e988d36e2f122cbb4598#files_bucket) (24 files)
-    - you'll find detailed instructions in separate article [Upgrade Instructions for Money Class](/docs/upgrade/money-class.md)
+    - you'll find detailed instructions in separate article [Upgrade Instructions for Money Class](./money-class.md)
 - you need to provide `$temporaryFilenames` parameter anywhere you use `ImageFactoryInterface::create()` and `ImageFacade::uploadImage()` functions ([#869](https://github.com/shopsys/shopsys/pull/869))
     - the parameter is not nullable now
 - if you're using protected method `ImageProcessor::removeFileIfRenamed()` in your code, remove the usage due to the method was removed and the code was moved to `convertToShopFormatAndGetNewFilename()` ([#869](https://github.com/shopsys/shopsys/pull/869))

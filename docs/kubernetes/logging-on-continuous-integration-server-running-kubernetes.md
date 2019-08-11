@@ -1,5 +1,5 @@
 # Logging on Continuous Integration server running Kubernetes
-As this [article](/docs/introduction/logging.md) describes, our logs are streamed. Since we want to be able to look at logs on our CI without needing to perform `kubectl` commands on server we need to make simple workaround in order to get logs out of application and containers onto local storage.
+As this [article](../introduction/logging.md) describes, our logs are streamed. Since we want to be able to look at logs on our CI without needing to perform `kubectl` commands on server we need to make simple workaround in order to get logs out of application and containers onto local storage.
 
 ## Problem
 On our CI, every branch is built in its own Kubernetes namespace for isolation.
