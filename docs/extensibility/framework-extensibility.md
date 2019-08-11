@@ -5,15 +5,15 @@ provides a list of customizations that are not achievable now but are planned to
 as well as a list of customizations that are not (and will not be) possible at all.
 
 ## What is achievable easily
-* [Extending an entity](../extensibility/entity-extension.md)
+* [Extending an entity](entity-extension.md)
     * [Adding a new attribute](../cookbook/adding-new-attribute-to-an-entity.md)
-    * *Note: There are some limitations when extending OrderItem, for more see [the documentation](../extensibility/entity-extension.md#orderitem)*
+    * *Note: There are some limitations when extending OrderItem, for more see [the documentation](entity-extension.md#orderitem)*
 * The administration can be extended by:
     * [Adding a new administration page](../cookbook/adding-a-new-administration-page.md) along with the side menu and breadcrumbs
-    * [Extending particular forms](../extensibility/form-extension.md) without the need of the template overriding
+    * [Extending particular forms](form-extension.md) without the need of the template overriding
 * [Customizing database migrations](../introduction/database-migrations.md)
     * adding a new migration as well as skipping and reordering the existing ones
-* Configuring the smoke tests (see [`RouteConfigCustomization`](/project-base/tests/ShopBundle/Smoke/Http/RouteConfigCustomization.php) class)
+* Configuring the smoke tests (see [`RouteConfigCustomization`](/ShopBundle/Smoke/Http/RouteConfigCustomization.php) class)
     * *Note: This is now achievable as the configuration class is located in the open box project-base.
     However, that makes the upgrading of the component harder so the configuration is planned to be re-worked.*
 * [Implementing custom product feed or modifying an existing one](../model/product-feeds.md)

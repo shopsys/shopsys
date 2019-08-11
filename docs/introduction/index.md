@@ -1,10 +1,7 @@
 # Introduction
 
-* [Installation Guide](../installation/installation-guide.md)
-* [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md)
 * [Console Commands for Application Management (Phing Targets)](./console-commands-for-application-management-phing-targets.md)
 * [Automated Testing](./automated-testing.md)
-* [Framework Extensibility](./framework-extensibility.md)
 * [Basics About Package Architecture](./basics-about-package-architecture.md)
 * [Basic and Demo Data During Application Installation](./basic-and-demo-data-during-application-installation.md)
 * [Database Migrations](./database-migrations.md)
