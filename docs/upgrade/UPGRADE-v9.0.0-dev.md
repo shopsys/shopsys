@@ -8,7 +8,7 @@ There you can find links to upgrade notes for other versions too.
 ## [shopsys/framework]
 
 ### Infrastructure
-- follow infrastructure instructions in the [separate article](/docs/upgrade/upgrade-instructions-for-calculation-of-product-visibility-asynchronously.md#infrastructure) to add RabbitMQ ([#1228](https://github.com/shopsys/shopsys/pull/1228))
+- follow infrastructure instructions in the [separate article](/docs/upgrade/upgrade-instructions-for-calculation-of-product-visibility-asynchronously.md#infrastructure) to add RabbitMQ ([#1321](https://github.com/shopsys/shopsys/pull/1321))
 
 ### Application
 
@@ -26,6 +26,6 @@ There you can find links to upgrade notes for other versions too.
         - `src/Resources/views/Admin/Content/Brand/detail.html.twig`
         - `src/Resources/views/Admin/Content/Category/detail.html.twig`
         - `src/Resources/views/Admin/Content/Product/detail.html.twig`
-- follow application instructions in the [separate article](/docs/upgrade/upgrade-instructions-for-calculation-of-product-visibility-asynchronously.md#application) to use RabbitMQ to calculate visibility of products ([#1228](https://github.com/shopsys/shopsys/pull/1228))
+- follow application instructions in the [separate article](/docs/upgrade/upgrade-instructions-for-calculation-of-product-visibility-asynchronously.md#application) to use RabbitMQ to calculate visibility of products ([#1321](https://github.com/shopsys/shopsys/pull/1321))
 
 [shopsys/framework]: https://github.com/shopsys/framework

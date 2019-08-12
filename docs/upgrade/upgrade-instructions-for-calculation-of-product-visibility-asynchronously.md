@@ -1,6 +1,6 @@
 # Upgrade Instructions for Calculation of Product Visibility asynchronously
 
-In ([#1228](https://github.com/shopsys/shopsys/pull/1228)) was calculation of product visibility changed to be calculated asynchronously.
+In ([#1321](https://github.com/shopsys/shopsys/pull/1321)) was calculation of product visibility changed to be calculated asynchronously.
 The change introduced many [BC breaks](/docs/contributing/backward-compatibility-promise.md) (many methods were moved or changed their signatures) so you need to follow the upgrading instructions.
 
 ## Infrastructure
@@ -20,7 +20,7 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     +   COPY ${project_root}/docker/php-fpm/docker-php-consumer-entrypoint /usr/local/bin/
     +   RUN chmod +x /usr/local/bin/docker-php-consumer-entrypoint
     ```
-- create new [`docker/php-fpm/docker-php-consumer-entrypoint`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/php-fpm/docker-php-consumer-entrypoint) file with this content:
+- create new [`docker/php-fpm/docker-php-consumer-entrypoint`](https://github.com/shopsys/shopsys/blob/9.0/project-base/docker/php-fpm/docker-php-consumer-entrypoint) file with this content:
     ```diff
     +   #!/bin/bash
     +   set -e
@@ -57,7 +57,7 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     +       done
     +   fi
     ```
-- update your `docker-compose` files (`docker-compose.yml`, `docker-compose.yml.dist`, `docker-compose-mac.yml.dist` and `docker-compose-win.yml.dist`) using new versions in [`docker/conf`](https://github.com/shopsys/shopsys/tree/master/project-base/docker/conf) folder
+- update your `docker-compose` files (`docker-compose.yml`, `docker-compose.yml.dist`, `docker-compose-mac.yml.dist` and `docker-compose-win.yml.dist`) using new versions in [`docker/conf`](https://github.com/shopsys/shopsys/tree/9.0/project-base/docker/conf) folder
     - add RabbitMQ service
     ```diff
     +   rabbitmq:
@@ -104,15 +104,14 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     +               - rabbitmq
     +               - php-fpm
     ```
-    - add `product-visibility-recalculate-consumer`
+    - add `product-search-export-consumer`
     ```diff
-    +   product-visibility-recalculate-consumer:
+    +   product-search-export-consumer:
     +       <<: *common_consumer_configuration
-    +       container_name: shopsys-framework-product-visibility-recalculate-consumer
-    +       command: product_visibility_recalculate
+    +       container_name: shopsys-framework-product-search-export-consumer
+    +       command: product_search_export
     ```
-
-- create new [`infrastructure/supervisor.conf.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/infrastructure/supervisor.conf.dist) file with this content:
+- create new [`infrastructure/supervisor.conf.dist`](https://github.com/shopsys/shopsys/blob/9.0/project-base/infrastructure/supervisor.conf.dist) file with this content:
     ```diff
     +   [unix_http_server]
     +   file = /tmp/supervisor.sock
@@ -123,20 +122,22 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     +   [supervisorctl]
     +   serverurl = unix:///tmp/supervisor.sock
     +
+    +   [inet_http_server]
+    +   port=*:9001
+    +
     +   [supervisord]
     +   nodaemon=false
     +   logfile=/tmp/supervisor/supervisor.log
     +   pidfile=/tmp/supervisor/supervisord.pid
     +
-    +   [program:product_visibility_recalculate]
-    +   command=php ./bin/console rabbitmq:consumer product_visibility_recalculate --messages=1000
+    +   [program:product_search_export]
+    +   command=php ./bin/console rabbitmq:consumer product_search_export --messages=1000
     +   process_name=%(program_name)s%(process_num)02d
     +   numprocs=1
     +   startsecs=2
     +   autorestart=true
-    +   stdout_logfile=/tmp/product_visibility_recalculate_stdout.log
-    +   stderr_logfile=/tmp/product_visibility_recalculate_stderr.log
-    +
+    +   stdout_logfile=/tmp/product_search_export_stdout.log
+    +   stderr_logfile=/tmp/product_search_export_stderr.log
     ```
 - update your `.gitignore` file like this:
     ```diff
@@ -162,7 +163,7 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     +   yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[2].env[0].value ${GOOGLE_CLOUD_STORAGE_BUCKET_NAME}
     +   yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[2].env[1].value ${PROJECT_ID}
     ```
-- add a consumer container into [`kubernetes/deployments/webserver-php-fpm.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/kubernetes/deployments/webserver-php-fpm.yml)
+- add a consumer container into [`kubernetes/deployments/webserver-php-fpm.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/kubernetes/deployments/webserver-php-fpm.yml)
     ```diff
         -   image: nginx:1.13.10-alpine
             name: webserver
@@ -180,14 +181,14 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
                             command:
                                 - nginx -s quit
     +       -   image: ~
-    +           name: product-visibility-recalculate-consumer
+    +           name: product-search-export-consumer
     +           securityContext:
     +               runAsUser: 33
     +           workingDir: /var/www/html
     +           command:
     +               - docker-php-consumer-entrypoint
     +           args:
-    +               - product_visibility_recalculate
+    +               - product_search_export
     +           volumeMounts:
     +               -   name: source-codes
     +                   mountPath: /var/www/html
@@ -203,7 +204,7 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     +               -   name: GOOGLE_CLOUD_PROJECT_ID
     +                   value: ~
     ```
-- create new [`kubernetes/deployments/rabbitmq.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/kubernetes/deployments/rabbitmq.yml) file with this content:
+- create new [`kubernetes/deployments/rabbitmq.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/kubernetes/deployments/rabbitmq.yml) file with this content:
     ```diff
     +   apiVersion: apps/v1
     +   kind: Deployment
@@ -271,7 +272,7 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     +                           serviceName: rabbitmq
     +                           servicePort: 15672
     ```
-- create new [`kubernetes/services/rabbitmq.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/kubernetes/services/rabbitmq.yml) file with this content:
+- create new [`kubernetes/services/rabbitmq.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/kubernetes/services/rabbitmq.yml) file with this content:
     ```diff
     +   kind: Service
     +   apiVersion: v1

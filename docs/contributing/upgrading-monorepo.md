@@ -14,11 +14,7 @@ Typical upgrade sequence should be:
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
 ## [From v8.1.0-dev to v9.0.0-dev]
-
-## [From v8.0.1-dev to v8.1.0-dev]
-
-## [From v8.0.0 to v8.0.1-dev]
-- update your `docker-compose.yml` file using new version in [`docker/conf`](https://github.com/shopsys/shopsys/tree/master/docker/conf) folder
+- update your `docker-compose.yml` file using new version in [`docker/conf`](https://github.com/shopsys/shopsys/tree/9.0/docker/conf) folder ([#1321](https://github.com/shopsys/shopsys/pull/1321))
     - add RabbitMQ service
     ```diff
     +   rabbitmq:
@@ -69,13 +65,17 @@ Typical upgrade sequence should be:
     +               - rabbitmq
     +               - php-fpm
     ```
-    - add `product-visibility-recalculate-consumer`
+    - add `product-search-export-consumer`
     ```diff
-    +   product-visibility-recalculate-consumer:
+    +   product-search-export-consumer:
     +       <<: *common_consumer_configuration
-    +       container_name: shopsys-framework-product-visibility-recalculate-consumer
-    +       command: product_visibility_recalculate
+    +       container_name: shopsys-framework-product-search-export-consumer
+    +       command: product_search_export
     ```
+
+## [From v8.0.1-dev to v8.1.0-dev]
+
+## [From v8.0.0 to v8.0.1-dev]
 
 ## [From v7.3.1 to v8.0.0]
 
