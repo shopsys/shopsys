@@ -415,6 +415,7 @@
         <exec executable="${path.php.executable}" outputProperty="domains-info.ids">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains:info"/>
+            <arg value="--oneline"/>
         </exec>
 
         <exec executable="${path.php.executable}" outputProperty="domains-info.locales">
@@ -422,6 +423,7 @@
             <arg value="shopsys:domains:info"/>
             <arg value="locale"/>
             <arg value="--deduplicate"/>
+            <arg value="--oneline"/>
         </exec>
 
         <if>

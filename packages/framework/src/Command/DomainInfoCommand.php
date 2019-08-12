@@ -21,6 +21,7 @@ class DomainInfoCommand extends Command
     protected const ARG_ID = 'domainId';
 
     protected const OPTION_DEDUPLICATE = 'deduplicate';
+    protected const OPTION_ONELINE = 'oneline';
 
     protected const RETURN_CODE_OK = 0;
     protected const RETURN_CODE_ERROR = 1;
@@ -54,7 +55,8 @@ class DomainInfoCommand extends Command
             ->setDescription('Loads and displays domain info.')
             ->addArgument(static::ARG_PROPERTY_NAME, InputArgument::OPTIONAL, 'Property that should be loaded', 'id')
             ->addArgument(static::ARG_ID, InputArgument::OPTIONAL, 'Domain ID (if omitted, the command will output all values)')
-            ->addOption(static::OPTION_DEDUPLICATE, 'd', InputOption::VALUE_NONE, 'Return only unique property values (sorted alphabetically)');
+            ->addOption(static::OPTION_DEDUPLICATE, 'd', InputOption::VALUE_NONE, 'Return only unique property values (sorted alphabetically)')
+            ->addOption(static::OPTION_ONELINE, 'o', InputOption::VALUE_NONE, 'Return property values on one line separated by tabs');
     }
 
     /**
@@ -85,11 +87,7 @@ class DomainInfoCommand extends Command
             $propertyValues[] = $propertyAccessor->getValue($domainConfig, $propertyName);
         }
 
-        if ($input->getOption(static::OPTION_DEDUPLICATE)) {
-            sort($propertyValues);
-            $propertyValues = array_unique($propertyValues);
-        }
-        $io->writeln(implode("\t", $this->formatPropertyValues($propertyValues)));
+        $this->outputPropertyValues($input, $io, $propertyValues);
 
         return static::RETURN_CODE_OK;
     }
@@ -128,6 +126,26 @@ class DomainInfoCommand extends Command
         $propertyExtractor = new ReflectionExtractor();
         $io->writeln('You can access these properties:');
         $io->listing($propertyExtractor->getProperties($domainConfig));
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Style\SymfonyStyle $io
+     * @param mixed[] $propertyValues
+     */
+    protected function outputPropertyValues(InputInterface $input, SymfonyStyle $io, array $propertyValues): void
+    {
+        if ($input->getOption(static::OPTION_DEDUPLICATE)) {
+            sort($propertyValues);
+            $propertyValues = array_unique($propertyValues);
+        }
+
+        $output = $this->formatPropertyValues($propertyValues);
+        if ($input->getOption(static::OPTION_ONELINE)) {
+            $output = implode("\t", $output);
+        }
+
+        $io->writeln($output);
     }
 
     /**
