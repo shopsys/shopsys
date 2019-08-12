@@ -426,11 +426,9 @@
         <if>
             <matches string="${domains-info.ids}" pattern="\d+\s+\d+"/>
             <then>
-                <echo>y</echo>
                 <property name="domains-info.is-multidomain" value="true"/>
             </then>
             <else>
-                <echo>f</echo>
                 <property name="domains-info.is-multidomain" value="false"/>
             </else>
         </if>

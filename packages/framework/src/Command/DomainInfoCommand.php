@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -16,7 +18,7 @@ use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 class DomainInfoCommand extends Command
 {
     protected const ARG_PROPERTY_NAME = 'propertyName';
-    protected const ARG_ID = 'username';
+    protected const ARG_ID = 'domainId';
 
     protected const OPTION_ALL = 'all';
 
