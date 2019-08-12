@@ -248,6 +248,8 @@ class ProductFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
+        $this->productChangeMessageProducer->productChanged($product);
+
         return $product;
     }
 
@@ -277,7 +279,6 @@ class ProductFacade
         $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
-        $this->productChangeMessageProducer->productChanged($product);
     }
 
     /**
