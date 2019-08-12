@@ -20,11 +20,20 @@ class ProductChangeMessageProducer
     protected $productChangeProducer;
 
     /**
-     * @param \OldSound\RabbitMqBundle\RabbitMq\ProducerInterface $productChangeProducer
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      */
-    public function __construct(ProducerInterface $productChangeProducer)
-    {
+    private $productFacade;
+
+    /**
+     * @param \OldSound\RabbitMqBundle\RabbitMq\ProducerInterface $productChangeProducer
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     */
+    public function __construct(
+        ProducerInterface $productChangeProducer,
+        ProductFacade $productFacade
+    ) {
         $this->productChangeProducer = $productChangeProducer;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -62,10 +71,13 @@ class ProductChangeMessageProducer
      */
     public function productsChangedByIds(array $productIds): void
     {
-        $this->scheduledProductIds = array_unique(array_merge(
-            $this->scheduledProductIds,
-            array_values($productIds)
-        ));
+        foreach ($productIds as $productId) {
+            $this->scheduledProductIds = array_unique(array_merge(
+                $this->getAllAssociatedProductIdsByProductId($productId),
+                array_values($productIds)
+            ));
+        }
+    }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
@@ -85,6 +97,17 @@ class ProductChangeMessageProducer
         }
 
         return $productIds;
+    }
+
+    /**
+     * @param int $productId
+     * @return int[]
+     */
+    protected function getAllAssociatedProductIdsByProductId(int $productId): array
+    {
+        $product = $this->productFacade->getById($productId);
+
+        return $this->getAllAssociatedProductIds($product);
     }
 
     /**
