@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\DequeuerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Webmozart\Assert\Assert;
 
 class ProductSearchExportConsumer implements ProductSearchExportConsumerInterface, ConsumerInterface
 {
@@ -47,7 +48,13 @@ class ProductSearchExportConsumer implements ProductSearchExportConsumerInterfac
      */
     public function execute(AMQPMessage $message): int
     {
-        $productId = (int)$message->getBody();
+        $messageBody = $message->getBody();
+
+        if (!is_numeric($messageBody) || $messageBody != (int)$messageBody) {
+            return ConsumerInterface::MSG_REJECT;
+        }
+
+        $productId = (int)$messageBody;
 
         $this->entityManager->clear();
 
