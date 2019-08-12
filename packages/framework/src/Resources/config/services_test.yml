@@ -215,6 +215,3 @@ services:
             $indexPrefix: '%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator: ~
-
-    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumerInterface:
-        class: Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumer
