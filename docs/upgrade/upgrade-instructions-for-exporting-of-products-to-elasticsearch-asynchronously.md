@@ -1,4 +1,4 @@
-# Upgrade Instructions for Calculation of Product Visibility asynchronously
+# Upgrade Instructions for Exporting of Products to Elasticsearch Asynchronously
 
 In ([#1321](https://github.com/shopsys/shopsys/pull/1321)) was calculation of product visibility changed to be calculated asynchronously.
 The change introduced many [BC breaks](/docs/contributing/backward-compatibility-promise.md) (many methods were moved or changed their signatures) so you need to follow the upgrading instructions.
@@ -295,45 +295,8 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
 
 ## Application
 - update your code in accordance with the following changes:
-    - `Shopsys\FrameworkBundle\Model\Product\ProductVisibilityImmediateCronModule` has been removed
-    - `Product::recalculateVisibility` has been removed
-    - `Product::setRecalculateVisibility()` has been removed
-    - `Product::markForVisibilityRecalculation()` has been removed
-    - `Product::isMarkedForVisibilityRecalculation()` has been removed
-    - `ProductVisibilityFacade::markProductsForRecalculationAffectedByCategory()` has been replaced by `ProductVisibilityFacade::refreshProductsVisibilityByCategory()`
-    - `ProductVisibilityFacade::refreshProductsVisibilityForMarkedDelayed()` has been removed, you can use `ProductVisibilityFacade::refreshProductVisibilityById()` or `ProductVisibilityFacade::refreshProductsVisibility` instead
-    - all methods in `ProductVisibilityRepository` that has been accepting `$onlyMarkedProducts` parameter now accept `Product::id` or `null` instead
-    - `ProductFacadeTest::testEditMarkProductForVisibilityRecalculation()` has been removed
-    - [`ProductVisibilityRecalculateConsumerTest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Functional/Model/Product/ProductVisibilityRecalculateConsumerTest.php) has been added
-- update all occurrences of `ProductVisibilityrepository::refreshProductVisibility()` in your `ProductVisibilityRepositoryTest` like this:
-    ```diff
-    -        $productVisibilityRepository->refreshProductsVisibility(true);
-    +        $productVisibilityRepository->refreshProductsVisibility();
-
-    ```
-- update `ProductAvailabilityCalculationTest` file like this:
-    ```diff
-        use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
-        use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation;
-    +   use Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer;
-        use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
-        use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-
-    ```
-    all occurrences of:
-    ```diff
-    +    $productChangeMessageProducer = $this->createMock(ProductChangeMessageProducer::class);
-    +
-         $productAvailabilityCalculation = new ProductAvailabilityCalculation(
-             $availabilityFacadeMock,
-             $productSellingDeniedRecalculatorMock,
-             $productVisibilityFacadeMock,
-             $entityManagerMock,
-    -        $productRepositoryMock
-    +        $productRepositoryMock,
-    +        $productChangeMessageProducer
-         );
-    ```
+    - `ProductSearchExportListener` class has been removed
+    - `ProductSearchExportScheduler` class has been removed
 - create new [`app/config/packages/old_sound_rabbit_mq.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/packages/old_sound_rabbit_mq.yml) file with this content:
     ```diff
     +   old_sound_rabbit_mq:
@@ -351,7 +314,7 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     ```diff
     +   old_sound_rabbit_mq:
     +       consumers:
-    +           product_visibility_recalculate:
+    +           product_search_export:
     +               idle_timeout: 5
     +               idle_timeout_exit_code: 0
     +
