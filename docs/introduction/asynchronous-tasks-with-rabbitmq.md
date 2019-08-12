@@ -26,7 +26,7 @@ _Note: To be able to use configuration from multiple sources, we use [`PrependEx
 
 By default, you can configure bundles only from your project, so we would be unable to add new consumers (producers) to the framework without BC break.
 
-`ShopsysFrameworkExtension` now implements `PrependExtensionInterface::prepend()` method so we can easily add producers and consumers without breaking our BC promise.
+`ShopsysFrameworkExtension` implements `PrependExtensionInterface::prepend()` method so we can easily add producers and consumers without breaking our BC promise.
 
 As this method only prepends default framework settings before the setting of your project, you can override everything by changing the desired configuration in your `old_sound_rabbit_mq.yml` configuration file.
 
