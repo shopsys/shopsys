@@ -253,6 +253,11 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet($debugNote)
                     ->setExpectedStatusCode(302);
             })
+            ->customizeByRouteName('front_login', function (RouteConfig $config) {
+                $config->addExtraRequestDataSet('Logged user on login page is redirected onto homepage')
+                    ->setAuth(new BasicHttpAuth('no-reply@shopsys.com', 'user123'))
+                    ->setExpectedStatusCode(302);
+            })
             ->customizeByRouteName(['front_order_index', 'front_order_sent'], function (RouteConfig $config) {
                 $debugNote = 'Order page should redirect by 302 as the cart is empty by default.';
                 $config->changeDefaultRequestDataSet($debugNote)
