@@ -985,7 +985,8 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumerInterface:
         class: Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumer
 
-    Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer:
+    Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducerInterface:
+        class: Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
         tags:
             # must be run after all recalculations
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -30}
@@ -995,4 +996,3 @@ services:
     Shopsys\FrameworkBundle\Command\CheckRabbitMqCommand:
         arguments:
             - '@old_sound_rabbit_mq.connection.default'
-

@@ -157,16 +157,16 @@ You need to provide consumer service for your class, so in the end your `service
 ```yml
 Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumerInterface:
     class: Shopsys\ShopBundle\Model\Product\Search\Export\MyProductSearchExportConsumer
-    arguments:
-        - '@old_sound_rabbit_mq.product_search_export_consumer'
 ```
 
 ## Extensibility of producers
 
 Producers can be extended same way as consumers, only difference is that you need to provide producer as argument instead of consumer, so your `services.yml` should look like this:
 ```yml
-Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer:
-    class: Shopsys\ShopBundle\Model\Product\ProductChangeMessageProducer
+Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducerInterface:
+    tags:
+        # must be run after all recalculations
+        - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -30}
     arguments:
         - '@old_sound_rabbit_mq.product_change_producer'
 ```

@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
-class ProductChangeMessageProducer
+class ProductChangeMessageProducer implements ProductChangeMessageProducerInterface
 {
     /**
      * @var int[]
@@ -22,7 +22,7 @@ class ProductChangeMessageProducer
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      */
-    private $productFacade;
+    protected $productFacade;
 
     /**
      * @param \OldSound\RabbitMqBundle\RabbitMq\ProducerInterface $productChangeProducer
