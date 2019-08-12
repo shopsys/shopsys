@@ -330,7 +330,6 @@ class ProductFacade
         foreach ($productsForRecalculations as $productForRecalculations) {
             $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
             $productForRecalculations->markForVisibilityRecalculation();
-            $this->productChangeMessageProducer->productChanged($productForRecalculations);
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
         }
 
