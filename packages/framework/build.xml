@@ -421,6 +421,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains:info"/>
             <arg value="locale"/>
+            <arg value="--deduplicate"/>
         </exec>
 
         <if>

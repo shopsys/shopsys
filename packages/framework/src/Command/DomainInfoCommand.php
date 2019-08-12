@@ -20,7 +20,7 @@ class DomainInfoCommand extends Command
     protected const ARG_PROPERTY_NAME = 'propertyName';
     protected const ARG_ID = 'domainId';
 
-    protected const OPTION_ALL = 'all';
+    protected const OPTION_DEDUPLICATE = 'deduplicate';
 
     protected const RETURN_CODE_OK = 0;
     protected const RETURN_CODE_ERROR = 1;
@@ -54,7 +54,7 @@ class DomainInfoCommand extends Command
             ->setDescription('Loads and displays domain info.')
             ->addArgument(static::ARG_PROPERTY_NAME, InputArgument::OPTIONAL, 'Property that should be loaded', 'id')
             ->addArgument(static::ARG_ID, InputArgument::OPTIONAL, 'Domain ID (if omitted, the command will output all distinct values)')
-            ->addOption(static::OPTION_ALL, 'a', InputOption::VALUE_NONE, 'Display all property values (without sorting and deduplication)');
+            ->addOption(static::OPTION_DEDUPLICATE, 'd', InputOption::VALUE_NONE, 'Return only unique property values (sorted alphabetically)');
     }
 
     /**
@@ -85,7 +85,7 @@ class DomainInfoCommand extends Command
             $propertyValues[] = $propertyAccessor->getValue($domainConfig, $propertyName);
         }
 
-        if (!$input->getOption(static::OPTION_ALL)) {
+        if ($input->getOption(static::OPTION_DEDUPLICATE)) {
             sort($propertyValues);
             $propertyValues = array_unique($propertyValues);
         }
