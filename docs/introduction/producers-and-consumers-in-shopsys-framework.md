@@ -27,10 +27,10 @@ _Note: The original `product_change` producer should NOT be used directly in the
 
 ## Consumers
 
-### `Shopsys\FrameworkBundle\Model\Product\Visibility\ProductVisibilityRecalculateConsumerInterface`
+### `Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumerInterface`
 
-In `FrameworkBundle` already exists the implementation of this interface – `Shopsys\FrameworkBundle\Model\Product\Visibility\ProductVisibilityRecalculateConsumer`.
+In `FrameworkBundle` already exists the implementation of this interface – `Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumer`.
 
 This consumer is registered in `old_sound_rabbit_mq.yml` file in `FrameworkBundle`.
 
-Consumer is responsible for [product visibility](../functional/product-visibility-and-exclude-from-sale.md) recalculations based on the other relevant product data and accepts Product ID in the message body.
+Consumer is responsible for [exporting changes in products to Elasticsearch](../model/elasticsearch.md#product-data-export) and accepts Product ID in the message body.

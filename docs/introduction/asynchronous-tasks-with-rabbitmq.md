@@ -39,10 +39,10 @@ In `docker-compose.yml` file, there is `common_consumer_configuration` alias pre
 With that, we can simplify each consumer configuration just to the necessary things.
 
 ```yaml
-product-visibility-recalculate-consumer:
+product-search-export-consumer:
     <<: *common_consumer_configuration
-    container_name: shopsys-framework-product-visibility-recalculate-consumer
-    command: product_visibility_recalculate
+    container_name: shopsys-framework-product-search-export-consumer
+    command: product_search_export
 ```
 
 The `command` key represents what consumer should be run within this container and this name is the same as is configured in `old_sound_rabbit_mq.yml` file.
@@ -52,10 +52,10 @@ If you want to add a new consumer, you just need to copy this definition and cha
 If you need to change the number of messages processed before the consumer is restarted, you can adjust the environment variable `CONSUMER_RUNS_BEFORE_RESTART`
 
 ```diff
-product-visibility-recalculate-consumer:
+product-search-export-consumer:
     <<: *common_consumer_configuration
-    container_name: shopsys-framework-product-visibility-recalculate-consumer
-    command: product_visibility_recalculate
+    container_name: shopsys-framework-product-search-export-consumer
+    command: product_search_export
 +   environment:
 +       CONSUMER_RUNS_BEFORE_RESTART: 2048
 ```
@@ -71,14 +71,14 @@ One of consumer's container configurations, placed into `webserver-php-fpm` depl
 
 ```yaml
 -   image: ~
-    name: product-visibility-recalculate-consumer
+    name: product-search-export-consumer
     securityContext:
         runAsUser: 33
     workingDir: /var/www/html
     command:
         - docker-php-consumer-entrypoint
     args:
-        - product_visibility_recalculate
+        - product_search_export
     volumeMounts:
         -   name: source-codes
             mountPath: /var/www/html
@@ -152,13 +152,13 @@ First, you can change its configuration in `old_sound_rabbit_mq.yml` file.
 This could be useful when you need to change for example the exchange name in RabbitMQ or just configure the consumer differently.
 
 Or the consumer can be extended, respecting the [glass-box extensibility principles](../introduction/basics-about-package-architecture.md#glass-box-extensibility).
-Meaning the class of the consumer can be extended (`class MyProductVisibilityRecalculateConsumer extends ProductVisibilityRecalculateConsumer`) or rewritten completely (`MyProductVisibilityRecalculateConsumer implements ProductVisibilityRecalculateConsumerInterface`) thanks to the interface and after registering your implementation in `services.yml` configuration file, it will be used in whole application.
+Meaning the class of the consumer can be extended (`class MyProductSearchExportConsumer extends ProductSearchExportConsumer`) or rewritten completely (`MyProductSearchExportConsumer implements ProductSearchExportConsumerInterface, ConsumerInterface`) thanks to the interface and after registering your implementation in `services.yml` configuration file, it will be used in whole application.
 You need to provide consumer service for your class, so in the end your `services.yml` should look like this:
 ```yml
-Shopsys\FrameworkBundle\Model\Product\Visibility\ProductVisibilityRecalculateConsumerInterface:
-    class: Shopsys\ShopBundle\Model\Product\Visibility\ProductVisibilityRecalculateConsumer
+Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumerInterface:
+    class: Shopsys\ShopBundle\Model\Product\Search\Export\MyProductSearchExportConsumer
     arguments:
-        - '@old_sound_rabbit_mq.product_visibility_recalculate_consumer'
+        - '@old_sound_rabbit_mq.product_search_export_consumer'
 ```
 
 ## Extensibility of producers
