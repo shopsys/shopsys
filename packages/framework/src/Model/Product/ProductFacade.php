@@ -316,8 +316,6 @@ class ProductFacade
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->productChangeMessageProducer->productChanged($product);
 
-        $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
-
         return $product;
     }
 
