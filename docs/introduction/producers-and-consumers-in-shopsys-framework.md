@@ -18,7 +18,11 @@ It also allows us to incorporate another logic in producer, for example changes 
 To work properly, the producer is registered in `services.yml` file in `FrameworkBundle` as
 
 ```yaml
-Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer:
+Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducerInterface:
+    class: Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
+    tags:
+        # must be run after all recalculations
+        - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -30}
     arguments:
         - '@old_sound_rabbit_mq.product_change_producer'
 ```
