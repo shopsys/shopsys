@@ -9,7 +9,6 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
 {
     /**
      * {@inheritDoc}
-     * @deprecated use "sql" method instead
      */
     protected function addSql($sql, array $params = [], array $types = [])
     {
