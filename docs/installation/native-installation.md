@@ -57,6 +57,7 @@ _Note: Running the consumers successfully assume RabbitMQ is up and listening on
 
 You can read more about [Supervisor configuration options here](http://supervisord.org/configuration.html).
 If you need more information about asynchronous processing in Shopsys Framework, you can read [Asynchronous tasks with RabbitMQ](../introduction/asynchronous-tasks-with-rabbitmq.md) article.
+
 ## Run integrated HTTP server
 
 ```

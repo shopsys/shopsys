@@ -22,7 +22,7 @@ From the clean project, during composer installation process it will prompt you 
 | `rabbitmq_port`                          | port the RabbitMQ listens on                                                                                 |
 | `rabbitmq_user`                          | user name to authenticate to the RabbitMQ                                                                    |
 | `rabbitmq_pass`                          | password to authenticate to the RabbitMQ                                                                     |
-| `rabbitmq_vhost`                         | can be used to separate more projects to use the same RabbitMQ instance                                         |
+| `rabbitmq_vhost`                         | can be used to separate more projects to use the same RabbitMQ instance                                      |
 | `secret`                                 | randomly generated secret token                                                                              |
 | `trusted_proxies`                        | proxies that are trusted to pass traffic, used mainly for production                                         |
 | `env(REDIS_PREFIX)`                      | separates more projects that use the same redis service                                                      |
