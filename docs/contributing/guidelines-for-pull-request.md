@@ -24,10 +24,6 @@ git fetch
 git rebase origin/master
 ```
 
-**Important note:**
-If your pull request contains any BC breaks (see [Backward Compatibility Promise](/docs/contributing/backward-compatibility-promise.md)), it should not be targeted against the current master but against a branch where the next major release is being prepared.
-E.g., if the latest release is `v7.1.0` and you want to introduce a breaking change, you need to rebase your branch on `8.0` branch and target your PR against it. If no such a branch exists, you need to create one.
-
 * You have to check your change using the command `php phing standards tests tests-acceptance` as it’s mentioned in [contributing](../../project-base/CONTRIBUTING.md).
 
     *Note: In this step you were using multiple Phing targets.
@@ -37,6 +33,17 @@ E.g., if the latest release is `v7.1.0` and you want to introduce a breaking cha
 * [Create a PR](https://github.com/shopsys/shopsys/compare?expand=1) with essential information to make our code review easier.
     * you do not have to update `CHANGELOG.md` at all as it is generated automatically using [symplify/changelog-linker](https://github.com/symplify/changeloglinker) during our release process.
 * Now just wait for review of your change.
+
+### Note about targeting pull requests
+As we [support multiple versions](./backward-compatibility-promise.md#current-release-plan) of Shopsys Framework while keeping [Backward Compatibility Promise](/docs/contributing/backward-compatibility-promise.md), it is important to think about proper targeting of your pull request.
+
+If your pull request:
+* **fixes a bug and does not contain any BC break**, it should be targeted to the oldest supported version where the bug occurs.
+* **does not contain any BC break**, it should be targeted to `master`.
+* **contains any BC break**, it should be targeted to a branch where the next major release is being prepared.
+    * E.g., if the latest release is `v7.1.0` and you want to introduce a breaking change, you need to rebase your branch on `8.0` branch and target your PR against it.
+
+*Note: Always rebase your branch onto the base branch before retargeting, otherwise your PR might contain more commits than you'd want to merge.*
 
 ## 2. Changes after review
 During the review, reviewer will write comments how to improve the solution or fix bugs. CR can end in `Approved` or `RequestChanges` status when further edits are needed. After completing the CR, it is necessary to correct errors encountered by the reviewer.
