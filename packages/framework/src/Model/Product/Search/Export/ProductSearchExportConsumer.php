@@ -13,11 +13,6 @@ use Webmozart\Assert\Assert;
 class ProductSearchExportConsumer implements ProductSearchExportConsumerInterface, ConsumerInterface
 {
     /**
-     * @var \OldSound\RabbitMqBundle\RabbitMq\DequeuerInterface
-     */
-    protected $dequeuer;
-
-    /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
     protected $entityManager;
@@ -28,16 +23,13 @@ class ProductSearchExportConsumer implements ProductSearchExportConsumerInterfac
     protected $productSearchExportFacade;
 
     /**
-     * @param \OldSound\RabbitMqBundle\RabbitMq\DequeuerInterface $dequeuer
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportFacade $productSearchExportFacade
      */
     public function __construct(
-        DequeuerInterface $dequeuer,
         EntityManagerInterface $entityManager,
         ProductSearchExportFacade $productSearchExportFacade
     ) {
-        $this->dequeuer = $dequeuer;
         $this->entityManager = $entityManager;
         $this->productSearchExportFacade = $productSearchExportFacade;
     }

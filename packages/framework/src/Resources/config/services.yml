@@ -984,8 +984,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumerInterface:
         class: Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportConsumer
-        arguments:
-            - '@old_sound_rabbit_mq.product_search_export_consumer'
 
     Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer:
         tags:
