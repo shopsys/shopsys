@@ -137,7 +137,7 @@ class ProductFacade
     protected $productPriceCalculation;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducerInterface
      */
     protected $productChangeMessageProducer;
 
@@ -164,7 +164,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer $productChangeMessageProducer
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducerInterface $productChangeMessageProducer
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -189,7 +189,7 @@ class ProductFacade
         ProductParameterValueFactoryInterface $productParameterValueFactory,
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
-        ProductChangeMessageProducer $productChangeMessageProducer
+        ProductChangeMessageProducerInterface $productChangeMessageProducer
     ) {
         $this->em = $em;
         $this->productRepository = $productRepository;

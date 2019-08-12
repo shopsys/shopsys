@@ -45,7 +45,7 @@ class ProductVariantFacade
     protected $productAvailabilityRecalculationScheduler;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducerInterface
      */
     protected $productChangeMessageProducer;
 
@@ -57,7 +57,7 @@ class ProductVariantFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer $productChangeMessageProducer
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducerInterface $productChangeMessageProducer
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -67,7 +67,7 @@ class ProductVariantFacade
         ProductFactoryInterface $productFactory,
         ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        ProductChangeMessageProducer $productChangeMessageProducer
+        ProductChangeMessageProducerInterface $productChangeMessageProducer
     ) {
         $this->em = $em;
         $this->productFacade = $productFacade;

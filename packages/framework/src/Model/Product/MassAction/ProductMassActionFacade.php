@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\MassAction;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer;
+use Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducerInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
@@ -25,7 +25,7 @@ class ProductMassActionFacade
     protected $productHiddenRecalculator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducerInterface
      */
     protected $productChangeMessageProducer;
 
@@ -33,13 +33,13 @@ class ProductMassActionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionRepository $productMassActionRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducer $productChangeMessageProducer
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductChangeMessageProducerInterface $productChangeMessageProducer
      */
     public function __construct(
         ProductMassActionRepository $productMassActionRepository,
         ProductVisibilityFacade $productVisibilityFacade,
         ProductHiddenRecalculator $productHiddenRecalculator,
-        ProductChangeMessageProducer $productChangeMessageProducer
+        ProductChangeMessageProducerInterface $productChangeMessageProducer
     ) {
         $this->productMassActionRepository = $productMassActionRepository;
         $this->productVisibilityFacade = $productVisibilityFacade;
