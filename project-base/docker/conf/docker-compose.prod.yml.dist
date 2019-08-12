@@ -43,7 +43,7 @@ services:
 
     product-search-export-consumer:
         <<: *common_consumer_configuration
-        container_name: shopsys-framework-product_search_export_consumer
+        container_name: production-product_search_export_consumer
         command: product_search_export
 
     smtp-server:
