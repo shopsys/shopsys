@@ -20,20 +20,20 @@ class ProductChangeMessageProducer implements ProductChangeMessageProducerInterf
     protected $productChangeProducer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
      */
-    protected $productFacade;
+    protected $productRepository;
 
     /**
      * @param \OldSound\RabbitMqBundle\RabbitMq\ProducerInterface $productChangeProducer
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
         ProducerInterface $productChangeProducer,
-        ProductFacade $productFacade
+        ProductRepository $productRepository
     ) {
         $this->productChangeProducer = $productChangeProducer;
-        $this->productFacade = $productFacade;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -105,7 +105,7 @@ class ProductChangeMessageProducer implements ProductChangeMessageProducerInterf
      */
     protected function getAllAssociatedProductIdsByProductId(int $productId): array
     {
-        $product = $this->productFacade->getById($productId);
+        $product = $this->productRepository->getById($productId);
 
         return $this->getAllAssociatedProductIds($product);
     }
