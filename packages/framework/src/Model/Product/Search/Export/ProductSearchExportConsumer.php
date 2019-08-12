@@ -45,7 +45,7 @@ class ProductSearchExportConsumer implements ProductSearchExportConsumerInterfac
      * @param \PhpAmqpLib\Message\AMQPMessage $message
      * @return int
      */
-    public function execute(AMQPMessage $message)
+    public function execute(AMQPMessage $message): int
     {
         $productId = (int)$message->getBody();
 
