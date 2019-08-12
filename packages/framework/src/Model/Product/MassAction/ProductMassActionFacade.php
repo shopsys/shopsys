@@ -71,8 +71,9 @@ class ProductMassActionFacade
                 );
                 $this->productHiddenRecalculator->calculateHiddenForAll();
                 $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
-                $this->productChangeMessageProducer->productsChangedByIds($selectedProductIds);
             }
+            
+            $this->productChangeMessageProducer->productsChangedByIds($selectedProductIds);
         }
     }
 
