@@ -57,7 +57,6 @@ services:
 
     product-search-export-consumer:
         <<: *common_consumer_configuration
-        container_name: shopsys-framework-product-search-export-consumer
         command: product_search_export
 
     redis:
