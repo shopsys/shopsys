@@ -13,7 +13,7 @@ port=*:9001
 [supervisord]
 nodaemon=false
 logfile=/tmp/supervisor/supervisor.log
-pidfile=/tmp/supervisor/supervisord.pid
+pidfile=/tmp/supervisor/supervisor.pid
 
 [program:product_search_export]
 command=php ./bin/console rabbitmq:consumer product_search_export --messages=1000

@@ -15,4 +15,4 @@
 .DS_Store
 /docker-compose.yml
 /docker-sync.yml
-/supervisord.conf
+/supervisor.conf

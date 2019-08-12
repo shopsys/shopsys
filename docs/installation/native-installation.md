@@ -40,7 +40,7 @@ php phing build-demo-dev
 
 ## Run background processing with Supervisor
 
-Create [Supervisor](http://supervisord.org) configuration file `<path-to-your-project-root>/supervisord.conf` from the [sample configuration file `/infrastructure/supervisor.conf.dist`](https://github.com/shopsys/project-base/blob/9.0/infrastructure/supervisor.conf.dist).
+Create [Supervisor](http://supervisord.org) configuration file `<path-to-your-project-root>/supervisor.conf` from the [sample configuration file `/infrastructure/supervisor.conf.dist`](https://github.com/shopsys/project-base/blob/9.0/infrastructure/supervisor.conf.dist).
 Supervisor then can start consumers and ensure background tasks are up and running.
 
 You should add another `program` sections for all your individual project-related consumers.
@@ -50,7 +50,7 @@ _Note: Supervisor configuration is most likely different on every machine and th
 
 Start the background processing
 ```
-supervisord -c <path-to-your-project-root>/supervisord.conf
+supervisord -c <path-to-your-project-root>/supervisor.conf
 ```
 
 _Note: Running the consumers successfully assume RabbitMQ is up and listening on a designated port._

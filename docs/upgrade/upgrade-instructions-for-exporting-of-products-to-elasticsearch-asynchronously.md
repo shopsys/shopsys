@@ -128,7 +128,7 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     +   [supervisord]
     +   nodaemon=false
     +   logfile=/tmp/supervisor/supervisor.log
-    +   pidfile=/tmp/supervisor/supervisord.pid
+    +   pidfile=/tmp/supervisor/supervisor.pid
     +
     +   [program:product_search_export]
     +   command=php ./bin/console rabbitmq:consumer product_search_export --messages=1000
@@ -143,7 +143,7 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
     ```diff
         /docker-compose.yml
         /docker-sync.yml
-    +   /supervisord.conf
+    +   /supervisor.conf
     ```
 - update your `.ci/deploy-to-google-cloud.sh` file like this:
     ```diff
