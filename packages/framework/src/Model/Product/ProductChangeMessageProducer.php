@@ -54,9 +54,7 @@ class ProductChangeMessageProducer
      */
     public function productChangedById(int $productId): void
     {
-        if (!in_array($productId, $this->scheduledProductIds, true)) {
-            $this->scheduledProductIds[] = $productId;
-        }
+        $this->productsChangedByIds([$productId]);
     }
 
     /**
@@ -64,12 +62,10 @@ class ProductChangeMessageProducer
      */
     public function productsChangedByIds(array $productIds): void
     {
-        $productIds = array_unique($productIds);
-
-        foreach ($productIds as $productId) {
-            $this->productChangedById($productId);
-        }
-    }
+        $this->scheduledProductIds = array_unique(array_merge(
+            $this->scheduledProductIds,
+            array_values($productIds)
+        ));
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
