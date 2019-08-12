@@ -22,6 +22,8 @@ before_install:
     - "sed -i 's#www_data_gid: 1000#www_data_uid: $TRAVIS_GROUP_ID#' ./docker-compose.yml"
 
 install:
+    - docker-compose pull --parallel postgres redis selenium-server webserver
+    - docker-compose build --parallel elasticsearch php-fpm
     - docker-compose up -d postgres elasticsearch redis selenium-server php-fpm webserver
     - docker-compose exec php-fpm composer install --no-interaction
 
