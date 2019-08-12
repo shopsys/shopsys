@@ -53,10 +53,6 @@ services:
         networks:
             - shopsys-network
 
-    rabbitmq:
-        image: rabbitmq:3.7-alpine
-        container_name: production-rabbitmq
-
 volumes:
     web-volume:
     nginx-conf:
