@@ -6,9 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search\Export;
 
 use Doctrine\ORM\EntityManagerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
-use OldSound\RabbitMqBundle\RabbitMq\DequeuerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
-use Webmozart\Assert\Assert;
 
 class ProductSearchExportConsumer implements ProductSearchExportConsumerInterface, ConsumerInterface
 {
