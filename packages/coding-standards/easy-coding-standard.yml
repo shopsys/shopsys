@@ -73,12 +73,7 @@ services:
     PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LogicalOperatorSpacingSniff: ~
     PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer:
         syntax: short
-    PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer:
-        default: single_space
-    PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer: ~
     PhpCsFixer\Fixer\LanguageConstruct\CombineConsecutiveUnsetsFixer: ~
-    PhpCsFixer\Fixer\Operator\ConcatSpaceFixer:
-        spacing: one
     PhpCsFixer\Fixer\Alias\EregToPregFixer: ~
     PhpCsFixer\Fixer\FunctionNotation\FunctionTypehintSpaceFixer: ~
     PhpCsFixer\Fixer\ControlStructure\IncludeFixer: ~
@@ -86,30 +81,25 @@ services:
         equal: false
         identical: false
     PhpCsFixer\Fixer\PhpTag\LinebreakAfterOpeningTagFixer: ~
-    PhpCsFixer\Fixer\CastNotation\LowercaseCastFixer: ~
     PhpCsFixer\Fixer\Casing\NativeFunctionCasingFixer: ~
-    PhpCsFixer\Fixer\Operator\NewWithBracesFixer: ~
     PhpCsFixer\Fixer\Alias\NoAliasFunctionsFixer: ~
     PhpCsFixer\Fixer\Phpdoc\NoBlankLinesAfterPhpdocFixer: ~
     PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer: ~
     PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer: ~
     PhpCsFixer\Fixer\Semicolon\NoEmptyStatementFixer: ~
     PhpCsFixer\Fixer\Whitespace\NoExtraConsecutiveBlankLinesFixer: ~
-    PhpCsFixer\Fixer\Import\NoLeadingImportSlashFixer: ~
     PhpCsFixer\Fixer\NamespaceNotation\NoLeadingNamespaceWhitespaceFixer: ~
     PhpCsFixer\Fixer\Alias\NoMixedEchoPrintFixer: ~
     PhpCsFixer\Fixer\ArrayNotation\NoMultilineWhitespaceAroundDoubleArrowFixer: ~
     PhpCsFixer\Fixer\Semicolon\NoMultilineWhitespaceBeforeSemicolonsFixer: ~
     PhpCsFixer\Fixer\ClassNotation\NoPhp4ConstructorFixer: ~
     PhpCsFixer\Fixer\CastNotation\NoShortBoolCastFixer: ~
-    PhpCsFixer\Fixer\Semicolon\NoSinglelineWhitespaceBeforeSemicolonsFixer: ~
     PhpCsFixer\Fixer\Whitespace\NoSpacesAroundOffsetFixer: ~
     PhpCsFixer\Fixer\ControlStructure\NoTrailingCommaInListCallFixer: ~
     PhpCsFixer\Fixer\ArrayNotation\NoTrailingCommaInSinglelineArrayFixer: ~
     PhpCsFixer\Fixer\ControlStructure\NoUnneededControlParenthesesFixer: ~
     PhpCsFixer\Fixer\Import\NoUnusedImportsFixer: ~
     PhpCsFixer\Fixer\ReturnNotation\NoUselessReturnFixer: ~
-    PhpCsFixer\Fixer\ArrayNotation\NoWhitespaceBeforeCommaInArrayFixer: ~
     PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer: ~
     PhpCsFixer\Fixer\Basic\NonPrintableCharacterFixer: ~
     PhpCsFixer\Fixer\ArrayNotation\NormalizeIndexBraceFixer: ~
@@ -136,7 +126,6 @@ services:
     PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer: ~
     PhpCsFixer\Fixer\ClassNotation\SelfAccessorFixer: ~
     PhpCsFixer\Fixer\Semicolon\SemicolonAfterInstructionFixer: ~
-    PhpCsFixer\Fixer\CastNotation\ShortScalarCastFixer: ~
     PhpCsFixer\Fixer\NamespaceNotation\SingleBlankLineBeforeNamespaceFixer: ~
     PhpCsFixer\Fixer\Semicolon\SpaceAfterSemicolonFixer: ~
     PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer: ~
@@ -145,11 +134,8 @@ services:
             - hash
     PhpCsFixer\Fixer\Operator\StandardizeNotEqualsFixer: ~
     PhpCsFixer\Fixer\Strict\StrictParamFixer: ~
-    PhpCsFixer\Fixer\Operator\TernaryOperatorSpacesFixer: ~
     PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer: ~
     PhpCsFixer\Fixer\ArrayNotation\TrimArraySpacesFixer: ~
-    PhpCsFixer\Fixer\Operator\UnaryOperatorSpacesFixer: ~
-    PhpCsFixer\Fixer\ArrayNotation\WhitespaceAfterCommaInArrayFixer: ~
     # keep 1 empty line between constants, properties and methods
     # keep 0 empty lines after class open bracket {
     # keep 0 empty lines before class end bracket }
@@ -157,11 +143,6 @@ services:
         elements:
             - 'property'
             - 'method'
-    PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer:
-        elements:
-            - 'const'
-            - 'method'
-            - 'property'
 
     # Code Metrics
     ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
@@ -173,7 +154,7 @@ services:
 
 parameters:
     sets:
-        - 'psr2'
+        - 'psr12'
     line_ending: '\n'
     exclude_files:
         - '*/tests/Unit/**/wrong/*'
