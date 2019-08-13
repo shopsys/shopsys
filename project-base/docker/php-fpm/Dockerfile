@@ -30,7 +30,8 @@ RUN chmod +x /usr/local/bin/docker-install-composer && \
 # libicu-dev for intl extension
 # libpg-dev for connection to postgres database
 # autoconf needed by "redis" extension
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \

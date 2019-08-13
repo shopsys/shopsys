@@ -7,6 +7,20 @@ There you can find links to upgrade notes for other versions too.
 
 ## [shopsys/framework]
 
+### Infrastructure
+- update your `docker/php-fpm/Dockerfile` like this ([#1282](https://github.com/shopsys/shopsys/pull/1282)):
+    ```diff
+        # libicu-dev for intl extension
+            # libpg-dev for connection to postgres database
+            # autoconf needed by "redis" extension
+    -       RUN apt-get install -y \
+    +       RUN apt-get update && \
+    +           apt-get install -y \
+                libpng-dev \
+                libjpeg-dev \
+                libfreetype6-dev \
+    ```
+
 ### Configuration
 - update your `app/config/packages/doctrine.yml` ([#1273](https://github.com/shopsys/shopsys/pull/1273))
     ```diff
