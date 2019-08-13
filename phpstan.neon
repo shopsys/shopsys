@@ -59,9 +59,6 @@ parameters:
             message: '#Array \(array<.+>\) does not accept object\.#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php
         - '#Undefined variable: \$undefined#'
-    excludes_analyse:
-        # Exclude coding standards from packages as it is in incompatible version
-        - %currentWorkingDirectory%/packages/coding-standards/*
 includes:
 	- vendor/phpstan/phpstan-doctrine/extension.neon
 	- vendor/phpstan/phpstan-phpunit/extension.neon 
