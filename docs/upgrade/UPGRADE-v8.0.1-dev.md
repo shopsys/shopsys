@@ -2,7 +2,6 @@
 
 This guide contains instructions to upgrade from version v8.0.0 to v8.0.1-dev.
 
-
 ## [shopsys/framework]
 
 ### Tools
