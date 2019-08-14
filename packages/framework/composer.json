@@ -24,6 +24,7 @@
         "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
+        "ext-filter": "*",
         "ext-gd": "*",
         "ext-iconv": "*",
         "ext-intl": "*",
@@ -34,7 +35,6 @@
         "ext-pdo_pgsql": "*",
         "ext-redis": "*",
         "ext-xml": "*",
-        "ext-filter": "*",
         "arvenil/ninja-mutex": "^0.4.1",
         "barryvdh/elfinder-flysystem-driver": "^0.2",
         "bmatzner/jquery-bundle": "^2.2.2",
@@ -101,7 +101,7 @@
         "shopsys/coding-standards": "9.0.x-dev",
         "phpstan/phpstan-doctrine": "^0.11.2",
         "phpstan/phpstan-phpunit": "^0.11.2",
-        "sspooky13/yaml-standards": "^4.2"
+        "sspooky13/yaml-standards": "^4.2.5"
     },
     "suggest": {
         "ext-pgsql": "Required for dumping the Postgres database in shopsys:database:dump command"

@@ -211,6 +211,47 @@ There you can find links to upgrade notes for other versions too.
     - stop using the deprecated method `\Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation::getVatCoefficientByPercent()`, use `PriceCalculation::getVatAmountByPriceWithVat()` for VAT calculation instead
     - if you want to customize the VAT calculation (eg. revert it back to the previous implementation), extend the service `@Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation` and override the method `getVatAmountByPriceWithVat()`
     - if you created new tests regarding the price calculation they might start failing after the upgrade - in such case, please see the new VAT calculation and change the tests expectations accordingly
+    - if you have overridden the `orderItems.html.twig` template, you'll need to update it to accommodate the two new columns:
+        ```diff
+          <thead>
+              <tr>
+                  <th>{{ 'Name'|trans }}</th>
+                  <th>{{ 'Catalogue number'|trans }}</th>
+                  <th class="text-right">{{ 'Unit price including VAT'|trans }}</th>
+                  <th class="text-right">{{ 'Amount'|trans }}</th>
+                  <th class="text-right">{{ 'Unit'|trans }}</th>
+                  <th class="text-right">{{ 'VAT rate (%)'|trans }}</th>
+        +         <th class="text-center">
+        +             <span class="display-inline-block" style="width: 80px">
+        +                 {{ 'Set prices manually'|trans }}
+        +                 <i class="svg svg-info cursor-help js-tooltip"
+        +                    data-toggle="tooltip" data-placement="bottom"
+        +                    title="{{ 'All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically.'|trans }}"
+        +                 ></i>
+        +             </span>
+        +         </th>
+        +         <th class="text-right">{{ 'Unit price excluding VAT'|trans }}</th>
+                  <th class="text-right">{{ 'Total including VAT'|trans }}</th>
+                  <th class="text-right">{{ 'Total excluding VAT'|trans }}</th>
+                  <th></th>
+              </tr>
+          </thead>
+        ```
+        ```diff
+          <tfoot>
+              <tr>
+        -         <td colspan="9">
+        +         <td colspan="11">
+                      {# ... #}
+                  </td>
+              </tr>
+              <tr>
+        -         <th colspan="6">{{ 'Total'|trans }}:</th>
+        +         <th colspan="8">{{ 'Total'|trans }}:</th>
+                  {# ... #}
+              </tr>
+          </tfoot>
+        ```
 - use automatic wiring of Redis clients for easier checking and cleaning ([#1161](https://github.com/shopsys/shopsys/pull/1161))
     - if you have redefined the service `@Shopsys\FrameworkBundle\Component\Redis\RedisFacade` or `@Shopsys\FrameworkBundle\Command\CheckRedisCommand` in your project, or you instantiate the classes in your code:
         - instead of instantiating `RedisFacade` with an array of cache clients to be cleaned by `php phing redis-clean`, pass an array of all redis clients and another array of redis clients you don't want to clean (eg. `global` and `session`)

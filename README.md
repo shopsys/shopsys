@@ -51,10 +51,11 @@ Shopsys Framework is fully functional e-commerce platform with all basic functio
 ## Sites Built on Shopsys Framework
 List of typical projects built on previous versions of Shopsys Framework:
 * [Prumex](https://www.prumex.cz/)
-* [Elektro Vlášek](https://www.elektrovlasek.cz/)
+* [Papírnictví Pavlík](https://www.papirnictvipavlik.cz/)
+* [Růžový slon](https://www.ruzovyslon.cz/)
 * [AB COM CZECH](https://www.ab-com.cz/)
-* [Knihy.cz](https://www.knihy.cz/)
-* [B2B portal Démos](https://www.demos24plus.com/login/)
+* [Patro](https://www.patro.cz/)
+* [B2B Portal Démos](https://www.demos24plus.com/login/)
 * [Agátin svět](https://www.agatinsvet.cz/)
 
 ## How to Start a New Project
@@ -92,16 +93,14 @@ please see our [Docker troubleshooting](./docs/docker/docker-troubleshooting.md)
 Or ultimately, just [report an issue](https://github.com/shopsys/shopsys/issues/new).
 
 ## License
-We distribute our main parts of Shopsys Framework
-[shopsys/project-base](https://github.com/shopsys/project-base) and
-[shopsys/framework](https://github.com/shopsys/framework) under two different licenses: 
+We distribute the main parts of Shopsys Framework under two different licenses: 
 
 * [Community License](./LICENSE) in MIT style for growing small to mid-size e-commerce sites with total online sales less than 12.000.000 EUR / year (3.000.000 EUR / quarter)
 * Commercial License
 
 Learn the principles on which we distribute our product on our website at [Licenses and Pricing section](https://www.shopsys.com/licensing).
 
-The rest of modules of Shopsys Framework including [HTTP smoke testing](https://github.com/shopsys/http-smoke-testing) are distributed under standard MIT license. 
+Some of the Shopsys Framework repositories including [HTTP smoke testing](https://github.com/shopsys/http-smoke-testing) and [Monorepo Tools](https://github.com/shopsys/monorepo-tools) are distributed under standard MIT license so generally you can use it without any restriction. The information about the license is placed in the LICENSE file in the root of each repository.
 
 Shopsys Framework also uses some third-party components and images which are licensed under their own respective licenses.
 The list of these licenses is summarized in [Open Source License Acknowledgements and Third Party Copyrights](./open-source-license-acknowledgements-and-third-party-copyrights.md).

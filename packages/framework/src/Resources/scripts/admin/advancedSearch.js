@@ -5,6 +5,7 @@
 
     Shopsys.advancedSearch.init = function ($addRuleButton, $rulesContainer, $ruleTemplate) {
         $ruleTemplate.detach().removeClass('display-none').removeAttr('id').find('*[id]').removeAttr('id');
+        $ruleTemplate.find('select.select2-hidden-accessible').select2('destroy');
 
         var newRuleIndexCounter = 0;
 

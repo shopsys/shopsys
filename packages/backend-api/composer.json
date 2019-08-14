@@ -22,8 +22,8 @@
     },
     "require": {
         "php": "^7.2",
-        "ext-pdo": "*",
         "ext-json": "*",
+        "ext-pdo": "*",
         "doctrine/dbal": "^2.7",
         "friendsofsymfony/rest-bundle": "^2.5",
         "jms/serializer-bundle": "^2.4",

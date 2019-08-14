@@ -28,12 +28,14 @@ Follow the instructions in the [monorepo upgrade guide](docs/contributing/upgrad
     * run `docker-compose up -d --force-recreate --remove-orphans` to start the application again
     * update the `shopsys/*` dependencies in `composer.json` to version you are upgrading to
         eg. `"shopsys/framework": "v7.0.0"`
-    * run `composer update`
+    * follow upgrade notes in the *Composer dependencies* section (related with `composer.json`)
+    * run `composer update shopsys/* --with-dependencies`
     * follow all upgrade notes you have not done yet
     * run `php phing clean`
     * run `php phing db-migrations` to run the database migrations
     * test your app locally
     * commit your changes
+    * run `composer update` to update the rest of your dependencies, test the app again and commit `composer.lock`
 * if any of the database migrations does not suit you, there is an option to skip it, see [our Database Migrations docs](https://github.com/shopsys/shopsys/blob/master/docs/introduction/database-migrations.md#reordering-and-skipping-migrations)
 * even we care a lot about these instructions, it is possible we miss something. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 

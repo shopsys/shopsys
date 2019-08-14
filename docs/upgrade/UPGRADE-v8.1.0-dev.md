@@ -18,4 +18,53 @@ There you can find links to upgrade notes for other versions too.
       ports:
     ```
 
+### Tools
+- let Phing properties `is-multidomain` and `translations.dump.locales` be auto-detected ([#1309](https://github.com/shopsys/shopsys/pull/1309))
+    - stop overriding the Phing properties `is-multidomain` and `translations.dump.locales` in your `build.xml`, these properties should not be used anymore
+        ```diff
+          <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
+
+        - <property name="is-multidomain" value="true"/>
+        - <property name="translations.dump.locales" value="cs en xx"/>
+          <property name="phpstan.level" value="1"/>
+        ```
+    - if you use the deprecated properties in your `build.xml` yourself, make the particular Phing target dependent on `domains-info-load` and use new auto-detected properties `domains-info.is-multidomain` and `domains-info.locales` instead
+        ```diff
+        - <target name="my-custom-localization-target">
+        + <target name="my-custom-localization-target" depends="domains-info-load">
+              <exec executable="${path.custom-localization.executable}" passthru="true" checkreturn="true">
+        -         <arg line="${translations.dump.locales}"/>
+        +         <arg line="${domains-info.locales}"/>
+              </exec>
+          </target>
+        ```
+
+
+## Application
+- redirect logged users from the registration page to the personal data page ([#1285](https://github.com/shopsys/shopsys/pull/1285))
+    - modify your `Shopsys\ShopBundle\Controller\Front\RegistrationController::registerAction()`:
+        ```diff
+          use Shopsys\FrameworkBundle\Model\Security\Authenticator;
+        + use Shopsys\FrameworkBundle\Model\Security\Roles;
+          use Shopsys\ShopBundle\Form\Front\Registration\RegistrationFormType;
+        ```  
+        ```diff
+         public function registerAction(Request $request)
+         {
+        +    if ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
+        +        return $this->redirectToRoute('front_homepage');
+        +    }
+        ```
+    - to test this behavior, modify your `ShopBundle\Smoke\Http\RouteConfigCustomization::configureFrontendRoutes()`:
+        ```diff
+        + ->customizeByRouteName('front_login', function (RouteConfig $config) {
+        +     $config->addExtraRequestDataSet('Logged user on login page is redirected onto homepage')
+        +         ->setAuth(new BasicHttpAuth('no-reply@shopsys.com', 'user123'))
+        +         ->setExpectedStatusCode(302);
+        + })
+          ->customizeByRouteName(['front_order_index', 'front_order_sent'], function (RouteConfig $config) {
+              $debugNote = 'Order page should redirect by 302 as the cart is empty by default.';
+              $config->changeDefaultRequestDataSet($debugNote)
+        ```
+
 [shopsys/framework]: https://github.com/shopsys/framework

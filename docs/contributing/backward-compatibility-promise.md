@@ -22,6 +22,8 @@ Once created, a git tag marking a release will never be removed or edited.
 Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc><n>`, eg. `7.0.0-beta5`.*
 
 ### Current Release Plan
+Currently, `7.3` and `8.0` versions are supported, i.e. we are releasing patch versions for them on a regular basis.
+
 To be able to develop and improve Shopsys Framework we plan to release `MAJOR` versions almost quarterly, aiming to release a new `MAJOR` every 3-4 months.
 We expect this period to increase in the future to yearly releases.
 
@@ -113,7 +115,7 @@ The changes should always be described in [upgrade notes](/UPGRADE.md) (in the *
 Changes of Twig functions and filters in `MINOR` and `PATCH` releases must be backward-compatible.
 This means only a new optional argument or a support for new data type of existing argument may be added.
 
-Twig blocks, functions, filters and the templates themselves can be removed or renamed only in a `MAJOR` release.
+Twig blocks, functions, filters, macros, imports of macros in templates, and the templates themselves can be removed or renamed only in a `MAJOR` release.
 
 ### HTML
 Backward-compatible changes and additions to the HTML structure may be introduced in any release.
