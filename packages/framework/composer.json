@@ -101,7 +101,7 @@
         "shopsys/coding-standards": "8.0.x-dev",
         "phpstan/phpstan-doctrine": "^0.11.2",
         "phpstan/phpstan-phpunit": "^0.11.2",
-        "sspooky13/yaml-standards": "^4.2"
+        "sspooky13/yaml-standards": "^4.2.5"
     },
     "suggest": {
         "ext-pgsql": "Required for dumping the Postgres database in shopsys:database:dump command"
