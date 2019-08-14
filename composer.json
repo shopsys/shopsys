@@ -160,7 +160,7 @@
     "shopsys/monorepo-builder": "^5.5.0",
     "phpstan/phpstan-doctrine": "^0.11.2",
     "phpstan/phpstan-phpunit": "^0.11.2",
-    "sspooky13/yaml-standards": "^4.2"
+    "sspooky13/yaml-standards": "^4.2.5"
   },
   "conflict": {
     "symfony/dependency-injection": "3.4.15|3.4.16",
