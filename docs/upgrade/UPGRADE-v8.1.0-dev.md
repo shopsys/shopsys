@@ -72,6 +72,6 @@ There you can find links to upgrade notes for other versions too.
         ```diff
             Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
         +       arguments:
-        +           $useInlineEditation: true
+        +           $useInlineEditation: false
         ```
 [shopsys/framework]: https://github.com/shopsys/framework
