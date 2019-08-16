@@ -11,16 +11,16 @@ msgid "Company name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Email cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "Email cannot be longer than {{ limit }} characters"
 
 msgid "First name cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "First name cannot be longer than {{ limit }} characters"
 
 msgid "First name of contact person cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "First name of contact person cannot be longer than {{ limit }} characters"
 
 msgid "Identification number cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "Identification number cannot be longer than {{ limit }} characters"
 
 msgid "Last name cannot be longer than {{ limit }} characters"
 msgstr ""
@@ -29,13 +29,13 @@ msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Password cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "Password cannot be longer than {{ limit }} characters"
 
 msgid "Password cannot be same as e-mail"
-msgstr ""
+msgstr "Password cannot be same as email"
 
 msgid "Password cannot be same as part of e-mail before at sign"
-msgstr ""
+msgstr "Password cannot be same as part of email before at sign"
 
 msgid "Passwords do not match"
 msgstr ""
@@ -65,7 +65,7 @@ msgid "Please enter date of creation"
 msgstr ""
 
 msgid "Please enter e-mail"
-msgstr ""
+msgstr "Please enter email"
 
 msgid "Please enter first name"
 msgstr ""
@@ -101,7 +101,7 @@ msgid "Please enter telephone number"
 msgstr ""
 
 msgid "Please enter valid e-mail"
-msgstr ""
+msgstr "Please enter valid email"
 
 msgid "Please enter valid quantity"
 msgstr ""
@@ -125,7 +125,7 @@ msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "This e-mail is already registered"
-msgstr ""
+msgstr "This email is already registered"
 
 msgid "You have to agree with privacy policy"
 msgstr ""
