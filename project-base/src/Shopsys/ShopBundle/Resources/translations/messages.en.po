@@ -151,6 +151,9 @@ msgstr ""
 msgid "Download the personal information"
 msgstr ""
 
+msgid "EAN"
+msgstr ""
+
 msgid "Email"
 msgstr ""
 
@@ -158,9 +161,6 @@ msgid "Email with a link to the export of your personal data was sent to your em
 msgstr ""
 
 msgid "Email with a link to the page with your personal data was sent to your email address."
-msgstr ""
-
-msgid "EAN"
 msgstr ""
 
 msgid "Empty cart"
