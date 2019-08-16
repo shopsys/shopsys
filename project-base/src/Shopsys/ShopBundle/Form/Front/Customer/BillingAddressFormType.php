@@ -64,7 +64,7 @@ class BillingAddressFormType extends AbstractType
                     ]),
                     new Constraints\Length([
                         'max' => 50,
-                        'maxMessage' => 'Identification number cannot be longer then {{ limit }} characters',
+                        'maxMessage' => 'Identification number cannot be longer than {{ limit }} characters',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],

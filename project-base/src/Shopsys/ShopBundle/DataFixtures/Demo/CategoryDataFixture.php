@@ -74,7 +74,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
             $emptyDescriptionsForAllDomains,
             [
                 Domain::FIRST_DOMAIN_ID => 'Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, '
-                    . 'video games, remote control cars, etc.), communications (telephones, cell phones, e-mail-capable laptops, etc.) '
+                    . 'video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) '
                     . 'and home office activities (e.g., desktop computers, printers, paper shredders, etc.).',
             ]
         );
@@ -163,7 +163,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 Domain::FIRST_DOMAIN_ID => 'Coffeemakers or coffee machines are cooking appliances used to brew coffee. While there are many different types '
                 . 'of coffeemakers using a number of different brewing principles, in the most common devices, coffee grounds '
                 . 'are placed in a paper or metal filter inside a funnel, which is set over a glass or ceramic coffee pot, '
-                . 'a cooking pot in the kettle family. Cold water is poured into a separate chamber, which is then heated up to the '
+                . 'a cooking pot in the kettle family. Cold water is poured into a separate chamber, which is than heated up to the '
                 . 'boiling point, and directed into the funnel.',
             ]
         );

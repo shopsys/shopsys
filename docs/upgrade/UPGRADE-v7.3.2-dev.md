@@ -21,6 +21,17 @@ There you can find links to upgrade notes for other versions too.
                 libfreetype6-dev \
     ```
 
+### Application
+- fix the typos in translation messages and demo data ([#1335](https://github.com/shopsys/shopsys/pull/1335))
+    - replace "then" by "than" when in context of making comparisons, eg.:
+        ```diff
+        - new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer then {{ limit }} characters']),
+        + new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
+        ```
+    - replace "e-mail" by "email" in English texts
+        - even though both spellings are valid, "email" is much more common
+    - make these replacements in your application code, test code, data fixtures, and translation messages
+
 ### Configuration
 - update your `app/config/packages/doctrine.yml` ([#1273](https://github.com/shopsys/shopsys/pull/1273))
     ```diff

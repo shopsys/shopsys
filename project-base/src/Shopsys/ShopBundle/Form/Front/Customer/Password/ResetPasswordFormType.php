@@ -21,9 +21,9 @@ class ResetPasswordFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter e-mail']),
-                    new Email(['message' => 'Please enter valid e-mail']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer then {{ limit }} characters']),
+                    new Constraints\NotBlank(['message' => 'Please enter email']),
+                    new Email(['message' => 'Please enter valid email']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('submit', SubmitType::class);

@@ -65,7 +65,7 @@ class ContactFormController extends FrontBaseController
                 ]);
                 $message = t('Thank you, your message has been sent.');
             } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $ex) {
-                $message = t('Error occurred when sending e-mail.');
+                $message = t('Error occurred when sending email.');
             }
         }
 
