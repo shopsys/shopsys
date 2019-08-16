@@ -406,7 +406,7 @@ msgstr ""
 msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
 msgstr ""
 
-msgid "Username cannot be longer then {{ limit }} characters"
+msgid "Username cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "VAT name cannot be longer than {{ limit }} characters"
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Variable {{ needle }} is required"
 msgstr ""
 
-msgid "Variant alias cannot be longer then {{ limit }} characters"
+msgid "Variant alias cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "You entered same product twice. In list of bestsellers can be product only once. Please correct it and then save form again."
@@ -432,4 +432,3 @@ msgstr ""
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr ""
-
