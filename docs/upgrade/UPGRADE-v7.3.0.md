@@ -127,7 +127,7 @@ There you can find links to upgrade notes for other versions too.
         - read about [customization of phing targets and properties](../introduction/console-commands-for-application-management-phing-targets.md#customization-of-phing-targets-and-properties) in the docs
         - if you have some own additional target definitions, copy them into your `build.xml`
         - if you have modified any targets, overwrite them in your `build.xml`
-            - examine the target in the `shopsys/framework` package (either on [GitHub](/packages/framework/build.xml) or locally in `vendor/shopsys/framework/build.xml`)
+            - examine the target in the `shopsys/framework` package (either on [GitHub](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/build.xml) or locally in `vendor/shopsys/framework/build.xml`)
             - it's possible that the current target's definition suits your needs now after the upgrade - you don't have to overwrite it if that's the case
             - for future upgradability of your project, it's better to use the original target via `shopsys_framework.TARGET_NAME` if that's possible (eg. if you want to execute a command before or after the original task)
             - if you think we can support your use case better via [phing target extensibility](../contributing/guidelines-for-phing-targets.md#extensibility), please [open an issue](https://github.com/shopsys/shopsys/issues/new) or [create a pull request](/docs/contributing/guidelines-for-pull-request.md)

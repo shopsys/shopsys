@@ -91,7 +91,7 @@ We update configuration of natively installed Nginx.
 ```
 service nginx restart
 ```
-Maintenance page [`maintenance.html`](../../project-base/app/maintenance.html) will be exported into `/usr/share/nginx/html` from `php-fpm` container later.
+Maintenance page [`maintenance.html`](https://github.com/shopsys/shopsys/blob/7.3/project-base/app/maintenance.html) will be exported into `/usr/share/nginx/html` from `php-fpm` container later.
 
 ### Database
 
@@ -108,7 +108,7 @@ We need to allow access to database from docker network that will operate on 192
 ```
 echo host all all 192.168.0.1/16 md5 >> /var/lib/pgsql/10/data/pg_hba.conf
 ```
-We edit configuration file `/var/lib/pgsql/10/data/postgresql.conf` of postgresql to match application needs based on our [postgres.conf](../../project-base/docker/postgres/postgres.conf).
+We edit configuration file `/var/lib/pgsql/10/data/postgresql.conf` of postgresql to match application needs based on our [postgres.conf](https://github.com/shopsys/shopsys/blob/7.3/project-base/docker/postgres/postgres.conf).
 We also allow to establish connection via localhost and 192.168.0.1 subnet by modifying one line in `postgresql.conf`.
 ```
 listen_addresses = '0.0.0.0'
@@ -231,7 +231,7 @@ echo $'domains_urls:
         url: https://<YOUR_DOMAIN_HERE>
 ' >  app/config/domains_urls.yml
 ```
-Then we check whether `mailer_master_email_address` property in [`parameters.yml.dist`](../../project-base/app/config/parameters.yml.dist) is set correctly.
+Then we check whether `mailer_master_email_address` property in [`parameters.yml.dist`](https://github.com/shopsys/shopsys/blob/7.3/project-base/app/config/parameters.yml.dist) is set correctly.
 
 After the project is setup correctly, we launch the build of php-fpm container by docker build command that will build image with composer, npm packages and created assets.
 ```
@@ -264,7 +264,7 @@ docker save production-php-fpm | gzip | ssh -oStrictHostKeyChecking=no -i <PRIVA
 We have setup server and also built image from project git repository in the server docker registry so we are now able to deploy application and setup it with base data.
 
 We log into the server using ssh.  
-Now we need to copy [`docker-compose-prod-deploy.yml.dist`](../../project-base/docker/conf/docker-compose.prod.yml.dist) into folder on the production server as `docker-compose.yml`.  
+Now we need to copy [`docker-compose-prod-deploy.yml.dist`](https://github.com/shopsys/shopsys/blob/7.3/project-base/docker/conf/docker-compose.prod.yml.dist) into folder on the production server as `docker-compose.yml`.  
 After the image is in the registry of the production server we create docker containers and build application for production with clean DB and base data.  
 We use parameter `-p` to specify the name of the project and prefix for the volumes so these will be easily accessible.
 There are named volumes created under path `/var/lib/docker/volumes/` and one persisted folder `production-content` for all uploaded images and generated files that should not be removed.  

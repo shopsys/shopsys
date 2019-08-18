@@ -18,7 +18,7 @@ They can be also generated manually in the administration section *Marketing >  
 There are two types of product feeds: `daily` and `hourly`.
 
 Daily feed usually contain a lot of information about the products are can take a while to export if you have a lot of products.
-For this exact reason, the [`DailyFeedCronModule`](../../packages/framework/src/Model/Feed/DailyFeedCronModule.php) is implemented iteratively and can export the feeds in batches as needed.
+For this exact reason, the [`DailyFeedCronModule`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Feed/DailyFeedCronModule.php) is implemented iteratively and can export the feeds in batches as needed.
 
 Hourly feeds contain much less information and their priority is to be as current as possible.
 Typical examples are exports of current availability and stock quantities of the products.
@@ -26,10 +26,10 @@ By default, they are exported every hour and the export cannot be broken into mu
 
 ## How to implement a custom product feed?
 
-The heart of a product feed plugin is a service implementing the [`FeedInterface`](../../packages/framework/src/Model/Feed/FeedInterface.php) that is tagged in a DI container with `shopsys.product_feed` tag.
+The heart of a product feed plugin is a service implementing the [`FeedInterface`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Feed/FeedInterface.php) that is tagged in a DI container with `shopsys.product_feed` tag.
 Optionally, the tag can have a type attribute (default is `daily`).
 
-The annotations in the feed interfaces ([`FeedInterface`](../../packages/framework/src/Model/Feed/FeedInterface.php), [`FeedInfoInterface`](../../packages/framework/src/Model/Feed/FeedInfoInterface.php) and [`FeedItemInterface`](../../packages/framework/src/Model/Feed/FeedItemInterface.php)) should explain a lot.
+The annotations in the feed interfaces ([`FeedInterface`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Feed/FeedInterface.php), [`FeedInfoInterface`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Feed/FeedInfoInterface.php) and [`FeedItemInterface`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Feed/FeedItemInterface.php)) should explain a lot.
 When in doubt, you can take a look at the [already implemented product feeds](https://github.com/search?q=topic%3Aproduct-feed+org%3Ashopsys) for inspiration.
 
 ## How to extend an existing product feed?
@@ -38,10 +38,10 @@ When in doubt, you can take a look at the [already implemented product feeds](ht
 * to use a different Twig template you can either [override the template](https://symfony.com/doc/3.3/templating/overriding.html)
 or you can extend the service tagged as `shopsys.product_feed` and override the `getTemplateFilepath` method in it
 * you can use a different `FeedItemInterface` implementation by extending its factory service
-(eg. [GoogleFeedItemFactory](../../packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFactory.php))
+(eg. [GoogleFeedItemFactory](https://github.com/shopsys/shopsys/blob/7.3/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFactory.php))
 * you can even change the way the underlying Product entities are fetched from the database by extending the feed's product repository
-(eg. [GoogleProductRepository](../../packages/product-feed-google/src/Model/Product/GoogleProductRepository.php))
+(eg. [GoogleProductRepository](https://github.com/shopsys/shopsys/blob/7.3/packages/product-feed-google/src/Model/Product/GoogleProductRepository.php))
 * when a more complicated customization is needed, extending feed item facade service and overwriting the `getItems` is the way to go
-(eg. [GoogleFeedItemFacade](../../packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFacade.php)),
+(eg. [GoogleFeedItemFacade](https://github.com/shopsys/shopsys/blob/7.3/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFacade.php)),
 it should allow you to provide your own way of getting the right items for your feed
 

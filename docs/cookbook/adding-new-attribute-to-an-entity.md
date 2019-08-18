@@ -104,7 +104,7 @@ You can find instructions in [Extending Product List](./extending-product-list.m
 
 1. Edit `Shopsys\ShopBundle\Model\Product\ProductDataFactory` - overwrite `create()` and `createFromProduct()` methods.
     *Alternatively you can create an independent class by implementing
-[`Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface`](../../packages/framework/src/Model/Product/ProductDataFactoryInterface.php).*
+[`Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/ProductDataFactoryInterface.php).*
 
     ```php
     namespace Shopsys\ShopBundle\Model\Product;
@@ -142,7 +142,7 @@ You can find instructions in [Extending Product List](./extending-product-list.m
     }
     ```
 
-Your `ProductDataFactory` is already registered in [`services.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services.yml)
+Your `ProductDataFactory` is already registered in [`services.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml)
 as an alias for the original interface.
 ```
 Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@Shopsys\ShopBundle\Model\Product\ProductDataFactory'
@@ -245,7 +245,7 @@ The original `ProductFormType` is set as the extended type by implementation of 
 
 ## Front-end
 In order to display your new attribute on a front-end page, you can modify the corresponding template directly
-as it is a part of your open-box, eg. [`detail.html.twig`](../../project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/detail.html.twig).
+as it is a part of your open-box, eg. [`detail.html.twig`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/detail.html.twig).
 ```
 {{ product.extId }}
 ```
@@ -253,7 +253,7 @@ as it is a part of your open-box, eg. [`detail.html.twig`](../../project-base/sr
 ## Data fixtures
 You can modify data fixtures in `src/Shopsys/ShopBundle/DataFixtures/` of your project
 ### Random `extId`
-If you want to add unique random `extId` for products from data fixtures you can add it in `createProductDataFromRowForFirstDomain` method of [`ProductDataFixtureLoader.php`](../../project-base/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixtureLoader.php).
+If you want to add unique random `extId` for products from data fixtures you can add it in `createProductDataFromRowForFirstDomain` method of [`ProductDataFixtureLoader.php`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixtureLoader.php).
 You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random numbers like this:
 ```diff
 +   use Faker\Generator as Faker;
@@ -300,8 +300,8 @@ You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random nu
 ```
 
 ### Specific `extId`
-If you need to add specific `extId` to products in data fixture you can add new column to [`demo-data-products.csv`](../../project-base/src/Shopsys/ShopBundle/DataFixtures/resources/demo-data-products.csv).
-Then you have to set the value of the new column in `updateProductDataFromCsvRowForFirstDomain` method of [`ProductDataFixtureLoader.php`](../../project-base/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixtureLoader.php).
+If you need to add specific `extId` to products in data fixture you can add new column to [`demo-data-products.csv`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/DataFixtures/resources/demo-data-products.csv).
+Then you have to set the value of the new column in `updateProductDataFromCsvRowForFirstDomain` method of [`ProductDataFixtureLoader.php`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixtureLoader.php).
 ```diff
 +   const COLUMN_EXT_ID = 24;  
 

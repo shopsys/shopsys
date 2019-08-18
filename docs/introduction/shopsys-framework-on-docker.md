@@ -53,7 +53,7 @@ The definition of container consists of some options:
 The definition of volumes, example:
 * **shopsys-framework-sync** : name of the volume
 * **external: true** : flag, which indicates, that volume is already defined external
-(in this case in [docker-sync.yml](../../project-base/docker-sync.yml))
+(in this case in [docker-sync.yml](https://github.com/shopsys/shopsys/blob/7.3/project-base/docker-sync.yml))
 
 #### 3.2 docker-sync.yml
 [Docker-sync.yml](/project-base/docker/conf/docker-sync.yml.dist) file contains the definition of synchronization for the docker-sync tool (it's used for Mac only).

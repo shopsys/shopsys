@@ -36,7 +36,7 @@ If you have created your custom entities that store monetary value or added a ne
   protected $myMonetaryValue;
 ```
 
-If you do so, you'll have to create [a database migration](../introduction/database-migrations.md) which will add a `(DC2Type:money)` comment on the columns, informing Doctrine about the specified type (similarly to the [`Version20190215092226`](/packages/framework/src/Migrations/Version20190215092226.php) in `shopsys/framework`).
+If you do so, you'll have to create [a database migration](../introduction/database-migrations.md) which will add a `(DC2Type:money)` comment on the columns, informing Doctrine about the specified type (similarly to the [`Version20190215092226`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Migrations/Version20190215092226.php) in `shopsys/framework`).
 
 Because the entity property now changed the type, its usages (along with the related [entity data class](../model/entities.md#entity-data)) have to be reviewed and changed as well.
 We recommend using type-hinting in the changed methods as explained in [Working With Money in PHP](#working-with-money-in-php) below.
@@ -306,11 +306,11 @@ Previously, the `MoneyToLocalizedStringTransformer` (which is a default view tra
 ```
 
 ## Data in SettingValue Entities
-The [`Setting`](/packages/framework/src/Component/Setting/Setting.php) component is now able to save and load [`SettingValue`](/packages/framework/src/Component/Setting/SettingValue.php) entities with an instance of `Money` as a value.
+The [`Setting`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Component/Setting/Setting.php) component is now able to save and load [`SettingValue`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Component/Setting/SettingValue.php) entities with an instance of `Money` as a value.
 To make sure that monetary values that are currently saved as a decimal string will be loaded as a `Money` instance, you have to manually create [a database migration](../introduction/database-migrations.md) that changes the `type` to `money` for all `SettingValue` entities holding monetary values that you added into your project.
 Previously, any of types `string`, `integer` or `float` might have been used to save a numeric value into the database.
 
-For example see the `up` method of migration class [`Version20190220101938`](/packages/framework/src/Migrations/Version20190220101938.php) that migrates the `freeTransportAndPaymentPriceLimit` setting values to the `Money` type:
+For example see the `up` method of migration class [`Version20190220101938`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Migrations/Version20190220101938.php) that migrates the `freeTransportAndPaymentPriceLimit` setting values to the `Money` type:
 ```php
 /**
  * @param \Doctrine\DBAL\Schema\Schema $schema

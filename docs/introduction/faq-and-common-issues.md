@@ -29,7 +29,7 @@ See more about phing targets in [Console Commands for Application Management (Ph
 ## What are the data fixtures good for?
 Data fixtures are actually demo data available in the Shopys Framework.
 For their installation, use the phing target `db-fixtures-demo`.
-This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (eg. with configured domains and an existing database structure), see [`build.xml`](/packages/framework/build.xml).
+This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (eg. with configured domains and an existing database structure), see [`build.xml`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/build.xml).
 Demo data are used for automatic tests and also for installation of demo shop with prepared data.
 
 ## How to change a domain URL?
@@ -99,9 +99,9 @@ We are using [entity data objects](../model/entities.md#entity-data) instead of 
 because Symfony forms need setters for all fields and we don't want to mess entities with them.
 
 ## What is the configuration file `services_test.yml` good for?
-[`services_test.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml)
+[`services_test.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml)
 is a service configuration file that is loaded in TEST environment in addition to
-the standard configuration defined in [`services.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services.yml) as sometimes the configuration differs from the standard one and we need to override it.
+the standard configuration defined in [`services.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml) as sometimes the configuration differs from the standard one and we need to override it.
 E.g., by default, all our services are defined as private. However, in tests, we are retrieving some services directly from the container hence we need to have them public in TEST environment.
 
 ## How to change the behavior of the product search on the front-end?

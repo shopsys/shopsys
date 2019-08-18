@@ -45,7 +45,7 @@ php bin/console server:run
 ```
 
 *Note: you will be prompted for starting one of the 2 localised domains*  
-*Note: you can use Nginx service instead of integrated server, in that case let be inspired by [nginx configuration](../../project-base/docker/nginx/nginx.conf)*
+*Note: you can use Nginx service instead of integrated server, in that case let be inspired by [nginx configuration](https://github.com/shopsys/shopsys/blob/7.3/project-base/docker/nginx/nginx.conf)*
 
 ## See it in your browser!
 

@@ -35,7 +35,7 @@ There you can find links to upgrade notes for other versions too.
         +    - -c
         +    - config_file=/var/lib/postgresql/data/postgresql.conf
         ```
-- update your [nginx.conf](../../project-base/docker/nginx/nginx.conf) file like this to have in nginx the same limit for file size as for php from [php.ini](../../project-base/docker/php-fpm/php-ini-overrides.ini) ([#947](https://github.com/shopsys/shopsys/pull/947))
+- update your [nginx.conf](https://github.com/shopsys/project-base/blob/v7.2.0/docker/nginx/nginx.conf) file like this to have in nginx the same limit for file size as for php from [php.ini](https://github.com/shopsys/shopsys/blob/7.3/project-base/docker/php-fpm/php-ini-overrides.ini) ([#947](https://github.com/shopsys/shopsys/pull/947))
     ```diff
     server {
         listen 8080;
@@ -44,7 +44,7 @@ There you can find links to upgrade notes for other versions too.
         server_tokens off;
     +   client_max_body_size 32M;
     ```
-    - also, update your [ingress.yml](../../project-base/kubernetes/ingress.yml) config file
+    - also, update your [ingress.yml](https://github.com/shopsys/project-base/blob/v7.2.0/kubernetes/ingress.yml) config file
         ```diff
         metadata:
             name: shopsys

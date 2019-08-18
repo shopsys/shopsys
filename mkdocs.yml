@@ -2,7 +2,6 @@ site_name: Shopsys Framework Knowledge Base
 nav:
     - Home: index.md
     - Administration: administration/index.md
-    - Backend API: backend-api/index.md
     - Contributing: contributing/index.md
     - Cookbooks: cookbook/index.md
     - Extensibility: extensibility/index.md

@@ -45,7 +45,7 @@ The source is mocked with [apiari.io service](http://docs.ssfwbasicdataimportdem
 ]
 ```
 
-### Step 1 - Add `$extId` to [Product](../../project-base/src/Shopsys/ShopBundle/Model/Product/Product.php) [entity](../model/introduction-to-model-architecture.md#entity)
+### Step 1 - Add `$extId` to [Product](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Model/Product/Product.php) [entity](../model/introduction-to-model-architecture.md#entity)
 We need to store the relation between your application database and the external source of data because later, in data transfer processing,
 we will be deciding whether to create a new product or update existing one, based on the `$extId` attribute.
 If you do not know how to add an attribute to an entity, take a look at [the cookbook](adding-new-attribute-to-an-entity.md).
@@ -54,7 +54,7 @@ If you do not know how to add an attribute to an entity, take a look at [the coo
 Cron modules are the best way to handle data downloaded from external sources
 because they can be scheduled, run on background and even iterated when necessary.
 
-#### 2.1 - Add new `ImportProductsCronModule` class that implements [`SimpleCronModuleInterface`](../../packages/plugin-interface/src/Cron/SimpleCronModuleInterface.php)
+#### 2.1 - Add new `ImportProductsCronModule` class that implements [`SimpleCronModuleInterface`](https://github.com/shopsys/shopsys/blob/7.3/packages/plugin-interface/src/Cron/SimpleCronModuleInterface.php)
 ```php
 // src/Shopsys/ShopBundle/Model/Product/ImportProductsCronModule.php
 
@@ -81,7 +81,7 @@ class ImportProductsCronModule implements SimpleCronModuleInterface
 *Note: Cron modules are not suitable for data transfers initialized by an external source,
 you should implement Web Services for that purpose.*
 
-#### 2.2 - Add cron configuration to [`cron.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services/cron.yml)
+#### 2.2 - Add cron configuration to [`cron.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services/cron.yml)
 ```diff
 # src/Shopsys/ShopBundle/Resources/config/services/cron.yml
 
@@ -160,11 +160,11 @@ private function importExternalProductsData(array $externalProductsData)
 ```
 
 *Note: We need to know whether the product with given `$extId` exists.
-For that purpose, we will use a descendant of [`ProductFacade`](../../packages/framework/src/Model/Product/ProductFacade.php) ([more about facades](../model/introduction-to-model-architecture.md#facade))
-which will use a descendant of [`ProductRepository`](../../packages/framework/src/Model/Product/ProductRepository.php) ([more about repositories](../model/introduction-to-model-architecture.md#repository))
+For that purpose, we will use a descendant of [`ProductFacade`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/ProductFacade.php) ([more about facades](../model/introduction-to-model-architecture.md#facade))
+which will use a descendant of [`ProductRepository`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/ProductRepository.php) ([more about repositories](../model/introduction-to-model-architecture.md#repository))
 that can talk to the persistence layer. We will extend the framework classes and implement new methods in the next two steps.*
 
-#### 3.2 - Extend [`ProductRepository`](../../packages/framework/src/Model/Product/ProductRepository.php) and implement method `findByExternalId()` in order to be able find a [`Product`](../../packages/framework/src/Model/Product/Product.php) by an external ID
+#### 3.2 - Extend [`ProductRepository`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/ProductRepository.php) and implement method `findByExternalId()` in order to be able find a [`Product`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/Product.php) by an external ID
 Create new class `Shopsys/ShopBundle/Model/Product/ProductRepository` that extends `ProductRepository` from the framework.
 ```php
 // src/Shopsys/ShopBundle/Model/Product/ProductRepository.php
@@ -185,13 +185,13 @@ class ProductRepository extends BaseProductRepository
 }
 ```
 
-Add information about the class extension into the container configuration in [`services.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services.yml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml) as well.
+Add information about the class extension into the container configuration in [`services.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml).
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml) as well.
 ```yaml
     Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@Shopsys\ShopBundle\Model\Product\ProductRepository'
 ```
 
-#### 3.3 - Extend [`ProductFacade`](../../packages/framework/src/Model/Product/ProductFacade.php) and implement method `findByExternalId()` in order to get [`Product`](../../packages/framework/src/Model/Product/Product.php) from repository
+#### 3.3 - Extend [`ProductFacade`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/ProductFacade.php) and implement method `findByExternalId()` in order to get [`Product`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/Product.php) from repository
 Create new class `Shopsys/ShopBundle/Model/Product/ProductFacade` that extends `ProductFacade` from the framework.
 ```php
 // src/Shopsys/ShopBundle/Model/Product/ProductFacade.php
@@ -219,8 +219,8 @@ class ProductFacade extends BaseProductFacade
 
 *Note: You should overwrite `protected $productRepository` annotation so IDE knows that you are using the extended `ProductRepository`*
 
-Add information about the class extension into the container configuration in [`services.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services.yml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml) as well.
+Add information about the class extension into the container configuration in [`services.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml).
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml) as well.
 ```yaml
     Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@Shopsys\ShopBundle\Model\Product\ProductFacade'
 ```
@@ -229,8 +229,8 @@ To [make the service public in TEST environment](../introduction/faq-and-common-
 As an entry-point for data processing in Shopsys Framework, we use facades.
 In this case, our new `ProductFacade`
 and its inherited methods `create()` and `edit()`.
-Those methods expect [`ProductData`](../../packages/framework/src/Model/Product/ProductData.php)
-class as a parameter, you can use [`ProductDataFactory`](../../project-base/src/Model/Product/ProductDataFactory.php) to create it.
+Those methods expect [`ProductData`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/ProductData.php)
+class as a parameter, you can use [`ProductDataFactory`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Model/Product/ProductDataFactory.php) to create it.
 
 ```php
 // src/Shopsys/ShopBundle/Model/Product/ImportProductsCronModule.php
@@ -287,7 +287,7 @@ private function editProduct(Product $product, array $externalProductData) {
 
 #### 3.5 - Implement `ImportProductsCronModule::fillProductData()`
 Finally, we can implement the private method for filling data object
-[`ProductData`](../../packages/framework/src/Model/Product/ProductData.php) with external source data.
+[`ProductData`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/ProductData.php) with external source data.
 ```php
 // src/Shopsys/ShopBundle/Model/Product/ImportProductsCronModule.php
 
@@ -340,16 +340,16 @@ private function fillProductData(ProductData $productData, array $externalProduc
 *Note: In order to be able to use stock quantity, we must enable it by setting the `$usingStock` attribute to `true`.*
 
 *Note 2: Data from external source contain only integer value for vat percent information but we need
-[`Vat`](../../packages/framework/src/Model/Pricing/Vat/Vat.php) object
-in [`ProductData`](../../packages/framework/src/Model/Product/ProductData.php).
-So we will extend [`VatRepository`](../../packages/framework/src/Model/Pricing/Vat/VatRepository.php)
-and [`VatFacade`](../../packages/framework/src/Model/Pricing/Vat/VatFacade.php) and implement appropriate methods.*
+[`Vat`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Pricing/Vat/Vat.php) object
+in [`ProductData`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/ProductData.php).
+So we will extend [`VatRepository`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Pricing/Vat/VatRepository.php)
+and [`VatFacade`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Pricing/Vat/VatFacade.php) and implement appropriate methods.*
 
 *Note 3: `Money::create()` can be used only for integers and numeric strings.
 If you use floats in your `$externalProductData` array you should always use `Money::createFromFloat()` and specify scale explicitly.
 Read more about monetary values in [How to Work with Money](../model/how-to-work-with-money.md).*
 
-#### 3.6 - Extend [`VatRepository`](../../packages/framework/src/Model/Pricing/Vat/VatRepository.php) and implement method `getVatByPercent()` in order to load [`Vat`](../../packages/framework/src/Model/Pricing/Vat/Vat.php) by percent
+#### 3.6 - Extend [`VatRepository`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Pricing/Vat/VatRepository.php) and implement method `getVatByPercent()` in order to load [`Vat`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Pricing/Vat/Vat.php) by percent
 ```php
 // src/Shopsys/ShopBundle/Model/Pricing/Vat/VatRepository.php
 
@@ -376,15 +376,15 @@ class VatRepository extends BaseVatRepository
 }
 ```
 
-Add information about the class extension into the container configuration in [`services.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services.yml)
+Add information about the class extension into the container configuration in [`services.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml)
 ```yaml
     Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository: '@Shopsys\ShopBundle\Model\Pricing\Vat\VatRepository'
 ```
 
-**Warning: The method throws an exception when [`Vat`](../../packages/framework/src/Model/Pricing/Vat/Vat.php) object is not found by given percent value.
+**Warning: The method throws an exception when [`Vat`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Pricing/Vat/Vat.php) object is not found by given percent value.
 Do not forget to handle it (e.g. skip the product data processing and log the exception).**
 
-#### 3.7 - Extend [`VatFacade`](../../packages/framework/src/Model/Pricing/Vat/VatFacade.php) and implement method `getVatByPercent()` in it
+#### 3.7 - Extend [`VatFacade`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Pricing/Vat/VatFacade.php) and implement method `getVatByPercent()` in it
 ```php
 // Shopsys/ShopBundle/Model/Pricing/Vat/VatFacade.php
 
@@ -412,8 +412,8 @@ class VatFacade extends BaseVatFacade
 
 *Note: You should overwrite `protected $vatRepository` annotation so IDE knows that you are using the extended `VatRepository`*
 
-Add information about the class extension into the container configuration in [`services.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services.yml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml) as well.
+Add information about the class extension into the container configuration in [`services.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml).
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml) as well.
 ```yaml
     Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade: '@Shopsys\ShopBundle\Model\Pricing\Vat\VatFacade'
 ```
@@ -452,10 +452,10 @@ php bin/console shopsys:cron --module="Shopsys\ShopBundle\Model\Product\ImportPr
 - Use database transactions.
     - Use `EntityManager` methods `beginTransaction()`, `commit()` and `rollback()`.
     - Do not forget to clear identity map when doing a rollback (so even entity modifications are reverted).
-    - [`IteratedCronModuleInterface`](../../packages/plugin-interface/src/Cron/IteratedCronModuleInterface.php) offers a way to implement longer processes that can span over many iterations.
-- Disable entity manager SQL logging (use [`SqlLoggerFacade::temporarilyDisableLogging()`](../../packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
+    - [`IteratedCronModuleInterface`](https://github.com/shopsys/shopsys/blob/7.3/packages/plugin-interface/src/Cron/IteratedCronModuleInterface.php) offers a way to implement longer processes that can span over many iterations.
+- Disable entity manager SQL logging (use [`SqlLoggerFacade::temporarilyDisableLogging()`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
     - By default, every executed SQL query is logged and that slows down the process and consumes a lot of memory when there are many iterations.
-    - Do not forget to re-enable the logging after the processing is done (use [`SqlLoggerFacade::reenableLogging()`](../../packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
+    - Do not forget to re-enable the logging after the processing is done (use [`SqlLoggerFacade::reenableLogging()`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
 - Logging of some key functions might be helpful for future debugging
 but it is not a good idea to log "everything". Too many information in logs might be counterproductive.
 - Clear entity manager identity map once in a while, because `EntityManager::flush()` searches
@@ -489,7 +489,7 @@ On the other hand, you have to handle all related logic manually then.
 Now you know how to implement simple data transfer to your e-shop from an external source.
 You know why you should persist external ID and how to decide whether create new entities or update existing ones.
 You learned about Shopsys Framework cron modules, how to create and run them. You also know how to get desired objects based on external data
-(e.g. [`Vat`](../../packages/framework/src/Model/Pricing/Vat/Vat.php) object based on vat percent).
+(e.g. [`Vat`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Pricing/Vat/Vat.php) object based on vat percent).
 You are familiar with best practices for implementing data transfers,
 what pitfalls you can encounter with and what are the ways of dealing with them.
 

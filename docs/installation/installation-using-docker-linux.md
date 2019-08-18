@@ -38,7 +38,7 @@ In case you want to start demo of the app as fast as possible, you can now execu
 If you want to know more about what is happening during installation, continue with next step.
 
 ### 2.2 Create docker-compose.yml file
-Create `docker-compose.yml` from template [`docker-compose.yml.dist`](../../project-base/docker/conf/docker-compose.yml.dist).
+Create `docker-compose.yml` from template [`docker-compose.yml.dist`](https://github.com/shopsys/shopsys/blob/7.3/project-base/docker/conf/docker-compose.yml.dist).
 ```
 cp docker/conf/docker-compose.yml.dist docker-compose.yml
 ```

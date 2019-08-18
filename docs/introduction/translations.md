@@ -7,7 +7,7 @@ In this article, we describe tools and recommendations for translations.
 
 ## Usage
 
-1. Use a translator for your [translatable texts](#translatable-texts). Shopsys Framework implementation of a translator is [`Shopsys\FrameworkBundle\Component\Translation\Translator`](/packages/framework/src/Component/Translation/Translator.php) class.
+1. Use a translator for your [translatable texts](#translatable-texts). Shopsys Framework implementation of a translator is [`Shopsys\FrameworkBundle\Component\Translation\Translator`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Component/Translation/Translator.php) class.
    You can find more in [Symfony translation documentation](https://symfony.com/doc/current/components/translation/usage.html).
 
 1. Once you have translations in your code, you have to extract them by running `php phing translations-dump`.
