@@ -19,20 +19,22 @@ Let's say we have a grid of salesmen (in fact, such a grid is created in ["Creat
 and we want to display all their names bold, and also, we want to be more specific when there are no salesmen in our database.
 
 1. Create a new template that extends to original one and override the blocks you need:
-    ```twig
-    {# src/Shopsys/ShopBundle/Resources/views/Admin/Content/Salesman/listGrid.html.twig #}
-    {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
 
-    {% block grid_no_data %}
-        {{ 'There are no salesmen in your database.' }}
-    {% endblock %}
+    <!-- language: lang-twig -->
 
-    {% block grid_value_cell_id_name %}
-        <strong>{{ value }}</strong>
-    {% endblock %}
-    ```
+        {# src/Shopsys/ShopBundle/Resources/views/Admin/Content/Salesman/listGrid.html.twig #}
+        {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+        {% block grid_no_data %}
+            {{ 'There are no salesmen in your database.' }}
+        {% endblock %}
+
+        {% block grid_value_cell_id_name %}
+            <strong>{{ value }}</strong>
+        {% endblock %}
 
 2. Set the new theme for your grid:
-    ```php
-    $grid->setTheme('@ShopsysShop/Admin/Content/Salesman/listGrid.html.twig');
-    ```
+
+    <!-- language: lang-php -->
+
+        $grid->setTheme('@ShopsysShop/Admin/Content/Salesman/listGrid.html.twig');
