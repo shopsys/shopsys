@@ -32,11 +32,11 @@ Add following line into your `docker-compose.yml` in `services -> php-fpm -> vol
 ```
 
 To perform a desired stage, run the following command in the `php-fpm` docker container and follow instructions that you'll be asked in console.
-```
+``` sh
 vendor/bin/monorepo-builder release <release-number> --stage <stage> -v
 ```
 If you want only to display a particular stage, along with the release worker class names, add the `--dry-run` argument:
-```
+``` sh
 vendor/bin/monorepo-builder release <release-number> --dry-run --stage <stage> -v
 ```
 

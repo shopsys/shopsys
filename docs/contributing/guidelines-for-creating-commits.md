@@ -15,7 +15,7 @@ This way we are able to understand how the specific commit changed the applicati
 * Commit messages should be short and brief. However, if you need to include some details in the commit message, you should write a short summary on the first line, leave one blank line and then write the more detailed explanation, usually in form of a list.
 * If you have a lot of information to share, you should write a short summary of the modification on the first line, then write a more detailed description below. Always try to include all relevant notes.
 
-```
+``` markdown
 administrator is now not allowed to put h1 headings to wysiwyg
 
 - done because of SEO - there should be always only one h1 tag
@@ -29,17 +29,17 @@ administrator is now not allowed to put h1 headings to wysiwyg
 * When a commit is related only to a specific part (admin, docs, design) or only to one class or file (composer.json, services.yml), it should be prefixed with that name.
 * Present tense is used for describing the change of application behavior. It is helpful to use words to define time, such as "now", in order to describe the current state. Otherwise, the message could be misunderstood as a description of an error that was fixed.
 
-```
+``` markdown
 admin: product list now displays name instead of ID
 ```
 
 * Past tense is used for describing the specific change made in the code, such as renaming, adding classes, and simple modifications.
 
-```
+``` markdown
 docs: added rule about title capitalization in Guidelines for Writing Documentation
 ```
 
-```
+``` markdown
 OrderFlowFacade: removed unused uses
 ```
 
@@ -48,7 +48,7 @@ OrderFlowFacade: removed unused uses
 * Property or variable name should be always prefixed with a dollar sign.
 * Merge commits and commits created using the *Squash and merge* method (see [Merging to Master on Github](./merging-on-github.md)) should always contain the PR number in parentheses:
 
-```
+``` markdown
 updated packages versions in package.json (#755)
 ```
 
@@ -57,36 +57,36 @@ updated packages versions in package.json (#755)
 * e.g. fixing a typo or incorrect annotation, renaming local variable.
 * Since these modifications do not influence application behavior, you should use a short and simple messages.
 
-```
+``` markdown
 typo
 ```
 
-```
+``` markdown
 annotation fix
 ```
 
-```
+``` markdown
 renamed variable
 ```
 
 #### Renaming methods and properties
 * Commit message should contain name of affected class and it should be obvious what was the previous state and what is the current state.
 
-```
+``` markdown
 ProductFacade: renamed method bar() to baz()
 ```
 
-```
+``` markdown
 ProductFacade: renamed property $name to $title
 ```
 
-```
+``` markdown
 ProductFacade: renamed getBy*() to getProductBy*()
 ```
 
 #### Adding classes, properties or tests
 * These usually need more information and should contain the reason why you added them.
-```
+``` markdown
 Product: added property $weight
 
 - needed to make transport availability dependent on the total weight of the products in cart

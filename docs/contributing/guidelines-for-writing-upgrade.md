@@ -29,7 +29,7 @@ This file contains information for the contributors in the form of the link to [
 Instructions for developers building a project based on project-base should follow.
 First, there must be general information about upgrading with recommended steps and a typical upgrade sequence,
 following with a list of links to upgrade guides for each version.
-These versions should be placed in a [`docs/upgrade/`](../../docs/upgrade) folder.
+These versions should be placed in a [`docs/upgrade/`](https://github.com/shopsys/shopsys/tree/7.3/docs/upgrade/) folder.
 
 ## Structure of upgrade files
 

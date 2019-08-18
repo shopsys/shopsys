@@ -3,7 +3,7 @@
 * Fork our [monorepo](https://github.com/shopsys/shopsys)
 * Create your branch
 
-```
+``` sh
 git branch branch-name
 ```
 
@@ -11,7 +11,7 @@ git branch branch-name
 
 * Push to your fork
 
-```
+``` sh
 git push
 ```
 
@@ -19,7 +19,7 @@ git push
 
 * Before creating the PR you have to update the branch on current master:
 
-```
+``` sh
 git fetch
 git rebase origin/master
 ```
@@ -59,19 +59,19 @@ We use fixup commits for correcting pull request so the reviewer can see what ed
 If the reviewer is satisfied with changes, squash fixup commits.
 * Update the branch on current master:
 
-```
+``` sh
 git fetch
 git rebase origin/master
 ```
 
 * Squash fixup commits:
 
-```
+``` sh
 git rebase --interactive --autosquash origin/master
 ```
 After squash you just need to correct commit messages (if needed) and push it:
 
-```
+``` sh
 git push --force
 ```
 

@@ -19,7 +19,7 @@ I have to add some suitable commit message that summarizes the whole modificatio
 
 - When my branch is not rebased on the base branch, I need to manually rebase and push-force it so I can use the "Merge pull request" button
 or I can do the whole merge manually:
-```
+``` sh
 # checkout my branch that I want to merge
 git checkout my-awesome-branch
 
