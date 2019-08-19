@@ -13,3 +13,8 @@ services:
             - { name: 'data_collector', template: '@ShopsysFramework/Debug/Elasticsearch/template.html.twig', id: 'shopsys.elasticsearch_collector' }
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection:
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry:
+        arguments:
+            - '%shopsys.entity_extension.map%'
+            - '%shopsys.framework.root_dir%'
