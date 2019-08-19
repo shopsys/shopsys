@@ -66,5 +66,10 @@ There you can find links to upgrade notes for other versions too.
               $debugNote = 'Order page should redirect by 302 as the cart is empty by default.';
               $config->changeDefaultRequestDataSet($debugNote)
         ```
+- fix a typo in your `ProductController` (in `listByCategoryAction()`, and `searchAction()` methods), and in all the related Twig templates ([#1336](https://github.com/shopsys/shopsys/pull/1336))
+    ```diff
+    -    'filterFormSubmited' => $filterForm->isSubmitted(),
+    +    'filterFormSubmitted' => $filterForm->isSubmitted(),
+    ```
 
 [shopsys/framework]: https://github.com/shopsys/framework
