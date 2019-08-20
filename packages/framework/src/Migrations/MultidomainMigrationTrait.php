@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use PDO;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 /**
  * This trait can be used in classes
@@ -17,7 +16,7 @@ trait MultidomainMigrationTrait
     protected function getAllDomainIds()
     {
         return $this
-            ->sql('SELECT domain_id FROM setting_values WHERE name = :baseUrl', ['baseUrl' => Setting::BASE_URL])
+            ->sql('SELECT domain_id FROM setting_values WHERE name = :baseUrl', ['baseUrl' => 'baseUrl'])
             ->fetchAll(PDO::FETCH_COLUMN, 'domain_id');
     }
 
