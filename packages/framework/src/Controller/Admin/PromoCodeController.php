@@ -139,8 +139,7 @@ class PromoCodeController extends AdminBaseController
 
             $grid->enablePaging();
         } else {
-            $grid = $this->promoCodeGridFactory->create();
-            $grid->addEditActionColumn('admin_promocode_edit', ['id' => 'pc.id']);
+            $grid = $this->promoCodeGridFactory->create(true);
 
             $grid->enablePaging();
         }
