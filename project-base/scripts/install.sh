@@ -47,13 +47,21 @@ echo "Creating docker configuration.."
 case "$operatingSystem" in
     "1")
         cp -f docker/conf/docker-compose.yml.dist docker-compose.yml
+
+        sed -i -r "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
+        sed -i -r "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
         ;;
     "2")
         cp -f docker/conf/docker-compose-mac.yml.dist docker-compose.yml
         cp -f docker/conf/docker-sync.yml.dist docker-sync.yml
 
-        echo "You will be asked to enter sudo password in case to allow second domain alias in your system config.."
-        sudo ifconfig lo0 alias 127.0.0.2 up
+        sed -i -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
+        sed -i -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
+
+        if [[ $1 != --skip-aliasing ]]; then
+            echo "You will be asked to enter sudo password in case to allow second domain alias in your system config.."
+            sudo ifconfig lo0 alias 127.0.0.2 up
+        fi
 
         mkdir -p ${projectPathPrefix}var/postgres-data ${projectPathPrefix}var/elasticsearch-data vendor
         docker-sync start
@@ -73,9 +81,8 @@ docker-compose up -d --build
 
 echo "Installing application inside a php-fpm container"
 
-docker-compose exec php-fpm composer install
-
-docker-compose exec php-fpm ./phing db-create test-db-create build-demo-dev-quick error-pages-generate
+docker-compose exec -T php-fpm composer install --no-interaction
+docker-compose exec -T php-fpm ./phing db-create test-db-create build-demo-dev-quick error-pages-generate
 
 echo "Your application is now ready under http://127.0.0.1:8000 and second domain under http://127.0.0.2:8000"
 echo "Administration is ready under http://127.0.0.1:8000/admin, you can log in using username 'admin' and password 'admin123'"
