@@ -85,4 +85,12 @@ class ClassExtensionRegistry
         $reflector = new ClassReflector(new SingleFileSourceLocator($pathname, $astLocator));
         return $reflector->getAllClasses()[0]->getName();
     }
+
+    /**
+     * @return string[]
+     */
+    public function getClassExtensionMap(): array
+    {
+        return $this->serviceExtensionMap + $this->entityExtensionMap + $this->dataObjectExtensionMap;
+    }
 }
