@@ -8,6 +8,7 @@ use DateTime;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Localization\CustomDateTimeFormatPatternRepositoryFactory;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
+use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 
@@ -65,8 +66,9 @@ class DateTimeFormatterExtensionTest extends TestCase
      */
     protected function createDateTimeFormatter(): DateTimeFormatter
     {
+        $displayTimeZoneProvider = new DisplayTimeZoneProvider();
         $dateTimeFormatPatternRepository = (new CustomDateTimeFormatPatternRepositoryFactory())->create();
 
-        return new DateTimeFormatter($dateTimeFormatPatternRepository);
+        return new DateTimeFormatter($dateTimeFormatPatternRepository, $displayTimeZoneProvider);
     }
 }
