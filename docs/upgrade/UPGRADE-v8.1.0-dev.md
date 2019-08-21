@@ -71,5 +71,12 @@ There you can find links to upgrade notes for other versions too.
     -    'filterFormSubmited' => $filterForm->isSubmitted(),
     +    'filterFormSubmitted' => $filterForm->isSubmitted(),
     ```
-
+- make promo codes editable on separate page ([#1319](https://github.com/shopsys/shopsys/pull/1319))
+    - replace `PromoCodeInlineEditCest` with [`VatInlineEditCest`](https://github.com/shopsys/project-base/blob/master/tests/ShopBundle/Acceptance/acceptance/VatInlineEditCest.php) in order to have inline edit still acceptance tested
+    - if you want to have promo codes editable on separate page change argument `useInlineEditation` to `false` for `PromoCodeController` in `services.yml` as inline editation for promo codes is deprecated and will be removed in the next major
+        ```diff
+            Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
+        +       arguments:
+        +           $useInlineEditation: false
+        ```
 [shopsys/framework]: https://github.com/shopsys/framework

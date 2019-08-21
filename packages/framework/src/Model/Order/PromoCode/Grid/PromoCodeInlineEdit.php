@@ -8,6 +8,9 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Symfony\Component\Form\FormFactoryInterface;
 
+/**
+ * @deprecated This class is deprecated and will be removed in the next major. Please use PromoCodeController, PromoCodeFacade or PromoCodeGridFactory instead.
+ */
 class PromoCodeInlineEdit extends AbstractGridInlineEdit
 {
     /**
