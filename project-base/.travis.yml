@@ -15,7 +15,7 @@ jobs:
                 - echo 1 | ./scripts/install.sh
                 - docker-compose exec php-fpm ./phing checks tests-acceptance
         -   stage: MacOS
-            name: "Test MacOS script in linux"
+            name: "Test MacOS script on linux"
             script:
                 - sudo apt install ruby
                 - gem install docker-sync
