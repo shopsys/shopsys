@@ -661,20 +661,32 @@ class OrderFacade
         foreach ($orderData->getNewItemsWithoutTransportAndPayment() as $newOrderItemData) {
             $this->calculateOrderItemDataPrices($newOrderItemData);
 
-            $newOrderItem = $this->orderItemFactory->createProduct(
-                $order,
-                $newOrderItemData->name,
-                new Price(
-                    $newOrderItemData->priceWithoutVat,
-                    $newOrderItemData->priceWithVat
-                ),
-                $newOrderItemData->vatPercent,
-                $newOrderItemData->quantity,
-                $newOrderItemData->unitName,
-                $newOrderItemData->catnum
-            );
-            if (!$newOrderItemData->usePriceCalculation) {
-                $newOrderItem->setTotalPrice(new Price($newOrderItemData->totalPriceWithoutVat, $newOrderItemData->totalPriceWithVat));
+            if (method_exists($this->orderItemFactory, 'createProductFromOrderItemData')) {
+                $this->orderItemFactory->createProductFromOrderItemData($order, $newOrderItemData);
+            } else {
+                $message = sprintf(
+                    'Adding new OrderItem via "%s" is deprecated since SSFW 8.1, implement "%s" instead.'
+                    . 'Interface "%s" will be changed in SSFW 9.',
+                    get_class($this->orderItemFactory) . '::createProduct()',
+                    get_class($this->orderItemFactory) . '::createProductFromOrderItemData()',
+                    OrderItemFactoryInterface::class
+                );
+                @trigger_error($message, E_USER_DEPRECATED);
+                $newOrderItem = $this->orderItemFactory->createProduct(
+                    $order,
+                    $newOrderItemData->name,
+                    new Price(
+                        $newOrderItemData->priceWithoutVat,
+                        $newOrderItemData->priceWithVat
+                    ),
+                    $newOrderItemData->vatPercent,
+                    $newOrderItemData->quantity,
+                    $newOrderItemData->unitName,
+                    $newOrderItemData->catnum
+                );
+                if (!$newOrderItemData->usePriceCalculation) {
+                    $newOrderItem->setTotalPrice(new Price($newOrderItemData->totalPriceWithoutVat, $newOrderItemData->totalPriceWithVat));
+                }
             }
         }
     }

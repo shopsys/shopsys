@@ -63,6 +63,31 @@ class OrderItemFactory implements OrderItemFactoryInterface
         return $orderProduct;
     }
 
+    public function createProductFromOrderItemData(Order $order, OrderItemData $orderItemData): OrderItem
+    {
+        $classData = $this->entityNameResolver->resolve(OrderItem::class);
+
+        $orderItem = new $classData(
+            $order,
+            $orderItemData->name,
+            new Price(
+                $orderItemData->priceWithoutVat,
+                $orderItemData->priceWithVat
+            ),
+            $orderItemData->vatPercent,
+            $orderItemData->quantity,
+            OrderItem::TYPE_PRODUCT,
+            $orderItemData->unitName,
+            $orderItemData->catnum
+        );
+        if (!$orderItemData->usePriceCalculation) {
+            $orderItem->setTotalPrice(
+                new Price($orderItemData->totalPriceWithoutVat, $orderItemData->totalPriceWithVat)
+            );
+        }
+        return $orderItem;
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param string $name
