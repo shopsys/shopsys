@@ -13,7 +13,9 @@ class InlineEditPage extends AbstractPage
      */
     public function startInlineEdit($rowId)
     {
-        $this->tester->clickByCss($this->getRowCssLocator($rowId) . ' .js-inline-edit-edit');
+        $class = $this->getRowCssLocator($rowId) . ' .js-inline-edit-edit';
+        $this->tester->scrollTo(['css' => $class]);
+        $this->tester->clickByCss($class);
         $this->tester->waitForAjax();
     }
 
@@ -28,7 +30,9 @@ class InlineEditPage extends AbstractPage
      */
     public function delete($rowId)
     {
-        $this->tester->clickByCss($this->getRowCssLocator($rowId) . ' .in-icon--delete');
+        $class = $this->getRowCssLocator($rowId) . ' .in-icon--delete';
+        $this->tester->scrollTo(['css' => $class]);
+        $this->tester->clickByCss($class);
         $this->tester->wait(1); // Pop-up animation
 
         $this->tester->clickByCss('.window-button-continue');
@@ -42,8 +46,10 @@ class InlineEditPage extends AbstractPage
      */
     public function changeInputValue($rowId, $columnName, $value)
     {
+        $class = $this->getRowCssLocator($rowId) . ' .js-grid-column-' . $columnName . ' input';
+        $this->tester->scrollTo(['css' => $class]);
         $this->tester->fillFieldByCss(
-            $this->getRowCssLocator($rowId) . ' .js-grid-column-' . $columnName . ' input',
+            $class,
             $value
         );
     }
@@ -53,7 +59,9 @@ class InlineEditPage extends AbstractPage
      */
     public function save($rowId)
     {
-        $this->tester->clickByCss($this->getRowCssLocator($rowId) . ' .js-inline-edit-save');
+        $class = $this->getRowCssLocator($rowId) . ' .js-inline-edit-save';
+        $this->tester->scrollTo(['css' => $class]);
+        $this->tester->clickByCss($class);
         $this->tester->waitForAjax();
     }
 

@@ -2,10 +2,12 @@
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PromoCode;
 
+use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -40,6 +42,13 @@ class PromoCodeFormType extends AbstractType
     {
         $this->promoCode = $options['promo_code'];
 
+        if ($this->promoCode instanceof PromoCode && $options['isInlineEdit'] === false) {
+            $builder->add('formId', DisplayOnlyType::class, [
+                'label' => t('ID'),
+                'data' => $this->promoCode->getId(),
+            ]);
+        }
+
         $builder
             ->add('code', TextType::class, [
                 'required' => true,
@@ -62,7 +71,12 @@ class PromoCodeFormType extends AbstractType
                     ]),
                 ],
                 'invalid_message' => 'Please enter whole number.',
+                'label' => 'Discount (%)',
             ]);
+
+        if ($options['isInlineEdit'] === false) {
+            $builder->add('save', SubmitType::class);
+        }
     }
 
     /**
@@ -71,10 +85,13 @@ class PromoCodeFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired('promo_code')
+            ->setRequired(['promo_code', 'isInlineEdit'])
             ->setAllowedTypes('promo_code', [PromoCode::class, 'null'])
+            /** @internal option isInlineEdit will be removed in the next major as inline editing will be removed for promo codes */
+            ->setAllowedTypes('isInlineEdit', 'bool')
             ->setDefaults([
                 'attr' => ['novalidate' => 'novalidate'],
+                'isInlineEdit' => true,
             ]);
     }
 

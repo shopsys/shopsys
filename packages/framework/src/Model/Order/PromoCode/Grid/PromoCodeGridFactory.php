@@ -33,9 +33,10 @@ class PromoCodeGridFactory implements GridFactoryInterface
     }
 
     /**
+     * @param bool $withEditButton
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create($withEditButton = false)
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -48,6 +49,11 @@ class PromoCodeGridFactory implements GridFactoryInterface
         $grid->addColumn('code', 'pc.code', t('Code'), true);
         $grid->addColumn('percent', 'pc.percent', t('Discount'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
+
+        if ($withEditButton === true) {
+            $grid->addEditActionColumn('admin_promocode_edit', ['id' => 'pc.id']);
+        }
+
         $grid->addDeleteActionColumn('admin_promocode_delete', ['id' => 'pc.id'])
             ->setConfirmMessage(t('Do you really want to remove this promo code?'));
 
