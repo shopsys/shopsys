@@ -17,7 +17,7 @@
     {{ render(controller('ShopsysShopBundle:Front/Category:categoryList', {categories: foundCategories})) }}
 
     <div class="js-product-list-with-filter">
-        {% if paginationResult.results|length > 0 or filterFormSubmited %}
+        {% if paginationResult.results|length > 0 or filterFormSubmitted %}
             <div class="box-filter js-product-filter">
                 {{ productFilterForm.filterForm(
                     filterForm,
@@ -35,7 +35,7 @@
             <div>
                 {{ render(controller('ShopsysShopBundle:Front/Product:selectOrderingModeForSearch')) }}
             </div>
-            {% include '@ShopsysShop/Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmited: filterFormSubmited, searchText: searchText} %}
+            {% include '@ShopsysShop/Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, searchText: searchText} %}
         </div>
     </div>
 {% endblock %}

@@ -192,7 +192,7 @@ class ProductController extends FrontBaseController
             'productFilterCountData' => $productFilterCountData,
             'category' => $category,
             'filterForm' => $filterForm->createView(),
-            'filterFormSubmited' => $filterForm->isSubmitted(),
+            'filterFormSubmitted' => $filterForm->isSubmitted(),
             'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId()),
             'priceRange' => $productFilterConfig->getPriceRange(),
         ];
@@ -287,7 +287,7 @@ class ProductController extends FrontBaseController
             'paginationResult' => $paginationResult,
             'productFilterCountData' => $productFilterCountData,
             'filterForm' => $filterForm->createView(),
-            'filterFormSubmited' => $filterForm->isSubmitted(),
+            'filterFormSubmitted' => $filterForm->isSubmitted(),
             'searchText' => $searchText,
             'SEARCH_TEXT_PARAMETER' => self::SEARCH_TEXT_PARAMETER,
             'priceRange' => $productFilterConfig->getPriceRange(),

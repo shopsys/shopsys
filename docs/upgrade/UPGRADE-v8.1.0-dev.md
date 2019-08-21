@@ -66,6 +66,11 @@ There you can find links to upgrade notes for other versions too.
               $debugNote = 'Order page should redirect by 302 as the cart is empty by default.';
               $config->changeDefaultRequestDataSet($debugNote)
         ```
+- fix a typo in your `ProductController` (in `listByCategoryAction()`, and `searchAction()` methods), and in all the related Twig templates ([#1336](https://github.com/shopsys/shopsys/pull/1336))
+    ```diff
+    -    'filterFormSubmited' => $filterForm->isSubmitted(),
+    +    'filterFormSubmitted' => $filterForm->isSubmitted(),
+    ```
 - make promo codes editable on separate page ([#1319](https://github.com/shopsys/shopsys/pull/1319))
     - replace `PromoCodeInlineEditCest` with [`VatInlineEditCest`](https://github.com/shopsys/project-base/blob/master/tests/ShopBundle/Acceptance/acceptance/VatInlineEditCest.php) in order to have inline edit still acceptance tested
     - if you want to have promo codes editable on separate page change argument `useInlineEditation` to `false` for `PromoCodeController` in `services.yml` as inline editation for promo codes is deprecated and will be removed in the next major
