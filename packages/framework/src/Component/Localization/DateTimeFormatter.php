@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\Localization;
 use DateTime;
 use IntlDateFormatter;
 
-class DateTimeFormatter
+class DateTimeFormatter implements DateTimeFormatterInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternRepository

@@ -5,14 +5,14 @@ namespace Shopsys\FrameworkBundle\Twig;
 use DateTime;
 use DateTimeImmutable;
 use IntlDateFormatter;
-use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
+use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Twig_Extension;
 
 class DateTimeFormatterExtension extends Twig_Extension
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter
+     * @var \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface
      */
     protected $dateTimeFormatter;
 
@@ -22,11 +22,11 @@ class DateTimeFormatterExtension extends Twig_Extension
     protected $localization;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter $dateTimeFormatter
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface $dateTimeFormatter
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        DateTimeFormatter $dateTimeFormatter,
+        DateTimeFormatterInterface $dateTimeFormatter,
         Localization $localization
     ) {
         $this->dateTimeFormatter = $dateTimeFormatter;
