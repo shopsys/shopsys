@@ -38,7 +38,7 @@ There you can find links to upgrade notes for other versions too.
               </exec>
           </target>
         ```
-- test installation of your project on Travis `.../scripts/install.sh` ([#1342](https://github.com/shopsys/shopsys/pull/1342/))
+- test installation of your project on Travis `scripts/install.sh` ([#1342](https://github.com/shopsys/shopsys/pull/1342/))
     - create file `.travis.yml` in your project root with this content:
         ```yaml
         language: bash
@@ -68,7 +68,7 @@ There you can find links to upgrade notes for other versions too.
                         - echo 2 | ./scripts/install.sh --skip-aliasing
                         - docker-compose exec php-fpm ./phing checks tests-acceptance
         ```
-    - update your `install.sh` file like this:
+    - update your `scripts/install.sh` file like this:
         ```diff
         echo "Creating docker configuration.."
         case "$operatingSystem" in
