@@ -555,6 +555,13 @@
         </if>
     </target>
 
+    <target name="fix-annotations" description="Fixes and adds annotations in project classes to improve static analysis and DX with extended classes">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:extended-classes:fix-annotations"/>
+        </exec>
+    </target>
+
     <target name="friendly-urls-generate" description="Generates friendly urls for supported entities when missing.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
