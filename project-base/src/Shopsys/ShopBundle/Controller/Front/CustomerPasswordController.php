@@ -57,7 +57,7 @@ class CustomerPasswordController extends FrontBaseController
                 $this->customerPasswordFacade->resetPassword($email, $this->domain->getId());
 
                 $this->getFlashMessageSender()->addSuccessFlashTwig(
-                    t('Link to password reset sent to e-mail <strong>{{ email }}</strong>.'),
+                    t('Link to password reset sent to email <strong>{{ email }}</strong>.'),
                     [
                         'email' => $email,
                     ]
@@ -65,7 +65,7 @@ class CustomerPasswordController extends FrontBaseController
                 return $this->redirectToRoute('front_registration_reset_password');
             } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundByEmailAndDomainException $ex) {
                 $this->getFlashMessageSender()->addErrorFlashTwig(
-                    t('Customer with e-mail address <strong>{{ email }}</strong> doesn\'t exist. '
+                    t('Customer with email address <strong>{{ email }}</strong> doesn\'t exist. '
                         . '<a href="{{ registrationLink }}"> Register</a>'),
                     [
                         'email' => $ex->getEmail(),
@@ -107,7 +107,7 @@ class CustomerPasswordController extends FrontBaseController
                 $this->authenticator->loginUser($user, $request);
             } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundByEmailAndDomainException $ex) {
                 $this->getFlashMessageSender()->addErrorFlashTwig(
-                    t('Customer with e-mail address <strong>{{ email }}</strong> doesn\'t exist. '
+                    t('Customer with email address <strong>{{ email }}</strong> doesn\'t exist. '
                         . '<a href="{{ registrationLink }}"> Register</a>'),
                     [
                         'email' => $ex->getEmail(),

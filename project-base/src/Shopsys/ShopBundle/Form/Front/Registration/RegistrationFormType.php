@@ -32,7 +32,7 @@ class RegistrationFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer then {{ limit }} characters']),
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('lastName', TextType::class, [
@@ -43,10 +43,10 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter e-mail']),
-                    new Email(['message' => 'Please enter valid e-mail']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer then {{ limit }} characters']),
-                    new UniqueEmail(['message' => 'This e-mail is already registered']),
+                    new Constraints\NotBlank(['message' => 'Please enter email']),
+                    new Email(['message' => 'Please enter valid email']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
+                    new UniqueEmail(['message' => 'This email is already registered']),
                 ],
             ])
             ->add('password', RepeatedType::class, [
@@ -57,7 +57,7 @@ class RegistrationFormType extends AbstractType
                 'first_options' => [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter password']),
-                        new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer then {{ limit }} characters']),
+                        new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer than {{ limit }} characters']),
                     ],
                 ],
                 'invalid_message' => 'Passwords do not match',
@@ -87,13 +87,13 @@ class RegistrationFormType extends AbstractType
                     'field1' => 'email',
                     'field2' => 'password',
                     'errorPath' => 'password',
-                    'message' => 'Password cannot be same as e-mail',
+                    'message' => 'Password cannot be same as email',
                 ]),
                 new NotIdenticalToEmailLocalPart([
                     'password' => 'password',
                     'email' => 'email',
                     'errorPath' => 'password',
-                    'message' => 'Password cannot be same as part of e-mail before at sign',
+                    'message' => 'Password cannot be same as part of email before at sign',
                 ]),
             ],
         ]);

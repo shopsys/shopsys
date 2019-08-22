@@ -65,7 +65,7 @@ class PersonalInfoFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer then {{ limit }} characters']),
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('lastName', TextType::class, [
@@ -76,9 +76,9 @@ class PersonalInfoFormType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter e-mail']),
-                    new Email(['message' => 'Please enter valid e-mail']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer then {{ limit }} characters']),
+                    new Constraints\NotBlank(['message' => 'Please enter email']),
+                    new Email(['message' => 'Please enter valid email']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('telephone', TextType::class, [
@@ -110,7 +110,7 @@ class PersonalInfoFormType extends AbstractType
                     ]),
                     new Constraints\Length([
                         'max' => 50,
-                        'maxMessage' => 'Identification number cannot be longer then {{ limit }} characters',
+                        'maxMessage' => 'Identification number cannot be longer than {{ limit }} characters',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
@@ -166,7 +166,7 @@ class PersonalInfoFormType extends AbstractType
                     ]),
                     new Constraints\Length([
                         'max' => 100,
-                        'maxMessage' => 'First name of contact person cannot be longer then {{ limit }} characters',
+                        'maxMessage' => 'First name of contact person cannot be longer than {{ limit }} characters',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
