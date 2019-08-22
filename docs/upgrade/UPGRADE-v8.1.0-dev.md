@@ -38,7 +38,74 @@ There you can find links to upgrade notes for other versions too.
               </exec>
           </target>
         ```
+- let Travis to test `.../scripts/install.sh`
+    - create file `.travis.yml` to your root
+        ```yaml
+        language: bash
+        dist: xenial
+        stages:
+            - Linux
+            - MacOS
+        services:
+            - docker
+        os:
+            - linux
+        jobs:
+            include:
+                -   stage: Linux
+                    name: "Test linux install script"
+                    script:
+                        - echo 1 | ./scripts/install.sh
+                        - docker-compose exec php-fpm ./phing checks tests-acceptance
+                -   stage: MacOS
+                    name: "Test MacOS script on linux"
+                    script:
+                        - sudo apt install ruby
+                        - gem install docker-sync
+                        - sed -i -r "s#sed -i -E#sed -i -r#" ./scripts/install.sh
+                        - mkdir -p ./var/elasticsearch-data
+                        - chmod -R 777 ./var/elasticsearch-data
+                        - echo 2 | ./scripts/install.sh --skip-aliasing
+                        - docker-compose exec php-fpm ./phing checks tests-acceptance
+        ```
+    - update `.../scripts/install.sh`
+        ```diff
+        echo "Creating docker configuration.."
+        case "$operatingSystem" in
+            "1")
+                cp -f docker/conf/docker-compose.yml.dist docker-compose.yml
+        +
+        +        sed -i -r "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
+        +        sed -i -r "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
+                ;;
+            "2")
+                cp -f docker/conf/docker-compose-mac.yml.dist docker-compose.yml
+                cp -f docker/conf/docker-sync.yml.dist docker-sync.yml
 
+        -        echo "You will be asked to enter sudo password in case to allow second domain alias in your system config.."
+        -        sudo ifconfig lo0 alias 127.0.0.2 up
+        +        sed -i -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
+        +        sed -i -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
+        +
+        +        if [[ $1 != --skip-aliasing ]]; then
+        +            echo "You will be asked to enter sudo password in case to allow second domain alias in your system config.."
+        +            sudo ifconfig lo0 alias 127.0.0.2 up
+        +        fi
+
+                mkdir -p ${projectPathPrefix}var/postgres-data ${projectPathPrefix}var/elasticsearch-data vendor
+        ```
+
+        ```diff
+        docker-compose up -d --build
+
+        echo "Installing application inside a php-fpm container"
+
+        - docker-compose exec php-fpm composer install
+        -
+        - docker-compose exec php-fpm ./phing db-create test-db-create build-demo-dev-quick error-pages-generate
+        + docker-compose exec -T php-fpm composer install
+        + docker-compose exec -T php-fpm ./phing db-create test-db-create build-demo-dev-quick error-pages-generate
+        ```
 
 ## Application
 - redirect logged users from the registration page to the personal data page ([#1285](https://github.com/shopsys/shopsys/pull/1285))
