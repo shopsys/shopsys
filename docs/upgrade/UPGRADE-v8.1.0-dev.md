@@ -107,6 +107,10 @@ There you can find links to upgrade notes for other versions too.
         + docker-compose exec -T php-fpm ./phing db-create test-db-create build-demo-dev-quick error-pages-generate
         ```
 
+### Database migrations
+- run database migrations so products will use a DateTime type for columns for "Selling start date" (selling_from) and "Selling end date" (selling_to) ([#1343](https://github.com/shopsys/shopsys/pull/1343))
+    - please check [`Version20190823110846`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Migrations/Version20190823110846.php)
+
 ## Application
 - redirect logged users from the registration page to the personal data page ([#1285](https://github.com/shopsys/shopsys/pull/1285))
     - modify your `Shopsys\ShopBundle\Controller\Front\RegistrationController::registerAction()`:
@@ -148,5 +152,20 @@ There you can find links to upgrade notes for other versions too.
         ```
 - add `setlocale(LC_NUMERIC, 'en_US.utf8');` in your `Bootstrap.php` right behind `setlocale(LC_CTYPE, 'en_US.utf8');` ([#1313](https://github.com/shopsys/shopsys/pull/1313/))
     - add [`\Tests\ShopBundle\Unit\NumberFormattingTest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Unit/NumberFormattingTest.php)
+- add support to display date-time values in different timezone ([#1343](https://github.com/shopsys/shopsys/pull/1343))
+    - you can read more about how to [work with display timezone in documentation](/docs/introduction/working-with-date-time-values.md)
+    - you can delete test `tests/ShopBundle/Functional/Twig/DateTimeFormatterExtensionTest.php` as it was moved to the FrameworkBundle, if you do not test any your specific use-case
+    - class `CustomDateTimeFormatterFactory` is deprecated and should not be used anymore
+        - if you have extended this factory to alter configuration of `DateTimeFormatPatternRepository`, extend new `DateTimeFormatPatternRepositoryFactory` instead (as `DateTimeFormatPatternRepository` configuration was moved to this class from the factory)
+        - custom `DateTimeFormatter` has to be created with the DIC directly if needed
+            ```yaml
+            Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface:
+                class: 'Shopsys\ShopBundle\Component\Localization\DateTimeFormatter'
+            ```
+    - class `DateTimeFormatter` no longer supports extending via `shopsys.entity_extension.map` as it is not entity
+        -if you have extended this class with `shopsys.entity_extension.map`, register your class for `DateTimeFormatterInterface` in `services.yml` instead
+    - protected property `Product::sellingFrom` and `Product::sellingTo` are deprecated in favor of `Product::sellingFromDateTime` and `Product::sellingToDateTime`, change your usages accordingly
+    - if you use any custom date-time related FormTypes, set option `view_timezone` to value provided by `DisplayTimeZoneProviderInterface` class
+        - you can find inspiration in new [`Shopsys\FrameworkBundle\Form\DateTimeType`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DateTimeType.php) FormType, or you can use this FormType directly
 
 [shopsys/framework]: https://github.com/shopsys/framework
