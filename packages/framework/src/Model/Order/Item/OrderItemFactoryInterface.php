@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
- * @method createProductFromOrderItemData(Order $order, OrderItemData $orderItemData): OrderItem
+ * @method OrderItem createProductFromOrderItemData(Order $order, OrderItemData $orderItemData)
  */
 interface OrderItemFactoryInterface
 {
