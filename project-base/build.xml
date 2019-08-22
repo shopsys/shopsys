@@ -7,7 +7,7 @@
     <property name="path.vendor" value="${path.root}/vendor"/>
     <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
 
-    <property name="phpstan.level" value="1"/>
+    <property name="phpstan.level" value="4"/>
 
     <import file="${path.framework}/build.xml"/>
 </project>
