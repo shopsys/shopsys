@@ -5,6 +5,13 @@ Here are first steps you should start with.
 
 *Note: If you don't have a working application, [install it](/docs/installation/installation-guide.md) first.*
 
+## Set up timezone to display dates
+
+Dates are internally stored in UTC. That supports portability and eases integration with other systems.
+To see dates properly in the desired timezone, you can change `shopsys.display_timezone` parameter (default value is `Europe/Prague`).
+
+*Note: Read more about [working with date-time values](./working-with-date-time-values.md)*
+
 ## Set up domains
 
 A domain can be understood as one instance of the shop.
