@@ -720,7 +720,7 @@ services:
         alias: Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactory
 
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory
+        alias: Shopsys\ShopBundle\Model\Order\Item\OrderItemFactory
 
     Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactory
