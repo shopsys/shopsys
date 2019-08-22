@@ -1904,10 +1904,10 @@ msgid "Send confirmation of order receipt"
 msgstr ""
 
 msgid "Send e-mail about change to this status"
-msgstr "Send e-mail about change to this status"
+msgstr "Send email about change to this status"
 
 msgid "Sending e-mails off, no e-mail will be sent from the app."
-msgstr "Sending e-ails off, no email will be sent from the app."
+msgstr "Sending emails off, no email will be sent from the app."
 
 msgid "Seo"
 msgstr ""
