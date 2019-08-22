@@ -63,6 +63,11 @@ class OrderItemFactory implements OrderItemFactoryInterface
         return $orderProduct;
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
     public function createProductFromOrderItemData(Order $order, OrderItemData $orderItemData): OrderItem
     {
         $classData = $this->entityNameResolver->resolve(OrderItem::class);
