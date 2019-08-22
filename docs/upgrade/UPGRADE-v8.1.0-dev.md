@@ -79,4 +79,8 @@ There you can find links to upgrade notes for other versions too.
         +       arguments:
         +           $useInlineEditation: false
         ```
+- introduced `\Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory::createProductFromOrderItemData()` which provides more flexibility when `\Shopsys\FrameworkBundle\Model\Order\Item\OrderItem` is extended
+	- simplifies SSFW usage in `\Shopsys\FrameworkBundle\Model\Order\OrderFacade::refreshOrderItemsWithoutTransportAndPayment()` where the logic was moved into new method which can be well overriden without needs to duplicate `OrderFacade`'s code
+	- `\Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface` is deprecated and method `createProductFromOrderItemData()` will be added in next major version
+
 [shopsys/framework]: https://github.com/shopsys/framework
