@@ -19,6 +19,14 @@
                 <b>Locale</b>
                 <span class="sf-toolbar-status">{{ collector.currentDomainLocale }}</span>
             </div>
+            <div class="sf-toolbar-info-piece">
+                <b>System TimeZone</b>
+                <span class="sf-toolbar-status">{{ collector.systemTimeZone }}</span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Display TimeZone</b>
+                <span class="sf-toolbar-status">{{ collector.displayTimeZone }}</span>
+            </div>
         </div>
         <div class="sf-toolbar-info-group">
             {% for domain in collector.domains %}
