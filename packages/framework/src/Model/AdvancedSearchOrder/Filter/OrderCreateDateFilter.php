@@ -56,26 +56,25 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
                 continue;
             }
 
-            $dateMidnight = clone $ruleData->value;
-            /* @var $dateMidnight \DateTime */
-            $dateMidnight->modify('midnight');
+            /* @var \DateTime $inputDate */
+            $inputDate = clone $ruleData->value;
 
             $parameterName = 'orderCreatedAt_' . $index;
             $parameterName2 = 'orderCreatedAt_' . $index . '_2';
 
             if ($ruleData->operator === self::OPERATOR_BEFORE) {
                 $queryBuilder->andWhere('o.createdAt < :' . $parameterName)
-                    ->setParameter($parameterName, $dateMidnight);
+                    ->setParameter($parameterName, $inputDate);
             } elseif ($ruleData->operator === self::OPERATOR_AFTER) {
                 $queryBuilder->andWhere('o.createdAt >= :' . $parameterName)
-                    ->setParameter($parameterName, $dateMidnight);
+                    ->setParameter($parameterName, $inputDate);
             } elseif ($ruleData->operator === self::OPERATOR_IS) {
-                $dateTomorrow = clone $dateMidnight;
-                $dateTomorrow->modify('tomorrow');
+                $dateDayAfter = clone $inputDate;
+                $dateDayAfter->modify('+1 day');
 
                 $queryBuilder->andWhere('o.createdAt BETWEEN :' . $parameterName . ' AND :' . $parameterName2)
-                    ->setParameter($parameterName, $dateMidnight)
-                    ->setParameter($parameterName2, $dateTomorrow);
+                    ->setParameter($parameterName, $inputDate)
+                    ->setParameter($parameterName2, $dateDayAfter);
             }
         }
     }

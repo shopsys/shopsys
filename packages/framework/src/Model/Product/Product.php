@@ -95,14 +95,14 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $sellingFrom;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $sellingTo;
 

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Collector;
 
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\ShopsysFrameworkBundle;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +20,37 @@ final class ShopsysFrameworkDataCollector extends DataCollector
     protected $domain;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface|null
+     */
+    protected $displayTimeZoneProvider;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface|null $displayTimeZoneProvider
      */
     public function __construct(
-        Domain $domain
+        Domain $domain,
+        ?DisplayTimeZoneProviderInterface $displayTimeZoneProvider = null
     ) {
         $this->domain = $domain;
+        $this->displayTimeZoneProvider = $displayTimeZoneProvider;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setDisplayTimeZoneProvider(DisplayTimeZoneProviderInterface $displayTimeZoneProvider): void
+    {
+        if ($this->displayTimeZoneProvider !== null && $this->displayTimeZoneProvider !== $displayTimeZoneProvider) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+
+        if ($this->displayTimeZoneProvider === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->displayTimeZoneProvider = $displayTimeZoneProvider;
+        }
     }
 
     /**
@@ -38,6 +65,8 @@ final class ShopsysFrameworkDataCollector extends DataCollector
             'currentDomainId' => $this->domain->getId(),
             'currentDomainName' => $this->domain->getName(),
             'currentDomainLocale' => $this->domain->getLocale(),
+            'systemTimeZone' => date_default_timezone_get(),
+            'displayTimeZone' => $this->displayTimeZoneProvider->getDisplayTimeZone()->getName(),
         ];
     }
 
@@ -103,6 +132,22 @@ final class ShopsysFrameworkDataCollector extends DataCollector
     public function getDocsVersion(): string
     {
         return $this->data['docsVersion'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getSystemTimeZone(): string
+    {
+        return $this->data['systemTimeZone'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplayTimeZone(): string
+    {
+        return $this->data['displayTimeZone'];
     }
 
     /**
