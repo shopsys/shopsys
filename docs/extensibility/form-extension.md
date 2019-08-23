@@ -58,6 +58,7 @@ rendering of `MyAmazingFormType` your `form_widget` and `form_row` should be nam
 This template is used for custom rendering of forms and form fields and it extends `form_div_layout.html.twig` from Symfony.
 There are two `theme.html.twig` files as one is used for [administration](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) and the other for [front-end](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Form/theme.html.twig).
 It contains definition of blocks that are used for rendering forms
+
 - `form_start` - renders the start tag of the form
 - `form_end` - renders the end tag of the form
 - `form_row` - renders the label, any errors, and the HTML form widget for the given field
@@ -66,7 +67,8 @@ It contains definition of blocks that are used for rendering forms
     - `form_label` - renders label for the given field including red asterisk if the field is required
 
 and blocks of custom form widgets for various [FormTypes](../introduction/using-form-types.md) eg.:
-- `date_picker_widget` - is rendered as `form_widget` for [`DatePickerType`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Form/DatePickerType.php)
+
+- `date_picker_widget` is rendered as `form_widget` for [`DatePickerType`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Form/DatePickerType.php)
 
 ## Changing order of groups and fields
 All form types contain option called `position`. With this option you can specify position of your group or field **on the same hierarchical layer**.
