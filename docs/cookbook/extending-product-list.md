@@ -108,8 +108,8 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
 
 You need to register your new class as an alias for the one from the bundle in `services.yml`:
 
-```yml
-Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@Shopsys\ShopBundle\Model\Product\View\ListedProductViewFactory'
+```yaml
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@Shopsys\ShopBundle\Model\Product\View\ListedProductViewFactory'
 ```
 
 ### 3. Modify the frontend template for rendering product lists so it displays the new attribute

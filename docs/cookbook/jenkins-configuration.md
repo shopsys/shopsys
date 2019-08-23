@@ -12,14 +12,16 @@ to make few other tools co-op with Jenkins.
 This cookbook describes how to properly set up your Jenkins, to be helpful, automatic and effective.
 
 This cookbook supposes that you already got installed:
-* [Jenkins](https://jenkins.io/)
-* [Jenkins-autojobs](https://github.com/gvalkov/jenkins-autojobs)
-* [Docker](https://www.docker.com/)
-* [Docker Compose](https://docs.docker.com/compose/)
-* [Git](https://git-scm.com/)
-* [Nginx](https://nginx.org/en/)
+
+- [Jenkins](https://jenkins.io/)
+- [Jenkins-autojobs](https://github.com/gvalkov/jenkins-autojobs)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Git](https://git-scm.com/)
+- [Nginx](https://nginx.org/en/)
 
 After completing this cookbook you should know:
+
 - how to configure Jenkins to be able to build multiple branches of Shopsys Framework running in docker
 - how jenkins autojobs works
 - how to make Jenkins works automatic
@@ -33,7 +35,7 @@ Log in into a terminal on your machine.
 Our build adds nginx configuration into a folder so we need nginx to load them, this can be done by editing `/etc/nginx/nginx.conf`.
 
 Add this line into your `nginx.conf`:
-```
+```no-highlight
 include /etc/nginx/conf.d/*.conf;
 ```
 
@@ -51,19 +53,19 @@ Editing this file is not safe, so before editing this file and allowing users to
 
 To the end of `/etc/sudoers` file we add this code:
 
-```
+```no-highlight
 jenkins ALL=(ALL) NOPASSWD: /usr/sbin/nginx
 ```
 
 This allows user jenkins to execute nginx operations without requiring a password from him.
 
 #### Prepare nginx proxy configuration file
-Our branches will be runned in a container, so we cant use default configuration of nginx, but use nginx to proxy requests into containers.
+Our branches will be run in a container, so we cant use default configuration of nginx, but use nginx to proxy requests into containers.
 
 So we create nginx template and save it into some publicly accessible folder. For this cookbook purposes, I will save it into
 `/var/jenkins-templates/nginx-template.conf`.
 
-```
+```nginx
 upstream {{JOB_NAME}}-upstream {
 
         server 127.0.0.1:{{PORT_WEB}};
@@ -86,8 +88,8 @@ server {
         }
 
 }
-
 ```
+
 This file contains variables defined as `{{variable}}`, these will be rewritten in build, since every branch needs their own nginx proxy.
 
 Basically this file resend requests into container where is another nginx configuration which handles the rest for our selves.
@@ -95,14 +97,14 @@ Basically this file resend requests into container where is another nginx config
 ### Credentials
 While we will be fetching project from some repository, you need to access this repository somehow.
 
-We recommend you to use ssh for it due to security and fact that ssh does not need any interaction, so it is more appropriate for usage like this.
-I don't want to write here full description on how to generate ssh keys, I think
+We recommend you to use SSH for it due to security and fact that SSH does not need any interaction, so it is more appropriate for usage like this.
+I don't want to write here full description on how to generate SSH keys, I think
 that [this article](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/) summarize it really well.
 
-Only thing that needs to be change is directory of ssh keys, you must remember that everything executed in jenkins is done by user jenkins.
-So you need to save ssh keys saved in jenkins home directory. If you struggle with where this home directory is, you can execute:
+Only thing that needs to be change is directory of SSH keys, you must remember that everything executed in jenkins is done by user jenkins.
+So you need to save SSH keys saved in jenkins home directory. If you struggle with where this home directory is, you can execute:
 
-```
+```sh
 less /etc/passwd
 ```
 
@@ -110,11 +112,11 @@ this will output every user in system, you are looking for jenkins user.
 
 Home directory is defined in many distributions different, so I would google this one.
 
-Second thing is that these ssh keys must own jenkins, to make things clear we can just change the owner of this files by `chown`.
+Second thing is that these SSH keys must own jenkins, to make things clear we can just change the owner of this files by `chown`.
 
 My jenkins home directory is `/var/lib/jenkins` so for me command would look like this:
 
-```
+```sh
 sudo chown -R jenkins:jenkins /var/lib/jenkins/.ssh
 ```
 
@@ -123,19 +125,20 @@ So everything in `/var/lib/jenkins` is owned by jenkins, but we need to make our
 create, modify and execute files. Thankfully, we can use `setfacl` command to create multiple permission rules onto jenkins folder.
 
 First, we need Jenkins to be able to write into nginx folder since we are modifying the configuration of nginx in the build:
-```
+
+```sh
 setfacl -R -m user:jenkins:rwx /etc/nginx/conf.d
 setfacl -dR -m user:jenkins:rwx /etc/nginx/conf.d
 ```
 
 Next we need to make able for users `root` and `nginx` since they both need to have access to files in application folder:
 
-```
+```sh
 setfacl -R -m user:root:rwx /var/lib/jenkins/workspace
 setfacl -dR -m user:root:rwx /var/lib/jenkins/workspace
 ```
 
-```
+```sh
 setfacl -R -m user:nginx:rwx /var/lib/jenkins/workspace
 setfacl -dR -m user:nginx:rwx /var/lib/jenkins/workspace
 ```
@@ -156,7 +159,7 @@ Following shell scripts needs to be written into `execute shell` text area in `b
 ### Setting docker-compose
 First create `docker-compose.yml` from `docker-compose.yml.dist` in `docker/conf` directory.
 
-```
+```sh
 cp -f $WORKSPACE/docker/conf/docker-compose.yml.dist $WORKSPACE/docker-compose.yml
 ```
 
@@ -170,7 +173,7 @@ For every new branch, we need to make sure that every container in this branch w
 With this problen can help us `netstat`, `netstat` can be installed with `net-tools` package, for example
 on CentOS i can install it by:
 
-```
+```sh
 yum install net-tools
 ```
 
@@ -178,7 +181,7 @@ yum install net-tools
 
 To get unique ports, we can execute something like this:
 
-```
+```sh
 # Command netstat will show us which ports are currently in use
 NETSTAT_LIST=$(netstat -at --numeric-ports);
 
@@ -192,21 +195,21 @@ MAX_PORT_INCREMENT=99;
 
 # Increment the xx part of the ports and check their availability
 for PORT_INCREMENT in $(seq 0 $MAX_PORT_INCREMENT); do
-	PORT_WEB=$((PORT_BASE_WEB+PORT_INCREMENT))
-	PORT_SELENIUM=$((PORT_BASE_SELENIUM+PORT_INCREMENT));
-	PORT_ADMINER=$((PORT_BASE_ADMINER+PORT_INCREMENT));
-	PORT_REDIS_ADMIN=$((PORT_BASE_REDIS_ADMIN+PORT_INCREMENT));
-	PORT_LIVERELOAD_JAVASCRIPT=$((PORT_BASE_LIVERELOAD_JAVASCRIPT+PORT_INCREMENT));
+    PORT_WEB=$((PORT_BASE_WEB+PORT_INCREMENT))
+    PORT_SELENIUM=$((PORT_BASE_SELENIUM+PORT_INCREMENT));
+    PORT_ADMINER=$((PORT_BASE_ADMINER+PORT_INCREMENT));
+    PORT_REDIS_ADMIN=$((PORT_BASE_REDIS_ADMIN+PORT_INCREMENT));
+    PORT_LIVERELOAD_JAVASCRIPT=$((PORT_BASE_LIVERELOAD_JAVASCRIPT+PORT_INCREMENT));
 
-	# If netstat output doesn't contain any of checked ports we can use them
-	if [ -z $(grep ":\($PORT_WEB\|$PORT_SELENIUM\|$PORT_ADMINER\|$PORT_REDIS_ADMIN\|$PORT_LIVERELOAD_JAVASCRIPT\)\ " <<< "$NETSTAT_LIST") ]; then
-		break;
-	fi
-	
-	if [ "$PORT_INCREMENT" == "$MAX_PORT_INCREMENT" ]; then
-		echo "No combination of available ports for this build found.";
-		exit 1;.
-	fi
+    # If netstat output doesn't contain any of checked ports we can use them
+    if [ -z $(grep ":\($PORT_WEB\|$PORT_SELENIUM\|$PORT_ADMINER\|$PORT_REDIS_ADMIN\|$PORT_LIVERELOAD_JAVASCRIPT\)\ " <<< "$NETSTAT_LIST") ]; then
+        break;
+    fi
+
+    if [ "$PORT_INCREMENT" == "$MAX_PORT_INCREMENT" ]; then
+        echo "No combination of available ports for this build found.";
+        exit 1;.
+    fi
 done;
 ```
 
@@ -214,7 +217,7 @@ This shell script is searching for available ports for each of our containers.
 Now we got defined our ports, lets set it into configuration files.
 
 First, set it into docker compose:
-```
+```sh
 # Rewrite all publicly exposed ports to the available ones we found earlier
 # e.g. '- "8000:8080"' => '- "8003:8080"'
 sed -i "s/\- \"$PORT_BASE_WEB\:*/\- \"$PORT_WEB:/" $WORKSPACE/docker-compose.yml
@@ -227,7 +230,7 @@ sed -i "s/\- \"$PORT_BASE_LIVERELOAD_JAVASCRIPT\:*/\- \"$PORT_LIVERELOAD_JAVASCR
 Now we need to setup proxy for our job build.
 We need to set `$JOB_NAME` as part of the server name and proxy it into earlier defined container port.
 Then we need to copy our earlier created nginx template into `/etc/nginx/conf.d/` folder and set proxy:
-```
+```sh
 cp -f /var/jenkins-templates/nginx-template.conf /etc/nginx/conf.d/$JOB_NAME.conf
 
 # Replace $JOB_NAME and $PORT_WEB in the nginx configuration
@@ -237,7 +240,7 @@ sed -i "s/{{PORT_WEB}}*/$PORT_WEB/" /etc/nginx/conf.d/$JOB_NAME.conf
 
 Now we need to reload nginx to load this new configurations, which we are able to do so by adding jenkins into sudoers earlier:
 
-```
+```sh
 sudo nginx -s reload
 ```
 
@@ -245,13 +248,13 @@ sudo nginx -s reload
 We need to mount postgres data locally so we make data persistent, as default postgres data is mounted into project folder,
 but this folder has not correct permission rights. We need to mount this folder into `/var` folder.
 
-First, create postgres data folder using ssh in your machine:
-```
+First, create postgres data folder using SSH in your machine:
+```sh
 mkdir /var/postgres-data
 ```
 
 Then add this piece of line into `execute shell` text area in template configuration:
-```
+```sh
 sed -i "s/\.\/project-base\/var\/postgres-data*/\/var\/postgres-data\/$JOB_NAME/" $WORKSPACE/docker-compose.yml
 ```
 
@@ -263,7 +266,7 @@ Jenkins has some variables that we can use for this, for example, `$JOB_NAME` co
 branch name, so we can use sed and put `$JOB_NAME` before every container name.
 eg. `'container_name: shopsys-framework-webserver' => 'container_name: job-name-shopsys-framework-webserver'`
 
-```
+```sh
 sed -i "s/container_name:\s*\b/container_name: $JOB_NAME-/" $WORKSPACE/docker-compose.yml
 ```
 
@@ -272,7 +275,8 @@ This section shows configuration of jenkins, which will allow build of applicati
 
 #### Create parameters.yml
 Our `parameters.yml.dist` is already set for running application in docker as default so we just need to create `parameters.yml` file from dist file:
-```
+
+```sh
 cp $WORKSPACE/project-base/app/config/parameters.yml.dist $WORKSPACE/project-base/app/config/parameters.yml
 cp $WORKSPACE/project-base/app/config/parameters_test.yml.dist $WORKSPACE/project-base/app/config/parameters_test.yml
 ```
@@ -281,7 +285,7 @@ cp $WORKSPACE/project-base/app/config/parameters_test.yml.dist $WORKSPACE/projec
 Now we just create domain file, in this case, we use branch name for domain name, and we add domain number into beginning of URL,
 that way domain names are related with the git branches, this makes jenkins more organized.
 
-```
+```sh
 # Copy domains_urls.yml from the template
 cp $WORKSPACE/project-base/app/config/domains_urls.yml.dist $WORKSPACE/project-base/app/config/domains_urls.yml
 
@@ -305,7 +309,7 @@ During composer install process there also needs to be created environment file.
 We use our CI to test application in `PRODUCTION` mode but you can always change it to `DEVELOPMENT`.
 Development mode show symfony debug tool bar.
 
-```
+```sh
 touch $WORKSPACE/PRODUCTION
 ```
 
@@ -321,19 +325,25 @@ You can prevent all of these problems and make your builds fast and efficient by
 so all containers can use one cache and use your set token.
 
 Create temporary `docker-compose`:
-```
+
+```sh
 cp $WORKSPACE/docker-compose.yml $WORKSPACE/docker-compose.yml.new
 ```
 
 Use sed to insert new mounting volumes into php-fpm container using regular expression.
-Sed does not handle `\n` well, so we change format of new lines using `tr` and change it back at the end
+`Sed` does not handle `\n` well, so we change format of new lines using `tr` and change it back at the end
 Output it into new docker-compose.yml:
-```
-cat $WORKSPACE/docker-compose.yml.new | tr '\n' '\r' | sed -r 's#(php-fpm:(\r[^\r]+)+volumes:)(\s+- )#\1\3~/.composer:/home/www-data/.composer\3#' | tr '\r' '\n' >> $WORKSPACE/docker-compose.yml
+
+```sh
+cat $WORKSPACE/docker-compose.yml.new | \
+tr '\n' '\r' | \
+sed -r 's#(php-fpm:(\r[^\r]+)+volumes:)(\s+- )#\1\3~/.composer:/home/www-data/.composer\3#' | \
+tr '\r' '\n' >> $WORKSPACE/docker-compose.yml
 ```
 
 Delete temporary `docker-compose.yml.new`:
-```
+
+```sh
 rm $WORKSPACE/docker-compose.yml.new
 ```
 
@@ -343,7 +353,8 @@ Otherwise, the user running Jenkins would be unable to change or remove files cr
 
 We can use build arguments `www_data_uid` and `www_data_gid` to match the ids before we build the containers.
 To change the argument we will use `sed` again.
-```
+
+```sh
 # Match UID and GID of user in host machine with the user "www-data" in php-fpm container
 sed -i "s/www_data_uid: 1000/www_data_uid: $(id -u)/" $WORKSPACE/docker-compose.yml
 sed -i "s/www_data_gid: 1000/www_data_gid: $(id -g)/" $WORKSPACE/docker-compose.yml
@@ -351,7 +362,7 @@ sed -i "s/www_data_gid: 1000/www_data_gid: $(id -g)/" $WORKSPACE/docker-compose.
 
 Now we can build our images and create containers:
 
-```
+```sh
 /usr/local/bin/docker-compose build
 /usr/local/bin/docker-compose up --force-recreate -d
 ```
@@ -359,7 +370,8 @@ Now we can build our images and create containers:
 ***Note:** During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
 Install the application:
-```
+
+```sh
 /usr/bin/docker exec $JOB_NAME-shopsys-framework-php-fpm composer install -o
 /usr/bin/docker exec $JOB_NAME-shopsys-framework-php-fpm php phing db-create test-db-create build-demo-ci
 ```
@@ -384,13 +396,13 @@ As first we need to configure the `autojobs-config.yml`, which contains configur
 
 Create `autojobs-config.yml` file into `/var/jenkins-templates/`:
 
-```
+```sh
 touch /var/jenkins-templates/autojobs-config.yml
 ```
 
 Great, now we need to open this file in some editor to be able to write into it:
 
-```
+```yaml
 jenkins: 'http://your-server-name.com:8080'
 username: None
 password: None
@@ -399,13 +411,13 @@ password: None
 These credentials are used to access your jenkins address, you can set username and password if your jenkins is secured.
 In our solution, we use jenkins only internally and hidden behind VPN so we dont need to have it secured.
 
-```
+```yaml
 repo: 'git@github.com:your/repository.git'
 ```
 
 Fill your credentials to your project repository.
 
-```
+```yaml
 template: 'template'
 ```
 
@@ -413,14 +425,14 @@ This defines where tool can find template for creation of new jobs, earlier we c
 
 This will copy configuration of `template` into every newly created job.
 
-```
+```yaml
 overwrite: true
 ```
 
 This option controls state of `template` file, if it gets modified, it will copy `template` configuration into every already created job
 that has old configuration.
 
-```
+```yaml
 build-on-create: true
 enable: true
 ```
@@ -430,7 +442,7 @@ Keep it on true.
 
 `enable` option just keeps jobs enabled so they can be built.
 
-```
+```yaml
 ignore:
   - 'refs/pull/.*'
 ```
@@ -439,7 +451,7 @@ this is great, but we don't need every created pull request to be build in jenki
 
 Using `ignore` parameter we can tell that we don't want them to be build.
 
-```
+```yaml
 cleanup: true
 ```
 
@@ -456,7 +468,7 @@ This defines how often we want to start this job, `H/5` defines that we want it 
 
 The configuration of job is pretty simple:
 
-```
+```sh
 jenkins-makejobs-git /var/jenkins-templates/autojobs-config.yml
 ```
 
@@ -473,7 +485,8 @@ We recommend to use this tool only at night, deleting of workspaces and containe
 pretty difficult operation so you don't want it to run every 5 minutes, just because you don't usually delete branches so often.
 
 The configuration of this job is this:
-```
+
+```sh
 #!/bin/sh
 
 WORKSPACES=$(ls $JENKINS_HOME/workspace/);
@@ -500,13 +513,14 @@ for WORKSPACE in $WORKSPACES; do
   fi
 done
 ```
+
 This script delete each workspace, for which is already missing appropriate job (old job is removed by another process).
 At the same time, containers and volumes associated with removed workspaces are removed.
 
 Script also deletes nginx configuration file and use `wipe_workspace.sh` to delete directories.
 File looks like this:
 
-```
+```sh
 echo "Wiping workspace \"$1\"..."
 rm -rf /var/lib/jenkins/workspace/$1
 rm -rf /var/postgres-data/$1
@@ -516,14 +530,14 @@ Create this file into `/opt/bin` directory.
 
 Make the file executable:
 
-```
+```sh
 chmod 700 /opt/bin/wipe_workspace.sh
 ```
 
 This shell script needs to be run as root, because of permission problems in php-fpm container.
 We need to edit `/etc/sudoers` file again, add this line into it:
 
-```
+```no-highlight
 jenkins ALL=(ALL) NOPASSWD: /opt/bin/wipe_workspace.sh
 ```
 
@@ -532,7 +546,8 @@ Done, our special jobs are created and jenkins should be ready to run.
 Now, we need to make few things on our machine to make things really work. Log through ssh into your machine.
 
 First of all, we need to start `docker daemon socket` which needs to be done manually as root once on a machine:
-```
+
+```sh
 sudo dockerd
 ```
 
@@ -542,7 +557,7 @@ start first builds which will fail, on `composer install -o` and it will prompt 
 So select one of your jobs names and get into `container` in ssh. For example i will use master, but it does not really matter
 which job will you choose:
 
-```
+```sh
 docker exec -it master-shopsys-framework-php-fpm composer install -o
 ```
 

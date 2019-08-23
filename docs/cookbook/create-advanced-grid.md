@@ -305,7 +305,7 @@ class SalesmanGridInlineEdit extends AbstractGridInlineEdit
 ```
 The new class must be registered in `services.yml`:
 ```yaml
-Shopsys\ShopBundle\Grid\Salesman\SalesmanGridInlineEdit: ~
+    Shopsys\ShopBundle\Grid\Salesman\SalesmanGridInlineEdit: ~
 ```
 
 ### 1.7 Use `SalesmanGridInlineEdit` in `SalesmanController`
@@ -360,6 +360,7 @@ class SalesmanController extends AdminBaseController
 ```
 
 At this point, you should be able to edit and create new salesmen directly in the grid.
+
 ![Advanced grid with inline edit](img/advanced-grid-inline-edit.png)
 
 ## 2. Sort data manually (drag and drop)
@@ -382,7 +383,7 @@ class Salesman
 
 ### 2.2 Generate new database migration
 Run phing target
-```bash
+```sh
 php phing db-migrations-generate
 ```
 
@@ -416,7 +417,7 @@ class Version20190305140005 extends AbstractMigration
 
 ### 2.3 Execute migrations to propagate all the changes to the database
 Run phing target
-```bash
+```sh
 php phing db-migrations
 ```
 
@@ -455,6 +456,7 @@ class SalesmanGridFactory implements GridFactoryInterface
 ```
 
 Now you should be able to sort your salesmen using the cross icon in the left part of each row as a handle for drag a drop.
+
 ![Advanced grid with drag and drop](img/advanced-grid-drag-and-drop.png)
 
 ## Pitfalls

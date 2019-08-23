@@ -96,7 +96,7 @@ use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\ShopBundle\Model\Salesman\Salesman;
 
-...
+// ...
 
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
@@ -286,8 +286,8 @@ First, we need to get the salesman entity by its id and then remove it from pers
 We will follow the basic concepts of Shopsys Framework (see ["Basics about model architecture"](../model/introduction-to-model-architecture.md) article) and create new classes - `SalesmanFacade` and `SalesmanRepository`.
 
 #### 6.1.1 Create `SalesmanRepository` and implement `getById` method
- ```php
- // src\Shopsys\ShopBundle\Model\Salesman\SalesmanRepository.php
+```php
+// src\Shopsys\ShopBundle\Model\Salesman\SalesmanRepository.php
 declare(strict_types=1);
 
 namespace Shopsys\ShopBundle\Model\Salesman;
