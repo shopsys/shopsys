@@ -229,6 +229,11 @@ Lists all available background jobs. If there is more than one cron instance reg
 
 For more information, see [Working with Multiple Cron Instances](/docs/cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](/docs/introduction/cron.md).
 
+#### fix-annotations
+Makes static analysis tools understand the extended code in your project by changing annotations and adding `@property` and `@method` annotations to relevant classes.
+
+You can read more in the ["Framework extensibility" article](./framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).
+
 #### grunt
 Builds CSS from LESS via Grunt.
 
