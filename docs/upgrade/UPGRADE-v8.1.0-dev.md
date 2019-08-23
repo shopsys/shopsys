@@ -154,6 +154,16 @@ There you can find links to upgrade notes for other versions too.
     - add [`\Tests\ShopBundle\Unit\NumberFormattingTest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Unit/NumberFormattingTest.php)
 - add support to display date-time values in different timezone ([#1343](https://github.com/shopsys/shopsys/pull/1343))
     - you can read more about how to [work with display timezone in documentation](/docs/introduction/working-with-date-time-values.md)
+    - in Twig templates have to be used `formatDate`, `formatTime` and `formatDateTime` filters exclusively to format date-time values
+        - change the filter in `src/Shopsys/ShopBundle/Resources/views/Front/Content/Article/detail.html.twig` file
+            ```diff
+                 </h1>
+
+            -    <p>{{ article.createdAt|date('j.n.Y') }}</p>
+            +    <p>{{ article.createdAt|formatDate }}</p>
+
+                 <div class="in-user-text">
+          ```
     - you can delete test `tests/ShopBundle/Functional/Twig/DateTimeFormatterExtensionTest.php` as it was moved to the FrameworkBundle, if you do not test any your specific use-case
     - class `CustomDateTimeFormatterFactory` is deprecated and should not be used anymore
         - if you have extended this factory to alter configuration of `DateTimeFormatPatternRepository`, extend new `DateTimeFormatPatternRepositoryFactory` instead (as `DateTimeFormatPatternRepository` configuration was moved to this class from the factory)
@@ -164,7 +174,6 @@ There you can find links to upgrade notes for other versions too.
             ```
     - class `DateTimeFormatter` no longer supports extending via `shopsys.entity_extension.map` as it is not entity
         -if you have extended this class with `shopsys.entity_extension.map`, register your class for `DateTimeFormatterInterface` in `services.yml` instead
-    - protected property `Product::sellingFrom` and `Product::sellingTo` are deprecated in favor of `Product::sellingFromDateTime` and `Product::sellingToDateTime`, change your usages accordingly
     - if you use any custom date-time related FormTypes, set option `view_timezone` to value provided by `DisplayTimeZoneProviderInterface` class
         - you can find inspiration in new [`Shopsys\FrameworkBundle\Form\DateTimeType`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DateTimeType.php) FormType, or you can use this FormType directly
 
