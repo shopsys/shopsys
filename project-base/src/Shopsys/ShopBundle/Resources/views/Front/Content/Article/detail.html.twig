@@ -17,7 +17,7 @@
         {% endif %}
     </h1>
 
-    <p>{{ article.createdAt|date('j.n.Y') }}</p>
+    <p>{{ article.createdAt|formatDate }}</p>
 
     <div class="in-user-text">
         {{ article.text|raw }}
