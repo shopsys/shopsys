@@ -48,7 +48,8 @@ In case you modified image sizes in file `images.yml`, then would be needed to r
 ### Example
 Assume we want to add new image size for the main image above gallery at the product detail page. We want affect only devices with maximal browser width `480px`. Image size for new device width should be `410px`. You can achieve that by following steps.
 
-1. Add new value for attribute `product.gallery.detail.additionalSizes` in configuration file `images.yml`.
+#### 1. Add new value for attribute `product.gallery.detail.additionalSizes` in configuration file `images.yml`.
+
 ```diff
     -   name: product
         class: Shopsys\FrameworkBundle\Model\Product\Product
@@ -64,4 +65,6 @@ Assume we want to add new image size for the main image above gallery at the pro
 +                       additionalSizes:
 +                           - {width: 410, height: ~, media: "(max-width: 480px)"}
 ```
-2. Remove all images in `web/content/images/product/default`. This step is applied only if there already exist some generated images for additional sizes.
+
+#### 2. Remove all images in `web/content/images/product/default`.
+This step is applied only if there already exist some generated images for additional sizes.
