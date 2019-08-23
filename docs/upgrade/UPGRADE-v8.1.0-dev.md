@@ -79,4 +79,6 @@ There you can find links to upgrade notes for other versions too.
         +       arguments:
         +           $useInlineEditation: false
         ```
+- update your code if you are using `CronFacade::TIMEOUT_SECONDS` constant because it will be removed in next major release ([#1314](https://github.com/shopsys/shopsys/pull/1314))
+
 [shopsys/framework]: https://github.com/shopsys/framework

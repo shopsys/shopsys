@@ -13,7 +13,7 @@ use Symfony\Bridge\Monolog\Logger;
 class CronFacade
 {
     /**
-     * @deprecated
+     * @deprecated Will be removed in next major release, create your own constant if needed
      */
     protected const TIMEOUT_SECONDS = 4 * 60;
 
@@ -109,7 +109,7 @@ class CronFacade
         if ($cronModuleExecutor === null) {
             $cronModuleExecutor = $this->cronModuleExecutor;
         } else {
-            @trigger_error(sprintf('The `$cronModuleConfig` argument of method %s() is deprecated and will be removed in the next major. Use the injected CronModuleConfig instead.', __METHOD__), E_USER_DEPRECATED);
+            @trigger_error(sprintf('The `$cronModuleExecutor` argument of method %s() is deprecated and will be removed in the next major. Use the injected CronModuleConfig instead.', __METHOD__), E_USER_DEPRECATED);
         }
 
         $this->logger->addInfo(sprintf('====== Start of cron instance %s ======', $instanceName));
@@ -143,7 +143,7 @@ class CronFacade
         if ($cronModuleExecutor === null) {
             $cronModuleExecutor = $this->cronModuleExecutor;
         } else {
-            @trigger_error(sprintf('The `$cronModuleConfig` argument of method %s() is deprecated and will be removed in the next major. Use the injected CronModuleConfig instead.', __METHOD__), E_USER_DEPRECATED);
+            @trigger_error(sprintf('The `$cronModuleExecutor` argument of method %s() is deprecated and will be removed in the next major. Use the injected CronModuleConfig instead.', __METHOD__), E_USER_DEPRECATED);
         }
 
         $this->logger->addInfo('Start of ' . $cronModuleConfig->getServiceId());
