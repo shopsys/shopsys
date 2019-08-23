@@ -1,4 +1,5 @@
 site_name: Shopsys Framework Knowledge Base
+
 nav:
     - Home: index.md
     - Administration: administration/index.md
@@ -13,6 +14,10 @@ nav:
     - Model: model/index.md
     - Upgrade: upgrade/index.md
 theme: readthedocs
+
+extra_css:
+    - _theme/extra.css
+
 markdown_extensions:
     - toc:
           permalink: True
