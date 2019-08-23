@@ -146,4 +146,7 @@ There you can find links to upgrade notes for other versions too.
         +       arguments:
         +           $useInlineEditation: false
         ```
+- add `setlocale(LC_NUMERIC, 'en_US.utf8');` in your `Bootstrap.php` right behind `setlocale(LC_CTYPE, 'en_US.utf8');` ([#1313](https://github.com/shopsys/shopsys/pull/1313/))
+    - add [`\Tests\ShopBundle\Unit\NumberFormattingTest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Unit/NumberFormattingTest.php)
+
 [shopsys/framework]: https://github.com/shopsys/framework
