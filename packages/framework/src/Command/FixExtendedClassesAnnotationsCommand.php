@@ -68,15 +68,10 @@ class FixExtendedClassesAnnotationsCommand extends Command
     protected function replaceFrameworkWithProjectAnnotations(): void
     {
         $finder = $this->getFinderForReplacingAnnotations();
-        $annotationsReplacementsMap = $this->getAnnotationsReplacementsMap($this->classExtensionRegistry->getClassExtensionMap());
         foreach ($finder as $fileWithFrameworkAnnotationsToReplace) {
             $pathname = $fileWithFrameworkAnnotationsToReplace->getPathname();
             $content = file_get_contents($pathname);
-            $replacedContent = preg_replace(
-                array_keys($annotationsReplacementsMap),
-                $annotationsReplacementsMap,
-                $content
-            );
+            $replacedContent = $this->replaceInStringUsingAnnotationsReplacementMap($content);
             file_put_contents($pathname, $replacedContent);
         }
     }
@@ -320,13 +315,8 @@ class FixExtendedClassesAnnotationsCommand extends Command
     {
         $methodReturnTypes = $reflectionMethod->getDocBlockReturnTypes();
         $replacedReturnTypes = [];
-        $annotationsReplacementsMap = $this->getAnnotationsReplacementsMap($this->classExtensionRegistry->getClassExtensionMap());
         foreach ($methodReturnTypes as $methodReturnType) {
-            $replacedReturnTypes[] = preg_replace(
-                array_keys($annotationsReplacementsMap),
-                $annotationsReplacementsMap,
-                (string)$methodReturnType
-            );
+            $replacedReturnTypes[] = $this->replaceInStringUsingAnnotationsReplacementMap((string)$methodReturnType);
         }
 
         return implode('|', $replacedReturnTypes);
@@ -340,12 +330,7 @@ class FixExtendedClassesAnnotationsCommand extends Command
     {
         $propertyType = implode('|', $reflectionProperty->getDocBlockTypeStrings());
 
-        $annotationsReplacementsMap = $this->getAnnotationsReplacementsMap($this->classExtensionRegistry->getClassExtensionMap());
-        $replacedPropertyType = preg_replace(
-            array_keys($annotationsReplacementsMap),
-            $annotationsReplacementsMap,
-            $propertyType
-        );
+        $replacedPropertyType = $this->replaceInStringUsingAnnotationsReplacementMap($propertyType);
 
         return $replacedPropertyType;
     }
@@ -455,5 +440,20 @@ class FixExtendedClassesAnnotationsCommand extends Command
             $extendedDocBlock = str_replace('*/', $newMethodAnnotationLine . ' */', $projectClassDocBlock);
             $this->replaceInFile($projectClassFileName, $projectClassDocBlock, $extendedDocBlock);
         }
+    }
+
+    /**
+     * @param string $string
+     * @return string
+     */
+    protected function replaceInStringUsingAnnotationsReplacementMap(string $string): string
+    {
+        $annotationsReplacementsMap = $this->getAnnotationsReplacementsMap($this->classExtensionRegistry->getClassExtensionMap());
+
+        return preg_replace(
+            array_keys($annotationsReplacementsMap),
+            array_values($annotationsReplacementsMap),
+            $string
+        );
     }
 }
