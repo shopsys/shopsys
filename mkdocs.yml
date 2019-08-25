@@ -19,6 +19,7 @@ theme:
         - dockerfile
         - twig
         - yaml
+        - less
 
 extra_css:
     - _theme/extra.css
