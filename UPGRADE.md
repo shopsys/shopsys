@@ -8,7 +8,7 @@ Since there are 3 possible scenarios how you can use the Shopsys Framework, inst
 Follow the instructions in relevant sections, eg. `shopsys/coding-standards` or `shopsys/http-smoke-testing`.
 
 ### You are using the monorepo
-Follow the instructions in the [monorepo upgrade guide](docs/contributing/upgrading-monorepo.md).
+Follow the instructions in the [monorepo upgrade guide](upgrade/upgrading-monorepo.md).
 
 ### You are developing a project based on the project-base repository
 * upgrade only your composer dependencies and follow the instructions in a guide below
