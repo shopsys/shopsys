@@ -59,4 +59,14 @@ class CronModuleRepository
 
         return array_map('array_pop', $query->getScalarResult());
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule[]
+     */
+    public function findAllIndexedByServiceId(): array
+    {
+        return $this->getCronModuleRepository()->createQueryBuilder('cm')
+            ->indexBy('cm', 'cm.serviceId')
+            ->getQuery()->getResult();
+    }
 }

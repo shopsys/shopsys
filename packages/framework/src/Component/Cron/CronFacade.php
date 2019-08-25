@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
 use Swift_TransportException;
 use Symfony\Bridge\Monolog\Logger;
+use Throwable;
 
 class CronFacade
 {
@@ -163,13 +164,27 @@ class CronFacade
      */
     protected function runSingleModule(CronModuleConfig $cronModuleConfig)
     {
+        if ($this->cronModuleFacade->isModuleEnabled($cronModuleConfig) === false) {
+            return;
+        }
+
         $this->logger->addInfo('Start of ' . $cronModuleConfig->getServiceId());
         $cronModuleService = $cronModuleConfig->getService();
         $cronModuleService->setLogger($this->logger);
-        $status = $this->cronModuleExecutor->runModule(
-            $cronModuleService,
-            $this->cronModuleFacade->isModuleSuspended($cronModuleConfig)
-        );
+        $this->cronModuleFacade->markCronAsStarted($cronModuleConfig);
+
+        try {
+            $status = $this->cronModuleExecutor->runModule(
+                $cronModuleService,
+                $this->cronModuleFacade->isModuleSuspended($cronModuleConfig)
+            );
+        } catch (Throwable $throwable) {
+            $this->cronModuleFacade->markCronAsFailed($cronModuleConfig);
+            $this->logger->addError('End of ' . $cronModuleConfig->getServiceId() . ' because of error');
+            throw $throwable;
+        }
+
+        $this->cronModuleFacade->markCronAsEnded($cronModuleConfig);
 
         try {
             $this->mailer->flushSpoolQueue();

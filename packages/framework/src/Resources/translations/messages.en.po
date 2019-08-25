@@ -541,6 +541,12 @@ msgstr ""
 msgid "Created on"
 msgstr ""
 
+msgid "Cron overview"
+msgstr ""
+
+msgid "Cron with serviceID `%serviceId%` was scheduled"
+msgstr ""
+
 msgid "Cropping"
 msgstr ""
 
@@ -937,6 +943,9 @@ msgstr ""
 msgid "Entry price type"
 msgstr ""
 
+msgid "Error"
+msgstr ""
+
 msgid "Error messages"
 msgstr ""
 
@@ -947,6 +956,21 @@ msgid "Error occurred while uploading file: %message%"
 msgstr ""
 
 msgid "Error occurred, try again please."
+msgstr ""
+
+msgid "Every 5 minutes"
+msgstr ""
+
+msgid "Every 5 minutes in %hour% hour"
+msgstr ""
+
+msgid "Every hour"
+msgstr ""
+
+msgid "Every hour and %minutes% minutes"
+msgstr ""
+
+msgid "Everyday at %hour%:%minutes%"
 msgstr ""
 
 msgid "Exchange rate"
@@ -1049,6 +1073,9 @@ msgid "Free shipping and payment"
 msgstr ""
 
 msgid "Free shipping and payment settings saved"
+msgstr ""
+
+msgid "Frequency"
 msgstr ""
 
 msgid "Frontend"
@@ -1186,6 +1213,12 @@ msgstr ""
 msgid "Last action time"
 msgstr ""
 
+msgid "Last duration (sec)"
+msgstr ""
+
+msgid "Last finished at"
+msgstr ""
+
 msgid "Last login"
 msgstr ""
 
@@ -1193,6 +1226,9 @@ msgid "Last name"
 msgstr ""
 
 msgid "Last order"
+msgstr ""
+
+msgid "Last started at"
 msgstr ""
 
 msgid "Legal conditions"
@@ -1411,6 +1447,9 @@ msgstr ""
 msgid "No countries found. You have to create some first."
 msgstr ""
 
+msgid "No crons found."
+msgstr ""
+
 msgid "No currencies found. You have to create some first."
 msgstr ""
 
@@ -1487,6 +1526,9 @@ msgid "Occurrence"
 msgstr ""
 
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
+msgstr ""
+
+msgid "Ok"
 msgstr ""
 
 msgid "Only checked products"
@@ -1816,6 +1858,9 @@ msgstr ""
 msgid "Rounding type"
 msgstr ""
 
+msgid "Running"
+msgstr ""
+
 msgid "SEO"
 msgstr ""
 
@@ -1841,6 +1886,12 @@ msgid "Save changes in all templates"
 msgstr ""
 
 msgid "Save changes in order"
+msgstr ""
+
+msgid "Schedule"
+msgstr ""
+
+msgid "Scheduled"
 msgstr ""
 
 msgid "Script <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
@@ -1994,6 +2045,9 @@ msgid "Settings"
 msgstr ""
 
 msgid "Settings modified."
+msgstr ""
+
+msgid "Several times a day (%hours%h and %minutes%m)"
 msgstr ""
 
 msgid "Shipping"

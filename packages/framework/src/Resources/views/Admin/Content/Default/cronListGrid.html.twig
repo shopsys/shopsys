@@ -1,0 +1,38 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No crons found.'|trans }}
+{% endblock %}
+
+{% block grid_value_cell_id_lastStartedAt %}
+    {{ value|formatDateTime }}
+{% endblock %}
+
+{% block grid_value_cell_id_lastFinishedAt %}
+    {{ value|formatDateTime}}
+{% endblock %}
+
+{% block grid_value_cell_id_status %}
+    <strong style="line-break: inherit;">
+        {% if row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_RUNNING') %}
+            <span style="color: lightskyblue;"><i class="svg svg-gear"></i> {{ 'Running'|trans }}</span>
+        {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_ERROR') %}
+            <span style="color: red;"><i class="svg svg-warning"></i> {{ 'Error'|trans }}</span>
+        {% else %}
+            <span style="color: green;"><i class="svg svg-checked"></i> {{ 'Ok'|trans }}</span>
+        {% endif %}
+    </strong>
+{% endblock %}
+
+{% block grid_value_cell_id_actions %}
+    {% if row.scheduled == false %}
+        <a href="{{ url(
+            'admin_default_schedulecron', {
+                serviceId: row.id,
+            }
+        ) }}" class="btn btn--small">{{ 'Schedule'|trans }}</a>
+    {% else %}
+        <span class="btn btn--small btn--disabled">{{ 'Scheduled'|trans }}</span>
+    {% endif %}
+
+{% endblock %}
