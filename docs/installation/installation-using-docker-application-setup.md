@@ -7,18 +7,18 @@ If you haven't already done that check the [Installation using Docker](./install
 Now that the Docker environment is prepared we can setup the application itself.
 
 ### 1.1. Connect into terminal of the Docker container
-```
+```sh
 docker exec -it shopsys-framework-php-fpm bash
 ```
 
 ### 1.2. Install dependencies and configure parameters
-```
+```sh
 composer install
 ```
 
 If you are installing the application in production environment, you should install composer optimized.
 The optimized composer speed up your application.
-```
+```sh
 composer install -o
 ```
 
@@ -31,7 +31,7 @@ Only exception is the `secret` parameter - you should input a random string to b
 It is not necessary for development though.
 
 ### 1.3. Create databases
-```
+```sh
 php phing db-create
 php phing test-db-create
 ```
@@ -40,7 +40,7 @@ php phing test-db-create
 More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)*
 
 ### 1.4. Build the application
-```
+```sh
 php phing build-demo-dev-quick error-pages-generate
 ```
 
@@ -51,6 +51,7 @@ php phing build-demo-dev-quick error-pages-generate
 Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see running application.
 
 You can also login into the administration section on [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) with default credentials:
+
 * Username: `admin` or `superadmin` (the latter has access to advanced options)
 * Password: `admin123`
 

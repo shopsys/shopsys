@@ -30,6 +30,7 @@ To be able to install, develop and run Shopsys Framework, the system should have
 * (*optional*) [Nginx](http://nginx.org/en/docs/install.html)
 
 *Notes:*
+
 - *The names link to the appropriate installation guide or download page.*  
 - ***optional Nginx can be used as replacement of standalone symfony server started via `php phing server-run`***
 - *Required tools can be easily installed on Windows via [choco](https://chocolatey.org/) package manager*  
