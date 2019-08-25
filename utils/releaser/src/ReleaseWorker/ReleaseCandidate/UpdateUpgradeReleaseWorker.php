@@ -131,13 +131,13 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      */
     private function createUpgradeFileForNewVersionFromDevelopmentVersion(Version $version)
     {
-        $upgradeFilePath = getcwd() . '/docs/upgrade/UPGRADE-' . $version->getVersionString() . '-dev.md';
+        $upgradeFilePath = getcwd() . '/upgrade/UPGRADE-' . $version->getVersionString() . '-dev.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
         $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version, $this->initialBranchName);
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
-        FileSystem::rename($upgradeFilePath, getcwd() . '/docs/upgrade/UPGRADE-' . $version->getVersionString() . '.md');
+        FileSystem::rename($upgradeFilePath, getcwd() . '/upgrade/UPGRADE-' . $version->getVersionString() . '.md');
 
         $this->processRunner->run('git add .');
     }
@@ -168,6 +168,6 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
                 'nextDevelopmentVersion' => $this->nextDevelopmentVersionString,
             ]
         );
-        FileSystem::write(getcwd() . '/docs/upgrade/UPGRADE-' . $this->nextDevelopmentVersionString . '.md', $content);
+        FileSystem::write(getcwd() . '/upgrade/UPGRADE-' . $this->nextDevelopmentVersionString . '.md', $content);
     }
 }

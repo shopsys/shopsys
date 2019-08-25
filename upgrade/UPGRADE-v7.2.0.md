@@ -166,7 +166,7 @@ There you can find links to upgrade notes for other versions too.
 - to be more descriptive about the error caused by active TEST environment, modify `ErrorController::createUnableToResolveDomainResponse()` to be explicit about `overwrite_domain_url` parameter ([#701](https://github.com/shopsys/shopsys/pull/701))
     - you can [see the diff](https://github.com/shopsys/project-base/commit/4d80864be1809ada9a86f49912b79a562360e3f3)
 - use interchangeable product filtering ([#943](https://github.com/shopsys/shopsys/pull/943))
-    - you'll find detailed instructions in separate article [Upgrade Instructions for Interchangeable Filtering](./interchangeable-filtering.md)
+    - you'll find detailed instructions in separate article [Upgrade Instructions for Interchangeable Filtering](interchangeable-filtering.md)
 
 ### Configuration
  - use the standard format for redis prefixes ([#928](https://github.com/shopsys/shopsys/pull/928))

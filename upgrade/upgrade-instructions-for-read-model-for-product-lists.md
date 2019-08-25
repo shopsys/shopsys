@@ -1,6 +1,6 @@
 # Upgrade Instructions for Read Model for Product Lists
 
-There is a new layer in Shopsys Framework, called [read model](../model/introduction-to-read-model.md), separating the templates and application model.
+There is a new layer in Shopsys Framework, called [read model](../docs/model/introduction-to-read-model.md), separating the templates and application model.
 Besides better logical separation of the application, it is a first step towards usage of Elasticsearch for frontend product lists, and hence significant performance boost in the near future.
 The read model package is marked as *experimental* at the moment so there is a possibility we might introduce some BC breaking changes there.
 You do not need to perform the upgrade instantly, however, if you do so, you will be better prepared for the upcoming changes.
@@ -135,9 +135,9 @@ To start using the read model, follow the instructions (you can also find inspir
     ```
 - edit your `productListMacro.html.twig` so it now works with instances of `ListedProductView` instead of `Product` entities. You can see the complete diff of the template [here](https://github.com/shopsys/shopsys/pull/1018/files#diff-0f5d7197a48555d8902a9391ea330e6f)
     - in the macro, you now need to render product flags by their ids using `renderFlagsByIds` function:
-        - copy `FlagsExtension` class from [here](/project-base/src/Shopsys/ShopBundle/Twig/FlagsExtension.php) and put it to your new `src/Shopsys/ShopBundle/Twig/FlagsExtension.php`
-        - copy `twig.yml` services configuration [here](/project-base/src/Shopsys/ShopBundle/Resources/config/services/twig.yml) and put it in your new `src/Shopsys/ShopBundle/Resources/config/services/twig.yml` so the Twig extension is registered as Symfony service
-        - copy `productFlags.html.twig` template from [here](/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Inline/Product/productFlags.html.twig) and put it to your new `src/Shopsys/ShopBundle/Resources/views/Front/Inline/Product/productFlags.html.twig`
+        - copy `FlagsExtension` class from [here](/ShopBundle/Twig/FlagsExtension.php) and put it to your new `src/Shopsys/ShopBundle/Twig/FlagsExtension.php`
+        - copy `twig.yml` services configuration [here](/ShopBundle/Resources/config/services/twig.yml) and put it in your new `src/Shopsys/ShopBundle/Resources/config/services/twig.yml` so the Twig extension is registered as Symfony service
+        - copy `productFlags.html.twig` template from [here](/ShopBundle/Resources/views/Front/Inline/Product/productFlags.html.twig) and put it to your new `src/Shopsys/ShopBundle/Resources/views/Front/Inline/Product/productFlags.html.twig`
     - in the macro, to render "add to cart" form, use the new `CartController::productActionAction` instead of `addProductFormAction`
         ```diff
          - {% if not product.isMainVariant %}

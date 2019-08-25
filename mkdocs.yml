@@ -12,7 +12,6 @@ nav:
     - Introduction: introduction/index.md
     - Orchestration: kubernetes/index.md
     - Model: model/index.md
-    - Upgrade: upgrade/index.md
 
 theme:
     name: readthedocs

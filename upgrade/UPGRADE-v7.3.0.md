@@ -104,7 +104,7 @@ There you can find links to upgrade notes for other versions too.
     - you'll find the configuration file in `src/Shopsys/ShopBundle/Resources/config/`
 
 ### Tools
-- use the `build.xml` [Phing configuration](../introduction/console-commands-for-application-management-phing-targets.md) from the `shopsys/framework` package ([#1068](https://github.com/shopsys/shopsys/pull/1068))
+- use the `build.xml` [Phing configuration](../docs/introduction/console-commands-for-application-management-phing-targets.md) from the `shopsys/framework` package ([#1068](https://github.com/shopsys/shopsys/pull/1068))
     - assuming your `build.xml` and `build-dev.xml` are the same as in `shopsys/project-base` in `v7.2.2`, just remove `build-dev.xml` and replace `build.xml` with this file:
         ```xml
         <?xml version="1.0" encoding="UTF-8"?>
@@ -124,13 +124,13 @@ There you can find links to upgrade notes for other versions too.
         </project>
         ```
     - if there are any changes in the your phing configuration, you'll need to make some customizations
-        - read about [customization of phing targets and properties](../introduction/console-commands-for-application-management-phing-targets.md#customization-of-phing-targets-and-properties) in the docs
+        - read about [customization of phing targets and properties](../docs/introduction/console-commands-for-application-management-phing-targets.md#customization-of-phing-targets-and-properties) in the docs
         - if you have some own additional target definitions, copy them into your `build.xml`
         - if you have modified any targets, overwrite them in your `build.xml`
             - examine the target in the `shopsys/framework` package (either on [GitHub](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/build.xml) or locally in `vendor/shopsys/framework/build.xml`)
             - it's possible that the current target's definition suits your needs now after the upgrade - you don't have to overwrite it if that's the case
             - for future upgradability of your project, it's better to use the original target via `shopsys_framework.TARGET_NAME` if that's possible (eg. if you want to execute a command before or after the original task)
-            - if you think we can support your use case better via [phing target extensibility](../contributing/guidelines-for-phing-targets.md#extensibility), please [open an issue](https://github.com/shopsys/shopsys/issues/new) or [create a pull request](/docs/contributing/guidelines-for-pull-request.md)
+            - if you think we can support your use case better via [phing target extensibility](../docs/contributing/guidelines-for-phing-targets.md#extensibility), please [open an issue](https://github.com/shopsys/shopsys/issues/new) or [create a pull request](/docs/contributing/guidelines-for-pull-request.md)
         - if you have deleted any targets, overwrite them in your `build.xml` with a fail task so it doesn't get executed by mistake:
             ```xml
             <target name="deleted-target" hidden="true">
@@ -153,7 +153,7 @@ There you can find links to upgrade notes for other versions too.
         - `(test-)load-plugin-demo-data` was deprecated, use `(test-)plugin-demo-data-load` instead
         - don't forget to update your Dockerfiles, Kubernetes manifests, scripts and other files that might reference the phing targets above
 - we recommend upgrading PHPStan to level 1
-    - you'll find detailed instructions in separate article [Upgrade Instructions for Upgrading PHPStan to Level 1](/docs/upgrade/phpstan-level-1.md)
+    - you'll find detailed instructions in separate article [Upgrade Instructions for Upgrading PHPStan to Level 1](/upgradetan-level-1.md)
 - update your installation script (`scripts/install.sh`) to lower installation time by not running tests and standards checks during the build
     ```diff
     -    docker-compose exec php-fpm ./phing db-create test-db-create build-demo-dev
@@ -169,7 +169,7 @@ There you can find links to upgrade notes for other versions too.
         ```
     - in other places you might have used it in your custom code
 - follow instructions in [the separate article](upgrade-instructions-for-read-model-for-product-lists.md) to introduce read model for frontend product lists into your project ([#1018](https://github.com/shopsys/shopsys/pull/1018))
-    - we recommend to read [Introduction to Read Model](../model/introduction-to-read-model.md) article
+    - we recommend to read [Introduction to Read Model](../docs/model/introduction-to-read-model.md) article
 - copy a new functional test to avoid regression of issues with creating product variants in the future ([#1113](https://github.com/shopsys/shopsys/pull/1113))
     - you can copy-paste the class [`ProductVariantCreationTest.php`](https://github.com/shopsys/project-base/blob/v7.3.0/tests/ShopBundle/Functional/Model/Product/ProductVariantCreationTest.php) into `tests/ShopBundle/Functional/Model/Product/` in your project
 - prevent indexing `CustomerPassword:setNewPassword` by robots ([#1119](https://github.com/shopsys/shopsys/pull/1119))

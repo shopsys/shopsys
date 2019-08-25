@@ -1,7 +1,7 @@
 # Upgrade Instructions for Interchangeable Filtering
 
 This article describes the upgrade instructions for [#943 Elasticsearch filtering](https://github.com/shopsys/shopsys/pull/943).
-Upgrade instructions are in a separate article because there is a lot of instructions and we don't want to jam the [UPGRADE-v7.2.0.md](./UPGRADE-v7.2.0.md).
+Upgrade instructions are in a separate article because there is a lot of instructions and we don't want to jam the [UPGRADE-v7.2.0.md](UPGRADE-v7.2.0.md).
 Instructions are meant to be followed when you upgrade from `v7.1.0` to `v7.2.0`.
 
 In order to avoid a BC break and to ease upgrade to the new version of Shopsys Framework,
@@ -9,7 +9,7 @@ we decided to allow to use either the current (SQL) or the newly created (Elasti
 Thanks to this, you can still easily upgrade to the new version without the need to rewrite your application
 or use faster filtering with Elasticsearch we were able to deliver in the minor version as it does not break our BC promise.
 
-You can learn more about [Product filtering](../model/front-end-product-filtering.md) in the particular article.
+You can learn more about [Product filtering](../docs/model/front-end-product-filtering.md) in the particular article.
 
 ## Use current SQL Filtering
 You can still filter products via SQL if your filtering is more complex and/or you don't want to implement your custom modification in Elasticsearch.

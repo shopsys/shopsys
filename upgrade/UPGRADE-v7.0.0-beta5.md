@@ -16,7 +16,7 @@ There you can find links to upgrade notes for other versions too.
 - add `!docker/nginx` line into `.dockerignore` file so `docker/nginx` directory is not excluded during building `php-fpm` image ([#674](https://github.com/shopsys/shopsys/pull/674))
 - make sure your `webserver` service depends on `php-fpm` in your `docker-compose.yml` file so webserver will not fail on error `host not found in upstream php-fpm:9000` ([#679](https://github.com/shopsys/shopsys/pull/679))
 - on a production server enable compression of static files ([#703](https://github.com/shopsys/shopsys/pull/703))
-    - you can see example configuration in [Installation using Docker on Production Server](../installation/installation-using-docker-on-production-server.md) guide
+    - you can see example configuration in [Installation using Docker on Production Server](../docs/installation/installation-using-docker-on-production-server.md) guide
 - *(low priority)* Switched to Debian PHP-FPM image ([#702](https://github.com/shopsys/shopsys/pull/702))
     - update your Dockerfile to extend from debian image, follow [changes](https://github.com/shopsys/project-base/commit/023d6f20f3d041dce09d381522bd6c438ed9fa59) and [fix #740](https://github.com/shopsys/shopsys/pull/740/files)
     - change `runAsUser` value in `webserver-php-fpm.yml` manifest to 33 as it is Debian default `www-data` UID
@@ -36,7 +36,7 @@ There you can find links to upgrade notes for other versions too.
 - stop providing the option `is_group_container_to_render_as_the_last_one` to the `FormGroup` in your forms, the option was removed
     - the separators are rendered automatically since [#619](https://github.com/shopsys/shopsys/pull/619) was merged and the option hasn't been used anymore
 - service layer was removed ([#627](https://github.com/shopsys/shopsys/pull/627))
-    - please read upgrade instructions in [separate article](./services-removal.md)
+    - please read upgrade instructions in [separate article](services-removal.md)
 - change usages of `Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFacade` to `Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade` ([#688](https://github.com/shopsys/shopsys/pull/688))
 - method `AdministratorRepository::findByIdAndLoginToken()` was deleted. If you were using it, please implement it to your `project-base` by yourself ([#697](https://github.com/shopsys/shopsys/pull/697))
 - new macro `loadMoreButton` is integrated into `@ShopsysShop/Front/Inline/Paginator/paginator.html.twig` ([#579](https://github.com/shopsys/shopsys/pull/579))
