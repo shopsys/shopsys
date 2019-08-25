@@ -35,6 +35,7 @@ When in doubt, you can take a look at the [already implemented product feeds](ht
 ## How to extend an existing product feed?
 
 [Already existing product feed modules](https://github.com/search?q=topic%3Aproduct-feed+org%3Ashopsys) can be customized in several ways:
+
 * to use a different Twig template you can either [override the template](https://symfony.com/doc/3.3/templating/overriding.html)
 or you can extend the service tagged as `shopsys.product_feed` and override the `getTemplateFilepath` method in it
 * you can use a different `FeedItemInterface` implementation by extending its factory service

@@ -35,4 +35,4 @@ For example SEO headline of a product can be *A4tech mouse* on first domain and 
 It might be unclear whether an attribute is multidomain or multilanguage when filling data objects.
 The decision matters because multidomain attributes are indexed by `domain ID` and multilanguage attributes are indexed by `locale` as is described in [data for multidomain or multilanguage fields](../model/entities.md#data-for-multidomain-or-multilanguage-field).
 
-If you are not sure, we suggest to take a look into an appropriate entity (whether there is an array of *EntityDomain* or *EntityTranlsation* objects in a given field), form type (whether there is `LocalizedType` or `MultidomainType` used for a given field) or into administration (whether there are locale flags or domain icons for a given field).
+If you are not sure, we suggest to take a look into an appropriate entity (whether there is an array of *EntityDomain* or *EntityTranslation* objects in a given field), form type (whether there is `LocalizedType` or `MultidomainType` used for a given field) or into administration (whether there are locale flags or domain icons for a given field).

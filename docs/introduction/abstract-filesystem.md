@@ -9,6 +9,7 @@ We use abstract filesystem - [Flysystem](https://github.com/thephpleague/flysyst
 
 ### What is Flysystem used for
 In Shopsys Framework we currently use [Flysystem](https://github.com/thephpleague/flysystem) to store:
+
 - uploaded files and images
 - uploaded files and images via WYSIWYG
 - generated feeds
@@ -26,16 +27,19 @@ For more information how to set up Flysystem with WYSIWYG visit [FMElfinderBundl
 #### Create Nginx proxy to load files from different storage
 If you changed the file storage, you have to change also loading of these files to be accessible from the frontend of your application.
 You need to update your Nginx proxy to access your new storage.
+
 For instance, you can take a look of implementation for Google Cloud Storage in [nginx.conf](/project-base/docker/nginx/google-cloud/nginx.conf)
 ```diff
         try_files $uri @app;
     }
+
 +   location ~ ^/content/ {
 +       resolver 8.8.8.8;
 +       proxy_intercept_errors on;
 +       proxy_pass https://storage.googleapis.com/{{GOOGLE_CLOUD_STORAGE_BUCKET_NAME}}/web$request_uri;
 +       error_page 404 = @app;
 +   }
++
     location ~ ^/content(-test)?/images/ {
 ```
 

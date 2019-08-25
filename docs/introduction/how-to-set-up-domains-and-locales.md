@@ -11,7 +11,7 @@ For an explanation of the basic terms, please read [domain, multidomain and mult
 
 #### 1.1 Domain configuration
 Modify the configuration of the domain in `app/config/domains.yml`.
-This configuration file contains informations about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
+This configuration file contains information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
 #### 1.2 Set up the url address
 Set the url address for the domain in `app/config/domains_urls.yml`.
@@ -25,7 +25,7 @@ Set up the locale of the domain according to the instructions in the section [Lo
 
 #### 1.5 Build
 Start the build, for example using a phing target
-```
+```sh
 php phing build-demo-dev
 ```
 *Note: In this step you were using Phing target `build-demo-dev`.
@@ -61,10 +61,11 @@ Set up the locale of the domain according to the instructions in the section [Lo
 #### 2.5 Create multidomains data
 There need to be created some multidomain data for the newly added domain.
 Run the phing target
-```
+```sh
 php phing domains-data-create
 ```
 This command performs multiple actions:
+
 - multidomain attributes from the first domain are copied for this new domain, see `FrameworkBundle/Component/Domain/DomainDataCreator.php`, where the `TEMPLATE_DOMAIN_ID` constant is defined.
 - if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilang attributes
 - pricing group with the name Default is created for every new domain
@@ -76,7 +77,7 @@ This means that if you are using a different locale, these multilang attributes 
 
 #### 2.7 Generate assets for the new domain
 In order to properly display the new domain, assets need to be generated
-```
+```sh
 php phing grunt
 ```
 
@@ -87,7 +88,7 @@ Configuration for elasticsearch can be found in `src/Shopsys/ShopBundle/Resource
 If you add a new domain, you need to create an elasticsearch configuration for this new domain.
 
 After you create the configuration, you have to create the index in elasticsearch and fill it by products
-```
+```sh
 php phing product-search-recreate-structure
 php phing product-search-export-products
 ```
@@ -110,7 +111,7 @@ Override the Phing property `translations.dump.locales` in the `build.xml` and s
 For example, if you want to add `xx` to the locales, add `<property name="translations.dump.locales" value="cs en xx"/>` to your `build.xml`.
 
 Then run
-```
+```sh
 php phing translations-dump
 ```
 There will be created files for translations of messages for the new locale in `src/Shopsys/ShopBundle/Resources/translations/`.
@@ -120,7 +121,7 @@ For more information about translations, see [the separate article](./translatio
 #### 3.4 Generate database functions for the locale use
 Within the database functions, it is necessary to regenerate the default database functions for the locale use that are already created for the `en` locale as default.
 Regenerate database functions by running a phing target
-```
+```sh
 php phing domains-db-functions-create
 ```
 
@@ -138,7 +139,7 @@ When you change admin locale, you have to update acceptance tests, to have admin
 You can change administration translations by adding messages into your `src/Shopsys/ShopBundle/Resources/translations/messages.xx.po`.
 
 #### 3.7 Sorting in different locales
-Alphabetical sorting on frontend uses Elasticsearch and its [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/analysis-icu.html).
+Alphabetical sorting on frontend uses Elasticsearch and its [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/analysis-icu.html).  
 Every domain needs to have `language` parameter for field `name.keyword` in `src/Shopsys/ShopBundle/Resources/definition/product/*.json` set in order to sort correctly for given locale.  
 example for domain that uses English language:
 ```json
@@ -164,7 +165,7 @@ Change the url address in the configuration of the domain in `app/config/domains
 
 #### 4.2 Replace the old url address
 Run the phing target
-```
+```sh
 php phing domains-urls-replace
 ```
 Running this command will ensure replacing all occurrences of the old url address in the text attributes in the database with the new url address.

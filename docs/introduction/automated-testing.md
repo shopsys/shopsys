@@ -1,7 +1,8 @@
 # Automated Testing
 
-Testing is a crucial part of development and maintenance of reliable software.
+Testing is a crucial part of development and maintenance of reliable software.  
 For this reason Shopsys Framework comes with 5 types of automated tests:
+
 * [Unit tests](#unit-tests)
 * [Functional tests](#functional-tests)
 * [HTTP smoke tests](#http-smoke-tests)

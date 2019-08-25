@@ -2,6 +2,7 @@
 In this article we will show what types you can use when creating or editing forms, what options they have and what they do.
 
 We use two types of naming for form types:
+
 - `*FormType` - This type is used in Controllers to create forms and their views on front-end or they are used in other FormTypes as sub-forms
 - `*Type` - This type is used only in other FormTypes to ease adding fields with their own widgets and to add to their reusability
 
@@ -11,6 +12,7 @@ Every form type has some default options that can be used for various things.
 ### macro
 Defaults to `null`.  
 This option is used as array with two options (`name`, `recommended_length`) and its currently used for working with SEO:
+
 - `name` - this option has two values that can be used
     - `seoFormRowMacros` - this value shows single domain `TextType` field with information about current length and recommended length
     - `seoFormRowMacros.multidomainRow` - this value shows multidomain `TextType` field with information about current length and recommended length
@@ -111,6 +113,7 @@ Displays field that shows date picker when clicked.
 Defaults to `DatePickerType::FORMAT_PHP`.  
 Defines in what format should be the date shown.
 DatePickerType has 2 constants that can be used:
+
 - FORMAT_PHP = 'dd.MM.yyyy'
 - FORMAT_JS = 'dd.mm.yy'
 

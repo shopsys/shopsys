@@ -14,7 +14,7 @@ Directories that are used by application and do not need to be public, typically
 These directories are grouped under `internal_directores` in `app/config/directories.yml` file and their definition is an absolute path.
 
 For example:
-```
+```yaml
 internal_directories:
     - '%kernel.project_dir%/var/logs'
 ```
@@ -25,7 +25,7 @@ Directories that needs to be available for public usage, for example feeds or si
 These directories are grouped under `public_directores` in `app/config/directories.yml` file and their definition is relative path to the root directory of a project.
 
 For example:
-```
+```yaml
 public_directories:
     - '/web/content/images'
 ```
@@ -35,7 +35,7 @@ In case you need to create your own directories, you can simply add them into  `
 
 For example:
 
-```
+```yaml
 // app/config/directories.yml
 
 parameters:
