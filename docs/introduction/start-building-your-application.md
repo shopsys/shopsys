@@ -113,6 +113,24 @@ switch ($domainId) {
     case 3: $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK); break;
     ...
 ```
+
+## Fine-tune your configuration
+If all developers working on your project use the same version of PHP (eg. because all use SSFW via Docker), you can use higher versions of the libraries and tools installed via Composer.
+To do so, remove the `config.platform.php` option from your `composer.json`:
+```diff
+     "config": {
+         "preferred-install": "dist",
+         "component-dir": "project-base/web/components",
+-        "platform": {
+-            "php": "7.2"
+-        }
+     },
+```
+Run `composer update` to install updated versions of your dependencies (versions that don't support the lowest PHP version supported by SSFW).
+Then commit the changed `composer.json` and `composer.lock` so all the devs can share the same configuration.
+
+If you're interested in why we use the forced PHP version in the first place, read [our FAQ](../introduction/faq-and-common-issues.md#why-is-there-a-faked-php-72-platform-in-the-composer-config).
+
 ## Think about optional features of Shopsys Framework
 
 ### Backend API
