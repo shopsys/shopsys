@@ -115,7 +115,7 @@ switch ($domainId) {
 ```
 
 ## Fine-tune your configuration
-If all developers working on your project use the same version of PHP (eg. because all use SSFW via Docker), you can use higher versions of the libraries and tools installed via Composer.
+If all developers working on your project use the same version of PHP (e.g. because all use SSFW via Docker), you can use higher versions of the libraries and tools installed via Composer.
 To do so, remove the `config.platform.php` option from your `composer.json`:
 ```diff
      "config": {
