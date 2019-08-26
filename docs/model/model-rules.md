@@ -9,14 +9,14 @@ Core model classes of SSFW can be found in `Shopsys\FrameworkBundle\Model\<MODEL
 They can also be nested into deeper directory such as `Shopsys\ShopBundle\Model\Product\Search` if it encapsulate group of classes representing some specific functionality, for example search functionality for a `Product` entity.
 
 ## Rules
-- Classes inside the model are grouped into model namespaces.
-For example, if you want to add a new functionality that works with product, your class should be created in `\Shopsys\ShopBundle\Model\Product`.
-- Main parts of a model such as `Facade` or `Repository` are grouped by a model they are responsible for, not by their type.
-Eg. classes `Product`, `ProductRepository` and `ProductFacade` should all be inside the `Shopsys\ShopBundle\Model\Product` namespace together.
+- Classes inside the model are grouped into model namespaces.  
+  For example, if you want to add a new functionality that works with product, your class should be created in `\Shopsys\ShopBundle\Model\Product`.
+- Main parts of a model such as `Facade` or `Repository` are grouped by a model they are responsible for, not by their type.  
+  Eg. classes `Product`, `ProductRepository` and `ProductFacade` should all be inside the `Shopsys\ShopBundle\Model\Product` namespace together.
 - All exceptions in a model should be in in a `Shopsys\ShopBundle\<MODEL>\Exception` namespace and they should implement a common interface using the [Marker Interface Pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern), eg. [ProductException](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Product/Exception/ProductException.php).
 - All DQL and SQL operations related to a model should be in a model repository.
-- Integration code is not a part of the model.
-For example, forms or controllers should be outside the `Model` namespace.
+- Integration code is not a part of the model.  
+  For example, forms or controllers should be outside the `Model` namespace.
 - A model can be dependent on a component but not vice versa, this rule comes from definition of a [Component](../introduction/components.md).
 
 ## What is and what is not a model
@@ -54,6 +54,7 @@ Some models do not have a persisted entity that represents a model.
 For example one of them is `Feed`, even though it does not have a entity, it is related to the e-commerce domain and because of that we keep it in the model namespace.
 
 Models without a persisted entity:
+
 * `Feed`
 * `Heureka`
 * `ShopInfo`

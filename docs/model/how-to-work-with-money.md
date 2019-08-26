@@ -4,12 +4,14 @@ Money is a very important concept for every e-commerce project.
 In Shopsys Framework, all monetary values (*prices, account balances, discount amounts, price limits etc.*) are represented by an instance of [the `Money` class](#money-class).
 
 This approach has several advantages:
+
 - it avoids problems with floating point number calculations and comparisons (see [official PHP documentation](http://php.net/manual/en/language.types.float.php) for details)
 - allows easy-to-use interfaces with consistent type-hinting so you can be sure what type of value you should be using
 - prevents accidental conversion to unexpected types (which may be problematic eg. when using the `===` operator)
 - makes the application design clearer and future changes easier
 
 **Table of Contents:**
+
 - [General Concept](#general-concept)
 - [Money Class](#money-class)
 - [Money in Forms](#money-in-forms)
@@ -20,13 +22,14 @@ This approach has several advantages:
 - [Price Class](#price-class)
 
 ## General Concept
-The money concept in Shopsys Framework represents and encapsulates monetary values with a decimal part, like `100`, `0.50`, `10.99`, `0.0005`, ...
+The money concept in Shopsys Framework represents and encapsulates monetary values with a decimal part, like `100`, `0.50`, `10.99`, `0.0005`, ...  
 Money is represented without currency.
 
 ### Scale
 Scale defines the precision of the decimal part and it can be a bit tricky.
 
-Imagine you want to represent `1/3` (one third) in your application. In a `float`, it would be actually represented as `0.333333333333333314829616256247390992939472198486328125` because of [the floating-point precision](http://php.net/manual/en/language.types.float.php).
+Imagine you want to represent `1/3` (one third) in your application.
+In a `float`, it would be actually represented as `0.333333333333333314829616256247390992939472198486328125` because of [the floating-point precision](http://php.net/manual/en/language.types.float.php).
 
 When you want to work with one third in terms of money, you have to specify the scale - the number of places after the decimal point that should be taken into account.
 So you can create a monetary value from `1/3` in the scale of 2 (`0.33`), or in the scale of 8 (`0.33333333`).
@@ -72,6 +75,7 @@ For multiplication and division, the other parameter has to be an integer or a n
 
 The scale (number of decimal places) of the result is assigned automatically to all operations except division, keeping the results as precise as possible.
 Results of a division may be inexpressible with a finite decimal (eg. 1 / 3 = 0.3333...), so it's up to the user to specify the requested scale.
+
 - scale of the result of `add` and `subtract` is the *maximal scale* of both money values
 - scale of the result of `multiply` is the *sum of scales* of both money values
 - scale of the result of `divide` must be *explicitly specified*, the last decimal place will be rounded to minimize the error
@@ -161,6 +165,7 @@ $priceTableFormBuilder->add($key, MoneyType::class, [
 Similarly to [the Symfony `Range` constraint](https://symfony.com/doc/3.4/reference/constraints/Range.html), it validates that the amount of money is between some minimum and maximum.
 
 It has four options:
+
 - `min` specifies the minimum value, has to be an instance of `Money` or `null`
 - `max` specifies the maximum value, has to be an instance of `Money` or `null`
 - `minMessage` specifies the validation error message in case the entered value is less than the `min` value
@@ -255,6 +260,7 @@ The *domain ID* (`int`) must be provided as a parameter.
 Formats the amount of money as a decimal number without any currency symbol.
 
 Three optional parameters can be provided:
+
 - *number of decimal places* - `null` by default (meaning all), it will [round](#rounding) the value if necessary
 - *decimal point character* - `"."` by default
 - *separator of thousands* - `""` by default
@@ -428,11 +434,13 @@ It can be constructed by calling `new Price(Money $priceWithoutVat, Money $price
 For a zero price, you can use a short-hand method `Price::zero()`.
 
 The class has three getters you can use to retrieve the prices or the VAT amount:
+
 - `Price::getPriceWithoutVat() : Money`
 - `Price::getPriceWithVat() : Money`
 - `Price::getVatAmount() : Money`
 
 And you can calculate with prices using its methods:
+
 - `Price::add(Price $addend) : Price`
 - `Price::subtract(Price $subtrahend) : Price`
 - `Price::inverse() : Price`

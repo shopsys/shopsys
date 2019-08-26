@@ -3,6 +3,7 @@ We use the same method for searching and for autocomplete, so results are always
 
 Understanding Elasticsearch searching is difficult.
 But if we simplify, we can say that the search term is searched in attributes and is prioritized in following order:
+
 * ean - exact match
 * name - match any of words
 * name - match any of words ignoring diacritics
