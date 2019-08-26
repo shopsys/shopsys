@@ -13,8 +13,9 @@ We decided to go the simplest way possible. In order to get logs for developers 
 We perform this operation every time before we delete the namespace. That way we can get logs really easy with minimum effort.
 
 ## Acceptance Tests
-Logs of Acceptance Tests cannot be streamed because they export images into application folder. In this case we use `kubectl cp` which is able to copy files (/var/log/codeception) from container to local folder.
+Logs of Acceptance Tests cannot be streamed because they export images into application folder.
+In this case we use `kubectl cp` which is able to copy files (`/var/log/codeception`) from container to local folder.
 
 ## Scripts
-In [.ci](/.ci) folder you can find [export_logs.sh](/.ci/export_logs.sh) file which we use on our CI to export logs.
+In [.ci](https://github.com/shopsys/shopsys/tree/7.3/.ci) folder you can find [export_logs.sh](https://github.com/shopsys/shopsys/tree/7.3/.ci/export_logs.sh) file which we use on our CI to export logs.
 

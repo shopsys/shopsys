@@ -22,7 +22,9 @@ We don't recommend using Kubernetes for local development, Docker Compose is a m
 
 ## Why choose Kubernetes over other orchestration tools?
 We have looked into other tools, such as Docker Swarm, Mesos or Nomad.
+
 Kubernetes has all features we determined as critical for production:
+
 - service discovery
 - secret management
 - logging and monitoring
@@ -36,27 +38,29 @@ A nice advantage is that it's configured via YAML files, which we use for most o
 
 ## Terminology of Kubernetes
 Kubernetes uses its own terminology and it can be difficult to get into.
+
 Here is a summary of the basic term used in Kubernetes:
+
 - **K8s** is an acronym for Kubernetes (similar to *i18n* for *internationalization*).
-We try to avoid using it for clarity.
+  We try to avoid using it for clarity.
 - **Kubernetes Cluster** is an abstraction over a set of servers (*nodes*).
-You can deploy your application directly into a *cluster*.
-For practical details, see [How to Get a Cluster Running](./how-to-get-a-cluster-running.md).
+  You can deploy your application directly into a *cluster*.
+  For practical details, see [How to Get a Cluster Running](./how-to-get-a-cluster-running.md).
 - **Node** is a part of a *cluster*. It is an abstraction over a single server.
 - **kubectl** is a CLI client for remotely controlling your *cluster*.
-You can run `kubectl` to deploy your application, access logs or connect directly into a running container.
-It's similar to running `docker` or `docker-compose` to control your local containers.
+  You can run `kubectl` to deploy your application, access logs or connect directly into a running container.
+  It's similar to running `docker` or `docker-compose` to control your local containers.
 - **Pod** is a set of containers that always run on a single *node*.
-All containers in Kubernetes run a *pod* (you can have a *pod* with a single container).  
-A *pod* always has a default container, so if you execute something in a *pod* without specifying a container, you'll execute it in the default one.
+  All containers in Kubernetes run a *pod* (you can have a *pod* with a single container).  
+  A *pod* always has a default container, so if you execute something in a *pod* without specifying a container, you'll execute it in the default one.
 - **Deployment** is a declarative configuration (manifest) of *N* copies of a *pod*.
-Basically a recipe for running a *pod*, with the possibility of scaling it.
+  Basically a recipe for running a *pod*, with the possibility of scaling it.
 - **Service** is a way to configure a *deployment* to receive traffic.
-Without a *service* configured, a *deployment* (or a *pod*) cannot be accessed, even from within the same *cluster*.
+  Without a *service* configured, a *deployment* (or a *pod*) cannot be accessed, even from within the same *cluster*.
 - **Ingress** is an application that manages external HTTP access to your configured *services*.
-You could liken it to a web-server.
+  You could liken it to a web-server.
 - **Namespace** is a way to group and separate different networks.
-This allows you to easily deploy several containerized applications to a single *cluster*.
-The *namespace* can be provided for every command via `kubectl [command] --namespace=my-app` or you can switch your *namespace* globally.
+  This allows you to easily deploy several containerized applications to a single *cluster*.
+  The *namespace* can be provided for every command via `kubectl [command] --namespace=my-app` or you can switch your *namespace* globally.
 
 For more info, see [official Kubernetes documentation](https://kubernetes.io/docs/home/?path=users&persona=app-developer).
