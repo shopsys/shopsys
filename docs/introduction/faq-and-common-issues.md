@@ -152,7 +152,7 @@ Yes, you can! Check [the quick guide](/docs/introduction/running-acceptance-test
 
 ## Why is there a faked PHP 7.2 platform in the Composer config?
 As a general rule, packages and libraries that depend on PHP 7.2 will work as expected even on PHP 7.3 (any higher 7.x version), but not vice versa.
-This is the maintainers of PHP focus on backward-compatibility (even if there were [some incompatible changes](https://www.php.net/manual/en/migration73.incompatible.php) introduced in PHP 7.3, in practice it doesn't cause issues).
+Mainteiners of PHP are focusing on backward-compatibility (even if there were [some incompatible changes](https://www.php.net/manual/en/migration73.incompatible.php) introduced in PHP 7.3, in practice it doesn't cause issues).
 
 Using [the `config.platform.php` option](https://getcomposer.org/doc/06-config.md#platform) in `composer.json` allows us to force Composer to install such dependencies, that work for all supported versions of PHP by Shopsys Framework.
 These dependencies are locked during each release of SSFW so users that install it can download exact versions of all libraries and tools that were tested and proved working.
