@@ -21,9 +21,9 @@
                     {{ form_row(form.userData.firstName, { label: 'First name'|trans}) }}
                     {{ form_row(form.userData.lastName, { label: 'Last name'|trans}) }}
                     {{ form_row(form.userData.telephone, { label: 'Telephone'|trans}) }}
-                    {{ form_row(form.userData.email, { label: 'E-mail'|trans}) }}
+                    {{ form_row(form.userData.email, { label: 'Email'|trans}) }}
                     <p>
-                        {{ 'To prevent the possibility of account theft, the change of the e-mail address must be dealt with individually. If your e-mail address has changed, please contact us.'|trans }}
+                        {{ 'To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us.'|trans }}
                     </p>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                         data-toggle="tooltip"
                         data-placement="right"
                         title=""
-                        data-original-title="{{ 'Password must be at least six characters and can\'t be the same as entered e-mail or its part before at sign.'|trans }}">
+                        data-original-title="{{ 'Password must be at least six characters and can\'t be the same as entered email or its part before at sign.'|trans }}">
                      </i>
                     {{ form_row(form.userData.password.second, { label: 'Password again'|trans}) }}
                 </div>
