@@ -1,6 +1,6 @@
 parameters:
     ignoreErrors:
-        #Shopsys/framework - don't forget to add these rules to phpstan.neon in framework
+        # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
         -
             message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Domain/Config/DomainsConfigDefinition.php
@@ -33,7 +33,7 @@ parameters:
         -
             message: '#Access to an undefined property PhpParser\\Node::\$name\.#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Translation/ConstraintViolationExtractor.php
-        #Shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base
+        # shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base (only exceptions for level 1)
         -
             message: '#(PHPDoc tag @(param|return) has invalid value (.|\n)+ expected TOKEN_IDENTIFIER at offset \d+)#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php
