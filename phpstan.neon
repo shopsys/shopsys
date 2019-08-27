@@ -13,7 +13,9 @@ parameters:
         -
             message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/UploadedFile/Config/UploadedFileConfigDefinition.php
-        - '#Method Doctrine\\Common\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
+        -
+            message: '#Method Doctrine\\Common\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
+            path: *
         -
             message: '#Property Doctrine\\ORM\\Mapping\\ClassMetadataInfo::\$discriminatorColumn \(array\) does not accept null\.#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/EntityExtension/EntityExtensionParentMetadataCleanerEventSubscriber.php
@@ -60,7 +62,9 @@ parameters:
         -
             message: '#Array \(array<.+>\) does not accept object\.#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php
-        - '#Undefined variable: \$undefined#'
+        -
+            message: '#Undefined variable: \$undefined#'
+            path: *
     excludes_analyse:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*

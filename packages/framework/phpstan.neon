@@ -2,11 +2,15 @@ parameters:
     ignoreErrors:
         # Don't forget to add these rules to phpstan.neon in monorepo
         # Ignoring absence of \AppKernel, which should be provided by project implementation
-        - '~Instantiated class AppKernel not found~'
+        -
+            message: '~Instantiated class AppKernel not found~'
+            path: *
         -
             message: '#Call to method .+\(\) on an unknown class AppKernel\.#'
             path: %currentWorkingDirectory%/src/Component/Error/ErrorPagesFacade.php
-        - '#Method Doctrine\\Common\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
+        -
+            message: '#Method Doctrine\\Common\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
+            path: *
         -
             message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)#'
             path: %currentWorkingDirectory%/src/Component/Domain/Config/DomainsConfigDefinition.php
