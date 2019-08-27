@@ -71,7 +71,7 @@ services:
             - HUB_PORT_4444_TCP_PORT=4444
 
     adminer:
-        image: adminer:4.6
+        image: adminer:4.7
         container_name: shopsys-framework-adminer
         ports:
             - "1100:8080"

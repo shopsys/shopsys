@@ -17,6 +17,13 @@ There you can find links to upgrade notes for other versions too.
     -     -   ./docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/php.ini
       ports:
     ```
+- upgrade the Adminer Docker image to 4.7 ([#1354](https://github.com/shopsys/shopsys/pull/1354))
+    - change the Docker image of Adminer from `adminer:4.6` to `adminer:4.7` in your `docker-compose.yml` config, `docker-compose*.yml.dist` templates and `kubernetes/deployments/adminer.yml`:
+        ```diff
+        - image: adminer:4.6
+        + image: adminer:4.7
+        ```
+    - run `docker-compose up -d` so the new image is pulled and used
 
 ### Tools
 - let Phing properties `is-multidomain` and `translations.dump.locales` be auto-detected ([#1309](https://github.com/shopsys/shopsys/pull/1309))

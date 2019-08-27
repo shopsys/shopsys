@@ -103,7 +103,7 @@ https://github.com/SeleniumHQ/docker-selenium/blob/master/LICENSE.md
 Copyright 2018 Software Freedom Conservancy (SFC)
 
 ### Adminer
-Image: `Adminer:4.6`  
+Image: `Adminer:4.7`  
 License: Apache License 2.0 or GPL 2  
 https://github.com/vrana/adminer/blob/master/readme.txt
 
