@@ -31,7 +31,6 @@ parameters:
         -
             message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.#'
             path: %currentWorkingDirectory%/src/Model/Order/Order.php
-        #TODO delete after changing typehint in the next major release#
         -
             message: '#Access to an undefined property PhpParser\\Node::\$var\.#'
             path: %currentWorkingDirectory%/src/Component/Translation/ConstraintViolationExtractor.php
