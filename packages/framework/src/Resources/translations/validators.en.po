@@ -14,7 +14,7 @@ msgid "Availability name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Catalogue number cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "Catalogue number cannot be longer than {{ limit }} characters"
 
 msgid "Choose image"
 msgstr ""
@@ -35,16 +35,16 @@ msgid "Country name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "E-mail subject cannot be longer than {{ limit }} characters"
-msgstr ""
+msgstr "Email subject cannot be longer than {{ limit }} characters"
 
 msgid "EAN cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "EAN cannot be longer than {{ limit }} characters"
 
 msgid "Each parameter can be used only once"
 msgstr ""
 
 msgid "Email cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "Email cannot be longer than {{ limit }} characters"
 
 msgid "Email {{ email }} is already registered"
 msgstr ""
@@ -62,10 +62,10 @@ msgid "File extension {{ value }} is too long. It should have {{ limit }} charac
 msgstr ""
 
 msgid "First name cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "First name cannot be longer than {{ limit }} characters"
 
 msgid "First name of contact person cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "First name of contact person cannot be longer than {{ limit }} characters"
 
 msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
@@ -74,7 +74,7 @@ msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Full name cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "Full name cannot be longer than {{ limit }} characters"
 
 msgid "Heading (H1) cannot be longer than {{ limit }} characters"
 msgstr ""
@@ -83,7 +83,7 @@ msgid "Heureka API must be {{ limit }} characters"
 msgstr ""
 
 msgid "Identification number cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "Identification number cannot be longer than {{ limit }} characters"
 
 msgid "Image can be only in JPG or PNG format"
 msgstr ""
@@ -116,16 +116,16 @@ msgid "Part number cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Password cannot be local part of e-mail."
-msgstr ""
+msgstr "Password cannot be local part of email."
 
 msgid "Password cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "Password cannot be longer than {{ limit }} characters"
 
 msgid "Password cannot be same as e-mail"
-msgstr ""
+msgstr "Password cannot be same as email"
 
 msgid "Password cannot be same as part of e-mail before at sign"
-msgstr ""
+msgstr "Password cannot be same as part of email before at sign"
 
 msgid "Password cannot be same as username"
 msgstr ""
@@ -227,10 +227,10 @@ msgid "Please enter discount percentage"
 msgstr ""
 
 msgid "Please enter e-mail"
-msgstr ""
+msgstr "Please enter email"
 
 msgid "Please enter e-mail content"
-msgstr ""
+msgstr "Please enter email content"
 
 msgid "Please enter first name"
 msgstr ""
@@ -338,7 +338,7 @@ msgid "Please enter valid 3-digit currency code according to ISO 4217 standard (
 msgstr ""
 
 msgid "Please enter valid e-mail"
-msgstr ""
+msgstr "Please enter valid email"
 
 msgid "Please enter whole number."
 msgstr ""
@@ -407,7 +407,7 @@ msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an 
 msgstr ""
 
 msgid "Username cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "Username cannot be longer than {{ limit }} characters"
 
 msgid "VAT name cannot be longer than {{ limit }} characters"
 msgstr ""
@@ -422,7 +422,7 @@ msgid "Variable {{ needle }} is required"
 msgstr ""
 
 msgid "Variant alias cannot be longer then {{ limit }} characters"
-msgstr ""
+msgstr "Variant alias cannot be longer than {{ limit }} characters"
 
 msgid "You entered same product twice. In list of bestsellers can be product only once. Please correct it and then save form again."
 msgstr ""

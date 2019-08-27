@@ -57,6 +57,7 @@
         "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
+        "ext-dom": "*",
         "ext-filter": "*",
         "ext-gd": "*",
         "ext-iconv": "*",

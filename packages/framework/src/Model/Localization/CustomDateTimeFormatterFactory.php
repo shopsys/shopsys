@@ -8,6 +8,9 @@ use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPattern;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternRepository;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
 
+/**
+ * @deprecated DateTimeFormatter should be created directly by DI container
+ */
 class CustomDateTimeFormatterFactory
 {
     /**

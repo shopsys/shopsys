@@ -31,7 +31,7 @@
         {{ render(controller('ShopsysShopBundle:Front/BestsellingProduct:list', { category: category })) }}
 
         <div class="js-product-list-with-filter">
-            {% if paginationResult.results|length > 0 or filterFormSubmited %}
+            {% if paginationResult.results|length > 0 or filterFormSubmitted %}
                 <div class="box-filter js-product-filter">
                     {{ productFilterForm.filterForm(
                         filterForm,
@@ -49,7 +49,7 @@
                 <div>
                     {{ render(controller('ShopsysShopBundle:Front/Product:selectOrderingModeForList')) }}
                 </div>
-                {% include '@ShopsysShop/Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmited: filterFormSubmited} %}
+                {% include '@ShopsysShop/Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted} %}
             </div>
         </div>
 

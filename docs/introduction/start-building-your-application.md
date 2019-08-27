@@ -5,15 +5,12 @@ Here are first steps you should start with.
 
 *Note: If you don't have a working application, [install it](/docs/installation/installation-guide.md) first.*
 
-## Commit `migrations-lock.yml`
+## Set up timezone to display dates
 
-Committing lock files is important because the application is then installed in the same way in all environments (most importantly in the production) and also in the same way for all team members.
-Notice that lock files for composer (`composer.lock`) and npm (`package-lock.json`) dependencies are already committed in your project.
+Dates are internally stored in UTC. That supports portability and eases integration with other systems.
+To see dates properly in the desired timezone, you can change `shopsys.display_timezone` parameter (default value is `Europe/Prague`).
 
-```bash
-git add migrations-lock.yml
-git commit -m'locked migrations'
-```
+*Note: Read more about [working with date-time values](./working-with-date-time-values.md)*
 
 ## Set up domains
 
@@ -116,6 +113,54 @@ switch ($domainId) {
     case 3: $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK); break;
     ...
 ```
+
+## Fine-tune your configuration
+If all developers working on your project use the same version of PHP (e.g. because all use SSFW via Docker), you can use higher versions of the libraries and tools installed via Composer.
+To do so, remove the `config.platform.php` option from your `composer.json`:
+```diff
+     "config": {
+         "preferred-install": "dist",
+-        "component-dir": "project-base/web/components",
+-        "platform": {
+-            "php": "7.2"
+-        }
++        "component-dir": "project-base/web/components"
+     },
+```
+Run `composer update` to install updated versions of your dependencies (versions that don't support the lowest PHP version supported by SSFW).
+Then commit the changed `composer.json` and `composer.lock` so all the devs can share the same configuration.
+
+If you're interested in why we use the forced PHP version in the first place, read [our FAQ](../introduction/faq-and-common-issues.md#why-is-there-a-faked-php-72-platform-in-the-composer-config).
+
+---
+
+On the other hand, if you're planning to run your project in production on a natively installed PHP, you should respect the version installed on that server.
+We recommend to use the same version in your `php-fpm`'s `Dockerfile`, so that developers using Docker run the app in the same environment.
+After all, your production server is the one that matters the most.
+
+First, run `php -v` on your server to find our the exact version, for example:
+```
+PHP 7.2.19-0ubuntu0.18.04.1 (cli) (built: Jun  4 2019 14:48:12) ( NTS )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
+    with Zend OPcache v7.2.19-0ubuntu0.18.04.1, Copyright (c) 1999-2018, by Zend Technologies
+```
+Then change the version in your `docker/php-fpm/Dockerfile`:
+```diff
+- FROM php:7.3-fpm-stretch as base
++ FROM php:7.2.19-fpm-stretch as base
+```
+After running `docker-compose up -d --build` you'll have the application running on the same PHP.
+
+Now you can modify the version in your `composer.json` as well so all packages will always be installed in a compatible version.
+```diff
+         "platform": {
+-            "php": "7.2"
++            "php": "7.2.19"
+         }
+```
+To apply the new setting, execute `composer update` and commit the changes.
+
 ## Think about optional features of Shopsys Framework
 
 ### Backend API

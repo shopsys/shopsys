@@ -28,7 +28,7 @@ class Administrator extends BaseAdministrator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
+     * @param \Shopsys\ShopBundle\Model\Administrator\AdministratorData $administratorData
      */
     public function edit(BaseAdministratorData $administratorData): void
     {
