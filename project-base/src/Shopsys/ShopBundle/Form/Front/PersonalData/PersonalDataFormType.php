@@ -29,7 +29,7 @@ class PersonalDataFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(),
-                    new Email(['message' => 'Please enter valid e-mail']),
+                    new Email(['message' => 'Please enter valid email']),
                 ],
             ])
             ->add('email2', HoneyPotType::class)

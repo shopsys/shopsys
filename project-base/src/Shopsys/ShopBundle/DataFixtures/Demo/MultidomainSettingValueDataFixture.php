@@ -89,14 +89,14 @@ class MultidomainSettingValueDataFixture extends AbstractReferenceFixture implem
         $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_MAIN_PAGE, 'Shopsys Framework - Titulní strana', $domainId);
         $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_ADD_ON, '| Demo obchod', $domainId);
 
-        $personalDataDisplaySiteContent = 'Zadáním e-mailu níže si můžete nechat zobrazit vaše osobní údaje, která evidujeme v našem internetovém obchodu.
-         Pro ověření vaší totožnosti vám po zadání e-mailové adresy bude zaslán e-mail s odkazem. 
-         Klikem na odkaz se dostanete na stránku s přehledem těchto osobních údajů - půjde o všechny údaje evidované k dané e-mailové adrese.';
+        $personalDataDisplaySiteContent = 'Zadáním emailu níže si můžete nechat zobrazit vaše osobní údaje, která evidujeme v našem internetovém obchodu.
+         Pro ověření vaší totožnosti vám po zadání emailové adresy bude zaslán email s odkazem. 
+         Klikem na odkaz se dostanete na stránku s přehledem těchto osobních údajů - půjde o všechny údaje evidované k dané emailové adrese.';
 
-        $personalDataExportSiteContent = 'Zadáním e-mailu níže si můžete stáhnout své osobní a jiné informace (například historii objednávek)
-         z našeho internetového obchodu. Pro ověření vaší totožnosti vám po zadání e-mailové adresy bude zaslán e-mail s odkazem.
+        $personalDataExportSiteContent = 'Zadáním emailu níže si můžete stáhnout své osobní a jiné informace (například historii objednávek)
+         z našeho internetového obchodu. Pro ověření vaší totožnosti vám po zadání emailové adresy bude zaslán email s odkazem.
          Klikem na odkaz se dostanete na stránku s s možností stažení těchto informací ve strojově čitelném formátu - půjde o údaje
-         evidované k dané e-mailové adrese na této doméně internetového obchodu.';
+         evidované k dané emailové adrese na této doméně internetového obchodu.';
 
         $this->setting->setForDomain(Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT, $personalDataDisplaySiteContent, $domainId);
         $this->setting->setForDomain(Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT, $personalDataExportSiteContent, $domainId);
