@@ -11,7 +11,7 @@ spec:
         spec:
             containers:
                 -   name: adminer
-                    image: adminer:4.6
+                    image: adminer:4.7
                     env:
                         -   name: ADMINER_DEFAULT_SERVER
                             value: postgres
