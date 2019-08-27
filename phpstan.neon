@@ -1,6 +1,6 @@
 parameters:
     ignoreErrors:
-        #Shopsys/framework - don't forget to add these rules to phpstan.neon in framework
+        # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
         -
             message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Domain/Config/DomainsConfigDefinition.php
@@ -13,7 +13,9 @@ parameters:
         -
             message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/UploadedFile/Config/UploadedFileConfigDefinition.php
-        - '#Method Doctrine\\Common\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
+        -
+            message: '#Method Doctrine\\Common\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
+            path: *
         -
             message: '#Property Doctrine\\ORM\\Mapping\\ClassMetadataInfo::\$discriminatorColumn \(array\) does not accept null\.#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/EntityExtension/EntityExtensionParentMetadataCleanerEventSubscriber.php
@@ -26,14 +28,13 @@ parameters:
         -
             message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.#'
             path: %currentWorkingDirectory%/packages/framework/src/Model/Order/Order.php
-        #TODO delete after changing typehint in the next major release#
         -
             message: '#Access to an undefined property PhpParser\\Node::\$var\.#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Translation/ConstraintViolationExtractor.php
         -
             message: '#Access to an undefined property PhpParser\\Node::\$name\.#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Translation/ConstraintViolationExtractor.php
-        #Shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base
+        # shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base (only exceptions for level 1)
         -
             message: '#(PHPDoc tag @(param|return) has invalid value (.|\n)+ expected TOKEN_IDENTIFIER at offset \d+)#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php
@@ -53,15 +54,20 @@ parameters:
             message: '#(Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept object\.)#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/*
         -
+            message: '#(Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept object\|null\.)#'
+            path: %currentWorkingDirectory%/project-base/tests/ShopBundle/*
+        -
             message: '#(Method .+::.+\(\) should return .+ but returns (object|Codeception\\Module).)#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/*
         -
             message: '#Array \(array<.+>\) does not accept object\.#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php
-        - '#Undefined variable: \$undefined#'
+        -
+            message: '#Undefined variable: \$undefined#'
+            path: *
     excludes_analyse:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
 includes:
-	- vendor/phpstan/phpstan-doctrine/extension.neon
-	- vendor/phpstan/phpstan-phpunit/extension.neon 
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
