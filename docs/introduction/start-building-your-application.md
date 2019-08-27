@@ -136,7 +136,7 @@ If you're interested in why we use the forced PHP version in the first place, re
 
 On the other hand, if you're planning to run your project in production on a natively installed PHP, you should respect the version installed on that server.
 We recommend to use the same version in your `php-fpm`'s `Dockerfile`, so that developers using Docker run the app in the same environment.
-After all, your production server is the one that matters most.
+After all, your production server is the one that matters the most.
 
 First, run `php -v` on your server to find our the exact version, for example:
 ```
