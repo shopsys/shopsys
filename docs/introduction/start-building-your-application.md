@@ -120,10 +120,11 @@ To do so, remove the `config.platform.php` option from your `composer.json`:
 ```diff
      "config": {
          "preferred-install": "dist",
-         "component-dir": "project-base/web/components",
+-        "component-dir": "project-base/web/components",
 -        "platform": {
 -            "php": "7.2"
 -        }
++        "component-dir": "project-base/web/components"
      },
 ```
 Run `composer update` to install updated versions of your dependencies (versions that don't support the lowest PHP version supported by SSFW).
