@@ -53,6 +53,9 @@ parameters:
             message: '#(Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept object\.)#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/*
         -
+            message: '#(Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept object\|null\.)#'
+            path: %currentWorkingDirectory%/project-base/tests/ShopBundle/*
+        -
             message: '#(Method .+::.+\(\) should return .+ but returns (object|Codeception\\Module).)#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/*
         -
