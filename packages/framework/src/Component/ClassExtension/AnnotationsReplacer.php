@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
+use Roave\BetterReflection\Reflection\ReflectionMethod;
+use Roave\BetterReflection\Reflection\ReflectionProperty;
+
 class AnnotationsReplacer
 {
     /**
@@ -30,5 +33,31 @@ class AnnotationsReplacer
             $this->annotationsReplacementsMap->getReplacements(),
             $string
         );
+    }
+
+    /**
+     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
+     * @return string
+     */
+    public function replaceInMethodReturnType(ReflectionMethod $reflectionMethod): string
+    {
+        $methodReturnTypes = $reflectionMethod->getDocBlockReturnTypes();
+        $replacedReturnTypes = [];
+        foreach ($methodReturnTypes as $methodReturnType) {
+            $replacedReturnTypes[] = $this->replaceIn((string)$methodReturnType);
+        }
+
+        return implode('|', $replacedReturnTypes);
+    }
+
+    /**
+     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
+     * @return string
+     */
+    public function replaceInPropertyType(ReflectionProperty $reflectionProperty): string
+    {
+        $propertyType = implode('|', $reflectionProperty->getDocBlockTypeStrings());
+
+        return $this->replaceIn($propertyType);
     }
 }

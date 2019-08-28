@@ -33,6 +33,11 @@ class FixExtendedClassesAnnotationsCommand extends Command
     protected $classExtensionRegistry;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer|null
+     */
+    protected $annotationsReplacer;
+
+    /**
      * {@inheritdoc}
      */
     protected function configure(): void
@@ -69,7 +74,7 @@ class FixExtendedClassesAnnotationsCommand extends Command
     protected function replaceFrameworkWithProjectAnnotations(): void
     {
         $finder = $this->getFinderForReplacingAnnotations();
-        $replacer = new AnnotationsReplacer($this->classExtensionRegistry->getAnnotationsReplacementsMap());
+        $replacer = $this->getReplacer();
         foreach ($finder as $file) {
             $pathname = $file->getPathname();
             $replacedContent = $replacer->replaceIn(file_get_contents($pathname));
@@ -105,22 +110,6 @@ class FixExtendedClassesAnnotationsCommand extends Command
         $unescapedRegular = sprintf('/(@var|@param|@return) (\\%s)/', implode('|\\', $frameworkClasses));
 
         return preg_quote($unescapedRegular, '/');
-    }
-
-    /**
-     * @param string[] $classExtensionMap
-     * @return string[]
-     */
-    protected function getAnnotationsReplacementsMap(array $classExtensionMap): array
-    {
-        $annotationsReplacementsMap = [];
-        foreach ($classExtensionMap as $frameworkClass => $projectClass) {
-            $index = $this->getEscapedFqcnWithLeadingSlashPattern($frameworkClass);
-            $value = '$1$2|\\' . $projectClass . '$2';
-            $annotationsReplacementsMap[$index] = $value;
-        }
-
-        return $annotationsReplacementsMap;
     }
 
     protected function addPropertyAndMethodAnnotationsToProjectClasses(): void
@@ -217,7 +206,7 @@ class FixExtendedClassesAnnotationsCommand extends Command
      */
     protected function addPropertyAnnotationToClass(ReflectionProperty $reflectionProperty, ReflectionClass $projectClassBetterReflection): void
     {
-        $replacedTypeForProperty = $this->getReplacedTypeForProperty($reflectionProperty);
+        $replacedTypeForProperty = $this->getReplacer()->replaceInPropertyType($reflectionProperty);
         $projectClassName = $projectClassBetterReflection->getShortName();
         $projectClassFileName = $projectClassBetterReflection->getFileName();
         $projectClassDocBlock = $projectClassBetterReflection->getDocComment();
@@ -259,7 +248,7 @@ class FixExtendedClassesAnnotationsCommand extends Command
      */
     protected function addMethodAnnotationToClass(ReflectionMethod $reflectionMethod, ReflectionClass $projectClassBetterReflection): void
     {
-        $replacedReturnTypeForMethod = $this->getReplacedReturnTypeForMethod($reflectionMethod);
+        $replacedReturnTypeForMethod = $this->getReplacer()->replaceInMethodReturnType($reflectionMethod);
         $projectClassFileName = $projectClassBetterReflection->getFileName();
         $projectClassDocBlock = $projectClassBetterReflection->getDocComment();
         if ($projectClassDocBlock !== '') {
@@ -306,34 +295,6 @@ class FixExtendedClassesAnnotationsCommand extends Command
         }
 
         return implode(', ', $methodParameterNames);
-    }
-
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
-     * @return string
-     */
-    protected function getReplacedReturnTypeForMethod(ReflectionMethod $reflectionMethod): string
-    {
-        $methodReturnTypes = $reflectionMethod->getDocBlockReturnTypes();
-        $replacer = new AnnotationsReplacer($this->classExtensionRegistry->getAnnotationsReplacementsMap());
-        $replacedReturnTypes = [];
-        foreach ($methodReturnTypes as $methodReturnType) {
-            $replacedReturnTypes[] = $replacer->replaceIn((string)$methodReturnType);
-        }
-
-        return implode('|', $replacedReturnTypes);
-    }
-
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @return string
-     */
-    protected function getReplacedTypeForProperty(ReflectionProperty $reflectionProperty): string
-    {
-        $replacer = new AnnotationsReplacer($this->classExtensionRegistry->getAnnotationsReplacementsMap());
-        $propertyType = implode('|', $reflectionProperty->getDocBlockTypeStrings());
-
-        return $replacer->replaceIn($propertyType);
     }
 
     /**
@@ -441,5 +402,19 @@ class FixExtendedClassesAnnotationsCommand extends Command
             $extendedDocBlock = str_replace('*/', $newMethodAnnotationLine . ' */', $projectClassDocBlock);
             $this->replaceInFile($projectClassFileName, $projectClassDocBlock, $extendedDocBlock);
         }
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer
+     */
+    protected function getReplacer(): AnnotationsReplacer
+    {
+        if ($this->annotationsReplacer === null) {
+            $this->annotationsReplacer = new AnnotationsReplacer(
+                $this->classExtensionRegistry->getAnnotationsReplacementsMap()
+            );
+        }
+
+        return $this->annotationsReplacer;
     }
 }

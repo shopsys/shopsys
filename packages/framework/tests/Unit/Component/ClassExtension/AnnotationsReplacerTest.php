@@ -5,11 +5,31 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension;
 
 use PHPUnit\Framework\TestCase;
+use Roave\BetterReflection\Reflection\ReflectionMethod;
+use Roave\BetterReflection\Reflection\ReflectionObject;
+use Roave\BetterReflection\Reflection\ReflectionProperty;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\DummyClassForAnnotationsReplacerTest;
 
 class AnnotationsReplacerTest extends TestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer
+     */
+    private $annotationsReplacer;
+
+    protected function setUp(): void
+    {
+        $replacementMap = new AnnotationsReplacementsMap([
+            'Shopsys\FrameworkBundle\Model\Category\CategoryFacade' => 'Shopsys\ShopBundle\Model\Category\CategoryFacade',
+            'Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface' => 'Shopsys\ShopBundle\Model\MyProduct\ProductDataFactory',
+            'Shopsys\FrameworkBundle\Model\Article\ArticleData' => 'Shopsys\ShopBundle\Model\Article\ArticleData',
+        ]);
+
+        $this->annotationsReplacer = new AnnotationsReplacer($replacementMap);
+    }
+
     /**
      * @return array
      */
@@ -66,14 +86,55 @@ class AnnotationsReplacerTest extends TestCase
      */
     public function testReplaceIn(string $input, string $output): void
     {
-        $replacementMap = new AnnotationsReplacementsMap([
-            'Shopsys\FrameworkBundle\Model\Category\CategoryFacade' => 'Shopsys\ShopBundle\Model\Category\CategoryFacade',
-            'Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface' => 'Shopsys\ShopBundle\Model\MyProduct\ProductDataFactory',
-            'Shopsys\FrameworkBundle\Model\Article\ArticleData' => 'Shopsys\ShopBundle\Model\Article\ArticleData',
-        ]);
+        $this->assertEquals($output, $this->annotationsReplacer->replaceIn($input));
+    }
 
-        $propertyReplacer = new AnnotationsReplacer($replacementMap);
+    /**
+     * @return array
+     */
+    public function getTestReplaceInMethodReturnTypeDataProvider(): array
+    {
+        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
 
-        $this->assertEquals($output, $propertyReplacer->replaceIn($input));
+        return [
+            [$reflectionClass->getMethod('returnsFrameworkCategoryFacade'), '\Shopsys\ShopBundle\Model\Category\CategoryFacade'],
+            [$reflectionClass->getMethod('returnsFrameworkCategoryFacadeOrNull'), '\Shopsys\ShopBundle\Model\Category\CategoryFacade|null'],
+            [$reflectionClass->getMethod('returnsFrameworkArticleDataArray'), '\Shopsys\ShopBundle\Model\Article\ArticleData[]'],
+            [$reflectionClass->getMethod('returnsInt'), 'int'],
+        ];
+    }
+
+    /**
+     * @dataProvider getTestReplaceInMethodReturnTypeDataProvider
+     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
+     * @param string $output
+     */
+    public function testReplaceInMethodReturnType(ReflectionMethod $reflectionMethod, string $output): void
+    {
+        $this->assertEquals($output, $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethod));
+    }
+
+    /**
+     * @return array
+     */
+    public function getTestReplaceInInPropertyTypeDataProvider(): array
+    {
+        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
+
+        return [
+            [$reflectionClass->getProperty('categoryFacadeOrNull'), '\Shopsys\ShopBundle\Model\Category\CategoryFacade|null'],
+            [$reflectionClass->getProperty('integer'), 'int'],
+            [$reflectionClass->getProperty('articleDataArray'), '\Shopsys\ShopBundle\Model\Article\ArticleData[]'],
+        ];
+    }
+
+    /**
+     * @dataProvider getTestReplaceInInPropertyTypeDataProvider
+     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
+     * @param string $output
+     */
+    public function testReplaceInPropertyType(ReflectionProperty $reflectionProperty, string $output): void
+    {
+        $this->assertEquals($output, $this->annotationsReplacer->replaceInPropertyType($reflectionProperty));
     }
 }
