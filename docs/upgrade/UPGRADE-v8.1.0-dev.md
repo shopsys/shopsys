@@ -80,9 +80,9 @@ There you can find links to upgrade notes for other versions too.
         +           $useInlineEditation: false
         ```
 - use `CronModuleExecutor` as a service in DIC ([#1314](https://github.com/shopsys/shopsys/pull/1314))
-    - update your code if you are using `CronFacade::TIMEOUT_SECONDS` constant because it will be removed in next major release
-    - These methods are deprecated and will be removed in the next major release:
-        - `runModulesForInstance()` use method `runModules()` instead
-        - `runModule()` use method `runSingleModule()` instead
+    - the constant `CronFacade::TIMEOUT_SECONDS` was deprecated and the timeout was moved to DIC configuration - if you need to access the timeout from different places, define your own constant and [use it in the YAML config via `!php/const`](https://symfony.com/blog/new-in-symfony-3-2-php-constants-in-yaml-files)
+    - these methods are deprecated and will be removed in the next major release:
+        - `CronFacade::runModulesForInstance()` use method `runModules()` instead
+        - `CronFacade::runModule()` use method `runSingleModule()` instead
 
 [shopsys/framework]: https://github.com/shopsys/framework
