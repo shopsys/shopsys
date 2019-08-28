@@ -184,6 +184,7 @@ There you can find links to upgrade notes for other versions too.
     - if you use any custom date-time related FormTypes, set option `view_timezone` to value provided by `DisplayTimeZoneProviderInterface` class
         - you can find inspiration in new [`Shopsys\FrameworkBundle\Form\DateTimeType`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DateTimeType.php) FormType, or you can use this FormType directly
 - use `CronModuleExecutor` as a service in DIC ([#1314](https://github.com/shopsys/shopsys/pull/1314))
+    - if you haven't extended `CronFacade` class in your project you don't have to do anything else during the upgrade
     - the constant `CronFacade::TIMEOUT_SECONDS` was deprecated and the timeout was moved to DIC configuration - if you need to access the timeout from different places, define your own constant and [use it in the YAML config via `!php/const`](https://symfony.com/blog/new-in-symfony-3-2-php-constants-in-yaml-files)
     - these methods are deprecated and will be removed in the next major release:
         - `CronFacade::runModulesForInstance()` use method `runModules()` instead
