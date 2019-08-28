@@ -93,4 +93,12 @@ class ClassExtensionRegistry
     {
         return $this->serviceExtensionMap + $this->entityExtensionMap + $this->dataObjectExtensionMap;
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap
+     */
+    public function getAnnotationsReplacementsMap(): AnnotationsReplacementsMap
+    {
+        return new AnnotationsReplacementsMap($this->getClassExtensionMap());
+    }
 }

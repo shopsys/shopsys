@@ -8,6 +8,7 @@ use Roave\BetterReflection\BetterReflection;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
 use Roave\BetterReflection\Reflection\ReflectionProperty;
+use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -68,10 +69,10 @@ class FixExtendedClassesAnnotationsCommand extends Command
     protected function replaceFrameworkWithProjectAnnotations(): void
     {
         $finder = $this->getFinderForReplacingAnnotations();
-        foreach ($finder as $fileWithFrameworkAnnotationsToReplace) {
-            $pathname = $fileWithFrameworkAnnotationsToReplace->getPathname();
-            $content = file_get_contents($pathname);
-            $replacedContent = $this->replaceInStringUsingAnnotationsReplacementMap($content);
+        $replacer = new AnnotationsReplacer($this->classExtensionRegistry->getAnnotationsReplacementsMap());
+        foreach ($finder as $file) {
+            $pathname = $file->getPathname();
+            $replacedContent = $replacer->replaceIn(file_get_contents($pathname));
             file_put_contents($pathname, $replacedContent);
         }
     }
@@ -314,9 +315,10 @@ class FixExtendedClassesAnnotationsCommand extends Command
     protected function getReplacedReturnTypeForMethod(ReflectionMethod $reflectionMethod): string
     {
         $methodReturnTypes = $reflectionMethod->getDocBlockReturnTypes();
+        $replacer = new AnnotationsReplacer($this->classExtensionRegistry->getAnnotationsReplacementsMap());
         $replacedReturnTypes = [];
         foreach ($methodReturnTypes as $methodReturnType) {
-            $replacedReturnTypes[] = $this->replaceInStringUsingAnnotationsReplacementMap((string)$methodReturnType);
+            $replacedReturnTypes[] = $replacer->replaceIn((string)$methodReturnType);
         }
 
         return implode('|', $replacedReturnTypes);
@@ -328,11 +330,10 @@ class FixExtendedClassesAnnotationsCommand extends Command
      */
     protected function getReplacedTypeForProperty(ReflectionProperty $reflectionProperty): string
     {
+        $replacer = new AnnotationsReplacer($this->classExtensionRegistry->getAnnotationsReplacementsMap());
         $propertyType = implode('|', $reflectionProperty->getDocBlockTypeStrings());
 
-        $replacedPropertyType = $this->replaceInStringUsingAnnotationsReplacementMap($propertyType);
-
-        return $replacedPropertyType;
+        return $replacer->replaceIn($propertyType);
     }
 
     /**
@@ -440,20 +441,5 @@ class FixExtendedClassesAnnotationsCommand extends Command
             $extendedDocBlock = str_replace('*/', $newMethodAnnotationLine . ' */', $projectClassDocBlock);
             $this->replaceInFile($projectClassFileName, $projectClassDocBlock, $extendedDocBlock);
         }
-    }
-
-    /**
-     * @param string $string
-     * @return string
-     */
-    protected function replaceInStringUsingAnnotationsReplacementMap(string $string): string
-    {
-        $annotationsReplacementsMap = $this->getAnnotationsReplacementsMap($this->classExtensionRegistry->getClassExtensionMap());
-
-        return preg_replace(
-            array_keys($annotationsReplacementsMap),
-            array_values($annotationsReplacementsMap),
-            $string
-        );
     }
 }
