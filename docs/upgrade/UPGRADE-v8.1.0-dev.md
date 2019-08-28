@@ -79,6 +79,10 @@ There you can find links to upgrade notes for other versions too.
         +       arguments:
         +           $useInlineEditation: false
         ```
-- update your code if you are using `CronFacade::TIMEOUT_SECONDS` constant because it will be removed in next major release ([#1314](https://github.com/shopsys/shopsys/pull/1314))
+- use `CronModuleExecutor` as a service in DIC ([#1314](https://github.com/shopsys/shopsys/pull/1314))
+    - update your code if you are using `CronFacade::TIMEOUT_SECONDS` constant because it will be removed in next major release
+    - These methods are deprecated and will be removed in the next major release:
+        - `runModulesForInstance()` use method `runModules()` instead
+        - `runModule()` use method `runSingleModule()` instead
 
 [shopsys/framework]: https://github.com/shopsys/framework
