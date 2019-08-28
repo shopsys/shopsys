@@ -107,7 +107,7 @@ class CronFacade
      */
     protected function runModulesForInstance(CronModuleExecutor $cronModuleExecutor, array $cronModuleConfigs, string $instanceName): void
     {
-        @trigger_error(sprintf('Method %s is deprecated and will be removed in the next major version. Please use method runModules() instead', __METHOD__));
+        @trigger_error(sprintf('Method %s is deprecated and will be removed in the next major version. Please use method runModules() instead', __METHOD__), E_USER_DEPRECATED);
 
         $originalCronModuleExecutor = $this->cronModuleExecutor;
         $this->cronModuleExecutor = $cronModuleExecutor;
@@ -150,7 +150,7 @@ class CronFacade
      */
     protected function runModule(CronModuleExecutor $cronModuleExecutor, CronModuleConfig $cronModuleConfig)
     {
-        @trigger_error(sprintf('Method %s is deprecated and will be removed in the next major version. Please use method runSingleModule() instead', __METHOD__));
+        @trigger_error(sprintf('Method %s is deprecated and will be removed in the next major version. Please use method runSingleModule() instead', __METHOD__), E_USER_DEPRECATED);
 
         $originalCronModuleExecutor = $this->cronModuleExecutor;
         $this->cronModuleExecutor = $cronModuleExecutor;
