@@ -99,7 +99,8 @@ Required option that defines from what domain should the category be listed.
 Displays text field with box of given color that shows color picker when clicked.
 
 ### [DatePickerType](../../packages/framework/src/Form/DatePickerType.php)
-Displays field that shows date picker when clicked.
+Displays field that shows date picker when clicked.  
+Value is internally converted from [display timezone](./working-with-date-time-values.md) to UTC, so it have to be persisted in database also as `DateTime` to avoid possible date shifting.
 
 #### format
 Defaults to `DatePickerType::FORMAT_PHP`.  
@@ -107,6 +108,16 @@ Defines in what format should be the date shown.
 DatePickerType has 2 constants that can be used:
 - FORMAT_PHP = 'dd.MM.yyyy'
 - FORMAT_JS = 'dd.mm.yy'
+
+### [DateTimeType](../../packages/framework/src/Form/DateTimeType.php)
+Displays a text field that allows to set date and time.  
+Value is internally converted from [display time zone](./working-with-date-time-values.md) to UTC.
+
+#### format
+Defaults to `DateTimeType::FORMAT_PHP`.  
+Defines in what format should be the date shown.
+DatePickerType has constant that can be used:
+- FORMAT_PHP = 'dd.MM.yyyy HH:mm:ss'
 
 ### [DisplayOnlyDomainIconType](../../packages/framework/src/Form/DisplayOnlyDomainIconType.php)
 Displays domain icon with the domains name for given domain ID in `data` option.

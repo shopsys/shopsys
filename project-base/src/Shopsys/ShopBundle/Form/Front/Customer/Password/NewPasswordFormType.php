@@ -29,7 +29,7 @@ class NewPasswordFormType extends AbstractType
                 'first_options' => [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter password']),
-                        new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer then {{ limit }} characters']),
+                        new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer than {{ limit }} characters']),
                     ],
                 ],
                 'invalid_message' => 'Passwords do not match',

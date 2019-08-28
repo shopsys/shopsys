@@ -28,7 +28,7 @@ class UserFactory implements UserFactoryInterface
     public function __construct(
         EntityNameResolver $entityNameResolver,
         CustomerPasswordFacade $customerPasswordFacade
-) {
+    ) {
         $this->entityNameResolver = $entityNameResolver;
         $this->customerPasswordFacade = $customerPasswordFacade;
     }

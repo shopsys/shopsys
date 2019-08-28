@@ -4,7 +4,7 @@
 {{ form_errors(form) }}
 
     {{ form_row(form.name, { label: 'Full name'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
-    {{ form_row(form.email, { label: 'E-mail'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
+    {{ form_row(form.email, { label: 'Email'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
     {{ form_row(form.message, { label: 'Message'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
     {% if privacyPolicyArticle is not null %}
         {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}

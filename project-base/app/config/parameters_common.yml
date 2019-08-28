@@ -30,3 +30,4 @@ parameters:
         Shopsys\FrameworkBundle\Model\Product\Product: Shopsys\ShopBundle\Model\Product\Product
         Shopsys\FrameworkBundle\Model\Product\Brand\Brand: Shopsys\ShopBundle\Model\Product\Brand\Brand
     build-version: '0000000000000000'
+    shopsys.display_timezone: Europe/Prague

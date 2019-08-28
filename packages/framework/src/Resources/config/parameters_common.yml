@@ -8,5 +8,8 @@ parameters:
     # Administration locale. Must be registered in domains.yml
     shopsys.admin_locale: en
 
+    # All time values are displayed in this timezone (default is PHP timezone)
+    shopsys.display_timezone: ~
+
     # Default extended classes mapping
     shopsys.entity_extension.map: {}

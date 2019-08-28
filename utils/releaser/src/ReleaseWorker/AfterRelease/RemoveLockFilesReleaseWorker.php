@@ -35,6 +35,7 @@ final class RemoveLockFilesReleaseWorker extends AbstractShopsysReleaseWorker
     {
         $this->processRunner->run('git rm project-base/composer.lock');
         $this->processRunner->run('git rm project-base/package-lock.json');
+        $this->processRunner->run('git rm project-base/migrations-lock.yml');
         $this->commit('removed locked versions of dependencies for unreleased version');
 
         if ($this->initialBranchName === 'master') {

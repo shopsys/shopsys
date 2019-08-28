@@ -39,7 +39,7 @@ class DomainFactory
 
         $domainId = getenv('DOMAIN');
         if ($domainId !== false) {
-            $domain->switchDomainById($domainId);
+            $domain->switchDomainById((int)$domainId);
         }
 
         return $domain;

@@ -48,5 +48,11 @@ doctrine:
                 alias: ShopsysShopBundle
                 prefix: Shopsys\ShopBundle\Model
                 is_bundle: false
+            ShopsysShopBundleComponent:
+                type: annotation
+                dir: '%shopsys.root_dir%/src/Shopsys/ShopBundle/Component'
+                alias: ShopsysShopBundleComponent
+                prefix: Shopsys\ShopBundle\Component
+                is_bundle: false
         hydrators:
             GroupedScalarHydrator: \Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator

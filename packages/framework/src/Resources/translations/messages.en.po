@@ -41,7 +41,7 @@ msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr ""
 
 msgid "<a href=\"{{ url }}\">Some required e-mail templates are not fully set.</a>"
-msgstr ""
+msgstr "<a href=\"{{ url }}\">Some required email templates are not fully set.</a>"
 
 msgid "<a href=\"{{ url }}\">There are no availabilities, you need to create some.</a>"
 msgstr ""
@@ -158,10 +158,10 @@ msgid "All domains"
 msgstr ""
 
 msgid "All e-mails will be sent only to entered address."
-msgstr ""
+msgstr "All emails will be sent only to entered address."
 
 msgid "All e-mails will be sent only to entered addresses."
-msgstr ""
+msgstr "All emails will be sent only to entered addresses."
 
 msgid "All pages"
 msgstr ""
@@ -557,7 +557,7 @@ msgid "Customer detail"
 msgstr ""
 
 msgid "Customer e-mail address"
-msgstr ""
+msgstr "Customer email address"
 
 msgid "Customer has no orders so far."
 msgstr ""
@@ -752,31 +752,31 @@ msgid "Drag your files here"
 msgstr ""
 
 msgid "E-mail"
-msgstr ""
+msgstr "Email"
 
 msgid "E-mail name"
-msgstr ""
+msgstr "Email name"
 
 msgid "E-mail newsletter"
-msgstr ""
+msgstr "Email newsletter"
 
 msgid "E-mail settings"
-msgstr ""
+msgstr "Email settings"
 
 msgid "E-mail settings modified."
-msgstr ""
+msgstr "Email settings modified."
 
 msgid "E-mail settings:"
-msgstr ""
+msgstr "Email settings:"
 
 msgid "E-mail templates"
-msgstr ""
+msgstr "Email templates"
 
 msgid "E-mail templates settings"
-msgstr ""
+msgstr "Email templates settings"
 
 msgid "E-mail templates settings modified"
-msgstr ""
+msgstr "Email templates settings modified"
 
 msgid "E-shop URL address"
 msgstr ""
@@ -929,7 +929,7 @@ msgid "Existing icon"
 msgstr ""
 
 msgid "Export e-mail list in CSV format"
-msgstr ""
+msgstr "Export email list in CSV format"
 
 msgid "External scripts"
 msgstr ""
@@ -1226,7 +1226,7 @@ msgid "Main URL can't be deleted"
 msgstr ""
 
 msgid "Main administrator e-mail"
-msgstr ""
+msgstr "Main administrator email"
 
 msgid "Main category"
 msgstr ""
@@ -1253,7 +1253,7 @@ msgid "Marketing"
 msgstr ""
 
 msgid "Master e-mail %masterMail% set"
-msgstr ""
+msgstr "Master email %masterMail% set"
 
 msgid "Message"
 msgstr ""
@@ -1907,16 +1907,16 @@ msgid "Selling start date"
 msgstr ""
 
 msgid "Send confirmation e-mail about registration to customer"
-msgstr ""
+msgstr "Send confirmation email about registration to customer"
 
 msgid "Send confirmation of order receipt"
 msgstr ""
 
 msgid "Send e-mail about change to this status"
-msgstr ""
+msgstr "Send email about change to this status"
 
 msgid "Sending e-mails off, no e-mail will be sent from the app."
-msgstr ""
+msgstr "Sending emails off, no email will be sent from the app."
 
 msgid "Seo"
 msgstr ""
@@ -2075,7 +2075,7 @@ msgid "This currency can't be deleted, it is set as default or is saved with ord
 msgstr ""
 
 msgid "This e-mail was sent from the contact form located below the panel of categories."
-msgstr ""
+msgstr "This email was sent from the contact form located below the panel of categories."
 
 msgid "This item can be set in product detail of a specific variant"
 msgstr ""
@@ -2147,7 +2147,7 @@ msgid "Unable to add product"
 msgstr ""
 
 msgid "Unable to send updating e-mail"
-msgstr ""
+msgstr "Unable to send updating email"
 
 msgid "Unexpected error occurred, file was not uploaded."
 msgstr ""

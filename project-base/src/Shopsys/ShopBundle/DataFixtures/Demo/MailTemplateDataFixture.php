@@ -102,7 +102,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
 
         $mailTemplateData->subject = 'Personal information overview - {domain}';
         $mailTemplateData->body = 'Dear customer, <br /><br />
-            based on your email {e-mail}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/>
+            based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/>
             personal details which we have in evidence in our online store {domain}. 
             <br/><br/>
             To overview your personal information please click here - {url} <br/>
@@ -114,7 +114,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
 
         $mailTemplateData->subject = 'Personal information export - {domain}';
         $mailTemplateData->body = 'Dear customer, <br/><br/>
-based on your email {e-mail}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}. 
+based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}. 
 <br/><br/>
 To download your personal information please click here - {url}<br/> 
 The link is valid for next 24 hours.

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdvancedSearchProductFacade
 {
-    protected const RULES_FORM_NAME = 'as';
+    public const RULES_FORM_NAME = 'as';
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchFormFactory
