@@ -57,7 +57,7 @@ class HeaderLinksTransformerTest extends TestCase
      * @param string|null $last
      * @return \Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinks
      */
-    protected function createHeaderLinks(?string $first = null, ?string $prev = null, ?string $next = null, ?string  $last = null): HeaderLinks
+    protected function createHeaderLinks(?string $first = null, ?string $prev = null, ?string $next = null, ?string $last = null): HeaderLinks
     {
         $headerLinks = new HeaderLinks();
         if ($first) {
