@@ -18,6 +18,7 @@ security:
         # see Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
         administration:
             pattern: ^/(admin/|efconnect|elfinder)
+            user_checker: Shopsys\FrameworkBundle\Model\Security\AdministratorChecker
             anonymous: ~
             provider: administrators
             logout_on_user_change: true
