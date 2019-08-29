@@ -96,20 +96,9 @@ class FixExtendedClassesAnnotationsCommand extends Command
                 $this->projectRootDirectory . '/tests',
             ])
             ->name('*.php')
-            ->contains($this->getRelevantFrameworkAnnotationsPattern());
+            ->contains($this->classExtensionRegistry->getAnnotationsReplacementsMap()->getPatternForAny());
 
         return $finder;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRelevantFrameworkAnnotationsPattern(): string
-    {
-        $frameworkClasses = array_keys($this->classExtensionRegistry->getClassExtensionMap());
-        $unescapedRegular = sprintf('/(@var|@param|@return) (\\%s)/', implode('|\\', $frameworkClasses));
-
-        return preg_quote($unescapedRegular, '/');
     }
 
     protected function addPropertyAndMethodAnnotationsToProjectClasses(): void
