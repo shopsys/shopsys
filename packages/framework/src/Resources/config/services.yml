@@ -565,7 +565,9 @@ services:
             - '@security.token_storage'
             - '@event_dispatcher'
 
-    Shopsys\FrameworkBundle\Model\Security\AdministratorChecker: ~
+    Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
+        arguments:
+            - %env(bool:IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK)%
 
     Shopsys\FrameworkBundle\Model\Security\LoginListener:
         tags:

@@ -12,9 +12,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdministratorChecker extends UserChecker
 {
+    protected $ignoreDefaultAdminPasswordCheck;
+
+    public function __construct(bool $ignoreDefaultAdminPasswordCheck)
+    {
+        $this->ignoreDefaultAdminPasswordCheck = $ignoreDefaultAdminPasswordCheck;
+    }
+
     public function checkPreAuth(UserInterface $user)
     {
         if (Environment::getEnvironment(false) === EnvironmentType::PRODUCTION
+            && !$this->ignoreDefaultAdminPasswordCheck
             && in_array($user->getUsername(), ['admin', 'superadmin'])
             && password_verify('admin123', $user->getPassword())
         ) {
