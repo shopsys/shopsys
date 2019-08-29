@@ -16,7 +16,7 @@ patchesJson6902:
         path: ./ingress-patch.yaml
     -   target:
             group: deployments
-            version: apps/v1
+            version: v1
             kind: Deployment
             name: webserver-php-fpm
         path: ./webserver-php-fpm-patch.yaml
