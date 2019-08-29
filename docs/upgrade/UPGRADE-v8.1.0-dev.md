@@ -190,4 +190,17 @@ There you can find links to upgrade notes for other versions too.
         - `CronFacade::runModulesForInstance()` use method `runModules()` instead
         - `CronFacade::runModule()` use method `runSingleModule()` instead
 
+## Configuration
+- use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
+    - the `RedisCacheFactory` was deprecated, use DIC configuration in YAML instead
+        ```diff
+         shopsys.shop.my_custom_cache:
+             class: Doctrine\Common\Cache\RedisCache
+        -        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
+        -        arguments:
+        -            - '@snc_redis.my_custom_cache'
+        +        calls:
+        +            - { method: setRedis, arguments: ['@snc_redis.my_custom_cache'] }
+        ```
+
 [shopsys/framework]: https://github.com/shopsys/framework
