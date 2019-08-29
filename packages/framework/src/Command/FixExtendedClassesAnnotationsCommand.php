@@ -8,6 +8,7 @@ use Roave\BetterReflection\BetterReflection;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
 use Roave\BetterReflection\Reflection\ReflectionProperty;
+use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry;
 use Symfony\Component\Console\Command\Command;
@@ -33,9 +34,14 @@ class FixExtendedClassesAnnotationsCommand extends Command
     protected $classExtensionRegistry;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer|null
+     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer
      */
     protected $annotationsReplacer;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap
+     */
+    protected $annotationsReplacementsMap;
 
     /**
      * {@inheritdoc}
@@ -53,12 +59,20 @@ class FixExtendedClassesAnnotationsCommand extends Command
     /**
      * @param string $projectRootDirectory
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry $classExtensionRegistry
+     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
+     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
      */
-    public function __construct(string $projectRootDirectory, ClassExtensionRegistry $classExtensionRegistry)
-    {
+    public function __construct(
+        string $projectRootDirectory,
+        ClassExtensionRegistry $classExtensionRegistry,
+        AnnotationsReplacer $annotationsReplacer,
+        AnnotationsReplacementsMap $annotationsReplacementsMap
+    ) {
         parent::__construct();
         $this->projectRootDirectory = $projectRootDirectory;
         $this->classExtensionRegistry = $classExtensionRegistry;
+        $this->annotationsReplacer = $annotationsReplacer;
+        $this->annotationsReplacementsMap = $annotationsReplacementsMap;
     }
 
     /**
@@ -74,10 +88,9 @@ class FixExtendedClassesAnnotationsCommand extends Command
     protected function replaceFrameworkWithProjectAnnotations(): void
     {
         $finder = $this->getFinderForReplacingAnnotations();
-        $replacer = $this->getReplacer();
         foreach ($finder as $file) {
             $pathname = $file->getPathname();
-            $replacedContent = $replacer->replaceIn(file_get_contents($pathname));
+            $replacedContent = $this->annotationsReplacer->replaceIn(file_get_contents($pathname));
             file_put_contents($pathname, $replacedContent);
         }
     }
@@ -96,7 +109,7 @@ class FixExtendedClassesAnnotationsCommand extends Command
                 $this->projectRootDirectory . '/tests',
             ])
             ->name('*.php')
-            ->contains($this->classExtensionRegistry->getAnnotationsReplacementsMap()->getPatternForAny());
+            ->contains($this->annotationsReplacementsMap->getPatternForAny());
 
         return $finder;
     }
@@ -195,7 +208,7 @@ class FixExtendedClassesAnnotationsCommand extends Command
      */
     protected function addPropertyAnnotationToClass(ReflectionProperty $reflectionProperty, ReflectionClass $projectClassBetterReflection): void
     {
-        $replacedTypeForProperty = $this->getReplacer()->replaceInPropertyType($reflectionProperty);
+        $replacedTypeForProperty = $this->annotationsReplacer->replaceInPropertyType($reflectionProperty);
         $projectClassName = $projectClassBetterReflection->getShortName();
         $projectClassFileName = $projectClassBetterReflection->getFileName();
         $projectClassDocBlock = $projectClassBetterReflection->getDocComment();
@@ -237,7 +250,7 @@ class FixExtendedClassesAnnotationsCommand extends Command
      */
     protected function addMethodAnnotationToClass(ReflectionMethod $reflectionMethod, ReflectionClass $projectClassBetterReflection): void
     {
-        $replacedReturnTypeForMethod = $this->getReplacer()->replaceInMethodReturnType($reflectionMethod);
+        $replacedReturnTypeForMethod = $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethod);
         $projectClassFileName = $projectClassBetterReflection->getFileName();
         $projectClassDocBlock = $projectClassBetterReflection->getDocComment();
         if ($projectClassDocBlock !== '') {
@@ -391,19 +404,5 @@ class FixExtendedClassesAnnotationsCommand extends Command
             $extendedDocBlock = str_replace('*/', $newMethodAnnotationLine . ' */', $projectClassDocBlock);
             $this->replaceInFile($projectClassFileName, $projectClassDocBlock, $extendedDocBlock);
         }
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer
-     */
-    protected function getReplacer(): AnnotationsReplacer
-    {
-        if ($this->annotationsReplacer === null) {
-            $this->annotationsReplacer = new AnnotationsReplacer(
-                $this->classExtensionRegistry->getAnnotationsReplacementsMap()
-            );
-        }
-
-        return $this->annotationsReplacer;
     }
 }

@@ -997,3 +997,8 @@ services:
     Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureUpdateChecker: ~
 
     Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter: ~
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap:
+        arguments: ["@=service('Shopsys\\\\FrameworkBundle\\\\Component\\\\ClassExtension\\\\ClassExtensionRegistry').getClassExtensionMap()"]
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer: ~
