@@ -24,8 +24,9 @@ There you can find links to upgrade notes for other versions too.
         + image: adminer:4.7
         ```
     - run `docker-compose up -d` so the new image is pulled and used
-- allow to configure PHP-FPM pool ([#1330](https://github.com/shopsys/shopsys/pull/1330))
+- allow to configure PHP-FPM pool for the production in Docker ([#1330](https://github.com/shopsys/shopsys/pull/1330))
     - copy new [production-www.conf file from shopsys/project-base](https://github.com/shopsys/project-base/blob/master/docker/php-fpm/production-www.conf) into `docker/php-fpm/production-www.conf`
+    - adjust this configuration to your expected production workload and hardware
     - update your `docker/php-fpm/Dockerfile` to copy this configuration into image during the production build
     ```diff
         FROM base as production
