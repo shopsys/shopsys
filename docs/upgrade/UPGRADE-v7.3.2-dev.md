@@ -48,5 +48,15 @@ There you can find links to upgrade notes for other versions too.
     +      prefix: Shopsys\ShopBundle\Component
     +      is_bundle: false
     ```
+- remove `access_log` directive from Nginx configuration to use the default path ([#1362](https://github.com/shopsys/shopsys/pull/1362))
+    - remove the directive from all `nginx.conf` files you use
+        ```diff
+         server {
+             listen 8080;
+        -    access_log /var/log/nginx/shopsys-framework.access.log;
+             root /var/www/html/web;
+        ```
+    - restart you Nginx for the changes to take effect
+        - for example, run `docker-compose up -d --force-recreate webserver` to restart the container in Docker Compose
 
 [shopsys/framework]: https://github.com/shopsys/framework
