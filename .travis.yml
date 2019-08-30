@@ -1,22 +1,10 @@
 language: bash
-dist: xenial
-
-services:
-    - docker
-
-addons:
-    apt:
-        update: true
 env:
     global:
-        - DOCKER_COMPOSE_VERSION=1.24.0
         - TRAVIS_USER_ID=$(id -u)
         - TRAVIS_GROUP_ID=$(id -g)
 
 before_install:
-    -   curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-    - chmod +x docker-compose
-    - sudo mv docker-compose /usr/local/bin
     - cp -f ./docker/conf/docker-compose.yml.dist ./docker-compose.yml
     - "sed -i 's#www_data_uid: 1000#www_data_uid: $TRAVIS_USER_ID#' ./docker-compose.yml"
     - "sed -i 's#www_data_gid: 1000#www_data_uid: $TRAVIS_GROUP_ID#' ./docker-compose.yml"
