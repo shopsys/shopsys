@@ -36,6 +36,40 @@ There you can find links to upgrade notes for other versions too.
 
         COPY --chown=www-data:www-data / /var/www/html
     ```
+- production environment disallow administrators to log in with default credentials [#1360](https://github.com/shopsys/shopsys/pull/1360)
+    - register `user_checker` in  `app/config/packages/security.yml`
+        ```diff
+        administration:
+            pattern: ^/(admin/|efconnect|elfinder)
+        +   user_checker: Shopsys\FrameworkBundle\Model\Security\AdministratorChecker
+            anonymous: ~
+            provider: administrators
+            logout_on_user_change: true
+        ```
+        - in case you need to disable this functionality (e.g. to prevent failing tests on CI which uses production environment)
+        there is an environment variable `IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK` which needs to be set to `1`
+            - when you are using kubernetes on CI server change your configuration of:
+                - `kubernetes/kustomize/overlays/ci/kustomization.yaml`
+                ```diff
+                        path: ./ingress-patch.yaml
+                +   -   target:
+                +           group: apps
+                +           version: v1
+                +           kind: Deployment
+                +           name: webserver-php-fpm
+                +       path: ./webserver-php-fpm-patch.yaml
+                configMapGenerator:
+                    -   name: nginx-configuration
+                ```
+                - create `kubernetes/kustomize/overlays/ci/webserver-php-fpm-patch.yaml` containing
+                ```diff
+                +-   op: add
+                +    path: /spec/template/spec/containers/0/env/-
+                +    value:
+                +        name: IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK
+                +        value: '1'
+                ```
+
 
 ### Tools
 - let Phing properties `is-multidomain` and `translations.dump.locales` be auto-detected ([#1309](https://github.com/shopsys/shopsys/pull/1309))
