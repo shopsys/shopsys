@@ -104,9 +104,8 @@ services:
 
     shopsys.doctrine.cache_driver.query_cache:
         class: Doctrine\Common\Cache\RedisCache
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
-        arguments:
-            - '@snc_redis.doctrine_query'
+        calls:
+            - { method: setRedis, arguments: ['@snc_redis.doctrine_query'] }
 
     shopsys.doctrine.cache_driver.metadata_cache:
         class: Doctrine\Common\Cache\CacheProvider
@@ -487,9 +486,8 @@ services:
 
     shopsys.shop.product.bestselling_product.cache_provider:
         class: Doctrine\Common\Cache\RedisCache
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
-        arguments:
-            - '@snc_redis.bestselling_products'
+        calls:
+            - { method: setRedis, arguments: ['@snc_redis.bestselling_products'] }
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
         arguments:
