@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Command;
 use Roave\BetterReflection\BetterReflection;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
+use Roave\BetterReflection\Reflection\ReflectionObject;
 use Roave\BetterReflection\Reflection\ReflectionProperty;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
@@ -15,6 +16,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\DummyClass;
 
 class FixExtendedClassesAnnotationsCommand extends Command
 {
@@ -118,7 +120,7 @@ class FixExtendedClassesAnnotationsCommand extends Command
     {
         $classExtensionMap = $this->classExtensionRegistry->getClassExtensionMap();
         foreach ($classExtensionMap as $frameworkClass => $projectClass) {
-            $frameworkClassBetterReflection = $this->getBetterReflectionClass($frameworkClass);
+            $frameworkClassBetterReflection = ReflectionObject::createFromName($frameworkClass);
             $extendedFrameworkClasses = array_keys($classExtensionMap);
             foreach ($frameworkClassBetterReflection->getProperties() as $property) {
                 $this->addPropertyAnnotationToProjectClassIfNecessary($property, $projectClass, $extendedFrameworkClasses);
@@ -139,7 +141,7 @@ class FixExtendedClassesAnnotationsCommand extends Command
         string $projectClass,
         array $extendedFrameworkClasses
     ): void {
-        $projectClassBetterReflection = $this->getBetterReflectionClass($projectClass);
+        $projectClassBetterReflection = ReflectionObject::createFromName($projectClass);
         foreach ($extendedFrameworkClasses as $extendedFrameworkClass) {
             $isPropertyOfTypeThatIsExtendedInProject = preg_match(
                 $this->getEscapedFqcnWithLeadingSlashPattern($extendedFrameworkClass),
@@ -163,7 +165,7 @@ class FixExtendedClassesAnnotationsCommand extends Command
         string $projectClass,
         array $extendedFrameworkClasses
     ): void {
-        $projectClassBetterReflection = $this->getBetterReflectionClass($projectClass);
+        $projectClassBetterReflection = ReflectionObject::createFromName($projectClass);
         foreach ($extendedFrameworkClasses as $extendedFrameworkClass) {
             foreach ($reflectionMethod->getDocBlockReturnTypes() as $docBlockReturnType) {
                 if (!$this->isMethodImplementedInClass($reflectionMethod->getName(), $projectClassBetterReflection)
@@ -187,19 +189,6 @@ class FixExtendedClassesAnnotationsCommand extends Command
     protected function getEscapedFqcnWithLeadingSlashPattern(string $fullyQualifiedClassName): string
     {
         return '/(?P<fqcn>\\\\' . preg_quote($fullyQualifiedClassName, '/') . ')(?!\w)(?P<brackets>(\[\])*)/';
-    }
-
-    /**
-     * @param string $fullyQualifiedClassName
-     * @return \Roave\BetterReflection\Reflection\ReflectionClass
-     */
-    protected function getBetterReflectionClass(string $fullyQualifiedClassName): ReflectionClass
-    {
-        $projectClassBetterReflection = (new BetterReflection())
-            ->classReflector()
-            ->reflect($fullyQualifiedClassName);
-
-        return $projectClassBetterReflection;
     }
 
     /**
