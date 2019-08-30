@@ -16,14 +16,10 @@ This configuration file contains information about the domain ID, the domain ide
 #### 1.2 Set up the url address
 Set the url address for the domain in `app/config/domains_urls.yml`.
 
-#### 1.3 Set up the application as "singledomain"
-Modify the value of the parameter `is-multidomain` in `build.xml` to `false`.
-Based on this parameter, smoke and functional tests are run for a single domain, or multiple domains, respectively.
-
-#### 1.4 Locale settings
+#### 1.3 Locale settings
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
 
-#### 1.5 Build
+#### 1.4 Build
 Start the build, for example using a phing target
 ```
 php phing build-demo-dev
@@ -35,10 +31,13 @@ More information about what Phing targets are and how they work can be found in 
 
 After the build is completed, a singledomain application is created.
 
-#### 1.6 Tests
+#### 1.5 Tests
 Some tests are prepared for the configuration with the first domain with `en` locale.
 For example `Tests\ShopBundle\Functional\Twig\PriceExtensionTest` is expecting the specific format of displayed currency.
 If you want to use already created tests for your specific configuration, you may need to modify these tests to be able to test your specific configuration of the domain.
+
+*Note: Some smoke and functional tests are only executed for a single domain or a multiple domain configuration.*
+*Search for `@group singledomain` or `@group multidomain` in your test methods' annotations respectively.*
 
 ### 2. How to add a new domain
 
@@ -51,11 +50,7 @@ Set the url address for the domain in `app/config/domains_urls.yml`.
 
 *Note: When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)*
 
-#### 2.3 Set up the application as "multidomain"
-Modify the value of the parameter `is-multidomain` in `build.xml` to `true` (this is the default value).
-Based on this parameter, smoke and functional tests are run for a single domain, or multiple domains, respectively.
-
-#### 2.4 Locale settings
+#### 2.3 Locale settings
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
 
 #### 2.5 Create multidomains data
@@ -104,15 +99,11 @@ Create a file with the frontend routes for the added locale if this file is not 
 Create this file in the directory `src/Shopsys/ShopBundle/Resources/config/` with the name `routing_front_xx.yml` where `xx` replace for the code of added locale.
 
 #### 3.3 Translations and messages
-In order to correctly display the labels like *Registration*, *Cart*, ..., create a file with translations of messages in `src/Shopsys/ShopBundle/Resources/translations/`.
-Override the Phing property `translations.dump.locales` in the `build.xml` and set a space-separated list of locales you want to dump.
-For example, if you want to add `xx` to the locales, add `<property name="translations.dump.locales" value="cs en xx"/>` to your `build.xml`.
-
-Then run
+You can extract all translatable messages from the source codes and templates for all your configured locales by running a phing target
 ```
 php phing translations-dump
 ```
-There will be created files for translations of messages for the new locale in `src/Shopsys/ShopBundle/Resources/translations/`.
+There will be created files for translations of messages for the new locale in `src/Shopsys/ShopBundle/Resources/translations/`, which you'll need to translate.
 
 For more information about translations, see [the separate article](/docs/introduction/translations.md).
 

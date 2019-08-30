@@ -16,7 +16,7 @@
     </div>
 {% else %}
     <div class="in-message in-message--info margin-bottom-20">
-        {% if (filterFormSubmited) %}
+        {% if (filterFormSubmitted) %}
             {{ 'No results matching filter'|trans }}
         {% elseif searchText is defined %}
             {{ 'Search didn\'t find any products.'|trans }}

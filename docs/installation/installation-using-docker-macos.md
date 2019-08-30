@@ -40,6 +40,8 @@ Now, you have two options:
     ```
     ./scripts/install.sh
     ```
+    *Note: `--skip-aliasing` may be used in case you have already enabled second domain or you do not want to enable it for some reason. When using this option you will not be asked for sudo password.*
+
   After the script is finished with installing the application, you can skip all the other steps and see [the last chapter of Application Setup Guide](./installation-using-docker-application-setup.md#2-see-it-in-your-browser) to get all the important information you might need right after the installation.
 - **Option 2:** If you want to know more about what is happening during installation, continue with the steps [#2.1 - #2.5](#21-enable-second-domain-optional).
 

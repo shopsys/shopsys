@@ -41,7 +41,7 @@ This wouldn't work as well in Shopsys Framework, because you can install a modul
 > If the application would be installed on some other computer the migrations would be executed in a different order and might end up with different structure or data.
 
 This problem is solved by the [MigrationsBundle](https://hithub.com/shopsys/migrations) by generating a `migrations-lock.yml`.
-After the first execution of migrations, the `migrations-lock.yml` file is created in your project's root directory.
+After the execution of migrations, the `migrations-lock.yml` file is updated.
 You should commit this file similarly as you [commit the Composer lock file](https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control).
 It contains the info about all migrations that were executed and it will be used when running the migrations on a different database.
 

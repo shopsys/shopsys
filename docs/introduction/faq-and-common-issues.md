@@ -26,6 +26,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [How can I create Front-end Breadcrumb navigation?](#how-can-i-create-front-end-breadcrumb-navigation)
 - [Do you have any tips how to debug emails during development in Docker?](#do-you-have-any-tips-how-to-debug-emails-during-development-in-docker)
 - [Can I see what is really happening in the Codeception acceptance tests when using Docker?](#can-i-see-what-is-really-happening-in-the-codeception-acceptance-tests-when-using-docker)
+- [Why is there a faked PHP 7.2 platform in the Composer config?](#why-is-there-a-faked-php-72-platform-in-the-composer-config)
 
 ## What are the phing targets?
 Every phing target is a task that can be executed simply by `php phing <target-name>` command.
@@ -148,3 +149,16 @@ See [Outgoing emails](https://github.com/djfarrelly/MailDev#outgoing-email) in t
 
 ## Can I see what is really happening in the Codeception acceptance tests when using Docker?
 Yes, you can! Check [the quick guide](/docs/introduction/running-acceptance-tests.md#how-to-watch-what-is-going-on-in-the-selenium-browser).
+
+## Why is there a faked PHP 7.2 platform in the Composer config?
+As a general rule, packages and libraries that depend on PHP 7.2 will work as expected even on PHP 7.3 (any higher 7.x version), but not vice versa.
+Mainteiners of PHP are focusing on backward-compatibility (even if there were [some incompatible changes](https://www.php.net/manual/en/migration73.incompatible.php) introduced in PHP 7.3, in practice it doesn't cause issues).
+
+Using [the `config.platform.php` option](https://getcomposer.org/doc/06-config.md#platform) in `composer.json` allows us to force Composer to install such dependencies, that work for all supported versions of PHP by Shopsys Framework.
+These dependencies are locked during each release of SSFW so users that install it can download exact versions of all libraries and tools that were tested and proved working.
+This helps to eliminate unforeseen issues during installation.
+See [Composer docs](https://getcomposer.org/doc/01-basic-usage.md#installing-with-composer-lock) for more details on version locking.
+
+Without this forced platform version, you could encounter issues when working on your project with developers that use a different version of PHP.
+For example, your `composer.lock` could contain dependencies that not all developers can install.
+If that's not your case, you can safely remove the `config.platform.php` option from your `composer.json` and run `composer update` to use higher versions of your dependencies.

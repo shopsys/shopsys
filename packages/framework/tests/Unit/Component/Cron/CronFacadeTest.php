@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
+use Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
@@ -118,7 +119,9 @@ class CronFacadeTest extends TestCase
         /* @var $mailerMock \Shopsys\FrameworkBundle\Model\Mail\Mailer */
         $mailerMock = $this->createMock(Mailer::class);
 
-        return new CronFacade($loggerMock, $cronConfig, $cronModuleFacade, $mailerMock);
+        $cronModuleExecutor = new CronModuleExecutor(240);
+
+        return new CronFacade($loggerMock, $cronConfig, $cronModuleFacade, $mailerMock, $cronModuleExecutor);
     }
 
     /**

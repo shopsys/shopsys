@@ -104,9 +104,8 @@ services:
 
     shopsys.doctrine.cache_driver.query_cache:
         class: Doctrine\Common\Cache\RedisCache
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
-        arguments:
-            - '@snc_redis.doctrine_query'
+        calls:
+            - { method: setRedis, arguments: ['@snc_redis.doctrine_query'] }
 
     shopsys.doctrine.cache_driver.metadata_cache:
         class: Doctrine\Common\Cache\CacheProvider
@@ -145,6 +144,10 @@ services:
     Shopsys\FrameworkBundle\Component\Csv\CsvReader: ~
 
     Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig: ~
+
+    Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor:
+        arguments:
+            $secondsTimeout: 240
 
     Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting:
         arguments:
@@ -442,8 +445,17 @@ services:
         arguments:
             $adminLocale: '%shopsys.admin_locale%'
 
+    # @deprecated DateTimeFormatterInterface should be used instead
     Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter:
         factory: ['@Shopsys\FrameworkBundle\Model\Localization\CustomDateTimeFormatterFactory', create]
+
+    Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface:
+        class: 'Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter'
+
+    Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface:
+        class: Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider
+        arguments:
+            ['%shopsys.display_timezone%']
 
     CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
         class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
@@ -474,9 +486,8 @@ services:
 
     shopsys.shop.product.bestselling_product.cache_provider:
         class: Doctrine\Common\Cache\RedisCache
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
-        arguments:
-            - '@snc_redis.bestselling_products'
+        calls:
+            - { method: setRedis, arguments: ['@snc_redis.bestselling_products'] }
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
         arguments:

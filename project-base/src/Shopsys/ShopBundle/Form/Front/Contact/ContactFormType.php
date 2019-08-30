@@ -41,8 +41,8 @@ class ContactFormType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter e-mail']),
-                    new Email(['message' => 'Please enter valid e-mail']),
+                    new Constraints\NotBlank(['message' => 'Please enter email']),
+                    new Email(['message' => 'Please enter valid email']),
                 ],
             ])
             ->add('privacyPolicy', CheckboxType::class, [

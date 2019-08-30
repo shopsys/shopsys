@@ -24,6 +24,7 @@
         "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
+        "ext-dom": "*",
         "ext-filter": "*",
         "ext-gd": "*",
         "ext-iconv": "*",
@@ -101,7 +102,7 @@
         "shopsys/coding-standards": "dev-master",
         "phpstan/phpstan-doctrine": "^0.11.2",
         "phpstan/phpstan-phpunit": "^0.11.2",
-        "sspooky13/yaml-standards": "^4.2"
+        "sspooky13/yaml-standards": "^4.2.5"
     },
     "suggest": {
         "ext-pgsql": "Required for dumping the Postgres database in shopsys:database:dump command"
