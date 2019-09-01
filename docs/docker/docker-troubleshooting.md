@@ -37,7 +37,7 @@ That's true because these stopped containers are still registered in memory.
 
 To properly delete your workspace containers, run:
 
-```
+```sh
 docker-compose down
 ```
 
@@ -70,7 +70,7 @@ We actually just need to allocate the first port to free port on our local syste
 Since we are trying to change ports on your local machine there is a chance that you will pick port that is already allocated for something else running on your computer.
 You can check all of your taken ports using `netstat` (for MacOs `lsof`).
 
-```
+```sh
 netstat -ltn
 ```
 
@@ -82,11 +82,12 @@ So now we got configured our `docker-compose` files in a way they do not have an
 That way we can have as many projects running at the same time as many ports there are in our local network.
 
 Remember that after changing these you need to do few things differently.
+
 * You changed `port` of webserver container which affects the domain URL, so you need to change ports in `domains_urls.yml`.
 * You changed `container_name` of php-fpm which means that in order to get inside the php-fpm container you must now use this name.
   for instance, if your new container name is `my-new-project-name-php-fpm` you need to execute
 
-```
+```sh
 docker exec -it my-new-project-name-php-fpm bash
 ```
 
@@ -98,18 +99,18 @@ That means that docker does not really check if there is change in the dockerfil
 it will always build container by cached image. So what we actually need is to rebuild our containers.
 First we need to stop our containers in `docker-compose` because we cannot update containers that are already in use:
 
-```
+```sh
 docker-compose stop
 ```
 
 Then we need to force Docker to rebuild our containers:
 
-```
+```sh
 docker-compose build
 ```
 
 Docker has now updated our containers and we can continue as usual with:
-```
+```sh
 docker-compose up -d
 ```
 
@@ -118,7 +119,7 @@ docker-compose up -d
 Docker compose is much easier to change than images. If we change anything in `docker-compose` we just need to recreate `docker-compose`.
 That is done by executing:
 
-```
+```sh
 docker-compose up -d --force-recreate
 ```
 
@@ -129,11 +130,11 @@ This version helped most people to solve their issues with syncing.
 You may sometimes encounter a sync problem even with the suggested version of Docker. In those cases, you need to recreate docker-sync containers. Here are two easy steps you have to follow:
 
 Delete your docker-sync containers and volumes (data on your host will not be removed):
-```
+```sh
 docker-sync clean
 ```
 Start docker-sync so your docker-sync containers and volumes will be recreated:
-```
+```sh
 docker-sync start
 ```
 
@@ -158,7 +159,7 @@ When `composer install` or `composer update` fails on an error with exceeding th
 
 ## Starting up the Docker containers fails due to invalid reference format
 Docker images may fail to build during `docker-compose up -d` due to invalid reference format, eg.:
-```
+```no-highlight
 Building php-fpm
 Step 1/41 : FROM php:7.2-fpm-stretch as base
 ERROR: Service 'php-fpm' failed to build: Error parsing reference: "php:7.2-fpm-stretch as base" is not a valid repository/tag: invalid reference format
