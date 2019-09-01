@@ -2,6 +2,7 @@ site_name: Shopsys Framework Docs
 
 theme:
     name: readthedocs
+    custom_dir: "docs/_theme"
     hljs_languages:
         - dockerfile
         - twig

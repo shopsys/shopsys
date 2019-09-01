@@ -2,3 +2,6 @@
     max-width: 100%;
 }
 
+.wy-menu-vertical li:not(.current) ul.hidden-section {
+    display: none;
+}
