@@ -27,4 +27,5 @@ extra_css:
 markdown_extensions:
     - toc:
           permalink: True
+          toc_depth: 2-3
     - admonition

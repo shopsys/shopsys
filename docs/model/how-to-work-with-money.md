@@ -12,14 +12,7 @@ This approach has several advantages:
 
 **Table of Contents:**
 
-- [General Concept](#general-concept)
-- [Money Class](#money-class)
-- [Money in Forms](#money-in-forms)
-- [Money in Twig Templates](#money-in-twig-templates)
-- [Money in Javascript](#money-in-javascript)
-- [Money in Doctrine](#money-in-doctrine)
-- [Unit and Functional Tests](#unit-and-functional-tests)
-- [Price Class](#price-class)
+[TOC]
 
 ## General Concept
 The money concept in Shopsys Framework represents and encapsulates monetary values with a decimal part, like `100`, `0.50`, `10.99`, `0.0005`, ...  
