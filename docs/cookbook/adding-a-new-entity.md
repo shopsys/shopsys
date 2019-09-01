@@ -75,7 +75,8 @@ Run a console command (in `php-fpm container` if you are using Docker) that will
 php phing db-migrations-generate
 ```
 
-*Note: More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+!!! note
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)
 
 The command will print a filename of the database migration with content like this.
 
@@ -110,7 +111,9 @@ class Version20190301122526 extends AbstractMigration
 }
 ```
 
-*Note: We recommend you to check this migration whether everything is set as expected. If the system doesn't generate the migration, the entity is probably in an incorrect namespace or has wrong Doctrine annotation mapping.*
+!!! tip
+    We recommend you to check this migration whether everything is set as expected.
+    If the system doesn't generate the migration, the entity is probably in an incorrect namespace or has wrong Doctrine annotation mapping.
 
 ## 4. Add default salesmen
 

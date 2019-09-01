@@ -133,7 +133,8 @@ First, we add columns we want to see into `SalesmanGridFactory::create` method.
     }
 ```
 
-*Note: In the example above, the column names are translated. Do not forget to [dump translations](../introduction/console-commands-for-application-management-phing-targets.md#translations-dump).*
+!!! note
+    In the example above, the column names are translated. Do not forget to [dump translations](../introduction/console-commands-for-application-management-phing-targets.md#translations-dump).
 
 ## 2. Display the grid
 
@@ -194,8 +195,9 @@ Finally, it is time to create a new twig template, `src/Shopsys/ShopBundle/Resou
 Now, you should be able to see the basic grid with salesmen data when accessing `/admin/salesman/list/`
 ![Basic Grid](img/basic-grid.png)
 
-*Note: If you want to add a link to the page to the menu and proper breadcrumb navigation,
-please check the corresponding section in [Adding a New Administration Page](./adding-a-new-administration-page.md#side-menu-and-breadcrumbs) cookbook.*
+!!! note
+    If you want to add a link to the page to the menu and proper breadcrumb navigation,
+    please check the corresponding section in [Adding a New Administration Page](./adding-a-new-administration-page.md#side-menu-and-breadcrumbs) cookbook.
 
 ## 3. Modify the basic grid appearance
 As you probably noticed, dates in the third column are not printed much friendly.
@@ -420,7 +422,8 @@ class SalesmanController extends AdminBaseController
 +    }
 ```
 
-*Note: It is a good practice to enable [CSRF protection](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) on this type of actions.*
+!!! tip
+    It is a good practice to enable [CSRF protection](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) on this type of actions.
 
 ### 6.3 Add action column to the grid
 We just use `addDeleteActionColumn` in existing `SalesmanGridFactory` with arguments `admin_salesman_delete` as a route  and request parameters (action have to know id of the salesman to delete).

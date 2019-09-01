@@ -9,7 +9,8 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
 
 This solution uses [*docker-sync*](http://docker-sync.io/) (for relatively fast two-way synchronization of the application files between the host machine and Docker volume).
 
-**Warning: Docker-sync might be a burden for intensive project development, especially when there is a huge amount of files in shared volumes of virtualized docker and when switching between branches or even between projects often. In such a case, you should consider using [native installation](./native-installation.md).**
+!!! warning
+    Docker-sync might be a burden for intensive project development, especially when there is a huge amount of files in shared volumes of virtualized docker and when switching between branches or even between projects often. In such a case, you should consider using [native installation](./native-installation.md).
 
 ## Requirements
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
@@ -30,10 +31,9 @@ composer create-project shopsys/project-base --no-install --keep-vcs
 cd project-base
 ```
 
-*Notes:*
-
-- *The `--no-install` option disables installation of the vendors - this will be done later in the Docker container.*
-- *The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`.*
+!!! note "Notes"
+    - The `--no-install` option disables installation of the vendors - this will be done later in the Docker container
+    - The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`
 
 ### 1.1 Use install script
 In case you want to start demo of the app as fast as possible, you can now execute install script.
@@ -93,7 +93,8 @@ Then rebuild and start containers
 docker-compose up -d --build
 ```
 
-***Note:** During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ### 4. Setup the application
 [Application setup guide](installation-using-docker-application-setup.md)

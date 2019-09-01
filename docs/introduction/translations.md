@@ -119,7 +119,8 @@ A usage for example:
 {{ 'You have to <a href="%url%">choose</a> products'|transHtml({ '%url%': url('front_homepage') }) }}
 ```
 
-_Note: The message is not escaped, so if there is malicious code in `*.po` files, it will not be escaped._
+!!! warning
+    The message is not escaped, so if there is malicious code in `*.po` files, it will not be escaped.
 
 ### JavaScript
 

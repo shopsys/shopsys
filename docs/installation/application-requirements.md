@@ -29,9 +29,14 @@ To be able to install, develop and run Shopsys Framework, the system should have
 * [Selenium Server](https://www.npmjs.com/package/selenium-standalone#install--run)
 * (*optional*) [Nginx](http://nginx.org/en/docs/install.html)
 
-*Notes:*
+!!! note "Info"
+    The names link to the appropriate installation guide or download page.
 
-- *The names link to the appropriate installation guide or download page.*  
-- ***optional Nginx can be used as replacement of standalone symfony server started via `php phing server-run`***
-- *Required tools can be easily installed on Windows via [choco](https://chocolatey.org/) package manager*  
-- ***Windows installation can be skipped in favor of [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10) where the tools will be installed like on [Linux / MacOS / WSL](#linux--macos--wsl) so all the tools and services can be up-to-date.***
+!!! note
+    optional Nginx can be used as replacement of standalone symfony server started via `php phing server-run`
+
+!!! tip
+    Required tools can be easily installed on Windows via [choco](https://chocolatey.org/) package manager
+
+!!! tip
+    Windows installation can be skipped in favor of [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10) where the tools will be installed like on [Linux / MacOS / WSL](#linux--macos--wsl) so all the tools and services can be up-to-date.

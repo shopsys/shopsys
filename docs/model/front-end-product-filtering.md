@@ -45,5 +45,6 @@ or
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface: '@Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade'
 ```
 
-*Note: If you need to extend the implementation of your choice, it is possible you will need to adjust abstract test `Tests\ShopBundle\Functional\Model\Product\ProductOnCurrentDomainFacadeTest` accordingly.
-In that case is perfectly fine to skip or delete implementation of this test for the one you don't use.*
+!!! note
+    If you need to extend the implementation of your choice, it is possible you will need to adjust abstract test `Tests\ShopBundle\Functional\Model\Product\ProductOnCurrentDomainFacadeTest` accordingly.
+    In that case is perfectly fine to skip or delete implementation of this test for the one you don't use.

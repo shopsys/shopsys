@@ -11,7 +11,8 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
 
 This solution uses [*docker-sync*](http://docker-sync.io/) (for relatively fast two-way synchronization of the application files between the host machine and Docker volume).
 
-**Warning: Docker-sync might be a burden for intensive project development, especially when there is a huge amount of files in shared volumes of virtualized docker and when switching between branches or even between projects often. In such a case, you should consider using [native installation](./native-installation.md).**
+!!! warning
+    Docker-sync might be a burden for intensive project development, especially when there is a huge amount of files in shared volumes of virtualized docker and when switching between branches or even between projects often. In such a case, you should consider using [native installation](./native-installation.md).
 
 ## Supported systems
 - Windows 10 Pro
@@ -30,8 +31,9 @@ This solution uses [*docker-sync*](http://docker-sync.io/) (for relatively fast 
 
 ### Installation of Docker-sync for Windows
 
-***Note:** be aware of using custom firewalls or protection tools other than default `Windows Defender`, we experienced that some of them make synchronization malfunctioning because of blocking synchronization ports.
-To speed up the synchronization and developing faster, you can exclude folder from indexing and search path of `Windows Defender`.*
+!!! warning
+    Be aware of using custom firewalls or protection tools other than default `Windows Defender`, we experienced that some of them make synchronization malfunctioning because of blocking synchronization ports.
+    To speed up the synchronization and developing faster, you can exclude folder from indexing and search path of `Windows Defender`.
 
 #### Prerequisites
 In settings of Windows docker check `Expose daemon on localhost:2375` in `General` tab and check drive option in `Shared Drives` tab, where the project will be installed, you will be prompted for your Windows credentials.
@@ -131,10 +133,9 @@ composer create-project shopsys/project-base --no-install --keep-vcs
 cd project-base
 ```
 
-*Notes:*
-
-- *The `--no-install` option disables installation of the vendors - this will be done later in the Docker container.*
-- *The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`.*
+!!! note "Notes"
+    - The `--no-install` option disables installation of the vendors - this will be done later in the Docker container
+    - The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`
 
 ### 2.1 Use install script
 In case you want to start demo of the app as fast as possible, you can now execute install script.
@@ -169,7 +170,8 @@ Then rebuild and start containers
 docker-compose up -d
 ```
 
-***Note:** During installation there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    During installation there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ### 5. Setup the application
 [Application setup guide](installation-using-docker-application-setup.md)

@@ -15,7 +15,8 @@ Elasticsearch [index](https://www.elastic.co/blog/what-is-an-elasticsearch-index
 The Elasticsearch indexes are created during application build.
 You can also create or delete indexes manually using Phing targets `product-search-create-structure`, and `product-search-delete-structure` respectively, or you can use `product-search-recreate-structure` that encapsulates the previous two.
 
-*Note: More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)*
+!!! hint
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 Unique index is created for each domain as some product attributes can have distinct values for each domain.
 To discover the exact mapping setting, you can look at the JSON configuration files

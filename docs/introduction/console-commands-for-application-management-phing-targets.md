@@ -13,7 +13,8 @@ php phing
 Phing targets are defined in `build.xml` file.
 Any Phing target can execute a subset of other targets or console commands.
 
-*Tip: You can use shorthand command `./phing <target-name>` on Unix system or `phing <target-name>` in Windows CMD instead of `php phing <target-name>`.*
+!!! tip
+    You can use shorthand command `./phing <target-name>` on Unix system or `phing <target-name>` in Windows CMD instead of `php phing <target-name>`.
 
 Let us take `build` target for example.
 It is located in `build.xml` file in the `shopsys/framework` package and it looks like this:
@@ -28,7 +29,8 @@ Let us take look at the first one, that is located in the same file:
 ```
 Target `build-deploy-part-1-db-independent` also executes subset of Phing targets (`clean`,`composer-prod`,`npm`,`dirs-create`,`domains-urls-check`,`assets`).
 
-***Note:** During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 Let us move a little deeper and take a look at the first one, `clean`:
 ```xml
@@ -57,12 +59,14 @@ Builds the application for production preserving your DB.
 
 Most important build command for production. Cleans cache, installs composer dependencies, installs npm, install assets, installs database migrations and much more.
 
-*Note: More about how to install and deploy your application in production can be found in [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md)*
+!!! tip
+    More about how to install and deploy your application in production can be found in [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md)
 
 #### build-demo-ci
 Most important build command for continuous integration server. Builds the whole application and after that runs all coding standards checks and all tests.
 
-*Note: More about how to build your CI and check your application there can be found in [Configuring Jenkins for Continuous Integration](../cookbook/jenkins-configuration.md)*
+!!! tip
+    More about how to build your CI and check your application there can be found in [Configuring Jenkins for Continuous Integration](../cookbook/jenkins-configuration.md)
 
 #### build-demo-dev
 Builds the application for development with clean demo DB and runs checks on changed files.
@@ -132,27 +136,32 @@ Drops all data in the database and creates a new one with demo data.
 #### test-db-demo
 Drops all data in the test database and creates a new one with demo data.
 
-*Note: All database related targets `db-*` have their `test-db-*` variant for the test database.*
+!!! tip
+    All database related targets `db-*` have their `test-db-*` variant for the test database.
 
 #### product-search-recreate-structure
 Recreates Elasticsearch indexes structure.
-Consists of two subtasks that can be run independently:
+Consists of two sub-tasks that can be run independently:
+
 * `product-search-delete-structure` - deletes existing indexes structure
 * `product-search-create-structure` - creates new indexes structure by json definitions stored in [the resources directory](/project-base/src/Shopsys/ShopBundle/Resources/definition).
 
 #### product-search-migrate-structure
 Migrates Elasticsearch indexes if there is change between currently used structure and the one in `*.json`.
 Especially useful when you need to change the structure and don't need to have fresh data in Elasticsearch
+
 * creates new index without alias
 * reindexes data from old index to the new one
 * deletes old index
 * creates alias for the new index
 
-*Note: If you add field/s to the structure and reindex they won't be available until `product-search-export-products` is called.*
-*Your application must handle the properties not being filled correctly until all products are exported.*
+!!! warning
+    If you add field/s to the structure and reindex, they won't be available until `product-search-export-products` is called.  
+    Your application must handle the properties not being filled correctly until all products are exported.
 
-*Note: Using this phing target after changing the type of field to another in structure (eg. changing it from `bool` to `integer`) will cause an error.*
-*If you need to make this change, please add new field with the correct type and delete the old field instead.*
+!!! danger
+    Using this phing target after changing the type of field to another in structure _(eg. changing it from `bool` to `integer`)_ will cause an error.  
+    If you need to make this change, please add new field with the correct type and delete the old field instead.
 
 #### product-search-export-products
 Exports all visible products to Elasticsearch.
@@ -266,4 +275,5 @@ Since the `build/build.local.properties` file is not versioned, the changes will
 
 ---
 
-*Note: If you want to add new Phing targets into Shopsys Framework or modify existing ones, please read [our guidelines](../contributing/guidelines-for-phing-targets.md) before contributing.*
+!!! tip
+    If you want to add new Phing targets into Shopsys Framework or modify existing ones, please read [our guidelines](../contributing/guidelines-for-phing-targets.md) before contributing.

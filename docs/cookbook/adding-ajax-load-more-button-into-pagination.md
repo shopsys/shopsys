@@ -3,7 +3,8 @@
 In this cookbook, we will add a paginated brand list including ajax "load more" button to a product list page.
 After finishing the guide, you will know how to use multiple paginations on one page.  
 
-*Note: After this change you will have paginated also `/brands-list/` page (`front_brand_list` route).*
+!!! note
+    After this change you will have paginated also `/brands-list/` page (`front_brand_list` route).
 
 ## Implementation of Brand Pagination
 

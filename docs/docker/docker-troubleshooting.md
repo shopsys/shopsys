@@ -76,7 +76,8 @@ netstat -ltn
 
 This will output all listening TCP ports in numeric format. Now we can just pick one that isn't in this list and set it to our container.
 
-*Note: Try not to use ports between 1000-1100, these are ports that root usually uses for its processes.*
+!!! warning
+    Try not to use ports between 1000-1100, these are ports that root usually uses for its processes.
 
 So now we got configured our `docker-compose` files in a way they do not have any conflicts among them.
 That way we can have as many projects running at the same time as many ports there are in our local network.
@@ -152,10 +153,12 @@ You can inspect what is wrong by using `docker logs <container-name>` command.
 ## Composer dependencies installation fails on memory limit
 When `composer install` or `composer update` fails on an error with exceeding the allowed memory size, you can increase the memory limit by setting `COMPOSER_MEMORY_LIMIT` environment variable in your `docker/php-fpm/Dockerfile` or `docker-compose.yml`.
 
-*Note: Since `v7.0.0-beta4` we have set the Composer memory limit to `-1` (which means unlimited) in the php-fpm's `Dockerfile`.*
-*If you still encounter memory issues while using Docker for Windows (or Mac), try increasing the limits in `Docker -> Preferences… -> Advanced`.*
+!!! note
+    Since `v7.0.0-beta4` we have set the Composer memory limit to `-1` (which means unlimited) in the php-fpm's `Dockerfile`.  
+    If you still encounter memory issues while using Docker for Windows (or Mac), try increasing the limits in `Docker -> Preferences… -> Advanced`.
 
-***Note:** Composer dependencies contain 3-rd party software with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    Composer dependencies contain 3-rd party software with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## Starting up the Docker containers fails due to invalid reference format
 Docker images may fail to build during `docker-compose up -d` due to invalid reference format, eg.:

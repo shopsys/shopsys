@@ -18,8 +18,9 @@ If this would be the case, we will mark the Pull Request with `[BC-BREAK]` in th
 Released versions will be always marked using git tags with `v` prefix (eg. `v7.0.0`).
 Once created, a git tag marking a release will never be removed or edited.
 
-*Note: Pre-release versions may introduce incompatible changes and can be used to try out the new functions and changes.
-Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc><n>`, eg. `7.0.0-beta5`.*
+!!! note
+    Pre-release versions may introduce incompatible changes and can be used to try out the new functions and changes.  
+    Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc><n>`, eg. `7.0.0-beta5`.
 
 ### Current Release Plan
 To be able to develop and improve Shopsys Framework we plan to release `MAJOR` versions almost quarterly, aiming to release a new `MAJOR` every 3-4 months.
@@ -41,7 +42,8 @@ You can follow the changes in the repository to see how working with Shopsys Fra
 
 During an upgrade to the next major version, you have to make the changes yourself according to the advice in [UPGRADE.md](https://github.com/shopsys/shopsys/blob/7.3/UPGRADE.md).
 
-*Note: The same holds true for the [demoshop repository](https://github.com/shopsys/demoshop) which is a complex example of an e-commerce project using a custom design and modifications.*
+!!! note
+    The same holds true for the [demoshop repository](https://github.com/shopsys/demoshop) which is a complex example of an e-commerce project using a custom design and modifications.
 
 ### PHP Code
 Basic rules for PHP code are covered by [Symfony Backward Compatibility Promise](https://symfony.com/doc/3.4/contributing/code/bc.html).

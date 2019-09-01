@@ -24,10 +24,9 @@ composer create-project shopsys/project-base --no-install --keep-vcs
 cd project-base
 ```
 
-*Notes:*
-
-- *The `--no-install` option disables installation of the vendors - this will be done later in the Docker container.*
-- *The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`.*
+!!! note "Notes"
+    - The `--no-install` option disables installation of the vendors - this will be done later in the Docker container
+    - The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`
 
 ### 2.1 Use install script
 In case you want to start demo of the app as fast as possible, you can now execute install script.
@@ -56,7 +55,8 @@ You can find out your UID by running `id -u` and your GID by running `id -g`.
 docker-compose up -d --build
 ```
 
-***Note:** During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ### 5. Setup the application
 [Application setup guide](installation-using-docker-application-setup.md)

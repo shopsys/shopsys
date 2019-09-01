@@ -64,7 +64,8 @@ as the project’s every customization has to work well with every new release.
 The framework and modules provide glass-box extensibility,
 ie. you can upgrade them independently via `composer update`.
 
-***Note:** During composer update there will be installed or updated 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    During composer update there will be installed or updated 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### Project base
 There is no automated way of upgrading the project base.

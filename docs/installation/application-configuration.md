@@ -40,7 +40,9 @@ Composer will then prompt you to set parameters for testing environment (`app/co
 | `test_mailer_password`             | ...                                                                           |
 | `shopsys.content_dir_name`         | web/content-test/ directory is used instead of web/content/ during the tests  |
 
-*Notes:*
 
-- *All default values use default ports for all external services like PostgreSQL database, elasticsearch, redis, ...*
-- *Host values can be modified or can be aliased for your Operating System via `/etc/hosts` or `C:\Windows\System32\drivers\etc\hosts`*
+!!! note
+    All default values use default ports for all external services like PostgreSQL database, elasticsearch, redis, ...
+
+!!! tip
+    Host values can be modified or can be aliased for your Operating System via `/etc/hosts` or `C:\Windows\System32\drivers\etc\hosts`

@@ -27,7 +27,8 @@ shopsys-framework-php-fpm | [2018-07-23 11:39:12] security.INFO: Populated the T
 shopsys-framework-php-fpm | [2018-07-23 11:42:41] slow.NOTICE: 3.14159265359 Shopsys\ShopBundle\Controller\Front\ProductController::listByCategoryAction /test-category/ [] []
 ```
 
-*Note: If you're only interested in some specific messages you can use `grep`, eg. `docker-compose logs | grep slow.NOTICE` for slow responses.*
+!!! tip
+    If you're only interested in some specific messages you can use `grep`, eg. `docker-compose logs | grep slow.NOTICE` for slow responses.
 
 ## Conclusion
 Logging into streams is one of the prerequisites for scalable application.

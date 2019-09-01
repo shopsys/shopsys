@@ -3,7 +3,8 @@
 This article describes how to work with domains and languages during the development of your project.
 For an explanation of the basic terms, please read [domain, multidomain and multilanguage](domain-multidomain-multilanguage.md) article first.
 
-*Note: Demo data on the Shopsys Framework contains data only in `en` and `cs` locales*
+!!! note
+    Demo data on the Shopsys Framework contains data only in `en` and `cs` locales
 
 ## Settings and working with domains
 
@@ -28,10 +29,12 @@ Start the build, for example using a phing target
 ```sh
 php phing build-demo-dev
 ```
-*Note: In this step you were using Phing target `build-demo-dev`.
-More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](./console-commands-for-application-management-phing-targets.md)*
+!!! hint
+    In this step you were using Phing target `build-demo-dev`.  
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](./console-commands-for-application-management-phing-targets.md)
 
-***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 After the build is completed, a singledomain application is created.
 
@@ -49,7 +52,8 @@ This configuration file contains pieces of information about the domain ID, the 
 #### 2.2 Set up the url address
 Set the url address for the domain in `app/config/domains_urls.yml`.
 
-*Note: When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)*
+!!! note
+    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)
 
 #### 2.3 Set up the application as "multidomain"
 Modify the value of the parameter `is-multidomain` in `build.xml` to `true` (this is the default value).
@@ -161,7 +165,8 @@ example for domain that uses English language:
 #### 4.1 Change the url address
 Change the url address in the configuration of the domain in `app/config/domains_urls.yml`.
 
-*Note: When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)*
+!!! note
+    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)
 
 #### 4.2 Replace the old url address
 Run the phing target

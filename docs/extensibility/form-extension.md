@@ -88,7 +88,8 @@ $builder
 
 The output will be: A => B => C => D => E => F => G.
 
-*Note: More examples can be found [here](https://github.com/egeloen/ivory-ordered-form/blob/master/doc/usage.md#position).*
+!!! tip
+    More examples can be found [here](https://github.com/egeloen/ivory-ordered-form/blob/master/doc/usage.md#position).
 
 ### Changing order of existing groups and fields
 
@@ -98,4 +99,6 @@ Implementation of `FormBuilderInterface` contains method `setPosition` that can 
 $builder->get('a')->setPosition('first');
 $builder->get('c')->setPosition(['after' => 'b']);
 ```
-*Note: Because `FormBuilderInterface` doesn't declare method `setPosition`, your IDE will warn you that method doesn't exist.*
+
+!!! note
+    Because `FormBuilderInterface` doesn't declare method `setPosition`, your IDE will warn you that method doesn't exist.

@@ -132,7 +132,8 @@ You will no longer cause *500 Server Error* on some random page by a seemingly u
 #### Example:
 See configuration of HTTP smoke (and [performance](#performance-tests)) tests in [`\Tests\ShopBundle\Smoke\Http\RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/7.3/project-base/tests/ShopBundle/Smoke/Http/RouteConfigCustomization.php).
 
-*Note: you can read more about customization of HTTP smoke tests in their [own documentation on GitHub](https://github.com/shopsys/http-smoke-testing).*
+!!! tip
+    You can read more about customization of HTTP smoke tests in their [own documentation on GitHub](https://github.com/shopsys/http-smoke-testing).
 
 ### Acceptance tests (a.k.a. functional tests or Selenium tests)
 Provide a way of fully end-to-end testing your application as if a real human used it.

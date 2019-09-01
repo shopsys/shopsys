@@ -48,7 +48,8 @@ The scale has to be specified during [rounding](#rounding), [creating from float
 It uses a decimal representation of the money amount and it does not contain any reference to the used currency.
 You can get the decimal representation as a `string` via the `getAmount` method.
 
-*Note: If in doubt about the results of any method, you can take a look at [its unit tests](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/tests/Unit/Component/Money/MoneyTest.php) which contain many examples of the class' behavior.*
+!!! tip
+    If in doubt about the results of any method, you can take a look at [its unit tests](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/tests/Unit/Component/Money/MoneyTest.php) which contain many examples of the class' behavior.
 
 ### Construction
 
@@ -68,7 +69,8 @@ To compute with monetary values you have to use the object's methods instead of 
 - `Money::multiply(int|string $multiplier) : Money`
 - `Money::divide(int|string $divisor, int $scale) : Money`
 
-*Note: `Money` is immutable, which means that all these methods create a new object and the original is never modified.*
+!!! note
+    `Money` is immutable, which means that all these methods create a new object and the original is never modified.
 
 For addition and subtraction, the other parameter has to be also a `Money` instance.
 For multiplication and division, the other parameter has to be an integer or a numeric string (as they are able to represent decimal numbers precisely), not a float.
@@ -80,7 +82,8 @@ Results of a division may be inexpressible with a finite decimal (eg. 1 / 3 = 0.
 - scale of the result of `multiply` is the *sum of scales* of both money values
 - scale of the result of `divide` must be *explicitly specified*, the last decimal place will be rounded to minimize the error
 
-*Note: The scale of the money amount is always preserved - `getAmount` will use all decimal places of its scale (eg. zero money with scale 6 would return `0.000000`).*
+!!! note
+    The scale of the money amount is always preserved - `getAmount` will use all decimal places of its scale (eg. zero money with scale 6 would return `0.000000`).
 
 ### Rounding
 
@@ -128,7 +131,8 @@ Thanks to this approach you can use `Money` in your [data objects](./entities.md
 
 In Shopsys Framework, the default value of the `currency` option is `false` instead of `EUR`, hiding the currency symbol by default.
 
-*Note: For non-monetary numeric values use `NumberType` (see [Symfony docs](https://symfony.com/doc/3.4/reference/forms/types/number.html) for details).*
+!!! tip
+    For non-monetary numeric values use `NumberType` (see [Symfony docs](https://symfony.com/doc/3.4/reference/forms/types/number.html) for details).
 
 ### Form Constraints
 

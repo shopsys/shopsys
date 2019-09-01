@@ -30,7 +30,8 @@ services:
 +            - { name: shopsys.cron, hours: '*/3', minutes: '0', instanceName: products}
 ```
 
-*Note: If you do not set `instanceName`, a job will be placed into cron instance named `default`.*
+!!! note
+    If you do not set `instanceName`, a job will be placed into cron instance named `default`.
 
 ## Listing available modules
 
@@ -60,14 +61,16 @@ default
  php bin/console shopsys:cron --module="Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule" --instance-name=default
 ```
 
-*Note: More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)*
+!!! hint
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 # Running cron jobs manually
 
 We now can run any cron jobs manually by running `php phing cron`.
 And because we have several cron instances registered, job asks what cron instance should be run.
 
-*Note: If only one instance is registered, no question is asked and this instance will run immediately.*
+!!! note
+    If only one instance is registered, no question is asked and this instance will run immediately.
 
 # Running cron jobs automatically
 

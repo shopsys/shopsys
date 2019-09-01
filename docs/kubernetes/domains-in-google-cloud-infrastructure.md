@@ -33,7 +33,8 @@ Create secrets from SSL certificate in `ingress-patch.yaml` in `kubernetes/kusto
     ca.crt: "cat ${ANOTHER_DOMAIN_SSL_DIRECTORY}/ca.crt"
 ```
 
-*Note: Replace ${DOMAIN_NUMBER} with a number of a domain*
+!!! note
+    Replace `${DOMAIN_NUMBER}` with a number of a domain
 
 Next, add SSL certificates for new domain:
 

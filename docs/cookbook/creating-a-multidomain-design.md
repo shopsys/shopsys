@@ -22,8 +22,11 @@ Generate CSS files from LESS using Grunt
 php phing grunt
 ```
 
-*Note 1: If you are not familiar with LESS and how it deals with file imports, see [the separate article](../frontend/introduction-to-less.md).*  
-*Note 2: If you are not familiar with `phing`, there is [a separate article](../introduction/console-commands-for-application-management-phing-targets.md) about it as well.*
+!!! hint
+    If you are not familiar with LESS and how it deals with file imports, see [the separate article](../frontend/introduction-to-less.md).
+
+!!! hint
+    If you are not familiar with `phing`, there is [a separate article](../introduction/console-commands-for-application-management-phing-targets.md) about it as well.
 
 ### Scenario 2 - I want to change layout in left panel on my 2nd domain
 
@@ -64,7 +67,8 @@ In your new `layoutWithPanel.my-design.html.twig`, re-order the elements in the 
 
 ## Final thoughts
 
-- Since there are two independent parameters for using custom styles and Twig templates,
+Since there are two independent parameters for using custom styles and Twig templates,
 you are able to combine them arbitrarily to achieve a multidomain design that suits your needs.
 E.g. you can have 2 color sets and 3 distinct layouts, and then 6 domains with all the possible combinations.
-- It is important to keep in mind that second (and any other than the first) domain is not covered by tests so be aware when using different templates.
+
+It is important to keep in mind that second (and any other than the first) domain is not covered by tests so be aware when using different templates.
