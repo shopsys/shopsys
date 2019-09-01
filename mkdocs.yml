@@ -10,7 +10,7 @@ theme:
         - less
 
 extra_css:
-    - _theme/extra.css
+    - _theme/main.css
 
 markdown_extensions:
     - toc:
