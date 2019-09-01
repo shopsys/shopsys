@@ -1,18 +1,5 @@
 site_name: Shopsys Framework Docs
 
-nav:
-    - Home: index.md
-    - Administration: administration/index.md
-    - Contributing: contributing/index.md
-    - Cookbooks: cookbook/index.md
-    - Extensibility: extensibility/index.md
-    - Frontend: frontend/index.md
-    - Functional documentation: functional/index.md
-    - Installation: installation/index.md
-    - Introduction: introduction/index.md
-    - Orchestration: kubernetes/index.md
-    - Model: model/index.md
-
 theme:
     name: readthedocs
     hljs_languages:
@@ -29,3 +16,8 @@ markdown_extensions:
           permalink: True
           toc_depth: 2-3
     - admonition
+
+plugins:
+    - search
+    - awesome-pages:
+          filename: navigation.yml

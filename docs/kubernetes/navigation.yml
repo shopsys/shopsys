@@ -1,0 +1,8 @@
+arrange:
+    - index.md
+    - introduction-to-kubernetes.md
+    - continuous-integration-using-kubernetes.md
+    - logging-on-continuous-integration-server-running-kubernetes.md
+    - how-to-deploy-ssfw-to-google-cloud-platform.md
+    - deploy-your-application-to-google-cloud-on-your-ci-cd.md
+    - how-to-set-smtp-server-container.md
