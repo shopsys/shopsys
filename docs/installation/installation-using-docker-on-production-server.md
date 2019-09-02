@@ -8,6 +8,9 @@ We use docker containers, built from docker images and php source code from git 
 As we do not want to lose data after deploying a new version of the project, we install all the data storages (postgres, elasticsearch, redis) natively.
 This guide also shows you how to setup first built image of the project on production server and how to deploy new versions of the project.  
 
+**Before deploying, don't forget to adjust your configuration to your expected workload and hardware.
+All values in configuration files are set to run on very limited hardware by default.**
+
 ## Server Setup
 
 CentOS is very common OS for production servers so we use it on our production server.
