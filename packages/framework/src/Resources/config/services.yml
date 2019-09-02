@@ -1002,3 +1002,7 @@ services:
         arguments: ["@=service('Shopsys\\\\FrameworkBundle\\\\Component\\\\ClassExtension\\\\ClassExtensionRegistry').getClassExtensionMap()"]
 
     Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer: ~
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder: ~
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer: ~

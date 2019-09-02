@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
-use Roave\BetterReflection\BetterReflection;
-use Roave\BetterReflection\Reflection\ReflectionClass;
-use Roave\BetterReflection\Reflection\ReflectionMethod;
 use Roave\BetterReflection\Reflection\ReflectionObject;
-use Roave\BetterReflection\Reflection\ReflectionProperty;
+use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry;
+use Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory;
+use Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\DummyClass;
 
 class FixExtendedClassesAnnotationsCommand extends Command
 {
@@ -46,6 +44,21 @@ class FixExtendedClassesAnnotationsCommand extends Command
     protected $annotationsReplacementsMap;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory
+     */
+    protected $propertyAnnotationsFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory
+     */
+    protected $methodAnnotationsAdder;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder
+     */
+    protected $annotationsAdder;
+
+    /**
      * {@inheritdoc}
      */
     protected function configure(): void
@@ -61,20 +74,29 @@ class FixExtendedClassesAnnotationsCommand extends Command
     /**
      * @param string $projectRootDirectory
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry $classExtensionRegistry
+     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory $propertyAnnotationsFactory
+     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory $methodAnnotationsAdder
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
+     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder $annotationsAdder
      */
     public function __construct(
         string $projectRootDirectory,
         ClassExtensionRegistry $classExtensionRegistry,
+        PropertyAnnotationsFactory $propertyAnnotationsFactory,
+        MethodAnnotationsFactory $methodAnnotationsAdder,
         AnnotationsReplacer $annotationsReplacer,
-        AnnotationsReplacementsMap $annotationsReplacementsMap
+        AnnotationsReplacementsMap $annotationsReplacementsMap,
+        AnnotationsAdder $annotationsAdder
     ) {
         parent::__construct();
         $this->projectRootDirectory = $projectRootDirectory;
         $this->classExtensionRegistry = $classExtensionRegistry;
         $this->annotationsReplacer = $annotationsReplacer;
         $this->annotationsReplacementsMap = $annotationsReplacementsMap;
+        $this->propertyAnnotationsFactory = $propertyAnnotationsFactory;
+        $this->methodAnnotationsAdder = $methodAnnotationsAdder;
+        $this->annotationsAdder = $annotationsAdder;
     }
 
     /**
@@ -121,277 +143,17 @@ class FixExtendedClassesAnnotationsCommand extends Command
         $classExtensionMap = $this->classExtensionRegistry->getClassExtensionMap();
         foreach ($classExtensionMap as $frameworkClass => $projectClass) {
             $frameworkClassBetterReflection = ReflectionObject::createFromName($frameworkClass);
-            $extendedFrameworkClasses = array_keys($classExtensionMap);
-            foreach ($frameworkClassBetterReflection->getProperties() as $property) {
-                $this->addPropertyAnnotationToProjectClassIfNecessary($property, $projectClass, $extendedFrameworkClasses);
-            }
-            foreach ($frameworkClassBetterReflection->getMethods() as $method) {
-                $this->addMethodAnnotationToProjectClassIfNecessary($method, $projectClass, $extendedFrameworkClasses);
-            }
-        }
-    }
+            $projectClassBetterReflection = ReflectionObject::createFromName($projectClass);
 
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @param string $projectClass
-     * @param string[] $extendedFrameworkClasses
-     */
-    protected function addPropertyAnnotationToProjectClassIfNecessary(
-        ReflectionProperty $reflectionProperty,
-        string $projectClass,
-        array $extendedFrameworkClasses
-    ): void {
-        $projectClassBetterReflection = ReflectionObject::createFromName($projectClass);
-        foreach ($extendedFrameworkClasses as $extendedFrameworkClass) {
-            $isPropertyOfTypeThatIsExtendedInProject = preg_match(
-                $this->getEscapedFqcnWithLeadingSlashPattern($extendedFrameworkClass),
-                $reflectionProperty->getDocComment()
+            $projectClassNecessaryPropertyAnnotationsLines = $this->propertyAnnotationsFactory->getProjectClassNecessaryPropertyAnnotationsLines(
+                $frameworkClassBetterReflection,
+                $projectClassBetterReflection
             );
-            if (!$this->isPropertyDeclaredInClass($reflectionProperty->getName(), $projectClassBetterReflection)
-                && $isPropertyOfTypeThatIsExtendedInProject
-            ) {
-                $this->addPropertyAnnotationToClass($reflectionProperty, $projectClassBetterReflection);
-            }
-        }
-    }
-
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
-     * @param string $projectClass
-     * @param string[] $extendedFrameworkClasses
-     */
-    protected function addMethodAnnotationToProjectClassIfNecessary(
-        ReflectionMethod $reflectionMethod,
-        string $projectClass,
-        array $extendedFrameworkClasses
-    ): void {
-        $projectClassBetterReflection = ReflectionObject::createFromName($projectClass);
-        foreach ($extendedFrameworkClasses as $extendedFrameworkClass) {
-            foreach ($reflectionMethod->getDocBlockReturnTypes() as $docBlockReturnType) {
-                if (!$this->isMethodImplementedInClass($reflectionMethod->getName(), $projectClassBetterReflection)
-                    && preg_match($this->getEscapedFqcnWithLeadingSlashPattern($extendedFrameworkClass), (string)$docBlockReturnType)
-                ) {
-                    $this->addMethodAnnotationToClass($reflectionMethod, $projectClassBetterReflection);
-                    break;
-                }
-            }
-        }
-    }
-
-    /**
-     * We want to match the FQCN followed by space or an array declaration but want to exclude the substrings.
-     * E.g. for "\Shopsys\FrameworkBundle\Model\Product\Product" we do not want to match "\Shopsys\FrameworkBundle\Model\Product\ProductFacade"
-     * but we want to match "\Shopsys\FrameworkBundle\Model\Product\Product[]"
-     *
-     * @param string $fullyQualifiedClassName
-     * @return string
-     */
-    protected function getEscapedFqcnWithLeadingSlashPattern(string $fullyQualifiedClassName): string
-    {
-        return '/(?P<fqcn>\\\\' . preg_quote($fullyQualifiedClassName, '/') . ')(?!\w)(?P<brackets>(\[\])*)/';
-    }
-
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectClassBetterReflection
-     */
-    protected function addPropertyAnnotationToClass(ReflectionProperty $reflectionProperty, ReflectionClass $projectClassBetterReflection): void
-    {
-        $replacedTypeForProperty = $this->annotationsReplacer->replaceInPropertyType($reflectionProperty);
-        $projectClassName = $projectClassBetterReflection->getShortName();
-        $projectClassFileName = $projectClassBetterReflection->getFileName();
-        $projectClassDocBlock = $projectClassBetterReflection->getDocComment();
-        if ($projectClassDocBlock !== '') {
-            $this->updateClassAnnotationWithProperty(
-                $reflectionProperty,
-                $replacedTypeForProperty,
-                $projectClassDocBlock,
-                $projectClassFileName
+            $projectClassNecessaryMethodAnnotationsLines = $this->methodAnnotationsAdder->getProjectClassNecessaryMethodAnnotationsLines(
+                $frameworkClassBetterReflection,
+                $projectClassBetterReflection
             );
-        } else {
-            $this->addClassAnnotationWithProperty(
-                $reflectionProperty,
-                $replacedTypeForProperty,
-                $projectClassName,
-                $projectClassFileName
-            );
-        }
-    }
-
-    /**
-     * @param string $propertyName
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionClass
-     * @return bool
-     */
-    protected function isPropertyDeclaredInClass(string $propertyName, ReflectionClass $reflectionClass)
-    {
-        $reflectionProperty = $reflectionClass->getProperty($propertyName);
-        if ($reflectionProperty === null) {
-            return false;
-        }
-
-        return $reflectionProperty->getDeclaringClass()->getName() === $reflectionClass->getName();
-    }
-
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectClassBetterReflection
-     */
-    protected function addMethodAnnotationToClass(ReflectionMethod $reflectionMethod, ReflectionClass $projectClassBetterReflection): void
-    {
-        $replacedReturnTypeForMethod = $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethod);
-        $projectClassFileName = $projectClassBetterReflection->getFileName();
-        $projectClassDocBlock = $projectClassBetterReflection->getDocComment();
-        if ($projectClassDocBlock !== '') {
-            $this->updateClassAnnotationWithMethod(
-                $reflectionMethod,
-                $replacedReturnTypeForMethod,
-                $projectClassDocBlock,
-                $projectClassFileName
-            );
-        } else {
-            $this->addClassAnnotationWithMethod(
-                $reflectionMethod,
-                $projectClassBetterReflection,
-                $replacedReturnTypeForMethod,
-                $projectClassFileName
-            );
-        }
-    }
-
-    /**
-     * @param string $methodName
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $reflectionClass
-     * @return bool
-     */
-    protected function isMethodImplementedInClass(string $methodName, ReflectionClass $reflectionClass)
-    {
-        try {
-            $reflectionMethod = $reflectionClass->getMethod($methodName);
-            return $reflectionMethod->getDeclaringClass()->getName() === $reflectionClass->getName();
-        } catch (\OutOfBoundsException $ex) {
-            return false;
-        }
-    }
-
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
-     * @return string
-     */
-    protected function getMethodParameterNames(ReflectionMethod $reflectionMethod): string
-    {
-        $methodParameterNames = [];
-        foreach ($reflectionMethod->getParameters() as $methodParameter) {
-            $methodParameterNames[] = '$' . $methodParameter->getName();
-        }
-
-        return implode(', ', $methodParameterNames);
-    }
-
-    /**
-     * @param string $fileName
-     * @param string $search
-     * @param string $replace
-     */
-    protected function replaceInFile(string $fileName, string $search, string $replace): void
-    {
-        $fileContent = file_get_contents($fileName);
-        $replacedContent = str_replace($search, $replace, $fileContent);
-        file_put_contents($fileName, $replacedContent);
-    }
-
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @param string $replacedTypeForProperty
-     * @param string $projectClassDocBlock
-     * @param string $projectClassFileName
-     */
-    protected function updateClassAnnotationWithProperty(
-        ReflectionProperty $reflectionProperty,
-        string $replacedTypeForProperty,
-        string $projectClassDocBlock,
-        string $projectClassFileName
-    ): void {
-        $propertyAnnotationNewLine = sprintf(
-            "* @property %s%s $%s\n",
-            $reflectionProperty->isStatic() ? 'static ' : '',
-            $replacedTypeForProperty,
-            $reflectionProperty->getName()
-        );
-        if (strpos($projectClassDocBlock, $propertyAnnotationNewLine) === false) {
-            $extendedDocBlock = str_replace('*/', $propertyAnnotationNewLine . ' */', $projectClassDocBlock);
-            $this->replaceInFile($projectClassFileName, $projectClassDocBlock, $extendedDocBlock);
-        }
-    }
-
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
-     * @param string $replacedTypeForProperty
-     * @param string $projectClassShortName
-     * @param string $projectClassFileName
-     */
-    protected function addClassAnnotationWithProperty(
-        ReflectionProperty $reflectionProperty,
-        string $replacedTypeForProperty,
-        string $projectClassShortName,
-        string $projectClassFileName
-    ): void {
-        $replacement = sprintf(
-            "/**\n * @property %s%s $%s\n */\nclass %s",
-            $reflectionProperty->isStatic() ? 'static ' : '',
-            $replacedTypeForProperty,
-            $reflectionProperty->getName(),
-            $projectClassShortName
-        );
-        $this->replaceInFile($projectClassFileName, 'class ' . $projectClassShortName, $replacement);
-    }
-
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectClassBetterReflection
-     * @param string $replacedReturnTypeForMethod
-     * @param string $projectClassFileName
-     */
-    protected function addClassAnnotationWithMethod(
-        ReflectionMethod $reflectionMethod,
-        ReflectionClass $projectClassBetterReflection,
-        string $replacedReturnTypeForMethod,
-        string $projectClassFileName
-    ): void {
-        $projectClassShortName = $projectClassBetterReflection->getShortName();
-        $replacement = sprintf(
-            "/**\n * @method %s%s %s(%s)\n */\nclass %s",
-            $reflectionMethod->isStatic() ? 'static ' : '',
-            $replacedReturnTypeForMethod,
-            $reflectionMethod->getName(),
-            $this->getMethodParameterNames($reflectionMethod),
-            $projectClassShortName
-        );
-        $this->replaceInFile($projectClassFileName, 'class ' . $projectClassShortName, $replacement);
-    }
-
-    /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
-     * @param string $replacedReturnTypeForMethod
-     * @param string $projectClassDocBlock
-     * @param string $projectClassFileName
-     */
-    protected function updateClassAnnotationWithMethod(
-        ReflectionMethod $reflectionMethod,
-        string $replacedReturnTypeForMethod,
-        string $projectClassDocBlock,
-        string $projectClassFileName
-    ): void {
-        $newMethodAnnotationLine = sprintf(
-            "* @method %s%s %s(%s)\n",
-            $reflectionMethod->isStatic() ? 'static ' : '',
-            $replacedReturnTypeForMethod,
-            $reflectionMethod->getName(),
-            $this->getMethodParameterNames($reflectionMethod)
-        );
-        if (strpos($projectClassDocBlock, $newMethodAnnotationLine) === false) {
-            $extendedDocBlock = str_replace('*/', $newMethodAnnotationLine . ' */', $projectClassDocBlock);
-            $this->replaceInFile($projectClassFileName, $projectClassDocBlock, $extendedDocBlock);
+            $this->annotationsAdder->addAnnotationToClass($projectClassBetterReflection, $projectClassNecessaryPropertyAnnotationsLines . $projectClassNecessaryMethodAnnotationsLines);
         }
     }
 }
