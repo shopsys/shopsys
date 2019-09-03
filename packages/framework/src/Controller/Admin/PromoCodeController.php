@@ -32,7 +32,7 @@ class PromoCodeController extends AdminBaseController
     protected $administratorGridFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory|null
+     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface|null
      */
     protected $promoCodeDataFactory;
 
