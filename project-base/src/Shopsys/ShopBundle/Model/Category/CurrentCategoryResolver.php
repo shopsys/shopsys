@@ -43,12 +43,14 @@ class CurrentCategoryResolver
 
         if ($routeName === 'front_product_list') {
             $categoryId = $request->get('id');
+            /** @var \Shopsys\ShopBundle\Model\Category\Category $currentCategory */
             $currentCategory = $this->categoryFacade->getById($categoryId);
 
             return $currentCategory;
         } elseif ($routeName === 'front_product_detail') {
             $productId = $request->get('id');
             $product = $this->productFacade->getById($productId);
+            /** @var \Shopsys\ShopBundle\Model\Category\Category $currentCategory */
             $currentCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
 
             return $currentCategory;

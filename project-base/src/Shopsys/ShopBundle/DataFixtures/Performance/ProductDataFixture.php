@@ -190,6 +190,7 @@ class ProductDataFixture
             $this->productDataFixtureLoader->updateProductDataFromCsvRowForSecondDomain($productData, $row);
             $this->makeProductDataUnique($productData);
             $this->setRandomPerformanceCategoriesToProductData($productData);
+            /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
             $product = $this->productFacade->create($productData);
 
             if ($this->countImported === 0) {

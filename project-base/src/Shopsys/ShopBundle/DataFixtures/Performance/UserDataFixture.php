@@ -163,7 +163,10 @@ class UserDataFixture
     {
         $customerData = $this->getRandomCustomerDataByDomainId($domainId, $userNumber);
 
-        return $this->customerEditFacade->create($customerData);
+        /** @var \Shopsys\ShopBundle\Model\Customer\User $user */
+        $user = $this->customerEditFacade->create($customerData);
+
+        return $user;
     }
 
     /**

@@ -333,11 +333,14 @@ class ProductController extends FrontBaseController
      */
     private function searchCategories($searchText)
     {
-        return $this->categoryFacade->getVisibleByDomainAndSearchText(
+        /** @var \Shopsys\ShopBundle\Model\Category\Category[] $categories */
+        $categories = $this->categoryFacade->getVisibleByDomainAndSearchText(
             $this->domain->getId(),
             $this->domain->getLocale(),
             $searchText
         );
+
+        return $categories;
     }
 
     /**

@@ -320,7 +320,10 @@ class OrderDataFixture
 
         if ($shouldBeRegisteredUser) {
             $userId = $this->faker->randomElement($this->performanceUserIds);
-            return $this->customerFacade->getUserById($userId);
+            /** @var \Shopsys\ShopBundle\Model\Customer\User $user */
+            $user = $this->customerFacade->getUserById($userId);
+
+            return $user;
         } else {
             return null;
         }
