@@ -125,7 +125,16 @@ There you can find links to upgrade notes for other versions too.
         + docker-compose exec -T php-fpm composer install
         + docker-compose exec -T php-fpm ./phing db-create test-db-create build-demo-dev-quick error-pages-generate
         ```
+- run `php phing fix-annotations` to fix or add all the relevant annotations for your extended classes ([#1344](https://github.com/shopsys/shopsys/pull/1344))
+    - thanks to the fixes, your IDE (PHPStorm) will understand your code better
+    - you can read more about the whole topic in the ["Framework extensibility" article](../introduction/framework-extensibility.md#making-the-static-analysis-understand-the-extended-code)
+    - the checks and fixes of the proper annotations are now included in all `standards-*` phing targets, if you want to turn this feature off, add the following line into your `build.xml`:
+    ```diff
+      <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
+    + <property name="check-and-fix-annotations" value="false"/>
 
+      <import file="${path.framework}/build.xml"/>
+    ```
 ### Database migrations
 - run database migrations so products will use a DateTime type for columns for "Selling start date" (selling_from) and "Selling end date" (selling_to) ([#1343](https://github.com/shopsys/shopsys/pull/1343))
     - please check [`Version20190823110846`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Migrations/Version20190823110846.php)
