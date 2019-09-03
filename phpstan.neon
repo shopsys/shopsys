@@ -68,7 +68,7 @@ parameters:
     excludes_analyse:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
-        # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:fix-annotations" command
+        # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
         - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/ClassExtension/Source/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon

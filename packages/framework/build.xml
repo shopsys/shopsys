@@ -104,6 +104,14 @@
         </copy>
     </target>
 
+    <target name="check-annotations" description="Checks whether annotations of extended classes in the project match the actual types according to ClassExtensionRegistry. Reported problems can be fixed using 'fix-annotations' phing target">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:extended-classes:annotations"/>
+            <arg value="--dry-run"/>
+        </exec>
+    </target>
+
     <target name="checks" depends="checks-internal,standards,tests" description="Runs internal checks, coding standards and runs unit, DB and smoke tests."/>
 
     <target name="checks-ci" depends="checks-internal,test-db-demo,test-product-search-recreate-structure,test-product-search-export-products,tests-functional,tests-smoke,tests-acceptance" description="Runs internal checks and runs DB, smoke and acceptance tests."/>
@@ -558,7 +566,7 @@
     <target name="fix-annotations" description="Fixes and adds annotations in project classes to improve static analysis and DX with extended classes">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="shopsys:extended-classes:fix-annotations"/>
+            <arg value="shopsys:extended-classes:annotations"/>
         </exec>
     </target>
 

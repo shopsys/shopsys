@@ -197,6 +197,12 @@ You can easily override the default values in your `parameters.yml` or `paramete
 
 ### Other
 
+#### check-annotations
+Checks whether annotations of extended classes in the project match the actual types according to [`ClassExtensionRegistry`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/ClassExtension/ClassExtensionRegistry.php).
+Reported problems can be fixed using [`fix-annotations` phing target](#fix-annotations).
+
+You can read more about the topic in the ["Framework extensibility" article](./framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).
+
 #### cron
 Runs background jobs. Should be executed periodically by system Cron every 5 minutes.
 

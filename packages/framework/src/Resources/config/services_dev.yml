@@ -19,6 +19,6 @@ services:
             - '%shopsys.entity_extension.map%'
             - '%shopsys.framework.root_dir%'
 
-    Shopsys\FrameworkBundle\Command\FixExtendedClassesAnnotationsCommand:
+    Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
         arguments:
             - '%shopsys.root_dir%'
