@@ -26,9 +26,15 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  * @method \Shopsys\ShopBundle\Model\Order\Item\OrderItem[] getItems()
  * @method \Shopsys\ShopBundle\Model\Order\Item\OrderItem[] getItemsWithoutTransportAndPayment()
  * @method \Shopsys\ShopBundle\Model\Order\Item\OrderItem[] getTransportAndPaymentItems()
- * @method \Shopsys\ShopBundle\Model\Order\Item\OrderItem getItemById($orderItemId)
+ * @method \Shopsys\ShopBundle\Model\Order\Item\OrderItem getItemById(int $orderItemId)
  * @method \Shopsys\ShopBundle\Model\Order\Item\OrderItem[] getProductItems()
  * @method \Shopsys\ShopBundle\Model\Administrator\Administrator|null getCreatedAsAdministrator()
+ * @method editData(\Shopsys\ShopBundle\Model\Order\OrderData $orderData)
+ * @method editOrderTransport(\Shopsys\ShopBundle\Model\Order\OrderData $orderData)
+ * @method editOrderPayment(\Shopsys\ShopBundle\Model\Order\OrderData $orderData)
+ * @method setDeliveryAddress(\Shopsys\ShopBundle\Model\Order\OrderData $orderData)
+ * @method addItem(\Shopsys\ShopBundle\Model\Order\Item\OrderItem $item)
+ * @method removeItem(\Shopsys\ShopBundle\Model\Order\Item\OrderItem $item)
  */
 class Order extends BaseOrder
 {

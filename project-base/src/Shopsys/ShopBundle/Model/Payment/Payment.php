@@ -13,6 +13,12 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentData as BasePaymentData;
  * @ORM\Entity
  * @property \Shopsys\ShopBundle\Model\Transport\Transport[]|\Doctrine\Common\Collections\Collection $transports
  * @method \Shopsys\ShopBundle\Model\Transport\Transport[] getTransports()
+ * @method addTransport(\Shopsys\ShopBundle\Model\Transport\Transport $transport)
+ * @method setTransports(\Shopsys\ShopBundle\Model\Transport\Transport[] $transports)
+ * @method removeTransport(\Shopsys\ShopBundle\Model\Transport\Transport $transport)
+ * @method setTranslations(\Shopsys\ShopBundle\Model\Payment\PaymentData $paymentData)
+ * @method setDomains(\Shopsys\ShopBundle\Model\Payment\PaymentData $paymentData)
+ * @method createDomains(\Shopsys\ShopBundle\Model\Payment\PaymentData $paymentData)
  */
 class Payment extends BasePayment
 {

@@ -20,6 +20,10 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
  * @method \Shopsys\ShopBundle\Model\Transport\Transport getTransport()
  * @method \Shopsys\ShopBundle\Model\Payment\Payment getPayment()
  * @method \Shopsys\ShopBundle\Model\Product\Product|null getProduct()
+ * @method edit(\Shopsys\ShopBundle\Model\Order\Item\OrderItemData $orderItemData)
+ * @method setTransport(\Shopsys\ShopBundle\Model\Transport\Transport $transport)
+ * @method setPayment(\Shopsys\ShopBundle\Model\Payment\Payment $payment)
+ * @method setProduct(\Shopsys\ShopBundle\Model\Product\Product|null $product)
  */
 class OrderItem extends BaseOrderItem
 {
