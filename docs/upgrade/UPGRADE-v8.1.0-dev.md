@@ -47,7 +47,7 @@ There you can find links to upgrade notes for other versions too.
             logout_on_user_change: true
         ```
         - in case you need to disable this functionality (e.g. to prevent failing tests on CI which uses production environment)
-        there is an environment variable `IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK` which needs to be set to `1`
+        there is an environment variable `IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK` which needs to be set to `1` (for **SECURITY** reasons **DO NOT EVER** do this in real production environment)
             - when you are using kubernetes on CI server change your configuration of:
                 - `kubernetes/kustomize/overlays/ci/kustomization.yaml`
                 ```diff
@@ -69,7 +69,30 @@ There you can find links to upgrade notes for other versions too.
                 +        name: IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK
                 +        value: '1'
                 ```
-
+            - when using docker containers without kubernetes add the environment variable to the `docker-compose.yml` file to `php-fpm` definition like in example below
+                ```diff
+                    php-fpm:
+                        build:
+                            context: .
+                            dockerfile: docker/php-fpm/Dockerfile
+                            target: development
+                            args:
+                                www_data_uid: 1000
+                                www_data_gid: 1000
+                        container_name: shopsys-framework-php-fpm
+                        volumes:
+                            - shopsys-framework-sync:/var/www/html
+                            - shopsys-framework-vendor-sync:/var/www/html/vendor
+                            - shopsys-framework-web-sync:/var/www/html/web
+                        ports:
+                            - "35729:35729"
+                +       environment:
+                +           - IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK=1
+                ```
+            - without containers you must set environment variable to the host machine, typically in unix like OS by executing
+                ```
+                export IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK=1
+                ```
 
 ### Tools
 - let Phing properties `is-multidomain` and `translations.dump.locales` be auto-detected ([#1309](https://github.com/shopsys/shopsys/pull/1309))
