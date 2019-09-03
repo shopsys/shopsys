@@ -7,6 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Component\ClassExtension;
 use PHPUnit\Framework\TestCase;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
 use Roave\BetterReflection\Reflection\ReflectionObject;
+use Roave\BetterReflection\Reflection\ReflectionParameter;
 use Roave\BetterReflection\Reflection\ReflectionProperty;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
@@ -136,5 +137,31 @@ class AnnotationsReplacerTest extends TestCase
     public function testReplaceInPropertyType(ReflectionProperty $reflectionProperty, string $output): void
     {
         $this->assertEquals($output, $this->annotationsReplacer->replaceInPropertyType($reflectionProperty));
+    }
+
+    /**
+     * @return array
+     */
+    public function testReplaceInParameterTypeDataProvider(): array
+    {
+        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
+        $reflectionMethod = $reflectionClass->getMethod('acceptsVariousParameters');
+
+        return [
+            [$reflectionMethod->getParameter('categoryFacade'), '\Shopsys\ShopBundle\Model\Category\CategoryFacade'],
+            [$reflectionMethod->getParameter('categoryFacadeOrNull'), '\Shopsys\ShopBundle\Model\Category\CategoryFacade|null'],
+            [$reflectionMethod->getParameter('array'), '\Shopsys\ShopBundle\Model\Article\ArticleData[]'],
+            [$reflectionMethod->getParameter('integer'), 'int'],
+        ];
+    }
+
+    /**
+     * @dataProvider testReplaceInParameterTypeDataProvider
+     * @param \Roave\BetterReflection\Reflection\ReflectionParameter $reflectionParameter
+     * @param string $output
+     */
+    public function testReplaceInParameterType(ReflectionParameter $reflectionParameter, string $output): void
+    {
+        $this->assertEquals($output, $this->annotationsReplacer->replaceInParameterType($reflectionParameter));
     }
 }

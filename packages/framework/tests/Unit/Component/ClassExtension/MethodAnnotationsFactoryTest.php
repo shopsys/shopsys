@@ -30,6 +30,7 @@ class MethodAnnotationsFactoryTest extends TestCase
     {
         $replacementMap = new AnnotationsReplacementsMap([
             'Shopsys\FrameworkBundle\Model\Category\CategoryFacade' => 'Shopsys\ShopBundle\Model\Category\CategoryFacade',
+            'Shopsys\FrameworkBundle\Model\Category\Category' => 'Shopsys\ShopBundle\Model\Category\Category',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass2' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass2',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass3' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass3',
@@ -76,5 +77,6 @@ class MethodAnnotationsFactoryTest extends TestCase
         );
 
         $this->assertContains('@method \Shopsys\ShopBundle\Model\Category\CategoryFacade getCategoryFacade()', $annotationLines);
+        $this->assertContains('@method setCategory(\Shopsys\ShopBundle\Model\Category\Category $category)', $annotationLines);
     }
 }

@@ -48,4 +48,14 @@ class DummyClassForAnnotationsReplacerTest
     public function returnsInt()
     {
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|null $categoryFacadeOrNull
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData[] $array
+     * @param int $integer
+     */
+    public function acceptsVariousParameters($categoryFacade, $categoryFacadeOrNull, $array, $integer)
+    {
+    }
 }

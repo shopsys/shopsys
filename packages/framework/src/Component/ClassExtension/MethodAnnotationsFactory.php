@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
-use phpDocumentor\Reflection\Type;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
 
@@ -63,16 +62,20 @@ class MethodAnnotationsFactory
         ReflectionClass $projectClassBetterReflection
     ): string {
         foreach ($this->annotationsReplacementsMap->getPatterns() as $frameworkClassPattern) {
-            foreach ($reflectionMethodFromFrameworkClass->getDocBlockReturnTypes() as $docBlockReturnType) {
-                if (!$this->isMethodImplementedInClass($reflectionMethodFromFrameworkClass->getName(), $projectClassBetterReflection)
-                    && $this->isMethodReturningTypeThatIsExtendedInProject($frameworkClassPattern, $docBlockReturnType)
-                ) {
+            $methodName = $reflectionMethodFromFrameworkClass->getName();
+            if (!$this->isMethodImplementedInClass($methodName, $projectClassBetterReflection)) {
+                if ($this->methodReturningTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes())
+                    || $this->methodParameterTypeIsExtendedInProject($frameworkClassPattern, $reflectionMethodFromFrameworkClass->getParameters())) {
+                    $optionalStaticKeyword = $reflectionMethodFromFrameworkClass->isStatic() ? 'static ' : '';
+                    $returnType = !empty($this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass)) ? $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass) . ' ' : '';
+                    $parameterNamesWithTypes = $this->getMethodParameterNamesWithTypes($reflectionMethodFromFrameworkClass);
+
                     return sprintf(
-                        " * @method %s%s %s(%s)\n",
-                        $reflectionMethodFromFrameworkClass->isStatic() ? 'static ' : '',
-                        $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethodFromFrameworkClass),
-                        $reflectionMethodFromFrameworkClass->getName(),
-                        $this->getMethodParameterNames($reflectionMethodFromFrameworkClass)
+                        " * @method %s%s%s(%s)\n",
+                        $optionalStaticKeyword,
+                        $returnType,
+                        $methodName,
+                        $parameterNamesWithTypes
                     );
                 }
             }
@@ -100,25 +103,54 @@ class MethodAnnotationsFactory
      * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
      * @return string
      */
-    protected function getMethodParameterNames(ReflectionMethod $reflectionMethod): string
+    protected function getMethodParameterNamesWithTypes(ReflectionMethod $reflectionMethod): string
     {
-        $methodParameterNames = [];
+        $methodParameterNamesWithTypes = [];
         foreach ($reflectionMethod->getParameters() as $methodParameter) {
-            $methodParameterNames[] = '$' . $methodParameter->getName();
+            $methodParameterNamesWithTypes[] = sprintf(
+                '%s $%s',
+                $this->annotationsReplacer->replaceInParameterType($methodParameter),
+                $methodParameter->getName()
+            );
         }
 
-        return implode(', ', $methodParameterNames);
+        return implode(', ', $methodParameterNamesWithTypes);
     }
 
     /**
      * @param string $frameworkClassPattern
-     * @param \phpDocumentor\Reflection\Type $docBlockReturnType
+     * @param \phpDocumentor\Reflection\Type[] $docBlockReturnTypes
      * @return bool
      */
-    protected function isMethodReturningTypeThatIsExtendedInProject(
+    protected function methodReturningTypeIsExtendedInProject(
         string $frameworkClassPattern,
-        Type $docBlockReturnType
+        array $docBlockReturnTypes
     ): bool {
-        return (bool)preg_match($frameworkClassPattern, (string)$docBlockReturnType);
+        foreach ($docBlockReturnTypes as $docBlockReturnType) {
+            if (preg_match($frameworkClassPattern, (string)$docBlockReturnType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param string $frameworkClassPattern
+     * @param \Roave\BetterReflection\Reflection\ReflectionParameter[] $methodParameters
+     * @return bool
+     */
+    protected function methodParameterTypeIsExtendedInProject(
+        string $frameworkClassPattern,
+        array $methodParameters
+    ): bool {
+        foreach ($methodParameters as $methodParameter) {
+            foreach ($methodParameter->getDocBlockTypeStrings() as $typeString) {
+                if (preg_match($frameworkClassPattern, $typeString)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

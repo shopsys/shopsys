@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
 use Roave\BetterReflection\Reflection\ReflectionMethod;
+use Roave\BetterReflection\Reflection\ReflectionParameter;
 use Roave\BetterReflection\Reflection\ReflectionProperty;
 
 class AnnotationsReplacer
@@ -59,5 +60,20 @@ class AnnotationsReplacer
         $propertyType = implode('|', $reflectionProperty->getDocBlockTypeStrings());
 
         return $this->replaceIn($propertyType);
+    }
+
+    /**
+     * @param \Roave\BetterReflection\Reflection\ReflectionParameter $reflectionParameter
+     * @return string
+     */
+    public function replaceInParameterType(ReflectionParameter $reflectionParameter): string
+    {
+        $parameterTypes = $reflectionParameter->getDocBlockTypeStrings();
+        $replacedTypes = [];
+        foreach ($parameterTypes as $parameterType) {
+            $replacedTypes[] = $this->replaceIn((string)$parameterType);
+        }
+
+        return implode('|', $replacedTypes);
     }
 }

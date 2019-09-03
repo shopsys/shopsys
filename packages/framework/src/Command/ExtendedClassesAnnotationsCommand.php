@@ -73,7 +73,7 @@ class ExtendedClassesAnnotationsCommand extends Command
             ->setHelp('What does the command do exactly?
 - Replaces the framework with the project annotations in all project files when there exists a project extension of a given framework class.
 - Adds @property annotations to project classes when there exists a property in parent class that is extended in the project.
-- Adds @method annotations to project classes when there exists a method in parent class that returns an instance of a class that is extended in the project.');
+- Adds @method annotations to project classes when there exists a method in parent class that accepts as a parameter or returns an instance of a class that is extended in the project.');
     }
 
     /**
