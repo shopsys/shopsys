@@ -12,14 +12,14 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
 class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /** @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface */
+    /** @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory */
     protected $productDataFactory;
 
     /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
     protected $productFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface $productDataFactory
+     * @param \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
@@ -36,12 +36,12 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
     public function load(ObjectManager $manager)
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        /* @var $product \Shopsys\FrameworkBundle\Model\Product\Product */
+        /* @var $product \Shopsys\ShopBundle\Model\Product\Product */
 
         $productData = $this->productDataFactory->createFromProduct($product);
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product24 */
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $product24 */
         $product24 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '24');
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product13 */
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $product13 */
         $product13 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '13');
         $productData->accessories = [
             $product24,

@@ -248,7 +248,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 
     /**
      * @param string $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     * @return \Shopsys\ShopBundle\Model\Product\Product[]
      */
     private function getProductsForSearchOrderedByPriority($searchText)
     {
@@ -275,7 +275,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\ShopBundle\Model\Category\Category $category
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     * @return \Shopsys\ShopBundle\Model\Product\Product[]
      */
     private function getProductsInCategoryOrderedByPriority(Category $category)
     {

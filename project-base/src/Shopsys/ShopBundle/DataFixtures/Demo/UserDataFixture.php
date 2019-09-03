@@ -91,7 +91,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $customer
+     * @param \Shopsys\ShopBundle\Model\Customer\User $customer
      */
     protected function resetPassword(User $customer)
     {

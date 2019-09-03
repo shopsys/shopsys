@@ -12,6 +12,14 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 /**
  * @ORM\Table(name="order_items")
  * @ORM\Entity
+ * @property \Shopsys\ShopBundle\Model\Order\Order $order
+ * @property \Shopsys\ShopBundle\Model\Transport\Transport|null $transport
+ * @property \Shopsys\ShopBundle\Model\Payment\Payment|null $payment
+ * @property \Shopsys\ShopBundle\Model\Product\Product|null $product
+ * @method \Shopsys\ShopBundle\Model\Order\Order getOrder()
+ * @method \Shopsys\ShopBundle\Model\Transport\Transport getTransport()
+ * @method \Shopsys\ShopBundle\Model\Payment\Payment getPayment()
+ * @method \Shopsys\ShopBundle\Model\Product\Product|null getProduct()
  */
 class OrderItem extends BaseOrderItem
 {

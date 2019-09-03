@@ -271,7 +271,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
+     * @param \Shopsys\ShopBundle\Model\Product\Brand\Brand $brand
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginatedProductsForBrand(Brand $brand): PaginationResult

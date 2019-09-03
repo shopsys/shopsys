@@ -54,7 +54,7 @@ class OrderController extends FrontBaseController
     private $orderMailFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataMapper
+     * @var \Shopsys\ShopBundle\Model\Order\OrderDataMapper
      */
     private $orderDataMapper;
 
@@ -296,8 +296,8 @@ class OrderController extends FrontBaseController
     /**
      * @param \Shopsys\ShopBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
+     * @param \Shopsys\ShopBundle\Model\Transport\Transport[] $transports
+     * @param \Shopsys\ShopBundle\Model\Payment\Payment[] $payments
      */
     private function checkTransportAndPaymentChanges(
         OrderData $orderData,
@@ -381,7 +381,7 @@ class OrderController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\ShopBundle\Model\Order\Order $order
      */
     private function sendMail($order)
     {

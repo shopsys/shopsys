@@ -113,7 +113,7 @@ class CustomerController extends FrontBaseController
             return $this->redirectToRoute('front_login');
         }
 
-        /** @var \Shopsys\FrameworkBundle\Model\Customer\User $user */
+        /** @var \Shopsys\ShopBundle\Model\Customer\User $user */
         $user = $this->getUser();
 
         $orders = $this->orderFacade->getCustomerOrderList($user);
@@ -152,14 +152,14 @@ class CustomerController extends FrontBaseController
 
             $user = $this->getUser();
             try {
-                /** @var \Shopsys\FrameworkBundle\Model\Order\Order $order */
+                /** @var \Shopsys\ShopBundle\Model\Order\Order $order */
                 $order = $this->orderFacade->getByOrderNumberAndUser($orderNumber, $user);
             } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $ex) {
                 $this->getFlashMessageSender()->addErrorFlash(t('Order not found'));
                 return $this->redirectToRoute('front_customer_orders');
             }
         } else {
-            /** @var \Shopsys\FrameworkBundle\Model\Order\Order $order */
+            /** @var \Shopsys\ShopBundle\Model\Order\Order $order */
             $order = $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
         }
 

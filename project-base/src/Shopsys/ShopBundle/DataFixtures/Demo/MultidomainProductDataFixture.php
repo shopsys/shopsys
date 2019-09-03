@@ -42,7 +42,7 @@ class MultidomainProductDataFixture extends AbstractReferenceFixture implements 
     protected $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
      */
     protected $productDataFactory;
 
@@ -57,7 +57,7 @@ class MultidomainProductDataFixture extends AbstractReferenceFixture implements 
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureCsvReader $productDataFixtureCsvReader
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface $productDataFactory
+     * @param \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -108,7 +108,7 @@ class MultidomainProductDataFixture extends AbstractReferenceFixture implements 
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\ShopBundle\Model\Product\Product $product
      * @param array $row
      */
     protected function editProduct(Product $product, array $row)

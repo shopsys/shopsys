@@ -48,7 +48,7 @@ class UserDataFixture
     private $customerEditFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Customer\UserDataFactory
      */
     private $userDataFactory;
 
@@ -88,7 +88,7 @@ class UserDataFixture
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerEditFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface $userDataFactory
+     * @param \Shopsys\ShopBundle\Model\Customer\UserDataFactory $userDataFactory
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
@@ -157,7 +157,7 @@ class UserDataFixture
     /**
      * @param int $domainId
      * @param int $userNumber
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
+     * @return \Shopsys\ShopBundle\Model\Customer\User
      */
     private function createCustomerOnDomain($domainId, $userNumber)
     {

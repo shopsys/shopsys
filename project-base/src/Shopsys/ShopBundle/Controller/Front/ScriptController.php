@@ -52,7 +52,7 @@ class ScriptController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\ShopBundle\Model\Order\Order $order
      */
     public function embedOrderSentPageScriptsAction(Order $order)
     {
@@ -62,7 +62,7 @@ class ScriptController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\ShopBundle\Model\Order\Order $order
      */
     public function embedOrderSentPageGoogleAnalyticsScriptAction(Order $order)
     {

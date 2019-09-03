@@ -85,8 +85,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param string $referenceName
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+     * @return \Shopsys\ShopBundle\Model\Product\Product
      */
     protected function createProduct($referenceName, ProductData $productData)
     {
@@ -98,7 +98,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $productsByCatnum
+     * @param \Shopsys\ShopBundle\Model\Product\Product[] $productsByCatnum
      * @param int $productNo
      */
     protected function createVariants(array $productsByCatnum, $productNo)
@@ -108,7 +108,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
             $mainProduct = $productsByCatnum[$mainVariantCatnum];
-            /* @var $mainProduct \Shopsys\FrameworkBundle\Model\Product\Product */
+            /* @var $mainProduct \Shopsys\ShopBundle\Model\Product\Product */
 
             $variants = [];
             foreach ($variantsCatnums as $variantCatnum) {

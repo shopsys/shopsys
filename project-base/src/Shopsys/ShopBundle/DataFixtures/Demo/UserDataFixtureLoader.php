@@ -51,7 +51,7 @@ class UserDataFixtureLoader
     protected $path;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Customer\UserDataFactory
      */
     protected $userDataFactory;
 
@@ -83,7 +83,7 @@ class UserDataFixtureLoader
     /**
      * @param string $path
      * @param \Shopsys\FrameworkBundle\Component\Csv\CsvReader $csvReader
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface $userDataFactory
+     * @param \Shopsys\ShopBundle\Model\Customer\UserDataFactory $userDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory

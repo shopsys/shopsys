@@ -31,7 +31,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     protected $categoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Category\CategoryDataFactory
      */
     protected $categoryDataFactory;
 
@@ -42,7 +42,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface $categoryDataFactory
+     * @param \Shopsys\ShopBundle\Model\Category\CategoryDataFactory $categoryDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -239,9 +239,9 @@ class CategoryDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
+     * @param \Shopsys\ShopBundle\Model\Category\CategoryData $categoryData
      * @param string|null $referenceName
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
+     * @return \Shopsys\ShopBundle\Model\Category\Category
      */
     protected function createCategory(CategoryData $categoryData, $referenceName = null)
     {
