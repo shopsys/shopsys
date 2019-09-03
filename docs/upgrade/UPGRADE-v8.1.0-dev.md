@@ -201,26 +201,6 @@ There you can find links to upgrade notes for other versions too.
     - these methods are deprecated and will be removed in the next major release:
         - `CronFacade::runModulesForInstance()` use method `runModules()` instead
         - `CronFacade::runModule()` use method `runSingleModule()` instead
-- fix argument's type hint in [`Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Controller/Admin/PromoCodeController.php) [#1364](https://github.com/shopsys/shopsys/pull/1364)
-    - if you haven't extended `PromoCodeController` class in your project you don't have to do anything
-    - otherwise you must replace type hint in
-        - `PromoCodeController::__construct()`
-            ```diff
-                public function __construct(
-                    PromoCodeFacade $promoCodeFacade,
-                    PromoCodeInlineEdit $promoCodeInlineEdit,
-                    AdministratorGridFacade $administratorGridFacade,
-                    ?PromoCodeDataFactory $promoCodeDataFactory = null,
-            -       ?PromoCodeDataFactory $promoCodeDataFactory = null,
-            +       ?PromoCodeDataFactoryInterface $promoCodeDataFactory = null,
-                    ?PromoCodeGridFactory $promoCodeGridFactory = null,
-                    ?BreadcrumbOverrider $breadcrumbOverrider = null,
-            ``` 
-        - `PromoCodeController::setPromoCodeDataFactory()`
-            ```diff
-            -   public function setPromoCodeDataFactory(PromoCodeDataFactory $promoCodeDataFactory)
-            +   public function setPromoCodeDataFactory(PromoCodeDataFactoryInterface $promoCodeDataFactory)
-            ```
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
