@@ -160,8 +160,8 @@ class MultidomainCategoryDataFixture extends AbstractReferenceFixture implements
      */
     protected function editCategoryOnDomain(string $referenceName, int $domainId, string $description)
     {
+        /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
         $category = $this->getReference($referenceName);
-        /* @var $category \Shopsys\ShopBundle\Model\Category\Category */
         $categoryData = $this->categoryDataFacade->createFromCategory($category);
         $categoryData->descriptions[$domainId] = $description;
         $this->categoryFacade->edit($category->getId(), $categoryData);

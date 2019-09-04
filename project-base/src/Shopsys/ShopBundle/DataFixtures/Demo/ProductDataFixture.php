@@ -108,8 +108,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $variantCatnumsByMainVariantCatnum = $this->productDataFixtureLoader->getVariantCatnumsIndexedByMainVariantCatnum($csvRows);
 
         foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
+            /** @var \Shopsys\ShopBundle\Model\Product\Product $mainProduct */
             $mainProduct = $productsByCatnum[$mainVariantCatnum];
-            /* @var $mainProduct \Shopsys\ShopBundle\Model\Product\Product */
 
             $variants = [];
             foreach ($variantsCatnums as $variantCatnum) {

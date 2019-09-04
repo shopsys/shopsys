@@ -35,8 +35,8 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
      */
     public function load(ObjectManager $manager)
     {
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        /* @var $product \Shopsys\ShopBundle\Model\Product\Product */
 
         $productData = $this->productDataFactory->createFromProduct($product);
         /** @var \Shopsys\ShopBundle\Model\Product\Product $product24 */

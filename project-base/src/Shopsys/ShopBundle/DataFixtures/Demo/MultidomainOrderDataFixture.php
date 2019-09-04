@@ -227,8 +227,8 @@ class MultidomainOrderDataFixture extends AbstractReferenceFixture implements De
             null
         );
 
+        /** @var \Shopsys\ShopBundle\Model\Order\Order $order */
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, $user);
-        /* @var $order \Shopsys\ShopBundle\Model\Order\Order */
 
         $referenceName = OrderDataFixture::ORDER_PREFIX . $order->getId();
         $this->addReference($referenceName, $order);

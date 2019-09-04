@@ -30,11 +30,12 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
      */
     public function load(ObjectManager $manager)
     {
+        /** @var \Shopsys\ShopBundle\Model\Article\Article $termsAndConditions */
         $termsAndConditions = $this->getReference(ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS_1);
+        /** @var \Shopsys\ShopBundle\Model\Article\Article $privacyPolicy */
         $privacyPolicy = $this->getReference(ArticleDataFixture::ARTICLE_PRIVACY_POLICY_1);
-        /* @var $termsAndConditions \Shopsys\ShopBundle\Model\Article\Article */
+        /** @var \Shopsys\ShopBundle\Model\Article\Article $cookies */
         $cookies = $this->getReference(ArticleDataFixture::ARTICLE_COOKIES_1);
-        /* @var $cookies \Shopsys\ShopBundle\Model\Article\Article */
 
         $personalDataDisplaySiteContent = 'By entering an email below, you can view your personal information that we register in our online store. 
         An email with a link will be sent to you after entering your email address, to verify your identity. 

@@ -370,10 +370,10 @@ class ProductDataFixture
      */
     private function isPerformanceCategory(Category $category)
     {
+        /** @var \Shopsys\ShopBundle\Model\Category\Category $firstPerformanceCategory */
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
             CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY
         );
-        /* @var $firstPerformanceCategory \Shopsys\ShopBundle\Model\Category\Category */
 
         return $category->getId() >= $firstPerformanceCategory->getId();
     }

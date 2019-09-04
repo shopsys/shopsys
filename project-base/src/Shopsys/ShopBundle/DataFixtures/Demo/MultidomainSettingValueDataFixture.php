@@ -49,19 +49,19 @@ class MultidomainSettingValueDataFixture extends AbstractReferenceFixture implem
      */
     protected function loadForDomain(int $domainId)
     {
+        /** @var \Shopsys\ShopBundle\Model\Article\Article $termsAndConditionsDomain */
         $termsAndConditionsDomain = $this->getReferenceForDomain(MultidomainArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS, $domainId);
-        /* @var $termsAndConditionsDomain \Shopsys\ShopBundle\Model\Article\Article */
         $this->setting->setForDomain(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $termsAndConditionsDomain->getId(), $domainId);
 
+        /** @var \Shopsys\ShopBundle\Model\Article\Article $privacyPolicyDomain */
         $privacyPolicyDomain = $this->getReferenceForDomain(MultidomainArticleDataFixture::ARTICLE_PRIVACY_POLICY, $domainId);
-        /* @var $privacyPolicyDomain \Shopsys\ShopBundle\Model\Article\Article */
         $this->setting->setForDomain(Setting::PRIVACY_POLICY_ARTICLE_ID, $privacyPolicyDomain->getId(), $domainId);
 
+        /** @var \Shopsys\ShopBundle\Model\Article\Article $cookiesDomain */
         $cookiesDomain = $this->getReferenceForDomain(MultidomainArticleDataFixture::ARTICLE_COOKIES, $domainId);
-        /* @var $cookiesDomain \Shopsys\ShopBundle\Model\Article\Article */
         $this->setting->setForDomain(Setting::COOKIES_ARTICLE_ID, $cookiesDomain->getId(), $domainId);
 
-        /* @var $pricingGroup \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup */
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(MultidomainPricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN, $domainId);
         $this->setting->setForDomain(Setting::DEFAULT_PRICING_GROUP, $pricingGroup->getId(), $domainId);
 
@@ -76,7 +76,7 @@ class MultidomainSettingValueDataFixture extends AbstractReferenceFixture implem
         ';
         $this->setting->setForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $orderSentText, $domainId);
 
-        /* @var $defaultCurrency \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency */
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $defaultCurrency */
         $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_EUR);
         $this->setting->setForDomain(PricingSetting::DEFAULT_DOMAIN_CURRENCY, $defaultCurrency->getId(), $domainId);
 

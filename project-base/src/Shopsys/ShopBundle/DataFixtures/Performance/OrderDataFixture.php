@@ -268,10 +268,10 @@ class OrderDataFixture
 
     private function loadPerformanceProductIds()
     {
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $firstPerformanceProduct */
         $firstPerformanceProduct = $this->persistentReferenceFacade->getReference(
             PerformanceProductDataFixture::FIRST_PERFORMANCE_PRODUCT
         );
-        /* @var $firstPerformanceProduct \Shopsys\ShopBundle\Model\Product\Product */
 
         $qb = $this->em->createQueryBuilder()
             ->select('p.id')
@@ -295,10 +295,10 @@ class OrderDataFixture
 
     private function loadPerformanceUserIdsOnFirstDomain()
     {
+        /** @var \Shopsys\ShopBundle\Model\Customer\User $firstPerformanceUser */
         $firstPerformanceUser = $this->persistentReferenceFacade->getReference(
             PerformanceUserDataFixture::FIRST_PERFORMANCE_USER
         );
-        /* @var $firstPerformanceUser \Shopsys\ShopBundle\Model\Customer\User */
 
         $qb = $this->em->createQueryBuilder()
             ->select('u.id')
