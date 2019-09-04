@@ -24,7 +24,7 @@ class ClassExtensionRegistry
     /**
      * @var string[]
      */
-    protected $dataObjectExtensionMap = [];
+    protected $otherClassesExtensionMap = [];
 
     /**
      * @var string
@@ -39,7 +39,7 @@ class ClassExtensionRegistry
     {
         $this->entityExtensionMap = $entityExtensionMap;
         $this->frameworkRootDir = $frameworkRootDir;
-        $this->dataObjectExtensionMap = $this->getDataObjectExtensionMap();
+        $this->otherClassesExtensionMap = $this->getOtherClassesExtensionMap();
     }
 
     /**
@@ -52,27 +52,30 @@ class ClassExtensionRegistry
     }
 
     /**
+     * Other classes that are not entities or registered in service extension map
+     * I.e. data objects and controllers (other class types can by added by modifying the finder if necessary)
+     *
      * @return string[]
      */
-    protected function getDataObjectExtensionMap(): array
+    protected function getOtherClassesExtensionMap(): array
     {
         $finder = Finder::create()
             ->files()
             ->ignoreUnreadableDirs()
-            ->in($this->frameworkRootDir)
-            ->name('/.*Data\.php/');
+            ->in($this->frameworkRootDir . '/src')
+            ->name('/.*(Data|Controller)\.php/');
 
-        $dataObjectsMap = [];
+        $otherClassesMap = [];
         foreach ($finder as $file) {
             /** @var \Symfony\Component\Finder\SplFileInfo $file */
             $frameworkClassFqcn = $this->getFqcn($file->getPathname());
             $projectClassFqcn = str_replace('Shopsys\FrameworkBundle', 'Shopsys\ShopBundle', $frameworkClassFqcn);
             if (class_exists($projectClassFqcn)) {
-                $dataObjectsMap[$frameworkClassFqcn] = $projectClassFqcn;
+                $otherClassesMap[$frameworkClassFqcn] = $projectClassFqcn;
             }
         }
 
-        return $dataObjectsMap;
+        return $otherClassesMap;
     }
 
     /**
@@ -91,6 +94,6 @@ class ClassExtensionRegistry
      */
     public function getClassExtensionMap(): array
     {
-        return $this->serviceExtensionMap + $this->entityExtensionMap + $this->dataObjectExtensionMap;
+        return $this->serviceExtensionMap + $this->entityExtensionMap + $this->otherClassesExtensionMap;
     }
 }
