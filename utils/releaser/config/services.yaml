@@ -3,7 +3,12 @@ parameters:
     monorepo_package_name: "shopsys/shopsys"
 
     # these stages can use already existing tag; newer version than the last one is required in all other stages by default
+    # this can be used to skip the tag validation completely
+    # we need this as we are supporting multiple versions and we need to release tags that are lower than the newest one
+    # e.g. we want to release "v7.3.2" even if "v8.0.0" is already released
     stages_to_allow_existing_tag:
+        - "release-candidate"
+        - "release"
         - "after-release"
 
 services:
