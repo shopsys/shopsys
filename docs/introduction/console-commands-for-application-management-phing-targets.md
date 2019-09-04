@@ -197,9 +197,9 @@ You can easily override the default values in your `parameters.yml` or `paramete
 
 ### Other
 
-#### check-annotations
+#### annotations-check
 Checks whether annotations of extended classes in the project match the actual types according to [`ClassExtensionRegistry`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/ClassExtension/ClassExtensionRegistry.php).
-Reported problems can be fixed using [`fix-annotations` phing target](#fix-annotations).
+Reported problems can be fixed using [`annotations-fix` phing target](#annotations-fix).
 
 You can read more about the topic in the ["Framework extensibility" article](./framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).
 
@@ -235,7 +235,7 @@ Lists all available background jobs. If there is more than one cron instance reg
 
 For more information, see [Working with Multiple Cron Instances](/docs/cookbook/working-with-multiple-cron-instances.md) cookbook or you can read about [Cron in general](/docs/introduction/cron.md).
 
-#### fix-annotations
+#### annotations-fix
 Makes static analysis tools understand the extended code in your project by changing annotations and adding `@property` and `@method` annotations to relevant classes.
 
 You can read more in the ["Framework extensibility" article](./framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).

@@ -133,7 +133,7 @@ class ExtendedClassesAnnotationsCommand extends Command
             $symfonyStyle->success('All good!');
             return 0;
         } elseif ($isDryRun) {
-            $symfonyStyle->note('You can fix the annotations using "fix-annotations" phing command.');
+            $symfonyStyle->note('You can fix the annotations using "annotations-fix" phing command.');
             return 1;
         }
     }

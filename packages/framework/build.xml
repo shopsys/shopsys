@@ -53,6 +53,43 @@
         </else>
     </if>
 
+    <target name="annotations-check" description="Checks whether annotations of extended classes in the project match the actual types according to ClassExtensionRegistry. Reported problems can be fixed using 'annotations-fix' phing target">
+        <if>
+            <istrue value="${check-and-fix-annotations}"/>
+            <then>
+                <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+                    <arg value="${path.bin-console}"/>
+                    <arg value="shopsys:extended-classes:annotations"/>
+                    <arg value="--dry-run"/>
+                </exec>
+            </then>
+            <else>
+                <echo>
+                    Annotations checks are turned off by configuration, see "check-and-fix-annotations" build property.
+                    You are still able to run "shopsys:extended-classes:annotations" Symfony command directly.
+                </echo>
+            </else>
+        </if>
+    </target>
+
+    <target name="annotations-fix" description="Fixes and adds annotations in project classes to improve static analysis and DX with extended classes">
+        <if>
+            <istrue value="${check-and-fix-annotations}"/>
+            <then>
+                <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+                    <arg value="${path.bin-console}"/>
+                    <arg value="shopsys:extended-classes:annotations"/>
+                </exec>
+            </then>
+            <else>
+                <echo>
+                    Annotations fixes are turned off by configuration, see "check-and-fix-annotations" build property.
+                    You are still able to run "shopsys:extended-classes:annotations" Symfony command directly.
+                </echo>
+            </else>
+        </if>
+    </target>
+
     <target name="assets" description="Installs web assets from external bundles into a public web directory.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true" output="${dev.null}">
             <arg value="${path.bin-console}"/>
@@ -103,25 +140,6 @@
                 </replacetokens>
             </filterchain>
         </copy>
-    </target>
-
-    <target name="check-annotations" description="Checks whether annotations of extended classes in the project match the actual types according to ClassExtensionRegistry. Reported problems can be fixed using 'fix-annotations' phing target">
-        <if>
-            <istrue value="${check-and-fix-annotations}"/>
-            <then>
-                <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-                    <arg value="${path.bin-console}"/>
-                    <arg value="shopsys:extended-classes:annotations"/>
-                    <arg value="--dry-run"/>
-                </exec>
-            </then>
-            <else>
-                <echo>
-                    Annotations checks are turned off by configuration, see "check-and-fix-annotations" build property.
-                    You are still able to run "shopsys:extended-classes:annotations" Symfony command directly.
-                </echo>
-            </else>
-        </if>
     </target>
 
     <target name="checks" depends="checks-internal,standards,tests" description="Runs internal checks, coding standards and runs unit, DB and smoke tests."/>
@@ -575,24 +593,6 @@
         </if>
     </target>
 
-    <target name="fix-annotations" description="Fixes and adds annotations in project classes to improve static analysis and DX with extended classes">
-        <if>
-            <istrue value="${check-and-fix-annotations}"/>
-            <then>
-                <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-                    <arg value="${path.bin-console}"/>
-                    <arg value="shopsys:extended-classes:annotations"/>
-                </exec>
-            </then>
-            <else>
-                <echo>
-                    Annotations fixes are turned off by configuration, see "check-and-fix-annotations" build property.
-                    You are still able to run "shopsys:extended-classes:annotations" Symfony command directly.
-                </echo>
-            </else>
-        </if>
-    </target>
-
     <target name="friendly-urls-generate" description="Generates friendly urls for supported entities when missing.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -738,13 +738,13 @@
         </exec>
     </target>
 
-    <target name="standards" depends="phplint,ecs,check-annotations,phpstan,twig-lint,yaml-standards,eslint-check" description="Checks coding standards."/>
+    <target name="standards" depends="phplint,ecs,annotations-check,phpstan,twig-lint,yaml-standards,eslint-check" description="Checks coding standards."/>
 
-    <target name="standards-diff" depends="phplint-diff,ecs-diff,check-annotations,phpstan,twig-lint-diff,yaml-standards,eslint-check-diff" description="Checks coding standards in changed files."/>
+    <target name="standards-diff" depends="phplint-diff,ecs-diff,annotations-check,phpstan,twig-lint-diff,yaml-standards,eslint-check-diff" description="Checks coding standards in changed files."/>
 
-    <target name="standards-fix" depends="ecs-fix,fix-annotations,yaml-standards-fix,eslint-fix" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
+    <target name="standards-fix" depends="ecs-fix,annotations-fix,yaml-standards-fix,eslint-fix" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
 
-    <target name="standards-fix-diff" depends="ecs-fix-diff,fix-annotations,yaml-standards-fix,eslint-fix-diff" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
+    <target name="standards-fix-diff" depends="ecs-fix-diff,annotations-fix,yaml-standards-fix,eslint-fix-diff" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
 
     <target name="test-db-create" description="Creates test database for application with required configuration.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">

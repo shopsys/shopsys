@@ -146,7 +146,7 @@ class ProductController
       }
 }
 ```
-**Luckily, you do need to fix the annotations manually, there is the [Phing target `fix-annotations`](./console-commands-for-application-management-phing-targets.md#fix-annotations), that handles everything for you.**
+**Luckily, you do need to fix the annotations manually, there is the [Phing target `annotations-fix`](./console-commands-for-application-management-phing-targets.md#annotations-fix), that handles everything for you.**
 
 ### Problem 2
 There might be yet another problem with static analysis when extending framework classes.
@@ -203,7 +203,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
   class ProductFacade extends BaseProductFacade
   {
 ```
-**Even this scenario is covered by `fix-annotations` phing target.**
+**Even this scenario is covered by `annotations-fix` phing target.**
 
 ### Problem 3
 There is one kind of problem that is not fixed automatically and needs to be addressed manually.
@@ -282,7 +282,7 @@ private function myAwesomeMethod($id)
 }
 ```
 
-As a workaround for this, you can create an empty class extending the one from the framework, register the extension in your `services.yml`, and then use `php phing fix-annotations` to fix appropriate annotations for you.
+As a workaround for this, you can create an empty class extending the one from the framework, register the extension in your `services.yml`, and then use `php phing annotations-fix` to fix appropriate annotations for you.
 
 Which way to go really depends on your situation. If you are likely to extend the given framework class sooner or later, or the same problem with the class is reported in many places, it would be better to create the empty extended class right away.
 Otherwise, it might be better just extracting and annotating the variable manually (like in [this commit in monorepo](https://github.com/shopsys/shopsys/commit/efd008b8d))
