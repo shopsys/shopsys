@@ -71,7 +71,7 @@ ie. you can upgrade them independently via `composer update`.
 There is no automated way of upgrading the project base.
 If you wanted to upgrade your project base, you would need to [cherry-pick](https://git-scm.com/docs/git-cherry-pick) or [merge](https://git-scm.com/docs/git-merge) modifications from the original repository manually.
 We try to ease you the process as much as possible by maintaining clear GIT history,
-keeping up-to-date [changelog](https://github.com/shopsys/shopsys/blob/7.3/CHANGELOG.md) and [upgrading instructions](https://github.com/shopsys/shopsys/blob/7.3/UPGRADE.md),
+keeping up-to-date [changelog](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md) and [upgrading instructions](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md),
 and writing [understandable commit messages](../contributing/guidelines-for-creating-commits.md).
 
 ## Conclusion
