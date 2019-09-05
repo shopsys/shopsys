@@ -7,7 +7,7 @@ The definition of a model is adopted from [Domain Driven Design (DDD)](https://s
 Model is a system of abstractions that describes selected aspect of a domain.
 
 Domain is a sphere of knowledge or activity we build application logic around.
-The domain of Shopsys Framework is e-commerce.
+The domain of Shopsys Framework is ecommerce.
 
 !!! note
     In Shopsys Framework, we also use the term domain for another concept which is an instance of eshop data accessible through an individual url address.  

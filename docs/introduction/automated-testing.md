@@ -163,7 +163,7 @@ See acceptance test for product filter in administration in [`\Tests\ShopBundle\
 ### Performance tests
 These tests assert that key actions do not take too long. They are similar to [HTTP smoke tests](#http-smoke-tests) but they measure response time as well. In addition to routes tested by HTTP smoke tests, these tests also request and measure regeneration of all product feeds.
 
-Before execution of the test suite, the testing database is filled with a large amount of data simulating production environment of a big e-commerce project. You will no longer unknowingly slow down a page because you are developing with only a small data set.
+Before execution of the test suite, the testing database is filled with a large amount of data simulating production environment of a big ecommerce project. You will no longer unknowingly slow down a page because you are developing with only a small data set.
 
 It is advised to run these tests on a separate server that is not under load at the time for consistent results (eg. only in nighttime).
 

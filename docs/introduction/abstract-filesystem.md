@@ -1,5 +1,5 @@
 # Abstract Filesystem
-One of the goals of the Shopsys Framework is to give you tools to make your e-commerce platform scalable.
+One of the goals of the Shopsys Framework is to give you tools to make your ecommerce platform scalable.
 One of the requirements for scalable application is separated file storage that is accessible from all application instances.
 
 We use abstract filesystem - [Flysystem](https://github.com/thephpleague/flysystem).

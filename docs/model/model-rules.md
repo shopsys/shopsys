@@ -3,7 +3,7 @@ In this article you will learn about model rules, what is and what is not model,
 
 ## Hierarchy nesting
 All classes related to the model are nested in the `Model` namespace inside the bundle namespace.
-In your e-commerce project based on Shopsys Framework, you should put your classes inside `Shopsys\ShopBundle\Model\<MODEL>` (this namespace will be used below).
+In your ecommerce project based on Shopsys Framework, you should put your classes inside `Shopsys\ShopBundle\Model\<MODEL>` (this namespace will be used below).
 Core model classes of SSFW can be found in `Shopsys\FrameworkBundle\Model\<MODEL>`.
 
 They can also be nested into deeper directory such as `Shopsys\ShopBundle\Model\Product\Search` if it encapsulate group of classes representing some specific functionality, for example search functionality for a `Product` entity.
@@ -22,7 +22,7 @@ They can also be nested into deeper directory such as `Shopsys\ShopBundle\Model\
 ## What is and what is not a model
 *Model is a system of abstractions that describes selected aspect of a domain.*
 
-That means that everything in a model should be related to some functionality of the domain, in our case, e-commerce.
+That means that everything in a model should be related to some functionality of the domain, in our case, ecommerce.
 An exception to this is integration code such as controllers or forms which are not a part of the model.
 
 If you are creating new functionality that could be used, for example, in a portfolio application, like a navigation panel, you should create it as a component.
@@ -51,7 +51,7 @@ Some concepts in our current model do not follow the rules listed above.
 
 ### Model without persisted entity representation
 Some models do not have a persisted entity that represents a model.
-For example one of them is `Feed`, even though it does not have a entity, it is related to the e-commerce domain and because of that we keep it in the model namespace.
+For example one of them is `Feed`, even though it does not have a entity, it is related to the ecommerce domain and because of that we keep it in the model namespace.
 
 Models without a persisted entity:
 

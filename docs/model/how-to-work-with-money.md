@@ -1,6 +1,6 @@
 # How to Work with Money
 
-Money is a very important concept for every e-commerce project.
+Money is a very important concept for every ecommerce project.
 In Shopsys Framework, all monetary values (*prices, account balances, discount amounts, price limits etc.*) are represented by an instance of [the `Money` class](#money-class).
 
 This approach has several advantages:

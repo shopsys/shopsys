@@ -1,6 +1,6 @@
 # Backward Compatibility Promise
 
-Smooth and safe upgrades of your own e-commerce project are very important to us.
+Smooth and safe upgrades of your own ecommerce project are very important to us.
 In the same time, we need to be able to improve Shopsys Framework for you by adding functionality, enhancing or simplifying current functions and fixing bugs.
 After reading this promise you'll understand backward compatibility, what changes you can expect and how we plan to make changes in the future.
 
@@ -33,7 +33,7 @@ Exceptions from adhering to Symfony's promise and clarifications for non-PHP sou
 ### Project-base Repository
 The [project-base repository](https://github.com/shopsys/project-base) is not meant to be extended or depended upon.
 For this reason, the changes in it are not subject to the rules of this BC promise.
-It should be viewed as a template for your own e-commerce projects built on top of Shopsys Framework.
+It should be viewed as a template for your own ecommerce projects built on top of Shopsys Framework.
 
 This means that the `project-base` should run with any higher minor version of Shopsys Framework, up to the next `MAJOR` version.
 
@@ -43,7 +43,7 @@ You can follow the changes in the repository to see how working with Shopsys Fra
 During an upgrade to the next major version, you have to make the changes yourself according to the advice in [UPGRADE.md](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md).
 
 !!! note
-    The same holds true for the [demoshop repository](https://github.com/shopsys/demoshop) which is a complex example of an e-commerce project using a custom design and modifications.
+    The same holds true for the [demoshop repository](https://github.com/shopsys/demoshop) which is a complex example of an ecommerce project using a custom design and modifications.
 
 ### PHP Code
 Basic rules for PHP code are covered by [Symfony Backward Compatibility Promise](https://symfony.com/doc/3.4/contributing/code/bc.html).
