@@ -75,7 +75,8 @@ class FriendlyUrlFacade
         $friendlyUrls = $this->friendlyUrlFactory->createForAllDomains($routeName, $entityId, $namesByLocale);
         foreach ($friendlyUrls as $friendlyUrl) {
             $locale = $this->domain->getDomainConfigById($friendlyUrl->getDomainId())->getLocale();
-            $this->resolveUniquenessOfFriendlyUrlAndFlush($friendlyUrl, $namesByLocale[$locale]);
+            $mainFriendlyUrl = $this->findMainFriendlyUrl($friendlyUrl->getDomainId(), $routeName, $entityId);
+            $this->resolveUniquenessOfFriendlyUrlAndFlush($friendlyUrl, $namesByLocale[$locale], $mainFriendlyUrl === null);
         }
     }
 
@@ -96,8 +97,9 @@ class FriendlyUrlFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param string $entityName
+     * @param bool $setAsMain
      */
-    protected function resolveUniquenessOfFriendlyUrlAndFlush(FriendlyUrl $friendlyUrl, $entityName)
+    protected function resolveUniquenessOfFriendlyUrlAndFlush(FriendlyUrl $friendlyUrl, $entityName, bool $setAsMain = true)
     {
         $attempt = 0;
         do {
@@ -128,7 +130,9 @@ class FriendlyUrlFacade
         if ($friendlyUrl !== null) {
             $this->em->persist($friendlyUrl);
             $this->em->flush($friendlyUrl);
-            $this->setFriendlyUrlAsMain($friendlyUrl);
+            if ($setAsMain === true) {
+                $this->setFriendlyUrlAsMain($friendlyUrl);
+            }
         }
     }
 
