@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
@@ -27,15 +28,23 @@ class ProductFilterRepository
     protected $parameterFilterRepository;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
+     */
+    protected $entityNameResolver;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterRepository $parameterFilterRepository
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
         QueryBuilderExtender $queryBuilderExtender,
-        ParameterFilterRepository $parameterFilterRepository
+        ParameterFilterRepository $parameterFilterRepository,
+        EntityNameResolver $entityNameResolver
     ) {
         $this->queryBuilderExtender = $queryBuilderExtender;
         $this->parameterFilterRepository = $parameterFilterRepository;
+        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**
@@ -85,6 +94,8 @@ class ProductFilterRepository
         PricingGroup $pricingGroup
     ) {
         if ($maximalPrice !== null || $minimalPrice !== null) {
+            $resolvedEntityClass = $this->entityNameResolver->resolve(ProductCalculatedPrice::class);
+
             $priceLimits = 'pcp.product = p AND pcp.pricingGroup = :pricingGroup';
             if ($minimalPrice !== null) {
                 $priceLimits .= ' AND pcp.priceWithVat >= :minimalPrice';
@@ -96,7 +107,7 @@ class ProductFilterRepository
             }
             $this->queryBuilderExtender->addOrExtendJoin(
                 $productsQueryBuilder,
-                ProductCalculatedPrice::class,
+                $resolvedEntityClass,
                 'pcp',
                 $priceLimits
             );
