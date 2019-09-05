@@ -1,4 +1,11 @@
 # Shopsys Framework Knowledge Base
+Welcome to Shopsys Framework Knowledge Base!
+On these pages, you can find everything you need to know when you want to build your own ecommerce site based on the framework.
+
+If you want to know more about what Shopsys Framework is, you can take a look at our [README.md](https://github.com/shopsys/shopsys/blob/master/README.md).
+
+## Need help?
+If you are not able to find the desired information here, you can always ask us directly on our [public slack](http://slack.shopsys-framework.com/) or [report an issue](https://github.com/shopsys/shopsys/issues/new) on Github.
 
 ## What is new and how to upgrade
 * In [CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md) you can find the list of all important changes in all repositories maintained in [shopsys/shopsys monorepo](https://github.com/shopsys/shopsys/)
