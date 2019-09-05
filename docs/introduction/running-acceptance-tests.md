@@ -1,5 +1,7 @@
 # Running Acceptance Tests
 
+*Note: You may want to test administrator's interaction in production environment. In that case you should follow [Upgrade Notes](/docs/upgrade/UPGRADE-v8.1.0-dev.md#infrastructure) (search for `IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK`) or change administrator's password since we do not allow administrators to log in with default credentials in production environment.*
+
 ## Running in Docker
 There is `selenium-server` container with installed Selenium hub and Google Chrome, prepared to run the acceptance tests.
 

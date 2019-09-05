@@ -91,7 +91,7 @@ class LoginController extends AdminBaseController
         try {
             $this->authenticator->checkLoginProcess($request);
         } catch (\Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException $e) {
-            $error = t('Log in failed.');
+            $error = t($e->getMessage());
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Login/loginForm.html.twig', [

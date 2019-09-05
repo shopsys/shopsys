@@ -14,6 +14,12 @@ patchesJson6902:
             kind: Ingress
             name: shopsys
         path: ./ingress-patch.yaml
+    -   target:
+            group: apps
+            version: v1
+            kind: Deployment
+            name: webserver-php-fpm
+        path: ./webserver-php-fpm-patch.yaml
 configMapGenerator:
     -   name: nginx-configuration
         files:

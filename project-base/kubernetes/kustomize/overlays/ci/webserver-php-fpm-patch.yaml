@@ -1,0 +1,5 @@
+-   op: add
+    path: /spec/template/spec/containers/0/env/-
+    value:
+        name: IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK
+        value: '1'
