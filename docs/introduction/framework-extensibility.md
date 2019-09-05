@@ -78,3 +78,216 @@ as well as a list of customizations that are not (and will not be) possible at a
     * separate users login credentials
     * share company attributes
     * change association from 1:1 to 1:N
+
+## Making the static analysis understand the extended code
+### Problem 1
+When extending framework classes, it may happen that tools for static analysis (e.g. PHPStan, PHPStorm) will not understand your code properly.
+Imagine this situation:
+
+- You have a controller that is dependent on a framework service:
+```php
+namespace Shopsys\ShopBundle\Controller\Front;
+
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+
+class ProductController
+{
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     */
+    protected $productFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     */
+    public function __construct(ProductFacade $productFacade)
+    {
+        $this->productFacade = $productFacade;
+    }
+}
+```
+- In your project, you extend the framework's `ProductFacade` service:
+```php
+namespace Shopsys\ShopBundle\Model\Product;
+
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
+
+class ProductFacade extends BaseProductFacade
+{
+    public function myCustomAwesomeFunction()
+    {
+        return 42;
+    }
+}
+```
+- You register your extension in DI services configuration and thanks to that, your class is used in `ProductController` instead of the one from `FrameworkBundle`, so far so good:
+```yaml
+Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@Shopsys\ShopBundle\Model\Product\ProductFacade'
+```
+**However, when you want to use your `myCustomAwesomeFunction()` in `ProductController`, the static analysis is not aware of that function.**
+#### Solution
+To fix this, you need to change the annotations properly:
+```diff
+class ProductController
+{
+      /**
+-      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
++      * @var \Shopsys\ShopBundle\Model\Product\ProductFacade
+       */
+      protected $productFacade;
+
+      /**
+-      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
++      * @param \Shopsys\ShopBundle\Model\Product\ProductFacade $productFacade
+       */
+      public function __construct(ProductFacade $productFacade)
+      {
+          $this->productFacade = $productFacade;
+      }
+}
+```
+**Luckily, you do need to fix the annotations manually, there is the [Phing target `annotations-fix`](./console-commands-for-application-management-phing-targets.md#annotations-fix), that handles everything for you.**
+
+### Problem 2
+There might be yet another problem with static analysis when extending framework classes.
+Imagine the following situation:
+
+- In framework, there is `ProductFacade` that has `ProductRepository` property
+```php
+namespace Shopsys\FrameworkBundle\Model\Product;
+
+class ProductFacade
+{
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
+     */
+    protected $productRepository;
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductRepository
+     */
+    public function getProductRepository()
+    {
+        retrun $this->productRepository;
+    }
+}
+```
+- In your project, you extend `ProductRepository` and `ProductFacade` as well.
+- Then, in your extended facade, you want to access the repository (generally speaking, you want to access the parent's property that has a type that is extended in your project, or you want to access a method that returns a type that is already extended):
+```php
+namespace Shopsys\ShopBundle\Model\Product;
+
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
+
+class ProductFacade extends BaseProductFacade
+{
+    public function myCustomAwesomeFunction()
+    {
+        $this->productRepository; // static analysis thinks this is of type \Shopsys\FrameworkBundle\Model\Product\ProductRepository
+        $this->getProductRepository(); // static analysis thinks this is of type \Shopsys\FrameworkBundle\Model\Product\ProductRepository
+    }
+}
+```
+- **Once again, static analysis is not aware of the extension.**
+#### Solution
+To fix this, you don't need to override the method or property, you just need to add proper `@method` and `@property` annotations to your class:
+```diff
+namespace Shopsys\ShopBundle\Model\Product;
+
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
+
++ /**
++  * @method \Shopsys\ShopBundle\Model\Product\ProductRepository getProductRepository()
++  * @property \Shopsys\ShopBundle\Model\Product\ProductRepository $productRepository
++  */
+  class ProductFacade extends BaseProductFacade
+  {
+```
+**Even this scenario is covered by `annotations-fix` phing target.**
+
+### Problem 3
+There is one kind of problem that is not fixed automatically and needs to be addressed manually.
+Shopsys Framework uses a kind of magic for working with extended entities (see [`EntityNameResolver` class](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/EntityExtension/EntityNameResolver.php)),
+and static analysis tools are not aware of that fact.
+Imagine the following situation:
+- You have extended `Product` entity in your project
+- In the framework, there is `ProductFacade` class that is not extended in your project, and it has a method that returns instances of `Product` entity (in fact, it returns instances of your child `Product` entity thanks to the mentioned `EntityNameResolver` magic).
+```php
+namespace Shopsys\FrameworkBundle\Model\Product;
+
+// the class has no extension in your project
+class ProductFacade
+{
+
+    /**
+     * This class is not extended in the project either
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
+     */
+    protected $productRepository;
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     */
+    public function getById($id)
+    {
+        // despite the annotation, extended Product entity from your project is returned
+        return $this->productRepository->getById($id);
+    }
+}
+```
+- You have a controller that is dependent on the framework service:
+```php
+namespace Shopsys\ShopBundle\Controller\Front;
+
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+
+class ProductController
+{
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     */
+    protected $productFacade;
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     */
+    public function __construct(ProductFacade $productFacade)
+    {
+        return $this->productFacade = $productFacade;
+    }
+
+    /**
+     * @param int $id
+     * Your Product instance is returned indeed, but static analysis is confused
+     * @return \Shopsys\ShopBundle\Model\Product\Product
+     */
+    private function myAwesomeMethod($id)
+    {
+        return $this->productFacade->getById($id);
+    }
+}
+```
+**In such a case, static analysis does not understand that the extended `Product` entity is returned.**
+#### Solution
+This needs to be fixed manually using a local variable with an inline annotation:
+```diff
+private function myAwesomeMethod($id)
+{
++    /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
++    $product = $this->productFacade->getById($id);
+
+
+-    return $this->productFacade->getById($id);
++    return $product;
+}
+```
+
+As a workaround for this, you can create an empty class extending the one from the framework, register the extension in your `services.yml`, and then use `php phing annotations-fix` to fix appropriate annotations for you.
+
+Which way to go really depends on your situation. If you are likely to extend the given framework class sooner or later, or the same problem with the class is reported in many places, it would be better to create the empty extended class right away.
+Otherwise, it might be better just extracting and annotating the variable manually (like in [this commit in monorepo](https://github.com/shopsys/shopsys/commit/efd008b8d))
+as it is quicker and you can avoid having an unused empty class in your project.
+
+### Tip
+If you are a fan of an automation and PHPStorm user at the same time, you can simplify things even more and set your IDE to automatically run the phing target every time you e.g. change something in your project.
+This can be achieved by setting up a custom "[File watcher](https://www.jetbrains.com/help/phpstorm/using-file-watchers.html)".

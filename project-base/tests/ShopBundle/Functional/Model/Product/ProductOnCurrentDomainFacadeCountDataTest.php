@@ -50,7 +50,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
     abstract public function getProductOnCurrentDomainFacade(): ProductOnCurrentDomainFacadeInterface;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param \Shopsys\ShopBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData
      * @dataProvider categoryTestCasesProvider

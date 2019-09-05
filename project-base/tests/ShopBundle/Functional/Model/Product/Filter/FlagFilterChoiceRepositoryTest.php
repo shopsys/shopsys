@@ -82,7 +82,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Category\Category $category */
+        /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
         $category = $this->getReference($categoryReferenceName);
 
         return $repository->getFlagFilterChoicesInCategory(1, $pricingGroup, 'en', $category);

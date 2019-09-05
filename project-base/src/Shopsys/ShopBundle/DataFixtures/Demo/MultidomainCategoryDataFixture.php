@@ -20,7 +20,7 @@ class MultidomainCategoryDataFixture extends AbstractReferenceFixture implements
     protected $categoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Category\CategoryDataFactory
      */
     protected $categoryDataFacade;
 
@@ -31,7 +31,7 @@ class MultidomainCategoryDataFixture extends AbstractReferenceFixture implements
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface $categoryDataFacade
+     * @param \Shopsys\ShopBundle\Model\Category\CategoryDataFactory $categoryDataFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -160,8 +160,8 @@ class MultidomainCategoryDataFixture extends AbstractReferenceFixture implements
      */
     protected function editCategoryOnDomain(string $referenceName, int $domainId, string $description)
     {
+        /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
         $category = $this->getReference($referenceName);
-        /* @var $category \Shopsys\FrameworkBundle\Model\Category\Category */
         $categoryData = $this->categoryDataFacade->createFromCategory($category);
         $categoryData->descriptions[$domainId] = $description;
         $this->categoryFacade->edit($category->getId(), $categoryData);

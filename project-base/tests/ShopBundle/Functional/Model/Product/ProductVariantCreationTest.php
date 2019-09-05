@@ -118,8 +118,8 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $expectedVariants
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
+     * @param \Shopsys\ShopBundle\Model\Product\Product[] $expectedVariants
+     * @param \Shopsys\ShopBundle\Model\Product\Product $mainVariant
      */
     private function assertContainsAllVariants(array $expectedVariants, Product $mainVariant): void
     {

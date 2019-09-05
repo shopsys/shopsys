@@ -35,7 +35,7 @@ class CurrentCategoryResolver
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
+     * @return \Shopsys\ShopBundle\Model\Category\Category|null
      */
     public function findCurrentCategoryByRequest(Request $request, $domainId)
     {
@@ -43,12 +43,14 @@ class CurrentCategoryResolver
 
         if ($routeName === 'front_product_list') {
             $categoryId = $request->get('id');
+            /** @var \Shopsys\ShopBundle\Model\Category\Category $currentCategory */
             $currentCategory = $this->categoryFacade->getById($categoryId);
 
             return $currentCategory;
         } elseif ($routeName === 'front_product_detail') {
             $productId = $request->get('id');
             $product = $this->productFacade->getById($productId);
+            /** @var \Shopsys\ShopBundle\Model\Category\Category $currentCategory */
             $currentCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
 
             return $currentCategory;

@@ -22,13 +22,13 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     protected $transportFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Transport\TransportDataFactory
      */
     protected $transportDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface $transportDataFactory
+     * @param \Shopsys\ShopBundle\Model\Transport\TransportDataFactory $transportDataFactory
      */
     public function __construct(
         TransportFacade $transportFacade,
@@ -90,7 +90,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
     /**
      * @param string $referenceName
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
+     * @param \Shopsys\ShopBundle\Model\Transport\TransportData $transportData
      */
     protected function createTransport($referenceName, TransportData $transportData)
     {

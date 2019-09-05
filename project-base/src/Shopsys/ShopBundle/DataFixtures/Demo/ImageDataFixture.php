@@ -138,8 +138,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($brandsImagesData as $imageId => $brandName) {
+            /** @var \Shopsys\ShopBundle\Model\Product\Brand\Brand $brand */
             $brand = $this->getReference($brandName);
-            /* @var $brand \Shopsys\FrameworkBundle\Model\Product\Brand\Brand */
 
             $this->saveImageIntoDb($brand->getId(), 'brand', $imageId);
         }
@@ -162,8 +162,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($categoriesImagesData as $imageId => $categoryName) {
+            /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
             $category = $this->getReference($categoryName);
-            /* @var $category \Shopsys\FrameworkBundle\Model\Category\Category */
 
             $this->saveImageIntoDb($category->getId(), 'category', $imageId);
         }
@@ -178,8 +178,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($paymentsImagesData as $imageId => $paymentName) {
+            /** @var \Shopsys\ShopBundle\Model\Payment\Payment $payment */
             $payment = $this->getReference($paymentName);
-            /* @var $payment \Shopsys\FrameworkBundle\Model\Payment\Payment */
 
             $this->saveImageIntoDb($payment->getId(), 'payment', $imageId);
         }
@@ -194,8 +194,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($transportsImagesData as $imageId => $transportName) {
+            /** @var \Shopsys\ShopBundle\Model\Transport\Transport $transport */
             $transport = $this->getReference($transportName);
-            /* @var $transport \Shopsys\FrameworkBundle\Model\Transport\Transport */
 
             $this->saveImageIntoDb($transport->getId(), 'transport', $imageId);
         }

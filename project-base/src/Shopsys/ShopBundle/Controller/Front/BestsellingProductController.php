@@ -43,7 +43,7 @@ class BestsellingProductController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param \Shopsys\ShopBundle\Model\Category\Category $category
      */
     public function listAction(Category $category)
     {

@@ -166,6 +166,17 @@ Exports all visible products to Elasticsearch.
 
 ### Coding standards
 
+#### annotations-check
+Checks whether annotations of extended classes in the project match the actual types according to [`ClassExtensionRegistry`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/ClassExtension/ClassExtensionRegistry.php).
+Reported problems can be fixed using [`annotations-fix` phing target](#annotations-fix).
+
+#### annotations-fix
+Makes static analysis tools understand the extended code in your project by changing annotations and adding `@property` and `@method` annotations to relevant classes.
+
+You can read more in the ["Framework extensibility" article](./framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).
+
+You can read more about the topic in the ["Framework extensibility" article](./framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).
+
 #### standards / standards-diff
 Checks coding standards in source files. Checking all files may take a few minutes, `standards-diff` is much quicker as it checks only files changed against `origin/master`.
 

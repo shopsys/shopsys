@@ -115,7 +115,7 @@ class CategoryController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
+     * @param \Shopsys\ShopBundle\Model\Category\Category[] $categories
      * @param bool $showProductsCountByCategory
      */
     public function categoryListAction(array $categories, $showProductsCountByCategory = true)

@@ -11,6 +11,9 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandData as BaseBrandData;
 /**
  * @ORM\Table(name="brands")
  * @ORM\Entity
+ * @method setTranslations(\Shopsys\ShopBundle\Model\Product\Brand\BrandData $brandData)
+ * @method setDomains(\Shopsys\ShopBundle\Model\Product\Brand\BrandData $brandData)
+ * @method createDomains(\Shopsys\ShopBundle\Model\Product\Brand\BrandData $brandData)
  */
 class Brand extends BaseBrand
 {

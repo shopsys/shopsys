@@ -98,7 +98,7 @@ class OrderDataFixture
     private $progressBarFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Order\OrderDataFactory
      */
     private $orderDataFactory;
 
@@ -114,7 +114,7 @@ class OrderDataFixture
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory
+     * @param \Shopsys\ShopBundle\Model\Order\OrderDataFactory $orderDataFactory
      */
     public function __construct(
         $orderTotalCount,
@@ -193,8 +193,8 @@ class OrderDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
+     * @param \Shopsys\ShopBundle\Model\Customer\User $user
+     * @return \Shopsys\ShopBundle\Model\Order\OrderData
      */
     private function createOrderData(?User $user = null)
     {
@@ -268,10 +268,10 @@ class OrderDataFixture
 
     private function loadPerformanceProductIds()
     {
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $firstPerformanceProduct */
         $firstPerformanceProduct = $this->persistentReferenceFacade->getReference(
             PerformanceProductDataFixture::FIRST_PERFORMANCE_PRODUCT
         );
-        /* @var $firstPerformanceProduct \Shopsys\FrameworkBundle\Model\Product\Product */
 
         $qb = $this->em->createQueryBuilder()
             ->select('p.id')
@@ -295,10 +295,10 @@ class OrderDataFixture
 
     private function loadPerformanceUserIdsOnFirstDomain()
     {
+        /** @var \Shopsys\ShopBundle\Model\Customer\User $firstPerformanceUser */
         $firstPerformanceUser = $this->persistentReferenceFacade->getReference(
             PerformanceUserDataFixture::FIRST_PERFORMANCE_USER
         );
-        /* @var $firstPerformanceUser \Shopsys\FrameworkBundle\Model\Customer\User */
 
         $qb = $this->em->createQueryBuilder()
             ->select('u.id')
@@ -312,7 +312,7 @@ class OrderDataFixture
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
+     * @return \Shopsys\ShopBundle\Model\Customer\User|null
      */
     private function getRandomUserOrNull()
     {
@@ -320,14 +320,17 @@ class OrderDataFixture
 
         if ($shouldBeRegisteredUser) {
             $userId = $this->faker->randomElement($this->performanceUserIds);
-            return $this->customerFacade->getUserById($userId);
+            /** @var \Shopsys\ShopBundle\Model\Customer\User $user */
+            $user = $this->customerFacade->getUserById($userId);
+
+            return $user;
         } else {
             return null;
         }
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
+     * @return \Shopsys\ShopBundle\Model\Transport\Transport
      */
     private function getRandomTransport()
     {
@@ -337,13 +340,13 @@ class OrderDataFixture
             TransportDataFixture::TRANSPORT_PERSONAL,
         ]);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $randomTransport */
+        /** @var \Shopsys\ShopBundle\Model\Transport\Transport $randomTransport */
         $randomTransport = $this->persistentReferenceFacade->getReference($randomTransportReferenceName);
         return $randomTransport;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
+     * @return \Shopsys\ShopBundle\Model\Payment\Payment
      */
     private function getRandomPayment()
     {
@@ -353,7 +356,7 @@ class OrderDataFixture
             PaymentDataFixture::PAYMENT_CASH,
         ]);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $randomPayment */
+        /** @var \Shopsys\ShopBundle\Model\Payment\Payment $randomPayment */
         $randomPayment = $this->persistentReferenceFacade->getReference($randomPaymentReferenceName);
         return $randomPayment;
     }

@@ -27,6 +27,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [Do you have any tips how to debug emails during development in Docker?](#do-you-have-any-tips-how-to-debug-emails-during-development-in-docker)
 - [Can I see what is really happening in the Codeception acceptance tests when using Docker?](#can-i-see-what-is-really-happening-in-the-codeception-acceptance-tests-when-using-docker)
 - [Why is there a faked PHP 7.2 platform in the Composer config?](#why-is-there-a-faked-php-72-platform-in-the-composer-config)
+- [How to make PHPStorm and PHPStan understand that I use extended classes?](#how-to-make-phpstorm-and-phpstan-understand-that-i-use-extended-classes)
 
 ## What are the phing targets?
 Every phing target is a task that can be executed simply by `php phing <target-name>` command.
@@ -162,3 +163,7 @@ See [Composer docs](https://getcomposer.org/doc/01-basic-usage.md#installing-wit
 Without this forced platform version, you could encounter issues when working on your project with developers that use a different version of PHP.
 For example, your `composer.lock` could contain dependencies that not all developers can install.
 If that's not your case, you can safely remove the `config.platform.php` option from your `composer.json` and run `composer update` to use higher versions of your dependencies.
+
+## How to make PHPStorm and PHPStan understand that I use extended classes?
+There is a phing target that automatically fixes all relevant `@var` and `@param` annotations, and adds proper `@method` and `@property` annotations to your classes so the static analysis understands the class extensions properly.
+You can read more in the ["Framework extensibility" article](./framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).

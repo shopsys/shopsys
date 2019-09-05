@@ -8,10 +8,13 @@ use Shopsys\FrameworkBundle\Model\Order\FrontOrderData as BaseFrontOrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataMapper as BaseOrderDataMapper;
 
+/**
+ * @property \Shopsys\ShopBundle\Model\Order\OrderDataFactory $orderDataFactory
+ */
 class OrderDataMapper extends BaseOrderDataMapper
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory
+     * @param \Shopsys\ShopBundle\Model\Order\OrderDataFactory $orderDataFactory
      */
     public function __construct(OrderDataFactoryInterface $orderDataFactory)
     {

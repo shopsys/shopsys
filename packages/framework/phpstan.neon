@@ -41,6 +41,9 @@ parameters:
         -
             message: '#Access to an undefined property PhpParser\\Node::\$name\.#'
             path: %currentWorkingDirectory%/src/Component/Translation/ConstraintViolationExtractor.php
+    excludes_analyses:
+        # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
+        - %currentWorkingDirectory%/tests/Unit/Component/ClassExtension/Source/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

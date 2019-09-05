@@ -19,7 +19,7 @@ class CategoryDataFixture
     public const FIRST_PERFORMANCE_CATEGORY = 'first_performance_category';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Category\CategoryDataFactory
      */
     private $categoryDataFactory;
 
@@ -60,7 +60,7 @@ class CategoryDataFixture
 
     /**
      * @param int[] $categoryCountsByLevel
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface $categoryDataFactory
+     * @param \Shopsys\ShopBundle\Model\Category\CategoryDataFactory $categoryDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
@@ -100,7 +100,7 @@ class CategoryDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
+     * @param \Shopsys\ShopBundle\Model\Category\Category $parentCategory
      * @param \Symfony\Component\Console\Helper\ProgressBar $progressBar
      * @param int $categoryLevel
      */
@@ -138,8 +138,8 @@ class CategoryDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $parentCategory
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryData
+     * @param \Shopsys\ShopBundle\Model\Category\Category $parentCategory
+     * @return \Shopsys\ShopBundle\Model\Category\CategoryData
      */
     private function getRandomCategoryDataByParentCategory(Category $parentCategory)
     {
