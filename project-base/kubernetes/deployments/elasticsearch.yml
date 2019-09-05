@@ -14,7 +14,7 @@ spec:
         spec:
             containers:
                 -   name: elasticsearch
-                    image: ~
+                    image: "{{DOCKER_ELASTIC_IMAGE}}"
                     ports:
                         -   name: elasticsearch
                             containerPort: 9200

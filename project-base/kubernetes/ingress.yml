@@ -6,14 +6,14 @@ metadata:
         nginx.ingress.kubernetes.io/proxy-body-size: 32m
 spec:
     rules:
-        -   host: ~
+        -   host: "{{FIRST_DOMAIN_HOSTNAME}}"
             http:
                 paths:
                     -   path: /
                         backend:
                             serviceName: webserver-php-fpm
                             servicePort: 8080
-        -   host: ~
+        -   host: "{{SECOND_DOMAIN_HOSTNAME}}"
             http:
                 paths:
                     -   path: /
