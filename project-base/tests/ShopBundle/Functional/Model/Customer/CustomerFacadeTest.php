@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Model\Customer;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\ShopBundle\DataFixtures\Demo\PricingGroupDataFixture;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -17,19 +15,19 @@ class CustomerFacadeTest extends TransactionFunctionalTestCase
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @inject
      */
     protected $customerFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @inject
      */
     protected $customerDataFactory;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->customerFacade = $this->getContainer()->get(CustomerFacade::class);
-        $this->customerDataFactory = $this->getContainer()->get(CustomerDataFactoryInterface::class);
     }
 
     public function testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException()

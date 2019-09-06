@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Category;
 
-use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface;
 use Shopsys\ShopBundle\Model\Category\Category;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -18,13 +16,13 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     protected const DEMONSTRATIVE_SEO_H1 = 'Demonstrative seo H1';
 
     /**
-     * @var CategoryDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Category\CategoryDataFactory
      * @inject
      */
     private $categoryDataFactory;
 
     /**
-     * @var CategoryFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface
      * @inject
      */
     private $categoryFactory;

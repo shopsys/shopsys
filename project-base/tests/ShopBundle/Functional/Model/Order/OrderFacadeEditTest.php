@@ -6,11 +6,8 @@ namespace Tests\ShopBundle\Functional\Model\Order;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\ShopBundle\DataFixtures\Demo\OrderDataFixture;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
@@ -29,27 +26,25 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
+     * @inject
      */
     private $orderFacade;
 
     /**
      * @var \Shopsys\ShopBundle\Model\Order\OrderDataFactory
+     * @inject
      */
     private $orderDataFactory;
 
     /**
      * @var \Shopsys\ShopBundle\Model\Order\Item\OrderItemDataFactory
+     * @inject
      */
     private $orderItemDataFactory;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->orderFacade = $this->getContainer()->get(OrderFacade::class);
-        $this->orderDataFactory = $this->getContainer()->get(OrderDataFactoryInterface::class);
-        $this->orderItemDataFactory = $this->getContainer()->get(OrderItemDataFactoryInterface::class);
-
         $this->setOrderForTests();
     }
 

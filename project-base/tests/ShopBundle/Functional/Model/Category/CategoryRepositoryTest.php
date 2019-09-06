@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Category;
 
-use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -32,13 +31,14 @@ class CategoryRepositoryTest extends TransactionFunctionalTestCase
     private $categoryVisibilityRepository;
 
     /**
-     * @var CategoryDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Category\CategoryDataFactory
      * @inject
      */
     private $categoryDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
+     * @inject
      */
     private $localization;
 

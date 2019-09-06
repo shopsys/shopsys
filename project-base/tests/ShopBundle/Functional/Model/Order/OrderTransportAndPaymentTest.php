@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Model\Order;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\ShopBundle\Model\Payment\Payment;
 use Shopsys\ShopBundle\Model\Transport\Transport;
@@ -22,11 +20,29 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
      */
     private $domain;
 
-    protected function setUp()
-    {
-        $this->domain = $this->getContainer()->get(Domain::class);
-        parent::setUp();
-    }
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     * @inject
+     */
+    private $transportFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
+     * @inject
+     */
+    private $paymentFacade;
+
+    /**
+     * @var \Shopsys\ShopBundle\Model\Payment\PaymentDataFactory
+     * @inject
+     */
+    private $paymentDataFactory;
+
+    /**
+     * @var \Shopsys\ShopBundle\Model\Transport\TransportDataFactory
+     * @inject
+     */
+    private $transportDataFactory;
 
     public function testVisibleTransport()
     {
@@ -48,13 +64,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade */
-        $transportFacade = $this->getContainer()->get(TransportFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
-        $visibleTransports = $transportFacade->getVisibleOnCurrentDomain($visiblePayments);
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
 
         $this->assertContains($transport, $visibleTransports);
     }
@@ -78,13 +89,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade */
-        $transportFacade = $this->getContainer()->get(TransportFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
-        $visibleTransports = $transportFacade->getVisibleOnCurrentDomain($visiblePayments);
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
 
         $this->assertNotContains($transport, $visibleTransports);
     }
@@ -113,13 +119,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade */
-        $transportFacade = $this->getContainer()->get(TransportFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
-        $visibleTransports = $transportFacade->getVisibleOnCurrentDomain($visiblePayments);
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
 
         $this->assertNotContains($transport, $visibleTransports);
     }
@@ -139,13 +140,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($transport);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade */
-        $transportFacade = $this->getContainer()->get(TransportFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
-        $visibleTransports = $transportFacade->getVisibleOnCurrentDomain($visiblePayments);
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
 
         $this->assertNotContains($transport, $visibleTransports);
     }
@@ -174,13 +170,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade */
-        $transportFacade = $this->getContainer()->get(TransportFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
-        $visibleTransports = $transportFacade->getVisibleOnCurrentDomain($visiblePayments);
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
 
         $this->assertNotContains($transport, $visibleTransports);
     }
@@ -207,13 +198,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade */
-        $transportFacade = $this->getContainer()->get(TransportFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
-        $visibleTransports = $transportFacade->getVisibleOnCurrentDomain($visiblePayments);
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
+        $visibleTransports = $this->transportFacade->getVisibleOnCurrentDomain($visiblePayments);
 
         $this->assertNotContains($transport, $visibleTransports);
     }
@@ -237,10 +223,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
         $this->assertContains($payment, $visiblePayments);
     }
@@ -264,10 +247,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
         $this->assertNotContains($payment, $visiblePayments);
     }
@@ -291,10 +271,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
         $this->assertNotContains($payment, $visiblePayments);
     }
@@ -314,10 +291,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
         $this->assertNotContains($payment, $visiblePayments);
     }
@@ -344,10 +318,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
         $this->assertNotContains($payment, $visiblePayments);
     }
@@ -375,10 +346,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade */
-        $paymentFacade = $this->getContainer()->get(PaymentFacade::class);
-
-        $visiblePayments = $paymentFacade->getVisibleOnCurrentDomain();
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
         $this->assertNotContains($payment, $visiblePayments);
     }
@@ -391,7 +359,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
      */
     public function getDefaultPayment(Vat $vat, $enabledForDomains, $hidden)
     {
-        $paymentDataFactory = $this->getPaymentDataFactory();
+        $paymentDataFactory = $this->paymentDataFactory;
 
         $paymentData = $paymentDataFactory->create();
         $names = [];
@@ -414,7 +382,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
      */
     public function getDefaultTransport(Vat $vat, $enabledForDomains, $hidden)
     {
-        $transportDataFactory = $this->getTransportDataFactory();
+        $transportDataFactory = $this->transportDataFactory;
 
         $transportData = $transportDataFactory->create();
         $names = [];
@@ -439,21 +407,5 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $vatData->name = 'vat';
         $vatData->percent = '21';
         return new Vat($vatData);
-    }
-
-    /**
-     * @return \Shopsys\ShopBundle\Model\Payment\PaymentDataFactory
-     */
-    public function getPaymentDataFactory()
-    {
-        return $this->getContainer()->get(PaymentDataFactoryInterface::class);
-    }
-
-    /**
-     * @return \Shopsys\ShopBundle\Model\Transport\TransportDataFactory
-     */
-    public function getTransportDataFactory()
-    {
-        return $this->getContainer()->get(TransportDataFactoryInterface::class);
     }
 }

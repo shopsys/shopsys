@@ -6,7 +6,6 @@ namespace Tests\ShopBundle\Functional\Model\Newsletter\NewsletterRepository;
 
 use Doctrine\ORM\Internal\Hydration\IterableResult;
 use PHPUnit\Framework\Assert;
-use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
@@ -15,13 +14,13 @@ class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository
+     * @inject
      */
     private $newsletterRepository;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->newsletterRepository = $this->getContainer()->get(NewsletterRepository::class);
     }
 
     public function testSubscriberFoundInFirstDomain(): void

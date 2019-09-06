@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Order\Preview;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
@@ -26,10 +25,14 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class OrderPreviewCalculationTest extends FunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @inject
+     */
+    private $domain;
+
     public function testCalculatePreviewWithTransportAndPayment()
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = $this->getContainer()->get(Domain::class);
         $vatData = new VatData();
         $vatData->name = 'vatName';
         $vatData->percent = '20';
@@ -95,7 +98,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
 
         $orderPreview = $previewCalculation->calculatePreview(
             $currency,
-            $domain->getId(),
+            $this->domain->getId(),
             $quantifiedProducts,
             $transport,
             $payment,
@@ -115,8 +118,6 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
 
     public function testCalculatePreviewWithoutTransportAndPayment()
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = $this->getContainer()->get(Domain::class);
         $vatData = new VatData();
         $vatData->name = 'vatName';
         $vatData->percent = '20';
@@ -173,7 +174,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
 
         $orderPreview = $previewCalculation->calculatePreview(
             $currency,
-            $domain->getId(),
+            $this->domain->getId(),
             $quantifiedProducts,
             null,
             null,

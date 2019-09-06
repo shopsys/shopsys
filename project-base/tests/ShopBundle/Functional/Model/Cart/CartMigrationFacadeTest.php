@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
@@ -21,7 +20,7 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 class CartMigrationFacadeTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var CartItemFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
      * @inject
      */
     private $cartItemFactory;

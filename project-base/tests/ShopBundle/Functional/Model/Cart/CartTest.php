@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\ShopBundle\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\ShopBundle\Model\Product\Product;
 use Shopsys\ShopBundle\Model\Product\ProductData;
@@ -21,7 +20,7 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 class CartTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var ProductDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
      * @inject
      */
     private $productDataFactory;
@@ -39,7 +38,7 @@ class CartTest extends TransactionFunctionalTestCase
         $availabilityData = new AvailabilityData();
         $availabilityData->dispatchTime = 0;
         $availability = new Availability($availabilityData);
-        /** @var ProductData $productData */
+        /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->vat = $vat;
@@ -97,7 +96,7 @@ class CartTest extends TransactionFunctionalTestCase
         $vatData->percent = '21';
         $vat = new Vat($vatData);
 
-        /** @var ProductData $productData */
+        /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = ['cs' => 'Any name'];
         $productData->vat = $vat;

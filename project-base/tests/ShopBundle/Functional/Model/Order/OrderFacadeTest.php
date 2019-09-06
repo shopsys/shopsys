@@ -4,16 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Order;
 
-use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 use Shopsys\ShopBundle\DataFixtures\Demo\CountryDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\CurrencyDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\OrderStatusDataFixture;
@@ -23,38 +14,75 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class OrderFacadeTest extends TransactionFunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
+     * @inject
+     */
+    private $cartFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
+     * @inject
+     */
+    private $orderFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
+     * @inject
+     */
+    private $orderPreviewFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\OrderRepository
+     * @inject
+     */
+    private $orderRepository;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
+     * @inject
+     */
+    private $productRepository;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportRepository
+     * @inject
+     */
+    private $transportRepository;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository
+     * @inject
+     */
+    private $paymentRepository;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
+     * @inject
+     */
+    private $persistentReferenceFacade;
+
+    /**
+     * @var \Shopsys\ShopBundle\Model\Order\OrderDataFactory
+     * @inject
+     */
+    private $orderDataFactory;
+
     public function testCreate()
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade */
-        $cartFacade = $this->getContainer()->get(CartFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade */
-        $orderFacade = $this->getContainer()->get(OrderFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory */
-        $orderPreviewFactory = $this->getContainer()->get(OrderPreviewFactory::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository */
-        $orderRepository = $this->getContainer()->get(OrderRepository::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository */
-        $productRepository = $this->getContainer()->get(ProductRepository::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository */
-        $transportRepository = $this->getContainer()->get(TransportRepository::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository $paymentRepository */
-        $paymentRepository = $this->getContainer()->get(PaymentRepository::class);
-        /** @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade */
-        $persistentReferenceFacade = $this->getContainer()->get(PersistentReferenceFacade::class);
+        $product = $this->productRepository->getById(1);
 
-        $product = $productRepository->getById(1);
-
-        $cartFacade->addProductToCart($product->getId(), 1);
+        $this->cartFacade->addProductToCart($product->getId(), 1);
 
         /** @var \Shopsys\ShopBundle\Model\Transport\Transport $transport */
-        $transport = $transportRepository->getById(1);
+        $transport = $this->transportRepository->getById(1);
         /** @var \Shopsys\ShopBundle\Model\Payment\Payment $payment */
-        $payment = $paymentRepository->getById(1);
+        $payment = $this->paymentRepository->getById(1);
 
         $orderData = new OrderData();
         $orderData->transport = $transport;
         $orderData->payment = $payment;
-        $orderData->status = $persistentReferenceFacade->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
+        $orderData->status = $this->persistentReferenceFacade->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
         $orderData->firstName = 'firstName';
         $orderData->lastName = 'lastName';
         $orderData->email = 'email';
@@ -65,7 +93,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->street = 'street';
         $orderData->city = 'city';
         $orderData->postcode = 'postcode';
-        $orderData->country = $persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $orderData->country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
         $orderData->deliveryAddressSameAsBillingAddress = false;
         $orderData->deliveryFirstName = 'deliveryFirstName';
         $orderData->deliveryLastName = 'deliveryLastName';
@@ -74,15 +102,15 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->deliveryStreet = 'deliveryStreet';
         $orderData->deliveryCity = 'deliveryCity';
         $orderData->deliveryPostcode = 'deliveryPostcode';
-        $orderData->deliveryCountry = $persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $orderData->deliveryCountry = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
         $orderData->note = 'note';
         $orderData->domainId = 1;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
-        $orderPreview = $orderPreviewFactory->createForCurrentUser($transport, $payment);
-        $order = $orderFacade->createOrder($orderData, $orderPreview, null);
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
+        $order = $this->orderFacade->createOrder($orderData, $orderPreview, null);
 
-        $orderFromDb = $orderRepository->getById($order->getId());
+        $orderFromDb = $this->orderRepository->getById($order->getId());
 
         $this->assertSame($orderData->transport->getId(), $orderFromDb->getTransport()->getId());
         $this->assertSame($orderData->payment->getId(), $orderFromDb->getPayment()->getId());
@@ -113,19 +141,12 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
 
     public function testEdit()
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade */
-        $orderFacade = $this->getContainer()->get(OrderFacade::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository */
-        $orderRepository = $this->getContainer()->get(OrderRepository::class);
-        /** @var \Shopsys\ShopBundle\Model\Order\OrderDataFactory $orderDataFactory */
-        $orderDataFactory = $this->getContainer()->get(OrderDataFactoryInterface::class);
-
         /** @var \Shopsys\ShopBundle\Model\Order\Order $order */
         $order = $this->getReference('order_1');
 
         $this->assertCount(4, $order->getItems());
 
-        $orderData = $orderDataFactory->createFromOrder($order);
+        $orderData = $this->orderDataFactory->createFromOrder($order);
 
         $orderItemsData = $orderData->itemsWithoutTransportAndPayment;
         array_pop($orderItemsData);
@@ -148,9 +169,9 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderItemsData[OrderData::NEW_ITEM_PREFIX . '2'] = $orderItemData2;
 
         $orderData->itemsWithoutTransportAndPayment = $orderItemsData;
-        $orderFacade->edit($order->getId(), $orderData);
+        $this->orderFacade->edit($order->getId(), $orderData);
 
-        $orderFromDb = $orderRepository->getById($order->getId());
+        $orderFromDb = $this->orderRepository->getById($order->getId());
 
         $this->assertCount(5, $orderFromDb->getItems());
     }

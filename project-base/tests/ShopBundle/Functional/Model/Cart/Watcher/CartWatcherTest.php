@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Cart\Watcher;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
@@ -13,9 +12,6 @@ use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 use Shopsys\ShopBundle\DataFixtures\Demo\PricingGroupDataFixture;
@@ -27,31 +23,31 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 class CartWatcherTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var ProductPriceCalculationForUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser
      * @inject
      */
     private $productPriceCalculationForUser;
 
     /**
-     * @var CartWatcher
+     * @var \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher
      * @inject
      */
     private $cartWatcher;
 
     /**
-     * @var ProductManualInputPriceFacade
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade
      * @inject
      */
     private $manualInputPriceFacade;
 
     /**
-     * @var ProductDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
      * @inject
      */
     private $productDataFactory;
 
     /**
-     * @var Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      * @inject
      */
     private $domain;
@@ -110,7 +106,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
     {
         $customerIdentifier = new CustomerIdentifier('randomString');
 
-        /** @var ProductData $productData */
+        /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $vatData = new VatData();
