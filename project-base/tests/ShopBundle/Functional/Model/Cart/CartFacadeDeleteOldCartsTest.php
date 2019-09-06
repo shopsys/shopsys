@@ -8,10 +8,8 @@ use DateTime;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
@@ -69,6 +67,18 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      * @inject
      */
     private $cartWatcherFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     * @inject
+     */
+    private $productFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @inject
+     */
+    private $customerFacade;
 
     public function testOldUnregisteredCustomerCartGetsDeleted()
     {
@@ -140,10 +150,8 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      */
     private function getProductById($productId)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade */
-        $productFacade = $this->getContainer()->get(ProductFacade::class);
         /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
-        $product = $productFacade->getById($productId);
+        $product = $this->productFacade->getById($productId);
 
         return $product;
     }
@@ -153,10 +161,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      */
     private function getCartFacadeForRegisteredCustomer()
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade */
-        $customerFacade = $this->getContainer()->get(CustomerFacade::class);
-
-        $user = $customerFacade->getUserById(1);
+        $user = $this->customerFacade->getUserById(1);
 
         return $this->getCartFacadeForCustomer($this->getCustomerIdentifierForRegisteredCustomer());
     }
@@ -232,8 +237,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      */
     private function getCustomerIdentifierForRegisteredCustomer()
     {
-        $customerFacade = $this->getContainer()->get(CustomerFacade::class);
-        $user = $customerFacade->getUserById(1);
+        $user = $this->customerFacade->getUserById(1);
 
         return new CustomerIdentifier('', $user);
     }
