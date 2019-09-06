@@ -15,11 +15,13 @@ final class ElasticsearchStructureUpdateCheckerTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureUpdateChecker
+     * @inject
      */
     private $elasticsearchStructureUpdateChecker;
 
     /**
      * @var \Elasticsearch\Client
+     * @inject
      */
     private $elasticsearchClient;
 
@@ -30,6 +32,7 @@ final class ElasticsearchStructureUpdateCheckerTest extends FunctionalTestCase
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager
+     * @inject
      */
     private $elasticsearchStructureManager;
 
@@ -37,11 +40,7 @@ final class ElasticsearchStructureUpdateCheckerTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->elasticsearchStructureUpdateChecker = $this->getContainer()->get(ElasticsearchStructureUpdateChecker::class);
-
-        $this->elasticsearchClient = $this->getContainer()->get(Client::class);
         $this->elasticsearchIndexes = $this->elasticsearchClient->indices();
-        $this->elasticsearchStructureManager = $this->getContainer()->get(ElasticsearchStructureManager::class);
     }
 
     /**

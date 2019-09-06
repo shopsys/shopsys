@@ -10,12 +10,16 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class JsTranslatorCompilerPassTest extends FunctionalTestCase
 {
+    /**
+     * @var JsTranslatorCompilerPass
+     * @inject
+     */
+    private $jsTranslatorCompilerPass;
+
     public function testProcess()
     {
         /** @var \Shopsys\FrameworkBundle\Component\Translation\Translator $translator */
         $translator = $this->getContainer()->get('translator');
-        /** @var \Shopsys\FrameworkBundle\Component\Javascript\Compiler\Translator\JsTranslatorCompilerPass $jsTranslatorCompilerPass */
-        $jsTranslatorCompilerPass = $this->getContainer()->get(JsTranslatorCompilerPass::class);
 
         $translator->setLocale('testLocale');
         $translator->getCatalogue()->add([
@@ -24,7 +28,7 @@ class JsTranslatorCompilerPassTest extends FunctionalTestCase
         ]);
 
         $jsCompiler = new JsCompiler([
-            $jsTranslatorCompilerPass,
+            $this->jsTranslatorCompilerPass,
         ]);
 
         $content = <<<EOD

@@ -10,6 +10,12 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class JsConstantCompilerPassTest extends FunctionalTestCase
 {
+    /**
+     * @var JsConstantCompilerPass
+     * @inject
+     */
+    private $jsConstantCompilerPass;
+
     public function testJsCompilerReplacesDefinedConstants()
     {
         $content = file_get_contents(__DIR__ . '/testDefinedConstant.js');
@@ -43,10 +49,8 @@ class JsConstantCompilerPassTest extends FunctionalTestCase
      */
     private function getJsCompiler()
     {
-        $jsConstantCompilerPass = $this->getContainer()->get(JsConstantCompilerPass::class);
-
         return new JsCompiler([
-            $jsConstantCompilerPass,
+            $this->jsConstantCompilerPass,
         ]);
     }
 }
