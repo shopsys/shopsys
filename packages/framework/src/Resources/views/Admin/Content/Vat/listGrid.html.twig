@@ -26,12 +26,10 @@
             {{ value }}
             <span
                 title="{{ 'VAT rate is marked for deleting and will be soon automatically removed. Conversion rate is several hundreds of products in 5 minutes.'|trans }}"
-                class="js-tooltip table-action cursor-help"
+                class="in-icon in-icon--delete svg svg-warning js-tooltip table-action cursor-help"
                 data-toggle="tooltip"
                 data-placement="right"
-            >
-                <i class="svg svg-warning"></i>
-            </span>
+            ></span>
         </span>
     {% else %}
         {{ value }}
@@ -42,21 +40,17 @@
     {% if row.vat.markedAsDeleted %}
         <span
             title="{{ 'VAT rate is marked for deleting and will be soon automatically removed. Conversion rate is several hundreds of products in 5 minutes.'|trans }}"
-            class="js-tooltip table-action cursor-help text-muted"
+            class="in-icon in-icon--delete svg svg-trash js-tooltip table-action cursor-help text-muted"
             data-toggle="tooltip"
             data-placement="bottom"
-        >
-            <i class="svg svg-trash"></i>
-        </span>
+        ></span>
     {% elseif row.asReplacementCount > 0 %}
         <span
             title="{{ 'VAT rate can\'t be removed because it is being currently used for conversion to this VAT rate'|trans }}"
-            class="js-tooltip table-action cursor-help text-muted"
+            class="in-icon in-icon--delete svg svg-trash js-tooltip table-action cursor-help text-muted"
             data-toggle="tooltip"
             data-placement="bottom"
-        >
-            <i class="svg svg-trash"></i>
-        </span>
+        ></span>
     {% else %}
         {{ parent() }}
     {% endif %}
