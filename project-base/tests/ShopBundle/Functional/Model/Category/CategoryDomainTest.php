@@ -18,12 +18,14 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     protected const DEMONSTRATIVE_SEO_H1 = 'Demonstrative seo H1';
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Category\CategoryDataFactory
+     * @var CategoryDataFactoryInterface
+     * @inject
      */
     private $categoryDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFactory
+     * @var CategoryFactoryInterface
+     * @inject
      */
     private $categoryFactory;
 
@@ -35,8 +37,6 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->categoryDataFactory = $this->getContainer()->get(CategoryDataFactoryInterface::class);
-        $this->categoryFactory = $this->getContainer()->get(CategoryFactoryInterface::class);
         $this->em = $this->getEntityManager();
     }
 

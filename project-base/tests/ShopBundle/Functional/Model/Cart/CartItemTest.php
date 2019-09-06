@@ -27,7 +27,6 @@ class CartItemTest extends TransactionFunctionalTestCase
 
     public function testIsSimilarItemAs()
     {
-        $this->getContainer();
         $em = $this->getEntityManager();
 
         $customerIdentifier = new CustomerIdentifier('randomString');

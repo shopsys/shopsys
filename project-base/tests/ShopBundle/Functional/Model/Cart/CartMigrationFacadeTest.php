@@ -20,6 +20,12 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class CartMigrationFacadeTest extends TransactionFunctionalTestCase
 {
+    /**
+     * @var CartItemFactoryInterface
+     * @inject
+     */
+    private $cartItemFactory;
+
     public function testMergeWithCartReturnsCartWithSummedProducts()
     {
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
@@ -60,7 +66,6 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
         $customerIdentifierFactoryMock
             ->expects($this->any())->method('get')
             ->willReturn($customerIdentifier1);
-        $cartItemFactory = $this->getContainer()->get(CartItemFactoryInterface::class);
         $cartFacadeMock = $this->getMockBuilder(CartFacade::class)
             ->setMethods(['getCartByCustomerIdentifierCreateIfNotExists', 'deleteCart'])
             ->disableOriginalConstructor()
@@ -75,7 +80,7 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
         $cartMigrationFacade = new CartMigrationFacade(
             $entityManagerMock,
             $customerIdentifierFactoryMock,
-            $cartItemFactory,
+            $this->cartItemFactory,
             $cartFacadeMock
         );
 
