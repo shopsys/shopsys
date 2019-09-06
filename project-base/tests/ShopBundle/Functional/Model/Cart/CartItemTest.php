@@ -12,15 +12,15 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\ShopBundle\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\ShopBundle\Model\Product\Product;
+use Shopsys\ShopBundle\Model\Product\ProductData;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
-class CartItemTest extends TransactionFunctionalTestCase implements \Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase
+class CartItemTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var ProductDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
      * @inject
      */
     private $productDataFactory;
@@ -29,7 +29,6 @@ class CartItemTest extends TransactionFunctionalTestCase implements \Zalas\Injec
     {
         $this->getContainer();
         $em = $this->getEntityManager();
-        $productDataFactory = $this->productDataFactory;
 
         $customerIdentifier = new CustomerIdentifier('randomString');
 
@@ -40,7 +39,9 @@ class CartItemTest extends TransactionFunctionalTestCase implements \Zalas\Injec
         $availabilityData = new AvailabilityData();
         $availabilityData->dispatchTime = 0;
         $availability = new Availability($availabilityData);
-        $productData = $productDataFactory->create();
+
+        /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
+        $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->vat = $vat;
         $productData->availability = $availability;
@@ -62,13 +63,5 @@ class CartItemTest extends TransactionFunctionalTestCase implements \Zalas\Injec
 
         $this->assertTrue($cartItem1->isSimilarItemAs($cartItem2));
         $this->assertFalse($cartItem1->isSimilarItemAs($cartItem3));
-    }
-
-    /**
-     * @return \Psr\Container\ContainerInterface
-     */
-    public function createContainer(): \Psr\Container\ContainerInterface
-    {
-        return $this->getContainer();
     }
 }

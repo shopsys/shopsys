@@ -4,37 +4,32 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Product;
 
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
-class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase implements \Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase
+class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var ProductSellingDeniedRecalculator
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator
      * @inject
      */
     private $productSellingDeniedRecalculator;
 
     /**
-     * @return \Psr\Container\ContainerInterface
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     * @inject
      */
-    public function createContainer(): \Psr\Container\ContainerInterface
-    {
-        return $this->getContainer();
-    }
+    private $productFacade;
+
+    /**
+     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
+     * @inject
+     */
+    private $productDataFactory;
 
     public function testCalculateSellingDeniedForProductSellableVariant()
     {
         $em = $this->getEntityManager();
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator */
-        $productSellingDeniedRecalculator = $this->productSellingDeniedRecalculator;
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade */
-        $productFacade = $this->getContainer()->get(ProductFacade::class);
-        /** @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory */
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
 
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
@@ -45,11 +40,11 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\ShopBundle\Model\Product\Product $mainVariant */
         $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
 
-        $variant1productData = $productDataFactory->createFromProduct($variant1);
+        $variant1productData = $this->productDataFactory->createFromProduct($variant1);
         $variant1productData->sellingDenied = true;
-        $productFacade->edit($variant1->getId(), $variant1productData);
+        $this->productFacade->edit($variant1->getId(), $variant1productData);
 
-        $productSellingDeniedRecalculator->calculateSellingDeniedForProduct($variant1);
+        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($variant1);
 
         $em->refresh($variant1);
         $em->refresh($variant2);
@@ -65,12 +60,6 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
     public function testCalculateSellingDeniedForProductNotSellableVariants()
     {
         $em = $this->getEntityManager();
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator */
-        $productSellingDeniedRecalculator = $this->productSellingDeniedRecalculator;
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade */
-        $productFacade = $this->getContainer()->get(ProductFacade::class);
-        /** @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory */
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
 
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
@@ -81,17 +70,17 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\ShopBundle\Model\Product\Product $mainVariant */
         $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
 
-        $variant1productData = $productDataFactory->createFromProduct($variant1);
+        $variant1productData = $this->productDataFactory->createFromProduct($variant1);
         $variant1productData->sellingDenied = true;
-        $productFacade->edit($variant1->getId(), $variant1productData);
-        $variant2productData = $productDataFactory->createFromProduct($variant2);
+        $this->productFacade->edit($variant1->getId(), $variant1productData);
+        $variant2productData = $this->productDataFactory->createFromProduct($variant2);
         $variant2productData->sellingDenied = true;
-        $productFacade->edit($variant2->getId(), $variant2productData);
-        $variant3productData = $productDataFactory->createFromProduct($variant3);
+        $this->productFacade->edit($variant2->getId(), $variant2productData);
+        $variant3productData = $this->productDataFactory->createFromProduct($variant3);
         $variant3productData->sellingDenied = true;
-        $productFacade->edit($variant3->getId(), $variant3productData);
+        $this->productFacade->edit($variant3->getId(), $variant3productData);
 
-        $productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
+        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
 
         $em->refresh($variant1);
         $em->refresh($variant2);
@@ -107,12 +96,6 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
     public function testCalculateSellingDeniedForProductNotSellableMainVariant()
     {
         $em = $this->getEntityManager();
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator */
-        $productSellingDeniedRecalculator = $this->productSellingDeniedRecalculator;
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade */
-        $productFacade = $this->getContainer()->get(ProductFacade::class);
-        /** @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory */
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
 
         /** @var \Shopsys\ShopBundle\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
@@ -123,11 +106,11 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\ShopBundle\Model\Product\Product $mainVariant */
         $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
 
-        $mainVariantproductData = $productDataFactory->createFromProduct($mainVariant);
+        $mainVariantproductData = $this->productDataFactory->createFromProduct($mainVariant);
         $mainVariantproductData->sellingDenied = true;
-        $productFacade->edit($mainVariant->getId(), $mainVariantproductData);
+        $this->productFacade->edit($mainVariant->getId(), $mainVariantproductData);
 
-        $productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
+        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
 
         $em->refresh($variant1);
         $em->refresh($variant2);

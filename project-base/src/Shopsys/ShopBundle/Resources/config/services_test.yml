@@ -51,8 +51,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@Shopsys\ShopBundle\Model\Payment\PaymentDataFactory'
 
-    Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@Shopsys\ShopBundle\Model\Product\ProductDataFactory'
-
     Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: ~
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@Shopsys\ShopBundle\Model\Product\Brand\BrandDataFactory'
