@@ -32,6 +32,10 @@ There you can find links to upgrade notes for other versions too.
         - even though both spellings are valid, "email" is much more common
     - make these replacements in your application code, test code, data fixtures, and translation messages
 
+- update your files according to ([#1371](https://github.com/shopsys/shopsys/pull/1371))
+    - update your `src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig` (https://github.com/shopsys/shopsys/pull/1371/files#diff-0373fee0f1114120b086516efbed6b5c)
+    - update your `src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less` (https://github.com/shopsys/shopsys/pull/1371/files#diff-5e59c07f00b3d216be99498135b39288)
+
 ### Configuration
 - update your `app/config/packages/doctrine.yml` ([#1273](https://github.com/shopsys/shopsys/pull/1273))
     ```diff
