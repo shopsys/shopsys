@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Model\Article;
 
 use DateTime;
-use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface;
 use Shopsys\ShopBundle\Model\Article\Article;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -14,11 +12,13 @@ class ArticleTest extends TransactionFunctionalTestCase
 {
     /**
      * @var \Shopsys\ShopBundle\Model\Article\ArticleDataFactory
+     * @inject
      */
     private $articleDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFactory
+     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface
+     * @inject
      */
     private $articleFactory;
 
@@ -30,8 +30,6 @@ class ArticleTest extends TransactionFunctionalTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->articleDataFactory = $this->getContainer()->get(ArticleDataFactoryInterface::class);
-        $this->articleFactory = $this->getContainer()->get(ArticleFactoryInterface::class);
         $this->em = $this->getEntityManager();
     }
 

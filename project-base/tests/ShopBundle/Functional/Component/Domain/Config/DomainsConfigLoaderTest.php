@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Component\Domain\Config;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader;
 use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class DomainsConfigLoaderTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader $domainsConfigLoader
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader
      * @inject
      */
     private $domainsConfigLoader;

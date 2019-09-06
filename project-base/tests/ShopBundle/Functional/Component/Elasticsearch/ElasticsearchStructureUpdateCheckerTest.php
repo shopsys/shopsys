@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Component\Elasticsearch;
 
-use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureUpdateChecker;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Tests\ShopBundle\Test\FunctionalTestCase;
 

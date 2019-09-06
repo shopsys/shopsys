@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Component\Javascript\Compiler\Constant;
 
-use Shopsys\FrameworkBundle\Component\Javascript\Compiler\Constant\JsConstantCompilerPass;
 use Shopsys\FrameworkBundle\Component\Javascript\Compiler\JsCompiler;
 use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class JsConstantCompilerPassTest extends FunctionalTestCase
 {
     /**
-     * @var JsConstantCompilerPass
+     * @var \Shopsys\FrameworkBundle\Component\Javascript\Compiler\Constant\JsConstantCompilerPass
      * @inject
      */
     private $jsConstantCompilerPass;

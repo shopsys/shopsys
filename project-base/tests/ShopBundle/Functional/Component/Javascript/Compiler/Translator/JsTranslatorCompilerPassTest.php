@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Component\Javascript\Compiler\Translator;
 
 use Shopsys\FrameworkBundle\Component\Javascript\Compiler\JsCompiler;
-use Shopsys\FrameworkBundle\Component\Javascript\Compiler\Translator\JsTranslatorCompilerPass;
 use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class JsTranslatorCompilerPassTest extends FunctionalTestCase
 {
     /**
-     * @var JsTranslatorCompilerPass
+     * @var \Shopsys\FrameworkBundle\Component\Javascript\Compiler\Translator\JsTranslatorCompilerPass
      * @inject
      */
     private $jsTranslatorCompilerPass;
