@@ -193,14 +193,14 @@ There you can find links to upgrade notes for other versions too.
     - run `php phing annotations-fix` to fix or add all the relevant annotations for your extended classes
     - thanks to the fixes, your IDE (PHPStorm) will understand your code better
     - you can read more about the whole topic in the ["Framework extensibility" article](../introduction/framework-extensibility.md#making-the-static-analysis-understand-the-extended-code)
-- increase your PHPStan level to 4 in your `build.xml` ([#1040](https://github.com/shopsys/shopsys/pull/1040))
+- for the better quality of code in your project we recommend you to increase your PHPStan level to 4 in your `build.xml` and address all the reported violations ([#1381](https://github.com/shopsys/shopsys/pull/1381))
     ```diff
   - <property name="phpstan.level" value="1"/>
   + <property name="phpstan.level" value="4"/>
     ```
     - a lot of the possible issues should be already resolved if you followed the previous instruction and ran the `php phing annotations-fix` phing command
     - some of the issues related to class extension need to be addressed manually nevertheless (see the ["Framework extensibility" article](../introduction/framework-extensibility.md#problem-3)) for more information
-    - you need to resolve all the other reported problems (any of them can be ignored in your `phpstan.neon`). You can find inspiration in [#1040](https://github.com/shopsys/shopsys/pull/1040)
+    - you need to resolve all the other reported problems (it is up to you whether you decide to address them directly or add ignores in your `phpstan.neon`). You can find inspiration in [#1381](https://github.com/shopsys/shopsys/pull/1381) and [#1040](https://github.com/shopsys/shopsys/pull/1040)
 ### Database migrations
 - run database migrations so products will use a DateTime type for columns for "Selling start date" (selling_from) and "Selling end date" (selling_to) ([#1343](https://github.com/shopsys/shopsys/pull/1343))
     - please check [`Version20190823110846`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Migrations/Version20190823110846.php)

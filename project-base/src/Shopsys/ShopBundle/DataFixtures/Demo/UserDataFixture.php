@@ -28,7 +28,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     /** @var \Faker\Generator */
     protected $faker;
 
-    /** @var \Doctrine\ORM\EntityManagerInterface */
+    /** @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator */
     protected $em;
 
     /** @var \Shopsys\FrameworkBundle\Component\String\HashGenerator */
@@ -38,7 +38,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\ShopBundle\DataFixtures\Demo\UserDataFixtureLoader $loaderService
      * @param \Faker\Generator $faker
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
