@@ -153,8 +153,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade: ~
 
-    Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\ProductDataFactory
+    Shopsys\FrameworkBundle\Component\System\PostgresqlLocaleMapper: ~
 
     Shopsys\FrameworkBundle\Model\Product\ProductFacade: ~
 
@@ -162,8 +161,6 @@ services:
         alias: Shopsys\FrameworkBundle\Model\Product\ProductFactory
 
     Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator: ~
-
-    Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator: ~
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository: ~
 

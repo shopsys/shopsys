@@ -11,9 +11,23 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
-class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase
+class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase implements \Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase
 {
     private const TESTED_PRODUCT_ID = 1;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
+     * @inject
+     */
+    private $productDataFactory;
+
+    /**
+     * @return \Psr\Container\ContainerInterface
+     */
+    public function createContainer(): \Psr\Container\ContainerInterface
+    {
+        return $this->getContainer();
+    }
 
     public function testPreviousUrlRedirect(): void
     {
@@ -21,7 +35,7 @@ class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase
         $productFacade = $this->getContainer()->get(ProductFacade::class);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactory $productDataFactory */
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
+        $productDataFactory = $this->productDataFactory;
 
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . self::TESTED_PRODUCT_ID);
 

@@ -10,13 +10,27 @@ use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
-class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
+class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase implements \Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase
 {
+    /**
+     * @var ProductSellingDeniedRecalculator
+     * @inject
+     */
+    private $productSellingDeniedRecalculator;
+
+    /**
+     * @return \Psr\Container\ContainerInterface
+     */
+    public function createContainer(): \Psr\Container\ContainerInterface
+    {
+        return $this->getContainer();
+    }
+
     public function testCalculateSellingDeniedForProductSellableVariant()
     {
         $em = $this->getEntityManager();
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator */
-        $productSellingDeniedRecalculator = $this->getContainer()->get(ProductSellingDeniedRecalculator::class);
+        $productSellingDeniedRecalculator = $this->productSellingDeniedRecalculator;
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade */
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         /** @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory */
@@ -52,7 +66,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
     {
         $em = $this->getEntityManager();
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator */
-        $productSellingDeniedRecalculator = $this->getContainer()->get(ProductSellingDeniedRecalculator::class);
+        $productSellingDeniedRecalculator = $this->productSellingDeniedRecalculator;
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade */
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         /** @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory */
@@ -94,7 +108,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
     {
         $em = $this->getEntityManager();
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator */
-        $productSellingDeniedRecalculator = $this->getContainer()->get(ProductSellingDeniedRecalculator::class);
+        $productSellingDeniedRecalculator = $this->productSellingDeniedRecalculator;
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade */
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         /** @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory */

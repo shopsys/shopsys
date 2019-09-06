@@ -17,12 +17,19 @@ use Shopsys\ShopBundle\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\ShopBundle\Model\Product\Product;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
-class CartItemTest extends TransactionFunctionalTestCase
+class CartItemTest extends TransactionFunctionalTestCase implements \Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase
 {
+    /**
+     * @var ProductDataFactoryInterface
+     * @inject
+     */
+    private $productDataFactory;
+
     public function testIsSimilarItemAs()
     {
+        $this->getContainer();
         $em = $this->getEntityManager();
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
+        $productDataFactory = $this->productDataFactory;
 
         $customerIdentifier = new CustomerIdentifier('randomString');
 
@@ -55,5 +62,13 @@ class CartItemTest extends TransactionFunctionalTestCase
 
         $this->assertTrue($cartItem1->isSimilarItemAs($cartItem2));
         $this->assertFalse($cartItem1->isSimilarItemAs($cartItem3));
+    }
+
+    /**
+     * @return \Psr\Container\ContainerInterface
+     */
+    public function createContainer(): \Psr\Container\ContainerInterface
+    {
+        return $this->getContainer();
     }
 }
