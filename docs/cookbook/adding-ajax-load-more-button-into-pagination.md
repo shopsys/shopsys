@@ -1,12 +1,15 @@
 # Adding Ajax Load More Button into Pagination
 
-In this cookbook, we will add a paginated brand list including ajax "load more" button to a product list page. After finishing the guide, you will know how to use multiple paginations on one page.  
+In this cookbook, we will add a paginated brand list including ajax "load more" button to a product list page.
+After finishing the guide, you will know how to use multiple paginations on one page.  
 
-*Note: After this change you will have paginated also `/brands-list/` page (`front_brand_list` route).*
+!!! note
+    After this change you will have paginated also `/brands-list/` page (`front_brand_list` route).
 
 ## Implementation of Brand Pagination
 
 First we need to extend `Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository` by creating `BrandRepository.php` in `/src/Shopsys/ShopBundle/Model/Product/Brand` and we add `getPaginationResult` method.
+
 ```php
 namespace Shopsys\ShopBundle\Model\Product\Brand;
 
@@ -36,6 +39,7 @@ class BrandRepository extends BaseBrandRepository
 ```
 
 Then we will extend `Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade` and add `getPaginatedResult` method.
+
 ```php
 namespace Shopsys\ShopBundle\Model\Product\Brand;
 
@@ -68,7 +72,9 @@ class BrandFacade extends BaseBrandFacade
 }
 ```
 
-After we have extended `BrandRepository` and `BrandFacade` we need to set them to be used instead of the framework classes in our application. This is done via configuration in `services.yml`.
+After we have extended `BrandRepository` and `BrandFacade` we need to set them to be used instead of the framework classes in our application.  
+This is done via configuration in `services.yml`.
+
 ```yaml
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository: '@Shopsys\ShopBundle\Model\Product\Brand\BrandRepository'
 
@@ -76,7 +82,8 @@ After we have extended `BrandRepository` and `BrandFacade` we need to set them t
 ```
 
 Next we will modify the brand list twig template where we replace the whole content and create twig template for rendering paging controls and paginated items via ajax where we move the original content from brand list template.  
-We will use `paginator.loadMoreButton(paginationResult, url('front_brand_list'), pageQueryParameter)` twig component that will asynchronously load next page when user clicks on its button. We will also define `pageQueryParameter` variable so it will have unique name and it will not interfere with other paging component on the same page.
+We will use `paginator.loadMoreButton(paginationResult, url('front_brand_list'), pageQueryParameter)` twig component that will asynchronously load next page when user clicks on its button.
+We will also define `pageQueryParameter` variable so it will have unique name and it will not interfere with other paging component on the same page.
 
 ```twig
 {# ShopBundle/Resources/views/Front/Content/Brand/list.html.twig #}
@@ -95,6 +102,7 @@ We will use `paginator.loadMoreButton(paginationResult, url('front_brand_list'),
 ```
 
 There are two important css classes that must be used.
+
 - `js-list-with-paginator` - element with this class encapsulate paging component
 - `js-list` - fragment from which new items are pulled during asynchronous call
 
@@ -128,10 +136,9 @@ There are two important css classes that must be used.
 After that we will modify `listAction` method in `BrandController` so `Brand` list page will be paginated and we will be able to integrate it into another list page that has other paginated items.  
 We will implement also constants for page query parameter `const PAGE_QUERY_PARAMETER = 'brandPage'` and for the count of items on one page `const ITEMS_PER_PAGE = 5;`.
 
-To be able to determine whether the request for brand list is called from the template, we need to add dependecy on `Symfony\Component\HttpFoundation\RequestStack` into our `BrandController`.
+To be able to determine whether the request for brand list is called from the template, we need to add dependency on `Symfony\Component\HttpFoundation\RequestStack` into our `BrandController`.
 
 ```php
-
 const PAGE_QUERY_PARAMETER = 'brandPage';
 const ITEMS_PER_PAGE = 5;
 
@@ -151,7 +158,6 @@ public function __construct(
     $this->brandFacade = $brandFacade;
     $this->requestStack = $requestStack;
 }
-
 
 /**
  * @param \Symfony\Component\HttpFoundation\Request $request
@@ -177,6 +183,7 @@ public function listAction(Request $request)
 ```
 
 ### Customizing the "load more" button text
+
 By default, the "load more" button displays general text - "Load next X item(s)".
 There is an option `buttonTextCallback` available for `Shopsys.AjaxMoreLoader` javascript component that you can use to customize the displayed text to fit your use case.
 You can see the usage of the option in [`productList.js`](/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/product/productList.js).
@@ -195,4 +202,5 @@ We will add twig code into `main_content` block.
 
 ## Conclusion
 
-Customer can see 2 paginated lists with buttons for loading items from next pages on each `Product` list page. Since there are unique page query parameters, paginated lists can have displayed different page indexes after browser is loaded with these page query parameters.
+Customer can see 2 paginated lists with buttons for loading items from next pages on each `Product` list page.
+Since there are unique page query parameters, paginated lists can have displayed different page indexes after browser is loaded with these page query parameters.

@@ -9,7 +9,8 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
 
 This solution uses [*docker-sync*](http://docker-sync.io/) (for relatively fast two-way synchronization of the application files between the host machine and Docker volume).
 
-**Warning: Docker-sync might be a burden for intensive project development, especially when there is a huge amount of files in shared volumes of virtualized docker and when switching between branches or even between projects often. In such a case, you should consider using [native installation](./native-installation.md).**
+!!! warning
+    Docker-sync might be a burden for intensive project development, especially when there is a huge amount of files in shared volumes of virtualized docker and when switching between branches or even between projects often. In such a case, you should consider using [native installation](./native-installation.md).
 
 ## Requirements
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
@@ -25,39 +26,44 @@ This solution uses [*docker-sync*](http://docker-sync.io/) (for relatively fast 
 
 ## Steps
 ### 1. Create new project from Shopsys Framework sources
-```
+```sh
 composer create-project shopsys/project-base --no-install --keep-vcs
 cd project-base
 ```
 
-*Notes:*
-- *The `--no-install` option disables installation of the vendors - this will be done later in the Docker container.*
-- *The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`.*
+!!! note "Notes"
+    - The `--no-install` option disables installation of the vendors - this will be done later in the Docker container
+    - The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`
 
 ### 1.1 Use install script
 In case you want to start demo of the app as fast as possible, you can now execute install script.
 
-```
+```sh
 ./scripts/install.sh
 ```
 
 If you want to know more about what is happening during installation, continue with next step.
 
 ### 1.2 Enable second domain (optional)
-There are two domains each for different language in default installation. First one is available via IP adress `127.0.O.1` and second one via `127.0.0.2`.
-`127.0.0.2` is not alias of `127.0.0.1` on Mac by default. To create this alias in network interface run:
-```
+There are two domains each for different language in default installation.
+First one is available via IP address `127.0.O.1` and second one via `127.0.0.2`.
+`127.0.0.2` is not alias of `127.0.0.1` on Mac by default.
+To create this alias in network interface run:
+
+```sh
 sudo ifconfig lo0 alias 127.0.0.2 up
 ```
 
 ### 2. Create docker-compose.yml and docker-sync.yml
-Create `docker-compose.yml` from template [`docker-compose-mac.yml.dist`](../../project-base/docker/conf/docker-compose-mac.yml.dist).
-```
+Create `docker-compose.yml` from template [`docker-compose-mac.yml.dist`](https://github.com/shopsys/shopsys/blob/7.3/project-base/docker/conf/docker-compose-mac.yml.dist).
+
+```sh
 cp docker/conf/docker-compose-mac.yml.dist docker-compose.yml
 ```
 
-Create `docker-sync.yml` from template [`docker-sync.yml.dist`](../../project-base/docker/conf/docker-sync.yml.dist).
-```
+Create `docker-sync.yml` from template [`docker-sync.yml.dist`](https://github.com/shopsys/shopsys/blob/7.3/project-base/docker/conf/docker-sync.yml.dist).
+
+```sh
 cp docker/conf/docker-sync.yml.dist docker-sync.yml
 ```
 
@@ -75,17 +81,20 @@ Also you need to insert your UID into `docker-sync.yml` into value `sync_userid`
 ### 3. Compose Docker container
 On MacOS you need to synchronize folders using docker-sync.
 Before starting synchronization you need to create a directory for persisting Postgres and Elasticsearch data so you won't lose it when the container is shut down.
-```
+
+```sh
 mkdir -p var/postgres-data var/elasticsearch-data vendor
 docker-sync start
 ```
 
 Then rebuild and start containers
-```
+
+```sh
 docker-compose up -d --build
 ```
 
-***Note:** During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ### 4. Setup the application
 [Application setup guide](installation-using-docker-application-setup.md)

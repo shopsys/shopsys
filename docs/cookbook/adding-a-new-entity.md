@@ -1,11 +1,12 @@
 # Adding a New Entity
 This article provides step by step instructions on how to add a new entity to your project.
-Basic information about custom entities can be found in the [separate article](/docs/introduction/custom-entities.md).
+Basic information about custom entities can be found in the [separate article](../model/custom-entities.md).
 
 Let's say we need to keep an agenda of salesmen. After finishing this cookbook, the new salesman entity will not be presented on the FE in any fashion,
-however, you can continue with another [cookbook](/docs/cookbook/create-basic-grid.md) that will show you how to display a list of salesmen using a grid in administration.
+however, you can continue with another [cookbook](./create-basic-grid.md) that will show you how to display a list of salesmen using a grid in administration.
 
 ## 1. Create a new class `Salesman` and set it as an entity using Doctrine annotation
+
 ```php
 // src\Shopsys\ShopBundle\Model\Salesman\Salesman.php
 
@@ -23,7 +24,9 @@ class Salesman
 ```
 
 ## 2. Add salesmen attributes and set them as database columns using Doctrine annotations
+
 Each salesman entity will have the following properties.
+
 - `id` - unique sequenced value for salesman identification
 - `name` - name of the salesman limited to 100 characters
 - `registeredAt` - registration date of the salesman
@@ -65,14 +68,18 @@ class Salesman
 ```
 
 ## 3. Generate a database migration
+
 Run a console command (in `php-fpm container` if you are using Docker) that will generate a database migration for you:
- ```bash
+
+```sh
 php phing db-migrations-generate
 ```
 
-*Note: More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+!!! note
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)
 
 The command will print a filename of the database migration with content like this.
+
 ```php
 namespace Shopsys\ShopBundle\Migrations;
 
@@ -103,10 +110,15 @@ class Version20190301122526 extends AbstractMigration
     }
 }
 ```
-*Note: We recommend you to check this migration whether everything is set as expected. If the system doesn't generate the migration, the entity is probably in an incorrect namespace or has wrong Doctrine annotation mapping.*
+
+!!! tip
+    We recommend you to check this migration whether everything is set as expected.
+    If the system doesn't generate the migration, the entity is probably in an incorrect namespace or has wrong Doctrine annotation mapping.
 
 ## 4. Add default salesmen
+
 Now we add some entries into the new database table by modifying the database migration.
+
 ```diff
 namespace Shopsys\ShopBundle\Migrations;
 
@@ -144,11 +156,14 @@ class Version20190301122526 extends AbstractMigration
 ```
 
 ## 5. Execute migrations to propagate all the changes to database
+
 Run a console command
-```bash
+
+```sh
 php phing db-migrations
 ```
 
 ## Conclusion
+
 Now, there is a new entity in your system - `Salesmen` - for which exists a database table that has 4 records with salesmen.
-If you want to display a list of them in the administration, follow ["Create basic grid" cookbook](/docs/cookbook/create-basic-grid.md).
+If you want to display a list of them in the administration, follow ["Create basic grid" cookbook](./create-basic-grid.md).

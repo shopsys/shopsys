@@ -37,7 +37,7 @@ That's true because these stopped containers are still registered in memory.
 
 To properly delete your workspace containers, run:
 
-```
+```sh
 docker-compose down
 ```
 
@@ -70,23 +70,25 @@ We actually just need to allocate the first port to free port on our local syste
 Since we are trying to change ports on your local machine there is a chance that you will pick port that is already allocated for something else running on your computer.
 You can check all of your taken ports using `netstat` (for MacOs `lsof`).
 
-```
+```sh
 netstat -ltn
 ```
 
 This will output all listening TCP ports in numeric format. Now we can just pick one that isn't in this list and set it to our container.
 
-*Note: Try not to use ports between 1000-1100, these are ports that root usually uses for its processes.*
+!!! warning
+    Try not to use ports between 1000-1100, these are ports that root usually uses for its processes.
 
 So now we got configured our `docker-compose` files in a way they do not have any conflicts among them.
 That way we can have as many projects running at the same time as many ports there are in our local network.
 
 Remember that after changing these you need to do few things differently.
+
 * You changed `port` of webserver container which affects the domain URL, so you need to change ports in `domains_urls.yml`.
 * You changed `container_name` of php-fpm which means that in order to get inside the php-fpm container you must now use this name.
   for instance, if your new container name is `my-new-project-name-php-fpm` you need to execute
 
-```
+```sh
 docker exec -it my-new-project-name-php-fpm bash
 ```
 
@@ -98,18 +100,18 @@ That means that docker does not really check if there is change in the dockerfil
 it will always build container by cached image. So what we actually need is to rebuild our containers.
 First we need to stop our containers in `docker-compose` because we cannot update containers that are already in use:
 
-```
+```sh
 docker-compose stop
 ```
 
 Then we need to force Docker to rebuild our containers:
 
-```
+```sh
 docker-compose build
 ```
 
 Docker has now updated our containers and we can continue as usual with:
-```
+```sh
 docker-compose up -d
 ```
 
@@ -118,7 +120,7 @@ docker-compose up -d
 Docker compose is much easier to change than images. If we change anything in `docker-compose` we just need to recreate `docker-compose`.
 That is done by executing:
 
-```
+```sh
 docker-compose up -d --force-recreate
 ```
 
@@ -129,11 +131,11 @@ This version helped most people to solve their issues with syncing.
 You may sometimes encounter a sync problem even with the suggested version of Docker. In those cases, you need to recreate docker-sync containers. Here are two easy steps you have to follow:
 
 Delete your docker-sync containers and volumes (data on your host will not be removed):
-```
+```sh
 docker-sync clean
 ```
 Start docker-sync so your docker-sync containers and volumes will be recreated:
-```
+```sh
 docker-sync start
 ```
 
@@ -151,14 +153,16 @@ You can inspect what is wrong by using `docker logs <container-name>` command.
 ## Composer dependencies installation fails on memory limit
 When `composer install` or `composer update` fails on an error with exceeding the allowed memory size, you can increase the memory limit by setting `COMPOSER_MEMORY_LIMIT` environment variable in your `docker/php-fpm/Dockerfile` or `docker-compose.yml`.
 
-*Note: Since `v7.0.0-beta4` we have set the Composer memory limit to `-1` (which means unlimited) in the php-fpm's `Dockerfile`.*
-*If you still encounter memory issues while using Docker for Windows (or Mac), try increasing the limits in `Docker -> Preferences… -> Advanced`.*
+!!! note
+    Since `v7.0.0-beta4` we have set the Composer memory limit to `-1` (which means unlimited) in the php-fpm's `Dockerfile`.  
+    If you still encounter memory issues while using Docker for Windows (or Mac), try increasing the limits in `Docker -> Preferences… -> Advanced`.
 
-***Note:** Composer dependencies contain 3-rd party software with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    Composer dependencies contain 3-rd party software with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## Starting up the Docker containers fails due to invalid reference format
 Docker images may fail to build during `docker-compose up -d` due to invalid reference format, eg.:
-```
+```no-highlight
 Building php-fpm
 Step 1/41 : FROM php:7.2-fpm-stretch as base
 ERROR: Service 'php-fpm' failed to build: Error parsing reference: "php:7.2-fpm-stretch as base" is not a valid repository/tag: invalid reference format

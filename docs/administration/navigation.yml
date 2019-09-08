@@ -1,0 +1,6 @@
+arrange:
+    - index.md
+    - administration-menu.md
+    - grid.md
+    - grid-rendering-customization.md
+    - grid-data-sources.md

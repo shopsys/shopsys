@@ -1,32 +1,28 @@
 # How to Work with Money
 
-Money is a very important concept for every e-commerce project.
+Money is a very important concept for every ecommerce project.
 In Shopsys Framework, all monetary values (*prices, account balances, discount amounts, price limits etc.*) are represented by an instance of [the `Money` class](#money-class).
 
 This approach has several advantages:
+
 - it avoids problems with floating point number calculations and comparisons (see [official PHP documentation](http://php.net/manual/en/language.types.float.php) for details)
 - allows easy-to-use interfaces with consistent type-hinting so you can be sure what type of value you should be using
 - prevents accidental conversion to unexpected types (which may be problematic eg. when using the `===` operator)
 - makes the application design clearer and future changes easier
 
 **Table of Contents:**
-- [General Concept](#general-concept)
-- [Money Class](#money-class)
-- [Money in Forms](#money-in-forms)
-- [Money in Twig Templates](#money-in-twig-templates)
-- [Money in Javascript](#money-in-javascript)
-- [Money in Doctrine](#money-in-doctrine)
-- [Unit and Functional Tests](#unit-and-functional-tests)
-- [Price Class](#price-class)
+
+[TOC]
 
 ## General Concept
-The money concept in Shopsys Framework represents and encapsulates monetary values with a decimal part, like `100`, `0.50`, `10.99`, `0.0005`, ...
+The money concept in Shopsys Framework represents and encapsulates monetary values with a decimal part, like `100`, `0.50`, `10.99`, `0.0005`, ...  
 Money is represented without currency.
 
 ### Scale
 Scale defines the precision of the decimal part and it can be a bit tricky.
 
-Imagine you want to represent `1/3` (one third) in your application. In a `float`, it would be actually represented as `0.333333333333333314829616256247390992939472198486328125` because of [the floating-point precision](http://php.net/manual/en/language.types.float.php).
+Imagine you want to represent `1/3` (one third) in your application.
+In a `float`, it would be actually represented as `0.333333333333333314829616256247390992939472198486328125` because of [the floating-point precision](http://php.net/manual/en/language.types.float.php).
 
 When you want to work with one third in terms of money, you have to specify the scale - the number of places after the decimal point that should be taken into account.
 So you can create a monetary value from `1/3` in the scale of 2 (`0.33`), or in the scale of 8 (`0.33333333`).
@@ -40,12 +36,13 @@ The scale has to be specified during [rounding](#rounding), [creating from float
 
 ## Money Class
 
-[`Money`](/packages/framework/src/Component/Money/Money.php) is an immutable [value object](https://codete.com/blog/value-objects/).
+[`Money`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Component/Money/Money.php) is an immutable [value object](https://codete.com/blog/value-objects/).
 
 It uses a decimal representation of the money amount and it does not contain any reference to the used currency.
 You can get the decimal representation as a `string` via the `getAmount` method.
 
-*Note: If in doubt about the results of any method, you can take a look at [its unit tests](/packages/framework/tests/Unit/Component/Money/MoneyTest.php) which contain many examples of the class' behavior.*
+!!! tip
+    If in doubt about the results of any method, you can take a look at [its unit tests](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/tests/Unit/Component/Money/MoneyTest.php) which contain many examples of the class' behavior.
 
 ### Construction
 
@@ -65,18 +62,21 @@ To compute with monetary values you have to use the object's methods instead of 
 - `Money::multiply(int|string $multiplier) : Money`
 - `Money::divide(int|string $divisor, int $scale) : Money`
 
-*Note: `Money` is immutable, which means that all these methods create a new object and the original is never modified.*
+!!! note
+    `Money` is immutable, which means that all these methods create a new object and the original is never modified.
 
 For addition and subtraction, the other parameter has to be also a `Money` instance.
 For multiplication and division, the other parameter has to be an integer or a numeric string (as they are able to represent decimal numbers precisely), not a float.
 
 The scale (number of decimal places) of the result is assigned automatically to all operations except division, keeping the results as precise as possible.
 Results of a division may be inexpressible with a finite decimal (eg. 1 / 3 = 0.3333...), so it's up to the user to specify the requested scale.
+
 - scale of the result of `add` and `subtract` is the *maximal scale* of both money values
 - scale of the result of `multiply` is the *sum of scales* of both money values
 - scale of the result of `divide` must be *explicitly specified*, the last decimal place will be rounded to minimize the error
 
-*Note: The scale of the money amount is always preserved - `getAmount` will use all decimal places of its scale (eg. zero money with scale 6 would return `0.000000`).*
+!!! note
+    The scale of the money amount is always preserved - `getAmount` will use all decimal places of its scale (eg. zero money with scale 6 would return `0.000000`).
 
 ### Rounding
 
@@ -119,12 +119,13 @@ $orderItemFormBuilder->add('priceWithVat', MoneyType::class, [
 ]);
 ```
 
-The form type is configured with a model data transformer that converts the value into a `Money` object automatically ([`NumericToMoneyTransformer`](/packages/framework/src/Form/Transformers/NumericToMoneyTransformer.php)).
-Thanks to this approach you can use `Money` in your [data objects](/docs/model/entities.md#entity-data) directly.
+The form type is configured with a model data transformer that converts the value into a `Money` object automatically ([`NumericToMoneyTransformer`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Form/Transformers/NumericToMoneyTransformer.php)).
+Thanks to this approach you can use `Money` in your [data objects](./entities.md#entity-data) directly.
 
 In Shopsys Framework, the default value of the `currency` option is `false` instead of `EUR`, hiding the currency symbol by default.
 
-*Note: For non-monetary numeric values use `NumberType` (see [Symfony docs](https://symfony.com/doc/3.4/reference/forms/types/number.html) for details).*
+!!! tip
+    For non-monetary numeric values use `NumberType` (see [Symfony docs](https://symfony.com/doc/3.4/reference/forms/types/number.html) for details).
 
 ### Form Constraints
 
@@ -161,6 +162,7 @@ $priceTableFormBuilder->add($key, MoneyType::class, [
 Similarly to [the Symfony `Range` constraint](https://symfony.com/doc/3.4/reference/constraints/Range.html), it validates that the amount of money is between some minimum and maximum.
 
 It has four options:
+
 - `min` specifies the minimum value, has to be an instance of `Money` or `null`
 - `max` specifies the maximum value, has to be an instance of `Money` or `null`
 - `minMessage` specifies the validation error message in case the entered value is less than the `min` value
@@ -216,7 +218,7 @@ They usually differ only in the currency and locale they use.
 ### priceText
 
 Filter `priceText` formats the amount of money in a localized manner, similarly to the `price` filter.
-The only difference is that it outputs the text *"Free"* (or the corresponding [translation](/docs/introduction/translations.md)) when zero amount of money is provided.
+The only difference is that it outputs the text *"Free"* (or the corresponding [translation](../introduction/translations.md)) when zero amount of money is provided.
 
 ### priceTextWithCurrencyByCurrencyIdAndLocale
 
@@ -255,6 +257,7 @@ The *domain ID* (`int`) must be provided as a parameter.
 Formats the amount of money as a decimal number without any currency symbol.
 
 Three optional parameters can be provided:
+
 - *number of decimal places* - `null` by default (meaning all), it will [round](#rounding) the value if necessary
 - *decimal point character* - `"."` by default
 - *separator of thousands* - `""` by default
@@ -327,7 +330,7 @@ class MyEntity
 
 ### In Parameters
 
-When you want to use a `Money` instance as a parameter in DQL, use the `getAmount` method in your [repository class](/docs/model/introduction-to-model-architecture.md#repository):
+When you want to use a `Money` instance as a parameter in DQL, use the `getAmount` method in your [repository class](./introduction-to-model-architecture.md#repository):
 
 ```php
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -419,7 +422,7 @@ class MyTest extends FunctionalTestCase
 
 ## Price Class
 
-[`Price`](/packages/framework/src/Model/Pricing/Price.php) is also an immutable [value object](https://codete.com/blog/value-objects/) used in pricing.
+[`Price`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/Pricing/Price.php) is also an immutable [value object](https://codete.com/blog/value-objects/) used in pricing.
 
 It represents a price with and without VAT and is used in many parts of Shopsys Framework.
 Price calculation classes usually output instances of `Price`.
@@ -428,11 +431,13 @@ It can be constructed by calling `new Price(Money $priceWithoutVat, Money $price
 For a zero price, you can use a short-hand method `Price::zero()`.
 
 The class has three getters you can use to retrieve the prices or the VAT amount:
+
 - `Price::getPriceWithoutVat() : Money`
 - `Price::getPriceWithVat() : Money`
 - `Price::getVatAmount() : Money`
 
 And you can calculate with prices using its methods:
+
 - `Price::add(Price $addend) : Price`
 - `Price::subtract(Price $subtrahend) : Price`
 - `Price::inverse() : Price`

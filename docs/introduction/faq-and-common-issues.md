@@ -29,7 +29,7 @@ See more about phing targets in [Console Commands for Application Management (Ph
 ## What are the data fixtures good for?
 Data fixtures are actually demo data available in the Shopys Framework.
 For their installation, use the phing target `db-fixtures-demo`.
-This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (eg. with configured domains and an existing database structure), see [`build.xml`](/packages/framework/build.xml).
+This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (eg. with configured domains and an existing database structure), see [`build.xml`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/build.xml).
 Demo data are used for automatic tests and also for installation of demo shop with prepared data.
 
 ## How to change a domain URL?
@@ -61,7 +61,7 @@ Of course, an SSL certificate must be installed on your server.
 To set up the user translations of labels and messages, use the files `messages.en.po` and `validators.en.po`, where `en` represents the locale.
 These files are generated for each locale you use, and you can find them in the `ShopBundle/Resources/translations/` directory.
 Language settings are described more in detail in the tutorial [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md#3-locale-settings).
-For more information about translations, see [the separate article](/docs/introduction/translations.md).
+For more information about translations, see [the separate article](./translations.md).
 
 ## How to set up deployment and production server?
 We recommend installation using the Docker for production.
@@ -92,18 +92,18 @@ You can change the environment manually by using the command `php bin/console sh
 
 ## Are some periodic tasks part of the Shopsys Framework (cron)?
 Yes, there is some prepared configuration for Shopsys Framework cron commands in a file `src/Resources/config/services/cron.yml` in `FrameworkBundle`.
-Do not forget to set up a cron on your server to execute [`php phing cron`](/docs/introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
+Do not forget to set up a cron on your server to execute [`php phing cron`](./console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
 
 ## Why are you using entity data instead of entities for Symfony forms?
 We are using [entity data objects](../model/entities.md#entity-data) instead of [entities](../model/introduction-to-model-architecture.md#entity)
 because Symfony forms need setters for all fields and we don't want to mess entities with them.
 
 ## What is the configuration file `services_test.yml` good for?
-[`services_test.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml)
+[`services_test.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml)
 is a service configuration file that is loaded in TEST environment in addition to
-the standard configuration defined in [`services.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services.yml) as sometimes the configuration differs from the standard one and we need to override it.
+the standard configuration defined in [`services.yml`](https://github.com/shopsys/shopsys/blob/7.3/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml) as sometimes the configuration differs from the standard one and we need to override it.
 E.g., by default, all our services are defined as private. However, in tests, we are retrieving some services directly from the container hence we need to have them public in TEST environment.
 
 ## How to change the behavior of the product search on the front-end?
 Full-text product search on the front-end is handled via Elasticsearch.
-If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](/docs/model/front-end-product-searching.md).
+If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](../model/front-end-product-searching.md).

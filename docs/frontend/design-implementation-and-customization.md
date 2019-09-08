@@ -1,5 +1,6 @@
 # Design Implementation and Customization
 Here are the basic technologies we use in Shopsys Framework for design implementation:
+
 - [LESS pre-processor](http://lesscss.org/) for definition of cascading style sheets (i.e. [CSS](https://www.w3.org/Style/CSS/Overview.en.html))
     - the LESS files are located in `src/Shopsys/ShopBundle/Resources/styles`  
     - you can read more about LESS in separate article [Introduction to Less](./introduction-to-less.md)
@@ -14,6 +15,7 @@ When you want to customize the styles or templates, you can modify any of the fi
 Shopsys Framework provides an ability of running multiple domains as a single application,
 if you want to know more about this concept, you can read [the separate article](../introduction/domain-multidomain-multilanguage.md).
 In order to change your multidomain appearance, you can set two parameters [`domains.yml`](/project-base/app/config/domains.yml) configuration file:
+
 - `styles_directory`
     - allows you to define a custom sub-folder with LESS files in `src/Shopsys/ShopBundle/Resources/styles`
     - if you need to use custom styles for a particular domain, put your LESS files in this sub-folder

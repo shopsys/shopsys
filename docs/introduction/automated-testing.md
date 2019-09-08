@@ -1,7 +1,8 @@
 # Automated Testing
 
-Testing is a crucial part of development and maintenance of reliable software.
+Testing is a crucial part of development and maintenance of reliable software.  
 For this reason Shopsys Framework comes with 5 types of automated tests:
+
 * [Unit tests](#unit-tests)
 * [Functional tests](#functional-tests)
 * [HTTP smoke tests](#http-smoke-tests)
@@ -100,16 +101,16 @@ These tests use a separate database to not affect your application data so you c
 * low-level testing of components that are hard to unit-test
 
 #### Example:
-See test class [`\Tests\ShopBundle\Functional\Model\Cart\CartFacadeTest`](../../project-base/tests/ShopBundle/Functional/Model/Cart/CartFacadeTest.php). Notice usage of demo data instead of preparing own entities.
+See test class [`\Tests\ShopBundle\Functional\Model\Cart\CartFacadeTest`](https://github.com/shopsys/shopsys/blob/7.3/project-base/tests/ShopBundle/Functional/Model/Cart/CartFacadeTest.php). Notice usage of demo data instead of preparing own entities.
 
 #### Choose base test class
 We have two base classes that you can choose from
 
-##### [`\Tests\ShopBundle\Test\TransactionFunctionalTestCase`](../../project-base/tests/ShopBundle/Test/TransactionFunctionalTestCase.php)
+##### [`\Tests\ShopBundle\Test\TransactionFunctionalTestCase`](https://github.com/shopsys/shopsys/blob/7.3/project-base/tests/ShopBundle/Test/TransactionFunctionalTestCase.php)
 All tests are isolated from each other thanks to database transactions. This means they can be executed in any order as each has the same starting conditions.
 `TransactionFunctionalTestCase` is always a safe choice.
 
-##### [`\Tests\ShopBundle\Test\FunctionalTestCase`](../../project-base/tests/ShopBundle/Test/FunctionalTestCase.php)
+##### [`\Tests\ShopBundle\Test\FunctionalTestCase`](https://github.com/shopsys/shopsys/blob/7.3/project-base/tests/ShopBundle/Test/FunctionalTestCase.php)
 Tests do not use database transactions, so they are quicker.
 Use `FunctionalTestCase` if you are sure that you won't commit anything into the database.
 
@@ -129,9 +130,10 @@ You will no longer cause *500 Server Error* on some random page by a seemingly u
 * protection from unhandled exceptions in controller actions
 
 #### Example:
-See configuration of HTTP smoke (and [performance](#performance-tests)) tests in [`\Tests\ShopBundle\Smoke\Http\RouteConfigCustomization`](../../project-base/tests/ShopBundle/Smoke/Http/RouteConfigCustomization.php).
+See configuration of HTTP smoke (and [performance](#performance-tests)) tests in [`\Tests\ShopBundle\Smoke\Http\RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/7.3/project-base/tests/ShopBundle/Smoke/Http/RouteConfigCustomization.php).
 
-*Note: you can read more about customization of HTTP smoke tests in their [own documentation on GitHub](https://github.com/shopsys/http-smoke-testing).*
+!!! tip
+    You can read more about customization of HTTP smoke tests in their [own documentation on GitHub](https://github.com/shopsys/http-smoke-testing).
 
 ### Acceptance tests (a.k.a. functional tests or Selenium tests)
 Provide a way of fully end-to-end testing your application as if a real human used it.
@@ -156,12 +158,12 @@ More information can be found in [Running Acceptance Tests](running-acceptance-t
 * validating business-critical scenarios (eg. order creation)
 
 #### Example:
-See acceptance test for product filter in administration in [`\Tests\ShopBundle\Acceptance\acceptance\AdminProductAdvancedSearchCest`](../../project-base/tests/ShopBundle/Acceptance/acceptance/AdminProductAdvancedSearchCest.php). Notice the usage of auto-wired Page objects [`LoginPage`](../../project-base/tests/ShopBundle/Acceptance/acceptance/PageObject/Admin/LoginPage.php) and [`ProductAdvancedSearchPage`](../../project-base/tests/ShopBundle/Acceptance/acceptance/PageObject/Admin/ProductAdvancedSearchPage.php). They provide a way to reuse code that interacts with user interface.
+See acceptance test for product filter in administration in [`\Tests\ShopBundle\Acceptance\acceptance\AdminProductAdvancedSearchCest`](https://github.com/shopsys/shopsys/blob/7.3/project-base/tests/ShopBundle/Acceptance/acceptance/AdminProductAdvancedSearchCest.php). Notice the usage of auto-wired Page objects [`LoginPage`](https://github.com/shopsys/shopsys/blob/7.3/project-base/tests/ShopBundle/Acceptance/acceptance/PageObject/Admin/LoginPage.php) and [`ProductAdvancedSearchPage`](https://github.com/shopsys/shopsys/blob/7.3/project-base/tests/ShopBundle/Acceptance/acceptance/PageObject/Admin/ProductAdvancedSearchPage.php). They provide a way to reuse code that interacts with user interface.
 
 ### Performance tests
 These tests assert that key actions do not take too long. They are similar to [HTTP smoke tests](#http-smoke-tests) but they measure response time as well. In addition to routes tested by HTTP smoke tests, these tests also request and measure regeneration of all product feeds.
 
-Before execution of the test suite, the testing database is filled with a large amount of data simulating production environment of a big e-commerce project. You will no longer unknowingly slow down a page because you are developing with only a small data set.
+Before execution of the test suite, the testing database is filled with a large amount of data simulating production environment of a big ecommerce project. You will no longer unknowingly slow down a page because you are developing with only a small data set.
 
 It is advised to run these tests on a separate server that is not under load at the time for consistent results (eg. only in nighttime).
 
@@ -177,9 +179,9 @@ It is advised to run these tests on a separate server that is not under load at 
 * preventing application collapse on production data load
 
 #### Example:
-See configuration of performance (and [HTTP smoke](#http-smoke-tests)) tests in [`\Tests\ShopBundle\Smoke\Http\RouteConfigCustomization`](../../project-base/tests/ShopBundle/Smoke/Http/RouteConfigCustomization.php).
+See configuration of performance (and [HTTP smoke](#http-smoke-tests)) tests in [`\Tests\ShopBundle\Smoke\Http\RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/7.3/project-base/tests/ShopBundle/Smoke/Http/RouteConfigCustomization.php).
 
-For testing performance of something else than controller actions see implementation of feed performance test in [`\Tests\ShopBundle\Performance\Feed\AllFeedsTest`](../../project-base/tests/ShopBundle/Performance/Feed/AllFeedsTest.php).
+For testing performance of something else than controller actions see implementation of feed performance test in [`\Tests\ShopBundle\Performance\Feed\AllFeedsTest`](https://github.com/shopsys/shopsys/blob/7.3/project-base/tests/ShopBundle/Performance/Feed/AllFeedsTest.php).
 
 ## How many tests should you write
 > The crucial question you should ask yourself is this: do I care about the future of my code?  

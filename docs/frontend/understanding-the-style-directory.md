@@ -1,13 +1,16 @@
 # Understanding the style directory
 In folder `src/Shopsys/ShopBundle/Resources/styles/front/` there exists folders containing styles for individual domains.
 
-For each domain exists the same folder structure consists of some folders and files. This document is about describing the meaning of these files and folders.
+For each domain exists the same folder structure consists of some folders and files.
+This document is about describing the meaning of these files and folders.
 
 ## Terms definition
-We are using a few terms for our coding standards in Shopsy Framework. In order to understand our folder hierarchy is good to know their meaning.
+We are using a few terms for our coding standards in Shopsys Framework.
+In order to understand our folder hierarchy is good to know their meaning.
 
 ### Helper
-Helper is class containing definition of a single attribute. In connection with `LESS preprocesor` helper classes may be very powerful.
+Helper is class containing definition of a single attribute.
+In connection with `LESS preprocesor` helper classes may be very powerful.
 
 Let's show you some code of helper class. You can see there is a definition of the helper class setting HTML element color to primary web color.
 ```css
@@ -19,12 +22,15 @@ Let's show you some code of helper class. You can see there is a definition of t
 ### Component
 In Shopsys Framework we use few types of components - `box`, `form`, `in`, `list`, `table`, `window`, `wrap`.
 
-All components are placed in the folder `components`. Each component type has own folder. There exists a rule that component folder name match with the component type name. According to a component type, we will move LESS component file into appropriate folder.
+All components are placed in the folder `components`. Each component type has own folder.
+There exists a rule that component folder name match with the component type name.
+According to a component type, we will move LESS component file into appropriate folder.
 
 For example component `list-products` will have following file path `components/list/products.less`.
 
 ## Root directory
 In the root directory for common styles `src/Shopsys/ShopBundle/Resources/styles/front/common` you will see following files and folders.
+
 - `main.less` - import all `Less` files needed to style its domain design. For more information about importing `Less` files, please see our document [Introduction to less](./introduction-to-less.md)
 - `helpers.less` - imports base configuration located in `core/` and helper classes located in files placed in `helpers/`
 - `todo.less` - serves as file to keep temporary CSS/LESS code for further processing
@@ -56,16 +62,24 @@ In the root directory for common styles `src/Shopsys/ShopBundle/Resources/styles
 ## How to create new LESS component
 First of all, it is good to select a class name that will fit the purpose of the `LESS component`.
 
-After that you have to realize which type of component it should be. To determine where a new component belongs, it is recommended to follow the suggestion mentioned in the previous section **Root directory**. You can find these suggestions in the description for individual component folders.
+After that you have to realize which type of component it should be.
+To determine where a new component belongs, it is recommended to follow the suggestion mentioned in the previous section **Root directory**.
+You can find these suggestions in the description for individual component folders.
 
 ## How to style print page
-For this purpose please access `print/` folder. In the folder place only files that are necessary to style print page. It is recommended to respect folder structure as is in the root folder.
+For this purpose please access `print/` folder.
+In the folder place only files that are necessary to style print page.
+It is recommended to respect folder structure as is in the root folder.
 
 ### Best practices
-In case you want to hide HTML element there exist CSS class `.dont-print`. It is best practice not to hide element through styles but to place this class to an appropriate element.
+In case you want to hide HTML element there exist CSS class `.dont-print`.
+It is best practice not to hide element through styles but to place this class to an appropriate element.
 
 ### Example 1 - Setting green color on title in product list
-In order to style the product list, you will have to find an appropriate `LESS component`. In our case it would be placed in `src/Shopsys/ShopBundle/Resources/styles/front/common/print/components/list/products.less`. It is also recommended to respect the way of writing a class name and its definition. We use BEM methodology in Shopsys Framework (for more information please visit [Introduction to BEM](http://getbem.com/introduction/)).
+In order to style the product list, you will have to find an appropriate `LESS component`.
+In our case it would be placed in `src/Shopsys/ShopBundle/Resources/styles/front/common/print/components/list/products.less`.
+It is also recommended to respect the way of writing a class name and its definition.
+We use BEM methodology in Shopsys Framework (for more information please visit [Introduction to BEM](http://getbem.com/introduction/)).
 
 Let's assume we need to set a green color for product title in the product list.
 
@@ -80,7 +94,7 @@ The code in file `print/components/list/products.less` would look like as it is 
 }
 ```
 
-### Example 2 - Hidding all advert places
+### Example 2 - Hiding all advert places
 In order to hide all advert places, we will proceed as recommended within best practices part.
 
 File `src/Shopsys/ShopBundle/Resources/views/Front/Content/Advert/box.html.twig` would look like is shown below.

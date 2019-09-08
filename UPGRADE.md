@@ -8,7 +8,7 @@ Since there are 3 possible scenarios how you can use the Shopsys Framework, inst
 Follow the instructions in relevant sections, eg. `shopsys/coding-standards` or `shopsys/http-smoke-testing`.
 
 ### You are using the monorepo
-Follow the instructions in the [monorepo upgrade guide](docs/contributing/upgrading-monorepo.md).
+Follow the instructions in the [monorepo upgrade guide](upgrade/upgrading-monorepo.md).
 
 ### You are developing a project based on the project-base repository
 * upgrade only your composer dependencies and follow the instructions in a guide below
@@ -38,25 +38,25 @@ Follow the instructions in the [monorepo upgrade guide](docs/contributing/upgrad
 * even we care a lot about these instructions, it is possible we miss something. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
 ## Upgrade guides
-* ### [From v7.3.1 to v7.3.2-dev](./docs/upgrade/UPGRADE-v7.3.2-dev.md)
-* ### [From v7.3.0 to v7.3.1](./docs/upgrade/UPGRADE-v7.3.1.md)
-* ### [From v7.2.2 to v7.3.0](./docs/upgrade/UPGRADE-v7.3.0.md)
-* ### [From v7.2.1 to v7.2.2](./docs/upgrade/UPGRADE-v7.2.2.md)
-* ### [From v7.2.0 to v7.2.1](./docs/upgrade/UPGRADE-v7.2.1.md)
-* ### [From v7.1.0 to v7.2.0](./docs/upgrade/UPGRADE-v7.2.0.md)
-* ### [From v7.1.0 to v7.1.1](./docs/upgrade/UPGRADE-v7.1.1.md)
-* ### [From v7.0.0 to v7.1.0](./docs/upgrade/UPGRADE-v7.1.0.md)
-* ### [From v7.0.0 to v7.0.1](./docs/upgrade/UPGRADE-v7.0.1.md)
-* ### [From v7.0.0-beta6 to v7.0.0](./docs/upgrade/UPGRADE-v7.0.0.md)
-* ### [From v7.0.0-beta5 to v7.0.0-beta6](./docs/upgrade/UPGRADE-v7.0.0-beta6.md)
-* ### [From v7.0.0-beta4 to v7.0.0-beta5](./docs/upgrade/UPGRADE-v7.0.0-beta5.md)
-* ### [From v7.0.0-beta3 to v7.0.0-beta4](docs/upgrade/UPGRADE-v7.0.0-beta4.md)
-* ### [From v7.0.0-beta2 to v7.0.0-beta3](docs/upgrade/UPGRADE-v7.0.0-beta3.md)
-* ### [From v7.0.0-beta1 to v7.0.0-beta2](docs/upgrade/UPGRADE-v7.0.0-beta2.md)
-* ### [From v7.0.0-alpha6 to v7.0.0-beta1](docs/upgrade/UPGRADE-v7.0.0-beta1.md)
-* ### [From v7.0.0-alpha5 to v7.0.0-alpha6](docs/upgrade/UPGRADE-v7.0.0-alpha6.md)
-* ### [From v7.0.0-alpha4 to v7.0.0-alpha5](docs/upgrade/UPGRADE-v7.0.0-alpha5.md)
-* ### [From v7.0.0-alpha3 to v7.0.0-alpha4](docs/upgrade/UPGRADE-v7.0.0-alpha4.md)
-* ### [From v7.0.0-alpha2 to v7.0.0-alpha3](docs/upgrade/UPGRADE-v7.0.0-alpha3.md)
-* ### [From v7.0.0-alpha1 to v7.0.0-alpha2](docs/upgrade/UPGRADE-v7.0.0-alpha2.md)
-* ### [Before monorepo](docs/upgrade/before-monorepo.md)
+* ### [From v7.3.1 to v7.3.2-dev](upgrade/UPGRADE-v7.3.2-dev.md)
+* ### [From v7.3.0 to v7.3.1](upgrade/UPGRADE-v7.3.1.md)
+* ### [From v7.2.2 to v7.3.0](upgrade/UPGRADE-v7.3.0.md)
+* ### [From v7.2.1 to v7.2.2](upgrade/UPGRADE-v7.2.2.md)
+* ### [From v7.2.0 to v7.2.1](upgrade/UPGRADE-v7.2.1.md)
+* ### [From v7.1.0 to v7.2.0](upgrade/UPGRADE-v7.2.0.md)
+* ### [From v7.1.0 to v7.1.1](upgrade/UPGRADE-v7.1.1.md)
+* ### [From v7.0.0 to v7.1.0](upgrade/UPGRADE-v7.1.0.md)
+* ### [From v7.0.0 to v7.0.1](upgrade/UPGRADE-v7.0.1.md)
+* ### [From v7.0.0-beta6 to v7.0.0](upgrade/UPGRADE-v7.0.0.md)
+* ### [From v7.0.0-beta5 to v7.0.0-beta6](upgrade/UPGRADE-v7.0.0-beta6.md)
+* ### [From v7.0.0-beta4 to v7.0.0-beta5](upgrade/UPGRADE-v7.0.0-beta5.md)
+* ### [From v7.0.0-beta3 to v7.0.0-beta4](upgrade/UPGRADE-v7.0.0-beta4.md)
+* ### [From v7.0.0-beta2 to v7.0.0-beta3](upgrade/UPGRADE-v7.0.0-beta3.md)
+* ### [From v7.0.0-beta1 to v7.0.0-beta2](upgrade/UPGRADE-v7.0.0-beta2.md)
+* ### [From v7.0.0-alpha6 to v7.0.0-beta1](upgrade/UPGRADE-v7.0.0-beta1.md)
+* ### [From v7.0.0-alpha5 to v7.0.0-alpha6](upgrade/UPGRADE-v7.0.0-alpha6.md)
+* ### [From v7.0.0-alpha4 to v7.0.0-alpha5](upgrade/UPGRADE-v7.0.0-alpha5.md)
+* ### [From v7.0.0-alpha3 to v7.0.0-alpha4](upgrade/UPGRADE-v7.0.0-alpha4.md)
+* ### [From v7.0.0-alpha2 to v7.0.0-alpha3](upgrade/UPGRADE-v7.0.0-alpha3.md)
+* ### [From v7.0.0-alpha1 to v7.0.0-alpha2](upgrade/UPGRADE-v7.0.0-alpha2.md)
+* ### [Before monorepo](upgrade/before-monorepo.md)

@@ -7,12 +7,12 @@ In this article, we describe tools and recommendations for translations.
 
 ## Usage
 
-1. Use a translator for your [translatable texts](#translatable-texts). Shopsys Framework implementation of a translator is [`Shopsys\FrameworkBundle\Component\Translation\Translator`](/packages/framework/src/Component/Translation/Translator.php) class.
+1. Use a translator for your [translatable texts](#translatable-texts). Shopsys Framework implementation of a translator is [`Shopsys\FrameworkBundle\Component\Translation\Translator`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Component/Translation/Translator.php) class.
    You can find more in [Symfony translation documentation](https://symfony.com/doc/current/components/translation/usage.html).
 
 1. Once you have translations in your code, you have to extract them by running `php phing translations-dump`.
    This command extracts the translatable texts into `*.po` translation files located in directory [src/Shopsys/ShopBundle/Resources/translations/](/project-base/src/Shopsys/ShopBundle/Resources/translations/).
-   For more information about phing targets in general, see the [separate article](/docs/introduction/console-commands-for-application-management-phing-targets.md).
+   For more information about phing targets in general, see the [separate article](./console-commands-for-application-management-phing-targets.md).
 
 1. Now you have to translate the newly extracted texts.
    The `*.po` files are text files so you can make translations in a text editor or you can use specialized software.
@@ -119,7 +119,8 @@ A usage for example:
 {{ 'You have to <a href="%url%">choose</a> products'|transHtml({ '%url%': url('front_homepage') }) }}
 ```
 
-_Note: The message is not escaped, so if there is malicious code in `*.po` files, it will not be escaped._
+!!! warning
+    The message is not escaped, so if there is malicious code in `*.po` files, it will not be escaped.
 
 ### JavaScript
 
@@ -137,11 +138,11 @@ JavaScript translations are extracted and translated during compilation of JavaS
     * change the text in the code
     * run `php phing translations-dump`
     * translate text again in `*.po` file(s) for the other languages because the message ID changed
-    * be careful, this is a [backward compatibility breaking change](/docs/contributing/backward-compatibility-promise.md#translation-messages) because the original message ID does not exist anymore.
+    * be careful, this is a [backward compatibility breaking change](../contributing/backward-compatibility-promise.md#translation-messages) because the original message ID does not exist anymore.
 * You do not care about the consistency between message ID and the original English form
     * just change the translations in `*.po` file(s) for English and all the other languages
 
 ## Localized routes
 On Shopsys Framework, you can translate URLs of your routes.
-See ["Frontend routes" section in "How to Set Up Domains and Locales" article](/docs/introduction/how-to-set-up-domains-and-locales.md#32-frontend-routes) for more information.
+See ["Frontend routes" section in "How to Set Up Domains and Locales" article](./how-to-set-up-domains-and-locales.md#32-frontend-routes) for more information.
 You can see the list of all translated URLs in administration page `admin/superadmin/urls/` (you must be logged in as a superadmin).

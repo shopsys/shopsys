@@ -63,7 +63,7 @@ But to access it, you still need to open a specific URL...
 
 ## Side menu and breadcrumbs
 The admin side menu is implemented by [KnpMenuBundle](https://symfony.com/doc/master/bundles/KnpMenuBundle/index.html) and to extend it, you can use [events](https://symfony.com/doc/master/bundles/KnpMenuBundle/events.html).
-For the details about the customization of the menu, read the [Administration Menu](/docs/administration/administration-menu.md) article.
+For the details about the customization of the menu, read the [Administration Menu](../administration/administration-menu.md) article.
 
 Right now, the Dashboard menu looks like this:
 
@@ -71,7 +71,7 @@ Right now, the Dashboard menu looks like this:
 
 Create a new [event subscriber](https://symfony.com/doc/current/event_dispatcher.html) and subscribe to the `ConfigureMenuEvent::SIDE_MENU_DASHBOARD` event.
 This is an event that will allow you to reconfigure the Dashboard menu and add a new item there.
-You can take a look at the class [`ConfigureMenuEvent`](/packages/framework/src/Model/AdminNavigation/ConfigureMenuEvent.php) to see other events you can subscribe to.
+You can take a look at the class [`ConfigureMenuEvent`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/AdminNavigation/ConfigureMenuEvent.php) to see other events you can subscribe to.
 
 You can put the subscriber right beside your new controller.
 
@@ -122,4 +122,4 @@ A similar approach could be used to add more complicated parametrized pages usin
 Also, we've not only added a new item to the menu, but we've modified some parameters of an already existing menu item, removing the link from it.
 This can be used for altering the menu in a more significant way.
 
-To see how the side menu works, you can see the [`SideMenuBuilder`](/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where it is created.
+To see how the side menu works, you can see the [`SideMenuBuilder`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where it is created.
