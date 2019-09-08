@@ -6,6 +6,7 @@ If you want to know more about what Shopsys Framework is, you can take a look at
 
 ## Need help?
 If you are not able to find the desired information here, you can always ask us directly on our [public slack](http://slack.shopsys-framework.com/) or [report an issue](https://github.com/shopsys/shopsys/issues/new) on Github.
+If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-troubleshooting.md) might help you.
 
 ## What is new and how to upgrade
 * In [CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md) you can find the list of all important changes in all repositories maintained in [shopsys/shopsys monorepo](https://github.com/shopsys/shopsys/)
@@ -21,7 +22,7 @@ If you are not able to find the desired information here, you can always ask us 
     * Basics about model architecture, entities, ...
 * [Cookbook](./cookbook/index.md)
     * Step by step how-to guides.
-* [Functional documentation](./functional/index.md)
+* [Functional](./functional/index.md)
     * How Shopsys Framework works from a user point of view.
 * [Frontend](./frontend/index.md)
     * Design implementation and customization, LESS, ...
@@ -31,6 +32,11 @@ If you are not able to find the desired information here, you can always ask us 
     * How to customize the behavior of Shopsys Framework to suit your needs.
 * [Orchestration](./kubernetes/index.md)
     * Orchestration, Google Cloud, and Kubernetes-related articles and guides.
+* [Contributing](./contributing/index.md)
+    * Guidelines and handy information for Shopsys Framework contributors.
 
 ## FAQ
 For the frequently asked questions, see [FAQ and Common Issues](./introduction/faq-and-common-issues.md).
+
+## Documenting your own project
+We strongly believe that not only the framework itself needs documentation, but also your your project deserves it's own docs. The tips for writing project documentation are written down in [Guidelines for Project Documentation](./project/guidelines-for-project-documentation.md).
