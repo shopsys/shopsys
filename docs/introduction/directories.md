@@ -35,7 +35,7 @@ In case you need to create your own directories, you can simply add them into  `
 
 For example:
 
-```yaml
+```diff
 // app/config/directories.yml
 
 parameters:
