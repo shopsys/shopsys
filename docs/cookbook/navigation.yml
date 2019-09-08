@@ -1,0 +1,17 @@
+arrange:
+    - index.md
+    - dumping-and-importing-the-database.md
+    - jenkins-configuration.md
+    - adding-a-new-entity.md
+    - adding-new-attribute-to-an-entity.md
+    - adding-a-new-administration-page.md
+    - adding-a-new-advert-position.md
+    - adding-an-icon-into-a-button.md
+    - modifying-a-template-in-administration.md
+    - adding-ajax-load-more-button-into-pagination.md
+    - basic-data-import.md
+    - creating-a-multidomain-design.md
+    - working-with-multiple-cron-instances.md
+    - create-basic-grid.md
+    - create-advanced-grid.md
+    - extending-product-list.md

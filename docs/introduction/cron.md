@@ -10,7 +10,7 @@ By default you can configure your own cron configurations in `src/Shopsys/ShopBu
 There is some prepared configuration for Shopsys Framework in a file `src/Resources/config/services/cron.yml` in `FrameworkBundle`.
 
 ## Running Cron Jobs
-Do not forget to set up a cron on your server to execute [`php phing cron`](/docs/introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
+Do not forget to set up a cron on your server to execute [`php phing cron`](../introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
 
 ## Multiple Cron Instances
 By default, all cron jobs are run as part of one, default, instance.
@@ -19,4 +19,4 @@ Separating the cron jobs into two (or more) cron instances allows you to run som
 
 The instance of cron is actually a named group of cron jobs.
 
-You can learn how to set up multiple cron instances in [Working with Multiple Cron Instances](/docs/cookbook/working-with-multiple-cron-instances.md) cookbook.
+You can learn how to set up multiple cron instances in [Working with Multiple Cron Instances](../cookbook/working-with-multiple-cron-instances.md) cookbook.

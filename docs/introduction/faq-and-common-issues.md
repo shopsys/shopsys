@@ -36,7 +36,7 @@ See more about phing targets in [Console Commands for Application Management (Ph
 ## What are the data fixtures good for?
 Data fixtures are actually demo data available in the Shopys Framework.
 For their installation, use the phing target `db-fixtures-demo`.
-This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (eg. with configured domains and an existing database structure), see [`build.xml`](/packages/framework/build.xml).
+This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (eg. with configured domains and an existing database structure), see [`build.xml`](https://github.com/shopsys/shopsys/blob/master/packages/framework/build.xml).
 Demo data are used for automatic tests and also for installation of demo shop with prepared data.
 
 ## How to change a domain URL?
@@ -68,7 +68,7 @@ Of course, an SSL certificate must be installed on your server.
 To set up the user translations of labels and messages, use the files `messages.en.po` and `validators.en.po`, where `en` represents the locale.
 These files are generated for each locale you use, and you can find them in the `ShopBundle/Resources/translations/` directory.
 Language settings are described more in detail in the tutorial [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md#3-locale-settings).
-For more information about translations, see [the separate article](/docs/introduction/translations.md).
+For more information about translations, see [the separate article](./translations.md).
 
 ## How to set up deployment and production server?
 We recommend installation using the Docker for production.
@@ -99,37 +99,37 @@ You can change the environment manually by using the command `php bin/console sh
 
 ## Are some periodic tasks part of the Shopsys Framework (cron)?
 Yes, there is some prepared configuration for Shopsys Framework cron commands in a file `src/Resources/config/services/cron.yml` in `FrameworkBundle`.
-Do not forget to set up a cron on your server to execute [`php phing cron`](/docs/introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
+Do not forget to set up a cron on your server to execute [`php phing cron`](./console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
 
 ## Why are you using entity data instead of entities for Symfony forms?
 We are using [entity data objects](../model/entities.md#entity-data) instead of [entities](../model/introduction-to-model-architecture.md#entity)
 because Symfony forms need setters for all fields and we don't want to mess entities with them.
 
 ## What is the configuration file `services_test.yml` good for?
-[`services_test.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml)
+[`services_test.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml)
 is a service configuration file that is loaded in TEST environment in addition to
-the standard configuration defined in [`services.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/services.yml) as sometimes the configuration differs from the standard one and we need to override it.
+the standard configuration defined in [`services.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml) as sometimes the configuration differs from the standard one and we need to override it.
 E.g., by default, all our services are defined as private. However, in tests, we are retrieving some services directly from the container hence we need to have them public in TEST environment.
 
 ## How to change the behavior of the product search on the front-end?
 Full-text product search on the front-end is handled via Elasticsearch.
-If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](/docs/model/front-end-product-searching.md).
+If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](../model/front-end-product-searching.md).
 
 ## Why are e-mails sent before end of the script and not immediately
 Project uses `SwiftMailer` package for sending e-mails and defaultly it has set `spool queue` that stores all mails into `memory` until the script execution is at the end.  
 This spooling method helps the user not to wait for the next page to load while the email is sending.
 However, based on implementations of many projects, project gained functionality that releases spool after the `*cronModule` run is ended in case of `cron` phing target that runs all cron modules at once.
-It is also possible to turn the spool off by removing it from [swiftmailer.yml](../../project-base/app/config/packages/swiftmailer.yml) or changing the behavior of storing e-mails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html) or [snc_redis docs](https://github.com/snc/SncRedisBundle/blob/master/Resources/doc/index.md#swiftmailer-spooling).
+It is also possible to turn the spool off by removing it from [swiftmailer.yml](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/packages/swiftmailer.yml) or changing the behavior of storing e-mails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html) or [snc_redis docs](https://github.com/snc/SncRedisBundle/blob/master/Resources/doc/index.md#swiftmailer-spooling).
 
 ## Where does the business logic belong?
 The business logic should be implemented directly in an entity every time when there is no need for external services.
 Otherwise, the logic is in facades (resp. the facades are used as delegates to other services, e.g. another *Facade*, *Repository*, *Calculation*, etc.). You can read more about the model architecture in [Introduction to model architecture](/docs/model/introduction-to-model-architecture.md).
 
 ## How can I create a friendly URL for my entity?
-See [Friendly URL](/docs/introduction/friendly-url.md) article.
+See [Friendly URL](./friendly-url.md) article.
 
 ## How can I create Front-end Breadcrumb navigation?
-See [Front-end Breadcrumb Navigation](/docs/introduction/front-end-breadcrumb-navigation.md) article.
+See [Front-end Breadcrumb Navigation](./front-end-breadcrumb-navigation.md) article.
 
 ## Do you have any tips how to debug emails during development in Docker?
 Yes we have, you can easily use [`djfarrelly/MailDev`](https://github.com/djfarrelly/MailDev) library that provides you web UI where you can see the emails including their headers:
@@ -149,7 +149,7 @@ Yes we have, you can easily use [`djfarrelly/MailDev`](https://github.com/djfarr
 See [Outgoing emails](https://github.com/djfarrelly/MailDev#outgoing-email) in the documentation of the library for more information.*
 
 ## Can I see what is really happening in the Codeception acceptance tests when using Docker?
-Yes, you can! Check [the quick guide](/docs/introduction/running-acceptance-tests.md#how-to-watch-what-is-going-on-in-the-selenium-browser).
+Yes, you can! Check [the quick guide](./running-acceptance-tests.md#how-to-watch-what-is-going-on-in-the-selenium-browser).
 
 ## Why is there a faked PHP 7.2 platform in the Composer config?
 As a general rule, packages and libraries that depend on PHP 7.2 will work as expected even on PHP 7.3 (any higher 7.x version), but not vice versa.
@@ -166,4 +166,4 @@ If that's not your case, you can safely remove the `config.platform.php` option 
 
 ## How to make PHPStorm and PHPStan understand that I use extended classes?
 There is a phing target that automatically fixes all relevant `@var` and `@param` annotations, and adds proper `@method` and `@property` annotations to your classes so the static analysis understands the class extensions properly.
-You can read more in the ["Framework extensibility" article](./framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).
+You can read more in the ["Framework extensibility" article](../extensibility/framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).

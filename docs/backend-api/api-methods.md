@@ -1,9 +1,12 @@
 # API Methods
-All API methods calls except for token generation are secured via [OAuth2](/docs/backend-api/api-authentication-oauth2.md).
-You need to provide token via `Authorization` header to access requested data like this: ```Authorization: Bearer eyJ0eXAiOiJKV...s3SKg```
+All API methods calls except for token generation are secured via [OAuth2](./api-authentication-oauth2.md).
+You need to provide token via `Authorization` header to access requested data like this:
+```no-highlight
+Authorization: Bearer eyJ0eXAiOiJKV...s3SKg
+```
 
 ## List of methods
-- [Retrive access token](#retrieve-access-token)
+- [Retrieve access token](#retrieve-access-token)
 - [Retrieve a product](#retrieve-a-product)
 - [Retrieve a list of products](#retrieve-a-list-of-products)
 - [Add product](#add-product)
@@ -56,9 +59,9 @@ You need to provide token via `Authorization` header to access requested data li
 
   * **Code** `400 Bad Request` <br />
 
-* **Notes**
-Token is valid for one hour.
-You will need to generate new token after the first one expires.
+!!! note "Notes"
+    - Token is valid for one hour.
+    - You will need to generate new token after the first one expires.
 
 **Retrieve a product**
 ----

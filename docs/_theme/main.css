@@ -1,0 +1,15 @@
+.wy-nav-content {
+    max-width: 100%;
+}
+
+.wy-menu-vertical li:not(.current) ul.hidden-section {
+    display: none;
+}
+
+.wy-side-nav-search img {
+    height: 100%;
+    width: 100%;
+    background-color: #2980B9;
+    padding: 5px;
+    border-radius: unset;
+}

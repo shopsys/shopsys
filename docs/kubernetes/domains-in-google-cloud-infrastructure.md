@@ -9,7 +9,7 @@ Let's say we want to listen to a new domain name.
 
 Open [ingress.yml](/project-base/kubernetes/ingress.yml) file and add new domain block into `spec -> rules`:
 
-```
+```yaml
 // kubernetes/ingress.yml
 
 rules:
@@ -23,7 +23,7 @@ rules:
 ```
 
 Create secrets from SSL certificate in `ingress-patch.yaml` in `kubernetes/kustomize/overlays/production/ingress-patch.yaml`:
-```
+```yaml
 // kubernetes/kustomize/overlays/production/ingress-patch.yaml
 
 - name: domain-${DOMAIN_NUMBER}-ssl-certificates
@@ -33,11 +33,12 @@ Create secrets from SSL certificate in `ingress-patch.yaml` in `kubernetes/kusto
     ca.crt: "cat ${ANOTHER_DOMAIN_SSL_DIRECTORY}/ca.crt"
 ```
 
-*Note: Replace ${DOMAIN_NUMBER} with a number of a domain*
+!!! note
+    Replace `${DOMAIN_NUMBER}` with a number of a domain
 
 Next, add SSL certificates for new domain:
 
-```
+```yaml
 spec:
     tls:
     -   hosts:
@@ -46,7 +47,7 @@ spec:
 
 Open [.ci/deploy-to-google-cloud.sh](/project-base/.ci/deploy-to-google-cloud.sh) file and set your new domain host to `ingress.yml` and `webserver-php-fpm.yml` host name:
 
-```
+```sh
 // .ci/deploy-to-google-cloud.sh
 
 NEW_DOMAIN_HOST=${NEW_DOMAIN_HOST}
@@ -58,7 +59,7 @@ Do not forget to pass `NEW_DOMAIN_HOST` and `ANOTHER_DOMAIN_SSL_DIRECTORY` to `s
 
 Now you need to add volume with your certificates in execution of `deploy-to-google-cloud.sh` script
 
-```bash
+```sh
 docker run \
     -v $WORKSPACE:/tmp \
     -v /var/run/docker.sock:/var/run/docker.sock \

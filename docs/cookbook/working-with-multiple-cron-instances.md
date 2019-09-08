@@ -1,16 +1,19 @@
 # Working with Multiple Cron Instances
-This cookbook will help you to set up independent processing of [cron jobs](/docs/introduction/cron.md).
+
+This cookbook will help you to set up independent processing of [cron jobs](../introduction/cron.md).
 We will learn, how to work with multiple cron instances, how to register a new instance for modules and how to run them.
 
 Let's presume, we want to run import of products, created for [Basic Data Import](./basic-data-import.md).
 But this import might take some time and we do not want to block processing of the other cron modules.
 
 ## Configuration
+
 When you register cron job in your configuration with tags mandatory for cron module, you can add the optional tag `instanceName`,
 effectively creating a new instance of cron just by tagging the service.  
 You do not have to register the instance anywhere else.
 
 We just edit earlier created configuration to place our `ImportProductsCronModule` to different cron instance.
+
 ```diff
 # src/Shopsys/ShopBundle/Resources/config/services/cron.yml
 
@@ -27,13 +30,15 @@ services:
 +            - { name: shopsys.cron, hours: '*/3', minutes: '0', instanceName: products}
 ```
 
-*Note: If you do not set `instanceName`, a job will be placed into cron instance named `default`.*
+!!! note
+    If you do not set `instanceName`, a job will be placed into cron instance named `default`.
 
 ## Listing available modules
-Now by running `php phing cron-list` in a console, we can see a list of all available cron modules, grouped into cron instances.
+
+Now by running `php phing cron-list` in a console, we can see a list of all available cron modules, grouped into cron instances.  
 `ImportProductsCronModule` is properly placed into cron instance named "products".
 
-```
+```no-highlight
 products
 --------
 
@@ -56,16 +61,20 @@ default
  php bin/console shopsys:cron --module="Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule" --instance-name=default
 ```
 
-*Note: More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+!!! hint
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 # Running cron jobs manually
+
 We now can run any cron jobs manually by running `php phing cron`.
 And because we have several cron instances registered, job asks what cron instance should be run.
 
-*Note: If only one instance is registered, no question is asked and this instance will run immediately.*
+!!! note
+    If only one instance is registered, no question is asked and this instance will run immediately.
 
 # Running cron jobs automatically
-To be able to run cron instances automatically, we first have to create new Phing targets in `build.xml` configuration file.
+
+To be able to run cron instances automatically, we first have to create new Phing targets in `build.xml` configuration file.  
 These targets have to be able to run without asking any interactive questions (`--instance-name` argument does the trick).
 
 New targets would look like

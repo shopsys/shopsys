@@ -20,7 +20,7 @@ Each grid should be created with its own factory in which a whole grid is config
 This factory can use `GridFactory` class from Shopsys Framework to create a basic grid object, which will be adjusted.
 
 Grid uses object implementing `DataSourceInterface` to obtain data to be rendered.
-Read more about various data sources in the [Grid data sources](/docs/administration/grid-data-sources.md) article.
+Read more about various data sources in the [Grid data sources](../administration/grid-data-sources.md) article.
 
 ## Configurations
 - **Display only**
@@ -44,7 +44,7 @@ Read more about various data sources in the [Grid data sources](/docs/administra
 
 ## Customization of grid rendering
 It is really easy to customize the appearance of your grid by overriding suitable Twig blocks of the default Grid template.
-Read the [separate article](/docs/administration/grid-rendering-customization.md) to get more information.
+Read the [separate article](../administration/grid-rendering-customization.md) to get more information.
 
 ## Extending an existing grid
 Usually, the grids are created in their factories (e.g. `\Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory`)
@@ -76,5 +76,5 @@ We are planning some refactorings to enable you easier and unified way of grid c
 
 ## Further reading - cookbooks
 If you want to implement a new grid, you can follow the cookbooks:
-- [Create basic grid](/docs/cookbook/create-basic-grid.md)
-- [Create advanced grid](/docs/cookbook/create-advanced-grid.md)
+- [Create basic grid](../cookbook/create-basic-grid.md)
+- [Create advanced grid](../cookbook/create-advanced-grid.md)

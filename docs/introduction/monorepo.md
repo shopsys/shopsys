@@ -42,8 +42,9 @@ If you are interested, you can read more about the monorepo approach here - http
 * [shopsys/read-model](https://github.com/shopsys/read-model)
 * [shopsys/backend-api](https://github.com/shopsys/backend-api)
 
-*Note: The list of these packages is maintained in the function `get_all_packages` in [`.ci/monorepo_functions.sh`](/.ci/monorepo_functions.sh).
-It is used for automated splitting of the monorepo and needs to be updated when a package is added or removed.*
+!!! note
+    The list of these packages is maintained in the function `get_all_packages` in [`.ci/monorepo_functions.sh`](/.ci/monorepo_functions.sh).  
+    It is used for automated splitting of the monorepo and needs to be updated when a package is added or removed.
 
 ## Infrastructure
 Monorepo can be installed and used as standard application. This requires some additional infrastructure:
@@ -62,7 +63,7 @@ also in `composer.json` in the root of monorepo. In monorepo, Shopsys packages a
 Shopsys Framework in monorepo
 
 ## Installation of monorepo
-Installation of Shopsys Framework is almost the same as is described in [Installation Using Docker](/docs/installation/installation-guide.md#installation-using-docker),
+Installation of Shopsys Framework is almost the same as is described in [Installation Using Docker](../installation/installation-guide.md#installation-using-docker),
 but instead of creating a new project based on `project-base` repository, you have to clone [`shopsys/shopsys`](https://github.com/shopsys/shopsys).
 
 Please keep in mind that all commands have to be executed from the monorepo root directory.
