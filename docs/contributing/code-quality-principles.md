@@ -42,8 +42,8 @@ class LocalizedType
 -       $this->localization = new Localization();
 -   }
 +   /**
-+   * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-+   */
++    * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
++    */
 +   public function __construct(Localization $localization)
 +   {
 +       $this->localization = $localization;
@@ -67,8 +67,11 @@ It is essential to provide code extensibility in the framework and this is achie
 
 ### Exceptions
 
-We don't respect this principle in tests as it is impossible to pass dependencies to PHPUnit tests via the constructor.
-In tests we use `$this->getContainer()->get(...)`.
+We don't respect this principle in tests as it is impossible to pass dependencies to PHPUnit tests via the constructor.  
+In tests we use
+```php
+$this->getContainer()->get(...)
+```
 
 ## Strict types
 
@@ -109,7 +112,7 @@ Please find more about DRY in online sources or in the great book [The Pragmatic
 We understand the DRY principle in a pragmatic way, we aren't obsessed with a duplication in the system that makes sense.
 Usability and maintainability are often more important than the DRY principle.
 
-Examples of such duplication are definitions of [Elasticsearch indexes](/project-base/src/Shopsys/ShopBundle/Resources/definition/product).
+Examples of such duplication are definitions of [Elasticsearch indexes](https://github.com/shopsys/shopsys/tree/8.0/project-base/src/Shopsys/ShopBundle/Resources/definition/product).
 They are very, very similar but if they were done in a strictly DRY fashion, the definition would have to be done in PHP and therefore less readable and maintainable than in JSON format.
 Also, it would be difficult to change the shared code just for one use-case.
 
@@ -142,18 +145,14 @@ The most typical place is `project-base | framework` so you should keep this pri
 In a traditional dependency system, the top-most class depends on the lower layer, which depends on the lower layer and so on.
 In the end, the top-most class indirectly depend on all lower classes in multiple modules.
 
-```
-Controller --> Facade --> Repository --> Doctrine
-```
+        Controller --> Facade --> Repository --> Doctrine
 
 When the interface is introduced, this nested dependency is broken.
 
-```
-Controller --> FacadeInterface
-                      ^
-                      |
-                  SQLFacade --> Repository --> Doctrine
-```
+        Controller --> FacadeInterface
+                              ^
+                              |
+                          SQLFacade --> Repository --> Doctrine
 
 The most important advantage of this interface dependency system is that the implementation (`SQLFacade`) is replaceable.
 This gives you more freedom during a shop implementation.

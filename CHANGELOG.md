@@ -1075,7 +1075,7 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 ### [shopsys/shopsys]
 #### Added
 - [#320 - Docs: overview of possible and impossible glassbox customizations](https://github.com/shopsys/shopsys/pull/320)
-    - added [framework-extensibility.md](/docs/introduction/framework-extensibility.md) article
+    - added [framework-extensibility.md](/docs/extensibility/framework-extensibility.md) article
 
 #### Changed
 - [#296 - normalize phing target "timezones-check"](https://github.com/shopsys/shopsys/pull/296): [@pk16011990]

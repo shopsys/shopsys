@@ -1,6 +1,7 @@
 # Adding a New Advert Position
 
 By default, you can place an advert banner on these predefined positions:
+
 - under the page header
 - in the left panel (under the category tree)
 - above the page footer
@@ -12,51 +13,56 @@ All the positions are defined in `AdvertPositionRegistry` class that provides th
 
 If you want to add a new custom position, let us say on the product detail page, you need to follow these steps:
 
-1. Create a new class that extends `AdvertPositionRegistry` and override `getAllLabelsIndexedByNames()` method where you add a translated description for your new advert position to the existing ones.
-    ```php
-    namespace Shopsys\ShopBundle\Model\Advert;
+Create a new class that extends `AdvertPositionRegistry` and override `getAllLabelsIndexedByNames()` method where you add a translated description for your new advert position to the existing ones.
 
-    use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry as BaseAdvertPositionRegistry;
+```php
+namespace Shopsys\ShopBundle\Model\Advert;
 
-    class AdvertPositionRegistry extends BaseAdvertPositionRegistry
+use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry as BaseAdvertPositionRegistry;
+
+class AdvertPositionRegistry extends BaseAdvertPositionRegistry
+{
+    /**
+     * @return string[]
+     */
+    public function getAllLabelsIndexedByNames(): array
     {
-        /**
-         * @return string[]
-         */
-        public function getAllLabelsIndexedByNames(): array
-        {
-            $advertPositions = parent::getAllLabelsIndexedByNames();
-            $advertPositions['productDetail'] = t('on product detail page');
+        $advertPositions = parent::getAllLabelsIndexedByNames();
+        $advertPositions['productDetail'] = t('on product detail page');
 
-            return $advertPositions;
-        }
+        return $advertPositions;
     }
-    ```
+}
+```
 
-2. In your `services.yml`, set your new class as an alias for the base one.
-    ```yaml
-    Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry:
-        class: Shopsys\ShopBundle\Model\Advert\AdvertPositionRegistry
-    ```
+In your `services.yml`, set your new class as an alias for the base one.
 
-3. Render the new advert on the product detail page (or wherever else you want) by adding the following line into the corresponding twig template.
-    ```twig
-    {{ render(controller('ShopsysShopBundle:Front/Advert:box',{'positionName' : 'productDetail'})) }}
-    ```
-    If you misspell the position name (or otherwise use a non-registered one) an exception will be thrown including the list of all registered positions.
-    So don't worry about calling the controller in a wrong way.
+```yaml
+Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry:
+    class: Shopsys\ShopBundle\Model\Advert\AdvertPositionRegistry
+```
 
-4. Add new entry into `noticer` section in `src/Shopsys/ShopBundle/Resources/config/images.yml` config if you want to provide additional information about the new position for the images overview admin page (`Settings > Image size > Image size` on URL `admin/image/overview/`)
-    ```yaml
-    -   name: noticer
-        class: Shopsys\FrameworkBundle\Model\Advert\Advert
-        sizes:
-            -   name: productDetail
-                width: 1160
-                height: ~
-                crop: false
-                occurrence: 'Front-end: Product detail'
-    ```
+Render the new advert on the product detail page (or wherever else you want) by adding the following line into the corresponding twig template.
+
+```twig
+{{ render(controller('ShopsysShopBundle:Front/Advert:box',{'positionName' : 'productDetail'})) }}
+```
+
+If you misspell the position name (or otherwise use a non-registered one) an exception will be thrown including the list of all registered positions.
+So don't worry about calling the controller in a wrong way.
+
+Add new entry into `noticer` section in `src/Shopsys/ShopBundle/Resources/config/images.yml` config if you want to provide additional information about the new position for the images overview admin page (`Settings > Image size > Image size` on URL `admin/image/overview/`)
+
+```yaml
+-   name: noticer
+    class: Shopsys\FrameworkBundle\Model\Advert\Advert
+    sizes:
+        -   name: productDetail
+            width: 1160
+            height: ~
+            crop: false
+            occurrence: 'Front-end: Product detail'
+```
 
 ## Conclusion
 

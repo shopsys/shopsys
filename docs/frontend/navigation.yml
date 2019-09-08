@@ -1,0 +1,7 @@
+arrange:
+    - index.md
+    - design-implementation-and-customization.md
+    - introduction-to-less.md
+    - configuring-image-sizes-for-individual-devices-width.md
+    - frontend-troubleshooting.md
+    - understanding-the-style-directory.md

@@ -31,14 +31,14 @@ Script used for building current state of an application into Google Cloud.
 ##### Docker Socket
 Docker socket is used to build and push image of php-fpm.
 
-```
+```no-highlight
 -v /var/run/docker.sock:/var/run/docker.sock
 ```
 
 ##### Terraform state
 Terraform state mounted locally to be able to apply changes or destroy Terraform infrastructure.
 
-```
+```no-highlight
 -v ~/google-cloud/.terraform/tfstate:/tmp/infrastructure/google-cloud/tfstate
 ```
 
@@ -53,7 +53,7 @@ Folder with certificates needs to contain these 3 files:
 | `tls.crt`     | `certificate.crt`
 | `ca.crt`      | `ca_bundle.crt`
 
-```
+```no-highlight
 -v ~/path/to/certificates-1:$FIRST_DOMAIN_SSL_DIRECTORY
 -v ~/path/to/certificates-2:$SECOND_DOMAIN_SSL_DIRECTORY
 ```
@@ -61,7 +61,7 @@ Folder with certificates needs to contain these 3 files:
 ##### Google Account Service
 Mount your service-account.json obtained from google-cloud
 
-```
+```no-highlight
 -v ~/google-cloud/service-account.json:/tmp/infrastructure/google-cloud/service-account.json \
 ```
 #### Usage
@@ -92,7 +92,8 @@ docker run \
 After running the script above, you will have your application running in Google Cloud and each deployment will be executed same way.
 
 ### Destroy Google Cloud Infrastructure
-The script used for deleting infrastructure on google. Script sends request to Google Cloud to stop all the resources provided by Terraform and updates `tfstate` file.
+The script used for deleting infrastructure on google.
+Script sends request to Google Cloud to stop all the resources provided by Terraform and updates `tfstate` file.
 
 [destroy-google-cloud-infrastructure.sh](/project-base/.ci/destroy-google-cloud-infrastructure.sh)
 
@@ -107,14 +108,14 @@ The script used for deleting infrastructure on google. Script sends request to G
 
 ##### Docker Socket
 Docker socket is used to build and push image of php-fpm
-```
+```no-highlight
 -v /var/run/docker.sock:/var/run/docker.sock
 ```
 
 ##### Terraform state
 Terraform state mounted locally to be able to apply changes or destroy Terraform infrastructure.
 
-```
+```no-highlight
 -v ~/google-cloud/.terraform/tfstate:/tmp/infrastructure/google-cloud/tfstate
 ```
 

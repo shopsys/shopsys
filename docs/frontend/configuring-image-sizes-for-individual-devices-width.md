@@ -4,7 +4,8 @@ In Shopsys Framework you can configure image sizes for individual devices width.
 ## Introduction
 This document serves for introducing you with the process of managing images on Shopsys Framework.
 
-*Note: In order to get correct image sizes of additional images then your original image must be larger than highest size in additional image size.*
+!!! tip
+    In order to get correct image sizes of additional images then your original image must be larger than highest size in additional image size.
 
 ## Configuration file
 In order to set right sizes for individual devices width you have to configure `src/Shopsys/ShopBundle/Resources/config/images.yml`.
@@ -43,12 +44,14 @@ For type `gallery` and size `detail` are set two additional sizes. First is imag
 ## How to generate images with modified sizes
 In case you modified image sizes in file `images.yml`, then would be needed to remove yet generated images. You approach that by removing images for modified size name of appropriate section. Folder path would look like `web/content/images/<section-name>/<type-name>`.
 
-*Note: Be aware of not removing folder `original` in path `web/content/images/<section-name>`.*
+!!! warning
+    Be aware of not removing folder `original` in path `web/content/images/<section-name>`.
 
 ### Example
 Assume we want to add new image size for the main image above gallery at the product detail page. We want affect only devices with maximal browser width `480px`. Image size for new device width should be `410px`. You can achieve that by following steps.
 
-1. Add new value for attribute `product.gallery.detail.additionalSizes` in configuration file `images.yml`.
+#### 1. Add new value for attribute `product.gallery.detail.additionalSizes` in configuration file `images.yml`.
+
 ```diff
     -   name: product
         class: Shopsys\FrameworkBundle\Model\Product\Product
@@ -64,4 +67,6 @@ Assume we want to add new image size for the main image above gallery at the pro
 +                       additionalSizes:
 +                           - {width: 410, height: ~, media: "(max-width: 480px)"}
 ```
-2. Remove all images in `web/content/images/product/default`. This step is applied only if there already exist some generated images for additional sizes.
+
+#### 2. Remove all images in `web/content/images/product/default`.
+This step is applied only if there already exist some generated images for additional sizes.

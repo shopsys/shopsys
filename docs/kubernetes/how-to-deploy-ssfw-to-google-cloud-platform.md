@@ -8,9 +8,12 @@ We created shell scripts that encapsulate functionality of Terraform and Kustomi
 If you want to know something about the script usage, read [Deploy your application to Google Cloud on your CI/CD](./deploy-your-application-to-google-cloud-on-your-ci-cd.md).
 
 ## Intro to Terraform
-To be able to create infrastructure on Google Cloud, we need a tool that is able to communicate with Google Cloud API. For this purpose, we have decided to use Terraform. [Terraform](https://www.terraform.io/) is a tool that allows you to create, change and destroy infrastructure on popular cloud providers (like Google Cloud, AWS, etc.) and many [other providers](https://www.terraform.io/docs/providers/).
+To be able to create infrastructure on Google Cloud, we need a tool that is able to communicate with Google Cloud API.
+For this purpose, we have decided to use Terraform.
+[Terraform](https://www.terraform.io/) is a tool that allows you to create, change and destroy infrastructure on popular cloud providers (like Google Cloud, AWS, etc.) and many [other providers](https://www.terraform.io/docs/providers/).
 
-We use it to declare database providers, clusters and networks on Google Cloud using declarative configurations that are part of the repository. Terraform applies infrastructure based on configuration provided, Shopsys Framework contains prepared configuration in [infrastructure/google-cloud](/project-base/infrastructure/google-cloud).
+We use it to declare database providers, clusters and networks on Google Cloud using declarative configurations that are part of the repository.
+Terraform applies infrastructure based on configuration provided, Shopsys Framework contains prepared configuration in [infrastructure/google-cloud](/project-base/infrastructure/google-cloud).
 
 ### Usage Examples
 
@@ -23,7 +26,8 @@ terraform init
 ```
 
 #### Apply infrastructure
-Each change of application infrastructure needs to be applied. Terraform creates a `tfstate` file which describes the current state of installed infrastructure, that means that if you change something in infrastructure, Terraform will not apply all changes again, but it will just compare current state with desired state and perform only desired changes.
+Each change of application infrastructure needs to be applied.
+Terraform creates a `tfstate` file which describes the current state of installed infrastructure, that means that if you change something in infrastructure, Terraform will not apply all changes again, but it will just compare current state with desired state and perform only desired changes.
 
 For applying a change of infrastructure we need to execute this command:
 
@@ -43,9 +47,12 @@ Always keep in mind to have `tfstate` file available, if you lose this file and 
 You can read more about Terraform in [official documentation](https://www.terraform.io/docs/index.html)
 
 ## Intro to Kustomize
-The production environment is a little bit different than the one used on CI. For example, on Google Cloud we use storage tools like [Postgres](https://www.postgresql.org/) and [Redis](https://redis.io/) provided by Google Cloud platform.  
+The production environment is a little bit different than the one used on CI.
+For example, on Google Cloud we use storage tools like [Postgres](https://www.postgresql.org/) and [Redis](https://redis.io/) provided by Google Cloud platform.
 
-That means that we do not use always the same manifests, with Kustomize you can divide your manifests into `variants`, for example `CI`, `production` etc. These variants are located in [kubernetes/kustomize/overlays](/project-base/kubernetes/kustomize/overlays). Each variant has `kustomization.yml`, which can independently select own manifests using `resources` or generate config maps, create secrets etc.  
+That means that we do not use always the same manifests, with Kustomize you can divide your manifests into `variants`, for example `CI`, `production` etc.
+These variants are located in [kubernetes/kustomize/overlays](/project-base/kubernetes/kustomize/overlays).
+Each variant has `kustomization.yml`, which can independently select own manifests using `resources` or generate config maps, create secrets etc.
 
 ### Usage Examples
 Select the environment, in our case `production` and go to the variant folder:

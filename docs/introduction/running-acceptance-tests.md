@@ -8,9 +8,10 @@ You should run all command mentioned below while logged into your `php-fpm` cont
 docker exec -it shopsys-framework-php-fpm sh
 ```
 
-*Note: For `selenium-server` to be able to connect to you `webserver` container and access your application, all domains should have URL set to `http://webserver:8000`.*
-*This is done via parameter `%overwrite_domain_url%` defined in `parameters_test.yml`.*
-*Everything should be configured for you by default but it is important to keep the domain URL overwriting in mind when dealing with acceptance tests.*
+!!! note
+    For `selenium-server` to be able to connect to you `webserver` container and access your application, all domains should have URL set to `http://webserver:8000`.
+    This is done via parameter `%overwrite_domain_url%` defined in `parameters_test.yml`.
+    Everything should be configured for you by default but it is important to keep the domain URL overwriting in mind when dealing with acceptance tests.
 
 If you are logged into your `php-fpm` container and have the `%overwrite_domain_url%` parameter properly set,
 you can run acceptance tests:
@@ -19,8 +20,9 @@ php phing tests-acceptance
 
 ```
 
-*Note: In this step you were using Phing target `tests-acceptance`.
-More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+!!! hint
+    In this step you were using Phing target `tests-acceptance`.  
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 ## Native installation
 For running acceptance tests you need to install [Google Chrome browser](https://www.google.com/chrome/browser/desktop/) and download [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/).
@@ -29,6 +31,7 @@ You must choose compatible versions of Google Chrome and ChromeDriver.
 As Chrome browser has auto-update enabled by default this may require you to update ChromeDriver from time to time.
 
 When installing Shopsys Framework natively, it is important to update parameters in `parameters_test.yml`:
+
 * `overwrite_domain_url: ~` (disables domain URL overwriting in `TEST` environment)
 * `selenium_server_host: 127.0.0.1`
 
@@ -59,9 +62,12 @@ php phing selenium-run
 php phing tests-acceptance
 ```
 
-*Note: `pg_dump` is executed internally to enable reverting the test DB to its previous state. You may have to add path of your PostgreSQL installation to the system `PATH` directory for it to work.*
+!!! note
+    `pg_dump` is executed internally to enable reverting the test DB to its previous state.
+    You may have to add path of your PostgreSQL installation to the system `PATH` directory for it to work.
 
-*Note: If you interrupt running acceptance tests you may need to delete root file named `TEST` that is temporarily created to switch application to `TEST` environment.*
+!!! note
+    If you interrupt running acceptance tests you may need to delete root file named `TEST` that is temporarily created to switch application to `TEST` environment.
 
 ## Running individual tests
 Sometimes you may want to debug individual test without running the whole acceptance test suite (which can take several minutes).
@@ -88,7 +94,8 @@ vendor/bin/codecept run -c build/codeception.yml acceptance tests/ShopBundle/Acc
 
 Do not forget to run both PHP web server and Selenium server. See [Running the whole acceptance test suite](#running-the-whole-acceptance-test-suite).
 
-*Note: In Windows CMD you have to use backslashes in the path of the executable: `vendor\bin\codecept run ...`*
+!!! note
+    In Windows CMD you have to use backslashes in the path of the executable: `vendor\bin\codecept run ...`
 
 ### Do not forget to restore your original environment afterward
 ```

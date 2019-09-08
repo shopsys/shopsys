@@ -1,0 +1,24 @@
+{%- if nav_item.is_section %}
+    {% set url = nav_item.children[0].url|url %}
+    {% set active = nav_item.children[0].active %}
+{%- else %}
+    {% set url = nav_item.url|url %}
+    {% set active = nav_item.active %}
+{%- endif %}
+
+<a class="{% if active%}current{%endif%} {% if nav_item.is_section%}section{%endif%}" href="{{ url }}">{{ nav_item.title }}</a>
+
+{%- if nav_item.children %}
+    <ul class="subnav {% if not active%}hidden-section{%endif%}">
+        {%- if nav_item.children %}
+            {%- set navlevel = navlevel + 1 %}
+            {%- set children = nav_item.children[1:] %}
+            {%- for nav_item in children %}
+                <li class="{% if navlevel > 2 %}toctree-l{{ navlevel }}{% endif %}{% if nav_item.active%} current{%endif%}">
+                    {% include 'nav.html' %}
+                </li>
+            {%- endfor %}
+            {%- set navlevel = navlevel - 1 %}
+        {%- endif %}
+    </ul>
+{%- endif %}

@@ -22,14 +22,14 @@ Keep in mind that upgrade instructions are written for users that do not underst
 
 ## Files related to upgrade
 
-The main file where a project developer should start looking for instructions is [`UPGRADE.md`](../../UPGRADE.md) file in the monorepo root.
+The main file where a project developer should start looking for instructions is [`UPGRADE.md`](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) file in the monorepo root.
 
-This file contains information for the contributors in the form of the link to [`docs/contributing/upgrading-monorepo.md`](upgrading-monorepo.md) file.
+This file contains information for the contributors in the form of the link to [`upgrade/upgrading-monorepo.md`](https://github.com/shopsys/shopsys/blob/8.0/upgrade/upgrading-monorepo.md) file.
 
 Instructions for developers building a project based on project-base should follow.
 First, there must be general information about upgrading with recommended steps and a typical upgrade sequence,
 following with a list of links to upgrade guides for each version.
-These versions should be placed in a [`docs/upgrade/`](../../docs/upgrade) folder.
+These versions should be placed in a [`upgrade/`](https://github.com/shopsys/shopsys/tree/8.0/upgrade/) folder.
 
 ## Structure of upgrade files
 

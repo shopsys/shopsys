@@ -6,13 +6,13 @@ We use [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) (im
 ## Installation
 
 The backend API is not a part of the Shopsys Framework by default and you have to install it by yourself.
-Please follow simple [installation instructions](/docs/backend-api/backend-api-installation.md).
+Please follow simple [installation instructions](./backend-api-installation.md).
 
 ## Try it
 
 ### You need to create OAuth2 client in database and configure OAuth2 first
 
-Easy steps to do that are described in [API Authentication - OAuth2](/docs/backend-api/api-authentication-oauth2.md) article.
+Easy steps to do that are described in [API Authentication - OAuth2](./api-authentication-oauth2.md) article.
 
 ### Get the Bearer token that is used for authentication when accessing API
 
@@ -76,11 +76,12 @@ If the token is invalid, you'll get `401` HTTP response code.
 
 ## Extensibility of the API
 If you need to extend your backend API, you can follow the cookbooks:
-* [Adding an Attribute to Product Export](/docs/cookbook/backend-api/adding-an-attribute-to-product-export.md)
-* [Adding an Attribute to Product Import](/docs/cookbook/backend-api/adding-an-attribute-to-product-import.md)
-* [Creating Custom API Endpoint](/docs/cookbook/backend-api/creating-custom-api-endpoint.md)
 
-If you need to overwrite an existing core endpoint, you can [create a custom one](/docs/cookbook/backend-api/creating-custom-api-endpoint.md) and use the same route settings to overwrite the one from the core,
+* [Adding an Attribute to Product Export](../cookbook/backend-api/adding-an-attribute-to-product-export.md)
+* [Adding an Attribute to Product Import](../cookbook/backend-api/adding-an-attribute-to-product-import.md)
+* [Creating Custom API Endpoint](../cookbook/backend-api/creating-custom-api-endpoint.md)
+
+If you need to overwrite an existing core endpoint, you can [create a custom one](../cookbook/backend-api/creating-custom-api-endpoint.md) and use the same route settings to overwrite the one from the core,
 e.g. provided there is a GET route `products/` in the core, you need to add your own action for the same route:
 ```php
 declare(strict_types=1);
@@ -106,8 +107,8 @@ class MyCustomController extends AbstractFOSRestController
 
 ## API Versioning
 
-If you are interested how is API versioned in Shopsys Framework see [API Versioning](/docs/backend-api/api-versioning.md) article.
+If you are interested how is API versioned in Shopsys Framework see [API Versioning](./api-versioning.md) article.
 
 ## API Methods
 
-If you are interested what methods does Shopsys Framework API support see [API Methods](/docs/backend-api/api-methods.md) article.
+If you are interested what methods does Shopsys Framework API support see [API Methods](./api-methods.md) article.

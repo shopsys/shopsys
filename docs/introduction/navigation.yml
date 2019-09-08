@@ -1,0 +1,19 @@
+arrange:
+    - index.md
+    - console-commands-for-application-management-phing-targets.md
+    - automated-testing.md
+    - basics-about-package-architecture.md
+    - basic-and-demo-data-during-application-installation.md
+    - database-migrations.md
+    - components.md
+    - abstract-filesystem.md
+    - logging.md
+    - domain-multidomain-multilanguage.md
+    - how-to-set-up-domains-and-locales.md
+    - development-workflow-of-project-on-shopsys-framework.md
+    - translations.md
+    - directories.md
+    - cron.md
+    - using-form-types.md
+    - friendly-url.md
+    - front-end-breadcrumb-navigation.md
