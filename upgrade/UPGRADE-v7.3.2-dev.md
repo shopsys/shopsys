@@ -32,9 +32,9 @@ There you can find links to upgrade notes for other versions too.
         - even though both spellings are valid, "email" is much more common
     - make these replacements in your application code, test code, data fixtures, and translation messages
 
-- fix brand label when the brand name is long or have two lines ([#1371](https://github.com/shopsys/shopsys/pull/1371))
-    - update your [`src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig`] (https://github.com/shopsys/project-base/blob/v7.3.2/src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig)
-    - update your [`src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less`] (https://github.com/shopsys/project-base/blob/v7.3.2/src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less)
+- fix brand label when the brand name is long or has two lines ([#1371](https://github.com/shopsys/shopsys/pull/1371))
+    - update your `src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig` according to [the file in shopsys/project-base](https://github.com/shopsys/project-base/blob/v7.3.2/src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig) repository
+    - update your `src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less` according to [the file in shopsys/project-base](https://github.com/shopsys/project-base/blob/v7.3.2/src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less) repository
 
 ### Configuration
 - update your `app/config/packages/doctrine.yml` ([#1273](https://github.com/shopsys/shopsys/pull/1273))
