@@ -2,7 +2,7 @@
 <project name="shopsys_framework" default="list">
 
     <property name="is-multidomain" value="true" description="This property is @deprecated, see 'domains-info-load' target instead."/>
-    <property name="check-and-fix-annotations" value="true"/>
+    <property name="check-and-fix-annotations" value="false"/>
     <property name="path.app" value="${path.root}/app"/>
     <property name="path.bin" value="${path.vendor}/bin"/>
     <property name="path.bin-console" value="${path.root}/bin/console"/>

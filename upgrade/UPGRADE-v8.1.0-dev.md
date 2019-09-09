@@ -182,16 +182,17 @@ There you can find links to upgrade notes for other versions too.
         + docker-compose exec -T php-fpm composer install
         + docker-compose exec -T php-fpm ./phing db-create test-db-create build-demo-dev-quick error-pages-generate
         ```
-- run `php phing annotations-fix` to fix or add all the relevant annotations for your extended classes ([#1344](https://github.com/shopsys/shopsys/pull/1344))
-    - thanks to the fixes, your IDE (PHPStorm) will understand your code better
-    - you can read more about the whole topic in the ["Framework extensibility" article](../introduction/framework-extensibility.md#making-the-static-analysis-understand-the-extended-code)
-    - the checks and fixes of the proper annotations are now included in all `standards-*` phing targets, if you want to turn this feature off, add the following line into your `build.xml`:
+- enable automated checks and fixes of annotations for extended classes in your project ([#1344](https://github.com/shopsys/shopsys/pull/1344))
+    - in your `build.xml` add the following line to include the checks and fixes for annotations of extended classes to all `standards-*` phing targets
     ```diff
-      <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
-    + <property name="check-and-fix-annotations" value="false"/>
-
+    + <property name="check-and-fix-annotations" value="true"/>
+      <property name="path.root" value="${project.basedir}"/>
+      ...
       <import file="${path.framework}/build.xml"/>
     ```
+    - run `php phing annotations-fix` to fix or add all the relevant annotations for your extended classes
+    - thanks to the fixes, your IDE (PHPStorm) will understand your code better
+    - you can read more about the whole topic in the ["Framework extensibility" article](../introduction/framework-extensibility.md#making-the-static-analysis-understand-the-extended-code)
 - increase your PHPStan level to 4 in your `build.xml` ([#1040](https://github.com/shopsys/shopsys/pull/1040))
     ```diff
   - <property name="phpstan.level" value="1"/>
