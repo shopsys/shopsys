@@ -9,26 +9,6 @@ echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-
 FIRST_DOMAIN_HOSTNAME=${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 SECOND_DOMAIN_HOSTNAME=2.${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 
-FILES=(
-    project-base/kubernetes/ingress.yml
-    project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml
-    project-base/kubernetes/deployments/webserver-php-fpm.yml
-)
-VARS=(
-    FIRST_DOMAIN_HOSTNAME
-    SECOND_DOMAIN_HOSTNAME
-)
-
-for FILE in "${FILES[@]}"
-do
-    for VAR in ${VARS[@]}
-	do
-        sed -i "s|{{$VAR}}|${!VAR}|" "$FILE"
-    done
-done
-unset FILES
-unset VARS
-
 # Set parameters.yml file and domains_urls
 cp project-base/app/config/domains_urls.yml.dist project-base/app/config/domains_urls.yml
 cp project-base/app/config/parameters_test.yml.dist project-base/app/config/parameters_test.yml
@@ -72,11 +52,15 @@ GOOGLE_CLOUD_STORAGE_BUCKET_NAME=''
 GOOGLE_CLOUD_PROJECT_ID=''
 
 FILES=(
+    project-base/kubernetes/ingress.yml
+    project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml
     project-base/kubernetes/deployments/webserver-php-fpm.yml
     project-base/kubernetes/deployments/elasticsearch.yml
 
 )
 VARS=(
+    FIRST_DOMAIN_HOSTNAME
+    SECOND_DOMAIN_HOSTNAME
     DOCKER_PHP_FPM_IMAGE
     DOCKER_ELASTIC_IMAGE
     PATH_CONFIG_DIRECTORY
