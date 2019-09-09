@@ -51,13 +51,6 @@ PATH_CONFIG_DIRECTORY='/var/www/html/project-base/app/config'
 GOOGLE_CLOUD_STORAGE_BUCKET_NAME=''
 GOOGLE_CLOUD_PROJECT_ID=''
 
-FILES=(
-    project-base/kubernetes/ingress.yml
-    project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml
-    project-base/kubernetes/deployments/webserver-php-fpm.yml
-    project-base/kubernetes/deployments/elasticsearch.yml
-
-)
 VARS=(
     FIRST_DOMAIN_HOSTNAME
     SECOND_DOMAIN_HOSTNAME
@@ -68,14 +61,12 @@ VARS=(
     GOOGLE_CLOUD_PROJECT_ID
 )
 
-for FILE in "${FILES[@]}"
+for VAR in ${VARS[@]}
 do
-    for VAR in ${VARS[@]}
-	do
-        sed -i "s|{{$VAR}}|${!VAR}|" "$FILE"
-    done
+    find ./ -type f -regex 'project-base\/kubernetes\/.*\.ya?ml$' -exec sed -i '' -e "s|{{$VAR}}|${!VAR}|" {} \;
+    #sed -i "s|{{$VAR}}|${!VAR}|" "$FILE"
 done
-unset FILES
+
 unset VARS
 
 # Deploy application using kubectl
