@@ -39,7 +39,6 @@ as well as a list of customizations that are not (and will not be) possible at a
 ## Which issues are going to be addressed soon
 * Extending data fixtures (including performance data fixtures)
 * Extending data grids in the administration
-* Extending all forms in the administration without the need of the template overriding
 * Extending classes like Repositories without the need for changing the project-base tests
 
 ## What is not supported
