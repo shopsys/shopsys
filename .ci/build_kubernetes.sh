@@ -51,13 +51,7 @@ PATH_CONFIG_DIRECTORY='/var/www/html/project-base/app/config'
 GOOGLE_CLOUD_STORAGE_BUCKET_NAME=''
 GOOGLE_CLOUD_PROJECT_ID=''
 
-FILES=(
-    project-base/kubernetes/ingress.yml
-    project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml
-    project-base/kubernetes/deployments/webserver-php-fpm.yml
-    project-base/kubernetes/deployments/elasticsearch.yml
-
-)
+FILES=$( find project-base/kubernetes -type f )
 VARS=(
     FIRST_DOMAIN_HOSTNAME
     SECOND_DOMAIN_HOSTNAME
@@ -68,7 +62,7 @@ VARS=(
     GOOGLE_CLOUD_PROJECT_ID
 )
 
-for FILE in "${FILES[@]}"
+for FILE in $FILES
 do
     for VAR in ${VARS[@]}
 	do
