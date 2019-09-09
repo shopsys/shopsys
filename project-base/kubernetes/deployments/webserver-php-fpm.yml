@@ -52,10 +52,10 @@ spec:
                         -   name: source-codes
                             mountPath: /tmp/source-codes
                         -   name: domains-urls
-                            mountPath: "{{PATH_CONFIG_DOMAIN_URL}}"
+                            mountPath: "{{PATH_CONFIG_DIRECTORY}}/domains_urls.yml"
                             subPath: domains_urls.yml
                         -   name: parameters
-                            mountPath: "{{PATH_CONFIG_PARAMETERS}}"
+                            mountPath: "{{PATH_CONFIG_DIRECTORY}}/parameters.yml"
                             subPath: parameters.yml
                 -   name: initialize-database
                     image: "{{DOCKER_PHP_FPM_IMAGE}}"
@@ -66,10 +66,10 @@ spec:
                         -   name: source-codes
                             mountPath: /var/www/html
                         -   name: domains-urls
-                            mountPath: "{{PATH_CONFIG_DOMAIN_URL}}"
+                            mountPath: "{{PATH_CONFIG_DIRECTORY}}/domains_urls.yml"
                             subPath: domains_urls.yml
                         -   name: parameters
-                            mountPath: "{{PATH_CONFIG_PARAMETERS}}"
+                            mountPath: "{{PATH_CONFIG_DIRECTORY}}/parameters.yml"
                             subPath: parameters.yml
                     env:
                         -   name: GOOGLE_CLOUD_STORAGE_BUCKET_NAME
@@ -86,10 +86,10 @@ spec:
                         -   name: source-codes
                             mountPath: /var/www/html
                         -   name: domains-urls
-                            mountPath: "{{PATH_CONFIG_DOMAIN_URL}}"
+                            mountPath: "{{PATH_CONFIG_DIRECTORY}}/domains_urls.yml"
                             subPath: domains_urls.yml
                         -   name: parameters
-                            mountPath: "{{PATH_CONFIG_PARAMETERS}}"
+                            mountPath: "{{PATH_CONFIG_DIRECTORY}}/parameters.yml"
                             subPath: parameters.yml
                     env:
                         -   name: GOOGLE_CLOUD_STORAGE_BUCKET_NAME
