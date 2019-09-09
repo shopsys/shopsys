@@ -149,9 +149,10 @@
     "codeception/phpunit-wrapper": "^7.0",
     "nette/utils": "^2.5",
     "phpstan/phpstan": "^0.11",
+    "symplify/changelog-linker": "dev-master",
     "symplify/easy-coding-standard-tester": "^5.2.17",
-    "symplify/monorepo-builder": "^5.2.17",
-    "shopsys/changelog-linker": "^5.5.0",
+    "symplify/monorepo-builder": "dev-master",
+    "symplify/package-builder": "@dev",
     "phpstan/phpstan-doctrine": "^0.11.2",
     "phpstan/phpstan-phpunit": "^0.11.2"
   },
