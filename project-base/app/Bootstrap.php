@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys;
 
 use AppKernel;
@@ -79,7 +81,7 @@ class Bootstrap
     private function configurePhp()
     {
         error_reporting(E_ALL);
-        ini_set('display_errors', 0);
+        ini_set('display_errors', '0');
     }
 
     private function initDoctrine()
