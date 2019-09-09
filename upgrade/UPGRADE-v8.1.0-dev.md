@@ -46,7 +46,7 @@ There you can find links to upgrade notes for other versions too.
             provider: administrators
             logout_on_user_change: true
         ```
-        - in case you need to disable this functionality (e.g. to prevent failing tests on CI which uses production environment)
+        - in case you need to disable this functionality (e.g. to allow easier logging in to a deployed application on your CI server)
         there is an environment variable `IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK` which needs to be set to `1` (for **SECURITY** reasons **DO NOT EVER** do this in real production environment)
             - when you are using kubernetes on CI server change your configuration of:
                 - `kubernetes/kustomize/overlays/ci/kustomization.yaml`
@@ -89,7 +89,7 @@ There you can find links to upgrade notes for other versions too.
                 +       environment:
                 +           - IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK=1
                 ```
-            - without containers you must set environment variable to the host machine, typically in unix like OS by executing
+            - without containers you must set environment variable on the host machine, typically in unix like OS by executing
                 ```
                 export IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK=1
                 ```

@@ -7,6 +7,9 @@ use Composer\Script\Event;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 
+/**
+ * Helper class for use in {@see \Shopsys\Bootstrap}
+ */
 class Environment
 {
     /**

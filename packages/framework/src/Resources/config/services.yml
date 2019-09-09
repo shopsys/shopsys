@@ -567,6 +567,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
         arguments:
+            - '%kernel.environment%'
             - '%env(bool:IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK)%'
 
     Shopsys\FrameworkBundle\Model\Security\LoginListener:

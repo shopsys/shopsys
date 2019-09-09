@@ -14,4 +14,4 @@ parameters:
     # Default extended classes mapping
     shopsys.entity_extension.map: {}
 
-    env(IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK): 0
+    env(IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK): '0'
