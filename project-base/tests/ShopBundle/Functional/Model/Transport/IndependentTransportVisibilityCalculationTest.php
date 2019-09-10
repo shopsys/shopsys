@@ -8,8 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation;
-use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\ShopBundle\Model\Transport\Transport;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -25,6 +23,18 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $this->localization = $this->getContainer()->get(Localization::class);
         parent::setUp();
     }
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation
+     * @inject
+     */
+    private $independentTransportVisibilityCalculation;
+
+    /**
+     * @var \Shopsys\ShopBundle\Model\Transport\TransportDataFactory
+     * @inject
+     */
+    private $transportDataFactory;
 
     public function testIsIndependentlyVisible()
     {
@@ -42,11 +52,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $em->persist($transport);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation */
-        $independentTransportVisibilityCalculation =
-            $this->getContainer()->get(IndependentTransportVisibilityCalculation::class);
-
-        $this->assertTrue($independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
+        $this->assertTrue($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleEmptyName()
@@ -54,7 +60,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
 
-        $transportData = $this->getTransportDataFactory()->create();
+        $transportData = $this->transportDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
             $names[$locale] = null;
@@ -73,11 +79,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $em->persist($transport);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation */
-        $independentTransportVisibilityCalculation =
-            $this->getContainer()->get(IndependentTransportVisibilityCalculation::class);
-
-        $this->assertFalse($independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
+        $this->assertFalse($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleNotOnDomain()
@@ -96,11 +98,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $em->persist($transport);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation */
-        $independentTransportVisibilityCalculation =
-            $this->getContainer()->get(IndependentTransportVisibilityCalculation::class);
-
-        $this->assertFalse($independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
+        $this->assertFalse($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleHidden()
@@ -119,11 +117,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $em->persist($transport);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation */
-        $independentTransportVisibilityCalculation =
-            $this->getContainer()->get(IndependentTransportVisibilityCalculation::class);
-
-        $this->assertFalse($independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
+        $this->assertFalse($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, Domain::FIRST_DOMAIN_ID));
     }
 
     /**
@@ -134,9 +128,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
      */
     public function getDefaultTransport(Vat $vat, $enabledForDomains, $hidden)
     {
-        $transportDataFactory = $this->getTransportDataFactory();
-
-        $transportData = $transportDataFactory->create();
+        $transportData = $this->transportDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
             $names[$locale] = 'transportName';
@@ -159,13 +151,5 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $vatData->name = 'vat';
         $vatData->percent = '21';
         return new Vat($vatData);
-    }
-
-    /**
-     * @return \Shopsys\ShopBundle\Model\Transport\TransportDataFactory
-     */
-    public function getTransportDataFactory()
-    {
-        return $this->getContainer()->get(TransportDataFactoryInterface::class);
     }
 }
