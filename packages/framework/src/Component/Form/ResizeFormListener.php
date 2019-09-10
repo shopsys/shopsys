@@ -118,18 +118,7 @@ class ResizeFormListener implements EventSubscriberInterface
             );
         }
 
-        // First remove all rows
-        foreach ($form as $name => $child) {
-            $form->remove($name);
-        }
-
-        $childOptions = $this->options;
-
-        // Then add all rows again in the correct order
-        foreach ($viewData as $name => $value) {
-            $childOptions['property_path'] = '[' . $name . ']';
-            $form->add($name, $this->type, $childOptions);
-        }
+        $this->arrangeFormRowsInCorrectOrder($form, $viewData);
     }
 
     /**
@@ -140,7 +129,7 @@ class ResizeFormListener implements EventSubscriberInterface
     public function preSubmit(FormEvent $event)
     {
         $form = $event->getForm();
-        $data = $event->getData();
+        $data = $this->normToView($form, $this->viewToNorm($form, $event->getData()));
 
         if ($data === null || $data === '') {
             $data = [];
@@ -173,6 +162,8 @@ class ResizeFormListener implements EventSubscriberInterface
                 }
             }
         }
+
+        $this->arrangeFormRowsInCorrectOrder($form, $data);
     }
 
     /**
@@ -316,5 +307,25 @@ class ResizeFormListener implements EventSubscriberInterface
         }
 
         return $value;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param mixed $viewData
+     */
+    protected function arrangeFormRowsInCorrectOrder(FormInterface $form, $viewData): void
+    {
+        // First remove all rows
+        foreach ($form as $name => $child) {
+            $form->remove($name);
+        }
+
+        $childOptions = $this->options;
+
+        // Then add all rows again in the correct order
+        foreach ($viewData as $name => $value) {
+            $childOptions['property_path'] = '[' . $name . ']';
+            $form->add($name, $this->type, $childOptions);
+        }
     }
 }
