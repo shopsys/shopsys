@@ -12,6 +12,12 @@ use Tests\ShopBundle\Test\ParameterTransactionFunctionalTestCase;
 
 class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository
+     * @inject
+     */
+    private $parameterFilterChoiceRepository;
+
     public function testParameterFilterChoicesFromCategoryWithNoParameters(): void
     {
         $parameterFilterChoices = $this->getParameterValueIdsForCategoryReferenceIndexedByParameterId(CategoryDataFixture::CATEGORY_GARDEN_TOOLS);
@@ -50,8 +56,6 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
      */
     protected function getParameterValueIdsForCategoryReferenceIndexedByParameterId(string $categoryReferenceName): array
     {
-        $repository = $this->getParameterFilterChoiceRepository();
-
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
@@ -62,7 +66,7 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
         $domain = $this->getContainer()->get(Domain::class);
         $domainConfig1 = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
 
-        $parameterFilterChoices = $repository->getParameterFilterChoicesInCategory($domainConfig1->getId(), $pricingGroup, $domainConfig1->getLocale(), $category);
+        $parameterFilterChoices = $this->parameterFilterChoiceRepository->getParameterFilterChoicesInCategory($domainConfig1->getId(), $pricingGroup, $domainConfig1->getLocale(), $category);
 
         $parameterValuesByParameterId = [];
 
