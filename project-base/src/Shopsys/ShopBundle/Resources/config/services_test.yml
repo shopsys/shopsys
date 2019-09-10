@@ -4,6 +4,9 @@ services:
         autoconfigure: true
         public: true
 
+    Shopsys\ShopBundle\:
+        resource: '../../**/*{Factory}.php'
+
     CommerceGuys\Intl\NumberFormat\NumberFormatRepository: ~
 
     Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter:
