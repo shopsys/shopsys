@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 use Shopsys\ShopBundle\DataFixtures\Demo\AvailabilityDataFixture;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -15,28 +12,21 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     * @inject
      */
     private $productFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade
+     * @inject
      */
     private $productVariantFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactory
+     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
+     * @inject
      */
     private $productDataFactory;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $container = $this->getContainer();
-        $this->productFacade = $container->get(ProductFacade::class);
-        $this->productVariantFacade = $container->get(ProductVariantFacade::class);
-        $this->productDataFactory = $container->get(ProductDataFactoryInterface::class);
-    }
 
     /**
      * @return array

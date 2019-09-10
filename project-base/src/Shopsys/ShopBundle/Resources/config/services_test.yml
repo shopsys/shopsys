@@ -22,8 +22,6 @@ services:
 
     Tests\ShopBundle\Functional\EntityExtension\OverwritableEntityNameResolver: '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
 
-    Symfony\Component\Filesystem\Filesystem: ~
-
     joschi127_doctrine_entity_override.event_subscriber.load_orm_metadata:
         class: Tests\ShopBundle\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber
         arguments:
@@ -38,13 +36,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface: '@Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory'
 
-    Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@Shopsys\ShopBundle\Model\Product\ProductDataFactory'
-
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface: '@Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory'
 
     Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: ~
-
-    Shopsys\ReadModelBundle\Image\ImageViewFacade: ~
 
     Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade: ~
 
