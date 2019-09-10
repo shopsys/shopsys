@@ -7,6 +7,15 @@ There you can find links to upgrade notes for other versions too.
 
 ## [shopsys/framework]
 
+### Infrastructure
+- update your `kubernetes/deployments/webserver-php-fpm.yml` file: ([#1368](https://github.com/shopsys/shopsys/pull/1368))
+    ```diff
+    -   command: ["sh", "-c", "cd /var/www/html && ./phing db-create dirs-create db-demo product-search-recreate-structure product-search-export-products grunt error-pages-generate warmup"]
+    +   command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo product-search-recreate-structure product-search-export-products grunt error-pages-generate warmup"]
+    ```
+- check all the phing targets that depend on the new `production-protection` target
+    - if you use any of the targets in your automated build scripts in production environment, you need to pass the confirmation to the phing using `-D production.confirm.action=y`
+
 ### Application
 
 - update your twig files ([#1284](https://github.com/shopsys/shopsys/pull/1284/)):
@@ -23,6 +32,7 @@ There you can find links to upgrade notes for other versions too.
         - `src/Resources/views/Admin/Content/Brand/detail.html.twig`
         - `src/Resources/views/Admin/Content/Category/detail.html.twig`
         - `src/Resources/views/Admin/Content/Product/detail.html.twig`
+- add [`app/getEnvironment.php`](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/getEnvironment.php) file to your project ([#1368](https://github.com/shopsys/shopsys/pull/1368))
 
 ### Tools
 

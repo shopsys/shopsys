@@ -72,13 +72,13 @@
 
     <target name="build" depends="build-deploy-part-1-db-independent,build-deploy-part-2-db-dependent" description="Builds application for production preserving your DB."/>
 
-    <target name="build-demo" depends="wipe,build-version-generate,composer-prod,redis-check,npm,dirs-create,assets,db-demo,grunt,error-pages-generate,warmup,product-search-recreate-structure,product-search-export-products,clean-redis-old" description="Builds application for production with clean demo DB."/>
+    <target name="build-demo" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,npm,dirs-create,assets,db-demo,grunt,error-pages-generate,warmup,product-search-recreate-structure,product-search-export-products,clean-redis-old" description="Builds application for production with clean demo DB."/>
 
-    <target name="build-demo-ci" depends="build-version-generate,wipe-excluding-logs,composer-dev,npm,timezones-check,dirs-create,test-dirs-create,assets,db-demo,product-search-recreate-structure,product-search-export-products,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
+    <target name="build-demo-ci" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,npm,timezones-check,dirs-create,test-dirs-create,assets,db-demo,product-search-recreate-structure,product-search-export-products,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
 
-    <target name="build-demo-dev" depends="build-version-generate,wipe-excluding-logs,composer-dev,npm,timezones-check,dirs-create,test-dirs-create,assets,db-demo,product-search-recreate-structure,product-search-export-products,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-diff" description="Builds application for development with clean demo DB and runs checks on changed files."/>
+    <target name="build-demo-dev" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,npm,timezones-check,dirs-create,test-dirs-create,assets,db-demo,product-search-recreate-structure,product-search-export-products,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-diff" description="Builds application for development with clean demo DB and runs checks on changed files."/>
 
-    <target name="build-demo-dev-quick" depends="build-version-generate,wipe-excluding-logs,composer-dev,npm,dirs-create,test-dirs-create,assets,db-demo,product-search-recreate-structure,product-search-export-products,grunt,clean-redis-old" description="Builds application for development with clean demo DB while skipping nonessential steps."/>
+    <target name="build-demo-dev-quick" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,npm,dirs-create,test-dirs-create,assets,db-demo,product-search-recreate-structure,product-search-export-products,grunt,clean-redis-old" description="Builds application for development with clean demo DB while skipping nonessential steps."/>
 
     <target name="build-deploy-part-1-db-independent" depends="build-version-generate,clean,composer-prod,npm,dirs-create,assets" description="First part of application build for production preserving your DB (can be run without maintenance page)."/>
 
@@ -88,7 +88,7 @@
 
     <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,npm,dirs-create,test-dirs-create,assets,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,product-search-migrate-structure,grunt,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
 
-    <target name="build-new" depends="wipe,build-version-generate,composer-prod,redis-check,npm,dirs-create,assets,db-rebuild,grunt,error-pages-generate,warmup,product-search-recreate-structure,clean-redis-old" description="Builds application for production with clean DB (with base data only)."/>
+    <target name="build-new" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,npm,dirs-create,assets,db-rebuild,grunt,error-pages-generate,warmup,product-search-recreate-structure,clean-redis-old" description="Builds application for production with clean DB (with base data only)."/>
 
     <target name="build-version-generate" description="Generates parameters_version.yml config file with a new build version number.">
         <exec executable="${path.php.executable}" checkreturn="true" outputProperty="version">
@@ -164,7 +164,7 @@
         </exec>
     </target>
 
-    <target name="composer-dev" depends="composer-check" description="Installs dependencies for development.">
+    <target name="composer-dev" depends="production-protection,composer-check" description="Installs dependencies for development.">
         <exec executable="${path.composer.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="install"/>
         </exec>
@@ -206,16 +206,16 @@
         </exec>
     </target>
 
-    <target name="db-create" description="Creates database for application with required configuration.">
+    <target name="db-create" depends="production-protection" description="Creates database for application with required configuration.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:database:create"/>
         </exec>
     </target>
 
-    <target name="db-demo" depends="db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,domains-urls-replace" description="Creates DB and fills it with demo data"/>
+    <target name="db-demo" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,domains-urls-replace" description="Creates DB and fills it with demo data"/>
 
-    <target name="db-fixtures-demo" description="Loads demo data fixtures." hidden="true">
+    <target name="db-fixtures-demo" depends="production-protection" description="Loads demo data fixtures." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="doctrine:fixtures:load"/>
@@ -256,9 +256,9 @@
         </exec>
     </target>
 
-    <target name="db-rebuild" depends="db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace" description="Drops all data in database and creates a new one with base data only."/>
+    <target name="db-rebuild" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace" description="Drops all data in database and creates a new one with base data only."/>
 
-    <target name="db-wipe-public-schema" description="Drops and creates public database schema." hidden="true">
+    <target name="db-wipe-public-schema" depends="production-protection" description="Drops and creates public database schema." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:schema:drop"/>
@@ -494,6 +494,18 @@
         </exec>
     </target>
 
+    <target name="environment-load" description="Load application environment into Phing property." hidden="true">
+        <if>
+            <not><isset property="environment"/></not>
+            <then>
+                <exec command="php ${path.app}/getEnvironment.php" outputProperty="environment"/>
+
+                <property name="environment" value="${environment}"/>
+                <echo>Current environment: ${environment}</echo>
+            </then>
+        </if>
+    </target>
+
     <target name="error-pages-generate" depends="prod-warmup,redis-check" description="Generates error pages displayed in production environment.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -664,7 +676,7 @@
         </exec>
     </target>
 
-    <target name="product-search-delete-structure" description="Deletes structure for searching via elasticsearch." hidden="true">
+    <target name="product-search-delete-structure" depends="production-protection" description="Deletes structure for searching via elasticsearch." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:product-search:delete-structure"/>
@@ -685,7 +697,22 @@
         </exec>
     </target>
 
-    <target name="product-search-recreate-structure" depends="product-search-delete-structure,product-search-create-structure" description="Recreates structure for searching via elasticsearch (deletes existing structure and creates new one)"/>
+    <target name="product-search-recreate-structure" depends="production-protection,product-search-delete-structure,product-search-create-structure" description="Recreates structure for searching via elasticsearch (deletes existing structure and creates new one)"/>
+
+    <target name="production-protection" depends="environment-load" description="Asks user for confirmation when he or she wants to run a particular action in production environment" hidden="true">
+        <if>
+            <equals arg1="${environment}" arg2="prod"/>
+            <then>
+                <input propertyName="production.confirm.action" validArgs="y,n" defaultValue="n" message="Warning! You are now in production environment and performing action that is not supposed to be ran in this environment! Are you sure you want to continue?"/>
+                <if>
+                    <equals arg1="${production.confirm.action}" arg2="n"/>
+                    <then>
+                        <fail message="Terminated by user" status="0"/>
+                    </then>
+                </if>
+            </then>
+        </if>
+    </target>
 
     <target name="redis-check" description="Checks availability of Redis" hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -716,7 +743,7 @@
 
     <target name="standards-fix-diff" depends="ecs-fix-diff,yaml-standards-fix,eslint-fix-diff" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
 
-    <target name="test-db-create" description="Creates test database for application with required configuration.">
+    <target name="test-db-create" depends="production-protection" description="Creates test database for application with required configuration.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:database:create"/>
@@ -724,9 +751,9 @@
         </exec>
     </target>
 
-    <target name="test-db-demo" depends="clean,clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
+    <target name="test-db-demo" depends="production-protection,clean,clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
 
-    <target name="test-db-dump" description="Dumps current test database into a file to be used in acceptance tests." hidden="true">
+    <target name="test-db-dump" depends="production-protection" description="Dumps current test database into a file to be used in acceptance tests." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -736,7 +763,7 @@
         </exec>
     </target>
 
-    <target name="test-db-fixtures-demo" description="Loads demo data fixtures into test DB." hidden="true">
+    <target name="test-db-fixtures-demo" depends="production-protection" description="Loads demo data fixtures into test DB." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -751,7 +778,7 @@
         </exec>
     </target>
 
-    <target name="test-db-fixtures-performance" description="Loads performance data fixtures into test DB." hidden="true">
+    <target name="test-db-fixtures-performance" depends="production-protection" description="Loads performance data fixtures into test DB." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -764,7 +791,7 @@
         </exec>
     </target>
 
-    <target name="test-db-import-basic-structure" description="Imports basic database structure (without migrations) into test database." hidden="true">
+    <target name="test-db-import-basic-structure" depends="production-protection" description="Imports basic database structure (without migrations) into test database." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -772,7 +799,7 @@
         </exec>
     </target>
 
-    <target name="test-db-migrations" description="Executes test database migrations and checks schema." hidden="true">
+    <target name="test-db-migrations" depends="production-protection" description="Executes test database migrations and checks schema." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -780,7 +807,7 @@
         </exec>
     </target>
 
-    <target name="test-db-performance" depends="test-db-demo,test-db-fixtures-performance" description="Drops all data in test database and creates a new one with performance data."/>
+    <target name="test-db-performance" depends="production-protection,test-db-demo,test-db-fixtures-performance" description="Drops all data in test database and creates a new one with performance data."/>
 
     <target name="test-db-wipe-public-schema" description="Drops and creates public database schema in test database." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -795,7 +822,7 @@
         </exec>
     </target>
 
-    <target name="test-dirs-create" description="Creates application directories for content, images, uploaded files, etc. for test environment" hidden="true">
+    <target name="test-dirs-create" depends="production-protection" description="Creates application directories for content, images, uploaded files, etc. for test environment" hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -803,7 +830,7 @@
         </exec>
     </target>
 
-    <target name="test-domains-data-create" depends="test-domains-db-functions-create" description="Creates domains data in tests DB for newly configured domains." hidden="true">
+    <target name="test-domains-data-create" depends="production-protection,test-domains-db-functions-create" description="Creates domains data in tests DB for newly configured domains." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-data:create"/>
@@ -811,7 +838,7 @@
         </exec>
     </target>
 
-    <target name="test-domains-db-functions-create" description="Creates new domains DB functions in test database." hidden="true">
+    <target name="test-domains-db-functions-create" depends="production-protection" description="Creates new domains DB functions in test database." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-db-functions:create"/>
@@ -819,7 +846,7 @@
         </exec>
     </target>
 
-    <target name="test-domains-urls-replace" description="Replaces domains urls in test database by urls in configuration." hidden="true">
+    <target name="test-domains-urls-replace" depends="production-protection" description="Replaces domains urls in test database by urls in configuration." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -827,7 +854,7 @@
         </exec>
     </target>
 
-    <target name="test-friendly-urls-generate" description="Generates friendly urls for supported entities when missing in test DB." hidden="true">
+    <target name="test-friendly-urls-generate" depends="production-protection" description="Generates friendly urls for supported entities when missing in test DB." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -835,7 +862,7 @@
         </exec>
     </target>
 
-    <target name="test-plugin-demo-data-load" description="Loads data fixtures of all registered plugins into test DB." hidden="true">
+    <target name="test-plugin-demo-data-load" depends="production-protection" description="Loads data fixtures of all registered plugins into test DB." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -843,7 +870,7 @@
         </exec>
     </target>
 
-    <target name="test-product-search-create-structure" description="Creates structure for searching via elasticsearch for test environment." hidden="true">
+    <target name="test-product-search-create-structure" depends="production-protection" description="Creates structure for searching via elasticsearch for test environment." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -851,7 +878,7 @@
         </exec>
     </target>
 
-    <target name="test-product-search-delete-structure" description="Deletes structure for searching via elasticsearch for test environment." hidden="true">
+    <target name="test-product-search-delete-structure" depends="production-protection" description="Deletes structure for searching via elasticsearch for test environment." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -859,7 +886,7 @@
         </exec>
     </target>
 
-    <target name="test-product-search-export-products" description="Exports all products for searching via elasticsearch for test environment.">
+    <target name="test-product-search-export-products" depends="production-protection" description="Exports all products for searching via elasticsearch for test environment.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
@@ -867,11 +894,11 @@
         </exec>
     </target>
 
-    <target name="test-product-search-recreate-structure" depends="test-product-search-delete-structure,test-product-search-create-structure" description="Recreates structure for searching via elasticsearch in test environment (deletes existing structure and creates new one)"/>
+    <target name="test-product-search-recreate-structure" depends="production-protection,test-product-search-delete-structure,test-product-search-create-structure" description="Recreates structure for searching via elasticsearch in test environment (deletes existing structure and creates new one)"/>
 
     <target name="tests" depends="test-db-demo,test-product-search-recreate-structure,test-product-search-export-products,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
 
-    <target name="tests-acceptance" depends="clean,clean-redis,test-db-dump" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
+    <target name="tests-acceptance" depends="production-protection,clean,clean-redis,test-db-dump" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
         <available file="${path.env.test}" type="file" property="path.env.test.existed"/>
         <if>
             <not>
@@ -902,14 +929,14 @@
         </trycatch>
     </target>
 
-    <target name="tests-acceptance-build" description="Generates AcceptanceTesterActions.php (execute after change of Codeception modules, eg. StrictWebDriver)." hidden="true">
+    <target name="tests-acceptance-build" depends="production-protection" description="Generates AcceptanceTesterActions.php (execute after change of Codeception modules, eg. StrictWebDriver)." hidden="true">
         <exec executable="${path.codeception.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="build"/>
             <arg value="--config=${path.codeception.configuration}"/>
         </exec>
     </target>
 
-    <target name="tests-functional" depends="clean,clean-redis,domains-info-load" description="Runs functional tests.">
+    <target name="tests-functional" depends="production-protection,clean,clean-redis,domains-info-load" description="Runs functional tests.">
         <if>
             <istrue value="${domains-info.is-multidomain}"/>
             <then>
@@ -937,7 +964,7 @@
         </if>
     </target>
 
-    <target name="tests-performance" depends="clean,clean-redis" description="Runs performance tests (assuming test DB has been filled with performance data and warmed up, see 'tests-performance-run').">
+    <target name="tests-performance" depends="production-protection,clean,clean-redis" description="Runs performance tests (assuming test DB has been filled with performance data and warmed up, see 'tests-performance-run').">
         <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--testsuite"/>
@@ -949,7 +976,7 @@
         </exec>
     </target>
 
-    <target name="tests-performance-run" depends="clean,clean-redis,test-db-performance,test-product-search-recreate-structure,test-product-search-export-products,tests-performance-warmup,tests-performance" description="Runs performance tests. Builds new test database with performance data in the process."/>
+    <target name="tests-performance-run" depends="production-protection,clean,clean-redis,test-db-performance,test-product-search-recreate-structure,test-product-search-export-products,tests-performance-warmup,tests-performance" description="Runs performance tests. Builds new test database with performance data in the process."/>
 
     <target name="tests-performance-warmup" description="Warms up cache for performance tests.">
         <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
@@ -963,7 +990,7 @@
         </exec>
     </target>
 
-    <target name="tests-smoke" depends="clean,clean-redis,domains-info-load" description="Runs smoke tests.">
+    <target name="tests-smoke" depends="production-protection,clean,clean-redis,domains-info-load" description="Runs smoke tests.">
         <if>
             <istrue value="${domains-info.is-multidomain}"/>
             <then>
@@ -991,7 +1018,7 @@
         </if>
     </target>
 
-    <target name="tests-unit" depends="clean" description="Runs unit tests.">
+    <target name="tests-unit" depends="production-protection,clean" description="Runs unit tests.">
         <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--testsuite"/>
@@ -1053,13 +1080,13 @@
         </exec>
     </target>
 
-    <target name="wipe" depends="wipe-excluding-logs" description="Wipes out all generated and/or uploaded files.">
+    <target name="wipe" depends="production-protection,wipe-excluding-logs" description="Wipes out all generated and/or uploaded files.">
         <delete failonerror="false" includeemptydirs="true">
             <fileset dir="${path.var}/logs/"/>
         </delete>
     </target>
 
-    <target name="wipe-excluding-logs" depends="clean,clean-styles" description="Wipes out all generated and/or uploaded files except for logs.">
+    <target name="wipe-excluding-logs" depends="production-protection,clean,clean-styles" description="Wipes out all generated and/or uploaded files except for logs.">
         <delete failonerror="false" includeemptydirs="true">
             <fileset dir="${path.var}/">
                 <exclude name=".gitkeep"/>
