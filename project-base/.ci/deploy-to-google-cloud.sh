@@ -38,31 +38,31 @@ sed -i "s/{{GOOGLE_CLOUD_STORAGE_BUCKET_NAME}}/${GOOGLE_CLOUD_STORAGE_BUCKET_NAM
 cp app/config/domains_urls.yml.dist app/config/domains_urls.yml
 cp app/config/parameters.yml.dist app/config/parameters.yml
 
-# Replace docker images for php-fpm of application
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
+DOCKER_PHP_FPM_IMAGE=${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
+DOCKER_ELASTIC_IMAGE=${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
+PATH_CONFIG_DIRECTORY='/var/www/html/project-base/app/config'
+GOOGLE_CLOUD_PROJECT_ID=${PROJECT_ID}
 
-# Replace docker image for elasticsearch of application
-yq write --inplace kubernetes/deployments/elasticsearch.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
+FILES=$( find kubernetes -type f )
+VARS=(
+    FIRST_DOMAIN_HOSTNAME
+    SECOND_DOMAIN_HOSTNAME
+    DOCKER_PHP_FPM_IMAGE
+    DOCKER_ELASTIC_IMAGE
+    PATH_CONFIG_DIRECTORY
+    GOOGLE_CLOUD_STORAGE_BUCKET_NAME
+    GOOGLE_CLOUD_PROJECT_ID
+)
 
-# Set domain name into ingress controller so ingress can listen on domain name
-yq write --inplace kubernetes/ingress.yml spec.rules[0].host ${FIRST_DOMAIN_HOSTNAME}
-yq write --inplace kubernetes/ingress.yml spec.rules[1].host ${SECOND_DOMAIN_HOSTNAME}
-
-# Set domain name into ingress tls patch so ingress can listen on domain name
-yq write --inplace kubernetes/kustomize/overlays/production/ingress-patch.yaml spec.tls[0].hosts[+] ${FIRST_DOMAIN_HOSTNAME}
-yq write --inplace kubernetes/kustomize/overlays/production/ingress-patch.yaml spec.tls[1].hosts[+] ${SECOND_DOMAIN_HOSTNAME}
-
-# Set domain into webserver hostnames
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.hostAliases[0].hostnames[+] ${FIRST_DOMAIN_HOSTNAME}
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.hostAliases[0].hostnames[+] ${SECOND_DOMAIN_HOSTNAME}
-
-# Set environment variables to container and initContainer for Google Cloud Storage connection
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[0].value ${GOOGLE_CLOUD_STORAGE_BUCKET_NAME}
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[1].value ${PROJECT_ID}
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].env[0].value ${GOOGLE_CLOUD_STORAGE_BUCKET_NAME}
-yq write --inplace kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].env[1].value ${PROJECT_ID}
+for FILE in $FILES
+do
+    for VAR in ${VARS[@]}
+	do
+        sed -i "s|{{$VAR}}|${!VAR}|" "$FILE"
+    done
+done
+unset FILES
+unset VARS
 
 # Set domain urls
 yq write --inplace app/config/domains_urls.yml domains_urls[0].url https://${FIRST_DOMAIN_HOSTNAME}
