@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\ShopBundle\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\ShopBundle\Model\Product\Product;
-use Shopsys\ShopBundle\Model\Product\ProductData;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class CartItemTest extends TransactionFunctionalTestCase
@@ -39,14 +38,12 @@ class CartItemTest extends TransactionFunctionalTestCase
         $availabilityData->dispatchTime = 0;
         $availability = new Availability($availabilityData);
 
-        /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->vat = $vat;
         $productData->availability = $availability;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
 
-        /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
         $product1 = Product::create($productData);
         $product2 = Product::create($productData);
         $em->persist($vat);

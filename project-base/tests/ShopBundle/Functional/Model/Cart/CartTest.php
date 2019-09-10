@@ -38,7 +38,7 @@ class CartTest extends TransactionFunctionalTestCase
         $availabilityData = new AvailabilityData();
         $availabilityData->dispatchTime = 0;
         $availability = new Availability($availabilityData);
-        /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
+
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->vat = $vat;
