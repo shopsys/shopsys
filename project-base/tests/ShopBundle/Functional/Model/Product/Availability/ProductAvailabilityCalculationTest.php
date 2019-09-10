@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -18,6 +17,12 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class ProductAvailabilityCalculationTest extends FunctionalTestCase
 {
+    /**
+     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
+     * @inject
+     */
+    private $productDataFactory;
+
     /**
      * @dataProvider getTestCalculateAvailabilityData
      * @param mixed $usingStock
@@ -37,8 +42,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         ?Availability $defaultInStockAvailability = null,
         ?Availability $expectedCalculatedAvailability = null
     ) {
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
-        $productData = $productDataFactory->create();
+        $productData = $this->productDataFactory->create();
         $productData->usingStock = $usingStock;
         $productData->stockQuantity = $stockQuantity;
         $productData->availability = $availability;
@@ -125,9 +129,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
 
     public function testCalculateAvailabilityMainVariant()
     {
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
-
-        $productData = $productDataFactory->create();
+        $productData = $this->productDataFactory->create();
 
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $variant1 = Product::create($productData);
@@ -142,7 +144,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $variant4 = Product::create($productData);
 
         $variants = [$variant1, $variant2, $variant3, $variant4];
-        $mainVariant = Product::createMainVariant($productDataFactory->create(), $variants);
+        $mainVariant = Product::createMainVariant($this->productDataFactory->create(), $variants);
 
         $availabilityFacadeMock = $this->createMock(AvailabilityFacade::class);
         $productSellingDeniedRecalculatorMock = $this->createMock(ProductSellingDeniedRecalculator::class);
@@ -176,13 +178,11 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
 
     public function testCalculateAvailabilityMainVariantWithNoSellableVariants()
     {
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
-
-        $productData = $productDataFactory->create();
+        $productData = $this->productDataFactory->create();
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
         $variant = Product::create($productData);
 
-        $mainVariant = Product::createMainVariant($productDataFactory->create(), [$variant]);
+        $mainVariant = Product::createMainVariant($this->productDataFactory->create(), [$variant]);
 
         $availabilityFacadeMock = $this->getMockBuilder(AvailabilityFacade::class)
             ->setMethods(['getDefaultInStockAvailability'])
