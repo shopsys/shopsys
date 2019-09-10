@@ -7,8 +7,6 @@ services:
     Shopsys\ShopBundle\:
         resource: '../../**/*{Factory}.php'
 
-    CommerceGuys\Intl\NumberFormat\NumberFormatRepository: ~
-
     Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter:
         factory: ['@Shopsys\FrameworkBundle\Model\Localization\CustomDateTimeFormatterFactory', create]
 
