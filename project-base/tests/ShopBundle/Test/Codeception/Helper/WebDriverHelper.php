@@ -15,7 +15,10 @@ class WebDriverHelper extends Module
      */
     private function getWebDriver()
     {
-        return $this->getModule(StrictWebDriver::class);
+        /** @var \Tests\ShopBundle\Test\Codeception\Module\StrictWebDriver $strictWebDriver */
+        $strictWebDriver = $this->getModule(StrictWebDriver::class);
+
+        return $strictWebDriver;
     }
 
     /**
