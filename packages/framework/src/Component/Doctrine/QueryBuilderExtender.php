@@ -19,11 +19,10 @@ class QueryBuilderExtender
      */
     public function addOrExtendJoin(QueryBuilder $queryBuilder, $class, $alias, $condition)
     {
-        $rootAlias = $this->getRootAlias($queryBuilder);
+        $joins = $this->getJoinsFromQueryBuilder($queryBuilder);
 
         $joinAlreadyUsed = false;
-
-        foreach ($queryBuilder->getDQLPart('join')[$rootAlias] as $join) {
+        foreach ($joins as $join) {
             /* @var $join \Doctrine\ORM\Query\Expr\Join */
             if ($join->getJoin() === $class) {
                 $joinAlreadyUsed = true;
@@ -58,5 +57,21 @@ class QueryBuilderExtender
         $firstAlias = reset($rootAliases);
 
         return $firstAlias;
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @return array
+     */
+    protected function getJoinsFromQueryBuilder(QueryBuilder $queryBuilder): array
+    {
+        $rootAlias = $this->getRootAlias($queryBuilder);
+
+        $joinDqlPart = $queryBuilder->getDQLPart('join');
+        if (array_key_exists($rootAlias, $joinDqlPart) === true) {
+            return $joinDqlPart[$rootAlias];
+        }
+
+        return [];
     }
 }
