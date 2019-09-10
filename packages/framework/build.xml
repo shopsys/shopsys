@@ -703,9 +703,14 @@
         <if>
             <equals arg1="${environment}" arg2="prod"/>
             <then>
-                <input propertyName="production.confirm.action" validArgs="y,n" defaultValue="n" message="Warning! You are now in production environment and performing action that is not supposed to be ran in this environment! Are you sure you want to continue?"/>
                 <if>
-                    <equals arg1="${production.confirm.action}" arg2="n"/>
+                    <not><isset property="production.confirm.action"/></not>
+                    <then>
+                        <input propertyName="production.confirm.action" validArgs="y,n" defaultValue="n" message="Warning! You are now in production environment and performing action that is not supposed to be ran in this environment! Are you sure you want to continue?"/>
+                    </then>
+                </if>
+                <if>
+                    <not><equals arg1="${production.confirm.action}" arg2="y"/></not>
                     <then>
                         <fail message="Terminated by user" status="0"/>
                     </then>
