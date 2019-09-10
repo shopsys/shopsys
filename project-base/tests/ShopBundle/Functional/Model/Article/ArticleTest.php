@@ -17,7 +17,7 @@ class ArticleTest extends TransactionFunctionalTestCase
     private $articleDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFactory
      * @inject
      */
     private $articleFactory;

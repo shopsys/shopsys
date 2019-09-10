@@ -17,7 +17,7 @@ final class AvailabilityFacadeTest extends TransactionFunctionalTestCase
     private $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory
      * @inject
      */
     private $availabilityDataFactory;
