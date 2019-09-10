@@ -30,11 +30,9 @@ services:
 
     League\Flysystem\FilesystemInterface: '@main_filesystem'
 
-    Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface: '@Shopsys\FrameworkBundle\Model\Article\ArticleFactory'
+    Shopsys\FrameworkBundle\Model\Article\ArticleFactory: ~
 
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface: '@Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory'
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface: '@Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory'
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory: ~
 
     Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: ~
 
