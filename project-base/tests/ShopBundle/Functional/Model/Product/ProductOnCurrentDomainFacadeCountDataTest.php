@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Product;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
@@ -24,11 +22,13 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
+     * @inject
      */
     protected $productFilterConfigFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @inject
      */
     protected $domain;
 
@@ -40,8 +40,6 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     protected function setUp()
     {
         parent::setUp();
-        $this->productFilterConfigFactory = $this->getContainer()->get(ProductFilterConfigFactory::class);
-        $this->domain = $this->getContainer()->get(Domain::class);
         $this->productOnCurrentDomainFacade = $this->getProductOnCurrentDomainFacade();
     }
 
