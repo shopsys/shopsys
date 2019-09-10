@@ -46,6 +46,7 @@ class CartItemTest extends TransactionFunctionalTestCase
         $productData->availability = $availability;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
 
+        /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
         $product1 = Product::create($productData);
         $product2 = Product::create($productData);
         $em->persist($vat);
