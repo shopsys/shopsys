@@ -361,7 +361,7 @@ Now we can build our images and create containers:
 Install the application:
 ```
 /usr/bin/docker exec $JOB_NAME-shopsys-framework-php-fpm composer install -o
-/usr/bin/docker exec $JOB_NAME-shopsys-framework-php-fpm php phing db-create test-db-create build-demo-ci
+/usr/bin/docker exec $JOB_NAME-shopsys-framework-php-fpm php phing -D production.confirm.action=y db-create test-db-create build-demo-ci
 ```
 
 *Note: In this step you were using multiple Phing targets.
