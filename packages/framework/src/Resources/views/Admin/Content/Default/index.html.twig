@@ -8,14 +8,14 @@
         <i class="svg svg-arrow"></i>
         <span class="box-overview__item__percent__value" data-counter="counterup" data-value="{{ percent|abs }}">0</span>%
     </div>
-    
+
     <div class="box-overview__item__number" data-counter="counterup" data-value="{{ number }}">
         0
     </div>
 {% endmacro %}
 
 {% block main_content %}
-    <div class="margin-bottom-20">
+    <div class="clearfix">
         <div class="width-50-percent float-left">
             <h2>{{ 'Quick product search'|trans }}</h2>
         </div>
@@ -24,9 +24,12 @@
                 {{ 'Advanced search'|trans }}
             </a>
         </div>
-        {% include '@ShopsysFramework/Admin/Content/Product/quickSearchFormContent.html.twig' with {quickSearchForm: quickProductSearchForm} %}
     </div>
 
+    <div class="margin-bottom-20">
+        {% include '@ShopsysFramework/Admin/Content/Product/quickSearchFormContent.html.twig' with {quickSearchForm: quickProductSearchForm} %}
+    </div>
+    
     <div class="box-overview">
         <h2>{{ 'Sales overview (last 7 days)'|trans }}</h2>
 
