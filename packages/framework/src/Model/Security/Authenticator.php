@@ -54,11 +54,11 @@ class Authenticator
 
         if ($error !== null) {
             if ($error instanceof LoginWithDefaultPasswordException) {
-                $message = 'Oh, you just tried to log in using default credentials. We do not allow that on production'
+                $message = t('Oh, you just tried to log in using default credentials. We do not allow that on production'
                     . ' environment. If you are random hacker, please go somewhere else. If you are authorized user,'
-                    . ' please use another account or contact developers and change password during deployment.';
+                    . ' please use another account or contact developers and change password during deployment.');
             } else {
-                $message = 'Log in failed.';
+                $message = t('Log in failed.');
             }
             throw new \Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException($message);
         }
