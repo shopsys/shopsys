@@ -20,6 +20,20 @@ There you can find links to upgrade notes for other versions too.
                 libjpeg-dev \
                 libfreetype6-dev \
     ```
+- remove `google_container_engine_versions` data source from `gce-cluster.tf` config to make it set automatically by GKE ([#1198](https://github.com/shopsys/shopsys/pull/1198))
+    ```diff
+    - data "google_container_engine_versions" "primary" {
+    -   zone = "${var.GOOGLE_CLOUD_REGION}-a"
+    - }
+    -
+      resource "google_container_cluster" "primary" {
+        name               = "primary"
+    -   zone               = "${data.google_container_engine_versions.primary.zone}"
+    -   min_master_version = "${data.google_container_engine_versions.primary.latest_master_version}"
+    -   node_version       = "${data.google_container_engine_versions.primary.latest_node_version}"
+    +   zone               = "${var.GOOGLE_CLOUD_REGION}-a"
+        initial_node_count = 3
+    ```
 
 ### Application
 - fix the typos in translation messages and demo data ([#1335](https://github.com/shopsys/shopsys/pull/1335))
