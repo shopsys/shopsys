@@ -1,0 +1,13 @@
+arrange:
+    - index.md
+    - installation
+    - introduction
+    - model
+    - cookbook
+    - functional
+    - frontend
+    - administration
+    - backend-api
+    - extensibility
+    - kubernetes
+    - contributing

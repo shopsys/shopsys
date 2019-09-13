@@ -7,7 +7,6 @@ namespace Tests\ShopBundle\Functional\Model\Order;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
@@ -18,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 use Shopsys\ShopBundle\DataFixtures\Demo\CountryDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\CurrencyDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\OrderStatusDataFixture;
+use Shopsys\ShopBundle\Model\Order\Item\OrderItemData;
 use Shopsys\ShopBundle\Model\Order\OrderData;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -46,7 +46,9 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
 
         $cartFacade->addProductToCart($product->getId(), 1);
 
+        /** @var \Shopsys\ShopBundle\Model\Transport\Transport $transport */
         $transport = $transportRepository->getById(1);
+        /** @var \Shopsys\ShopBundle\Model\Payment\Payment $payment */
         $payment = $paymentRepository->getById(1);
 
         $orderData = new OrderData();

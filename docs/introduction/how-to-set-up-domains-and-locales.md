@@ -3,7 +3,8 @@
 This article describes how to work with domains and languages during the development of your project.
 For an explanation of the basic terms, please read [domain, multidomain and multilanguage](domain-multidomain-multilanguage.md) article first.
 
-*Note: Demo data on the Shopsys Framework contains data only in `en` and `cs` locales*
+!!! note
+    Demo data on the Shopsys Framework contains data only in `en` and `cs` locales
 
 ## Settings and working with domains
 
@@ -21,13 +22,15 @@ Set up the locale of the domain according to the instructions in the section [Lo
 
 #### 1.4 Build
 Start the build, for example using a phing target
-```
+```sh
 php phing build-demo-dev
 ```
-*Note: In this step you were using Phing target `build-demo-dev`.
-More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
+!!! hint
+    In this step you were using Phing target `build-demo-dev`.  
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](./console-commands-for-application-management-phing-targets.md)
 
-***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 After the build is completed, a singledomain application is created.
 
@@ -48,7 +51,8 @@ This configuration file contains pieces of information about the domain ID, the 
 #### 2.2 Set up the url address
 Set the url address for the domain in `app/config/domains_urls.yml`.
 
-*Note: When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)*
+!!! note
+    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)
 
 #### 2.3 Locale settings
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
@@ -56,10 +60,11 @@ Set up the locale of the domain according to the instructions in the section [Lo
 #### 2.5 Create multidomains data
 There need to be created some multidomain data for the newly added domain.
 Run the phing target
-```
+```sh
 php phing domains-data-create
 ```
 This command performs multiple actions:
+
 - multidomain attributes from the first domain are copied for this new domain, see `FrameworkBundle/Component/Domain/DomainDataCreator.php`, where the `TEMPLATE_DOMAIN_ID` constant is defined.
 - if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilang attributes
 - pricing group with the name Default is created for every new domain
@@ -71,7 +76,7 @@ This means that if you are using a different locale, these multilang attributes 
 
 #### 2.7 Generate assets for the new domain
 In order to properly display the new domain, assets need to be generated
-```
+```sh
 php phing grunt
 ```
 
@@ -82,7 +87,7 @@ Configuration for elasticsearch can be found in `src/Shopsys/ShopBundle/Resource
 If you add a new domain, you need to create an elasticsearch configuration for this new domain.
 
 After you create the configuration, you have to create the index in elasticsearch and fill it by products
-```
+```sh
 php phing product-search-recreate-structure
 php phing product-search-export-products
 ```
@@ -99,18 +104,22 @@ Create a file with the frontend routes for the added locale if this file is not 
 Create this file in the directory `src/Shopsys/ShopBundle/Resources/config/` with the name `routing_front_xx.yml` where `xx` replace for the code of added locale.
 
 #### 3.3 Translations and messages
-You can extract all translatable messages from the source codes and templates for all your configured locales by running a phing target
-```
+In order to correctly display the labels like *Registration*, *Cart*, ..., create a file with translations of messages in `src/Shopsys/ShopBundle/Resources/translations/`.
+Override the Phing property `translations.dump.locales` in the `build.xml` and set a space-separated list of locales you want to dump.
+For example, if you want to add `xx` to the locales, add `<property name="translations.dump.locales" value="cs en xx"/>` to your `build.xml`.
+
+Then run
+```sh
 php phing translations-dump
 ```
 There will be created files for translations of messages for the new locale in `src/Shopsys/ShopBundle/Resources/translations/`, which you'll need to translate.
 
-For more information about translations, see [the separate article](/docs/introduction/translations.md).
+For more information about translations, see [the separate article](./translations.md).
 
 #### 3.4 Generate database functions for the locale use
 Within the database functions, it is necessary to regenerate the default database functions for the locale use that are already created for the `en` locale as default.
 Regenerate database functions by running a phing target
-```
+```sh
 php phing domains-db-functions-create
 ```
 
@@ -128,7 +137,7 @@ When you change admin locale, you have to update acceptance tests, to have admin
 You can change administration translations by adding messages into your `src/Shopsys/ShopBundle/Resources/translations/messages.xx.po`.
 
 #### 3.7 Sorting in different locales
-Alphabetical sorting on frontend uses Elasticsearch and its [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/analysis-icu.html).
+Alphabetical sorting on frontend uses Elasticsearch and its [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/analysis-icu.html).  
 Every domain needs to have `language` parameter for field `name.keyword` in `src/Shopsys/ShopBundle/Resources/definition/product/*.json` set in order to sort correctly for given locale.  
 example for domain that uses English language:
 ```json
@@ -150,11 +159,12 @@ example for domain that uses English language:
 #### 4.1 Change the url address
 Change the url address in the configuration of the domain in `app/config/domains_urls.yml`.
 
-*Note: When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)*
+!!! note
+    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)
 
 #### 4.2 Replace the old url address
 Run the phing target
-```
+```sh
 php phing domains-urls-replace
 ```
 Running this command will ensure replacing all occurrences of the old url address in the text attributes in the database with the new url address.

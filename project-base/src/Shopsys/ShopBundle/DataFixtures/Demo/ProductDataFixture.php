@@ -85,11 +85,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param string $referenceName
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+     * @return \Shopsys\ShopBundle\Model\Product\Product
      */
     protected function createProduct($referenceName, ProductData $productData)
     {
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
         $product = $this->productFacade->create($productData);
 
         $this->addReference($referenceName, $product);
@@ -98,7 +99,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $productsByCatnum
+     * @param \Shopsys\ShopBundle\Model\Product\Product[] $productsByCatnum
      * @param int $productNo
      */
     protected function createVariants(array $productsByCatnum, $productNo)
@@ -107,8 +108,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $variantCatnumsByMainVariantCatnum = $this->productDataFixtureLoader->getVariantCatnumsIndexedByMainVariantCatnum($csvRows);
 
         foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
+            /** @var \Shopsys\ShopBundle\Model\Product\Product $mainProduct */
             $mainProduct = $productsByCatnum[$mainVariantCatnum];
-            /* @var $mainProduct \Shopsys\FrameworkBundle\Model\Product\Product */
 
             $variants = [];
             foreach ($variantsCatnums as $variantCatnum) {

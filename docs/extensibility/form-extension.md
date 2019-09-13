@@ -22,7 +22,7 @@ using forms.
 
 For this cases you can use `FormExtensions` in namespace `ShopBundle/Form/Admin` that extends `Symfony\Component\Form\AbstractTypeExtension`, which has function called `getExtendedType()`.
 Implement this function and return `class` of `ProductFormType` and add your fields into form.
-If you create new extension you need to register it in [`forms.yml`](../../project-base/src/Shopsys/ShopBundle/Resources/config/forms.yml)
+If you create new extension you need to register it in [`forms.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/config/forms.yml)
 
 ## Changing rendering of already existing form type
 If you want to change way the form is rendered or if you want to add your own classes you need to follow few steps.
@@ -32,7 +32,7 @@ change with your own file in `twig/form_themes` in `app/config/packages/twig.yml
 
 Remember that files that you copy into your project cannot be automatically upgraded with newer versions of Shopsys Framework.
 
-If you want to change the whole style of rendering forms in administration you need to copy whole [`theme.html.twig`](../../packages/framework/src/Resources/views/Admin/Form/theme.html.twig) which defines the style of
+If you want to change the whole style of rendering forms in administration you need to copy whole [`theme.html.twig`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) which defines the style of
 rendering default symfony rows.
 You can read more about `theme.html.twig` below.
 
@@ -56,8 +56,9 @@ rendering of `MyAmazingFormType` your `form_widget` and `form_row` should be nam
 
 ## `theme.html.twig`
 This template is used for custom rendering of forms and form fields and it extends `form_div_layout.html.twig` from Symfony.
-There are two `theme.html.twig` files as one is used for [administration](../../packages/framework/src/Resources/views/Admin/Form/theme.html.twig) and the other for [front-end](../../project-base/src/Shopsys/ShopBundle/Resources/views/Front/Form/theme.html.twig).
+There are two `theme.html.twig` files as one is used for [administration](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) and the other for [front-end](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Form/theme.html.twig).
 It contains definition of blocks that are used for rendering forms
+
 - `form_start` - renders the start tag of the form
 - `form_end` - renders the end tag of the form
 - `form_row` - renders the label, any errors, and the HTML form widget for the given field
@@ -66,7 +67,8 @@ It contains definition of blocks that are used for rendering forms
     - `form_label` - renders label for the given field including red asterisk if the field is required
 
 and blocks of custom form widgets for various [FormTypes](../introduction/using-form-types.md) eg.:
-- `date_picker_widget` - is rendered as `form_widget` for [`DatePickerType`](../../packages/framework/src/Form/DatePickerType.php)
+
+- `date_picker_widget` is rendered as `form_widget` for [`DatePickerType`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DatePickerType.php)
 
 ## Changing order of groups and fields
 All form types contain option called `position`. With this option you can specify position of your group or field **on the same hierarchical layer**.
@@ -86,7 +88,8 @@ $builder
 
 The output will be: A => B => C => D => E => F => G.
 
-*Note: More examples can be found [here](https://github.com/egeloen/ivory-ordered-form/blob/master/doc/usage.md#position).*
+!!! tip
+    More examples can be found [here](https://github.com/egeloen/ivory-ordered-form/blob/master/doc/usage.md#position).
 
 ### Changing order of existing groups and fields
 
@@ -96,4 +99,6 @@ Implementation of `FormBuilderInterface` contains method `setPosition` that can 
 $builder->get('a')->setPosition('first');
 $builder->get('c')->setPosition(['after' => 'b']);
 ```
-*Note: Because `FormBuilderInterface` doesn't declare method `setPosition`, your IDE will warn you that method doesn't exist.*
+
+!!! note
+    Because `FormBuilderInterface` doesn't declare method `setPosition`, your IDE will warn you that method doesn't exist.

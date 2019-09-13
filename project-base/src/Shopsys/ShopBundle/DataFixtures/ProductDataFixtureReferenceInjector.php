@@ -83,7 +83,7 @@ class ProductDataFixtureReferenceInjector
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @return \Shopsys\ShopBundle\Model\Category\Category[]
      */
     private function getCategoryReferences(PersistentReferenceFacade $persistentReferenceFacade)
     {
@@ -117,7 +117,7 @@ class ProductDataFixtureReferenceInjector
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     * @return \Shopsys\ShopBundle\Model\Product\Brand\Brand[]
      */
     private function getBrandReferences(PersistentReferenceFacade $persistentReferenceFacade)
     {

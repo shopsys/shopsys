@@ -13,6 +13,14 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  * @Gedmo\Tree(type="nested")
  * @ORM\Table(name="categories")
  * @ORM\Entity
+ * @property \Shopsys\ShopBundle\Model\Category\Category|null $parent
+ * @property \Shopsys\ShopBundle\Model\Category\Category[]|\Doctrine\Common\Collections\Collection $children
+ * @method \Shopsys\ShopBundle\Model\Category\Category|null getParent()
+ * @method \Shopsys\ShopBundle\Model\Category\Category[] getChildren()
+ * @method setParent(\Shopsys\ShopBundle\Model\Category\Category|null $parent)
+ * @method setTranslations(\Shopsys\ShopBundle\Model\Category\CategoryData $categoryData)
+ * @method setDomains(\Shopsys\ShopBundle\Model\Category\CategoryData $categoryData)
+ * @method createDomains(\Shopsys\ShopBundle\Model\Category\CategoryData $categoryData)
  */
 class Category extends BaseCategory
 {

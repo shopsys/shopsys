@@ -5,7 +5,7 @@
 +    <property name="path.backend-api" value="${path.vendor}/shopsys/backend-api"/>
      <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
 
-     <property name="phpstan.level" value="1"/>
+     <property name="phpstan.level" value="4"/>
 
      <import file="${path.framework}/build.xml"/>
 +    <import file="${path.backend-api}/build.xml"/>

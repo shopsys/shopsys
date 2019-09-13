@@ -11,6 +11,14 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
 /**
  * @ORM\Table(name="transports")
  * @ORM\Entity
+ * @property \Shopsys\ShopBundle\Model\Payment\Payment[]|\Doctrine\Common\Collections\Collection $payments
+ * @method \Shopsys\ShopBundle\Model\Payment\Payment[] getPayments()
+ * @method setTranslations(\Shopsys\ShopBundle\Model\Transport\TransportData $transportData)
+ * @method setDomains(\Shopsys\ShopBundle\Model\Transport\TransportData $transportData)
+ * @method createDomains(\Shopsys\ShopBundle\Model\Transport\TransportData $transportData)
+ * @method addPayment(\Shopsys\ShopBundle\Model\Payment\Payment $payment)
+ * @method setPayments(\Shopsys\ShopBundle\Model\Payment\Payment[] $payments)
+ * @method removePayment(\Shopsys\ShopBundle\Model\Payment\Payment $payment)
  */
 class Transport extends BaseTransport
 {

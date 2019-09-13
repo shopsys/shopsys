@@ -1,6 +1,6 @@
 # Guidelines for Phing Targets
 
-There are a few rules to help us maintain [Phing targets](/docs/introduction/console-commands-for-application-management-phing-targets.md) in Shopsys Framework.
+There are a few rules to help us maintain [Phing targets](../introduction/console-commands-for-application-management-phing-targets.md) in Shopsys Framework.
 
 ## Naming conventions
 
@@ -66,7 +66,7 @@ For example, all paths to executables should be used via `path.*.executable` pro
 Sometimes, it can be even useful to include an argument such as `<arg line="${my-target.flags}"/>` in the `exec` task of your target along with an empty `my-target.flags` property (defined on the root level).
 This will allow the end users to provide their own flags, modifying the command's behavior without the need for overwriting the whole target.
 
-Removing [DRY violations](/docs/contributing/code-quality-principles.md#dont-repeat-yourself) in the phing target definitions by extracting common tasks and sequences into their own (possibly hidden) targets also helps with extensibility.
+Removing [DRY violations](./code-quality-principles.md#dont-repeat-yourself) in the phing target definitions by extracting common tasks and sequences into their own (possibly hidden) targets also helps with extensibility.
 Instead if having to overwrite a few targets to change the definition, in such case users could overwrite just the extracted part.
 
 ## Extending in monorepo

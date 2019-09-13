@@ -127,7 +127,7 @@ team of {domain}
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $manager
      * @param mixed $name
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
      */

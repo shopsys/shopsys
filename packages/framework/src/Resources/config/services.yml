@@ -104,9 +104,8 @@ services:
 
     shopsys.doctrine.cache_driver.query_cache:
         class: Doctrine\Common\Cache\RedisCache
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
-        arguments:
-            - '@snc_redis.doctrine_query'
+        calls:
+            - { method: setRedis, arguments: ['@snc_redis.doctrine_query'] }
 
     shopsys.doctrine.cache_driver.metadata_cache:
         class: Doctrine\Common\Cache\CacheProvider
@@ -145,6 +144,10 @@ services:
     Shopsys\FrameworkBundle\Component\Csv\CsvReader: ~
 
     Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig: ~
+
+    Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor:
+        arguments:
+            $secondsTimeout: 240
 
     Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting:
         arguments:
@@ -483,9 +486,8 @@ services:
 
     shopsys.shop.product.bestselling_product.cache_provider:
         class: Doctrine\Common\Cache\RedisCache
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\RedisCacheFactory:create'
-        arguments:
-            - '@snc_redis.bestselling_products'
+        calls:
+            - { method: setRedis, arguments: ['@snc_redis.bestselling_products'] }
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
         arguments:
@@ -562,6 +564,11 @@ services:
         arguments:
             - '@security.token_storage'
             - '@event_dispatcher'
+
+    Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
+        arguments:
+            - '%kernel.environment%'
+            - '%env(bool:IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK)%'
 
     Shopsys\FrameworkBundle\Model\Security\LoginListener:
         tags:
@@ -995,3 +1002,12 @@ services:
     Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureUpdateChecker: ~
 
     Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter: ~
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap:
+        arguments: ["@=service('Shopsys\\\\FrameworkBundle\\\\Component\\\\ClassExtension\\\\ClassExtensionRegistry').getClassExtensionMap()"]
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer: ~
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder: ~
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer: ~

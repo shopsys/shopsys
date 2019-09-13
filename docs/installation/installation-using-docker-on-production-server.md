@@ -1,3 +1,4 @@
+
 # Installation Using Docker on Production Server
 
 **This guide is for the version which is not released yet. See the [version for `v8.0.0`](https://github.com/shopsys/shopsys/blob/v8.0.0/docs/installation/installation-using-docker-on-production-server.md).**
@@ -7,6 +8,9 @@ We do not want to setup each application manually and we want to have separate r
 We use docker containers, built from docker images and php source code from git repository to have everything setup correctly and fast.
 As we do not want to lose data after deploying a new version of the project, we install all the data storages (postgres, elasticsearch, redis) natively.
 This guide also shows you how to setup first built image of the project on production server and how to deploy new versions of the project.  
+
+**Before deploying, don't forget to adjust your configuration to your expected workload and hardware.
+All values in configuration files are set to run on very limited hardware by default.**
 
 ## Server Setup
 
@@ -23,7 +27,8 @@ Then we install docker-compose using [installation guide](https://docs.docker.co
 It is very important to have our containers inaccessible from outside.
 For that purpose we need to update `firewalld` configuration with these commands,
 because Docker overrides `firewalld` and publishes ports on the server by default.
-```
+
+```sh
 firewall-cmd --permanent --direct --add-chain ipv4 filter DOCKER
 firewall-cmd --permanent --direct --add-rule ipv4 filter DOCKER 0 ! -s 127.0.0.1 -j RETURN
 ```
@@ -34,11 +39,14 @@ Let's presume that we want to have our site running on `HTTPS` protocol and ever
 [Nginx atricle](https://www.nginx.com/blog/nginx-https-101-ssl-basics-getting-started/#HTTPS) provides us with some helpful information about the setup.
 Only thing that is missing is to connect the domain to application that runs in docker containers via port 8000 on 127.0.0.1 ip address.
 First we need to allow Nginx to connect to sockets by executing a command in shell console.
- ```
+
+```sh
 setsebool httpd_can_network_connect on -P
 ```
+
 Then we add location block into `/etc/nginx/conf.d/<YOUR_DOMAIN_HERE>.conf` into server block so the config looks like this.
-```
+
+```nginx
 server {
     listen 443 http2 ssl;
 
@@ -87,43 +95,59 @@ server {
     return 301 https://<YOUR_DOMAIN_HERE>$request_uri;
 }
 ```
+
 We update configuration of natively installed Nginx.
-```
+
+```sh
 service nginx restart
 ```
-Maintenance page [`maintenance.html`](../../project-base/app/maintenance.html) will be exported into `/usr/share/nginx/html` from `php-fpm` container later.
+
+Maintenance page [`maintenance.html`](https://github.com/shopsys/shopsys/blob/master/project-base/app/maintenance.html) will be exported into `/usr/share/nginx/html` from `php-fpm` container later.
 
 ### Database
 
 We need PostgresSQL in version 10.5 installed. To get this done we need to add repository to our server and then install PostgresSQL server with PostgresSQL client.
-```
+
+```sh
 rpm -Uvh https://yum.postgresql.org/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm
 yum install postgresql10-server postgresql10 postgresql10-contrib
 ```
+
 Next we initialise PostgresSQL database.
- ```
+
+```sh
 /usr/pgsql-10/bin/postgresql-10-setup initdb
 ```
+
 We need to allow access to database from docker network that will operate on 192.168.0.1 subnet by adding one line into the config file.
-```
+
+```sh
 echo host all all 192.168.0.1/16 md5 >> /var/lib/pgsql/10/data/pg_hba.conf
 ```
-We edit configuration file `/var/lib/pgsql/10/data/postgresql.conf` of postgresql to match application needs based on our [postgres.conf](../../project-base/docker/postgres/postgres.conf).
+
+We edit configuration file `/var/lib/pgsql/10/data/postgresql.conf` of postgresql to match application needs based on our [postgres.conf](https://github.com/shopsys/shopsys/blob/master/project-base/docker/postgres/postgres.conf).
 We also allow to establish connection via localhost and 192.168.0.1 subnet by modifying one line in `postgresql.conf`.
-```
+
+```ini
 listen_addresses = '0.0.0.0'
 ```
+
 Now we register and launch PostgresSQL server as a service.
-```
+
+```sh
 systemctl start postgresql-10
 systemctl enable postgresql-10
 ```
+
 Next with help of default postgres administration user we create new database user with login root. You will be prompted to enter password for newly created user root.
-```
+
+```sh
 sudo -u postgres createuser --createdb --superuser --pwprompt root
 ```
+
 Now we need to allow connection between docker containers and database via local network and PostgresSQL port.
-```
+
+```sh
 cat <<EOT > /etc/firewalld/services/postgresql.xml
 <?xml version="1.0" encoding="utf-8"?>
 <service>
@@ -141,19 +165,26 @@ firewall-cmd --reload
 
 For storing cache and sessions we need to [install](https://redis.io/download#installation) Redis server.
 Also we want it running as a service.
-```
+
+```sh
 <REDIS_DIRECTORY>/utils/install_server.sh
 ```
+
 In addition we want redis server to operate also on 192.168.0.1 subnet so we modify one line in configuration file that is set by default in folder `/etc/redis/`.
+
 ```
 bind 0.0.0.0
 ```
+
 After configuration change, configuration need to be reloaded by service restart.
-```
+
+```sh
 service redis_6379 restart
 ```
+
 Now we just need to allow communication between docker containers and Redis server.
-```
+
+```sh
 cat <<EOT > /etc/firewalld/services/redis.xml
 <?xml version="1.0" encoding="utf-8"?>
 <service>
@@ -173,12 +204,14 @@ You can do that by setting environment variable `REDIS_PREFIX` in `docker-compos
 ### Elasticsearch
 
 First we need to install Java SDK environment.
-```
+
+```sh
 yum install java-1.8.0-openjdk
 ```
 
 Next we [install](https://www.elastic.co/guide/en/elasticsearch/reference/current/rpm.html) elasticsearch and allow connecting to it via local network.
-```
+
+```sh
 cat <<EOT > /etc/firewalld/services/elasticsearch.xml
 <?xml version="1.0" encoding="utf-8"?>
 <service>
@@ -192,16 +225,19 @@ EOT
 firewall-cmd --permanent --zone=public --add-service=elasticsearch
 firewall-cmd --reload
 ```
+
 We will also make elasticsearch server listen on 192.168.0.1 subnet by modifying one line in `/etc/elasticsearch/elasticsearch.yml`.
-```
+
+```yaml
 network.host: 0.0.0.0
 ```
 
-To [sort properly in different locales](/docs/introduction/how-to-set-up-domains-and-locales.md#37-sorting-in-different-locales) we need to [install ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
+To [sort properly in different locales](../introduction/how-to-set-up-domains-and-locales.md#37-sorting-in-different-locales) we need to [install ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
 which ensures that alphabetical sorting is correct for every language and its set of rules.
 
 We also need to restart service so the new configuration is applied.
-```
+
+```sh
 service elasticsearch restart
 ```
 
@@ -214,31 +250,39 @@ First we need to build image of the project and then deploy it as `php-fpm` dock
 
 We can do the whole process manually of write the commands into some deployment application that can help with the automation.
 We need to clone project repository with the specific tag or commit hash into some workspace.  
-```
+
+```sh
 git clone <YOUR_PROJECT_REPOSITORY> (e.g. https://github.com/shopsys/project-base.git)
 cd project-base
 git checkout $commit_hash
 ```
+
 Then we setup environment for building the image with the correct data for production server.
 Now we create configuration file for domains.
-```
+
+```sh
 echo $'domains:
     -   id: 1
         name: <YOUR_DOMAIN_NAME_HERE>
         locale: en
 ' > app/config/domains.yml
 ```
+
+
 For each domain we need to create config with domain url.
-```
+
+```sh
 echo $'domains_urls:
     -   id: 1
         url: https://<YOUR_DOMAIN_HERE>
 ' >  app/config/domains_urls.yml
 ```
-Then we check whether `mailer_master_email_address` property in [`parameters.yml.dist`](../../project-base/app/config/parameters.yml.dist) is set correctly.
+
+Then we check whether `mailer_master_email_address` property in [`parameters.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/parameters.yml.dist) is set correctly.
 
 After the project is setup correctly, we launch the build of php-fpm container by docker build command that will build image with composer, npm packages and created assets.
-```
+
+```sh
 docker build \
     -f ./docker/php-fpm/Dockerfile \
     --target production \
@@ -246,20 +290,25 @@ docker build \
     --compress \
     .
 ```
-With `f` parameter we set path to Dockerfile that builds image.
+
+With `f` parameter we set path to Dockerfile that builds image.  
 With `t` parameter we set the name of built image.
 
-***Note:** During the build of `production target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/), [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! note
+    During the build of `production target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/), [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 If we are building the image on different server than production server, we can push built image into docker registry of production server via ssh.
 We use `-oStrictHostKeyChecking=no` argument to have ssh connection without the prompt that asks about adding target server record into `known_hosts` ssh configuration.
 We also want to establish connection to the server without prompting for password so we will use [key exchange method](http://sshkeychain.sourceforge.net/mirrors/SSH-with-Keys-HOWTO/SSH-with-Keys-HOWTO-4.html).
 Before uploading the built image we perform cleanse of old images from the registry.
-```
+
+```sh
 ssh -oStrictHostKeyChecking=no -i <PRIVATE_KEY_PATH> root@<YOUR_DOMAIN_HERE> docker image prune -f
 ```
+
 Then we can upload built image into registry of our server.
-```
+
+```sh
 docker save production-php-fpm | gzip | ssh -oStrictHostKeyChecking=no -i <PRIVATE_KEY_PATH> root@<YOUR_DOMAIN_HERE> 'gunzip | docker load'
 ```
 
@@ -268,42 +317,55 @@ docker save production-php-fpm | gzip | ssh -oStrictHostKeyChecking=no -i <PRIVA
 We have setup server and also built image from project git repository in the server docker registry so we are now able to deploy application and setup it with base data.
 
 We log into the server using ssh.  
-Now we need to copy [`docker-compose-prod-deploy.yml.dist`](../../project-base/docker/conf/docker-compose.prod.yml.dist) into folder on the production server as `docker-compose.yml`.  
+Now we need to copy [`docker-compose-prod-deploy.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose.prod.yml.dist) into folder on the production server as `docker-compose.yml`.  
 After the image is in the registry of the production server we create docker containers and build application for production with clean DB and base data.  
 We use parameter `-p` to specify the name of the project and prefix for the volumes so these will be easily accessible.
 There are named volumes created under path `/var/lib/docker/volumes/` and one persisted folder `production-content` for all uploaded images and generated files that should not be removed.  
 We create persisted folder with correct owner id `33` so internal docker `php-fpm` container user has access into the folder.
-```
+
+```sh
 mkdir /var/www/production-content
 chown -R 33:33 /var/www/production-content
 ```
+
 and start containers with docker-compose.
-```
+
+```sh
 cd <PROJECT_ROOT_PATH> #(e.g. /var/www/html)
 docker-compose -p production up -d
 ```
+
 Now we export maintenance page from `php-fpm` container.
-```
+
+```sh
 docker cp  production-php-fpm:/var/www/html/app/maintenance.html /usr/share/nginx/html
 ```
+
 Then we create database and build the application.
-```
+
+```sh
 docker-compose -p production exec php-fpm ./phing db-create build-new
 ```
-*Note: In this step you were using multiple Phing targets.
-More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)*
 
-***Note:** During the execution of `build-new target` there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](../../open-source-license-acknowledgements-and-third-party-copyrights.md)*
+!!! hint
+    In this step you were using multiple Phing targets.  
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
+
+!!! note
+    During the execution of `build-new target` there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 
 Now the application should be running.
 We want to setup scheduler for execution of cron jobs by adding one line into `/etc/crontab` file.
 Cron job is executed every 5 minutes in `php-fpm` container under `root` user privileges.
-```
+
+```text
 */5 * * * * root /usr/bin/docker exec production-php-fpm php phing cron
 ```
+
 Since web application is running we can go to administration and change passwords for default administrators.
 With login `superadmin` and password `admin123` we can do it via these urls:
+
 * `/admin/administrator/edit/1`
 * `/admin/administrator/edit/2`
 
@@ -320,7 +382,8 @@ With each update of master branch in our repository we need to rebuild image bas
 
 We log into the server using ssh.  
 Now we are logged in production server and we start to deploy newly built production image.
-```
+
+```sh
 cd <PROJECT_ROOT_PATH> (e.g. /var/www/html)
 
 # make sure that container for building the application image is cleared
@@ -352,13 +415,18 @@ docker-compose -p production up -d --force-recreate webserver
 # remove container for building the application image
 docker rm -f build-php-fpm-container
 ```
-***Note:** During `build-deploy-part-2-db-dependent` phing target `product-search-migrate-structure` is called and can cause error when you change the type of field to another (eg. you change it from `bool` to `integer`). If you need to make this change, please add new field with the correct type and delete the old field instead*
 
-***Note:** If you need to have freshly exported products in Elasticsearch after deploy, you can call phing target `product-search-export-products` during `build-deploy-part-2-db-dependent`.*
+!!! warning
+    During `build-deploy-part-2-db-dependent` phing target `product-search-migrate-structure` is called and can cause error when you change the type of field to another (eg. you change it from `bool` to `integer`).
+    If you need to make this change, please add new field with the correct type and delete the old field instead
+
+!!! tip
+    If you need to have freshly exported products in Elasticsearch after deploy, you can call phing target `product-search-export-products` during `build-deploy-part-2-db-dependent`.
 
 ## Logging
+
 If you need to inspect your application logs, use `docker-compose logs` command.
-For more information about logging see [the separate article](/docs/introduction/logging.md).
+For more information about logging see [the separate article](../introduction/logging.md).
 
 ## Conclusion
 

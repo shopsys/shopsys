@@ -1,0 +1,7 @@
+arrange:
+    - index.md
+    - framework-extensibility.md
+    - entity-extension.md
+    - entity-extension-vs-entity-generation.md
+    - extending-form-from-plugin.md
+    - form-extension.md

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Shopsys Framework" default="list">
 
+    <property name="check-and-fix-annotations" value="true"/>
     <property name="path.root" value="${project.basedir}/project-base"/>
     <property name="path.vendor" value="${project.basedir}/vendor"/>
     <property name="path.packages" value="${project.basedir}/packages"/>

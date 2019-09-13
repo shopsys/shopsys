@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,7 +32,7 @@ class PromoCodeController extends AdminBaseController
     protected $administratorGridFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory|null
+     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface|null
      */
     protected $promoCodeDataFactory;
 
@@ -55,7 +55,7 @@ class PromoCodeController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit $promoCodeInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory|null $promoCodeDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface|null $promoCodeDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory|null $promoCodeGridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider|null $breadcrumbOverrider
      * @param bool $useInlineEditation
@@ -64,7 +64,7 @@ class PromoCodeController extends AdminBaseController
         PromoCodeFacade $promoCodeFacade,
         PromoCodeInlineEdit $promoCodeInlineEdit,
         AdministratorGridFacade $administratorGridFacade,
-        ?PromoCodeDataFactory $promoCodeDataFactory = null,
+        ?PromoCodeDataFactoryInterface $promoCodeDataFactory = null,
         ?PromoCodeGridFactory $promoCodeGridFactory = null,
         ?BreadcrumbOverrider $breadcrumbOverrider = null,
         bool $useInlineEditation = true
@@ -81,9 +81,9 @@ class PromoCodeController extends AdminBaseController
     /**
      * @required
      * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface $promoCodeDataFactory
      */
-    public function setPromoCodeDataFactory(PromoCodeDataFactory $promoCodeDataFactory)
+    public function setPromoCodeDataFactory(PromoCodeDataFactoryInterface $promoCodeDataFactory)
     {
         if ($this->promoCodeDataFactory !== null && $this->promoCodeDataFactory !== $promoCodeDataFactory) {
             throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));

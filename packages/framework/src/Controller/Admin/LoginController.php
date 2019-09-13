@@ -91,7 +91,13 @@ class LoginController extends AdminBaseController
         try {
             $this->authenticator->checkLoginProcess($request);
         } catch (\Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException $e) {
-            $error = t('Log in failed.');
+            if ($e->getPrevious() instanceof \Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException) {
+                $error = t('Oh, you just tried to log in using default credentials. We do not allow that on production'
+                    . ' environment. If you are random hacker, please go somewhere else. If you are authorized user,'
+                    . ' please use another account or contact developers and change password during deployment.');
+            } else {
+                $error = t('Log in failed.');
+            }
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Login/loginForm.html.twig', [

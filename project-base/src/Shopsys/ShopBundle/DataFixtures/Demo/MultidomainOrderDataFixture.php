@@ -43,7 +43,7 @@ class MultidomainOrderDataFixture extends AbstractReferenceFixture implements De
     protected $orderPreviewFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Order\OrderDataFactory
      */
     protected $orderDataFactory;
 
@@ -57,7 +57,7 @@ class MultidomainOrderDataFixture extends AbstractReferenceFixture implements De
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory
+     * @param \Shopsys\ShopBundle\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -203,9 +203,9 @@ class MultidomainOrderDataFixture extends AbstractReferenceFixture implements De
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param \Shopsys\ShopBundle\Model\Order\OrderData $orderData
      * @param array $products
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\ShopBundle\Model\Customer\User $user
      */
     protected function createOrder(
         OrderData $orderData,
@@ -227,8 +227,8 @@ class MultidomainOrderDataFixture extends AbstractReferenceFixture implements De
             null
         );
 
+        /** @var \Shopsys\ShopBundle\Model\Order\Order $order */
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, $user);
-        /* @var $order \Shopsys\FrameworkBundle\Model\Order\Order */
 
         $referenceName = OrderDataFixture::ORDER_PREFIX . $order->getId();
         $this->addReference($referenceName, $order);

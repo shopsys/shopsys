@@ -1,0 +1,13 @@
+arrange:
+    - index.md
+    - introduction-to-model-architecture.md
+    - model-rules.md
+    - how-to-work-with-products.md
+    - how-to-work-with-money.md
+    - product-feeds.md
+    - entities.md
+    - custom-entities.md
+    - elasticsearch.md
+    - front-end-product-searching.md
+    - front-end-product-filtering.md
+    - introduction-to-read-model.md

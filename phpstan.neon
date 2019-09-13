@@ -2,72 +2,80 @@ parameters:
     ignoreErrors:
         # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
         -
-            message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)#'
+            message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Domain/Config/DomainsConfigDefinition.php
         -
-            message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)#'
+            message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Domain/Config/DomainsUrlsConfigDefinition.php
         -
-            message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)#'
+            message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Image/Config/ImageConfigDefinition.php
         -
-            message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)#'
+            message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/UploadedFile/Config/UploadedFileConfigDefinition.php
         -
-            message: '#Method Doctrine\\Common\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
+            message: '#^Method Doctrine\\Common\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.$#'
             path: *
         -
-            message: '#Property Doctrine\\ORM\\Mapping\\ClassMetadataInfo::\$discriminatorColumn \(array\) does not accept null\.#'
+            message: '#^Property Doctrine\\ORM\\Mapping\\ClassMetadataInfo::\$discriminatorColumn \(array\) does not accept null\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/EntityExtension/EntityExtensionParentMetadataCleanerEventSubscriber.php
         -
-            message: '#Argument of an invalid type Symfony\\Component\\Validator\\Constraint supplied for foreach, only iterables are supported\.#'
+            message: '#^Argument of an invalid type Symfony\\Component\\Validator\\Constraint supplied for foreach, only iterables are supported\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Form/JsFormValidatorFactory.php
         -
-            message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$transport \(Shopsys\\FrameworkBundle\\Model\\Transport\\Transport\) does not accept null\.#'
+            message: '#^Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$transport \(Shopsys\\FrameworkBundle\\Model\\Transport\\Transport\) does not accept null\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Model/Order/Order.php
         -
-            message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.#'
+            message: '#^Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Model/Order/Order.php
         -
-            message: '#Access to an undefined property PhpParser\\Node::\$var\.#'
+            message: '#^Access to an undefined property PhpParser\\Node::\$var\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Translation/ConstraintViolationExtractor.php
         -
-            message: '#Access to an undefined property PhpParser\\Node::\$name\.#'
+            message: '#^Access to an undefined property PhpParser\\Node::\$name\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Translation/ConstraintViolationExtractor.php
-        # shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base (only exceptions for level 1)
+        # shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base
         -
-            message: '#(PHPDoc tag @(param|return) has invalid value (.|\n)+ expected TOKEN_IDENTIFIER at offset \d+)#'
+            # Ignore annotations in generated code
+            message: '#^PHPDoc tag @(param|return) has invalid value (.|\n)+ expected TOKEN_IDENTIFIER at offset \d+$#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
-            message: '#(PHPDoc tag @throws with type .+ is not subtype of Throwable)#'
+            # Ignore annotations in generated code
+            message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
-            message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)#'
+            # Actually, the method is called on NodeBuilder which is implementing the interface, however, annotating would worsen the readability of the code in Configuration class
+            message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)\.$#'
             path: %currentWorkingDirectory%/project-base/src/Shopsys/ShopBundle/DependencyInjection/Configuration.php
         -
-            message: '#(Property Shopsys\\.+::\$.+ \(Shopsys\\.+\) does not accept object\.)#'
+            # In data fixtures, we often access persistent references using $this->getReference()
+            message: '#^Property Shopsys\\.+::\$.+ \(Shopsys\\.+\) does not accept object\.$#'
             path: %currentWorkingDirectory%/project-base/src/Shopsys/ShopBundle/DataFixtures/*
         -
-            message: '#Method Shopsys\\ShopBundle\\DataFixtures\\ProductDataFixtureReferenceInjector::.+\(\) should return array<.+> but returns array<string, object>\.#'
+            # A helper methods returning an array of persistent references using $this->getReference()
+            message: '#^Method Shopsys\\ShopBundle\\DataFixtures\\ProductDataFixtureReferenceInjector::.+\(\) should return array<.+> but returns array<string, object>\.$#'
             path: %currentWorkingDirectory%/project-base/src/Shopsys/ShopBundle/DataFixtures/ProductDataFixtureReferenceInjector.php
         -
-            message: '#(Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept object\.)#'
+            # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
+            message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/*
         -
-            message: '#(Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept object\|null\.)#'
+            # In tests, there are helper methods for grabbing services using $container->get()
+            message: '#^Method .+::.+\(\) should return .+ but returns (object|object\|null)\.$#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/*
         -
-            message: '#(Method .+::.+\(\) should return .+ but returns (object|Codeception\\Module).)#'
-            path: %currentWorkingDirectory%/project-base/tests/ShopBundle/*
-        -
-            message: '#Array \(array<.+>\) does not accept object\.#'
+            # Actually, we are setting an array item using "$array[] = $this->getReference()"
+            message: '#^Array \(array<.+>\) does not accept object\.$#'
             path: %currentWorkingDirectory%/project-base/tests/ShopBundle/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php
         -
-            message: '#Undefined variable: \$undefined#'
-            path: *
+            # We need to have undefined variable for testing purposes
+            message: '#^Undefined variable: \$undefined$#'
+            path: %currentWorkingDirectory%/project-base/src/Shopsys/ShopBundle/Controller/Test/ErrorHandlerController.php
     excludes_analyse:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
+        # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
+        - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/ClassExtension/Source/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

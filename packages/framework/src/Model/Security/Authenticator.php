@@ -52,7 +52,10 @@ class Authenticator
         }
 
         if ($error !== null) {
-            throw new \Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException('Login failed.');
+            throw new \Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException(
+                'Log in failed.',
+                $error instanceof \Exception ? $error : null
+            );
         }
 
         return true;

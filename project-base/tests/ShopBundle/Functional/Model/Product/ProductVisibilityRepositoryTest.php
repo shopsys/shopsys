@@ -55,7 +55,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $price
      */
     private function setPriceForAllDomains(ProductData $productData, ?Money $price)

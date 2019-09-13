@@ -1,6 +1,6 @@
 # API Versioning
 
-[Shopsys Backend API](/docs/backend-api/introduction-to-backend-api.md) is versioned for the same [reasons](/docs/contributing/backward-compatibility-promise.md) as the rest of the Shopsys Framework - to provide the users the certainty what kind of changes they can expect.
+[Shopsys Backend API](./introduction-to-backend-api.md) is versioned for the same [reasons](../contributing/backward-compatibility-promise.md) as the rest of the Shopsys Framework - to provide the users the certainty what kind of changes they can expect.
 If you are interested in the topic of API versioning, you can read more e.g. on [restfulapi.net](https://restfulapi.net/versioning/).
 
 Our API is versioned in the URL so you are able to recognize the version easily (e.g. `/api/v1/products`).

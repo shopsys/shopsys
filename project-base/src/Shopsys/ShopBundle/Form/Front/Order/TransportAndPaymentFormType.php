@@ -87,7 +87,7 @@ class TransportAndPaymentFormType extends AbstractType
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param \Shopsys\ShopBundle\Model\Order\OrderData $orderData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function validateTransportPaymentRelation(OrderData $orderData, ExecutionContextInterface $context)

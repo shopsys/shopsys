@@ -84,7 +84,7 @@ class ProductDataFixture
     private $demoDataIterationCounter;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Product[]
+     * @var \Shopsys\ShopBundle\Model\Product\Product[]
      */
     private $productsByCatnum;
 
@@ -190,6 +190,7 @@ class ProductDataFixture
             $this->productDataFixtureLoader->updateProductDataFromCsvRowForSecondDomain($productData, $row);
             $this->makeProductDataUnique($productData);
             $this->setRandomPerformanceCategoriesToProductData($productData);
+            /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
             $product = $this->productFacade->create($productData);
 
             if ($this->countImported === 0) {
@@ -241,7 +242,7 @@ class ProductDataFixture
 
     /**
      * @param string $catnum
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     * @return \Shopsys\ShopBundle\Model\Product\Product
      */
     private function getProductByCatnum($catnum)
     {
@@ -255,7 +256,7 @@ class ProductDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
      */
     private function makeProductDataUnique(ProductData $productData)
     {
@@ -306,7 +307,7 @@ class ProductDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
      */
     private function setRandomPerformanceCategoriesToProductData(ProductData $productData)
     {
@@ -317,7 +318,7 @@ class ProductDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
      * @param int $domainId
      */
     private function cleanPerformanceCategoriesFromProductDataByDomainId(ProductData $productData, $domainId)
@@ -330,7 +331,7 @@ class ProductDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
      * @param int $domainId
      */
     private function addRandomPerformanceCategoriesToProductDataByDomainId(ProductData $productData, $domainId)
@@ -364,15 +365,15 @@ class ProductDataFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param \Shopsys\ShopBundle\Model\Category\Category $category
      * @return bool
      */
     private function isPerformanceCategory(Category $category)
     {
+        /** @var \Shopsys\ShopBundle\Model\Category\Category $firstPerformanceCategory */
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
             CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY
         );
-        /* @var $firstPerformanceCategory \Shopsys\FrameworkBundle\Model\Category\Category */
 
         return $category->getId() >= $firstPerformanceCategory->getId();
     }

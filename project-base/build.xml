@@ -3,11 +3,12 @@
 
     <property file="${project.basedir}/build/build.local.properties"/>
 
+    <property name="check-and-fix-annotations" value="true"/>
     <property name="path.root" value="${project.basedir}"/>
     <property name="path.vendor" value="${path.root}/vendor"/>
     <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
 
-    <property name="phpstan.level" value="1"/>
+    <property name="phpstan.level" value="4"/>
 
     <import file="${path.framework}/build.xml"/>
 </project>

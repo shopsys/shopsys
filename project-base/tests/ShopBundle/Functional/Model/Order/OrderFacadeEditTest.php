@@ -23,7 +23,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     private const TRANSPORT_ITEM_ID = 47;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Order
+     * @var \Shopsys\ShopBundle\Model\Order\Order
      */
     private $order;
 
@@ -33,12 +33,12 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     private $orderFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Order\OrderDataFactory
      */
     private $orderDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Order\Item\OrderItemDataFactory
      */
     private $orderItemDataFactory;
 
@@ -238,9 +238,9 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\ShopBundle\Model\Order\Order $order
      * @param string $name
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     * @return \Shopsys\ShopBundle\Model\Order\Item\OrderItem
      */
     private function getOrderItemByName(Order $order, string $name): OrderItem
     {

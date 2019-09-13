@@ -27,4 +27,4 @@ services:
     Twig_LoaderInterface:
         class: Twig_Loader_Filesystem
         arguments:
-            - ['docs/upgrade/template']
+            - ['upgrade/template']

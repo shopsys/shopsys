@@ -22,13 +22,13 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     protected $paymentFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Payment\PaymentDataFactory
      */
     protected $paymentDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface $paymentDataFactory
+     * @param \Shopsys\ShopBundle\Model\Payment\PaymentDataFactory $paymentDataFactory
      */
     public function __construct(
         PaymentFacade $paymentFacade,
@@ -94,7 +94,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param string $referenceName
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
+     * @param \Shopsys\ShopBundle\Model\Payment\PaymentData $paymentData
      * @param array $transportsReferenceNames
      */
     protected function createPayment(
@@ -104,7 +104,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     ) {
         $paymentData->transports = [];
         foreach ($transportsReferenceNames as $transportReferenceName) {
-            /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $transport */
+            /** @var \Shopsys\ShopBundle\Model\Transport\Transport $transport */
             $transport = $this->getReference($transportReferenceName);
             $paymentData->transports[] = $transport;
         }

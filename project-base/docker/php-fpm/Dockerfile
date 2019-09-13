@@ -121,6 +121,9 @@ USER www-data
 
 FROM base as production
 
+# copy FPM pool configuration
+COPY ${project_root}/docker/php-fpm/production-www.conf /usr/local/etc/php-fpm.d/www.conf
+
 COPY --chown=www-data:www-data / /var/www/html
 
 RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev

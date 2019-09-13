@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20160129122637 extends AbstractMigration
@@ -14,7 +13,7 @@ class Version20160129122637 extends AbstractMigration
     public function up(Schema $schema)
     {
         $sql = 'INSERT INTO setting_values (name, domain_id, value, type) VALUES
-            (\'' . Setting::BASE_URL . '\', 1, \'http://localhost:8080\', \'string\')
+            (\'baseUrl\', 1, \'http://localhost:8080\', \'string\')
         ';
         $this->sql($sql);
 

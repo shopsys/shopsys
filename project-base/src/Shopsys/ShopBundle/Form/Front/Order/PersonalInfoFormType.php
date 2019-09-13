@@ -305,7 +305,7 @@ class PersonalInfoFormType extends AbstractType
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
-                    /** @var \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $orderData */
+                    /** @var \Shopsys\ShopBundle\Model\Order\FrontOrderData $orderData */
                     $orderData = $form->getData();
 
                     if ($orderData->companyCustomer) {

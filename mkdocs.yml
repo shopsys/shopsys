@@ -1,0 +1,24 @@
+site_name: Shopsys Framework Docs
+
+theme:
+    name: readthedocs
+    custom_dir: "docs/_theme"
+    hljs_languages:
+        - dockerfile
+        - twig
+        - yaml
+        - less
+
+extra_css:
+    - _theme/main.css
+
+markdown_extensions:
+    -   toc:
+            permalink: True
+            toc_depth: 2-3
+    - admonition
+
+plugins:
+    - search
+    -   awesome-pages:
+            filename: navigation.yml

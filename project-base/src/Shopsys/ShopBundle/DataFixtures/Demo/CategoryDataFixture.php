@@ -31,7 +31,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     protected $categoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
+     * @var \Shopsys\ShopBundle\Model\Category\CategoryDataFactory
      */
     protected $categoryDataFactory;
 
@@ -42,7 +42,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface $categoryDataFactory
+     * @param \Shopsys\ShopBundle\Model\Category\CategoryDataFactory $categoryDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -63,6 +63,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         /**
          * Root category is created in database migration.
          * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135345
+         * @var \Shopsys\ShopBundle\Model\Category\Category
          */
         $rootCategory = $this->categoryFacade->getRootCategory();
         $categoryData = $this->categoryDataFactory->create();
@@ -239,12 +240,13 @@ class CategoryDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
+     * @param \Shopsys\ShopBundle\Model\Category\CategoryData $categoryData
      * @param string|null $referenceName
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
+     * @return \Shopsys\ShopBundle\Model\Category\Category
      */
     protected function createCategory(CategoryData $categoryData, $referenceName = null)
     {
+        /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
         $category = $this->categoryFacade->create($categoryData);
         if ($referenceName !== null) {
             $this->addReference($referenceName, $category);

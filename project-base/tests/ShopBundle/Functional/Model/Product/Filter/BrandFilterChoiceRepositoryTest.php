@@ -71,7 +71,7 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
 
     /**
      * @param string $categoryReferenceName
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     * @return \Shopsys\ShopBundle\Model\Product\Brand\Brand[]
      */
     protected function getChoicesForCategoryReference(string $categoryReferenceName): array
     {
@@ -80,15 +80,17 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Category\Category $category */
+        /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
         $category = $this->getReference($categoryReferenceName);
+        /** @var \Shopsys\ShopBundle\Model\Product\Brand\Brand[] $brands */
+        $brands = $repository->getBrandFilterChoicesInCategory(1, $pricingGroup, $category);
 
-        return $repository->getBrandFilterChoicesInCategory(1, $pricingGroup, $category);
+        return $brands;
     }
 
     /**
      * @param string $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     * @return \Shopsys\ShopBundle\Model\Product\Brand\Brand[]
      */
     protected function getChoicesForSearchText(string $searchText): array
     {
@@ -96,8 +98,10 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        /** @var \Shopsys\ShopBundle\Model\Product\Brand\Brand[] $brands */
+        $brands = $repository->getBrandFilterChoicesForSearch(1, $pricingGroup, 'en', $searchText);
 
-        return $repository->getBrandFilterChoicesForSearch(1, $pricingGroup, 'en', $searchText);
+        return $brands;
     }
 
     /**
