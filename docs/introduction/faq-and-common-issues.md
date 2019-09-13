@@ -20,7 +20,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [Why are you using entity data instead of entities for Symfony forms?](#why-are-you-using-entity-data-instead-of-entities-for-symfony-forms)
 - [What is the configuration file `services_test.yml` good for?](#what-is-the-configuration-file-services_testyml-good-for)
 - [How to change the behavior of the product search on the front-end?](#how-to-change-the-behavior-of-the-product-search-on-the-front-end)
-
+- [SMTP container cannot send email with error "Helo command rejected: need fully-qualified hostname"](#smtp-container-cannot-send-email-with-error-helo-command-rejected-need-fully-qualified-hostname)
 
 ## What are the phing targets?
 Every phing target is a task that can be executed simply by `php phing <target-name>` command.
@@ -107,3 +107,13 @@ E.g., by default, all our services are defined as private. However, in tests, we
 ## How to change the behavior of the product search on the front-end?
 Full-text product search on the front-end is handled via Elasticsearch.
 If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](../model/front-end-product-searching.md).
+
+## SMTP container cannot send email with error "Helo command rejected: need fully-qualified hostname"
+SMTP container should have set hostname to the domain of the server, where your application is running.
+You can set this hostname in your `docker-compose` file like this:
+```diff
+  smtp-server:
+      restart: always
+      image: namshi/smtp:latest
++     hostname: my-host-machine-hostname.provider.org
+```
