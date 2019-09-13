@@ -24,6 +24,7 @@ final class TravisStatusReporter
         'shopsys/postgres-search-bundle',
         'shopsys/doctrine-orm',
         'shopsys/jparser',
+        'shopsys/changelog-linker',
         // old packages
         'shopsys/syscart',
         'shopsys/sysconfig',
