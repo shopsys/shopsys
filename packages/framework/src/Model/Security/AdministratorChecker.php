@@ -34,7 +34,7 @@ class AdministratorChecker extends UserChecker
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      */
-    public function checkPreAuth(UserInterface $user)
+    public function checkPostAuth(UserInterface $user)
     {
         if ($this->environment === EnvironmentType::PRODUCTION
             && !$this->ignoreDefaultAdminPasswordCheck
@@ -44,6 +44,6 @@ class AdministratorChecker extends UserChecker
             throw new LoginWithDefaultPasswordException();
         }
 
-        return parent::checkPreAuth($user);
+        return parent::checkPostAuth($user);
     }
 }
