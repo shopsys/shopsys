@@ -110,7 +110,7 @@ If you want to change its behavior (e.g. make the EAN not as important or change
 
 ## SMTP container cannot send email with error "Helo command rejected: need fully-qualified hostname"
 SMTP container should have set hostname to the domain of the server, where your application is running.
-You can set this hostname in a docker-compose file like this:
+You can set this hostname in your `docker-compose` file like this:
 ```diff
   smtp-server:
       restart: always
