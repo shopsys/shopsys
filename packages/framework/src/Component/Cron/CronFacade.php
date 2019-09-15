@@ -164,7 +164,7 @@ class CronFacade
      */
     protected function runSingleModule(CronModuleConfig $cronModuleConfig)
     {
-        if ($this->cronModuleFacade->isModuleEnabled($cronModuleConfig) === false) {
+        if ($this->cronModuleFacade->isModuleDisabled($cronModuleConfig) === true) {
             return;
         }
 

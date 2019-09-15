@@ -86,11 +86,11 @@ class CronModuleFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
      * @return bool
      */
-    public function isModuleEnabled(CronModuleConfig $cronModuleConfig): bool
+    public function isModuleDisabled(CronModuleConfig $cronModuleConfig): bool
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
 
-        return $cronModule->isEnabled();
+        return $cronModule->isEnabled() === false;
     }
 
     /**

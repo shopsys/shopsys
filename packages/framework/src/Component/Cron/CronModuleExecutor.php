@@ -11,7 +11,6 @@ class CronModuleExecutor
     public const RUN_STATUS_OK = 'ok';
     public const RUN_STATUS_TIMEOUT = 'timeout';
     public const RUN_STATUS_SUSPENDED = 'suspended';
-    public const RUN_STATUS_ERROR = 'error';
 
     /**
      * @var \DateTimeImmutable|null
