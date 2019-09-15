@@ -14,7 +14,9 @@
 
 {% block grid_value_cell_id_status %}
     <strong style="line-break: inherit;">
-        {% if row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_RUNNING') %}
+        {% if row.enabled == false %}
+            <span style="color: grey;"><i class="svg svg-circle-remove"></i> {{ 'Disabled'|trans }}</span>
+        {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_RUNNING') %}
             <span style="color: lightskyblue;"><i class="svg svg-gear"></i> {{ 'Running'|trans }}</span>
         {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_ERROR') %}
             <span style="color: red;"><i class="svg svg-warning"></i> {{ 'Error'|trans }}</span>

@@ -670,6 +670,9 @@ msgstr ""
 msgid "Description can be set on product detail of the main product."
 msgstr ""
 
+msgid "Disabled"
+msgstr ""
+
 msgid "Discard changes"
 msgstr ""
 

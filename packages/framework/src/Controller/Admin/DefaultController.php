@@ -285,6 +285,7 @@ class DefaultController extends AdminBaseController
                 'lastFinishedAt' => $cronModule->getLastFinishedAt(),
                 'lastDuration' => $cronModule->getLastDuration(),
                 'status' => $cronModule->getStatus(),
+                'enabled' => $cronModule->isEnabled(),
                 'readableFrequency' => $cronConfig->getReadableFrequency(),
                 'scheduled' => $cronModule->isScheduled(),
                 'actions' => null,

@@ -670,6 +670,9 @@ msgstr "Popis"
 msgid "Description can be set on product detail of the main product."
 msgstr "Popis můžete nastavit na kartě hlavní varianty."
 
+msgid "Disabled"
+msgstr "Vypnuto"
+
 msgid "Discard changes"
 msgstr "Zahodit změny"
 
