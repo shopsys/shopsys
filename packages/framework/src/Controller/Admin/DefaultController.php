@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
+use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -71,6 +72,11 @@ class DefaultController extends AdminBaseController
     protected $cronConfig;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Cron\CronFacade
+     */
+    protected $cronFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade $statisticsFacade
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade $statisticsProcessingFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
@@ -80,6 +86,7 @@ class DefaultController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      */
     public function __construct(
         StatisticsFacade $statisticsFacade,
@@ -90,7 +97,8 @@ class DefaultController extends AdminBaseController
         AvailabilityFacade $availabilityFacade,
         CronModuleFacade $cronModuleFacade,
         GridFactory $gridFactory,
-        CronConfig $cronConfig
+        CronConfig $cronConfig,
+        CronFacade $cronFacade
     ) {
         $this->statisticsFacade = $statisticsFacade;
         $this->statisticsProcessingFacade = $statisticsProcessingFacade;
@@ -101,6 +109,7 @@ class DefaultController extends AdminBaseController
         $this->cronModuleFacade = $cronModuleFacade;
         $this->gridFactory = $gridFactory;
         $this->cronConfig = $cronConfig;
+        $this->cronFacade = $cronFacade;
     }
 
     /**
@@ -161,7 +170,7 @@ class DefaultController extends AdminBaseController
                 'newOrdersTrend' => $ordersTrend,
                 'ordersValue' => $currentValueOfOrders,
                 'ordersValueTrend' => $ordersValueTrend,
-                'cronGridView' => $this->createCronGridView(),
+                'cronGridViews' => $this->getCronGridViews(),
             ]
         );
     }
@@ -233,16 +242,32 @@ class DefaultController extends AdminBaseController
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView|null
+     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView[]|null
      */
-    protected function createCronGridView(): ?GridView
+    protected function getCronGridViews(): ?array
     {
         if ($this->isGranted(Roles::ROLE_SUPER_ADMIN) === false) {
             return null;
         }
 
+        $cronInstances = $this->cronFacade->getInstanceNames();
+        $gridViews = [];
+
+        foreach ($cronInstances as $cronInstance) {
+            $gridViews[$cronInstance] = $this->createCronGridViewForInstance($cronInstance);
+        }
+
+        return $gridViews;
+    }
+
+    /**
+     * @param string $instanceName
+     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
+     */
+    protected function createCronGridViewForInstance(string $instanceName): GridView
+    {
         $cronModules = $this->cronModuleFacade->findAllIndexedByServiceId();
-        $cronConfigs = $this->cronConfig->getAllCronModuleConfigs();
+        $cronConfigs = $this->cronConfig->getCronModuleConfigsForInstance($instanceName);
 
         $data = [];
 
