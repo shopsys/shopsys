@@ -4,6 +4,8 @@ imports:
 services:
     PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer: ~
 
+    Shopsys\CodingStandards\CsFixer\ForbiddenDicAliasShortSyntaxFixer: ~
+
 parameters:
     exclude_files:
         - '*/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php'

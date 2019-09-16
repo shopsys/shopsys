@@ -4,6 +4,8 @@ imports:
 services:
     Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff: ~
 
+    Shopsys\CodingStandards\CsFixer\ForbiddenDicAliasShortSyntaxFixer: ~
+
 parameters:
     exclude_files:
         - '*/src/Resources/views/Migration/migration.php.twig'

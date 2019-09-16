@@ -13,6 +13,8 @@ services:
 
     Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff: ~
 
+    Shopsys\CodingStandards\CsFixer\ForbiddenDicAliasShortSyntaxFixer: ~
+
 parameters:
     skip:
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:

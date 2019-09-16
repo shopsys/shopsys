@@ -1,0 +1,12 @@
+# config/services.yaml
+services:
+    # ...
+
+    App\Service\Bar: ~
+
+    App\Service\Foo: '@App\Service\Bar'
+
+    my_service:
+        class: App\Service\FooBar
+
+    my_alias: '@my_service'

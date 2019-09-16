@@ -1,0 +1,14 @@
+# config/services.yaml
+services:
+    # ...
+
+    App\Service\Bar: ~
+
+    App\Service\Foo:
+        alias: App\Service\Bar
+
+    my_service:
+        class: App\Service\FooBar
+
+    my_alias:
+        alias: my_service

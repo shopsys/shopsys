@@ -289,5 +289,15 @@ There you can find links to upgrade notes for other versions too.
         +        calls:
         +            - { method: setRedis, arguments: ['@snc_redis.my_custom_cache'] }
         ```
+- use new ECS rule `ForbiddenDicAliasShortSyntaxFixer` to standardize aliases in DIC config ([#1412](https://github.com/shopsys/shopsys/pull/1412))
+    - add the new service in your `easy-coding-standards.yml`:
+        ```diff
+          services:
+              PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer: ~
+        + 
+        +     Shopsys\CodingStandards\CsFixer\ForbiddenDicAliasShortSyntaxFixer: ~
+
+        ```
+    - run `php phing standards-fix` to apply the new rule
 
 [shopsys/framework]: https://github.com/shopsys/framework
