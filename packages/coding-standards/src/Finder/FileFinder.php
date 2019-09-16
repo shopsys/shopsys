@@ -30,7 +30,7 @@ final class FileFinder implements CustomSourceProviderInterface
         }
 
         $finder = Finder::create()->files()
-            ->name('#\.(twig|html(\.twig)?|php|md)$#')
+            ->name('#\.(twig|html(\.twig)?|php|md|ya?ml)$#')
             ->in($directories);
 
         // ArrayIterator will be fixed in new release
