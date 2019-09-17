@@ -1,6 +1,6 @@
-# [Upgrade from v7.3.1 to v7.3.2-dev](https://github.com/shopsys/shopsys/compare/v7.3.1...7.3)
+# [Upgrade from v7.3.1 to v7.3.2](https://github.com/shopsys/shopsys/compare/v7.3.1...v7.3.2)
 
-This guide contains instructions to upgrade from version v7.3.1 to v7.3.2-dev.
+This guide contains instructions to upgrade from version v7.3.1 to v7.3.2.
 
 **Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/7.3/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
@@ -35,27 +35,6 @@ There you can find links to upgrade notes for other versions too.
         initial_node_count = 3
     ```
 
-### Application
-- fix the typos in translation messages and demo data ([#1335](https://github.com/shopsys/shopsys/pull/1335))
-    - replace "then" by "than" when in context of making comparisons, eg.:
-        ```diff
-        - new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer then {{ limit }} characters']),
-        + new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
-        ```
-    - replace "e-mail" by "email" in English texts
-        - even though both spellings are valid, "email" is much more common
-    - make these replacements in your application code, test code, data fixtures, and translation messages
-
-- fix brand label when the brand name is long or has two lines ([#1371](https://github.com/shopsys/shopsys/pull/1371))
-    - update your `src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig` according to [the file in shopsys/project-base](https://github.com/shopsys/project-base/blob/v7.3.2/src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig) repository
-    - update your `src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less` according to [the file in shopsys/project-base](https://github.com/shopsys/project-base/blob/v7.3.2/src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less) repository
-- fix category description for first domain in data fixtures ([#1414](https://github.com/shopsys/shopsys/pull/1414))
-    - replace all usage of `array_merge` by `array_replace` in `\Shopsys\ShopBundle\DataFixtures\Demo\CategoryDataFixture`:
-        ```diff
-        -        $categoryData->descriptions = array_merge(
-        +        $categoryData->descriptions = array_replace(
-        ```
-
 ### Configuration
 - update your `app/config/packages/doctrine.yml` ([#1273](https://github.com/shopsys/shopsys/pull/1273))
     ```diff
@@ -82,5 +61,25 @@ There you can find links to upgrade notes for other versions too.
         ```
     - restart you Nginx for the changes to take effect
         - for example, run `docker-compose up -d --force-recreate webserver` to restart the container in Docker Compose
+
+### Application
+- fix the typos in translation messages and demo data ([#1335](https://github.com/shopsys/shopsys/pull/1335))
+    - replace "then" by "than" when in context of making comparisons, eg.:
+        ```diff
+        - new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer then {{ limit }} characters']),
+        + new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
+        ```
+    - replace "e-mail" by "email" in English texts
+        - even though both spellings are valid, "email" is much more common
+    - make these replacements in your application code, test code, data fixtures, and translation messages
+- fix brand label when the brand name is long or has two lines ([#1371](https://github.com/shopsys/shopsys/pull/1371))
+    - update your `src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig` according to [the file in shopsys/project-base](https://github.com/shopsys/project-base/blob/v7.3.2/src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig) repository
+    - update your `src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less` according to [the file in shopsys/project-base](https://github.com/shopsys/project-base/blob/v7.3.2/src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less) repository
+- fix category description for first domain in data fixtures ([#1414](https://github.com/shopsys/shopsys/pull/1414))
+    - replace all usage of `array_merge` by `array_replace` in `\Shopsys\ShopBundle\DataFixtures\Demo\CategoryDataFixture`:
+        ```diff
+        -        $categoryData->descriptions = array_merge(
+        +        $categoryData->descriptions = array_replace(
+        ```
 
 [shopsys/framework]: https://github.com/shopsys/framework
