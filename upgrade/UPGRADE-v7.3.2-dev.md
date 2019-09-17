@@ -49,6 +49,12 @@ There you can find links to upgrade notes for other versions too.
 - fix brand label when the brand name is long or has two lines ([#1371](https://github.com/shopsys/shopsys/pull/1371))
     - update your `src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig` according to [the file in shopsys/project-base](https://github.com/shopsys/project-base/blob/v7.3.2/src/Shopsys/ShopBundle/Resources/views/Front/Content/Brand/list.html.twig) repository
     - update your `src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less` according to [the file in shopsys/project-base](https://github.com/shopsys/project-base/blob/v7.3.2/src/Shopsys/ShopBundle/Resources/styles/front/common/components/list/images.less) repository
+- fix category description for first domain in data fixtures ([#1414](https://github.com/shopsys/shopsys/pull/1414))
+    - replace all usage of `array_merge` by `array_replace` in `\Shopsys\ShopBundle\DataFixtures\Demo\CategoryDataFixture`:
+        ```diff
+        -        $categoryData->descriptions = array_merge(
+        +        $categoryData->descriptions = array_replace(
+        ```
 
 ### Configuration
 - update your `app/config/packages/doctrine.yml` ([#1273](https://github.com/shopsys/shopsys/pull/1273))
