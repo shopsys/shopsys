@@ -663,7 +663,7 @@
                 <ul class="in-message__list">
                     {% if errors|length > 0 %}
                         {% for error in errors %}
-                            <li class="js-validation-errors-message js-error-source-id-{{ getFormErrorSourceId(error) }} }}">
+                            <li class="js-validation-errors-message js-error-source-id-{{ getFormErrorSourceId(error) }}">
                                 {{ error.message }}
                             </li>
                         {% endfor %}
@@ -865,17 +865,11 @@
 
 {% block yes_no_row %}
     {% if multidomain is defined %}
-        <div class="form-line__side">
-            {% if isMultidomain() %}
-                <div class="form-line__item">
-                    {{ domainIcon(domainId, 'long-bordered') }}
-                </div>
-            {% endif %}
-            <div class="form-line__item">
-                {{ form_widget(form, { isSimple: isSimple|default(isMultidomain()) }) }}
-                {{ form_errors(form) }}
-            </div>
-        </div>
+        {% if isMultidomain() %}
+            {{ domainIcon(domainId, 'long-bordered') }}
+        {% endif %}
+        {{ form_widget(form, { isSimple: isSimple|default(isMultidomain()) }) }}
+        {{ form_errors(form) }}
     {% else %}
         {{ block('form_row') }}
     {% endif %}

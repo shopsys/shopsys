@@ -143,6 +143,74 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 - [#1262] add missing strict types and return types into template, Thanks to [@sspooky13]
 
+## [v7.3.2](https://github.com/shopsys/shopsys/compare/v7.3.1...v7.3.2) - 2019-09-17
+
+### [shopsys/framework]
+
+#### Added
+
+- [#1303] composer.json: added missing PHP extension dom
+
+#### Changed
+
+- [#1248] DailyFeedCronModule set as lazy to avoid side-effects in constructor
+
+#### Fixed
+
+- [#1189] UploadedFileDeleteDoctrineListener not throw not found entity, Thanks to [@stanoMilan]
+- [#1210] fixed ordering customers by telephone in administration
+- [#1225] admin advanced search: reset button will not close the filter
+- [#1226] admin: new order items have "Set prices manually" unchecked by default
+- [#1231] DomainController: fix non-existing route
+- [#1232] LegalConditionsFacade::findArticle() returns null when the Article doesn't exist
+- [#1290] convert DOMAIN environment variable to integer, Thanks to [@hason]
+- [#1311] AdvancedSearch respects current route on reset form, Thanks to [@pk16011990]
+
+#### Removed
+
+- [#1234] CountryFormType: removal of duplicate constraint
+
+### [shopsys/project-base]
+
+#### Changed
+
+- [#1198] gke-cluster.tf: remove 'google_container_engine_versions' data source
+- [#1273] enable entity extension from components, Thanks to [@malyMiso]
+
+#### Fixed
+
+- [#1414] fix set category description for first domain, Thanks to [@sspooky13]
+- [#1371] brand list - brand label in two rows with label text wrapping, Thanks to [@TomasGottvald]
+
+#### Removed
+
+- [#1355] remove unnecessary English translations
+
+### [shopsys/shopsys]
+
+#### Added
+
+- [#1240] added Phing target that checks whether there is a project-base/vendor dir
+- [#1323] commit migrations-lock.yml with other lock files when releasing
+- [#1403] added FAQ entry about setting hostname for SMTP container
+
+#### Changed
+
+- [#1244] prepare releaser for work in multiple branches
+- [#1264] releaser now commits package and composer locks
+- [#1362] nginx.conf: remove access_log directive and use default settings
+- [#1370] releaser simplification
+- [#1402] Allow to scan PRs with SonarCloud
+
+#### Fixed
+
+- [#1282] php-fpm Dockerfile: update repository before install `libpg-dev`, Thanks to [@pk16011990]
+- [#1335] fix typos in translation messages and demo data
+- [#1353] fix configuration of PhpStan
+- [#1405] releaser: excluded forked shopsys/changelog-linker from travis check
+- [#1406] releaser: excluded forked shopsys/monorepo-builder from travis check
+- [#1410] releaser: fixed path for upgrading-monorepo file
+
 ## [v7.3.1](https://github.com/shopsys/shopsys/compare/v7.3.0...v7.3.1) - 2019-07-15
 
 ### [shopsys/framework]
@@ -2720,6 +2788,38 @@ That's why is this section formatted differently.
 [#1180]: https://github.com/shopsys/shopsys/pull/1180
 [#1195]: https://github.com/shopsys/shopsys/pull/1195
 [#1199]: https://github.com/shopsys/shopsys/pull/1199
+[#1410]: https://github.com/shopsys/shopsys/pull/1410
+[#1406]: https://github.com/shopsys/shopsys/pull/1406
+[#1405]: https://github.com/shopsys/shopsys/pull/1405
+[#1403]: https://github.com/shopsys/shopsys/pull/1403
+[#1402]: https://github.com/shopsys/shopsys/pull/1402
+[#1371]: https://github.com/shopsys/shopsys/pull/1371
+[#1370]: https://github.com/shopsys/shopsys/pull/1370
+[#1362]: https://github.com/shopsys/shopsys/pull/1362
+[#1355]: https://github.com/shopsys/shopsys/pull/1355
+[#1353]: https://github.com/shopsys/shopsys/pull/1353
+[#1335]: https://github.com/shopsys/shopsys/pull/1335
+[#1323]: https://github.com/shopsys/shopsys/pull/1323
+[#1311]: https://github.com/shopsys/shopsys/pull/1311
+[#1303]: https://github.com/shopsys/shopsys/pull/1303
+[#1290]: https://github.com/shopsys/shopsys/pull/1290
+[#1282]: https://github.com/shopsys/shopsys/pull/1282
+[#1273]: https://github.com/shopsys/shopsys/pull/1273
+[#1264]: https://github.com/shopsys/shopsys/pull/1264
+[#1248]: https://github.com/shopsys/shopsys/pull/1248
+[#1244]: https://github.com/shopsys/shopsys/pull/1244
+[#1240]: https://github.com/shopsys/shopsys/pull/1240
+[#1234]: https://github.com/shopsys/shopsys/pull/1234
+[#1232]: https://github.com/shopsys/shopsys/pull/1232
+[#1231]: https://github.com/shopsys/shopsys/pull/1231
+[#1226]: https://github.com/shopsys/shopsys/pull/1226
+[#1225]: https://github.com/shopsys/shopsys/pull/1225
+[#1210]: https://github.com/shopsys/shopsys/pull/1210
+[#1198]: https://github.com/shopsys/shopsys/pull/1198
+[#1189]: https://github.com/shopsys/shopsys/pull/1189
+[#1414]: https://github.com/shopsys/shopsys/pull/1414
+[@hason]: https://github.com/hason
+[@TomasGottvald]: https://github.com/TomasGottvald
 
 [#1262]: https://github.com/shopsys/shopsys/pull/1262
 [#1256]: https://github.com/shopsys/shopsys/pull/1256
@@ -2776,4 +2876,3 @@ That's why is this section formatted differently.
 [#906]: https://github.com/shopsys/shopsys/pull/906
 [#875]: https://github.com/shopsys/shopsys/pull/875
 [#539]: https://github.com/shopsys/shopsys/pull/539
-[@hason]: https://github.com/hason

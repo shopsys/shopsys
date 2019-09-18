@@ -21,9 +21,11 @@ final class TravisStatusReporter
      */
     private const EXCLUDED_PACKAGES = [
         // forks
-        'shopsys/postgres-search-bundle',
+        'shopsys/changelog-linker',
         'shopsys/doctrine-orm',
         'shopsys/jparser',
+        'shopsys/monorepo-builder',
+        'shopsys/postgres-search-bundle',
         // old packages
         'shopsys/syscart',
         'shopsys/sysconfig',

@@ -28,6 +28,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [Can I see what is really happening in the Codeception acceptance tests when using Docker?](#can-i-see-what-is-really-happening-in-the-codeception-acceptance-tests-when-using-docker)
 - [Why is there a faked PHP 7.2 platform in the Composer config?](#why-is-there-a-faked-php-72-platform-in-the-composer-config)
 - [How to make PHPStorm and PHPStan understand that I use extended classes?](#how-to-make-phpstorm-and-phpstan-understand-that-i-use-extended-classes)
+- [SMTP container cannot send email with error "Helo command rejected: need fully-qualified hostname"](#smtp-container-cannot-send-email-with-error-helo-command-rejected-need-fully-qualified-hostname)
 
 ## What are the phing targets?
 Every phing target is a task that can be executed simply by `php phing <target-name>` command.
@@ -167,3 +168,13 @@ If that's not your case, you can safely remove the `config.platform.php` option 
 ## How to make PHPStorm and PHPStan understand that I use extended classes?
 There is a phing target that automatically fixes all relevant `@var` and `@param` annotations, and adds proper `@method` and `@property` annotations to your classes so the static analysis understands the class extensions properly.
 You can read more in the ["Framework extensibility" article](../extensibility/framework-extensibility.md#making-the-static-analysis-understand-the-extended-code).
+
+## SMTP container cannot send email with error "Helo command rejected: need fully-qualified hostname"
+SMTP container should have set hostname to the domain of the server, where your application is running.
+You can set this hostname in your `docker-compose` file like this:
+```diff
+  smtp-server:
+      restart: always
+      image: namshi/smtp:latest
++     hostname: my-host-machine-hostname.provider.org
+```
