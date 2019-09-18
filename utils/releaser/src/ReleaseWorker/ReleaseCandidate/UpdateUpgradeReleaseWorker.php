@@ -118,7 +118,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      */
     private function updateUpgradeFileForMonorepo(Version $version)
     {
-        $upgradeFilePath = getcwd() . '/docs/contributing/upgrading-monorepo.md';
+        $upgradeFilePath = getcwd() . '/upgrade/upgrading-monorepo.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
         $newUpgradeContent = $this->monorepoUpgradeFileManipulator->processFileToString($upgradeFileInfo, $version, $this->initialBranchName, $this->nextDevelopmentVersionString);

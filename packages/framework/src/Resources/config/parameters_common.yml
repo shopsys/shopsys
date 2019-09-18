@@ -15,3 +15,5 @@ parameters:
     shopsys.entity_extension.map: {}
 
     env(IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK): '0'
+    env(REDIS_PREFIX): ''
+    env(ELASTIC_SEARCH_INDEX_PREFIX): ''

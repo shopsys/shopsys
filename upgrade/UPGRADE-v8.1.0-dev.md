@@ -93,6 +93,15 @@ There you can find links to upgrade notes for other versions too.
                 ```
                 export IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK=1
                 ```
+- remove default values of environment variables from your `php-fpm`'s `Dockerfile` ([#1408](https://github.com/shopsys/shopsys/pull/1408))
+    ```diff
+      FROM php:7.3-fpm-stretch as base
+
+      ARG project_root=.
+    - ENV REDIS_PREFIX=''
+    - ENV ELASTIC_SEARCH_INDEX_PREFIX=''
+
+    ```
 
 ### Tools
 - let Phing properties `is-multidomain` and `translations.dump.locales` be auto-detected ([#1309](https://github.com/shopsys/shopsys/pull/1309))

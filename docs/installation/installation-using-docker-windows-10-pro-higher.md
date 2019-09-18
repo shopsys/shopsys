@@ -75,7 +75,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 Install ruby as installation tool for docker-sync in specific version for working unison synchronization strategy driver.
 ```sh
 sudo apt install -y --no-install-recommends ruby ruby-dev
-sudo gem install docker-sync -v 0.5.7
+sudo gem install docker-sync
 ```
 
 Download, compile and install unison driver.
