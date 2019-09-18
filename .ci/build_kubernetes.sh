@@ -62,10 +62,8 @@ VARS=(
     GOOGLE_CLOUD_PROJECT_ID
 )
 
-for FILE in $FILES
-do
-    for VAR in ${VARS[@]}
-	do
+for FILE in $FILES; do
+    for VAR in ${VARS[@]}; do
         sed -i "s|{{$VAR}}|${!VAR}|" "$FILE"
     done
 done
