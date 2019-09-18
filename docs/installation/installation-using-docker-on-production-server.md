@@ -1,4 +1,3 @@
-
 # Installation Using Docker on Production Server
 
 **This guide is for the version which is not released yet. See the [version for `v8.0.0`](https://github.com/shopsys/shopsys/blob/v8.0.0/docs/installation/installation-using-docker-on-production-server.md).**

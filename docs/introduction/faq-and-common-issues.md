@@ -24,6 +24,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [Where does the business logic belong?](#where-does-the-business-logic-belong)
 - [How can I create a friendly URL for my entity?](#how-can-i-create-a-friendly-url-for-my-entity)
 - [How can I create Front-end Breadcrumb navigation?](#how-can-i-create-front-end-breadcrumb-navigation)
+- [SMTP container cannot send email with error "Helo command rejected: need fully-qualified hostname"](#smtp-container-cannot-send-email-with-error-helo-command-rejected-need-fully-qualified-hostname)
 
 ## What are the phing targets?
 Every phing target is a task that can be executed simply by `php phing <target-name>` command.
@@ -126,3 +127,13 @@ See [Friendly URL](./friendly-url.md) article.
 
 ## How can I create Front-end Breadcrumb navigation?
 See [Front-end Breadcrumb Navigation](./front-end-breadcrumb-navigation.md) article.
+
+## SMTP container cannot send email with error "Helo command rejected: need fully-qualified hostname"
+SMTP container should have set hostname to the domain of the server, where your application is running.
+You can set this hostname in your `docker-compose` file like this:
+```diff
+  smtp-server:
+      restart: always
+      image: namshi/smtp:latest
++     hostname: my-host-machine-hostname.provider.org
+```
