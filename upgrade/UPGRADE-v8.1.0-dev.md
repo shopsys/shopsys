@@ -104,7 +104,15 @@ There you can find links to upgrade notes for other versions too.
     ```
 - parametrize variables in kubernetes configuration [[#1384]](https://github.com/shopsys/shopsys/pull/1384)
     - walk through your [`.ci/deploy-to-google-cloud.sh`](https://github.com/shopsys/shopsys/blob/v8.0.0/project-base/.ci/deploy-to-google-cloud.sh) and notice every occurrences of using `yq` command which is affecting `yml` or `yaml` files in [`project-base/kubernetes`](https://github.com/shopsys/shopsys/tree/v8.0.0/project-base/kubernetes) (k8s' configuration files)
-        - in k8s' configuration files replace these occurrences with placeholder like this `{{FIRST_DOMAIN}}` (placeholder will be replaced by ENV variable with the same name)
+        - in k8s' configuration files replace these occurrences with placeholder like this `{{FIRST_DOMAIN_HOSTNAME}}` (the placeholder will be replaced by ENV variable with the same name)
+            ```diff
+             spec:
+                 rules:
+            -        -   host: ~
+            +        -   host: "{{FIRST_DOMAIN_HOSTNAME}}"
+                         http:
+                             paths:
+            ```
         - in  `deploy-to-google-cloud.sh` replace `yq` commands by new code bellow
             - change shebang of `.ci/deploy-to-google-cloud.sh`
                 ```diff
