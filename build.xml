@@ -10,6 +10,25 @@
 
     <import file="${path.framework}/build.xml"/>
 
+    <target name="check-all-translations-dumped" depends="translations-dump-keep" description="Checks that all translatable messages in the whole monorepo are dumped.">
+        <exec executable="${path.git.executable}" logoutput="true" passthru="true" outputProperty="git.diff.output">
+            <arg value="diff"/>
+            <arg value="--color=always"/>
+        </exec>
+        <if>
+            <not>
+                <equals arg1="${git.diff.output}" arg2=""/>
+            </not>
+            <then>
+                <echo level="error" message="After dumping all translations there are some uncommitted changes in the repository."/>
+                <echo level="info" message="This means that some translation messages were not properly extracted and translated."/>
+                <echo level="info" message="Translate the messages to all supported languages and commit the result."/>
+                <echo level="info" message="If you see this error on a CI server, you'll first have to extract the messages using 'translations-dump-keep' or 'translations-dump' target."/>
+                <fail message="Git repository contains uncommitted changes"/>
+            </then>
+        </if>
+    </target>
+
     <target name="checks-internal" depends="shopsys_framework.checks-internal,project-base-vendor-check" description="Runs all internal checks for monorepo, eg. availability of services or validity of configuration f." hidden="true"/>
 
     <target name="clean" description="Cleans up directories with cache and scripts which are generated on demand.">
@@ -275,6 +294,7 @@
             <arg value="--dir=${path.packages}/form-types-bundle/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/form-types-bundle/src/Resources/translations"/>
+            <arg line="${translations.dump.flags}"/>
             <arg line="${translations.dump.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -288,6 +308,7 @@
             <arg value="--exclude-name=*AnnotatedRouteControllerLoader.php"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.framework}/src/Resources/translations"/>
+            <arg line="${translations.dump.flags}"/>
             <arg line="${translations.dump.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -297,6 +318,7 @@
             <arg value="--dir=${path.packages}/product-feed-google/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-google/src/Resources/translations"/>
+            <arg line="${translations.dump.flags}"/>
             <arg line="${translations.dump.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -306,6 +328,7 @@
             <arg value="--dir=${path.packages}/product-feed-heureka/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-heureka/src/Resources/translations"/>
+            <arg line="${translations.dump.flags}"/>
             <arg line="${translations.dump.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -315,6 +338,7 @@
             <arg value="--dir=${path.packages}/product-feed-heureka-delivery/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-heureka-delivery/src/Resources/translations"/>
+            <arg line="${translations.dump.flags}"/>
             <arg line="${translations.dump.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -324,8 +348,14 @@
             <arg value="--dir=${path.packages}/product-feed-zbozi/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-zbozi/src/Resources/translations"/>
+            <arg line="${translations.dump.flags}"/>
             <arg line="${translations.dump.locales}"/>
         </exec>
+    </target>
+
+    <target name="translations-dump-keep" description="Extracts translatable messages in the whole monorepo while keeping removed messages.">
+        <property name="translations.dump.flags" value="--keep" override="true"/>
+        <phingcall target="translations-dump"/>
     </target>
 
     <target name="twig-lint" description="Checks syntax of Twig templates in the whole monorepo." hidden="true">
