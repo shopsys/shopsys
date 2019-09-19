@@ -34,6 +34,7 @@ parameters:
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff:
             - '*/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixture.php'
+            - '*/src/Shopsys/ShopBundle/DataFixtures/Demo/CategoryDataFixture'
 
         Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff:
             - '*/tests/ShopBundle/Functional/EntityExtension/EntityExtensionTest.php'
