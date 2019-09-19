@@ -285,6 +285,70 @@ There you can find links to upgrade notes for other versions too.
     - these methods are deprecated and will be removed in the next major release:
         - `CronFacade::runModulesForInstance()` use method `runModules()` instead
         - `CronFacade::runModule()` use method `runSingleModule()` instead
+- add unique error ID to 500 error pages ([#1393](https://github.com/shopsys/shopsys/pull/1393))
+    - add new paragraph in [`error.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Error/error.html.twig)
+        ```diff
+                <p>
+                    {{ 'Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%.'|trans({ '%mail%': getShopInfoEmail(), '%phone%': getShopInfoPhoneNumber() }) }}
+                </p>
+        +
+        +       <p>
+        +           Error ID: <span id="js-error-id">{{ '{{ERROR_ID}}' }}</span>
+        +       </p>
+            </div>
+        ```
+    - in [`ErrorController`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Controller/Front/ErrorController.php) 
+        - pass [`ErrorIdProvider`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Error/ErrorIdProvider.php) to it
+            ```diff
+                 * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
+                 * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+            +    * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
+                 */
+                public function __construct(
+                    ExceptionController $exceptionController,
+                    ExceptionListener $exceptionListener,
+                    ErrorPagesFacade $errorPagesFacade,
+                    Domain $domain
+                    Domain $domain,
+            +       ErrorIdProvider $errorIdProvider
+                ) {
+                    $this->exceptionController = $exceptionController;
+                    $this->exceptionListener = $exceptionListener;
+                    $this->errorPagesFacade = $errorPagesFacade;
+                    $this->domain = $domain;
+            +       $this->errorIdProvider = $errorIdProvider;
+                }
+            ```
+        - replace placeholder `{{ERROR_ID}}` by actual error ID in variable `$errorPageContent` in it
+            ```diff
+                private function createErrorPageResponse($statusCode)
+                {
+                    $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);
+                    $errorPageContent = $this->errorPagesFacade->getErrorPageContentByDomainIdAndStatusCode(
+                        $this->domain->getId(),
+                        $errorPageStatusCode
+                    );
+            +       $errorPageContent = str_replace('{{ERROR_ID}}', $this->errorIdProvider->getErrorId(), $errorPageContent);
+                    return new Response($errorPageContent, $errorPageStatusCode);
+                }
+            ```
+    - create new acceptance test in [`ErrorHandlingCest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Acceptance/acceptance/ErrorHandlingCest.php)
+        ```diff   
+        +    /**
+        +     * @param \Tests\ShopBundle\Test\Codeception\AcceptanceTester $me
+        +     */
+        +    public function test500ErrorPage(AcceptanceTester $me)
+        +    {
+        +        $me->wantTo('display 500 error and check error ID uniqueness');
+        +        $me->amOnPage('/test/error-handler/exception');
+        +        $me->see('Oops! Error occurred');
+        +        $cssIdentifier = ['css' => '#js-error-id'];
+        +        $errorIdFirstAccess = $me->grabTextFrom($cssIdentifier);
+        +        $me->amOnPage('/test/error-handler/exception');
+        +        $errorIdSecondAccess = $me->grabTextFrom($cssIdentifier);
+        +        Assert::assertNotSame($errorIdFirstAccess, $errorIdSecondAccess);
+        +    }
+        ```
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
