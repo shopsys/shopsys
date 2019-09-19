@@ -600,6 +600,7 @@ services:
             - { name: 'monolog.logger', channel: 'request' }
         arguments:
             - '%twig.exception_listener.controller%'
+            - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
             - '@?logger'
             - '%kernel.debug%'
 
