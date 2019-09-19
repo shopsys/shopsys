@@ -103,8 +103,8 @@ There you can find links to upgrade notes for other versions too.
 
     ```
 - parametrize variables in kubernetes configuration [[#1384]](https://github.com/shopsys/shopsys/pull/1384)
-    - walk through your [`.ci/deploy-to-google-cloud.sh`](https://github.com/shopsys/shopsys/blob/v8.0.0/project-base/.ci/deploy-to-google-cloud.sh) and notice every occurrences of using `yq` command which is affecting `yml` or `yaml` files in [`project-base/kubernetes`](https://github.com/shopsys/shopsys/tree/v8.0.0/project-base/kubernetes) (k8s' configuration files)
-        - in k8s' configuration files replace these occurrences with placeholder like this `{{FIRST_DOMAIN_HOSTNAME}}` (the placeholder will be replaced by ENV variable with the same name)
+    - walk through your [`.ci/deploy-to-google-cloud.sh`](https://github.com/shopsys/shopsys/blob/v8.0.0/project-base/.ci/deploy-to-google-cloud.sh) and notice every occurrences of using `yq` command which is affecting `yml` or `yaml` files in [`project-base/kubernetes`](https://github.com/shopsys/shopsys/tree/v8.0.0/project-base/kubernetes)
+        - in Kubernetes configuration files replace these occurrences with placeholder like this `{{FIRST_DOMAIN_HOSTNAME}}` (the placeholder will be replaced by ENV variable with the same name)
             ```diff
              spec:
                  rules:
@@ -119,7 +119,7 @@ There you can find links to upgrade notes for other versions too.
                 - #!/bin/sh -ex
                 + #!/bin/bash -ex
                 ```
-            - add code bellow to find all k8s' configuration files in `kubernetes` folder
+            - add code bellow to find all Kubernetes configuration files in `kubernetes` folder
                 ```diff
                 +   FILES=$( find kubernetes -type f )
                 ```
