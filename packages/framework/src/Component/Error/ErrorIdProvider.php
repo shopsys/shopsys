@@ -11,18 +11,24 @@ class ErrorIdProvider
     /**
      * @var \Shopsys\FrameworkBundle\Component\String\HashGenerator
      */
-    private $hashGenerator;
+    protected $hashGenerator;
 
     /**
      * @var string|null
      */
-    private $errorId;
+    protected $errorId;
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
+     */
     public function __construct(HashGenerator $hashGenerator)
     {
         $this->hashGenerator = $hashGenerator;
     }
 
+    /**
+     * @return string
+     */
     public function getErrorId(): string
     {
         if (!$this->errorId) {
