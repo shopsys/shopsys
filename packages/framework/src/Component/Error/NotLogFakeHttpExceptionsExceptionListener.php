@@ -25,7 +25,7 @@ class NotLogFakeHttpExceptionsExceptionListener extends ExceptionListener
     protected function logException(\Exception $exception, $message)
     {
         if (!$exception instanceof \Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException) {
-            $message .= sprintf('Error ID: %s' . $this->errorIdProvider->getErrorId());
+            $message .= sprintf('Error ID: %s', $this->errorIdProvider->getErrorId());
             parent::logException($exception, $message);
         }
     }
