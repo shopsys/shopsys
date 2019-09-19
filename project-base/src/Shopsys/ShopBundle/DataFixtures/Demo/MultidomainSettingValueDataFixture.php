@@ -50,15 +50,15 @@ class MultidomainSettingValueDataFixture extends AbstractReferenceFixture implem
     protected function loadForDomain(int $domainId)
     {
         /** @var \Shopsys\ShopBundle\Model\Article\Article $termsAndConditionsDomain */
-        $termsAndConditionsDomain = $this->getReferenceForDomain(MultidomainArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS, $domainId);
+        $termsAndConditionsDomain = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS, $domainId);
         $this->setting->setForDomain(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $termsAndConditionsDomain->getId(), $domainId);
 
         /** @var \Shopsys\ShopBundle\Model\Article\Article $privacyPolicyDomain */
-        $privacyPolicyDomain = $this->getReferenceForDomain(MultidomainArticleDataFixture::ARTICLE_PRIVACY_POLICY, $domainId);
+        $privacyPolicyDomain = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, $domainId);
         $this->setting->setForDomain(Setting::PRIVACY_POLICY_ARTICLE_ID, $privacyPolicyDomain->getId(), $domainId);
 
         /** @var \Shopsys\ShopBundle\Model\Article\Article $cookiesDomain */
-        $cookiesDomain = $this->getReferenceForDomain(MultidomainArticleDataFixture::ARTICLE_COOKIES, $domainId);
+        $cookiesDomain = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_COOKIES, $domainId);
         $this->setting->setForDomain(Setting::COOKIES_ARTICLE_ID, $cookiesDomain->getId(), $domainId);
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
@@ -108,7 +108,7 @@ class MultidomainSettingValueDataFixture extends AbstractReferenceFixture implem
     public function getDependencies()
     {
         return [
-            MultidomainArticleDataFixture::class,
+            ArticleDataFixture::class,
             MultidomainPricingGroupDataFixture::class,
             SettingValueDataFixture::class,
         ];
