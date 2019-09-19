@@ -68,7 +68,6 @@ class MultidomainTopProductDataFixture extends AbstractReferenceFixture implemen
     public function getDependencies()
     {
         return [
-            MultidomainProductDataFixture::class,
             TopProductDataFixture::class,
         ];
     }

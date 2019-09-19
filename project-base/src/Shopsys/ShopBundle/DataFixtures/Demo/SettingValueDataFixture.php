@@ -61,6 +61,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
         return [
             ArticleDataFixture::class,
             PricingGroupDataFixture::class,
+            CurrencyDataFixture::class,
         ];
     }
 }

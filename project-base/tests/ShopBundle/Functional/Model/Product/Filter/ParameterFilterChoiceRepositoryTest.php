@@ -33,7 +33,7 @@ class ParameterFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         );
 
         $this->assertContains(50, $ids);
-        $this->assertContains(49, $ids);
+        $this->assertContains(51, $ids);
         $this->assertContains(10, $ids);
 
         $parameterParameterValuePair = [

@@ -129,37 +129,37 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
         ];
         $countData->countByParameterIdAndValueId = [
             32 => [
-                8 => 10,
+                7 => 10,
             ],
             11 => [
-                58 => 8,
-                124 => 2,
+                57 => 8,
+                123 => 2,
             ],
             30 => [
-                8 => 5,
-                12 => 5,
+                7 => 5,
+                11 => 5,
             ],
             29 => [
-                54 => 7,
-                189 => 3,
+                53 => 7,
+                188 => 3,
             ],
             31 => [
-                56 => 3,
+                55 => 3,
                 97 => 7,
             ],
             28 => [
-                52 => 10,
+                51 => 10,
             ],
             4 => [
-                8 => 10,
+                7 => 10,
             ],
             10 => [
-                60 => 1,
-                62 => 9,
+                59 => 1,
+                61 => 9,
             ],
             33 => [
-                8 => 8,
-                12 => 2,
+                7 => 8,
+                11 => 2,
             ],
         ];
 
@@ -190,35 +190,35 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
         ];
         $countData->countByParameterIdAndValueId = [
             32 => [
-                8 => 2,
+                7 => 2,
             ],
             11 => [
-                58 => 2,
+                57 => 2,
             ],
             30 => [
-                8 => 1,
-                12 => 1,
+                7 => 1,
+                11 => 1,
             ],
             29 => [
-                54 => 1,
-                189 => 1,
+                53 => 1,
+                188 => 1,
             ],
             31 => [
-                56 => 1,
+                55 => 1,
                 97 => 1,
             ],
             28 => [
-                52 => 2,
+                51 => 2,
             ],
             4 => [
-                8 => 2,
+                7 => 2,
             ],
             10 => [
-                60 => 1,
-                62 => 1,
+                59 => 1,
+                61 => 1,
             ],
             33 => [
-                8 => 2,
+                7 => 2,
             ],
         ];
 
@@ -248,35 +248,35 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
         ];
         $countData->countByParameterIdAndValueId = [
             32 => [
-                8 => 6,
+                7 => 6,
             ],
             11 => [
-                58 => 6,
+                57 => 6,
             ],
             30 => [
-                8 => 3,
-                12 => 3,
+                7 => 3,
+                11 => 3,
             ],
             29 => [
-                54 => 3,
-                189 => 3,
+                53 => 3,
+                188 => 3,
             ],
             31 => [
-                56 => 2,
+                55 => 2,
                 97 => 4,
             ],
             28 => [
-                52 => 6,
+                51 => 6,
             ],
             4 => [
-                8 => 6,
+                7 => 6,
             ],
             10 => [
-                60 => 1,
-                62 => 5,
+                59 => 1,
+                61 => 5,
             ],
             33 => [
-                8 => 6,
+                7 => 6,
             ],
         ];
 
@@ -303,35 +303,35 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
         $countData->countInStock = 4;
         $countData->countByParameterIdAndValueId = [
             32 => [
-                8 => 4,
+                7 => 4,
             ],
             11 => [
-                58 => 4,
+                57 => 4,
             ],
             30 => [
-                8 => 2,
-                12 => 2,
+                7 => 2,
+                11 => 2,
             ],
             29 => [
-                54 => 3,
-                189 => 1,
+                53 => 3,
+                188 => 1,
             ],
             31 => [
-                56 => 2,
+                55 => 2,
                 97 => 2,
             ],
             28 => [
-                52 => 4,
+                51 => 4,
             ],
             4 => [
-                8 => 4,
+                7 => 4,
             ],
             10 => [
-                60 => 1,
-                62 => 3,
+                59 => 1,
+                61 => 3,
             ],
             33 => [
-                8 => 4,
+                7 => 4,
             ],
         ];
 
@@ -364,35 +364,35 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
         ];
         $countData->countByParameterIdAndValueId = [
             32 => [
-                8 => 6,
+                7 => 6,
             ],
             11 => [
-                58 => 6,
+                57 => 6,
             ],
             30 => [
-                8 => 3,
-                12 => 3,
+                7 => 3,
+                11 => 3,
             ],
             29 => [
-                54 => 4,
-                189 => 2,
+                53 => 4,
+                188 => 2,
             ],
             31 => [
-                56 => 1,
+                55 => 1,
                 97 => 5,
             ],
             28 => [
-                52 => 6,
+                51 => 6,
             ],
             4 => [
-                8 => 6,
+                7 => 6,
             ],
             10 => [
-                60 => 1,
-                62 => 5,
+                59 => 1,
+                61 => 5,
             ],
             33 => [
-                8 => 6,
+                7 => 6,
             ],
         ];
 
@@ -423,34 +423,34 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
         ];
         $countData->countByParameterIdAndValueId = [
             17 => [
-                8 => 1,
+                7 => 1,
             ],
             11 => [
-                24 => 1,
+                23 => 1,
             ],
             19 => [
-                12 => 1,
+                11 => 1,
             ],
             12 => [
-                12 => 1,
+                11 => 1,
             ],
             18 => [
-                12 => 1,
+                11 => 1,
             ],
             14 => [
-                28 => 1,
+                27 => 1,
             ],
             16 => [
-                32 => 1,
+                31 => 1,
             ],
             15 => [
-                30 => 1,
+                29 => 1,
             ],
             13 => [
-                26 => 1,
+                25 => 1,
             ],
             10 => [
-                22 => 1,
+                21 => 1,
             ],
         ];
 
@@ -491,35 +491,35 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
         $countData->countByFlagId = [];
         $countData->countByParameterIdAndValueId = [
             32 => [
-                8 => 2,
+                7 => 2,
             ],
             11 => [
-                58 => 2,
+                57 => 2,
             ],
             30 => [
-                8 => 1,
-                12 => 1,
+                7 => 1,
+                11 => 1,
             ],
             29 => [
-                54 => 1,
-                189 => 1,
+                53 => 1,
+                188 => 1,
             ],
             31 => [
-                56 => 1,
+                55 => 1,
                 97 => 1,
             ],
             28 => [
-                52 => 2,
+                51 => 2,
             ],
             4 => [
-                8 => 2,
+                7 => 2,
             ],
             10 => [
-                60 => 1,
-                62 => 2,
+                59 => 1,
+                61 => 2,
             ],
             33 => [
-                8 => 2,
+                7 => 2,
             ],
         ];
 
@@ -562,36 +562,36 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
         ];
         $countData->countByParameterIdAndValueId = [
             32 => [
-                8 => 7,
+                7 => 7,
             ],
             11 => [
-                58 => 7,
-                124 => 2,
+                57 => 7,
+                123 => 2,
             ],
             30 => [
-                8 => 3,
-                12 => 4,
+                7 => 3,
+                11 => 4,
             ],
             29 => [
-                54 => 4,
-                189 => 3,
+                53 => 4,
+                188 => 3,
             ],
             31 => [
-                56 => 1,
+                55 => 1,
                 97 => 6,
             ],
             28 => [
-                52 => 7,
+                51 => 7,
             ],
             4 => [
-                8 => 7,
+                7 => 7,
             ],
             10 => [
-                60 => 1,
-                62 => 7,
+                59 => 1,
+                61 => 7,
             ],
             33 => [
-                8 => 7,
+                7 => 7,
             ],
         ];
 
@@ -667,6 +667,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
             14 => 2,
             12 => 2,
             3 => 2,
+            9 => 1,
         ];
         $countData->countByFlagId = [
             1 => 15,
@@ -735,6 +736,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
             15 => 1,
             16 => 1,
             19 => 2,
+            9 => 1,
         ];
         $countData->countByFlagId = [
             1 => 3,

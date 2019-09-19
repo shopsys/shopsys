@@ -61,12 +61,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@Shopsys\ShopBundle\Model\Product\Brand\BrandDataFactory'
 
-    Shopsys\ShopBundle\DataFixtures\ProductDataFixtureReferenceInjector: ~
-
-    Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureLoader: ~
-
-    Shopsys\ShopBundle\DataFixtures\Demo\ProductParametersFixtureLoader: ~
-
     Shopsys\ShopBundle\DataFixtures\Performance\CategoryDataFixture:
         arguments:
             - "%shopsys.performance_data.category.counts_by_level%"
@@ -90,10 +84,6 @@ services:
             - '%shopsys.image_dir%'
             - '%shopsys.domain_images_dir%'
         tags: ['doctrine.fixture.orm']
-
-    Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureCsvReader:
-        arguments:
-            - '%shopsys.data_fixtures.resource_products_filepath%'
 
     Shopsys\ShopBundle\DataFixtures\Demo\UserDataFixtureLoader:
         arguments:

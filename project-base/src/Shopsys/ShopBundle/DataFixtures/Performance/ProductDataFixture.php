@@ -15,11 +15,10 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalc
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
-use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureCsvReader;
-use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureLoader;
-use Shopsys\ShopBundle\DataFixtures\ProductDataFixtureReferenceInjector;
+use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture as DemoProductDataFixture;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ProductDataFixture
@@ -44,11 +43,6 @@ class ProductDataFixture
     private $productFacade;
 
     /**
-     * @var \Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureLoader
-     */
-    private $productDataFixtureLoader;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
      */
     private $sqlLoggerFacade;
@@ -57,11 +51,6 @@ class ProductDataFixture
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade
      */
     private $productVariantFacade;
-
-    /**
-     * @var \Shopsys\ShopBundle\DataFixtures\ProductDataFixtureReferenceInjector
-     */
-    private $productDataReferenceInjector;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
@@ -104,54 +93,53 @@ class ProductDataFixture
     private $productPriceRecalculationScheduler;
 
     /**
-     * @var \Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureCsvReader
-     */
-    private $productDataFixtureCsvReader;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory
      */
     private $progressBarFactory;
 
     /**
+     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
+     */
+    private $productDataFactory;
+
+    /**
+     * @var array|\Shopsys\ShopBundle\Model\Product\Product[]
+     */
+    private $productTemplates;
+
+    /**
      * @param int $productTotalCount
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureLoader $productDataFixtureLoader
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
-     * @param \Shopsys\ShopBundle\DataFixtures\ProductDataFixtureReferenceInjector $productDataReferenceInjector
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
-     * @param \Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureCsvReader $productDataFixtureCsvReader
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
+     * @param \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory
      */
     public function __construct(
         $productTotalCount,
         EntityManagerInterface $em,
         ProductFacade $productFacade,
-        ProductDataFixtureLoader $productDataFixtureLoader,
         SqlLoggerFacade $sqlLoggerFacade,
         ProductVariantFacade $productVariantFacade,
-        ProductDataFixtureReferenceInjector $productDataReferenceInjector,
         PersistentReferenceFacade $persistentReferenceFacade,
         CategoryRepository $categoryRepository,
         Faker $faker,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        ProductDataFixtureCsvReader $productDataFixtureCsvReader,
-        ProgressBarFactory $progressBarFactory
+        ProgressBarFactory $progressBarFactory,
+        ProductDataFactoryInterface $productDataFactory
     ) {
         $this->productTotalCount = $productTotalCount;
         $this->em = $em;
         $this->productFacade = $productFacade;
-        $this->productDataFixtureLoader = $productDataFixtureLoader;
         $this->sqlLoggerFacade = $sqlLoggerFacade;
         $this->productVariantFacade = $productVariantFacade;
-        $this->productDataReferenceInjector = $productDataReferenceInjector;
         $this->persistentReferenceFacade = $persistentReferenceFacade;
         $this->categoryRepository = $categoryRepository;
         $this->countImported = 0;
@@ -159,8 +147,8 @@ class ProductDataFixture
         $this->faker = $faker;
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
-        $this->productDataFixtureCsvReader = $productDataFixtureCsvReader;
         $this->progressBarFactory = $progressBarFactory;
+        $this->productDataFactory = $productDataFactory;
     }
 
     /**
@@ -172,23 +160,22 @@ class ProductDataFixture
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
         $this->cleanAndLoadReferences();
-        $csvRows = $this->productDataFixtureCsvReader->getProductDataFixtureCsvRows();
-        $variantCatnumsByMainVariantCatnum = $this->productDataFixtureLoader->getVariantCatnumsIndexedByMainVariantCatnum(
-            $csvRows
-        );
+
+        $variantCatnumsByMainVariantCatnum = DemoProductDataFixture::getVariantCatnumsByMainVariantCatnum();
 
         $progressBar = $this->progressBarFactory->create($output, $this->productTotalCount);
 
         while ($this->countImported < $this->productTotalCount) {
-            $row = next($csvRows);
-            if ($row === false) {
+            $productTemplate = next($this->productTemplates);
+
+            if ($productTemplate === false) {
                 $this->createVariants($variantCatnumsByMainVariantCatnum);
-                $row = reset($csvRows);
+                $productTemplate = reset($this->productTemplates);
                 $this->demoDataIterationCounter++;
             }
-            $productData = $this->productDataFixtureLoader->createProductDataFromRowForFirstDomain($row);
-            $this->productDataFixtureLoader->updateProductDataFromCsvRowForSecondDomain($productData, $row);
+            $productData = $this->productDataFactory->createFromProduct($productTemplate);
             $this->makeProductDataUnique($productData);
+
             $this->setRandomPerformanceCategoriesToProductData($productData);
             /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
             $product = $this->productFacade->create($productData);
@@ -202,9 +189,7 @@ class ProductDataFixture
             }
 
             if ($this->countImported % self::BATCH_SIZE === 0) {
-                $currentKey = key($csvRows);
                 $this->cleanAndLoadReferences();
-                $this->setArrayPointerByKey($csvRows, $currentKey);
             }
 
             $this->countImported++;
@@ -298,12 +283,19 @@ class ProductDataFixture
     {
         $this->clearResources();
         $this->productsByCatnum = [];
+        $this->productTemplates = [];
 
-        $this->productDataReferenceInjector->loadReferences(
-            $this->productDataFixtureLoader,
-            $this->persistentReferenceFacade,
-            2
-        );
+        $i = 1;
+        while (true) {
+            try {
+                /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
+                $product = $this->persistentReferenceFacade->getReference(DemoProductDataFixture::PRODUCT_PREFIX . $i);
+                $this->productTemplates[] = $product;
+                $i++;
+            } catch (\Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException $e) {
+                break;
+            }
+        }
     }
 
     /**
@@ -376,19 +368,5 @@ class ProductDataFixture
         );
 
         return $category->getId() >= $firstPerformanceCategory->getId();
-    }
-
-    /**
-     * @param array $array
-     * @param string|int $key
-     */
-    private function setArrayPointerByKey(array &$array, $key)
-    {
-        reset($array);
-        while (key($array) !== $key) {
-            if (empty(each($array)) === true) {
-                throw new \Shopsys\ShopBundle\DataFixtures\Performance\Exception\UndefinedArrayKeyException($key);
-            }
-        }
     }
 }

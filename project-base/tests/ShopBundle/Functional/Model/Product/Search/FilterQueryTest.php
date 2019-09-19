@@ -60,7 +60,7 @@ class FilterQueryTest extends TransactionFunctionalTestCase
 
     public function testParameters(): void
     {
-        $parameters = [50 => [109, 115], 49 => [105, 121], 10 => [107]];
+        $parameters = [51 => [109, 115], 50 => [105, 121], 10 => [107]];
 
         $filter = $this->createFilter()
             ->filterByParameters($parameters);
