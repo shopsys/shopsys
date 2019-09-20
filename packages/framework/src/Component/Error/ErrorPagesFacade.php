@@ -39,8 +39,7 @@ class ErrorPagesFacade
     /**
      * @var \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider
      */
-    private $errorIdProvider;
-
+    protected $errorIdProvider;
 
     /**
      * @param string $errorPagesDir

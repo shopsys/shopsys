@@ -2,8 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Error;
 
-use Symfony\Component\HttpKernel\EventListener\ExceptionListener;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpKernel\EventListener\ExceptionListener;
 
 class NotLogFakeHttpExceptionsExceptionListener extends ExceptionListener
 {
@@ -14,11 +14,11 @@ class NotLogFakeHttpExceptionsExceptionListener extends ExceptionListener
 
     /**
      * @param mixed $controller
-     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
      * @param \Psr\Log\LoggerInterface|null $logger
      * @param bool $debug
+     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider|null $errorIdProvider
      */
-    public function __construct($controller, ?LoggerInterface $logger = null, bool $debug = false, ErrorIdProvider $errorIdProvider = null)
+    public function __construct($controller, ?LoggerInterface $logger = null, bool $debug = false, ?ErrorIdProvider $errorIdProvider = null)
     {
         parent::__construct($controller, $logger, $debug);
         $this->errorIdProvider = $errorIdProvider;
@@ -42,12 +42,12 @@ class NotLogFakeHttpExceptionsExceptionListener extends ExceptionListener
      */
     public function setErrorIdProvider(ErrorIdProvider $errorIdProvider): void
     {
-        if ($this->errorIdProvider && $this->errorIdProvider !== $errorIdProvider) {
+        if ($this->errorIdProvider !== null && $this->errorIdProvider !== $errorIdProvider) {
             throw new \BadMethodCallException(
                 sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
             );
         }
-        if (!$this->errorIdProvider) {
+        if ($this->errorIdProvider === null) {
             @trigger_error(
                 sprintf(
                     'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
