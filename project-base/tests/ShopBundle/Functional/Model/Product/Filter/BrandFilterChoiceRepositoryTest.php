@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Product\Filter;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository;
 use Shopsys\ShopBundle\DataFixtures\Demo\CategoryDataFixture;
@@ -78,7 +79,7 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         $repository = $this->getBrandFilterChoiceRepository();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
 
         /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
         $category = $this->getReference($categoryReferenceName);
@@ -97,9 +98,13 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         $repository = $this->getBrandFilterChoiceRepository();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
+        $domain = $this->getContainer()->get(Domain::class);
+        $domainConfig1 = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
+
         /** @var \Shopsys\ShopBundle\Model\Product\Brand\Brand[] $brands */
-        $brands = $repository->getBrandFilterChoicesForSearch(1, $pricingGroup, 'en', $searchText);
+        $brands = $repository->getBrandFilterChoicesForSearch($domainConfig1->getId(), $pricingGroup, $domainConfig1->getLocale(), $searchText);
 
         return $brands;
     }

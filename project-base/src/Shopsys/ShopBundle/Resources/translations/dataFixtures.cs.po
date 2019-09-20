@@ -1033,6 +1033,9 @@ msgstr ""
 msgid "Order status has changed"
 msgstr "Stav objednávky se změnil"
 
+msgid "Ordinary customer"
+msgstr "Obyčejný zákazník"
+
 msgid "Other"
 msgstr ""
 
@@ -1056,6 +1059,9 @@ msgstr ""
 
 msgid "Parallel port"
 msgstr ""
+
+msgid "Partner"
+msgstr "Partner"
 
 msgid "Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>"
 msgstr ""
@@ -1434,6 +1440,9 @@ msgstr ""
 
 msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
 msgstr ""
+
+msgid "VIP customer"
+msgstr "VIP zákazník"
 
 msgid "Video"
 msgstr ""

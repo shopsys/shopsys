@@ -43,7 +43,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $modifiedItems1 = $cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
         $this->assertEmpty($modifiedItems1);
 
-        $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $manualInputPriceFacade */
         $manualInputPriceFacade = $this->getContainer()->get(ProductManualInputPriceFacade::class);
@@ -65,7 +65,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             ->setMethods(null)
             ->getMock();
 
-        $expectedPricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        $expectedPricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
         $currentCustomerMock = $this->getMockBuilder(CurrentCustomer::class)
             ->disableOriginalConstructor()
             ->setMethods(['getPricingGroup'])
@@ -107,7 +107,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             ->method('getProduct')
             ->willReturn($product);
 
-        $expectedPricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        $expectedPricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
         $currentCustomerMock = $this->getMockBuilder(CurrentCustomer::class)
             ->disableOriginalConstructor()
             ->setMethods(['getPricingGroup'])

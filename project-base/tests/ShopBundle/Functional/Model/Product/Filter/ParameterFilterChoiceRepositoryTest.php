@@ -58,7 +58,7 @@ class ParameterFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         $repository = $this->getParameterFilterChoiceRepository();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
 
         /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
         $category = $this->getReference($categoryReferenceName);

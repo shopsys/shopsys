@@ -47,7 +47,7 @@ class FilterQueryTest extends TransactionFunctionalTestCase
     public function testMultiFilter(): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
 
         $filter = $this->createFilter()
             ->filterOnlyInStock()
@@ -71,7 +71,7 @@ class FilterQueryTest extends TransactionFunctionalTestCase
     public function testOrdering(): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
 
         $filter = $this->createFilter()
             ->filterByCategory([9])

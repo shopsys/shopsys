@@ -1033,6 +1033,9 @@ msgstr ""
 msgid "Order status has changed"
 msgstr ""
 
+msgid "Ordinary customer"
+msgstr ""
+
 msgid "Other"
 msgstr ""
 
@@ -1055,6 +1058,9 @@ msgid "Pages count"
 msgstr ""
 
 msgid "Parallel port"
+msgstr ""
+
+msgid "Partner"
 msgstr ""
 
 msgid "Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>"
@@ -1433,6 +1439,9 @@ msgid "Using a steamer Concept is surprisingly versatile. It can be used to prep
 msgstr ""
 
 msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
+msgstr ""
+
+msgid "VIP customer"
 msgstr ""
 
 msgid "Video"

@@ -39,7 +39,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         $vat = new Vat($vatData);
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
 
         $productData = $producDataFactory->create();
         $productData->vat = $vat;
@@ -72,7 +72,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         $vat = new Vat($vatData);
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReference(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN_1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
 
         $productData = $productDataFactory->create();
         $productData->vat = $vat;

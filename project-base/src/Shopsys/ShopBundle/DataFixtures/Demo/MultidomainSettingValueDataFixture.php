@@ -62,7 +62,7 @@ class MultidomainSettingValueDataFixture extends AbstractReferenceFixture implem
         $this->setting->setForDomain(Setting::COOKIES_ARTICLE_ID, $cookiesDomain->getId(), $domainId);
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(MultidomainPricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN, $domainId);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY_DOMAIN, $domainId);
         $this->setting->setForDomain(Setting::DEFAULT_PRICING_GROUP, $pricingGroup->getId(), $domainId);
 
         $orderSentText = '
@@ -109,7 +109,7 @@ class MultidomainSettingValueDataFixture extends AbstractReferenceFixture implem
     {
         return [
             ArticleDataFixture::class,
-            MultidomainPricingGroupDataFixture::class,
+            PricingGroupDataFixture::class,
             SettingValueDataFixture::class,
         ];
     }
