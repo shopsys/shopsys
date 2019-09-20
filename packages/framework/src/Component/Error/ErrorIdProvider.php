@@ -32,7 +32,7 @@ class ErrorIdProvider
     public function getErrorId(): string
     {
         if (!$this->errorId) {
-            $this->errorId = $this->hashGenerator->generateHash(32);
+            $this->errorId = $this->hashGenerator->generateHash(10);
         }
         return $this->errorId;
     }
