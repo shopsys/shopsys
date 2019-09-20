@@ -43,29 +43,21 @@ class ErrorController extends FrontBaseController
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider
-     */
-    private $errorIdProvider;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionController $exceptionController
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
      */
     public function __construct(
         ExceptionController $exceptionController,
         ExceptionListener $exceptionListener,
         ErrorPagesFacade $errorPagesFacade,
-        Domain $domain,
-        ErrorIdProvider $errorIdProvider
+        Domain $domain
     ) {
         $this->exceptionController = $exceptionController;
         $this->exceptionListener = $exceptionListener;
         $this->errorPagesFacade = $errorPagesFacade;
         $this->domain = $domain;
-        $this->errorIdProvider = $errorIdProvider;
     }
 
     /**
@@ -136,7 +128,6 @@ class ErrorController extends FrontBaseController
             $errorPageStatusCode
         );
 
-        $errorPageContent = str_replace('{{ERROR_ID}}', $this->errorIdProvider->getErrorId(), $errorPageContent);
         return new Response($errorPageContent, $errorPageStatusCode);
     }
 

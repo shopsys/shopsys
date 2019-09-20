@@ -600,9 +600,9 @@ services:
             - { name: 'monolog.logger', channel: 'request' }
         arguments:
             - '%twig.exception_listener.controller%'
-            - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
             - '@?logger'
             - '%kernel.debug%'
+            - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
 
     twig.stringloader:
         class: Twig_Loader_Array
@@ -1012,5 +1012,3 @@ services:
     Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder: ~
 
     Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer: ~
-
-    Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider: ~

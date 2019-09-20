@@ -37,21 +37,30 @@ class ErrorPagesFacade
     protected $filesystem;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider
+     */
+    private $errorIdProvider;
+
+
+    /**
      * @param string $errorPagesDir
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
      */
     public function __construct(
         $errorPagesDir,
         Domain $domain,
         DomainRouterFactory $domainRouterFactory,
-        Filesystem $filesystem
+        Filesystem $filesystem,
+        ErrorIdProvider $errorIdProvider
     ) {
         $this->errorPagesDir = $errorPagesDir;
         $this->domain = $domain;
         $this->domainRouterFactory = $domainRouterFactory;
         $this->filesystem = $filesystem;
+        $this->errorIdProvider = $errorIdProvider;
     }
 
     public function generateAllErrorPagesForProduction()
@@ -73,6 +82,8 @@ class ErrorPagesFacade
         if ($errorPageContent === false) {
             throw new \Shopsys\FrameworkBundle\Component\Error\Exception\ErrorPageNotFoundException($domainId, $statusCode);
         }
+
+        $errorPageContent = str_replace('{{ERROR_ID}}', $this->errorIdProvider->getErrorId(), $errorPageContent);
 
         return $errorPageContent;
     }
