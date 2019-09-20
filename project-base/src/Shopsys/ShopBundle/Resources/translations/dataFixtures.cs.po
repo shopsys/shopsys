@@ -1429,6 +1429,30 @@ msgstr "Kávovar je stroj určený pro výrobu kávy takovým způsobem, aby se 
 msgid "Contact"
 msgstr "Kontakty"
 
+msgid "Dear customer, <br /><br /> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/> personal details which we have in evidence in our online store {domain}. <br/><br/> To overview your personal information please click here - {url} <br/> The link is valid for next 24 hours.<br/> Best Regards <br/><br/> team of {domain}"
+msgstr "Vážený zákazníku,<br /><br /> na základě vašeho zadaného emailu {email}, Vám zasíláme odkaz na zobrazení osobních údajů. Klikem na odkaz níže se dostanete na stránku s <br/> přehledem všech osobních údajů, které k Vašemu emailu evidujeme na našem e-shopu {domain}.<br/><br/> Pro zobrazení osobních údajů klikněte zde - {url}<br/> Odkaz je platný 24 hodin.<br/><br/> S pozdravem<br/> tým {domain}"
+
+msgid "Dear customer, <br /><br />Processing your order has been finished."
+msgstr "Vážený zákazníku, <br /><br />zpracování objednávky bylo dokončeno."
+
+msgid "Dear customer, <br /><br />Your order has been cancelled."
+msgstr "Vážený zákazníku, <br /><br />Vaše objednávka byla zrušena."
+
+msgid "Dear customer, <br /><br />Your order is being processed."
+msgstr "Vážený zákazníku, <br /><br />Vaše objednávka se zpracovává."
+
+msgid "Dear customer, <br /><br />your registration is completed. <br />Name: {first_name} {last_name}<br />Email: {email}<br />E-shop link: {url}<br />Log in page: {login_page}"
+msgstr "Vážený zákazníku, <br /><br />Vaše registrace je dokončena. <br />Jméno: {first_name} {last_name}<br />Email: {email}<br />Adresa e-shopu: {url}<br />Přihlašovací stránka: {login_page}"
+
+msgid "Dear customer, <br/><br/> based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}. <br/><br/> To download your personal information please click here - {url}<br/> The link is valid for next 24 hours. <br/><br/> Best regards<br/> team of {domain}"
+msgstr "Vážený zákazníku,<br/><br/> na základě vašeho zadaného emailu {email}, Vám zasíláme odkaz ke stažení Vašich<br/> údajů evidovaných na našem internetovém obchodě ve strojově čitelném formátu.<br/> Klikem na odkaz se dostanete na stránku s s možností stažení těchto informací, které k<br/> Vašemu emailu evidujeme na našem internetovém obchodu {domain}.<br/><br/> Pro přechod na stažení údajů, prosím, klikněte zde - {url}<br/> Odkaz je platný 24 hodin.<br/><br/> S pozdravem<br/> tým {domain}"
+
+msgid "Dear customer,<br /><br />Your order has been placed successfully.<br /><br />You will be contacted when the order state changes.<br />Order number: {number} <br />Date and time of creation: {date} <br />E-shop link: {url} <br />Order detail link: {order_detail_url} <br />Shipping: {transport} <br />Payment: {payment} <br />Total price including VAT: {total_price} <br />Billing address:<br /> {billing_address} <br />Delivery address: {delivery_address} <br />Note: {note} <br />Products: {products} <br />{transport_instructions} <br />{payment_instructions}"
+msgstr "Dobrý den,<br /><br />Vaše objednávka byla úspěšně vytvořena.<br /><br />O dalších stavech objednávky Vás budeme informovat.<br />Čislo objednávky: {number} <br />Datum a čas vytvoření: {date} <br />URL adresa eshopu: {url} <br />URL adresa na detail objednávky: {order_detail_url} <br />Doprava: {transport} <br />Platba: {payment} <br />Celková cena s DPH: {total_price} <br />Fakturační adresa:<br /> {billing_address} <br />Doručovací adresa: {delivery_address} <br />Poznámka: {note} <br />Produkty: {products} <br />{transport_instructions} <br />{payment_instructions}'"
+
+msgid "Dear customer.<br /><br />You can set a new password following this link: <a href=\"{new_password_url}\">{new_password_url}</a>"
+msgstr "Vážený zákazníku,<br /><br />na tomto odkazu můžete nastavit nové heslo: <a href=\"{new_password_url}\">{new_password_url}</a>'"
+
 msgid "Donec at dolor mi. Nullam ornare, massa in cursus imperdiet, felis nisl auctor ante, vel aliquet tortor lacus sit amet ipsum. Proin ultrices euismod elementum. Integer sodales hendrerit tortor, vel semper turpis interdum eu. Phasellus quam tortor, feugiat vel condimentum vel, tristique et ipsum. Duis blandit lectus in odio cursus rutrum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam pulvinar massa at imperdiet venenatis. Maecenas convallis lobortis quam in fringilla. Mauris gravida turpis eget sapien imperdiet pulvinar. Nunc velit urna, fringilla nec est sit amet, accumsan varius nunc. Morbi sed tincidunt diam, sit amet laoreet nisl. Nulla tempus id lectus non lacinia.\\n\\nVestibulum interdum adipiscing iaculis. Nunc posuere pharetra velit. Nunc ac ante non massa scelerisque blandit sit amet vel velit. Integer in massa sed augue pulvinar malesuada. Pellentesque laoreet orci augue, in fermentum nisl feugiat ut. Nunc congue et nisi a interdum. Aenean mauris mi, interdum vel lacus et, placerat gravida augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sagittis ipsum et consequat euismod. Praesent a ipsum dapibus, aliquet justo a, consectetur magna. Phasellus imperdiet tempor laoreet. Sed a accumsan lacus, accumsan faucibus dolor. Praesent euismod justo quis ipsum aliquam suscipit. Sed quis blandit urna."
 msgstr "Donec at dolor mi. Nullam ornare, massa in cursus imperdiet, felis nisl auctor ante, vel aliquet tortor lacus sit amet ipsum. Proin ultrices euismod elementum. Integer sodales hendrerit tortor, vel semper turpis interdum eu. Phasellus quam tortor, feugiat vel condimentum vel, tristique et ipsum. Duis blandit lectus in odio cursus rutrum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam pulvinar massa at imperdiet venenatis. Maecenas convallis lobortis quam in fringilla. Mauris gravida turpis eget sapien imperdiet pulvinar. Nunc velit urna, fringilla nec est sit amet, accumsan varius nunc. Morbi sed tincidunt diam, sit amet laoreet nisl. Nulla tempus id lectus non lacinia.\\n\\nVestibulum interdum adipiscing iaculis. Nunc posuere pharetra velit. Nunc ac ante non massa scelerisque blandit sit amet vel velit. Integer in massa sed augue pulvinar malesuada. Pellentesque laoreet orci augue, in fermentum nisl feugiat ut. Nunc congue et nisi a interdum. Aenean mauris mi, interdum vel lacus et, placerat gravida augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sagittis ipsum et consequat euismod. Praesent a ipsum dapibus, aliquet justo a, consectetur magna. Phasellus imperdiet tempor laoreet. Sed a accumsan lacus, accumsan faucibus dolor. Praesent euismod justo quis ipsum aliquam suscipit. Sed quis blandit urna."
 
@@ -1459,17 +1483,32 @@ msgstr "Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasel
 msgid "News"
 msgstr "Novinky"
 
+msgid "Order status has changed"
+msgstr "Stav objednávky se změnil"
+
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr "Spotřební elektronika zahrnuje elektronická zařízení každodenního (nebo alespoň častého) použití pro komunikaci, v kanceláři i doma."
 
 msgid "Personal Computers & accessories"
 msgstr "Počítače & příslušenství"
 
+msgid "Personal information export - {domain}"
+msgstr "Export osobních údajů - {domain}"
+
+msgid "Personal information overview - {domain}"
+msgstr "Přehled osobních údajů - {domain}"
+
 msgid "Printers"
 msgstr "Tiskárny"
 
 msgid "Privacy policy"
 msgstr "Zásady ochrany osobních údajů"
+
+msgid "Registration completed"
+msgstr "Registrace byla dokončena"
+
+msgid "Reset password request"
+msgstr "Žádost o heslo"
 
 msgid "Shopping guide"
 msgstr "Jak nakupovat"
@@ -1482,6 +1521,9 @@ msgstr "Televize (z řeckého tele – daleko a latinského vize – vidět) je 
 
 msgid "Terms and conditions"
 msgstr "Obchodní podmínky"
+
+msgid "Thank you for your order no. {number} placed at {date}"
+msgstr "Děkujeme za objednávku č. {number} ze dne {date}"
 
 msgid "Toys"
 msgstr "Hračky a další"
