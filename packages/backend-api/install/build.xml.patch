@@ -1,5 +1,6 @@
-@@ -5,9 +5,16 @@
+@@ -5,10 +5,17 @@
 
+     <property name="check-and-fix-annotations" value="true"/>
      <property name="path.root" value="${project.basedir}"/>
      <property name="path.vendor" value="${path.root}/vendor"/>
 +    <property name="path.backend-api" value="${path.vendor}/shopsys/backend-api"/>
