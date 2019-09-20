@@ -102,7 +102,7 @@ There you can find links to upgrade notes for other versions too.
     - ENV ELASTIC_SEARCH_INDEX_PREFIX=''
 
     ```
-- parametrize variables in kubernetes configuration [[#1384]](https://github.com/shopsys/shopsys/pull/1384)
+- parametrize variables in kubernetes configuration ([#1384](https://github.com/shopsys/shopsys/pull/1384))
     - walk through your [`.ci/deploy-to-google-cloud.sh`](https://github.com/shopsys/shopsys/blob/v8.0.0/project-base/.ci/deploy-to-google-cloud.sh) and notice every occurrences of using `yq` command which is affecting `yml` or `yaml` files in [`project-base/kubernetes`](https://github.com/shopsys/shopsys/tree/v8.0.0/project-base/kubernetes)
         - in Kubernetes configuration files replace these occurrences with placeholder like this `{{FIRST_DOMAIN_HOSTNAME}}` (the placeholder will be replaced by ENV variable with the same name)
             ```diff
