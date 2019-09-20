@@ -9,7 +9,6 @@ use Shopsys\Environment;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
-use Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider;
 use Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade;
 use Shopsys\FrameworkBundle\Component\Error\ExceptionController;
 use Shopsys\FrameworkBundle\Component\Error\ExceptionListener;
