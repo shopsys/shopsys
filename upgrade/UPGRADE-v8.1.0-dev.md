@@ -297,41 +297,7 @@ There you can find links to upgrade notes for other versions too.
         +       </p>
             </div>
         ```
-    - in [`ErrorController`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Controller/Front/ErrorController.php) 
-        - pass [`ErrorIdProvider`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Error/ErrorIdProvider.php) to it
-            ```diff
-                 * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
-                 * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-            +    * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
-                 */
-                public function __construct(
-                    ExceptionController $exceptionController,
-                    ExceptionListener $exceptionListener,
-                    ErrorPagesFacade $errorPagesFacade,
-                    Domain $domain
-                    Domain $domain,
-            +       ErrorIdProvider $errorIdProvider
-                ) {
-                    $this->exceptionController = $exceptionController;
-                    $this->exceptionListener = $exceptionListener;
-                    $this->errorPagesFacade = $errorPagesFacade;
-                    $this->domain = $domain;
-            +       $this->errorIdProvider = $errorIdProvider;
-                }
-            ```
-        - replace placeholder `{{ERROR_ID}}` by actual error ID in variable `$errorPageContent` in it
-            ```diff
-                private function createErrorPageResponse($statusCode)
-                {
-                    $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);
-                    $errorPageContent = $this->errorPagesFacade->getErrorPageContentByDomainIdAndStatusCode(
-                        $this->domain->getId(),
-                        $errorPageStatusCode
-                    );
-            +       $errorPageContent = str_replace('{{ERROR_ID}}', $this->errorIdProvider->getErrorId(), $errorPageContent);
-                    return new Response($errorPageContent, $errorPageStatusCode);
-                }
-            ```
+        - doing so will require regenerating error page templates by running `php phing error-pages-generate` inside `php-fpm` container
     - create new acceptance test in [`ErrorHandlingCest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Acceptance/acceptance/ErrorHandlingCest.php)
         ```diff   
         +    /**
