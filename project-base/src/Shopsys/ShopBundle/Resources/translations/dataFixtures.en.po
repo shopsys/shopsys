@@ -613,6 +613,9 @@ msgstr ""
 msgid "Defender SPK-480, easy to fit into any bag or backpack"
 msgstr ""
 
+msgid "Demo advert"
+msgstr ""
+
 msgid "Determination"
 msgstr ""
 

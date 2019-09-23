@@ -39,7 +39,7 @@ class AdvertDataFixture extends AbstractReferenceFixture
     {
         $advertData = $this->advertDataFactory->create();
         $advertData->domainId = 1;
-        $advertData->name = 'Demo advert';
+        $advertData->name = t('Demo advert', [], 'dataFixtures');
         $advertData->type = Advert::TYPE_CODE;
         $advertData->hidden = false;
         $advertData->positionName = 'leftSidebar';

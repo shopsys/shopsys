@@ -613,6 +613,9 @@ msgstr "Defender 2.0 SPK-480"
 msgid "Defender SPK-480, easy to fit into any bag or backpack"
 msgstr "reproduktory 2.0, jednopásmové, výkon 2x2W RMS, 90Hz až 20kHz, USB napájení"
 
+msgid "Demo advert"
+msgstr "Demo reklama"
+
 msgid "Determination"
 msgstr "Určení"
 
