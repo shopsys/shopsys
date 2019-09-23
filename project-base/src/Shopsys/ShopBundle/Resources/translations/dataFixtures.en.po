@@ -7,6 +7,12 @@ msgstr ""
 msgid ""
 msgstr ""
 
+msgid "(Mon - Sat: 9 - 10 a.m. to 8 - 10 p.m.)"
+msgstr ""
+
+msgid "+1-234-567-8989"
+msgstr ""
+
 msgid "1 kg"
 msgstr ""
 
@@ -1526,6 +1532,9 @@ msgid "inkjet"
 msgstr ""
 
 msgid "media 210MB, 24min., writing speed 24x, slim box"
+msgstr ""
+
+msgid "no-reply@shopsys.com"
 msgstr ""
 
 msgid "one-slotted"
