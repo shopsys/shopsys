@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class HttpSmokeTestCase extends KernelTestCase
 {
+    protected const APP_ENV = 'test';
+    protected const APP_DEBUG = false;
+    
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before data provider is executed and before each test.
@@ -18,8 +21,8 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         parent::setUp();
 
         static::bootKernel([
-            'environment' => 'test',
-            'debug' => false,
+            'environment' => static::APP_ENV,
+            'debug' => static::APP_DEBUG,
         ]);
     }
 
