@@ -56,7 +56,7 @@ VARS=(
 
 for FILE in $FILES; do
     for VAR in ${VARS[@]}; do
-        sed -i "s|{{$VAR}}|${!VAR}|" "$FILE"
+        sed -i "s|{{$VAR}}|${!VAR}|g" "$FILE"
     done
 done
 unset FILES
