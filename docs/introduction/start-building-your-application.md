@@ -105,7 +105,7 @@ Class `SettingValueDataFixture`, method `load()`
 ```
 
 #### How to set next domains default currency
-Class `MultidomainSettingValueDataFixture`, method `load()`
+Class `SettingValueDataFixture`, method `setDomainDefaultCurrency()`
 ```diff
 - $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_EUR);
 + $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);

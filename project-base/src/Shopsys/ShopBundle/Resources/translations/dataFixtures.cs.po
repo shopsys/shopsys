@@ -349,6 +349,9 @@ msgstr ""
 msgid "<p> It is safe for you to your loved ones as important as us? In that case, you will appreciate with hob SDV-3460 feature residual heat indicators - H that you and your loved ones will protect against nasty burns. The residual heat indicator signals a residual temperature of the cooking zone even after power off. </p><br /> <h2> Reasons to opt just for built-in ceramic plate Concept SDV-3460: </h2><br /> <ol> <li> The built-in ceramic hob SDV-3460 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - protects you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 60 mm </li> <li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, angled edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 50 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> </li><li> The diameter of the front left plates: 165x265 mm </li><li> Input left front plate: 1100/2000 W </li><li> <strong> Rear Left plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> wattage right rear plate: 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate: 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5700-6800 W </li><li> Weight: 10 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
 msgstr ""
 
+msgid "<p> Order number {number} has been sent, thank you for your purchase. We will contact you about next order status. <br /><br /> <a href=\"{order_detail_url}\">Track</a> the status of your order. <br /> {transport_instructions} <br /> {payment_instructions} <br /> </p>"
+msgstr "<p> Objednávka číslo {number} byla odeslána, děkujeme za Váš nákup. Budeme Vás kontaktovat o dalším průběhu vyřizování. <br /><br /> Uschovejte si permanentní <a href=\"{order_detail_url}\">odkaz na detail objednávky</a>. <br /> {transport_instructions} <br /> {payment_instructions} <br /> </p>"
+
 msgid "<p> The minimum space requirements excels sub-mounting range hood OPP-2060th Suitable for very small kitchens. Metal buttons provide ease of use and precise adjustment of the corresponding stage performance. </p> <br /> <br /> <h2> Reasons to choose just the sub-mounting range hood Concept OPP-2060: </h2> <br /> <br /> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. The sub-mounting range hood brand Concept OPP-2060 will surprise performance <strong> 186 m3 per hour </strong>. </li><li> Very practical is the ability to select <strong> 4 Ways exhaust </strong>. </li></ol> Model OPP-2060 is equipped with a practical <strong> metal grease filter </strong>, its maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using a carbon filter, which can be bought."
 msgstr ""
 
@@ -447,6 +450,12 @@ msgstr ""
 
 msgid "Books"
 msgstr "Knihy"
+
+msgid "By entering an email below, you can download your personal and other information (for example, order history) from our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data registered to given email address on this online store domain."
+msgstr "Zadáním emailu níže si můžete stáhnout své osobní a jiné informace (například historii objednávek) z našeho internetového obchodu. Pro ověření vaší totožnosti vám po zadání emailové adresy bude zaslán email s odkazem. Klikem na odkaz se dostanete na stránku s s možností stažení těchto informací ve strojově čitelném formátu - půjde o údaje evidované k dané emailové adrese na této doméně internetového obchodu."
+
+msgid "By entering an email below, you can view your personal information that we register in our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page listing all the personal details we have connected to your email address."
+msgstr "Zadáním emailu níže si můžete nechat zobrazit vaše osobní údaje, která evidujeme v našem internetovém obchodu. Pro ověření vaší totožnosti vám po zadání emailové adresy bude zaslán email s odkazem.  Klikem na odkaz se dostanete na stránku s přehledem těchto osobních údajů - půjde o všechny údaje evidované k dané emailové adrese."
 
 msgid "CD-R VERBATIM 210MB"
 msgstr ""
@@ -1237,6 +1246,12 @@ msgstr ""
 msgid "Shopping guide"
 msgstr "Jak nakupovat"
 
+msgid "Shopsys Framework - Title page"
+msgstr "Shopsys Framework - Titulní strana"
+
+msgid "Shopsys Framework - the best solution for your eshop."
+msgstr "Shopsys Framework - nejlepší řešení pro váš internetový obchod."
+
 msgid "Side mount plates - few ETV-2860"
 msgstr ""
 
@@ -1548,4 +1563,7 @@ msgstr ""
 
 msgid "white"
 msgstr ""
+
+msgid "| Demo eshop"
+msgstr "| Demo obchod"
 

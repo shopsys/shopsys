@@ -760,7 +760,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             UserDataFixture::class,
             OrderStatusDataFixture::class,
             CountryDataFixture::class,
-            MultidomainSettingValueDataFixture::class,
+            SettingValueDataFixture::class,
         ];
     }
 }
