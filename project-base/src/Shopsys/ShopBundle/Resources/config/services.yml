@@ -85,10 +85,6 @@ services:
             - '%shopsys.domain_images_dir%'
         tags: ['doctrine.fixture.orm']
 
-    Shopsys\ShopBundle\DataFixtures\Demo\UserDataFixtureLoader:
-        arguments:
-            - '%shopsys.data_fixtures.resource_customers_filepath%'
-
     Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
         arguments:
             $useInlineEditation: false
