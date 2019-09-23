@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\EventListener\ExceptionListener;
 class NotLogFakeHttpExceptionsExceptionListener extends ExceptionListener
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider
+     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider|null
      */
     protected $errorIdProvider;
 
@@ -42,12 +42,12 @@ class NotLogFakeHttpExceptionsExceptionListener extends ExceptionListener
      */
     public function setErrorIdProvider(ErrorIdProvider $errorIdProvider): void
     {
-        if ($this->errorIdProvider !== null && $this->errorIdProvider !== $errorIdProvider) {
+        if ($this->errorIdProvider && $this->errorIdProvider !== $errorIdProvider) {
             throw new \BadMethodCallException(
                 sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
             );
         }
-        if ($this->errorIdProvider === null) {
+        if (!$this->errorIdProvider) {
             @trigger_error(
                 sprintf(
                     'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',

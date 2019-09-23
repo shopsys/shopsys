@@ -37,7 +37,7 @@ class ErrorPagesFacade
     protected $filesystem;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider
+     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider|null
      */
     protected $errorIdProvider;
 
@@ -46,14 +46,14 @@ class ErrorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
+     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider|null $errorIdProvider
      */
     public function __construct(
         $errorPagesDir,
         Domain $domain,
         DomainRouterFactory $domainRouterFactory,
         Filesystem $filesystem,
-        ErrorIdProvider $errorIdProvider
+        ?ErrorIdProvider $errorIdProvider = null
     ) {
         $this->errorPagesDir = $errorPagesDir;
         $this->domain = $domain;
@@ -157,5 +157,29 @@ class ErrorPagesFacade
         }
 
         return $errorPageResponse->getContent();
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setErrorIdProvider(ErrorIdProvider $errorIdProvider): void
+    {
+        if ($this->errorIdProvider && $this->errorIdProvider !== $errorIdProvider) {
+            throw new \BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if (!$this->errorIdProvider) {
+            @trigger_error(
+                sprintf(
+                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+            $this->errorIdProvider = $errorIdProvider;
+        }
     }
 }
