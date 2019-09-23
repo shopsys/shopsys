@@ -565,6 +565,9 @@ msgstr ""
 msgid "Czech"
 msgstr ""
 
+msgid "Czech republic"
+msgstr ""
+
 msgid "D-Link"
 msgstr ""
 
@@ -1277,6 +1280,9 @@ msgid "Sleek and compact stereo speakers in combination of black and metallic su
 msgstr ""
 
 msgid "Slicer Pizza ETV-2860"
+msgstr ""
+
+msgid "Slovakia"
 msgstr ""
 
 msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"

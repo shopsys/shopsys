@@ -565,6 +565,9 @@ msgstr "Cyklocomputer - cyklonavigace s předinstalovanými mapami silnic a cykl
 msgid "Czech"
 msgstr "česká"
 
+msgid "Czech republic"
+msgstr "Česká republika"
+
 msgid "D-Link"
 msgstr "D-Link"
 
@@ -1278,6 +1281,9 @@ msgstr "Jednopásmové stereo reproduktory SP-M120 s celkovým hudebním výkone
 
 msgid "Slicer Pizza ETV-2860"
 msgstr "Kráječ na pizzu ETV-2860"
+
+msgid "Slovakia"
+msgstr "Slovensko"
 
 msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
 msgstr "Náhradní papírové sáčky pro vysavače CONCEPT Clipper VP 9030/31/32/33 a VP 9130/31/32"
