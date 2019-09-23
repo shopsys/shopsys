@@ -409,6 +409,9 @@ msgstr "Herní počítačová myš A4Tech X-710BK s pěti tlačítky a scrolovac
 msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
 msgstr "A4tech myš X-710BK, OSCAR Game, 2000DPI, černá"
 
+msgid "Action"
+msgstr "Akce"
+
 msgid "Active"
 msgstr "Aktivní"
 
@@ -970,6 +973,9 @@ msgstr "NS-9310 Infant náhradní sáčky papírové pro VP-9310"
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr "NS-9710 Prominent náhradní sáčky papírové pro VP-9711/12/13"
 
+msgid "New"
+msgstr "Novinka"
+
 msgid "New driving rules and tips just for you!"
 msgstr "Prostudujte si nová pravidla silničního provozu platná od 1. července 2006!"
 
@@ -1332,6 +1338,9 @@ msgstr "TFT"
 
 msgid "TK-9710 Turbo brush Prominent VP 971"
 msgstr "TK-9710 Turbo kartáč Prominent VP 971"
+
+msgid "TOP"
+msgstr "Nejprodávanější"
 
 msgid "TS-9080 replacement bag for textile VP-9080"
 msgstr "TS-9080 náhradní sáček textilní pro VP-9080"

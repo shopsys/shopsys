@@ -409,6 +409,9 @@ msgstr ""
 msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
 msgstr ""
 
+msgid "Action"
+msgstr ""
+
 msgid "Active"
 msgstr ""
 
@@ -970,6 +973,9 @@ msgstr ""
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr ""
 
+msgid "New"
+msgstr ""
+
 msgid "New driving rules and tips just for you!"
 msgstr ""
 
@@ -1331,6 +1337,9 @@ msgid "TFT"
 msgstr ""
 
 msgid "TK-9710 Turbo brush Prominent VP 971"
+msgstr ""
+
+msgid "TOP"
 msgstr ""
 
 msgid "TS-9080 replacement bag for textile VP-9080"
