@@ -6,6 +6,7 @@ namespace Shopsys\ShopBundle\DataFixtures\Demo;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 
@@ -43,13 +44,20 @@ class BrandDataFixture extends AbstractReferenceFixture
     protected $brandDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    protected $domain;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\ShopBundle\Model\Product\Brand\BrandDataFactory $brandDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(BrandFacade $brandFacade, BrandDataFactoryInterface $brandDataFactory)
+    public function __construct(BrandFacade $brandFacade, BrandDataFactoryInterface $brandDataFactory, Domain $domain)
     {
         $this->brandFacade = $brandFacade;
         $this->brandDataFactory = $brandDataFactory;
+        $this->domain = $domain;
     }
 
     /**
@@ -61,10 +69,10 @@ class BrandDataFixture extends AbstractReferenceFixture
 
         foreach ($this->getBrandNamesIndexedByBrandConstants() as $brandConstant => $brandName) {
             $brandData->name = $brandName;
-            $brandData->descriptions = [
-                'cs' => 'Toto je popis značky ' . $brandData->name . '.',
-                'en' => 'This is description of brand ' . $brandData->name . '.',
-            ];
+
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $brandData->descriptions[$locale] = t('This is description of brand %brandName%.', ['%brandName%' => $brandData->name], 'dataFixtures', $locale);
+            }
 
             $brand = $this->brandFacade->create($brandData);
             $this->addReference($brandConstant, $brand);
