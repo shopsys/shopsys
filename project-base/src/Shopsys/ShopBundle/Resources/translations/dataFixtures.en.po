@@ -817,6 +817,9 @@ msgstr ""
 msgid "Hyundai 22HD44D"
 msgstr ""
 
+msgid "In stock"
+msgstr ""
+
 msgid "Information about cookies"
 msgstr ""
 
@@ -1033,6 +1036,9 @@ msgstr ""
 msgid "OPV-3260 Built-in retractable hood is 60 cm"
 msgstr ""
 
+msgid "On request"
+msgstr ""
+
 msgid "Open"
 msgstr ""
 
@@ -1055,6 +1061,9 @@ msgid "Other"
 msgstr ""
 
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
+msgstr ""
+
+msgid "Out of stock"
 msgstr ""
 
 msgid "Overall performance"
@@ -1121,6 +1130,9 @@ msgid "Practical and stylish optical mouse ideal for everyday office use.With it
 msgstr ""
 
 msgid "PremiumCord micro USB, A-B, 1m"
+msgstr ""
+
+msgid "Preparing"
 msgstr ""
 
 msgid "Pressure"

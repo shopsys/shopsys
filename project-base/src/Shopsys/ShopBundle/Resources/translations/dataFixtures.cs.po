@@ -817,6 +817,9 @@ msgstr "Hadice VP-9310"
 msgid "Hyundai 22HD44D"
 msgstr "Hyundai 22HD44D"
 
+msgid "In stock"
+msgstr "Skladem"
+
 msgid "Information about cookies"
 msgstr "Informace o cookies"
 
@@ -1033,6 +1036,9 @@ msgstr "OPP-2060  Odsavač par podstavný 60 cm"
 msgid "OPV-3260 Built-in retractable hood is 60 cm"
 msgstr "OPV-3260 Vestavný odsavač výsuvný 60cm"
 
+msgid "On request"
+msgstr "Na dotaz"
+
 msgid "Open"
 msgstr "Otevřená"
 
@@ -1056,6 +1062,9 @@ msgstr "Pevné"
 
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr "Spotřební elektronika zahrnuje elektronická zařízení každodenního (nebo alespoň častého) použití pro komunikaci, v kanceláři i doma."
+
+msgid "Out of stock"
+msgstr "Nedostupné"
 
 msgid "Overall performance"
 msgstr "Celkový výkon"
@@ -1122,6 +1131,9 @@ msgstr "Tato USB myš funguje spolehlivě na téměř libovolném povrchu a je u
 
 msgid "PremiumCord micro USB, A-B, 1m"
 msgstr "PremiumCord micro USB, A-B, 1m"
+
+msgid "Preparing"
+msgstr "Připravuje se"
 
 msgid "Pressure"
 msgstr "Tlak"
