@@ -4,7 +4,7 @@
 Shopsys Framework is a **fully functional ecommerce platform for businesses transitioning into tech-companies with their own software development team**. 
 It contains the most common B2C and B2B features for online stores, and its infrastructure is prepared for high scalability.
 
-Shopsys Framework is **the fruit of our 15 years of experience in creating custom-made online stores and it’s dedicated to best in-house devs teams who work with online stores with tens of millions of Euros of turnover per year**. 
+Shopsys Framework is **the fruit of our 16 years of experience in creating custom-made online stores and it’s dedicated to best in-house devs teams who work with online stores with tens of millions of Euros of turnover per year**. 
 
 Our platform’s **architecture is modern and corresponds to the latest trends in the production of software for leading ecommerce solutions**. 
 Deployment and scaling of our system are comfortable thanks to the use of the containerization and orchestration concepts (**Docker, Kubernetes**). 
@@ -12,13 +12,6 @@ The platform is based on one of the best PHP frameworks on the market - **Symfon
 
 ## Shopsys Framework Infrastructure
 ![Shopsys Framework Infrastructure](./docs/img/shopsys-framework-infrastructure.png 'Shopsys Framework Infrastructure')
-
-## Shopsys Framework Package Architecture
-These are most important packages and the way they depend on each other.
-For more info see the article [Basics About Package Architecture](./docs/introduction/basics-about-package-architecture.md) in our knowledge base.
-
-![Shopsys Framework package architecture schema](./docs/img/package-architecture.png 'Shopsys Framework Package Architecture')
-*Note: The specific modules in this diagram are just examples.*
 
 ## Current State and Roadmap
 
@@ -40,13 +33,13 @@ Shopsys Framework is fully functional e-commerce platform with all basic functio
 * Preparation for scalability
 * Manifest for orchestration via [Kubernetes](./docs/kubernetes/introduction-to-kubernetes.md) 
 * Support to easier [deployment to Google Cloud via Terraform](./docs/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform.md)
+* Base for [Back-end API](./docs/backend-api/index.md)
 
 ### Plans for next releases
 
-* Further performance optimizations
-* Modularization of pricing
-* Back-end API
-* Modulestore with first modules
+* GraphQL Front-end API for PWA
+* Additional Premium Fetaures
+* Enhancements for easier project implementation based on community feedback
 
 ## Sites Built on Shopsys Framework
 List of typical projects built on previous versions of Shopsys Framework:
