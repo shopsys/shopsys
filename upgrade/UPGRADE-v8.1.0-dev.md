@@ -114,6 +114,15 @@ There you can find links to upgrade notes for other versions too.
                              paths:
             ```
         - in  `deploy-to-google-cloud.sh` replace `yq` commands by new code bellow
+            - for better stability build docker images without using cache
+                ```diff
+                    docker image build \
+                        --tag ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG} \
+                        --target production \
+                +       --no-cache \
+                        -f docker/php-fpm/Dockerfile \
+                        . &&
+                ``` 
             - change shebang of `.ci/deploy-to-google-cloud.sh`
                 ```diff
                 - #!/bin/sh -ex
