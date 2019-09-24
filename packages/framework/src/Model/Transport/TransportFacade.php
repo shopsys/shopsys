@@ -178,8 +178,10 @@ class TransportFacade
     protected function updateTransportPrices(Transport $transport, array $pricesByCurrencyId)
     {
         foreach ($this->currencyFacade->getAll() as $currency) {
-            $price = $pricesByCurrencyId[$currency->getId()];
-            $transport->setPrice($this->transportPriceFactory, $currency, $price);
+            if (isset($pricesByCurrencyId[$currency->getId()])) {
+                $price = $pricesByCurrencyId[$currency->getId()];
+                $transport->setPrice($this->transportPriceFactory, $currency, $price);
+            }
         }
     }
 

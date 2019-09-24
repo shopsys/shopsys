@@ -7,7 +7,10 @@ namespace Shopsys\ShopBundle\DataFixtures\Demo;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
@@ -27,15 +30,39 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     protected $transportDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    protected $domain;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    protected $currencyFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     */
+    protected $priceConverter;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\ShopBundle\Model\Transport\TransportDataFactory $transportDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         TransportFacade $transportFacade,
-        TransportDataFactoryInterface $transportDataFactory
+        TransportDataFactoryInterface $transportDataFactory,
+        Domain $domain,
+        CurrencyFacade $currencyFacade,
+        PriceConverter $priceConverter
     ) {
         $this->transportFacade = $transportFacade;
         $this->transportDataFactory = $transportDataFactory;
+        $this->domain = $domain;
+        $this->currencyFacade = $currencyFacade;
+        $this->priceConverter = $priceConverter;
     }
 
     /**
@@ -44,46 +71,37 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public function load(ObjectManager $manager)
     {
         $transportData = $this->transportDataFactory->create();
-        $transportData->name = [
-            'cs' => 'Česká pošta - balík do ruky',
-            'en' => 'Czech post',
-        ];
-        $transportData->pricesByCurrencyId = [
-            $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::create('99.95'),
-            $this->getReference(CurrencyDataFixture::CURRENCY_EUR)->getId() => Money::create('3.95'),
-        ];
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);
+        }
+
+        $this->setPriceForAllDomainDefaultCurrencies($transportData, Money::create('99.95'));
+
         $transportData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
         $transportData = $this->transportDataFactory->create();
-        $transportData->name = [
-            'cs' => 'PPL',
-            'en' => 'PPL',
-        ];
-        $transportData->pricesByCurrencyId = [
-            $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::create('199.95'),
-            $this->getReference(CurrencyDataFixture::CURRENCY_EUR)->getId() => Money::create('6.95'),
-        ];
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $transportData->name[$locale] = t('PPL', [], 'dataFixtures', $locale);
+        }
+
+        $this->setPriceForAllDomainDefaultCurrencies($transportData, Money::create('199.95'));
+
         $transportData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
-        $transportData->name = [
-            'cs' => 'Osobní převzetí',
-            'en' => 'Personal collection',
-        ];
-        $transportData->pricesByCurrencyId = [
-            $this->getReference(CurrencyDataFixture::CURRENCY_CZK)->getId() => Money::zero(),
-            $this->getReference(CurrencyDataFixture::CURRENCY_EUR)->getId() => Money::zero(),
-        ];
-        $transportData->description = [
-            'cs' => 'Uvítá Vás milý personál!',
-            'en' => 'You will be welcomed by friendly staff!',
-        ];
-        $transportData->instructions = [
-            'cs' => 'Těšíme se na Vaši návštěvu.',
-            'en' => 'We are looking forward to your visit.',
-        ];
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $transportData->name[$locale] = t('Personal collection', [], 'dataFixtures', $locale);
+            $transportData->description[$locale] = t('You will be welcomed by friendly staff!', [], 'dataFixtures', $locale);
+            $transportData->instructions[$locale] = t('We are looking forward to your visit.', [], 'dataFixtures', $locale);
+        }
+
+        $this->setPriceForAllDomainDefaultCurrencies($transportData, Money::zero());
+
         $transportData->vat = $this->getReference(VatDataFixture::VAT_ZERO);
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
     }
@@ -99,6 +117,20 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
+     * @param \Shopsys\ShopBundle\Model\Transport\TransportData $transportData
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
+     */
+    protected function setPriceForAllDomainDefaultCurrencies(TransportData $transportData, Money $price): void
+    {
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+            $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domain->getId());
+            $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency($price, $domain->getId());
+
+            $transportData->pricesByCurrencyId[$currency->getId()] = $price;
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getDependencies()
@@ -106,6 +138,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         return [
             VatDataFixture::class,
             CurrencyDataFixture::class,
+            SettingValueDataFixture::class,
         ];
     }
 }

@@ -583,6 +583,9 @@ msgstr "Cyklocomputer - cyklonavigace s předinstalovanými mapami silnic a cykl
 msgid "Czech"
 msgstr "česká"
 
+msgid "Czech post"
+msgstr "Česká pošta - balík do ruky"
+
 msgid "Czech republic"
 msgstr "Česká republika"
 
@@ -1108,6 +1111,9 @@ msgstr "PANASONIC DMC FT5EP"
 msgid "POS cookbook_steam oven GB"
 msgstr "POS kuchařka_parní trouba CZ"
 
+msgid "PPL"
+msgstr "PPL"
+
 msgid "PRIMECOOLER PC-AD2 3D glasses"
 msgstr "PRIMECOOLER PC-AD2 3D brýle"
 
@@ -1125,6 +1131,9 @@ msgstr "<p>Dokonale čistí, ošetřuje a chrání nerezové plochy v jednom pra
 
 msgid "Personal Computers & accessories"
 msgstr "Počítače & příslušenství"
+
+msgid "Personal collection"
+msgstr "Osobní převzetí"
 
 msgid "Personal information export - {domain}"
 msgstr "Export osobních údajů - {domain}"
@@ -1537,6 +1546,9 @@ msgstr "Sledujte vysílání v úžasném rozlišení Full HD a zároveň na ste
 msgid "Water reservoir capacity"
 msgstr "Objem zásobníku na vodu"
 
+msgid "We are looking forward to your visit."
+msgstr "Těšíme se na Vaši návštěvu."
+
 msgid "Weight"
 msgstr "Hmotnost"
 
@@ -1578,6 +1590,9 @@ msgstr "YENKEE YSP 1005WH bílé"
 
 msgid "Yes"
 msgstr "Ano"
+
+msgid "You will be welcomed by friendly staff!"
+msgstr "Uvítá Vás milý personál!"
 
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
 msgstr "ZN-8009 napařovací žehlička Ferratte nerez 2200 W modrá"
