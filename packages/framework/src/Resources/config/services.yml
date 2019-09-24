@@ -602,6 +602,7 @@ services:
             - '%twig.exception_listener.controller%'
             - '@?logger'
             - '%kernel.debug%'
+            - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
 
     twig.stringloader:
         class: Twig_Loader_Array
