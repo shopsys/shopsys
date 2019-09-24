@@ -130,10 +130,12 @@ class Domain implements DomainIdsProviderInterface
     }
 
     /**
+     * @deprecated - will be removed in 9.0 release
      * @return int[]
      */
     public function getAllIdsExcludingFirstDomain(): array
     {
+        @trigger_error(sprintf('The method %s::getAllIdsExcludingFirstDomain is deprecated and will be removed in 9.0', __CLASS__), E_USER_DEPRECATED);
         $ids = [];
         foreach ($this->getAll() as $domainConfig) {
             $id = $domainConfig->getId();
