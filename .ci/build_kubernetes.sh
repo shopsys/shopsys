@@ -1,4 +1,4 @@
-#!/bin/sh -ex
+#!/bin/bash -ex
 
 # For details about this script, see /docs/kubernetes/continuous-integration-using-kubernetes.md
 
@@ -8,19 +8,6 @@ echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-
 # Set domain names for 2 domains by git branch name and server domain
 FIRST_DOMAIN_HOSTNAME=${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 SECOND_DOMAIN_HOSTNAME=2.${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
-
-# Set domain name into ingress controller so ingress can listen on domain name
-yq write --inplace project-base/kubernetes/ingress.yml spec.rules[0].host ${FIRST_DOMAIN_HOSTNAME}
-yq write --inplace project-base/kubernetes/ingress.yml spec.rules[1].host ${SECOND_DOMAIN_HOSTNAME}
-
-# Set domain into dev-stack (redis-admin, elasticsearch, adminer) hostnames
-yq write --inplace project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml [0].value.host adminer.${FIRST_DOMAIN_HOSTNAME}
-yq write --inplace project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml [1].value.host elasticsearch.${FIRST_DOMAIN_HOSTNAME}
-yq write --inplace project-base/kubernetes/kustomize/overlays/ci/ingress-patch.yaml [2].value.host redis-admin.${FIRST_DOMAIN_HOSTNAME}
-
-# Set domain into webserver hostnames
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.hostAliases[0].hostnames[+] ${FIRST_DOMAIN_HOSTNAME}
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.hostAliases[0].hostnames[+] ${SECOND_DOMAIN_HOSTNAME}
 
 # Set parameters.yml file and domains_urls
 cp project-base/app/config/domains_urls.yml.dist project-base/app/config/domains_urls.yml
@@ -43,6 +30,7 @@ docker image pull ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG} || (
         --build-arg project_root=project-base \
         --tag ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG} \
         --target ci \
+        --no-cache \
         -f project-base/docker/php-fpm/Dockerfile \
         . &&
     docker image push ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
@@ -58,27 +46,30 @@ docker image pull ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG} |
     docker image push ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
 )
 
-# Replace docker images for php-fpm of application
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].image ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
+DOCKER_PHP_FPM_IMAGE=${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
+DOCKER_ELASTIC_IMAGE=${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
+PATH_CONFIG_DIRECTORY='/var/www/html/project-base/app/config'
+GOOGLE_CLOUD_STORAGE_BUCKET_NAME=''
+GOOGLE_CLOUD_PROJECT_ID=''
 
-# Replace docker image for elasticsearch of application
-yq write --inplace project-base/kubernetes/deployments/elasticsearch.yml spec.template.spec.containers[0].image ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
+FILES=$( find project-base/kubernetes -type f )
+VARS=(
+    FIRST_DOMAIN_HOSTNAME
+    SECOND_DOMAIN_HOSTNAME
+    DOCKER_PHP_FPM_IMAGE
+    DOCKER_ELASTIC_IMAGE
+    PATH_CONFIG_DIRECTORY
+    GOOGLE_CLOUD_STORAGE_BUCKET_NAME
+    GOOGLE_CLOUD_PROJECT_ID
+)
 
-# Set different path to parameters and domain configmap paths, as default context is that root of the project is project-base, here it is monorepo so we need to check it
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].volumeMounts[1].mountPath /var/www/html/project-base/app/config/domains_urls.yml
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[0].volumeMounts[2].mountPath /var/www/html/project-base/app/config/parameters.yml
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].volumeMounts[1].mountPath /var/www/html/project-base/app/config/domains_urls.yml
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].volumeMounts[2].mountPath /var/www/html/project-base/app/config/parameters.yml
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].volumeMounts[1].mountPath /var/www/html/project-base/app/config/domains_urls.yml
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].volumeMounts[2].mountPath /var/www/html/project-base/app/config/parameters.yml
-
-# Set environment variables to container and initContainer for Google Cloud Storage connection - set it to null
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[0].value ''
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.containers[0].env[1].value ''
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].env[0].value ''
-yq write --inplace project-base/kubernetes/deployments/webserver-php-fpm.yml spec.template.spec.initContainers[1].env[1].value ''
+for FILE in $FILES; do
+    for VAR in ${VARS[@]}; do
+        sed -i "s|{{$VAR}}|${!VAR}|g" "$FILE"
+    done
+done
+unset FILES
+unset VARS
 
 # Deploy application using kubectl
 kubectl delete namespace ${JOB_NAME} || true

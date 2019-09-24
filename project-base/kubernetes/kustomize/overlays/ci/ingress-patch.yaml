@@ -1,7 +1,7 @@
 -   op: add
     path: /spec/rules/-
     value:
-        host: ~
+        host: "adminer.{{FIRST_DOMAIN_HOSTNAME}}"
         http:
             paths:
                 -   path: /
@@ -11,7 +11,7 @@
 -   op: add
     path: /spec/rules/-
     value:
-        host: ~
+        host: "elasticsearch.{{FIRST_DOMAIN_HOSTNAME}}"
         http:
             paths:
                 -   path: /
@@ -21,7 +21,7 @@
 -   op: add
     path: /spec/rules/-
     value:
-        host: ~
+        host: "redis-admin.{{FIRST_DOMAIN_HOSTNAME}}"
         http:
             paths:
                 -   path: /
