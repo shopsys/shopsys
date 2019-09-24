@@ -41,7 +41,7 @@ cp app/config/parameters.yml.dist app/config/parameters.yml
 
 DOCKER_PHP_FPM_IMAGE=${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 DOCKER_ELASTIC_IMAGE=${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
-PATH_CONFIG_DIRECTORY='/var/www/html/project-base/app/config'
+PATH_CONFIG_DIRECTORY='/var/www/html/app/config'
 GOOGLE_CLOUD_PROJECT_ID=${PROJECT_ID}
 
 FILES=$( find kubernetes -type f )
