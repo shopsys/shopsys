@@ -55,7 +55,7 @@ class FlagDataFixture extends AbstractReferenceFixture
         $flagData = $this->flagDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $flagData->name[$locale] = t('New', [], 'dataFixtures', $locale);
+            $flagData->name[$locale] = t('New [noun]', [], 'dataFixtures', $locale);
         }
 
         $flagData->rgbColor = '#efd6ff';
