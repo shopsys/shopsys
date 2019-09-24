@@ -1621,6 +1621,9 @@ msgstr ""
 msgid "media 210MB, 24min., writing speed 24x, slim box"
 msgstr ""
 
+msgid "m³"
+msgstr ""
+
 msgid "no-reply@shopsys.com"
 msgstr ""
 
@@ -1631,6 +1634,9 @@ msgid "optical"
 msgstr ""
 
 msgid "paper"
+msgstr ""
+
+msgid "pcs"
 msgstr ""
 
 msgid "white"

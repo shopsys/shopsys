@@ -6,6 +6,7 @@ namespace Shopsys\ShopBundle\DataFixtures\Demo;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface;
@@ -32,18 +33,26 @@ class UnitDataFixture extends AbstractReferenceFixture
     protected $setting;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    protected $domain;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface $unitDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         UnitFacade $unitFacade,
         UnitDataFactoryInterface $unitDataFactory,
-        Setting $setting
+        Setting $setting,
+        Domain $domain
     ) {
         $this->unitFacade = $unitFacade;
         $this->unitDataFactory = $unitDataFactory;
         $this->setting = $setting;
+        $this->domain = $domain;
     }
 
     /**
@@ -53,10 +62,14 @@ class UnitDataFixture extends AbstractReferenceFixture
     {
         $unitData = $this->unitDataFactory->create();
 
-        $unitData->name = ['cs' => 'm³', 'en' => 'm³'];
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('m³', [], 'dataFixtures', $locale);
+        }
         $this->createUnit($unitData, self::UNIT_CUBIC_METERS);
 
-        $unitData->name = ['cs' => 'ks', 'en' => 'pcs'];
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('pcs', [], 'dataFixtures', $locale);
+        }
         $this->createUnit($unitData, self::UNIT_PIECES);
 
         $this->setPiecesAsDefaultUnit();

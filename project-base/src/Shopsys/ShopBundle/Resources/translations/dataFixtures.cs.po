@@ -1621,6 +1621,9 @@ msgstr "inkoustové"
 msgid "media 210MB, 24min., writing speed 24x, slim box"
 msgstr "médium 210MB, 24min., rychlost zápisu 24x, slim box"
 
+msgid "m³"
+msgstr "m³"
+
 msgid "no-reply@shopsys.com"
 msgstr "no-reply@shopsys.cz"
 
@@ -1632,6 +1635,9 @@ msgstr "optický"
 
 msgid "paper"
 msgstr "papír"
+
+msgid "pcs"
+msgstr "ks"
 
 msgid "white"
 msgstr "bílá"
