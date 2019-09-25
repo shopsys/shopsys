@@ -6,6 +6,7 @@ namespace Tests\ShopBundle\Functional\Model\Product;
 
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
@@ -42,9 +43,14 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
         /** @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory */
         $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
-
+        /** @var \Shopsys\FrameworkBundle\Model\Localization\Localization $localization */
+        $localization = $this->getContainer()->get(Localization::class);
         $productData = $productDataFactory->create();
-        $productData->name = ['cs' => 'Name', 'en' => 'Name'];
+        $names = [];
+        foreach ($localization->getLocalesOfAllDomains() as $locale) {
+            $names[$locale] = 'Name';
+        }
+        $productData->name = $names;
         $productData->vat = $vat;
         $productData->categoriesByDomainId = [1 => [$category]];
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
@@ -275,7 +281,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productPriceRecalculator = $this->getContainer()->get(ProductPriceRecalculator::class);
 
         $productData = $this->getDefaultProductData();
-        $productData->name = ['cs' => 'Name', 'en' => 'Name'];
         $product = $productFacade->create($productData);
         $productPriceRecalculator->runImmediateRecalculations();
 
