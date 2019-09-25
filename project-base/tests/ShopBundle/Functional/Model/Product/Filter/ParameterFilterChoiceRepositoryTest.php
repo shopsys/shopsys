@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Product\Filter;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository;
 use Shopsys\ShopBundle\DataFixtures\Demo\CategoryDataFixture;
@@ -63,7 +64,10 @@ class ParameterFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
         $category = $this->getReference($categoryReferenceName);
 
-        return $repository->getParameterFilterChoicesInCategory(1, $pricingGroup, 'en', $category);
+        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
+        $domain = $this->getContainer()->get(Domain::class);
+        $domainConfig1 = $domain->getDomainConfigById(1);
+        return $repository->getParameterFilterChoicesInCategory($domainConfig1->getId(), $pricingGroup, $domainConfig1->getLocale(), $category);
     }
 
     /**
