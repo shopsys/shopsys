@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Controller;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -30,7 +31,9 @@ class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase
 
         /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
         $productData = $productDataFactory->createFromProduct($product);
-        $productData->name['en'] = 'rename';
+        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
+        $domain = $this->getContainer()->get(Domain::class);
+        $productData->name[$domain->getDomainConfigById(1)->getLocale()] = 'rename';
 
         $productFacade->edit(self::TESTED_PRODUCT_ID, $productData);
 
