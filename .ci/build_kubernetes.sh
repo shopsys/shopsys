@@ -36,6 +36,10 @@ yq write --inplace project-base/app/config/parameters_test.yml parameters.overwr
 DOCKER_IMAGE_TAG=ci-commit-${GIT_COMMIT}
 DOCKER_ELASTIC_IMAGE_TAG=ci-elasticsearch
 
+## Build documentation with mkdocs to be available in ./documentation directory
+docker build -t mkdocs-build:latest -f docker/mkdocs/Dockerfile .
+docker run -v "${WORKSPACE}":/var/www/html mkdocs-build:latest mkdocs build --site-dir documentation
+
 ## Docker image for application php-fpm container
 docker image pull ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG} || (
     echo "Image not found (see warning above), building it instead..." &&
