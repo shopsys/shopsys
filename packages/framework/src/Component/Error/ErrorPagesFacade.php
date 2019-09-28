@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\Error;
 
 use AppKernel;
@@ -37,21 +39,29 @@ class ErrorPagesFacade
     protected $filesystem;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider|null
+     */
+    protected $errorIdProvider;
+
+    /**
      * @param string $errorPagesDir
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider|null $errorIdProvider
      */
     public function __construct(
         $errorPagesDir,
         Domain $domain,
         DomainRouterFactory $domainRouterFactory,
-        Filesystem $filesystem
+        Filesystem $filesystem,
+        ?ErrorIdProvider $errorIdProvider = null
     ) {
         $this->errorPagesDir = $errorPagesDir;
         $this->domain = $domain;
         $this->domainRouterFactory = $domainRouterFactory;
         $this->filesystem = $filesystem;
+        $this->errorIdProvider = $errorIdProvider;
     }
 
     public function generateAllErrorPagesForProduction()
@@ -73,6 +83,8 @@ class ErrorPagesFacade
         if ($errorPageContent === false) {
             throw new \Shopsys\FrameworkBundle\Component\Error\Exception\ErrorPageNotFoundException($domainId, $statusCode);
         }
+
+        $errorPageContent = str_replace('{{ERROR_ID}}', $this->errorIdProvider->getErrorId(), $errorPageContent);
 
         return $errorPageContent;
     }
@@ -147,5 +159,29 @@ class ErrorPagesFacade
         }
 
         return $errorPageResponse->getContent();
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setErrorIdProvider(ErrorIdProvider $errorIdProvider): void
+    {
+        if ($this->errorIdProvider && $this->errorIdProvider !== $errorIdProvider) {
+            throw new \BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if (!$this->errorIdProvider) {
+            @trigger_error(
+                sprintf(
+                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+            $this->errorIdProvider = $errorIdProvider;
+        }
     }
 }

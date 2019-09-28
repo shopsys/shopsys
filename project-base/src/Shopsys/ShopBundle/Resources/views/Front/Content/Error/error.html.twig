@@ -39,6 +39,10 @@
                     <p>
                         {{ 'Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%.'|trans({ '%mail%': getShopInfoEmail(), '%phone%': getShopInfoPhoneNumber() }) }}
                     </p>
+
+                    <p>
+                        Error ID: <span id="js-error-id">{{ '{{ERROR_ID}}' }}</span>
+                    </p>
                 </div>
             {% endif %}
         </div>

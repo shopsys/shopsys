@@ -377,7 +377,8 @@ We need to follow some steps that will change old version of the shop for the ne
 
 To preserve created data we need to use phing target `build-deploy-part-2-db-dependent` for building application environment of `php-fpm` container, maintenance page is needed if there exist unapplied database migrations.
 
-With each update of master branch in our repository we need to rebuild image based on [Docker Image Building](./installation-using-docker-on-production-server.md#docker-image-building) section.
+!!! important
+    With each update of master branch in our repository we need to rebuild image based on [Docker Image Building](./installation-using-docker-on-production-server.md#docker-image-building) section.
 
 We log into the server using ssh.  
 Now we are logged in production server and we start to deploy newly built production image.

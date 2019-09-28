@@ -120,7 +120,7 @@ There you can find links to upgrade notes for other versions too.
 
 ### Tools
 - check and get rid of the use of all removed phing targets ([#1193](https://github.com/shopsys/shopsys/pull/1193))
-    - the targets were marked as deprecated in `v7.3.0` version, see [the upgrade notes](/docs/upgrade/UPGRADE-v7.3.0.md#tools) and [#1068](https://github.com/shopsys/shopsys/pull/1068)
+    - the targets were marked as deprecated in `v7.3.0` version, see [the upgrade notes](/upgrade/UPGRADE-v7.3.0.md#tools) and [#1068](https://github.com/shopsys/shopsys/pull/1068)
 - use YAML standards checker ([#539](https://github.com/shopsys/shopsys/pull/539))
     - for your YAML files to be checked and fixed automatically, install `sspooky13/yaml-standards` as a dev-dependency via Composer
         - you can do this by running `composer require --dev sspooky13/yaml-standards:^4.2`

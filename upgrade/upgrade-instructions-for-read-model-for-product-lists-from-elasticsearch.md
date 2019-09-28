@@ -2,7 +2,7 @@
 
 There is a new layer in Shopsys Framework, called [read model](/docs/model/introduction-to-read-model.md), separating the templates and application model.
 
-This upgrade requires the [Upgrade Instructions for Read Model for Product Lists](/docs/upgrade/upgrade-instructions-for-read-model-for-product-lists.md) to be applied first.
+This upgrade requires the [Upgrade Instructions for Read Model for Product Lists](/upgrade/upgrade-instructions-for-read-model-for-product-lists.md) to be applied first.
 
 - if you are using Elasticsearch for filtering, you need to configure it as your data source as well in your `service.yml` and `services_test.yml`:
     ```diff

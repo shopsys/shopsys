@@ -30,7 +30,7 @@ Run database migrations
 php phing db-migrations
 ```
 
-*Now you can continue with creating [OAuth client](/docs/backend-api/api-authentication-oauth2.md)*
+*Now you can continue with creating [OAuth client](./api-authentication-oauth2.md)*
 
 ## Troubleshooting
 

@@ -209,7 +209,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 ```
 
 !!! tip
-    If you want to change order for your newly created field, please look at section [Changing order of groups and fields](https://github.com/shopsys/shopsys/blob/master/docs/extensibility/form-extension.md#changing-order-of-groups-and-fields)
+    If you want to change order for your newly created field, please look at section [Changing order of groups and fields](../extensibility/form-extension.md#changing-order-of-groups-and-fields)
 
 In your `Product` class, overwrite the `edit()` method.
 

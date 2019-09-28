@@ -1,4 +1,4 @@
-#!/bin/sh -ex
+#!/bin/sh -e
 
 # used to copy logs of codeception which are not streamed
 WEBSERVER_PHP_FPM_CONTAINER_NAME="webserver-php-fpm"

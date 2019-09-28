@@ -1,6 +1,6 @@
 # Creating Custom API Endpoint
 
-This cookbook provides you all the necessary steps that you will need for extending your [backend API](/docs/backend-api/introduction-to-backend-api.md) with a custom endpoint.
+This cookbook provides you all the necessary steps that you will need for extending your [backend API](../../backend-api/introduction-to-backend-api.md) with a custom endpoint.
 
 To keep the cookbook as simple as possible, we will just add `/hello/<name>` endpoint that will greet the API client.
 
@@ -66,8 +66,8 @@ In this step, we will require the client's name as a parameter and reflect it in
 ```
 
 ## Conclusion
-Your new backend API endpoint is now available on the url `<your_domain_url>/api/v1/hello/<name>`. If you are not sure how to test it, you can get inspired in [Introduction to Backend API](/docs/backend-api/introduction-to-backend-api.md#try-it).
+Your new backend API endpoint is now available on the url `<your_domain_url>/api/v1/hello/<name>`. If you are not sure how to test it, you can get inspired in [Introduction to Backend API](../../backend-api/introduction-to-backend-api.md#try-it).
 
 The routing for your new endpoint works out of the box, thanks to the `shopsys_shop_api` setting in your [`Resources/config/routing.yml`](/project-base/src/Shopsys/ShopBundle/Resources/config/routing.yml) configuration.
 
-[API Authentication - OAuth2](/docs/backend-api/api-authentication-oauth2.md) is required by default for the endpoint, thanks to the `oauth2` setting in your [`app/config/routing.yml`](/project-base/app/config/routing.yml) configuration.
+[API Authentication - OAuth2](../../backend-api/api-authentication-oauth2.md) is required by default for the endpoint, thanks to the `oauth2` setting in your [`app/config/routing.yml`](/project-base/app/config/routing.yml) configuration.

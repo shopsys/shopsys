@@ -42,21 +42,29 @@ class ErrorController extends FrontBaseController
     private $domain;
 
     /**
+     * @var string
+     */
+    private $environment;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionController $exceptionController
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param string $environment
      */
     public function __construct(
         ExceptionController $exceptionController,
         ExceptionListener $exceptionListener,
         ErrorPagesFacade $errorPagesFacade,
-        Domain $domain
+        Domain $domain,
+        string $environment
     ) {
         $this->exceptionController = $exceptionController;
         $this->exceptionListener = $exceptionListener;
         $this->errorPagesFacade = $errorPagesFacade;
         $this->domain = $domain;
+        $this->environment = $environment;
     }
 
     /**
@@ -188,7 +196,7 @@ class ErrorController extends FrontBaseController
         $url = $request->getSchemeAndHttpHost() . $request->getBasePath();
         $content = sprintf("You are trying to access an unknown domain '%s'.", $url);
 
-        if (Environment::getEnvironment(false) === EnvironmentType::TEST) {
+        if ($this->environment === EnvironmentType::TEST) {
             $overwriteDomainUrl = $this->getParameter('overwrite_domain_url');
             $content .= sprintf(" TEST environment is active, current domain url is '%s'.", $overwriteDomainUrl);
         }

@@ -102,6 +102,62 @@ There you can find links to upgrade notes for other versions too.
     - ENV ELASTIC_SEARCH_INDEX_PREFIX=''
 
     ```
+- parametrize variables in kubernetes configuration ([#1384](https://github.com/shopsys/shopsys/pull/1384))
+    - walk through your [`.ci/deploy-to-google-cloud.sh`](https://github.com/shopsys/shopsys/blob/v8.0.0/project-base/.ci/deploy-to-google-cloud.sh) and notice every occurrences of using `yq` command which is affecting `yml` or `yaml` files in [`project-base/kubernetes`](https://github.com/shopsys/shopsys/tree/v8.0.0/project-base/kubernetes)
+        - in Kubernetes configuration files replace these occurrences with placeholder like this `{{FIRST_DOMAIN_HOSTNAME}}` (the placeholder will be replaced by ENV variable with the same name)
+            ```diff
+             spec:
+                 rules:
+            -        -   host: ~
+            +        -   host: "{{FIRST_DOMAIN_HOSTNAME}}"
+                         http:
+                             paths:
+            ```
+        - in  `deploy-to-google-cloud.sh` replace `yq` commands by new code bellow
+            - for better stability build docker images without using cache
+                ```diff
+                    docker image build \
+                        --tag ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG} \
+                        --target production \
+                +       --no-cache \
+                        -f docker/php-fpm/Dockerfile \
+                        . &&
+                ``` 
+            - change shebang of `.ci/deploy-to-google-cloud.sh`
+                ```diff
+                - #!/bin/sh -ex
+                + #!/bin/bash -ex
+                ```
+            - add code bellow to find all Kubernetes configuration files in `kubernetes` folder
+                ```diff
+                +   FILES=$( find kubernetes -type f )
+                ```
+            - set the environment variables and specify them into array, e.g.
+                ```diff
+                +   VARS=(
+                +       FIRST_DOMAIN_HOSTNAME
+                +       SECOND_DOMAIN_HOSTNAME
+                +       DOCKER_PHP_FPM_IMAGE
+                +       DOCKER_ELASTIC_IMAGE
+                +       PATH_CONFIG_DIRECTORY
+                +       GOOGLE_CLOUD_STORAGE_BUCKET_NAME
+                +       GOOGLE_CLOUD_PROJECT_ID
+                +   )
+                ```
+            - add a loop to replace defined placeholders automatically
+                ```diff
+                +   for FILE in $FILES; do
+                +       for VAR in ${VARS[@]}; do
+                +           sed -i "s|{{$VAR}}|${!VAR}|" "$FILE"
+                +       done
+                +   done
+                ```
+            - optionally you may unset variables which you will not need any more
+                ```diff
+                +   unset FILES
+                +   unset VARS
+                ```
+    - for better understanding we recommend to see given PR on github
 
 ### Tools
 - let Phing properties `is-multidomain` and `translations.dump.locales` be auto-detected ([#1309](https://github.com/shopsys/shopsys/pull/1309))
@@ -285,6 +341,36 @@ There you can find links to upgrade notes for other versions too.
     - these methods are deprecated and will be removed in the next major release:
         - `CronFacade::runModulesForInstance()` use method `runModules()` instead
         - `CronFacade::runModule()` use method `runSingleModule()` instead
+- add unique error ID to 500 error pages ([#1393](https://github.com/shopsys/shopsys/pull/1393))
+    - add new paragraph in [`error.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Error/error.html.twig)
+        ```diff
+                <p>
+                    {{ 'Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%.'|trans({ '%mail%': getShopInfoEmail(), '%phone%': getShopInfoPhoneNumber() }) }}
+                </p>
+        +
+        +       <p>
+        +           Error ID: <span id="js-error-id">{{ '{{ERROR_ID}}' }}</span>
+        +       </p>
+            </div>
+        ```
+        - doing so will require regenerating error page templates by running `php phing error-pages-generate` inside `php-fpm` container
+    - create new acceptance test in [`ErrorHandlingCest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Acceptance/acceptance/ErrorHandlingCest.php)
+        ```diff   
+        +    /**
+        +     * @param \Tests\ShopBundle\Test\Codeception\AcceptanceTester $me
+        +     */
+        +    public function test500ErrorPage(AcceptanceTester $me)
+        +    {
+        +        $me->wantTo('display 500 error and check error ID uniqueness');
+        +        $me->amOnPage('/test/error-handler/exception');
+        +        $me->see('Oops! Error occurred');
+        +        $cssIdentifier = ['css' => '#js-error-id'];
+        +        $errorIdFirstAccess = $me->grabTextFrom($cssIdentifier);
+        +        $me->amOnPage('/test/error-handler/exception');
+        +        $errorIdSecondAccess = $me->grabTextFrom($cssIdentifier);
+        +        Assert::assertNotSame($errorIdFirstAccess, $errorIdSecondAccess);
+        +    }
+        ```
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
