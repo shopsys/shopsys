@@ -91,7 +91,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $this->updateGeneralUpgradeFile($version);
 
         $this->symfonyStyle->success(Message::SUCCESS);
-        $this->symfonyStyle->note('Review all the upgrading files whether they satisfy our rules and guidelines, see https://docs.shopsys.com/en/7.3/contributing/guidelines-for-writing-upgrade/.');
+        $this->symfonyStyle->note('Review all the upgrading files whether they satisfy our rules and guidelines, see https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-upgrade/.');
         $versionString = $version->getVersionString();
         $this->symfonyStyle->note(sprintf(
             'Typically, you need to:

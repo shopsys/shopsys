@@ -130,7 +130,7 @@ There you can find links to upgrade notes for other versions too.
             - examine the target in the `shopsys/framework` package (either on [GitHub](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/build.xml) or locally in `vendor/shopsys/framework/build.xml`)
             - it's possible that the current target's definition suits your needs now after the upgrade - you don't have to overwrite it if that's the case
             - for future upgradability of your project, it's better to use the original target via `shopsys_framework.TARGET_NAME` if that's possible (eg. if you want to execute a command before or after the original task)
-            - if you think we can support your use case better via [phing target extensibility](https://docs.shopsys.com/en/7.3/contributing/guidelines-for-phing-targets/#extensibility), please [open an issue](https://github.com/shopsys/shopsys/issues/new) or [create a pull request](https://docs.shopsys.com/en/7.3/contributing/guidelines-for-pull-request/)
+            - if you think we can support your use case better via [phing target extensibility](https://docs.shopsys.com/en/latest/contributing/guidelines-for-phing-targets/#extensibility), please [open an issue](https://github.com/shopsys/shopsys/issues/new) or [create a pull request](https://docs.shopsys.com/en/latest/contributing/guidelines-for-pull-request/)
         - if you have deleted any targets, overwrite them in your `build.xml` with a fail task so it doesn't get executed by mistake:
             ```xml
             <target name="deleted-target" hidden="true">
