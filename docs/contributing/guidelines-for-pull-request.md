@@ -41,7 +41,7 @@ git rebase origin/master
 * Now just wait for review of your change.
 
 ### Note about targeting pull requests
-As we [support multiple versions](./backward-compatibility-promise.md#current-release-plan) of Shopsys Framework while keeping [Backward Compatibility Promise](/docs/contributing/backward-compatibility-promise.md), it is important to think about proper targeting of your pull request.
+As we [support multiple versions](./backward-compatibility-promise.md#current-release-plan) of Shopsys Framework while keeping [Backward Compatibility Promise](./backward-compatibility-promise.md), it is important to think about proper targeting of your pull request.
 
 If your pull request:
 * **fixes a bug and does not contain any BC break**, it should be targeted to the oldest supported version where the bug occurs.

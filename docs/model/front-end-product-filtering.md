@@ -38,7 +38,7 @@ You can choose which one of them will be used by setting one of the previously m
 
 Along with filtering the choice will influence the data source for the product lists for increased performance.
 
-You can find more about this topic in [Introduction to Read Model](/docs/model/introduction-to-read-model.md#read-model-options).
+You can find more about this topic in [Introduction to Read Model](./introduction-to-read-model.md#read-model-options).
 
 !!! note
     If you need to extend the implementation of your choice, it is possible you will need to adjust abstract test `Tests\ShopBundle\Functional\Model\Product\ProductOnCurrentDomainFacadeTest` accordingly.

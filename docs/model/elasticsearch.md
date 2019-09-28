@@ -46,7 +46,7 @@ Following product attributes are exported into Elasticsearch (i.e. the search or
 * calculated_selling_denied (calculated true/false value whether the product is already sold out)
 * selling_denied (true/false value whether the product can be sold)
 * availability (translation of product availability)
-* main_variant (true/false value whether the product is main variant or not. You can find more about behaviour of variants [here](/docs/functional/behavior-of-product-variants.md))
+* main_variant (true/false value whether the product is main variant or not. You can find more about behaviour of variants [here](../functional/behavior-of-product-variants.md))
 * detail_url (absolute url to page with products detail)
 * visibility (all visibilities for all pricing groups and domains)
 

@@ -52,7 +52,7 @@ This configuration file contains pieces of information about the domain ID, the 
 Set the url address for the domain in `app/config/domains_urls.yml`.
 
 !!! note
-    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)
+    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#12-enable-second-domain-optional)
 
 #### 2.3 Locale settings
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
@@ -160,7 +160,7 @@ example for domain that uses English language:
 Change the url address in the configuration of the domain in `app/config/domains_urls.yml`.
 
 !!! note
-    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-macos.md#11-enable-second-domain-optional)
+    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#12-enable-second-domain-optional)
 
 #### 4.2 Replace the old url address
 Run the phing target
