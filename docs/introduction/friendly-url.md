@@ -11,7 +11,7 @@ The rest of the work is done automatically and URLs provided by these providers 
 
 - create new class with name ending with `FriendlyUrlDataProvider`
 - this class has to implement `FriendlyUrlDataProviderInterface`
-- this interface requires you to implement two methods *(see [ProductDetailFriendlyUrlDataProvider](/packages/framework/src/Model/Product/ProductDetailFriendlyUrlDataProvider.php) class as an example of the implementation)*:
+- this interface requires you to implement two methods *(see [ProductDetailFriendlyUrlDataProvider](https://github.com/shopsys/shopsys/blob/8.0/packages/framework/src/Model/Product/ProductDetailFriendlyUrlDataProvider.php) class as an example of the implementation)*:
     - `getFriendlyUrlData` method that generates `FriendlyUrlData` for all your entities
     - `getRouteName` method returns name of route that you have to declare in `routing_friendly_url.yml` file like:
         ```
@@ -32,5 +32,5 @@ The rest of the work is done automatically and URLs provided by these providers 
 - run `php phing friendly-urls-generate` to generate new URLs
 - visit some of provided URLs and check if everything works fine
 
-*Note: You can use [`UrlListType` in your forms](https://github.com/shopsys/shopsys/blob/master/docs/introduction/using-form-types.md#urllisttype) to edit friendly URLs of existing entities.*
+*Note: You can use [`UrlListType` in your forms](./using-form-types.md#urllisttype) to edit friendly URLs of existing entities.*
 *If you're interested, you can take a look at the processing of `Article` entity (see `ArticleFacade`, `ArticleData::$urls`, `ArticleDataFactory` and `ArticleFormType`), which allows for this functionality.*

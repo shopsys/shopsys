@@ -3,7 +3,7 @@
 Installation of the Shopsys Framework is complete and now you can start building your application.
 Here are first steps you should start with.
 
-*Note: If you don't have a working application, [install it](/docs/installation/installation-guide.md) first.*
+*Note: If you don't have a working application, [install it](../installation/installation-guide.md) first.*
 
 ## Commit `migrations-lock.yml`
 
@@ -20,17 +20,17 @@ git commit -m'locked migrations'
 A domain can be understood as one instance of the shop.
 For example, just furniture can be bough on the domain shopsys-furniture.com while only electronics can be found on the domain shopsys-electro.com.
 
-*Note: Learn more about domain concept fully in [Domain, Multidomain, Multilanguage](/docs/introduction/domain-multidomain-multilanguage.md#domain) article.*
+*Note: Learn more about domain concept fully in [Domain, Multidomain, Multilanguage](./domain-multidomain-multilanguage.md#domain) article.*
 
 When you install new project, domains are set like this
 * `shopsys` on the URL `http://127.0.0.1:8000`
 * `2.shopsys` on the URL `http://127.0.0.2:8000`
 
-Read [settings and working with domain](/docs/introduction/how-to-set-up-domains-and-locales.md#settings-and-working-with-domains) to learn how to set your domains correctly. If you have project with only one domain, read [how to create a single domain application](/docs/introduction/how-to-set-up-domains-and-locales.md#1-how-to-create-a-single-domain-application). If you have project with more than two domains, read [how to add a new domain](/docs/introduction/how-to-set-up-domains-and-locales.md#2-how-to-add-a-new-domain).
+Read [settings and working with domain](./how-to-set-up-domains-and-locales.md#settings-and-working-with-domains) to learn how to set your domains correctly. If you have project with only one domain, read [how to create a single domain application](/docs/introduction/how-to-set-up-domains-and-locales.md#1-how-to-create-a-single-domain-application). If you have project with more than two domains, read [how to add a new domain](/docs/introduction/how-to-set-up-domains-and-locales.md#2-how-to-add-a-new-domain).
 
 We highly recommend to set up domains in the beginning of your project correctly. It will save you a lot of time.
 
-*Note: When you change the domain settings, it is likely that [tests](/docs/introduction/automated-testing.md) (mainly [acceptance](/docs/introduction/automated-testing.md#acceptance-tests-aka-functional-tests-or-selenium-tests)) will fail and that [demo data](/docs/introduction/basic-and-demo-data-during-application-installation.md) will not fit you.
+*Note: When you change the domain settings, it is likely that [tests](./automated-testing.md) (mainly [acceptance](./automated-testing.md#acceptance-tests-aka-functional-tests-or-selenium-tests)) will fail and that [demo data](/docs/introduction/basic-and-demo-data-during-application-installation.md) will not fit you.
 It is up to you to adjust them accordingly for your needs.*
 
 *Note 2: If you add a domain, please create and upload an icon for the new domain (Administration > Settings >  E-shop identification). You'll make shop administrators happy.*
@@ -46,16 +46,16 @@ When you install new project, locales are set like this
 * `2.shopsys` *(2nd domain)*: `cs`
 * administration: `en`
 
-In case you want to change domain locale read [locale settings](/docs/introduction/how-to-set-up-domains-and-locales.md#3-locale-settings) or in case you want to change default administration locale read [locale in administration](/docs/introduction/how-to-set-up-domains-and-locales.md#36-locale-in-administration).
+In case you want to change domain locale read [locale settings](./how-to-set-up-domains-and-locales.md#3-locale-settings) or in case you want to change default administration locale read [locale in administration](/docs/introduction/how-to-set-up-domains-and-locales.md#36-locale-in-administration).
 
 ## Set up Elasticsearch
 
 We use Elasticsearch on the frontend for product searching, filtering and for fast listing of products to provide better performance.
 You are likely to adjust the Elasticsearch configuration for example if you have a technical shop where the inflection of product names doesn't make sense (we use inflection during searching by default).
 
-*Note: Find more in detailed article about [Elasticsearch](/docs/model/elasticsearch.md) usage.*
+*Note: Find more in detailed article about [Elasticsearch](../model/elasticsearch.md) usage.*
 
-Every domain has defined one [Elasticsearch index](/docs/model/elasticsearch.md#elasticsearch-index-setting). Definition of this index can be found in `src/Shopsys/ShopBundle/Resources/definition/<domain_id>.json` files.
+Every domain has defined one [Elasticsearch index](../model/elasticsearch.md#elasticsearch-index-setting). Definition of this index can be found in `src/Shopsys/ShopBundle/Resources/definition/<domain_id>.json` files.
 The most often change is adding [fields](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) and changing [analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html) to justify search behavior.
 
 ## Set up routing
@@ -65,7 +65,7 @@ You are likely to adjust routing when you need translated routes for a new local
 
 *We use Symfony routing, so please find more in the [official documentation](https://symfony.com/doc/3.4/routing.html)*
 
-You can adjust the routing in `src/Shopsys/ShopBundle/Resources/config/routing_front.yml` file and [locale specific](/docs/introduction/how-to-set-up-domains-and-locales.md#32-frontend-routes) in `src/Shopsys/ShopBundle/Resources/config/routing_front_xx.yml` files.
+You can adjust the routing in `src/Shopsys/ShopBundle/Resources/config/routing_front.yml` file and [locale specific](./how-to-set-up-domains-and-locales.md#32-frontend-routes) in `src/Shopsys/ShopBundle/Resources/config/routing_front_xx.yml` files.
 
 ## Set up default currency
 
@@ -75,7 +75,7 @@ The default currency is different for administration and for each of domains and
 The administration default currency is used in twig templates eg. as `{{ value|priceWithCurrencyAdmin }}`.
 The default currency for domain is used eg. as `{{ cartItemDiscount.priceWithVat|price }}`.
 
-*Note: Read more in a dedicated article about [price filters](/docs/model/how-to-work-with-money.md#price) and [administration price filter](/docs/model/how-to-work-with-money.md#pricewithcurrencyadmin).*
+*Note: Read more in a dedicated article about [price filters](../model/how-to-work-with-money.md#price) and [administration price filter](../model/how-to-work-with-money.md#pricewithcurrencyadmin).*
 
 When you install new project, default currencies are set like this
 * `shopsys` *(1st domain)*: `CZK`

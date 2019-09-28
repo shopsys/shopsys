@@ -64,4 +64,4 @@ You can also login into the administration section on [http://127.0.0.1:8000/adm
 * Username: `admin` or `superadmin` (the latter has access to advanced options)
 * Password: `admin123`
 
-*And now you can [start building your application](/docs/introduction/start-building-your-application.md).*
+*And now you can [start building your application](../introduction/start-building-your-application.md).*
