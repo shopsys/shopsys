@@ -76,7 +76,7 @@ php phing db-migrations-generate
 ```
 
 !!! note
-    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](/docs/introduction/console-commands-for-application-management-phing-targets.md)
+    More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 The command will print a filename of the database migration with content like this.
 
