@@ -137,7 +137,7 @@ OR
 * `page=[integer]`
 
 #### Success Response
-##### Code 
+##### Code
 `200`
 ##### Content
 ```
@@ -209,7 +209,7 @@ http://127.0.0.1:8000/api/v1/products?uuids[]=877a07d5-a276-49f8-9b73-6ac0edef83
 ### Add product
 #### URL
 `/api/v1/products`
-#### Method 
+#### Method
 `POST`
 #### Headers
 
