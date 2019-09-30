@@ -23,17 +23,18 @@ For example, just furniture can be bough on the domain shopsys-furniture.com whi
 *Note: Learn more about domain concept fully in [Domain, Multidomain, Multilanguage](./domain-multidomain-multilanguage.md#domain) article.*
 
 When you install new project, domains are set like this
+
 * `shopsys` on the URL `http://127.0.0.1:8000`
 * `2.shopsys` on the URL `http://127.0.0.2:8000`
 
-Read [settings and working with domain](./how-to-set-up-domains-and-locales.md#settings-and-working-with-domains) to learn how to set your domains correctly. If you have project with only one domain, read [how to create a single domain application](/docs/introduction/how-to-set-up-domains-and-locales.md#1-how-to-create-a-single-domain-application). If you have project with more than two domains, read [how to add a new domain](/docs/introduction/how-to-set-up-domains-and-locales.md#2-how-to-add-a-new-domain).
+Read [settings and working with domain](./how-to-set-up-domains-and-locales.md#settings-and-working-with-domains) to learn how to set your domains correctly. If you have project with only one domain, read [how to create a single domain application](./how-to-set-up-domains-and-locales.md#1-how-to-create-a-single-domain-application). If you have project with more than two domains, read [how to add a new domain](./how-to-set-up-domains-and-locales.md#2-how-to-add-a-new-domain).
 
 We highly recommend to set up domains in the beginning of your project correctly. It will save you a lot of time.
 
-*Note: When you change the domain settings, it is likely that [tests](./automated-testing.md) (mainly [acceptance](./automated-testing.md#acceptance-tests-aka-functional-tests-or-selenium-tests)) will fail and that [demo data](/docs/introduction/basic-and-demo-data-during-application-installation.md) will not fit you.
-It is up to you to adjust them accordingly for your needs.*
-
-*Note 2: If you add a domain, please create and upload an icon for the new domain (Administration > Settings >  E-shop identification). You'll make shop administrators happy.*
+!!! note "Notes"
+    * When you change the domain settings, it is likely that [tests](./automated-testing.md) (mainly [acceptance](./automated-testing.md#acceptance-tests-aka-functional-tests-or-selenium-tests)) will fail and that [demo data](./basic-and-demo-data-during-application-installation.md) will not fit you.
+    It is up to you to adjust them accordingly for your needs.
+    * If you add a domain, please create and upload an icon for the new domain (Administration > Settings >  E-shop identification). You'll make shop administrators happy.
 
 ## Set up locales
 
@@ -42,18 +43,20 @@ We use [ISO 639-1 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 
 Every domain has defined one locale and also administration has defined its locale.
 
 When you install new project, locales are set like this
+
 * `shopsys` *(1st domain)*: `en`
 * `2.shopsys` *(2nd domain)*: `cs`
 * administration: `en`
 
-In case you want to change domain locale read [locale settings](./how-to-set-up-domains-and-locales.md#3-locale-settings) or in case you want to change default administration locale read [locale in administration](/docs/introduction/how-to-set-up-domains-and-locales.md#36-locale-in-administration).
+In case you want to change domain locale read [locale settings](./how-to-set-up-domains-and-locales.md#3-locale-settings) or in case you want to change default administration locale read [locale in administration](./how-to-set-up-domains-and-locales.md#36-locale-in-administration).
 
 ## Set up Elasticsearch
 
 We use Elasticsearch on the frontend for product searching, filtering and for fast listing of products to provide better performance.
 You are likely to adjust the Elasticsearch configuration for example if you have a technical shop where the inflection of product names doesn't make sense (we use inflection during searching by default).
 
-*Note: Find more in detailed article about [Elasticsearch](../model/elasticsearch.md) usage.*
+!!! note
+    Find more in detailed article about [Elasticsearch](../model/elasticsearch.md) usage.
 
 Every domain has defined one [Elasticsearch index](../model/elasticsearch.md#elasticsearch-index-setting). Definition of this index can be found in `src/Shopsys/ShopBundle/Resources/definition/<domain_id>.json` files.
 The most often change is adding [fields](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) and changing [analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html) to justify search behavior.
@@ -78,6 +81,7 @@ The default currency for domain is used eg. as `{{ cartItemDiscount.priceWithVat
 *Note: Read more in a dedicated article about [price filters](../model/how-to-work-with-money.md#price) and [administration price filter](../model/how-to-work-with-money.md#pricewithcurrencyadmin).*
 
 When you install new project, default currencies are set like this
+
 * `shopsys` *(1st domain)*: `CZK`
 * `2.shopsys` *(2nd domain)*: `EUR`
 * administration: `CZK`
