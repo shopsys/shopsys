@@ -371,7 +371,7 @@ OR
 `404 Not Found`
 
 !!! note
-    Updating variant/main variant is not supported yet*
+    Updating variant/main variant is not supported yet
 
 ### Delete product
 #### URL
