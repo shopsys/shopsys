@@ -88,6 +88,8 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends TransactionFunc
      */
     public function testSearch(string $searchText, ProductFilterData $filterData, ProductFilterCountData $expectedCountData): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         $filterConfig = $this->productFilterConfigFactory->createForSearch($this->domain->getId(), $this->domain->getLocale(), $searchText);
         $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch($searchText, $filterConfig, $filterData);
 
