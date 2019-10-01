@@ -41,6 +41,8 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
 
     public function testGetBrandFilterChoicesForSearchPhone(): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         $brandFilterChoices = $this->getChoicesForSearchText('phone');
 
         $this->assertCount(7, $brandFilterChoices);

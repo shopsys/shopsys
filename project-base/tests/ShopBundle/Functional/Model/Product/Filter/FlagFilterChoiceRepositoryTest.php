@@ -39,6 +39,8 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
 
     public function testGetFlagFilterChoicesForSearchPhone(): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         $flagFilterChoices = $this->getChoicesForSearchText('phone');
 
         $this->assertCount(3, $flagFilterChoices);
@@ -57,6 +59,8 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
 
     public function testGetFlagFilterChoicesForBook(): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         $flagFilterChoices = $this->getChoicesForSearchText('book');
 
         $this->assertCount(2, $flagFilterChoices);
