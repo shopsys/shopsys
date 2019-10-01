@@ -19,6 +19,8 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
     public function testBrand(): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         $filter = $this->createFilter()
             ->filterByBrands([1]);
 
@@ -27,6 +29,8 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
     public function testFlag(): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         $filter = $this->createFilter()
             ->filterByFlags([3])
             ->applyDefaultOrdering();
@@ -36,6 +40,8 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
     public function testFlagBrand(): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         $filter = $this->createFilter()
             ->filterByBrands([12])
             ->filterByFlags([1])
@@ -46,6 +52,8 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
     public function testMultiFilter(): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
 
@@ -72,6 +80,8 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
     public function testOrdering(): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
 
@@ -96,6 +106,8 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
     public function testMatchQuery(): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         $filter = $this->createFilter();
 
         $kittyFilter = $filter->search('kitty');
@@ -107,6 +119,8 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
     public function testPagination(): void
     {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
         $filter = $this->createFilter()
             ->filterByCategory([9])
             ->applyDefaultOrdering();
