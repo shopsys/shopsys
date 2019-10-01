@@ -98,20 +98,16 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
 
     public function testGetFilteredPaginatedInCategory(): void
     {
-        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
         /** @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade */
         $listedProductViewFacade = $this->getContainer()->get(ListedProductViewFacadeInterface::class);
         $emptyFilterData = new ProductFilterData();
 
         $categoryId = 9;
-        $foundProductId = 72;
 
         $paginationResults = $listedProductViewFacade->getFilteredPaginatedInCategory($categoryId, $emptyFilterData, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 5);
         $listedProductViews = $paginationResults->getResults();
 
         $this->assertCount(5, $listedProductViews);
-        $this->assertArrayHasKey($foundProductId, $listedProductViews);
-        $this->assertInstanceOf(ListedProductView::class, $listedProductViews[$foundProductId]);
-        $this->assertEquals(t('100 Czech crowns ticket', [], 'dataFixtures', $firstDomainLocale), $listedProductViews[$foundProductId]->getName());
+        $this->assertContainsOnlyInstancesOf(ListedProductView::class, $listedProductViews);
     }
 }
