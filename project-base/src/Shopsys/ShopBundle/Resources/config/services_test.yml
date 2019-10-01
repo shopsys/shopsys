@@ -9,7 +9,8 @@ services:
     Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter:
         factory: ['@Shopsys\FrameworkBundle\Model\Localization\CustomDateTimeFormatterFactory', create]
 
-    Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~
+    CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
+        class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
 
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver:
         class: Tests\ShopBundle\Functional\EntityExtension\OverwritableEntityNameResolver
@@ -63,3 +64,16 @@ services:
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade: ~
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
+
+    Shopsys\FrameworkBundle\Model\Localization\Localization:
+        arguments:
+            $adminLocale: '%shopsys.admin_locale%'
+
+    Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
+        arguments: ['%router.resource%']
+
+    Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory: ~
+
+    Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~
+
+    Shopsys\FrameworkBundle\Twig\NumberFormatterExtension: ~

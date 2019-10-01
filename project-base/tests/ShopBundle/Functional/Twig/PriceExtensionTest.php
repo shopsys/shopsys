@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Twig;
 
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
+use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -35,6 +36,11 @@ class PriceExtensionTest extends FunctionalTestCase
      */
     private $numberFormatRepository;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory
+     */
+    private $currencyFormatterFactory;
+
     protected function setUp()
     {
         $domainConfig1 = new DomainConfig(1, 'http://example.com', 'example', 'en');
@@ -53,6 +59,7 @@ class PriceExtensionTest extends FunctionalTestCase
         $this->domain = new Domain([$domainConfig1, $domainConfig2], $settingMock);
         $this->intlCurrencyRepository = $this->getContainer()->get(IntlCurrencyRepository::class);
         $this->numberFormatRepository = $this->getContainer()->get(NumberFormatRepository::class);
+        $this->currencyFormatterFactory = $this->getContainer()->get(CurrencyFormatterFactory::class);
 
         parent::setUp();
     }
@@ -141,7 +148,8 @@ class PriceExtensionTest extends FunctionalTestCase
             $this->domain,
             $localization,
             $this->numberFormatRepository,
-            $this->intlCurrencyRepository
+            $this->intlCurrencyRepository,
+            $this->currencyFormatterFactory
         );
     }
 }

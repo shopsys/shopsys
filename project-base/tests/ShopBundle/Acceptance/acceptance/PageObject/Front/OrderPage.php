@@ -15,7 +15,8 @@ class OrderPage extends AbstractPage
      */
     public function assertTransportIsNotSelected($transportTitle)
     {
-        $this->tester->dontSeeCheckboxIsCheckedByLabel($transportTitle);
+        $translatedTransportTitle = t($transportTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $this->tester->dontSeeCheckboxIsCheckedByLabel($translatedTransportTitle);
     }
 
     /**
@@ -23,7 +24,8 @@ class OrderPage extends AbstractPage
      */
     public function assertTransportIsSelected($transportTitle)
     {
-        $this->tester->seeCheckboxIsCheckedByLabel($transportTitle);
+        $translatedTransportTitle = t($transportTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $this->tester->seeCheckboxIsCheckedByLabel($translatedTransportTitle);
     }
 
     /**
@@ -31,7 +33,7 @@ class OrderPage extends AbstractPage
      */
     public function selectTransport($transportTitle)
     {
-        $this->tester->checkOptionByLabel($transportTitle);
+        $this->tester->checkOptionByLabelTranslationFrontend($transportTitle, 'dataFixtures');
     }
 
     /**
@@ -39,7 +41,8 @@ class OrderPage extends AbstractPage
      */
     public function assertPaymentIsNotSelected($paymentTitle)
     {
-        $this->tester->dontSeeCheckboxIsCheckedByLabel($paymentTitle);
+        $translatedPaymentTitle = t($paymentTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $this->tester->dontSeeCheckboxIsCheckedByLabel($translatedPaymentTitle);
     }
 
     /**
@@ -47,7 +50,8 @@ class OrderPage extends AbstractPage
      */
     public function assertPaymentIsSelected($paymentTitle)
     {
-        $this->tester->seeCheckboxIsCheckedByLabel($paymentTitle);
+        $translatedPaymentTitle = t($paymentTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $this->tester->seeCheckboxIsCheckedByLabel($translatedPaymentTitle);
     }
 
     /**
@@ -55,7 +59,7 @@ class OrderPage extends AbstractPage
      */
     public function selectPayment($paymentTitle)
     {
-        $this->tester->checkOptionByLabel($paymentTitle);
+        $this->tester->checkOptionByLabelTranslationFrontend($paymentTitle, 'dataFixtures');
     }
 
     /**
@@ -110,6 +114,6 @@ class OrderPage extends AbstractPage
 
     public function acceptLegalConditions()
     {
-        $this->tester->checkOptionByLabel('I agree with terms and conditions and privacy policy.');
+        $this->tester->checkOptionByLabelTranslationFrontend('I agree with terms and conditions and privacy policy.');
     }
 }

@@ -6,6 +6,7 @@ namespace Tests\ShopBundle\Acceptance\acceptance\PageObject\Front;
 
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverKeys;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\ShopBundle\Acceptance\acceptance\PageObject\AbstractPage;
 
 class CartPage extends AbstractPage
@@ -22,21 +23,24 @@ class CartPage extends AbstractPage
 
     /**
      * @param string $productName
-     * @param string $formattedPriceWithCurrency
+     * @param string $price
      */
-    public function assertProductPrice($productName, $formattedPriceWithCurrency)
+    public function assertProductPrice($productName, $price)
     {
+        $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolOnFrontend(Money::create($price));
         $productPriceCell = $this->getProductPriceCellByName($productName);
         $this->tester->seeInElement($formattedPriceWithCurrency, $productPriceCell);
     }
 
     /**
-     * @param string $formattedPriceWithCurrency
+     * @param string $price
      */
-    public function assertTotalPriceWithVat($formattedPriceWithCurrency)
+    public function assertTotalPriceWithVat($price)
     {
+        $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolOnFrontend(Money::create($price));
         $orderPriceCell = $this->getTotalProductsPriceCell();
-        $this->tester->seeInElement('Total price including VAT: ' . $formattedPriceWithCurrency, $orderPriceCell);
+        $message = t('Total price including VAT', [], 'messages', $this->tester->getFrontendLocale());
+        $this->tester->seeInElement($message . ': ' . $formattedPriceWithCurrency, $orderPriceCell);
     }
 
     /**
@@ -66,7 +70,8 @@ class CartPage extends AbstractPage
      */
     public function assertProductIsInCartByName($productName)
     {
-        $this->tester->see($productName, WebDriverBy::cssSelector('.js-cart-item-name'));
+        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $this->tester->see($translatedProductName, WebDriverBy::cssSelector('.js-cart-item-name'));
     }
 
     /**
@@ -74,7 +79,8 @@ class CartPage extends AbstractPage
      */
     public function assertProductIsNotInCartByName($productName)
     {
-        $this->tester->dontSee($productName, WebDriverBy::cssSelector('.js-cart-item-name'));
+        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $this->tester->dontSee($translatedProductName, WebDriverBy::cssSelector('.js-cart-item-name'));
     }
 
     /**
@@ -94,13 +100,14 @@ class CartPage extends AbstractPage
      */
     private function findProductRowInCartByName($productName)
     {
+        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $rows = $this->webDriver->findElements(WebDriverBy::cssSelector('.js-cart-item'));
 
         foreach ($rows as $row) {
             try {
                 $nameCell = $row->findElement(WebDriverBy::cssSelector('.js-cart-item-name'));
 
-                if ($nameCell->getText() === $productName) {
+                if ($nameCell->getText() === $translatedProductName) {
                     return $row;
                 }
             } catch (\Facebook\WebDriver\Exception\NoSuchElementException $ex) {
@@ -108,7 +115,7 @@ class CartPage extends AbstractPage
             }
         }
 
-        $message = 'Unable to find row containing product "' . $productName . '" in cart.';
+        $message = sprintf('Unable to find row containing product "%s" (translated to "%s") in cart.', $productName, $translatedProductName);
         throw new \Facebook\WebDriver\Exception\NoSuchElementException($message);
     }
 

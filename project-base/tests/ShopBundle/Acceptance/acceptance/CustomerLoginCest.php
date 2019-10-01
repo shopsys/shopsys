@@ -26,7 +26,7 @@ class CustomerLoginCest
         $loginPage->login('no-reply@shopsys.com', 'user123');
         $me->see('Jaromír Jágr');
         $layoutPage->logout();
-        $me->see('Log in');
+        $me->seeTranslationFrontend('Log in');
         $me->seeCurrentPageEquals('/');
     }
 
@@ -41,12 +41,13 @@ class CustomerLoginCest
         LayoutPage $layoutPage
     ) {
         $me->wantTo('login as a customer from category page');
-        $me->amOnPage('/personal-computers-accessories/');
+        // personal-computers-accessories
+        $me->amOnLocalizedRoute('front_product_list', ['id' => 6]);
         $layoutPage->openLoginPopup();
         $loginPage->login('no-reply@shopsys.com', 'user123');
         $me->see('Jaromír Jágr');
         $layoutPage->logout();
-        $me->see('Log in');
+        $me->seeTranslationFrontend('Log in');
         $me->seeCurrentPageEquals('/');
     }
 
@@ -61,11 +62,11 @@ class CustomerLoginCest
         LayoutPage $layoutPage
     ) {
         $me->wantTo('login as a customer from login page');
-        $me->amOnPage('/login/');
+        $me->amOnLocalizedRoute('front_login');
         $loginPage->login('no-reply@shopsys.com', 'user123');
         $me->see('Jaromír Jágr');
         $layoutPage->logout();
-        $me->see('Log in');
+        $me->seeTranslationFrontend('Log in');
         $me->seeCurrentPageEquals('/');
     }
 }
