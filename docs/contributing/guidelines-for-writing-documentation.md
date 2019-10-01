@@ -20,6 +20,7 @@
         * You can use `[TOC]` tag to generate a table of contents for your article.
     * [`admonition`](https://python-markdown.github.io/extensions/admonition/)
         * You can add nicely rendered blocks with notes, warnings, tips, etc. using `!!! note/warning/...` syntax.
+        * You can see all the supported types in the [rST documentation](http://docutils.sourceforge.net/docs/ref/rst/directives.html#specific-admonitions).
     * [`awesome-pages`](https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin)
         * Enables us configuring navigation menu of the `docs` folder and it's sub-folders using `navigation.yml` files.
     * `search`
