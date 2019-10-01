@@ -99,4 +99,14 @@ class ParameterFacade
         $this->em->remove($parameter);
         $this->em->flush();
     }
+
+    /**
+     * @param string $valueText
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
+     */
+    public function getParameterValueByValueTextAndLocale(string $valueText, string $locale): ParameterValue
+    {
+        return $this->parameterRepository->getParameterValueByValueTextAndLocale($valueText, $locale);
+    }
 }

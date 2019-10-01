@@ -11,9 +11,9 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\ShopBundle\DataFixtures\Demo\PricingGroupDataFixture;
-use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
+use Tests\ShopBundle\Test\ParameterTransactionFunctionalTestCase;
 
-class FilterQueryTest extends TransactionFunctionalTestCase
+class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 {
     private const ELASTICSEARCH_INDEX = 'product';
 
@@ -60,7 +60,9 @@ class FilterQueryTest extends TransactionFunctionalTestCase
 
     public function testParameters(): void
     {
-        $parameters = [51 => [109, 115], 50 => [105, 121], 10 => [107]];
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
+        $parameters = [51 => [$this->getParameterValueIdForFirstDomain('hardcover'), $this->getParameterValueIdForFirstDomain('paper')], 50 => [$this->getParameterValueIdForFirstDomain('55'), $this->getParameterValueIdForFirstDomain('48')], 10 => [$this->getParameterValueIdForFirstDomain('50 g')]];
 
         $filter = $this->createFilter()
             ->filterByParameters($parameters);
