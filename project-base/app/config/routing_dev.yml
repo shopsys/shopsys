@@ -8,3 +8,7 @@ _profiler:
 
 _main:
     resource: routing.yml
+
+shopsys_frontend_api_graphiql:
+    resource: "@ShopsysFrontendApiBundle/Resources/config/routing_dev.yml"
+    prefix: /graphql
