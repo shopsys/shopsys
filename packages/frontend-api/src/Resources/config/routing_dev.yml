@@ -1,0 +1,9 @@
+overblog_graphiql_endpoint:
+    path: /graphiql/
+    defaults:
+        _controller: Overblog\GraphiQLBundle\Controller\GraphiQLController::indexAction
+
+overblog_graphiql_endpoint_multiple:
+    path: /graphiql/{schemaName}
+    defaults:
+        _controller: Overblog\GraphiQLBundle\Controller\GraphiQLController::indexAction

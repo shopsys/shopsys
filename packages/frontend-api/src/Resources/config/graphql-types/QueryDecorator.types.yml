@@ -1,0 +1,3 @@
+QueryDecorator:
+    type: object
+    decorator: true

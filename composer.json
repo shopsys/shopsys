@@ -117,6 +117,8 @@
         "litipk/php-bignumbers": "^0.8",
         "nikic/php-parser": "^4.0",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.1",
+        "overblog/graphql-bundle": "^0.12",
+        "overblog/graphiql-bundle": "^0.1",
         "phing/phing": "^2.16.1",
         "phpunit/phpunit": "^7.0",
         "presta/sitemap-bundle": "^1.5.3",

@@ -1,0 +1,11 @@
+overblog_graphql_endpoint:
+    path: /
+    defaults:
+        _controller: Shopsys\FrontendApiBundle\Controller\FrontendApiController::endpointAction
+        _format: 'json'
+
+overblog_graphql_batch_endpoint:
+    path: /batch/
+    defaults:
+        _controller: Shopsys\FrontendApiBundle\Controller\FrontendApiController::batchEndpointAction
+        _format: 'json'
