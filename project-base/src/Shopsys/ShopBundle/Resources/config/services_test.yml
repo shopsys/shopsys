@@ -79,3 +79,5 @@ services:
     Shopsys\FrameworkBundle\Twig\NumberFormatterExtension: ~
 
     Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~

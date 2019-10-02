@@ -7,6 +7,7 @@ namespace Tests\ShopBundle\Functional\Model\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
@@ -349,10 +350,12 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function categoryPriceTestCase(): array
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter */
+        $priceConverter = $this->getContainer()->get(PriceConverter::class);
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = Money::create(1000);
-        $filterData->maximalPrice = Money::create(80000);
+        $filterData->minimalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), 1);
+        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(80000), 1);
 
         $countData = new ProductFilterCountData();
         $countData->countInStock = 6;

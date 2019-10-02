@@ -43,4 +43,17 @@ class PriceConverter
 
         return $this->rounding->roundPriceWithoutVat($price);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function convertPriceWithVatToPriceInDomainDefaultCurrency(Money $price, int $domainId): Money
+    {
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        $price = $price->divide($currency->getExchangeRate(), static::DEFAULT_SCALE);
+
+        return $this->rounding->roundPriceWithVat($price);
+    }
 }
