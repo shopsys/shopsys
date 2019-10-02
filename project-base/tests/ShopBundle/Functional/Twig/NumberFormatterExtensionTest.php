@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Twig;
 
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Tests\ShopBundle\Test\FunctionalTestCase;
@@ -52,8 +53,11 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
         /** @var \CommerceGuys\Intl\NumberFormat\NumberFormatRepository $numberFormatRepository */
         $numberFormatRepository = $this->getContainer()->get(NumberFormatRepository::class);
 
-        $numberFormatterExtension = new NumberFormatterExtension($localizationMock, $numberFormatRepository);
+        /** @var \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade */
+        $administrationFacade = $this->getContainer()->get(AdministrationFacade::class);
 
-        $this->assertSame($result, $numberFormatterExtension->formatNumber($input));
+        $numberFormatterExtension = new NumberFormatterExtension($localizationMock, $numberFormatRepository, $administrationFacade);
+
+        $this->assertSame($result, $numberFormatterExtension->formatNumber($input, $locale));
     }
 }
