@@ -1,3 +1,8 @@
 QueryDecorator:
     type: object
     decorator: true
+    config:
+        fields:
+            categories:
+                type: '[Category!]!'
+                resolve: "@=resolver('categories')"

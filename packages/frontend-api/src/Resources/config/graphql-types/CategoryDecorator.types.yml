@@ -1,0 +1,18 @@
+CategoryDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a category"
+        fields:
+            uuid:
+                type: "ID!"
+                description: "UUID"
+            name:
+                type: "String"
+                description: "Localized category name (domain dependent)"
+            children:
+                type: "[Category!]"
+                description: "Descendant categories"
+            parent:
+                type: "Category"
+                description: "Ancestor category"
