@@ -5,6 +5,7 @@
 get_all_packages() {
     echo "framework \
         backend-api \
+        frontend-api \
         read-model \
         google-cloud-bundle \
         product-feed-zbozi \

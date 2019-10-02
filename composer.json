@@ -12,6 +12,7 @@
             "Shopsys\\BackendApiBundle\\": "packages/backend-api/src/",
             "Shopsys\\CodingStandards\\": "packages/coding-standards/src/",
             "Shopsys\\FormTypesBundle\\": "packages/form-types-bundle/src/",
+            "Shopsys\\FrontendApiBundle\\": "packages/frontend-api/src/",
             "Shopsys\\GoogleCloudBundle\\": "packages/google-cloud-bundle/src/",
             "Shopsys\\HttpSmokeTesting\\": "packages/http-smoke-testing/src/",
             "Shopsys\\MigrationBundle\\": "packages/migrations/src/",
@@ -41,6 +42,7 @@
             "Tests\\BackendApiBundle\\": "packages/backend-api/tests/",
             "Tests\\CodingStandards\\": "packages/coding-standards/tests/",
             "Tests\\FrameworkBundle\\": "packages/framework/tests/",
+            "Tests\\FrontendApiBundle\\": "packages/frontend-api/tests/",
             "Tests\\HttpSmokeTesting\\": "packages/http-smoke-testing/tests/",
             "Tests\\MigrationBundle\\": "packages/migrations/tests/",
             "Tests\\ProductFeed\\ZboziBundle\\": "packages/product-feed-zbozi/tests/",
@@ -210,6 +212,7 @@
     "replace": {
         "shopsys/backend-api": "self.version",
         "shopsys/form-types-bundle": "self.version",
+        "shopsys/frontend-api": "self.version",
         "shopsys/google-cloud-bundle": "self.version",
         "shopsys/http-smoke-testing": "self.version",
         "shopsys/migrations": "self.version",
