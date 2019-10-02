@@ -8,6 +8,7 @@ arrange:
     - frontend
     - administration
     - backend-api
+    - frontend-api
     - extensibility
     - kubernetes
     - contributing
