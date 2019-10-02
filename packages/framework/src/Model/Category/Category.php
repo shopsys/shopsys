@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
@@ -26,6 +27,13 @@ class Category extends AbstractTranslatableEntity
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation[]|\Doctrine\Common\Collections\Collection
@@ -94,6 +102,8 @@ class Category extends AbstractTranslatableEntity
 
         $this->setTranslations($categoryData);
         $this->createDomains($categoryData);
+
+        $this->uuid = $categoryData->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
@@ -271,6 +281,14 @@ class Category extends AbstractTranslatableEntity
     public function getDescription(int $domainId)
     {
         return $this->getCategoryDomain($domainId)->getDescription();
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**
