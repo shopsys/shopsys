@@ -7,6 +7,7 @@ namespace Tests\ShopBundle\Functional\Model\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -27,9 +28,15 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
      */
     protected $domain;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     */
+    protected $priceConverter;
+
     protected function setUp()
     {
         $this->domain = $this->getContainer()->get(Domain::class);
+        $this->priceConverter = $this->getContainer()->get(PriceConverter::class);
         parent::setUp();
     }
 
@@ -38,7 +45,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->minimalPrice = Money::create(1000);
+        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), 1);
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
         $this->assertCount(22, $paginationResult->getResults());
@@ -49,7 +56,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->maximalPrice = Money::create(10000);
+        $productFilterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(10000), 1);
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
         $this->assertCount(22, $paginationResult->getResults());
@@ -252,7 +259,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->minimalPrice = Money::create(1000);
+        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), 1);
 
         $paginationResult = $this->getPaginationResultInCategoryWithPageAndLimit($productFilterData, $category, 1, 10);
         $this->assertCount(10, $paginationResult->getResults());
