@@ -33,6 +33,45 @@ There you can find links to upgrade notes for other versions too.
         - `src/Resources/views/Admin/Content/Category/detail.html.twig`
         - `src/Resources/views/Admin/Content/Product/detail.html.twig`
 - add [`app/getEnvironment.php`](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/getEnvironment.php) file to your project ([#1368](https://github.com/shopsys/shopsys/pull/1368))
+- add optional [Frontend API](https://github.com/shopsys/shopsys/blob/9.0/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445)):
+    - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
+    - register necessary bundles in `app/AppKernel.php`
+        ```diff
+          new JMS\TranslationBundle\JMSTranslationBundle(),
+          new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+        + new Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle(),
+        + new Overblog\GraphQLBundle\OverblogGraphQLBundle(),
+          new Presta\SitemapBundle\PrestaSitemapBundle(),
+        ```
+        ```diff
+          if ($this->getEnvironment() === EnvironmentType::DEVELOPMENT) {
+        +     $bundles[] = new Overblog\GraphiQLBundle\OverblogGraphiQLBundle();
+        ```
+    - add new route resource at the end of `app/config/routing.yml`
+        ```diff
+        + shopsys_frontend_api:
+        +     resource: "@ShopsysFrontendApiBundle/Resources/config/routing.yml"
+        +     prefix: /graphql
+        ```
+    - add new route resource at the end of `app/config/routing_dev.yml`
+        ```diff
+        + shopsys_frontend_api:
+        +     resource: "@ShopsysFrontendApiBundle/Resources/config/routing_dev.yml"
+        +     prefix: /graphql
+        ```
+    - copy necessary type definitions
+        [Query.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Query.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Query.types.yml`
+        [Category.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml`
+    - copy necessary configuration [shopsys_frontend_api.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/packages/shopsys_frontend_api.yml) to `app/config/packages/shopsys_frontend_api.yml`
+    - copy [tests for FrontendApiBundle from Github](https://github.com/shopsys/shopsys/tree/9.0/project-base/tests/FrontendApiBundle) to your `tests` folder
+    - enable Frontend API for desired domains in `app/config/parameters_common.yml` file  
+    for example
+        ```diff
+          parmeters:
+              # ...
+        +     shopsys.frontend_api.domains:
+        +         - 1
+        +         - 2
 
 ### Tools
 
