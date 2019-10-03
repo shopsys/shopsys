@@ -7,6 +7,7 @@ namespace Tests\ShopBundle\Functional\Model\Product\Search;
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
@@ -54,6 +55,9 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     {
         $this->skipTestIfFirstDomainIsNotInEnglish();
 
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter */
+        $priceConverter = $this->getContainer()->get(PriceConverter::class);
+
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
 
@@ -61,7 +65,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
             ->filterOnlyInStock()
             ->filterByCategory([9])
             ->filterByFlags([1])
-            ->filterByPrices($pricingGroup, null, Money::create(20));
+            ->filterByPrices($pricingGroup, null, $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20), 1));
 
         $this->assertIdWithFilter($filter, [50]);
     }
