@@ -1,24 +1,42 @@
 {% macro orderItem(orderItemForm, orderItemId, productItem) %}
     {% import _self as self %}
     <tr class="js-order-item js-order-item-any" id="{{ orderItemForm.vars.id }}" data-index="{{ orderItemId }}">
-        <td class="position-relative">
-            {% if productItem and productItem.product %}
-                {{ form_widget(orderItemForm.name, { attr: { class: 'js-order-item-name'}}) }}
-                <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" class="in-icon in-icon--after-input" target="_blank">
-                    <i class="svg svg-arrow-simple in-icon in-icon--detail"></i>
-                </a>
-            {% elseif productItem and not productItem.product %}
-                {{ form_widget(orderItemForm.name, { attr: { class: 'js-order-item-name'}}) }}
-                <i class="in-icon in-icon--after-input svg svg-question js-tooltip" data-toggle="tooltip" data-placement="right" title="{{ 'Product not in e-shop.'|trans }}"></i>
-            {% else %}
-                {{ form_widget(orderItemForm.name, { attr: { class: 'js-order-item-name'}}) }}
-            {% endif %}
+        <td>
+            <div class="relative padding-left-10">
+                {% if productItem and productItem.product %}
+                    {{ form_widget(orderItemForm.name, {attr: { class: 'js-order-item-name'}}) }}
+                    {{ form_errors(orderItemForm.name, {errors_attr: { inline: false }}) }}
+                    <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" class="in-icon in-icon--after-input" target="_blank">
+                        <i class="svg svg-arrow-simple in-icon in-icon--detail"></i>
+                    </a>
+                {% elseif productItem and not productItem.product %}
+                    {{ form_widget(orderItemForm.name, {attr: { class: 'js-order-item-name'}}) }}
+                    {{ form_errors(orderItemForm.name, {errors_attr: { inline: false }}) }}
+                    <i class="in-icon in-icon--after-input svg svg-question js-tooltip" data-toggle="tooltip" data-placement="right" title="{{ 'Product not in e-shop.'|trans }}"></i>
+                {% else %}
+                    {{ form_widget(orderItemForm.name, { attr: { class: 'js-order-item-name'}}) }}
+                    {{ form_errors(orderItemForm.name, {errors_attr: { inline: false }}) }}
+                {% endif %}
+            </div>
         </td>
-        <td>{{ form_widget(orderItemForm.catnum, {attr: { class: 'input--medium text-right'}}) }}</td>
-        <td>{{ self.priceWithVatWidget(orderItemForm.priceWithVat) }}</td>
-        <td>{{ form_widget(orderItemForm.quantity, {attr: { class: 'input--small text-right'}}) }}</td>
-        <td>{{ form_widget(orderItemForm.unitName, {attr: { class: 'input--small text-right'}}) }}</td>
-        <td>{{ form_widget(orderItemForm.vatPercent, {attr: { class: 'input--small text-right'}}) }}</td>
+        <td>
+            {{ form_widget(orderItemForm.catnum, {attr: { class: 'input--medium text-right'}}) }}
+        </td>
+        <td>
+            {{ self.priceWithVatWidget(orderItemForm.priceWithVat) }}
+        </td>
+        <td>
+            {{ form_widget(orderItemForm.quantity, {attr: { class: 'input--small text-right'}, error_attr: { inline: false }}) }}
+            {{ form_errors(orderItemForm.quantity, {errors_attr: { inline: false }}) }}
+        </td>
+        <td>
+            {{ form_widget(orderItemForm.unitName, {attr: { class: 'input--small text-right'}}) }}
+            {{ form_errors(orderItemForm.unitName, {errors_attr: { inline: false }}) }}
+        </td>
+        <td>
+            {{ form_widget(orderItemForm.vatPercent, {attr: { class: 'input--small text-right'}}) }}
+            {{ form_errors(orderItemForm.vatPercent, {errors_attr: { inline: false }}) }}
+        </td>
         {% set uncheckedByDefault = orderItemForm.vars.data is not null ? orderItemForm.setPricesManually.vars.data : false %}
         <td class="text-center">{{ form_widget(orderItemForm.setPricesManually, {attr: { class: 'js-set-prices-manually'}, checked: uncheckedByDefault}) }}</td>
         <td>{{ self.calculablePriceWidget(orderItemForm.priceWithoutVat) }}</td>
@@ -37,13 +55,23 @@
             data-transport-prices-with-vat-by-transport-id="{{ transportPricesWithVatByTransportId|json_encode() }}"
             data-transport-vat-percents-by-transport-id="{{ transportVatPercentsByTransportId|json_encode() }}"
             >
-        <td>{{ form_widget(orderTransportForm.transport, {isSimple: true}) }}</td>
+        <td>
+            <div class="relative padding-left-10">
+                {{ form_widget(orderTransportForm.transport, {isSimple: true}) }}
+                {{ form_errors(orderTransportForm.transport, {errors_attr: { inline: false }}) }}
+            </div>
+        </td>
         <td class="text-right">-</td>
         <td>{{ self.priceWithVatWidget(orderTransportForm.priceWithVat) }}</td>
         <td class="text-right">1</td>
         <td></td>
-        <td>{{ form_widget(orderTransportForm.vatPercent, {attr: { class: 'input--small text-right'}}) }}</td>
-        <td class="text-center">{{ form_widget(orderTransportForm.setPricesManually, {attr: { class: 'js-set-prices-manually'}}) }}</td>
+        <td>
+            {{ form_widget(orderTransportForm.vatPercent, {attr: { class: 'input--small text-right'}}) }}
+            {{ form_errors(orderTransportForm.vatPercent, {errors_attr: { inline: false }}) }}
+        </td>
+        <td class="text-center">
+            {{ form_widget(orderTransportForm.setPricesManually, {attr: { class: 'js-set-prices-manually'}}) }}
+        </td>
         <td>{{ self.calculablePriceWidget(orderTransportForm.priceWithoutVat) }}</td>
         <td colspan="3"></td>
     </tr>
@@ -56,36 +84,46 @@
             data-payment-prices-with-vat-by-payment-id="{{ paymentPricesWithVatByPaymentId|json_encode() }}"
             data-payment-vat-percents-by-payment-id="{{ paymentVatPercentsByPaymentId|json_encode() }}"
     >
-        <td>{{ form_widget(orderPaymentForm.payment, {isSimple: true}) }}</td>
+        <td>
+            <div class="relative padding-left-10">
+                {{ form_widget(orderPaymentForm.payment, {isSimple: true}) }}
+                {{ form_errors(orderPaymentForm.payment, {errors_attr: { inline: false }}) }}
+            </div>
+        </td>
         <td class="text-right">-</td>
         <td>{{ self.priceWithVatWidget(orderPaymentForm.priceWithVat) }}</td>
         <td class="text-right">1</td>
         <td></td>
-        <td>{{ form_widget(orderPaymentForm.vatPercent, {attr: { class: 'input--small text-right'}}) }}</td>
-        <td class="text-center">{{ form_widget(orderPaymentForm.setPricesManually, {attr: { class: 'js-set-prices-manually'}}) }}</td>
+        <td>
+            {{ form_widget(orderPaymentForm.vatPercent, {attr: { class: 'input--small text-right'}}) }}
+            {{ form_errors(orderPaymentForm.vatPercent, {errors_attr: { inline: false }}) }}
+        </td>
+        <td class="text-center">
+            {{ form_widget(orderPaymentForm.setPricesManually, {attr: { class: 'js-set-prices-manually'}}) }}
+        </td>
         <td>{{ self.calculablePriceWidget(orderPaymentForm.priceWithoutVat) }}</td>
         <td colspan="3"></td>
     </tr>
 {% endmacro %}
 
 {% macro priceWithVatWidget(priceWithVatForm) %}
-    {{ form_errors(priceWithVatForm, {errors_attr: {inline: true}}) }}
     <span class="text-no-wrap">
+        {{ form_widget(priceWithVatForm, {attr: { class: 'input--small text-right'}}, {errors_attr: { class: 'in-message--pin' }}) }}
         <span class="display-inline-block text-normal-wrap">
             <i
-                    title="{{ 'Using price calculation has been disabled, don\'t forget to edit all prices.'|trans }}"
-                    class="svg svg-warning js-setting-prices-manually-warning js-tooltip table-action cursor-help"
-                    data-toggle="tooltip"
-                    data-placement="right"
+            title="{{ 'Using price calculation has been disabled, don\'t forget to edit all prices.'|trans }}"
+            class="svg svg-warning js-setting-prices-manually-warning js-tooltip table-action cursor-help"
+            data-toggle="tooltip"
+            data-placement="right"
             ></i>
         </span>
-        {{ form_widget(priceWithVatForm, {attr: { class: 'input--small text-right'}}) }}
+        {{ form_errors(priceWithVatForm, {errors_attr: { inline: false }}) }}
     </span>
 {% endmacro %}
 
 {% macro calculablePriceWidget(calculablePriceForm) %}
-    {{ form_errors(calculablePriceForm, {errors_attr: {inline: true}}) }}
     <span class="text-no-wrap">
         {{ form_widget(calculablePriceForm, {attr: { class: 'input--small text-right js-calculable-price'}}) }}
+        {{ form_errors(calculablePriceForm, {errors_attr: { inline: false }}) }}
     </span>
 {% endmacro %}
