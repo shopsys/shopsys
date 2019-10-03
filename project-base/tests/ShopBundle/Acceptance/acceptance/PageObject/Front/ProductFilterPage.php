@@ -29,7 +29,8 @@ class ProductFilterPage extends AbstractPage
      */
     public function setMinimalPrice($price)
     {
-        $this->tester->fillFieldByCss('#product_filter_form_minimalPrice', $price . WebDriverKeys::ENTER);
+        $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
+        $this->tester->fillFieldByCss('#product_filter_form_minimalPrice', $convertedPrice . WebDriverKeys::ENTER);
         $this->waitForFilter();
     }
 
@@ -38,7 +39,8 @@ class ProductFilterPage extends AbstractPage
      */
     public function setMaximalPrice($price)
     {
-        $this->tester->fillFieldByCss('#product_filter_form_maximalPrice', $price . WebDriverKeys::ENTER);
+        $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
+        $this->tester->fillFieldByCss('#product_filter_form_maximalPrice', $convertedPrice . WebDriverKeys::ENTER);
         $this->waitForFilter();
     }
 
