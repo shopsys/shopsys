@@ -766,9 +766,12 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function searchPriceTestCase(): array
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter */
+        $priceConverter = $this->getContainer()->get(PriceConverter::class);
+
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = Money::create(5000);
-        $filterData->maximalPrice = Money::create(50000);
+        $filterData->minimalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(5000), 1);
+        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(50000), 1);
         $countData = new ProductFilterCountData();
         $countData->countInStock = 9;
         $countData->countByBrandId = [
@@ -829,6 +832,9 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function searchPriceStockFlagBrandsTestCase(): array
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter */
+        $priceConverter = $this->getContainer()->get(PriceConverter::class);
+
         $filterData = new ProductFilterData();
         $filterData->inStock = true;
         $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_NEW_PRODUCT);
@@ -836,7 +842,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_DEFENDER);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_GENIUS);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_HP);
-        $filterData->maximalPrice = Money::create(20000);
+        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20000), 1);
 
         $countData = new ProductFilterCountData();
         $countData->countInStock = 3;
