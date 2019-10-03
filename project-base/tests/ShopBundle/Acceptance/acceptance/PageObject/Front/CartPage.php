@@ -27,8 +27,9 @@ class CartPage extends AbstractPage
      */
     public function assertProductPrice($productName, $price)
     {
-        $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolOnFrontend(Money::create($price));
-        $productPriceCell = $this->getProductPriceCellByName($productName);
+        $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
+        $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolOnFrontend(Money::create($convertedPrice));
+        $productPriceCell = $this->getProductTotalPriceCellByName($productName);
         $this->tester->seeInElement($formattedPriceWithCurrency, $productPriceCell);
     }
 
@@ -123,11 +124,22 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getProductPriceCellByName($productName)
+    private function getProductTotalPriceCellByName($productName)
     {
         $row = $this->findProductRowInCartByName($productName);
 
         return $row->findElement(WebDriverBy::cssSelector('.js-cart-item-total-price'));
+    }
+
+    /**
+     * @param string $productName
+     * @return \Facebook\WebDriver\WebDriverElement
+     */
+    private function getProductPriceCellByName($productName)
+    {
+        $row = $this->findProductRowInCartByName($productName);
+
+        return $row->findElement(WebDriverBy::cssSelector('.js-cart-item-price'));
     }
 
     /**
@@ -170,5 +182,39 @@ class CartPage extends AbstractPage
     public function canSeePromoCodeRemoveButtonElement()
     {
         return $this->tester->canSeeElement(WebDriverBy::cssSelector('#js-promo-code-remove-button'));
+    }
+
+    /**
+     * @param array $products
+     * @param int $discount
+     */
+    public function assertTotalPriceWithVatByProducts(array $products, int $discount = 0)
+    {
+        $totalPrice = Money::zero();
+
+        foreach ($products as $productName => $count) {
+            $totalPrice = $totalPrice->add(
+                Money::create($this->getProductTotalPriceByName($productName))
+                    ->divide(100, 6)
+                    ->multiply(100 - $discount)
+                    ->multiply($count)
+            );
+        }
+
+        $this->assertTotalPriceWithVat($totalPrice->getAmount());
+    }
+
+    /**
+     * @param string $productName
+     * @return string
+     */
+    private function getProductTotalPriceByName(string $productName): string
+    {
+        $productName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $productPriceCell = $this->getProductPriceCellByName($productName);
+
+        $productPriceWithoutCurrencySymbol = preg_replace('/[^0-9.,]/', '', $productPriceCell->getText());
+
+        return $this->tester->getNumberFromLocalizedFormat($productPriceWithoutCurrencySymbol, $this->tester->getFrontendLocale());
     }
 }

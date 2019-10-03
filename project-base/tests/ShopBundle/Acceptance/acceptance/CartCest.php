@@ -141,6 +141,7 @@ class CartCest
         AcceptanceTester $me
     ) {
         $me->wantTo('change items in cart and recalculate price');
+
         // 22-sencor-sle-22f46dm4-hello-kitty
         $me->amOnLocalizedRoute('front_product_detail', ['id' => 1]);
         $me->seeTranslationFrontend('Add to cart');
@@ -148,7 +149,12 @@ class CartCest
         $me->clickByTranslationFrontend('Go to cart');
 
         $cartPage->changeProductQuantity('22" Sencor SLE 22F46DM4 HELLO KITTY', 10);
-        $cartPage->assertTotalPriceWithVat('34990');
+
+        $products = [
+            '22" Sencor SLE 22F46DM4 HELLO KITTY' => 10,
+        ];
+
+        $cartPage->assertTotalPriceWithVatByProducts($products);
     }
 
     /**
@@ -239,7 +245,14 @@ class CartCest
         $productDetailPage->addProductIntoCart(75);
 
         $me->amOnLocalizedRoute('front_cart');
-        $cartPage->assertTotalPriceWithVat('17350');
+
+        $products = [
+            'Aquila Aquagym non-carbonated spring water' => 10,
+            '100 Czech crowns ticket' => 100,
+            'PremiumCord micro USB, A-B, 1m' => 75,
+        ];
+
+        $cartPage->assertTotalPriceWithVatByProducts($products);
     }
 
     /**
@@ -263,14 +276,19 @@ class CartCest
 
         $me->amOnLocalizedRoute('front_cart');
 
+        $products = [
+            'Aquila Aquagym non-carbonated spring water' => 1,
+            '100 Czech crowns ticket' => 1,
+        ];
+
         $cartPage->applyPromoCode('test');
 
         $cartPage->canSeePromoCodeRemoveButtonElement();
-        $cartPage->assertTotalPriceWithVat('122');
+        $cartPage->assertTotalPriceWithVatByProducts($products, 10);
 
         $cartPage->removePromoCode();
 
         $cartPage->canSeePromoCodeSubmitButtonElement();
-        $cartPage->assertTotalPriceWithVat('136');
+        $cartPage->assertTotalPriceWithVatByProducts($products);
     }
 }

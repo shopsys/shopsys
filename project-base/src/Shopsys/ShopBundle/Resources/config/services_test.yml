@@ -81,3 +81,5 @@ services:
     Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade: ~
 
     Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
