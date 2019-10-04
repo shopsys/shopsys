@@ -4,6 +4,7 @@
 @input-border-size: 2px;
 @input-line-height: @input-height - 2*@input-border-size;
 @input-padding-horizontal: 14px;
+@input-padding-vertical: 10px;
 
 @input-space-for-icon: 40px;
 @input-space-for-domain: 65px;
@@ -18,8 +19,8 @@
     width: @input-width;
     max-width: 100%;
     height: @input-height;
-    line-height: @input-line-height;
-    padding: 0 @input-padding-horizontal;
+    line-height: normal;
+    padding: @input-padding-vertical @input-padding-horizontal;
 
     background: @input-bg-color;
     border: @input-border-size solid @color-border;
