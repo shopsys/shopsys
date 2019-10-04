@@ -146,7 +146,7 @@ class BackendApiCreateProductTest extends OauthTestCase
         $namesByLocale = [];
         $shortDescriptionsByDomainId = [];
         $longDescriptionsByDomainId = [];
-        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
+        $firstDomainLocale = $this->getFirstDomainLocale();
         $notExistingDomainId = $this->getNotExistingDomainId();
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainLocale = $domainConfig->getLocale();

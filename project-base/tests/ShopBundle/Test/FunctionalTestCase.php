@@ -108,8 +108,17 @@ abstract class FunctionalTestCase extends WebTestCase
 
     protected function skipTestIfFirstDomainIsNotInEnglish()
     {
-        if ($this->domain->getDomainConfigById(1)->getLocale() !== 'en') {
+        if ($this->getFirstDomainLocale() !== 'en') {
             $this->markTestSkipped('Tests for product searching are run only when the first domain has English locale');
         }
+    }
+
+    /**
+     * We can use the shorthand here as $this->domain->switchDomainById(1) is called in setUp()
+     * @return string
+     */
+    protected function getFirstDomainLocale(): string
+    {
+        return $this->domain->getLocale();
     }
 }

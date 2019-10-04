@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ReadModelBundle\Functional\Product\Listed;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView;
@@ -13,22 +12,9 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class ListedProductViewFacadeTest extends FunctionalTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    protected function setUp()
-    {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = $this->getContainer()->get(Domain::class);
-        $this->domain = $domain;
-        parent::setUp();
-    }
-
     public function testGetAllAccessories(): void
     {
-        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
+        $firstDomainLocale = $this->getFirstDomainLocale();
         /** @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade */
         $listedProductViewFacade = $this->getContainer()->get(ListedProductViewFacadeInterface::class);
 
@@ -67,7 +53,7 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
 
     public function testGetFilteredPaginatedForSearch(): void
     {
-        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
+        $firstDomainLocale = $this->getFirstDomainLocale();
         /** @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade */
         $listedProductViewFacade = $this->getContainer()->get(ListedProductViewFacadeInterface::class);
         $emptyFilterData = new ProductFilterData();
@@ -82,7 +68,7 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
 
     public function testGetTop(): void
     {
-        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
+        $firstDomainLocale = $this->getFirstDomainLocale();
         /** @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade */
         $listedProductViewFacade = $this->getContainer()->get(ListedProductViewFacadeInterface::class);
 
