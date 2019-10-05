@@ -2,6 +2,10 @@
 
 namespace Shopsys\HttpSmokeTesting\RouterAdapter;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Shopsys\HttpSmokeTesting\Annotation\DataSet;
+use Shopsys\HttpSmokeTesting\Annotation\Skipped;
 use Shopsys\HttpSmokeTesting\RequestDataSet;
 use Shopsys\HttpSmokeTesting\RouteInfo;
 use Symfony\Component\Routing\RouterInterface;
@@ -18,6 +22,8 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
      */
     public function __construct(RouterInterface $router)
     {
+        AnnotationRegistry::registerLoader('class_exists');
+
         $this->router = $router;
     }
 
@@ -27,8 +33,25 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     public function getAllRouteInfo()
     {
         $allRouteInfo = [];
+        $annotationReader = new AnnotationReader();
         foreach ($this->router->getRouteCollection() as $routeName => $route) {
-            $allRouteInfo[] = new RouteInfo($routeName, $route);
+            $annotations = [];
+
+            if ($route->hasDefault('_controller')) {
+                try {
+                    $reflectionMethod = new \ReflectionMethod($route->getDefault('_controller'));
+
+                    foreach ($annotationReader->getMethodAnnotations($reflectionMethod) as $annotation) {
+                        if ($annotation instanceof DataSet || $annotation instanceof Skipped) {
+                            $annotations[] = $annotation;
+                        }
+                    }
+                } catch (\ReflectionException $exception) {
+                    // Just could not parse the reflection. Do noting.
+                }
+            }
+
+            $allRouteInfo[] = new RouteInfo($routeName, $route, $annotations);
         }
 
         return $allRouteInfo;
