@@ -124,6 +124,45 @@ All configured options will extend the values from default request data set (eve
 *Note: All three methods of [`RouteConfigCustomizer`](./src/RouteConfigCustomizer.php) accept `string $debugNote` as an argument.*
 *It is useful for describing the reasons of your configuration change because it may help you with debugging when the test fails.*
 
+To make smoke test configuration a little easier, you can use the annotations:
+
+- `@DataSet()`
+- `@Parameter()`
+- `@Skipped()`
+
+You can add them directly to your controller methods. Here is an example:
+
+```php
+<?php declare(strict_types=1);
+
+use Symfony\Component\Routing\Annotation\Route;
+use Shopsys\HttpSmokeTesting\Annotation\DataSet;
+use Shopsys\HttpSmokeTesting\Annotation\Parameter;
+use Shopsys\HttpSmokeTesting\Annotation\Skipped;
+
+class TestController
+{
+    /**
+     * @Route("/hello/name")
+     * @DataSet(parameters={@Parameter(name="name", value="test")})
+     * @DataSet(statusCode=404, parameters={@Parameter(name="name", value="notExist"})
+     */
+    public function helloAction(string $name)
+    {
+        // ...
+    }
+    
+    /**
+     * @Route("/untested")
+     * @Skipped()
+     */
+    public function untestedAction()
+    {
+        //
+    }
+}
+```
+
 Additionally you can override these methods in your implementation of [`HttpSmokeTestCase`](./src/HttpSmokeTestCase.php) to further change the test behavior:
 * `setUp` to change the way your kernel is booted (eg. boot it with different options).
 * `getRouterAdapter` to change the object responsible for collecting routes from your application and generating urls.
