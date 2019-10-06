@@ -61,7 +61,7 @@ class RequestDataSetGeneratorTest extends TestCase
     {
         $parameters = [
             [new Parameter()],
-            [new Parameter()]
+            [new Parameter()],
         ];
         $annotations = [
             new DataSet(),

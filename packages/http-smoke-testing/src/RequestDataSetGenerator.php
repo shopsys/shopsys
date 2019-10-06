@@ -47,7 +47,7 @@ class RequestDataSetGenerator implements RouteConfig
                         $requestDataSet->setExpectedStatusCode($annotation->statusCode);
                     }
 
-                    /** @var Parameter $parameter */
+                    /** @var \Shopsys\HttpSmokeTesting\Annotation\Parameter $parameter */
                     foreach ($annotation->parameters as $parameter) {
                         $requestDataSet->setParameter($parameter->name, $parameter->value);
                     }

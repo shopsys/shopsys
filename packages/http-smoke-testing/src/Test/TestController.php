@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Shopsys\HttpSmokeTesting\Test;
 
@@ -12,7 +14,7 @@ class TestController
 {
     /**
      * @param string $name
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/hello/{name}")
      *
      * @DataSet(parameters={
@@ -32,7 +34,7 @@ class TestController
     }
 
     /**
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/untested")
      * @Skipped()
      */
