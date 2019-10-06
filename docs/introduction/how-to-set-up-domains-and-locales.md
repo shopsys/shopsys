@@ -143,8 +143,9 @@ You can change administration translations by adding messages into your `src/Sho
 
 #### 3.7 Sorting in different locales
 Alphabetical sorting on frontend uses Elasticsearch and its [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/analysis-icu.html).  
-Every domain needs to have `language` parameter for field `name.keyword` in `src/Shopsys/ShopBundle/Resources/definition/product/*.json` set in order to sort correctly for given locale.  
-example for domain that uses English language:
+Every domain needs to have `language` parameter for field `name.keyword` in `src/Shopsys/ShopBundle/Resources/definition/product/*.json` set in order to sort correctly for given locale.
+
+An example for domain that uses English language:
 ```json
 "name": {
     "type": "text",

@@ -33,6 +33,7 @@ into volumes, otherwise, these data will be lost after the container is closed.
 
 ##### Containers
 Examples of containers that we use:
+
 * **postgres**
 * **webserver**
 * **php-fpm**
@@ -41,6 +42,7 @@ Examples of containers that we use:
 
 ##### Options
 The definition of container consists of some options:
+
 * **image**: Docker image that will be downloaded from [Docker Hub](https://hub.docker.com/) and used
 * **build**: data used for building the Docker image locally
 * **container_name**:  name of created container
@@ -51,6 +53,7 @@ The definition of container consists of some options:
 
 ##### Volumes
 The definition of volumes, example:
+
 * **shopsys-framework-sync** : name of the volume
 * **external: true** : flag, which indicates, that volume is already defined external
 (in this case in [docker-sync.yml](https://github.com/shopsys/shopsys/blob/8.0/project-base/docker-sync.yml))
@@ -67,7 +70,9 @@ Dockerfile example command:
 ```dockerfile
 FROM php:7.3-fpm-stretch
 ```
-* The `FROM` instruction specifies the base image, from which you are building
+
+!!! note
+    The `FROM` instruction specifies the base image, from which you are building
 
 The official list of Dockerfile commands can be found on [Dockerfile reference](https://docs.docker.com/engine/reference/builder/#from).
 
