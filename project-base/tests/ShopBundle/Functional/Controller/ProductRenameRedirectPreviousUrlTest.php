@@ -33,7 +33,7 @@ class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase
         $productData = $productDataFactory->createFromProduct($product);
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $domain = $this->getContainer()->get(Domain::class);
-        $productData->name[$domain->getDomainConfigById(1)->getLocale()] = 'rename';
+        $productData->name[$domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()] = 'rename';
 
         $productFacade->edit(self::TESTED_PRODUCT_ID, $productData);
 

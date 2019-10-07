@@ -34,8 +34,8 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $vat = $this->getDefaultVat();
 
         $enabledForDomains = [
-            1 => true,
-            2 => false,
+            Domain::FIRST_DOMAIN_ID => true,
+            Domain::SECOND_DOMAIN_ID => false,
         ];
         $transport = $this->getDefaultTransport($vat, $enabledForDomains, false);
         $payment = $this->getDefaultPayment($vat, $enabledForDomains, false);

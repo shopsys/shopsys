@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Model\Product;
 
 use DateTime;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -52,7 +53,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
         $productData->name = $names;
         $productData->vat = $vat;
-        $productData->categoriesByDomainId = [1 => [$category]];
+        $productData->categoriesByDomainId = [Domain::FIRST_DOMAIN_ID => [$category]];
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
         $this->setPriceForAllDomains($productData, Money::create(100));
@@ -101,13 +102,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productAgain = $em->getRepository(Product::class)->find($id);
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility1 */
         $productVisibility1 = $em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $productAgain,
             'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => 1,
+            'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 
         $this->assertFalse($productAgain->isVisible());
@@ -137,13 +138,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productAgain = $em->getRepository(Product::class)->find($id);
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility1 */
         $productVisibility1 = $em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $productAgain->getId(),
             'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => 1,
+            'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 
         $this->assertTrue($productAgain->isVisible());
@@ -291,13 +292,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productVisibilityRepository->refreshProductsVisibility();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
         $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => 1,
+            'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 
         $this->assertTrue($productVisibility->isVisible());
@@ -323,13 +324,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productVisibilityRepository->refreshProductsVisibility();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
         $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => 1,
+            'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 
         $this->assertFalse($productVisibility->isVisible());
@@ -347,7 +348,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TOYS);
 
         $productData = $this->getDefaultProductData();
-        $productData->categoriesByDomainId = [1 => [$category]];
+        $productData->categoriesByDomainId = [Domain::FIRST_DOMAIN_ID => [$category]];
         $product = $productFacade->create($productData);
         $productPriceRecalculator->runImmediateRecalculations();
 
@@ -358,13 +359,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productVisibilityRepository->refreshProductsVisibility();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
         $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => 1,
+            'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 
         $this->assertTrue($productVisibility->isVisible());
@@ -390,12 +391,12 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productVisibilityRepository->refreshProductsVisibility();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => 1,
+            'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 
         $this->assertFalse($productVisibility->isVisible());
@@ -413,7 +414,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->setPriceForAllDomains($productData, Money::create(10));
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
         $pricingGroupWithZeroPriceId = $pricingGroup->getId();
 
         $productData->manualInputPricesByPricingGroupId[$pricingGroupWithZeroPriceId] = Money::zero();
@@ -431,7 +432,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroupWithZeroPriceId,
-            'domainId' => 1,
+            'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 
         $this->assertFalse($productVisibility->isVisible());
@@ -455,7 +456,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
         $pricingGroupWithNullPriceId = $pricingGroup->getId();
         $productData->manualInputPricesByPricingGroupId[$pricingGroupWithNullPriceId] = null;
 
@@ -472,7 +473,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productVisibility = $em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroupWithNullPriceId,
-            'domainId' => 1,
+            'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 
         $this->assertFalse($productVisibility->isVisible());

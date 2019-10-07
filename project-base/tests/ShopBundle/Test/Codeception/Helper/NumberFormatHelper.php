@@ -10,6 +10,7 @@ use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
 use CommerceGuys\Intl\Formatter\NumberFormatter;
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
@@ -84,7 +85,7 @@ class NumberFormatHelper extends Module
      */
     public function getFormattedPriceWithCurrencySymbolOnFrontend(Money $price): string
     {
-        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(1);
+        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID);
         $firstDomainLocale = $this->localizationHelper->getFrontendLocale();
         $currencyFormatter = $this->currencyFormatterFactory->create($firstDomainLocale);
 
@@ -105,7 +106,7 @@ class NumberFormatHelper extends Module
      */
     public function getFormattedPriceOnFrontend(Money $price): string
     {
-        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(1);
+        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID);
         $firstDomainLocale = $this->localizationHelper->getFrontendLocale();
         $currencyFormatter = $this->currencyFormatterFactory->create($firstDomainLocale);
 
@@ -126,7 +127,7 @@ class NumberFormatHelper extends Module
      */
     public function getPriceWithVatConvertedToDomainDefaultCurrency(string $price): string
     {
-        $money = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($price), 1);
+        $money = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($price), Domain::FIRST_DOMAIN_ID);
 
         return $money->getAmount();
     }

@@ -175,10 +175,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_TOP_PRODUCT, FlagDataFixture::FLAG_ACTION_PRODUCT]);
 
@@ -528,8 +528,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_NEW_PRODUCT, FlagDataFixture::FLAG_TOP_PRODUCT]);
 
@@ -578,8 +578,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_NEW_PRODUCT]);
 
@@ -695,8 +695,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_NEW_PRODUCT]);
 
@@ -853,8 +853,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_NEW_PRODUCT]);
 
@@ -938,8 +938,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_NEW_PRODUCT]);
 
@@ -1185,9 +1185,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PC);
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PC);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_NEW_PRODUCT]);
 
@@ -1433,8 +1433,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_NEW_PRODUCT]);
 
@@ -3426,9 +3426,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
 
         $this->setFlags($productData, []);
 
@@ -3476,9 +3476,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
 
         $this->setFlags($productData, []);
 
@@ -5443,8 +5443,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_NEW_PRODUCT, FlagDataFixture::FLAG_TOP_PRODUCT]);
 
@@ -5493,8 +5493,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
-        $productData->categoriesByDomainId[2] = [];
-        $productData->categoriesByDomainId[2][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
 
         $this->setFlags($productData, []);
 

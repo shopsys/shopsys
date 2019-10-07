@@ -354,8 +354,8 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $priceConverter = $this->getContainer()->get(PriceConverter::class);
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), 1);
-        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(80000), 1);
+        $filterData->minimalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), Domain::FIRST_DOMAIN_ID);
+        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(80000), Domain::FIRST_DOMAIN_ID);
 
         $countData = new ProductFilterCountData();
         $countData->countInStock = 6;
@@ -473,7 +473,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     {
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $domain = $this->getContainer()->get(Domain::class);
-        $firstDomainLocale = $domain->getDomainConfigById(1)->getLocale();
+        $firstDomainLocale = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_CANON);
@@ -545,7 +545,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     {
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $domain = $this->getContainer()->get(Domain::class);
-        $firstDomainLocale = $domain->getDomainConfigById(1)->getLocale();
+        $firstDomainLocale = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
         $filterData->parameters[] = $this->createParameterFilterData(
@@ -770,8 +770,8 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $priceConverter = $this->getContainer()->get(PriceConverter::class);
 
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(5000), 1);
-        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(50000), 1);
+        $filterData->minimalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(5000), Domain::FIRST_DOMAIN_ID);
+        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(50000), Domain::FIRST_DOMAIN_ID);
         $countData = new ProductFilterCountData();
         $countData->countInStock = 9;
         $countData->countByBrandId = [
@@ -842,7 +842,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_DEFENDER);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_GENIUS);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_HP);
-        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20000), 1);
+        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20000), Domain::FIRST_DOMAIN_ID);
 
         $countData = new ProductFilterCountData();
         $countData->countInStock = 3;

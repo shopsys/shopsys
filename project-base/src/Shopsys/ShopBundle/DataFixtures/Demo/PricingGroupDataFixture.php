@@ -69,7 +69,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
 
             $this->editDefaultPricingGroupOnDomain($domainConfig);
 
-            if ($domainId !== 2) {
+            if ($domainId !== Domain::SECOND_DOMAIN_ID) {
                 $pricingGroupData->name = t('Partner', [], 'dataFixtures', $locale);
                 $this->createPricingGroup($pricingGroupData, $domainId, self::PRICING_GROUP_PARTNER);
             }

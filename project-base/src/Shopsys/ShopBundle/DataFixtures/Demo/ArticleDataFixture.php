@@ -147,7 +147,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     protected function changeDataForSecondDomain()
     {
         /** @var \Shopsys\ShopBundle\Model\Article\Article $cookiesArticle */
-        $cookiesArticle = $this->getReferenceForDomain(self::ARTICLE_COOKIES, 2);
+        $cookiesArticle = $this->getReferenceForDomain(self::ARTICLE_COOKIES, Domain::SECOND_DOMAIN_ID);
         $cookiesArticleData = $this->articleDataFactory->createFromArticle($cookiesArticle);
         $cookiesArticleData->placement = Article::PLACEMENT_FOOTER;
 

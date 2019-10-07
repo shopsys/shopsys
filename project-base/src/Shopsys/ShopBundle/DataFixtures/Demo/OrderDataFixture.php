@@ -91,7 +91,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
-            if ($domainId === 2) {
+            if ($domainId === Domain::SECOND_DOMAIN_ID) {
                 $this->loadDistinct($domainId);
             } else {
                 $this->loadDefault($domainId);

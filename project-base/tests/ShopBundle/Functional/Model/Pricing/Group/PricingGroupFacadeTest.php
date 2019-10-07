@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Pricing\Group;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
@@ -47,12 +48,11 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade */
         $customerFacade = $this->getContainer()->get(CustomerFacade::class);
 
-        $domainId = 1;
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
-        $pricingGroupToDelete = $pricingGroupFacade->create($pricingGroupData, $domainId);
+        $pricingGroupToDelete = $pricingGroupFacade->create($pricingGroupData, Domain::FIRST_DOMAIN_ID);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroupToReplaceWith */
-        $pricingGroupToReplaceWith = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroupToReplaceWith = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
         /** @var \Shopsys\ShopBundle\Model\Customer\User $user */
         $user = $customerFacade->getUserById(1);
         /** @var \Shopsys\ShopBundle\Model\Customer\UserDataFactory $userDataFactory */

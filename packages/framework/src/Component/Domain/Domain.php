@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class Domain implements DomainIdsProviderInterface
 {
     public const FIRST_DOMAIN_ID = 1;
+    public const SECOND_DOMAIN_ID = 2;
     public const MAIN_ADMIN_DOMAIN_ID = 1;
 
     /**

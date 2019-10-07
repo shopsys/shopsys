@@ -43,8 +43,8 @@ class PriceExtensionTest extends FunctionalTestCase
 
     protected function setUp()
     {
-        $domainConfig1 = new DomainConfig(1, 'http://example.com', 'example', 'en');
-        $domainConfig2 = new DomainConfig(2, 'http://example.com', 'example', 'cs');
+        $domainConfig1 = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com', 'example', 'en');
+        $domainConfig2 = new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'example', 'cs');
 
         /** @var \Shopsys\FrameworkBundle\Component\Setting\Setting|\PHPUnit\Framework\MockObject\MockObject $settingMock */
         $settingMock = $this->getMockBuilder(Setting::class)
@@ -67,36 +67,36 @@ class PriceExtensionTest extends FunctionalTestCase
     public function priceFilterDataProvider()
     {
         return [
-            ['input' => Money::create(12), 'domainId' => 1, 'result' => 'CZK12.00'],
-            ['input' => Money::create('12.00'), 'domainId' => 1, 'result' => 'CZK12.00'],
-            ['input' => Money::create('12.600'), 'domainId' => 1, 'result' => 'CZK12.60'],
-            ['input' => Money::create('12.630000'), 'domainId' => 1, 'result' => 'CZK12.63'],
-            ['input' => Money::create('12.638000'), 'domainId' => 1, 'result' => 'CZK12.638'],
-            ['input' => Money::create('12.630000'), 'domainId' => 1, 'result' => 'CZK12.63'],
+            ['input' => Money::create(12), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.00'],
+            ['input' => Money::create('12.00'), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.00'],
+            ['input' => Money::create('12.600'), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.60'],
+            ['input' => Money::create('12.630000'), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.63'],
+            ['input' => Money::create('12.638000'), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.638'],
+            ['input' => Money::create('12.630000'), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.63'],
             [
                 'input' => Money::create('123456789.123456789'),
-                'domainId' => 1,
+                'domainId' => Domain::FIRST_DOMAIN_ID,
                 'result' => 'CZK123,456,789.123456789',
             ],
             [
                 'input' => Money::create('123456789.123456789123456789'),
-                'domainId' => 1,
+                'domainId' => Domain::FIRST_DOMAIN_ID,
                 'result' => 'CZK123,456,789.1234567891',
             ],
-            ['input' => Money::create(12), 'domainId' => 2, 'result' => '12,00' . self::NBSP . '€'],
-            ['input' => Money::create('12.00'), 'domainId' => 2, 'result' => '12,00' . self::NBSP . '€'],
-            ['input' => Money::create('12.600'), 'domainId' => 2, 'result' => '12,60' . self::NBSP . '€'],
-            ['input' => Money::create('12.630000'), 'domainId' => 2, 'result' => '12,63' . self::NBSP . '€'],
-            ['input' => Money::create('12.638000'), 'domainId' => 2, 'result' => '12,638' . self::NBSP . '€'],
-            ['input' => Money::create('12.630000'), 'domainId' => 2, 'result' => '12,63' . self::NBSP . '€'],
+            ['input' => Money::create(12), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,00' . self::NBSP . '€'],
+            ['input' => Money::create('12.00'), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,00' . self::NBSP . '€'],
+            ['input' => Money::create('12.600'), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,60' . self::NBSP . '€'],
+            ['input' => Money::create('12.630000'), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,63' . self::NBSP . '€'],
+            ['input' => Money::create('12.638000'), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,638' . self::NBSP . '€'],
+            ['input' => Money::create('12.630000'), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,63' . self::NBSP . '€'],
             [
                 'input' => Money::create('123456789.123456789'),
-                'domainId' => 2,
+                'domainId' => Domain::SECOND_DOMAIN_ID,
                 'result' => '123' . self::NBSP . '456' . self::NBSP . '789,123456789' . self::NBSP . '€',
             ],
             [
                 'input' => Money::create('123456789.123456789123456789'),
-                'domainId' => 2,
+                'domainId' => Domain::SECOND_DOMAIN_ID,
                 'result' => '123' . self::NBSP . '456' . self::NBSP . '789,1234567891' . self::NBSP . '€',
             ],
         ];
@@ -135,8 +135,8 @@ class PriceExtensionTest extends FunctionalTestCase
         $currencyFacadeMock
             ->method('getDomainDefaultCurrencyByDomainId')
             ->willReturnMap([
-                [1, $domain1DefaultCurrency],
-                [2, $domain2DefaultCurrency],
+                [Domain::FIRST_DOMAIN_ID, $domain1DefaultCurrency],
+                [Domain::SECOND_DOMAIN_ID, $domain2DefaultCurrency],
             ]);
         $currencyFacadeMock
             ->method('getDefaultCurrency')

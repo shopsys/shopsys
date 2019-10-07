@@ -21,7 +21,7 @@ class ParameterTransactionFunctionalTestCase extends TransactionFunctionalTestCa
         /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade */
         $parameterFacade = $this->getContainer()->get(ParameterFacade::class);
 
-        $firstDomainLocale = $domain->getDomainConfigById(1)->getLocale();
+        $firstDomainLocale = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         $parameterValueTranslatedName = t($parameterValueNameId, [], 'dataFixtures', $firstDomainLocale);
 
         return $parameterFacade->getParameterValueByValueTextAndLocale($parameterValueTranslatedName, $firstDomainLocale)->getId();

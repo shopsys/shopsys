@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Model\Product\Search;
 
 use Elasticsearch\Client;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
@@ -59,13 +60,13 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $priceConverter = $this->getContainer()->get(PriceConverter::class);
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         $filter = $this->createFilter()
             ->filterOnlyInStock()
             ->filterByCategory([9])
             ->filterByFlags([1])
-            ->filterByPrices($pricingGroup, null, $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20), 1));
+            ->filterByPrices($pricingGroup, null, $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20), Domain::FIRST_DOMAIN_ID));
 
         $this->assertIdWithFilter($filter, [50]);
     }
@@ -87,7 +88,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $this->skipTestIfFirstDomainIsNotInEnglish();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         $filter = $this->createFilter()
             ->filterByCategory([9])
@@ -192,7 +193,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager $elasticSearchStructureManager */
         $elasticSearchStructureManager = $this->getContainer()->get(ElasticsearchStructureManager::class);
 
-        $elasticSearchIndexName = $elasticSearchStructureManager->getAliasName(1, self::ELASTICSEARCH_INDEX);
+        $elasticSearchIndexName = $elasticSearchStructureManager->getAliasName(Domain::FIRST_DOMAIN_ID, self::ELASTICSEARCH_INDEX);
 
         $filter = $filterQueryFactory->create($elasticSearchIndexName);
 

@@ -148,7 +148,7 @@ class LocalizationHelper extends Module
      */
     public function getFrontendLocale(): string
     {
-        return $this->domain->getDomainConfigById(1)->getLocale();
+        return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
     }
 
     /**
@@ -158,7 +158,7 @@ class LocalizationHelper extends Module
      */
     private function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = []): string
     {
-        $router = $this->domainRouterFactory->getRouter(1);
+        $router = $this->domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
 
         return $router->generate($routeName, $parameters);
     }

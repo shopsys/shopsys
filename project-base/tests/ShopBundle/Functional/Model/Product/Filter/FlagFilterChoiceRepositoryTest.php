@@ -85,14 +85,14 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         $repository = $this->getFlagFilterChoiceRepository();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
         $category = $this->getReference($categoryReferenceName);
 
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $domain = $this->getContainer()->get(Domain::class);
-        $domainConfig1 = $domain->getDomainConfigById(1);
+        $domainConfig1 = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
 
         return $repository->getFlagFilterChoicesInCategory($domainConfig1->getId(), $pricingGroup, $domainConfig1->getLocale(), $category);
     }
@@ -106,11 +106,11 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         $repository = $this->getFlagFilterChoiceRepository();
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, 1);
+        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $domain = $this->getContainer()->get(Domain::class);
-        $domainConfig1 = $domain->getDomainConfigById(1);
+        $domainConfig1 = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
 
         return $repository->getFlagFilterChoicesForSearch($domainConfig1->getId(), $pricingGroup, $domainConfig1->getLocale(), $searchText);
     }

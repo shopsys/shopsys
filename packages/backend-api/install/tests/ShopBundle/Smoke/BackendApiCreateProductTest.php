@@ -151,7 +151,7 @@ class BackendApiCreateProductTest extends OauthTestCase
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainLocale = $domainConfig->getLocale();
             $domainId = $domainConfig->getId();
-            if ($domainId === 1) {
+            if ($domainId === Domain::FIRST_DOMAIN_ID) {
                 $namesByLocale[$firstDomainLocale] = 'name longer than 255 letters Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis erat turpis, ac ullamcorper tellus tempor a. Sed dapibus posuere dui sed iaculis. Phasellus non magna et urna aliquam fringilla et sit amet diam. Suspendisse suscipit lacus quis nisi sed.';
                 $shortDescriptionsByDomainId[$domainId] = 123;
                 $longDescriptionsByDomainId[$domainId] = 345;

@@ -50,8 +50,11 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
 
-            $topProducts = $domainId === Domain::SECOND_DOMAIN_ID ? $distinctTopProductReferenceNames : $defaultTopProductReferenceNames;
-            $this->createTopProductsForDomain($topProducts, $domainId);
+            if ($domainId === Domain::SECOND_DOMAIN_ID) {
+                $this->createTopProductsForDomain($distinctTopProductReferenceNames, $domainId);
+            } else {
+                $this->createTopProductsForDomain($defaultTopProductReferenceNames, $domainId);
+            }
         }
     }
 

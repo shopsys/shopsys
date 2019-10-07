@@ -36,7 +36,8 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
-            if ($domainId === 2) {
+
+            if ($domainId === Domain::SECOND_DOMAIN_ID) {
                 $newsletterSubscribersData = $this->getDistinctEmailData();
             } else {
                 $newsletterSubscribersData = $this->getDefaultEmailData();

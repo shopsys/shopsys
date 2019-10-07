@@ -41,7 +41,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
-            if ($domainId !== 2) {
+            if ($domainId !== Domain::SECOND_DOMAIN_ID) {
                 $productsIndexedByPosition = [
                     0 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7'),
                     2 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8'),

@@ -108,7 +108,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
-            if ($domainId === 2) {
+            if ($domainId === Domain::SECOND_DOMAIN_ID) {
                 $customersData = $this->getDistinctCustomersData($domainId);
             } else {
                 $customersData = $this->getDefaultCustomersData($domainId);

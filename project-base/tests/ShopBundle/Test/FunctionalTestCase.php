@@ -25,7 +25,7 @@ abstract class FunctionalTestCase extends WebTestCase
     {
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $this->domain = $this->getContainer()->get(Domain::class);
-        $this->domain->switchDomainById(1);
+        $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
 
     protected function setUp()
