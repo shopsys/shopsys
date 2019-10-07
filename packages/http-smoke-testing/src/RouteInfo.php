@@ -17,14 +17,14 @@ class RouteInfo
     private $route;
 
     /**
-     * @var array<int, object>|null
+     * @var array
      */
     private $annotations;
 
     /**
      * @param string $routeName
      * @param \Symfony\Component\Routing\Route $route
-     * @param array<int, object>|null $annotations
+     * @param array $annotations
      */
     public function __construct($routeName, Route $route, array $annotations = [])
     {
