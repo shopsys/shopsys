@@ -5,23 +5,13 @@
     @media @query-lg {
         width: 100%;
         display: flex;
-
-        .is-no-flex & {
-            display: block;
-            .clearfix();
-        }
     }
 
     &__info {
         margin-bottom: @margin-gap;
 
         @media @query-lg {
-            flex: 0 @box-order-info-width;
-
-            .is-no-flex & {
-                float: left;
-                width: @box-order-info-width;
-            }
+            width: @box-order-info-width;
         }
     }
 
@@ -29,13 +19,8 @@
         margin-bottom: @margin-gap;
 
         @media @query-lg {
-            flex: 0 @box-order-cart-width;
+            width: @box-order-cart-width;
             padding-left: 20px;
-
-            .is-no-flex & {
-                float: right;
-                width: @box-order-cart-width;
-            }
         }
 
         @media @query-vl {
