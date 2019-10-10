@@ -20,15 +20,13 @@
     {% endif %}
     <div class="web__in">
         <div class="web__line">
-            <div class="web__header">
-                <div class="web__container">
+            <div class="web__container">
+                <div class="web__header">
                     {{ block('header') }}
                 </div>
             </div>
-            <div class="web__container">
-                {% block content %}{% endblock %}
-            </div>
         </div>
+        {% block content %}{% endblock %}
     </div>
     <div class="web__footer{% if not isCookiesConsentGiven() %} web__footer--with-cookies js-eu-cookies-consent-footer-gap{% endif %}">
         {% include '@ShopsysShop/Front/Layout/footer.html.twig' %}
