@@ -1,6 +1,8 @@
 {% extends '@ShopsysShop/Front/Layout/layout.html.twig' %}
 
 {% block content %}
+<div class="web__line">
+    <div class="web__container">
     <div class="web__main">
         <div class="web__main__content js-main-content">
             {% block breadcrumb %}
@@ -16,4 +18,6 @@
     <div class="display-none display-block-tablet">
         {{ render(controller('ShopsysShopBundle:Front/Category:panel', { request: app.request } )) }}
     </div>
+    </div>
+</div>
 {% endblock %}
