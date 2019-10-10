@@ -54,9 +54,7 @@ There you can find links to upgrade notes for other versions too.
         -           if (EnvironmentType::TEST === Environment::getEnvironment(false)) {    
         +           if ($this->environment === EnvironmentType::TEST) {
         ```
-- remove unused usages of property `ProductData::$price` ([#1459](https://github.com/shopsys/shopsys/pull/1459))
-    - occurrences were found at
-        - [`tests/ShopBundle/Functional/Model/Cart/CartItemTest.php`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Functional/Model/Cart/CartItemTest.php)
-        - [`tests/ShopBundle/Functional/Model/Cart/CartTest.php`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Functional/Model/Cart/CartTest.php)
-        - [`tests/ShopBundle/Functional/Model/Cart/Watcher/CartWatcherTest.php`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Functional/Model/Cart/Watcher/CartWatcherTest.php)
-    - more details might be seen in out pull request
+- remove unused usages of property `ProductData::$price` in following tests ([#1459](https://github.com/shopsys/shopsys/pull/1459))
+    - [`tests/ShopBundle/Functional/Model/Cart/CartItemTest.php`](https://github.com/shopsys/shopsys/pull/1459/files#diff-a00850a718c91d2fc057e182c72ce13c)
+    - [`tests/ShopBundle/Functional/Model/Cart/CartTest.php`](https://github.com/shopsys/shopsys/pull/1459/files#diff-e5523042560228cc06e1cf49cf4e1ec2)
+    - [`tests/ShopBundle/Functional/Model/Cart/Watcher/CartWatcherTest.php`](https://github.com/shopsys/shopsys/pull/1459/files#diff-51c8da3c731810f6e72b0e4b676490a9)
