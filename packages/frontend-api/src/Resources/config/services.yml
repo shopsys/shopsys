@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Shopsys\FrontendApiBundle\:
+        resource: '../../**/*{Resolver}.php'
+
+    Shopsys\FrontendApiBundle\Controller\FrontendApiController:
+        tags: ['controller.service_arguments']
+
+    Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker:
+        arguments:
+            $enabledDomainIds: '%shopsys.frontend_api.domains%'
+
+    Shopsys\FrontendApiBundle\Model\Error\ErrorHandlerListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 20}

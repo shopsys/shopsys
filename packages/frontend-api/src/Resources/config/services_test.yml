@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker:
+        arguments:
+            $enabledDomainIds: '%shopsys.frontend_api.domains%'

@@ -30,6 +30,8 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
     * Administration menu and grids.
 * [Backend API](./backend-api)
     * Information about the backend REST API dedicated for integration with third party systems.
+* [Frontend API](./frontend-api)
+    * Information about the frontend GraphQL API dedicated for connecting external storefront or mobile app.
 * [Extensibility](./extensibility/index.md)
     * How to customize the behavior of Shopsys Framework to suit your needs.
 * [Orchestration](./kubernetes/index.md)

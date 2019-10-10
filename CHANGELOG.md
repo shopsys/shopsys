@@ -19,6 +19,7 @@ There is a list of all the repositories maintained by monorepo:
 * [shopsys/google-cloud-bundle]
 * [shopsys/read-model]
 * [shopsys/backend-api]
+* [shopsys/frontend-api]
 
 Packages are formatted by release version. You can see all the changes done to package that you carry about with this tree.
 
@@ -2386,6 +2387,7 @@ That's why is this section formatted differently.
 [shopsys/google-cloud-bundle]: https://github.com/shopsys/google-cloud-bundle
 [shopsys/read-model]: https://github.com/shopsys/read-model
 [shopsys/backend-api]: https://github.com/shopsys/backend-api
+[shopsys/frontend-api]: https://github.com/shopsys/frontend-api
 
 [@pk16011990]: https://github.com/pk16011990
 [@stanoMilan]: https://github.com/stanoMilan

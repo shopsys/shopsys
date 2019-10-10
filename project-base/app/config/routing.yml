@@ -7,3 +7,7 @@ shopsys_framework:
 
 elfinder:
     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+
+shopsys_frontend_api:
+    resource: "@ShopsysFrontendApiBundle/Resources/config/routing.yml"
+    prefix: /graphql

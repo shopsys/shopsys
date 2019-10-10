@@ -1,0 +1,8 @@
+overblog_graphql:
+    definitions:
+        schema:
+            query: Query
+        mappings:
+            types:
+                -   type: yaml
+                    dir: "%shopsys.resources_dir%/graphql-types"

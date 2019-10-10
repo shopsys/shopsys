@@ -33,6 +33,7 @@ parameters:
         'shopsys/google-cloud-bundle/': 'https://github.com/shopsys/google-cloud-bundle'
         'shopsys/read-model': 'https://github.com/shopsys/read-model'
         'shopsys/backend-api': 'https://github.com/shopsys/backend-api'
+        'shopsys/frontend-api': 'https://github.com/shopsys/frontend-api'
     package_aliases:
         'shopsys': 'shopsys/shopsys'
         'project-base': 'shopsys/project-base'
@@ -51,3 +52,4 @@ parameters:
         'google-cloud-bundle': 'shopsys/google-cloud-bundle'
         'read-model': 'shopsys/read-model'
         'backend-api': 'shopsys/backend-api'
+        'frontend-api': 'shopsys/frontend-api'

@@ -25,10 +25,12 @@ class AppKernel extends Kernel
             new Intaro\PostgresSearchBundle\IntaroPostgresSearchBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Overblog\GraphQLBundle\OverblogGraphQLBundle(),
             new Presta\SitemapBundle\PrestaSitemapBundle(),
             new Prezent\Doctrine\TranslatableBundle\PrezentDoctrineTranslatableBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Shopsys\FormTypesBundle\ShopsysFormTypesBundle(),
+            new Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle(),
             new Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle(),
             new Shopsys\MigrationBundle\ShopsysMigrationBundle(),
             new Shopsys\ProductFeed\HeurekaBundle\ShopsysProductFeedHeurekaBundle(),
@@ -53,6 +55,7 @@ class AppKernel extends Kernel
         ];
 
         if ($this->getEnvironment() === EnvironmentType::DEVELOPMENT) {
+            $bundles[] = new Overblog\GraphiQLBundle\OverblogGraphiQLBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
