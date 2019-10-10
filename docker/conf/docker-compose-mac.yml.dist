@@ -96,6 +96,15 @@ services:
         environment:
             - discovery.type=single-node
 
+    mkdocs:
+        build:
+            context: .
+            dockerfile: docker/mkdocs/Dockerfile
+        ports:
+            - "1300:8000"
+        volumes:
+            - shopsys-framework-sync:/var/www/html
+
 volumes:
     shopsys-framework-sync:
         external: true
