@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+    <div class="web__line">
+        <div class="web__container">
     <div class="row">
         {{ render(controller('ShopsysShopBundle:Front/Breadcrumb:index', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
 
@@ -45,6 +47,8 @@
                     </p>
                 </div>
             {% endif %}
+        </div>
+    </div>
         </div>
     </div>
 {% endblock %}
