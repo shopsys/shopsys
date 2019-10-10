@@ -13,6 +13,8 @@
 {% endblock %}
 
 {% block main_content %}
+<div class="web__line">
+    <div class="web__container">
     <div class="in-user-text">
         <div class="padding-20">
             <h1>{{ 'Personal information overview'|trans }} - {{ personalDataAccessRequest.email }}</h1>
@@ -115,4 +117,6 @@
             {% endif %}
         {% endif %}
     </div>
+    </div>
+</div>
 {% endblock %}

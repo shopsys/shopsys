@@ -9,6 +9,8 @@
 {% endblock %}
 
 {% block main_content %}
+<div class="web__line">
+    <div class="web__container">
     <h1>{{ 'My orders'|trans }}</h1>
     {% if orders|length == 0 %}
         {{ 'No order so far.'|trans }}
@@ -42,4 +44,6 @@
             </div>
         </div>
     {% endif %}
+    </div>
+</div>
 {% endblock %}
