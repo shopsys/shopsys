@@ -9,6 +9,8 @@
 {% endblock %}
 
 {% block main_content %}
+<div class="web__line">
+    <div class="web__container">
     <h1>
         {% if article.seoH1 is not null %}
             {{ article.seoH1 }}
@@ -22,4 +24,6 @@
     <div class="in-user-text">
         {{ article.text|raw }}
     </div>
+    </div>
+</div>
 {% endblock %}

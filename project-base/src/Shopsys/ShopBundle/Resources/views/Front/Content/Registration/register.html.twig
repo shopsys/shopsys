@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block main_content %}
+<div class="web__line">
+    <div class="web__container">
     <h1>{{ 'Registration'|trans }}</h1>
 
     {{ form_errors(form) }}
@@ -51,10 +53,7 @@
     </dl>
 
         {{ form_widget(form.save, { label: 'Register'|trans }) }}
-
     {{ form_end(form) }}
-
-    <br />
-
-
+    </div>
+</div>
 {% endblock %}

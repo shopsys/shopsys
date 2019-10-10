@@ -9,6 +9,8 @@
 {% endblock %}
 
 {% block main_content %}
+<div class="web__line">
+    <div class="web__container">
     <h1>{{ 'Order Nr.'|trans }} {{order.number}}</h1>
     <div class="box-order-detail">
 
@@ -182,4 +184,6 @@
     {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
         <a href="{{ url('front_customer_orders') }}" class="btn">{{ 'Back to orders overview'|trans }}</a>
     {% endif %}
+    </div>
+</div>
 {% endblock %}

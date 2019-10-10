@@ -10,6 +10,8 @@
 {% block h1 %}{% endblock %}
 
 {% block main_content %}
+<div class="web__line">
+    <div class="web__container">
     <h1>{{ 'Personal data'|trans }}</h1>
     {{ form_start(form) }}
         {{ form_errors(form) }}
@@ -95,4 +97,6 @@
         {{ form_widget(form.save, { label: 'Save changes'|trans}) }}
 
     {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}
