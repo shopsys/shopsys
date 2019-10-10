@@ -1,6 +1,8 @@
 {% extends '@ShopsysShop/Front/Layout/layout.html.twig' %}
 
 {% block content %}
+<div class="web__line">
+    <div class="web__container">
     <div class="web__main web__main--with-panel">
         <div class="web__main__content js-main-content">
             {% block breadcrumb %}
@@ -24,4 +26,6 @@
             {{ render(controller('ShopsysShopBundle:Front/Advert:box',{'positionName' : 'leftSidebar'})) }}
         </div>
     </div>
+    </div>
+</div>
 {% endblock %}
