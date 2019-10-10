@@ -9,7 +9,8 @@
 {% endblock %}
 
 {% block main_content %}
-
+<div class="web__line">
+    <div class="web__container">
     {{ form_start(form, {attr: {'multipleForm': true}}) }}
     {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}
 
@@ -67,5 +68,6 @@
         </dl>
 
     {{ form_end(form) }}
-
+    </div>
+</div>
 {% endblock %}

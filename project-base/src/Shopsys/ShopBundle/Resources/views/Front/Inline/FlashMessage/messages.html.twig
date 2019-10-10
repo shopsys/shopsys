@@ -1,7 +1,11 @@
 {% if messages %}
+<div class="web__line">
+    <div class="web__container">
     <div class="in-message in-message--{{ type }}">
         {% for message in messages %}
             <div>{{ message|raw }}</div>
         {% endfor %}
     </div>
+    </div>
+</div>
 {% endif %}
