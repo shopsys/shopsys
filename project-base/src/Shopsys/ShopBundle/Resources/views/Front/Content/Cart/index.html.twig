@@ -14,8 +14,10 @@
 {% block main_content %}
     {% include '@ShopsysShop/Front/Inline/OrderProgress/index.html.twig' with {step: 1} only %}
 
-    <h1>{{ 'Your cart'|trans }}</h1>
+<div class="web__line">
+    <div class="web__container">
 
+    <h1>{{ 'Your cart'|trans }}</h1>
 
     {% if cart is not null %}
         {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form' }}) }}
@@ -170,4 +172,6 @@
         </div>
     {% endif %}
 
+    </div>
+</div>
 {% endblock %}
