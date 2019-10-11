@@ -7,7 +7,11 @@
             {{ render(controller('ShopsysShopBundle:Front/Breadcrumb:index', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
         {% endblock %}
 
-        {{ render(controller('ShopsysShopBundle:Front/FlashMessage:index')) }}
+        <div class="web__line">
+            <div class="web__container">
+                {{ render(controller('ShopsysShopBundle:Front/FlashMessage:index')) }}
+            </div>
+        </div>
 
         {% block main_content %}{% endblock %}
     </div>
