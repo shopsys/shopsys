@@ -21,6 +21,7 @@
         </td>
         <td>
             {{ form_widget(orderItemForm.catnum, {attr: { class: 'input--medium text-right'}}) }}
+            {{ form_errors(orderItemForm.catnum, {errors_attr: { inline: false }}) }}
         </td>
         <td>
             {{ self.priceWithVatWidget(orderItemForm.priceWithVat) }}
