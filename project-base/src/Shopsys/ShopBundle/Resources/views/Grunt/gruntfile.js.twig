@@ -33,6 +33,14 @@ module.exports = function(grunt) {
                     }
                 }
             },
+            styleguide: {
+                files: {
+                    'web/assets/styleguide/styles/styleguide_{{ cssVersion }}.css': '{{ customResourcesDirectory }}/styles/styleguide/main.less'
+                },
+                options: {
+                    compress: true
+                }
+            },
 
             {% for domain in domains -%}
                 helpers{{ domain.id }}: {

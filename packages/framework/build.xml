@@ -36,6 +36,7 @@
     <property name="path.web.scripts" value="${path.web}/assets/scripts"/>
     <property name="path.web.styles.admin" value="${path.web}/assets/admin/styles"/>
     <property name="path.web.styles.front" value="${path.web}/assets/frontend/styles"/>
+    <property name="path.web.styles.styleguide" value="${path.web}/assets/styleguide/styles"/>
     <property name="path.yaml-standards.executable" value="${path.bin}/yaml-standards"/>
     <property name="phpstan.level" value="4"/>
     <property name="translations.dump.locales" value="en cs" description="This property is @deprecated, see 'domains-info-load' target instead."/>
@@ -190,6 +191,9 @@
                 <exclude name="/"/>
             </fileset>
             <fileset dir="${path.web.styles.front}/">
+                <exclude name="/"/>
+            </fileset>
+            <fileset dir="${path.web.styles.styleguide}/">
                 <exclude name="/"/>
             </fileset>
         </delete>
