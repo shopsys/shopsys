@@ -40,5 +40,39 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
 ## FAQ
 For the frequently asked questions, see [FAQ and Common Issues](./introduction/faq-and-common-issues.md).
 
+## Administration
+* [Administration Menu](./administration/administration-menu.md)
+* [Grid](./administration/grid.md)
+    * [Grid Rendering Customization](./administration/grid-rendering-customization.md)
+    * [Grid Data Sources](./administration/grid-data-sources.md)
+
+## Frontend
+* [Design implementation and Customization](./frontend/design-implementation-and-customization.md)
+* [Introduction to LESS](./frontend/introduction-to-less.md)
+* [Configuring Image Sizes for Individual Devices Width](./frontend/configuring-image-sizes-for-individual-devices-width.md)
+* [Frontend Troubleshooting](./frontend/frontend-troubleshooting.md)
+* [Understanding the Style Directory](./frontend/understanding-the-style-directory.md)
+* [Basic design styleguide](./frontend/styleguide.md)
+
+
+## Orchestration
+* [Introduction to Kubernetes](/docs/kubernetes/introduction-to-kubernetes.md)
+* [Continuous Integration Using Kubernetes](/docs/kubernetes/continuous-integration-using-kubernetes.md)
+* [Logging on Continuous Integration server running Kubernetes](/docs/kubernetes/logging-on-continuous-integration-server-running-kubernetes.md)
+* [How to deploy SSFW to Google Cloud platform](/docs/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform.md)
+* [Deploy Your Application to Google Cloud on your CI/CD](/docs/kubernetes/deploy-your-application-to-google-cloud-on-your-ci-cd.md)
+* [How to set SMTP Server Container](/docs/kubernetes/how-to-set-smtp-server-container.md)
+
+## Backend API
+* [Introduction to Backend API](/docs/backend-api/introduction-to-backend-api.md)
+* [API Versioning](/docs/backend-api/api-versioning.md)
+* [Adding an Attribute to Product Export](/docs/cookbook/backend-api/adding-an-attribute-to-product-export.md)
+* [Creating Custom API Endpoint](/docs/cookbook/backend-api/creating-custom-api-endpoint.md)
+* [API Methods](/docs/backend-api/api-methods.md)
+
+## FAQ
+For the frequently asked questions, see
+* [FAQ and Common Issues](./introduction/faq-and-common-issues.md)
+
 ## Documenting your own project
 We strongly believe that not only the framework itself needs documentation, but also your project deserves it's own docs. The tips for writing project documentation are written down in [Guidelines for Project Documentation](./project/guidelines-for-project-documentation.md).
