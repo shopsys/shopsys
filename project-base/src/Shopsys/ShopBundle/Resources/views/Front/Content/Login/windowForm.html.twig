@@ -13,16 +13,14 @@
 
         <div class="box-login__item box-login__item--checkbox">
             <label class="form-choice">
-                <span class="form-choice__input">
-                    {{ form_widget(form.rememberMe) }}
-                </span>
-                <span class="form-choice__label">
+                {{ form_widget(form.rememberMe, { attr: { class: "css-checkbox" } }) }}
+                <label class="css-checkbox__image form-choice__label" for="{{ form.rememberMe.vars.id }}">
                     {{ 'Remember my login'|trans }}
                     <i class="svg svg-info in-icon in-icon--info js-tooltip"
                         data-toggle="tooltip" data-placement="right"
                         title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
                      ></i>
-                </span>
+                </label>
             </label>
         </div>
 
