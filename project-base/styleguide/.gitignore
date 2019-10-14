@@ -1,0 +1,5 @@
+/docs/generated
+/node_modules
+/packages
+/src/Shopsys/ShopBundle/Resources/styles/
+/web

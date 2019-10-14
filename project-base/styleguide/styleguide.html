@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="/">
+    <base href="">
+    <title>Shopsys Framework Styleguide</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link href="styleguide/assets/css/structure.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="web/assets/frontend/styles/index11.css" media="screen, projection">
+
+    <script src="styleguide/assets/js/jquery-3.4.1.min.js"></script>
+
+    <!-- codemirror -->
+    <link href="styleguide/libs/codemirror/lib/codemirror.css" rel="stylesheet">
+    <link href="styleguide/libs/codemirror/addon/scroll/simplescrollbars.css" rel="stylesheet">
+    <link href="styleguide/libs/codemirror/theme/hopscotch.css" rel="stylesheet">
+    <script src="styleguide/libs/codemirror/lib/codemirror.js"></script>
+    <script src="styleguide/libs/codemirror/mode/css/css.js"></script>
+    <script src="styleguide/libs/codemirror/mode/javascript/javascript.js"></script>
+    <script src="styleguide/libs/codemirror/mode/xml/xml.js"></script>
+    <script src="styleguide/libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="styleguide/libs/codemirror/addon/scroll/simplescrollbars.js"></script>
+    <link rel="stylesheet" href="styleguide/libs/codemirror/addon/hint/show-hint.css">
+    <script src="styleguide/libs/codemirror/addon/hint/show-hint.js"></script>
+    <script src="styleguide/libs/codemirror/addon/hint/css-hint.js"></script>
+    <script src="styleguide/libs/codemirror/addon/hint/html-hint.js"></script>
+    <script src="styleguide/libs/codemirror/addon/hint/javascript-hint.js"></script>
+
+    <!-- stylguide functions -->
+    <script src="styleguide/assets/js/styleguide.js"></script>
+
+</head>
+<body>
+<main class="container">
+    <header class="styleguide-header">
+        <div class="styleguide-header__welcome left"> Styleguide - v.2.0 2019/10/07</div>
+        <nav class="styleguide-header__breakpoints right">
+            <ul class="styleguide-list--unstyled styleguide-list--float">
+                <li class="styleguide-header__breakpoints__item">
+                    <a id="small" data-size="420px" data-size-label="small" class="styleguide-header__breakpoints__item__link"><span>Small</span></a>
+                </li>
+                <li class="styleguide-header__breakpoints__item">
+                    <a id="medium" data-size="720px" data-size-label="medium" class="styleguide-header__breakpoints__item__link"><span>Medium</span></a>
+                </li>
+                <li class="styleguide-header__breakpoints__item">
+                    <a id="large" data-size="1280px" data-size-label="large" class="styleguide-header__breakpoints__item__link"><span>Large</span></a>
+                </li>
+                <li class="styleguide-header__breakpoints__item">
+                    <a id="full" data-size="100%" data-size-label="full" class="styleguide-header__breakpoints__item__link"><span>Full</span></a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="styleguide-sidebar">
+        <div class="styleguide-sidebar__toggle--out"><a href="#">Menu</a></div>
+        <div class="styleguide-sidebar__content">
+            <div class="styleguide-sidebar__toggle--in"><a href="#">Menu</a></div>
+            <!--img.styleguide-sidebar__logo.clearfix(src='assets/images/#{public.styleguide._data.logoImage}')-->
+            <svg class="styleguide-sidebar__menu-icon" width="80px" height="32px" viewbox="0 0 80 32" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                <title>Shopsys Framework Styleguide</title>
+                <desc>Created with Sketch.</desc>
+                <defs></defs>
+            </svg>
+            <nav class="styleguide-sidebar__nav row clearfix">
+                <ul class="styleguide-list--unstyled">
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#introduction" class="styleguide-sidebar__nav__item__link styleguide-anchor">Introduction</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#colors" class="styleguide-sidebar__nav__item__link styleguide-anchor">Colors</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#typography" class="styleguide-sidebar__nav__item__link styleguide-anchor">Typography</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#lists" class="styleguide-sidebar__nav__item__link styleguide-anchor">Lists</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#flags" class="styleguide-sidebar__nav__item__link styleguide-anchor">Flags</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#flash" class="styleguide-sidebar__nav__item__link styleguide-anchor">Flash messages</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#buttons" class="styleguide-sidebar__nav__item__link styleguide-anchor">Buttons</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#forms" class="styleguide-sidebar__nav__item__link styleguide-anchor">Forms</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#tables" class="styleguide-sidebar__nav__item__link styleguide-anchor">Tables</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#toggle" class="styleguide-sidebar__nav__item__link styleguide-anchor">Toggle</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#popup" class="styleguide-sidebar__nav__item__link styleguide-anchor">Popup</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#loaders" class="styleguide-sidebar__nav__item__link styleguide-anchor">Loaders</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#paging" class="styleguide-sidebar__nav__item__link styleguide-anchor">Paging</a>
+                    </li>
+                    <li class="styleguide-sidebar__nav__item">
+                        <a href="#icons" class="styleguide-sidebar__nav__item__link styleguide-anchor">Icons</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="styleguide-iframe-wrapper">
+        <main class="container">
+            <div class="styleguide-iframe-content">
+
+                <section id="introduction" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Introduction</h2>
+
+                    <div class="feedback"><p class="styleguide-module__paragraph">Hello! Welcome to the Styleguide, A tool to make
+                        creating and maintaining styleguides easy for Shopsys FW designs.</p>
+                    </div>
+                </section>
+
+                <section id="colors" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Colors</h2>
+
+                    <p class="styleguide-module__paragraph">We usualy have two colors: Primary and alternative.</p>
+                    <ul class="styleguide-list--unstyled list-colors">
+                        <li class="small-12 medium-2 column ">
+                            <div class="color" style="background: #333; border-radius: 5px;"><p style="color: #fff; padding-left: 10px;">@color-base</p></div>
+                        </li>
+                        <li class="small-12 medium-2 column ">
+                            <div class="color" style="background: #009BD9; border-radius: 5px;"><p style="color: #fff; padding-left: 10px;">@color-primary</p></div>
+                        </li>
+                        <li class="small-12 medium-2 column ">
+                            <div class="color" style="background: #a0c519; border-radius: 5px;"><p style="color: #fff; padding-left: 10px;">@color-add</p></div>
+                        </li>
+                        <li class="small-12 medium-2 column end">
+                            <div class="color" style="background: #f4f4f4; border-radius: 5px;"><p style="color: #fff; padding-left: 10px;">@color-light</p></div>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                    <br>
+                    <p class="styleguide-module__paragraph ">Colors used for product availability.</p>
+                    <ul class="styleguide-list--unstyled list-colors">
+                        <li class="small-12 medium-2 column ">
+                            <div class="color" style="background: green; border-radius: 5px;"><p style="color: #fff; padding-left: 10px;">Product in stock</p></div>
+                        </li>
+                        <li class="small-12 medium-2 column ">
+                            <div class="color" style="background: orange; border-radius: 5px;"><p style="color: #fff; padding-left: 10px;">Temporary unavailable</p></div>
+                        </li>
+                        <li class="small-12 medium-2 column end">
+                            <div class="color" style="background: red; border-radius: 5px;"><p style="color: #fff; padding-left: 10px;">Sold out</p></div>
+                        </li>
+                    </ul>
+
+                </section>
+
+                <section id="typography" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Typography</h2>
+
+                    <div class="titles">
+                        <h1>Heading H1</h1>
+                        <h2>Heading H2</h2>
+                        <h3>Heading H3</h3>
+                        <h4>Heading H4</h4>
+                    </div>
+                    <br/>
+                    <h3 class="styleguide-module__title--small">Paragraphs</h3>
+                    <p class="p1">SEO is a marketing tactic that costs five percent of overall budget but brings in more than 20
+                        percent of revenue for many Fortune 500 companies, and yet very few of them prioritize it. Instead,
+                        while slowly changing, too many CMOS still favor paid search, which costs 20 percent and brings in… 20
+                        percent. In search, businesses need to shift priorities. Now.</p>
+
+                    <p class="p2">Link volume is one of the most powerful signals search engines use to rank websites. There’s a
+                        way to use links to generate better search results, but too many marketers rely on traditional (or even
+                        black hat) tactics that just don’t work anymore.</p>
+
+                    <p class="p3 small-3">Huge to be recognized at the 2014 “Made in NY” Awards for the company’s contribution
+                        to New York’s creative economy.</p>
+                    <p>
+                        <h3 class="styleguide-module__title--small">Links</h3>
+                        <a href="#">Link and other special elements</a>
+                        <br>
+                        <a class="link-style link-style--alternative" href="#">Alternative link</a>
+                        <br>
+                        <span class="link-style">Span which looks like link</span>
+                        <br>
+                        <span class="link-style link-style--alternative">Span which looks like alternative link</span>
+                        <br>
+                        <span class="in-icon">
+                            <i class="svg svg-info in-icon__icon"></i>
+                            <span class="in-icon__label">Text with icon</span>
+                        </span>
+                        <br>
+                        <a href="#" class="in-icon in-icon--link">
+                            <i class="svg svg-info in-icon__icon"></i>
+                            <span class="in-icon__label">Link with icon</span>
+                        </a>
+                    </p>
+                </section>
+
+                <section id="lists" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Lists</h2>
+                    <h3 class="styleguide-module__title--small">List simple</h3>
+                    <ul class="list-simple">
+                        <li class="list-simple__item">Item 1</li>
+                        <li class="list-simple__item">Item 2</li>
+                        <li class="list-simple__item">Item 3</li>
+                    </ul>
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-list-simple">
+<ul class="list-simple">
+    <li class="list-simple__item">Item 1</li>
+    <li class="list-simple__item">Item 2</li>
+    <li class="list-simple__item">Item 3</li>
+</ul>
+</textarea>
+                    </div>
+                </section>
+
+                <section id="flags" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Flags</h2>
+                    <div style="position: relative; height: 80px;">
+                        <div class="in-flag">
+                            <span class="in-flag__item">
+                                TOP
+                            </span>
+                            <span class="in-flag__item in-flag__item--sales">
+                                Action
+                            </span>
+                            <span class="in-flag__item in-flag__item--news">
+                                New
+                            </span>
+                        </div>
+                    </div>
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-flags">
+    <div class="in-flag">
+        <span class="in-flag__item">
+            TOP
+        </span>
+        <span class="in-flag__item in-flag__item--sales">
+            Action
+        </span>
+        <span class="in-flag__item in-flag__item--news">
+            New
+        </span>
+    </div>
+</textarea>
+                    </div>
+                </section>
+
+                <section id="flash" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Flash messages</h2>
+                    <div class="in-message in-message--info">
+                        <div>Info flash message</div>
+                    </div>
+                    <div class="in-message in-message--success">
+                        <div>Success flash message</div>
+                    </div>
+                    <div class="in-message in-message--warning">
+                        <div>Warning flash message</div>
+                    </div>
+                    <div class="in-message in-message--error">
+                        <div>Error flash message</div>
+                    </div>
+                    <div class="in-message in-message--alert">
+                        <div>Alert flash message</div>
+                    </div>
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-flash-messages">
+<div class="in-message in-message--info">
+    <div>Info flash message</div>
+</div>
+
+<div class="in-message in-message--success">
+    <div>Success flash message</div>
+</div>
+
+<div class="in-message in-message--warning">
+    <div>Warning flash message</div>
+</div>
+
+<div class="in-message in-message--error">
+    <div>Error flash message</div>
+</div>
+
+<div class="in-message in-message--alert">
+    <div>Alert flash message</div>
+</div>
+</textarea>
+                    </div>
+                </section>
+
+                <section id="buttons" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Buttons</h2>
+
+                    <a href="#" class="btn">Primary button</a>  &nbsp;
+                    <a href="#" class="btn btn--success">Success button</a>  &nbsp;
+                    <a href="#" class="btn btn--success"><i class="svg svg-arrow"></i>Go to cart</a>  &nbsp;
+                    <a href="#" class="window-popup__actions__btn--continue window-button-continue btn btn--success">Go to cart <i class="svg svg-arrow"></i></a> &nbsp;
+                    <a href="#" class="btn btn--disabled">Disabled</a>  &nbsp;
+                    <a href="#" class="btn btn--outline">Outline</a>  &nbsp;
+                    <a href="#" class="btn-no-style">No style</a>  &nbsp;
+                    <br><br>
+                    <a href="#" class="btn btn--small">Primary small</a>  &nbsp;
+                    <a href="#" class="btn">Primary</a>  &nbsp;
+                    <a href="#" class="btn btn--large">Primary large</a>  &nbsp;
+
+
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-buttons">
+<a href="#" class="btn">Primary button</a>
+<a href="#" class="btn btn--success">Success button</a>
+<a href="#" class="btn btn--success"><i class="svg svg-arrow"></i>Go to cart</a>
+<a href="#" class="window-popup__actions__btn--continue window-button-continue btn btn--success">Go to cart <i class="svg svg-arrow"></i></a>
+<a href="#" class="btn btn--disabled">Disabled</a>
+<a href="#" class="btn btn--outline">Outline</a>
+<a href="#" class="btn-no-style">No style</a>
+
+<a href="#" class="btn btn--small">Primary small</a>
+<a href="#" class="btn">Primary</a>
+<a href="#" class="btn btn--large">Primary large</a>
+</textarea>
+                    </div>
+                </section>
+
+                <section id="forms" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Forms</h2>
+
+                    <form class="snippet">
+                        <fieldset>
+                            <dl class="form-line">
+                                <dt>
+                                    <label for="registration_form_firstName" class="required">
+                                        First name:
+                                        <span class="form-input-required">*</span>
+                                    </label>
+                                </dt>
+                                <dd>
+                                    <input type="text" id="registration_form_firstName" name="registration_form[firstName]" required="required" class="input">
+                                    <span class="js-validation-errors-list js-validation-error-list-registration_form_firstName form-error form-error--line display-none">
+                                        <span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                        <ul class="form-error__list"></ul>
+                                    </span>
+                                </dd>
+                            </dl>
+                            <dl class="form-line">
+                                <dt></dt>
+                                <dd>
+                                    <div class="form-choice">
+                                        <div class="form-choice__input">
+                                            <input type="checkbox" id="order_personal_info_form_companyCustomer" name="order_personal_info_form[companyCustomer]" class="js-checkbox-toggle" data-checkbox-toggle-container-id="js-company-fields" value="1">
+                                        </div>
+                                        <div class="form-choice__label">
+                                            <label for="order_personal_info_form_companyCustomer">
+                                                I buy on company behalf
+                                            </label>
+                                            <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyCustomer form-error form-error--choice display-none" style="display: none;"><span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                                <ul class="form-error__list"></ul>
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+
+                            <div id="js-company-fields" style="display: none;">
+                                <dl class="form-line">
+                                    <dt>
+                                        <label for="order_personal_info_form_companyName" class="required">
+                                            Company name: <span class="form-input-required">*</span>
+                                        </label>
+                                    </dt>
+                                    <dd>
+                                        <input type="text" id="order_personal_info_form_companyName" name="order_personal_info_form[companyName]" required="required" class="input">
+
+                                        <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyName form-error form-error--line display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                            <ul class="form-error__list"></ul>
+                                        </span>
+                                    </dd>
+                                </dl>
+
+                                <dl class="form-line">
+                                    <dt>
+                                        <label for="order_personal_info_form_companyNumber" class="required">
+                                            Company number: <span class="form-input-required">*</span>
+                                        </label>
+                                    </dt>
+                                    <dd>
+                                        <input type="text" id="order_personal_info_form_companyNumber" name="order_personal_info_form[companyNumber]" required="required" class="input">
+
+                                        <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyNumber form-error form-error--line display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                            <ul class="form-error__list"></ul>
+                                        </span>
+                                    </dd>
+                                </dl>
+
+                                <dl class="form-line">
+                                    <dt>
+                                        <label for="order_personal_info_form_companyTaxNumber">
+                                            Tax number:
+                                        </label>
+                                    </dt>
+                                    <dd>
+                                        <input type="text" id="order_personal_info_form_companyTaxNumber" name="order_personal_info_form[companyTaxNumber]" class="input">
+
+                                        <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyTaxNumber form-error form-error--line display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                            <ul class="form-error__list"></ul>
+                                        </span>
+                                    </dd>
+                                </dl>
+                            </div>
+
+                            <dl class="form-line">
+                                <dt>
+                                    <label for="registration_form_password_first" class="required">
+                                        Password: <span class="form-input-required">*</span>
+                                    </label>
+                                    <i class="svg svg-info in-icon in-icon--info js-tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="Password must be at least six characters and can't be the same as entered email or its part before at sign."></i>
+                                </dt>
+                                <dd>
+                                    <input type="password" id="registration_form_password_first" name="registration_form[password][first]" required="required" autocomplete="new-password" class="input">
+
+                                    <span class="js-validation-errors-list js-validation-error-list-registration_form_password_first form-error form-error--line display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                        <ul class="form-error__list"></ul>
+                                    </span>
+                                </dd>
+                            </dl>
+
+                            <dl class="form-line">
+                                <dt></dt>
+                                <dd>
+                                    <div class="form-choice">
+                                        <div class="form-choice__input">
+                                            <input type="checkbox" id="registration_form_privacyPolicy" name="registration_form[privacyPolicy]" required="required" value="1">
+                                        </div>
+                                        <div class="form-choice__label">
+                                            <label for="registration_form_privacyPolicy">
+                                                I agree with <a href="http://127.0.0.1:8000/privacy-policy/" target="_blank">privacy policy</a>.
+                                            </label>
+                                            <span class="js-validation-errors-list js-validation-error-list-registration_form_privacyPolicy form-error form-error--choice display-none">
+                                                <span class="form-error__icon">
+                                                    <i class="svg svg-warning"></i>
+                                                </span>
+                                                <ul class="form-error__list"></ul>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </dd>
+                            </dl>
+
+                            <dl class="form-line">
+                                <dt></dt>
+                                <dd>
+                                    <button type="submit" name="submit_button" class="btn">Submit form</button>
+                                </dd>
+                            </dl>
+
+                        </fieldset>
+                    </form>
+
+                    <h3 class="styleguide-module__title--small">Error field</h3>
+                    <fieldset>
+                        <dl class="form-line">
+                            <dt>
+                                <label for="order_personal_info_form_firstName" class="required">
+                                    First name: <span class="form-input-required">*</span>
+                                </label>
+                                <i class="svg svg-info in-icon in-icon--info js-tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="Password must be at least six characters and can't be the same as entered email or its part before at sign."></i>
+                            </dt>
+                            <dd>
+                                <input id="order_personal_info_form_firstName" name="order_personal_info_form[firstName]" required="required" class="input form-input-error" type="text">
+
+                                <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_firstName form-error form-error--line display-none" style="display: block;">
+                                    <span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                    <ul class="form-error__list">
+                                        <li class="js-validation-errors-message js-validation-error-list-order_personal_info_form_firstName">This value is not a valid Name</li>
+                                    </ul>
+                                </span>
+                            </dd>
+                        </dl>
+                    </fieldset>
+                    <fieldset class="form-fieldset">
+                        <h3 class="styleguide-module__title--small">Select classic</h3>
+                        <select id="select_1" name="select_1" class="input">
+                            <option value="1">Slovenská republika</option>
+                            <option value="2">Czech republic</option>
+                        </select>
+                    </fieldset>
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-radiobuttons">
+<select id="select_1" name="select_1" class="input">
+<option value="1">Slovenská republika</option>
+<option value="2">Czech republic</option>
+</select>
+</textarea>
+                    </div>
+                    <h3 class="styleguide-module__title--small">Radio</h3>
+                    <fieldset class="form-fieldset">
+                        <div class="form-choice">
+                            <div class="form-choice__input">
+                                <input type="radio" id="radio1" name="radio" class="css-radio" />
+                            </div>
+                            <div class="form-choice__label">
+                                <label for="radio1">Radio input</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-fieldset">
+                        <div class="form-choice">
+                            <div class="form-choice__input">
+                                <input type="radio" id="radio2" name="radio" class="css-radio" checked="checked" />
+                            </div>
+                            <div class="form-choice__label">
+                                <label for="radio2">Radio input selected</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-fieldset">
+                        <div class="form-choice">
+                            <div class="form-choice__input">
+                                <input type="radio" id="radio3" name="radio" class="css-radio" disabled="disabled" />
+                            </div>
+                            <div class="form-choice__label">
+                                <label for="radio3">Radio input disabled</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-fieldset">
+                        <div class="form-choice">
+                            <div class="form-choice__input">
+                                <input type="radio" id="radio4" name="radio2" class="css-radio" checked="checked" disabled="disabled" />
+                            </div>
+                            <div class="form-choice__label">
+                                <label for="radio4">Radio input selected disabled</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-fieldset" style="max-width: 200px;">
+                        <div class="form-choice">
+                            <div class="form-choice__input">
+                                <input type="radio" id="radio5" name="radio2" class="css-radio" />
+                            </div>
+                            <div class="form-choice__label">
+                                <label for="radio5">Radio with longer text Lorem ipsum dolor sit amet, consectetur adipiscing elit,</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-radiobuttons">
+<div class="form-choice">
+<div class="form-choice__input">
+    <input type="radio" id="radio_1" name="radio2" class="css-radio" />
+</div>
+<div class="form-choice__label">
+    <label for="radio_1">Radio text label</label>
+</div>
+</div>
+</textarea>
+                    </div>
+
+                    <h3 class="styleguide-module__title--small">Checkbox</h3>
+                    <fieldset class="form-fieldset">
+                        <div class="form-choice">
+                            <div class="form-choice__input">
+                                <input type="checkbox" id="checkbox1" name="checkbox" class="css-checkbox" />
+                            </div>
+                            <div class="form-choice__label">
+                                <label for="checkbox1">Checkbox input</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-fieldset">
+                        <div class="form-choice">
+                            <div class="form-choice__input">
+                                <input type="checkbox" id="checkbox2" name="checkbox" class="css-checkbox" checked="checked" />
+                            </div>
+                            <div class="form-choice__label">
+                                <label for="checkbox2">Checkbox checked</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-fieldset">
+                        <div class="form-choice">
+                            <div class="form-choice__input">
+                                <input type="checkbox" id="checkbox3" name="checkbox" class="css-checkbox" disabled="disabled" />
+                            </div>
+                            <div class="form-choice__label">
+                                <label for="checkbox3">Checkbox disabled</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-fieldset">
+                        <div class="form-choice">
+                            <div class="form-choice__input">
+                                <input type="checkbox" id="checkbox4" name="checkbox-dis" class="css-checkbox" disabled="disabled" />
+                            </div>
+                            <div class="form-choice__label">
+                                <label for="checkbox4">Checkbox checked disabled</label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-fieldset" style="max-width: 200px;">
+                        <div class="form-choice">
+                            <div class="form-choice__input">
+                                <input type="checkbox" id="checkbox4" name="checkbox-dis" class="css-checkbox" disabled="disabled" />
+                            </div>
+                            <div class="form-choice__label">
+                                <label for="checkbox4">Checkbox with longer text Lorem ipsum dolor sit amet, consectetur adipiscing elit,</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-checkboxes">
+<div class="form-choice">
+<div class="form-choice__input">
+    <input type="checkbox" id="checkbox_1" name="checkbox" class="css-checkbox" />
+</div>
+<div class="form-choice__label">
+    <label for="checkbox_1">Checkbox with text</label>
+</div>
+</div>
+</textarea>
+                    </div>
+
+                    <h3 class="styleguide-module__title--small">Spinbox / add basket</h3>
+                    <span class="form-input-spinbox js-spinbox">
+                        <input type="text" name="add_product_form[quantity]" required="required" class="form-input-spinbox__input input-no-style js-spinbox-input input id__add_product_form_quantity" data-spinbox-min="1" value="1">
+
+                        <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">+</button>
+                        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">-</button>
+                    </span>
+                    <button type="submit" name="add_product_form[add]" class="btn--success  btn id__add_product_form_add">Add to cart</button>
+                    <input type="hidden" name="add_product_form[productId]" class="input id__add_product_form_productId" value="1">
+
+                    <h3 class="styleguide-module__title--small">Price Slider</h3>
+                    <div class="box-filter__price">
+                        <dl class="form-line">
+                            <dt>
+                                <label for="product_filter_form_minimalPrice">
+                                    Price from:
+                                </label>
+                            </dt>
+                            <dd>
+                                <input type="text" id="product_filter_form_minimalPrice" name="product_filter_form[minimalPrice]" placeholder="319.00" class="js-product-filter-call-change-after-reset input">
+
+                                <span class="js-validation-errors-list js-validation-error-list-product_filter_form_minimalPrice form-error form-error--line display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                    <ul class="form-error__list"></ul>
+                                </span>
+                                CZK
+                            </dd>
+                        </dl>
+
+                        <dl class="form-line">
+                            <dt>
+                                <label for="product_filter_form_maximalPrice">
+                                    Price to:
+                                </label>
+                            </dt>
+                            <dd>
+                                <input type="text" id="product_filter_form_maximalPrice" name="product_filter_form[maximalPrice]" placeholder="21590.00" class="js-product-filter-call-change-after-reset input">
+
+                                <span class="js-validation-errors-list js-validation-error-list-product_filter_form_maximalPrice form-error form-error--line display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                    <ul class="form-error__list"></ul>
+                                </span>
+                                CZK
+                            </dd>
+                        </dl>
+
+                        <div class="js-range-slider ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-minimum-input-id="product_filter_form_minimalPrice" data-minimal-value="319.000000" data-maximum-input-id="product_filter_form_maximalPrice" data-maximal-value="21590.000000">
+                            <div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 25%; width: 75%;"></div>
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 25%;"></span>
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;"></span>
+                        </div>
+                    </div>
+
+                    <h3 class="styleguide-module__title--small">Newsletter form error</h3>
+                    <div class="footer__newsletter">
+                        <div class="footer__newsletter__form">
+                            <div class="footer__newsletter__form__in">
+                                <input id="subscription_form_email" name="subscription_form[email]" required="required" placeholder="Zadejte váš e-mail..." class="footer__newsletter__form__input input form-input-error" type="email">
+                                <span class="js-validation-errors-list js-validation-error-list-subscription_form_email form-error">
+                                    <span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                    <ul class="form-error__list">
+                                        <li class="js-validation-errors-message js-error-source-id-form-error-subscription-form-email">This value is not a valid email address.</li>
+                                    </ul>
+                                </span>
+                                <button type="submit" id="subscription_form_send" name="subscription_form[send]" class="footer__newsletter__form__btn btn">Přihlásiť se</button>
+                                <span class="js-validation-errors-list js-validation-error-list-subscription_form in-message in-message--alert display-none">
+                                    <ul class="in-message__list">
+                                        <li class="js-validation-errors-message js-error-source-id-form-error-subscription-form-email">This value is not a valid email address.</li>
+                                    </ul>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="toggle" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Toggle</h2>
+
+                    <h3 class="styleguide-module__title--small">Responsive toggle</h3>
+                    <a href="#toggle" class="btn btn--success js-responsive-toggle" data-element="hidden-div" data-element="hide-on-click-out">Toggle Button</a>
+
+                    <div id="hidden-div" class="display-none">This is hidden div content</div>
+
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-list-simple">
+    <a href="#toggle" class="btn btn--success js-responsive-toggle" data-element="hidden-div" data-hide-on-click-out="true">Toggle Button</a>
+
+    <div id="hidden-div" class="display-none">This is hidden div content</div>
+</textarea>
+                    </div>
+                    <div class="styleguide__info">
+                        data-element: must point to ID of hidden/toggled element
+                    </div>
+                    <div class="styleguide__info">
+                        data-hide-on-click-out: if you want to hide data-element on click on another place in document
+                    </div>
+                    <div class="styleguide__warning">
+                        When you click on button, it obtain state class "active"
+                    </div>
+
+                    <h3 class="styleguide-module__title--small">Checkbox toggle</h3>
+                    <input type="checkbox" id="checkbox_toggle" name="checkbox_toggle" class="js-checkbox-toggle" data-checkbox-toggle-container-class="js-checkbox-show-hide-this" value="1">
+                    <label for="checkbox_toggle">
+                        Show/hide element by clicking on checkbox
+                    </label>
+                    <div class="js-checkbox-show-hide-this display-none">
+                        This is checbox show hide element content
+                    </div>
+
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-list-simple">
+    <a href="#toggle" class="btn btn--success js-checkbox-toggle" data-checkbox-toggle-container-class="js-checkbox-show-hide-this">Toggle Button</a>
+
+    <div class="js-checkbox-show-hide-this display-none">This is checbox show hide element content</div>
+</textarea>
+                    </div>
+                    <div class="styleguide__info">
+                        data-checkbox-toggle-container-id: must point to ID of hidden/toggled element
+                    </div>
+                    <div class="styleguide__info">
+                        data-checkbox-toggle-container-class: must point to class of hidden/toggled element
+                    </div>
+                    <div class="styleguide__warning">
+                        You can add "js-checkbox-toggle--inverted" class for inverted show/hide process. Do not remove original class "js-checkbox-toggle"
+                    </div>
+                </section>
+
+                <section id="tables" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Tables</h2>
+                    <div class="wrap-box">
+                        <h2 class="wrap-box__title">Basic information</h2>
+                        <div class="wrap-box__in">
+                            <table class="table-params">
+                                <tbody>
+                                    <tr>
+                                        <th>Status: </th>
+                                        <td>New</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Responsiblity: </th>
+                                        <td>Everyone</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="wrap-box__in">
+                            <div class="in-scroll box-orders">
+                                <div class="in-scroll__in">
+                                    <table class="table-main box-orders__table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Order number</th>
+                                                <th>Creation date</th>
+                                                <th>Current status</th>
+                                                <th class="text-right">Number of items</th>
+                                                <th>Shipping</th>
+                                                <th>Payment</th>
+                                                <th class="text-right">Total price including VAT</th>
+                                                <th class="text-center">Detail</th>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="#">1506464372</a></td>
+                                                <td>2017-09-25</td>
+                                                <td>New</td>
+                                                <td class="text-right">4</td>
+                                                <td>Personal collection</td>
+                                                <td>Credit card</td>
+                                                <td class="text-right">CZK1,916.00</td>
+                                                <td class="text-center"><a href="#" class="in-icon in-icon--detail"><i class="svg svg-search"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="#">1506464371</a></td>
+                                                <td>2017-09-25</td>
+                                                <td>Done</td>
+                                                <td class="text-right">2</td>
+                                                <td>Personal collection</td>
+                                                <td>Cash</td>
+                                                <td class="text-right">CZK6,150.00</td>
+                                                <td class="text-center"><a href="#" class="in-icon in-icon--detail"><i class="svg svg-search"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="#">1506464374</a></td>
+                                                <td>2017-09-25</td>
+                                                <td>In progress</td>
+                                                <td class="text-right">1</td>
+                                                <td>PPL</td>
+                                                <td>Credit card</td>
+                                                <td class="text-right">CZK3,841.00</td>
+                                                <td class="text-center"><a href="#" class="in-icon in-icon--detail"><i class="svg svg-search"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="#">1506464374</a></td>
+                                                <td>2017-09-25</td>
+                                                <td>In progress</td>
+                                                <td class="text-right">1</td>
+                                                <td>PPL</td>
+                                                <td>Credit card</td>
+                                                <td class="text-right">CZK3,841.00</td>
+                                                <td class="text-center"><a href="#" class="in-icon in-icon--detail"><i class="svg svg-search"></i></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="popup" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Popup</h2>
+                    <div style="position: relative; display: block;">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        <div class="window-popup__overlay window-popup__overlay--active" id="js-overlay" style="position: absolute;"></div>
+                        <div id="window-main-container" style="padding-bottom: 20px;">
+                            <div class="window-popup window-popup--standard window-popup--active" id="js-window" style="position: relative;">
+                                <div class="js-window-content window-popup__in">
+                                    <form name="front_login_form" method="post" action="/login/check/" novalidate="novalidate" class="js-front-login-window" role="form">
+                                        <span class="js-validation-errors-list js-validation-error-list-front_login_form in-message  display-none">
+                                            <ul class="in-message__list"></ul>
+                                        </span>
+                                        <div class="box-login">
+                                            <h3 class="box-login__title">Login</h3>
+                                            <div class="js-front-login-window-message in-message in-message--alert display-none"></div>
+                                            <div class="box-login__item">
+                                                <input name="front_login_form[email]" required="required" placeholder="E-mail" class="input id__front_login_form_email" type="text">
+                                                <span class="js-validation-errors-list js-validation-error-list-front_login_form_email form-error  display-none">
+                                                    <span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                                    <ul class="form-error__list"></ul>
+                                                </span>
+                                            </div>
+                                            <div class="box-login__item">
+                                                <span class="js-validation-errors-list js-validation-error-list-front_login_form_password form-error  display-none">
+                                                    <span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                                    <ul class="form-error__list"></ul>
+                                                </span>
+                                                <input name="front_login_form[password]" required="required" placeholder="Password" class="input id__front_login_form_password" type="password">
+                                            </div>
+                                            <div class="box-login__item box-login__item--checkbox">
+                                                <label class="form-choice">
+                                                <span class="form-choice__input">
+                                                <input name="front_login_form[rememberMe]" class="id__front_login_form_rememberMe" value="1" type="checkbox">
+                                                </span>
+                                                <span class="form-choice__label">
+                                                Remember my login
+                                                <i class="svg svg-info in-icon in-icon--info js-tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="We will remember your login on this computer for 30 days."></i>
+                                                </span>
+                                                </label>
+                                            </div>
+                                            <div class="box-login__item box-login__item--submit">
+                                                <button type="submit" name="front_login_form[login]" class="btn id__front_login_form_login">Log in</button>
+                                            </div>
+                                            <div class="box-login__item box-login__item--info">
+                                                <a href="#">Forgot your password?</a>
+                                            </div>
+                                        </div>
+                                        <input name="front_login_form[_token]" class="input id__front_login_form__token" value="mxizsxDz68IphRegvxbVu2gRxEJacy7kiuPj9Ty9UN4" type="hidden">
+                                    </form>
+                                </div>
+                                <a href="#" class="window-button-close window-popup__close js-window-button-close" title="Close (Esc)"><i class="svg svg-remove-thin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="loaders" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Loaders</h2>
+                    <div style="position: relative; display: block;">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+                        <div class="in-overlay__in in-overlay__in--absolute">
+                            <div class="in-overlay__spinner in-overlay__spinner--absolute">
+                                <span class="in-overlay__spinner__icon"></span>
+                                <span class="in-overlay__spinner__message"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-list-simple">
+<div class="in-overlay__in">
+    <div class="in-overlay__spinner">
+        <span class="in-overlay__spinner__icon"></span>
+        <span class="in-overlay__spinner__message"></span>
+    </div>
+</div>
+</textarea>
+                    </div>
+                    <div class="styleguide__info">
+                        For display loader to whole page is used JS class, which adds ".in-overlay" for <body> element.
+                    </div>
+                    <div class="styleguide__info">
+                        For display loader only for parent element, you have to add ".in-overlay__in--absolute" modification class next to ".in-overlay__in".
+                        And add ".in-overlay__spinner--absolute" modification class next to ".in-overlay__spinner".
+
+                    </div>
+                </section>
+
+                <section id="paging" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Paging</h2>
+
+                    <div class="in-paging__control">
+                        <span class="in-paging__control__item in-paging__control__item--arrow in-paging__control__item--inactive">
+                            <i class="svg svg-arrow-left"></i>
+                            <span class="in-paging__control__item__arrow-text">
+                                Preview
+                            </span>
+                        </span>
+
+                        <span class="in-paging__control__item in-paging__control__item--num in-paging__control__item--active">1</span>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">2</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">3</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">4</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">5</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">6</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">7</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">8</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">9</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">10</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">11</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">12</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">13</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">14</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">15</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">16</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">17</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">18</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">19</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">...</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">100</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">...</a>
+                        <a class="in-paging__control__item in-paging__control__item--num" href="#">1000</a>
+
+                        <a class="in-paging__control__item in-paging__control__item--arrow in-paging__control__item--right" href="#">
+                            <span class="in-paging__control__item__arrow-text">
+                                Next
+                            </span>
+                            <i class="svg svg-arrow-left"></i>
+                        </a>
+                    </div>
+
+                    <div class="in-paging__control" style="padding-top: 20px;">
+                        <div class="in-paging__button-more text-center">
+                            <input class="js-load-more-button btn btn--success btn--large" data-page="1" data-total-count="4" data-page-size="12" data-pagination-to-item="4" value="Load next 20 products" type="button">
+                        </div>
+                    </div>
+                </section>
+
+                <section id="icons" class="styleguide-module anchor clearfix"><h2 class="styleguide-module__title">Icons</h2>
+                    <div class="feedback">
+                        <p class="styleguide-module__paragraph">Generated  SVG icons from docs/generated/webfont-frontend-svg.html</p>
+                    </div>
+                    <div class="icons" id="icons" style="width: 100%;">
+                        <iframe src="docs/generated/svg.html" width="100%" height="500"></iframe>
+                    </div>
+                    <div class="styleguide-module__editor">
+<textarea class="codemirror-html" id="html-svg">
+<i class="svg svg-home"></i>
+</textarea>
+                    </div>
+                    <div class="styleguide__info">
+                        If you can´t see svg icon - just try to open this html file in Chrome.
+                    </div>
+                </section>
+
+                <section id="final-notice" class="styleguide-module anchor clearfix">
+                    <h2 class="styleguide-module__title">Others</h2>
+                    <div class="feedback">
+                        <p class="styleguide-module__paragraph">If you think that something is missing - write us
+                            <a href="koderi@shopsys.com ">koderi@shopsys.com</a>
+                        </p>
+
+                        <p class="styleguide-module__paragraph">
+                            Inspired by <a href="https://hugeinc.github.io/styleguide/" target="__blank">https://hugeinc.github.io/styleguide/</a>
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+</main>
+<!-- JS minimum for styleguide start -->
+<script type="text/javascript" src="src/Shopsys/ShopBundle/Resources/scripts/filterAllNodes.js"></script>
+<script type="text/javascript" src="src/Shopsys/ShopBundle/Resources/scripts/register.js"></script>
+<script type="text/javascript" src="src/Shopsys/ShopBundle/Resources/scripts/number.js"></script>
+<script type="text/javascript" src="src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/jquery-ui.min.js"></script>
+<!-- JS minimum for styleguide end -->
+
+<script type="text/javascript" src="src/Shopsys/ShopBundle/Resources/scripts/frontend/responsiveToggle.js"></script>
+<script type="text/javascript" src="src/Shopsys/ShopBundle/Resources/scripts/frontend/rangeSlider.js"></script>
+<script type="text/javascript" src="src/Shopsys/ShopBundle/Resources/scripts/frontend/checkboxToggle.js"></script>
+
+</body>
+</html>
