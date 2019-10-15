@@ -12,7 +12,7 @@
         </div>
 
         <div class="box-login__item box-login__item--checkbox">
-            <label class="form-choice">
+            <div class="form-choice">
                 {{ form_widget(form.rememberMe, { attr: { class: "css-checkbox" } }) }}
                 <label class="css-checkbox__image form-choice__label" for="{{ form.rememberMe.vars.id }}">
                     {{ 'Remember my login'|trans }}
@@ -21,7 +21,7 @@
                         title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
                      ></i>
                 </label>
-            </label>
+            </div>
         </div>
 
         <div class="box-login__item box-login__item--submit">
