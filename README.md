@@ -31,14 +31,9 @@ Shopsys Framework is fully functional e-commerce platform with all basic functio
 * Full core upgradability
 * GDPR compliance
 * Preparation for scalability
-<<<<<<< HEAD
-* Manifest for orchestration via [Kubernetes](./docs/kubernetes/introduction-to-kubernetes.md) 
-* Support to easier [deployment to Google Cloud via Terraform](./docs/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform.md)
-* Base for [Back-end API](./docs/backend-api/index.md)
-=======
+* Base for [Back-end API](https://docs.shopsys.com/en/latest/backend-api/)
 * Manifest for orchestration via [Kubernetes](https://docs.shopsys.com/en/latest/kubernetes/introduction-to-kubernetes/)
 * Support to easier [deployment to Google Cloud via Terraform](https://docs.shopsys.com/en/latest/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
->>>>>>> 8.0
 
 ### Plans for next releases
 

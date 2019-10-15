@@ -100,7 +100,6 @@ Required option that defines from what domain should the category be listed.
 ### [ColorPickerType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/ColorPickerType.php)
 Displays text field with box of given color that shows color picker when clicked.
 
-<<<<<<< HEAD
 ### [DatePickerType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DatePickerType.php)
 Displays field that shows date picker when clicked.  
 Value is internally converted from [display timezone](./working-with-date-time-values.md) to UTC, so it have to be persisted in database also as `DateTime` to avoid possible date shifting.
