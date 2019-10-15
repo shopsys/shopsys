@@ -1,5 +1,5 @@
 # UPGRADING
-The releases of Shopsys Framework adhere to the [Backward Compatibility Promise](/docs/contributing/backward-compatibility-promise.md) to make the upgrades to new versions easier and help long-term maintainability.
+The releases of Shopsys Framework adhere to the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/) to make the upgrades to new versions easier and help long-term maintainability.
 
 ## Recommended way of upgrading
 Since there are 3 possible scenarios how you can use the Shopsys Framework, instructions are divided into these scenarios.
@@ -36,7 +36,7 @@ Follow the instructions in the [monorepo upgrade guide](upgrade/upgrading-monore
     * test your app locally
     * commit your changes
     * run `composer update` to update the rest of your dependencies, test the app again and commit `composer.lock`
-* if any of the database migrations does not suit you, there is an option to skip it, see [our Database Migrations docs](https://github.com/shopsys/shopsys/blob/master/docs/introduction/database-migrations.md#reordering-and-skipping-migrations)
+* if any of the database migrations does not suit you, there is an option to skip it, see [our Database Migrations docs](https://docs.shopsys.com/en/latest/introduction/database-migrations/#reordering-and-skipping-migrations)
 * even we care a lot about these instructions, it is possible we miss something. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
 ## Upgrade guides

@@ -35,7 +35,6 @@ class CartItemTest extends TransactionFunctionalTestCase
         $availability = new Availability($availabilityData);
         $productData = $productDataFactory->create();
         $productData->name = [];
-        $productData->price = 100;
         $productData->vat = $vat;
         $productData->availability = $availability;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);

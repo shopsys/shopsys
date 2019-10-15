@@ -9,7 +9,7 @@ namespace Shopsys\ReadModelBundle\Image;
  *
  * Class representing images in frontend
  *
- * @see https://github.com/shopsys/shopsys/blob/master/docs/model/introduction-to-read-model.md
+ * @see https://docs.shopsys.com/en/latest/model/introduction-to-read-model/
  */
 class ImageView
 {
