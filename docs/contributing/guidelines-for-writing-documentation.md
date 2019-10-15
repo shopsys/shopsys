@@ -10,7 +10,7 @@
     * The main [`mkdocs.yml`](https://github.com/shopsys/shopsys/blob/7.3/mkdocs.yml) configuration file is located in the monorepo root.
 * All documentation files should be named same as first heading (in lowercase, non-alphanumeric characters replaced by dash).
 * References to project files and classes have to be absolute links to the GitHub in proper version - e.g. `[app/config/config.yml](https://github.com/shopsys/shopsys/blob/7.3/project-base/app/config/config.yml)`.
-    * there is an exception for files [CHANGELOG](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md), [UPGRADE](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md), and [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md) - these files should be always linked in the latest (i.e. `master`) version.
+    * there is an exception for files [CHANGELOG](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) and [UPGRADE](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) - these files should be always linked in the latest (i.e. `master`) version.
 * References among the docs files must be relative - e.g. `[read this article](../introduction/using-form-types.md)`.
 * All words in a title except conjunctions (and, or, but...), articles (a, an, the), and short prepositions (in, to, of...) should be capitalized. Other headings should not be capitalized.
 * Each sub-folder in the `docs` folder should contain `index.md` file with links to all the other articles in the sub-folder as well as `navigation.yml` file with the menu configuration that should be consistent with the `index.md`.
