@@ -1,3 +1,6 @@
+@table-main-padding-vertical: 14px;
+@table-main-padding-horizontal: 17px;
+@table-main-padding-horizontal-larger: 2*@table-main-padding-horizontal;
 .table-main {
     width: 100%;
     border-collapse: collapse;
@@ -19,13 +22,35 @@
     }
 
     td, th {
-        padding: 14px 17px;
+        padding: @table-main-padding-vertical @table-main-padding-horizontal;
     }
 
     thead {
         td, th {
-            padding-top: 14px;
-            padding-bottom: 14px;
+            padding-top: @table-main-padding-vertical;
+            padding-bottom: @table-main-padding-vertical;
+        }
+    }
+
+    &__column-with-info {
+        display: block;
+        padding-right: @table-main-padding-horizontal;
+    }
+
+    &--with-inline-form {
+        th {
+            padding-right: @table-main-padding-horizontal-larger;
+        }
+
+        td {
+            position: relative;
+            padding: @table-main-padding-vertical @table-main-padding-horizontal-larger @table-main-padding-vertical 10px;
+        }
+
+        tbody tr td:first-child,
+        tfoot tr td:first-child,
+        th:first-child {
+            padding-left: 15px;
         }
     }
 }
