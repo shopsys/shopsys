@@ -76,5 +76,6 @@ We are planning some refactorings to enable you easier and unified way of grid c
 
 ## Further reading - cookbooks
 If you want to implement a new grid, you can follow the cookbooks:
-- [Create basic grid](../cookbook/create-basic-grid.md)
-- [Create advanced grid](../cookbook/create-advanced-grid.md)
+
+* [Create basic grid](../cookbook/create-basic-grid.md)
+* [Create advanced grid](../cookbook/create-advanced-grid.md)

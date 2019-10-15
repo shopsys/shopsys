@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-# For details about this script, see /docs/kubernetes/continuous-integration-using-kubernetes.md
+# For details about this script, see https://docs.shopsys.com/en/9.0/kubernetes/continuous-integration-using-kubernetes/
 
 # Login to Docker Hub for pushing images into register
 echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
@@ -22,6 +22,10 @@ yq write --inplace project-base/app/config/parameters_test.yml parameters.overwr
 # Pull or build Docker images for the current commit
 DOCKER_IMAGE_TAG=ci-commit-${GIT_COMMIT}
 DOCKER_ELASTIC_IMAGE_TAG=ci-elasticsearch
+
+## Build documentation with mkdocs to be available in ./documentation directory
+docker build -t mkdocs-build:latest -f docker/mkdocs/Dockerfile .
+docker run -v "${WORKSPACE}":/var/www/html mkdocs-build:latest mkdocs build --site-dir documentation
 
 ## Docker image for application php-fpm container
 docker image pull ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG} || (

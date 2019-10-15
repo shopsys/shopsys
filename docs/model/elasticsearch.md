@@ -69,11 +69,11 @@ Configurations use the `<index>/<domain_id>.json` naming pattern.
 If you need to change the data that are exported into Elasticsearch, overwrite appropriate methods in `ProductSearchExportWithFilterRepository` and `ProductElasticsearchConverter` classes.
 
 ## Known issues
-* When you need to add a new domain, you have to do following steps
-  * create elasticsearch definition for the domain
-  * delete indexes
-  * create indexes
-  * export products
+* When you need to add a new domain, you have to do following steps:
+    * create elasticsearch definition for the domain
+    * delete indexes
+    * create indexes
+    * export products
 
 ## Troubleshooting
 

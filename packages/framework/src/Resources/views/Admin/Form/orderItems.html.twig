@@ -7,15 +7,15 @@
             <div class="table-touch-always">
                 {{ form_errors(form.itemsWithoutTransportAndPayment) }}
                 <div class="table-touch-always__in">
-                    <table class="table-main">
+                    <table class="table-main table-main--with-inline-form">
                         <thead>
                             <tr>
-                                <th>{{ 'Name'|trans }}</th>
-                                <th>{{ 'Catalogue number'|trans }}</th>
-                                <th>{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
-                                <th>{{ 'Amount'|trans }}</th>
-                                <th>{{ 'Unit'|trans }}</th>
-                                <th>{{ 'VAT rate (%)'|trans }}</th>
+                                <th><span class="padding-left-10">{{ 'Name'|trans }}</span></th>
+                                <th class="text-right">{{ 'Catalogue number'|trans }}</th>
+                                <th class="text-right"><span class="table-main__column-with-info">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</span></th>
+                                <th class="text-right">{{ 'Amount'|trans }}</th>
+                                <th class="text-right">{{ 'Unit'|trans }}</th>
+                                <th class="text-right">{{ 'VAT rate (%)'|trans }}</th>
                                 <th class="text-center">
                                     <span class="display-inline-block" style="width: 80px">
                                         {{ 'Set prices manually'|trans }}
@@ -25,9 +25,9 @@
                                         ></i>
                                     </span>
                                 </th>
-                                <th>{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
-                                <th>{{ 'Total including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
-                                <th>{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+                                <th class="text-right">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+                                <th class="text-right">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+                                <th class="text-right">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
                                 <th></th>
                         </tr>
                         </thead>
@@ -52,18 +52,24 @@
                         <tfoot>
                             <tr>
                                 <td colspan="11">
-                                    <a id="js-order-item-add" href="#" class="btn btn--plus">
-                                        <i class="btn__icon">+</i>
-                                        {{ 'Add item'|trans }}
-                                    </a>
-                                    <a id="js-order-item-add-product" href="#" class="btn btn--plus" data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: false}) }}">
-                                        <i class="btn__icon">+</i>
-                                        {{ 'Add product'|trans }}
-                                    </a>
+                                    <div class="padding-left-10">
+                                        <a id="js-order-item-add" href="#" class="btn btn--plus">
+                                            <i class="btn__icon">+</i>
+                                            {{ 'Add item'|trans }}
+                                        </a>
+                                        <a id="js-order-item-add-product" href="#" class="btn btn--plus" data-product-picker-url="{{ url('admin_productpicker_picksingle', {allowMainVariants: false}) }}">
+                                            <i class="btn__icon">+</i>
+                                            {{ 'Add product'|trans }}
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
-                                <th colspan="8">{{ 'Total'|trans }}:</th>
+                                <th colspan="8">
+                                    <div class="padding-left-10">
+                                        {{ 'Total'|trans }}:
+                                    </div>
+                                </th>
                                 <th class="text-right">{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</th>
                                 <th class="text-right">{{ order.totalPriceWithoutVat|priceWithCurrency(order.currency) }}</th>
                                 <th></th>
