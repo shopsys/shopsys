@@ -2,7 +2,7 @@
 
 * Documentation is distributed with the source code of Shopsys Framework inside [docs](https://github.com/shopsys/shopsys/tree/7.3/docs/) directory in the project root.
 * Documentation is written in [Markdown format](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
-* Output HTML is rendered from the `*.md` files using [mkdocs](https://www.mkdocs.org/) and hosted on [readthedocs](https://readthedocs.org/).
+* Output HTML is rendered from the `*.md` files using [MkDocs](https://www.mkdocs.org/) and hosted on [Read the Docs](https://readthedocs.org/).
     * The docs live at [https://docs.shopsys.com](https://docs.shopsys.com).
     * When using Docker, you can see the rendered docs locally on `http://127.0.0.1:1300`.
         * See `mkdocs` container defined in `docker-compose.yml`.
