@@ -34,7 +34,7 @@ Follow the instructions in the [monorepo upgrade guide](upgrade/upgrading-monore
     * run `php phing db-migrations` to run the database migrations
     * test your app locally
     * commit your changes
-* if any of the database migrations does not suit you, there is an option to skip it, see [our Database Migrations docs](https://docs.shopsys.com/en/7.3/introduction/database-migrations/#reordering-and-skipping-migrations)
+* if any of the database migrations does not suit you, there is an option to skip it, see [our Database Migrations docs](https://docs.shopsys.com/en/8.0/introduction/database-migrations/#reordering-and-skipping-migrations)
 * even we care a lot about these instructions, it is possible we miss something. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
 ## Upgrade guides

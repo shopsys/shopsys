@@ -150,7 +150,7 @@ Typical upgrade sequence should be:
     - you can stop providing the `github_oauth_token` in your `docker-compose.yml`
 
 ## [From v7.0.0-alpha5 to v7.0.0-alpha6]
-- when upgrading your installed [monorepo](https://docs.shopsys.com/en/7.3/introduction/monorepo/), you'll have to change the build context for the images of the microservices in `docker-compose.yml`
+- when upgrading your installed [monorepo](https://docs.shopsys.com/en/8.0/introduction/monorepo/), you'll have to change the build context for the images of the microservices in `docker-compose.yml`
     - `build.context` should be the root of the microservice (eg. `microservices/product-search-export`)
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running
