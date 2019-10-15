@@ -14,7 +14,7 @@ use Webmozart\Assert\Assert;
  *
  * Class representing products in lists in frontend
  *
- * @see https://github.com/shopsys/shopsys/blob/master/docs/model/introduction-to-read-model.md
+ * @see https://docs.shopsys.com/en/7.3/model/introduction-to-read-model/
  */
 class ListedProductView
 {

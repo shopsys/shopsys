@@ -14,10 +14,10 @@ This repository is maintained by [shopsys/shopsys] monorepo, information about c
 ## How to Start New Project
 For the purposes of building the new project use our [shopsys/project-base](https://github.com/shopsys/project-base), which is fully ready as the base for building your Shopsys Framework based project.
 
-For more detailed instructions, follow the [Installation Guide](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-guide.md).
+For more detailed instructions, follow the [Installation Guide](https://docs.shopsys.com/en/7.3/installation/installation-guide/).
 
 ## Documentation
-For documentation of Shopsys Framework itself see [Shopsys Framework Knowledge Base](https://github.com/shopsys/shopsys/blob/master/docs/index.md).
+For documentation of Shopsys Framework itself see [Shopsys Framework Knowledge Base](https://docs.shopsys.com/en/7.3/).
 
 Documentation of the specific project built on Shopsys Framework should be in [Project Documentation](https://github.com/shopsys/project-base/blob/master/docs/index.md).
 

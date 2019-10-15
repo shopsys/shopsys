@@ -11,7 +11,7 @@ To upgrade level of PHPStan you need to:
     ```xml
     <property name="phpstan.level" value="1"/>
     ```
-    - if you have [overridden the `phpstan` Phing target](../docs/introduction/console-commands-for-application-management-phing-targets.md#customization-of-phing-targets-and-properties) or don't use the `build.xml` from `shopsys/framework` package yet, look for `<arg value="--level=0"/>` in your `build.xml` and change its value instead.
+    - if you have [overridden the `phpstan` Phing target](https://docs.shopsys.com/en/7.3/introduction/console-commands-for-application-management-phing-targets/#customization-of-phing-targets-and-properties) or don't use the `build.xml` from `shopsys/framework` package yet, look for `<arg value="--level=0"/>` in your `build.xml` and change its value instead.
 - add `phpstan-doctrine` and `phpstan-phpunit` extension packages as dev dependencies to `composer.json`
     ```diff
     "require-dev": {

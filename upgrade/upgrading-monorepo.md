@@ -45,7 +45,7 @@ Typical upgrade sequence should be:
     - don't use targets with suffix `-packages` or `-utils`, the targets without the suffixes now work in the whole monorepo
         - eg. you can use `tests-unit` to run unit tests in the whole monorepo instead of running `tests-unit`, `tests-packages` and `tests-utils`
         - you can even use coding standards subtargets in the whole monorepo, such as `ecs`, `eslint-fix`, etc.
-    - read [the new guidelines for phing targets](../docs/contributing/guidelines-for-phing-targets.md) before suggesting changes via pull requests
+    - read [the new guidelines for phing targets](https://docs.shopsys.com/en/latest/contributing/guidelines-for-phing-targets/) before suggesting changes via pull requests
 - remove `'project-base/docs',` line from your `docker-sync.yml` ([#1172](https://github.com/shopsys/shopsys/pull/1172))
 
 ## [From v7.2.0 to v7.2.1]
@@ -145,7 +145,7 @@ Typical upgrade sequence should be:
     - you can stop providing the `github_oauth_token` in your `docker-compose.yml`
 
 ## [From v7.0.0-alpha5 to v7.0.0-alpha6]
-- when upgrading your installed [monorepo](../docs/introduction/monorepo.md), you'll have to change the build context for the images of the microservices in `docker-compose.yml`
+- when upgrading your installed [monorepo](https://docs.shopsys.com/en/7.3/introduction/monorepo/), you'll have to change the build context for the images of the microservices in `docker-compose.yml`
     - `build.context` should be the root of the microservice (eg. `microservices/product-search-export`)
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running
