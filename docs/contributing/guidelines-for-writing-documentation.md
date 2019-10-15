@@ -16,7 +16,7 @@
 * Each sub-folder in the `docs` folder should contain `index.md` file with links to all the other articles in the sub-folder as well as `navigation.yml` file with the menu configuration that should be consistent with the `index.md`.
 * If using a list in the text, you need to add an empty line above the list definition, otherwise it is not rendered properly.
 * Rendering of multi-line code-blocks in the lists does not work properly so if you need to add such thing in your article, consider using headlines instead of bullet points in your text flow, or just do not indent the code-blocks at all in your list.
-* Enabled `mkdocs` plugins and extensions:
+* Enabled MkDocs plugins and extensions:
     * [`toc`](https://python-markdown.github.io/extensions/toc/)
         * You can use `[TOC]` tag to generate a table of contents for your article.
     * [`admonition`](https://python-markdown.github.io/extensions/admonition/)
