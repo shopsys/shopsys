@@ -41,4 +41,4 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
 For the frequently asked questions, see [FAQ and Common Issues](./introduction/faq-and-common-issues.md).
 
 ## Documenting your own project
-We strongly believe that not only the framework itself needs documentation, but also your your project deserves it's own docs. The tips for writing project documentation are written down in [Guidelines for Project Documentation](./project/guidelines-for-project-documentation.md).
+We strongly believe that not only the framework itself needs documentation, but also your project deserves it's own docs. The tips for writing project documentation are written down in [Guidelines for Project Documentation](./project/guidelines-for-project-documentation.md).

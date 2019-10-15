@@ -10,7 +10,7 @@ There you can find links to upgrade notes for other versions too.
 - already existing data object factories changed their signatures
 - to change the last item in admin breadcrumb, use `BreadcrumbOverrider:overrideLastItem(string $label)` instead of `Breadcrumb::overrideLastItem(MenuItem $item)`
 - if you've customized the admin menu by using your own `admin_menu.yml`, implement event listeners instead
-    - see the [Adding a New Administration Page](../docs/cookbook/adding-a-new-administration-page.md) cookbook for details
+    - see the [Adding a New Administration Page](https://docs.shopsys.com/en/7.3/cookbook/adding-a-new-administration-page/) cookbook for details
 
 ## [shopsys/product-feed-google]
 - move creation of data objects into factories

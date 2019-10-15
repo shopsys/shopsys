@@ -35,7 +35,6 @@ class CartTest extends TransactionFunctionalTestCase
         $availability = new Availability($availabilityData);
         $productData = $productDataFactory->create();
         $productData->name = [];
-        $productData->price = 100;
         $productData->vat = $vat;
         $productData->availability = $availability;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
@@ -88,7 +87,6 @@ class CartTest extends TransactionFunctionalTestCase
     {
         $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
 
-        $price = 100;
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
@@ -96,7 +94,6 @@ class CartTest extends TransactionFunctionalTestCase
 
         $productData = $productDataFactory->create();
         $productData->name = ['cs' => 'Any name'];
-        $productData->price = $price;
         $productData->vat = $vat;
         $product = Product::create($productData);
 

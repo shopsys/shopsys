@@ -77,7 +77,7 @@ There you can find links to upgrade notes for other versions too.
 - run `php phing ecs-fix` to apply new coding standards - [keep class spacing consistent #384](https://github.com/shopsys/shopsys/pull/384)
 
 ## [shopsys/shopsys]
-- when upgrading your installed [monorepo](../docs/introduction/monorepo.md), you'll have to change the build context for the images of the microservices in `docker-compose.yml`
+- when upgrading your installed [monorepo](https://docs.shopsys.com/en/7.3/introduction/monorepo/), you'll have to change the build context for the images of the microservices in `docker-compose.yml`
     - `build.context` should be the root of the microservice (eg. `microservices/product-search-export`)
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running
