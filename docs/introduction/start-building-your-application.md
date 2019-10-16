@@ -28,9 +28,7 @@ Read [settings and working with domain](./how-to-set-up-domains-and-locales.md#s
 
 We highly recommend to set up domains in the beginning of your project correctly. It will save you a lot of time.
 
-!!! note "Notes"
-    * When you change the domain settings, it is likely that [tests](./automated-testing.md) (mainly [acceptance](./automated-testing.md#acceptance-tests-aka-functional-tests-or-selenium-tests)) will fail and that [demo data](./basic-and-demo-data-during-application-installation.md) will not fit you.
-    It is up to you to adjust them accordingly for your needs.
+!!! note
     * If you add a domain, please create and upload an icon for the new domain (Administration > Settings >  E-shop identification). You'll make shop administrators happy.
 
 ## Set up locales
