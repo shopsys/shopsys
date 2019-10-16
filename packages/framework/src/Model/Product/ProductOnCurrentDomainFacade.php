@@ -274,4 +274,15 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->currentCustomer->getPricingGroup()
         );
     }
+
+    /**
+     * @return array
+     */
+    public function getAllListableProducts(): array
+    {
+        return $this->productRepository->getAllListableProducts(
+            $this->domain->getId(),
+            $this->currentCustomer->getPricingGroup()
+        );
+    }
 }

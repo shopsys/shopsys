@@ -786,4 +786,14 @@ class ProductRepository
         $queryPaginator = new QueryPaginator($queryBuilder);
         return $queryPaginator->getResult($query->getPage(), $query->getPageSize());
     }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return array
+     */
+    public function getAllListableProducts(int $domainId, PricingGroup $pricingGroup): array
+    {
+        return $this->getAllListableQueryBuilder($domainId, $pricingGroup)->getQuery()->execute();
+    }
 }

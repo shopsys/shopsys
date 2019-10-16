@@ -62,6 +62,14 @@ There you can find links to upgrade notes for other versions too.
     - copy necessary type definitions
         [Query.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Query.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Query.types.yml`
         [Category.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml`
+- add optional frontend API - products to your project ([#1471](https://github.com/shopsys/shopsys/pull/1471)):
+    - copy necessary type definitions:
+        [Availability.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Availability.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Availability.types.yml`
+        [Flag.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Flag.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Flag.types.yml`
+        [Money.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Money.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Money.types.yml`
+        [Price.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Price.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Price.types.yml`
+        [Product.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Product.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Product.types.yml`
+        [Unit.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Unit.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Unit.types.yml`
     - copy necessary configuration [shopsys_frontend_api.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/packages/shopsys_frontend_api.yml) to `app/config/packages/shopsys_frontend_api.yml`
     - copy [tests for FrontendApiBundle from Github](https://github.com/shopsys/shopsys/tree/9.0/project-base/tests/FrontendApiBundle) to your `tests` folder
     - enable Frontend API for desired domains in `app/config/parameters_common.yml` file  
@@ -72,6 +80,12 @@ There you can find links to upgrade notes for other versions too.
         +     shopsys.frontend_api.domains:
         +         - 1
         +         - 2
+    - update your [`phpstan.neon`](https://github.com/shopsys/shopsys/blob/9.0/project-base/phpstan.neon): ([#1471](https://github.com/shopsys/shopsys/pull/1471))
+      ```diff
+      +    # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
+      +    message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
+      +    path: %currentWorkingDirectory%/tests/FrontendApiBundle/*
+      ```
 - removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437)) 
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
 

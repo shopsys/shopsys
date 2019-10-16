@@ -1,0 +1,12 @@
+FlagDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a flag"
+        fields:
+            name:
+                type: "String"
+                description: "Localized flag name (domain dependent)"
+            rgbColor:
+                type: "String"
+                description: "Flag color in rgb format"

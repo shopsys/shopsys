@@ -24,6 +24,8 @@ abstract class GraphQlTestCase extends FunctionalTestCase
         if (!$enabledOnCurrentDomainChecker->isEnabledOnCurrentDomain()) {
             $this->markTestSkipped('Frontend API disabled on domain');
         }
+
+        parent::setUp();
     }
 
     /**

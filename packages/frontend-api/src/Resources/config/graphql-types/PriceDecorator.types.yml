@@ -1,0 +1,17 @@
+PriceDecorator:
+    type: object
+    config:
+        description: "Represents the price of the product"
+        fields:
+            priceWithVat:
+                type: "Money"
+                description: "Price with VAT"
+            priceWithoutVat:
+                type: "Money"
+                description: "Price without VAT"
+            vatAmount:
+                type: "Money"
+                description: "Total value of VAT"
+            isPriceFrom:
+                type: "Boolean!"
+                description: "Determines whether it's a final price or starting price"

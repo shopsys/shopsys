@@ -158,3 +158,49 @@ public static function getAliases(): array
 ```
 
 You can override resolvers like any other Symfony service.
+
+### Resolver Maps
+If we map GraphQl objects to entities, it may happen that automatic transformation is not possible.
+
+This can happen when we want to use getter for some entity attribute and such getter requires parameter.
+
+For this transformation we can use a `ResolverMap` object .
+`ResolverMap` is a Symfoy service that implements `Overblog\GraphQLBundle\Resolver\ResolverMapInterface`.
+ResolverMap can be created as a child of `Overblog\GraphQLBundle\Resolver\ResolverMap` class too and overload the `map` method.
+
+Example of `ResolverMap`:
+
+```php
+class ProductResolverMap extends ResolverMap
+{
+    /**
+     * @return array
+     */
+    protected function map(): array
+    {
+        return [
+            'Product' => [
+                'shortDescription' => function (Product $product) {
+                    return $product->getShortDescription($this->domain->getId());
+                },
+                'link' => function (Product $product) {
+                    return $this->getProductLink($product);
+                },
+            ],
+        ];
+    }
+}
+```
+
+You  can register `ResolverMap` in `app/config/packages/shopsys_frontend_api.yml`:
+
+```yaml
+overblog_graphql:
+    definitions:
+        schema:
+            ...
+            resolver_maps:
+                - Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap
+```
+
+you can read more info about `ResolveMap` in [documentation](https://github.com/overblog/GraphQLBundle/blob/master/docs/definitions/resolver-map.md).

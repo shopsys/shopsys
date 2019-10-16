@@ -1,0 +1,7 @@
+MoneyDecorator:
+    type: custom-scalar
+    config:
+        description: "Represents and encapsulates monetary value"
+        serialize: ["Shopsys\\FrontendApiBundle\\Model\\Money\\MoneyType", "serialize"]
+        parseValue: ["Shopsys\\FrontendApiBundle\\Model\\Money\\MoneyType", "parseValue"]
+        parseLiteral: ["Shopsys\\FrontendApiBundle\\Model\\Money\\MoneyType", "parseLiteral"]
