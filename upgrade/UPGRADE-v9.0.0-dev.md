@@ -72,6 +72,8 @@ There you can find links to upgrade notes for other versions too.
         +     shopsys.frontend_api.domains:
         +         - 1
         +         - 2
+- removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437)) 
+    - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
 
 ### Tools
 
