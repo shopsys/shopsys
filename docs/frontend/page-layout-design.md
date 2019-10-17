@@ -6,7 +6,7 @@ Page layout is divided to three main parts
 
 ## Weblines and containers
 Each part described above should contain `web__line` - this is full width div which wraps every line.
-Inside every `web__line` it must be `web__container` - it has set `web-width` and makes web content centered
+Inside every `web__line` there should be `web__container` - it has set `web-width` and makes web content centered
 in div with `web-width` width.
 
 
