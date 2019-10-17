@@ -46,7 +46,7 @@
                                 </td>
 
                                 <td class="table-cart__cell table-cart__cell--name js-cart-item-name">
-                                    <a href="{{ url('front_product_detail', {id: cartItem.product.id}) }}" title="">
+                                    <a href="{{ url('front_product_detail', {id: cartItem.product.id}) }}">
                                         {{ cartItem.name }}
                                     </a>
                                     <div class="table-cart__cell__price-mobile">
@@ -164,7 +164,7 @@
 
             <div class="in-action">
                 <div class="in-action__left">
-                    <a href="{{url('front_homepage') }}" class="btn in-action__btn">
+                    <a href="{{ url('front_homepage') }}" class="btn in-action__btn">
                         {{ 'Back to buying'|trans }}
                     </a>
                 </div>

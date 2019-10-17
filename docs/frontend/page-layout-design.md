@@ -9,7 +9,7 @@ Each part described above should contain `web__line` - this is full width div wh
 Inside every `web__line` there should be `web__container` - it has set `web-width` and makes web content centered in div with `web-width` width.
 
 ### Weblines
-`web__main` is devided to rows. We call this rows as `web__lines`. If you use design without left panel you can see on homepage these weblines:
+`web__main` is divided to rows. We call this rows as `web__lines`. If you use design without left panel you can see on homepage these weblines:
 - slider
 - popular categories
 - special offers
