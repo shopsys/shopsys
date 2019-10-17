@@ -14,8 +14,8 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
     margin: -1px;
     padding: 0;
     z-index: -1000;
-
     overflow: hidden;
+
     clip: rect(0 0 0 0);
     border: 0;
 
@@ -44,7 +44,6 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
         }
 
         &:hover {
-
             &:before {
                 background-position-x: center;
             }
@@ -52,9 +51,7 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
     }
 
     &:focus, &:active {
-
         & + .css-checkbox__image, & + .css-radio__image {
-
             &:before {
                 background-position-x: center;
             }
@@ -62,9 +59,7 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
     }
 
     &:checked {
-
         & + .css-checkbox__image, & + .css-radio__image {
-
             &:before {
                 background-position-y: bottom;
             }
@@ -72,9 +67,7 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
     }
 
     &:disabled {
-
         & + .css-checkbox__image, & + .css-radio__image {
-
             &:before {
                 cursor: no-drop;
                 background-position-x: right;
@@ -88,7 +81,6 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
     }
 
     &.display-none, &[style*="display: none"], &[style*="display:none"] {
-
         & ~ .css-checkbox__image, & ~ .css-radio__image {
             display: none;
         }
@@ -105,7 +97,6 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
 }
 
 .css-checkbox__image {
-
     .css-checkbox__image__link {
         color: @custom-inputs-link-color;
 
@@ -120,7 +111,6 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
 }
 
 .css-radio__image {
-
     &:before {
         background-image: url('@{path-design}/custom_radio.png');
     }
