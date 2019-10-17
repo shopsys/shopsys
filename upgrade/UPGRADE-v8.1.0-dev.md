@@ -484,6 +484,66 @@ There you can find links to upgrade notes for other versions too.
         + </div>
     ```
 
+- if you want to remove old Internet Explorer support ([#1461]https://github.com/shopsys/shopsys/pull/1461)
+    - search all less files and remove `.is-no-flex` and all definitions in it.
+    - search all less files and unify flex width definition like
+        ```diff
+        - flex: 0 100%;
+        + width: 100%;
+        ```
+    - remove old Internet explorer metatags from page header (search and remove in whole project-base)
+        ```diff
+        - <!--[if IE 7 ]>    <html lang="{{ app.request.locale }}" class="ie7 no-js"> <![endif]-->
+        - <!--[if IE 8 ]>    <html lang="{{ app.request.locale }}" class="ie8 no-js"> <![endif]-->
+        - <!--[if IE 9 ]>    <html lang="{{ app.request.locale }}" class="ie9 no-js"> <![endif]-->
+        - <!--[if (gt IE 9)|!(IE)]><!--> <html lang="{{ app.request.locale }}" class="no-js"> <!--<![endif]-->
+        + <html lang="{{ app.request.locale }}" class="no-js">;
+        ```
+        ```diff
+        - <!--[if lte IE 8 ]>
+        -     <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/index' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '-ie8.css') }}" media="screen, projection">
+        - <![endif]-->
+        ```
+    - update `package.json` and remove legacssy
+        ```diff
+        - "grunt-legacssy": "shopsys/grunt-legacssy#v0.4.0-with-grunt1-support",
+        ```
+    - update `gruntfile.js.twig`
+        Update autoprefixer settings to `Last 3 versions` and update settings variable name to `browserlist`
+        ```diff
+        - require('autoprefixer')({browsers: ['last 3 versions', 'ios 6', 'Safari 7', 'Safari 8', 'ie 7', 'ie 8', 'ie 9']})
+        + require('autoprefixer')({browserlist: ['last 3 versions']})
+        ```
+
+        Delete whole legacssy part
+        ```diff
+        -  legacssy: {
+        -     admin: {
+        -        options: {
+        .
+        .
+        .
+        ```
+        Remove legacssy tasks
+        ```diff
+        - grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss", "legacssy"]);
+        + grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss"]);
+
+        - grunt.registerTask('frontend{{ domain.id }}', ['webfont:frontend', 'sprite:frontend', 'less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'legacssy:frontend{{ domain.id }}', 'less:wysiwyg{{ domain.id }}'], 'postcss');
+        + grunt.registerTask('frontend{{ domain.id }}', ['webfont:frontend', 'sprite:frontend', 'less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}'], 'postcss');
+
+        - grunt.registerTask('admin', ['sprite:admin', 'webfont:admin', 'less:admin', 'legacssy:admin' ]);
+        + grunt.registerTask('admin', ['sprite:admin', 'webfont:admin', 'less:admin']);
+
+        - grunt.registerTask('frontendLess{{ domain.id }}', ['less:frontend{{ domain.id }}', 'legacssy:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}']);
+        + grunt.registerTask('frontendLess{{ domain.id }}', ['less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}']);
+
+        - grunt.registerTask('adminLess', ['less:admin', 'legacssy:admin' ]);
+        + grunt.registerTask('adminLess', ['less:admin']);
+        ```
+
+
+
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
     - the `RedisCacheFactory` was deprecated, use DIC configuration in YAML instead
