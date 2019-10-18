@@ -1,5 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+
+body {
+    font-family: "Source Sans Pro", sans-serif;
+}
+
+.btn {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    text-align: center;
+    line-height: 1em;
+    padding: .7rem 1.2rem .8rem;
+    transform: perspective(1px) translateZ(0);
+
+    cursor: pointer;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border: 2px solid #009aff;
+    border-radius: 100px;
+    color: #009aff !important;
+    font-family: "Source Sans Pro", sans-serif !important;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all .1s cubic-bezier(.61,.2,.48,1);
+    transition-delay: 0.05s;
+}
+
+.btn:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+
+    background: rgba(0,154,255,.2);
+    transition: all .1s cubic-bezier(.61,.2,.48,1);
+    z-index: -1;
+}
+
+.btn:visited {
+    color: #009aff !important;
+}
+
+.btn:visited:hover,
+.btn:hover {
+    color: #fff !important;
+    background-color: #009aff !important;
+}
+
+.btn:visited:hover:before,
+.btn:hover:before {
+    transform: scaleX(1);
+
+    background-color: #009AFF;
+}
+
+.btn .icon {
+    margin: 0 3px;
+}
+
+.wy-nav-top {
+    background-color: #0f00a0;
+}
+
+.wy-nav-top i {
+    line-height: 52px;
+}
+
 .wy-nav-content {
     max-width: 100%;
+}
+
+.wy-nav-content a:visited {
+    color: #3091d1;
 }
 
 .wy-menu-vertical li:not(.current) ul.hidden-section {
@@ -9,7 +85,249 @@
 .wy-side-nav-search img {
     height: 100%;
     width: 100%;
-    background-color: #2980B9;
     padding: 5px;
+    max-width: 150px;
+    margin-bottom: 0;
+
     border-radius: unset;
+    background-color: transparent;
+}
+
+.wy-side-nav-search {
+    background-color: #0f00a0;
+}
+
+.wy-side-nav-search > a:hover, .wy-side-nav-search .wy-dropdown > a:hover {
+    background-color: transparent;
+}
+
+.wy-nav-side {
+    background: #0f00a0;;
+}
+
+.wy-menu-vertical a {
+    color: #fff;
+    transition: opacity .15s ease-in;
+}
+
+.wy-menu-vertical a:active {
+    background-color: transparent;
+    color: #fff;
+}
+
+.wy-menu-vertical a:hover {
+    background-color: transparent;
+    opacity: 0.5;
+}
+
+.wy-menu-vertical li.current {
+    background-color: transparent;
+}
+
+.wy-menu-vertical li.current a {
+    color: #fff;
+    padding: 0.4045em 3em;
+
+    border-top: none;
+    border-right: none;
+}
+
+.wy-menu-vertical li.current a:hover {
+    background-color: transparent;
+}
+
+.wy-menu-vertical li.on a, .wy-menu-vertical li.current > a {
+    padding: 0.4045em 1.618em;
+
+    color: #fff;
+    font-weight: 700;
+    border-bottom: none;
+    border-right: none;
+    background-color: transparent;
+}
+
+.wy-menu-vertical li.on a:hover, .wy-menu-vertical li.current > a:hover {
+    background-color: transparent;
+}
+
+.wy-menu-vertical .subnav li.current > a {
+    padding-left: 3em;
+}
+
+.rst-versions, .rst-versions .rst-current-version {
+    background-color: #0f00a0 !important;
+}
+
+.rst-versions {
+    border-top: 2px solid #fff;
+}
+
+.rst-version a {
+    transition: opacity .15s ease-in;
+}
+
+.rst-versions a:hover {
+    opacity: 0.5;
+}
+
+.rst-versions.rst-badge {
+    bottom: 15px !important;
+}
+
+.rst-versions.rst-badge .rst-current-version {
+    height: auto !important;
+    line-height: normal !important;
+    padding: 8px 15px !important;
+
+    color: #fff;
+}
+
+.rst-versions.rst-badge.shift-up .rst-current-version {
+    padding: 10px 15px 0 !important;
+}
+
+.rst-other-versions dt {
+    color: #fff !important;
+    font-weight: 700;
+}
+
+.rst-other-versions hr {
+    margin: 10px 0 !important;
+
+    border-color: #fff !important;
+}
+
+.rst-other-versions small {
+    color: #ddd !important;
+}
+
+.rst-versions .rst-other-versions dd a {
+    color: #ddd !important;
+}
+
+.rst-versions .rst-other-versions strong dd a {
+    color: #fff !important;
+}
+
+.rst-versions .rst-current-version .fa-caret-down {
+    margin-left: 5px;
+}
+
+/* Alerts */
+.wy-alert,
+.rst-content .note,
+.rst-content .attention,
+.rst-content .caution,
+.rst-content .danger,
+.rst-content .error,
+.rst-content .hint,
+.rst-content .important,
+.rst-content .tip,
+.rst-content .warning,
+.rst-content .seealso,
+.rst-content .admonition-todo {
+    background-color: #e1f3f8 !important;
+}
+
+.wy-alert.wy-alert-success .wy-alert-title,
+.rst-content .wy-alert-success.note .wy-alert-title,
+.rst-content .wy-alert-success.attention .wy-alert-title,
+.rst-content .wy-alert-success.caution .wy-alert-title,
+.rst-content .wy-alert-success.danger .wy-alert-title,
+.rst-content .wy-alert-success.error .wy-alert-title,
+.rst-content .hint .wy-alert-title,
+.rst-content .important .wy-alert-title,
+.rst-content .tip .wy-alert-title,
+.rst-content .wy-alert-success.warning .wy-alert-title,
+.rst-content .wy-alert-success.seealso .wy-alert-title,
+.rst-content .wy-alert-success.admonition-todo .wy-alert-title,
+.wy-alert.wy-alert-success .rst-content .admonition-title,
+.rst-content .wy-alert.wy-alert-success .admonition-title,
+.rst-content .wy-alert-success.note .admonition-title,
+.rst-content .wy-alert-success.attention .admonition-title,
+.rst-content .wy-alert-success.caution .admonition-title,
+.rst-content .wy-alert-success.danger .admonition-title,
+.rst-content .wy-alert-success.error .admonition-title,
+.rst-content .hint .admonition-title,
+.rst-content .important .admonition-title,
+.rst-content .tip .admonition-title,
+.rst-content .wy-alert-success.warning .admonition-title,
+.rst-content .wy-alert-success.seealso .admonition-title,
+.rst-content .wy-alert-success.admonition-todo .admonition-title,
+.rst-content .note .admonition-title {
+    background-color: #33bfe7 !important;
+    color: #444 !important;
+}
+
+.wy-alert.wy-alert-warning,
+.rst-content .wy-alert-warning.note,
+.rst-content .attention,
+.rst-content .caution,
+.rst-content .wy-alert-warning.danger,
+.rst-content .wy-alert-warning.error,
+.rst-content .wy-alert-warning.hint,
+.rst-content .wy-alert-warning.important,
+.rst-content .wy-alert-warning.tip,
+.rst-content .warning,
+.rst-content .wy-alert-warning.seealso,
+.rst-content .admonition-todo {
+    background-color: #fff1d2 !important;
+}
+
+.wy-alert.wy-alert-warning .wy-alert-title,
+.rst-content .wy-alert-warning.note .wy-alert-title,
+.rst-content .attention .wy-alert-title,
+.rst-content .caution .wy-alert-title,
+.rst-content .wy-alert-warning.danger .wy-alert-title,
+.rst-content .wy-alert-warning.error .wy-alert-title,
+.rst-content .wy-alert-warning.hint .wy-alert-title,
+.rst-content .wy-alert-warning.important .wy-alert-title,
+.rst-content .wy-alert-warning.tip .wy-alert-title,
+.rst-content .warning .wy-alert-title,
+.rst-content .wy-alert-warning.seealso .wy-alert-title,
+.rst-content .admonition-todo .wy-alert-title,
+.wy-alert.wy-alert-warning .rst-content .admonition-title,
+.rst-content .wy-alert.wy-alert-warning .admonition-title,
+.rst-content .wy-alert-warning.note .admonition-title,
+.rst-content .attention .admonition-title,
+.rst-content .caution .admonition-title,
+.rst-content .wy-alert-warning.danger .admonition-title,
+.rst-content .wy-alert-warning.error .admonition-title,
+.rst-content .wy-alert-warning.hint .admonition-title,
+.rst-content .wy-alert-warning.important .admonition-title,
+.rst-content .wy-alert-warning.tip .admonition-title,
+.rst-content .warning .admonition-title,
+.rst-content .wy-alert-warning.seealso .admonition-title,
+.rst-content .admonition-todo .admonition-title {
+    background-color: #fdb820 !important;
+    color: #444 !important;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .wy-nav-side.shift {
+        width: 60%;
+    }
+
+    .wy-nav-content-wrap.shift {
+        position: absolute;
+        overflow: auto;
+        left: 60%;
+        width: 40%;
+        min-width: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .wy-nav-side.shift {
+        width: 85%;
+    }
+
+    .wy-nav-content-wrap.shift {
+        position: fixed;
+        width: auto;
+        overflow: hidden;
+        left: 85%;
+        min-width: 100%;
+    }
 }
