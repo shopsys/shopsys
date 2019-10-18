@@ -484,7 +484,7 @@ There you can find links to upgrade notes for other versions too.
         + </div>
     ```
 
-- if you want to remove old Internet Explorer support ([#1461]https://github.com/shopsys/shopsys/pull/1461)
+- remove old Internet Explorer support ([#1461](https://github.com/shopsys/shopsys/pull/1461))
     - search all less files and remove `.is-no-flex` and all definitions in it.
     - search all less files and unify flex width definition like
         ```diff
