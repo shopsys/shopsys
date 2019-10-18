@@ -6,26 +6,25 @@
 @list-images-icon-background: #2a384e;
 @list-images-icon-color: @color-f;
 @list-images-icon-font-size: 10px;
-@list-images-item-gap: 26px;
+@list-images-item-gap: 24px;
 
 .list-images {
     .reset-ul();
-    margin: 0 0 0 -@list-images-item-gap;
+    margin: 0 -@list-images-item-gap/2;
 
     font-size: 0;
 
     &__wrap {
         padding: 22px;
-
         background: @color-f;
     }
 
     &__item {
         display: inline-block !important;
-        width: 100% / 4;
-        padding-left: @list-images-item-gap;
+        width: calc(~"100% / 4");
         vertical-align: top;
-        margin-bottom: @list-images-item-gap;
+        margin: 0;
+        padding: 0 @list-images-item-gap/2 @list-images-item-gap @list-images-item-gap/2;
 
         &__in {
             position: relative;
