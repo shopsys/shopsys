@@ -1,6 +1,6 @@
 #!/bin/sh -ex
 
-# For details about this script, see https://docs.shopsys.com/en/7.3/kubernetes/continuous-integration-using-kubernetes/
+# For details about this script, see https://docs.shopsys.com/en/8.0/kubernetes/continuous-integration-using-kubernetes/
 
 # This restarts the application in Kubernetes, assuming it has been already built
 # Useful after deleting the namespace (via "kubectl delete namespace ${JOB_NAME}")

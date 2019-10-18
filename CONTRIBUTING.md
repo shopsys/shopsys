@@ -5,7 +5,7 @@ You can take part in making Shopsys Framework better.
 * [Create a pull request](https://github.com/shopsys/shopsys/compare)
 * [Report an issue](https://github.com/shopsys/shopsys/issues/new)
 * [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/)
-* [Guidelines for Working with Monorepo](https://docs.shopsys.com/en/7.3/introduction/monorepo/)
+* [Guidelines for Working with Monorepo](https://docs.shopsys.com/en/8.0/introduction/monorepo/)
 * [Guidelines for Creating Commits](https://docs.shopsys.com/en/latest/contributing/guidelines-for-creating-commits/)
 * [Guidelines for Writing Documentation](https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-documentation/)
 * [Guidelines for Pull Request](https://docs.shopsys.com/en/latest/contributing/guidelines-for-pull-request/)
@@ -27,4 +27,4 @@ Apply the same procedure if you make the changes in Dockerfile or docker-compose
 
 These rules ensure that the code will remain consistent and the project is maintainable in the future.
 
-*Tip: Read more about automatic checks in [Console Commands for Application Management (Phing Targets)](https://docs.shopsys.com/en/7.3/introduction/console-commands-for-application-management-phing-targets/) and [Running Acceptance Tests](https://docs.shopsys.com/en/7.3/introduction/running-acceptance-tests/).*
+*Tip: Read more about automatic checks in [Console Commands for Application Management (Phing Targets)](https://docs.shopsys.com/en/8.0/introduction/console-commands-for-application-management-phing-targets/) and [Running Acceptance Tests](https://docs.shopsys.com/en/8.0/introduction/running-acceptance-tests/).*

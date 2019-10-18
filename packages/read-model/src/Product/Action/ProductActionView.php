@@ -10,7 +10,7 @@ namespace Shopsys\ReadModelBundle\Product\Action;
  * Class representing products actions in lists in frontend
  *
  * @see \Shopsys\ReadModelBundle\Product\Listed\ListedProductView
- * @see https://docs.shopsys.com/en/7.3/model/introduction-to-read-model/
+ * @see https://docs.shopsys.com/en/8.0/model/introduction-to-read-model/
  */
 class ProductActionView
 {

@@ -6,7 +6,7 @@ Follow these instructions only if you upgrade from `v7.0.0-beta6` to `v7.0.0`.
 
 All monetary values (*prices, account balances, discount amounts, price limits etc.*) should be represented by an instance of the class `\Shopsys\FrameworkBundle\Component\Money\Money`.
 
-Before the upgrade, we recommend reading the article [How to Work with Money](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/) which explains the concept in detail.
+Before the upgrade, we recommend reading the article [How to Work with Money](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/) which explains the concept in detail.
 
 **When in doubt, you can take a look at [what was modified in `shopsys/project-base` during this change](https://github.com/shopsys/project-base/compare/cb6d02f335819aeff575dec01bda5b228263a2eb...c08cac7b55ebc46b43c2e988d36e2f122cbb4598#files_bucket).**
 
@@ -24,7 +24,7 @@ Register the new Doctrine type in `doctrine.dbal.types` in your `app/config/pack
 ```
 
 ## Extended and Custom Entities
-If you have created your custom entities that store monetary value or added a new such column [by entity extension](https://docs.shopsys.com/en/7.3/extensibility/entity-extension/), change your `decimal` Doctrine type to the new `money` type:
+If you have created your custom entities that store monetary value or added a new such column [by entity extension](https://docs.shopsys.com/en/8.0/extensibility/entity-extension/), change your `decimal` Doctrine type to the new `money` type:
 
 ```diff
   /**
@@ -36,14 +36,14 @@ If you have created your custom entities that store monetary value or added a ne
   protected $myMonetaryValue;
 ```
 
-If you do so, you'll have to create [a database migration](https://docs.shopsys.com/en/7.3/introduction/database-migrations/) which will add a `(DC2Type:money)` comment on the columns, informing Doctrine about the specified type (similarly to the [`Version20190215092226`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Migrations/Version20190215092226.php) in `shopsys/framework`).
+If you do so, you'll have to create [a database migration](https://docs.shopsys.com/en/8.0/introduction/database-migrations/) which will add a `(DC2Type:money)` comment on the columns, informing Doctrine about the specified type (similarly to the [`Version20190215092226`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Migrations/Version20190215092226.php) in `shopsys/framework`).
 
-Because the entity property now changed the type, its usages (along with the related [entity data class](https://docs.shopsys.com/en/7.3/model/entities/#entity-data)) have to be reviewed and changed as well.
+Because the entity property now changed the type, its usages (along with the related [entity data class](https://docs.shopsys.com/en/8.0/model/entities/#entity-data)) have to be reviewed and changed as well.
 We recommend using type-hinting in the changed methods as explained in [Working With Money in PHP](#working-with-money-in-php) below.
 
-If you need to set a value to the property in these custom entities or data objects directly, you should use the `Money::create()` method that accepts a string or an integer (or another [construction method](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#construction)).
+If you need to set a value to the property in these custom entities or data objects directly, you should use the `Money::create()` method that accepts a string or an integer (or another [construction method](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#construction)).
 
-For more details read [the Money in Doctrine section](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#money-in-doctrine) of the documentation.
+For more details read [the Money in Doctrine section](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#money-in-doctrine) of the documentation.
 
 ## Working With Money in PHP
 You should use `Money` for all monetary values across your project.
@@ -54,12 +54,12 @@ If you need to compute money, use its methods `add`, `subtract`, `multiply` and 
 If you need to compare two instances of `Money`, use its methods `equals`, `isGreaterThan`, `isGreaterThanOrEqualTo`, `isLessThan`, `isLessThanOrEqualTo` and `compare` instead of the operators `==`/`===`, `>`, `>=`, `<`, `<=` and `<=>`.
 If you want to compare `Money` with zero, you can use the methods `isZero`, `isPositive` and `isNegative`.
 
-For more details read [the Money Class section](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#money-class) of the documentation.
+For more details read [the Money Class section](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#money-class) of the documentation.
 
 There were no changes needed in `shopsys/project-base` as most PHP implementation is in `shopsys/framework`.
 You might need to update your custom classes working with prices and overridden services, because of the changed types.
 
-*Note: Running the `phpstan` [Phing target](https://docs.shopsys.com/en/7.3/introduction/console-commands-for-application-management-phing-targets/) will help you find out problems with incompatible method declarations mentioned in this section and in [Strict Typing](#strict-typing) below.*
+*Note: Running the `phpstan` [Phing target](https://docs.shopsys.com/en/8.0/introduction/console-commands-for-application-management-phing-targets/) will help you find out problems with incompatible method declarations mentioned in this section and in [Strict Typing](#strict-typing) below.*
 *In case of problems, it will fail on a `PHP Fatal error` with a reference to the incompatible method (unfortunately it is unable to continue with the checks as it cannot recover from this error).*
 
 ## Strict Typing
@@ -88,21 +88,21 @@ Check how you use or extend these classes, into which the statement `declare(str
 - `\Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation`
 - `\Shopsys\FrameworkBundle\Twig\PriceExtension`
 
-*Note: Running the `phpstan` [Phing target](https://docs.shopsys.com/en/7.3/introduction/console-commands-for-application-management-phing-targets/) will help you find out problems with incompatible method declarations as mentioned in the note above.*
+*Note: Running the `phpstan` [Phing target](https://docs.shopsys.com/en/8.0/introduction/console-commands-for-application-management-phing-targets/) will help you find out problems with incompatible method declarations as mentioned in the note above.*
 
 ## Twig Templates
-Templates mostly use [the `price` Twig filter](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#price) (or one of its `price*` variants) for rendering monetary values.
+Templates mostly use [the `price` Twig filter](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#price) (or one of its `price*` variants) for rendering monetary values.
 The filters work the same way, but they now require an instance of `Money` to be provided.
 If you pass a value of a different type into one of the `price*` filters (it would fail on a `TypeError`) you should check where it came from and fix it there - all monetary values have to be represented by the new `Money` value object.
 Because the monetary value is mostly taken from a `Price` object and its getters use `Money` as a return type now, the templates usually don't need any changes.
 
-*Note: [HTTP smoke tests](https://docs.shopsys.com/en/7.3/introduction/automated-testing/#http-smoke-tests) can be very helpful when finding issues in your templates.*
-*You can run them by executing the `tests-smoke` [Phing target](https://docs.shopsys.com/en/7.3/introduction/console-commands-for-application-management-phing-targets/).*
+*Note: [HTTP smoke tests](https://docs.shopsys.com/en/8.0/introduction/automated-testing/#http-smoke-tests) can be very helpful when finding issues in your templates.*
+*You can run them by executing the `tests-smoke` [Phing target](https://docs.shopsys.com/en/8.0/introduction/console-commands-for-application-management-phing-targets/).*
 
 There are some cases in which you'll have to modify your templates:
 
 ### Manipulation with money before rendering
-Instead of arithmetic operators, you should use the methods for [computation with Money](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#computation) such as `add`, `subtract`, `multiply`, etc.
+Instead of arithmetic operators, you should use the methods for [computation with Money](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#computation) such as `add`, `subtract`, `multiply`, etc.
 Also, you can use the `Price::inverse()` for inverting the value, which might come handy in presenting discounts.
 
 As an example, see the change in `@ShopsysShop/Front/Content/Order/preview.html.twig` from `shopsys/project-base`:
@@ -112,10 +112,10 @@ As an example, see the change in `@ShopsysShop/Front/Content/Order/preview.html.
 ```
 
 Code manipulating with prices in a complex way does not belong into templates.
-In such situation, you should probably refactor your code and move the logic into your [model](https://docs.shopsys.com/en/7.3/model/introduction-to-model-architecture/).
+In such situation, you should probably refactor your code and move the logic into your [model](https://docs.shopsys.com/en/8.0/model/introduction-to-model-architecture/).
 
 ### Comparing monetary values in templates
-Instead of comparison operators, you should use the methods for [comparing Money](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#comparing) such as `equals`, `isGreaterThan`, `isGreaterOrEqualTo`, etc.
+Instead of comparison operators, you should use the methods for [comparing Money](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#comparing) such as `equals`, `isGreaterThan`, `isGreaterOrEqualTo`, etc.
 To compare a value with zero, you may use `isZero`, `isPositive`, or `isNegative`.
 
 Don't forget to check conditions without any operators (such as `{% if money %}` / `{% if not money %}`).
@@ -138,7 +138,7 @@ As an example, see the change in `@ShopsysShop/Front/Content/PersonalData/orders
 ```
 
 ### Displaying money without a currency symbol
-Instead of rendering a monetary value directly, you should use [the new `moneyFormat` Twig filter](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#moneyformat) which accepts `Money` instances.
+Instead of rendering a monetary value directly, you should use [the new `moneyFormat` Twig filter](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#moneyformat) which accepts `Money` instances.
 So instead of `{{ money }}`, you should use `{{ money|moneyFormat }}`.
 
 See all the changes that were needed in `shopsys/project-base`:
@@ -216,7 +216,7 @@ For inspiration, [see the commit where we implemented the MoneyRange constraint]
 
 *Note: You don't have to specify the option `'currency' => false` for the `MoneyType` field as this is its new default value.*
 
-You'll find more info about the form type and constraints in [the Money in Forms section](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#money-in-forms) of the documentation.
+You'll find more info about the form type and constraints in [the Money in Forms section](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#money-in-forms) of the documentation.
 
 ---
 
@@ -307,7 +307,7 @@ Previously, the `MoneyToLocalizedStringTransformer` (which is a default view tra
 
 ## Data in SettingValue Entities
 The [`Setting`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Component/Setting/Setting.php) component is now able to save and load [`SettingValue`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Component/Setting/SettingValue.php) entities with an instance of `Money` as a value.
-To make sure that monetary values that are currently saved as a decimal string will be loaded as a `Money` instance, you have to manually create [a database migration](https://docs.shopsys.com/en/7.3/introduction/database-migrations/) that changes the `type` to `money` for all `SettingValue` entities holding monetary values that you added into your project.
+To make sure that monetary values that are currently saved as a decimal string will be loaded as a `Money` instance, you have to manually create [a database migration](https://docs.shopsys.com/en/8.0/introduction/database-migrations/) that changes the `type` to `money` for all `SettingValue` entities holding monetary values that you added into your project.
 Previously, any of types `string`, `integer` or `float` might have been used to save a numeric value into the database.
 
 For example see the `up` method of migration class [`Version20190220101938`](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/src/Migrations/Version20190220101938.php) that migrates the `freeTransportAndPaymentPriceLimit` setting values to the `Money` type:
@@ -328,17 +328,17 @@ public function up(Schema $schema)
 All monetary values in data fixtures should use `Money` as well.
 If you haven't altered the data fixtures in any way, you should be ready to go when you copy the data fixtures from `shopsys/project-base` in `v7.0.0` (as explained in the upgrade notes of [PR #854](https://github.com/shopsys/shopsys/pull/854/files#diff-da18024d2b6b8b4b2fafe94d18cb2866)).
 
-You should manage to upgrade your custom data fixtures by using [the static methods `Money::create()` and `Money::zero()`](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#construction) when setting a monetary value.
+You should manage to upgrade your custom data fixtures by using [the static methods `Money::create()` and `Money::zero()`](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#construction) when setting a monetary value.
 
 These 3 data fixture classes had to be changed in `shopsys/project-base`:
 - `\Shopsys\ShopBundle\DataFixtures\Demo\PaymentDataFixture.php`
 - `\Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixtureLoader.php`
 - `\Shopsys\ShopBundle\DataFixtures\Demo\TransportDataFixture.php`
 
-*Note: Thanks to [the parameter type declarations](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) you should be able to see very quickly if your data fixtures use a wrong type when you run the `db-demo` [Phing target](https://docs.shopsys.com/en/7.3/introduction/console-commands-for-application-management-phing-targets/).*
+*Note: Thanks to [the parameter type declarations](http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration) you should be able to see very quickly if your data fixtures use a wrong type when you run the `db-demo` [Phing target](https://docs.shopsys.com/en/8.0/introduction/console-commands-for-application-management-phing-targets/).*
 
 ## Tests
-Changes will be required in all your [unit tests](https://docs.shopsys.com/en/7.3/introduction/automated-testing/#unit-tests) and [functional tests](https://docs.shopsys.com/en/7.3/introduction/automated-testing/#functional-tests) that deal with money.
+Changes will be required in all your [unit tests](https://docs.shopsys.com/en/8.0/introduction/automated-testing/#unit-tests) and [functional tests](https://docs.shopsys.com/en/8.0/introduction/automated-testing/#functional-tests) that deal with money.
 
 You'll have to create instances of `Money` instead of using integers, floats or strings in your data providers (or directly in your test methods) like in these examples:
 
@@ -405,7 +405,7 @@ Take a look at the examples:
 
 Furthermore, you'll have to apply same changes as in [section Working with Money in PHP](#working-with-money-in-php) if your tests make arithmetic operations or comparisons with Money.
 
-You can read more about it in [the Unit and Functional Tests section](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#unit-and-functional-tests).
+You can read more about it in [the Unit and Functional Tests section](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#unit-and-functional-tests).
 
 These 13 functional test classes had to be changed in `shopsys/project-base`:
 - `\Tests\ShopBundle\Functional\Model\Cart\CartFacadeDeleteOldCartsTest`
@@ -422,12 +422,12 @@ These 13 functional test classes had to be changed in `shopsys/project-base`:
 - `\Tests\ShopBundle\Functional\PersonalData\PersonalDataExportXmlTest`
 - `\Tests\ShopBundle\Functional\Twig\PriceExtensionTest`
 
-Your [HTTP smoke tests](https://docs.shopsys.com/en/7.3/introduction/automated-testing/#http-smoke-tests) and [acceptance test](https://docs.shopsys.com/en/7.3/introduction/automated-testing/#acceptance-tests-aka-functional-tests-or-selenium-tests) shouldn't require any changes.
+Your [HTTP smoke tests](https://docs.shopsys.com/en/8.0/introduction/automated-testing/#http-smoke-tests) and [acceptance test](https://docs.shopsys.com/en/8.0/introduction/automated-testing/#acceptance-tests-aka-functional-tests-or-selenium-tests) shouldn't require any changes.
 
 ## Javascript
 The `Money` class implements the `JsonSerializable` interface so it can be serialized using `json_encode` into an object usable in JS.
 
-You can read more about it in [the Money in Javascript section](https://docs.shopsys.com/en/7.3/model/how-to-work-with-money/#money-in-javascript) of the documentation if you work with monetary values using JS in your project.
+You can read more about it in [the Money in Javascript section](https://docs.shopsys.com/en/8.0/model/how-to-work-with-money/#money-in-javascript) of the documentation if you work with monetary values using JS in your project.
 There were no changes needed in `shopsys/project-base`.
 
 ## Other
