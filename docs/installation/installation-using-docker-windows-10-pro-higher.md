@@ -151,12 +151,12 @@ After the script is finished with installing the application, you can skip all t
 If you want to know more about what is happening during installation, continue with the steps [#2.1 - #2.3](#21-create-docker-composeyml-and-docker-syncyml-file).
 
 #### 2.1 Create docker-compose.yml and docker-sync.yml file
-Create `docker-compose.yml` from template [`docker-compose-win.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose-win.yml.dist).
+Create `docker-compose.yml` from template [`docker-compose-win.yml.dist`](https://github.com/shopsys/shopsys/blob/9.0/project-base/docker/conf/docker-compose-win.yml.dist).
 ```sh
 cp docker/conf/docker-compose-win.yml.dist docker-compose.yml
 ```
 
-Create `docker-sync.yml` from template [`docker-sync-win.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-sync-win.yml.dist).
+Create `docker-sync.yml` from template [`docker-sync-win.yml.dist`](https://github.com/shopsys/shopsys/blob/9.0/project-base/docker/conf/docker-sync-win.yml.dist).
 ```sh
 cp docker/conf/docker-sync-win.yml.dist docker-sync.yml
 ```
@@ -175,7 +175,7 @@ docker-compose up -d
 ```
 
 !!! note
-    During installation there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During installation there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/9.0/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### 2.3 Setup the application
 [Application setup guide](installation-using-docker-application-setup.md)

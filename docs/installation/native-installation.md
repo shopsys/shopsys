@@ -21,7 +21,7 @@ php -d memory_limit=-1 <PATH TO COMPOSER or COMPOSER.PHAR> create-project shopsy
     - We have set memory limit to `-1` for composer because of the increased memory consumption during the dependencies calculation
 
 !!! note
-    During the execution of `composer create-project`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the execution of `composer create-project`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/9.0/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## Create databases
 
@@ -41,7 +41,7 @@ php phing build-demo-dev
 ```
 
 !!! note
-    During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/9.0/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## Run integrated HTTP server
 
@@ -53,7 +53,7 @@ php bin/console server:run
     you will be prompted for starting one of the 2 localised domains
 
 !!! tip
-    you can use Nginx service instead of integrated server, in that case let be inspired by [nginx configuration](https://github.com/shopsys/shopsys/blob/master/project-base/docker/nginx/nginx.conf)
+    you can use Nginx service instead of integrated server, in that case let be inspired by [nginx configuration](https://github.com/shopsys/shopsys/blob/9.0/project-base/docker/nginx/nginx.conf)
 
 ## See it in your browser!
 

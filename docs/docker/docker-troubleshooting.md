@@ -158,7 +158,7 @@ When `composer install` or `composer update` fails on an error with exceeding th
     If you still encounter memory issues while using Docker for Windows (or Mac), try increasing the limits in `Docker -> Preferences… -> Advanced`.
 
 !!! note
-    Composer dependencies contain 3-rd party software with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    Composer dependencies contain 3-rd party software with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/9.0/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## Starting up the Docker containers fails due to invalid reference format
 Docker images may fail to build during `docker-compose up -d` due to invalid reference format, eg.:

@@ -37,7 +37,7 @@ See more about phing targets in [Console Commands for Application Management (Ph
 ## What are the data fixtures good for?
 Data fixtures are actually demo data available in the Shopys Framework.
 For their installation, use the phing target `db-fixtures-demo`.
-This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (eg. with configured domains and an existing database structure), see [`build.xml`](https://github.com/shopsys/shopsys/blob/master/packages/framework/build.xml).
+This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (eg. with configured domains and an existing database structure), see [`build.xml`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/build.xml).
 Demo data are used for automatic tests and also for installation of demo shop with prepared data.
 
 ## How to change a domain URL?
@@ -107,9 +107,9 @@ We are using [entity data objects](../model/entities.md#entity-data) instead of 
 because Symfony forms need setters for all fields and we don't want to mess entities with them.
 
 ## What is the configuration file `services_test.yml` good for?
-[`services_test.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml)
+[`services_test.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml)
 is a service configuration file that is loaded in TEST environment in addition to
-the standard configuration defined in [`services.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml) as sometimes the configuration differs from the standard one and we need to override it.
+the standard configuration defined in [`services.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml) as sometimes the configuration differs from the standard one and we need to override it.
 E.g., by default, all our services are defined as private. However, in tests, we are retrieving some services directly from the container hence we need to have them public in TEST environment.
 
 ## How to change the behavior of the product search on the front-end?
@@ -120,7 +120,7 @@ If you want to change its behavior (e.g. make the EAN not as important or change
 Project uses `SwiftMailer` package for sending e-mails and defaultly it has set `spool queue` that stores all mails into `memory` until the script execution is at the end.  
 This spooling method helps the user not to wait for the next page to load while the email is sending.
 However, based on implementations of many projects, project gained functionality that releases spool after the `*cronModule` run is ended in case of `cron` phing target that runs all cron modules at once.
-It is also possible to turn the spool off by removing it from [swiftmailer.yml](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/packages/swiftmailer.yml) or changing the behavior of storing e-mails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html) or [snc_redis docs](https://github.com/snc/SncRedisBundle/blob/master/Resources/doc/index.md#swiftmailer-spooling).
+It is also possible to turn the spool off by removing it from [swiftmailer.yml](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/packages/swiftmailer.yml) or changing the behavior of storing e-mails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html) or [snc_redis docs](https://github.com/snc/SncRedisBundle/blob/master/Resources/doc/index.md#swiftmailer-spooling).
 
 ## Where does the business logic belong?
 The business logic should be implemented directly in an entity every time when there is no need for external services.

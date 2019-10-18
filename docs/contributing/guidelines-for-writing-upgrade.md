@@ -15,7 +15,7 @@ Keep in mind that upgrade instructions are written for users that do not underst
     * This is especially important for files in project-base, as users don't have new changes in their project-base
 * Link files in an accurate version, because the project evolves in time
     * Good example: [installation using docker - version alpha5](https://github.com/shopsys/shopsys/blob/v7.0.0-alpha5/docs/installation/installation-using-docker-application-setup.md)
-    * Bad example: [installation using docker - master](https://github.com/shopsys/shopsys/blob/master/docs/installation/installation-using-docker-application-setup.md)
+    * Bad example: [installation using docker - master](https://github.com/shopsys/shopsys/blob/9.0/docs/installation/installation-using-docker-application-setup.md)
 * Write instructions
     * Good example: *"Do this, then that"*
     * Bad example: *"This was done, this was changed"*
@@ -24,7 +24,7 @@ Keep in mind that upgrade instructions are written for users that do not underst
 
 The main file where a project developer should start looking for instructions is [`UPGRADE.md`](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) file in the monorepo root.
 
-This file contains information for the contributors in the form of the link to [`upgrade/upgrading-monorepo.md`](https://github.com/shopsys/shopsys/blob/master/upgrade/upgrading-monorepo.md) file.
+This file contains information for the contributors in the form of the link to [`upgrade/upgrading-monorepo.md`](https://github.com/shopsys/shopsys/blob/9.0/upgrade/upgrading-monorepo.md) file.
 
 Instructions for developers building a project based on project-base should follow.
 First, there must be general information about upgrading with recommended steps and a typical upgrade sequence,

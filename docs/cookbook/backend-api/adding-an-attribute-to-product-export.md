@@ -5,7 +5,7 @@ This short cookbook describes the steps that you need to do when you want to add
 Let's say you have added `extId` attribute to `Product` entity following [the cookbook](../../cookbook/adding-new-attribute-to-an-entity.md) and you want to include the attribute in the export as well.
 
 ## 1. Implement your own product transformer by extending `ApiProductTransformer`
-[`ApiProductTransformer`](https://github.com/shopsys/shopsys/blob/master/packages/backend-api/src/Controller/V1/Product/ApiProductTransformer.php) is responsible for providing array of product data to backend API controllers.
+[`ApiProductTransformer`](https://github.com/shopsys/shopsys/blob/9.0/packages/backend-api/src/Controller/V1/Product/ApiProductTransformer.php) is responsible for providing array of product data to backend API controllers.
 You need to add your attribute to the array that is returned in `transform()` method.
 ```php
 namespace Shopsys\ShopBundle\Controller\Api\V1\Product;
