@@ -541,6 +541,7 @@ There you can find links to upgrade notes for other versions too.
         - grunt.registerTask('adminLess', ['less:admin', 'legacssy:admin' ]);
         + grunt.registerTask('adminLess', ['less:admin']);
         ```
+        - for more information you can see the [PR](https://github.com/shopsys/shopsys/pull/1461)
 
 
 
