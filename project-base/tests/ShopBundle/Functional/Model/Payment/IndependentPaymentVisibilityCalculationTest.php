@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Payment;
 
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -15,6 +16,17 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
 {
     protected const FIRST_DOMAIN_ID = 1;
     protected const SECOND_DOMAIN_ID = 2;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
+     */
+    private $localization;
+
+    protected function setUp()
+    {
+        $this->localization = $this->getContainer()->get(Localization::class);
+        parent::setUp();
+    }
 
     public function testIsIndependentlyVisible()
     {
@@ -44,10 +56,11 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $vat = $this->getDefaultVat();
 
         $paymentData = $this->getPaymentDataFactory()->create();
-        $paymentData->name = [
-            'cs' => null,
-            'en' => null,
-        ];
+        $names = [];
+        foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
+            $names[$locale] = null;
+        }
+        $paymentData->name = $names;
         $paymentData->vat = $vat;
         $paymentData->hidden = false;
         $paymentData->enabled = [
@@ -123,10 +136,11 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $paymentDataFactory = $this->getPaymentDataFactory();
 
         $paymentData = $paymentDataFactory->create();
-        $paymentData->name = [
-            'cs' => 'paymentName',
-            'en' => 'paymentName',
-        ];
+        $names = [];
+        foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
+            $names[$locale] = 'paymentName';
+        }
+        $paymentData->name = $names;
         $paymentData->vat = $vat;
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $enabledForDomains;

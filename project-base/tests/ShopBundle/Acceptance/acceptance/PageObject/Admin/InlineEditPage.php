@@ -96,6 +96,16 @@ class InlineEditPage extends AbstractPage
 
     /**
      * @param int $rowId
+     * @param string $text
+     */
+    public function assertSeeInColumnPercent(int $rowId, string $text)
+    {
+        $formattedPercent = $this->tester->getFormattedPercentAdmin($text);
+        $this->assertSeeInColumn($rowId, 'percent', $formattedPercent);
+    }
+
+    /**
+     * @param int $rowId
      */
     public function assertDontSeeRow($rowId)
     {

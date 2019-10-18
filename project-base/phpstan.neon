@@ -17,10 +17,6 @@ parameters:
             message: '#^Property Shopsys\\.+::\$.+ \(Shopsys\\.+\) does not accept object\.$#'
             path: %currentWorkingDirectory%/src/Shopsys/ShopBundle/DataFixtures/*
         -
-            # A helper methods returning an array of persistent references using $this->getReference()
-            message: '#^Method Shopsys\\ShopBundle\\DataFixtures\\ProductDataFixtureReferenceInjector::.+\(\) should return array<.+> but returns array<string, object>\.$#'
-            path: %currentWorkingDirectory%/src/Shopsys/ShopBundle/DataFixtures/ProductDataFixtureReferenceInjector.php
-        -
             # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
             message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
             path: %currentWorkingDirectory%/tests/ShopBundle/*
@@ -32,6 +28,10 @@ parameters:
             # Actually, we are setting an array item using "$array[] = $this->getReference()"
             message: '#^Array \(array<.+>\) does not accept object\.$#'
             path: %currentWorkingDirectory%/tests/ShopBundle/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php
+        -
+            # Actually, we are setting an array item using "$array[] = $this->getReference()"
+            message: '#^Array \(array<.+>\) does not accept object\.$#'
+            path: %currentWorkingDirectory%/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixture.php
         -
             # We need to have undefined variable for testing purposes
             message: '#^Undefined variable: \$undefined$#'

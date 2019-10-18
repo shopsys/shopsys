@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Smoke;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
 use Tests\ShopBundle\Test\OauthTestCase;
 
@@ -13,15 +14,32 @@ use Tests\ShopBundle\Test\OauthTestCase;
  */
 class BackendApiUpdateProductTest extends OauthTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private $domain;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->domain = $this->getContainer()->get(Domain::class);
+    }
+
     public function testUpdateProductCompletely(): void
     {
         $uuid = $this->createProduct();
+        $names = [];
+        $shortDescriptions = [];
+        $longDescriptions = [];
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $names[$domainConfig->getLocale()] = 'Changed name';
+            $shortDescriptions[$domainConfig->getId()] = 'Changed short description';
+            $longDescriptions[$domainConfig->getId()] = 'Changed long description';
+        }
 
         $updateData = [
-            'name' => [
-                'en' => 'Y changed',
-                'cs' => 'název changed',
-            ],
+            'name' => $names,
             'hidden' => false,
             'sellingDenied' => false,
             'sellingFrom' => null,
@@ -29,14 +47,8 @@ class BackendApiUpdateProductTest extends OauthTestCase
             'catnum' => 'co changed',
             'ean' => 'E changed',
             'partno' => 'P changed',
-            'shortDescription' => [
-                1 => '<b>changed',
-                2 => '<b>popisek changed',
-            ],
-            'longDescription' => [
-                1 => '<b>desc changed',
-                2 => '<b>popisek changed',
-            ],
+            'shortDescription' => $shortDescriptions,
+            'longDescription' => $longDescriptions,
         ];
 
         $response = $this->runOauthRequest('PATCH', sprintf('/api/v1/products/%s', $uuid), $updateData);
@@ -51,11 +63,18 @@ class BackendApiUpdateProductTest extends OauthTestCase
     {
         $uuid = $this->createProduct();
 
+        $namesByLocale = [];
+        $shortDescriptionsByDomainId = [];
+        $longDescriptionsByDomainId = [];
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $namesByLocale[$domainConfig->getLocale()] = 'Changed name';
+            $shortDescriptionsByDomainId[$domainConfig->getId()] = 'Short description';
+            $longDescriptionsByDomainId[$domainConfig->getId()] = 'Long description';
+        }
+
         $updateData = [
-            'name' => [
-                'en' => 'Y changed',
-                'cs' => 'název changed',
-            ],
+            'name' => $namesByLocale,
         ];
 
         $response = $this->runOauthRequest('PATCH', sprintf('/api/v1/products/%s', $uuid), $updateData);
@@ -63,10 +82,7 @@ class BackendApiUpdateProductTest extends OauthTestCase
         $this->assertSame(204, $response->getStatusCode());
 
         $expected = [
-            'name' => [
-                'en' => 'Y changed',
-                'cs' => 'název changed',
-            ],
+            'name' => $namesByLocale,
             'hidden' => true,
             'sellingDenied' => true,
             'sellingFrom' => '2019-07-16T00:00:00+00:00',
@@ -74,14 +90,8 @@ class BackendApiUpdateProductTest extends OauthTestCase
             'catnum' => '123456 co',
             'ean' => 'E12346B',
             'partno' => 'P123456',
-            'shortDescription' => [
-                1 => '<b>desc',
-                2 => '<b>popisek',
-            ],
-            'longDescription' => [
-                1 => '<b>desc long',
-                2 => '<b>popisek dlouhy',
-            ],
+            'shortDescription' => $shortDescriptionsByDomainId,
+            'longDescription' => $longDescriptionsByDomainId,
         ];
 
         $foundProduct = $this->getProduct($uuid);
@@ -147,27 +157,26 @@ class BackendApiUpdateProductTest extends OauthTestCase
      */
     private function createProduct(): string
     {
-        $product = [
-            'name' => [
-                'en' => 'X tech',
-                'cs' => 'název',
-            ],
-            'hidden' => true,
-            'sellingDenied' => true,
-            'sellingFrom' => '2019-07-16T00:00:00+00:00',
-            'sellingTo' => '2020-07-16T00:00:00+00:00',
-            'catnum' => '123456 co',
-            'ean' => 'E12346B',
-            'partno' => 'P123456',
-            'shortDescription' => [
-                1 => '<b>desc',
-                2 => '<b>popisek',
-            ],
-            'longDescription' => [
-                1 => '<b>desc long',
-                2 => '<b>popisek dlouhy',
-            ],
-        ];
+        $product = [];
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $product['name'][$domainConfig->getLocale()] = 'Name';
+            $product['shortDescription'][$domainConfig->getId()] = 'Short description';
+            $product['longDescription'][$domainConfig->getId()] = 'Long description';
+        }
+
+        $product = array_merge(
+            $product,
+            [
+                'hidden' => true,
+                'sellingDenied' => true,
+                'sellingFrom' => '2019-07-16T00:00:00+00:00',
+                'sellingTo' => '2020-07-16T00:00:00+00:00',
+                'catnum' => '123456 co',
+                'ean' => 'E12346B',
+                'partno' => 'P123456',
+            ]
+        );
 
         $response = $this->runOauthRequest('POST', '/api/v1/products', $product);
 

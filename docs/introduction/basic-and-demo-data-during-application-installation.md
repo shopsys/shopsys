@@ -9,5 +9,6 @@ This is the responsibility of `phing` task `domains-data-create` that executes [
 
 All the other data that are not vital (products, customers, etc.) are created afterwards as data fixtures (i.e. demo data)
 using `phing` target `db-fixtures-demo`.
-We have English demo data for first domain and Czech demo data for second domain.
-If you have more domains, the phing target `db-fixtures-demo` will use the same Czech demo data for other domains.
+We have English and Czech demo data translations by default.
+If you have set a different locale, you can use `translations-dump` that will create new translation files in `src/Shopsys/ShopBundle/Resources/translations` and you can translate your demo data in `dataFixtures.xx.po` file.
+Default language will be used for languages without translated demo data.

@@ -18,11 +18,18 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
     protected $topProductFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    public function __construct(TopProductFacade $topProductFacade)
+    protected $domain;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
+    public function __construct(TopProductFacade $topProductFacade, Domain $domain)
     {
         $this->topProductFacade = $topProductFacade;
+        $this->domain = $domain;
     }
 
     /**
@@ -30,26 +37,39 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
      */
     public function load(ObjectManager $manager)
     {
-        $topProductReferenceNames = [
+        $defaultTopProductReferenceNames = [
             ProductDataFixture::PRODUCT_PREFIX . '1',
             ProductDataFixture::PRODUCT_PREFIX . '17',
             ProductDataFixture::PRODUCT_PREFIX . '9',
         ];
+        $distinctTopProductReferenceNames = [
+            ProductDataFixture::PRODUCT_PREFIX . '14',
+            ProductDataFixture::PRODUCT_PREFIX . '10',
+            ProductDataFixture::PRODUCT_PREFIX . '7',
+        ];
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $domainId = $domainConfig->getId();
 
-        $this->createTopProducts($topProductReferenceNames);
+            if ($domainId === Domain::SECOND_DOMAIN_ID) {
+                $this->createTopProductsForDomain($distinctTopProductReferenceNames, $domainId);
+            } else {
+                $this->createTopProductsForDomain($defaultTopProductReferenceNames, $domainId);
+            }
+        }
     }
 
     /**
      * @param string[] $productReferenceNames
+     * @param int $domainId
      */
-    protected function createTopProducts(array $productReferenceNames)
+    protected function createTopProductsForDomain(array $productReferenceNames, int $domainId): void
     {
         $products = [];
         foreach ($productReferenceNames as $productReferenceName) {
             $products[] = $this->getReference($productReferenceName);
         }
 
-        $this->topProductFacade->saveTopProductsForDomain(Domain::FIRST_DOMAIN_ID, $products);
+        $this->topProductFacade->saveTopProductsForDomain($domainId, $products);
     }
 
     /**

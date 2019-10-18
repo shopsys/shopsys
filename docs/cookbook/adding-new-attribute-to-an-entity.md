@@ -277,7 +277,7 @@ You can modify data fixtures in `src/Shopsys/ShopBundle/DataFixtures/` of your p
 
 ### Random `extId`
 
-If you want to add unique random `extId` for products from data fixtures you can add it in `createProductDataFromRowForFirstDomain` method of [`ProductDataFixtureLoader.php`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixtureLoader.php).
+If you want to add unique random `extId` for products from data fixtures you can add it in `createProduct` method of [`ProductDataFixture.php`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixture.php).
 You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random numbers like this:
 
 ```diff
@@ -288,61 +288,80 @@ You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random nu
 +   /**
 +    * @var \Faker\Generator
 +    */
-+   private $faker;
++   protected $faker;
 
     /**
-     * @param \Shopsys\ShopBundle\DataFixtures\Demo\ProductParametersFixtureLoader $productParametersFixtureLoader
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface $productDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
+     * @param \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
 +    * @param \Faker\Generator $faker  
      */
     public function __construct(
-        ProductParametersFixtureLoader $productParametersFixtureLoader,
-        ProductDataFactoryInterface $productDataFactory,
+        ProductFacade $productFacade,
+        ProductVariantFacade $productVariantFacade,
         Domain $domain,
--       PricingGroupFacade $pricingGroupFacade
-+       PricingGroupFacade $pricingGroupFacade,
+        PricingGroupFacade $pricingGroupFacade,
+        ProductDataFactoryInterface $productDataFactory,
+        ProductParameterValueDataFactory $productParameterValueDataFactory,
+        ParameterValueDataFactory $parameterValueDataFactory,
+        ParameterFacade $parameterFacade,
+        ParameterDataFactory $parameterDataFactory,
+-       PriceConverter $priceConverter
++       PriceConverter $priceConverter,
 +       Faker $faker
     ) {
-        $this->productParametersFixtureLoader = $productParametersFixtureLoader;
-        $this->productDataFactory = $productDataFactory;
+        $this->productFacade = $productFacade;
+        $this->productVariantFacade = $productVariantFacade;
         $this->domain = $domain;
         $this->pricingGroupFacade = $pricingGroupFacade;
-+       $this->faker = $faker;  
+        $this->productDataFactory = $productDataFactory;
+        $this->productParameterValueDataFactory = $productParameterValueDataFactory;
+        $this->parameterValueDataFactory = $parameterValueDataFactory;
+        $this->parameterFacade = $parameterFacade;
+        $this->parameterDataFactory = $parameterDataFactory;
+        $this->priceConverter = $priceConverter;
++       $this->faker = $faker;
     }
 
     //...
 
-    public function createProductDataFromRowForFirstDomain($row)
-        {
-            $productData = $this->productDataFactory->create();
-            $this->updateProductDataFromCsvRowForFirstDomain($productData, $row);
-+           $productData->extId = $this->faker->unique()->numberBetween(1, 10000);
+    /**
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+     * @return \Shopsys\ShopBundle\Model\Product\Product
+     */
+    protected function createProduct(ProductData $productData): Product
+    {
++       $productData->extId = $this->faker->unique()->numberBetween(1, 10000);
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
+        $product = $this->productFacade->create($productData);
 
-            return $productData;
-        }
+        $this->addProductReference($product);
+
+        return $product;
+    }
 ```
 
 ### Specific `extId`
 
-If you need to add specific `extId` to products in data fixture you can add new column to [`demo-data-products.csv`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/DataFixtures/resources/demo-data-products.csv).
-Then you have to set the value of the new column in `updateProductDataFromCsvRowForFirstDomain` method of [`ProductDataFixtureLoader.php`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixtureLoader.php).
+If you need to add specific `extId` to products in data fixture you will have to update creation of products in [`ProductDataFixture::load`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixture.php).
 
 ```diff
-+   const COLUMN_EXT_ID = 24;  
 
     //...
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param array $row
-     */
-    protected function updateProductDataFromCsvRowForFirstDomain(ProductData $productData, array $row)
-    {
+    $productData = $this->productDataFactory->create();
 
-        //...
+    $productData->catnum = '9184440';
+    $productData->partno = '8328B006';
+    $productData->ean = '8845781245936';
++   $productData->extId = 1;
 
-+       $productData->extId = $row[self::COLUMN_EXT_ID];
-    }  
+    //...
 ```

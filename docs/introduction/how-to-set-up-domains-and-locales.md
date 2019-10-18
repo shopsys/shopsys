@@ -4,7 +4,8 @@ This article describes how to work with domains and languages during the develop
 For an explanation of the basic terms, please read [domain, multidomain and multilanguage](domain-multidomain-multilanguage.md) article first.
 
 !!! note
-    Demo data on the Shopsys Framework contains data only in `en` and `cs` locales
+    Demo data on the Shopsys Framework are only translated to `en` and `cs` locales.
+    If you have set a different locale, you can use `translations-dump` that will create new translation files in `src/Shopsys/ShopBundle/Resources/translations` and you can translate your demo data in `dataFixtures.xx.po` file.
 
 ## Settings and working with domains
 
@@ -35,12 +36,13 @@ php phing build-demo-dev
 After the build is completed, a singledomain application is created.
 
 #### 1.5 Tests
-Some tests are prepared for the configuration with the first domain with `en` locale.
+Some tests are prepared for the specific configuration and test only the behavior for the default locales (`en` and/or `cs`).
 For example `Tests\ShopBundle\Functional\Twig\PriceExtensionTest` is expecting the specific format of displayed currency.
 If you want to use already created tests for your specific configuration, you may need to modify these tests to be able to test your specific configuration of the domain.
 
-*Note: Some smoke and functional tests are only executed for a single domain or a multiple domain configuration.*
-*Search for `@group singledomain` or `@group multidomain` in your test methods' annotations respectively.*
+!!! note "Notes"
+    - Some smoke and functional tests are only executed for a single domain or a multiple domain configuration. Search for `@group singledomain` or `@group multidomain` in your test methods' annotations respectively.
+    - Some functional tests (e.g. the ones for searching a specific phrase) are also skipped when the first domain locale is other than `en`. Search for usages of `FunctionalTestCase::skipTestIfFirstDomainIsNotInEnglish()` method.
 
 ### 2. How to add a new domain
 
@@ -57,7 +59,7 @@ Set the url address for the domain in `app/config/domains_urls.yml`.
 #### 2.3 Locale settings
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
 
-#### 2.5 Create multidomains data
+#### 2.4 Create multidomains data
 There need to be created some multidomain data for the newly added domain.
 Run the phing target
 ```sh
@@ -70,17 +72,17 @@ This command performs multiple actions:
 - pricing group with the name Default is created for every new domain
 - the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
 
-#### 2.6 Multilang attributes
-Demo data of Shopsys Framework are prepared only for `en` and `cs` locales.
-This means that if you are using a different locale, these multilang attributes will be empty for this new locale even after the installation of demo data.
+#### 2.5 Multilang attributes
+Demo data of Shopsys Framework are translated only for `en` and `cs` locales.
+If you have set a different locale, you can use `translations-dump` that will create new translation files in `src/Shopsys/ShopBundle/Resources/translations` and you can translate your demo data in `dataFixtures.xx.po` file.
 
-#### 2.7 Generate assets for the new domain
+#### 2.6 Generate assets for the new domain
 In order to properly display the new domain, assets need to be generated
 ```sh
 php phing grunt
 ```
 
-#### 2.8. Create elasticsearch definition for the new domain
+#### 2.7. Create elasticsearch definition for the new domain
 The configuration for elasticsearch must be created for each domain in a separate json file.
 By default, the configurations for the domain 1 and 2 are already parts of a project-base.
 Configuration for elasticsearch can be found in `src/Shopsys/ShopBundle/Resources/Resources/definition/`.
@@ -112,7 +114,11 @@ Then run
 ```sh
 php phing translations-dump
 ```
-There will be created files for translations of messages for the new locale in `src/Shopsys/ShopBundle/Resources/translations/`, which you'll need to translate.
+There will be created files for translations of messages for the new locale in `src/Shopsys/ShopBundle/Resources/translations/`, which you'll need to translate:
+
+* `messages.xx.po` for translations of common strings
+* `validators.xx.po` for translations of validation messages
+* `dataFixtures.xx.po` for translations of demo data
 
 For more information about translations, see [the separate article](./translations.md).
 
@@ -125,7 +131,7 @@ php phing domains-db-functions-create
 
 #### 3.5 Multilang attributes
 Demo data of Shopsys Framework are prepared only for `en` and `cs` locales.
-This means that if you are using a different locale, these multilang attributes will be empty for this new locale even after the installation of demo data.
+If you have set a different locale, you can use `translations-dump` that will create new translation files in `src/Shopsys/ShopBundle/Resources/translations` and you can translate your demo data in `dataFixtures.xx.po` file.
 
 #### 3.6 Locale in administration
 Administration is by default in `en` locale.
@@ -155,6 +161,13 @@ An example for domain that uses English language:
 }
 ```
 
+#### 3.8 Default application locale
+In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request so you can just use e.g. `Product::getName()` and you get the proper translation.
+However, sometimes, there is no request (i.e. in CLI commands or in tests) so you need to tell your application, which locale should be used - either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.
+
+To change the default application locale, set `locale` parameter to you desired locale (e.g. `es` for Spanish) in your [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/parameters_common.yml).
+The value is then used for setting [`default_locale` Symfony parameter](https://symfony.com/doc/3.4/translation/locale.html#setting-a-default-locale) (see your [`framework.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/packages/framework.yml) config).
+
 ### 4. Change the url address for an existing domain
 
 #### 4.1 Change the url address
@@ -174,10 +187,10 @@ Running this command will ensure replacing all occurrences of the old url addres
 This scenario is not supported by default because of the fact, that change of the locale within an already running eshop almost never happens.
 However, there is workaround even for this scenario.
 
-#### Change the locale to the locale that is already used by another domain
+#### 5.1 Change the locale to the locale that is already used by another domain
 If you need to change the locale of a specific domain to another locale that is already used by another domain, just set the required locale for this domain in the `app/config/domains.yml`.
 
-#### Change the locale to the locale that is not yet used by another domain
+#### 5.2 Change the locale to the locale that is not yet used by another domain
 If you need to change the locale of a specific domain to another locale that is not yet already used by another domain, add new temporary domain with this new locale and follow the instructions of [How to add a new domain](#2-how-to-add-a-new-domain).
 The following procedure is the same as in the case with [Change the locale to the locale that is already used by another domain](#change-the-locale-to-the-locale-that-is-already-used-by-another-domain).
 

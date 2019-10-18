@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Product;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -21,12 +23,23 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     */
+    protected $priceConverter;
+
+    protected function setUp()
+    {
+        $this->priceConverter = $this->getContainer()->get(PriceConverter::class);
+        parent::setUp();
+    }
+
     public function testFilterByMinimalPrice()
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->minimalPrice = Money::create(1000);
+        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), Domain::FIRST_DOMAIN_ID);
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
         $this->assertCount(22, $paginationResult->getResults());
@@ -37,7 +50,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->maximalPrice = Money::create(10000);
+        $productFilterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(10000), Domain::FIRST_DOMAIN_ID);
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
         $this->assertCount(22, $paginationResult->getResults());
@@ -114,9 +127,10 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
+        $firstDomainLocale = $this->getFirstDomainLocale();
         $parameterFilterData = $this->createParameterFilterData(
-            ['en' => 'Print resolution'],
-            [['en' => '4800x1200']]
+            [$firstDomainLocale => t('Print resolution', [], 'dataFixtures', $firstDomainLocale)],
+            [[$firstDomainLocale => t('4800x1200', [], 'dataFixtures', $firstDomainLocale)]]
         );
 
         $productFilterData = new ProductFilterData();
@@ -131,11 +145,12 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
+        $firstDomainLocale = $this->getFirstDomainLocale();
         $parameterFilterData = $this->createParameterFilterData(
-            ['en' => 'Print resolution'],
+            [$firstDomainLocale => t('Print resolution', [], 'dataFixtures', $firstDomainLocale)],
             [
-                ['en' => '4800x1200'],
-                ['en' => '2400x600'],
+                [$firstDomainLocale => t('4800x1200', [], 'dataFixtures', $firstDomainLocale)],
+                [$firstDomainLocale => t('2400x600', [], 'dataFixtures', $firstDomainLocale)],
             ]
         );
         $productFilterData = new ProductFilterData();
@@ -149,15 +164,16 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
+        $firstDomainLocale = $this->getFirstDomainLocale();
         $parameterFilterData1 = $this->createParameterFilterData(
-            ['en' => 'Print resolution'],
+            [$firstDomainLocale => t('Print resolution', [], 'dataFixtures', $firstDomainLocale)],
             [
-                ['en' => '4800x1200'],
-                ['en' => '2400x600'],
+                [$firstDomainLocale => t('4800x1200', [], 'dataFixtures', $firstDomainLocale)],
+                [$firstDomainLocale => t('2400x600', [], 'dataFixtures', $firstDomainLocale)],
             ]
         );
         $parameterFilterData2 = $this->createParameterFilterData(
-            ['en' => 'LCD'],
+            [$firstDomainLocale => t('LCD', [], 'dataFixtures', $firstDomainLocale)],
             []
         );
 
@@ -172,13 +188,14 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
+        $firstDomainLocale = $this->getFirstDomainLocale();
         $parameterFilterData1 = $this->createParameterFilterData(
-            ['en' => 'Print resolution'],
-            [['en' => '2400x600']]
+            [$firstDomainLocale => t('Print resolution', [], 'dataFixtures', $firstDomainLocale)],
+            [[$firstDomainLocale => t('2400x600', [], 'dataFixtures', $firstDomainLocale)]]
         );
         $parameterFilterData2 = $this->createParameterFilterData(
-            ['en' => 'LCD'],
-            [['en' => 'Yes']]
+            [$firstDomainLocale => t('LCD', [], 'dataFixtures', $firstDomainLocale)],
+            [[$firstDomainLocale => t('Yes', [], 'dataFixtures', $firstDomainLocale)]]
         );
         $productFilterData = new ProductFilterData();
         $productFilterData->parameters = [$parameterFilterData1, $parameterFilterData2];
@@ -236,7 +253,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->minimalPrice = Money::create(1000);
+        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), Domain::FIRST_DOMAIN_ID);
 
         $paginationResult = $this->getPaginationResultInCategoryWithPageAndLimit($productFilterData, $category, 1, 10);
         $this->assertCount(10, $paginationResult->getResults());

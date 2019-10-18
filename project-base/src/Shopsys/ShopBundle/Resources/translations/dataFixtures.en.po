@@ -1,0 +1,1647 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "(Mon - Sat: 9 - 10 a.m. to 8 - 10 p.m.)"
+msgstr ""
+
+msgid "+1-234-567-8989"
+msgstr ""
+
+msgid "1 kg"
+msgstr ""
+
+msgid "1.7GHz"
+msgstr ""
+
+msgid "100 Czech crowns ticket"
+msgstr ""
+
+msgid "1024 MB"
+msgstr ""
+
+msgid "112 g"
+msgstr ""
+
+msgid "12 Mpix"
+msgstr ""
+
+msgid "123.8x58.6 mm"
+msgstr ""
+
+msgid "12800"
+msgstr ""
+
+msgid "13 Mpx"
+msgstr ""
+
+msgid "1366×768 (HD Ready)"
+msgstr ""
+
+msgid "14 Mpix"
+msgstr ""
+
+msgid "15 bar"
+msgstr ""
+
+msgid "150 g"
+msgstr ""
+
+msgid "16mil."
+msgstr ""
+
+msgid "18 Mpix"
+msgstr ""
+
+msgid "1800"
+msgstr ""
+
+msgid "1920×1080 (Full HD)"
+msgstr ""
+
+msgid "2"
+msgstr ""
+
+msgid "2 l"
+msgstr ""
+
+msgid "2.0"
+msgstr ""
+
+msgid "21\""
+msgstr ""
+
+msgid "21,5” Hyundai 22MT44"
+msgstr ""
+
+msgid "210 MB"
+msgstr ""
+
+msgid "22\" Sencor SLE 22F46DM4 HELLO KITTY"
+msgstr ""
+
+msgid "220 x 250 x 9 mm"
+msgstr ""
+
+msgid "240 x 205 x 15 mm"
+msgstr ""
+
+msgid "2400x600"
+msgstr ""
+
+msgid "250"
+msgstr ""
+
+msgid "250 g"
+msgstr ""
+
+msgid "250 kWh/year"
+msgstr ""
+
+msgid "255 x 255 x 15"
+msgstr ""
+
+msgid "27\""
+msgstr ""
+
+msgid "275 kWh/year"
+msgstr ""
+
+msgid "27” Hyundai T27D590EY"
+msgstr ""
+
+msgid "27” Hyundai T27D590EZ"
+msgstr ""
+
+msgid "295 x 240 x 15 mm <br /> cartridge with active carbon"
+msgstr ""
+
+msgid "295 x 245 x 15 mm <br /> cartridge with active carbon"
+msgstr ""
+
+msgid "2W"
+msgstr ""
+
+msgid "3.5 kg"
+msgstr ""
+
+msgid "30\""
+msgstr ""
+
+msgid "30” Hyundai 22MT44D"
+msgstr ""
+
+msgid "310 x 285 x 15 mm"
+msgstr ""
+
+msgid "310 x 480 x 10"
+msgstr ""
+
+msgid "32\" Philips 32PFL4308"
+msgstr ""
+
+msgid "320 x 300 x 10 mm"
+msgstr ""
+
+msgid "32” Hyundai 32PFL4400"
+msgstr ""
+
+msgid "36\""
+msgstr ""
+
+msgid "36\" Hyundai 32PFL4308"
+msgstr ""
+
+msgid "36\" Philips 32PFL4308"
+msgstr ""
+
+msgid "380 g"
+msgstr ""
+
+msgid "3“"
+msgstr ""
+
+msgid "4 W"
+msgstr ""
+
+msgid "4.5\""
+msgstr ""
+
+msgid "400 g"
+msgstr ""
+
+msgid "426x306x145 mm"
+msgstr ""
+
+msgid "440 x 345 x 40 mm"
+msgstr ""
+
+msgid "449x304x152 mm"
+msgstr ""
+
+msgid "47 \"LG 47LA790V Luxury TV from the South Korean company LG bears 47LA790S. At first glance its beautiful design that pleases the eye of every lover of pure and precise shapes."
+msgstr ""
+
+msgid "47\""
+msgstr ""
+
+msgid "47\" LG 47LA790V (FHD)"
+msgstr ""
+
+msgid "48"
+msgstr ""
+
+msgid "480 x 310 x 10 mm <br /> <br /> The filter is a need to adjust the scissors to cover the entire surface of the grease filter."
+msgstr ""
+
+msgid "480 x 310 x 10 mm. The filter is a need to adjust the scissors to cover the entire surface of the grease filter."
+msgstr ""
+
+msgid "4800x1200"
+msgstr ""
+
+msgid "495 x 200 x 8 mm"
+msgstr ""
+
+msgid "4“"
+msgstr ""
+
+msgid "5"
+msgstr ""
+
+msgid "5 Mpx"
+msgstr ""
+
+msgid "5.4 kg"
+msgstr ""
+
+msgid "5.5\""
+msgstr ""
+
+msgid "50"
+msgstr ""
+
+msgid "50 g"
+msgstr ""
+
+msgid "51,5” Hyundai 22HD44D"
+msgstr ""
+
+msgid "54\""
+msgstr ""
+
+msgid "54\" Philips 32PFL4308"
+msgstr ""
+
+msgid "55"
+msgstr ""
+
+msgid "560 g"
+msgstr ""
+
+msgid "580 g"
+msgstr ""
+
+msgid "580 kg"
+msgstr ""
+
+msgid "5“"
+msgstr ""
+
+msgid "60\""
+msgstr ""
+
+msgid "600 ml"
+msgstr ""
+
+msgid "60” Hyundai 22HD44D"
+msgstr ""
+
+msgid "6400"
+msgstr ""
+
+msgid "75\""
+msgstr ""
+
+msgid "800 × 480 px"
+msgstr ""
+
+msgid "80x70x70 mm"
+msgstr ""
+
+msgid "9 Mpix"
+msgstr ""
+
+msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
+msgstr ""
+
+msgid "<h2> Cookbook </h2> <br /> <br /> <p> What can be cooked in a steam oven? <br /> Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts. <br /> 75 pages of cookbooks Concept - cook healthy steamed - contains recipes with practical procedures. Each recipe includes: </p> <br /> <br /> <p> The list of ingredients </p> <br /> <p> Method </p> <br /> <p> How many people </p > <br /> <p> Preparation time </p> <br /> <p> The degree of difficulty </p> <br /> <p> + time + temperature </p> <br /> <br /> From under the lids give you some tips - Asparagus with tuna sauce, salmon in vermouth sauce, soup minestrone, chicken mint surprise Cabbage leaves stuffed with minced meat, grilled chop with vegetables, potatoes baked with blue cheese, pear with chocolate sauce, roasted mandelimi and ice cream, etc."
+msgstr ""
+
+msgid "<h2> Specifications: </h2> <ul> <li> Height: 140 mm </li> <li> Width: 600 mm </li> <li> Depth: 470 mm </li> <li> Accessories: backflow preventer </li> <li> White execution </li> <li> Top towing - the possibility of recirculation </li> <li> Controls - slider slider </li> <li> 3 levels of performance </li> <li> Max. Performance: 185 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> Textile grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 1x textile filter 61990026, 1x carbon filter 61990028 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Net weight: 4 , 5 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 1.5 m </li> </ul>"
+msgstr ""
+
+msgid "<h2>47 \"LG 47LA790V</h2>> Luxury TV from the South Korean company LG bears <strong> 47LA790S </strong>. At first glance its <strong> beautiful design </strong> That pleases the eye of every lover of pure and precise shapes. Inside the TV is hidden except <strong> M13 dual-core processor </strong> number of extra features. I so belong to the energy class <strong> A + </strong> . Micro Pixel Control function is performed local dimming backlight and thus significantly <strong> reduces </strong> up to 64 W. This is so gigantic screen with really great. <br> <br> This TV is considerate to your eyes because of the image <strong> eliminates the annoying flicker </strong> caused by conventional 3D glasses, and you so you can enjoy long evenings of film <strong> without fatigue and eye pain </strong> . User-friendly environment allows <strong> adjust the 3D depth effect </strong> and yourself, you can choose whether you prefer comfort or deeper experience when watching 3D content. You could very well happen that while watching a football match <strong> flips the ball right into your living room </strong> Because special functions for image conversion<strong> improve any broadcasting the third dimension </strong> . <br> <br> Avid gamers will appreciate the <strong> Dual Play </strong> When television broadcasts two separate 2D images and each player using glasses to see their part to the full screen area. No more worry when a split screen. <strong> Intel WiDi </strong> (Wireless Display), respectively. wireless transmission of video and audio, allows quick and easy connection of TVs and laptops without cables or an Internet connection. It is very convenient and fast you'll love this feature."
+msgstr ""
+
+msgid "<h2>A4tech X710BK</h2>Playing computer mouse has five buttons and scrolovacím button for easier browsing documents or Internet pages. News is a key 3XFire that in one pressing regulating a triple clicks. The mouse has five options to set up the sensor sensitivity and in steps 400, 600, 1200, 1600 and 2000 DPI. The mouse has an ergonomic design, it connects via high-speed USB interface and is equipped with 16 Kb internal memory that is possible with the Oscar Mouse Editor to record scripts to control your favorite games. It is fully compatible with all modern operating systems including Windows Vista. <br><br><strong> Specifications: </strong><br><br><strong> Interface: </strong><br> USB 2.0 <br> Reduction in PS/2 <br><br><strong> OS Compatibility: </strong><br> Microsoft Windows 2000/XP/2003/Vista"
+msgstr ""
+
+msgid "<h2>Canon EH-22L</h2> High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm."
+msgstr ""
+
+msgid "<h2>Canon EH-22L</h2>High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm."
+msgstr ""
+
+msgid "<h2>Canon PIXMA MG2450</h2><p>Stylish and affordable, accessible multifunction devices for the home. Easy <strong> printing, scanning and copying </strong> in one device will take much less space and you'll save money than buying individual components. The printing machine uses an innovative print <strong> FINE technology </strong> Which guarantee excellent print quality. The printer has a system of four ink colors hidden in two ink cartridges, which provide easy user service and stable print quality throughout the life. <strong> You can reach the XL cartridges </strong> FINE, which provide significantly greater number of print pages between ink replacement. This is ideal if you are printing large volumes.<br><br>Software <strong> My Image Garden </strong> will reveal the full range of functions PIXMA printers. It offers solutions for the layout and printing photos, scanning, and access to online services. Due to advanced features such as face detection, it will scan all the pictures on your computer (even those long forgotten), and compile them into great designs to print. Service <strong> CREATIVE PARK PREMIUM</strong> you can download and print photos, images and artwork from internationally recognized photographers and artists. Create greeting cards, calendars or stunning 3D paper products, such as the space shuttle Endeavour.</p>"
+msgstr ""
+
+msgid "<h2>Canon PIXMA MG3350 black</h2><p>Features of modern and elegantly prepared MFPs<strong> s new wireless capabilities</strong>. Function <strong>automatic two-sided printing</strong> printing on both sides, which saves paper while producing professional looking documents. The printer uses<strong> ChromaLife100 ink system </strong>with four colors of ink hidden <strong>two print cartridges</strong>That provide easy user service and stable print quality throughout the life. You reach for XL FINE cartridges provide printing multiple pages significantly between individual ink replacement. This is ideal if you often print.<br><br>Do smart device application download <strong>Canon PIXMA Printing Solutions</strong> a straight print or scan. In addition, you can check the printer status and ink levels. They also supported services <strong>Apple AirPrint</strong> and access to the Internet and <strong>Google Cloud Print</strong>. Software <strong>My Image Garden</strong> has a solution for organizing and printing photos, scanning, and access to online services. Due to advanced features such as face detection, you will always find exactly what you're looking for.<br><br><strong>Additional information:</strong><br><br><strong>Print:</strong><br>Technology: 4-ink (in 2 packs) ChromaLife100 system, the head of FINE (2 pl)<br>Borderless printing: A4, Letter, 20 x 25 cm, 13 x 18 cm, 10 x 15 cm<br>Automatic two-sided printing: A4, A5, B5, Letter<br>Printing from Application PIXMA Printing Solutions, Google Cloud Print, Apple AirPrint</p>"
+msgstr ""
+
+msgid "<h2>Canon PIXMA MG3350 black</h2><p>Features of modern and elegantly prepared MFPs<strong> s new wireless capabilities</strong>. Function <strong>automatic two-sided printing</strong> printing on both sides, which saves paper while producing professional looking documents. The printer uses<strong> ChromaLife100 ink system </strong>with four colors of ink hidden <strong>two print cartridges</strong>That provide easy user service and stable print quality throughout the life. You reach for XL FINE cartridges provide printing multiple pages significantly between individual ink replacement. This is ideal if you often print.<br><br>Do smart device application download <strong>Canon PIXMA Printing Solutions</strong> a straight print or scan. In addition, you can check the printer status and ink levels. They also supported services <strong>Apple AirPrint</strong> and access to the Internet and <strong>Google Cloud Print</strong>. Software <strong>My Image Garden</strong> has a solution for organizing and printing photos, scanning, and access to online services. Due to advanced features such as face detection, you will always find exactly what you're looking for.<br><strong>Additional information:</strong><br><strong>Print:</strong><br>Technology: 4-ink (in 2 packs) ChromaLife100 system, the head of FINE (2 pl)<br>Borderless printing: A4, Letter, 20 x 25 cm, 13 x 18 cm, 10 x 15 cm<br>Automatic two-sided printing: A4, A5, B5, Letter<br>Printing from Application PIXMA Printing Solutions, Google Cloud Print, Apple AirPrint</p>"
+msgstr ""
+
+msgid "<h2>D-Link DGS-105/E</h2>The switch provides a cost-effective way to create a small network or extend existing ones. Connect not only computers, but also a number of network devices such as IP cameras, network printers and more. The switch is equipped with five Gigabit Ethernet ports with auto-sensing speeds, so you shall always have the best performance. To communicate without delay and smooth video streaming has integrated <strong> QoS optimization </strong> . <br><br> Switch functions quickly and easily without complicated setting. But <strong> consistently low power </strong> detect used ports, and if stopping traffic enters Sleep mode. <strong> Rugged metal body is sufficient for cooling without fan </strong> . Together with its small size you can find a place almost anywhere. Also available is a set of <strong> wall mounting </strong> and it can also protect against theft Kensington."
+msgstr ""
+
+msgid "<h2>Defender SPK-480</h2><strong>Defender SPK 480</strong>, two portable and practical&nbsp;<strong>2\" broadband&nbsp;</strong>speakers. They have&nbsp;<strong>4 watt output&nbsp;</strong>and are powered by USB. They're made of durable plastic and their&nbsp;compact size is&nbsp;<strong>portable&nbsp;</strong>and easy to fit into any bag or backpack. The speakers connect to notebooks or portable music players via the built-in 3.5 mm jack. Each speaker features its own volume control, and they can be placed near monitors without disturbing image quality due to their magnetic shielding. The silver and black&nbsp;design is simple and modern."
+msgstr ""
+
+msgid "<h2>DéLonghi ECAM 44.660.B</h2><p>Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker.&nbsp; A built in special hot steam/water jet automatically prepares a thick milk froth for cappuccino and tea. Drip coffee lovers can also press their own coffee.</p><h3>Magic Milk Menu button</h3><p><br>A special function is the Milk Menu button, which gives you a choice of milk-based beverages. In addition to the classic cappuccino, latte macchiato, or Latte, you can prepare rare drinks such as Espresso macchiato and a flat white. For a quick and easy treat, you can prepare hot cocoa or a cup of frothed milk, and the size of the beverage can be adjusted based on the cup.&nbsp;&nbsp;</p>"
+msgstr ""
+
+msgid "<h2>GENIUS SP-M120 black</h2><p align=\"justify\"> Sleek and compact stereo speakers in combination of black and metallic surface. Speakers provide basic computer sound system with an output of 2 W RMS. On the front is virtually placed in a large volume control, but not forgotten even the popular headphone jack. <br><strong> Specifications: <br> Performance: <br></strong> 2 x 1 W RMS <br><strong> Frequency Range: </strong> 100 Hz - 20KHz <br><strong> Signal/noise ratio: </strong> 75 db <br><strong> Dimensions: </strong> 50 x 90 mm </p>"
+msgstr ""
+
+msgid "<h2>GIGABYTE GK-KM7580 Black</h2>Quality set keyboard and optical mouse from Gigabyte. Both components are color-matched to the sleek glossy black color. The keyboard has 15 multimedia keys for quick access to the Internet, email and other applications. The multimedia keys also used for various tasks (volume control, ...). Optical mouse has a sensor with a resolution of 500 to 1000 DPI resolution can be switched. Mouse fits both the left and the right hand. Wireless communication provides a miniature USB receiver for keyboard and mouse. This set will contrast nicely on any desk. <br><br><strong> Specifications: </strong> <br><br><strong> Multimedia keys: </strong><br> 15 hotkeys <br><br><strong> Interface: </strong><br> USB receiver <br><br><strong> Communication: </strong><br> wireless, 2.4 GHz band <br><br><strong> Power: </strong><br> Keyboard: 2x AAA <br> Mouse: 2x AAA"
+msgstr ""
+
+msgid "<h2>Genius SP-HF150 Black</h2>Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers. It is powered only by the USB port. Yet they can generate high power 4 W RMS. The sound of the smaller 2.5 \"drives is airy, yet does not lack sufficient bass fundament. All of the elegant veneer finish imitating a hidden volume control. <br><strong><br> Specifications: </strong><br><br><strong> Sound characteristics: </strong><br> Power: 2 x 2 W RMS <br> Drivers: 2.5 \"(širokpásmové) <br> Frequency range: 200 to 20 000 Hz <br> Signal-to-Noise Ratio: 70 db <br><br><strong> Connectors: </strong><br> 3.5 mm audio <br> USB for power"
+msgstr ""
+
+msgid "<h2>Genius SlimStar i222 CZ+SK Black</h2>GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design. It will decorate your desk at home or in the office. In addition to the standard layout will delight and a large variety of function keys that enhance control of the internet, email and also a multimedia player. Low profile you use for long periods still feel comfortable. The computer keyboard GENIUS LuxeMate I222 connects via USB interface.<br><br><strong>Specifications:<br><br>Type: </strong>conduction<br><strong>Layout: </strong>Czech<br><strong>Interface: </strong><br>USB<br><strong>Design:</strong><br>Apple design"
+msgstr ""
+
+msgid "<h2>JURA IMPRESSA Z9 One Touch TFT Pianoblack</h2><p> Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design. The purpose is always the most advanced technology to achieve real, authentic results. The powerful device has intuitive controls and except large 3.5 \"TFT color display. Together with rotary dial allows you to choose between 11 specialties and goes to prepare any coffee you can think of. With the coffee a la carte, allowing you to quickly change settings according to your needs, your options are almost limitless. </p><p> For an authentic experience and to ensure optimal conditions for coffee are two Thermoblocks. The first coffee and hot water, the second is intended to couple. With every cup of coffee is also possible to set the correct brewing temperature, amount of water and grind. Mill technology + Aroma is quiet and up to twice faster than previously used. Grains of coffee while grinding so much heat and so there is no negative influence of taste of coffee. </p><p> Foam crown in drinks Latte macchiato, cappuccino and other specialty are the world extremely popular. Automatic coffee machine in the model IMPRESSA Z9 One Touch is a distinctive design with a combination of pure luxury and sophistication. But technology also has a soft foam that each of trendy coffee specialties will adjust fluffy crown. S cappuccino outlets, which can be adjusted up to 153 mm, there is no problem to use a glass or a latte macchiato. Formed with Swiss precision and elegance with which you prepare the perfect espresso, cappuccino or caffe latte. </p><p> You will enjoy a very low power consumption. If the espresso is separated from the mains power switch, patented innovation JURY Zero Energy Switch (zero energy consumption) will remove any energy at all. Before turning off the espresso is automatically purged and cleansed, which provides him with long life. The unique geometry with finer teeth grinding and new technology supports the lower noise machine when grinding coffee. </p>"
+msgstr ""
+
+msgid "<h2>Logitech S-120 Speaker System</h2> Modern stereo speakers in a stylish black design, with an output of 2.3 W, suitable only for desktops and laptops, but also for CD or MP3 players, and other devices. They are connected via standard stereo jack 3,5 mm. The speakers have a frequency response of 50 Hz to 20 kHz. Easily accessible controls are located on the side of the right speaker with headphone outlet. <br><br><b> Specifications: </b><br><strong><br> Performance: <br></strong> 2.3 W (2 x 1.15 W RMS) <br><br><strong> Frequency response: <br></strong> 50 Hz to 20 kHz <br>"
+msgstr ""
+
+msgid "<h2>Nikon EH-22L</h2> High quality, elegant, soft, and yet reliably protecting brand case for your Nikon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm."
+msgstr ""
+
+msgid "<h2>Steam iron Concept ZN8009 wattage 2200 Watt security system AUTO - SHUT OFF lets much easier and more convenient ironing. </h2> Its other advantage is easy operation and many other practical functions and features, such as 3 m long supply cable through which you will not have to move ironing. Specifications: <ul> <li> Stainless steel soleplate </li><li> Even steam dosage: 20 g / min </li><li> Auto-off function AUTO SHUT-OFF Audible : turn off after 30 seconds in horizontal position and after 8 minutes in the vertical position irons </li><li> The water tank: 300 ml </li><li> Airbrush </li><li> The anti-drip ANTI-DRIP </li><li> Self-cleaning function Self Clean </li><li> The descaling function ANTI-CALC </li><li> Vertical steam </li><li> Notification light </li><li> Thermostat </li><li> 3 m power cable (with swivel 360 °) </li><li> Color: blue + silver </li><li> Power consumption: 2200 W </li><li> Voltage: 230 V </li> </ul> <br/>Accessories: container to refill their water"
+msgstr ""
+
+msgid "<p> A perfectly clean glass ceramic cooktop without leaving stains and does not endanger the environment. </p><br /> <ul> <li> <strong> remove </strong> leftover food, grease, nicotine coating and many other impurities </li><li> <strong> does not harm </strong> rubber and plastics </li><li> <strong> does not </strong> AOX - Adsorbable organic halogens </li><li> biologically <strong> degradable </strong> by OECD </li></ul><br />"
+msgstr ""
+
+msgid "<p> Enjoy quick cooking with special cooking HI-LIGHT zones which warms almost immediately. </p> Reasons to opt just for built-in ceramic plate Concept SDV-3360:<br /> <ol> <li> The built-in ceramic hob SDV-3360 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - will protect you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 50mm </li><li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, orthogonal edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 46 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> Circular HI-LIGHT </li><li> The diameter of the front left plates: 200 mm </li><li> Input left front plate: 1800 W </li><li> <strong> Rear left hotplate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> Input right rear plates : 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5500-6600 W </li><li> Weight: 9 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
+msgstr ""
+
+msgid "<p> Hand printing adhesive labels Brother especially suitable for easy marking in warehouses, offices and wherever it is required records or quickly usable labels. The printer boasts a very easy to use, ensuring a perfect look label width from 3.5 mm to 18 mm. You can create labels, barcodes, labels for folders, address and shipping labels, or labels on CD and DVD media. Everything can be created by using the keyboard directly to the printer manual. <br><br> The printer is in addition to ease of use and versatility also very fast. It can print up to 2 cm plate for one second. Very please direct thermal printing technology, which reduces the cost of toner and ink. The printer can be powered by AC adapter, rechargeable battery or alkaline batteries 6 x AA. <br><br><strong> Additional information: </strong><br><br><strong> Print technology: </strong><br> Thermal </p><p><strong> Width TZ tapes: </strong> 3.5/6/9/12/18 (mm) <br><strong> Display: </strong><br> 16 characters x 2 lines <br><strong> Print speed: </strong><br> 20 mm/s <br><strong> Odsřih: </strong><br> handmade <br><strong> Font style: </strong><br> 14 <br><br><strong> Symbols: </strong><br> 617<br><br><strong> Characters in mind: </strong><br> 2800 <br><br><strong> Other features: </strong><br> vertical printing, barcode printing <br><br><strong> Possible sources of supply: </strong><br> AC adapter AD-E001 - (not included) <br> rechargeable battery BA-E001 - (not included) <br> Alkaline Batteries 6 x AA - (not included) <br><strong> Package Contents: </strong><br> Printer PT-H300 <br> starting tape TZe-241 (18 mm black on white, length 4 m) <br> documentation </p>"
+msgstr ""
+
+msgid "<p> It is safe for you to your loved ones as important as us? In that case, you will appreciate with hob SDV-3460 feature residual heat indicators - H that you and your loved ones will protect against nasty burns. The residual heat indicator signals a residual temperature of the cooking zone even after power off. </p><br /> <h2> Reasons to opt just for built-in ceramic plate Concept SDV-3460: </h2><br /> <ol> <li> The built-in ceramic hob SDV-3460 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - protects you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 60 mm </li> <li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, angled edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 50 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> </li><li> The diameter of the front left plates: 165x265 mm </li><li> Input left front plate: 1100/2000 W </li><li> <strong> Rear Left plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> wattage right rear plate: 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate: 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5700-6800 W </li><li> Weight: 10 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
+msgstr ""
+
+msgid "<p> Order number {number} has been sent, thank you for your purchase. We will contact you about next order status. <br /><br /> <a href=\"{order_detail_url}\">Track</a> the status of your order. <br /> {transport_instructions} <br /> {payment_instructions} <br /> </p>"
+msgstr ""
+
+msgid "<p> The minimum space requirements excels sub-mounting range hood OPP-2060th Suitable for very small kitchens. Metal buttons provide ease of use and precise adjustment of the corresponding stage performance. </p> <br /> <br /> <h2> Reasons to choose just the sub-mounting range hood Concept OPP-2060: </h2> <br /> <br /> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. The sub-mounting range hood brand Concept OPP-2060 will surprise performance <strong> 186 m3 per hour </strong>. </li><li> Very practical is the ability to select <strong> 4 Ways exhaust </strong>. </li></ol> Model OPP-2060 is equipped with a practical <strong> metal grease filter </strong>, its maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using a carbon filter, which can be bought."
+msgstr ""
+
+msgid "<p><strong>CD/DVD/Blu-ray/HD-DVD</strong>is an affordable program for burning CD/DVD/Blu-ray/HD-DVD media. Intuitive operation with its easy to handle even a novice in this field. Another big advantage is the use of technology burning \"on the fly\", which is spared not only your time but also the capacity of the disk, because the process does not create any storage (temporary) files on your hard disk.<br><br>Worth mentioning is also the fact that<strong> for its operation baking does not use any components of Windows</strong> or other manufacturers. Its functionality is not needed any external libraries or DLL. This makes the software provides high stability, even if your system is corrupted Windows. <strong>This gives you the ability to backup before reinstalling Broken System</strong>. The program is completely in the Czech language.</p>"
+msgstr ""
+
+msgid "<p>Hewlett-Packard was founded in the difficult times of the Great Depression. The founders were a pair of friends whose name the company still proudly bears. They started their business in an unobtrusive garage near the city of Palo Alto. It is now a national monument. HP’s success lay not in copying existing products, but in the ability and courage to come up with something new.</p><p>The first commercial triumph was an oscillator that surpassed all competition in quality, yet sold at a quarter of the price. In 1968, HP released their first desktop computer - a desktop calculator. The company currently manufactures products primarily related to computer technology - computers and laptops, printers, scanners, digital cameras, servers, and last but not least, calculators.</p><p>Unless otherwise indicated in the product description, packaging does not contain a USB interface cable.</p>"
+msgstr ""
+
+msgid "<p>Meet the latest generation of LED TVs Philips, which include the thin<strong>Smart TV running Android.</strong> Gets you a fine painting, innovative technologies, including image processing Ambilight and honest materials used in production. It features cutting-edge design structures with an eye for detail that fits into modern interiors. Like basis was inclined central pedestal that represents the geometric pun. On TV it will always look nice even when switched off. </p><p> <strong>The main advantages:</strong> </p><ul><li> Ambilight backlighting - projecting a glow on the wall </li><li> Sharp and smooth image </li><li> Android operating system with applications </li><li> Internet connection </li><li> Remote control with keyboard </li></ul><div data-act=\"block\" contenteditable=\"false\"><div data-act=\"edit\" style=\"position: relative;\" contenteditable=\"false\"><h3> Superior picture </h3><p> <strong>Ambilight backlighting will forever change your perception of television.</strong> This is a unique technology that expands the display area outside the boundaries of the panel itself. 2 Sided glow lit from two sides of the screen to the surrounding walls and creates a breathtaking effect. Natural Motion technology ensures smooth and crisp moving images without blur by increasing the number of frames per second to double. It's handy for example when movie action scenes or sports broadcasts. </p><p> <strong>Micro Dimming Pro conveys a realistic visual experience day and night.</strong> It uses a light sensor and a special software to optimize the contrast of the screen on the basis of light conditions in the environment. The image is analyzed 6400 in different zones, thereby providing authentic and undisturbed experience. Sharp moving images with breathtaking contrast, detail and depth ensure Pixel Precise HD. </p></div></div><div data-act=\"block\" contenteditable=\"false\"><div data-act=\"edit\" style=\"position: relative;\" contenteditable=\"false\"><h3> Android - richer television viewing experience </h3><p> Built-in WiFi module, and an Ethernet port expands the possibilities of television. <strong>Are you tired of watching okoukaných series?</strong> Then drop into online content. Waiting for you Archives TV stations, social networks, YouTube and other corners of the Internet via a web browser. Smart TV is based on Android OS 5.0 (Lollipop), has pre-installed applications and more can be found at Google Play. Use remote control with keyboard for easy typing text or even voice control. Advantage based on Android is also always up to date firmware. And all of you will be taken without waiting for a nimble run television is not only the old operating system, but also 2jádrový processor. </p></div></div><h3> Saving operation </h3><p> Manufacturer did not forget to decent connective equipment. It includes a quartet of HDMI connectors, one Scart and a trio of USB connectors for recording or playback of content by connecting USB disks. There is also support for HbbTV function or even suspend broadcasts EPG 8 days. Tuners are represented DVB-T / T2 / C and television unequivocal advantage of the economic operation. <strong>The TV comes to energy class A +,</strong> and for a very decent cuts only 45 kWh. </p><p><strong>Additional information:</strong> </p><p> <strong>Picture Enhancement:</strong> <br> Natural Motion <br> 500Hz Perfect Motion Rate <br> Pixel Precise HD <br> Micro Dimming Pro </p><p> <strong>Smart TV:</strong> <br> User interaction - multiroom Client and Server, SimplyShare, certified Wi-Fi Certified Miracast <br> Interactive television - HbbTV <br> Program - Suspension of television broadcasting, USB recording <br> Applications SmartTV - Online video store, open an Internet browser, Social TV service, Spotify, TV on Demand, YouTube <br> Easy Installation - Automatic detection equipment Philips Connection Wizard equipment, Network Setup Wizard, the Setup Wizard <br> Easy to use - Universal Smart Menu button, on-screen User Guide <br> Firmware upgradeable - Guide cars. update, Firmware upgradeable via USB, Firmware Update online <br> Screen Format Adjustments - Basic - Fill Screen, Fit to Screen, Advanced - Pan, Zoom, Stretch <br> Philips TV Remote - Applications Channels, Control, NowOnTV, TV guide, Video on demand <br> Remote control - Keyboard </p><p> <strong>Ambilight:</strong> <br> Versions of Ambilight - 2 pages <br> Ambilight - The adaptation of the color of walls, Lounge Mode, Game Mode, Ambilight + hue </p><p> <strong>Multimedia applications:</strong> <br> Video playback formats - Containers: AVI, MKV, H264 / MPEG-4 AVC, MPEG-1, MPEG-2, MPEG-4, WMV9 / VC1, HEVC <br> Format Support subtitles - .SMI, .SRT, .ssa, .SUB, .TXT, .ass <br> Play music formats - AAC, MP3, WAV, WMA (v2 to v9.2), PRO-WMA (v9 and v10) <br> Picture Playback Formats - JPEG, BMP, GIF, JPS, PNG, PNS, BMS, MIT </p><p> <strong style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">Connectivity:</strong><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">4 x HDMI</span> <span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">1 x Scart (RGB / CVBS)</span> <span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">3 x USB</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">Wireless Dual Band Wi-Fi Direct, Integrated Wi-Fi 11n 2 × 2</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">Other connections: Antenna IEC75, Common Interface Plus (CI +), Ethernet-LAN ??RJ-45, Digital audio output (optical), Audio L / R, Audio Input (DVI), Headphone out, Service connector, the connector Satellite</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">HDMI features - Audio Return Channel</span><span style=\"font-family: Verdana, sans-serif, Arial; font-size: 13px;\">EasyLink (HDMI-CEC) - Pass the remote control signal, System audio control, System standby, One touch play</span> </p><p> <strong>Supplied</strong> <br> Remote control <br> 2 x AAA Batteries <br> Table top stand <br> Power cable <br> Quick start guide use <br> Brochure Legal and safety information </p>"
+msgstr ""
+
+msgid "<p>This product is not an independently functional unit and may require professional installation.</p>"
+msgstr ""
+
+msgid "<ul><li> Type nozzles: Universal </li><li> Diameter: 32 mm </li><li> Turbobrush Big </li></ul>"
+msgstr ""
+
+msgid "A"
+msgstr ""
+
+msgid "A and micro B"
+msgstr ""
+
+msgid "A book is a set of written, printed, illustrated, or blank sheets, made of ink, paper, parchment, or other materials, fastened together to hinge at one side. A single sheet within a book is a leaf, and each side of a leaf is a page. A set of text-filled or illustrated pages produced in electronic format is known as an electronic book, or e-book."
+msgstr ""
+
+msgid "A cable HDMI - HDMI AM / M 2 m gold-plated connector High Speed HDMI Cable with Ethernet 1.4 support 1080p FULL HD"
+msgstr ""
+
+msgid "A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both."
+msgstr ""
+
+msgid "A garden tool is any one of many tools made for gardens and gardening and overlaps with the range of tools made for agriculture and horticulture. Garden tools can also be hand tools and power tools."
+msgstr ""
+
+msgid "A personal computer (PC) is a general-purpose computer whose size, capabilities, and original sale price make it useful for individuals, and is intended to be operated directly by an end-user with no intervening computer time-sharing models that allowed larger, more expensive minicomputer and mainframe systems to be used by many people, usually at the same time."
+msgstr ""
+
+msgid "A printer is a peripheral which makes a persistent human readable representation of graphics or text on paper or similar physical media."
+msgstr ""
+
+msgid "A telephone is a telecommunications device that permits two or more users to conduct a conversation when they are too far apart to be heard directly. A telephone converts sound, typically and most efficiently the human voice, into electronic signals suitable for transmission via cables or other transmission media over long distances, and replays such signals simultaneously in audible form to its user."
+msgstr ""
+
+msgid "A toy is an item that can be used for play. Toys are generally played with by children and pets. Playing with toys is an enjoyable means of training young children for life in society. Different materials are used to make toys enjoyable to all ages."
+msgstr ""
+
+msgid "A3"
+msgstr ""
+
+msgid "A4"
+msgstr ""
+
+msgid "A4tech X710BK Playing computer mouse has five buttons and scrolovacím button for easier browsing documents or Internet pages."
+msgstr ""
+
+msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Active/Passive"
+msgstr ""
+
+msgid "Annual energy consumption"
+msgstr ""
+
+msgid "Apple iPhone 5S 64GB, gold"
+msgstr ""
+
+msgid "Aquila Aquagym non-carbonated spring water"
+msgstr ""
+
+msgid "BROTHER PT-H300"
+msgstr ""
+
+msgid "Bluetooth"
+msgstr ""
+
+msgid "Book 55 best programs for burning CDs and DVDs"
+msgstr ""
+
+msgid "Book Computer for Dummies Digital Photography II"
+msgstr ""
+
+msgid "Book of procedures for dealing with traffic accidents"
+msgstr ""
+
+msgid "Book of traditional Czech fairy tales"
+msgstr ""
+
+msgid "Book scoring system and traffic regulations"
+msgstr ""
+
+msgid "Books"
+msgstr ""
+
+msgid "By entering an email below, you can download your personal and other information (for example, order history) from our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data registered to given email address on this online store domain."
+msgstr ""
+
+msgid "By entering an email below, you can view your personal information that we register in our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page listing all the personal details we have connected to your email address."
+msgstr ""
+
+msgid "CD-R VERBATIM 210MB"
+msgstr ""
+
+msgid "Camera type"
+msgstr ""
+
+msgid "Cameras & Photo"
+msgstr ""
+
+msgid "Canceled"
+msgstr ""
+
+msgid "Canon EH-22L"
+msgstr ""
+
+msgid "Canon EH-22L. High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
+msgstr ""
+
+msgid "Canon EH-22M"
+msgstr ""
+
+msgid "Canon EOS 700D"
+msgstr ""
+
+msgid "Canon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Quality digital camera with CMOS sensor with a resolution of 18 megapixels"
+msgstr ""
+
+msgid "Canon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Quality digital camera with CMOS sensor with a resolution of 18 megapixels, which is to take the top photo in a professional style. Innovative DIGIC 5 image processing delivers powerful in any situation. A high sensitivity range up to ISO 12800 lets you capture great images even in dim light"
+msgstr ""
+
+msgid "Canon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Quality digital camera with CMOS sensor with a resolution of 18 megapixels, which is to take the top photo in a professional style. Innovative DIGIC 5 image processing delivers powerful in any situation. A high sensitivity range up to ISO 12800 lets you capture great images even in dim light, even without a flash. Automatic smart scene mode analyzes the scene and automatically selects the best settings for the camera. View images, focus, or even pictures can be taken using a 3 \"touch screen TFT Clear View II with a whopping resolution of 1.04 million pixels and a vari-angle. With this camera out of you in a moment become a professional cameraman. It makes it possible to shoot stunning movies in Full HD 1080p. Hybrid AF technology enables continuous focus during movie shooting and using the built-in microphone ozvučíme your images are high quality stereo sound. Autofocus system comprising nine cross-type AF points to capture fast-moving objects without any blurring. Thanks to continuous shooting at up to 5 frames per second, you'll never miss a crucial moment for getting the best picture possible.The HDR Backlight Control mode, the camera takes three different exposures and combines them into one, in order to preserve details in shadows and areas with high brightness. In Night Scene mode, the camera takes the hand of multiple images at high shutter speeds and combining them together and thus prevents blurring. Captured images and videos simply adding it to an SD Memory Card, SDHC and SDXC, thanks to the integrated connector is miniHDMI you can conveniently viewed on your LCD or plasma TV. The camera can buy a wide range of lenses, flashes and accessories that are compatible with the EOS system."
+msgstr ""
+
+msgid "Canon EOS 700E"
+msgstr ""
+
+msgid "Canon MG3550"
+msgstr ""
+
+msgid "Canon MG3650"
+msgstr ""
+
+msgid "Canon PIXMA MG2450"
+msgstr ""
+
+msgid "Canon PIXMA MG2650"
+msgstr ""
+
+msgid "Canon PIXMA iP7250"
+msgstr ""
+
+msgid "Canon PIXMA iP7350"
+msgstr ""
+
+msgid "Cap with air conditioning, convenient for hot days."
+msgstr ""
+
+msgid "Cap with solar-powered fan, white"
+msgstr ""
+
+msgid "Capacity"
+msgstr ""
+
+msgid "Cash"
+msgstr ""
+
+msgid "Cash on delivery"
+msgstr ""
+
+msgid "Circumaural"
+msgstr ""
+
+msgid "Cleaner 3in1 stainless steel appliances (4039286078461)"
+msgstr ""
+
+msgid "Coarse grater blade RM-3240/3250"
+msgstr ""
+
+msgid "Coffee Machines"
+msgstr ""
+
+msgid "Coffeemakers or coffee machines are cooking appliances used to brew coffee. While there are many different types of coffeemakers using a number of different brewing principles, in the most common devices, coffee grounds are placed in a paper or metal filter inside a funnel, which is set over a glass or ceramic coffee pot, a cooking pot in the kettle family. Cold water is poured into a separate chamber, which is than heated up to the boiling point, and directed into the funnel."
+msgstr ""
+
+msgid "Collection of classical Czech fairy tales."
+msgstr ""
+
+msgid "Color"
+msgstr ""
+
+msgid "Color printing"
+msgstr ""
+
+msgid "Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers."
+msgstr ""
+
+msgid "Connectors"
+msgstr ""
+
+msgid "Construction"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "Coupon valued to 100 Czech crowns. You can cash it at any exchange office"
+msgstr ""
+
+msgid "Cover"
+msgstr ""
+
+msgid "Credit card"
+msgstr ""
+
+msgid "Crevice nozzle VP-4290"
+msgstr ""
+
+msgid "Cyklocomputer – cyklonavigation with preset maps, color display 3\", training programmes, WiFi"
+msgstr ""
+
+msgid "Czech"
+msgstr ""
+
+msgid "Czech post"
+msgstr ""
+
+msgid "Czech republic"
+msgstr ""
+
+msgid "D-Link"
+msgstr ""
+
+msgid "DVB-T"
+msgstr ""
+
+msgid "DVB-T Receiver HD - MPEG4, MPEG2, USB recording, timeshift"
+msgstr ""
+
+msgid "DVB-T Receiver HD - MPEG4, MPEG2, USB recording, timeshift, EPG, HDMI 1.3, USB, SCART, coaxial output, power antenna 5V/50mA"
+msgstr ""
+
+msgid "DeLonghi ECAM 44.660 B Eletta Plus"
+msgstr ""
+
+msgid "Dear customer, <br /><br /> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/> personal details which we have in evidence in our online store {domain}. <br/><br/> To overview your personal information please click here - {url} <br/> The link is valid for next 24 hours.<br/> Best Regards <br/><br/> team of {domain}"
+msgstr ""
+
+msgid "Dear customer, <br /><br />Processing your order has been finished."
+msgstr ""
+
+msgid "Dear customer, <br /><br />Your order has been cancelled."
+msgstr ""
+
+msgid "Dear customer, <br /><br />Your order is being processed."
+msgstr ""
+
+msgid "Dear customer, <br /><br />your registration is completed. <br />Name: {first_name} {last_name}<br />Email: {email}<br />E-shop link: {url}<br />Log in page: {login_page}"
+msgstr ""
+
+msgid "Dear customer, <br/><br/> based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}. <br/><br/> To download your personal information please click here - {url}<br/> The link is valid for next 24 hours. <br/><br/> Best regards<br/> team of {domain}"
+msgstr ""
+
+msgid "Dear customer,<br /><br />Your order has been placed successfully.<br /><br />You will be contacted when the order state changes.<br />Order number: {number} <br />Date and time of creation: {date} <br />E-shop link: {url} <br />Order detail link: {order_detail_url} <br />Shipping: {transport} <br />Payment: {payment} <br />Total price including VAT: {total_price} <br />Billing address:<br /> {billing_address} <br />Delivery address: {delivery_address} <br />Note: {note} <br />Products: {products} <br />{transport_instructions} <br />{payment_instructions}"
+msgstr ""
+
+msgid "Dear customer.<br /><br />You can set a new password following this link: <a href=\"{new_password_url}\">{new_password_url}</a>"
+msgstr ""
+
+msgid "Deep baking sheet ETV-2560/2860/2960 / 3160bc"
+msgstr ""
+
+msgid "Defender 2.0 SPK-480"
+msgstr ""
+
+msgid "Defender SPK-480, easy to fit into any bag or backpack"
+msgstr ""
+
+msgid "Demo advert"
+msgstr ""
+
+msgid "Determination"
+msgstr ""
+
+msgid "Digital Camera - Waterproof, shockproof, freezeproof, 16.1 Mpx CCD"
+msgstr ""
+
+msgid "Digital Camera - Waterproof, shockproof, freezeproof, 16.1 Mpx CCD, 4x zoom (29-108 mm), 2.7\" LCD display, Li-Ion, HD video, SD/SDHC/SDXC, time lapse recording, stabilizer"
+msgstr ""
+
+msgid "Digital Camera CMOS 16 megapixel, 24x zoom, 3.0 \"LCD, Li-Ion, FullHD video, histogram, HDR"
+msgstr ""
+
+msgid "Digital Camera CMOS 16 megapixel, 24x zoom, 3.0 \"LCD, Li-Ion, FullHD video, histogram, HDR, optical stabilizer, SD/SDHC/SDXC, face detection, USB"
+msgstr ""
+
+msgid "Digital Camera CMOS Exmor R1 20.2 megapixel, 3.6x zoom"
+msgstr ""
+
+msgid "Digital Camera CMOS Exmor R1 20.2 megapixel, 3.6x zoom (28-100 mm F1.8), Full HD video (1920 x 1080) 50p, 3 \"LCD, Li-Ion, MS DUO + \\u200b\\u200bSD/SDHC/SDXC, Face Detection, Intelligent stabilizer"
+msgstr ""
+
+msgid "Digital Camera Nikon VH-520 16 megapixel, 24x zoom, 3.0 \"LCD, Li-Ion, FullHD video"
+msgstr ""
+
+msgid "Digital Camera Nikon VH-520 16 megapixel, 24x zoom, 3.0 \"LCD, Li-Ion, FullHD video, histogram, HDR, optical stabilizer, SD/SDHC/SDXC, face detection, USB"
+msgstr ""
+
+msgid "Digital Voice Reco.rder Olympus VN-733PC is profiled primarily intuitive operation and long battery lif."
+msgstr ""
+
+msgid "Digital Voice Reco.rder Olympus VN-733PC is profiled primarily intuitive operation and long battery life . Its user offers 4 gigabytes internal memory and a new slot for microSD cards. O capacity certainly will not be a shortage in power saving mode, LP handle record up to 1600 hours of recording"
+msgstr ""
+
+msgid "Dimensions"
+msgstr ""
+
+msgid "Discover the secret of people with us."
+msgstr ""
+
+msgid "Display"
+msgstr ""
+
+msgid "Display Size"
+msgstr ""
+
+msgid "Display size"
+msgstr ""
+
+msgid "Display type"
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+msgid "Donec at dolor mi. Nullam ornare, massa in cursus imperdiet, felis nisl auctor ante, vel aliquet tortor lacus sit amet ipsum. Proin ultrices euismod elementum. Integer sodales hendrerit tortor, vel semper turpis interdum eu. Phasellus quam tortor, feugiat vel condimentum vel, tristique et ipsum. Duis blandit lectus in odio cursus rutrum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam pulvinar massa at imperdiet venenatis. Maecenas convallis lobortis quam in fringilla. Mauris gravida turpis eget sapien imperdiet pulvinar. Nunc velit urna, fringilla nec est sit amet, accumsan varius nunc. Morbi sed tincidunt diam, sit amet laoreet nisl. Nulla tempus id lectus non lacinia.\\n\\nVestibulum interdum adipiscing iaculis. Nunc posuere pharetra velit. Nunc ac ante non massa scelerisque blandit sit amet vel velit. Integer in massa sed augue pulvinar malesuada. Pellentesque laoreet orci augue, in fermentum nisl feugiat ut. Nunc congue et nisi a interdum. Aenean mauris mi, interdum vel lacus et, placerat gravida augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sagittis ipsum et consequat euismod. Praesent a ipsum dapibus, aliquet justo a, consectetur magna. Phasellus imperdiet tempor laoreet. Sed a accumsan lacus, accumsan faucibus dolor. Praesent euismod justo quis ipsum aliquam suscipit. Sed quis blandit urna."
+msgstr ""
+
+msgid "DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker"
+msgstr ""
+
+msgid "Ear Coupling"
+msgstr ""
+
+msgid "Easy printing, scanning and copying in one device will take much less space and you'll save money than buying individual components."
+msgstr ""
+
+msgid "Easy printing, scanning and copying in one device will take much less space and you'll save money than buying individual components. The printing machine uses an innovative print FINE technology Which guarantee excellent print quality."
+msgstr ""
+
+msgid "Electronics"
+msgstr ""
+
+msgid "Element arrangement"
+msgstr ""
+
+msgid "Energy efficiency class"
+msgstr ""
+
+msgid "Enjoy quick cooking with special cooking HI-LIGHT zones"
+msgstr ""
+
+msgid "Enter"
+msgstr ""
+
+msgid "Ergonomics"
+msgstr ""
+
+msgid "Extension rod plastic TM-4610"
+msgstr ""
+
+msgid "Features of modern and elegantly prepared MFPs with new wireless capabilities. Function automatic two-sided printing"
+msgstr ""
+
+msgid "Filter carbon OPK4290"
+msgstr ""
+
+msgid "Filter input VP-9161 / SF-9162 / SF-8210"
+msgstr ""
+
+msgid "Floor nozzle metal VP-9310"
+msgstr ""
+
+msgid "Floor nozzle metal yellow VP-9141ye"
+msgstr ""
+
+msgid "Fluorescent green laces. Visible at any condition."
+msgstr ""
+
+msgid "Fluorescent laces, green"
+msgstr ""
+
+msgid "Fold-up"
+msgstr ""
+
+msgid "Food"
+msgstr ""
+
+msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
+msgstr ""
+
+msgid "GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design."
+msgstr ""
+
+msgid "GIGABYTE KM7580 CZ"
+msgstr ""
+
+msgid "GPS module"
+msgstr ""
+
+msgid "Gaming mouse"
+msgstr ""
+
+msgid "Garden tools"
+msgstr ""
+
+msgid "Genius NetScroll 310 silver"
+msgstr ""
+
+msgid "Genius SP-U150X black-green"
+msgstr ""
+
+msgid "Genius SlimStar i820"
+msgstr ""
+
+msgid "Genius repro SP-M120 black"
+msgstr ""
+
+msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
+msgstr ""
+
+msgid "HDMI"
+msgstr ""
+
+msgid "HEPA filter CN-9240 (VP-9241)"
+msgstr ""
+
+msgid "HEPA filter SF-9161 / SF-8210"
+msgstr ""
+
+msgid "HEPA filter VP-9241"
+msgstr ""
+
+msgid "HEPA filter VP-9711/12"
+msgstr ""
+
+msgid "HP Deskjet Ink Advantage 1515 (B2L57C)"
+msgstr ""
+
+msgid "HP Deskjet Ink Advantage 1615 (B2L57C)"
+msgstr ""
+
+msgid "HQ speakers from well known brand."
+msgstr ""
+
+msgid "HTC Desire 816 White"
+msgstr ""
+
+msgid "Hand printing adhesive labels Brother especially suitable for easy marking in warehouses, offices and wherever it is required records or quickly usable labels. The printer boasts a very easy to us"
+msgstr ""
+
+msgid "Have you ever experienced an accident and didn't know how to react? Or are you going to? This book is just for you!"
+msgstr ""
+
+msgid "Hewlett-Packard was founded in the difficult times of the Great Depression."
+msgstr ""
+
+msgid "Hewlett-Packard was founded in the difficult times of the Great Depression. The founders were a pair of friends whose name the company still proudly bears."
+msgstr ""
+
+msgid "High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
+msgstr ""
+
+msgid "Home Listening"
+msgstr ""
+
+msgid "Hose VP-9241"
+msgstr ""
+
+msgid "Hose VP-9310"
+msgstr ""
+
+msgid "Hyundai 22HD44D"
+msgstr ""
+
+msgid "In Progress"
+msgstr ""
+
+msgid "In stock"
+msgstr ""
+
+msgid "Information about cookies"
+msgstr ""
+
+msgid "Interface"
+msgstr ""
+
+msgid "Intuitive operation with its easy to handle even a novice in this field. Another big advantage is the use of technology burning \"on the fly\", which is spared not only your time but also the capacity of the disk, because the process does not create any storage (temporary) files on your hard disk."
+msgstr ""
+
+msgid "JURA Impressa J9 TFT Carbon"
+msgstr ""
+
+msgid "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
+msgstr ""
+
+msgid "Knife potato RM-3240/3250"
+msgstr ""
+
+msgid "LCD"
+msgstr ""
+
+msgid "LED"
+msgstr ""
+
+msgid "LG 22MT44D 21,5\""
+msgstr ""
+
+msgid "LG 22MT44D 30\""
+msgstr ""
+
+msgid "LG 22MT44D 51,5\""
+msgstr ""
+
+msgid "LG 22MT44D 60\""
+msgstr ""
+
+msgid "LG 47LA790W (FHD)"
+msgstr ""
+
+msgid "LG 58LA790W (FHD)"
+msgstr ""
+
+msgid "LG E410 Optimus L1 II White"
+msgstr ""
+
+msgid "Localization"
+msgstr ""
+
+msgid "Logitech S120 black"
+msgstr ""
+
+msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue."
+msgstr ""
+
+msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
+msgstr ""
+
+msgid "MIO Cyclo 100, bicycle computer, 1,8\""
+msgstr ""
+
+msgid "Magazine capacity for beans"
+msgstr ""
+
+msgid "Maximum size"
+msgstr ""
+
+msgid "Media type"
+msgstr ""
+
+msgid "Meet the latest generation of LED TVs Philips, which include the thin Smart TV running Android."
+msgstr ""
+
+msgid "Memory card support"
+msgstr ""
+
+msgid "Metal grease filter OPK-4290"
+msgstr ""
+
+msgid "Metal grease filter OPK-5660 / OPK-5760 / OPK-6690"
+msgstr ""
+
+msgid "Metal grease filter OPV-3260"
+msgstr ""
+
+msgid "Microsoft Basic Optical Mouse, black"
+msgstr ""
+
+msgid "Milk reservoir capacity"
+msgstr ""
+
+msgid "Million-euro toilet paper"
+msgstr ""
+
+msgid "Mini CD-R 8 cm"
+msgstr ""
+
+msgid "Mobile Phones"
+msgstr ""
+
+msgid "Mobile phone - Apple A7 with 64-bit architecture, 4\" Retina Touch display 1136x640, 32GB internal memory, WiFi 802.11a/b/g/n, Bluetooth 4.0, 8 Mpx camera with LED flash, GPS, Fingerprint sensor, iOS 7"
+msgstr ""
+
+msgid "Mobile phone 4.5 \"800x480, processor, Quad-Core 1.2GHz, RAM 768 megabytes internal memory of 4GB"
+msgstr ""
+
+msgid "Mobile phone 4.5 \"800x480, processor, Quad-Core 1.2GHz, RAM 768 megabytes internal memory of 4GB, microSD up to 64GB, 5 megapixel camera, GPS, WiFi, Bluetooth 4.0, NFC, 3G, microUSB, Li-Ion 2000 mAh, Android 4.4"
+msgstr ""
+
+msgid "Mobile phone 4.6 \"1280x720, Qualcomm MSM8960Pro 1.7 GHz"
+msgstr ""
+
+msgid "Mobile phone 4.6 \"1280x720, Qualcomm MSM8960Pro 1.7 GHz, 1GB RAM, 8GB 8MPx camera, GPS, WiFi, Bluetooth, FM, micro USB, Android 4.1"
+msgstr ""
+
+msgid "Mobile phone 4.7\" 720x1280, procesor 1,5GHz, internal memory 16GB, camera 8mpx, GPS, WiFi, Bluetooth, 3G, FM, microSD, micro USB, Android 4.0"
+msgstr ""
+
+msgid "Modern stereo speakers in a stylish black design, with an output of 2.3 W, suitable only for desktops and laptops, but also for CD or MP3 players."
+msgstr ""
+
+msgid "Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla."
+msgstr ""
+
+msgid "Mouse game, 8200dpi laser sensor, 7 programmable buttons + 2D wheel 12000fps, 1ms response, EasyShift, USB, LED backlight, Turbo Core V2, Black"
+msgstr ""
+
+msgid "Multimedia"
+msgstr ""
+
+msgid "NFC"
+msgstr ""
+
+msgid "NS-9020 Limpio/Clipper/Nino replacement paper bags for VP902/3/9010"
+msgstr ""
+
+msgid "NS-9030 Clipper replacement paper bags for VP-903/913"
+msgstr ""
+
+msgid "NS-9040 Jumbo replacement paper bags for VP-9040"
+msgstr ""
+
+msgid "NS-9310 Infant replacement bags of paper for the VP-9310"
+msgstr ""
+
+msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
+msgstr ""
+
+msgid "New [adjective]"
+msgstr "New"
+
+msgid "New [noun]"
+msgstr "New"
+
+msgid "New driving rules and tips just for you!"
+msgstr ""
+
+msgid "News"
+msgstr ""
+
+msgid "Nikon COS 700D"
+msgstr ""
+
+msgid "Nikon DMC FT5EP"
+msgstr ""
+
+msgid "Nikon EOS 700D + EF-S 18-55 mm + 75-300 mm DC III DC III Quality digital camera with CMOS sensor with a resolution of 18 megapixels, which is to take the top photo in a professional style. Innovative DIGIC 5 image processing delivers powerful in any situation. A high sensitivity range up to ISO 12800 lets you capture great images even in dim light, even without a flash. Automatic smart scene mode analyzes the scene and automatically selects the best settings for the camera. View images, focus, or even pictures can be taken using a 3 \"touch screen TFT Clear View II with a whopping resolution of 1.04 million pixels and a vari-angle. With this camera out of you in a moment become a professional cameraman. It makes it possible to shoot stunning movies in Full HD 1080p. Hybrid AF technology enables continuous focus during movie shooting and using the built-in microphone ozvučíme your images are high quality stereo sound. Autofocus system comprising nine cross-type AF points to capture fast-moving objects without any blurring. Thanks to continuous shooting at up to 5 frames per second, you'll never miss a crucial moment for getting the best picture possible.The HDR Backlight Control mode, the camera takes three different exposures and combines them into one, in order to preserve details in shadows and areas with high brightness. In Night Scene mode, the camera takes the hand of multiple images at high shutter speeds and combining them together and thus prevents blurring. Captured images and videos simply adding it to an SD Memory Card, SDHC and SDXC, thanks to the integrated connector is miniHDMI you can conveniently viewed on your LCD or plasma TV. The camera can buy a wide range of lenses, flashes and accessories that are compatible with the EOS system."
+msgstr ""
+
+msgid "Nikon ND-22L"
+msgstr ""
+
+msgid "Nikon TS-800"
+msgstr ""
+
+msgid "Nikon VH-520"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Nozzle with brush VP-4290"
+msgstr ""
+
+msgid "Number of buttons"
+msgstr ""
+
+msgid "Number of colors"
+msgstr ""
+
+msgid "Number of processor cores"
+msgstr ""
+
+msgid "OKI MC861cdxm"
+msgstr ""
+
+msgid "OKI MC861cdxn+ (01318206)"
+msgstr ""
+
+msgid "OLYMPUS ME-34 Compact directional microphone suitable for recording lectures"
+msgstr ""
+
+msgid "OLYMPUS VH-520"
+msgstr ""
+
+msgid "OLYMPUS VH-620"
+msgstr ""
+
+msgid "OPK44xx carbon filter / OPK-5690 / OPK5790 / OPO55xx"
+msgstr ""
+
+msgid "OPK5660 carbon filter / OPK5760 / OPK6690"
+msgstr ""
+
+msgid "OPP-1060 Hood sub-mounting 60 cm"
+msgstr ""
+
+msgid "OPP-2060 Hood sub-mounting 60 cm"
+msgstr ""
+
+msgid "OPV-3260 Built-in retractable hood is 60 cm"
+msgstr ""
+
+msgid "On request"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Optical"
+msgstr ""
+
+msgid "Orava LT-823 C82B"
+msgstr ""
+
+msgid "Orava LT-823 C82C"
+msgstr ""
+
+msgid "Order status has changed"
+msgstr ""
+
+msgid "Ordinary customer"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
+msgstr ""
+
+msgid "Out of stock"
+msgstr ""
+
+msgid "Overall performance"
+msgstr ""
+
+msgid "PANASONIC DMC FT5EP"
+msgstr ""
+
+msgid "POS cookbook_steam oven GB"
+msgstr ""
+
+msgid "PPL"
+msgstr ""
+
+msgid "PRIMECOOLER PC-AD2 3D glasses"
+msgstr ""
+
+msgid "Pages count"
+msgstr ""
+
+msgid "Parallel port"
+msgstr ""
+
+msgid "Partner"
+msgstr ""
+
+msgid "Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>"
+msgstr ""
+
+msgid "Personal Computers & accessories"
+msgstr ""
+
+msgid "Personal collection"
+msgstr ""
+
+msgid "Personal information export - {domain}"
+msgstr ""
+
+msgid "Personal information overview - {domain}"
+msgstr ""
+
+msgid "Philips 32PFL4308"
+msgstr ""
+
+msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles."
+msgstr ""
+
+msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles. Incredible design, giant 5,5palcový display with HD resolution, two front stereo speakers, customized channels with real-time information and a quad-core processor - all combine to form one of the best smartphones in the world."
+msgstr ""
+
+msgid "Pot holder, black"
+msgstr ""
+
+msgid "Power supply"
+msgstr ""
+
+msgid "Powerful color inkjet printer A4 size, quality photo printing"
+msgstr ""
+
+msgid "Powerful color inkjet printer A4 size, quality photo printing, high resolution up to 9600 x 2400dpi, the rate of up to 15 st. / Min in monochrome and up to 10 st. / Min in color, duplex printing, tray for up to 125 sheets, USB 2.0, WiFi 802.11b / g / n, possibility of printing discs. Canon PIXMA iP7250 is a compact portable printer for home or office thous. This is a quality color inkjet printer up to A4 with gentle tiskem.Má stylish and compact design with a hinged upper portion serving as a feeder print media. It is intended primarily for use as a small family or a printer portable printer - especially for printing photographs. It allows users to print documents and fotografií.Je equipped with precision 1 picolitre FINE for printing with tiny particles. It allows you to achieve resolutions up to 9600 x 2400dpi. The printer has five individual ink tanks with the ChromaLife100 + .Tiskárna can print borderless photos. Maximum print speed is 15 pages per minute in black and white or 10 in color. E.g. print borderless 10 x 15 cm photo takes about 21 seconds. The printer also offers direct disc printing and automatic two-sided tisk.Připojení to the computer is done via the USB 2.0 port or through a wireless interface, WiFi 802.11b / g / n. The printer has the dimensions 451 x 368 x 128 mm and weighs 6.6 kg. The included software for easy photo printing My Image Garden."
+msgstr ""
+
+msgid "Powerful color inkjet printer A4 size, quality photo printing, high resolution up to 9600 x 2400dpi, the rate of up to 15 st. / Min in monochrome and up to 10 st. / Min in color, duplex printing, tray for up to 125 sheets, USB 2.0, WiFi 802.11b / g / n, possibility of printing discs. Canon PIXMA iP7250 is a compact portable printer for home or office thous. This is a quality color inkjet printer up to A4 with gentle tiskem.Má stylish and compact design with a hinged upper portion serving as a feeder print media. It is intended primarily for use as a small family or a printer portable printer - especially for printing photographs. It allows users to print documents and fotografií.Je equipped with precision 1 picolitre FINE for printing with tiny particles. It allows you to achieve resolutions up to 9600 x 2400dpi. The printer has five individual ink tanks with the ChromaLife100 +. Printer can print borderless photos. Maximum print speed is 15 pages per minute in black and white or 10 in color. E.g. print borderless 10 x 15 cm photo takes about 21 seconds. The printer also offers direct disc printing and automatic two-sided tisk.Připojení to the computer is done via the USB 2.0 port or through a wireless interface, WiFi 802.11b / g / n. The printer has the dimensions 451 x 368 x 128 mm and weighs 6.6 kg. The included software for easy photo printing My Image Garden."
+msgstr ""
+
+msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers."
+msgstr ""
+
+msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers.Using an optical sensor with high sensitivity is move the cursor on the screen fast and smooth.Benefits are also programmable buttons to help with easy access to the programs and documents you use most often.The computer mouse simply connect using a cable with a USB connector and the support Plug and Play, no need to install drivers and you can immediately get to work."
+msgstr ""
+
+msgid "PremiumCord micro USB, A-B, 1m"
+msgstr ""
+
+msgid "Preparing"
+msgstr ""
+
+msgid "Pressure"
+msgstr ""
+
+msgid "Prime flour 1 kg"
+msgstr ""
+
+msgid "Prime flour for creating your own cake. Now with special discount."
+msgstr ""
+
+msgid "Print resolution"
+msgstr ""
+
+msgid "Print technology"
+msgstr ""
+
+msgid "Printers"
+msgstr ""
+
+msgid "Privacy policy"
+msgstr ""
+
+msgid "Processor frequency"
+msgstr ""
+
+msgid "Quality digital camera with CMOS sensor with a resolution of 18 megapixels"
+msgstr ""
+
+msgid "Quality set keyboard and optical mouse from Gigabyte. Both components are color-matched to the sleek glossy black color."
+msgstr ""
+
+msgid "Quick, cheap and reliable!"
+msgstr ""
+
+msgid "RAM"
+msgstr ""
+
+msgid "ROCCAT Kone Pure Optical Gaming Mouse"
+msgstr ""
+
+msgid "Recording on"
+msgstr ""
+
+msgid "Red and green paper glasses for watching"
+msgstr ""
+
+msgid "Reducing the diameter of 35 mm to 32 mm"
+msgstr ""
+
+msgid "Reduction Avg. OPK OPO 150/120 mm"
+msgstr ""
+
+msgid "Reflective tape for safe movement on the road"
+msgstr ""
+
+msgid "Registration completed"
+msgstr ""
+
+msgid "Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc"
+msgstr ""
+
+msgid "Reset password request"
+msgstr ""
+
+msgid "Resolution"
+msgstr ""
+
+msgid "Resolution of rear camera"
+msgstr ""
+
+msgid "Right-handed"
+msgstr ""
+
+msgid "SDV 3360-built ceramic plate 60 cm"
+msgstr ""
+
+msgid "SDV 3460-built ceramic plate 60 cm"
+msgstr ""
+
+msgid "SLR"
+msgstr ""
+
+msgid "SMS-9170 SMS IQ SPACE spare bags"
+msgstr ""
+
+msgid "SONY DSCRX100"
+msgstr ""
+
+msgid "SONY Xperia SP C5303"
+msgstr ""
+
+msgid "Samsung Galaxy Core 2 (SM-G355) - black"
+msgstr ""
+
+msgid "Samsung Galaxy Core Plus (SM-G350) - white"
+msgstr ""
+
+msgid "Samsung T27D590EW"
+msgstr ""
+
+msgid "Samsung T27D590EX"
+msgstr ""
+
+msgid "Samsung T27D590EY"
+msgstr ""
+
+msgid "Samsung T27D590EZ"
+msgstr ""
+
+msgid "Samsung UE75HU7500 (UHD)"
+msgstr ""
+
+msgid "Screen size"
+msgstr ""
+
+msgid "Sencor SDB 4002M4"
+msgstr ""
+
+msgid "Sennheiser HD 700"
+msgstr ""
+
+msgid "Sensitivity (ISO)"
+msgstr ""
+
+msgid "Shopping guide"
+msgstr ""
+
+msgid "Shopsys Framework - Title page"
+msgstr ""
+
+msgid "Shopsys Framework - the best solution for your eshop."
+msgstr ""
+
+msgid "Side mount plates - few ETV-2860"
+msgstr ""
+
+msgid "Simple Genius Mouse NetScroll 310 offers the most widely used functional elements of a basic ergonomics. It has an optical sensor with a resolution of 800 DPI, which can handle work on a large number of standard surfaces."
+msgstr ""
+
+msgid "Simple Genius Mouse NetScroll 310 offers the most widely used functional elements of a basic ergonomics. It has an optical sensor with a resolution of 800 DPI, which can handle work on a large number of standard surfaces. There are two classic buttons and the third with the paging function wheel. Genius NetScroll 310 is equipped with modern USB interface and finds use in conserving ambidextrous or in an office environment. <br><strong> Specifications: </strong><br><strong> Supported OS: </strong><br> Microsoft Windows 7, Vista, XP, 2003, 2000, 98SE <br> Mac OS 8.6 or later"
+msgstr ""
+
+msgid "Sleek and compact stereo speakers in combination of black and metallic surface."
+msgstr ""
+
+msgid "Slicer Pizza ETV-2860"
+msgstr ""
+
+msgid "Slovakia"
+msgstr ""
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
+msgstr ""
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32. Packaging: 5 pieces of bags + input and output filter."
+msgstr ""
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT INFANT VP 9310th Package: 5 pieces of bags + 2."
+msgstr ""
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Jumbo VP 9"
+msgstr ""
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Jumbo VP 9,041th Package: 5 pieces of bags + input and output filter."
+msgstr ""
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Limpio VP 9020/21"
+msgstr ""
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Limpio VP 9020/21, Clipper VP and VP 913_ 903_, Nino VP 9010 Packaging: 5 pieces of bags + input and output filter."
+msgstr ""
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Prominent VP 9711/12/13"
+msgstr ""
+
+msgid "Spare paper bags for vacuum cleaners CONCEPT Prominent VP 9711/12/13. Packaging: 5 pieces of bags + input and output filter."
+msgstr ""
+
+msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB"
+msgstr ""
+
+msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB, 4Ohm impedance, power supply via USB, 3.5 mm audio jack, dimensions 85x85x107mm, weight 550 g"
+msgstr ""
+
+msgid "Super LCD"
+msgstr ""
+
+msgid "Supported OS"
+msgstr ""
+
+msgid "System type"
+msgstr ""
+
+msgid "TFT"
+msgstr ""
+
+msgid "TK-9710 Turbo brush Prominent VP 971"
+msgstr ""
+
+msgid "TOP"
+msgstr ""
+
+msgid "TS-9080 replacement bag for textile VP-9080"
+msgstr ""
+
+msgid "TS-9170 replacement bag for textile VP-9171"
+msgstr ""
+
+msgid "TV Cinema 3D LED SMART diagonal 119 cm, 700 MCI, 1920x1080 Full HD"
+msgstr ""
+
+msgid "TV Cinema 3D LED SMART diagonal 119 cm, 700 MCI, 1920x1080 Full HD, DVB-S / S2 / T / T2 / C, 3x HDMI, 3x USB, CI, SCART, MHL, LAN, HbbTV, WiFi, Miracast / WiDi, WebOS, Web browser, Dual Core, 2 pieces 3D glasses AG-F310, magical driver energ. Class A +"
+msgstr ""
+
+msgid "TV LED, 100Hz, diagonal 32 inches 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr ""
+
+msgid "TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr ""
+
+msgid "TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler"
+msgstr ""
+
+msgid "TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler, DVB-S2 / T2 / C, H.265, 3x HDMI, 3x USB, Scart, CI +, LAN, WiFi, Miracast, DLNA, MHL, HbbTV, Web browser, webOS 2.0, 2x10W speakers, magical MR15 driver, energ. Class A +"
+msgstr ""
+
+msgid "TV, audio"
+msgstr ""
+
+msgid "Technology"
+msgstr ""
+
+msgid "Telescopic metal pipes VP-9161"
+msgstr ""
+
+msgid "Telescopic pipe VP918x VP802x"
+msgstr ""
+
+msgid "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback"
+msgstr ""
+
+msgid "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B"
+msgstr ""
+
+msgid "Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner"
+msgstr ""
+
+msgid "Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner, 2x HDMI"
+msgstr ""
+
+msgid "Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner, 2x HDMI, USB, SCART, VGA, headphone jack, USB/HDD recording, hotel mode, Energ. Class A"
+msgstr ""
+
+msgid "Television SMART 3D LED, 189 cm diagonal, CMR 1000 4K Ultra HD 3840x2160, DVB-S2 / T2 / C, 4x HDMI, 3x USB, CI +, LAN, WiFi, DLNA, MHL, HbbTV, Tizen OS, energ. Class A"
+msgstr ""
+
+msgid "Television SMART 3D LED, 189 cm diagonal."
+msgstr ""
+
+msgid "Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080"
+msgstr ""
+
+msgid "Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A"
+msgstr ""
+
+msgid "Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms"
+msgstr ""
+
+msgid "Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768"
+msgstr ""
+
+msgid "Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A"
+msgstr ""
+
+msgid "Television or TV is a telecommunication medium used for transmitting sound with moving images in monochrome (black-and-white), or in color, and in two or three dimensions"
+msgstr ""
+
+msgid "Terms and conditions"
+msgstr ""
+
+msgid "Thank you for your order no. {number} placed at {date}"
+msgstr ""
+
+msgid "The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control"
+msgstr ""
+
+msgid "The filter carbon OPK-4360/4390"
+msgstr ""
+
+msgid "The filter carbon OPK-7790"
+msgstr ""
+
+msgid "The filter carbon OPP-1060"
+msgstr ""
+
+msgid "The filter carbon OPP-2060"
+msgstr ""
+
+msgid "The minimum space requirements excels sub-mounting range hood OPP-2060th"
+msgstr ""
+
+msgid "The printer uses ChromaLife100 ink system with four colors of ink hidden two print cartridges"
+msgstr ""
+
+msgid "The switch provides a cost-effective way to create a small network or extend existing ones. Connect not only computers, but also a number of network devices such as IP cameras, network printers and more."
+msgstr ""
+
+msgid "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements"
+msgstr ""
+
+msgid "The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements, making it suitable for small kitchens. Stainless steel front bar with rocker switch for easy operation. <h2> Reasons to opt just for telescopic cooker hood Concept OPV-3260: </h2> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. Telescopic cooker hood Brand Concept OPV-3260 will surprise you <strong> output of 198 m3 per hour </strong>. </li> <li> Model AL-3260 is equipped with two mA practical metal grease filters, whose maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using two carbon filters, which can be bought (kat.číslo: 61990005). </li> </ol> <h2> Specifications: </h2> <ul> <li> Height: 175 mm </li> <li> Width: 600 mm </li> <li> Depth: 310-470 mm </li> <li> Accessories: backflow preventer </li> <li> Stainless steel front bar </li> <li> Ability to upper exhaust or recirculation </li> <li> Rocker Switch </li> <li> 2 power levels </li> <li> Max. Performance 198 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> 2x the grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 2x carbon filter 61990005 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Dimensions for installation (HxWxD): 133 x 560 x 272 mm </li> <li> Net weight: 5.9 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 2.2 m </li> </ul>"
+msgstr ""
+
+msgid "This is description of brand %brandName%."
+msgstr ""
+
+msgid "This luminiscent tape might prevent you from dying."
+msgstr ""
+
+msgid "This pot holder is used to hold pots. No more burnt kitchen tables!"
+msgstr ""
+
+msgid "This product is not an independently functional unit and may require professional installation."
+msgstr ""
+
+msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
+msgstr ""
+
+msgid "Toner for MC861/ 851, 7000 pages"
+msgstr ""
+
+msgid "Toys"
+msgstr ""
+
+msgid "Tube type: Universal. Diameter: 32mm."
+msgstr ""
+
+msgid "Tuner"
+msgstr ""
+
+msgid "Type nozzles: Universal. Diameter: 32 mm. Turbobrush: Big."
+msgstr ""
+
+msgid "USB"
+msgstr ""
+
+msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
+msgstr ""
+
+msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
+msgstr ""
+
+msgid "VIP customer"
+msgstr ""
+
+msgid "Video"
+msgstr ""
+
+msgid "Viewfinder type"
+msgstr ""
+
+msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work."
+msgstr ""
+
+msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work. TD590 Monitor allows you to quickly and easily switch between TV and computer monitor or test your multitasking skills and watch TV while working on a split screen. In addition, it offers flexible connectivity options to your entertainment and multimedia can be enjoyed to the fullest. This monitor is perfect for studio flats, rooms in dormitories and small living rooms. Why should you buy two devices when one can do it more?"
+msgstr ""
+
+msgid "Water reservoir capacity"
+msgstr ""
+
+msgid "We are looking forward to your visit."
+msgstr ""
+
+msgid "Weight"
+msgstr ""
+
+msgid "Well known USB cable with A and micro B connectors."
+msgstr ""
+
+msgid "WiFi"
+msgstr ""
+
+msgid "Winch throttle silver VP-9711/12"
+msgstr ""
+
+msgid "Windows 2000/XP/Vista/7"
+msgstr ""
+
+msgid "Wired"
+msgstr ""
+
+msgid "Xtreamer SW4"
+msgstr ""
+
+msgid "Xtreamer SW4 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions"
+msgstr ""
+
+msgid "Xtreamer SW4 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions in HD quality"
+msgstr ""
+
+msgid "Xtreamer SW5"
+msgstr ""
+
+msgid "Xtreamer SW5 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions"
+msgstr ""
+
+msgid "Xtreamer SW5 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions in HD quality"
+msgstr ""
+
+msgid "YENKEE YSP 1005WH white"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "You will be welcomed by friendly staff!"
+msgstr ""
+
+msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
+msgstr ""
+
+msgid "battery"
+msgstr ""
+
+msgid "black"
+msgstr ""
+
+msgid "classic"
+msgstr ""
+
+msgid "fits into VP812x VP9520"
+msgstr ""
+
+msgid "flash disk"
+msgstr ""
+
+msgid "hardcover"
+msgstr ""
+
+msgid "inkjet"
+msgstr ""
+
+msgid "media 210MB, 24min., writing speed 24x, slim box"
+msgstr ""
+
+msgid "m³"
+msgstr ""
+
+msgid "no-reply@shopsys.com"
+msgstr ""
+
+msgid "one-slotted"
+msgstr ""
+
+msgid "optical"
+msgstr ""
+
+msgid "paper"
+msgstr ""
+
+msgid "pcs"
+msgstr ""
+
+msgid "white"
+msgstr ""
+
+msgid "| Demo eshop"
+msgstr ""
+

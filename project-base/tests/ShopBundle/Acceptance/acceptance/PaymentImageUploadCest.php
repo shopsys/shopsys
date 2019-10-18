@@ -13,8 +13,6 @@ class PaymentImageUploadCest
     protected const IMAGE_UPLOAD_FIELD_ID = 'payment_form_image_image_file';
     protected const SAVE_BUTTON_NAME = 'payment_form[save]';
 
-    protected const EXPECTED_SUCCESS_MESSAGE = 'Payment Credit card modified';
-
     protected const TEST_IMAGE_NAME = 'paymentTestImage.png';
 
     /**
@@ -29,6 +27,9 @@ class PaymentImageUploadCest
         $me->amOnPage('/admin/payment/edit/1');
         $entityEditPage->uploadTestImage(self::IMAGE_UPLOAD_FIELD_ID, self::TEST_IMAGE_NAME);
         $me->clickByName(self::SAVE_BUTTON_NAME);
-        $me->see(self::EXPECTED_SUCCESS_MESSAGE);
+        $me->seeTranslationAdmin('Payment <strong><a href="{{ url }}">%name%</a></strong> modified', 'messages', [
+            '{{ url }}' => '',
+            '%name%' => t('Credit card', [], 'dataFixtures', $me->getAdminLocale()),
+        ]);
     }
 }

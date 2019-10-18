@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class Domain implements DomainIdsProviderInterface
 {
     public const FIRST_DOMAIN_ID = 1;
+    public const SECOND_DOMAIN_ID = 2;
     public const MAIN_ADMIN_DOMAIN_ID = 1;
 
     /**
@@ -130,10 +131,12 @@ class Domain implements DomainIdsProviderInterface
     }
 
     /**
+     * @deprecated - will be removed in 9.0 release
      * @return int[]
      */
     public function getAllIdsExcludingFirstDomain(): array
     {
+        @trigger_error(sprintf('The method %s::getAllIdsExcludingFirstDomain is deprecated and will be removed in 9.0', __CLASS__), E_USER_DEPRECATED);
         $ids = [];
         foreach ($this->getAll() as $domainConfig) {
             $id = $domainConfig->getId();

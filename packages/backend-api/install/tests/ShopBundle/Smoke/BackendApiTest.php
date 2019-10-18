@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Smoke;
 
 use DateTime;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
 use Tests\ShopBundle\Test\OauthTestCase;
 use Webmozart\Assert\Assert;
@@ -61,9 +62,12 @@ class BackendApiTest extends OauthTestCase
      */
     private function assertProductJsonStructure(array $product): void
     {
+        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
+        $domain = $this->getContainer()->get(Domain::class);
+        $firstDomainConfigLocale = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         Assert::uuid($product['uuid']);
         $this->assertIsArray($product['name']);
-        $this->assertIsString($product['name']['en']);
+        $this->assertIsString($product['name'][$firstDomainConfigLocale]);
         $this->assertIsBool($product['hidden']);
         $this->assertIsBool($product['sellingDenied']);
         $this->nullOrStringDatetimeInAtomFormat($product['sellingFrom']);
