@@ -206,7 +206,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 
 ### Problem 3
 There is one kind of problem that is not fixed automatically and needs to be addressed manually.
-Shopsys Framework uses a kind of magic for working with extended entities (see [`EntityNameResolver` class](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/EntityExtension/EntityNameResolver.php)),
+Shopsys Framework uses a kind of magic for working with extended entities (see [`EntityNameResolver` class](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Component/EntityExtension/EntityNameResolver.php)),
 and static analysis tools are not aware of that fact.
 Imagine the following situation:
 - You have extended `Product` entity in your project

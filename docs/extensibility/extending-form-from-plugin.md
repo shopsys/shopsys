@@ -2,7 +2,7 @@
 Sometimes your plugin needs some extra information to be included in an entity, for example, you need to track the weight of products.
 This can be solved by extending the entity CRUD model with your custom sub-form.
 
-To do so you should implement [`PluginCrudExtensionInterface`](https://github.com/shopsys/shopsys/blob/master/packages/plugin-interface/src/PluginCrudExtensionInterface.php) and [tag the service in a DI container](http://symfony.com/doc/current/service_container/tags.html) with `shopsys.crud_extension` tag.
+To do so you should implement [`PluginCrudExtensionInterface`](https://github.com/shopsys/shopsys/blob/9.0/packages/plugin-interface/src/PluginCrudExtensionInterface.php) and [tag the service in a DI container](http://symfony.com/doc/current/service_container/tags.html) with `shopsys.crud_extension` tag.
 The tag should have a `type` attribute defining which CRUD model should be extended (eg. `"product"`).
 
 Each form extension has its label, form type and methods for managing the form data.

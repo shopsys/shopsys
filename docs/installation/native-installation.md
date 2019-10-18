@@ -53,7 +53,7 @@ php bin/console server:run
     you will be prompted for starting one of the 2 localised domains
 
 !!! tip
-    you can use Nginx service instead of integrated server, in that case let be inspired by [nginx configuration](https://github.com/shopsys/shopsys/blob/master/project-base/docker/nginx/nginx.conf)
+    you can use Nginx service instead of integrated server, in that case let be inspired by [nginx configuration](https://github.com/shopsys/shopsys/blob/9.0/project-base/docker/nginx/nginx.conf)
 
 ## See it in your browser!
 

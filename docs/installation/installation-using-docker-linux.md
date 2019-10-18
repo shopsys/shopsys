@@ -40,7 +40,7 @@ After the script is finished with installing the application, you can skip all t
 If you want to know more about what is happening during installation, continue with the steps [#2.1 - #2.4](#21-create-docker-composeyml-file).
 
 #### 2.1 Create docker-compose.yml file
-Create `docker-compose.yml` from template [`docker-compose.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose.yml.dist).
+Create `docker-compose.yml` from template [`docker-compose.yml.dist`](https://github.com/shopsys/shopsys/blob/9.0/project-base/docker/conf/docker-compose.yml.dist).
 ```sh
 cp docker/conf/docker-compose.yml.dist docker-compose.yml
 ```
