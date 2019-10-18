@@ -12,20 +12,9 @@
     <script src="styleguide/assets/js/jquery-3.4.1.min.js"></script>
 
     <!-- codemirror -->
-    <link href="styleguide/libs/codemirror/lib/codemirror.css" rel="stylesheet">
-    <link href="styleguide/libs/codemirror/addon/scroll/simplescrollbars.css" rel="stylesheet">
+    <script src="styleguide/libs/codemirror/codemirror.minified.js"></script>
+    <link href="styleguide/libs/codemirror/codemirror.minified.css" rel="stylesheet">
     <link href="styleguide/libs/codemirror/theme/hopscotch.css" rel="stylesheet">
-    <script src="styleguide/libs/codemirror/lib/codemirror.js"></script>
-    <script src="styleguide/libs/codemirror/mode/css/css.js"></script>
-    <script src="styleguide/libs/codemirror/mode/javascript/javascript.js"></script>
-    <script src="styleguide/libs/codemirror/mode/xml/xml.js"></script>
-    <script src="styleguide/libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-    <script src="styleguide/libs/codemirror/addon/scroll/simplescrollbars.js"></script>
-    <link rel="stylesheet" href="styleguide/libs/codemirror/addon/hint/show-hint.css">
-    <script src="styleguide/libs/codemirror/addon/hint/show-hint.js"></script>
-    <script src="styleguide/libs/codemirror/addon/hint/css-hint.js"></script>
-    <script src="styleguide/libs/codemirror/addon/hint/html-hint.js"></script>
-    <script src="styleguide/libs/codemirror/addon/hint/javascript-hint.js"></script>
 
     <!-- stylguide functions -->
     <script src="styleguide/assets/js/styleguide.js"></script>
@@ -238,17 +227,17 @@
                     </div>
                     <div class="styleguide-module__editor">
 <textarea class="codemirror-html" id="html-flags">
-    <div class="in-flag">
-        <span class="in-flag__item">
-            TOP
-        </span>
-        <span class="in-flag__item in-flag__item--sales">
-            Action
-        </span>
-        <span class="in-flag__item in-flag__item--news">
-            New
-        </span>
-    </div>
+<div class="in-flag">
+    <span class="in-flag__item">
+        TOP
+    </span>
+    <span class="in-flag__item in-flag__item--sales">
+        Action
+    </span>
+    <span class="in-flag__item in-flag__item--news">
+        New
+    </span>
+</div>
 </textarea>
                     </div>
                 </section>
@@ -494,8 +483,8 @@
                     <div class="styleguide-module__editor">
 <textarea class="codemirror-html" id="html-radiobuttons">
 <select id="select_1" name="select_1" class="input">
-<option value="1">Slovenská republika</option>
-<option value="2">Czech republic</option>
+    <option value="1">Slovenská republika</option>
+    <option value="2">Czech republic</option>
 </select>
 </textarea>
                     </div>
@@ -553,12 +542,12 @@
                     <div class="styleguide-module__editor">
 <textarea class="codemirror-html" id="html-radiobuttons">
 <div class="form-choice">
-<div class="form-choice__input">
-    <input type="radio" id="radio_1" name="radio2" class="css-radio" />
-</div>
-<div class="form-choice__label">
-    <label for="radio_1">Radio text label</label>
-</div>
+    <div class="form-choice__input">
+        <input type="radio" id="radio_1" name="radio2" class="css-radio" />
+    </div>
+    <div class="form-choice__label">
+        <label for="radio_1">Radio text label</label>
+    </div>
 </div>
 </textarea>
                     </div>
@@ -618,12 +607,12 @@
                     <div class="styleguide-module__editor">
 <textarea class="codemirror-html" id="html-checkboxes">
 <div class="form-choice">
-<div class="form-choice__input">
-    <input type="checkbox" id="checkbox_1" name="checkbox" class="css-checkbox" />
-</div>
-<div class="form-choice__label">
-    <label for="checkbox_1">Checkbox with text</label>
-</div>
+    <div class="form-choice__input">
+        <input type="checkbox" id="checkbox_1" name="checkbox" class="css-checkbox" />
+    </div>
+    <div class="form-choice__label">
+        <label for="checkbox_1">Checkbox with text</label>
+    </div>
 </div>
 </textarea>
                     </div>
@@ -980,11 +969,6 @@
                     </div>
                     <div class="icons" id="icons" style="width: 100%;">
                         <iframe src="docs/generated/svg.html" width="100%" height="500"></iframe>
-                    </div>
-                    <div class="styleguide-module__editor">
-<textarea class="codemirror-html" id="html-svg">
-<i class="svg svg-home"></i>
-</textarea>
                     </div>
                     <div class="styleguide__info">
                         If you can´t see svg icon - just try to open this html file in Chrome.
