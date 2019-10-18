@@ -103,7 +103,7 @@ class FeedController extends AdminBaseController
         $grid->addColumn('created', 'created', t('Generated'));
         $grid->addColumn('url', 'url', t('Url address'));
         if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {
-            $grid->addColumn('actions', 'actions', t('Action'))->setClassAttribute('column--superadmin');
+            $grid->addColumn('actions', 'actions', t('Action'));
         }
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Feed/listGrid.html.twig');
