@@ -47,11 +47,13 @@ class VatInlineEditCest
         $newRowId = $inlineEditPage->getHighestRowId();
 
         $inlineEditPage->assertSeeInColumn($newRowId, 'name', 'test created');
-        $inlineEditPage->assertSeeInColumn($newRowId, 'percent', '5%');
+        $inlineEditPage->assertSeeInColumnPercent($newRowId, '5');
 
         $inlineEditPage->delete($newRowId);
 
         $inlineEditPage->assertDontSeeRow($newRowId);
-        $me->see('VAT test created deleted');
+        $me->seeTranslationAdmin('VAT <strong>%name%</strong> deleted', 'messages', [
+            '%name%' => 'test created',
+        ]);
     }
 }

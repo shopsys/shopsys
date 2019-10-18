@@ -180,8 +180,10 @@ class PaymentFacade
     protected function updatePaymentPrices(Payment $payment, $pricesByCurrencyId)
     {
         foreach ($this->currencyFacade->getAll() as $currency) {
-            $price = $pricesByCurrencyId[$currency->getId()];
-            $payment->setPrice($this->paymentPriceFactory, $currency, $price);
+            if (isset($pricesByCurrencyId[$currency->getId()])) {
+                $price = $pricesByCurrencyId[$currency->getId()];
+                $payment->setPrice($this->paymentPriceFactory, $currency, $price);
+            }
         }
     }
 

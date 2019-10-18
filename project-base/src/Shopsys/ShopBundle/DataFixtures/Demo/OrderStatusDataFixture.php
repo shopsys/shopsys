@@ -6,6 +6,8 @@ namespace Shopsys\ShopBundle\DataFixtures\Demo;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 
 class OrderStatusDataFixture extends AbstractReferenceFixture
@@ -21,11 +23,28 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     protected $orderStatusFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    public function __construct(OrderStatusFacade $orderStatusFacade)
-    {
+    protected $domain;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface
+     */
+    protected $orderStatusDataFactory;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface $orderStatusDataFactory
+     */
+    public function __construct(
+        OrderStatusFacade $orderStatusFacade,
+        Domain $domain,
+        OrderStatusDataFactoryInterface $orderStatusDataFactory
+    ) {
         $this->orderStatusFacade = $orderStatusFacade;
+        $this->domain = $domain;
+        $this->orderStatusDataFactory = $orderStatusDataFactory;
     }
 
     /**
@@ -51,6 +70,26 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
         $referenceName
     ) {
         $orderStatus = $this->orderStatusFacade->getById($orderStatusId);
+        $orderStatusData = $this->orderStatusDataFactory->createFromOrderStatus($orderStatus);
+        foreach ($this->domain->getAllLocales() as $locale) {
+            switch ($referenceName) {
+                case self::ORDER_STATUS_NEW:
+                    $orderStatusData->name[$locale] = t('New [adjective]', [], 'dataFixtures', $locale);
+                    break;
+                case self::ORDER_STATUS_IN_PROGRESS:
+                    $orderStatusData->name[$locale] = t('In Progress', [], 'dataFixtures', $locale);
+                    break;
+                case self::ORDER_STATUS_DONE:
+                    $orderStatusData->name[$locale] = t('Done', [], 'dataFixtures', $locale);
+                    break;
+                case self::ORDER_STATUS_CANCELED:
+                    $orderStatusData->name[$locale] = t('Canceled', [], 'dataFixtures', $locale);
+                    break;
+                default:
+                    throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnknownNameTranslationForOrderStatusReferenceNameException($referenceName);
+            }
+        }
+        $this->orderStatusFacade->edit($orderStatusId, $orderStatusData);
         $this->addReference($referenceName, $orderStatus);
     }
 }

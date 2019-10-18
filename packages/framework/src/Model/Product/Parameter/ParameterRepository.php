@@ -123,6 +123,26 @@ class ParameterRepository
     }
 
     /**
+     * @param string $valueText
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
+     */
+    public function getParameterValueByValueTextAndLocale(string $valueText, string $locale): ParameterValue
+    {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null $parameterValue */
+        $parameterValue = $this->getParameterValueRepository()->findOneBy([
+            'text' => $valueText,
+            'locale' => $locale,
+        ]);
+
+        if ($parameterValue === null) {
+            throw new \Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException();
+        }
+
+        return $parameterValue;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Doctrine\ORM\QueryBuilder
      */

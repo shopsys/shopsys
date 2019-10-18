@@ -6,6 +6,7 @@ namespace Shopsys\ShopBundle\DataFixtures\Demo;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
@@ -38,8 +39,8 @@ class AdvertDataFixture extends AbstractReferenceFixture
     public function load(ObjectManager $manager)
     {
         $advertData = $this->advertDataFactory->create();
-        $advertData->domainId = 1;
-        $advertData->name = 'Demo advert';
+        $advertData->domainId = Domain::FIRST_DOMAIN_ID;
+        $advertData->name = t('Demo advert', [], 'dataFixtures');
         $advertData->type = Advert::TYPE_CODE;
         $advertData->hidden = false;
         $advertData->positionName = 'leftSidebar';

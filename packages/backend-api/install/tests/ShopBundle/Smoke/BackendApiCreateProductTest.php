@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Smoke;
 
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\ShopBundle\Test\OauthTestCase;
 
 /**
@@ -13,6 +14,17 @@ use Tests\ShopBundle\Test\OauthTestCase;
  */
 class BackendApiCreateProductTest extends OauthTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private $domain;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->domain = $this->getContainer()->get(Domain::class);
+    }
+
     public function testCreatePostProduct(): void
     {
         $product = $this->getValidProduct();
@@ -105,12 +117,16 @@ class BackendApiCreateProductTest extends OauthTestCase
 
         $uuid = $this->extractUuid($location);
 
+        $nullsByLocale = [];
+        $nullsByDomainId = [];
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $nullsByLocale[$domainConfig->getLocale()] = null;
+            $nullsByDomainId[$domainConfig->getId()] = null;
+        }
+
         $expected = [
             'uuid' => $uuid,
-            'name' => [
-                'en' => null,
-                'cs' => null,
-            ],
+            'name' => $nullsByLocale,
             'hidden' => false,
             'sellingDenied' => false,
             'sellingFrom' => null,
@@ -118,14 +134,8 @@ class BackendApiCreateProductTest extends OauthTestCase
             'catnum' => null,
             'ean' => null,
             'partno' => null,
-            'shortDescription' => [
-                1 => null,
-                2 => null,
-            ],
-            'longDescription' => [
-                1 => null,
-                2 => null,
-            ],
+            'shortDescription' => $nullsByDomainId,
+            'longDescription' => $nullsByDomainId,
         ];
         $actualProduct = $this->getProduct($uuid);
         $this->assertEquals($expected, $actualProduct);
@@ -133,11 +143,30 @@ class BackendApiCreateProductTest extends OauthTestCase
 
     public function testValidationError(): void
     {
+        $namesByLocale = [];
+        $shortDescriptionsByDomainId = [];
+        $longDescriptionsByDomainId = [];
+        $firstDomainLocale = $this->getFirstDomainLocale();
+        $notExistingDomainId = $this->getNotExistingDomainId();
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $domainLocale = $domainConfig->getLocale();
+            $domainId = $domainConfig->getId();
+            if ($domainId === Domain::FIRST_DOMAIN_ID) {
+                $namesByLocale[$firstDomainLocale] = 'name longer than 255 letters Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis erat turpis, ac ullamcorper tellus tempor a. Sed dapibus posuere dui sed iaculis. Phasellus non magna et urna aliquam fringilla et sit amet diam. Suspendisse suscipit lacus quis nisi sed.';
+                $shortDescriptionsByDomainId[$domainId] = 123;
+                $longDescriptionsByDomainId[$domainId] = 345;
+            } else {
+                $namesByLocale[$domainLocale] = 'Name';
+                $shortDescriptionsByDomainId[$domainId] = 'Short description';
+                $longDescriptionsByDomainId[$domainId] = 'Long description';
+            }
+        }
+        $namesByLocale['xx'] = 'Not existing locale';
+        $shortDescriptionsByDomainId[$notExistingDomainId] = 'Not existing domain';
+        $longDescriptionsByDomainId[$notExistingDomainId] = 'Not existing domain';
+
         $product = [
-            'name' => [
-                'en' => 'name longer than 255 letters Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis erat turpis, ac ullamcorper tellus tempor a. Sed dapibus posuere dui sed iaculis. Phasellus non magna et urna aliquam fringilla et sit amet diam. Suspendisse suscipit lacus quis nisi sed.',
-                'xx' => 'Some wrong text',
-            ],
+            'name' => $namesByLocale,
             'hidden' => 'false',
             'sellingDenied' => 'false',
             'sellingFrom' => 123,
@@ -145,16 +174,8 @@ class BackendApiCreateProductTest extends OauthTestCase
             'catnum' => 'CAT12346B Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci nec diam turpis duis.',
             'ean' => 'E12346B Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci nec diam turpis duis.',
             'partno' => 'P123456 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci nec diam turpis duis.',
-            'shortDescription' => [
-                1 => 123,
-                2 => '<b>popisek',
-                99 => 'not existing domain',
-            ],
-            'longDescription' => [
-                1 => 345,
-                2 => '<b>popisek dlouhy',
-                99 => 'not existing domain',
-            ],
+            'shortDescription' => $shortDescriptionsByDomainId,
+            'longDescription' => $longDescriptionsByDomainId,
         ];
         $response = $this->runOauthRequest('POST', '/api/v1/products', $product);
 
@@ -164,7 +185,7 @@ class BackendApiCreateProductTest extends OauthTestCase
             'code' => 400,
             'message' => 'Provided data did not pass validation',
             'errors' => [
-                'name.en' => 'The value "name longer than 255 letters Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis erat turpis, ac ullamcorper tellus tempor a. Sed dapibus posuere dui sed iaculis. Phasellus non magna et urna aliquam fringilla et sit amet diam. Suspendisse suscipit lacus quis nisi sed." cannot be longer then 255 characters',
+                sprintf('name.%s', $firstDomainLocale) => 'The value "name longer than 255 letters Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis erat turpis, ac ullamcorper tellus tempor a. Sed dapibus posuere dui sed iaculis. Phasellus non magna et urna aliquam fringilla et sit amet diam. Suspendisse suscipit lacus quis nisi sed." cannot be longer then 255 characters',
                 'name.xx' => 'This field was not expected.',
                 'hidden' => 'The value "false" is not a valid bool.',
                 'sellingDenied' => 'The value "false" is not a valid bool.',
@@ -174,9 +195,9 @@ class BackendApiCreateProductTest extends OauthTestCase
                 'ean' => 'The value "E12346B Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci nec diam turpis duis." cannot be longer then 100 characters',
                 'partno' => 'The value "P123456 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci nec diam turpis duis." cannot be longer then 100 characters',
                 'shortDescription.1' => 'The value 123 is not a valid string.',
-                'shortDescription.99' => 'This field was not expected.',
+                sprintf('shortDescription.%d', $notExistingDomainId) => 'This field was not expected.',
                 'longDescription.1' => 'The value 345 is not a valid string.',
-                'longDescription.99' => 'This field was not expected.',
+                sprintf('longDescription.%d', $notExistingDomainId) => 'This field was not expected.',
             ],
         ];
 
@@ -184,15 +205,37 @@ class BackendApiCreateProductTest extends OauthTestCase
     }
 
     /**
+     * @return int
+     */
+    private function getNotExistingDomainId(): int
+    {
+        $notExistingDomainId = 99;
+        while (in_array($notExistingDomainId, $this->domain->getAllIds(), true)) {
+            $notExistingDomainId++;
+        }
+
+        return $notExistingDomainId;
+    }
+
+    /**
      * @return array
      */
     private function getValidProduct(): array
     {
+        $namesByLocale = [];
+        $shortDescriptionsByDomainId = [];
+        $longDescriptionsByDomainId = [];
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $domainLocale = $domainConfig->getLocale();
+            $domainId = $domainConfig->getId();
+            $namesByLocale[$domainLocale] = sprintf('Name (%s)', $domainLocale);
+            $shortDescriptionsByDomainId[$domainId] = sprintf('Short description for domain ID %d', $domainId);
+            $longDescriptionsByDomainId[$domainId] = sprintf('Long description for domain ID %d', $domainId);
+        }
+
         $product = [
-            'name' => [
-                'en' => 'X tech',
-                'cs' => 'název',
-            ],
+            'name' => $namesByLocale,
             'hidden' => true,
             'sellingDenied' => true,
             'sellingFrom' => '2019-07-16T00:00:00+00:00',
@@ -200,14 +243,8 @@ class BackendApiCreateProductTest extends OauthTestCase
             'catnum' => '123456 co',
             'ean' => 'E12346B',
             'partno' => 'P123456',
-            'shortDescription' => [
-                1 => '<b>desc',
-                2 => '<b>popisek',
-            ],
-            'longDescription' => [
-                1 => '<b>desc long',
-                2 => '<b>popisek dlouhy',
-            ],
+            'shortDescription' => $shortDescriptionsByDomainId,
+            'longDescription' => $longDescriptionsByDomainId,
         ];
 
         return $product;

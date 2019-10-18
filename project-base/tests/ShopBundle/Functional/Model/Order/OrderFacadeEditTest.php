@@ -46,11 +46,11 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         parent::setUp();
 
-        $this->order = $this->getReference(OrderDataFixture::ORDER_PREFIX . self::ORDER_ID);
-
         $this->orderFacade = $this->getContainer()->get(OrderFacade::class);
         $this->orderDataFactory = $this->getContainer()->get(OrderDataFactoryInterface::class);
         $this->orderItemDataFactory = $this->getContainer()->get(OrderItemDataFactoryInterface::class);
+
+        $this->setOrderForTests();
     }
 
     public function testEditProductItem(): void
@@ -251,5 +251,22 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         }
 
         throw new \RuntimeException(sprintf('Order item with the name "%s" was not found in the order.', $name));
+    }
+
+    protected function setOrderForTests(): void
+    {
+        $this->order = $this->getReference(OrderDataFixture::ORDER_PREFIX . self::ORDER_ID);
+        $orderData = $this->orderDataFactory->createFromOrder($this->order);
+
+        $orderItemData = $orderData->itemsWithoutTransportAndPayment[self::PRODUCT_ITEM_ID];
+        $orderItemData->priceWithVat = Money::create(21590);
+
+        $orderPayment = $orderData->orderPayment;
+        $orderPayment->priceWithVat = Money::create(100);
+
+        $orderTransport = $orderData->orderTransport;
+        $orderTransport->priceWithVat = Money::create(242);
+
+        $this->orderFacade->edit(self::ORDER_ID, $orderData);
     }
 }

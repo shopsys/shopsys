@@ -29,7 +29,8 @@ class ProductFilterPage extends AbstractPage
      */
     public function setMinimalPrice($price)
     {
-        $this->tester->fillFieldByCss('#product_filter_form_minimalPrice', $price . WebDriverKeys::ENTER);
+        $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
+        $this->tester->fillFieldByCss('#product_filter_form_minimalPrice', $convertedPrice . WebDriverKeys::ENTER);
         $this->waitForFilter();
     }
 
@@ -38,7 +39,8 @@ class ProductFilterPage extends AbstractPage
      */
     public function setMaximalPrice($price)
     {
-        $this->tester->fillFieldByCss('#product_filter_form_maximalPrice', $price . WebDriverKeys::ENTER);
+        $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
+        $this->tester->fillFieldByCss('#product_filter_form_maximalPrice', $convertedPrice . WebDriverKeys::ENTER);
         $this->waitForFilter();
     }
 
@@ -47,7 +49,7 @@ class ProductFilterPage extends AbstractPage
      */
     public function filterByBrand($label)
     {
-        $this->tester->checkOptionByLabel($label);
+        $this->tester->checkOptionByLabelTranslationFrontend($label);
         $this->waitForFilter();
     }
 
@@ -75,6 +77,7 @@ class ProductFilterPage extends AbstractPage
      */
     private function findParameterElementByLabel($parameterLabel)
     {
+        $translatedParameterLabel = t($parameterLabel, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $parameterItems = $this->webDriver->findElements(
             WebDriverBy::cssSelector('#product_filter_form_parameters .js-product-filter-parameter')
         );
@@ -83,7 +86,7 @@ class ProductFilterPage extends AbstractPage
             try {
                 $itemLabel = $item->findElement(WebDriverBy::cssSelector('.js-product-filter-parameter-label'));
 
-                if (stripos($itemLabel->getText(), $parameterLabel) !== false) {
+                if (stripos($itemLabel->getText(), $translatedParameterLabel) !== false) {
                     return $item;
                 }
             } catch (\Facebook\WebDriver\Exception\NoSuchElementException $ex) {
@@ -91,7 +94,7 @@ class ProductFilterPage extends AbstractPage
             }
         }
 
-        $message = 'Unable to find parameter with label "' . $parameterLabel . '" in product filter.';
+        $message = sprintf('Unable to find parameter with label "%s" (translated to "%s") in product filter.', $parameterLabel, $translatedParameterLabel);
         throw new \Facebook\WebDriver\Exception\NoSuchElementException($message);
     }
 
@@ -102,11 +105,12 @@ class ProductFilterPage extends AbstractPage
      */
     private function getLabelElementByParameterValueText($parameterElement, $parameterValueText)
     {
+        $translatedParameterValueText = t($parameterValueText, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $labelElements = $parameterElement->findElements(WebDriverBy::cssSelector('.js-product-filter-parameter-value'));
 
         foreach ($labelElements as $labelElement) {
             try {
-                if (stripos($labelElement->getText(), $parameterValueText) !== false) {
+                if (stripos($labelElement->getText(), $translatedParameterValueText) !== false) {
                     return $labelElement;
                 }
             } catch (\Facebook\WebDriver\Exception\NoSuchElementException $ex) {
@@ -114,7 +118,7 @@ class ProductFilterPage extends AbstractPage
             }
         }
 
-        $message = 'Unable to find parameter value with label "' . $parameterValueText . '" in product filter.';
+        $message = sprintf('Unable to find parameter value with label "%s" (translated to %s) in product filter.', $parameterValueText, $translatedParameterValueText);
         throw new \Facebook\WebDriver\Exception\NoSuchElementException($message);
     }
 }

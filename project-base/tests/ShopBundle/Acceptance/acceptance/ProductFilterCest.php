@@ -21,7 +21,8 @@ class ProductFilterCest
         ProductListPage $productListPage
     ) {
         $me->wantTo('test all product filters');
-        $me->amOnPage('/tv-audio/');
+        // tv-audio
+        $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
         $productListPage->assertProductsTotalCount(28);
 
         $productFilterPage->setMinimalPrice(1000);

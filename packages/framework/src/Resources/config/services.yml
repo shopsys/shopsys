@@ -1012,3 +1012,5 @@ services:
     Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder: ~
 
     Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Smoke;
 
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
 use Tests\ShopBundle\Test\OauthTestCase;
 
@@ -16,11 +17,18 @@ class BackendApiDeleteProductTest extends OauthTestCase
 {
     public function testDeleteProductSuccess(): void
     {
+        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
+        $domain = $this->getContainer()->get(Domain::class);
+        $namesByLocale = [];
+        $shortDescriptionsByDomainId = [];
+        $longDescriptionsByDomainId = [];
+        foreach ($domain->getAll() as $domainConfig) {
+            $namesByLocale[$domainConfig->getLocale()] = 'Name';
+            $shortDescriptionsByDomainId[$domainConfig->getId()] = 'Short description';
+            $longDescriptionsByDomainId[$domainConfig->getId()] = 'Long description';
+        }
         $product = [
-            'name' => [
-                'en' => 'X tech',
-                'cs' => 'název',
-            ],
+            'name' => $namesByLocale,
             'hidden' => true,
             'sellingDenied' => true,
             'sellingFrom' => '2019-07-16T00:00:00+00:00',
@@ -28,14 +36,8 @@ class BackendApiDeleteProductTest extends OauthTestCase
             'catnum' => '123456 co',
             'ean' => 'E12346B',
             'partno' => 'P123456',
-            'shortDescription' => [
-                1 => '<b>desc',
-                2 => '<b>popisek',
-            ],
-            'longDescription' => [
-                1 => '<b>desc long',
-                2 => '<b>popisek dlouhy',
-            ],
+            'shortDescription' => $shortDescriptionsByDomainId,
+            'longDescription' => $longDescriptionsByDomainId,
         ];
         $createResponse = $this->runOauthRequest('POST', '/api/v1/products', $product);
 
