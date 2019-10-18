@@ -9,63 +9,63 @@
 {% endblock %}
 
 {% block main_content %}
-<div class="web__line">
-    <div class="web__container">
-        <h1>{{ 'Login'|trans }}</h1>
+    <div class="web__line">
+        <div class="web__container">
+            <h1>{{ 'Login'|trans }}</h1>
 
-        {{ form_start(form, {attr: {'multipleForm': true}}) }}
-        {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}    
-            <dl class="form-line">
-                <dt>
-                    {{ form_label(form.email) }}
-                </dt>
-                <dd>
-                    {{ form_widget(form.email) }}
-                </dd>
-            </dl>
+            {{ form_start(form, {attr: {'multipleForm': true}}) }}
+            {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}
+                <dl class="form-line">
+                    <dt>
+                        {{ form_label(form.email) }}
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.email) }}
+                    </dd>
+                </dl>
 
-            <dl class="form-line">
-                <dt>
-                    {{ form_label(form.password) }}
-                </dt>
-                <dd>
-                    {{ form_widget(form.password) }}
-                </dd>
-            </dl>
+                <dl class="form-line">
+                    <dt>
+                        {{ form_label(form.password) }}
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.password) }}
+                    </dd>
+                </dl>
 
-            <dl class="form-line">
-                <dt></dt>
-                <dd>
-                    <label class="form-choice">
-                        <span class="form-choice__input">
-                            {{ form_widget(form.rememberMe) }}
-                        </span>
-                        <span class="form-choice__label">
-                            {{ 'Remember my login'|trans }}
-                            <i class="svg svg-info in-icon in-icon--info js-tooltip"
-                               data-toggle="tooltip"
-                               data-placement="right"
-                               title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
-                            ></i>
-                        </span>
-                    </label>
-                </dd>
-            </dl>
+                <dl class="form-line">
+                    <dt></dt>
+                    <dd>
+                        <label class="form-choice">
+                            <span class="form-choice__input">
+                                {{ form_widget(form.rememberMe) }}
+                            </span>
+                            <span class="form-choice__label">
+                                {{ 'Remember my login'|trans }}
+                                <i class="svg svg-info in-icon in-icon--info js-tooltip"
+                                   data-toggle="tooltip"
+                                   data-placement="right"
+                                   title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
+                                ></i>
+                            </span>
+                        </label>
+                    </dd>
+                </dl>
 
-            <dl class="form-line">
-                <dt></dt>
-                <dd>
-                    {{ form_widget(form.login, {label: 'Log in'|trans}) }}
-                </dd>
-            </dl>
-            <dl class="form-line">
-                <dt></dt>
-                <dd>
-                    <a href="{{ url('front_registration_reset_password') }}">{{ 'Forgot your password?'|trans }}</a>
-                </dd>
-            </dl>
+                <dl class="form-line">
+                    <dt></dt>
+                    <dd>
+                        {{ form_widget(form.login, {label: 'Log in'|trans}) }}
+                    </dd>
+                </dl>
+                <dl class="form-line">
+                    <dt></dt>
+                    <dd>
+                        <a href="{{ url('front_registration_reset_password') }}">{{ 'Forgot your password?'|trans }}</a>
+                    </dd>
+                </dl>
 
-        {{ form_end(form) }}
+            {{ form_end(form) }}
+        </div>
     </div>
-</div>
 {% endblock %}

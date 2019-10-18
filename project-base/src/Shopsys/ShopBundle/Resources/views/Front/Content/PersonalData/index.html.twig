@@ -13,25 +13,25 @@
 {% endblock %}
 
 {% block main_content %}
-<div class="web__line">
-    <div class="web__container">
-        <div class="in-user-text">
-            <h1>{{ title }}</h1>
+    <div class="web__line">
+        <div class="web__container">
+            <div class="in-user-text">
+                <h1>{{ title }}</h1>
 
-            {{ personalDataSiteContent|raw }}
+                {{ personalDataSiteContent|raw }}
 
-            <div class="padding-20">
-                {{ form_start(form, { method: 'POST' }) }}
-                    {{ form_row(form.email) }}
-                    {{ form_row(form.send) }}
-                {{ form_end(form) }}
-                {{ form_errors(form, { errors_attr: { class : 'in-message--alert' } }) }}
+                <div class="padding-20">
+                    {{ form_start(form, { method: 'POST' }) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.send) }}
+                    {{ form_end(form) }}
+                    {{ form_errors(form, { errors_attr: { class : 'in-message--alert' } }) }}
+                </div>
             </div>
-        </div>
 
-        {% if user is defined %}
-            {{ include('@ShopsysShop/Front/Content/PersonalData/detail.html.twig') }}
-        {% endif %}
+            {% if user is defined %}
+                {{ include('@ShopsysShop/Front/Content/PersonalData/detail.html.twig') }}
+            {% endif %}
+        </div>
     </div>
-</div>
 {% endblock %}

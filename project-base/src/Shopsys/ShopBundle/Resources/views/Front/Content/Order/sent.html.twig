@@ -13,24 +13,24 @@
 
 {% block main_content %}
 
-{{ render(controller('ShopsysShopBundle:Front/Script:embedOrderSentPageScripts', {order: order})) }}
-{{ render(controller('ShopsysShopBundle:Front/Script:embedOrderSentPageGoogleAnalyticsScript', {order: order})) }}
+    {{ render(controller('ShopsysShopBundle:Front/Script:embedOrderSentPageScripts', {order: order})) }}
+    {{ render(controller('ShopsysShopBundle:Front/Script:embedOrderSentPageGoogleAnalyticsScript', {order: order})) }}
 
-<div class="web__line">
-    <div class="web__container">
-        <h1>{{ 'Order sent'|trans }}</h1>
+    <div class="web__line">
+        <div class="web__container">
+            <h1>{{ 'Order sent'|trans }}</h1>
 
-        <div class="in-user-text">
-            {{ pageContent|raw }}
-        </div>
+            <div class="in-user-text">
+                {{ pageContent|raw }}
+            </div>
 
-        <div class="in-action">
-            <div class="in-action__left">
-                <a href="{{ url('front_homepage') }}" class="btn in-action__btn">
-                    {{ 'Back to store'|trans }}
-                </a>
+            <div class="in-action">
+                <div class="in-action__left">
+                    <a href="{{ url('front_homepage') }}" class="btn in-action__btn">
+                        {{ 'Back to store'|trans }}
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
