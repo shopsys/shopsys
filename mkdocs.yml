@@ -20,5 +20,9 @@ markdown_extensions:
 
 plugins:
     - search
+    -   readthedocs-version-warning:
+            project_id: "490215"
+            show_on_versions:
+                - latest
     -   awesome-pages:
             filename: navigation.yml
