@@ -52,10 +52,25 @@ class RedisFacade
         foreach ($this->getCacheClients() as $redis) {
             $prefix = (string)$redis->getOption(Redis::OPT_PREFIX);
             $pattern = $prefix . '*';
-            if (!$this->hasAnyKey($redis, $pattern)) {
-                continue;
+            $this->cleanCacheByScan($redis, $pattern);
+        }
+    }
+
+    /**
+     * @param \Redis $redisClient
+     * @param string $pattern
+     */
+    protected function cleanCacheByScan(Redis $redisClient, string $pattern): void
+    {
+        $suggestedScanBatchSize = 1000;
+
+        $iterator = null;
+        $keys = null;
+        while ($keys !== false) {
+            $keys = $redisClient->scan($iterator, $pattern, $suggestedScanBatchSize);
+            if (is_array($keys) && count($keys) > 0) {
+                $redisClient->eval("return redis.call('unlink', unpack(ARGV))", $keys);
             }
-            $redis->eval("return redis.call('del', unpack(redis.call('keys', ARGV[1])))", [$pattern]);
         }
     }
 
@@ -67,6 +82,8 @@ class RedisFacade
     }
 
     /**
+     * @deprecated This method is deprecated since SSFW 7.3.3
+     *
      * @param \Redis $redis
      * @param string $pattern
      * @return bool
