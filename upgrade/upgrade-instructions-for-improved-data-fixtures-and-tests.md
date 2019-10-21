@@ -62,3 +62,14 @@ If any of the following instructions is not clear enough for you or you need mor
     - [`LocalizationListener`](https://github.com/shopsys/shopsys/blob/v8.1.0/packages/framework/src/Model/Localization/LocalizationListener.php) now depends on [`AdministrationFacade`](https://github.com/shopsys/shopsys/blob/v8.1.0/packages/framework/src/Model/Administration/AdministrationFacade.php)
     - [`NumberFormatterExtension`](https://github.com/shopsys/shopsys/blob/v8.1.0/packages/framework/src/Twig/NumberFormatterExtension.php) now depends on [`AdministrationFacade`](https://github.com/shopsys/shopsys/blob/v8.1.0/packages/framework/src/Model/Administration/AdministrationFacade.php)
 - Stop using `Domain::getAllIdsExcludingFirstDomain()` - the method is deprecated and will be removed in the next major release.
+- fix your acceptance tests for single domain: ([#1477](https://github.com/shopsys/shopsys/pull/1477))
+    - create second currency only for multidomain project ([diff](https://github.com/shopsys/shopsys/pull/1477/files))
+    - fix used translation message ID in `PaymentImageUploadCest`
+    ```diff
+    -    $me->seeTranslationAdmin('Payment <strong><a href="{{ url }}">%name%</a></strong> modified', 'messages', [
+    +    $me->seeTranslationAdmin('Payment <strong><a href="{{ url }}">{{ name }}</a></strong> modified', 'messages', [
+             '{{ url }}' => '',
+    -        '%name%' => t('Credit card', [], 'dataFixtures', $me->getAdminLocale()),
+    +        '{{ name }}' => t('Credit card', [], 'dataFixtures', $me->getAdminLocale()),
+         ]);
+    ```
