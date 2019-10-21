@@ -69,22 +69,20 @@ class ImageUploadType extends AbstractType
     {
         $builder->resetModelTransformers();
 
-        if ($options['multiple']) {
-            $builder->add(
-                $builder->create('orderedImages', CollectionType::class, [
-                    'required' => false,
-                    'entry_type' => HiddenType::class,
-                ])->addModelTransformer($this->imagesIdsToImagesTransformer)
-            );
-            $builder->add('imagesToDelete', ChoiceType::class, [
+        $builder->add(
+            $builder->create('orderedImages', CollectionType::class, [
                 'required' => false,
-                'multiple' => true,
-                'expanded' => true,
-                'choices' => $this->getImagesIndexedById($options),
-                'choice_label' => 'filename',
-                'choice_value' => 'id',
-            ]);
-        }
+                'entry_type' => HiddenType::class,
+            ])->addModelTransformer($this->imagesIdsToImagesTransformer)
+        );
+        $builder->add('imagesToDelete', ChoiceType::class, [
+            'required' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'choices' => $this->getImagesIndexedById($options),
+            'choice_label' => 'filename',
+            'choice_value' => 'id',
+        ]);
     }
 
     /**
