@@ -9,7 +9,7 @@
                             <li class="list-images__item js-image-upload-image" data-id="{{ image.id }}" data-delete-input="#{{ form.imagesToDelete.vars.id }}">
                                 <div class="list-images__item__in">
                                     <div class="list-images__item__image js-image-upload-preview">
-                                        {{ image(image, {size: 'original', height: '100'}) }}
+                                        {{ image(image, {size: 'original', height: '100', type: image_type}) }}
                                     </div>
                                     <span class="list-images__item__main">
                                         {{ 'Main image'|trans }}
