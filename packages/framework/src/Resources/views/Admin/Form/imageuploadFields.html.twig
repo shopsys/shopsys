@@ -10,15 +10,17 @@
                                 <div class="list-images__item__image js-image-upload-preview">
                                     {{ image(image, {size: 'original', height: '100', type: image_type}) }}
                                 </div>
-                                <span class="list-images__item__main">
-                                    {{ 'Main image'|trans }}
-                                </span>
+                                {% if multiple %}
+                                    <span class="list-images__item__main">
+                                        {{ 'Main image'|trans }}
+                                    </span>
+                                    <span class="js-image-upload-image-handle list-images__item__move" title="{{ 'Move'|trans }}">
+                                        <i class="svg svg-move"></i>
+                                    </span>
+                                {% endif %}
                                 <button class="js-image-upload-delete-button btn-no-style list-images__item__remove" type="button" title="{{ 'Delete'|trans }}">
                                     <i class="svg svg-delete"></i>
                                 </button>
-                                <span class="js-image-upload-image-handle list-images__item__move" title="{{ 'Move'|trans }}">
-                                    <i class="svg svg-move"></i>
-                                </span>
                                 <button class="btn-no-style js-image-upload-delete-revert-button display-none list-images__item__revert" type="button" title="{{ 'Return back'|trans }}">
                                     <i class="svg svg-forward-page"></i>
                                 </button>
