@@ -1,10 +1,10 @@
 # Grid Data Sources
 
-As a data source, the [Grid Component](./grid.md) requires an implementation of [`DataSourceInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/DataSourceInterface.php).
+As a data source, the [Grid Component](./grid.md) requires an implementation of [`DataSourceInterface`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Component/Grid/DataSourceInterface.php).
 
 You can find 4 implementations of the interface in Shopsys Framework.
 
-## [`QueryBuilderDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/QueryBuilderDataSource.php)
+## [`QueryBuilderDataSource`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Component/Grid/QueryBuilderDataSource.php)
 Most commonly used data source that is created from Doctrine Query Builder.
 ### Example of usage
 ```php
@@ -18,7 +18,7 @@ $queryBuilder->select('p')
 $dataSource = new QueryBuilderDataSource($queryBuilder, 'p.id');
 ```
 
-## [`QueryBuilderWithRowManipulatorDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/QueryBuilderWithRowManipulatorDataSource.php)
+## [`QueryBuilderWithRowManipulatorDataSource`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Component/Grid/QueryBuilderWithRowManipulatorDataSource.php)
 This data source is created from query builder as well, and on top of it, it allows to define a callback that is applied on each row so additional data can be set this way,
 e.g. you can add some calculated price into the data set.
 ### Example of usage
@@ -42,7 +42,7 @@ $dataSource = new QueryBuilderWithRowManipulatorDataSource(
 );
 ```
 
-## [`ArrayDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/ArrayDataSource.php)
+## [`ArrayDataSource`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Component/Grid/ArrayDataSource.php)
 Data source that is created from an array. It is suitable when you need to display data that are not stored in the database.
 ### Example of usage
 ```php
@@ -60,7 +60,7 @@ foreach ($domain->getAll() as $domainConfig) {
 
 $dataSource = new ArrayDataSource($domainData, 'id');
 ```
-## [`MoneyConvertingDataSourceDecorator`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecorator.php)
+## [`MoneyConvertingDataSourceDecorator`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecorator.php)
 A decorator that can be applied to any of the data sources described above. It provides conversion of monetary values in a data set to [`Money` value object](../model/how-to-work-with-money.md#money-class).
 
 ### Example of usage

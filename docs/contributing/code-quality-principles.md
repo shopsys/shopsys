@@ -112,7 +112,7 @@ Please find more about DRY in online sources or in the great book [The Pragmatic
 We understand the DRY principle in a pragmatic way, we aren't obsessed with a duplication in the system that makes sense.
 Usability and maintainability are often more important than the DRY principle.
 
-Examples of such duplication are definitions of [Elasticsearch indexes](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/definition/product).
+Examples of such duplication are definitions of [Elasticsearch indexes](https://github.com/shopsys/shopsys/tree/9.0/project-base/src/Shopsys/ShopBundle/Resources/definition/product).
 They are very, very similar but if they were done in a strictly DRY fashion, the definition would have to be done in PHP and therefore less readable and maintainable than in JSON format.
 Also, it would be difficult to change the shared code just for one use-case.
 

@@ -49,7 +49,7 @@ The installation script tries to apply patches for all involved files and applie
 In other words the installation script doesn't stop on the first patch error.
 
 In case of error you'll see error messages like `Patch for app/AppKernel.php cannot be applied!`.
-In such case please take a look into [install directory](https://github.com/shopsys/shopsys/tree/master/packages/backend-api/install), and apply all patches manually.
+In such case please take a look into [install directory](https://github.com/shopsys/shopsys/tree/9.0/packages/backend-api/install), and apply all patches manually.
 * You have to only add code into files, so copy only lines that starts with plus `+ ` symbol
     * eg. from `composer.json.patch` copy the line `"trikoder/oauth2-bundle": "^1.1",` into your `composer.json`
 * The directory structure in the installation directory matches the directory structure in your project

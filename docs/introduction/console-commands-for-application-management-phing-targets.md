@@ -176,7 +176,7 @@ Exports all visible products to Elasticsearch.
 ### Coding standards
 
 #### annotations-check
-Checks whether annotations of extended classes in the project match the actual types according to [`ClassExtensionRegistry`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/ClassExtension/ClassExtensionRegistry.php).
+Checks whether annotations of extended classes in the project match the actual types according to [`ClassExtensionRegistry`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Component/ClassExtension/ClassExtensionRegistry.php).
 Reported problems can be fixed using [`annotations-fix` phing target](#annotations-fix).
 
 #### annotations-fix
@@ -212,7 +212,7 @@ Runs performance tests on a newly built test database with performance data.
 
 It may take a few hours as the generation of performance data is very time-consuming. Should be executed on CI server only.
 
-The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/parameters_common.yml).
+The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/parameters_common.yml).
 You can easily override the default values in your `parameters.yml` or `parameters_test.yml` configuration files.
 
 ### Other

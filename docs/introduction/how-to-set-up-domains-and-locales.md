@@ -165,8 +165,8 @@ An example for domain that uses English language:
 In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request so you can just use e.g. `Product::getName()` and you get the proper translation.
 However, sometimes, there is no request (i.e. in CLI commands or in tests) so you need to tell your application, which locale should be used - either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.
 
-To change the default application locale, set `locale` parameter to you desired locale (e.g. `es` for Spanish) in your [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/parameters_common.yml).
-The value is then used for setting [`default_locale` Symfony parameter](https://symfony.com/doc/3.4/translation/locale.html#setting-a-default-locale) (see your [`framework.yml`](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/packages/framework.yml) config).
+To change the default application locale, set `locale` parameter to you desired locale (e.g. `es` for Spanish) in your [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/parameters_common.yml).
+The value is then used for setting [`default_locale` Symfony parameter](https://symfony.com/doc/3.4/translation/locale.html#setting-a-default-locale) (see your [`framework.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/packages/framework.yml) config).
 
 ### 4. Change the url address for an existing domain
 
