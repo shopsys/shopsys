@@ -161,6 +161,7 @@ class PaymentFormType extends AbstractType
             ->add('image', ImageUploadType::class, [
                 'required' => false,
                 'label' => t('Upload image'),
+                'image_entity_class' => Payment::class,
                 'file_constraints' => [
                     new Constraints\Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
