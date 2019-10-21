@@ -73,7 +73,7 @@ class SliderItemFacade
 
         $this->em->persist($sliderItem);
         $this->em->flush();
-        $this->imageFacade->uploadImage($sliderItem, $sliderItemData->image->uploadedFiles, null);
+        $this->imageFacade->manageImages($sliderItem, $sliderItemData->image);
 
         return $sliderItem;
     }
@@ -89,7 +89,7 @@ class SliderItemFacade
         $sliderItem->edit($sliderItemData);
 
         $this->em->flush();
-        $this->imageFacade->uploadImage($sliderItem, $sliderItemData->image->uploadedFiles, null);
+        $this->imageFacade->manageImages($sliderItem, $sliderItemData->image);
 
         return $sliderItem;
     }
