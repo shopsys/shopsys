@@ -29,7 +29,7 @@ module.exports = function(grunt) {
                     sourceMapRootpath: '../../../',
 
                     modifyVars: {
-                        adminCssPath: '{{ (frameworkResourcesDirectory ~ '/styles/admin/')|raw }}',
+                        frameworkResourcesDirectory: '{{ frameworkResourcesDirectory|raw }}',
                     }
                 }
             },
