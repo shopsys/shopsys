@@ -9,6 +9,7 @@ use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 
@@ -90,6 +91,31 @@ class ImageFacade
         $this->imageLocator = $imageLocator;
         $this->imageFactory = $imageFactory;
         $this->mountManager = $mountManager;
+    }
+
+    /**
+     * @param object $entity
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData $imageUploadData
+     * @param string|null $type
+     */
+    public function manageImages(object $entity, ImageUploadData $imageUploadData, ?string $type = null): void
+    {
+        $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
+        $uploadedFiles = $imageUploadData->uploadedFiles;
+        $orderedImages = $imageUploadData->orderedImages;
+
+        if ($imageEntityConfig->isMultiple($type) === false) {
+            if (count($orderedImages) > 1) {
+                array_shift($orderedImages);
+                $this->deleteImages($entity, $orderedImages);
+            }
+            $this->uploadImage($entity, $uploadedFiles, $type);
+        } else {
+            $this->saveImageOrdering($orderedImages);
+            $this->uploadImages($entity, $uploadedFiles, $type);
+        }
+
+        $this->deleteImages($entity, $imageUploadData->imagesToDelete);
     }
 
     /**
