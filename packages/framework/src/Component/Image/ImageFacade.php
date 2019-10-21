@@ -122,6 +122,7 @@ class ImageFacade
      * @param object $entity
      * @param array $temporaryFilenames
      * @param string|null $type
+     * @deprecated This function will be changed to protected in the next major release, use ImageFacade::manageImages instead
      */
     public function uploadImage($entity, $temporaryFilenames, $type)
     {
@@ -151,6 +152,7 @@ class ImageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
+     * @deprecated This function will be changed to protected in the next major release, use ImageFacade::manageImages instead
      */
     public function saveImageOrdering($orderedImages)
     {
@@ -162,6 +164,7 @@ class ImageFacade
      * @param object $entity
      * @param array|null $temporaryFilenames
      * @param string|null $type
+     * @deprecated This function will be changed to protected in the next major release, use ImageFacade::manageImages instead
      */
     public function uploadImages($entity, $temporaryFilenames, $type)
     {
@@ -180,6 +183,7 @@ class ImageFacade
     /**
      * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
+     * @deprecated This function will be changed to protected in the next major release, use ImageFacade::manageImages instead
      */
     public function deleteImages($entity, array $images)
     {
