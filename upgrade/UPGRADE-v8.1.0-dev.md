@@ -371,6 +371,33 @@ There you can find links to upgrade notes for other versions too.
         +        Assert::assertNotSame($errorIdFirstAccess, $errorIdSecondAccess);
         +    }
         ```
+- autowire service `ImageFacade` in data object factories ([#1476](https://github.com/shopsys/shopsys/pull/1476))
+    - `src/Shopsys/ShopBundle/Model/Payment/PaymentDataFactory.php`
+        ```diff
+            public function __construct(
+                PaymentFacade $paymentFacade,
+                VatFacade $vatFacade,
+        -       Domain $domain
+        +       Domain $domain,
+        +       ImageFacade $imageFacade
+            ) {
+        -       parent::__construct($paymentFacade, $vatFacade, $domain);
+        +       parent::__construct($paymentFacade, $vatFacade, $domain, $imageFacade);
+        ```
+    - `src/Shopsys/ShopBundle/Model/Product/Brand/BrandDataFactory.php`
+        ```diff
+             public function __construct(
+                 FriendlyUrlFacade $friendlyUrlFacade,
+                 BrandFacade $brandFacade,
+        -        Domain $domain
+        +        Domain $domain,
+        +        ImageFacade $imageFacade
+             ) {
+        -        parent::__construct($friendlyUrlFacade, $brandFacade, $domain);
+        +        parent::__construct($friendlyUrlFacade, $brandFacade, $domain, $imageFacade);
+             } 
+        ```
+    
 - improve your data fixtures and tests so they are more resistant against domains and locales settings changes [#1425](https://github.com/shopsys/shopsys/pull/1425)
     - if you have done a lot of changes in your data fixtures you might consider to skip this upgrade
     - for detailed information, see [the separate article](upgrade-instructions-for-improved-data-fixtures-and-tests.md)
