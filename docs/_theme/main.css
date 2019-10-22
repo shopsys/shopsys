@@ -144,6 +144,8 @@ body {
     border-bottom: none;
     border-right: none;
     background-color: transparent;
+    text-decoration: underline;
+    text-underline-position: under;
 }
 
 .wy-menu-vertical li.on a:hover, .wy-menu-vertical li.current > a:hover {
@@ -270,7 +272,8 @@ body {
 .rst-content .wy-alert-warning.tip,
 .rst-content .warning,
 .rst-content .wy-alert-warning.seealso,
-.rst-content .admonition-todo {
+.rst-content .admonition-todo,
+.rst-content .admonition.danger {
     background-color: #fff1d2 !important;
 }
 
@@ -298,7 +301,8 @@ body {
 .rst-content .wy-alert-warning.tip .admonition-title,
 .rst-content .warning .admonition-title,
 .rst-content .wy-alert-warning.seealso .admonition-title,
-.rst-content .admonition-todo .admonition-title {
+.rst-content .admonition-todo .admonition-title,
+.rst-content .admonition.danger .admonition-title {
     background-color: #fdb820 !important;
     color: #444 !important;
 }
