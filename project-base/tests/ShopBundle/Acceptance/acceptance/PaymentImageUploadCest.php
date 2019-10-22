@@ -27,9 +27,9 @@ class PaymentImageUploadCest
         $me->amOnPage('/admin/payment/edit/1');
         $entityEditPage->uploadTestImage(self::IMAGE_UPLOAD_FIELD_ID, self::TEST_IMAGE_NAME);
         $me->clickByName(self::SAVE_BUTTON_NAME);
-        $me->seeTranslationAdmin('Payment <strong><a href="{{ url }}">%name%</a></strong> modified', 'messages', [
+        $me->seeTranslationAdmin('Payment <strong><a href="{{ url }}">{{ name }}</a></strong> modified', 'messages', [
             '{{ url }}' => '',
-            '%name%' => t('Credit card', [], 'dataFixtures', $me->getAdminLocale()),
+            '{{ name }}' => t('Credit card', [], 'dataFixtures', $me->getAdminLocale()),
         ]);
     }
 }
