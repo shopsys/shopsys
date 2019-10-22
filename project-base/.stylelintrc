@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "block-no-empty": null,
+    "color-no-invalid-hex": true,
+    "color-hex-case": [ "lower", {
+        "message": "Lowercase letters are easier to distinguish from numbers"
+    } ],
+    "comment-empty-line-before": [ "always", {
+      "ignore": ["stylelint-commands", "after-comment"]
+    } ],
+    "declaration-colon-space-after": "always",
+    "indentation": [ 4, {
+      "except": ["value"],
+      "message": "Please use 4 spaces for indentation."
+    }],
+    "max-empty-lines": 2,
+    "rule-empty-line-before": [ "always", {
+      "except": ["first-nested"],
+      "ignore": ["after-comment"]
+    } ],
+    "unit-whitelist": ["em", "rem", "%", "px", "s", "ms", "deg"]
+  }
+}
