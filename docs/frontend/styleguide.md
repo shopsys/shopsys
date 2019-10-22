@@ -1,13 +1,13 @@
-# Shopsys Framework StyleGuide
+# Shopsys Framework styleguide
 
 ## Documentation
-Styleguide - tool to make creating and maintaining styleguides easy for Shopsys Framework designs.
+styleguide - tool to make creating and maintaining styleguides easy for Shopsys Framework designs.
 Contains all html elements necessary to create new design.
 
 ## Installation to runing SSFW project
 ```
 1) clone or copy content of repository to your SSFW project base
-- so your final folder structure will be xxx/ssfw-shop/StyleGuide/*.*
+- so your final folder structure will be xxx/ssfw-shop/styleguide/*.*
 2) project have to be ready and successfully build
 3) in cmd run: npm install
 4) in cmd run: grunt
@@ -63,8 +63,3 @@ Colors in styleguide content are NOT loaded from LESS files of SSFW project )-; 
 
 ### Inspired by
 <a href="https://hugeinc.github.io/styleguide/">https://hugeinc.github.io/styleguide/</a>
-
-## ChangeLog
-
-07-10-2019
-- content according to Shopsys Framework Stable version 8.0
