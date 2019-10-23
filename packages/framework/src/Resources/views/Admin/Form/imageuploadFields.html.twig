@@ -1,44 +1,47 @@
 {% block image_upload_row %}
     {% if entity is not null %}
-        {% if multiple %}
-            {% if form.orderedImages|length > 0 %}
-                <div class="list-images__wrap">
-                    <ul class="list-images js-image-upload">
-                        {% for imageForm in form.orderedImages %}
-                            {% set image = images_by_id[imageForm.vars.value] %}
-                            <li class="list-images__item js-image-upload-image" data-id="{{ image.id }}" data-delete-input="#{{ form.imagesToDelete.vars.id }}">
-                                <div class="list-images__item__in">
-                                    <div class="list-images__item__image js-image-upload-preview">
-                                        {{ image(image, {size: 'original', height: '100'}) }}
-                                    </div>
+        {% if form.orderedImages|length > 0 %}
+            <div class="list-images__wrap">
+                <ul class="list-images js-image-upload">
+                    {% for imageForm in form.orderedImages %}
+                        {% set image = images_by_id[imageForm.vars.value] %}
+                        {% set isRemoved = false %}
+                        {% if not multiple and loop.index > 1 %}
+                            {% set isRemoved = true %}
+                        {% endif %}
+                        <li class="list-images__item js-image-upload-image" data-id="{{ image.id }}" data-delete-input="#{{ form.imagesToDelete.vars.id }}">
+                            <div class="list-images__item__in">
+                                <div class="list-images__item__image js-image-upload-preview {% if isRemoved %}list-images__item__in--removed{% endif %}">
+                                    {{ image(image, {size: 'original', height: '100', type: image_type}) }}
+                                </div>
+                                {% if multiple %}
                                     <span class="list-images__item__main">
                                         {{ 'Main image'|trans }}
                                     </span>
-                                    <button class="js-image-upload-delete-button btn-no-style list-images__item__remove" type="button" title="{{ 'Delete'|trans }}">
-                                        <i class="svg svg-delete"></i>
-                                    </button>
                                     <span class="js-image-upload-image-handle list-images__item__move" title="{{ 'Move'|trans }}">
                                         <i class="svg svg-move"></i>
                                     </span>
+                                {% endif %}
+                                {% if not isRemoved %}
+                                    <button class="js-image-upload-delete-button btn-no-style list-images__item__remove" type="button" title="{{ 'Delete'|trans }}">
+                                        <i class="svg svg-delete"></i>
+                                    </button>
                                     <button class="btn-no-style js-image-upload-delete-revert-button display-none list-images__item__revert" type="button" title="{{ 'Return back'|trans }}">
                                         <i class="svg svg-forward-page"></i>
                                     </button>
-                                    <span class="list-images__item__overlay js-image-upload-image-overlay">
-                                        {{ 'Image will be deleted after saving.'|trans }}
-                                    </span>
-                                </div>
-                                {# Ignore indices from form definition. Let them reflect new positions. #}
-                                {{ form_widget(imageForm, { full_name: form.orderedImages.vars.full_name ~ '[]'}) }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-            {% do form.orderedImages.setRendered %}
-            <div class="display-none">
-                {{ form_widget(form.imagesToDelete) }}
+                                {% endif %}
+                                <span class="list-images__item__overlay {% if isRemoved %}list-images__item__overlay__show{% endif %} js-image-upload-image-overlay">
+                                    {{ 'Image will be deleted after saving.'|trans }}
+                                </span>
+                            </div>
+                            {# Ignore indices from form definition. Let them reflect new positions. #}
+                            {{ form_widget(imageForm, { full_name: form.orderedImages.vars.full_name ~ '[]'}) }}
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
         {% else %}
+            {% do form.orderedImages.setRendered %}
             <div class="form-line">
                 <label class="form-line__label">
                     {{ 'Image'|trans }}:
@@ -50,6 +53,9 @@
                 </div>
             </div>
         {% endif %}
+        <div class="display-none">
+            {{ form_widget(form.imagesToDelete) }}
+        </div>
     {% endif %}
     <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}

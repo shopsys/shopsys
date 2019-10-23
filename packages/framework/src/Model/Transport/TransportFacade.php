@@ -107,7 +107,7 @@ class TransportFacade
         $this->em->persist($transport);
         $this->em->flush();
         $this->updateTransportPrices($transport, $transportData->pricesByCurrencyId);
-        $this->imageFacade->uploadImage($transport, $transportData->image->uploadedFiles, null);
+        $this->imageFacade->manageImages($transport, $transportData->image);
         $transport->setPayments($transportData->payments);
         $this->em->flush();
 
@@ -122,7 +122,7 @@ class TransportFacade
     {
         $transport->edit($transportData);
         $this->updateTransportPrices($transport, $transportData->pricesByCurrencyId);
-        $this->imageFacade->uploadImage($transport, $transportData->image->uploadedFiles, null);
+        $this->imageFacade->manageImages($transport, $transportData->image);
         $transport->setPayments($transportData->payments);
         $this->em->flush();
     }

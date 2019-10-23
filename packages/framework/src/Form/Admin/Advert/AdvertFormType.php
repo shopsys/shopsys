@@ -158,6 +158,7 @@ class AdvertFormType extends AbstractType
         $builderImageGroup
             ->add('image', ImageUploadType::class, [
                 'required' => false,
+                'image_entity_class' => Advert::class,
                 'file_constraints' => [
                     new Constraints\Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],

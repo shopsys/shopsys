@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class PaymentDataFactory implements PaymentDataFactoryInterface
@@ -23,18 +25,42 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
     protected $domain;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null
+     */
+    protected $imageFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
      */
     public function __construct(
         PaymentFacade $paymentFacade,
         VatFacade $vatFacade,
-        Domain $domain
+        Domain $domain,
+        ?ImageFacade $imageFacade = null
     ) {
         $this->paymentFacade = $paymentFacade;
         $this->vatFacade = $vatFacade;
         $this->domain = $domain;
+        $this->imageFacade = $imageFacade;
+    }
+
+    /**
+     * @required
+     * @internal This function will be replaced by constructor injection in next major
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     */
+    public function setImageFacade(ImageFacade $imageFacade): void
+    {
+        if ($this->imageFacade !== null && $this->imageFacade !== $imageFacade) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->imageFacade === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->imageFacade = $imageFacade;
+        }
     }
 
     /**
@@ -113,5 +139,7 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         foreach ($payment->getPrices() as $paymentPrice) {
             $paymentData->pricesByCurrencyId[$paymentPrice->getCurrency()->getId()] = $paymentPrice->getPrice();
         }
+
+        $paymentData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($payment, null);
     }
 }
