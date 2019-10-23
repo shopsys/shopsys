@@ -17,17 +17,19 @@ ProductDecorator:
                 type: "String!"
                 description: "Product link"
             unit:
-                type: "Unit"
+                type: "Unit!"
+            isUsingStock:
+                type: "Boolean!"
             availability:
                 type: "Availability"
             stockQuantity:
                 type: "Int"
                 description: "Count of quantity on stock"
             categories:
-                type: "[Category!]"
+                type: "[Category!]!"
                 description: "List of categories"
             flags:
-                type: "[Flag!]"
+                type: "[Flag!]!"
                 description: "List of flags"
             price:
                 type: "Price"

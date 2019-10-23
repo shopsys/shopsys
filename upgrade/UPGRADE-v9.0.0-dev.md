@@ -82,9 +82,10 @@ There you can find links to upgrade notes for other versions too.
         +         - 2
     - update your [`phpstan.neon`](https://github.com/shopsys/shopsys/blob/9.0/project-base/phpstan.neon): ([#1471](https://github.com/shopsys/shopsys/pull/1471))
       ```diff
-      +    # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
-      +    message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
-      +    path: %currentWorkingDirectory%/tests/FrontendApiBundle/*
+      ignoreErrors:
+          +    # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
+          +    message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
+          +    path: %currentWorkingDirectory%/tests/FrontendApiBundle/*
       ```
 - removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437)) 
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
