@@ -7,7 +7,11 @@ namespace Tests\ShopBundle\Test;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class FunctionalTestCase extends WebTestCase
 {
@@ -21,6 +25,16 @@ abstract class FunctionalTestCase extends WebTestCase
      */
     private $domain;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
+     */
+    private $domainRouterFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     */
+    private $priceConverter;
+
     protected function setUpDomain()
     {
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
@@ -32,6 +46,9 @@ abstract class FunctionalTestCase extends WebTestCase
     {
         parent::setUp();
         $this->setUpDomain();
+
+        $this->domainRouterFactory = $this->getContainer()->get(DomainRouterFactory::class);
+        $this->priceConverter = $this->getContainer()->get(PriceConverter::class);
     }
 
     /**
@@ -120,5 +137,39 @@ abstract class FunctionalTestCase extends WebTestCase
     protected function getFirstDomainLocale(): string
     {
         return $this->domain->getLocale();
+    }
+
+    /**
+     * @param string $routeName
+     * @param array $parameters
+     * @return string
+     */
+    protected function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = []): string
+    {
+        $router = $this->domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
+
+        return $router->generate($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+    }
+
+    /**
+     * @param string $price
+     * @return string
+     */
+    protected function getPriceWithVatConvertedToDomainDefaultCurrency(string $price): string
+    {
+        $money = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($price), Domain::FIRST_DOMAIN_ID);
+
+        return $money->getAmount();
+    }
+
+    /**
+     * @param string $price
+     * @return string
+     */
+    protected function getPriceWithoutVatConvertedToDomainDefaultCurrency(string $price): string
+    {
+        $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(Money::create($price), Domain::FIRST_DOMAIN_ID);
+
+        return $money->getAmount();
     }
 }

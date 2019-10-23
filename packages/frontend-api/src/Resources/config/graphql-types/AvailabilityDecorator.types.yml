@@ -1,0 +1,9 @@
+AvailabilityDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents an availability"
+        fields:
+            name:
+                type: "String"
+                description: "Localized availability name (domain dependent)"

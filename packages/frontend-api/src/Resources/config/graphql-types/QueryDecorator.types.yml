@@ -6,3 +6,12 @@ QueryDecorator:
             categories:
                 type: '[Category!]!'
                 resolve: "@=resolver('categories')"
+            products:
+                type: '[Product!]!'
+                resolve: "@=resolver('products')"
+            product:
+                type: 'Product'
+                resolve: "@=resolver('product', [args['uuid']])"
+                args:
+                    uuid:
+                        type: "ID!"

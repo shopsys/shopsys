@@ -1,0 +1,37 @@
+ProductDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a category"
+        fields:
+            uuid:
+                type: "ID!"
+                description: "UUID"
+            name:
+                type: "String"
+                description: "Localized product name (domain dependent)"
+            shortDescription:
+                type: "String"
+                description: "Localized product short description (domain dependent)"
+            link:
+                type: "String!"
+                description: "Product link"
+            unit:
+                type: "Unit!"
+            isUsingStock:
+                type: "Boolean!"
+            availability:
+                type: "Availability"
+            stockQuantity:
+                type: "Int"
+                description: "Count of quantity on stock"
+            categories:
+                type: "[Category!]!"
+                description: "List of categories"
+            flags:
+                type: "[Flag!]!"
+                description: "List of flags"
+            price:
+                type: "Price"
+                description: "Product price"
+                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Price\\PriceResolver").resolveByProduct(value)'

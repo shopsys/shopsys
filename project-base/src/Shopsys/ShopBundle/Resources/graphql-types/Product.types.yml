@@ -1,0 +1,4 @@
+Product:
+    type: object
+    inherits:
+        - 'ProductDecorator'

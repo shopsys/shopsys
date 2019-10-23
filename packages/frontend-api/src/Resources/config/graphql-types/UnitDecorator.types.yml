@@ -1,0 +1,9 @@
+UnitDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a unit"
+        fields:
+            name:
+                type: "String"
+                description: "Localized unit name (domain dependent)"

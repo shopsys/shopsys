@@ -5,7 +5,7 @@ services:
         public: false
 
     Shopsys\FrontendApiBundle\:
-        resource: '../../**/*{Resolver}.php'
+        resource: '../../**/*{Resolver,Map}.php'
 
     Shopsys\FrontendApiBundle\Controller\FrontendApiController:
         tags: ['controller.service_arguments']

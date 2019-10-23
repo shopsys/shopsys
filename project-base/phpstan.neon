@@ -21,6 +21,10 @@ parameters:
             message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
             path: %currentWorkingDirectory%/tests/ShopBundle/*
         -
+            # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
+            message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
+            path: %currentWorkingDirectory%/tests/FrontendApiBundle/*
+        -
             # In tests, there are helper methods for grabbing services using $container->get()
             message: '#^Method .+::.+\(\) should return .+ but returns (object|object\|null)\.$#'
             path: %currentWorkingDirectory%/tests/ShopBundle/*

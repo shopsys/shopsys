@@ -1,0 +1,4 @@
+Price:
+    type: object
+    inherits:
+        - 'PriceDecorator'
