@@ -21,13 +21,17 @@
 {% block main_content %}
 
     {% if sliderItems is not empty %}
-        <div class="box-slider">
-            <div id="js-slider-homepage" class="box-slider__in">
-                {% for item in sliderItems %}
-                    <div class="box-slider__item">
-                        <a href = "{{ item.link }}">{{ image(item) }}</a>
+        <div class="web__line">
+            <div class="web__container">
+                <div class="box-slider">
+                    <div id="js-slider-homepage" class="box-slider__in">
+                        {% for item in sliderItems %}
+                            <div class="box-slider__item">
+                                <a href="{{ item.link }}">{{ image(item) }}</a>
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                </div>
             </div>
         </div>
     {% endif %}
@@ -35,9 +39,13 @@
     {{ render(controller('ShopsysShopBundle:Front/Category:top')) }}
 
     {% if topProducts is not empty %}
-        <div id="top-products">
-            <h2>{{ 'Special offers'|trans }}</h2>
-            {{ productList.list(topProducts, null, 'h3') }}
+        <div class="web__line">
+            <div class="web__container">
+                <div id="top-products">
+                    <h2>{{ 'Special offers'|trans }}</h2>
+                    {{ productList.list(topProducts, null, 'h3') }}
+                </div>
+            </div>
         </div>
     {% endif %}
 

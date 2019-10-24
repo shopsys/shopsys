@@ -17,11 +17,15 @@
 
 .list-products {
     .reset-ul();
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
     margin-bottom: @margin-gap;
-    margin-left: -@list-products-item-gap;
+
+    .web__main--with-panel {
+        margin-left: -@list-products-item-gap;
+    }
 
     .is-no-flex & {
         display: block;

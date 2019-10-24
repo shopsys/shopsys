@@ -122,7 +122,7 @@ There you can find links to upgrade notes for other versions too.
                 +       --no-cache \
                         -f docker/php-fpm/Dockerfile \
                         . &&
-                ``` 
+                ```
             - change shebang of `.ci/deploy-to-google-cloud.sh`
                 ```diff
                 - #!/bin/sh -ex
@@ -277,7 +277,7 @@ There you can find links to upgrade notes for other versions too.
           use Shopsys\FrameworkBundle\Model\Security\Authenticator;
         + use Shopsys\FrameworkBundle\Model\Security\Roles;
           use Shopsys\ShopBundle\Form\Front\Registration\RegistrationFormType;
-        ```  
+        ```
         ```diff
          public function registerAction(Request $request)
          {
@@ -355,7 +355,7 @@ There you can find links to upgrade notes for other versions too.
         ```
         - doing so will require regenerating error page templates by running `php phing error-pages-generate` inside `php-fpm` container
     - create new acceptance test in [`ErrorHandlingCest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Acceptance/acceptance/ErrorHandlingCest.php)
-        ```diff   
+        ```diff
         +    /**
         +     * @param \Tests\ShopBundle\Test\Codeception\AcceptanceTester $me
         +     */
@@ -401,6 +401,55 @@ There you can find links to upgrade notes for other versions too.
 - improve your data fixtures and tests so they are more resistant against domains and locales settings changes [#1425](https://github.com/shopsys/shopsys/pull/1425)
     - if you have done a lot of changes in your data fixtures you might consider to skip this upgrade
     - for detailed information, see [the separate article](upgrade-instructions-for-improved-data-fixtures-and-tests.md)
+
+- update pages layout to webline layout ([#1464](https://github.com/shopsys/shopsys/pull/1464))
+    - update your custom created pages and wrap them to
+    ```html
+        {% block blockname %}
+            <div class="web__line">
+                <div class="web__container">
+                    ...old content here...
+                </div>
+            </div>
+        {% endblock %}
+    ```
+    - update default pages according this pull request (https://github.com/shopsys/shopsys/pull/1464/files)
+
+    - remove global `.web__line` and `.web__container` and unify main three parts (`.web__header`, `.web__main`, `.web__footer`) in file `src/Shopsys/ShopBundle/Resources/views/Front/Layout/layout.html.twig`
+
+    ```diff
+        -    <div class="web__line">
+        -        <div class="web__header">
+        +    <div class="web__header">
+        +        <div class="web__line">
+    ```
+
+    ```diff
+        -        <div class="web__container">
+        -            {% block content %}{% endblock %}
+        -        </div>
+            </div>
+        - </div>
+        - <div class="web__footer{% if not isCookiesConsentGiven() %} web__footer--with-cookies js-eu-cookies-consent-footer-gap{% endif %}">
+        -    {% include '@ShopsysShop/Front/Layout/footer.html.twig' %}
+        +
+        +    {% block content %}{% endblock %}
+        +
+        +    <div class="web__footer{% if not isCookiesConsentGiven() %} web__footer--with-cookies js-eu-cookies-consent-footer-gap{% endif %}">
+        +        {% include '@ShopsysShop/Front/Layout/footer.html.twig' %}
+        +    </div>
+    ```
+
+    - add `.web__line` and `.web__container` around flashmessages in files `src/Shopsys/ShopBundle/Resources/views/Front/Layout/layoutWithPanel.html.twig`, `src/Shopsys/ShopBundle/Resources/views/Front/Layout/layoutWithoutPanel.html.twig`
+
+    ```diff
+        - {{ render(controller('ShopsysShopBundle:Front/FlashMessage:index')) }}
+        + <div class="web__line">
+        +     <div class="web__container">
+        +         {{ render(controller('ShopsysShopBundle:Front/FlashMessage:index')) }}
+        +     </div>
+        + </div>
+    ```
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
