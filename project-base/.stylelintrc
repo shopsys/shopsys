@@ -1,6 +1,6 @@
 {
   "rules": {
-    "block-no-empty": null,
+    "block-no-empty": true,
     "color-no-invalid-hex": true,
     "color-hex-case": [ "lower", {
         "message": "Lowercase letters are easier to distinguish from numbers"
