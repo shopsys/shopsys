@@ -17,6 +17,40 @@
 
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/print' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="print">
 
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/frontend/images/icons/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/frontend/images/icons/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/frontend/images/icons/favicon-16x16.png') }}">
+        <link rel="mask-icon" href="{{ asset('assets/frontend/images/icons/safari-pinned-tab.svg') }}" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+        <link rel="manifest" href="/manifest.json">
+
+        <script>
+            // Check that service workers are supported
+            if ('serviceWorker' in navigator) {
+                // Use the window load event to keep the page load performant
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/service-worker.js').then(registration => {
+                        if ('pushManager' in registration) {
+                            registration.pushManager.subscribe({
+                                userVisibleOnly: true
+                            }).then(sub => {
+                                console.log('Endpoint URL: ', sub.endpoint);
+                            }).catch(pushError => {
+                                if (Notification.permission === 'denied') {
+                                    console.warn('Permission for notifications was denied');
+                                } else {
+                                    console.error('Unable to subscribe to push', pushError);
+                                }
+                            });
+                        }
+                    }).catch(registrationError => {
+                        console.error('Service worker registration faild!' + registrationError)
+                    });
+                });
+            }
+        </script>
+
         {# bootstrap/tooltip.js must be imported before bootstrap/popover.js #}
         {{ importJavascripts([
             'bundles/bmatznerjquery/js/jquery.min.js',
@@ -34,16 +68,41 @@
     </head>
 
     <body class="web">
+        <button id="js-install-btn" style="display: none" type="button">install</button>
+        <script>
+            let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', e => {
+                deferredPrompt = e;
+                document.getElementById('js-install-btn').style.display = 'block';
+            });
+
+            let installBtn =  document.getElementById('js-install-btn');
+            installBtn.addEventListener('click', event => {
+                if (deferredPrompt === null) {
+                    return;
+                }
+
+                // hide our user interface that shows our A2HS button
+                installBtn.style.display = 'none';
+                // Show the prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                deferredPrompt.userChoice
+                    .then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the shopsys framework prompt');
+                        } else {
+                            console.log('User dismissed the shopsys framework prompt');
+                        }
+                        deferredPrompt = null;
+                    });
+            });
+        </script>
 
         {{ render(controller('ShopsysShopBundle:Front/Script:embedAllPagesScripts')) }}
         {{ render(controller('ShopsysShopBundle:Front/Script:embedAllPagesGoogleAnalyticsScript')) }}
 
         {% block html_body %}{% endblock %}
-
-        {% if app.environment == 'dev' %}
-            <script async src="//localhost:35729/livereload.js"></script>
-        {% endif %}
-
 
         {{ importJavascripts([
             'frontend/plugins/*.js',

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Camera test</title>
+</head>
+<body>
+    <div class="container" style="margin-top: 10px">
+        <div class="row">
+            <div class="col-sm-6">
+                <p><button type="button" class="btn btn-lg btn-default" onclick="getStream('video')">Grab video</button></p>
+                <video controls autoplay style="height:180px; width: 240px;"></video>
+            </div>
+        </div>
+    </div>
+    <script>
+        function getUserMedia(options, successCallback, failureCallback) {
+            var api = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia || navigator.msGetUserMedia;
+            if (api) {
+                return api.bind(navigator)(options, successCallback, failureCallback);
+            }
+        }
+
+        function getStream (type) {
+            if (!navigator.getUserMedia && !navigator.webkitGetUserMedia &&
+                !navigator.mozGetUserMedia && !navigator.msGetUserMedia) {
+                alert('User Media API not supported.');
+                return;
+            }
+
+            var constraints = {};
+            constraints[type] = true;
+            getUserMedia(constraints, function (stream) {
+                var mediaControl = document.querySelector(type);
+
+                if ('srcObject' in mediaControl) {
+                    mediaControl.srcObject = stream;
+                    mediaControl.src = (window.URL || window.webkitURL).createObjectURL(stream);
+                } else if (navigator.mozGetUserMedia) {
+                    mediaControl.mozSrcObject = stream;
+                }
+            }, function (err) {
+                alert('Error: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>
