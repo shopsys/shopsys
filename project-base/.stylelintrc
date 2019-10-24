@@ -6,14 +6,16 @@
         "message": "Lowercase letters are easier to distinguish from numbers"
     } ],
     "comment-empty-line-before": [ "always", {
-      "ignore": ["stylelint-commands", "after-comment"]
+    "ignore": ["stylelint-commands", "after-comment"]
     } ],
     "declaration-colon-space-after": "always",
     "indentation": [ 4, {
       "except": ["value"],
       "message": "Please use 4 spaces for indentation."
     }],
+    "length-zero-no-unit": true,
     "max-empty-lines": 2,
+    "property-blacklist": [ "widht", "marign", "pading" ],
     "rule-empty-line-before": [ "always", {
       "except": ["first-nested"],
       "ignore": ["after-comment"]
