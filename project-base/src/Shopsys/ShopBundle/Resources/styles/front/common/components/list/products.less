@@ -4,6 +4,7 @@
 @list-products-item-image-height: 120px;
 @list-products-item-title-line-height: 18px;
 @list-products-item-description-line-height: 16px;
+@list-products-item-min-height: 353px;
 
 @list-products-line-count-sm: 2;
 @list-products-line-count-md: 3;
@@ -69,10 +70,11 @@
         }
 
         &__in {
-            padding: @list-products-item-padding;
             flex: 1;
             display: flex;
             flex-direction: column;
+            padding: @list-products-item-padding;
+            min-height: @list-products-item-min-height;
         }
 
         &__block {
@@ -107,6 +109,7 @@
 
         &__image {
             height: @list-products-item-image-height;
+            min-height: @list-products-item-image-height;
             position: relative;
             margin-bottom: @list-products-item-inner-gap;
 
