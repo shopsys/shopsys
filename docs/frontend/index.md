@@ -9,3 +9,4 @@
 
 ## Implementation
 * [Page layout design](./page-layout-design.md)
+* [Override admin styles from project-base](./override-admin-styles.md)
