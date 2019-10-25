@@ -36,7 +36,13 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\CustomerFacade: ~
 
+    Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory
+
     Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactory
 
     Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyInlineEdit: ~
 
