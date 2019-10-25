@@ -1613,7 +1613,6 @@ body {
     display: block;
     background: #fff;
     border-bottom: 1px solid #eee;
-    width: 100%;
     padding: 17px 30px 21px 80px;
     position: fixed;
     height: 63px;
@@ -1729,7 +1728,7 @@ body.opened .styleguide-header {
 }
 
 .styleguide-footer p {
-    font-family: "HUGEAvantGardeBold", Helvetica, Arial, sans;
+    font-family: "HUGEAvantGardeBold", Helvetica, Arial, sans-serif;
     letter-spacing: -1px;
     font-size: 15px;
     color: #999;
@@ -1750,17 +1749,15 @@ body.opened .styleguide-sidebar__menu-icon {
     overflow: hidden;
     cursor: pointer;
     text-align: center;
-    right: 0;
-    height: 35px;
-    padding: 15px 0 10px 0;
     z-index: 10;
     width: 45px;
     position: fixed;
     padding: 0;
     height: 35px;
-    background: none;
+    right: 0;
     left: 187px;
-    top: 15px
+    top: 15px;
+    background: none;
 }
 
 .styleguide-sidebar__toggle--in a {
@@ -1811,11 +1808,8 @@ body.opened .styleguide-sidebar__menu-icon {
 
 .styleguide-sidebar__toggle--out {
     margin: 0;
-    padding: 0;
     overflow: hidden;
     cursor: pointer;
-    text-align: center;
-    width: 100%;
     text-align: center;
     height: 63px;
     width: 63px;
@@ -1886,12 +1880,9 @@ body.opened .styleguide-sidebar__menu-icon {
 }
 
 .styleguide-sidebar__content {
-    z-index: 1;
     position: fixed;
     background-color: #fff;
     border-right: 1px solid #eee;
-    -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.37, 0.62, 0.47, 0.72);
-    -webkit-transform: translateX(-240px);
     -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.37, 0.62, 0.47, 0.72);
     transition: transform 0.2s cubic-bezier(0.37, 0.62, 0.47, 0.72);
     -webkit-transform: translateX(-240px);
@@ -1975,8 +1966,6 @@ body.opened .styleguide-iframe-wrapper {
 .styleguide-iframe-wrapper {
     height: 100%;
     width: 100%;
-    max-width: 100%;
-    position: relative;
     left: 0;
     padding: 0;
     margin: 0;
