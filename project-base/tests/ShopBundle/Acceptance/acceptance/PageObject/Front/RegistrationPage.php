@@ -23,8 +23,7 @@ class RegistrationPage extends AbstractPage
         $this->tester->fillFieldByName('registration_form[email]', $email);
         $this->tester->fillFieldByName('registration_form[password][first]', $firstPassword);
         $this->tester->fillFieldByName('registration_form[password][second]', $secondPassword);
-        $translatedLabelForAgreementWithPrivacyPolicy = t('I agree with privacy policy.', [], 'messages', $this->tester->getFrontendLocale());
-        $this->tester->checkOptionByLabel($translatedLabelForAgreementWithPrivacyPolicy);
+        $this->tester->executeJS('return $("#registration_form_privacyPolicy").click()');
         $this->tester->wait(TimedFormTypeExtension::MINIMUM_FORM_FILLING_SECONDS);
         $this->tester->clickByName('registration_form[save]');
     }

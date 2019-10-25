@@ -29,11 +29,11 @@ class OrderPage extends AbstractPage
     }
 
     /**
-     * @param string $transportTitle
+     * @param int $transportPosition
      */
-    public function selectTransport($transportTitle)
+    public function selectTransport($transportPosition)
     {
-        $this->tester->checkOptionByLabelTranslationFrontend($transportTitle, 'dataFixtures');
+        $this->tester->executeJS('return $("#transport_and_payment_form_transport_' . $transportPosition . '").click()');
     }
 
     /**
@@ -55,11 +55,11 @@ class OrderPage extends AbstractPage
     }
 
     /**
-     * @param string $paymentTitle
+     * @param int $paymentPosition
      */
-    public function selectPayment($paymentTitle)
+    public function selectPayment($paymentPosition)
     {
-        $this->tester->checkOptionByLabelTranslationFrontend($paymentTitle, 'dataFixtures');
+        $this->tester->executeJS('return $("#transport_and_payment_form_payment_' . $paymentPosition . '").click()');
     }
 
     /**
@@ -114,6 +114,6 @@ class OrderPage extends AbstractPage
 
     public function acceptLegalConditions()
     {
-        $this->tester->checkOptionByLabelTranslationFrontend('I agree with terms and conditions and privacy policy.');
+        $this->tester->executeJS('return $("#order_personal_info_form_legalConditionsAgreement").click()');
     }
 }

@@ -45,11 +45,11 @@ class ProductFilterPage extends AbstractPage
     }
 
     /**
-     * @param string $label
+     * @param int $brandPosition
      */
-    public function filterByBrand($label)
+    public function filterByBrand($brandPosition)
     {
-        $this->tester->checkOptionByLabelTranslationFrontend($label);
+        $this->tester->executeJS('return $("#product_filter_form_brands_' . $brandPosition . '").click()');
         $this->waitForFilter();
     }
 
