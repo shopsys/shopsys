@@ -9,6 +9,7 @@
             "ignore": ["stylelint-commands", "after-comment"]
         } ],
         "declaration-colon-space-after": "always",
+        "declaration-block-no-duplicate-properties": true,
         "indentation": [ 4, {
             "except": ["value"],
             "message": "Please use 4 spaces for indentation."
