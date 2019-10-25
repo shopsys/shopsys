@@ -73,3 +73,5 @@ If any of the following instructions is not clear enough for you or you need mor
     +        '{{ name }}' => t('Credit card', [], 'dataFixtures', $me->getAdminLocale()),
          ]);
     ```
+- fix your functional tests for single domain: ([#1479](https://github.com/shopsys/shopsys/pull/1479))
+    - fix your `InputPriceRecalculationSchedulerTest` and `PriceExtensionTest` using this [diff](https://github.com/shopsys/shopsys/pull/1479/files)
