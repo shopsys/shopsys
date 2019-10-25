@@ -210,6 +210,14 @@ class ImageExtension extends Twig_Extension
         $htmlAttributes = $attributes;
         unset($htmlAttributes['type'], $htmlAttributes['size']);
 
+        $useLazyLoading = array_key_exists('lazy', $attributes) ? (bool)$attributes['lazy'] : true;
+        $isAttributeClassExistsAndNotEmpty = array_key_exists('class', $attributes) && $attributes['class'] !== '';
+        $htmlAttributes['class'] = sprintf(
+            '%s%s',
+            $useLazyLoading ? 'lazy' : '',
+            $isAttributeClassExistsAndNotEmpty ? ' ' . $attributes['class'] : ''
+        );
+
         return $this->templating->render('@ShopsysFramework/Common/image.html.twig', [
             'attr' => $htmlAttributes,
             'additionalImagesData' => $additionalImagesData,
