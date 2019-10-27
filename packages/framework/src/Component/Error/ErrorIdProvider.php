@@ -4,26 +4,30 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Error;
 
-use Shopsys\FrameworkBundle\Component\String\HashGenerator;
-
 class ErrorIdProvider
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\String\HashGenerator
-     */
-    protected $hashGenerator;
-
     /**
      * @var string|null
      */
     protected $errorId;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
+     * @param \Throwable $exception
      */
-    public function __construct(HashGenerator $hashGenerator)
+    public function setErrorId(\Throwable $exception): void
     {
-        $this->hashGenerator = $hashGenerator;
+        while ($exception) {
+            $data[] = [
+                get_class($exception), $exception->getMessage(), $exception->getCode(), $exception->getFile(), $exception->getLine(),
+                array_map(function (array $item): array {
+                    unset($item['args']);
+                    return $item;
+                }, $exception->getTrace()),
+            ];
+            $exception = $exception->getPrevious();
+        }
+
+        $this->errorId = substr(md5(serialize($data)), 0, 10);
     }
 
     /**
@@ -31,9 +35,6 @@ class ErrorIdProvider
      */
     public function getErrorId(): string
     {
-        if (!$this->errorId) {
-            $this->errorId = $this->hashGenerator->generateHash(10);
-        }
         return $this->errorId;
     }
 }

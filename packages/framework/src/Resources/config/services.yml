@@ -603,6 +603,21 @@ services:
             - '@?logger'
             - '%kernel.debug%'
             - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
+            - '@Shopsys\FrameworkBundle\Component\Log\TracyFileLogger'
+
+    shopsys.tracy.logger.default:
+        class: Tracy\Logger
+        factory: [Tracy\Debugger, getLogger]
+
+    shopsys.tracy.blue_screen.default:
+        class: Tracy\BlueScreen
+        factory: [Tracy\Debugger, getBlueScreen]
+
+    Shopsys\FrameworkBundle\Component\Log\TracyFileLogger:
+        arguments:
+            - '%kernel.logs_dir%'
+            - '@shopsys.tracy.logger.default'
+            - '@shopsys.tracy.blue_screen.default'
 
     twig.stringloader:
         class: Twig_Loader_Array
