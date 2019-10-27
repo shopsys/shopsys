@@ -15,7 +15,7 @@ class TracyFileLogger
     protected $logDirectory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Log\TracyLogger
+     * @var \Tracy\Logger
      */
     protected $tracyLogger;
 
