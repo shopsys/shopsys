@@ -7,8 +7,9 @@ QueryDecorator:
                 type: '[Category!]!'
                 resolve: "@=resolver('categories')"
             products:
-                type: '[Product!]!'
-                resolve: "@=resolver('products')"
+                type: "ProductConnection"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=resolver('products', [args])"
             product:
                 type: 'Product'
                 resolve: "@=resolver('product', [args['uuid']])"
@@ -17,3 +18,9 @@ QueryDecorator:
                         type: "ID!"
             RegularProduct:
                 type: 'RegularProduct'
+            category:
+                type: 'Category'
+                resolve: "@=resolver('category', [args['uuid']])"
+                args:
+                    uuid:
+                        type: "ID!"

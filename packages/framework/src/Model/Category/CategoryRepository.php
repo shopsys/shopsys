@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
@@ -201,6 +202,21 @@ class CategoryRepository extends NestedTreeRepository
         if ($category === null) {
             $message = 'Category with ID ' . $categoryId . ' not found.';
             throw new \Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException($message);
+        }
+
+        return $category;
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category
+     */
+    public function getOneByUuid(string $uuid): Category
+    {
+        $category = $this->getCategoryRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($category === null) {
+            throw new CategoryNotFoundException('Category with UUID ' . $uuid . ' does not exist.');
         }
 
         return $category;

@@ -26,3 +26,8 @@ CategoryDecorator:
                         defaultValue: null
                     size:
                         type: "String"
+            products:
+                type: "ProductConnection"
+                description: "Paginated products of category"
+                argsBuilder: "Relay::Connection"
+                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver").resolveByCategory(args, value)'
