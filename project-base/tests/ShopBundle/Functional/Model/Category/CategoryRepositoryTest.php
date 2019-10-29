@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Category;
 
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class CategoryRepositoryTest extends TransactionFunctionalTestCase

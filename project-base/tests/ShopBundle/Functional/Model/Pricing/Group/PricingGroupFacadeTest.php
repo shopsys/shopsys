@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Model\Pricing\Group;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
 use Shopsys\ShopBundle\DataFixtures\Demo\PricingGroupDataFixture;

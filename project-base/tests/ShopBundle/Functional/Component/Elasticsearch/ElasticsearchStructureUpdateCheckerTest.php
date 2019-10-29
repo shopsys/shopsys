@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Component\Elasticsearch;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Tests\ShopBundle\Test\FunctionalTestCase;
 

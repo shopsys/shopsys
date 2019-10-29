@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Model\Order;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\ShopBundle\Model\Payment\Payment;
 use Shopsys\ShopBundle\Model\Transport\Transport;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;

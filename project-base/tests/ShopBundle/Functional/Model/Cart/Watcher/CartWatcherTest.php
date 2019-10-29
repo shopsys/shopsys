@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 use Shopsys\ShopBundle\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\ShopBundle\Model\Product\Product;
-use Shopsys\ShopBundle\Model\Product\ProductData;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class CartWatcherTest extends TransactionFunctionalTestCase

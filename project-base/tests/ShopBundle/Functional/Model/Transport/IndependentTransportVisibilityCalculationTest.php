@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Functional\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\ShopBundle\Model\Transport\Transport;

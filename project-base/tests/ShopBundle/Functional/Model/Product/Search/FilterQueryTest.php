@@ -6,7 +6,6 @@ namespace Tests\ShopBundle\Functional\Model\Product\Search;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\ShopBundle\DataFixtures\Demo\PricingGroupDataFixture;
