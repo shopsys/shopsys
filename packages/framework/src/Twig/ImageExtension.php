@@ -218,6 +218,11 @@ class ImageExtension extends Twig_Extension
             $isAttributeClassExistsAndNotEmpty ? ' ' . $attributes['class'] : ''
         );
 
+        if($useLazyLoading){
+            $htmlAttributes['data-src'] = $htmlAttributes['src'];
+            $htmlAttributes['src'] = '';
+        }
+
         return $this->templating->render('@ShopsysFramework/Common/image.html.twig', [
             'attr' => $htmlAttributes,
             'additionalImagesData' => $additionalImagesData,
