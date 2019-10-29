@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Cart\Watcher;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
