@@ -7,6 +7,29 @@ can manage minimum fraction digits, which will be displayed on fronted, for ever
 To avoid of [BC breaks](/docs/contributing/backward-compatibility-promise.md), new functions for rounding by currency have been implemented.
 Because of new functions, new tests have been introduced.
 
+### Data fixture
+- set up default settings for demo currencies in `CurrencyDataFixture`
+```diff
+         /**
+          * The "CZK" currency is created in database migration.
+          * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135342
+          */
+         $currencyCzk = $this->currencyFacade->getById(1);
++        $currencyData = $this->currencyDataFactory->createFromCurrency($currencyCzk);
++        $currencyData->minFractionDigits = Currency::DEFAULT_MIN_FRACTION_DIGITS;
++        $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
++        $currencyCzk = $this->currencyFacade->edit($currencyCzk->getId(), $currencyData);
+         $this->addReference(self::CURRENCY_CZK, $currencyCzk);
+```
+```diff
+          $currencyData->code = Currency::CODE_EUR;
+          $currencyData->exchangeRate = '25';
++         $currencyData->minFractionDigits = Currency::DEFAULT_MIN_FRACTION_DIGITS;
++         $currencyData->roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS;
+          $currencyEuro = $this->currencyFacade->create($currencyData);
+```
+- If you would like to use different settings in your existing projects, we recommend you to create migration on your own 
+
 ### New tests for price formatting 
 - add tests for `NumberFormatHelper`
 ```
