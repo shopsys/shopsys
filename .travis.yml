@@ -6,8 +6,8 @@ env:
 
 before_install:
     - cp -f ./docker/conf/docker-compose.yml.dist ./docker-compose.yml
-    - "sed -i 's#www_data_uid: 1000#www_data_uid: $TRAVIS_USER_ID#' ./docker-compose.yml"
-    - "sed -i 's#www_data_gid: 1000#www_data_uid: $TRAVIS_GROUP_ID#' ./docker-compose.yml"
+    - "sed -i \"s#www_data_uid: 1000#www_data_uid: $TRAVIS_USER_ID#\" ./docker-compose.yml"
+    - "sed -i \"s#www_data_gid: 1000#www_data_gid: $TRAVIS_GROUP_ID#\" ./docker-compose.yml"
 
 install:
     - docker-compose pull --parallel postgres redis selenium-server webserver
