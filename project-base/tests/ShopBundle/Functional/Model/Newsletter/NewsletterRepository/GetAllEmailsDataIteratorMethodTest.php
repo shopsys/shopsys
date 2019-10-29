@@ -18,11 +18,6 @@ class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
      */
     private $newsletterRepository;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testSubscriberFoundInFirstDomain(): void
     {
         $iterator = $this->newsletterRepository->getAllEmailsDataIteratorByDomainId(1);
