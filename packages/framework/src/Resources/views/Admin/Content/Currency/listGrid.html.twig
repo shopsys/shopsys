@@ -56,6 +56,26 @@
     </span>
 {% endblock %}
 
+{% block grid_value_cell_id_roundingType %}
+    <span class="form-edit-block form-edit-block--size-1">
+        {% if value == constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\Currency\\Currency::ROUNDING_TYPE_HUNDREDTHS') %}
+            {{ 'To hundredths (cents)'|trans }}
+        {% elseif value == constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\Currency\\Currency::ROUNDING_TYPE_FIFTIES') %}
+            {{ 'To fifty hundredths (halfs)'|trans }}
+        {% elseif value == constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\Currency\\Currency::ROUNDING_TYPE_INTEGER') %}
+            {{ 'To whole numbers'|trans }}
+        {% endif %}
+    </span>
+{% endblock %}
+
+
+{% block grid_value_cell_edit_id_roundingType %}
+    <span class="form-edit-block form-edit-block--size-1">
+        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
+        {{ form_widget(form.roundingType, {attr: {class: "input--half-width"}}) }}
+    </span>
+{% endblock %}
+
 {% block grid_no_data %}
     {{ 'No currencies found. You have to create some first.'|trans }}
 {% endblock %}

@@ -5,8 +5,10 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency;
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -87,6 +89,15 @@ class CurrencyFormType extends AbstractType
                     new Constraints\GreaterThanOrEqual(0),
                     new Constraints\LessThanOrEqual(CurrencyFormatterFactory::MAXIMUM_FRACTION_DIGITS),
                 ],
+            ])
+            ->add('roundingType', ChoiceType::class, [
+                'required' => true,
+                'choices' => [
+                    t('To hundredths (cents)') => Currency::ROUNDING_TYPE_HUNDREDTHS,
+                    t('To fifty hundredths (halfs)') => Currency::ROUNDING_TYPE_FIFTIES,
+                    t('To whole numbers') => Currency::ROUNDING_TYPE_INTEGER,
+                ],
+                'label' => t('Price including VAT rounding'),
             ]);
     }
 
