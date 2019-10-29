@@ -13,12 +13,6 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 class ImageExtensionTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
      * @inject
      */

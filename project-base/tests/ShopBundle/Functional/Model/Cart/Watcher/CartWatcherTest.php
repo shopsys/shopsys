@@ -46,12 +46,6 @@ class CartWatcherTest extends TransactionFunctionalTestCase
      */
     private $productDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
     public function testGetModifiedPriceItemsAndUpdatePrices()
     {
         $customerIdentifier = new CustomerIdentifier('randomString');

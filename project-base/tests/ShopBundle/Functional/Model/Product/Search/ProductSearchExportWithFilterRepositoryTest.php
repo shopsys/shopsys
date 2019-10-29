@@ -15,12 +15,6 @@ class ProductSearchExportWithFilterRepositoryTest extends TransactionFunctionalT
      */
     private $repository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
     public function testProductDataHaveExpectedStructure(): void
     {
         $data = $this->repository->getProductsData($this->domain->getId(), $this->domain->getLocale(), 0, 10);

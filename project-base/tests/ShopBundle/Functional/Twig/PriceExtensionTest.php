@@ -21,12 +21,6 @@ class PriceExtensionTest extends FunctionalTestCase
     protected const NBSP = "\xc2\xa0";
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
      * @inject
      */

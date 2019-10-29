@@ -13,12 +13,6 @@ class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase
     private const TESTED_PRODUCT_ID = 1;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
-    /**
      * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
      * @inject
      */

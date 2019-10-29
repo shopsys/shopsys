@@ -32,12 +32,6 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     private $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
      * @inject
      */

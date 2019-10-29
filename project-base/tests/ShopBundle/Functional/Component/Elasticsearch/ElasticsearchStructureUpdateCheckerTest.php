@@ -10,12 +10,6 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 final class ElasticsearchStructureUpdateCheckerTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureUpdateChecker
      * @inject
      */

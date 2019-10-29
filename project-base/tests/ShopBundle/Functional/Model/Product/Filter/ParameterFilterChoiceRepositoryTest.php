@@ -12,12 +12,6 @@ use Tests\ShopBundle\Test\ParameterTransactionFunctionalTestCase;
 class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository
      * @inject
      */

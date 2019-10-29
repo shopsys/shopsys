@@ -26,12 +26,6 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     protected $productFilterConfigFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    protected $domain;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
      * @inject
      */

@@ -25,12 +25,6 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class OrderPreviewCalculationTest extends FunctionalTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
     public function testCalculatePreviewWithTransportAndPayment()
     {
         $vatData = new VatData();

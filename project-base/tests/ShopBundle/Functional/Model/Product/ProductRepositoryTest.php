@@ -23,12 +23,6 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
     private $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
-    /**
      * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
      * @inject
      */

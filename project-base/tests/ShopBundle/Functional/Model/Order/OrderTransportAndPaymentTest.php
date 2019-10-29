@@ -14,12 +14,6 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      * @inject
      */

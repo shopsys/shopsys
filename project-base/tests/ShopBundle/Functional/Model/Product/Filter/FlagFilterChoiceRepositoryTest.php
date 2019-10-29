@@ -18,12 +18,6 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
      */
     private $flagFilterChoiceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
     public function testFlagFilterChoicesFromCategoryWithNoFlags(): void
     {
         $flagFilterChoices = $this->getChoicesForCategoryReference(CategoryDataFixture::CATEGORY_GARDEN_TOOLS);

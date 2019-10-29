@@ -18,12 +18,6 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
      */
     private $brandFilterChoiceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
     public function testBrandFilterChoicesFromCategoryWithNoBrands(): void
     {
         $brandFilterChoices = $this->getChoicesForCategoryReference(CategoryDataFixture::CATEGORY_BOOKS);

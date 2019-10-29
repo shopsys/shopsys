@@ -22,7 +22,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      * @inject
      */
-    private $domain;
+    protected $domain;
 
     protected function setUpDomain()
     {

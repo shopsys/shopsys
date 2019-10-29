@@ -9,16 +9,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class ParameterTransactionFunctionalTestCase extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    private $domain;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
      * @inject
      */
-    private $parameterFacade;
+    protected $parameterFacade;
 
     /**
      * @param string $parameterValueNameId
