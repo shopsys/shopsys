@@ -15,13 +15,18 @@
 }
 
 #colors li>.color {
-	height: 120px;
-	padding: 10px;
+	padding: 15px;
 	margin-right: 0.9375em;
+	border-radius: 5px;
 }
 
 #colors li:last-child {
 	margin-right: 0
+}
+
+#colors li>.color>.color__text {
+	color: #fff;
+	background: transparent;
 }
 
 .font-huge {
