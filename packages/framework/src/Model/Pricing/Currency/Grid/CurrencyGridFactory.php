@@ -56,6 +56,7 @@ class CurrencyGridFactory implements GridFactoryInterface
         $grid->setDefaultOrder('name');
         $grid->addColumn('name', 'c.name', t('Name'), true);
         $grid->addColumn('code', 'c.code', t('Code'), true);
+        $grid->addColumn('minFractionDigits', 'c.minFractionDigits', t('Min fraction digits'), true);
         $grid->addColumn('exchangeRate', 'c.exchangeRate', t('Exchange rate'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_currency_deleteconfirm', ['id' => 'c.id'])

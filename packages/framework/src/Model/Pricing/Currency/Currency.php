@@ -14,6 +14,7 @@ class Currency
     public const CODE_EUR = 'EUR';
 
     public const DEFAULT_EXCHANGE_RATE = '1';
+    public const DEFAULT_MIN_FRACTION_DIGITS = 2;
 
     /**
      * @var int
@@ -46,6 +47,13 @@ class Currency
     protected $exchangeRate;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $minFractionDigits;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      */
     public function __construct(CurrencyData $currencyData)
@@ -53,6 +61,7 @@ class Currency
         $this->name = $currencyData->name;
         $this->code = $currencyData->code;
         $this->exchangeRate = $currencyData->exchangeRate;
+        $this->minFractionDigits = $currencyData->minFractionDigits;
     }
 
     /**
@@ -96,11 +105,20 @@ class Currency
     }
 
     /**
+     * @return int
+     */
+    public function getMinFractionDigits(): int
+    {
+        return $this->minFractionDigits;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      */
     public function edit(CurrencyData $currencyData)
     {
         $this->name = $currencyData->name;
         $this->code = $currencyData->code;
+        $this->minFractionDigits = $currencyData->minFractionDigits;
     }
 }

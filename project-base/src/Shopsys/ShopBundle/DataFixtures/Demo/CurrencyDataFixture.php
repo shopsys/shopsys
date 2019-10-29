@@ -63,6 +63,7 @@ class CurrencyDataFixture extends AbstractReferenceFixture
             $currencyData->name = 'Euro';
             $currencyData->code = Currency::CODE_EUR;
             $currencyData->exchangeRate = '25';
+            $currencyData->minFractionDigits = Currency::DEFAULT_MIN_FRACTION_DIGITS;
             $currencyEuro = $this->currencyFacade->create($currencyData);
             $this->addReference(self::CURRENCY_EUR, $currencyEuro);
         }

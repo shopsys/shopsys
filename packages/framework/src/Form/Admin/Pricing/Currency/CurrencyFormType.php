@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency;
 
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
+use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Symfony\Component\Form\AbstractType;
@@ -77,6 +78,14 @@ class CurrencyFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter currency exchange rate']),
                     new Constraints\GreaterThan(0),
+                ],
+            ])
+            ->add('minFractionDigits', NumberType::class, [
+                'required' => true,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter currency minimum fraction digits']),
+                    new Constraints\GreaterThanOrEqual(0),
+                    new Constraints\LessThanOrEqual(CurrencyFormatterFactory::MAXIMUM_FRACTION_DIGITS),
                 ],
             ]);
     }
