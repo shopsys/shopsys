@@ -22,6 +22,7 @@ class PriceExtensionTest extends FunctionalTestCase
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @inject
      */
     private $domain;
 
@@ -39,6 +40,7 @@ class PriceExtensionTest extends FunctionalTestCase
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory
+     * @inject
      */
     private $currencyFormatterFactory;
 

@@ -15,6 +15,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @inject
      */
     private $domain;
 
