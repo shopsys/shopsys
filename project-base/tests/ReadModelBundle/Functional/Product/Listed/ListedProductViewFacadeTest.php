@@ -7,21 +7,24 @@ namespace Tests\ReadModelBundle\Functional\Product\Listed;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView;
-use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class ListedProductViewFacadeTest extends FunctionalTestCase
 {
+    /**
+     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade
+     * @inject
+     */
+    private $listedProductViewFacade;
+
     public function testGetAllAccessories(): void
     {
         $firstDomainLocale = $this->getFirstDomainLocale();
-        /** @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade */
-        $listedProductViewFacade = $this->getContainer()->get(ListedProductViewFacadeInterface::class);
 
         $productId1 = 24;
         $productId2 = 13;
 
-        $listedProductViews = $listedProductViewFacade->getAllAccessories(1);
+        $listedProductViews = $this->listedProductViewFacade->getAllAccessories(1);
 
         $this->assertCount(2, $listedProductViews);
 
@@ -37,13 +40,10 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
 
     public function testGetPaginatedForBrand(): void
     {
-        /** @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade */
-        $listedProductViewFacade = $this->getContainer()->get(ListedProductViewFacadeInterface::class);
-
         $brandId = 1;
         $foundProductId = 5;
 
-        $paginationResults = $listedProductViewFacade->getPaginatedForBrand($brandId, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 10);
+        $paginationResults = $this->listedProductViewFacade->getPaginatedForBrand($brandId, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 10);
         $listedProductViews = $paginationResults->getResults();
 
         $this->assertCount(1, $listedProductViews);
@@ -54,11 +54,9 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
     public function testGetFilteredPaginatedForSearch(): void
     {
         $firstDomainLocale = $this->getFirstDomainLocale();
-        /** @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade */
-        $listedProductViewFacade = $this->getContainer()->get(ListedProductViewFacadeInterface::class);
         $emptyFilterData = new ProductFilterData();
 
-        $paginationResults = $listedProductViewFacade->getFilteredPaginatedForSearch('kitty', $emptyFilterData, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 10);
+        $paginationResults = $this->listedProductViewFacade->getFilteredPaginatedForSearch('kitty', $emptyFilterData, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 10);
         $listedProductViews = $paginationResults->getResults();
 
         $this->assertArrayHasKey(1, $listedProductViews);
@@ -69,12 +67,10 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
     public function testGetTop(): void
     {
         $firstDomainLocale = $this->getFirstDomainLocale();
-        /** @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade */
-        $listedProductViewFacade = $this->getContainer()->get(ListedProductViewFacadeInterface::class);
 
         $firstTopProductId = 1;
 
-        $listedProductViews = $listedProductViewFacade->getTop(1);
+        $listedProductViews = $this->listedProductViewFacade->getTop(1);
 
         $this->assertCount(1, $listedProductViews);
         $this->assertArrayHasKey($firstTopProductId, $listedProductViews);
@@ -84,13 +80,11 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
 
     public function testGetFilteredPaginatedInCategory(): void
     {
-        /** @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade */
-        $listedProductViewFacade = $this->getContainer()->get(ListedProductViewFacadeInterface::class);
         $emptyFilterData = new ProductFilterData();
 
         $categoryId = 9;
 
-        $paginationResults = $listedProductViewFacade->getFilteredPaginatedInCategory($categoryId, $emptyFilterData, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 5);
+        $paginationResults = $this->listedProductViewFacade->getFilteredPaginatedInCategory($categoryId, $emptyFilterData, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 5);
         $listedProductViews = $paginationResults->getResults();
 
         $this->assertCount(5, $listedProductViews);

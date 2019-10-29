@@ -11,6 +11,12 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 final class ElasticsearchStructureUpdateCheckerTest extends FunctionalTestCase
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @inject
+     */
+    private $domain;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureUpdateChecker
      * @inject
      */
@@ -45,10 +51,7 @@ final class ElasticsearchStructureUpdateCheckerTest extends FunctionalTestCase
      */
     public function elasticseachIndexesParametersProvider(): iterable
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = $this->getContainer()->get(Domain::class);
-
-        foreach ($domain->getAllIds() as $domainId) {
+        foreach ($this->domain->getAllIds() as $domainId) {
             yield [$domainId, ProductElasticsearchRepository::ELASTICSEARCH_INDEX];
         }
     }

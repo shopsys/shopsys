@@ -15,14 +15,9 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
+     * @inject
      */
     private $localization;
-
-    protected function setUp()
-    {
-        $this->localization = $this->getContainer()->get(Localization::class);
-        parent::setUp();
-    }
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation

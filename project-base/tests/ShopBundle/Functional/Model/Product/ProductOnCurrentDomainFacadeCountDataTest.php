@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Product;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -31,6 +31,18 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      * @inject
      */
     protected $domain;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
+     * @inject
+     */
+    protected $parameterRepository;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     * @inject
+     */
+    protected $priceConverter;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
@@ -348,12 +360,10 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function categoryPriceTestCase(): array
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter */
-        $priceConverter = $this->getContainer()->get(PriceConverter::class);
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), Domain::FIRST_DOMAIN_ID);
-        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(80000), Domain::FIRST_DOMAIN_ID);
+        $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(1000), Domain::FIRST_DOMAIN_ID);
+        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(80000), Domain::FIRST_DOMAIN_ID);
 
         $countData = new ProductFilterCountData();
         $countData->countInStock = 6;
@@ -469,9 +479,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function categoryFlagBrandAndParametersTestCase(): array
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = $this->getContainer()->get(Domain::class);
-        $firstDomainLocale = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
+        $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_CANON);
@@ -541,9 +549,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function categoryParametersTestCase(): array
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = $this->getContainer()->get(Domain::class);
-        $firstDomainLocale = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
+        $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
         $filterData->parameters[] = $this->createParameterFilterData(
@@ -618,10 +624,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository */
-        $parameterRepository = $this->getContainer()->get(ParameterRepository::class);
-
-        $parameter = $parameterRepository->findParameterByNames($namesByLocale);
+        $parameter = $this->parameterRepository->findParameterByNames($namesByLocale);
         $parameterValues = $this->getParameterValuesByLocalesAndTexts($valuesTextsByLocales);
 
         $parameterFilterData = new ParameterFilterData();
@@ -764,12 +767,9 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function searchPriceTestCase(): array
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter */
-        $priceConverter = $this->getContainer()->get(PriceConverter::class);
-
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(5000), Domain::FIRST_DOMAIN_ID);
-        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(50000), Domain::FIRST_DOMAIN_ID);
+        $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(5000), Domain::FIRST_DOMAIN_ID);
+        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(50000), Domain::FIRST_DOMAIN_ID);
         $countData = new ProductFilterCountData();
         $countData->countInStock = 9;
         $countData->countByBrandId = [
@@ -830,9 +830,6 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function searchPriceStockFlagBrandsTestCase(): array
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter */
-        $priceConverter = $this->getContainer()->get(PriceConverter::class);
-
         $filterData = new ProductFilterData();
         $filterData->inStock = true;
         $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_NEW_PRODUCT);
@@ -840,7 +837,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_DEFENDER);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_GENIUS);
         $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_HP);
-        $filterData->maximalPrice = $priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20000), Domain::FIRST_DOMAIN_ID);
+        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20000), Domain::FIRST_DOMAIN_ID);
 
         $countData = new ProductFilterCountData();
         $countData->countInStock = 3;

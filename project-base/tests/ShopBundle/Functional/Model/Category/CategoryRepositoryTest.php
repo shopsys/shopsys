@@ -42,12 +42,6 @@ class CategoryRepositoryTest extends TransactionFunctionalTestCase
      */
     private $localization;
 
-    protected function setUp()
-    {
-        $this->localization = $this->getContainer()->get(Localization::class);
-        parent::setUp();
-    }
-
     public function testDoNotGetCategoriesWithoutVisibleChildren()
     {
         $categoryData = $this->categoryDataFactory->create();
