@@ -401,6 +401,9 @@ There you can find links to upgrade notes for other versions too.
 - improve your data fixtures and tests so they are more resistant against domains and locales settings changes [#1425](https://github.com/shopsys/shopsys/pull/1425)
     - if you have done a lot of changes in your data fixtures you might consider to skip this upgrade
     - for detailed information, see [the separate article](upgrade-instructions-for-improved-data-fixtures-and-tests.md)
+
+- cover new rounding functionality with tests, for detail information see [the separate article](upgrade-instructions-for-currency-rounding.md)
+
 - add possibility to override admin styles from project-base
  ([#1472](https://github.com/shopsys/shopsys/pull/1472))
     - delete all files from `src/Shopsys/ShopBundle/styles/admin/` and create two new files in it - `main.less` and `todo.less`
