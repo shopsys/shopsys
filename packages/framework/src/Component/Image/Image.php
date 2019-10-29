@@ -137,6 +137,14 @@ class Image implements EntityFileUploadInterface
     }
 
     /**
+     * @return int|null
+     */
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    /**
      * @return string
      */
     public function getFilename()

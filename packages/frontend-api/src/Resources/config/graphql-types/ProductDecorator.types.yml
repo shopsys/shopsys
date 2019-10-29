@@ -35,3 +35,13 @@ ProductDecorator:
                 type: "Price"
                 description: "Product price"
                 resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Price\\PriceResolver").resolveByProduct(value)'
+            images:
+                type: "[Image]!"
+                description: "Product images"
+                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver").resolveByProduct(value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
