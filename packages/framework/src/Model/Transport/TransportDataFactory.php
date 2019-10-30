@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class TransportDataFactory implements TransportDataFactoryInterface
@@ -23,18 +25,42 @@ class TransportDataFactory implements TransportDataFactoryInterface
     protected $domain;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null
+     */
+    protected $imageFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
      */
     public function __construct(
         TransportFacade $transportFacade,
         VatFacade $vatFacade,
-        Domain $domain
+        Domain $domain,
+        ?ImageFacade $imageFacade = null
     ) {
         $this->transportFacade = $transportFacade;
         $this->vatFacade = $vatFacade;
         $this->domain = $domain;
+        $this->imageFacade = $imageFacade;
+    }
+
+    /**
+     * @required
+     * @internal This function will be replaced by constructor injection in next major
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     */
+    public function setImageFacade(ImageFacade $imageFacade): void
+    {
+        if ($this->imageFacade !== null && $this->imageFacade !== $imageFacade) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->imageFacade === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->imageFacade = $imageFacade;
+        }
     }
 
     /**
@@ -112,5 +138,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
         foreach ($transport->getPrices() as $transportPrice) {
             $transportData->pricesByCurrencyId[$transportPrice->getCurrency()->getId()] = $transportPrice->getPrice();
         }
+
+        $transportData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($transport, null);
     }
 }

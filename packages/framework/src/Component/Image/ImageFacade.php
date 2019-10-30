@@ -9,6 +9,7 @@ use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 
@@ -94,8 +95,34 @@ class ImageFacade
 
     /**
      * @param object $entity
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData $imageUploadData
+     * @param string|null $type
+     */
+    public function manageImages(object $entity, ImageUploadData $imageUploadData, ?string $type = null): void
+    {
+        $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
+        $uploadedFiles = $imageUploadData->uploadedFiles;
+        $orderedImages = $imageUploadData->orderedImages;
+
+        if ($imageEntityConfig->isMultiple($type) === false) {
+            if (count($orderedImages) > 1) {
+                array_shift($orderedImages);
+                $this->deleteImages($entity, $orderedImages);
+            }
+            $this->uploadImage($entity, $uploadedFiles, $type);
+        } else {
+            $this->saveImageOrdering($orderedImages);
+            $this->uploadImages($entity, $uploadedFiles, $type);
+        }
+
+        $this->deleteImages($entity, $imageUploadData->imagesToDelete);
+    }
+
+    /**
+     * @param object $entity
      * @param array $temporaryFilenames
      * @param string|null $type
+     * @deprecated This function will be changed to protected in the next major release, use ImageFacade::manageImages instead
      */
     public function uploadImage($entity, $temporaryFilenames, $type)
     {
@@ -125,6 +152,7 @@ class ImageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
+     * @deprecated This function will be changed to protected in the next major release, use ImageFacade::manageImages instead
      */
     public function saveImageOrdering($orderedImages)
     {
@@ -136,6 +164,7 @@ class ImageFacade
      * @param object $entity
      * @param array|null $temporaryFilenames
      * @param string|null $type
+     * @deprecated This function will be changed to protected in the next major release, use ImageFacade::manageImages instead
      */
     public function uploadImages($entity, $temporaryFilenames, $type)
     {
@@ -154,6 +183,7 @@ class ImageFacade
     /**
      * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
+     * @deprecated This function will be changed to protected in the next major release, use ImageFacade::manageImages instead
      */
     public function deleteImages($entity, array $images)
     {

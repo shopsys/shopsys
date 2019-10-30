@@ -82,7 +82,7 @@ class BrandFacade
         $brand = $this->brandFactory->create($brandData);
         $this->em->persist($brand);
         $this->em->flush();
-        $this->imageFacade->uploadImage($brand, $brandData->image->uploadedFiles, null);
+        $this->imageFacade->manageImages($brand, $brandData->image);
 
         foreach ($domains as $domain) {
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(
@@ -107,7 +107,7 @@ class BrandFacade
         $domains = $this->domain->getAll();
         $brand = $this->brandRepository->getById($brandId);
         $brand->edit($brandData);
-        $this->imageFacade->uploadImage($brand, $brandData->image->uploadedFiles, null);
+        $this->imageFacade->manageImages($brand, $brandData->image);
         $this->em->flush();
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_brand_detail', $brand->getId(), $brandData->urls);

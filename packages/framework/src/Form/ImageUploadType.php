@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
+use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Form\Transformers\ImagesIdsToImagesTransformer;
 use Symfony\Component\Form\AbstractType;
@@ -27,13 +29,39 @@ class ImageUploadType extends AbstractType
     private $imagesIdsToImagesTransformer;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig|null
+     */
+    private $imageConfig;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig|null $imageConfig
      */
-    public function __construct(ImageFacade $imageFacade, ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer)
-    {
+    public function __construct(
+        ImageFacade $imageFacade,
+        ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer,
+        ?ImageConfig $imageConfig = null
+    ) {
         $this->imageFacade = $imageFacade;
         $this->imagesIdsToImagesTransformer = $imagesIdsToImagesTransformer;
+        $this->imageConfig = $imageConfig;
+    }
+
+    /**
+     * @required
+     * @internal This function will be replaced by constructor injection in next major
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
+     */
+    public function setImageConfig(ImageConfig $imageConfig): void
+    {
+        if ($this->imageConfig !== null && $this->imageConfig !== $imageConfig) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->imageConfig === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->imageConfig = $imageConfig;
+        }
     }
 
     /**
@@ -45,6 +73,8 @@ class ImageUploadType extends AbstractType
             'data_class' => ImageUploadData::class,
             'entity' => null,
             'image_type' => null,
+            'multiple' => null,
+            'image_entity_class' => null,
         ]);
     }
 
@@ -59,6 +89,7 @@ class ImageUploadType extends AbstractType
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['images_by_id'] = $this->getImagesIndexedById($options);
         $view->vars['image_type'] = $options['image_type'];
+        $view->vars['multiple'] = $options['multiple'] ?? $this->isMultiple($options);
     }
 
     /**
@@ -69,22 +100,20 @@ class ImageUploadType extends AbstractType
     {
         $builder->resetModelTransformers();
 
-        if ($options['multiple']) {
-            $builder->add(
-                $builder->create('orderedImages', CollectionType::class, [
-                    'required' => false,
-                    'entry_type' => HiddenType::class,
-                ])->addModelTransformer($this->imagesIdsToImagesTransformer)
-            );
-            $builder->add('imagesToDelete', ChoiceType::class, [
+        $builder->add(
+            $builder->create('orderedImages', CollectionType::class, [
                 'required' => false,
-                'multiple' => true,
-                'expanded' => true,
-                'choices' => $this->getImagesIndexedById($options),
-                'choice_label' => 'filename',
-                'choice_value' => 'id',
-            ]);
-        }
+                'entry_type' => HiddenType::class,
+            ])->addModelTransformer($this->imagesIdsToImagesTransformer)
+        );
+        $builder->add('imagesToDelete', ChoiceType::class, [
+            'required' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'choices' => $this->getImagesIndexedById($options),
+            'choice_label' => 'filename',
+            'choice_value' => 'id',
+        ]);
     }
 
     /**
@@ -98,6 +127,21 @@ class ImageUploadType extends AbstractType
         }
 
         return $this->imageFacade->getImagesByEntityIndexedById($options['entity'], $options['image_type']);
+    }
+
+    /**
+     * @param array $options
+     * @return bool
+     */
+    private function isMultiple(array $options)
+    {
+        if ($options['image_entity_class'] === null) {
+            return false;
+        }
+
+        $imageEntityConfig = $this->imageConfig->getImageEntityConfigByClass($options['image_entity_class']);
+
+        return $imageEntityConfig->isMultiple($options['image_type']);
     }
 
     /**

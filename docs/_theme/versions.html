@@ -1,0 +1,15 @@
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version">
+      <a href="https://github.com/shopsys/shopsys/" class="rst-current-version-icon fa fa-github" target="_blank" title="Github"></a>
+      <a href="https://shopsysframework.slack.com/" class="rst-current-version-icon" target="_blank" title="Slack">
+          <img src="{{ base_url }}/_theme/img/slack.png" class="rst-current-version-icon-image" ></a>
+      <a href="https://twitter.com/shopsyscz?lang=cs" class="rst-current-version-icon fa fa-twitter" target="_blank" title="Twitter"></a>
+
+      {% if page.previous_page %}
+        <span><a href="{{ page.previous_page.url|url }}" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      {% endif %}
+      {% if page.next_page %}
+        <span style="margin-left: 15px"><a href="{{ page.next_page.url|url }}" style="color: #fcfcfc">Next &raquo;</a></span>
+      {% endif %}
+    </span>
+</div>

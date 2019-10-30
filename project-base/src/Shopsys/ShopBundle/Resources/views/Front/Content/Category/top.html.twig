@@ -1,3 +1,6 @@
-<h2>{{ 'Popular categories'|trans }}</h2>
-
-{{ render(controller('ShopsysShopBundle:Front/Category:categoryList', {categories: categories, showProductsCountByCategory: false})) }}
+<div class="web__line">
+    <div class="web__container">
+        <h2>{{ 'Popular categories'|trans }}</h2>
+        {{ render(controller('ShopsysShopBundle:Front/Category:categoryList', {categories: categories, showProductsCountByCategory: false})) }}
+    </div>
+</div>

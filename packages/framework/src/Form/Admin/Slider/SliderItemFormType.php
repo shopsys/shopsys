@@ -96,6 +96,7 @@ class SliderItemFormType extends AbstractType
             ->add('image', ImageUploadType::class, [
                 'required' => $options['scenario'] === self::SCENARIO_CREATE,
                 'constraints' => $imageConstraints,
+                'image_entity_class' => SliderItem::class,
                 'file_constraints' => [
                     new Constraints\Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],

@@ -18,7 +18,7 @@ module.exports = function(grunt) {
             },
             admin: {
                 files: {
-                    'web/assets/admin/styles/index_{{ cssVersion }}.css': '{{ frameworkResourcesDirectory|raw }}/styles/admin/main.less'
+                    'web/assets/admin/styles/index_{{ cssVersion }}.css': '{{ customResourcesDirectory|raw }}/styles/admin/main.less'
                 },
                 options: {
                     compress: true,
@@ -26,7 +26,11 @@ module.exports = function(grunt) {
                     sourceMapFilename: 'web/assets/admin/styles/index_{{ cssVersion }}.css.map',
                     sourceMapBasepath: 'web',
                     sourceMapURL: 'index_{{ cssVersion }}.css.map',
-                    sourceMapRootpath: '../../../'
+                    sourceMapRootpath: '../../../',
+
+                    modifyVars: {
+                        frameworkResourcesDirectory: '{{ frameworkResourcesDirectory|raw }}',
+                    }
                 }
             },
 
