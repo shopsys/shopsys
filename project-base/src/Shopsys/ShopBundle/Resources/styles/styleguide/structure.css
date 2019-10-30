@@ -121,7 +121,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: monospace, monospace;
+    font-family: monospace, monospace, sans-serif;
     font-size: 1em
 }
 
@@ -218,7 +218,7 @@ th {
 }
 
 meta.foundation-version {
-    font-family: "/5.4.7/"
+    font-family: "/5.4.7/";
 }
 
 meta.foundation-mq-small {
@@ -1315,7 +1315,7 @@ code[class*="language-"],
 pre[class*="language-"] {
     color: black;
     text-shadow: 0 1px #fff;
-    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace, sans-serif;
     direction: ltr;
     text-align: left;
     white-space: pre;
@@ -1729,7 +1729,7 @@ body.opened .styleguide-header {
 }
 
 .styleguide-footer p {
-    font-family: "HUGEAvantGardeBold", Helvetica, Arial, sans;
+    font-family: "HUGEAvantGardeBold", Helvetica, Arial, sans-serif;
     letter-spacing: -1px;
     font-size: 15px;
     color: #999;
@@ -1751,8 +1751,6 @@ body.opened .styleguide-sidebar__menu-icon {
     cursor: pointer;
     text-align: center;
     right: 0;
-    height: 35px;
-    padding: 15px 0 10px 0;
     z-index: 10;
     width: 45px;
     position: fixed;
@@ -1811,11 +1809,8 @@ body.opened .styleguide-sidebar__menu-icon {
 
 .styleguide-sidebar__toggle--out {
     margin: 0;
-    padding: 0;
     overflow: hidden;
     cursor: pointer;
-    text-align: center;
-    width: 100%;
     text-align: center;
     height: 63px;
     width: 63px;
@@ -1886,12 +1881,9 @@ body.opened .styleguide-sidebar__menu-icon {
 }
 
 .styleguide-sidebar__content {
-    z-index: 1;
     position: fixed;
     background-color: #fff;
     border-right: 1px solid #eee;
-    -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.37, 0.62, 0.47, 0.72);
-    -webkit-transform: translateX(-240px);
     -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.37, 0.62, 0.47, 0.72);
     transition: transform 0.2s cubic-bezier(0.37, 0.62, 0.47, 0.72);
     -webkit-transform: translateX(-240px);
@@ -1975,8 +1967,6 @@ body.opened .styleguide-iframe-wrapper {
 .styleguide-iframe-wrapper {
     height: 100%;
     width: 100%;
-    max-width: 100%;
-    position: relative;
     left: 0;
     padding: 0;
     margin: 0;
