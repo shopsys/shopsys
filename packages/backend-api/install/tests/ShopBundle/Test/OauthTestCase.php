@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Test;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -24,7 +23,6 @@ class OauthTestCase extends FunctionalTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->setUpDomain();
         $this->connection = $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection();
         $this->createOauthClientInDatabase();
     }
@@ -105,10 +103,7 @@ class OauthTestCase extends FunctionalTestCase
      */
     protected function getDomainBaseUrl(): string
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = $this->getContainer()->get(Domain::class);
-
-        return $domain->getUrl();
+        return $this->domain->getUrl();
     }
 
     /**

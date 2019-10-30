@@ -14,17 +14,6 @@ use Tests\ShopBundle\Test\OauthTestCase;
  */
 class BackendApiCreateProductTest extends OauthTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->domain = $this->getContainer()->get(Domain::class);
-    }
-
     public function testCreatePostProduct(): void
     {
         $product = $this->getValidProduct();
