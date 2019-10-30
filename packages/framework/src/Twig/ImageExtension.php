@@ -218,7 +218,7 @@ class ImageExtension extends Twig_Extension
             $isAttributeClassExistsAndNotEmpty ? ' ' . $attributes['class'] : ''
         );
 
-        if($useLazyLoading){
+        if ($useLazyLoading) {
             $htmlAttributes['data-src'] = $htmlAttributes['src'];
             $htmlAttributes['src'] = '';
         }
