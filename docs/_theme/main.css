@@ -221,10 +221,17 @@ body {
 
 .rst-versions .rst-current-version .rst-current-version-icon {
     float: left;
+    font-size: 18px;
     color: #fcfcfc;
-    padding: 2px 6px 0 0;
+    padding: 2px 10px 0 0;
 }
 
+.rst-versions .rst-current-version .rst-current-version-icon-image {
+    margin-top: -8px;
+    margin-left: 2px;
+    margin display: inline;
+    width: 14px;
+}
 /*
  *** Alerts ***
  */
