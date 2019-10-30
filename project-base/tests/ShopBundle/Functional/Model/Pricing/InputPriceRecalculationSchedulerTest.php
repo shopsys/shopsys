@@ -22,6 +22,12 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     private const METHOD_WITHOUT_VAT = 'scheduleSetInputPricesWithoutVat';
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     * @inject
+     */
+    private $currencyFacade;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
      * @inject
      */
