@@ -1,12 +1,10 @@
 <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version">
-      {% if config.repo_name == 'GitHub' %}
-          <a href="{{ config.repo_url }}" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      {% elif config.repo_name == 'Bitbucket' %}
-          <a href="{{ config.repo_url }}" class="icon icon-bitbucket" style="float: left; color: #fcfcfc"> BitBucket</a>
-      {% elif config.repo_name == 'GitLab' %}
-          <a href="{{ config.repo_url }}" class="icon icon-gitlab" style="float: left; color: #fcfcfc"> GitLab</a>
-      {% endif %}
+      <a href="https://github.com/shopsys/shopsys/" class="rst-current-version-icon fa fa-github" target="_blank" title="Github"></a>
+      <a href="https://shopsysframework.slack.com/" class="rst-current-version-icon" target="_blank" title="Slack">
+          <img src="{{ base_url }}/_theme/img/slack.png" style="margin-top: -4px;"></a>
+      <a href="https://twitter.com/shopsyscz?lang=cs" class="rst-current-version-icon fa fa-twitter" target="_blank" title="Twitter"></a>
+
       {% if page.previous_page %}
         <span><a href="{{ page.previous_page.url|url }}" style="color: #fcfcfc;">&laquo; Previous</a></span>
       {% endif %}

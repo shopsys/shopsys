@@ -219,6 +219,12 @@ body {
     margin-left: 5px;
 }
 
+.rst-versions .rst-current-version .rst-current-version-icon {
+    float: left;
+    color: #fcfcfc;
+    padding: 2px 6px 0 0;
+}
+
 /*
  *** Alerts ***
  */
