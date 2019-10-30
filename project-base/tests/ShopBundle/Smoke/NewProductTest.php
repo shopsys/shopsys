@@ -26,8 +26,13 @@ class NewProductTest extends FunctionalTestCase
      */
     public function testCreateOrEditProduct($relativeUrl)
     {
+        $domainUrl = $this->getContainer()->getParameter('overwrite_domain_url');
+        $server = [
+            'HTTP_HOST' => sprintf('%s:%d', parse_url($domainUrl, PHP_URL_HOST), parse_url($domainUrl, PHP_URL_PORT)),
+        ];
+
         $client1 = $this->getClient(false, 'admin', 'admin123');
-        $crawler = $client1->request('GET', $relativeUrl);
+        $crawler = $client1->request('GET', $relativeUrl, [], [], $server);
 
         $form = $crawler->filter('form[name=product_form]')->form();
         $this->fillForm($form);
