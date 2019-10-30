@@ -6,7 +6,6 @@ namespace Tests\ShopBundle\Functional\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -53,18 +52,20 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     abstract public function getProductOnCurrentDomainFacade(): ProductOnCurrentDomainFacadeInterface;
 
-    /**
-     * @param \Shopsys\ShopBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData
-     * @dataProvider categoryTestCasesProvider
-     */
-    public function testCategory(Category $category, ProductFilterData $filterData, ProductFilterCountData $expectedCountData): void
+    public function testCategory(): void
     {
-        $filterConfig = $this->productFilterConfigFactory->createForCategory($this->domain->getId(), $this->domain->getLocale(), $category);
-        $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory($category->getId(), $filterConfig, $filterData);
+        foreach ($this->categoryTestCasesProvider() as $dataProvider) {
+            /** @var \Shopsys\ShopBundle\Model\Category\Category $category */
+            $category = $dataProvider[0];
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData */
+            $filterData = $dataProvider[1];
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
+            $expectedCountData = $dataProvider[2];
 
-        $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData));
+            $filterConfig = $this->productFilterConfigFactory->createForCategory($this->domain->getId(), $this->domain->getLocale(), $category);
+            $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory($category->getId(), $filterConfig, $filterData);
+            $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData));
+        }
     }
 
     /**
@@ -84,20 +85,23 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         ];
     }
 
-    /**
-     * @param string $searchText
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData
-     * @dataProvider searchTestCasesProvider
-     */
-    public function testSearch(string $searchText, ProductFilterData $filterData, ProductFilterCountData $expectedCountData): void
+    public function testSearch(): void
     {
         $this->skipTestIfFirstDomainIsNotInEnglish();
 
-        $filterConfig = $this->productFilterConfigFactory->createForSearch($this->domain->getId(), $this->domain->getLocale(), $searchText);
-        $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch($searchText, $filterConfig, $filterData);
+        foreach ($this->searchTestCasesProvider() as $dataProvider) {
+            /** @var string $category */
+            $searchText = $dataProvider[0];
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData */
+            $filterData = $dataProvider[1];
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
+            $expectedCountData = $dataProvider[2];
 
-        $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData));
+            $filterConfig = $this->productFilterConfigFactory->createForSearch($this->domain->getId(), $this->domain->getLocale(), $searchText);
+            $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch($searchText, $filterConfig, $filterData);
+
+            $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData));
+        }
     }
 
     /**

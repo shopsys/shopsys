@@ -49,46 +49,50 @@ final class ElasticsearchStructureUpdateCheckerTest extends FunctionalTestCase
         }
     }
 
-    /**
-     * @param int $domainId
-     * @param string $index
-     * @dataProvider elasticseachIndexesParametersProvider
-     */
-    public function testUpdateIsNotNecessaryWhenNothingIsChanged(int $domainId, string $index): void
+    public function testUpdateIsNotNecessaryWhenNothingIsChanged(): void
     {
-        $definition = $this->elasticsearchStructureManager->getStructureDefinition($domainId, $index);
-        $aliasName = $this->elasticsearchStructureManager->getAliasName($domainId, $index);
-        $indexName = $this->elasticsearchStructureManager->getCurrentIndexName($domainId, $index);
+        foreach ($this->elasticseachIndexesParametersProvider() as $dataProvider) {
+            $domainId = $dataProvider[0];
+            $index = $dataProvider[1];
 
-        $this->createNewStructureAndMakeBackup($definition, $definition, $indexName, $aliasName);
+            $definition = $this->elasticsearchStructureManager->getStructureDefinition($domainId, $index);
+            $aliasName = $this->elasticsearchStructureManager->getAliasName($domainId, $index);
+            $indexName = $this->elasticsearchStructureManager->getCurrentIndexName($domainId, $index);
 
-        try {
-            $this->assertFalse($this->elasticsearchStructureUpdateChecker->isNecessaryToUpdateStructure($domainId, $index));
-        } finally {
-            $this->revertStructureFromBackup($definition, $indexName, $aliasName);
+            $this->createNewStructureAndMakeBackup($definition, $definition, $indexName, $aliasName);
+
+            try {
+                $this->assertFalse(
+                    $this->elasticsearchStructureUpdateChecker->isNecessaryToUpdateStructure($domainId, $index)
+                );
+            } finally {
+                $this->revertStructureFromBackup($definition, $indexName, $aliasName);
+            }
         }
     }
 
-    /**
-     * @param int $domainId
-     * @param string $index
-     * @dataProvider elasticseachIndexesParametersProvider
-     */
-    public function testUpdateIsNecessaryWhenStructureHasAdditionalProperty(int $domainId, string $index): void
+    public function testUpdateIsNecessaryWhenStructureHasAdditionalProperty(): void
     {
-        $oldDefinition = $this->elasticsearchStructureManager->getStructureDefinition($domainId, $index);
-        $aliasName = $this->elasticsearchStructureManager->getAliasName($domainId, $index);
-        $indexName = $this->elasticsearchStructureManager->getCurrentIndexName($domainId, $index);
+        foreach ($this->elasticseachIndexesParametersProvider() as $dataProvider) {
+            $domainId = $dataProvider[0];
+            $index = $dataProvider[1];
 
-        $newDefinition = $oldDefinition;
-        $newDefinition['mappings']['_doc']['properties']['new_property'] = ['type' => 'text'];
+            $oldDefinition = $this->elasticsearchStructureManager->getStructureDefinition($domainId, $index);
+            $aliasName = $this->elasticsearchStructureManager->getAliasName($domainId, $index);
+            $indexName = $this->elasticsearchStructureManager->getCurrentIndexName($domainId, $index);
 
-        $this->createNewStructureAndMakeBackup($oldDefinition, $newDefinition, $indexName, $aliasName);
+            $newDefinition = $oldDefinition;
+            $newDefinition['mappings']['_doc']['properties']['new_property'] = ['type' => 'text'];
 
-        try {
-            $this->assertTrue($this->elasticsearchStructureUpdateChecker->isNecessaryToUpdateStructure($domainId, $index));
-        } finally {
-            $this->revertStructureFromBackup($oldDefinition, $indexName, $aliasName);
+            $this->createNewStructureAndMakeBackup($oldDefinition, $newDefinition, $indexName, $aliasName);
+
+            try {
+                $this->assertTrue(
+                    $this->elasticsearchStructureUpdateChecker->isNecessaryToUpdateStructure($domainId, $index)
+                );
+            } finally {
+                $this->revertStructureFromBackup($oldDefinition, $indexName, $aliasName);
+            }
         }
     }
 
