@@ -10,7 +10,7 @@ useNativeLazyload(new MiniLazyload({
     Shopsys.lazyLoadCall = Shopsys.lazyLoadCall || {};
 
     Shopsys.lazyLoadCall.inContainer = function (container) {
-        $(container).find('.lazyx').each(function () {
+        $(container).find('.lazy').each(function () {
             $(this).attr('src', $(this).data('src'));
         });
     };
