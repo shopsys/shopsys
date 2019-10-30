@@ -8,5 +8,6 @@
 * [Frontend Troubleshooting](./frontend-troubleshooting.md)
 
 ## Implementation
-* [Page layout design](./page-layout-design.md)
+* [Lazyload](./lazyload.md)
 * [Override admin styles from project-base](./override-admin-styles.md)
+* [Page layout design](./page-layout-design.md)
