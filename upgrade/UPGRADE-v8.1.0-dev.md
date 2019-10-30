@@ -395,9 +395,9 @@ There you can find links to upgrade notes for other versions too.
              ) {
         -        parent::__construct($friendlyUrlFacade, $brandFacade, $domain);
         +        parent::__construct($friendlyUrlFacade, $brandFacade, $domain, $imageFacade);
-             } 
+             }
         ```
-    
+
 - improve your data fixtures and tests so they are more resistant against domains and locales settings changes [#1425](https://github.com/shopsys/shopsys/pull/1425)
     - if you have done a lot of changes in your data fixtures you might consider to skip this upgrade
     - for detailed information, see [the separate article](upgrade-instructions-for-improved-data-fixtures-and-tests.md)
@@ -414,7 +414,7 @@ There you can find links to upgrade notes for other versions too.
     ```css
     // load main.less file from framework, variable frameworkResourcesDirectory is set in gruntfile.js
     @import "@{frameworkResourcesDirectory}/styles/admin/main.less";
-  
+
     // file for temporary styles eg. added by a programmer
     @import "todo.less";
     ```
@@ -520,9 +520,8 @@ There you can find links to upgrade notes for other versions too.
         -  legacssy: {
         -     admin: {
         -        options: {
-        .
-        .
-        .
+        // ...
+        -  }
         ```
         Remove legacssy tasks
         ```diff
@@ -542,8 +541,6 @@ There you can find links to upgrade notes for other versions too.
         + grunt.registerTask('adminLess', ['less:admin']);
         ```
         - for more information you can see the [PR](https://github.com/shopsys/shopsys/pull/1461)
-
-
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
