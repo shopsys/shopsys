@@ -115,7 +115,7 @@ class NumberFormatHelper extends Module
         $intlCurrency = $this->intlCurrencyRepository->get($firstDomainDefaultCurrency->getCode(), $firstDomainLocale);
 
         $formattedPriceWithCurrencySymbol = $currencyFormatter->format(
-            $this->rounding->roundPriceWithVat($price)->getAmount(),
+            $this->rounding->roundPriceWithVatByCurrency($price, $firstDomainDefaultCurrency)->getAmount(),
             $intlCurrency->getCurrencyCode()
         );
 
@@ -159,7 +159,7 @@ class NumberFormatHelper extends Module
         $intlCurrency = $this->intlCurrencyRepository->get($firstDomainDefaultCurrency->getCode(), $firstDomainLocale);
 
         $formattedPriceWithCurrencySymbol = $currencyFormatter->format(
-            $this->rounding->roundPriceWithVat($price)->getAmount(),
+            $this->rounding->roundPriceWithVatByCurrency($price, $firstDomainDefaultCurrency)->getAmount(),
             $intlCurrency->getCurrencyCode()
         );
 
