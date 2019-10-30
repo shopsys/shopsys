@@ -1,8 +1,8 @@
 useNativeLazyload(new MiniLazyload({
-    rootMargin: "500px",
-    threshold: .5,
-    placeholder: "placeholder.png"
-}, ".lazy"));
+    rootMargin: '500px',
+    threshold: 0.5,
+    placeholder: 'placeholder.png'
+}, '.lazy'));
 
 (function ($) {
 
@@ -10,8 +10,8 @@ useNativeLazyload(new MiniLazyload({
     Shopsys.lazyLoadCall = Shopsys.lazyLoadCall || {};
 
     Shopsys.lazyLoadCall.inContainer = function (container) {
-        $(container).find(".lazyx").each( function(){
-            $(this).attr("src", $(this).data("src"));
+        $(container).find('.lazyx').each(function () {
+            $(this).attr('src', $(this).data('src'));
         });
     };
 
