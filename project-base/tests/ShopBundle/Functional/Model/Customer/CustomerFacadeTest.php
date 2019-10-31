@@ -25,11 +25,6 @@ class CustomerFacadeTest extends TransactionFunctionalTestCase
      */
     protected $customerDataFactory;
 
-    protected function setUp()
-    {
-        parent::setUp();
-    }
-
     public function testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException()
     {
         $user = $this->customerFacade->findUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, Domain::FIRST_DOMAIN_ID);
