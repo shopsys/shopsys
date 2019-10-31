@@ -10,11 +10,13 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ImagesResolver implements ResolverInterface
 {
     protected const IMAGE_ENTITY_PRODUCT = 'product';
+    protected const IMAGE_ENTITY_CATEGORY = 'category';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
@@ -55,6 +57,17 @@ class ImagesResolver implements ResolverInterface
     public function resolveByProduct(Product $product, ?string $type, ?string $size): array
     {
         return $this->resolveByEntity($product, static::IMAGE_ENTITY_PRODUCT, $type, $size);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param string|null $type
+     * @param string|null $size
+     * @return array
+     */
+    public function resolveByCategory(Category $category, ?string $type, ?string $size): array
+    {
+        return $this->resolveByEntity($category, static::IMAGE_ENTITY_CATEGORY, $type, $size);
     }
 
     /**
