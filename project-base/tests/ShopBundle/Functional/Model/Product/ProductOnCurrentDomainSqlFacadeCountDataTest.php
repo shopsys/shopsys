@@ -12,13 +12,13 @@ class ProductOnCurrentDomainSqlFacadeCountDataTest extends ProductOnCurrentDomai
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade
      * @inject
      */
-    protected $productOnCurrentDomainFacade;
+    private $productOnCurrentDomainSqlFacade;
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
      */
     public function getProductOnCurrentDomainFacade(): ProductOnCurrentDomainFacadeInterface
     {
-        return $this->productOnCurrentDomainFacade;
+        return $this->productOnCurrentDomainSqlFacade;
     }
 }
