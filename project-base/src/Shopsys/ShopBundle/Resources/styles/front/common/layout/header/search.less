@@ -7,19 +7,9 @@
     &__form {
         display: flex;
 
-        .is-no-flex & {
-            display: block;
-            .clearfix();
-        }
-
         &__input {
-            flex: 1;
+            width: ~"calc(100% - @{search-button-width})";
             position: relative;
-
-            .is-no-flex & {
-                float: left;
-                width: ~"calc(100% - @{search-button-width})";
-            }
 
             .input {
                 padding-left: 30px;
@@ -28,14 +18,10 @@
         }
 
         &__button {
-            flex: 0 @search-button-width;
+            width: @search-button-width;
             height: @search-form-height;
             line-height: @search-form-height;
             padding: 0;
-
-            .is-no-flex & {
-                width: @search-button-width;
-            }
         }
 
         &__icon {
@@ -99,7 +85,7 @@
         &__image {
             position: relative;
             height: 30px;
-            flex: 0 30px;
+            width: 30px;
 
             img {
                 .center-image();

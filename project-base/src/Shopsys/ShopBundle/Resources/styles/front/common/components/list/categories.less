@@ -40,40 +40,22 @@
 
             text-decoration: none;
             border: 1px solid @color-border;
-
-            .is-no-flex & {
-                display: block;
-
-                font-size: 0;
-            }
         }
 
         &__image {
             padding: @list-categories-item-padding 0 @list-categories-item-padding @list-categories-item-padding;
-            flex: 0 @list-categories-item-image-width;
+            width: @list-categories-item-image-width;
             text-align: center;
-
-            .is-no-flex & {
-                display: inline-block;
-                vertical-align: middle;
-                width: @list-categories-item-image-width;
-            }
         }
 
         &__title {
-            flex: 1;
+            width: calc(~"100% - @{list-categories-item-image-width}");
             margin: 0;
             line-height: 16px;
             padding: @list-categories-item-padding;
 
             font-size: 12px;
             font-weight: bold;
-
-            .is-no-flex & {
-                display: inline-block;
-                vertical-align: middle;
-                width: ~"calc(100% - @{list-categories-item-image-width})";
-            }
         }
     }
 }
