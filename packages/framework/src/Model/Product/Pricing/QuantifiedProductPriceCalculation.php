@@ -21,6 +21,8 @@ class QuantifiedProductPriceCalculation
     protected $productPriceCalculationForUser;
 
     /**
+     * @deprecated Will be removed in the next major release, this service is not used here
+     *
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Rounding
      */
     protected $rounding;
