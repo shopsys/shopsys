@@ -1,0 +1,8 @@
+RegularProductDecorator:
+    type: object
+    decorator: true
+    inherits:
+        - 'ProductDecorator'
+    config:
+        interfaces:
+            - 'Product'
