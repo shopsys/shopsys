@@ -19,7 +19,7 @@
 {% block grid_value_cell_edit_id_exchangeRate %}
     <span class="form-edit-block form-edit-block--size-1">
         {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
-        {{ form_widget(form.exchangeRate, {attr: {class: "input--half-width"}}) }}
+        {{ form_widget(form.exchangeRate, {attr: {class: "input--small"}}) }}
         <span class="form-edit-block__info relative">
             {% if row is null %}
                 <span title="" class="js-tooltip cursor-help in-icon in-icon--after-input" data-toggle="tooltip" data-placement="top" data-original-title="{{ '%defaultCurrency% per unit'|trans({'%defaultCurrency%': currencySymbolByCurrencyId(defaultCurrency.id)}) }}">
@@ -52,7 +52,7 @@
 {% block grid_value_cell_edit_id_minFractionDigits %}
     <span class="form-edit-block form-edit-block--size-1">
         {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
-        {{ form_widget(form.minFractionDigits, {attr: {class: "input--half-width"}}) }}
+        {{ form_widget(form.minFractionDigits, {attr: {class: "input--small"}}) }}
     </span>
 {% endblock %}
 
@@ -73,6 +73,20 @@
     <span class="form-edit-block form-edit-block--size-1">
         {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
         {{ form_widget(form.roundingType, {attr: {class: "input--half-width"}}) }}
+    </span>
+{% endblock %}
+
+{% block grid_value_cell_edit_id_name %}
+    <span class="form-edit-block form-edit-block--size-1">
+        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
+        {{ form_widget(form.name, {attr: {class: "input--half-width"}}) }}
+    </span>
+{% endblock %}
+
+{% block grid_value_cell_edit_id_code %}
+    <span class="form-edit-block form-edit-block--size-1">
+        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
+        {{ form_widget(form.code, {attr: {class: "input--small"}}) }}
     </span>
 {% endblock %}
 
