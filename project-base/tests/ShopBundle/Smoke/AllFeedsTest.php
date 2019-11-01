@@ -47,10 +47,6 @@ class AllFeedsTest extends FunctionalTestCase
         return $data;
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
     public function testFeedIsExportable(): void
     {
         foreach ($this->getAllFeedExportCreationData() as $dataProvider) {
