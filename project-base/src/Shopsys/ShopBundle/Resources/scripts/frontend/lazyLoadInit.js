@@ -1,5 +1,5 @@
 (function ($) {
-
+    /* eslint-disable no-new */
     new MiniLazyload({
         rootMargin: '500px',
         threshold: 0.5,
