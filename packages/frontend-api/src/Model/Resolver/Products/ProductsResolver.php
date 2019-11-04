@@ -38,7 +38,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(): array
     {
-        return $this->productOnCurrentDomainFacade->getAllListableProducts();
+        return $this->productOnCurrentDomainFacade->getAllOfferedProducts();
     }
 
     /**

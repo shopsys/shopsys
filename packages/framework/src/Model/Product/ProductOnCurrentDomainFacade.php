@@ -278,9 +278,9 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     /**
      * @return array
      */
-    public function getAllListableProducts(): array
+    public function getAllOfferedProducts(): array
     {
-        return $this->productRepository->getAllListableProducts(
+        return $this->productRepository->getAllOfferedProducts(
             $this->domain->getId(),
             $this->currentCustomer->getPricingGroup()
         );
