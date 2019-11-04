@@ -38,16 +38,16 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
             $annotations = [];
 
             if ($route->hasDefault('_controller')) {
-                try {
-                    $reflectionMethod = new \ReflectionMethod($route->getDefault('_controller'));
+                list($className, $methodName) = explode('::', $route->getDefault('_controller'));
+
+                if (method_exists($className, $methodName)) {
+                    $reflectionMethod = new \ReflectionMethod($className, $methodName);
 
                     foreach ($annotationReader->getMethodAnnotations($reflectionMethod) as $annotation) {
                         if ($annotation instanceof DataSet || $annotation instanceof Skipped) {
                             $annotations[] = $annotation;
                         }
                     }
-                } catch (\ReflectionException $exception) {
-                    // Just could not parse the reflection. Do noting.
                 }
             }
 
