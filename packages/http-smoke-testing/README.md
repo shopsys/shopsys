@@ -127,7 +127,7 @@ All configured options will extend the values from default request data set (eve
 To make smoke test configuration a little easier, you can use the annotations:
 
 - `@DataSet()`
-- `@Parameter()`
+- `@Parameter(name="name", value="value")`
 - `@Skipped()`
 
 You can add them directly to your controller methods. See the example in `Shopsys\HttpSmokeTesting\Test\TestController`.
