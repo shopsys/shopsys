@@ -211,14 +211,9 @@ class ImageExtension extends Twig_Extension
         unset($htmlAttributes['type'], $htmlAttributes['size']);
 
         $useLazyLoading = array_key_exists('lazy', $attributes) ? (bool)$attributes['lazy'] : true;
-        $isAttributeClassExistsAndNotEmpty = array_key_exists('class', $attributes) && $attributes['class'] !== '';
-        $htmlAttributes['class'] = sprintf(
-            '%s%s',
-            $useLazyLoading ? 'lazy' : '',
-            $isAttributeClassExistsAndNotEmpty ? ' ' . $attributes['class'] : ''
-        );
 
         if ($useLazyLoading) {
+            $htmlAttributes['loading'] = 'lazy';
             $htmlAttributes['data-src'] = $htmlAttributes['src'];
             $htmlAttributes['src'] = '';
         }
