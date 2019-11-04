@@ -249,29 +249,30 @@
 
                     <section id="flags" class="styleguide-module anchor clearfix">
                         <h2 class="styleguide-module__title">Flags</h2>
-                        <div style="position: relative; height: 80px;">
-                            <div class="in-flag">
-                                <span class="in-flag__item">
+                        <p class="styleguide-module__paragraph">Flag colors are loaded from administration as inline style. But you can override it by class modification.</p>
+                        <div style="position: relative; height: 100px;">
+                            <div class="in-flag in-flag--in-list">
+                                <span class="in-flag__item" style="background-color: #d6fffa;">
                                     TOP
                                 </span>
-                                <span class="in-flag__item in-flag__item--sales">
+                                <span class="in-flag__item in-flag__item--sales" style="background-color: #f9ffd6;">
                                     Action
                                 </span>
-                                <span class="in-flag__item in-flag__item--news">
+                                <span class="in-flag__item in-flag__item--news" style="background-color: #efd6ff;">
                                     New
                                 </span>
                             </div>
                         </div>
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-flags">
-<div class="in-flag">
-    <span class="in-flag__item">
+<div class="in-flag in-flag--in-list">
+    <span class="in-flag__item" style="background-color: #d6fffa;">
         TOP
     </span>
-    <span class="in-flag__item in-flag__item--sales">
+    <span class="in-flag__item in-flag__item--sales" style="background-color: #f9ffd6;">
         Action
     </span>
-    <span class="in-flag__item in-flag__item--news">
+    <span class="in-flag__item in-flag__item--news" style="background-color: #efd6ff;">
         New
     </span>
 </div>
@@ -654,7 +655,7 @@
                             <div class="form-choice">
                                 <div class="form-choice__input">
                                     <input type="checkbox" id="checkbox4" name="checkbox-dis" class="css-checkbox"
-                                           disabled="disabled"/>
+                                           disabled="disabled" checked="checked"/>
                                 </div>
                                 <div class="form-choice__label">
                                     <label for="checkbox4">Checkbox checked disabled</label>
@@ -761,24 +762,28 @@
                         <h3 class="styleguide-module__title--small">Newsletter form error</h3>
                         <div class="footer__newsletter">
                             <div class="footer__newsletter__form">
-                                <div class="footer__newsletter__form__in">
-                                    <input id="subscription_form_email" name="subscription_form[email]"
-                                           required="required" placeholder="Zadejte váš e-mail..."
-                                           class="footer__newsletter__form__input input form-input-error" type="email">
-                                    <span class="js-validation-errors-list js-validation-error-list-subscription_form_email form-error">
-                                        <span class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                        <ul class="form-error__list">
-                                            <li class="js-validation-errors-message js-error-source-id-form-error-subscription-form-email">This value is not a valid email address.</li>
-                                        </ul>
-                                    </span>
-                                    <button type="submit" id="subscription_form_send" name="subscription_form[send]"
-                                            class="footer__newsletter__form__btn btn">Přihlásiť se
-                                    </button>
-                                    <span class="js-validation-errors-list js-validation-error-list-subscription_form in-message in-message--alert display-none">
-                                        <ul class="in-message__list">
-                                            <li class="js-validation-errors-message js-error-source-id-form-error-subscription-form-email">This value is not a valid email address.</li>
-                                        </ul>
-                                    </span>
+                                <div class="footer__newsletter__form__wrap">
+                                    <div class="footer__newsletter__form__in">
+                                                <input type="email" id="subscription_form_email" name="subscription_form[email]" required="required" placeholder="Enter email" class="footer__newsletter__input input">
+
+                                                <span class="js-validation-errors-list js-validation-error-list-subscription_form_email form-error  display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span><ul class="form-error__list"></ul></span>
+                                    </div>
+                                        <button type="submit" id="subscription_form_send" name="subscription_form[send]" class="footer__newsletter__form__btn btn">Log in</button>
+
+                                </div>
+                                <span class="js-validation-errors-list js-validation-error-list-subscription_form in-message in-message--alert display-none">
+                                    <ul class="in-message__list"></ul>
+                                </span>
+                                <div class="form-choice">
+                                    <div class="form-choice__input">
+                                        <input type="checkbox" id="subscription_form_privacyPolicyAgreement" name="subscription_form[privacyPolicyAgreement]" required="required" value="1">
+                                    </div>
+                                    <div class="form-choice__label">
+                                        <label for="subscription_form_privacyPolicyAgreement">
+                                            I agree with <a href="#" target="_blank">privacy policy</a>.
+                                        </label>
+                                        <span class="js-validation-errors-list js-validation-error-list-subscription_form_privacyPolicyAgreement form-error form-error--choice display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span><ul class="form-error__list"></ul></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
