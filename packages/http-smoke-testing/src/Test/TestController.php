@@ -34,6 +34,24 @@ class TestController
     }
 
     /**
+     * @param string $name
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/test")
+     *
+     * @DataSet(parameters={
+     *     @Parameter(name="myName", value="Batman")
+     * })
+     */
+    public function testAction(string $name): Response
+    {
+        if ($name === 'Batman') {
+            return new Response(sprintf('I am %1$s!', $name), 200);
+        } else {
+            return new Response('Nothing found.', 404);
+        }
+    }
+
+    /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/untested")
      * @Skipped()

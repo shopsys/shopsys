@@ -26,7 +26,7 @@ class SymfonyRouterAdapterTest extends TestCase
 
         $routeInfos = $adapter->getAllRouteInfo();
 
-        self::assertCount(2, $routeInfos);
+        self::assertCount(3, $routeInfos);
 
         self::assertInstanceOf(RouteInfo::class, $routeInfos[0]);
         self::assertSame('/hello/{name}', $routeInfos[0]->getRoutePath());
@@ -38,8 +38,16 @@ class SymfonyRouterAdapterTest extends TestCase
         self::assertInstanceOf(Parameter::class, $routeInfos[0]->getAnnotations()[1]->parameters[0]);
 
         self::assertInstanceOf(RouteInfo::class, $routeInfos[1]);
-        self::assertSame('/untested', $routeInfos[1]->getRoutePath());
+        self::assertSame('/test', $routeInfos[1]->getRoutePath());
         self::assertCount(1, $routeInfos[1]->getAnnotations());
-        self::assertInstanceOf(Skipped::class, $routeInfos[1]->getAnnotations()[0]);
+        self::assertInstanceOf(DataSet::class, $routeInfos[1]->getAnnotations()[0]);
+        self::assertInstanceOf(Parameter::class, $routeInfos[1]->getAnnotations()[0]->parameters[0]);
+        self::assertSame('myName', $routeInfos[1]->getAnnotations()[0]->parameters[0]->name);
+        self::assertSame('Batman', $routeInfos[1]->getAnnotations()[0]->parameters[0]->value);
+
+        self::assertInstanceOf(RouteInfo::class, $routeInfos[2]);
+        self::assertSame('/untested', $routeInfos[2]->getRoutePath());
+        self::assertCount(1, $routeInfos[2]->getAnnotations());
+        self::assertInstanceOf(Skipped::class, $routeInfos[2]->getAnnotations()[0]);
     }
 }
