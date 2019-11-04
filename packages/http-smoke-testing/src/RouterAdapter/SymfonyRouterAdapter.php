@@ -8,6 +8,7 @@ use Shopsys\HttpSmokeTesting\Annotation\DataSet;
 use Shopsys\HttpSmokeTesting\Annotation\Skipped;
 use Shopsys\HttpSmokeTesting\RequestDataSet;
 use Shopsys\HttpSmokeTesting\RouteInfo;
+use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouterInterface;
 
 class SymfonyRouterAdapter implements RouterAdapterInterface
@@ -17,6 +18,8 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
      */
     private $router;
 
+    private $annotationsReader;
+
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router
      */
@@ -25,6 +28,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         AnnotationRegistry::registerLoader('class_exists');
 
         $this->router = $router;
+        $this->annotationsReader = new AnnotationReader();
     }
 
     /**
@@ -33,28 +37,40 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     public function getAllRouteInfo()
     {
         $allRouteInfo = [];
-        $annotationReader = new AnnotationReader();
+
         foreach ($this->router->getRouteCollection() as $routeName => $route) {
-            $annotations = [];
-
-            if ($route->hasDefault('_controller')) {
-                list($className, $methodName) = explode('::', $route->getDefault('_controller'));
-
-                if (method_exists($className, $methodName)) {
-                    $reflectionMethod = new \ReflectionMethod($className, $methodName);
-
-                    foreach ($annotationReader->getMethodAnnotations($reflectionMethod) as $annotation) {
-                        if ($annotation instanceof DataSet || $annotation instanceof Skipped) {
-                            $annotations[] = $annotation;
-                        }
-                    }
-                }
-            }
-
-            $allRouteInfo[] = new RouteInfo($routeName, $route, $annotations);
+            $allRouteInfo[] = new RouteInfo($routeName, $route, $this->extractAnnotationsForRoute($route));
         }
 
         return $allRouteInfo;
+    }
+
+    private function extractAnnotationsForRoute(Route $route): array
+    {
+        if ($route->hasDefault('_controller')) {
+            return $this->extractAnnotationForController($route->getDefault('_controller'));
+        }
+
+        return [];
+    }
+
+    private function extractAnnotationForController(string $controller): array
+    {
+        $annotations = [];
+
+        list($className, $methodName) = explode('::', $controller);
+
+        if (method_exists($className, $methodName)) {
+            $reflectionMethod = new \ReflectionMethod($className, $methodName);
+
+            foreach ($this->annotationsReader->getMethodAnnotations($reflectionMethod) as $annotation) {
+                if ($annotation instanceof DataSet || $annotation instanceof Skipped) {
+                    $annotations[] = $annotation;
+                }
+            }
+        }
+
+        return $annotations;
     }
 
     /**
