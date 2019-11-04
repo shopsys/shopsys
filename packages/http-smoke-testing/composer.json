@@ -27,7 +27,7 @@
         "symfony/http-foundation": "^3.4|^4.0",
         "symfony/dependency-injection": "^3.4|^4.0",
         "symfony/routing": "^3.4|^4.0",
-        "doctrine/annotations": "^1.7"
+        "doctrine/annotations": "^1.6"
     },
     "require-dev": {
         "shopsys/coding-standards": "dev-master",
