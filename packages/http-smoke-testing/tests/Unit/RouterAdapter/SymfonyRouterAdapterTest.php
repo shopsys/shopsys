@@ -5,6 +5,7 @@ namespace Tests\HttpSmokeTesting\Unit\RouterAdapter;
 use Doctrine\Common\Annotations\AnnotationReader;
 use PHPUnit\Framework\TestCase;
 use Shopsys\HttpSmokeTesting\Annotation\DataSet;
+use Shopsys\HttpSmokeTesting\Annotation\Parameter;
 use Shopsys\HttpSmokeTesting\Annotation\Skipped;
 use Shopsys\HttpSmokeTesting\RouteInfo;
 use Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter;
@@ -34,6 +35,7 @@ class SymfonyRouterAdapterTest extends TestCase
         self::assertInstanceOf(DataSet::class, $routeInfos[0]->getAnnotations()[1]);
         self::assertSame(404, $routeInfos[0]->getAnnotations()[1]->statusCode);
         self::assertCount(1, $routeInfos[0]->getAnnotations()[1]->parameters);
+        self::assertInstanceOf(Parameter::class, $routeInfos[0]->getAnnotations()[1]->parameters[0]);
 
         self::assertInstanceOf(RouteInfo::class, $routeInfos[1]);
         self::assertSame('/untested', $routeInfos[1]->getRoutePath());
