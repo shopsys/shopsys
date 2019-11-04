@@ -211,8 +211,9 @@ class ImageExtension extends Twig_Extension
         unset($htmlAttributes['type'], $htmlAttributes['size']);
 
         $useLazyLoading = array_key_exists('lazy', $attributes) ? (bool)$attributes['lazy'] : true;
+        unset($htmlAttributes['lazy']);
 
-        if ($useLazyLoading) {
+        if ($useLazyLoading === true) {
             $htmlAttributes['loading'] = 'lazy';
             $htmlAttributes['data-src'] = $htmlAttributes['src'];
             $htmlAttributes['src'] = '';
