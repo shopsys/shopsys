@@ -18,10 +18,10 @@ class TestController
      * @Route("/hello/{name}")
      *
      * @DataSet(parameters={
-     *     @Parameter("name", value="Batman")
+     *     @Parameter(name="name", value="Batman")
      * })
      * @DataSet(statusCode=404, parameters={
-     *     @Parameter("name", value="World")
+     *     @Parameter(name="name", value="World")
      * })
      */
     public function helloAction(string $name): Response

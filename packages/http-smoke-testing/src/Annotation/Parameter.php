@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\HttpSmokeTesting\Annotation;
 
+use Doctrine\Common\Annotations\Annotation\Required;
 use Doctrine\Common\Annotations\Annotation\Target;
 
 /**
@@ -12,9 +13,15 @@ use Doctrine\Common\Annotations\Annotation\Target;
  */
 class Parameter
 {
-    /** @var string */
+    /**
+     * @var string
+     * @Required()
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     * @Required()
+     */
     public $value;
 }
