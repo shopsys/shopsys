@@ -1,7 +1,8 @@
 # Lazyload
-Lazyload for images and iframes are implemented with [Minilazyload library](https://www.npmjs.com/package/minilazyload). This function respects browser native lazyload. If browser supports lazyload natively, function uses native lazyload.
+Lazyload for images and iframes are implemented with [Minilazyload library](https://www.npmjs.com/package/minilazyload).
 
-All images are lazy loaded as default.
+All images are lazy loaded as default. Default selector for lazyload is [loading=lazy].
+Native lazy load is overrided - we are waiting for bigger browser support.
 
 ## Disable lazyload
 At homepage slider is used Slick to rotate slider images. We dont want to use lazyload on these images. Slick has own lazyload function. We can disable minilazyload function by `lazy: false` attribute in img tag.
