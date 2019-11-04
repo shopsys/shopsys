@@ -1,7 +1,7 @@
 # Lazyload
 Lazyload for images and iframes are implemented with [Minilazyload library](https://www.npmjs.com/package/minilazyload).
 
-All images are lazy loaded as default. Default selector for lazyload is [loading=lazy].
+All images are lazy loaded by default. Default selector for lazyload is [loading=lazy].
 Native lazy load is overrided - we are waiting for bigger browser support.
 
 ## Disable lazyload
