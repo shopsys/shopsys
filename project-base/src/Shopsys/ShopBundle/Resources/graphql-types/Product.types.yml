@@ -1,4 +1,4 @@
 Product:
-    type: object
+    type: interface
     inherits:
         - 'ProductDecorator'

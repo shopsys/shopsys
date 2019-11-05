@@ -1,0 +1,11 @@
+MainVariantDecorator:
+    type: object
+    decorator: true
+    inherits:
+        - 'ProductDecorator'
+    config:
+        fields:
+            variants:
+                type: '[Product!]!'
+        interfaces:
+            - 'Product'

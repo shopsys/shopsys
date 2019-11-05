@@ -792,8 +792,8 @@ class ProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return array
      */
-    public function getAllListableProducts(int $domainId, PricingGroup $pricingGroup): array
+    public function getAllOfferedProducts(int $domainId, PricingGroup $pricingGroup): array
     {
-        return $this->getAllListableQueryBuilder($domainId, $pricingGroup)->getQuery()->execute();
+        return $this->getAllOfferedQueryBuilder($domainId, $pricingGroup)->getQuery()->execute();
     }
 }

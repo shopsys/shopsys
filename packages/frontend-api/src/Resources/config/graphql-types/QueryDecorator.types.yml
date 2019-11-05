@@ -15,3 +15,5 @@ QueryDecorator:
                 args:
                     uuid:
                         type: "ID!"
+            RegularProduct:
+                type: 'RegularProduct'

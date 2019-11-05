@@ -90,6 +90,12 @@ There you can find links to upgrade notes for other versions too.
 - removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437)) 
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
 
+- add optional frontend API - products variant to your project ([#1489](https://github.com/shopsys/shopsys/pull/1489)):
+    - copy necessary type definitions:
+        [MainVariant.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/MainVariant.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/MainVariant.types.yml`
+        [RegularProduct.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/RegularProduct.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/RegularProduct.types.yml`
+        [Variant.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Variant.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Variant.types.yml`
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
