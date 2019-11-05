@@ -540,11 +540,6 @@ There you can find links to upgrade notes for other versions too.
             +         return $this->getContainer();
             +       }
             ```
-    - register factory classes in `services_test.yml`
-        ```diff
-        +   Shopsys\ShopBundle\:
-        +       resource: '../../**/*{Factory}.php'
-        ```
     - to achieve the goal you should find and replace all occurrences of accessing class directly from container, e.g. `$this->getContainer()->get(FooBar::class)` and define it as a class property with an inject annotation instead 
     - in case you want to change it in data provides you will need to say good bye to `@dataProvider` annotations
         - since data providers are called earlier than injecting our services you might need to do some workaround for it
