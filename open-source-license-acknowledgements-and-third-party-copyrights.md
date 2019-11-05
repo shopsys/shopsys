@@ -297,6 +297,20 @@ License: MIT
 https://github.com/carhartl/jquery-cookie/blob/master/MIT-LICENSE.txt  
 Copyright 2014 Klaus Hartl
 
+### Styleguide
+Library: `ShopBundle/Resources/styles/styleguide/styleguide.css`  
+Library: `ShopBundle/Resources/scripts/styleguide/styleguide.js`  
+Licence: MIT
+https://github.com/hugeinc/styleguide/blob/master/LICENSE.md
+Copyright 2015 Huge Inc.
+
+### CodeMirror
+Library: `ShopBundle/Resources/styles/styleguide/plugins/codemirror/`  
+Library: `ShopBundle/Resources/scripts/styleguide/plugins/codemirror.minified.js`  
+Licence: MIT
+https://github.com/codemirror/CodeMirror/blob/master/LICENSE
+Copyright 2017 by Marijn Haverbeke <marijnh@gmail.com> and others
+
 ## Libraries dynamically referenced via Composer
 Run `composer license` in your `shopsys-framework-php-fpm` container of your project to get the latest licensing info about all dependencies.
 

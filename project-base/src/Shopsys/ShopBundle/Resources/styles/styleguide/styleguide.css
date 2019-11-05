@@ -1,0 +1,159 @@
+#colors li {
+	position: relative;
+	padding: 0;
+	margin-bottom: 0.9375em
+}
+
+#colors li p {
+	position: absolute;
+	padding: 3px 13px;
+	color: #666;
+	background-color: #fff;
+	font-size: 12px;
+	bottom: 0;
+	left: 0.9375em
+}
+
+#colors li>.color {
+	padding: 15px;
+	margin-right: 0.9375em;
+	border-radius: 5px;
+}
+
+#colors li:last-child {
+	margin-right: 0
+}
+
+#colors li>.color>.color__text {
+	color: #fff;
+	background: transparent;
+}
+
+.font-huge {
+	font-family: 'HUGEAvantGardeBold', Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-weight: normal
+}
+
+.font-galaxie {
+	font-family: 'Galaxie', Helvetica, Roboto, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-weight: normal
+}
+
+.italic {
+	font-style: italic
+}
+
+h1 {
+	font-size: 100px;
+	line-height: 120px
+}
+
+h2 {
+	font-size: 80px;
+	line-height: 92px
+}
+
+h3 {
+	font-size: 38px;
+	line-height: 45px
+}
+
+.p1,
+.p2 {
+	padding-right: 20%
+}
+
+.p3 {
+	font-size: 15px;
+	line-height: 1.8;
+	color: #666;
+	margin-top: 3em
+}
+
+#typography h1,
+#typography h2,
+#typography h3,
+#typography h4,
+#typography h5,
+#typography h6,
+#typography p {
+	margin-top: 0
+}
+
+#typography p {
+	font: 16px/2 "Galaxie";
+	margin: 2em 0
+}
+
+.button {
+	cursor: pointer;
+	text-decoration: none!important;
+	display: inline-block;
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	text-align: center;
+	color: #fff;
+	-webkit-transition: background-color 0.3s, opacity 0.3s;
+	transition: background-color 0.3s, opacity 0.3s
+}
+
+.button.load {
+	-webkit-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) all;
+	transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) all
+}
+
+.button.black {
+	background: #000;
+	width: 160px;
+	height: 54px;
+	line-height: 54px;
+	font-size: 13px
+}
+
+.button:hover {
+	background-color: #189BD7!important;
+	color: #fff
+}
+
+ol,
+ul {
+	list-style: none;
+	margin: 0 0 2em 0;
+	padding: 0
+}
+
+ul.list_huge li {
+	padding-left: 20px;
+	position: relative
+}
+
+ul.list_huge li::before {
+	content: '▶';
+	font-size: 11px;
+	top: 4px;
+	color: #189BD7;
+	position: absolute;
+	left: 0
+}
+
+ol.list_huge {
+	counter-reset: item
+}
+
+ol.list_huge li {
+	padding-left: 30px;
+	position: relative
+}
+
+ol.list_huge li::before {
+	content: counters(item, ".") " ";
+	counter-increment: item;
+	top: 0;
+	color: #189BD7;
+	position: absolute;
+	left: 0
+}
