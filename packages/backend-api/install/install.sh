@@ -22,28 +22,28 @@ else
 fi
 
 echo "Copying FOS REST configuration..."
-cp ${INSTALL_DIR}/app/config/packages/fos_rest.yml ${PROJECT_BASE_PATH}/app/config/packages/fos_rest.yml
-cp ${INSTALL_DIR}/app/config/packages/test/fos_rest.yml ${PROJECT_BASE_PATH}/app/config/packages/test/fos_rest.yml
+cp ${INSTALL_DIR}/config/packages/fos_rest.yml ${PROJECT_BASE_PATH}/config/packages/fos_rest.yml
+cp ${INSTALL_DIR}/config/packages/test/fos_rest.yml ${PROJECT_BASE_PATH}/config/packages/test/fos_rest.yml
 echo "Done"
 
 echo "Copying OAuth2 configuration..."
-cp ${INSTALL_DIR}/app/config/packages/trikoder_oauth2.yml ${PROJECT_BASE_PATH}/app/config/packages/trikoder_oauth2.yml
-mkdir -p ${PROJECT_BASE_PATH}/app/config/packages/oauth2
-cp ${INSTALL_DIR}/app/config/packages/oauth2/.gitignore ${PROJECT_BASE_PATH}/app/config/packages/oauth2/.gitignore
-cp ${INSTALL_DIR}/app/config/packages/oauth2/parameters_oauth.yml.dist ${PROJECT_BASE_PATH}/app/config/packages/oauth2/parameters_oauth.yml.dist
+cp ${INSTALL_DIR}/config/packages/trikoder_oauth2.yml ${PROJECT_BASE_PATH}/config/packages/trikoder_oauth2.yml
+mkdir -p ${PROJECT_BASE_PATH}/config/oauth2
+cp ${INSTALL_DIR}/config/oauth2/.gitignore ${PROJECT_BASE_PATH}/config/oauth2/.gitignore
+cp ${INSTALL_DIR}/config/oauth2/parameters_oauth.yml.dist ${PROJECT_BASE_PATH}/config/oauth2/parameters_oauth.yml.dist
 echo "Done"
 
-echo "Creating directory src/Shopsys/ShopBundle/Controller/Api/V1..."
-mkdir -p ${PROJECT_BASE_PATH}/src/Shopsys/ShopBundle/Controller/Api/V1/Product
-touch ${PROJECT_BASE_PATH}/src/Shopsys/ShopBundle/Controller/Api/V1/Product/.gitkeep
+echo "Creating directory src/Controller/Api/V1..."
+mkdir -p ${PROJECT_BASE_PATH}/src/Controller/Api/V1/Product
+touch ${PROJECT_BASE_PATH}/src/Controller/Api/V1/Product/.gitkeep
 echo "Done"
 
 echo "Copying tests..."
-cp ${INSTALL_DIR}/tests/ShopBundle/Smoke/BackendApiTest.php ${PROJECT_BASE_PATH}/tests/ShopBundle/Smoke/BackendApiTest.php
-cp ${INSTALL_DIR}/tests/ShopBundle/Smoke/BackendApiCreateProductTest.php ${PROJECT_BASE_PATH}/tests/ShopBundle/Smoke/BackendApiCreateProductTest.php
-cp ${INSTALL_DIR}/tests/ShopBundle/Smoke/BackendApiDeleteProductTest.php ${PROJECT_BASE_PATH}/tests/ShopBundle/Smoke/BackendApiDeleteProductTest.php
-cp ${INSTALL_DIR}/tests/ShopBundle/Smoke/BackendApiUpdateProductTest.php ${PROJECT_BASE_PATH}/tests/ShopBundle/Smoke/BackendApiUpdateProductTest.php
-cp ${INSTALL_DIR}/tests/ShopBundle/Test/OauthTestCase.php ${PROJECT_BASE_PATH}/tests/ShopBundle/Test/OauthTestCase.php
+cp ${INSTALL_DIR}/tests/App/Smoke/BackendApiTest.php ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiTest.php
+cp ${INSTALL_DIR}/tests/App/Smoke/BackendApiCreateProductTest.php ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiCreateProductTest.php
+cp ${INSTALL_DIR}/tests/App/Smoke/BackendApiDeleteProductTest.php ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiDeleteProductTest.php
+cp ${INSTALL_DIR}/tests/App/Smoke/BackendApiUpdateProductTest.php ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiUpdateProductTest.php
+cp ${INSTALL_DIR}/tests/App/Test/OauthTestCase.php ${PROJECT_BASE_PATH}/tests/App/Test/OauthTestCase.php
 echo "Done"
 
 function apply_patch () {
@@ -80,11 +80,11 @@ function apply_patch () {
     fi
 }
 
-apply_patch "app/config/parameters_common.yml"
-apply_patch "app/config/routing.yml"
-apply_patch "app/config/packages/security.yml"
-apply_patch "src/Shopsys/ShopBundle/Resources/config/routing.yml"
-apply_patch "app/AppKernel.php"
+apply_patch "src/Kernel.php"
+apply_patch "config/parameters_common.yml"
+cp ${INSTALL_DIR}/config/routes/backend-api.yml ${PROJECT_BASE_PATH}/config/routes/backend-api.yml
+apply_patch "config/packages/security.yml"
+apply_patch "config/bundles.php"
 apply_patch "build.xml"
 
 if [ "$1" == "monorepo" ]

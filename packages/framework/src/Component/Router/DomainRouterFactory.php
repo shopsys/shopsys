@@ -107,7 +107,7 @@ class DomainRouterFactory
         return new Router(
             $this->configLoader,
             $this->routerConfiguration,
-            [],
+            ['resource_type' => 'service'],
             $this->getRequestContextByDomainConfig($domainConfig)
         );
     }

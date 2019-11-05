@@ -1,6 +1,6 @@
-@@ -86,6 +86,7 @@
-         "symfony-cmf/routing": "^2.0.3",
-         "symfony-cmf/routing-bundle": "^2.0.3",
+@@ -148,6 +148,7 @@
+         "symfony/twig-bundle": "^3.4",
+         "symfony/validator": "^3.4",
          "tracy/tracy": "^2.4.13",
 +        "trikoder/oauth2-bundle": "^1.1",
          "twig/extensions": "^1.5.1",

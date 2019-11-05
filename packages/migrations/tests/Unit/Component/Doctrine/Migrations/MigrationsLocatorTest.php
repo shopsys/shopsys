@@ -33,7 +33,9 @@ class MigrationsLocatorTest extends TestCase
             $this->kernelMock,
             $this->filesystemMock,
             'MigrationsDirectory',
-            'MigrationsNamespace'
+            'MigrationsNamespace',
+            'AppNamespace\Migrations',
+            'src/Resources/MigrationsDirectory'
         );
     }
 
@@ -43,18 +45,15 @@ class MigrationsLocatorTest extends TestCase
         $this->filesystemSaysPathExists('test/MockBundle/MigrationsDirectory');
 
         $migrationsLocations = $this->migrationsLocator->getMigrationsLocations();
-
-        $this->assertCount(1, $migrationsLocations);
+        $this->assertCount(2, $migrationsLocations);
     }
 
-    public function testNonExistingMigrationsLocation()
+    public function testNonExistingBundleMigrationsLocation()
     {
         $this->kernelReturnsOneBundle('Test\\MockBundle', 'test/MockBundle');
         $this->filesystemSaysPathExists('test/MockBundle/MigrationsDirectory', false);
-
         $migrationsLocations = $this->migrationsLocator->getMigrationsLocations();
-
-        $this->assertEmpty($migrationsLocations);
+        $this->assertCount(1, $migrationsLocations);
     }
 
     public function testMultipleMigrationsLocations()
@@ -64,19 +63,20 @@ class MigrationsLocatorTest extends TestCase
         $this->filesystemSaysEveryPathExists();
 
         $migrationsLocations = $this->migrationsLocator->getMigrationsLocations();
-
-        $this->assertCount(3, $migrationsLocations);
+        $this->assertCount(4, $migrationsLocations);
     }
 
     public function testMigrationsLocationParameters()
     {
         $this->kernelReturnsOneBundle('Test\\MockBundle', 'test/MockBundle');
         $this->filesystemSaysEveryPathExists();
-
-        list($migrationsLocation) = $this->migrationsLocator->getMigrationsLocations();
-
-        $this->assertEquals('Test\\MockBundle\\MigrationsNamespace', $migrationsLocation->getNamespace());
-        $this->assertEquals('test/MockBundle/MigrationsDirectory', $migrationsLocation->getDirectory());
+        $migrationsLocations = $this->migrationsLocator->getMigrationsLocations();
+        $appMigration = $migrationsLocations[0];
+        $bundleMigration = $migrationsLocations[1];
+        $this->assertEquals('AppNamespace\\Migrations', $appMigration->getNamespace());
+        $this->assertEquals('src/Resources/MigrationsDirectory', $appMigration->getDirectory());
+        $this->assertEquals('Test\\MockBundle\\MigrationsNamespace', $bundleMigration->getNamespace());
+        $this->assertEquals('test/MockBundle/MigrationsDirectory', $bundleMigration->getDirectory());
     }
 
     /**

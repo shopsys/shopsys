@@ -213,8 +213,8 @@ Portions Copyright © 1996-2019, The PostgreSQL Global Development Group
 
 ## Other CSS and JS libraries
 Other components, mostly css and js libraries, that are not dynamically installed.
-JS libraries can be found primarily in the `ShopBundle/Resources/scripts/*/plugins/` and `FrameworkBundle/Resources/scripts/*/plugins/` directories.
-CSS libraries can be found primarily in the `ShopBundle/Resources/styles/*/libs/` and `FrameworkBundle/Resources/styles/*/libs/` directories.
+JS libraries can be found primarily in the `src/Resources/scripts/*/plugins/` and `FrameworkBundle/Resources/scripts/*/plugins/` directories.
+CSS libraries can be found primarily in the `src/Resources/styles/*/libs/` and `FrameworkBundle/Resources/styles/*/libs/` directories.
 
 ### Magnific Popup Repository
 Library: `FrameworkBundle/Resources/scripts/common/plugins/jquery.magnific-popup.js`  
@@ -275,24 +275,24 @@ License: MIT
 https://github.com/ilikenwf/nestedSortable/blob/master/README.md  
 
 ### normalize.css
-Library: `ShopBundle/Resources/styles/front/common/core/reset.less`  
+Library: `src/Resources/styles/front/common/core/reset.less`  
 License: MIT  
 https://github.com/necolas/normalize.css/blob/master/LICENSE.md  
 Copyright © Nicolas Gallagher and Jonathan Neal
 
 ### jQuery UI Touch Punch 0.2.3
-Library: `ShopBundle/Resources/scripts/frontend/plugins/jquery.ui.touch-punch.js`  
+Library: `src/Resources/scripts/frontend/plugins/jquery.ui.touch-punch.js`  
 License: MIT or GPL Version 2  
 https://github.com/furf/jquery-ui-touch-punch/blob/master/jquery.ui.touch-punch.js  
 Copyright 2011–2014, Dave Furfero
 
 ### Modernizr
-Library: `ShopBundle/Resources/scripts/frontend/plugins/modernizr.js`  
+Library: `src/Resources/scripts/frontend/plugins/modernizr.js`  
 License: MIT  
 https://github.com/Modernizr/Modernizr/blob/master/LICENSE
 
 ### jquery.cookie
-Library: `ShopBundle/Resources/scripts/frontend/plugins/jquery.cookie.js`  
+Library: `src/Resources/scripts/frontend/plugins/jquery.cookie.js`  
 License: MIT  
 https://github.com/carhartl/jquery-cookie/blob/master/MIT-LICENSE.txt  
 Copyright 2014 Klaus Hartl

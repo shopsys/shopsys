@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Twig\ImageExtension;
-use Tests\ShopBundle\Test\FunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
 class ImageExtensionTest extends FunctionalTestCase
 {

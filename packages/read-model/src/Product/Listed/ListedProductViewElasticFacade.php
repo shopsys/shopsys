@@ -246,7 +246,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     }
 
     /**
-     * @param \Shopsys\ShopBundle\Model\Product\Product[] $products
+     * @param \App\Model\Product\Product[] $products
      * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
      */
     protected function createFromProducts(array $products): array
@@ -264,7 +264,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     }
 
     /**
-     * @param \Shopsys\ShopBundle\Model\Product\Product[] $products
+     * @param \App\Model\Product\Product[] $products
      * @return int[]
      */
     protected function getIdsForProducts(array $products): array

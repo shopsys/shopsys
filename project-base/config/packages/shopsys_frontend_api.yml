@@ -1,0 +1,10 @@
+overblog_graphql:
+    definitions:
+        schema:
+            query: Query
+            resolver_maps:
+                - Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap
+        mappings:
+            types:
+                -   type: yaml
+                    dir: "%shopsys.root_dir%/config/graphql/types"

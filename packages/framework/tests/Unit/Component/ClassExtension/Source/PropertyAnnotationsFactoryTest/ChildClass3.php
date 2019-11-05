@@ -7,7 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnn
 class ChildClass3 extends BaseClass3
 {
     /**
-     * @var \Shopsys\ShopBundle\Model\Category\CategoryFacade
+     * @var \App\Model\Category\CategoryFacade
      */
     public $categoryFacade;
 }

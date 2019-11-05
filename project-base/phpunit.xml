@@ -3,7 +3,7 @@
 <phpunit
     backupGlobals="false"
     backupStaticAttributes="false"
-    bootstrap="app/autoload.php"
+    bootstrap="config/bootstrap.php"
     colors="true"
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
@@ -14,21 +14,22 @@
     beStrictAboutTestsThatDoNotTestAnything="false"
 >
     <php>
-        <server name="KERNEL_DIR" value="app/" />
+        <env name="KERNEL_CLASS" value="App\Kernel" />
     </php>
 
     <testsuites>
         <testsuite name="Unit">
-            <directory>tests/*Bundle/Unit</directory>
+            <directory>tests/App/Unit</directory>
         </testsuite>
         <testsuite name="Functional">
+            <directory>tests/App/Functional</directory>
             <directory>tests/*Bundle/Functional</directory>
         </testsuite>
         <testsuite name="Smoke">
-            <directory>tests/*Bundle/Smoke</directory>
+            <directory>tests/App/Smoke</directory>
         </testsuite>
         <testsuite name="Performance">
-            <directory>tests/*Bundle/Performance</directory>
+            <directory>tests/App/Performance</directory>
         </testsuite>
     </testsuites>
 
@@ -37,7 +38,11 @@
             <directory>src</directory>
             <directory>tests</directory>
             <exclude>
-                <directory>src/*/*Bundle/Resources</directory>
+                <directory>src/*/Resources</directory>
+                <directory>tests/App/Unit</directory>
+                <directory>tests/App/Functional</directory>
+                <directory>tests/App/Smoke</directory>
+                <directory>tests/App/Performance</directory>
                 <directory>tests/*Bundle/Unit</directory>
                 <directory>tests/*Bundle/Functional</directory>
                 <directory>tests/*Bundle/Smoke</directory>

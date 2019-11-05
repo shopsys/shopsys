@@ -1,0 +1,71 @@
+front_cart:
+    path: /cart/
+    defaults: { _controller: App\Controller\Front\CartController:indexAction }
+
+front_customer_edit:
+    path: /customer/edit/
+    defaults: { _controller: App\Controller\Front\CustomerController:editAction }
+
+front_customer_orders:
+    path: /customer/orders/
+    defaults: { _controller: App\Controller\Front\CustomerController:ordersAction }
+
+front_customer_order_detail_registered:
+    path: /customer/orders/detail/{orderNumber}
+    defaults: { _controller: App\Controller\Front\CustomerController:orderDetailRegisteredAction }
+
+front_customer_order_detail_unregistered:
+    path: /order-detail/{urlHash}
+    defaults: { _controller: App\Controller\Front\CustomerController:orderDetailUnregisteredAction }
+
+front_login:
+    path: /login/
+    defaults: { _controller: App\Controller\Front\LoginController:loginAction }
+
+front_logout:
+    # controller's action is unnecessary, because firewall processes whole request
+    path: /logout/{_csrf_token}
+
+front_order_index:
+    path: /order/
+    defaults: { _controller: App\Controller\Front\OrderController:indexAction }
+
+front_order_sent:
+    path: /order-confirm/
+    defaults: { _controller: App\Controller\Front\OrderController:sentAction }
+
+front_product_search:
+    path: /search
+    defaults: { _controller: App\Controller\Front\ProductController:searchAction }
+
+front_registration_register:
+    path: /registration/
+    defaults: { _controller: App\Controller\Front\RegistrationController:registerAction }
+
+front_registration_reset_password:
+    path: /forgotten-password/
+    defaults: { _controller: App\Controller\Front\CustomerPasswordController:resetPasswordAction }
+
+front_registration_set_new_password:
+    path: /new-password/
+    defaults: { _controller: App\Controller\Front\CustomerPasswordController:setNewPasswordAction }
+
+front_brand_list:
+    path: /brands-list/
+    defaults: { _controller: App\Controller\Front\BrandController:listAction }
+
+front_personal_data:
+    path: /personal-information-overview/
+    defaults: { _controller: App\Controller\Front\PersonalDataController:indexAction }
+
+front_personal_data_access:
+    path: /personal-information-overview/{hash}/
+    defaults: { _controller: App\Controller\Front\PersonalDataController:accessDisplayAction }
+
+front_personal_data_export:
+    path: /personal-information-export/
+    defaults: { _controller: App\Controller\Front\PersonalDataController:exportAction }
+
+front_personal_data_access_export:
+    path: /personal-information-export/{hash}/
+    defaults: { _controller: App\Controller\Front\PersonalDataController:accessExportAction }

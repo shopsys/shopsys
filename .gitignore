@@ -10,3 +10,16 @@
 /project-base/composer.lock
 /project-base/package-lock.json
 /project-base/migrations-lock.yml
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/project-base/public/bundles/
+/project-base/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###

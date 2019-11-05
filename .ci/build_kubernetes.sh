@@ -10,14 +10,14 @@ FIRST_DOMAIN_HOSTNAME=${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 SECOND_DOMAIN_HOSTNAME=2.${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 
 # Set parameters.yml file and domains_urls
-cp project-base/app/config/domains_urls.yml.dist project-base/app/config/domains_urls.yml
-cp project-base/app/config/parameters_test.yml.dist project-base/app/config/parameters_test.yml
-cp project-base/app/config/parameters.yml.dist project-base/app/config/parameters.yml
-yq write --inplace project-base/app/config/domains_urls.yml domains_urls[0].url http://${FIRST_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
-yq write --inplace project-base/app/config/domains_urls.yml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
+cp project-base/config/domains_urls.yml.dist project-base/config/domains_urls.yml
+cp project-base/config/parameters_test.yml.dist project-base/config/parameters_test.yml
+cp project-base/config/parameters.yml.dist project-base/config/parameters.yml
+yq write --inplace project-base/config/domains_urls.yml domains_urls[0].url http://${FIRST_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
+yq write --inplace project-base/config/domains_urls.yml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
 
 # Change "overwrite_domain_url" parameter for Selenium tests as containers "webserver" and "php-fpm" are bundled together in a pod "webserver-php-fpm"
-yq write --inplace project-base/app/config/parameters_test.yml parameters.overwrite_domain_url http://webserver-php-fpm:8080
+yq write --inplace project-base/config/parameters_test.yml parameters.overwrite_domain_url http://webserver-php-fpm:8080
 
 # Pull or build Docker images for the current commit
 DOCKER_IMAGE_TAG=ci-commit-${GIT_COMMIT}
@@ -52,7 +52,7 @@ docker image pull ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG} |
 
 DOCKER_PHP_FPM_IMAGE=${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 DOCKER_ELASTIC_IMAGE=${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
-PATH_CONFIG_DIRECTORY='/var/www/html/project-base/app/config'
+PATH_CONFIG_DIRECTORY='/var/www/html/project-base/config'
 GOOGLE_CLOUD_STORAGE_BUCKET_NAME=''
 GOOGLE_CLOUD_PROJECT_ID=''
 

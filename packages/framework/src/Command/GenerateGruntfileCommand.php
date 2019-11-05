@@ -92,6 +92,7 @@ class GenerateGruntfileCommand extends Command
             'domains' => $this->domain->getAll(),
             'customResourcesDirectory' => $this->customResourcesDirectory,
             'frameworkResourcesDirectory' => $this->frameworkResourcesDirectory,
+            'gruntTemplateDirectory' => $this->rootDirectory . '/templates/Grunt',
             'cssVersion' => $cssVersion,
         ]);
         $path = $this->rootDirectory;

@@ -21,19 +21,19 @@ else
     fi
 fi
 
-rm -f ${PROJECT_BASE_PATH}/app/config/packages/fos_rest.yml
-rm -f ${PROJECT_BASE_PATH}/app/config/packages/test/fos_rest.yml
+rm -f ${PROJECT_BASE_PATH}/config/packages/fos_rest.yml
+rm -f ${PROJECT_BASE_PATH}/config/packages/test/fos_rest.yml
 
-rm -f ${PROJECT_BASE_PATH}/app/config/packages/trikoder_oauth2.yml
-rm -rf ${PROJECT_BASE_PATH}/app/config/packages/oauth2
+rm -f ${PROJECT_BASE_PATH}/config/packages/trikoder_oauth2.yml
+rm -rf ${PROJECT_BASE_PATH}/config/oauth2
 
-rm -rf ${PROJECT_BASE_PATH}/src/Shopsys/ShopBundle/Controller/Api
+rm -rf ${PROJECT_BASE_PATH}/src/Controller/Api
 
-rm -f ${PROJECT_BASE_PATH}/tests/ShopBundle/Smoke/BackendApiTest.php
-rm -f ${PROJECT_BASE_PATH}/tests/ShopBundle/Smoke/BackendApiCreateProductTest.php
-rm -f ${PROJECT_BASE_PATH}/tests/ShopBundle/Smoke/BackendApiDeleteProductTest.php
-rm -f ${PROJECT_BASE_PATH}/tests/ShopBundle/Smoke/BackendApiUpdateProductTest.php
-rm -f ${PROJECT_BASE_PATH}/tests/ShopBundle/Test/OauthTestCase.php
+rm -f ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiTest.php
+rm -f ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiCreateProductTest.php
+rm -f ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiDeleteProductTest.php
+rm -f ${PROJECT_BASE_PATH}/tests/App/Smoke/BackendApiUpdateProductTest.php
+rm -f ${PROJECT_BASE_PATH}/tests/App/Test/OauthTestCase.php
 
 function apply_patch_reverse () {
     if [ -z $1 ]
@@ -71,11 +71,11 @@ function apply_patch_reverse () {
     fi
 }
 
-apply_patch_reverse "app/config/parameters_common.yml"
-apply_patch_reverse "app/config/routing.yml"
-apply_patch_reverse "app/config/packages/security.yml"
-apply_patch_reverse "src/Shopsys/ShopBundle/Resources/config/routing.yml"
-apply_patch_reverse "app/AppKernel.php"
+apply_patch_reverse "src/Kernel.php"
+apply_patch_reverse "config/parameters_common.yml"
+rm -r ${PROJECT_BASE_PATH}/config/routes/backend-api.yml
+apply_patch_reverse "config/packages/security.yml"
+apply_patch_reverse "config/bundles.php"
 apply_patch_reverse "build.xml"
 
 if [ "$1" == "monorepo" ]

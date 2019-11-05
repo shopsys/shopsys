@@ -1,0 +1,11 @@
+@@ -84,6 +84,10 @@
+         $loader->load($confDir . '/{services}' . self::CONFIG_EXTS, 'glob');
+         $loader->load($confDir . '/{services}_' . $this->environment . self::CONFIG_EXTS, 'glob');
+
++        if (file_exists($confDir . '/oauth2/parameters_oauth.yml')) {
++            $loader->load($confDir . '/oauth2/parameters_oauth.yml');
++        }
++
+         if (file_exists(__DIR__ . '/../../parameters_monorepo.yml')) {
+             $loader->load(__DIR__ . '/../../parameters_monorepo.yml');
+         }

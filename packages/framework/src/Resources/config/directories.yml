@@ -8,7 +8,7 @@ parameters:
         - '%kernel.project_dir%/docs/generated'
         - '%kernel.project_dir%/var/cache'
         - '%kernel.project_dir%/var/lock'
-        - '%kernel.project_dir%/var/logs'
+        - '%kernel.project_dir%/var/log'
         - '%kernel.project_dir%/var/errorPages'
         - '%shopsys.web_dir%/assets/admin/styles'
         - '%shopsys.web_dir%/assets/frontend/styles'

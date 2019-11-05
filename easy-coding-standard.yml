@@ -10,9 +10,9 @@ parameters:
             - 'utils/*'
 
         Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff:
-            - '*/src/Shopsys/ShopBundle/*'
-            - '*/tests/ShopBundle/*'
+            - '*/src/*'
+            - '*/tests/App/*'
 
         Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff:
-            - '*/src/Shopsys/ShopBundle/*'
-            - '*/tests/ShopBundle/*'
+            - '*/src/*'
+            - '*/tests/App/*'

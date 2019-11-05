@@ -1,0 +1,8 @@
+@@ -45,4 +45,7 @@
+     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],
+     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
+     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
++    FOS\RestBundle\FOSRestBundle::class => ['all' => true],
++    Shopsys\BackendApiBundle\ShopsysBackendApiBundle::class => ['all' => true],
++    Trikoder\Bundle\OAuth2Bundle\TrikoderOAuth2Bundle::class => ['all' => true],
+ ];

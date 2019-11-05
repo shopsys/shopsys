@@ -11,12 +11,12 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class ProductVariantTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\ShopBundle\Model\Product\Product
+     * @var \App\Model\Product\Product
      */
     private $productAsMainVariant;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Product\Product
+     * @var \App\Model\Product\Product
      */
     private $productAsVariant;
 

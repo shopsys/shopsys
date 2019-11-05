@@ -1,5 +1,0 @@
-# This configuration is cached in the container (delete cache after changes).
-# Should be as same with production as it is possible.
-
-imports:
-    - { resource: packages/test/*.yml }

@@ -1,0 +1,6 @@
+<div class="web__line">
+    <div class="web__container">
+        <h2>{{ 'Popular categories'|trans }}</h2>
+        {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories, showProductsCountByCategory: false})) }}
+    </div>
+</div>

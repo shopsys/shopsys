@@ -5,10 +5,7 @@
     "license": "proprietary",
     "autoload": {
         "psr-4": {
-            "Shopsys\\": [
-                "project-base/app/",
-                "project-base/src/Shopsys/"
-            ],
+            "App\\": "project-base/src/",
             "Shopsys\\BackendApiBundle\\": "packages/backend-api/src/",
             "Shopsys\\CodingStandards\\": "packages/coding-standards/src/",
             "Shopsys\\FormTypesBundle\\": "packages/form-types-bundle/src/",
@@ -25,9 +22,6 @@
             "Shopsys\\FrameworkBundle\\": "packages/framework/src/"
         },
         "classmap": [
-            "project-base/app/AppCache.php",
-            "project-base/app/AppKernel.php",
-            "project-base/app/Bootstrap.php",
             "project-base/app/Environment.php"
         ],
         "files": [
@@ -93,10 +87,10 @@
         "doctrine/doctrine-migrations-bundle": "^1.3.0",
         "doctrine/migrations": "^1.6.0",
         "elasticsearch/elasticsearch": "^6.0.1",
+        "fp/jsformvalidator-bundle": "^1.5.1",
         "friendsofphp/php-cs-fixer": "^2.14.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "friendsofsymfony/rest-bundle": "^2.5",
-        "fp/jsformvalidator-bundle": "^1.5.1",
         "fzaninotto/faker": "^1.7.1",
         "gedmo/doctrine-extensions": "^2.4.34",
         "google/cloud-storage": "^1.10",
@@ -108,16 +102,16 @@
         "jakub-onderka/php-parallel-lint": "^0.9",
         "jdorn/sql-formatter": "^1.2",
         "jms/metadata": "^1.6",
-        "jms/translation-bundle": "^1.4.1",
         "jms/serializer-bundle": "^2.4",
-        "joschi127/doctrine-entity-override-bundle": "^0.5.0",
+        "jms/translation-bundle": "^1.4.1",
+        "joschi127/doctrine-entity-override-bundle": "^0.7.2",
         "knplabs/knp-menu-bundle": "^2.2.1",
         "league/flysystem": "^1.0",
         "litipk/php-bignumbers": "^0.8",
         "nikic/php-parser": "^4.0",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.1",
-        "overblog/graphql-bundle": "^0.12",
         "overblog/graphiql-bundle": "^0.1",
+        "overblog/graphql-bundle": "^0.12",
         "phing/phing": "^2.16.1",
         "phpunit/phpunit": "^7.0",
         "presta/sitemap-bundle": "^1.5.3",
@@ -126,9 +120,9 @@
         "psr/log": "^1.0",
         "ramsey/uuid": "^3.8",
         "roave/better-reflection": "^3.5",
-        "sensio/distribution-bundle": "^5.0.21",
         "sensio/framework-extra-bundle": "^3.0.29",
         "sensio/generator-bundle": "^3.1.7",
+        "sensiolabs/security-checker": "^6.0",
         "shopsys/doctrine-orm": "^2.6.2",
         "shopsys/jparser": "^0.1",
         "shopsys/ordered-form": "^4.0",
@@ -139,21 +133,37 @@
         "stof/doctrine-extensions-bundle": "^1.3.0",
         "superbalist/flysystem-google-storage": "^7.1",
         "swiftmailer/swiftmailer": "^6.0",
-        "symplify/easy-coding-standard": "^5.2.17",
-        "symfony/assetic-bundle": "^2.8.2",
         "symfony-cmf/routing": "^2.0.3",
         "symfony-cmf/routing-bundle": "^2.0.3",
+        "symfony/assetic-bundle": "^2.8.2",
+        "symfony/debug": "^3.4",
+        "symfony/debug-bundle": "^3.4",
+        "symfony/dotenv": "^3.4",
+        "symfony/flex": "^1.4",
+        "symfony/form": "^3.4",
+        "symfony/http-client": "^4.3",
+        "symfony/mime": "^4.3",
         "symfony/monolog-bridge": "^3.0.0",
         "symfony/monolog-bundle": "~3.4.0",
+        "symfony/property-info": "^3.4",
         "symfony/proxy-manager-bridge": "^3.4",
+        "symfony/security-bundle": "^3.4",
         "symfony/swiftmailer-bundle": "^3.2.2",
-        "symfony/symfony": "^3.4.8",
+        "symfony/templating": "^3.4",
+        "symfony/translation": "^3.4",
+        "symfony/twig-bundle": "^3.4",
+        "symfony/validator": "^3.4",
+        "symfony/web-link": "^3.4",
+        "symfony/web-profiler-bundle": "^3.4",
+        "symfony/web-server-bundle": "^3.4",
+        "symfony/workflow": "^3.4",
+        "symplify/easy-coding-standard": "^5.2.17",
         "tracy/tracy": "^2.4.13",
+        "trikoder/oauth2-bundle": "^1.1",
         "twig/extensions": "^1.5.1",
         "twig/twig": "^2.4.8",
         "vasek-purchart/console-errors-bundle": "^1.0.1",
-        "webmozart/assert": "^1.4",
-        "trikoder/oauth2-bundle": "^1.1"
+        "webmozart/assert": "^1.4"
     },
     "require-dev": {
         "ext-pgsql": "*",
@@ -161,6 +171,7 @@
         "codeception/phpunit-wrapper": "^7.0",
         "nette/utils": "^2.5",
         "phpstan/phpstan": "^0.11",
+        "symfony/var-dumper": "^3.4",
         "symplify/easy-coding-standard-tester": "^5.2.17",
         "symplify/monorepo-builder": "^5.2.17",
         "shopsys/changelog-linker": "^5.5.0",
@@ -172,42 +183,52 @@
     "conflict": {
         "symfony/dependency-injection": "3.4.15|3.4.16",
         "symplify/better-phpdoc-parser": "5.4.14|5.4.15",
-        "twig/twig": "2.6.1"
+        "twig/twig": "2.6.1",
+        "symfony/symfony": "*"
     },
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Shopsys\\Environment::checkEnvironment",
-            "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postInstall"
+            "App\\Environment::checkEnvironment",
+            "@auto-scripts"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Shopsys\\Environment::checkEnvironment",
-            "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postUpdate"
-        ]
+            "App\\Environment::checkEnvironment",
+            "@auto-scripts"
+        ],
+        "auto-scripts": {
+            "shopsys:domains-urls:configure": "symfony-cmd",
+            "ckeditor:install --clear=skip --release=full --tag=4.5.11": "symfony-cmd",
+            "cache:clear --no-warmup": "symfony-cmd",
+            "security-checker security:check": "script"
+        }
     },
     "config": {
         "preferred-install": "dist",
         "component-dir": "project-base/web/components",
+        "sort-packages": true,
         "platform": {
             "php": "7.2"
         }
     },
     "extra": {
-        "symfony-app-dir": "project-base/app",
-        "symfony-bin-dir": "project-base/bin",
-        "symfony-tests-dir": "project-base/tests",
-        "symfony-var-dir": "project-base/var",
-        "symfony-web-dir": "project-base/web",
+        "bin-dir": "project-base/bin",
+        "config-dir": "project-base/config",
+        "src-dir": "project-base/src",
+        "var-dir": "project-base/var",
+        "public-dir": "project-base/web",
+        "symfony": {
+            "allow-contrib": true,
+            "require": "^3.4"
+        },
         "incenteev-parameters": [
             {
-                "file": "project-base/app/config/parameters.yml",
+                "file": "project-base/config/parameters.yml",
                 "keep-outdated": true
             },
             {
-                "file": "project-base/app/config/parameters_test.yml",
+                "file": "project-base/config/parameters_test.yml",
                 "keep-outdated": true
             }
         ]

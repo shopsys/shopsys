@@ -1,0 +1,5 @@
+@@ -31,3 +31,4 @@
+         Shopsys\FrameworkBundle\Model\Product\Brand\Brand: App\Model\Product\Brand\Brand
+     build-version: '0000000000000000'
+     shopsys.display_timezone: Europe/Prague
++    oauth2_encryption_key: '0' #placeholder for correctly running composer post script, replaced by config/oauth2/parameters_oauth.yml

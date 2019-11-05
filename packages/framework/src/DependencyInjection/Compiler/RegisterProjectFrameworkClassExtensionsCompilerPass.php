@@ -42,6 +42,6 @@ class RegisterProjectFrameworkClassExtensionsCompilerPass implements CompilerPas
      */
     private function isProjectClass(string $serviceId): bool
     {
-        return strpos($serviceId, 'Shopsys\ShopBundle') !== false;
+        return strpos($serviceId, 'App') !== false;
     }
 }

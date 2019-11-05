@@ -121,7 +121,9 @@ class GenerateMigrationCommand extends AbstractCommand
      */
     private function chooseMigrationLocation(SymfonyStyle $io)
     {
+        $applicationMigrationLocation = $this->migrationsLocator->getApplicationMigrationLocation();
         $bundles = $this->getAllBundleNamesExceptVendor();
+        array_unshift($bundles, $applicationMigrationLocation->getNamespace());
 
         if (count($bundles) > 1) {
             $chosenBundle = $io->choice(
@@ -130,6 +132,10 @@ class GenerateMigrationCommand extends AbstractCommand
             );
         } else {
             $chosenBundle = reset($bundles);
+        }
+
+        if ($chosenBundle === $applicationMigrationLocation->getNamespace()) {
+            return $applicationMigrationLocation;
         }
 
         return $this->getMigrationLocation($this->kernel->getBundle($chosenBundle));

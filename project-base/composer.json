@@ -5,15 +5,11 @@
     "license": "proprietary",
     "autoload": {
         "psr-4": {
-            "Shopsys\\": [
-                "app/",
-                "src/Shopsys/"
+            "App\\": [
+                "src/"
             ]
         },
         "classmap": [
-            "app/AppCache.php",
-            "app/AppKernel.php",
-            "app/Bootstrap.php",
             "app/Environment.php"
         ]
     },
@@ -55,15 +51,16 @@
         "heureka/overeno-zakazniky": "^2.0.6",
         "incenteev/composer-parameter-handler": "^2.1.3",
         "intervention/image": "^2.3.14",
+        "jms/serializer-bundle": "^2.4",
         "jms/translation-bundle": "^1.4.1",
-        "joschi127/doctrine-entity-override-bundle": "^0.5.0",
+        "joschi127/doctrine-entity-override-bundle": "^0.7.2",
         "league/flysystem": "^1.0",
         "phing/phing": "^2.16.1",
         "presta/sitemap-bundle": "^1.5.3",
         "prezent/doctrine-translatable-bundle": "^1.0.3",
-        "sensio/distribution-bundle": "^5.0.21",
         "sensio/framework-extra-bundle": "^3.0.29",
         "sensio/generator-bundle": "^3.1.7",
+        "sensiolabs/security-checker": "^6.0",
         "shopsys/doctrine-orm": "^2.6.2",
         "shopsys/google-cloud-bundle": "9.0.x-dev",
         "shopsys/postgres-search-bundle": "^0.1",
@@ -79,12 +76,30 @@
         "shopsys/read-model": "9.0.x-dev",
         "snc/redis-bundle": "^2.1.8",
         "stof/doctrine-extensions-bundle": "^1.3.0",
-        "symfony/assetic-bundle": "^2.8.2",
-        "symfony/monolog-bundle": "~3.4.0",
-        "symfony/swiftmailer-bundle": "^3.2.2",
-        "symfony/symfony": "^3.4.8",
         "symfony-cmf/routing": "^2.0.3",
         "symfony-cmf/routing-bundle": "^2.0.3",
+        "symfony/assetic-bundle": "^2.8.2",
+        "symfony/debug": "^3.4",
+        "symfony/debug-bundle": "^3.4",
+        "symfony/dotenv": "^3.4",
+        "symfony/flex": "^1.4",
+        "symfony/form": "^3.4",
+        "symfony/http-client": "^4.3",
+        "symfony/mime": "^4.3",
+        "symfony/monolog-bridge": "^3.0.0",
+        "symfony/monolog-bundle": "~3.4.0",
+        "symfony/property-info": "^3.4",
+        "symfony/proxy-manager-bridge": "^3.4",
+        "symfony/security-bundle": "^3.4",
+        "symfony/swiftmailer-bundle": "^3.2.2",
+        "symfony/templating": "^3.4",
+        "symfony/translation": "^3.4",
+        "symfony/twig-bundle": "^3.4",
+        "symfony/validator": "^3.4",
+        "symfony/web-link": "^3.4",
+        "symfony/web-profiler-bundle": "^3.4",
+        "symfony/web-server-bundle": "^3.4",
+        "symfony/workflow": "^3.4",
         "tracy/tracy": "^2.4.13",
         "twig/extensions": "^1.5.1",
         "twig/twig": "^2.4.8",
@@ -96,6 +111,7 @@
         "ext-zip": "*",
         "codeception/codeception": "^2.4.0",
         "phpstan/phpstan": "^0.11",
+        "symfony/var-dumper": "^3.4",
         "phpunit/phpunit": "^7.0",
         "shopsys/coding-standards": "9.0.x-dev",
         "shopsys/http-smoke-testing": "9.0.x-dev",
@@ -106,42 +122,52 @@
     },
     "conflict": {
         "symfony/dependency-injection": "3.4.15|3.4.16",
-        "twig/twig": "2.6.1"
+        "twig/twig": "2.6.1",
+        "symfony/symfony": "*"
     },
     "scripts": {
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Shopsys\\Environment::checkEnvironment",
-            "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postInstall"
+            "App\\Environment::checkEnvironment",
+            "@auto-scripts"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Shopsys\\Environment::checkEnvironment",
-            "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postUpdate"
-        ]
+            "App\\Environment::checkEnvironment",
+            "@auto-scripts"
+        ],
+        "auto-scripts": {
+            "shopsys:domains-urls:configure": "symfony-cmd",
+            "ckeditor:install --clear=skip --release=full --tag=4.5.11": "symfony-cmd",
+            "cache:clear --no-warmup": "symfony-cmd",
+            "security-checker security:check": "script"
+        }
     },
     "config": {
         "preferred-install": "dist",
         "component-dir": "web/components",
+        "sort-packages": true,
         "platform": {
             "php": "7.2"
         }
     },
     "extra": {
-        "symfony-app-dir": "app",
-        "symfony-bin-dir": "bin",
-        "symfony-tests-dir": "tests",
-        "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
+        "bin-dir": "bin",
+        "config-dir": "config",
+        "src-dir": "src",
+        "var-dir": "var",
+        "public-dir": "web",
+        "symfony": {
+            "allow-contrib": true,
+            "require": "^3.4"
+        },
         "incenteev-parameters": [
             {
-                "file": "app/config/parameters.yml",
+                "file": "config/parameters.yml",
                 "keep-outdated": true
             },
             {
-                "file": "app/config/parameters_test.yml",
+                "file": "config/parameters_test.yml",
                 "keep-outdated": true
             }
         ]

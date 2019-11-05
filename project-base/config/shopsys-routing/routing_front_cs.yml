@@ -1,0 +1,71 @@
+front_cart:
+    path: /kosik/
+    defaults: { _controller: App\Controller\Front\CartController:indexAction }
+
+front_customer_edit:
+    path: /zakaznik/upravit-udaje/
+    defaults: { _controller: App\Controller\Front\CustomerController:editAction }
+
+front_customer_orders:
+    path: /zakaznik/objednavky/
+    defaults: { _controller: App\Controller\Front\CustomerController:ordersAction }
+
+front_customer_order_detail_registered:
+    path: /zakaznik/detail-objednavky/{orderNumber}
+    defaults: { _controller: App\Controller\Front\CustomerController:orderDetailRegisteredAction }
+
+front_customer_order_detail_unregistered:
+    path: /detail-objednavky/{urlHash}
+    defaults: { _controller: App\Controller\Front\CustomerController:orderDetailUnregisteredAction }
+
+front_login:
+    path: /prihlaseni/
+    defaults: { _controller: App\Controller\Front\LoginController:loginAction }
+
+front_logout:
+    # controller's action is unnecessary, because firewall processes whole request
+    path: /odhlasit/{_csrf_token}
+
+front_order_index:
+    path: /objednavka/
+    defaults: { _controller: App\Controller\Front\OrderController:indexAction }
+
+front_order_sent:
+    path: /potvrzeni-objednavky/
+    defaults: { _controller: App\Controller\Front\OrderController:sentAction }
+
+front_product_search:
+    path: /hledani
+    defaults: { _controller: App\Controller\Front\ProductController:searchAction }
+
+front_registration_register:
+    path: /registrace/
+    defaults: { _controller: App\Controller\Front\RegistrationController:registerAction }
+
+front_registration_reset_password:
+    path: /zapomenute-heslo/
+    defaults: { _controller: App\Controller\Front\CustomerPasswordController:resetPasswordAction }
+
+front_registration_set_new_password:
+    path: /nove-heslo/
+    defaults: { _controller: App\Controller\Front\CustomerPasswordController:setNewPasswordAction }
+
+front_brand_list:
+    path: /prehled-znacek/
+    defaults: { _controller: App\Controller\Front\BrandController:listAction }
+
+front_personal_data:
+    path: /prehled-osobnich-udaju/
+    defaults: { _controller: App\Controller\Front\PersonalDataController:indexAction }
+
+front_personal_data_access:
+    path: /prehled-osobnich-udaju/{hash}/
+    defaults: { _controller: App\Controller\Front\PersonalDataController:accessDisplayAction }
+
+front_personal_data_export:
+    path: /export-osobnich-udaju/
+    defaults: { _controller: App\Controller\Front\PersonalDataController:exportAction }
+
+front_personal_data_access_export:
+    path: /export-osobnich-udaju/{hash}/
+    defaults: { _controller: App\Controller\Front\PersonalDataController:accessExportAction }
