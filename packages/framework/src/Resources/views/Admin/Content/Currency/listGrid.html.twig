@@ -102,4 +102,11 @@
 {% block grid_inline_edit_add_button %}
     {% set addEntity = 'Create currency'|trans %}
     {{ parent() }}
+        <div class="in-message in-message--block in-message--warning js-flash-message">
+            <ul class="in-message__list">
+                <li class="in-message__list__item">
+                    {{ 'If you change currency settings, prices of all products will be recalculated'| trans}}
+                </li>
+            </ul>
+        </div>
 {% endblock %}
