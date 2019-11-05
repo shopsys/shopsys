@@ -7,7 +7,7 @@ Contains all html elements necessary to create new design.
 ## Installation to running SSFW project
 You need to have Shopsys Framework installed in developer mode according to our installation guide
 
-1) run `phing grunt` so you have all your styles compiled
+1) run `php phing grunt` so you have all your styles compiled
 2) open `your-project-url/_styleguide` file in browser to see your styleguide
 
 ### How to add new information
