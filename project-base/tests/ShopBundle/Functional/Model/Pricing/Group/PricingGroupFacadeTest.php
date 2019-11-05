@@ -32,7 +32,7 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
     private $customerFacade;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Customer\UserDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface
      * @inject
      */
     private $userDataFactory;

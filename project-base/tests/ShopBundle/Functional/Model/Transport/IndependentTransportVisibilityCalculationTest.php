@@ -25,7 +25,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
     private $independentTransportVisibilityCalculation;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Transport\TransportDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
      * @inject
      */
     private $transportDataFactory;

@@ -41,7 +41,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
     private $manualInputPriceFacade;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
     private $productDataFactory;

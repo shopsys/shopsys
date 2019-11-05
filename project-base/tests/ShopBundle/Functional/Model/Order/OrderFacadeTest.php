@@ -63,7 +63,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
     private $persistentReferenceFacade;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Order\OrderDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
      * @inject
      */
     private $orderDataFactory;

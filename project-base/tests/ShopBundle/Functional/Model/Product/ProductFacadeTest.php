@@ -15,7 +15,7 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 class ProductFacadeTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
     private $productDataFactory;

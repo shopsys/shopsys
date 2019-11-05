@@ -11,13 +11,13 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 class ArticleTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\ShopBundle\Model\Article\ArticleDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface
      * @inject
      */
     private $articleDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFactory
+     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface
      * @inject
      */
     private $articleFactory;

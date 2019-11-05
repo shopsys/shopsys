@@ -21,7 +21,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
     private $independentPaymentVisibilityCalculation;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Payment\PaymentDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface
      * @inject
      */
     private $paymentDataFactory;

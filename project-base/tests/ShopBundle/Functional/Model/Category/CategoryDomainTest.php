@@ -16,7 +16,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     protected const DEMONSTRATIVE_SEO_H1 = 'Demonstrative seo H1';
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Category\CategoryDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
      * @inject
      */
     private $categoryDataFactory;

@@ -12,7 +12,7 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 class ListedProductViewFacadeTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade
+     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
      * @inject
      */
     private $listedProductViewFacade;

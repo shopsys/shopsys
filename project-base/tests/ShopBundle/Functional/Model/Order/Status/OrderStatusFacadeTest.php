@@ -24,7 +24,7 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
     private $orderFacade;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Order\OrderDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
      * @inject
      */
     private $orderDataFactory;

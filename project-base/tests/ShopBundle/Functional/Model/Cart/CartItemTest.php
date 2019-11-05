@@ -19,7 +19,7 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 class CartItemTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
     private $productDataFactory;

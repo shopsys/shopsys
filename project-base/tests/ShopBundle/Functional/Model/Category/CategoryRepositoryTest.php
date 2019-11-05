@@ -30,7 +30,7 @@ class CategoryRepositoryTest extends TransactionFunctionalTestCase
     private $categoryVisibilityRepository;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Category\CategoryDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
      * @inject
      */
     private $categoryDataFactory;

@@ -25,13 +25,13 @@ class VatFacadeTest extends TransactionFunctionalTestCase
     private $transportFacade;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Transport\TransportDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
      * @inject
      */
     private $transportDataFactory;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Payment\PaymentDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface
      * @inject
      */
     private $paymentDataFactory;

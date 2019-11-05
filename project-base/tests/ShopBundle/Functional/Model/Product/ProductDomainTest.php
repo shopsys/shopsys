@@ -19,7 +19,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     protected const DEMONSTRATIVE_SHORT_DESCRIPTION = 'Demonstrative short description';
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
     private $productDataFactory;

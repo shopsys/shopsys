@@ -18,7 +18,7 @@ class UnitFacadeTest extends TransactionFunctionalTestCase
     private $unitFacade;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
     private $productDataFactory;
