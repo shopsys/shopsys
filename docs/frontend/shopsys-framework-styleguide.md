@@ -5,13 +5,14 @@ Styleguide - tool to make creating and maintaining styleguides easy for Shopsys 
 Contains all html elements necessary to create new design.
 
 ## Installation for already running project based on Shopsys Framework
-You need to have Shopsys Framework installed in developer mode according to our installation guide
+You need to have Shopsys Framework installed in developer mode according to our [Installation Guide](./installation-guide.md)
 
 1) run `php phing grunt` so you have all your styles compiled
-2) open `your-project-url/_styleguide` file in browser to see your styleguide
+2) open http://127.0.0.1:8000/_styleguide file in browser to see your styleguide
 
-### How to add new information
-You need to add your information to `src/Shopsys/ShopBundle/Resources/views/Styleguide/styleguide.html.twig` which is simple twig file.
+### How to add new section to styleguide
+If you need to add your information to styleguide - edit `src/Shopsys/ShopBundle/Resources/views/Styleguide/styleguide.html.twig` which is simple twig file.
+
 ```
 <section id="[your_section_id]" class="styleguide-module anchor">
     <h2 class="styleguide-module__title">[your_section_title]</h2>
