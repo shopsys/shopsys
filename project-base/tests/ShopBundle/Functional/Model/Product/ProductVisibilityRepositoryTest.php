@@ -72,6 +72,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $vat = new Vat($vatData);
         $em->persist($vat);
 
+        /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {

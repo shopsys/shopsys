@@ -35,6 +35,7 @@ class ArticleTest extends TransactionFunctionalTestCase
 
     public function testArticleIsCorrectlyRestoredFromDatabase()
     {
+        /** @var \Shopsys\ShopBundle\Model\Article\ArticleData $articleData */
         $articleData = $this->articleDataFactory->create();
 
         $articleData->name = 'Demonstrative name';
