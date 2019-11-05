@@ -1,4 +1,4 @@
-# Graphic checkboxes and radiobuttons
+# Graphic Checkboxes and Radiobuttons
 For replacing native checkboxes and radiobuttons we use image background, which has six positions:
 
     - normal (top, left)

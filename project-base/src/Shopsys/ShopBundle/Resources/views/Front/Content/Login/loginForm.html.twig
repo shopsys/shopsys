@@ -13,57 +13,57 @@
         <div class="web__container">
             <h1>{{ 'Login'|trans }}</h1>
 
-    {{ form_start(form, {attr: {'multipleForm': true}}) }}
-    {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}
-        <dl class="form-line">
-            <dt>
-                {{ form_label(form.email) }}
-            </dt>
-            <dd>
-                {{ form_widget(form.email) }}
-            </dd>
-        </dl>
+            {{ form_start(form, {attr: {'multipleForm': true}}) }}
+            {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}
+                <dl class="form-line">
+                    <dt>
+                        {{ form_label(form.email) }}
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.email) }}
+                    </dd>
+                </dl>
 
-        <dl class="form-line">
-            <dt>
-                {{ form_label(form.password) }}
-            </dt>
-            <dd>
-                {{ form_widget(form.password) }}
-            </dd>
-        </dl>
+                <dl class="form-line">
+                    <dt>
+                        {{ form_label(form.password) }}
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.password) }}
+                    </dd>
+                </dl>
 
-        <dl class="form-line">
-            <dt></dt>
-            <dd>
-                <div class="form-choice">
-                    {{ form_widget(form.rememberMe, { attr: { class: "css-checkbox" } }) }}
-                    <label class="css-checkbox__image form-choice__label" for="{{ form.rememberMe.vars.id }}">
-                        {{ 'Remember my login'|trans }}
-                        <i class="svg svg-info in-icon in-icon--info js-tooltip"
-                           data-toggle="tooltip"
-                           data-placement="right"
-                           title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
-                        ></i>
-                    </label>
-                </div>
-            </dd>
-        </dl>
+                <dl class="form-line">
+                    <dt></dt>
+                    <dd>
+                        <div class="form-choice">
+                            {{ form_widget(form.rememberMe, { attr: { class: "css-checkbox" } }) }}
+                            <label class="css-checkbox__image form-choice__label" for="{{ form.rememberMe.vars.id }}">
+                                {{ 'Remember my login'|trans }}
+                                <i class="svg svg-info in-icon in-icon--info js-tooltip"
+                                   data-toggle="tooltip"
+                                   data-placement="right"
+                                   title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
+                                ></i>
+                            </label>
+                        </div>
+                    </dd>
+                </dl>
 
-        <dl class="form-line">
-            <dt></dt>
-            <dd>
-                {{ form_widget(form.login, {label: 'Log in'|trans}) }}
-            </dd>
-        </dl>
-        <dl class="form-line">
-            <dt></dt>
-            <dd>
-                <a href="{{ url('front_registration_reset_password') }}">{{ 'Forgot your password?'|trans }}</a>
-            </dd>
-        </dl>
+                <dl class="form-line">
+                    <dt></dt>
+                    <dd>
+                        {{ form_widget(form.login, {label: 'Log in'|trans}) }}
+                    </dd>
+                </dl>
+                <dl class="form-line">
+                    <dt></dt>
+                    <dd>
+                        <a href="{{ url('front_registration_reset_password') }}">{{ 'Forgot your password?'|trans }}</a>
+                    </dd>
+                </dl>
 
-    {{ form_end(form) }}
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}
