@@ -27,7 +27,7 @@
                     <div id="js-slider-homepage" class="box-slider__in">
                         {% for item in sliderItems %}
                             <div class="box-slider__item">
-                                <a href="{{ item.link }}">{{ image(item) }}</a>
+                                <a href="{{ item.link }}">{{ image(item, { lazy: false }) }}</a>
                             </div>
                         {% endfor %}
                     </div>
