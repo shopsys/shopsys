@@ -30,6 +30,25 @@ Because of new functions, new tests have been introduced.
 ```
 - If you would like to use different settings in your existing projects, we recommend you to create migration on your own 
 
+### Format prices in filter price range
+- It is recommended to edit filter price range placeholders directly in `filterFormMacro.html.twig` instead of in `ProductFilterFormType`. 
+You can set placeholders on your own, e.g you can format values with price formatter
+- edit `filterFormMacro.html.twig`
+```diff
+-       {{ form_row(filterForm.minimalPrice, {label: 'Price from'|trans, symbolAfterInput: currencySymbolByDomainId(getDomain().id), attr: { class: 'js-product-filter-call-change-after-reset'} }) }}
+-       {{ form_row(filterForm.maximalPrice, {label: 'Price to'|trans, symbolAfterInput: currencySymbolByDomainId(getDomain().id), attr: { class: 'js-product-filter-call-change-after-reset'} }) }}
++       {{ form_row(filterForm.minimalPrice, {
++          label: 'Price from'|trans,
++          symbolAfterInput: currencySymbolByDomainId(getDomain().id),
++          attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.minimalPrice|price }
++       }) }}
++       {{ form_row(filterForm.maximalPrice, {
++          label: 'Price to'|trans,
++          symbolAfterInput: currencySymbolByDomainId(getDomain().id),
++          attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.maximalPrice|price}
++       }) }}
+```
+
 ### New tests for price formatting 
 - add tests for `NumberFormatHelper`
 ```
@@ -371,6 +390,7 @@ Because of new functions, new tests have been introduced.
     - `Rounding::roundPriceWithVat()` use `roundPriceWithVatByCurrency()`
     - `BasePriceCalculation::getBasePriceWithVat()` use `getBasePriceWithVatRoundedByCurrency()`
     - `BasePriceCalculation::calculateBasePrice()` use `calculateBasePriceRoundedByCurrency()`
+    - `ProductFilterFormType::transformMoneyToView`, set up filter price range placeholders in `filterFormMacro.html.twig`
 - these tests are deprecated and will be removed in the next major release
     - `CartBoxPage::seeCountAndPriceInCartBox()`
     - `CartPage::assertProductPrice()`
