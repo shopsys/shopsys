@@ -1,4 +1,4 @@
-# Shopsys Framework Styleguide
+# Basic Design Styleguide
 
 ## Documentation
 Styleguide - tool to make creating and maintaining styleguides easy for Shopsys Framework designs.

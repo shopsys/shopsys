@@ -43,7 +43,7 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
 * [Configuring Image Sizes for Individual Devices Width](./frontend/configuring-image-sizes-for-individual-devices-width.md)
 * [Frontend Troubleshooting](./frontend/frontend-troubleshooting.md)
 * [Understanding the Style Directory](./frontend/understanding-the-style-directory.md)
-* [Shopsys Framework Styleguide](./frontend/shopsys-framework-styleguide.md)
+* [Basic Design Styleguide](frontend/basic-design-styleguide.md)
 
 ## FAQ
 For the frequently asked questions, see [FAQ and Common Issues](./introduction/faq-and-common-issues.md).

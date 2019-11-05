@@ -12,4 +12,4 @@ _main:
 _styleguide:
     path: /_styleguide/
     defaults: { _controller: ShopsysShopBundle:Styleguide\Styleguide:styleguide}
-    
+
