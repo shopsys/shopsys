@@ -87,6 +87,13 @@ There you can find links to upgrade notes for other versions too.
           +    message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
           +    path: %currentWorkingDirectory%/tests/FrontendApiBundle/*
       ```
+- add optional fronted API - product and category images to your project ([#1486](https://github.com/shopsys/shopsys/pull/1486))
+    - copy necessary type definitions:
+        [Category.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml`
+        [Image.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Image.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Image.types.yml`
+        [Product.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Product.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Product.types.yml`
+    - update your `easy-coding-standard.yml` file:
+        - add `'*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
 - removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437)) 
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
 

@@ -1,0 +1,24 @@
+ImageDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents an image"
+        fields:
+            type:
+                type: "String"
+                description: "Image type"
+            position:
+                type: "Int"
+                description: "Position of image in list"
+            size:
+                type: "String"
+                description: "Image size defined in images.yml"
+            url:
+                type: "String"
+                description: "URL address of image"
+            width:
+                type: "Int"
+                description: "Width in pixels defined in images.yml"
+            height:
+                type: "Int"
+                description: "Height in pixels defined in images.yml"

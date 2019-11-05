@@ -16,3 +16,13 @@ CategoryDecorator:
             parent:
                 type: "Category"
                 description: "Ancestor category"
+            images:
+                type: "[Image]!"
+                description: "Category images"
+                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver").resolveByCategory(value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
