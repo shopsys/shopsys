@@ -88,9 +88,9 @@ class RouteInfo
     }
 
     /**
-     * @return array|null
+     * @return array
      */
-    public function getAnnotations(): ?array
+    public function getAnnotations(): array
     {
         return $this->annotations;
     }
