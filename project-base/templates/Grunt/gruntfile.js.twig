@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 
                     modifyVars: {
                         frameworkResourcesDirectory: '{{ frameworkResourcesDirectory|raw }}',
-                    }
+                }
                 }
             },
             styleguide: {
@@ -220,6 +220,12 @@ module.exports = function(grunt) {
             }
         },
 
+        stylelint: {
+            all: [
+                'src/**/*.less',
+            ]
+        },
+
         watch: {
             admin: {
                 files: [
@@ -275,7 +281,7 @@ module.exports = function(grunt) {
                     ],
                     tasks: {%- if domain.id == 1 -%}[{% for domain in domains %}'frontendLess{{ domain.id }}'{% if not loop.last %},{% endif %}{% endfor %}]
                     {% else -%}
-                        ['frontendLess{{ domain.id }}']
+                        ['frontendLess{{ domain.id }}','stylelint']
                     {% endif -%}
                 },
                 helpers{{ domain.id }}: {
@@ -309,8 +315,9 @@ module.exports = function(grunt) {
         }
     });
     grunt.loadNpmTasks('grunt-spritesmith');
+    grunt.loadNpmTasks('grunt-stylelint');
 
-    grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss"]);
+    grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss", "stylelint"]);
 
     {% for domain in domains -%}
         grunt.registerTask('frontend{{ domain.id }}', ['webfont:frontend', 'sprite:frontend', 'less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}'], 'postcss');
