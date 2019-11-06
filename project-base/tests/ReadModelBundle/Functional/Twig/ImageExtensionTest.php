@@ -4,16 +4,26 @@ declare(strict_types=1);
 
 namespace Tests\ReadModelBundle\Functional\Twig;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Twig\ImageExtension;
 use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class ImageExtensionTest extends FunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
+     * @inject
+     */
+    private $imageFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
+     * @inject
+     */
+    private $imageLocator;
+
     public function testGetImageHtmlWithMockedImageFacade(): void
     {
         $productId = 2;
@@ -115,9 +125,7 @@ class ImageExtensionTest extends FunctionalTestCase
      */
     private function getCurrentUrl(): string
     {
-        $domain = $this->getContainer()->get(Domain::class);
-
-        return $domain->getCurrentDomainConfig()->getUrl();
+        return $this->domain->getCurrentDomainConfig()->getUrl();
     }
 
     /**
@@ -127,11 +135,9 @@ class ImageExtensionTest extends FunctionalTestCase
      */
     private function createImageExtension(string $frontDesignImageUrlPrefix = '', ?ImageFacade $imageFacade = null): ImageExtension
     {
-        $imageLocator = $this->getContainer()->get(ImageLocator::class);
         $templating = $this->getContainer()->get('templating');
-        $domain = $this->getContainer()->get(Domain::class);
-        $imageFacade = $imageFacade ?: $this->getContainer()->get(ImageFacade::class);
+        $imageFacade = $imageFacade ?: $this->imageFacade;
 
-        return new ImageExtension($frontDesignImageUrlPrefix, $domain, $imageLocator, $imageFacade, $templating);
+        return new ImageExtension($frontDesignImageUrlPrefix, $this->domain, $this->imageLocator, $imageFacade, $templating);
     }
 }

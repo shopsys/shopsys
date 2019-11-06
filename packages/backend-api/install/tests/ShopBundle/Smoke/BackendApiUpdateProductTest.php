@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Smoke;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
 use Tests\ShopBundle\Test\OauthTestCase;
 
@@ -14,17 +13,6 @@ use Tests\ShopBundle\Test\OauthTestCase;
  */
 class BackendApiUpdateProductTest extends OauthTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->domain = $this->getContainer()->get(Domain::class);
-    }
-
     public function testUpdateProductCompletely(): void
     {
         $uuid = $this->createProduct();

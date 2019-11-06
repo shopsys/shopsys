@@ -169,7 +169,6 @@ class ExtendedClassesAnnotationsCommand extends Command
             ->in([
                 $this->projectRootDirectory . '/app',
                 $this->projectRootDirectory . '/src',
-                $this->projectRootDirectory . '/tests',
             ])
             ->name('*.php')
             ->contains($this->annotationsReplacementsMap->getPatternForAny());

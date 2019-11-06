@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Twig;
 
-use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
-use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Tests\ShopBundle\Test\FunctionalTestCase;
@@ -13,6 +11,18 @@ use Tests\ShopBundle\Test\FunctionalTestCase;
 class NumberFormatterExtensionTest extends FunctionalTestCase
 {
     protected const NBSP = "\xc2\xa0";
+
+    /**
+     * @var \CommerceGuys\Intl\NumberFormat\NumberFormatRepository
+     * @inject
+     */
+    private $numberFormatRepository;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade
+     * @inject
+     */
+    private $administrationFacade;
 
     public function formatNumberDataProvider()
     {
@@ -50,13 +60,7 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
         $localizationMock->expects($this->any())->method('getLocale')
             ->willReturn($locale);
 
-        /** @var \CommerceGuys\Intl\NumberFormat\NumberFormatRepository $numberFormatRepository */
-        $numberFormatRepository = $this->getContainer()->get(NumberFormatRepository::class);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade */
-        $administrationFacade = $this->getContainer()->get(AdministrationFacade::class);
-
-        $numberFormatterExtension = new NumberFormatterExtension($localizationMock, $numberFormatRepository, $administrationFacade);
+        $numberFormatterExtension = new NumberFormatterExtension($localizationMock, $this->numberFormatRepository, $this->administrationFacade);
 
         $this->assertSame($result, $numberFormatterExtension->formatNumber($input, $locale));
     }

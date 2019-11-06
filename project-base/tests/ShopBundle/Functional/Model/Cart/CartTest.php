@@ -12,17 +12,22 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\ShopBundle\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\ShopBundle\Model\Product\Product;
+use Shopsys\ShopBundle\Model\Product\ProductData;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class CartTest extends TransactionFunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
+     * @inject
+     */
+    private $productDataFactory;
+
     public function testRemoveItem()
     {
         $em = $this->getEntityManager();
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
 
         $customerIdentifier = new CustomerIdentifier('randomString');
 
@@ -33,7 +38,8 @@ class CartTest extends TransactionFunctionalTestCase
         $availabilityData = new AvailabilityData();
         $availabilityData->dispatchTime = 0;
         $availability = new Availability($availabilityData);
-        $productData = $productDataFactory->create();
+
+        $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->vat = $vat;
         $productData->availability = $availability;
@@ -85,14 +91,13 @@ class CartTest extends TransactionFunctionalTestCase
      */
     private function createProduct()
     {
-        $productDataFactory = $this->getContainer()->get(ProductDataFactoryInterface::class);
-
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
         $vat = new Vat($vatData);
 
-        $productData = $productDataFactory->create();
+        /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
+        $productData = $this->productDataFactory->create();
         $productData->name = ['cs' => 'Any name'];
         $productData->vat = $vat;
         $product = Product::create($productData);

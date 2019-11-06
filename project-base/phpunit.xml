@@ -46,4 +46,8 @@
         </whitelist>
     </filter>
 
+    <listeners>
+        <listener class="Zalas\Injector\PHPUnit\TestListener\ServiceInjectorListener" />
+    </listeners>
+
 </phpunit>

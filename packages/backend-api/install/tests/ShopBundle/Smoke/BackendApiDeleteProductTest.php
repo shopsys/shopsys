@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Smoke;
 
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
 use Tests\ShopBundle\Test\OauthTestCase;
 
@@ -17,12 +16,10 @@ class BackendApiDeleteProductTest extends OauthTestCase
 {
     public function testDeleteProductSuccess(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = $this->getContainer()->get(Domain::class);
         $namesByLocale = [];
         $shortDescriptionsByDomainId = [];
         $longDescriptionsByDomainId = [];
-        foreach ($domain->getAll() as $domainConfig) {
+        foreach ($this->domain->getAll() as $domainConfig) {
             $namesByLocale[$domainConfig->getLocale()] = 'Name';
             $shortDescriptionsByDomainId[$domainConfig->getId()] = 'Short description';
             $longDescriptionsByDomainId[$domainConfig->getId()] = 'Long description';
