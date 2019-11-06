@@ -54,22 +54,34 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return [];
     }
 
+    /**
+     * @param string $controller
+     *
+     * @return array
+     */
     private function extractAnnotationForController(string $controller): array
     {
-        $annotations = [];
-
-        list($className, $methodName) = explode('::', $controller);
-
-        if (method_exists($className, $methodName)) {
-            $reflectionMethod = new \ReflectionMethod($className, $methodName);
-
-            foreach ($this->annotationsReader->getMethodAnnotations($reflectionMethod) as $annotation) {
-                if ($annotation instanceof DataSet || $annotation instanceof Skipped) {
-                    $annotations[] = $annotation;
-                }
-            }
+        try {
+            $reflectionMethod = new \ReflectionMethod($controller);
+        } catch (\ReflectionException $e) {
+            return [];
         }
 
+        return $this->getControllerMethodAnnotations($reflectionMethod);
+    }
+
+    /**
+     * @param \ReflectionMethod $reflectionMethod
+     *
+     * @return array
+     */
+    private function getControllerMethodAnnotations(\ReflectionMethod $reflectionMethod) {
+        $annotations = [];
+        foreach ($this->annotationsReader->getMethodAnnotations($reflectionMethod) as $annotation) {
+            if ($annotation instanceof DataSet || $annotation instanceof Skipped) {
+                $annotations[] = $annotation;
+            }
+        }
         return $annotations;
     }
 
