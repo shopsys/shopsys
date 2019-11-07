@@ -20,14 +20,8 @@ class ProductVariantTest extends GraphQlTestCase
      */
     private $productAsVariant;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
     protected function setUp(): void
     {
-        $this->domain = $this->getContainer()->get(Domain::class);
         $productFacade = $this->getContainer()->get(ProductFacade::class);
 
         $this->productAsMainVariant = $productFacade->getById(150);

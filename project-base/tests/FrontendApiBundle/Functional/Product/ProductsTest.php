@@ -9,18 +9,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductsTest extends GraphQlTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    protected function setUp(): void
-    {
-        $this->domain = $this->getContainer()->get(Domain::class);
-
-        parent::setUp();
-    }
-
     public function testFirstFiveProductsWithName(): void
     {
         $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
