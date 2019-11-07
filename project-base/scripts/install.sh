@@ -55,8 +55,8 @@ case "$operatingSystem" in
         cp -f docker/conf/docker-compose-mac.yml.dist docker-compose.yml
         cp -f docker/conf/docker-sync.yml.dist docker-sync.yml
 
-        sed -i -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
-        sed -i -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
+        sed -i '' -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
+        sed -i '' -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
 
         if [[ $1 != --skip-aliasing ]]; then
             echo "You will be asked to enter sudo password in case to allow second domain alias in your system config.."
