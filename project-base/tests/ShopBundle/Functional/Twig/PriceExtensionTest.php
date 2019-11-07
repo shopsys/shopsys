@@ -125,11 +125,15 @@ class PriceExtensionTest extends FunctionalTestCase
         $domain1DefaultCurrencyData->name = 'Czech crown';
         $domain1DefaultCurrencyData->code = Currency::CODE_CZK;
         $domain1DefaultCurrencyData->exchangeRate = 1;
+        $domain1DefaultCurrencyData->minFractionDigits = 2;
+        $domain1DefaultCurrencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
 
         $domain2DefaultCurrencyData = $currencyDataFactory->create();
         $domain2DefaultCurrencyData->name = 'Euro';
         $domain2DefaultCurrencyData->code = Currency::CODE_EUR;
         $domain2DefaultCurrencyData->exchangeRate = 25;
+        $domain1DefaultCurrencyData->minFractionDigits = 2;
+        $domain1DefaultCurrencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
 
         $domain1DefaultCurrency = $currencyFactory->create($domain1DefaultCurrencyData);
         $domain2DefaultCurrency = $currencyFactory->create($domain2DefaultCurrencyData);

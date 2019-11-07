@@ -87,9 +87,10 @@ class OrderPreviewCalculation
             $domainId,
             $user
         );
-        $quantifiedItemsDiscounts = $this->quantifiedProductDiscountCalculation->calculateDiscounts(
+        $quantifiedItemsDiscounts = $this->quantifiedProductDiscountCalculation->calculateDiscountsRoundedByCurrency(
             $quantifiedItemsPrices,
-            $promoCodeDiscountPercent
+            $promoCodeDiscountPercent,
+            $currency
         );
 
         $productsPrice = $this->getProductsPrice($quantifiedItemsPrices, $quantifiedItemsDiscounts);

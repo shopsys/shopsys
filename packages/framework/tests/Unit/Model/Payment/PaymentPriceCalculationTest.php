@@ -80,15 +80,12 @@ class PaymentPriceCalculationTest extends TestCase
         Money $priceWithVat
     ) {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->setMethods(['getInputPriceType', 'getRoundingType'])
+            ->setMethods(['getInputPriceType'])
             ->disableOriginalConstructor()
             ->getMock();
         $pricingSettingMock
             ->expects($this->any())->method('getInputPriceType')
                 ->willReturn($inputPriceType);
-        $pricingSettingMock
-            ->expects($this->any())->method('getRoundingType')
-                ->willReturn(PricingSetting::ROUNDING_TYPE_INTEGER);
 
         $rounding = new Rounding($pricingSettingMock);
 
@@ -101,7 +98,13 @@ class PaymentPriceCalculationTest extends TestCase
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
         $vat = new Vat($vatData);
-        $currency = new Currency(new CurrencyData());
+        $currencyData = new CurrencyData();
+        $currencyData->name = 'currencyName';
+        $currencyData->code = Currency::CODE_CZK;
+        $currencyData->exchangeRate = '1.0';
+        $currencyData->minFractionDigits = 2;
+        $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
+        $currency = new Currency($currencyData);
 
         $paymentData = new PaymentData();
         $paymentData->name = ['cs' => 'paymentName'];
@@ -134,15 +137,12 @@ class PaymentPriceCalculationTest extends TestCase
     ) {
         $priceLimit = Money::create(1000);
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->setMethods(['getInputPriceType', 'getRoundingType', 'getFreeTransportAndPaymentPriceLimit'])
+            ->setMethods(['getInputPriceType', 'getFreeTransportAndPaymentPriceLimit'])
             ->disableOriginalConstructor()
             ->getMock();
         $pricingSettingMock
             ->expects($this->any())->method('getInputPriceType')
                 ->willReturn($inputPriceType);
-        $pricingSettingMock
-            ->expects($this->any())->method('getRoundingType')
-                ->willReturn(PricingSetting::ROUNDING_TYPE_INTEGER);
         $pricingSettingMock
             ->expects($this->any())->method('getFreeTransportAndPaymentPriceLimit')
                 ->willReturn($priceLimit);
@@ -158,7 +158,13 @@ class PaymentPriceCalculationTest extends TestCase
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
         $vat = new Vat($vatData);
-        $currency = new Currency(new CurrencyData());
+        $currencyData = new CurrencyData();
+        $currencyData->name = 'currencyName';
+        $currencyData->code = Currency::CODE_CZK;
+        $currencyData->exchangeRate = '1.0';
+        $currencyData->minFractionDigits = 2;
+        $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
+        $currency = new Currency($currencyData);
 
         $paymentData = new PaymentData();
         $paymentData->name = ['cs' => 'paymentName'];

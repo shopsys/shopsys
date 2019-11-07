@@ -19,7 +19,7 @@
 {% block grid_value_cell_edit_id_exchangeRate %}
     <span class="form-edit-block form-edit-block--size-1">
         {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
-        {{ form_widget(form.exchangeRate, {attr: {class: "input--half-width"}}) }}
+        {{ form_widget(form.exchangeRate, {attr: {class: "input--small"}}) }}
         <span class="form-edit-block__info relative">
             {% if row is null %}
                 <span title="" class="js-tooltip cursor-help in-icon in-icon--after-input" data-toggle="tooltip" data-placement="top" data-original-title="{{ '%defaultCurrency% per unit'|trans({'%defaultCurrency%': currencySymbolByCurrencyId(defaultCurrency.id)}) }}">
@@ -49,6 +49,47 @@
     {% endif %}
 {% endblock %}
 
+{% block grid_value_cell_edit_id_minFractionDigits %}
+    <span class="form-edit-block form-edit-block--size-1">
+        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
+        {{ form_widget(form.minFractionDigits, {attr: {class: "input--small"}}) }}
+    </span>
+{% endblock %}
+
+{% block grid_value_cell_id_roundingType %}
+    <span class="form-edit-block form-edit-block--size-1">
+        {% if value == constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\Currency\\Currency::ROUNDING_TYPE_HUNDREDTHS') %}
+            {{ 'To hundredths (cents)'|trans }}
+        {% elseif value == constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\Currency\\Currency::ROUNDING_TYPE_FIFTIES') %}
+            {{ 'To fifty hundredths (halfs)'|trans }}
+        {% elseif value == constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\Currency\\Currency::ROUNDING_TYPE_INTEGER') %}
+            {{ 'To whole numbers'|trans }}
+        {% endif %}
+    </span>
+{% endblock %}
+
+
+{% block grid_value_cell_edit_id_roundingType %}
+    <span class="form-edit-block form-edit-block--size-1">
+        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
+        {{ form_widget(form.roundingType, {attr: {class: "input--half-width"}}) }}
+    </span>
+{% endblock %}
+
+{% block grid_value_cell_edit_id_name %}
+    <span class="form-edit-block form-edit-block--size-1">
+        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
+        {{ form_widget(form.name, {attr: {class: "input--half-width"}}) }}
+    </span>
+{% endblock %}
+
+{% block grid_value_cell_edit_id_code %}
+    <span class="form-edit-block form-edit-block--size-1">
+        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
+        {{ form_widget(form.code, {attr: {class: "input--small"}}) }}
+    </span>
+{% endblock %}
+
 {% block grid_no_data %}
     {{ 'No currencies found. You have to create some first.'|trans }}
 {% endblock %}
@@ -61,4 +102,11 @@
 {% block grid_inline_edit_add_button %}
     {% set addEntity = 'Create currency'|trans %}
     {{ parent() }}
+        <div class="in-message in-message--block in-message--warning js-flash-message">
+            <ul class="in-message__list">
+                <li class="in-message__list__item">
+                    {{ 'If you change currency settings, prices of all products will be recalculated'| trans}}
+                </li>
+            </ul>
+        </div>
 {% endblock %}

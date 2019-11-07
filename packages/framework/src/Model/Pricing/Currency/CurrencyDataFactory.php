@@ -33,5 +33,7 @@ class CurrencyDataFactory implements CurrencyDataFactoryInterface
         $currencyData->name = $currency->getName();
         $currencyData->code = $currency->getCode();
         $currencyData->exchangeRate = $currency->getExchangeRate();
+        $currencyData->minFractionDigits = $currency->getMinFractionDigits();
+        $currencyData->roundingType = $currency->getRoundingType();
     }
 }

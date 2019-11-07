@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidRoundingTypeException;
 
 /**
  * @ORM\Table(name="currencies")
@@ -13,7 +14,13 @@ class Currency
     public const CODE_CZK = 'CZK';
     public const CODE_EUR = 'EUR';
 
+    public const ROUNDING_TYPE_HUNDREDTHS = 'hundredths';
+    public const ROUNDING_TYPE_FIFTIES = 'fifties';
+    public const ROUNDING_TYPE_INTEGER = 'integer';
+
     public const DEFAULT_EXCHANGE_RATE = '1';
+    public const DEFAULT_MIN_FRACTION_DIGITS = 2;
+    public const DEFAULT_ROUNDING_TYPE = self::ROUNDING_TYPE_INTEGER;
 
     /**
      * @var int
@@ -46,6 +53,20 @@ class Currency
     protected $exchangeRate;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $minFractionDigits;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=15)
+     */
+    protected $roundingType;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      */
     public function __construct(CurrencyData $currencyData)
@@ -53,6 +74,8 @@ class Currency
         $this->name = $currencyData->name;
         $this->code = $currencyData->code;
         $this->exchangeRate = $currencyData->exchangeRate;
+        $this->minFractionDigits = $currencyData->minFractionDigits;
+        $this->setRoundingType($currencyData->roundingType);
     }
 
     /**
@@ -96,11 +119,53 @@ class Currency
     }
 
     /**
+     * @return int
+     */
+    public function getMinFractionDigits(): int
+    {
+        return $this->minFractionDigits;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoundingType(): string
+    {
+        return $this->roundingType;
+    }
+
+    /**
+     * @param string $roundingType
+     */
+    protected function setRoundingType(string $roundingType): void
+    {
+        if (in_array($roundingType, self::getRoundingTypes(), true) === true) {
+            $this->roundingType = $roundingType;
+        } else {
+            throw new InvalidRoundingTypeException($roundingType);
+        }
+    }
+
+    /**
+     * @return string[]
+     */
+    protected static function getRoundingTypes(): array
+    {
+        return [
+            self::ROUNDING_TYPE_HUNDREDTHS,
+            self::ROUNDING_TYPE_FIFTIES,
+            self::ROUNDING_TYPE_INTEGER,
+        ];
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      */
     public function edit(CurrencyData $currencyData)
     {
         $this->name = $currencyData->name;
         $this->code = $currencyData->code;
+        $this->minFractionDigits = $currencyData->minFractionDigits;
+        $this->setRoundingType($currencyData->roundingType);
     }
 }

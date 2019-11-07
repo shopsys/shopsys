@@ -54,6 +54,6 @@ class PriceConverter
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $price = $price->divide($currency->getExchangeRate(), static::DEFAULT_SCALE);
 
-        return $this->rounding->roundPriceWithVat($price);
+        return $this->rounding->roundPriceWithVatByCurrency($price, $currency);
     }
 }
