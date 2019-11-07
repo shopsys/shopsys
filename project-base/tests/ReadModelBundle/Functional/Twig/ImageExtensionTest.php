@@ -4,16 +4,26 @@ declare(strict_types=1);
 
 namespace Tests\ReadModelBundle\Functional\Twig;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Twig\ImageExtension;
 use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class ImageExtensionTest extends FunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
+     * @inject
+     */
+    private $imageFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
+     * @inject
+     */
+    private $imageLocator;
+
     public function testGetImageHtmlWithMockedImageFacade(): void
     {
         $productId = 2;
@@ -50,6 +60,27 @@ class ImageExtensionTest extends FunctionalTestCase
 
         $expected = '<picture>';
         $expected .= sprintf('    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/additional_0_1.jpg"/>', $this->getCurrentUrl());
+        $expected .= sprintf('    <img alt="" class="image-product" itemprop="image" data-src="%s/content-test/images/product/default/1.jpg" title="" src="" loading="lazy"/>', $this->getCurrentUrl());
+        $expected .= '</picture>';
+
+        $this->assertXmlStringEqualsXmlString($expected, $html);
+
+        libxml_clear_errors();
+    }
+
+    public function testGetImageHtmlWithtoutLazyload(): void
+    {
+        $productId = 1;
+        $entityName = 'product';
+        $fileExtension = 'jpg';
+
+        $imageView = new ImageView($productId, $fileExtension, $entityName, null);
+
+        $readModelBundleImageExtension = $this->createImageExtension();
+        $html = $readModelBundleImageExtension->getImageHtml($imageView, ['lazy' => false]);
+
+        $expected = '<picture>';
+        $expected .= sprintf('    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/additional_0_1.jpg"/>', $this->getCurrentUrl());
         $expected .= sprintf('    <img alt="" class="image-product" itemprop="image" src="%s/content-test/images/product/default/1.jpg" title=""/>', $this->getCurrentUrl());
         $expected .= '</picture>';
 
@@ -65,7 +96,7 @@ class ImageExtensionTest extends FunctionalTestCase
         $html = $readModelBundleImageExtension->getImageHtml(null);
 
         $expected = '<picture>';
-        $expected .= sprintf('    <img alt="" class="image-noimage" title=""  itemprop="image" src="%s/noimage.png"/>', $this->getCurrentUrl());
+        $expected .= sprintf('    <img alt="" class="image-noimage" title=""  itemprop="image" data-src="%s/noimage.png" src="" loading="lazy"/>', $this->getCurrentUrl());
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);
@@ -81,7 +112,7 @@ class ImageExtensionTest extends FunctionalTestCase
         $html = $readModelBundleImageExtension->getImageHtml(null);
 
         $expected = '<picture>';
-        $expected .= sprintf('    <img alt="" class="image-noimage" title=""  itemprop="image" src="%s%snoimage.png"/>', $this->getCurrentUrl(), $defaultFrontDesignImageUrlPrefix);
+        $expected .= sprintf('    <img alt="" class="image-noimage" title=""  itemprop="image" data-src="%s%snoimage.png" src="" loading="lazy"/>', $this->getCurrentUrl(), $defaultFrontDesignImageUrlPrefix);
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);
@@ -94,9 +125,7 @@ class ImageExtensionTest extends FunctionalTestCase
      */
     private function getCurrentUrl(): string
     {
-        $domain = $this->getContainer()->get(Domain::class);
-
-        return $domain->getCurrentDomainConfig()->getUrl();
+        return $this->domain->getCurrentDomainConfig()->getUrl();
     }
 
     /**
@@ -106,11 +135,9 @@ class ImageExtensionTest extends FunctionalTestCase
      */
     private function createImageExtension(string $frontDesignImageUrlPrefix = '', ?ImageFacade $imageFacade = null): ImageExtension
     {
-        $imageLocator = $this->getContainer()->get(ImageLocator::class);
         $templating = $this->getContainer()->get('templating');
-        $domain = $this->getContainer()->get(Domain::class);
-        $imageFacade = $imageFacade ?: $this->getContainer()->get(ImageFacade::class);
+        $imageFacade = $imageFacade ?: $this->imageFacade;
 
-        return new ImageExtension($frontDesignImageUrlPrefix, $domain, $imageLocator, $imageFacade, $templating);
+        return new ImageExtension($frontDesignImageUrlPrefix, $this->domain, $this->imageLocator, $imageFacade, $templating);
     }
 }

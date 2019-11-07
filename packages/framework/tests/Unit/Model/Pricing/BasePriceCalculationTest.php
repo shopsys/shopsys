@@ -5,6 +5,8 @@ namespace Tests\FrameworkBundle\Unit\Model\Pricing;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -38,6 +40,8 @@ class BasePriceCalculationTest extends TestCase
     }
 
     /**
+     * @deprecated test is deprecated and will be removed in the next major
+     *
      * @dataProvider calculateBasePriceProvider
      * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
@@ -78,6 +82,50 @@ class BasePriceCalculationTest extends TestCase
         $this->assertThat($basePrice->getVatAmount(), new IsMoneyEqual($basePriceVatAmount));
     }
 
+    /**
+     * @dataProvider calculateBasePriceProvider
+     * @param int $inputPriceType
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
+     * @param mixed $vatPercent
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithoutVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceVatAmount
+     */
+    public function testCalculateBasePriceRoundedByCurrency(
+        int $inputPriceType,
+        Money $inputPrice,
+        $vatPercent,
+        Money $basePriceWithoutVat,
+        Money $basePriceWithVat,
+        Money $basePriceVatAmount
+    ) {
+        $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $rounding = new Rounding($pricingSettingMock);
+        $priceCalculation = new PriceCalculation($rounding);
+        $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
+
+        $vatData = new VatData();
+        $vatData->name = 'vat';
+        $vatData->percent = $vatPercent;
+        $vat = new Vat($vatData);
+
+        $currencyData = new CurrencyData();
+        $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
+        $currency = new Currency($currencyData);
+
+        $basePrice = $basePriceCalculation->calculateBasePriceRoundedByCurrency($inputPrice, $inputPriceType, $vat, $currency);
+
+        $this->assertThat($basePrice->getPriceWithoutVat(), new IsMoneyEqual($basePriceWithoutVat));
+        $this->assertThat($basePrice->getPriceWithVat(), new IsMoneyEqual($basePriceWithVat));
+        $this->assertThat($basePrice->getVatAmount(), new IsMoneyEqual($basePriceVatAmount));
+    }
+
+    /**
+     * @deprecated provider is deprecated and will be removed in the next major.
+     * Test uses this provider works with unused function
+     */
     public function applyCoefficientProvider()
     {
         return [
@@ -109,6 +157,8 @@ class BasePriceCalculationTest extends TestCase
     }
 
     /**
+     * @deprecated test is deprecated and will be removed in the next major. Test works with unused function
+     *
      * @dataProvider applyCoefficientProvider
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      * @param mixed $vatPercent

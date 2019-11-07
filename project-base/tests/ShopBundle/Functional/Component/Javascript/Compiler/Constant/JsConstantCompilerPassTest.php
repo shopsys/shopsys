@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Component\Javascript\Compiler\Constant;
 
-use Shopsys\FrameworkBundle\Component\Javascript\Compiler\Constant\JsConstantCompilerPass;
 use Shopsys\FrameworkBundle\Component\Javascript\Compiler\JsCompiler;
 use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class JsConstantCompilerPassTest extends FunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Javascript\Compiler\Constant\JsConstantCompilerPass
+     * @inject
+     */
+    private $jsConstantCompilerPass;
+
     public function testJsCompilerReplacesDefinedConstants()
     {
         $content = file_get_contents(__DIR__ . '/testDefinedConstant.js');
@@ -43,10 +48,8 @@ class JsConstantCompilerPassTest extends FunctionalTestCase
      */
     private function getJsCompiler()
     {
-        $jsConstantCompilerPass = $this->getContainer()->get(JsConstantCompilerPass::class);
-
         return new JsCompiler([
-            $jsConstantCompilerPass,
+            $this->jsConstantCompilerPass,
         ]);
     }
 }

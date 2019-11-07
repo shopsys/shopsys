@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Form\Admin\Vat;
 
 use Shopsys\FrameworkBundle\Form\GroupType;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -50,15 +49,6 @@ class VatSettingsFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter default VAT']),
                 ],
                 'label' => t('Default VAT rate'),
-            ])
-            ->add('roundingType', ChoiceType::class, [
-                'required' => true,
-                'choices' => [
-                    t('To hundredths (cents)') => PricingSetting::ROUNDING_TYPE_HUNDREDTHS,
-                    t('To fifty hundredths (halfs)') => PricingSetting::ROUNDING_TYPE_FIFTIES,
-                    t('To whole numbers') => PricingSetting::ROUNDING_TYPE_INTEGER,
-                ],
-                'label' => t('Price including VAT rounding'),
             ]);
 
         $builder

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Payment;
 
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\ShopBundle\Model\Payment\Payment;
@@ -18,15 +15,22 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
     protected const SECOND_DOMAIN_ID = 2;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation
+     * @inject
+     */
+    private $independentPaymentVisibilityCalculation;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface
+     * @inject
+     */
+    private $paymentDataFactory;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
+     * @inject
      */
     private $localization;
-
-    protected function setUp()
-    {
-        $this->localization = $this->getContainer()->get(Localization::class);
-        parent::setUp();
-    }
 
     public function testIsIndependentlyVisible()
     {
@@ -43,11 +47,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation */
-        $independentPaymentVisibilityCalculation =
-            $this->getContainer()->get(IndependentPaymentVisibilityCalculation::class);
-
-        $this->assertTrue($independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
+        $this->assertTrue($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleEmptyName()
@@ -55,7 +55,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $em = $this->getEntityManager();
         $vat = $this->getDefaultVat();
 
-        $paymentData = $this->getPaymentDataFactory()->create();
+        $paymentData = $this->paymentDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
             $names[$locale] = null;
@@ -74,11 +74,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation */
-        $independentPaymentVisibilityCalculation =
-            $this->getContainer()->get(IndependentPaymentVisibilityCalculation::class);
-
-        $this->assertFalse($independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
+        $this->assertFalse($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleNotOnDomain()
@@ -96,11 +92,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation */
-        $independentPaymentVisibilityCalculation =
-            $this->getContainer()->get(IndependentPaymentVisibilityCalculation::class);
-
-        $this->assertFalse($independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
+        $this->assertFalse($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }
 
     public function testIsIndependentlyVisibleHidden()
@@ -118,11 +110,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation */
-        $independentPaymentVisibilityCalculation =
-            $this->getContainer()->get(IndependentPaymentVisibilityCalculation::class);
-
-        $this->assertFalse($independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
+        $this->assertFalse($this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID));
     }
 
     /**
@@ -133,9 +121,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
      */
     public function getDefaultPayment(Vat $vat, $enabledForDomains, $hidden)
     {
-        $paymentDataFactory = $this->getPaymentDataFactory();
-
-        $paymentData = $paymentDataFactory->create();
+        $paymentData = $this->paymentDataFactory->create();
         $names = [];
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
             $names[$locale] = 'paymentName';
@@ -157,13 +143,5 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $vatData->name = 'vat';
         $vatData->percent = '21';
         return new Vat($vatData);
-    }
-
-    /**
-     * @return \Shopsys\ShopBundle\Model\Payment\PaymentDataFactory
-     */
-    public function getPaymentDataFactory()
-    {
-        return $this->getContainer()->get(PaymentDataFactoryInterface::class);
     }
 }

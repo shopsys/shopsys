@@ -33,6 +33,14 @@ module.exports = function(grunt) {
                     }
                 }
             },
+            styleguide: {
+                files: {
+                    'web/assets/styleguide/styles/styleguide_{{ cssVersion }}.css': '{{ customResourcesDirectory }}/styles/styleguide/main.less'
+                },
+                options: {
+                    compress: true
+                }
+            },
 
             {% for domain in domains -%}
                 helpers{{ domain.id }}: {
@@ -89,39 +97,12 @@ module.exports = function(grunt) {
         postcss: {
             options: {
                 processors: [
-                    require('autoprefixer')({browsers: ['last 3 versions', 'ios 6', 'Safari 7', 'Safari 8', 'ie 7', 'ie 8', 'ie 9']})
+                    require('autoprefixer')({browserlist: ['last 3 versions']})
                 ]
             },
             dist: {
                 src: ['web/assets/frontend/styles/*.css', 'web/assets/admin/styles/*.css']
             }
-        },
-
-        legacssy: {
-            admin: {
-                options: {
-                    legacyWidth: 1200,
-                    matchingOnly: false,
-                    overridesOnly: false
-                },
-                files: {
-                    'web/assets/admin/styles/index_{{ cssVersion }}-ie8.css': 'web/assets/admin/styles/index_{{ cssVersion }}.css'
-                }
-            },
-
-            {% for domain in domains -%}
-                frontend{{ domain.id }}: {
-                    options: {
-                        legacyWidth: 1200,
-                        matchingOnly: false,
-                        overridesOnly: false
-                    },
-                    files: {
-                        'web/assets/frontend/styles/index{{ domain.id }}_{{ cssVersion }}-ie8.css': 'web/assets/frontend/styles/index{{ domain.id }}_{{ cssVersion }}.css'
-                    }
-                }{% if not loop.last %},{% endif %}
-
-            {% endfor -%}
         },
 
         sprite: {
@@ -329,15 +310,15 @@ module.exports = function(grunt) {
     });
     grunt.loadNpmTasks('grunt-spritesmith');
 
-    grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss", "legacssy"]);
+    grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss"]);
 
     {% for domain in domains -%}
-        grunt.registerTask('frontend{{ domain.id }}', ['webfont:frontend', 'sprite:frontend', 'less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'legacssy:frontend{{ domain.id }}', 'less:wysiwyg{{ domain.id }}'], 'postcss');
+        grunt.registerTask('frontend{{ domain.id }}', ['webfont:frontend', 'sprite:frontend', 'less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}'], 'postcss');
     {% endfor -%}
-    grunt.registerTask('admin', ['sprite:admin', 'webfont:admin', 'less:admin', 'legacssy:admin' ]);
+    grunt.registerTask('admin', ['sprite:admin', 'webfont:admin', 'less:admin']);
 
     {% for domain in domains -%}
-        grunt.registerTask('frontendLess{{ domain.id }}', ['less:frontend{{ domain.id }}', 'legacssy:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}']);
+        grunt.registerTask('frontendLess{{ domain.id }}', ['less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}']);
     {% endfor -%}
-    grunt.registerTask('adminLess', ['less:admin', 'legacssy:admin' ]);
+    grunt.registerTask('adminLess', ['less:admin']);
 };

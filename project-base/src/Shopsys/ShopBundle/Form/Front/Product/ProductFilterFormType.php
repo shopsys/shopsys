@@ -87,6 +87,10 @@ class ProductFilterFormType extends AbstractType
     }
 
     /**
+     * @deprecated This method will be removed in the next major release, it is used for price range widget placeholders
+     * It is recommended to edit placeholders in `filterFormMacro` and set values on your own, e.g you can format
+     * values with price formatter
+     *
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
      * @param \Symfony\Component\Form\FormBuilderInterface $moneyBuilder
      * @return string

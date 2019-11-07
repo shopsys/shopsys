@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Product\Search;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -12,20 +11,9 @@ class ProductSearchExportWithFilterRepositoryTest extends TransactionFunctionalT
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository
+     * @inject
      */
     private $repository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->repository = $this->getContainer()->get(ProductSearchExportWithFilterRepository::class);
-        $this->domain = $this->getContainer()->get(Domain::class);
-    }
 
     public function testProductDataHaveExpectedStructure(): void
     {

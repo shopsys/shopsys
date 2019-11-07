@@ -2,8 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -32,21 +34,45 @@ class ProductPriceCalculation
     protected $productRepository;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|null
+     */
+    protected $currencyFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|null $currencyFacade
      */
     public function __construct(
         BasePriceCalculation $basePriceCalculation,
         PricingSetting $pricingSetting,
         ProductManualInputPriceRepository $productManualInputPriceRepository,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        ?CurrencyFacade $currencyFacade = null
     ) {
         $this->pricingSetting = $pricingSetting;
         $this->basePriceCalculation = $basePriceCalculation;
         $this->productManualInputPriceRepository = $productManualInputPriceRepository;
         $this->productRepository = $productRepository;
+        $this->currencyFacade = $currencyFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setCurrencyFacade(CurrencyFacade $currencyFacade): void
+    {
+        if ($this->currencyFacade !== null && $this->currencyFacade !== $currencyFacade) {
+            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        }
+        if ($this->currencyFacade === null) {
+            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
+            $this->currencyFacade = $currencyFacade;
+        }
     }
 
     /**
@@ -107,10 +133,14 @@ class ProductPriceCalculation
             $inputPrice = Money::zero();
         }
 
-        $basePrice = $this->basePriceCalculation->calculateBasePrice(
+        $domainId = $pricingGroup->getDomainId();
+        $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
+        $basePrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
             $inputPrice,
             $this->pricingSetting->getInputPriceType(),
-            $product->getVat()
+            $product->getVat(),
+            $defaultCurrency
         );
 
         return new ProductPrice($basePrice, false);

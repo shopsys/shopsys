@@ -7,12 +7,10 @@ namespace Tests\ShopBundle\Functional\Model\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\ShopBundle\DataFixtures\Demo\BrandDataFixture;
@@ -24,15 +22,16 @@ use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTestCase
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
+     * @inject
+     */
+    private $parameterRepository;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     * @inject
      */
     protected $priceConverter;
-
-    protected function setUp()
-    {
-        $this->priceConverter = $this->getContainer()->get(PriceConverter::class);
-        parent::setUp();
-    }
 
     public function testFilterByMinimalPrice()
     {
@@ -211,10 +210,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
      */
     private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository */
-        $parameterRepository = $this->getContainer()->get(ParameterRepository::class);
-
-        $parameter = $parameterRepository->findParameterByNames($namesByLocale);
+        $parameter = $this->parameterRepository->findParameterByNames($namesByLocale);
         $parameterValues = $this->getParameterValuesByLocalesAndTexts($valuesTextsByLocales);
 
         $parameterFilterData = new ParameterFilterData();

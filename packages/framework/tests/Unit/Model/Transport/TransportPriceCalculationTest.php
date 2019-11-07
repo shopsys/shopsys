@@ -57,15 +57,12 @@ class TransportPriceCalculationTest extends TestCase
         Money $priceWithVat
     ) {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->setMethods(['getInputPriceType', 'getRoundingType'])
+            ->setMethods(['getInputPriceType'])
             ->disableOriginalConstructor()
             ->getMock();
         $pricingSettingMock
             ->expects($this->any())->method('getInputPriceType')
                 ->willReturn($inputPriceType);
-        $pricingSettingMock
-            ->expects($this->any())->method('getRoundingType')
-                ->willReturn(PricingSetting::ROUNDING_TYPE_INTEGER);
 
         $rounding = new Rounding($pricingSettingMock);
         $priceCalculation = new PriceCalculation($rounding);
@@ -77,7 +74,13 @@ class TransportPriceCalculationTest extends TestCase
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
         $vat = new Vat($vatData);
-        $currency = new Currency(new CurrencyData());
+        $currencyData = new CurrencyData();
+        $currencyData->name = 'currencyName';
+        $currencyData->code = Currency::CODE_CZK;
+        $currencyData->exchangeRate = '1.0';
+        $currencyData->minFractionDigits = 2;
+        $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
+        $currency = new Currency($currencyData);
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];

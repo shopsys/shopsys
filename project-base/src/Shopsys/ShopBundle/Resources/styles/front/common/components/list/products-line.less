@@ -28,33 +28,18 @@
 
             text-decoration: none;
             color: @color-base;
-
-            .is-no-flex & {
-                display: block;
-                .clearfix();
-            }
         }
 
         &__position {
-            flex: 0 @list-products-line-item-postion-width;
+            width: @list-products-line-item-postion-width;
 
             font-size: 14px;
-
-            .is-no-flex & {
-                width: @list-products-line-item-postion-width;
-                float: left;
-            }
         }
 
         &__image {
-            flex: 0 @list-products-line-item-image-width;
+            width: @list-products-line-item-image-width;
             padding-right: @list-products-line-item-gap;
             text-align: center;
-
-            .is-no-flex & {
-                width: @list-products-line-item-image-width;
-                float: left;
-            }
 
             img {
                 display: block;
@@ -62,39 +47,23 @@
         }
 
         &__title {
-            flex: 1;
+            width: @list-products-line-item-title-width-mobile;
             margin-bottom: 0;
             padding-left: @list-products-line-item-gap;
 
             font-size: 14px;
             font-weight: bold;
 
-            .is-no-flex & {
-                width: @list-products-line-item-title-width-mobile;
-                float: left;
-
-                @media @query-md {
-                    width: @list-products-line-item-title-width;
-                }
+            @media @query-md {
+                width: @list-products-line-item-title-width;
             }
         }
 
         &__price {
-            flex: 0 100%;
-
-            .is-no-flex & {
-                width: 100%;
-                clear: both;
-            }
+            width: 100%;
 
             @media @query-md {
-                flex: 0 @list-products-line-item-price-width;
-
-                .is-no-flex & {
-                    float: left;
-                    width: @list-products-line-item-price-width;
-                    clear: none;
-                }
+                width: @list-products-line-item-price-width;
             }
 
             &__item {

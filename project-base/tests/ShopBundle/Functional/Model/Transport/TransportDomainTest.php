@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Transport;
 
-use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface;
 use Shopsys\ShopBundle\Model\Transport\Transport;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -15,12 +13,14 @@ class TransportDomainTest extends TransactionFunctionalTestCase
     protected const SECOND_DOMAIN_ID = 2;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Transport\TransportDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
+     * @inject
      */
     private $transportDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFactory
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface
+     * @inject
      */
     private $transportFactory;
 
@@ -32,8 +32,6 @@ class TransportDomainTest extends TransactionFunctionalTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->transportDataFactory = $this->getContainer()->get(TransportDataFactoryInterface::class);
-        $this->transportFactory = $this->getContainer()->get(TransportFactoryInterface::class);
         $this->em = $this->getEntityManager();
     }
 

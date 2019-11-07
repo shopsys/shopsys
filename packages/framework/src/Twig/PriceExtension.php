@@ -270,7 +270,7 @@ class PriceExtension extends Twig_Extension
             $locale = $this->localization->getLocale();
         }
 
-        $currencyFormatter = $this->currencyFormatterFactory->create($locale);
+        $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency($locale, $currency);
         $intlCurrency = $this->intlCurrencyRepository->get(
             $currency->getCode(),
             $locale

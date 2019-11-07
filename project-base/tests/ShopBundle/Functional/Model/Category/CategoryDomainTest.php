@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Category;
 
-use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface;
 use Shopsys\ShopBundle\Model\Category\Category;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -18,12 +16,14 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     protected const DEMONSTRATIVE_SEO_H1 = 'Demonstrative seo H1';
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Category\CategoryDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
+     * @inject
      */
     private $categoryDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFactory
+     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface
+     * @inject
      */
     private $categoryFactory;
 
@@ -35,8 +35,6 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->categoryDataFactory = $this->getContainer()->get(CategoryDataFactoryInterface::class);
-        $this->categoryFactory = $this->getContainer()->get(CategoryFactoryInterface::class);
         $this->em = $this->getEntityManager();
     }
 

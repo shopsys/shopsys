@@ -1,5 +1,7 @@
 /src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins
 
+/src/Shopsys/ShopBundle/Resources/scripts/styleguide
+
 /node_modules
 
 # eslint-check-diff runs check with provided files that could contain even javascripts from tests folder

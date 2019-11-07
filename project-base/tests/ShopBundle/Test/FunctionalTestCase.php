@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Test;
 
+use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
@@ -12,8 +13,9 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
 
-abstract class FunctionalTestCase extends WebTestCase
+abstract class FunctionalTestCase extends WebTestCase implements ServiceContainerTestCase
 {
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Client
@@ -21,9 +23,10 @@ abstract class FunctionalTestCase extends WebTestCase
     private $client;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|null
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @inject
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
@@ -37,8 +40,6 @@ abstract class FunctionalTestCase extends WebTestCase
 
     protected function setUpDomain()
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $this->domain = $this->getContainer()->get(Domain::class);
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
 
@@ -107,6 +108,14 @@ abstract class FunctionalTestCase extends WebTestCase
             ->get(PersistentReferenceFacade::class);
 
         return $persistentReferenceFacade->getReference($referenceName);
+    }
+
+    /**
+     * @return \Psr\Container\ContainerInterface
+     */
+    public function createContainer(): ContainerInterface
+    {
+        return $this->getContainer();
     }
 
     /**

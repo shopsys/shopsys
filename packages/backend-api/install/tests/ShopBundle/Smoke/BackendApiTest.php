@@ -62,9 +62,7 @@ class BackendApiTest extends OauthTestCase
      */
     private function assertProductJsonStructure(array $product): void
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = $this->getContainer()->get(Domain::class);
-        $firstDomainConfigLocale = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
+        $firstDomainConfigLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         Assert::uuid($product['uuid']);
         $this->assertIsArray($product['name']);
         $this->assertIsString($product['name'][$firstDomainConfigLocale]);

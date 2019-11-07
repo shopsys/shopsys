@@ -6,7 +6,6 @@ namespace Tests\ShopBundle\Smoke;
 
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 use Tests\ShopBundle\Test\FunctionalTestCase;
@@ -37,12 +36,9 @@ class AllFeedsTest extends FunctionalTestCase
         // Method setUp is called only before each test, data providers are called even before that
         $this->setUp();
 
-        $domain = $this->getContainer()->get(Domain::class);
-        /* @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-
         $data = [];
         foreach ($this->feedFacade->getFeedsInfo() as $feedInfo) {
-            foreach ($domain->getAll() as $domainConfig) {
+            foreach ($this->domain->getAll() as $domainConfig) {
                 $key = sprintf('feed "%s" on domain "%s"', $feedInfo->getName(), $domainConfig->getName());
                 $data[$key] = [$feedInfo, $domainConfig];
             }
@@ -51,22 +47,23 @@ class AllFeedsTest extends FunctionalTestCase
         return $data;
     }
 
-    /**
-     * @dataProvider getAllFeedExportCreationData
-     *
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
-    public function testFeedIsExportable(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): void
+    public function testFeedIsExportable(): void
     {
-        $this->cleanUp($feedInfo, $domainConfig);
+        foreach ($this->getAllFeedExportCreationData() as $dataProvider) {
+            /** @var \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo */
+            $feedInfo = $dataProvider[0];
+            /** @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig */
+            $domainConfig = $dataProvider[1];
 
-        $this->feedFacade->generateFeed($feedInfo->getName(), $domainConfig);
+            $this->cleanUp($feedInfo, $domainConfig);
 
-        $feedFilepath = $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig);
-        $this->assertTrue($this->filesystem->has($feedFilepath), 'Exported feed file exists.');
+            $this->feedFacade->generateFeed($feedInfo->getName(), $domainConfig);
 
-        $this->cleanUp($feedInfo, $domainConfig);
+            $feedFilepath = $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig);
+            $this->assertTrue($this->filesystem->has($feedFilepath), 'Exported feed file exists.');
+
+            $this->cleanUp($feedInfo, $domainConfig);
+        }
     }
 
     /**

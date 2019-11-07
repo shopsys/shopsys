@@ -13,8 +13,16 @@
         {% endif %}
 
         <div class="box-filter__price">
-            {{ form_row(filterForm.minimalPrice, {label: 'Price from'|trans, symbolAfterInput: currencySymbolByDomainId(getDomain().id), attr: { class: 'js-product-filter-call-change-after-reset'} }) }}
-            {{ form_row(filterForm.maximalPrice, {label: 'Price to'|trans, symbolAfterInput: currencySymbolByDomainId(getDomain().id), attr: { class: 'js-product-filter-call-change-after-reset'} }) }}
+            {{ form_row(filterForm.minimalPrice, {
+                label: 'Price from'|trans,
+                symbolAfterInput: currencySymbolByDomainId(getDomain().id),
+                attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.minimalPrice|price }
+            }) }}
+            {{ form_row(filterForm.maximalPrice, {
+                label: 'Price to'|trans,
+                symbolAfterInput: currencySymbolByDomainId(getDomain().id),
+                attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.maximalPrice|price}
+            }) }}
             <div
                 class="js-range-slider"
                 data-minimum-input-id="{{ filterForm.minimalPrice.vars.id }}"

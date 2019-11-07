@@ -3,25 +3,11 @@
     align-items: center;
     flex-wrap: wrap;
 
-    .is-no-flex & {
-        display: block;
-        .clearfix();
-    }
-
     &__text {
-        flex: 0 100%;
-
-        .is-no-flex & {
-            width: 100%;
-        }
+        width: 100%;
 
         @media @query-md {
-            flex: 1;
-
-            .is-no-flex & {
-                float: left;
-                width: 100%/2;
-            }
+            width: 100%/2;
         }
 
         &__main {
@@ -30,20 +16,11 @@
     }
 
     &__image {
-        flex: 0 100%;
+        width: 100%;
         text-align: center;
 
-        .is-no-flex & {
-            width: 100%;
-        }
-
         @media @query-md {
-            flex: 1;
-
-            .is-no-flex & {
-                float: left;
-                width: 100%/2;
-            }
+            width: 100%/2;
         }
     }
 }

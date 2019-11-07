@@ -12,3 +12,8 @@ _main:
 shopsys_frontend_api_graphiql:
     resource: "@ShopsysFrontendApiBundle/Resources/config/routing_dev.yml"
     prefix: /graphql
+
+_styleguide:
+    path: /_styleguide/
+    defaults: { _controller: ShopsysShopBundle:Styleguide\Styleguide:styleguide}
+

@@ -4,35 +4,46 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Payment;
 
-use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\ShopBundle\Model\Payment\Payment;
 use Shopsys\ShopBundle\Model\Transport\Transport;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class PaymentTest extends TransactionFunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface
+     * @inject
+     */
+    private $paymentDataFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
+     * @inject
+     */
+    private $transportDataFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     * @inject
+     */
+    private $transportFacade;
+
     public function testRemoveTransportFromPaymentAfterDelete()
     {
-        /** @var \Shopsys\ShopBundle\Model\Payment\PaymentDataFactory $paymentDataFactory */
-        $paymentDataFactory = $this->getContainer()->get(PaymentDataFactoryInterface::class);
-        /** @var \Shopsys\ShopBundle\Model\Transport\TransportDataFactory $transportDataFactory */
-        $transportDataFactory = $this->getContainer()->get(TransportDataFactoryInterface::class);
         $em = $this->getEntityManager();
 
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
         $vat = new Vat($vatData);
-        $transportData = $transportDataFactory->create();
+        $transportData = $this->transportDataFactory->create();
         $transportData->name['cs'] = 'name';
         $transportData->vat = $vat;
         $transport = new Transport($transportData);
 
-        $paymentData = $paymentDataFactory->create();
+        $paymentData = $this->paymentDataFactory->create();
         $paymentData->name['cs'] = 'name';
         $paymentData->vat = $vat;
 
@@ -44,9 +55,7 @@ class PaymentTest extends TransactionFunctionalTestCase
         $em->persist($payment);
         $em->flush();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade */
-        $transportFacade = $this->getContainer()->get(TransportFacade::class);
-        $transportFacade->deleteById($transport->getId());
+        $this->transportFacade->deleteById($transport->getId());
 
         $this->assertNotContains($transport, $payment->getTransports());
     }

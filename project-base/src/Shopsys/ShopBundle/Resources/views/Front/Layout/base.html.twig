@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!--[if IE 7 ]>    <html lang="{{ app.request.locale }}" class="ie7 no-js"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="{{ app.request.locale }}" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="{{ app.request.locale }}" class="ie9 no-js"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="{{ app.request.locale }}" class="no-js"> <!--<![endif]-->
+<html lang="{{ app.request.locale }}" class="no-js">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,10 +8,6 @@
         {% block meta_robots %}{% endblock %}
 
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/index' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
-        <!--[if lte IE 8 ]>
-            <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/index' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '-ie8.css') }}" media="screen, projection">
-        <![endif]-->
-
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/print' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="print">
 
         {# bootstrap/tooltip.js must be imported before bootstrap/popover.js #}

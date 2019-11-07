@@ -395,12 +395,15 @@ There you can find links to upgrade notes for other versions too.
              ) {
         -        parent::__construct($friendlyUrlFacade, $brandFacade, $domain);
         +        parent::__construct($friendlyUrlFacade, $brandFacade, $domain, $imageFacade);
-             } 
+             }
         ```
-    
+
 - improve your data fixtures and tests so they are more resistant against domains and locales settings changes [#1425](https://github.com/shopsys/shopsys/pull/1425)
     - if you have done a lot of changes in your data fixtures you might consider to skip this upgrade
     - for detailed information, see [the separate article](upgrade-instructions-for-improved-data-fixtures-and-tests.md)
+
+- cover new rounding functionality with tests, for detail information see [the separate article](upgrade-instructions-for-currency-rounding.md)
+
 - add possibility to override admin styles from project-base
  ([#1472](https://github.com/shopsys/shopsys/pull/1472))
     - delete all files from `src/Shopsys/ShopBundle/styles/admin/` and create two new files in it - `main.less` and `todo.less`
@@ -414,7 +417,7 @@ There you can find links to upgrade notes for other versions too.
     ```css
     // load main.less file from framework, variable frameworkResourcesDirectory is set in gruntfile.js
     @import "@{frameworkResourcesDirectory}/styles/admin/main.less";
-  
+
     // file for temporary styles eg. added by a programmer
     @import "todo.less";
     ```
@@ -483,6 +486,158 @@ There you can find links to upgrade notes for other versions too.
         +     </div>
         + </div>
     ```
+- improve functional and smoke tests to be more readable and easier to write [#1392](https://github.com/shopsys/shopsys/pull/1392)
+    - add a new package via composer into your project `composer require --dev zalas/phpunit-injector`
+    - edit `phpunit.xml` by adding a listener
+        ```diff
+                </filter>
+        +  
+        +       <listeners>
+        +           <listener class="Zalas\Injector\PHPUnit\TestListener\ServiceInjectorListener" />
+        +       </listeners>   
+            </phpunit>
+        ```
+    - edit `FunctionalTestCase`
+        - make the class implement `Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase` and implement required method `createContainer()`
+        - in `setUp()` remove getting class `Domain` directly from container and add `@inject` annotation to its private property instead
+        - change visibility of property `$domain` from `private` to `protected`
+        - the diff should look like this 
+            ```diff
+                namespace Tests\ShopBundle\Test;
+    
+            +   use Psr\Container\ContainerInterface;
+                use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
+                use Shopsys\FrameworkBundle\Component\Domain\Domain;
+                use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+                use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+            +   use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
+    
+            -   abstract class FunctionalTestCase extends WebTestCase
+            +   abstract class FunctionalTestCase extends WebTestCase implements ServiceContainerTestCase
+                {
+                    /**
+                     * @var \Symfony\Bundle\FrameworkBundle\Client
+                     */
+                    private $client;
+    
+                    /**
+            -        * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|null
+            +        * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+            +        * @inject
+                     */
+            -       private $domain;
+            +       protected $domain;
+    
+                    protected function setUpDomain()
+                    {
+            -           /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
+            -           $this->domain = $this->getContainer()->get(Domain::class);
+            +           $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
+                    }
+            +
+            +       /**
+            +        * @return \Psr\Container\ContainerInterface
+            +        */
+            +       public function createContainer(): ContainerInterface
+            +       {
+            +         return $this->getContainer();
+            +       }
+            ```
+    - to achieve the goal you should find and replace all occurrences of accessing class directly from container, e.g. `$this->getContainer()->get(FooBar::class)` and define it as a class property with an inject annotation instead 
+    - in case you want to change it in data provides you will need to say good bye to `@dataProvider` annotations
+        - since data providers are called earlier than injecting our services you might need to do some workaround for it
+            - in our case there were 4 tests where it was changed
+                - `ProductOnCurrentDomainFacadeCountDataTest::testCategory()`
+                - `ProductOnCurrentDomainFacadeCountDataTest::testSearch()`
+                - `ElasticsearchStructureUpdateCheckerTest::testUpdateIsNotNecessaryWhenNothingIsChanged()`
+                - `ElasticsearchStructureUpdateCheckerTest::testUpdateIsNecessaryWhenStructureHasAdditionalProperty()`
+            - the workaround is to remove `@dataProvider` from the test and call it directly inside a loop
+                ```diff
+                -   /**
+                -    * @param string $searchText
+                -    * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData
+                -    * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData
+                -    * @dataProvider searchTestCasesProvider
+                -    */
+                -   public function testSearch(string $searchText, ProductFilterData $filterData, ProductFilterCountData $expectedCountData): void
+                +   public function testSearch(): void
+                    {
+                        $this->skipTestIfFirstDomainIsNotInEnglish();
+
+                -       $filterConfig = $this->productFilterConfigFactory->createForSearch($this->domain->getId(), $this->domain->getLocale(), $searchText);
+                -       $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch($searchText, $filterConfig, $filterData);
+                -       $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData));
+                +       foreach ($this->searchTestCasesProvider() as $dataProvider) {
+                +           /** @var string $category */
+                +           $searchText = $dataProvider[0];
+                +           /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData */
+                +           $filterData = $dataProvider[1];
+                +           /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
+                +           $expectedCountData = $dataProvider[2];
+                +
+                +           $filterConfig = $this->productFilterConfigFactory->createForSearch($this->domain->getId(), $this->domain->getLocale(), $searchText);
+                +           $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch($searchText, $filterConfig, $filterData);
+                +           $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData));
+                        }
+                ```
+
+- remove old Internet Explorer support ([#1461](https://github.com/shopsys/shopsys/pull/1461))
+    - search all less files and remove `.is-no-flex` and all definitions in it.
+    - search all less files and unify flex width definition like
+        ```diff
+        - flex: 0 100%;
+        + width: 100%;
+        ```
+    - remove old Internet explorer metatags from page header (search and remove in whole project-base)
+        ```diff
+        - <!--[if IE 7 ]>    <html lang="{{ app.request.locale }}" class="ie7 no-js"> <![endif]-->
+        - <!--[if IE 8 ]>    <html lang="{{ app.request.locale }}" class="ie8 no-js"> <![endif]-->
+        - <!--[if IE 9 ]>    <html lang="{{ app.request.locale }}" class="ie9 no-js"> <![endif]-->
+        - <!--[if (gt IE 9)|!(IE)]><!--> <html lang="{{ app.request.locale }}" class="no-js"> <!--<![endif]-->
+        + <html lang="{{ app.request.locale }}" class="no-js">;
+        ```
+        ```diff
+        - <!--[if lte IE 8 ]>
+        -     <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/index' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '-ie8.css') }}" media="screen, projection">
+        - <![endif]-->
+        ```
+    - update `package.json` and remove legacssy
+        ```diff
+        - "grunt-legacssy": "shopsys/grunt-legacssy#v0.4.0-with-grunt1-support",
+        ```
+    - update `gruntfile.js.twig`
+        Update autoprefixer settings to `Last 3 versions` and update settings variable name to `browserlist`
+        ```diff
+        - require('autoprefixer')({browsers: ['last 3 versions', 'ios 6', 'Safari 7', 'Safari 8', 'ie 7', 'ie 8', 'ie 9']})
+        + require('autoprefixer')({browserlist: ['last 3 versions']})
+        ```
+
+        Delete whole legacssy part
+        ```diff
+        -  legacssy: {
+        -     admin: {
+        -        options: {
+        // ...
+        -  }
+        ```
+        Remove legacssy tasks
+        ```diff
+        - grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss", "legacssy"]);
+        + grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss"]);
+
+        - grunt.registerTask('frontend{{ domain.id }}', ['webfont:frontend', 'sprite:frontend', 'less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'legacssy:frontend{{ domain.id }}', 'less:wysiwyg{{ domain.id }}'], 'postcss');
+        + grunt.registerTask('frontend{{ domain.id }}', ['webfont:frontend', 'sprite:frontend', 'less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}'], 'postcss');
+
+        - grunt.registerTask('admin', ['sprite:admin', 'webfont:admin', 'less:admin', 'legacssy:admin' ]);
+        + grunt.registerTask('admin', ['sprite:admin', 'webfont:admin', 'less:admin']);
+
+        - grunt.registerTask('frontendLess{{ domain.id }}', ['less:frontend{{ domain.id }}', 'legacssy:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}']);
+        + grunt.registerTask('frontendLess{{ domain.id }}', ['less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}']);
+
+        - grunt.registerTask('adminLess', ['less:admin', 'legacssy:admin' ]);
+        + grunt.registerTask('adminLess', ['less:admin']);
+        ```
+        - for more information you can see the [PR](https://github.com/shopsys/shopsys/pull/1461)
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))

@@ -5,25 +5,24 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Test;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ParameterTransactionFunctionalTestCase extends TransactionFunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
+     * @inject
+     */
+    protected $parameterFacade;
+
     /**
      * @param string $parameterValueNameId
      * @return int
      */
     protected function getParameterValueIdForFirstDomain(string $parameterValueNameId): int
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
-        $domain = $this->getContainer()->get(Domain::class);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade */
-        $parameterFacade = $this->getContainer()->get(ParameterFacade::class);
-
-        $firstDomainLocale = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
+        $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         $parameterValueTranslatedName = t($parameterValueNameId, [], 'dataFixtures', $firstDomainLocale);
 
-        return $parameterFacade->getParameterValueByValueTextAndLocale($parameterValueTranslatedName, $firstDomainLocale)->getId();
+        return $this->parameterFacade->getParameterValueByValueTextAndLocale($parameterValueTranslatedName, $firstDomainLocale)->getId();
     }
 }

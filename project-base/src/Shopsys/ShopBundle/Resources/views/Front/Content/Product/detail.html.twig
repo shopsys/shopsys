@@ -40,7 +40,7 @@
                             {% for galleryImage in galleryImages %}
                                 <div class="box-gallery__item">
                                     <a href="{{ imageUrl(galleryImage, 'original') }}" class="box-gallery__item__link js-gallery-slide-link">
-                                        {{ image(galleryImage, {size: 'galleryThumbnail'}) }}
+                                        {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false}) }}
                                     </a>
                                 </div>
                             {% endfor %}

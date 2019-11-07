@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Twig;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Twig\ImageExtension;
 use Tests\ShopBundle\Test\FunctionalTestCase;
 
 class ImageExtensionTest extends FunctionalTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
+     * @inject
+     */
+    private $imageLocator;
+
     public function testGetImageHtmlWithAdditional(): void
     {
-        $container = $this->getContainer();
-
-        $domain = $container->get(Domain::class);
-        $imageLocator = $container->get(ImageLocator::class);
-        $templating = $container->get('templating');
+        $templating = $this->getContainer()->get('templating');
 
         $imageFacade = $this->createMock(ImageFacade::class);
 
@@ -33,7 +33,7 @@ class ImageExtensionTest extends FunctionalTestCase
             new AdditionalImageData('(max-width: 480px)', 'http://webserver:8080/additional_1_2.jpg'),
         ]);
 
-        $imageExtension = new ImageExtension('', $domain, $imageLocator, $imageFacade, $templating);
+        $imageExtension = new ImageExtension('', $this->domain, $this->imageLocator, $imageFacade, $templating);
 
         $html = $imageExtension->getImageHtml($image);
 
