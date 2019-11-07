@@ -34,7 +34,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     /**
      * @return \Shopsys\HttpSmokeTesting\RouteInfo[]
      */
-    public function getAllRouteInfo()
+    public function getAllRouteInfo(): array
     {
         $allRouteInfo = [];
 
@@ -45,6 +45,11 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
         return $allRouteInfo;
     }
 
+    /**
+     * @param \Symfony\Component\Routing\Route $route
+     *
+     * @return array
+     */
     private function extractAnnotationsForRoute(Route $route): array
     {
         if ($route->hasDefault('_controller')) {
@@ -75,7 +80,8 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
      *
      * @return array
      */
-    private function getControllerMethodAnnotations(\ReflectionMethod $reflectionMethod) {
+    private function getControllerMethodAnnotations(\ReflectionMethod $reflectionMethod): array
+    {
         $annotations = [];
         foreach ($this->annotationsReader->getMethodAnnotations($reflectionMethod) as $annotation) {
             if ($annotation instanceof DataSet || $annotation instanceof Skipped) {
@@ -87,9 +93,9 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
 
     /**
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
-     * @return string
+     * @return string|null
      */
-    public function generateUri(RequestDataSet $requestDataSet)
+    public function generateUri(RequestDataSet $requestDataSet): ?string
     {
         return $this->router->generate($requestDataSet->getRouteName(), $requestDataSet->getParameters());
     }
