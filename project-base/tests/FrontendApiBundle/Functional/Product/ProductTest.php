@@ -15,14 +15,8 @@ class ProductTest extends GraphQlTestCase
      */
     private $product;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
     protected function setUp(): void
     {
-        $this->domain = $this->getContainer()->get(Domain::class);
         $productFacade = $this->getContainer()->get(ProductFacade::class);
         $this->product = $productFacade->getById(1);
 
