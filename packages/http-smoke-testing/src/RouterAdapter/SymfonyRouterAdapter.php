@@ -47,7 +47,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
 
     /**
      * @param \Symfony\Component\Routing\Route $route
-     *
      * @return array
      */
     private function extractAnnotationsForRoute(Route $route): array
@@ -61,7 +60,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
 
     /**
      * @param string $controller
-     *
      * @return array
      */
     private function extractAnnotationForController(string $controller): array
@@ -77,7 +75,6 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
 
     /**
      * @param \ReflectionMethod $reflectionMethod
-     *
      * @return array
      */
     private function getControllerMethodAnnotations(\ReflectionMethod $reflectionMethod): array

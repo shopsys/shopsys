@@ -16,7 +16,6 @@ class TestController
      * @param string $name
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/hello/{name}")
-     *
      * @DataSet(parameters={
      *     @Parameter(name="name", value="Batman")
      * })
@@ -37,7 +36,6 @@ class TestController
      * @param string $name
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/test")
-     *
      * @DataSet(parameters={
      *     @Parameter(name="myName", value="Batman")
      * })

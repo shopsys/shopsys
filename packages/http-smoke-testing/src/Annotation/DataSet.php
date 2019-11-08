@@ -12,9 +12,13 @@ use Doctrine\Common\Annotations\Annotation\Target;
  */
 class DataSet
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     public $statusCode;
 
-    /** @var array<\Shopsys\HttpSmokeTesting\Annotation\Parameter> */
+    /**
+     * @var \Shopsys\HttpSmokeTesting\Annotation\Parameter[]
+     */
     public $parameters;
 }
