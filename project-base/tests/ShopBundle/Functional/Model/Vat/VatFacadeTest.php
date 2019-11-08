@@ -52,7 +52,7 @@ class VatFacadeTest extends TransactionFunctionalTestCase
         $vatData->percent = '10';
         $vatToDelete = $this->vatFacade->create($vatData, Domain::FIRST_DOMAIN_ID);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatToReplaceWith */
-        $vatToReplaceWith = $this->getReference(VatDataFixture::VAT_HIGH);
+        $vatToReplaceWith = $this->getReference(sprintf('%s_%s', VatDataFixture::VAT_HIGH, Domain::FIRST_DOMAIN_ID));
         /** @var \Shopsys\ShopBundle\Model\Transport\Transport $transport */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
         $transportData = $this->transportDataFactory->createFromTransport($transport);

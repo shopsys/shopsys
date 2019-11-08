@@ -33,7 +33,6 @@ class ZboziProductRepository
     public function getProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup, ?int $lastSeekId, int $maxResults): iterable
     {
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
-            ->addSelect('v')->join('p.vat', 'v')
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->leftJoin(ZboziProductDomain::class, 'zpd', Join::WITH, 'zpd.product = p AND zpd.domainId = :domainId')
             ->andWhere('p.variantType != :variantTypeMain')->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
@@ -44,6 +43,7 @@ class ZboziProductRepository
 
         $this->productRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
         $this->productRepository->addDomain($queryBuilder, $domainConfig->getId());
+        $queryBuilder->addSelect('v')->join('pd.vat', 'v');
 
         if ($lastSeekId !== null) {
             $queryBuilder->andWhere('p.id > :lastProductId')->setParameter('lastProductId', $lastSeekId);

@@ -11,13 +11,12 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 use Shopsys\ShopBundle\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\ShopBundle\Model\Product\Product;
+use Shopsys\ShopBundle\Model\Product\ProductData;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class CartWatcherTest extends TransactionFunctionalTestCase
@@ -45,6 +44,12 @@ class CartWatcherTest extends TransactionFunctionalTestCase
      * @inject
      */
     private $productDataFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     * @inject
+     */
+    private $vatFacade;
 
     public function testGetModifiedPriceItemsAndUpdatePrices()
     {
@@ -103,10 +108,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = [];
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        $productData->vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
+        $this->setVats($productData);
         $product = Product::create($productData);
 
         $cartItemMock = $this->getMockBuilder(CartItem::class)
@@ -153,5 +155,14 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $notListableItems = $cartWatcher->getNotListableItems($cart, $currentCustomerMock);
         $this->assertCount(1, $notListableItems);
+    }
+
+    private function setVats(ProductData $productData): void
+    {
+        $productVatsIndexedByDomainId = [];
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatFormDomain($domainId);
+        }
+        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 }

@@ -74,7 +74,7 @@ class ProductInputPriceRecalculator
             $basePriceForPricingGroup = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
                 $productManualInputPrice->getInputPrice(),
                 $inputPriceType,
-                $productManualInputPrice->getProduct()->getVat(),
+                $productManualInputPrice->getProduct()->getVatForDomain($domainId),
                 $defaultCurrency
             );
             $inputPriceForPricingGroup = $this->inputPriceCalculation->getInputPrice(

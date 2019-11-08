@@ -52,11 +52,12 @@ class VatRepository
     }
 
     /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
      */
-    public function getAllIncludingMarkedForDeletion()
+    public function getAllForDomainIncludingMarkedForDeletion(int $domainId): array
     {
-        return $this->getVatRepository()->findAll();
+        return $this->getVatRepository()->findBy(['domainId' => $domainId]);
     }
 
     /**

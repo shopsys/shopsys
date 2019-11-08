@@ -64,12 +64,12 @@ class QuantifiedProductPriceCalculation
         );
 
         $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice);
-        $totalPriceVatAmount = $this->getTotalPriceVatAmount($totalPriceWithVat, $product->getVat());
+        $totalPriceVatAmount = $this->getTotalPriceVatAmount($totalPriceWithVat, $product->getVatForDomain($domainId));
         $priceWithoutVat = $this->getTotalPriceWithoutVat($totalPriceWithVat, $totalPriceVatAmount);
 
         $totalPrice = new Price($priceWithoutVat, $totalPriceWithVat);
 
-        return new QuantifiedItemPrice($productPrice, $totalPrice, $product->getVat());
+        return new QuantifiedItemPrice($productPrice, $totalPrice, $product->getVatForDomain($domainId));
     }
 
     /**

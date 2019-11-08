@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\ShopBundle\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\UnitDataFixture;
 use Shopsys\ShopBundle\Model\Product\Product;
+use Shopsys\ShopBundle\Model\Product\ProductData;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -37,6 +38,12 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
     private $productInputPriceRecalculator;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     * @inject
+     */
+    private $vatFacade;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
@@ -45,18 +52,12 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
     public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithoutVat()
     {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
-
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
-
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         $productData = $this->productDataFactory->create();
-        $productData->vat = $vat;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $this->setVats($productData);
         $product = Product::create($productData);
 
         $productManualInputPrice = new ProductManualInputPrice($product, $pricingGroup, Money::create(1000));
@@ -70,17 +71,12 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
     {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
 
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
-
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
 
         $productData = $this->productDataFactory->create();
-        $productData->vat = $vat;
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $this->setVats($productData);
         $product = Product::create($productData);
 
         $productManualInputPrice = new ProductManualInputPrice($product, $pricingGroup, Money::create(1000));
@@ -89,5 +85,14 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         $this->productInputPriceRecalculator->recalculateInputPriceForNewVatPercent($productManualInputPrice, $inputPriceType, '15');
 
         $this->assertThat($productManualInputPrice->getInputPrice(), new IsMoneyEqual(Money::create(1000)));
+    }
+
+    private function setVats(ProductData $productData): void
+    {
+        $productVatsIndexedByDomainId = [];
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatFormDomain($domainId);
+        }
+        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 }

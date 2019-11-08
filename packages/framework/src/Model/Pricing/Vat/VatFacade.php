@@ -81,14 +81,6 @@ class VatFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
-     */
-    public function getAllIncludingMarkedForDeletion()
-    {
-        return $this->vatRepository->getAllIncludingMarkedForDeletion();
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
@@ -171,7 +163,7 @@ class VatFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function getDefaultVatFormDomain(int $domainId): Vat
+    public function getDefaultVatFormDomain(int $domainId)
     {
         $defaultVatId = $this->setting->getForDomain(Vat::SETTING_DEFAULT_VAT, $domainId);
 
@@ -206,5 +198,13 @@ class VatFacade
     public function getAllExceptId($vatId)
     {
         return $this->vatRepository->getAllExceptId($vatId);
+    }
+
+    /**
+     * @param int $domainId
+     */
+    public function getAllForDomainIncludingMarkedForDeletion(int $domainId)
+    {
+        return $this->vatRepository->getAllForDomainIncludingMarkedForDeletion($domainId);
     }
 }

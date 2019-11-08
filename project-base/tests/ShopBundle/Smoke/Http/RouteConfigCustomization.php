@@ -227,9 +227,9 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_vat_delete', function (RouteConfig $config) {
                 /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
-                $vat = $this->getPersistentReference(VatDataFixture::VAT_SECOND_LOW);
+                $vat = $this->getPersistentReference(sprintf('%s_%s', VatDataFixture::VAT_SECOND_LOW, Domain::FIRST_DOMAIN_ID));
                 /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat */
-                $newVat = $this->getPersistentReference(VatDataFixture::VAT_LOW);
+                $newVat = $this->getPersistentReference(sprintf('%s_%s', VatDataFixture::VAT_LOW, Domain::FIRST_DOMAIN_ID));
 
                 $debugNote = sprintf('Delete VAT "%s" and replace it by "%s".', $vat->getName(), $newVat->getName());
                 $config->changeDefaultRequestDataSet($debugNote)

@@ -6,6 +6,7 @@ namespace Tests\ShopBundle\Functional\Model\Product;
 
 use Shopsys\ShopBundle\DataFixtures\Demo\AvailabilityDataFixture;
 use Shopsys\ShopBundle\Model\Product\Product;
+use Shopsys\ShopBundle\Model\Product\ProductData;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
 class ProductDomainTest extends TransactionFunctionalTestCase
@@ -35,6 +36,12 @@ class ProductDomainTest extends TransactionFunctionalTestCase
      */
     private $em;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     * @inject
+     */
+    private $vatFacade;
+
     public function setUp()
     {
         parent::setUp();
@@ -55,6 +62,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setVats($productData);
 
         $product = $this->productFactory->create($productData);
 
@@ -86,6 +94,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $this->setVats($productData);
 
         $product = $this->productFactory->create($productData);
 
@@ -112,5 +121,14 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $this->em->clear();
 
         return $this->em->getRepository(Product::class)->find($productId);
+    }
+
+    private function setVats(ProductData $productData): void
+    {
+        $productVatsIndexedByDomainId = [];
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatFormDomain($domainId);
+        }
+        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 }

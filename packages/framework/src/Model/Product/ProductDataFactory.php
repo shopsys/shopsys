@@ -134,8 +134,12 @@ class ProductDataFactory implements ProductDataFactoryInterface
      */
     protected function fillNew(ProductData $productData)
     {
-        // TODO change it
-        $productData->vat = $this->vatFacade->getDefaultVatFormDomain(Domain::FIRST_DOMAIN_ID);
+        $productVatsIndexedByDomain = [];
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productVatsIndexedByDomain[$domainId] = $this->vatFacade->getDefaultVatFormDomain($domainId);
+        }
+
+        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomain;
         $productData->unit = $this->unitFacade->getDefaultUnit();
 
         $productParameterValuesData = [];
@@ -149,6 +153,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->seoMetaDescriptions = $nullForAllDomains;
         $productData->descriptions = $nullForAllDomains;
         $productData->shortDescriptions = $nullForAllDomains;
+        $productData->vatsIndexedByDomainId = $nullForAllDomains;
         $productData->accessories = [];
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -190,6 +195,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $productData->seoH1s[$domainId] = $product->getSeoH1($domainId);
             $productData->seoTitles[$domainId] = $product->getSeoTitle($domainId);
             $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
+            $productData->vatsIndexedByDomainId[$domainId] = $product->getVatForDomain($domainId);
         }
         $productData->name = $names;
         $productData->variantAlias = $variantAliases;
@@ -197,7 +203,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->catnum = $product->getCatnum();
         $productData->partno = $product->getPartno();
         $productData->ean = $product->getEan();
-        $productData->vat = $product->getVat();
         $productData->sellingFrom = $product->getSellingFrom();
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();

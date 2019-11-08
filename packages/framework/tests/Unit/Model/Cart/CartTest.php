@@ -27,18 +27,12 @@ class CartTest extends TestCase
     {
         $customerIdentifier = new CustomerIdentifier('randomString');
 
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $productData1 = new ProductData();
         $productData1->name = ['cs' => 'Product 1'];
-        $productData1->vat = $vat;
         $product1 = Product::create($productData1);
 
         $productData2 = new ProductData();
         $productData2->name = ['cs' => 'Product 2'];
-        $productData2->vat = $vat;
         $product2 = Product::create($productData2);
 
         $cart = new Cart($customerIdentifier->getCartIdentifier());
@@ -64,14 +58,8 @@ class CartTest extends TestCase
     public function testIsNotEmpty()
     {
         $customerIdentifier = new CustomerIdentifier('randomString');
-
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $productData = new ProductData();
         $productData->name = ['cs' => 'Product 1'];
-        $productData->vat = $vat;
         $product = Product::create($productData);
 
         $cart = new Cart($customerIdentifier->getCartIdentifier());
@@ -85,19 +73,13 @@ class CartTest extends TestCase
     public function testClean()
     {
         $customerIdentifier = new CustomerIdentifier('randomString');
-
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $productData1 = new ProductData();
         $productData1->name = ['cs' => 'Product 1'];
-        $productData1->vat = $vat;
         $product1 = Product::create($productData1);
 
         $productData2 = new ProductData();
         $productData2->name = ['cs' => 'Product 2'];
-        $productData2->vat = $vat;
+
         $product2 = Product::create($productData2);
 
         $cart = new Cart($customerIdentifier->getCartIdentifier());

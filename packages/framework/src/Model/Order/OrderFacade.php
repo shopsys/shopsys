@@ -530,7 +530,7 @@ class OrderFacade
                 $order,
                 $product->getName($locale),
                 $quantifiedItemPrice->getUnitPrice(),
-                $product->getVat()->getPercent(),
+                $product->getVatForDomain($order->getDomainId())->getPercent(),
                 $quantifiedProduct->getQuantity(),
                 $product->getUnit()->getName($locale),
                 $product->getCatnum(),
