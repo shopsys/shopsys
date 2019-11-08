@@ -7,8 +7,8 @@ namespace Tests\App\Functional\Model\Product;
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
-use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Product;
+use App\Model\Product\ProductData;
 use ReflectionClass;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -31,6 +31,12 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
      * @inject
      */
     private $productPriceRecalculationScheduler;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     * @inject
+     */
+    private $vatFacade;
 
     /**
      * @dataProvider getTestHandleOutOfStockStateDataProvider
@@ -57,8 +63,8 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productData->usingStock = true;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
-        $productData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $this->setVats($productData);
 
         $product = $this->productFacade->create($productData);
 
@@ -145,8 +151,23 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
         $productId = $product->getId();
 
-        $this->productFacade->edit($productId, $this->productDataFactory->create());
+        $productData = $this->productDataFactory->create();
+        $this->setVats($productData);
+
+        $this->productFacade->edit($productId, $productData);
 
         $this->assertArrayHasKey($productId, $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation());
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function setVats(ProductData $productData): void
+    {
+        $productVatsIndexedByDomainId = [];
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+        }
+        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 }

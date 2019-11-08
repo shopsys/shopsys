@@ -16,6 +16,9 @@
                 {% endif %}
 
                 <div {% if isMultidomain() %} class="form-line__box__content"{% endif %}>
+                    {{ form_label(form.vatsIndexedByDomainId[domainId]) }}
+                    {{ form_widget(form.vatsIndexedByDomainId[domainId]) }}
+
                     <div class="form-price-heading">
                         <div class="form-price-heading__cell form-price-heading__cell--field">
                             {{ inputPriceLabel({ isSimple: true }) }}
@@ -63,6 +66,9 @@
                     </div>
                 {% endif %}
                 <div {% if isMultidomain() %} class="form-line__box__content"{% endif %}>
+                    {{ form_label(form.vatsIndexedByDomainId[domainId]) }}
+                    {{ form_widget(form.vatsIndexedByDomainId[domainId]) }}
+
                     <div class="form-price-heading">
                         <div class="form-price-heading__cell form-price-heading__cell--field">
                             {{ inputPriceLabel({ isSimple: true }) }}

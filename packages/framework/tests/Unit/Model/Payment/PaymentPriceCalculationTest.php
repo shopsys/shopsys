@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Payment;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -97,7 +98,7 @@ class PaymentPriceCalculationTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $currencyData = new CurrencyData();
         $currencyData->name = 'currencyName';
         $currencyData->code = Currency::CODE_CZK;
@@ -108,11 +109,17 @@ class PaymentPriceCalculationTest extends TestCase
 
         $paymentData = new PaymentData();
         $paymentData->name = ['cs' => 'paymentName'];
-        $paymentData->vat = $vat;
+        $paymentData->enabled = [
+            Domain::FIRST_DOMAIN_ID => true,
+        ];
+        $paymentData->vatsIndexedByDomainId = [
+            Domain::FIRST_DOMAIN_ID => $vat,
+        ];
         $payment = new Payment($paymentData);
-        $payment->setPrice(new PaymentPriceFactory(new EntityNameResolver([])), $currency, $inputPrice);
+        $payment->setPrice($inputPrice, Domain::FIRST_DOMAIN_ID);
+        $payment->addPrice((new PaymentPriceFactory(new EntityNameResolver([])))->create($payment, $inputPrice, Domain::FIRST_DOMAIN_ID));
 
-        $price = $paymentPriceCalculation->calculateIndependentPrice($payment, $currency);
+        $price = $paymentPriceCalculation->calculateIndependentPrice($payment, $currency, Domain::FIRST_DOMAIN_ID);
 
         $this->assertThat($price->getPriceWithoutVat(), new IsMoneyEqual($priceWithoutVat));
         $this->assertThat($price->getPriceWithVat(), new IsMoneyEqual($priceWithVat));
@@ -157,7 +164,7 @@ class PaymentPriceCalculationTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $currencyData = new CurrencyData();
         $currencyData->name = 'currencyName';
         $currencyData->code = Currency::CODE_CZK;
@@ -168,11 +175,17 @@ class PaymentPriceCalculationTest extends TestCase
 
         $paymentData = new PaymentData();
         $paymentData->name = ['cs' => 'paymentName'];
-        $paymentData->vat = $vat;
+        $paymentData->enabled = [
+            Domain::FIRST_DOMAIN_ID => true,
+        ];
+        $paymentData->vatsIndexedByDomainId = [
+            Domain::FIRST_DOMAIN_ID => $vat,
+        ];
         $payment = new Payment($paymentData);
-        $payment->setPrice(new PaymentPriceFactory(new EntityNameResolver([])), $currency, $inputPrice);
+        $payment->setPrice($inputPrice, Domain::FIRST_DOMAIN_ID);
+        $payment->addPrice((new PaymentPriceFactory(new EntityNameResolver([])))->create($payment, $inputPrice, Domain::FIRST_DOMAIN_ID));
 
-        $price = $paymentPriceCalculation->calculatePrice($payment, $currency, $productsPrice, 1);
+        $price = $paymentPriceCalculation->calculatePrice($payment, $currency, $productsPrice, Domain::FIRST_DOMAIN_ID);
 
         if ($productsPrice->getPriceWithVat()->isGreaterThan($priceLimit)) {
             $this->assertThat($price->getPriceWithoutVat(), new IsMoneyEqual(Money::zero()));

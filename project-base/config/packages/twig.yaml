@@ -7,7 +7,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig'
         - '@ShopsysFramework/Admin/Form/fileuploadFields.html.twig'
         - '@ShopsysFramework/Admin/Form/imageuploadFields.html.twig'
-        - '@ShopsysFramework/Admin/Form/pricetableFields.html.twig'
+        - '@ShopsysFramework/Admin/Form/priceandvattableByDomainsFields.html.twig'
         - '@ShopsysFramework/Admin/Form/orderItems.html.twig'
         - '@ShopsysFramework/Admin/Form/orderlistFields.html.twig'
         - '@ShopsysFramework/Admin/Form/displayOnlyCustomer.html.twig'

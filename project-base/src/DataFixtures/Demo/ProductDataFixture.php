@@ -5806,9 +5806,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     protected function setVat(ProductData $productData, ?string $vatReference): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null $vat */
-        $vat = $vatReference === null ? null : $this->persistentReferenceFacade->getReference($vatReference);
-        $productData->vat = $vat;
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $productVatsIndexedByDomainId */
+        $productVatsIndexedByDomainId = [];
+        foreach ($this->domain->getAllIds() as $domainId) {
+            if ($vatReference !== null) {
+                $productVatsIndexedByDomainId[$domainId] = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, Domain::FIRST_DOMAIN_ID);
+            }
+        }
+        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 
     /**

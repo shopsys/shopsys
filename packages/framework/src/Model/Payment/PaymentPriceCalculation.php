@@ -50,20 +50,21 @@ class PaymentPriceCalculation
             return Price::zero();
         }
 
-        return $this->calculateIndependentPrice($payment, $currency);
+        return $this->calculateIndependentPrice($payment, $currency, $domainId);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function calculateIndependentPrice(Payment $payment, Currency $currency): Price
+    public function calculateIndependentPrice(Payment $payment, Currency $currency, int $domainId): Price
     {
         return $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
-            $payment->getPrice($currency)->getPrice(),
+            $payment->getPrice($domainId)->getPrice(),
             $this->pricingSetting->getInputPriceType(),
-            $payment->getVat(),
+            $payment->getPaymentDomain($domainId)->getVat(),
             $currency
         );
     }

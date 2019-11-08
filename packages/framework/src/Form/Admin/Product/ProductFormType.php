@@ -620,19 +620,6 @@ class ProductFormType extends AbstractType
             'label' => t('Prices'),
         ]);
 
-        $builderPricesGroup
-            ->add('vat', ChoiceType::class, [
-                'required' => true,
-                'choices' => $this->vatFacade->getAllIncludingMarkedForDeletion(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
-                ],
-                'disabled' => $this->isProductMainVariant($product),
-                'label' => t('VAT'),
-            ]);
-
         $productCalculatedPricesGroup = $builder->create('productCalculatedPricesGroup', ProductCalculatedPricesType::class, [
             'product' => $product,
             'inherit_data' => true,
@@ -645,6 +632,27 @@ class ProductFormType extends AbstractType
             'render_form_row' => false,
             'disabled' => $this->isProductMainVariant($product),
         ]);
+
+        $vatsIndexedByDomainId = $builder->create('vatsIndexedByDomainId', FormType::class, [
+            'compound' => true,
+            'render_form_row' => false,
+            'disabled' => $this->isProductMainVariant($product),
+        ]);
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $vatsIndexedByDomainId
+                ->add($domainId, ChoiceType::class, [
+                    'required' => true,
+                    'choices' => $this->vatFacade->getAllForDomainIncludingMarkedForDeletion($domainId),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'constraints' => [
+                        new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
+                    ],
+                    'label' => t('VAT'),
+                ]);
+        }
+
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
             $manualInputPricesByPricingGroup->add($pricingGroup->getId(), MoneyType::class, [
                 'scale' => 6,
@@ -657,10 +665,11 @@ class ProductFormType extends AbstractType
             ]);
         }
         $productCalculatedPricesGroup->add($manualInputPricesByPricingGroup);
+        $productCalculatedPricesGroup->add($vatsIndexedByDomainId);
+
         $builderPricesGroup->add($productCalculatedPricesGroup);
 
         if ($this->isProductMainVariant($product)) {
-            $builderPricesGroup->remove('vat');
             $builderPricesGroup->remove('productCalculatedPricesGroup');
             $builderPricesGroup->add('disabledPricesOnMainVariant', DisplayOnlyType::class, [
                 'mapped' => false,

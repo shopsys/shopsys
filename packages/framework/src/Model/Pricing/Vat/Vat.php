@@ -44,12 +44,21 @@ class Vat
     protected $replaceWith;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
+     * @var int
+     *
+     * @ORM\Column(type="integer")
      */
-    public function __construct(VatData $vatData)
+    protected $domainId;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
+     * @param int $domainId
+     */
+    public function __construct(VatData $vatData, int $domainId)
     {
         $this->name = $vatData->name;
         $this->percent = $vatData->percent;
+        $this->domainId = $domainId;
     }
 
     /**
@@ -103,5 +112,13 @@ class Vat
     public function isMarkedAsDeleted()
     {
         return $this->replaceWith !== null;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId(): int
+    {
+        return $this->domainId;
     }
 }

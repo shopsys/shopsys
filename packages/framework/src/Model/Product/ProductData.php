@@ -28,11 +28,6 @@ class ProductData
     public $ean;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
-     */
-    public $vat;
-
-    /**
      * @var \DateTime|null
      */
     public $sellingFrom;
@@ -172,6 +167,11 @@ class ProductData
      */
     public $uuid;
 
+    /**
+     * @var array
+     */
+    public $vatsIndexedByDomainId;
+
     public function __construct()
     {
         $this->name = [];
@@ -194,5 +194,6 @@ class ProductData
         $this->variants = [];
         $this->seoH1s = [];
         $this->pluginData = [];
+        $this->vatsIndexedByDomainId = [];
     }
 }

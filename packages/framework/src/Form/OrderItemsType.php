@@ -84,14 +84,20 @@ class OrderItemsType extends AbstractType
         $order = $options['order'];
 
         $view->vars['order'] = $order;
-        $view->vars['transportPricesWithVatByTransportId'] = $this->transportFacade->getTransportPricesWithVatIndexedByTransportId(
-            $order->getCurrency()
+        $view->vars['transportPricesWithVatByTransportId'] = $this->transportFacade->getTransportPricesWithVatByCurrencyAndDomainIdIndexedByTransportId(
+            $order->getCurrency(),
+            $order->getDomainId()
         );
-        $view->vars['transportVatPercentsByTransportId'] = $this->transportFacade->getTransportVatPercentsIndexedByTransportId();
-        $view->vars['paymentPricesWithVatByPaymentId'] = $this->paymentFacade->getPaymentPricesWithVatIndexedByPaymentId(
-            $order->getCurrency()
+        $view->vars['transportVatPercentsByTransportId'] = $this->transportFacade->getTransportVatPercentsByDomainIdIndexedByTransportId(
+            $order->getDomainId()
         );
-        $view->vars['paymentVatPercentsByPaymentId'] = $this->paymentFacade->getPaymentVatPercentsIndexedByPaymentId();
+        $view->vars['paymentPricesWithVatByPaymentId'] = $this->paymentFacade->getPaymentPricesWithVatByCurrencyAndDomainIdIndexedByPaymentId(
+            $order->getCurrency(),
+            $order->getDomainId()
+        );
+        $view->vars['paymentVatPercentsByPaymentId'] = $this->paymentFacade->getPaymentVatPercentsByDomainIdIndexedByPaymentId(
+            $order->getDomainId()
+        );
     }
 
     /**

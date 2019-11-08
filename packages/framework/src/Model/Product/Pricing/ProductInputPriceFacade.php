@@ -120,18 +120,28 @@ class ProductInputPriceFacade
 
                 return false;
             }
+
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
             $product = $row[0];
-            $newVat = $product->getVat()->getReplaceWith();
+
             $productManualInputPrices = $this->productManualInputPriceRepository->getByProduct($product);
             $inputPriceType = $this->pricingSetting->getInputPriceType();
             foreach ($productManualInputPrices as $productManualInputPrice) {
+                $domainId = $productManualInputPrice->getPricingGroup()->getDomainId();
+                $newVat = $product->getVatForDomain($domainId)->getReplaceWith();
+
+                if ($newVat === null) {
+                    continue;
+                }
+
                 $this->productInputPriceRecalculator->recalculateInputPriceForNewVatPercent(
                     $productManualInputPrice,
                     $inputPriceType,
                     $newVat->getPercent()
                 );
+
+                $product->changeVatForDomain($newVat, $domainId);
             }
-            $product->changeVat($newVat);
         }
 
         $this->em->flush();

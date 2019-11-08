@@ -8,6 +8,9 @@ use Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository;
 use Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class DomainDataCreator
 {
@@ -49,6 +52,16 @@ class DomainDataCreator
     protected $pricingGroupFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory
+     */
+    protected $vatDataFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     */
+    protected $vatFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository $settingValueRepository
@@ -56,6 +69,8 @@ class DomainDataCreator
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator $translatableEntityDataCreator
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory $pricingGroupDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      */
     public function __construct(
         Domain $domain,
@@ -64,7 +79,9 @@ class DomainDataCreator
         MultidomainEntityDataCreator $multidomainEntityDataCreator,
         TranslatableEntityDataCreator $translatableEntityDataCreator,
         PricingGroupDataFactory $pricingGroupDataFactory,
-        PricingGroupFacade $pricingGroupFacade
+        PricingGroupFacade $pricingGroupFacade,
+        VatDataFactory $vatDataFactory,
+        VatFacade $vatFacade
     ) {
         $this->domain = $domain;
         $this->setting = $setting;
@@ -73,6 +90,8 @@ class DomainDataCreator
         $this->translatableEntityDataCreator = $translatableEntityDataCreator;
         $this->pricingGroupDataFactory = $pricingGroupDataFactory;
         $this->pricingGroupFacade = $pricingGroupFacade;
+        $this->vatDataFactory = $vatDataFactory;
+        $this->vatFacade = $vatFacade;
     }
 
     /**
@@ -93,6 +112,7 @@ class DomainDataCreator
                 $this->setting->setForDomain(Setting::BASE_URL, $domainConfig->getUrl(), $domainId);
 
                 $this->processDefaultPricingGroupForNewDomain($domainId);
+                $this->processDefaultVatForNewDomain($domainId);
 
                 $this->multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(self::TEMPLATE_DOMAIN_ID, $domainId);
                 if ($isNewLocale) {
@@ -149,5 +169,27 @@ class DomainDataCreator
         $pricingGroupData = $this->pricingGroupDataFactory->create();
         $pricingGroupData->name = 'Default';
         return $this->pricingGroupFacade->create($pricingGroupData, $domainId);
+    }
+
+    /**
+     * @param int $domainId
+     */
+    protected function processDefaultVatForNewDomain(int $domainId): void
+    {
+        $vat = $this->createDefaultVatForNewDomain($domainId);
+        $this->setting->setForDomain(Vat::SETTING_DEFAULT_VAT, $vat->getId(), $domainId);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     */
+    protected function createDefaultVatForNewDomain(int $domainId): Vat
+    {
+        $vatData = $this->vatDataFactory->create();
+        $vatData->name = 'Default';
+        $vatData->percent = '0';
+
+        return $this->vatFacade->create($vatData, $domainId);
     }
 }

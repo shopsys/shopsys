@@ -80,7 +80,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('99.95'));
 
-        $paymentData->vat = $this->getReference(VatDataFixture::VAT_ZERO);
         $this->createPayment(self::PAYMENT_CARD, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
             TransportDataFixture::TRANSPORT_PPL,
@@ -93,8 +92,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         }
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('49.90'));
-
-        $paymentData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
         $this->createPayment(self::PAYMENT_CASH_ON_DELIVERY, $paymentData, [TransportDataFixture::TRANSPORT_CZECH_POST]);
 
         $paymentData = $this->paymentDataFactory->create();
@@ -106,8 +103,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData->czkRounding = true;
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::zero());
-
-        $paymentData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
         $this->createPayment(self::PAYMENT_CASH, $paymentData, [TransportDataFixture::TRANSPORT_PERSONAL]);
     }
 
@@ -152,10 +147,13 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     protected function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domain->getId());
             $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency($price, $domain->getId());
 
-            $paymentData->pricesByCurrencyId[$currency->getId()] = $price;
+            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
+            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domain->getId());
+
+            $paymentData->pricesIndexedByDomainId[$domain->getId()] = $price;
+            $paymentData->vatsIndexedByDomainId[$domain->getId()] = $vat;
         }
     }
 }

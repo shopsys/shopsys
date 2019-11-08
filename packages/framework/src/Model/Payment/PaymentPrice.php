@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 /**
  * @ORM\Table(name="payment_prices")
@@ -24,15 +23,6 @@ class PaymentPrice
     protected $payment;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     *
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     */
-    protected $currency;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      *
      * @ORM\Column(type="money", precision=20, scale=6)
@@ -40,23 +30,23 @@ class PaymentPrice
     protected $price;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
+     * @var int
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
      */
-    public function __construct(Payment $payment, Currency $currency, Money $price)
-    {
-        $this->payment = $payment;
-        $this->currency = $currency;
-        $this->setPrice($price);
-    }
+    protected $domainId;
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
+     * @param int $domainId
      */
-    public function getCurrency(): Currency
+    public function __construct(Payment $payment, Money $price, int $domainId)
     {
-        return $this->currency;
+        $this->payment = $payment;
+        $this->price = $price;
+        $this->domainId = $domainId;
     }
 
     /**
@@ -81,5 +71,21 @@ class PaymentPrice
     public function setPrice(Money $price): void
     {
         $this->price = $price;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId(): int
+    {
+        return $this->domainId;
+    }
+
+    /**
+     * @param int $domainId
+     */
+    public function setDomainId(int $domainId): void
+    {
+        $this->domainId = $domainId;
     }
 }

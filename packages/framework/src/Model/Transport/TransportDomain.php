@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 /**
  * @ORM\Table(
@@ -47,13 +48,23 @@ class TransportDomain
     protected $enabled = false;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     *
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $vat;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      */
-    public function __construct(Transport $transport, $domainId)
+    public function __construct(Transport $transport, int $domainId, Vat $vat)
     {
         $this->transport = $transport;
         $this->domainId = $domainId;
+        $this->vat = $vat;
         $this->enabled = true;
     }
 
@@ -79,5 +90,21 @@ class TransportDomain
     public function isEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     */
+    public function setVat(Vat $vat): void
+    {
+        $this->vat = $vat;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     */
+    public function getVat(): Vat
+    {
+        return $this->vat;
     }
 }

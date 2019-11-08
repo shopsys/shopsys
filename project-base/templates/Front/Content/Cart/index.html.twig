@@ -65,7 +65,7 @@
                                     </td>
 
                                     <td class="table-cart__cell table-cart__cell--price">
-                                        {{ cartItem.product.vat.percent|formatPercent }}
+                                        {{ cartItem.product.getVatForDomain(getDomain().id).percent|formatPercent }}
                                     </td>
 
                                     <td class="table-cart__cell table-cart__cell--amount">

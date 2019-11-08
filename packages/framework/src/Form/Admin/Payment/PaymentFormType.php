@@ -9,12 +9,10 @@ use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\PriceTableType;
+use Shopsys\FrameworkBundle\Form\PriceAndVatTableByDomainsType;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -32,35 +30,19 @@ class PaymentFormType extends AbstractType
     private $transportFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    private $vatFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private $currencyFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
      */
     private $paymentFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      */
     public function __construct(
         TransportFacade $transportFacade,
-        VatFacade $vatFacade,
-        CurrencyFacade $currencyFacade,
         PaymentFacade $paymentFacade
     ) {
         $this->transportFacade = $transportFacade;
-        $this->vatFacade = $vatFacade;
-        $this->currencyFacade = $currencyFacade;
         $this->paymentFacade = $paymentFacade;
     }
 
@@ -117,25 +99,17 @@ class PaymentFormType extends AbstractType
         $builderPriceGroup = $builder->create('prices', GroupType::class, [
             'label' => t('Prices'),
         ]);
+
         $builderPriceGroup
-            ->add('vat', ChoiceType::class, [
-                'required' => true,
-                'choices' => $this->vatFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
-                ],
-                'label' => t('VAT'),
-            ])
             ->add('czkRounding', YesNoType::class, [
                 'required' => false,
                 'label' => t('Order in CZK round to whole crowns'),
                 'icon_title' => t('Rounding item with 0 % VAT will be added to your order. It is used for payment in cash.'),
             ])
-            ->add('pricesByCurrencyId', PriceTableType::class, [
-                'currencies' => $this->currencyFacade->getAllIndexedById(),
-                'base_prices' => $payment !== null ? $this->paymentFacade->getIndependentBasePricesIndexedByCurrencyId($payment) : [],
+            ->add('pricesByDomains', PriceAndVatTableByDomainsType::class, [
+                'pricesIndexedByDomainId' => $this->paymentFacade->getPricesIndexedByDomainId($payment),
+                'inherit_data' => true,
+                'render_form_row' => false,
             ]);
 
         $builderAdditionalInformationGroup = $builder->create('additionalInformation', GroupType::class, [

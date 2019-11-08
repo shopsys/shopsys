@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Pricing;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -63,7 +64,7 @@ class PriceCalculationTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'testVat';
         $vatData->percent = $vatPercent;
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
 
         $actualPriceWithVat = $priceCalculation->applyVatPercent($priceWithoutVat, $vat);
 
@@ -115,7 +116,7 @@ class PriceCalculationTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'testVat';
         $vatData->percent = $vatPercent;
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
 
         $actualVatAmount = $priceCalculation->getVatAmountByPriceWithVat($priceWithVat, $vat);
 

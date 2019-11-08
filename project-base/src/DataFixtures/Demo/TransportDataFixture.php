@@ -76,9 +76,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);
         }
 
-        $this->setPriceForAllDomainDefaultCurrencies($transportData, Money::create('99.95'));
-
-        $transportData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
+        $this->setPriceForAllDomains($transportData, Money::create('99.95'));
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -87,9 +85,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->name[$locale] = t('PPL', [], 'dataFixtures', $locale);
         }
 
-        $this->setPriceForAllDomainDefaultCurrencies($transportData, Money::create('199.95'));
-
-        $transportData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
+        $this->setPriceForAllDomains($transportData, Money::create('199.95'));
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -100,9 +96,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->instructions[$locale] = t('We are looking forward to your visit.', [], 'dataFixtures', $locale);
         }
 
-        $this->setPriceForAllDomainDefaultCurrencies($transportData, Money::zero());
-
-        $transportData->vat = $this->getReference(VatDataFixture::VAT_ZERO);
+        $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
     }
 
@@ -120,13 +114,16 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Transport\TransportData $transportData
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      */
-    protected function setPriceForAllDomainDefaultCurrencies(TransportData $transportData, Money $price): void
+    protected function setPriceForAllDomains(TransportData $transportData, Money $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domain->getId());
             $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency($price, $domain->getId());
 
-            $transportData->pricesByCurrencyId[$currency->getId()] = $price;
+            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
+            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domain->getId());
+
+            $transportData->vatsIndexedByDomainId[$domain->getId()] = $vat;
+            $transportData->pricesIndexedByDomainId[$domain->getId()] = $price;
         }
     }
 

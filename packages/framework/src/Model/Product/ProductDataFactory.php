@@ -134,7 +134,12 @@ class ProductDataFactory implements ProductDataFactoryInterface
      */
     protected function fillNew(ProductData $productData)
     {
-        $productData->vat = $this->vatFacade->getDefaultVat();
+        $productVatsIndexedByDomain = [];
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productVatsIndexedByDomain[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+        }
+
+        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomain;
         $productData->unit = $this->unitFacade->getDefaultUnit();
 
         $productParameterValuesData = [];
@@ -189,6 +194,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $productData->seoH1s[$domainId] = $product->getSeoH1($domainId);
             $productData->seoTitles[$domainId] = $product->getSeoTitle($domainId);
             $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
+            $productData->vatsIndexedByDomainId[$domainId] = $product->getVatForDomain($domainId);
         }
         $productData->name = $names;
         $productData->variantAlias = $variantAliases;
@@ -196,7 +202,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->catnum = $product->getCatnum();
         $productData->partno = $product->getPartno();
         $productData->ean = $product->getEan();
-        $productData->vat = $product->getVat();
         $productData->sellingFrom = $product->getSellingFrom();
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();

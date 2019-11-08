@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Transport;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
@@ -73,7 +74,7 @@ class TransportPriceCalculationTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $currencyData = new CurrencyData();
         $currencyData->name = 'currencyName';
         $currencyData->code = Currency::CODE_CZK;
@@ -84,11 +85,15 @@ class TransportPriceCalculationTest extends TestCase
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
-        $transportData->vat = $vat;
+        $transportData->enabled = [Domain::FIRST_DOMAIN_ID => true];
+        $transportData->vatsIndexedByDomainId = [
+            Domain::FIRST_DOMAIN_ID => $vat,
+        ];
         $transport = new Transport($transportData);
-        $transport->setPrice(new TransportPriceFactory(new EntityNameResolver([])), $currency, $inputPrice);
+        $transport->setPrice($inputPrice, Domain::FIRST_DOMAIN_ID);
+        $transport->addPrice((new TransportPriceFactory(new EntityNameResolver([])))->create($transport, $inputPrice, Domain::FIRST_DOMAIN_ID));
 
-        $price = $transportPriceCalculation->calculateIndependentPrice($transport, $currency);
+        $price = $transportPriceCalculation->calculateIndependentPrice($transport, $currency, Domain::FIRST_DOMAIN_ID);
 
         $this->assertThat($price->getPriceWithoutVat(), new IsMoneyEqual($priceWithoutVat));
         $this->assertThat($price->getPriceWithVat(), new IsMoneyEqual($priceWithVat));

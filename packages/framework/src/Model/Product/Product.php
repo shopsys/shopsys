@@ -85,14 +85,6 @@ class Product extends AbstractTranslatableEntity
     protected $ean;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     *
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $vat;
-
-    /**
      * @var \DateTime|null
      *
      * @ORM\Column(type="datetime", nullable=true)
@@ -294,7 +286,6 @@ class Product extends AbstractTranslatableEntity
         $this->catnum = $productData->catnum;
         $this->partno = $productData->partno;
         $this->ean = $productData->ean;
-        $this->vat = $productData->vat;
         $this->sellingFrom = $productData->sellingFrom;
         $this->sellingTo = $productData->sellingTo;
         $this->sellingDenied = $productData->sellingDenied;
@@ -353,7 +344,6 @@ class Product extends AbstractTranslatableEntity
         array $productCategoryDomains,
         ProductData $productData
     ) {
-        $this->vat = $productData->vat;
         $this->sellingFrom = $productData->sellingFrom;
         $this->sellingTo = $productData->sellingTo;
         $this->sellingDenied = $productData->sellingDenied;
@@ -412,10 +402,11 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @param int $domainId
      */
-    public function changeVat(Vat $vat)
+    public function changeVatForDomain(Vat $vat, int $domainId): void
     {
-        $this->vat = $vat;
+        $this->getProductDomain($domainId)->setVat($vat);
         $this->recalculatePrice = true;
     }
 
@@ -484,11 +475,12 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function getVat()
+    public function getVatForDomain(int $domainId): Vat
     {
-        return $this->vat;
+        return $this->getProductDomain($domainId)->getVat();
     }
 
     /**
@@ -900,6 +892,7 @@ class Product extends AbstractTranslatableEntity
             $productDomain->setSeoMetaDescription($productData->seoMetaDescriptions[$domainId]);
             $productDomain->setDescription($productData->descriptions[$domainId]);
             $productDomain->setShortDescription($productData->shortDescriptions[$domainId]);
+            $productDomain->setVat($productData->vatsIndexedByDomainId[$domainId]);
         }
     }
 

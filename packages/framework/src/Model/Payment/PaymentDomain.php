@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 /**
  * @ORM\Table(
@@ -47,13 +48,23 @@ class PaymentDomain
     protected $enabled;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     *
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $vat;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      */
-    public function __construct(Payment $payment, $domainId)
+    public function __construct(Payment $payment, int $domainId, Vat $vat)
     {
         $this->payment = $payment;
         $this->domainId = $domainId;
+        $this->vat = $vat;
         $this->enabled = true;
     }
 
@@ -79,5 +90,21 @@ class PaymentDomain
     public function setEnabled(bool $enabled)
     {
         $this->enabled = $enabled;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     */
+    public function getVat(): Vat
+    {
+        return $this->vat;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     */
+    public function setVat(Vat $vat): void
+    {
+        $this->vat = $vat;
     }
 }

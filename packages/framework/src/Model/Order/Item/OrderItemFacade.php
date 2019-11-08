@@ -96,7 +96,7 @@ class OrderItemFacade
             $order,
             $product->getName($orderDomainConfig->getLocale()),
             $productPrice,
-            $product->getVat()->getPercent(),
+            $product->getVatForDomain($order->getDomainId())->getPercent(),
             static::DEFAULT_PRODUCT_QUANTITY,
             $product->getUnit()->getName($orderDomainConfig->getLocale()),
             $product->getCatnum(),
