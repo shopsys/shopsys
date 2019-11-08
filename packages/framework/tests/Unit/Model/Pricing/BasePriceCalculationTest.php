@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Pricing;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -73,7 +74,7 @@ class BasePriceCalculationTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
 
         $basePrice = $basePriceCalculation->calculateBasePrice($inputPrice, $inputPriceType, $vat);
 
@@ -109,7 +110,7 @@ class BasePriceCalculationTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
 
         $currencyData = new CurrencyData();
         $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
@@ -195,7 +196,7 @@ class BasePriceCalculationTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $resultPrice = $basePriceCalculation->applyCoefficients($price, $vat, $coefficients);
 
         $this->assertThat($resultPrice->getPriceWithVat(), new IsMoneyEqual($resultPriceWithVat));

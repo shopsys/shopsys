@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Cart;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
@@ -33,7 +34,7 @@ class CartItemTest extends TransactionFunctionalTestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $availabilityData = new AvailabilityData();
         $availabilityData->dispatchTime = 0;
         $availability = new Availability($availabilityData);

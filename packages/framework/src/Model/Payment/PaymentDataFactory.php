@@ -79,7 +79,8 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
      */
     protected function fillNew(PaymentData $paymentData): void
     {
-        $paymentData->vat = $this->vatFacade->getDefaultVat();
+        // TODO change it
+        $paymentData->vat = $this->vatFacade->getDefaultVatFormDomain(Domain::FIRST_DOMAIN_ID);
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $paymentData->enabled[$domainId] = true;

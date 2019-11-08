@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Vat;
 
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractType;
@@ -19,11 +20,18 @@ class VatSettingsFormType extends AbstractType
     private $vatFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
      */
-    public function __construct(VatFacade $vatFacade)
+    private $adminDomainTabsFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     */
+    public function __construct(VatFacade $vatFacade, AdminDomainTabsFacade $adminDomainTabsFacade)
     {
         $this->vatFacade = $vatFacade;
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
@@ -42,7 +50,7 @@ class VatSettingsFormType extends AbstractType
         $builderSettingsGroup
             ->add('defaultVat', ChoiceType::class, [
                 'required' => true,
-                'choices' => $this->vatFacade->getAll(),
+                'choices' => $this->vatFacade->getAllForDomain($this->adminDomainTabsFacade->getSelectedDomainId()),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [

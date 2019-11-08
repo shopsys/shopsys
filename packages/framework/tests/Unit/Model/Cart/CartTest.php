@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Cart;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
@@ -29,7 +30,7 @@ class CartTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $productData1 = new ProductData();
         $productData1->name = ['cs' => 'Product 1'];
         $productData1->vat = $vat;
@@ -67,7 +68,7 @@ class CartTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $productData = new ProductData();
         $productData->name = ['cs' => 'Product 1'];
         $productData->vat = $vat;
@@ -88,7 +89,7 @@ class CartTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $productData1 = new ProductData();
         $productData1->name = ['cs' => 'Product 1'];
         $productData1->vat = $vat;

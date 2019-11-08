@@ -134,7 +134,8 @@ class ProductDataFactory implements ProductDataFactoryInterface
      */
     protected function fillNew(ProductData $productData)
     {
-        $productData->vat = $this->vatFacade->getDefaultVat();
+        // TODO change it
+        $productData->vat = $this->vatFacade->getDefaultVatFormDomain(Domain::FIRST_DOMAIN_ID);
         $productData->unit = $this->unitFacade->getDefaultUnit();
 
         $productParameterValuesData = [];

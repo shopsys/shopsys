@@ -80,7 +80,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('99.95'));
 
-        $paymentData->vat = $this->getReference(VatDataFixture::VAT_ZERO);
+        $paymentData->vat = $this->getReference(sprintf('%s_%s', VatDataFixture::VAT_ZERO, Domain::FIRST_DOMAIN_ID));
         $this->createPayment(self::PAYMENT_CARD, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
             TransportDataFixture::TRANSPORT_PPL,
@@ -94,7 +94,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('49.90'));
 
-        $paymentData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
+        $paymentData->vat = $this->getReference(sprintf('%s_%s', VatDataFixture::VAT_HIGH, Domain::FIRST_DOMAIN_ID));
         $this->createPayment(self::PAYMENT_CASH_ON_DELIVERY, $paymentData, [TransportDataFixture::TRANSPORT_CZECH_POST]);
 
         $paymentData = $this->paymentDataFactory->create();
@@ -107,7 +107,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::zero());
 
-        $paymentData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
+        $paymentData->vat = $this->getReference(sprintf('%s_%s', VatDataFixture::VAT_HIGH, Domain::FIRST_DOMAIN_ID));
         $this->createPayment(self::PAYMENT_CASH, $paymentData, [TransportDataFixture::TRANSPORT_PERSONAL]);
     }
 

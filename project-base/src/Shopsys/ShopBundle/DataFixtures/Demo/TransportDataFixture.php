@@ -78,7 +78,8 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $this->setPriceForAllDomainDefaultCurrencies($transportData, Money::create('99.95'));
 
-        $transportData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
+        // TODO change it
+        $transportData->vat = $this->getReference(sprintf('%s_%s', VatDataFixture::VAT_HIGH, Domain::FIRST_DOMAIN_ID));
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -89,7 +90,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $this->setPriceForAllDomainDefaultCurrencies($transportData, Money::create('199.95'));
 
-        $transportData->vat = $this->getReference(VatDataFixture::VAT_HIGH);
+        $transportData->vat = $this->getReference(sprintf('%s_%s', VatDataFixture::VAT_HIGH, Domain::FIRST_DOMAIN_ID));
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -102,7 +103,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $this->setPriceForAllDomainDefaultCurrencies($transportData, Money::zero());
 
-        $transportData->vat = $this->getReference(VatDataFixture::VAT_ZERO);
+        $transportData->vat = $this->getReference(sprintf('%s_%s', VatDataFixture::VAT_ZERO, Domain::FIRST_DOMAIN_ID));
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
     }
 

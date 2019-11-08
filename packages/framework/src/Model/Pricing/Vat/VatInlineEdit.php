@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Vat\VatFormType;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -24,21 +25,29 @@ class VatInlineEdit extends AbstractGridInlineEdit
     protected $vatDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
+     */
+    protected $adminDomainTabsFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatGridFactory $vatGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface $vatDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         VatGridFactory $vatGridFactory,
         VatFacade $vatFacade,
         FormFactoryInterface $formFactory,
-        VatDataFactoryInterface $vatDataFactory
+        VatDataFactoryInterface $vatDataFactory,
+        AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
         parent::__construct($vatGridFactory);
         $this->vatFacade = $vatFacade;
         $this->formFactory = $formFactory;
         $this->vatDataFactory = $vatDataFactory;
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
@@ -47,7 +56,7 @@ class VatInlineEdit extends AbstractGridInlineEdit
      */
     protected function createEntityAndGetId($vatData)
     {
-        $vat = $this->vatFacade->create($vatData);
+        $vat = $this->vatFacade->create($vatData, $this->adminDomainTabsFacade->getSelectedDomainId());
 
         return $vat->getId();
     }

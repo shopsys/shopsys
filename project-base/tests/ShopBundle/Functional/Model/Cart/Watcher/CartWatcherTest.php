@@ -106,7 +106,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
-        $productData->vat = new Vat($vatData);
+        $productData->vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $product = Product::create($productData);
 
         $cartItemMock = $this->getMockBuilder(CartItem::class)

@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Vat\VatSettingsFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -35,21 +36,29 @@ class VatController extends AdminBaseController
     protected $vatInlineEdit;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
+     */
+    protected $adminDomainTabsFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit $vatInlineEdit
      * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         VatFacade $vatFacade,
         PricingSetting $pricingSetting,
         VatInlineEdit $vatInlineEdit,
-        ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
+        ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
+        AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
         $this->vatFacade = $vatFacade;
         $this->pricingSetting = $pricingSetting;
         $this->vatInlineEdit = $vatInlineEdit;
         $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
@@ -72,7 +81,7 @@ class VatController extends AdminBaseController
     {
         try {
             $vat = $this->vatFacade->getById($id);
-            if ($this->vatFacade->isVatUsed($vat)) {
+            if ($this->vatFacade->isVatUsed($vat, $this->adminDomainTabsFacade->getSelectedDomainId())) {
                 $message = t(
                     'For deleting rate  "%name%" you have to choose other one to be set everywhere where the existing one is used. '
                     . 'After changing the VAT rate products prices will be recalculated - base price with VAT will remain same. '
@@ -112,7 +121,7 @@ class VatController extends AdminBaseController
         try {
             $fullName = $this->vatFacade->getById($id)->getName();
 
-            $this->vatFacade->deleteById($id, $newId);
+            $this->vatFacade->deleteByIdAndUpdateDefaultVatForDomain($id, $this->adminDomainTabsFacade->getSelectedDomainId(), $newId);
 
             if ($newId === null) {
                 $this->getFlashMessageSender()->addSuccessFlashTwig(
@@ -144,7 +153,7 @@ class VatController extends AdminBaseController
     public function settingsAction(Request $request)
     {
         $vatSettingsFormData = [
-            'defaultVat' => $this->vatFacade->getDefaultVat(),
+            'defaultVat' => $this->vatFacade->getDefaultVatFormDomain($this->adminDomainTabsFacade->getSelectedDomainId()),
             'roundingType' => $this->pricingSetting->getRoundingType(),
         ];
 
@@ -155,7 +164,7 @@ class VatController extends AdminBaseController
             $vatSettingsFormData = $form->getData();
 
             try {
-                $this->vatFacade->setDefaultVat($vatSettingsFormData['defaultVat']);
+                $this->vatFacade->setDefaultVatForDomain($vatSettingsFormData['defaultVat'], $this->adminDomainTabsFacade->getSelectedDomainId());
                 $this->pricingSetting->setRoundingType($vatSettingsFormData['roundingType']);
 
                 $this->getFlashMessageSender()->addSuccessFlash(t('VAT settings modified'));

@@ -33,7 +33,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
     public function testIsIndependentlyVisible()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
+        $vat = $this->getDefaultVat(Domain::FIRST_DOMAIN_ID);
 
         $enabledOnDomains = [
             Domain::FIRST_DOMAIN_ID => true,
@@ -52,7 +52,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
     public function testIsIndependentlyVisibleEmptyName()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
+        $vat = $this->getDefaultVat(Domain::FIRST_DOMAIN_ID);
 
         $transportData = $this->transportDataFactory->create();
         $names = [];
@@ -79,7 +79,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
     public function testIsIndependentlyVisibleNotOnDomain()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
+        $vat = $this->getDefaultVat(Domain::FIRST_DOMAIN_ID);
 
         $enabledOnDomains = [
             Domain::FIRST_DOMAIN_ID => false,
@@ -98,7 +98,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
     public function testIsIndependentlyVisibleHidden()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
+        $vat = $this->getDefaultVat(Domain::FIRST_DOMAIN_ID);
 
         $enabledOnDomains = [
             Domain::FIRST_DOMAIN_ID => true,
@@ -137,13 +137,14 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
     }
 
     /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    private function getDefaultVat()
+    private function getDefaultVat(int $domainId)
     {
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
-        return new Vat($vatData);
+        return new Vat($vatData, $domainId);
     }
 }

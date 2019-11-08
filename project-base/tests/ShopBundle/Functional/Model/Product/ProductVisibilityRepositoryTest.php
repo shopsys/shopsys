@@ -69,7 +69,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $em->persist($vat);
 
         /** @var \Shopsys\ShopBundle\Model\Product\ProductData $productData */

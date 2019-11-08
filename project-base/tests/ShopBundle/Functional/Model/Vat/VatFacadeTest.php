@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Vat;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\ShopBundle\DataFixtures\Demo\PaymentDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\TransportDataFixture;
@@ -42,14 +43,14 @@ class VatFacadeTest extends TransactionFunctionalTestCase
      */
     private $paymentFacade;
 
-    public function testDeleteByIdAndReplace()
+    public function testDeleteByIdAndReplaceForFirstDomain()
     {
         $em = $this->getEntityManager();
 
         $vatData = new VatData();
         $vatData->name = 'name';
         $vatData->percent = '10';
-        $vatToDelete = $this->vatFacade->create($vatData);
+        $vatToDelete = $this->vatFacade->create($vatData, Domain::FIRST_DOMAIN_ID);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatToReplaceWith */
         $vatToReplaceWith = $this->getReference(VatDataFixture::VAT_HIGH);
         /** @var \Shopsys\ShopBundle\Model\Transport\Transport $transport */
@@ -65,7 +66,7 @@ class VatFacadeTest extends TransactionFunctionalTestCase
         $paymentData->vat = $vatToDelete;
         $this->paymentFacade->edit($payment, $paymentData);
 
-        $this->vatFacade->deleteById($vatToDelete, $vatToReplaceWith);
+        $this->vatFacade->deleteByIdAndUpdateDefaultVatForDomain($vatToDelete, Domain::FIRST_DOMAIN_ID, $vatToReplaceWith);
 
         $em->refresh($transport);
         $em->refresh($payment);

@@ -213,4 +213,13 @@ class VatRepository
             ->where('t.vat = :oldVat')->setParameter('oldVat', $oldVat)
             ->getQuery()->execute();
     }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
+     */
+    public function getAllForDomain(int $domainId): array
+    {
+        return $this->getVatRepository()->findBy(['domainId' => $domainId]);
+    }
 }

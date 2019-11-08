@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
@@ -32,21 +33,29 @@ class VatGridFactory implements GridFactoryInterface
     protected $priceCalculation;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
+     */
+    protected $adminDomainTabsFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         GridFactory $gridFactory,
         VatFacade $vatFacade,
-        PriceCalculation $priceCalculation
+        PriceCalculation $priceCalculation,
+        AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
         $this->em = $em;
         $this->gridFactory = $gridFactory;
         $this->vatFacade = $vatFacade;
         $this->priceCalculation = $priceCalculation;
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
@@ -59,6 +68,8 @@ class VatGridFactory implements GridFactoryInterface
             ->select('v, COUNT(rv.id) as asReplacementCount')
             ->from(Vat::class, 'v')
             ->leftJoin(Vat::class, 'rv', Join::WITH, 'v.id = rv.replaceWith')
+            ->where('v.domainId = :selectedDomainId')
+            ->setParameter('selectedDomainId', $this->adminDomainTabsFacade->getSelectedDomainId())
             ->groupBy('v');
         $dataSource = new QueryBuilderWithRowManipulatorDataSource($queryBuilder, 'v.id', function ($row) {
             $vat = $this->vatFacade->getById($row['v']['id']);

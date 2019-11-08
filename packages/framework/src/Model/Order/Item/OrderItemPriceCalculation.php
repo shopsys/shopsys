@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
@@ -51,7 +52,8 @@ class OrderItemPriceCalculation
         $vatData = $this->vatDataFactory->create();
         $vatData->name = 'orderItemVat';
         $vatData->percent = $orderItemData->vatPercent;
-        $vat = $this->vatFactory->create($vatData);
+        // TODO change it
+        $vat = $this->vatFactory->create($vatData, Domain::FIRST_DOMAIN_ID);
         $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($orderItemData->priceWithVat, $vat);
 
         return $orderItemData->priceWithVat->subtract($vatAmount);
@@ -70,7 +72,8 @@ class OrderItemPriceCalculation
         $vatData = $this->vatDataFactory->create();
         $vatData->name = 'orderItemVat';
         $vatData->percent = $orderItem->getVatPercent();
-        $vat = $this->vatFactory->create($vatData);
+        // TODO change it
+        $vat = $this->vatFactory->create($vatData, Domain::FIRST_DOMAIN_ID);
 
         $totalPriceWithVat = $orderItem->getPriceWithVat()->multiply($orderItem->getQuantity());
         $totalVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat);

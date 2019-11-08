@@ -79,7 +79,8 @@ class TransportDataFactory implements TransportDataFactoryInterface
      */
     protected function fillNew(TransportData $transportData)
     {
-        $transportData->vat = $this->vatFacade->getDefaultVat();
+        // TODO change it
+        $transportData->vat = $this->vatFacade->getDefaultVatFormDomain(Domain::FIRST_DOMAIN_ID);
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = true;

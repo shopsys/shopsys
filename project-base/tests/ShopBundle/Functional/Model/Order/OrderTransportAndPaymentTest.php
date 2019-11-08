@@ -399,6 +399,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
-        return new Vat($vatData);
+        return new Vat($vatData, Domain::FIRST_DOMAIN_ID);
     }
 }

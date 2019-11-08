@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Transport;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
@@ -73,7 +74,7 @@ class TransportPriceCalculationTest extends TestCase
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
-        $vat = new Vat($vatData);
+        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $currencyData = new CurrencyData();
         $currencyData->name = 'currencyName';
         $currencyData->code = Currency::CODE_CZK;

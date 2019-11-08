@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Payment;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\ShopBundle\Model\Payment\Payment;
@@ -142,6 +143,6 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $vatData = new VatData();
         $vatData->name = 'vat';
         $vatData->percent = '21';
-        return new Vat($vatData);
+        return new Vat($vatData, Domain::FIRST_DOMAIN_ID);
     }
 }
