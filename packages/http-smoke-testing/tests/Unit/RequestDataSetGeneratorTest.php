@@ -5,7 +5,7 @@ namespace Tests\HttpSmokeTesting\Unit;
 use PHPUnit\Framework\TestCase;
 use Shopsys\HttpSmokeTesting\Annotation\DataSet;
 use Shopsys\HttpSmokeTesting\Annotation\Parameter;
-use Shopsys\HttpSmokeTesting\RequestDataSetGenerator;
+use Shopsys\HttpSmokeTesting\RequestDataSetGeneratorFactory;
 use Shopsys\HttpSmokeTesting\RouteInfo;
 use Symfony\Component\Routing\Route;
 
@@ -52,9 +52,9 @@ class RequestDataSetGeneratorTest extends TestCase
     {
         $route = new Route($routePath);
         $routeInfo = new RouteInfo($routeName, $route, $annotations);
-        $requestDataSetGenerator = new RequestDataSetGenerator($routeInfo);
+        $requestDataSetGeneratorFactory = new RequestDataSetGeneratorFactory();
 
-        return $requestDataSetGenerator;
+        return $requestDataSetGeneratorFactory->create($routeInfo);
     }
 
     public function testGeneratorGeneratesRequestDataSetsFromDataSetAnnotations()

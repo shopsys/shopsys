@@ -30,18 +30,11 @@ class RequestDataSetGenerator implements RouteConfig
         $this->routeInfo = $routeInfo;
         $this->defaultRequestDataSet = new RequestDataSet($this->routeInfo->getRouteName());
         $this->extraRequestDataSets = [];
-
-        if ($routeInfo->getAnnotations() !== null) {
-            $this->fulfillRequestFromAnnotations($routeInfo->getAnnotations());
-        }
     }
 
-    /**
-     * @param array $annotations
-     */
-    private function fulfillRequestFromAnnotations(array $annotations): void
+    public function fulfillRequestFromAnnotations(): void
     {
-        foreach ($annotations as $index => $annotation) {
+        foreach ($this->routeInfo->getAnnotations() as $index => $annotation) {
             if ($annotation instanceof Skipped) {
                 $this->defaultRequestDataSet->skip();
             } elseif ($annotation instanceof DataSet) {
