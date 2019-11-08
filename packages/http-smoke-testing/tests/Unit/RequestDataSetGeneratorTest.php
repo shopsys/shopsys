@@ -59,23 +59,25 @@ class RequestDataSetGeneratorTest extends TestCase
 
     public function testGeneratorGeneratesRequestDataSetsFromDataSetAnnotations()
     {
-        $parameters = [
-            [new Parameter()],
-            [new Parameter()],
-        ];
+        $parameter1 = new Parameter();
+        $parameter1->name = 'name';
+        $parameter1->value = 'Batman';
+
+        $parameter2 = new Parameter();
+        $parameter2->name = 'name';
+        $parameter2->value = 'World';
+
+        $dataSet1 = new DataSet();
+        $dataSet1->parameters = [$parameter1];
+
+        $dataSet2 = new DataSet();
+        $dataSet2->parameters = [$parameter2];
+        $dataSet2->statusCode = 404;
+
         $annotations = [
-            new DataSet(),
-            new DataSet(),
+            $dataSet1,
+            $dataSet2,
         ];
-
-        $parameters[0][0]->name = 'name';
-        $parameters[0][0]->value = 'Batman';
-        $parameters[1][0]->name = 'name';
-        $parameters[1][0]->value = 'World';
-
-        $annotations[0]->parameters = $parameters[0];
-        $annotations[1]->parameters = $parameters[1];
-        $annotations[1]->statusCode = 404;
 
         $requestDataSetGenerator = $this->createRequestDataSetGenerator(
             'test_route_path',
