@@ -130,7 +130,7 @@ To make smoke test configuration a little easier, you can use the annotations:
 - `@Parameter(name="name", value="value")`
 - `@Skipped()`
 
-You can add them directly to your controller methods. See the example in `Shopsys\HttpSmokeTesting\Test\TestController`.
+You can add them directly to your controller methods. See the example in [`Shopsys\HttpSmokeTesting\Test\TestController`](./src/Test/TestController.php).
 
 Additionally you can override these methods in your implementation of [`HttpSmokeTestCase`](./src/HttpSmokeTestCase.php) to further change the test behavior:
 * `setUp` to change the way your kernel is booted (eg. boot it with different options).
