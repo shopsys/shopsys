@@ -80,13 +80,6 @@ There you can find links to upgrade notes for other versions too.
         +     shopsys.frontend_api.domains:
         +         - 1
         +         - 2
-    - update your [`phpstan.neon`](https://github.com/shopsys/shopsys/blob/9.0/project-base/phpstan.neon): ([#1471](https://github.com/shopsys/shopsys/pull/1471))
-      ```diff
-      ignoreErrors:
-          +    # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
-          +    message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
-          +    path: %currentWorkingDirectory%/tests/FrontendApiBundle/*
-      ```
 - add optional fronted API - product and category images to your project ([#1486](https://github.com/shopsys/shopsys/pull/1486))
     - copy necessary type definitions:
         [Category.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml`
