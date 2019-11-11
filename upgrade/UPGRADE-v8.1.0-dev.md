@@ -491,27 +491,27 @@ There you can find links to upgrade notes for other versions too.
     - edit `phpunit.xml` by adding a listener
         ```diff
                 </filter>
-        +  
+        +
         +       <listeners>
         +           <listener class="Zalas\Injector\PHPUnit\TestListener\ServiceInjectorListener" />
-        +       </listeners>   
+        +       </listeners>
             </phpunit>
         ```
     - edit `FunctionalTestCase`
         - make the class implement `Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase` and implement required method `createContainer()`
         - in `setUp()` remove getting class `Domain` directly from container and add `@inject` annotation to its private property instead
         - change visibility of property `$domain` from `private` to `protected`
-        - the diff should look like this 
+        - the diff should look like this
             ```diff
                 namespace Tests\ShopBundle\Test;
-    
+
             +   use Psr\Container\ContainerInterface;
                 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
                 use Shopsys\FrameworkBundle\Component\Domain\Domain;
                 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
                 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
             +   use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
-    
+
             -   abstract class FunctionalTestCase extends WebTestCase
             +   abstract class FunctionalTestCase extends WebTestCase implements ServiceContainerTestCase
                 {
@@ -519,7 +519,7 @@ There you can find links to upgrade notes for other versions too.
                      * @var \Symfony\Bundle\FrameworkBundle\Client
                      */
                     private $client;
-    
+
                     /**
             -        * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|null
             +        * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -527,7 +527,7 @@ There you can find links to upgrade notes for other versions too.
                      */
             -       private $domain;
             +       protected $domain;
-    
+
                     protected function setUpDomain()
                     {
             -           /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
@@ -543,7 +543,7 @@ There you can find links to upgrade notes for other versions too.
             +         return $this->getContainer();
             +       }
             ```
-    - to achieve the goal you should find and replace all occurrences of accessing class directly from container, e.g. `$this->getContainer()->get(FooBar::class)` and define it as a class property with an inject annotation instead 
+    - to achieve the goal you should find and replace all occurrences of accessing class directly from container, e.g. `$this->getContainer()->get(FooBar::class)` and define it as a class property with an inject annotation instead
     - in case you want to change it in data provides you will need to say good bye to `@dataProvider` annotations
         - since data providers are called earlier than injecting our services you might need to do some workaround for it
             - in our case there were 4 tests where it was changed
@@ -645,6 +645,86 @@ There you can find links to upgrade notes for other versions too.
         -       "symfony/monolog-bundle": "^3.3.1",
         +       "symfony/monolog-bundle": "~3.4.0",
         ```
+
+- add image and iframe LazyLoad ([#1483](https://github.com/shopsys/shopsys/pull/1483))
+    - update docs `index.md` file
+        ```diff
+        ## Implementation
+        - * [Page layout design](./page-layout-design.md)
+        + * [Lazyload](./lazyload.md)
+          * [Override admin styles from project-base](./override-admin-styles.md)
+        + * [Page layout design](./page-layout-design.md)
+        ```
+    - add [page-layout-design.md](https://github.com/shopsys/project-base/blob/master/docs/frontend/lazyload.md) file
+
+    - update `listGrid.html.twig`(https://github.com/shopsys/project-base/blob/master/packages/framework/src/Resources/views/Admin/Content/Advert/listGrid.html.twig)
+        ```diff
+          {% if row.advert.type == TYPE_IMAGE %}
+        -    {{ image(row.advert, {size: 'original', height: 30}) }}
+        +    {{ image(row.advert, {size: 'original', height: 30, lazy: false}) }}
+           {% else %}
+        ```
+    - update `imageuploadFields.html.twig`(https://github.com/shopsys/project-base/blob/master/packages/framework/src/Resources/views/Admin/Form/imageuploadFields.html.twig)
+        ```diff
+          <div class="list-images__item__image js-image-upload-preview {% if isRemoved %}list-images__item__in--removed{% endif %}">
+        -     {{ image(image, {size: 'original', height: '100', type: image_type}) }}
+        +     {{ image(image, {size: 'original', height: '100', type: image_type, lazy: false}) }}
+          </div>
+          <div class="form-line__item">
+        -      {{ image(entity, { size: 'original', height: 100, type: image_type }) }}
+        +      {{ image(entity, { size: 'original', height: 100, type: image_type, lazy: false }) }}
+          </div>
+        ```
+    - update `ImageExtension.php`(https://github.com/shopsys/project-base/blob/master/packages/framework/src/Twig/ImageExtension.php)
+        ```diff
+           $htmlAttributes = $attributes;
+           unset($htmlAttributes['type'], $htmlAttributes['size']);
+        +  $useLazyLoading = array_key_exists('lazy', $attributes) ? (bool)$attributes['lazy'] : true;
+        +  unset($htmlAttributes['lazy']);
+        +  if ($useLazyLoading === true) {
+              $htmlAttributes['loading'] = 'lazy';
+              $htmlAttributes['data-src'] = $htmlAttributes['src'];
+              $htmlAttributes['src'] = '';
+        +  }
+        +
+        ```
+    - update `ajaxMoreLoader.js`(https://github.com/shopsys/project-base/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/components/ajaxMoreLoader.js)
+        ```diff
+                 $paginationToItemSpan.text(paginationToItem);
+                 updateLoadMoreButton();
+        +        Shopsys.lazyLoadCall.inContainer($currentList);
+                 Shopsys.register.registerNewContent($nextItems);
+             }
+        ```
+    - update `productList.AjaxFilter.js`(https://github.com/shopsys/project-base/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/product/productList.AjaxFilter.js)
+        ```diff
+                 $productsWithControls.show();
+        +        Shopsys.lazyLoadCall.inContainer($productsWithControls);
+                 Shopsys.register.registerNewContent($productsWithControls);
+             };
+        ```
+    - add new file `lazyLoadInit.js`(https://github.com/shopsys/project-base/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/lazyLoadInit.js)
+    - update admin files
+      - `index.html.twig`(https://github.com/shopsys/project-base/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Default/index.html.twig)
+
+      ```diff
+        <div class="box-slider__item">
+      -     <a href="{{ item.link }}">{{ image(item) }}</a>
+      +     <a href="{{ item.link }}">{{ image(item, { lazy: false }) }}</a>
+        </div>
+      ```
+      - `detail.html.twig`(https://github.com/shopsys/project-base/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/detail.html.twig)
+
+      ```diff
+        <div class="box-slider__item">
+      -     <a href="{{ item.link }}">{{ image(item) }}</a>
+      +     <a href="{{ item.link }}">{{ image(item, { lazy: false }) }}</a>
+        </div>
+      ```
+    - update test files according to PR:
+        - [ReadModelBundle/Functional/Twig/ImageExtensionTest.php](https://github.com/shopsys/project-base/blob/master/project-base/tests/ReadModelBundle/Functional/Twig/ImageExtensionTest.php)
+        - [ReadModelBundle/Functional/Twig/Resources/picture.twig](https://github.com/shopsys/project-base/blob/master/project-base/tests/ReadModelBundle/Functional/Twig/Resources/picture.twig)
+        - [ShopBundle/Functional/Twig/Resources/picture.twig](https://github.com/shopsys/project-base/blob/master/project-base/tests/ShopBundle/Functional/Twig/Resources/picture.twig)
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
