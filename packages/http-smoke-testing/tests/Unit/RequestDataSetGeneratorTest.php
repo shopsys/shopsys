@@ -58,7 +58,7 @@ class RequestDataSetGeneratorTest extends TestCase
     }
 
     /**
-     * @param DataSet $dataSet
+     * @param \Shopsys\HttpSmokeTesting\Annotation\DataSet $dataSet
      * @param int $statusCode
      * @param array $parameters
      * @dataProvider getDataSets
@@ -117,6 +117,9 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertSame(404, $requestDataSets[1]->getExpectedStatusCode());
     }
 
+    /**
+     * @return array
+     */
     public function getDataSets(): array
     {
         $parameter1 = new Parameter();
