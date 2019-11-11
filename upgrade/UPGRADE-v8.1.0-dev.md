@@ -693,9 +693,9 @@ There you can find links to upgrade notes for other versions too.
         - [docs/frontend/basic-design-styleguide.md](https://github.com/shopsys/shopsys/blob/master/docs/frontend/basic-design-styleguide.md)
         - [docs/frontend/navigation.yml](https://github.com/shopsys/shopsys/blob/master/docs/frontend/navigation.yml)
         - [docs/index.md](https://github.com/shopsys/shopsys/blob/master/docs/index.md)
-        - [open-source-license-acknowledgements-and-third-party-copyrights.md](https://github.com/shopsys/shopsys/open-source-license-acknowledgements-and-third-party-copyrights.md)
+        - [open-source-license-acknowledgements-and-third-party-copyrights.md](https://github.com/shopsys/shopsys/tree/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
-    - update build file [build.xml](packages/framework/build.xml)
+    - update build file [build.xml](https://github.com/shopsys/shopsys/tree/master/packages/framework/build.xml)
         ```diff
           <property name="path.web.styles.front" value="${path.web}/assets/frontend/styles"/>
         + <property name="path.web.styles.styleguide" value="${path.web}/assets/styleguide/styles"/>
@@ -710,13 +710,13 @@ There you can find links to upgrade notes for other versions too.
         + </fileset>
         ```
 
-    - update config file [services.yml](packages/framework/src/Resources/config/services.yml)
+    - update config file [services.yml](https://github.com/shopsys/shopsys/tree/master/packages/framework/src/Resources/config/services.yml)
         ```diff
         - ['admin/', 'common/', 'custom_admin/', 'frontend/']
         + ['admin/', 'common/', 'custom_admin/', 'frontend/', 'styleguide/']
         ```
 
-    - update config file [.eslintignore](project-base/.eslintignore)
+    - update config file [.eslintignore](https://github.com/shopsys/shopsys/tree/master/project-base/.eslintignore)
         ```diff
           /src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins
         + /src/Shopsys/ShopBundle/Resources/scripts/styleguide
@@ -749,10 +749,10 @@ There you can find links to upgrade notes for other versions too.
         + }
         ```
     - add styleguide files according to PR
-        - [project-base/web/assets/styleguide/*](https://github.com/shopsys/shopsys/project-base/web/assets/styleguide/)
-        - [project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/*](https://github.com/shopsys/shopsys/project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/)
-        - [project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/*](https://github.com/shopsys/shopsys/project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/)
-        - [project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/*](https://github.com/shopsys/shopsys/project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/)
+        - [project-base/web/assets/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/web/assets/styleguide/)
+        - [project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/)
+        - [project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/)
+        - [project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/)
 
     - update `gruntfile.js.twig` and add task
 
