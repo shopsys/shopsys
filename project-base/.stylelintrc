@@ -16,11 +16,11 @@
         }],
         "length-zero-no-unit": true,
         "max-empty-lines": 2,
-        "property-blacklist": [ "widht", "marign", "pading" ],
+        "property-blacklist": [ "widht", "marign", "pading", "blcok" ],
         "rule-empty-line-before": [ "always", {
             "except": ["first-nested"],
             "ignore": ["after-comment"]
         } ],
-        "unit-whitelist": ["em", "rem", "%", "px", "s", "ms", "deg"]
+        "unit-whitelist": ["em", "rem", "%", "px", "s", "ms", "deg", "vh"]
     }
 }
