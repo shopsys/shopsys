@@ -164,6 +164,8 @@ Mark test as skipped
 
 You can add them directly to your controller methods. See the example in [`Shopsys\HttpSmokeTesting\Test\TestController`](./src/Test/TestController.php).
 
+*Note: You should avoid using annotations with configuring via `changeDefaultRequestDataSet()` on same route. It may result in unexpected behavior.*
+
 ## Troubleshooting
 
 ### Tests do not fail on non-existing route
