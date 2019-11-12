@@ -106,7 +106,7 @@ class TransportFacade
         $transport = $this->transportFactory->create($transportData);
         $this->em->persist($transport);
         $this->em->flush();
-        $this->updateTransportPrices($transport, $transportData->pricesByCurrencyId);
+        $this->updateTransportPricesAndVats($transport, $transportData);
         $this->imageFacade->manageImages($transport, $transportData->image);
         $transport->setPayments($transportData->payments);
         $this->em->flush();
@@ -121,7 +121,7 @@ class TransportFacade
     public function edit(Transport $transport, TransportData $transportData)
     {
         $transport->edit($transportData);
-        $this->updateTransportPrices($transport, $transportData->pricesByCurrencyId);
+        $this->updateTransportPricesAndVats($transport, $transportData);
         $this->imageFacade->manageImages($transport, $transportData->image);
         $transport->setPayments($transportData->payments);
         $this->em->flush();
@@ -173,15 +173,20 @@ class TransportFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money[] $pricesByCurrencyId
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      */
-    protected function updateTransportPrices(Transport $transport, array $pricesByCurrencyId)
+    protected function updateTransportPricesAndVats(Transport $transport, TransportData $transportData): void
     {
-        foreach ($this->currencyFacade->getAll() as $currency) {
-            if (isset($pricesByCurrencyId[$currency->getId()])) {
-                $price = $pricesByCurrencyId[$currency->getId()];
-                $transport->setPrice($this->transportPriceFactory, $currency, $price);
-            }
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
+            $transport->setPriceAndVatByCurrencyAndDomainId(
+                $this->transportPriceFactory,
+                $currency,
+                $transportData->pricesIndexedByDomainId[$domainId],
+                $transportData->vatsIndexedByDomainId[$domainId],
+                $domainId
+            );
         }
     }
 
@@ -200,14 +205,15 @@ class TransportFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money[]
      */
-    public function getTransportPricesWithVatIndexedByTransportId(Currency $currency): array
+    public function getTransportPricesWithVatByCurrencyAndDomainIdIndexedByTransportId(Currency $currency, int $domainId): array
     {
         $transportPricesWithVatByTransportId = [];
         $transports = $this->getAllIncludingDeleted();
         foreach ($transports as $transport) {
-            $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice($transport, $currency);
+            $transportPrice = $this->transportPriceCalculation->calculateIndependentPriceByCurrencyAndDomainId($transport, $currency, $domainId);
             $transportPricesWithVatByTransportId[$transport->getId()] = $transportPrice->getPriceWithVat();
         }
 
@@ -215,14 +221,16 @@ class TransportFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
      * @return string[]
      */
-    public function getTransportVatPercentsIndexedByTransportId()
+    public function getTransportVatPercentsByCurrencyAndDomainIdIndexedByTransportId(Currency $currency, int $domainId): array
     {
         $transportVatPercentsByTransportId = [];
         $transports = $this->getAllIncludingDeleted();
         foreach ($transports as $transport) {
-            $transportVatPercentsByTransportId[$transport->getId()] = $transport->getVat()->getPercent();
+            $transportVatPercentsByTransportId[$transport->getId()] = $transport->getVatByCurrencyAndDomainId($currency, $domainId)->getPercent();
         }
 
         return $transportVatPercentsByTransportId;
@@ -230,14 +238,31 @@ class TransportFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[][]
      */
-    public function getIndependentBasePricesIndexedByCurrencyId(Transport $transport)
+    public function getIndependentBasePricesByDomainIdIndexedByDomainIdAndCurrencyId(Transport $transport): array
     {
         $prices = [];
         foreach ($transport->getPrices() as $transportInputPrice) {
+            $domainId = $transportInputPrice->getDomainId();
             $currency = $transportInputPrice->getCurrency();
-            $prices[$currency->getId()] = $this->transportPriceCalculation->calculateIndependentPrice($transport, $currency);
+            $prices[$domainId][$currency->getId()] = $this->transportPriceCalculation->calculateIndependentPriceByCurrencyAndDomainId($transport, $currency, $domainId);
+        }
+
+        return $prices;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport|null $payment
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     */
+    public function getPricesIndexedByDomainId(?Transport $payment): array
+    {
+        $prices = [];
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+            $prices[$domainId] = $this->transportPriceCalculation->calculateIndependentPriceByCurrencyAndDomainId($payment, $currency, $domainId);
         }
 
         return $prices;

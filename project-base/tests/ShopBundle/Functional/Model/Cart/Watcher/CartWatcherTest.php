@@ -157,6 +157,9 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $notListableItems);
     }
 
+    /**
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+     */
     private function setVats(ProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];

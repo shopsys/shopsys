@@ -146,17 +146,8 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $paymentData = $this->paymentDataFactory->create();
         $transportData = $this->transportDataFactory->create();
 
-        $paymentData->pricesByCurrencyId = [];
-        $transportData->pricesByCurrencyId = [];
-        $currencies = [];
-
-        foreach ($this->currencyFacade->getAllIndexedById() as $currency) {
-            $currencies[] = $currency;
-            $paymentData->pricesByCurrencyId[$currency->getId()] = $inputPrice;
-            $transportData->pricesByCurrencyId[$currency->getId()] = $inputPrice;
-        }
-
-        $firstCurrency = reset($currencies);
+        $paymentData->pricesIndexedByDomainId[Domain::FIRST_DOMAIN_ID] = $inputPrice;
+        $transportData->pricesIndexedByDomainId[Domain::FIRST_DOMAIN_ID] = $inputPrice;
 
         $vatData = new VatData();
         $vatData->name = 'vat';
@@ -169,14 +160,12 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $em->persist($availability);
 
         $paymentData->name = ['cs' => 'name'];
-        $paymentData->vat = $vat;
 
         /** @var \Shopsys\ShopBundle\Model\Payment\Payment $payment */
         $payment = $this->paymentFacade->create($paymentData);
 
         $transportData->name = ['cs' => 'name'];
         $transportData->description = ['cs' => 'desc'];
-        $transportData->vat = $vat;
         /** @var \Shopsys\ShopBundle\Model\Transport\Transport $transport */
         $transport = $this->transportFacade->create($transportData);
 
@@ -200,7 +189,8 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $em->refresh($payment);
         $em->refresh($transport);
 
-        $this->assertThat($payment->getPrice($firstCurrency)->getPrice(), new IsMoneyEqual($expectedPrice));
-        $this->assertThat($transport->getPrice($firstCurrency)->getPrice(), new IsMoneyEqual($expectedPrice));
+        $defaultCurrencyForFirstDomain = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID);
+        $this->assertThat($payment->getPriceByCurrencyAndDomainId($defaultCurrencyForFirstDomain, Domain::FIRST_DOMAIN_ID), new IsMoneyEqual($expectedPrice));
+        $this->assertThat($transport->getPriceByCurrencyAndDomainId($defaultCurrencyForFirstDomain, Domain::FIRST_DOMAIN_ID), new IsMoneyEqual($expectedPrice));
     }
 }

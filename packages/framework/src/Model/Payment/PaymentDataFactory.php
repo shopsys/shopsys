@@ -5,6 +5,8 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class PaymentDataFactory implements PaymentDataFactoryInterface
@@ -30,21 +32,29 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
     protected $imageFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    protected $currencyFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         PaymentFacade $paymentFacade,
         VatFacade $vatFacade,
         Domain $domain,
-        ?ImageFacade $imageFacade = null
+        ImageFacade $imageFacade,
+        CurrencyFacade $currencyFacade
     ) {
         $this->paymentFacade = $paymentFacade;
         $this->vatFacade = $vatFacade;
         $this->domain = $domain;
         $this->imageFacade = $imageFacade;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -79,11 +89,10 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
      */
     protected function fillNew(PaymentData $paymentData): void
     {
-        // TODO change it
-        $paymentData->vat = $this->vatFacade->getDefaultVatFormDomain(Domain::FIRST_DOMAIN_ID);
-
         foreach ($this->domain->getAllIds() as $domainId) {
             $paymentData->enabled[$domainId] = true;
+            $paymentData->pricesIndexedByDomainId[$domainId] = Money::zero();
+            $paymentData->vatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatFormDomain($domainId);
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -111,7 +120,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
      */
     protected function fillFromPayment(PaymentData $paymentData, Payment $payment)
     {
-        $paymentData->vat = $payment->getVat();
         $paymentData->hidden = $payment->isHidden();
         $paymentData->czkRounding = $payment->isCzkRounding();
         $paymentData->transports = $payment->getTransports();
@@ -134,11 +142,11 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         $paymentData->instructions = $instructions;
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $paymentData->enabled[$domainId] = $payment->isEnabled($domainId);
-        }
+            $defaultCurrencyForDomain = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
-        foreach ($payment->getPrices() as $paymentPrice) {
-            $paymentData->pricesByCurrencyId[$paymentPrice->getCurrency()->getId()] = $paymentPrice->getPrice();
+            $paymentData->enabled[$domainId] = $payment->isEnabled($domainId);
+            $paymentData->pricesIndexedByDomainId[$domainId] = $payment->getPriceByCurrencyAndDomainId($defaultCurrencyForDomain, $domainId);
+            $paymentData->vatsIndexedByDomainId[$domainId] = $payment->getVatByCurrencyAndDomainId($defaultCurrencyForDomain, $domainId);
         }
 
         $paymentData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($payment, null);

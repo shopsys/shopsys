@@ -83,13 +83,9 @@ class Version20191107162719 extends AbstractMigration
     {
         $currentDefaultVat = $this->sql('SELECT value FROM setting_values WHERE name = \'defaultVatId\' AND domain_id = 0;')->fetchColumn(0);
 
-        $this->sql('UPDATE setting_values set domain_id = :domainId WHERE name = \'defaultVatId\' AND domain_id = 0;', ['domainId' => Domain::FIRST_DOMAIN_ID]);
+        //$this->sql('UPDATE setting_values set domain_id = :domainId WHERE name = \'defaultVatId\' AND domain_id = 0;', ['domainId' => Domain::FIRST_DOMAIN_ID]);
 
         foreach ($this->getAllDomainIds() as $domainId) {
-            if ($domainId === Domain::FIRST_DOMAIN_ID) {
-                continue;
-            }
-
             $newVatId = $this
                 ->sql('SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId', [
                     'tmpOriginalId' => $currentDefaultVat,

@@ -12,11 +12,6 @@ class PaymentData
     public $name;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
-     */
-    public $vat;
-
-    /**
      * @var string[]|null[]
      */
     public $description;
@@ -47,14 +42,19 @@ class PaymentData
     public $czkRounding;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]
-     */
-    public $pricesByCurrencyId;
-
-    /**
      * @var bool[]
      */
     public $enabled;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|object[]
+     */
+    public $pricesIndexedByDomainId;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]|object[]
+     */
+    public $vatsIndexedByDomainId;
 
     public function __construct()
     {
@@ -66,6 +66,7 @@ class PaymentData
         $this->image = new ImageUploadData();
         $this->transports = [];
         $this->czkRounding = false;
-        $this->pricesByCurrencyId = [];
+        $this->pricesIndexedByDomainId = [];
+        $this->vatsIndexedByDomainId = [];
     }
 }

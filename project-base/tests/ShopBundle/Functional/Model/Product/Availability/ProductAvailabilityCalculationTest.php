@@ -234,6 +234,9 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $this->assertSame($defaultInStockAvailability, $mainVariantCalculatedAvailability);
     }
 
+    /**
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+     */
     private function setVats(ProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];

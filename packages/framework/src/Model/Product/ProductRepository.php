@@ -589,7 +589,8 @@ class ProductRepository
         $query = $this->em->createQuery('
             SELECT p
             FROM ' . Product::class . ' p
-            JOIN p.vat v
+            JOIN p.domains pd
+            JOIN pd.vat v
             WHERE v.replaceWith IS NOT NULL
         ');
 

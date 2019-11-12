@@ -3,18 +3,18 @@
 namespace Shopsys\FrameworkBundle\Model\Transport\Grid;
 
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
 class TransportGridFactory implements GridFactoryInterface
 {
-    protected const CURRENCY_ID_FOR_LIST = 1;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
      */
@@ -36,21 +36,37 @@ class TransportGridFactory implements GridFactoryInterface
     protected $transportFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
+     */
+    protected $adminDomainTabsFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    protected $currencyFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         GridFactory $gridFactory,
         TransportRepository $transportRepository,
         Localization $localization,
-        TransportFacade $transportFacade
+        TransportFacade $transportFacade,
+        AdminDomainTabsFacade $adminDomainTabsFacade,
+        CurrencyFacade $currencyFacade
     ) {
         $this->gridFactory = $gridFactory;
         $this->transportRepository = $transportRepository;
         $this->localization = $localization;
         $this->transportFacade = $transportFacade;
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -94,8 +110,9 @@ class TransportGridFactory implements GridFactoryInterface
      */
     protected function getDisplayPrice(Transport $transport)
     {
-        $transportBasePricesIndexedByCurrencyId = $this->transportFacade->getIndependentBasePricesIndexedByCurrencyId($transport);
-
-        return $transportBasePricesIndexedByCurrencyId[static::CURRENCY_ID_FOR_LIST]->getPriceWithVat();
+        $transportBasePricesIndexedByCurrencyId = $this->transportFacade->getIndependentBasePricesByDomainIdIndexedByDomainIdAndCurrencyId($transport);
+        $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+        $currencyId = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->adminDomainTabsFacade->getSelectedDomainId())->getId();
+        return $transportBasePricesIndexedByCurrencyId[$domainId][$currencyId]->getPriceWithVat();
     }
 }

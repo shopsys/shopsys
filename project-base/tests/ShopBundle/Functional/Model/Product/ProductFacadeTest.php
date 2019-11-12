@@ -159,6 +159,9 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $this->assertArrayHasKey($productId, $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation());
     }
 
+    /**
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+     */
     private function setVats(ProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Payment;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\ShopBundle\Model\Payment\Payment;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
 
@@ -36,15 +33,13 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
     public function testIsIndependentlyVisible()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $enabledForDomains = [
             self::FIRST_DOMAIN_ID => true,
             self::SECOND_DOMAIN_ID => true,
         ];
-        $payment = $this->getDefaultPayment($vat, $enabledForDomains, false);
+        $payment = $this->getDefaultPayment($enabledForDomains, false);
 
-        $em->persist($vat);
         $em->persist($payment);
         $em->flush();
 
@@ -54,7 +49,6 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
     public function testIsIndependentlyVisibleEmptyName()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $paymentData = $this->paymentDataFactory->create();
         $names = [];
@@ -62,7 +56,6 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
             $names[$locale] = null;
         }
         $paymentData->name = $names;
-        $paymentData->vat = $vat;
         $paymentData->hidden = false;
         $paymentData->enabled = [
             self::FIRST_DOMAIN_ID => true,
@@ -71,7 +64,6 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
 
         $payment = new Payment($paymentData);
 
-        $em->persist($vat);
         $em->persist($payment);
         $em->flush();
 
@@ -81,15 +73,13 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
     public function testIsIndependentlyVisibleNotOnDomain()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $enabledForDomains = [
             self::FIRST_DOMAIN_ID => false,
             self::SECOND_DOMAIN_ID => false,
         ];
-        $payment = $this->getDefaultPayment($vat, $enabledForDomains, false);
+        $payment = $this->getDefaultPayment($enabledForDomains, false);
 
-        $em->persist($vat);
         $em->persist($payment);
         $em->flush();
 
@@ -99,15 +89,13 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
     public function testIsIndependentlyVisibleHidden()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $enabledForDomains = [
             self::FIRST_DOMAIN_ID => false,
             self::SECOND_DOMAIN_ID => false,
         ];
-        $payment = $this->getDefaultPayment($vat, $enabledForDomains, false);
+        $payment = $this->getDefaultPayment($enabledForDomains, false);
 
-        $em->persist($vat);
         $em->persist($payment);
         $em->flush();
 
@@ -115,12 +103,11 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param bool[] $enabledForDomains
      * @param bool $hidden
      * @return \Shopsys\ShopBundle\Model\Payment\Payment
      */
-    public function getDefaultPayment(Vat $vat, $enabledForDomains, $hidden)
+    public function getDefaultPayment($enabledForDomains, $hidden)
     {
         $paymentData = $this->paymentDataFactory->create();
         $names = [];
@@ -128,21 +115,9 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
             $names[$locale] = 'paymentName';
         }
         $paymentData->name = $names;
-        $paymentData->vat = $vat;
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $enabledForDomains;
 
         return new Payment($paymentData);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    private function getDefaultVat()
-    {
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        return new Vat($vatData, Domain::FIRST_DOMAIN_ID);
     }
 }

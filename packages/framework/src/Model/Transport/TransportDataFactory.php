@@ -5,6 +5,8 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class TransportDataFactory implements TransportDataFactoryInterface
@@ -30,21 +32,29 @@ class TransportDataFactory implements TransportDataFactoryInterface
     protected $imageFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    protected $currencyFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         TransportFacade $transportFacade,
         VatFacade $vatFacade,
         Domain $domain,
-        ?ImageFacade $imageFacade = null
+        ImageFacade $imageFacade,
+        CurrencyFacade $currencyFacade
     ) {
         $this->transportFacade = $transportFacade;
         $this->vatFacade = $vatFacade;
         $this->domain = $domain;
         $this->imageFacade = $imageFacade;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -79,11 +89,10 @@ class TransportDataFactory implements TransportDataFactoryInterface
      */
     protected function fillNew(TransportData $transportData)
     {
-        // TODO change it
-        $transportData->vat = $this->vatFacade->getDefaultVatFormDomain(Domain::FIRST_DOMAIN_ID);
-
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = true;
+            $transportData->pricesIndexedByDomainId[$domainId] = Money::zero();
+            $transportData->vatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatFormDomain($domainId);
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -128,18 +137,16 @@ class TransportDataFactory implements TransportDataFactoryInterface
         $transportData->description = $descriptions;
         $transportData->instructions = $instructions;
         $transportData->hidden = $transport->isHidden();
-        $transportData->vat = $transport->getVat();
 
         foreach ($this->domain->getAllIds() as $domainId) {
+            $defaultCurrencyForDomain = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
             $transportData->enabled[$domainId] = $transport->isEnabled($domainId);
+            $transportData->pricesIndexedByDomainId[$domainId] = $transport->getPriceByCurrencyAndDomainId($defaultCurrencyForDomain, $domainId);
+            $transportData->vatsIndexedByDomainId[$domainId] = $transport->getVatByCurrencyAndDomainId($defaultCurrencyForDomain, $domainId);
         }
 
         $transportData->payments = $transport->getPayments();
-
-        foreach ($transport->getPrices() as $transportPrice) {
-            $transportData->pricesByCurrencyId[$transportPrice->getCurrency()->getId()] = $transportPrice->getPrice();
-        }
-
         $transportData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($transport, null);
     }
 }

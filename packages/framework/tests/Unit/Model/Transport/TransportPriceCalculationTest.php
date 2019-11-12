@@ -85,11 +85,10 @@ class TransportPriceCalculationTest extends TestCase
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
-        $transportData->vat = $vat;
         $transport = new Transport($transportData);
-        $transport->setPrice(new TransportPriceFactory(new EntityNameResolver([])), $currency, $inputPrice);
+        $transport->setPriceAndVatByCurrencyAndDomainId(new TransportPriceFactory(new EntityNameResolver([])), $currency, $inputPrice, $vat, Domain::FIRST_DOMAIN_ID);
 
-        $price = $transportPriceCalculation->calculateIndependentPrice($transport, $currency);
+        $price = $transportPriceCalculation->calculateIndependentPriceByCurrencyAndDomainId($transport, $currency, Domain::FIRST_DOMAIN_ID);
 
         $this->assertThat($price->getPriceWithoutVat(), new IsMoneyEqual($priceWithoutVat));
         $this->assertThat($price->getPriceWithVat(), new IsMoneyEqual($priceWithVat));

@@ -81,6 +81,16 @@ class VatFacade
     }
 
     /**
+     * @param int $domainId
+     * @param int $vatId
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
+     */
+    public function getAllForDomainExceptId(int $domainId, int $vatId)
+    {
+        return $this->vatRepository->getAllForDomainExceptId($domainId, $vatId);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
@@ -189,15 +199,6 @@ class VatFacade
         $defaultVat = $this->getDefaultVatFormDomain($domainId);
 
         return $defaultVat === $vat || $this->vatRepository->isVatUsed($vat);
-    }
-
-    /**
-     * @param int $vatId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
-     */
-    public function getAllExceptId($vatId)
-    {
-        return $this->vatRepository->getAllExceptId($vatId);
     }
 
     /**

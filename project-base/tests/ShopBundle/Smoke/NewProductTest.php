@@ -113,6 +113,9 @@ class NewProductTest extends FunctionalTestCase
         }
     }
 
+    /**
+     * @param \Symfony\Component\DomCrawler\Form $form
+     */
     private function fillVats(Form $form)
     {
         foreach ($this->domain->getAllIds() as $domainId) {

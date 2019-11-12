@@ -7,8 +7,6 @@ namespace Tests\ShopBundle\Functional\Model\Pricing;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\ShopBundle\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Demo\UnitDataFixture;
@@ -87,6 +85,9 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         $this->assertThat($productManualInputPrice->getInputPrice(), new IsMoneyEqual(Money::create(1000)));
     }
 
+    /**
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+     */
     private function setVats(ProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];

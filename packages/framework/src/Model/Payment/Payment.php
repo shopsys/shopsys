@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
@@ -45,14 +46,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Payment\PaymentPrice", mappedBy="payment", cascade={"persist"})
      */
     protected $prices;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     *
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $vat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport[]|\Doctrine\Common\Collections\Collection
@@ -105,7 +98,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
-        $this->vat = $paymentData->vat;
         $this->transports = new ArrayCollection();
         $this->hidden = $paymentData->hidden;
         $this->deleted = false;
@@ -183,7 +175,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     public function edit(PaymentData $paymentData)
     {
-        $this->vat = $paymentData->vat;
         $this->hidden = $paymentData->hidden;
         $this->czkRounding = $paymentData->czkRounding;
         $this->setTranslations($paymentData);
@@ -194,20 +185,25 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @param int $domainId
      */
-    public function setPrice(
+    public function setPriceAndVatByCurrencyAndDomainId(
         PaymentPriceFactoryInterface $paymentPriceFactory,
         Currency $currency,
-        Money $price
-    ) {
+        Money $price,
+        Vat $vat,
+        int $domainId
+    ): void {
         foreach ($this->prices as $paymentInputPrice) {
-            if ($paymentInputPrice->getCurrency() === $currency) {
+            if ($paymentInputPrice->getDomainId() === $domainId && $paymentInputPrice->getCurrency() === $currency) {
                 $paymentInputPrice->setPrice($price);
+                $paymentInputPrice->setVat($vat);
                 return;
             }
         }
 
-        $this->prices->add($paymentPriceFactory->create($this, $currency, $price));
+        $this->prices->add($paymentPriceFactory->create($this, $currency, $price, $vat, $domainId));
     }
 
     /**
@@ -233,30 +229,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     public function getPrices()
     {
         return $this->prices->toArray();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentPrice
-     */
-    public function getPrice(Currency $currency)
-    {
-        foreach ($this->prices as $price) {
-            if ($price->getCurrency() === $currency) {
-                return $price;
-            }
-        }
-
-        $message = 'Payment price with currency ID ' . $currency->getId() . ' from payment with ID ' . $this->getId() . 'not found.';
-        throw new \Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException($message);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    public function getVat()
-    {
-        return $this->vat;
     }
 
     /**
@@ -379,5 +351,42 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
 
         throw new PaymentDomainNotFoundException($this->id, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentPrice
+     */
+    protected function getPaymentPriceByCurrencyAndDomainId(Currency $currency, int $domainId): PaymentPrice
+    {
+        foreach ($this->prices as $price) {
+            if ($price->getCurrency() === $currency && $price->getDomainId() === $domainId) {
+                return $price;
+            }
+        }
+
+        $message = 'Payment price with currency ID ' . $currency->getId() . ' and domain ID ' . $domainId . ' from payment with ID ' . $this->getId() . 'not found.';
+        throw new \Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException($message);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getPriceByCurrencyAndDomainId(Currency $currency, int $domainId): Money
+    {
+        return $this->getPaymentPriceByCurrencyAndDomainId($currency, $domainId)->getPrice();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     */
+    public function getVatByCurrencyAndDomainId(Currency $currency, int $domainId): Vat
+    {
+        return $this->getPaymentPriceByCurrencyAndDomainId($currency, $domainId)->getVat();
     }
 }

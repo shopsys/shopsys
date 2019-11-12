@@ -561,7 +561,7 @@ class OrderFacade
             $order,
             $payment->getName($locale),
             $paymentPrice,
-            $payment->getVat()->getPercent(),
+            $payment->getVatByCurrencyAndDomainId($order->getCurrency(), $order->getDomainId())->getPercent(),
             1,
             $payment
         );
@@ -586,7 +586,7 @@ class OrderFacade
             $order,
             $transport->getName($locale),
             $transportPrice,
-            $transport->getVat()->getPercent(),
+            $transport->getVatByCurrencyAndDomainId($order->getCurrency(), $order->getDomainId())->getPercent(),
             1,
             $transport
         );

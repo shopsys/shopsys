@@ -2,7 +2,6 @@
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Model\Product;
 
-use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;

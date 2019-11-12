@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundException;
 
 /**
@@ -55,14 +57,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected $prices;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     *
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $vat;
-
-    /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
@@ -97,7 +91,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
-        $this->vat = $transportData->vat;
         $this->hidden = $transportData->hidden;
         $this->deleted = false;
         $this->setTranslations($transportData);
@@ -112,7 +105,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     public function edit(TransportData $transportData)
     {
-        $this->vat = $transportData->vat;
         $this->hidden = $transportData->hidden;
         $this->setTranslations($transportData);
         $this->setDomains($transportData);
@@ -187,48 +179,28 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportPrice
-     */
-    public function getPrice(Currency $currency)
-    {
-        foreach ($this->prices as $price) {
-            if ($price->getCurrency() === $currency) {
-                return $price;
-            }
-        }
-
-        $message = 'Transport price with currency ID ' . $currency->getId()
-            . ' from transport with ID ' . $this->getId() . 'not found.';
-        throw new \Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException($message);
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface $transportPriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @param int $domainId
      */
-    public function setPrice(
+    public function setPriceAndVatByCurrencyAndDomainId(
         TransportPriceFactoryInterface $transportPriceFactory,
         Currency $currency,
-        Money $price
-    ) {
+        Money $price,
+        Vat $vat,
+        int $domainId
+    ): void {
         foreach ($this->prices as $transportInputPrice) {
-            if ($transportInputPrice->getCurrency() === $currency) {
+            if ($transportInputPrice->getDomainId() === $domainId && $transportInputPrice->getCurrency() === $currency) {
                 $transportInputPrice->setPrice($price);
+                $transportInputPrice->setVat($vat);
                 return;
             }
         }
 
-        $this->prices->add($transportPriceFactory->create($this, $currency, $price));
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    public function getVat()
-    {
-        return $this->vat;
+        $this->prices->add($transportPriceFactory->create($this, $currency, $price, $vat, $domainId));
     }
 
     /**
@@ -361,5 +333,42 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         }
 
         throw new TransportDomainNotFoundException($this->id, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportPrice
+     */
+    public function getTransportPriceByCurrencyAndDomainId(Currency $currency, int $domainId): TransportPrice
+    {
+        foreach ($this->prices as $price) {
+            if ($price->getCurrency() === $currency && $price->getDomainId() === $domainId) {
+                return $price;
+            }
+        }
+
+        $message = 'Transport price with currency ID ' . $currency->getId() . ' and domain ID ' . $domainId . ' from payment with ID ' . $this->getId() . 'not found.';
+        throw new \Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException($message);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getPriceByCurrencyAndDomainId(Currency $currency, int $domainId): Money
+    {
+        return $this->getTransportPriceByCurrencyAndDomainId($currency, $domainId)->getPrice();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     */
+    public function getVatByCurrencyAndDomainId(Currency $currency, int $domainId): Vat
+    {
+        return $this->getTransportPriceByCurrencyAndDomainId($currency, $domainId)->getVat();
     }
 }

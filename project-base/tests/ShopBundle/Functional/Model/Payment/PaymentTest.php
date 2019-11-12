@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Functional\Model\Payment;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\ShopBundle\Model\Payment\Payment;
 use Shopsys\ShopBundle\Model\Transport\Transport;
 use Tests\ShopBundle\Test\TransactionFunctionalTestCase;
@@ -35,23 +32,16 @@ class PaymentTest extends TransactionFunctionalTestCase
     {
         $em = $this->getEntityManager();
 
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $transportData = $this->transportDataFactory->create();
         $transportData->name['cs'] = 'name';
-        $transportData->vat = $vat;
         $transport = new Transport($transportData);
 
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->name['cs'] = 'name';
-        $paymentData->vat = $vat;
 
         $payment = new Payment($paymentData);
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->persist($payment);
         $em->flush();

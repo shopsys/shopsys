@@ -132,6 +132,9 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
         }
     }
 
+    /**
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+     */
     private function setVats(ProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];

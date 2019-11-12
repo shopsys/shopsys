@@ -123,6 +123,9 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         return $this->em->getRepository(Product::class)->find($productId);
     }
 
+    /**
+     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+     */
     private function setVats(ProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];

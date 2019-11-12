@@ -1,0 +1,54 @@
+{% block price_table_by_domains_row %}
+    <div class="form-line">
+        {% for domainId, price in pricesIndexedByDomainId %}
+            <div class="form-line__box js-entity-url-list-domain-{{ domainId }}">
+                {% if isMultidomain() %}
+                    <div class="form-line__box__title">
+                        <span class="form-line__box__title__image">
+                            {{ domainIcon(domainId, 'large') }}
+                        </span>
+                        <strong class="form-line__box__title__name">
+                            {{ 'Domain %domainName%'|trans({'%domainName%' : getDomainName(domainId)}) }}
+                        </strong>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div {% if isMultidomain() %} class="form-line__box__content"{% endif %}>
+                {{ form_label(form.vatsIndexedByDomainId[domainId]) }}
+                {{ form_widget(form.vatsIndexedByDomainId[domainId]) }}
+
+                <div class="form-price-heading">
+                    <div class="form-price-heading__cell form-price-heading__cell--field">
+                        {{ inputPriceLabel({ isSimple: true }) }}
+                    </div>
+                    <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Calculated price excluding VAT'|trans }}</div>
+                    <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Calculated price including VAT'|trans }}</div>
+                </div>
+
+                <div class="form-line form-line--in-box">
+                    <div class="form-line__label">
+                        {{ form_label(form.pricesIndexedByDomainId[domainId]) }}
+                    </div>
+                    <div class="form-line__side">
+                        <div class="form-line__item">
+                            {{ form_widget(form.pricesIndexedByDomainId[domainId], { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
+                        </div>
+                        <div class="form-line__item--right">
+                            <div class="form-line__item__price">
+                                {{ price.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
+                            </div>
+                            <div class="form-line__item__price">
+                                <strong>{{ price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}</strong>
+                            </div>
+                        </div>
+                        <div>
+                            {{ form_errors(form.pricesIndexedByDomainId[domainId] ) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+{% endblock %}

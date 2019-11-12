@@ -3,11 +3,8 @@
 namespace Tests\FrameworkBundle\Unit\Model\Transport;
 
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 
@@ -18,13 +15,8 @@ class TransportTest extends TestCase
      */
     private function createTransport()
     {
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
-        $transportData->vat = $vat;
         $transportData->hidden = false;
         $transport = new Transport($transportData);
 
@@ -36,13 +28,8 @@ class TransportTest extends TestCase
      */
     private function createPayment()
     {
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $paymentData = new PaymentData();
         $paymentData->name = ['cs' => 'paymentName', 'en' => 'paymentName'];
-        $paymentData->vat = $vat;
         $paymentData->hidden = true;
         $payment = new Payment($paymentData);
 

@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
@@ -71,6 +72,11 @@ class CurrencyFacade
     protected $currencyFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     */
+    protected $vatFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyRepository $currencyRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
@@ -82,6 +88,7 @@ class CurrencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface $transportPriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface $currencyFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -94,7 +101,8 @@ class CurrencyFacade
         TransportRepository $transportRepository,
         PaymentPriceFactoryInterface $paymentPriceFactory,
         TransportPriceFactoryInterface $transportPriceFactory,
-        CurrencyFactoryInterface $currencyFactory
+        CurrencyFactoryInterface $currencyFactory,
+        VatFacade $vatFacade
     ) {
         $this->em = $em;
         $this->currencyRepository = $currencyRepository;
@@ -107,6 +115,7 @@ class CurrencyFacade
         $this->paymentPriceFactory = $paymentPriceFactory;
         $this->transportPriceFactory = $transportPriceFactory;
         $this->currencyFactory = $currencyFactory;
+        $this->vatFacade = $vatFacade;
     }
 
     /**
@@ -263,12 +272,24 @@ class CurrencyFacade
     {
         $toFlush = [];
         foreach ($this->paymentRepository->getAll() as $payment) {
-            $paymentPrice = $this->paymentPriceFactory->create($payment, $currency, Money::zero());
+            $paymentPrice = $this->paymentPriceFactory->create(
+                $payment,
+                $currency,
+                Money::zero(),
+                $this->vatFacade->getDefaultVatFormDomain($this->domain->getId()),
+                $this->domain->getId()
+            );
             $this->em->persist($paymentPrice);
             $toFlush[] = $paymentPrice;
         }
         foreach ($this->transportRepository->getAll() as $transport) {
-            $transportPrice = $this->transportPriceFactory->create($transport, $currency, Money::zero());
+            $transportPrice = $this->transportPriceFactory->create(
+                $transport,
+                $currency,
+                Money::zero(),
+                $this->vatFacade->getDefaultVatFormDomain($this->domain->getId()),
+                $this->domain->getId()
+            );
             $this->em->persist($transportPrice);
             $toFlush[] = $transportPrice;
         }

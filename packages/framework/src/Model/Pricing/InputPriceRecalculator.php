@@ -83,15 +83,16 @@ class InputPriceRecalculator
 
         $this->batchProcessQuery($query, function (Payment $payment) use ($toInputPriceType) {
             foreach ($payment->getPrices() as $paymentInputPrice) {
-                $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice(
+                $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPriceByCurrencyAndDomainId(
                     $payment,
-                    $paymentInputPrice->getCurrency()
+                    $paymentInputPrice->getCurrency(),
+                    $paymentInputPrice->getDomainId()
                 );
 
                 $newInputPrice = $this->inputPriceCalculation->getInputPrice(
                     $toInputPriceType,
                     $paymentPrice->getPriceWithVat(),
-                    $payment->getVat()->getPercent()
+                    $payment->getVatByCurrencyAndDomainId($paymentInputPrice->getCurrency(), $paymentInputPrice->getDomainId())->getPercent()
                 );
 
                 $paymentInputPrice->setPrice($newInputPrice);
@@ -111,15 +112,16 @@ class InputPriceRecalculator
 
         $this->batchProcessQuery($query, function (Transport $transport) use ($toInputPriceType) {
             foreach ($transport->getPrices() as $transportInputPrice) {
-                $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice(
+                $transportPrice = $this->transportPriceCalculation->calculateIndependentPriceByCurrencyAndDomainId(
                     $transport,
-                    $transportInputPrice->getCurrency()
+                    $transportInputPrice->getCurrency(),
+                    $transportInputPrice->getDomainId()
                 );
 
                 $newInputPrice = $this->inputPriceCalculation->getInputPrice(
                     $toInputPriceType,
                     $transportPrice->getPriceWithVat(),
-                    $transport->getVat()->getPercent()
+                    $transport->getVatByCurrencyAndDomainId($transportInputPrice->getCurrency(), $transportInputPrice->getDomainId())->getPercent()
                 );
 
                 $transportInputPrice->setPrice($newInputPrice);

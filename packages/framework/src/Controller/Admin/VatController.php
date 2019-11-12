@@ -93,7 +93,7 @@ class VatController extends AdminBaseController
                     $message,
                     'admin_vat_delete',
                     $id,
-                    $this->vatFacade->getAllExceptId($id)
+                    $this->vatFacade->getAllForDomainExceptId($this->adminDomainTabsFacade->getSelectedDomainId(), $id)
                 );
             } else {
                 $message = t(
