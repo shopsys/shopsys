@@ -130,6 +130,42 @@ Additionally you can override these methods in your implementation of [`HttpSmok
 * `createRequest` if you have specific needs about the way `Request` is created from [`RequestDataSet`](./src/RequestDataSet.php).
 * `handleRequest` to customize handling `Request` in your application (eg. you can wrap it in database transaction to roll it back into original state).
 
+### Annotations
+To make smoke test configuration a little easier, you can use the annotations:
+
+#### DataSet
+Used for setting expected status code based on provided paramteters.
+
+```
+@DataSet(statusCode=404, parameters={
+    @Parameter(name="name", value="Batman")
+})
+```
+- arguments:
+    - `parameters` _(optional)_
+    - `statusCode` _(optional, default = `200`)_
+
+#### Parameter
+Parameter defines value for specified parameter.
+
+```
+@Parameter(name="name", value="Batman")
+```  
+- arguments:
+    - `name` _(required)_
+    - `value` _(required)_  
+
+#### Skipped
+Mark test as skipped
+
+```
+@Skipped()
+```
+
+You can add them directly to your controller methods. See the example in [`Shopsys\HttpSmokeTesting\Test\TestController`](./src/Test/TestController.php).
+
+*Note: You should avoid using annotations with configuring via `changeDefaultRequestDataSet()` on same route. It may result in unexpected behavior.*
+
 ## Troubleshooting
 
 ### Tests do not fail on non-existing route

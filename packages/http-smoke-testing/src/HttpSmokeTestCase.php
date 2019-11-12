@@ -63,13 +63,13 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     final public function httpResponseTestDataProvider()
     {
         $this->setUp();
-
-        $requestDataSetGenerators = [];
+        $requestDataSetGeneratorFactory = new RequestDataSetGeneratorFactory();
         /* @var $requestDataSetGenerators \Shopsys\HttpSmokeTesting\RequestDataSetGenerator[] */
+        $requestDataSetGenerators = [];
 
         $allRouteInfo = $this->getRouterAdapter()->getAllRouteInfo();
         foreach ($allRouteInfo as $routeInfo) {
-            $requestDataSetGenerators[] = new RequestDataSetGenerator($routeInfo);
+            $requestDataSetGenerators[] = $requestDataSetGeneratorFactory->create($routeInfo);
         }
 
         $routeConfigCustomizer = new RouteConfigCustomizer($requestDataSetGenerators);
