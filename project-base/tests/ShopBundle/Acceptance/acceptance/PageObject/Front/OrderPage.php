@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ShopBundle\Acceptance\acceptance\PageObject\Front;
 
+use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 use Tests\ShopBundle\Acceptance\acceptance\PageObject\AbstractPage;
 
 class OrderPage extends AbstractPage
@@ -33,7 +34,11 @@ class OrderPage extends AbstractPage
      */
     public function selectTransport($transportPosition)
     {
-        $this->tester->executeJS('return $("#transport_and_payment_form_transport_' . $transportPosition . '").click()');
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#transport_and_payment_form_transport_' . $transportPosition
+        );
+        $frontCheckboxClicker->check();
     }
 
     /**
@@ -59,7 +64,11 @@ class OrderPage extends AbstractPage
      */
     public function selectPayment($paymentPosition)
     {
-        $this->tester->executeJS('return $("#transport_and_payment_form_payment_' . $paymentPosition . '").click()');
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#transport_and_payment_form_payment_' . $paymentPosition
+        );
+        $frontCheckboxClicker->check();
     }
 
     /**
@@ -114,6 +123,10 @@ class OrderPage extends AbstractPage
 
     public function acceptLegalConditions()
     {
-        $this->tester->executeJS('return $("#order_personal_info_form_legalConditionsAgreement").click()');
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#order_personal_info_form_legalConditionsAgreement'
+        );
+        $frontCheckboxClicker->check();
     }
 }

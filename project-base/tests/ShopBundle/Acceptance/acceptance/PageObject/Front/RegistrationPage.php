@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\ShopBundle\Acceptance\acceptance\PageObject\Front;
 
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
+use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 use Tests\ShopBundle\Acceptance\acceptance\PageObject\AbstractPage;
 
 class RegistrationPage extends AbstractPage
@@ -23,7 +24,13 @@ class RegistrationPage extends AbstractPage
         $this->tester->fillFieldByName('registration_form[email]', $email);
         $this->tester->fillFieldByName('registration_form[password][first]', $firstPassword);
         $this->tester->fillFieldByName('registration_form[password][second]', $secondPassword);
-        $this->tester->executeJS('return $("#registration_form_privacyPolicy").click()');
+
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#registration_form_privacyPolicy'
+        );
+        $frontCheckboxClicker->check();
+
         $this->tester->wait(TimedFormTypeExtension::MINIMUM_FORM_FILLING_SECONDS);
         $this->tester->clickByName('registration_form[save]');
     }
