@@ -111,10 +111,13 @@ final class ShopsysFrameworkDataCollector extends DataCollector
      */
     protected function resolveDocsVersion(string $versionString): string
     {
-        if (strpos($versionString, '-dev') !== false) {
-            return 'master';
+        if (!preg_match('~^(\d+)\.(\d+)~', $versionString, $matches)) {
+            return '';
         }
 
-        return 'v' . $versionString;
+        $major = $matches[1];
+        $minor = $matches[2];
+
+        return sprintf('%d.%d', $major, $minor);
     }
 }
