@@ -63,7 +63,7 @@ class RequestDataSetGeneratorTest extends TestCase
      * @param array $parameters
      * @dataProvider getDataSets
      */
-    public function testGeneratorGenerateRequestDataSetFromDataSerAnnotation(
+    public function testGeneratorGenerateRequestDataSetFromDataSetAnnotation(
         DataSet $dataSet,
         int $statusCode,
         array $parameters
