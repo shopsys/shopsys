@@ -1,7 +1,5 @@
 <?php
 
-use App\Environment;
-use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\Dotenv\Dotenv;
 
 setlocale(LC_CTYPE, 'en_US.utf8');
