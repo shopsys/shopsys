@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Serializable;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\MandatoryAdministratorRoleIsMissingException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
@@ -80,6 +81,18 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
     protected $superadmin;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole[]|\Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="\Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole",
+     *     mappedBy="administrator",
+     *     cascade={"persist"},
+     *     orphanRemoval=true
+     * )
+     */
+    protected $roles;
+
+    /**
      * @var bool
      */
     protected $multidomainLogin;
@@ -113,6 +126,7 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         $this->multidomainLogin = false;
         $this->multidomainLoginToken = '';
         $this->multidomainLoginTokenExpiration = new DateTime();
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -200,7 +214,13 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
      */
     public function isSuperadmin()
     {
-        return $this->superadmin;
+        foreach ($this->roles as $role) {
+            if ($role->getRole() === Roles::ROLE_SUPER_ADMIN) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -241,6 +261,14 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
     public function setEmail($email)
     {
         $this->email = $email;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole[]
+     */
+    public function getAdministratorRoles(): array
+    {
+        return $this->roles->toArray();
     }
 
     /**
@@ -315,10 +343,13 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
      */
     public function getRoles()
     {
-        if ($this->superadmin) {
-            return [Roles::ROLE_SUPER_ADMIN];
+        $roles = [];
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole $role */
+        foreach ($this->roles->toArray() as $role) {
+            $roles[] = $role->getRole();
         }
-        return [Roles::ROLE_ADMIN];
+
+        return $roles;
     }
 
     /**
@@ -362,5 +393,33 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
     public function addGridLimit(AdministratorGridLimit $administratorGridLimit): void
     {
         $this->gridLimits->add($administratorGridLimit);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole[] $administratorRoles
+     */
+    public function addRoles(array $administratorRoles): void
+    {
+        foreach ($administratorRoles as $role) {
+            $this->roles->add($role);
+        }
+
+        $this->checkRolesContainAdminRole();
+    }
+
+    protected function checkRolesContainAdminRole(): void
+    {
+        foreach ($this->roles->toArray() as $role) {
+            if (in_array($role->getRole(), Roles::getMandatoryAdministratorRoles(), true)) {
+                return;
+            }
+        }
+
+        $message = sprintf(
+            'There is no mandatory role for administrator with ID `%s`. One of this role is expected: %s.',
+            $this->id,
+            implode(', ', Roles::getMandatoryAdministratorRoles())
+        );
+        throw new MandatoryAdministratorRoleIsMissingException($message);
     }
 }
