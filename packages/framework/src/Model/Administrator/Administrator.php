@@ -74,13 +74,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
     protected $gridLimits;
 
     /**
-     * @ORM\Column(type="boolean")
-     *
-     * @var bool
-     */
-    protected $superadmin;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole[]|\Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(
@@ -122,7 +115,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         $this->lastActivity = new DateTime();
         $this->gridLimits = new ArrayCollection();
         $this->loginToken = '';
-        $this->superadmin = $administratorData->superadmin;
         $this->multidomainLogin = false;
         $this->multidomainLoginToken = '';
         $this->multidomainLoginTokenExpiration = new DateTime();
@@ -221,14 +213,6 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param bool $superadmin
-     */
-    public function setSuperadmin($superadmin)
-    {
-        $this->superadmin = $superadmin;
     }
 
     /**

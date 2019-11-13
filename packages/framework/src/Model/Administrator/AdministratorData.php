@@ -7,11 +7,6 @@ use Shopsys\FrameworkBundle\Model\Security\Roles;
 class AdministratorData
 {
     /**
-     * @var bool
-     */
-    public $superadmin;
-
-    /**
      * @var string|null
      */
     public $username;
@@ -38,7 +33,6 @@ class AdministratorData
 
     public function __construct()
     {
-        $this->superadmin = false;
         $this->roles[] = Roles::ROLE_ADMIN;
     }
 }
