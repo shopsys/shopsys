@@ -186,4 +186,13 @@ class AdministratorFacade
     {
         return $this->administratorRepository->getAllListableQueryBuilder();
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
+     */
+    public function setRolesChangedNow(Administrator $administrator)
+    {
+        $administrator->setRolesChangedNow();
+        $this->em->flush($administrator);
+    }
 }

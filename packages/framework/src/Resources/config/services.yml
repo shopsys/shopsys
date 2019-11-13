@@ -829,7 +829,6 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory
 
-
     Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory
 

@@ -24,15 +24,23 @@ class AdministratorUserProvider implements UserProviderInterface
     protected $administratorActivityFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber
+     */
+    protected $administratorRolesChangedSubscriber;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber
      */
     public function __construct(
         AdministratorRepository $administratorRepository,
-        AdministratorActivityFacade $administratorActivityFacade
+        AdministratorActivityFacade $administratorActivityFacade,
+        AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber
     ) {
         $this->administratorRepository = $administratorRepository;
         $this->administratorActivityFacade = $administratorActivityFacade;
+        $this->administratorRolesChangedSubscriber = $administratorRolesChangedSubscriber;
     }
 
     /**
@@ -93,6 +101,12 @@ class AdministratorUserProvider implements UserProviderInterface
 
         if ($freshAdministrator instanceof Administrator) {
             $this->administratorActivityFacade->updateCurrentActivityLastActionTime($freshAdministrator);
+        }
+
+        if ($freshAdministrator->getRolesChangedAt() > $administrator->getRolesChangedAt()) {
+            //In this step token does not exist, so we are not able to update user roles.
+            //We notify RolesChangedListener for roles updating
+            $this->administratorRolesChangedSubscriber->updateRoles();
         }
 
         return $freshAdministrator;

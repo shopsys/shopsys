@@ -105,6 +105,13 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
     protected $multidomainLoginTokenExpiration;
 
     /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $rolesChangedAt;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      */
     public function __construct(AdministratorData $administratorData)
@@ -256,6 +263,19 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
     }
 
     /**
+     * @return \DateTime|null
+     */
+    public function getRolesChangedAt(): ?DateTime
+    {
+        return $this->rolesChangedAt;
+    }
+
+    public function setRolesChangedNow(): void
+    {
+        $this->rolesChangedAt = new DateTime();
+    }
+
+    /**
      * @param string $loginToken
      */
     public function setLoginToken($loginToken)
@@ -295,6 +315,7 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
             $this->realName,
             $this->loginToken,
             time(),
+            $this->rolesChangedAt,
         ]);
     }
 
@@ -309,8 +330,8 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
             $this->password,
             $this->realName,
             $this->loginToken,
-            $timestamp
-        ) = unserialize($serialized);
+            $timestamp,
+            $this->rolesChangedAt) = unserialize($serialized);
         $this->lastActivity = new DateTime();
         $this->lastActivity->setTimestamp($timestamp);
     }
@@ -384,6 +405,8 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
      */
     public function addRoles(array $administratorRoles): void
     {
+        $this->setRolesChangedNow();
+
         foreach ($administratorRoles as $role) {
             $this->roles->add($role);
         }
