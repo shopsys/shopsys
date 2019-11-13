@@ -22,6 +22,7 @@ security:
             anonymous: ~
             provider: administrators
             logout_on_user_change: true
+            access_denied_url: "/admin/access-denied/"
             form_login:
                 check_path: admin_login_check
                 login_path: admin_login
