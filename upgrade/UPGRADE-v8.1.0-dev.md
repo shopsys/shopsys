@@ -203,7 +203,7 @@ There you can find links to upgrade notes for other versions too.
                     script:
                         - sudo apt install ruby
                         - gem install docker-sync
-                        - sed -i -r "s#sed -i \'\' -E#sed -i -r#" ./scripts/install.sh
+                        - sed -i -r "s#sed -i '' -E#sed -i -r#" ./scripts/install.sh
                         - mkdir -p ./var/elasticsearch-data
                         - chmod -R 777 ./var/elasticsearch-data
                         - echo 2 | ./scripts/install.sh --skip-aliasing
