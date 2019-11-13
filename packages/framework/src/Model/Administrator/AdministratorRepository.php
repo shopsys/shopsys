@@ -116,12 +116,4 @@ class AdministratorRepository
             ->select('COUNT(a)')
             ->getQuery()->getSingleScalarResult());
     }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator[]
-     */
-    public function getAllSuperadmins()
-    {
-        return $this->getAdministratorRepository()->findBy(['superadmin' => true]);
-    }
 }
