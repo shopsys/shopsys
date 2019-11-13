@@ -42,16 +42,16 @@ doctrine:
                 alias: ShopsysFrameworkBundleComponent
                 prefix: Shopsys\FrameworkBundle\Component
                 is_bundle: false
-            ShopsysShopBundle:
+            App:
                 type: annotation
                 dir: '%shopsys.root_dir%/src/Model'
-                alias: ShopsysShopBundle
+                alias: App
                 prefix: App\Model
                 is_bundle: false
-            ShopsysShopBundleComponent:
+            AppComponent:
                 type: annotation
                 dir: '%shopsys.root_dir%/src/Component'
-                alias: ShopsysShopBundleComponent
+                alias: AppComponent
                 prefix: App\Component
                 is_bundle: false
         hydrators:
