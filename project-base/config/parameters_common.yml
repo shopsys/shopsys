@@ -18,6 +18,7 @@ parameters:
     shopsys.performance_test.feed.delivery.max_duration_seconds: 20
     shopsys.performance_test.feed.min_duration_seconds: 5
     container.autowiring.strict_mode: true
+    container.dumper.inline_class_loader: true
     shopsys.entity_extension.map:
         Shopsys\FrameworkBundle\Model\Article\Article: App\Model\Article\Article
         Shopsys\FrameworkBundle\Model\Administrator\Administrator: App\Model\Administrator\Administrator
