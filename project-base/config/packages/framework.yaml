@@ -9,7 +9,6 @@ framework:
     validation: { enable_annotations: true }
     templating:
         engines: ['twig']
-    default_locale: "%locale%"
     trusted_hosts: ~
     session:
         handler_id: snc_redis.session.handler
@@ -19,7 +18,6 @@ framework:
         gc_probability: 0
     fragments: ~
     http_method_override: true
-    translator: ~
     profiler:
         enabled: false
         collect: false
