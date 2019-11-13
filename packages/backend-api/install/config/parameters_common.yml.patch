@@ -1,4 +1,4 @@
-@@ -31,3 +31,4 @@
+@@ -32,3 +32,4 @@
          Shopsys\FrameworkBundle\Model\Product\Brand\Brand: App\Model\Product\Brand\Brand
      build-version: '0000000000000000'
      shopsys.display_timezone: Europe/Prague

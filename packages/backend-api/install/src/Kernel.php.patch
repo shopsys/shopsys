@@ -1,4 +1,4 @@
-@@ -84,6 +84,10 @@
+@@ -80,6 +80,10 @@
          $loader->load($confDir . '/{services}' . self::CONFIG_EXTS, 'glob');
          $loader->load($confDir . '/{services}_' . $this->environment . self::CONFIG_EXTS, 'glob');
 
