@@ -43,10 +43,7 @@
                 <directory>tests/App/Functional</directory>
                 <directory>tests/App/Smoke</directory>
                 <directory>tests/App/Performance</directory>
-                <directory>tests/*Bundle/Unit</directory>
                 <directory>tests/*Bundle/Functional</directory>
-                <directory>tests/*Bundle/Smoke</directory>
-                <directory>tests/*Bundle/Performance</directory>
             </exclude>
         </whitelist>
     </filter>
