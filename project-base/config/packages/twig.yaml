@@ -1,4 +1,5 @@
 twig:
+    # ShopsysShop namespace is defined to maintain backward compatibility of twig templates
     paths:
         'templates': 'ShopsysShop'
     debug: "%kernel.debug%"
