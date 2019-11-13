@@ -84,8 +84,6 @@
         "symfony/dotenv": "^3.4",
         "symfony/flex": "^1.4",
         "symfony/form": "^3.4",
-        "symfony/http-client": "^4.3",
-        "symfony/mime": "^4.3",
         "symfony/monolog-bridge": "^3.0.0",
         "symfony/monolog-bundle": "~3.4.0",
         "symfony/property-info": "^3.4",
