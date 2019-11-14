@@ -37,11 +37,7 @@
         <div class="sf-toolbar-info-group">
             <div class="sf-toolbar-info-piece">
                 <b>Resources</b>
-                {% if collector.docsVersion is not empty %}
-                    <span><a href="https://docs.shopsys.com/en/{{ collector.docsVersion }}" target="_blank" rel="help">Documentation</a></span>
-                {% else %}
-                    <span><a href="https://docs.shopsys.com/" target="_blank" rel="help">Documentation</a></span>
-                {% endif %}
+                <span><a href="https://docs.shopsys.com/en/{{ collector.docsVersion }}" target="_blank" rel="help">Documentation</a></span>
             </div>
         </div>
     {% endset %}

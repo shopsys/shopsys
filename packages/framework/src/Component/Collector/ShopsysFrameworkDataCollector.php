@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Collector;
 
+use PharIo\Version\Version;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\ShopsysFrameworkBundle;
 use Symfony\Component\HttpFoundation\Request;
@@ -111,13 +112,15 @@ final class ShopsysFrameworkDataCollector extends DataCollector
      */
     protected function resolveDocsVersion(string $versionString): string
     {
-        if (!preg_match('~^(\d+)\.(\d+)~', $versionString, $matches)) {
-            return '';
+        $version = new Version($versionString);
+        if (
+            $version->hasPreReleaseSuffix()
+            && $version->getPreReleaseSuffix() === 'dev'
+            && $version->getPatch()->getValue() === 0
+            && $version->getMinor()->getValue() > 0
+        ) {
+            return sprintf('%d.%d', $version->getMajor()->getValue(), $version->getMinor()->getValue() - 1);
         }
-
-        $major = $matches[1];
-        $minor = $matches[2];
-
-        return sprintf('%d.%d', $major, $minor);
+        return sprintf('%d.%d', $version->getMajor()->getValue(), $version->getMinor()->getValue());
     }
 }
