@@ -639,6 +639,13 @@ There you can find links to upgrade notes for other versions too.
         ```
         - for more information you can see the [PR](https://github.com/shopsys/shopsys/pull/1461)
 
+- change required version for `symfony/monolog-bundle` ([#1506](https://github.com/shopsys/shopsys/pull/1506))
+    - edit `composer.json`
+        ```diff
+        -       "symfony/monolog-bundle": "^3.3.1",
+        +       "symfony/monolog-bundle": "~3.4.0",
+        ```
+
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
     - the `RedisCacheFactory` was deprecated, use DIC configuration in YAML instead

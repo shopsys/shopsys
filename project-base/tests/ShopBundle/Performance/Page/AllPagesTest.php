@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\HttpSmokeTesting\RequestDataSet;
-use Shopsys\HttpSmokeTesting\RequestDataSetGenerator;
+use Shopsys\HttpSmokeTesting\RequestDataSetGeneratorFactory;
 use Shopsys\HttpSmokeTesting\RouteConfig;
 use Shopsys\HttpSmokeTesting\RouteConfigCustomizer;
 use Shopsys\HttpSmokeTesting\RouteInfo;
@@ -81,8 +81,9 @@ class AllPagesTest extends KernelTestCase
     {
         $requestDataSetGenerators = [];
         $allRouteInfo = $this->getRouterAdapter()->getAllRouteInfo();
+        $requestDataSetGeneratorFactory = new RequestDataSetGeneratorFactory();
         foreach ($allRouteInfo as $routeInfo) {
-            $requestDataSetGenerators[] = new RequestDataSetGenerator($routeInfo);
+            $requestDataSetGenerators[] = $requestDataSetGeneratorFactory->create($routeInfo);
         }
 
         $routeConfigCustomizer = new RouteConfigCustomizer($requestDataSetGenerators);

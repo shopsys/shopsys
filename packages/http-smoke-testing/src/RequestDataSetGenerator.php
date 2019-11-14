@@ -2,6 +2,9 @@
 
 namespace Shopsys\HttpSmokeTesting;
 
+use Shopsys\HttpSmokeTesting\Annotation\DataSet;
+use Shopsys\HttpSmokeTesting\Annotation\Skipped;
+
 class RequestDataSetGenerator implements RouteConfig
 {
     /**
@@ -27,6 +30,45 @@ class RequestDataSetGenerator implements RouteConfig
         $this->routeInfo = $routeInfo;
         $this->defaultRequestDataSet = new RequestDataSet($this->routeInfo->getRouteName());
         $this->extraRequestDataSets = [];
+    }
+
+    public function fulfillRequestFromAnnotations(): void
+    {
+        foreach ($this->routeInfo->getAnnotations() as $index => $annotation) {
+            if ($annotation instanceof Skipped) {
+                $this->defaultRequestDataSet->skip();
+            } elseif ($annotation instanceof DataSet) {
+                $this->fulfillRequestDataSetFromAnnotation($this->getRequestDataSetForIteration($index), $annotation);
+            }
+        }
+    }
+
+    /**
+     * @param int $index
+     * @return \Shopsys\HttpSmokeTesting\RequestDataSet
+     */
+    private function getRequestDataSetForIteration(int $index): RequestDataSet
+    {
+        if ($index === 0) {
+            return $this->defaultRequestDataSet;
+        } else {
+            return $this->addExtraRequestDataSet();
+        }
+    }
+
+    /**
+     * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
+     * @param \Shopsys\HttpSmokeTesting\Annotation\DataSet $annotation
+     */
+    private function fulfillRequestDataSetFromAnnotation(RequestDataSet $requestDataSet, DataSet $annotation): void
+    {
+        if ($annotation->statusCode) {
+            $requestDataSet->setExpectedStatusCode($annotation->statusCode);
+        }
+
+        foreach ($annotation->parameters as $parameter) {
+            $requestDataSet->setParameter($parameter->name, $parameter->value);
+        }
     }
 
     /**
