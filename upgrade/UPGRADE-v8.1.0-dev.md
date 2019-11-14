@@ -689,12 +689,6 @@ There you can find links to upgrade notes for other versions too.
         - [`tests/ShopBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-b57160edc2db5a01659693b4b417dafd)
 
 - add Basic styleguide ([#1463](https://github.com/shopsys/shopsys/pull/1463))
-    - update md files according to PR
-        - [docs/frontend/basic-design-styleguide.md](https://github.com/shopsys/shopsys/blob/master/docs/frontend/basic-design-styleguide.md)
-        - [docs/frontend/navigation.yml](https://github.com/shopsys/shopsys/blob/master/docs/frontend/navigation.yml)
-        - [docs/index.md](https://github.com/shopsys/shopsys/blob/master/docs/index.md)
-        - [open-source-license-acknowledgements-and-third-party-copyrights.md](https://github.com/shopsys/shopsys/tree/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
-
     - update build file [build.xml](https://github.com/shopsys/shopsys/tree/master/packages/framework/build.xml)
         ```diff
           <property name="path.web.styles.front" value="${path.web}/assets/frontend/styles"/>
@@ -723,38 +717,24 @@ There you can find links to upgrade notes for other versions too.
         ```
 
     - add route and contorller according to PR
-        update `project-base/app/config/routing_dev.yml`
+        update [routing_dev.yml](https://github.com/shopsys/shopsys/project-base/app/config/routing_dev.yml)
         ```diff
         + _styleguide:
         +    path: /_styleguide/
         +    defaults: { _controller: ShopsysShopBundle:Styleguide\Styleguide:styleguide}
         ```
 
-        create new file `project-base/src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php`
-        ```diff
-        + <?php
-        +
-        + declare(strict_types=1);
-        +
-        + namespace Shopsys\ShopBundle\Controller\Styleguide;
-        +
-        + use Shopsys\ShopBundle\Controller\Front\FrontBaseController;
-        +
-        + class StyleguideController extends FrontBaseController
-        + {
-        +     public function styleguideAction()
-        +     {
-        +         return $this->render('@ShopsysShop/Styleguide/styleguide.html.twig');
-        +     }
-        + }
-        ```
+        add styleguide controller:
+        - [StyleguideController.php](project-base/src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php)
+
     - add styleguide files according to PR
+
         - [project-base/web/assets/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/web/assets/styleguide/)
         - [project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/)
         - [project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/)
         - [project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/)
 
-    - update `gruntfile.js.twig` and add task
+    - update [gruntfile.js.twig](https://github.com/shopsys/shopsys/project-base/src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig ) and add task
 
     ```diff
         + styleguide: {
