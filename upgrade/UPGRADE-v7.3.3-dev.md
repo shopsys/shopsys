@@ -58,3 +58,5 @@ There you can find links to upgrade notes for other versions too.
     - `tests/ShopBundle/Functional/Model/Cart/CartItemTest.php`
     - `tests/ShopBundle/Functional/Model/Cart/CartTest.php`
     - `tests/ShopBundle/Functional/Model/Cart/Watcher/CartWatcherTest.php`
+
+- exception `CartIsEmptyException` has been marked as deprecated and will be removed in 9.0 ([#1494](https://github.com/shopsys/shopsys/pull/1494))
