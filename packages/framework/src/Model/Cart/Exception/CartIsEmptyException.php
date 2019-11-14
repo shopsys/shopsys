@@ -4,6 +4,9 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Exception;
 
 use Exception;
 
+/**
+ * @deprecated exception is not used and will be removed in 9.0
+ */
 class CartIsEmptyException extends Exception implements CartException
 {
     /**

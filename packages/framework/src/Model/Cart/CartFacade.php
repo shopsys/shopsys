@@ -163,7 +163,7 @@ class CartFacade
         $cart = $this->findCartOfCurrentCustomer();
 
         if ($cart === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException();
+            return;
         }
 
         $cart->changeQuantities($quantitiesByCartItemId);
@@ -178,7 +178,7 @@ class CartFacade
         $cart = $this->findCartOfCurrentCustomer();
 
         if ($cart === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\CartIsEmptyException();
+            return;
         }
 
         $cartItemToDelete = $cart->getItemById($cartItemId);
