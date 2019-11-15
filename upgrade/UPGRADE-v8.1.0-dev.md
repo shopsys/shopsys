@@ -694,12 +694,11 @@ There you can find links to upgrade notes for other versions too.
           /src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins
         + /src/Shopsys/ShopBundle/Resources/scripts/styleguide
         ```
-    - add route and controller according to PR
-        update `app/config/routing_dev.yml`
+    - add route and controller according to PR update `app/config/routing_dev.yml`
         ```diff
         + _styleguide:
         +    path: /_styleguide/
-        +    defaults: { _controller: ShopsysShopBundle:Styleguide\Styleguide:styleguide}
+        +    defaults: { _controller: ShopsysShopBundle:Styleguide\Styleguide:styleguide }
         ```
     - add styleguide controller:
         - [src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php)
