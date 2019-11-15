@@ -95,6 +95,44 @@ There you can find links to upgrade notes for other versions too.
         [MainVariant.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/MainVariant.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/MainVariant.types.yml`
         [RegularProduct.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/RegularProduct.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/RegularProduct.types.yml`
         [Variant.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Variant.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Variant.types.yml`
+        
+- add access denied url to `security.yml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
+    ```diff
+         administration:
+             pattern: ^/(admin/|efconnect|elfinder)
+             user_checker: Shopsys\FrameworkBundle\Model\Security\AdministratorChecker
+             anonymous: ~
+             provider: administrators
+             logout_on_user_change: true
+    +        access_denied_url: "/admin/access-denied/"
+             form_login:
+    ```
+    - add new customized route `admin_access_denied` in `RouteConfigCustomization`
+    ```diff
+         ->customizeByRouteName('admin_domain_list', function (RouteConfig $config) {
+             if ($this->isSingleDomain()) {
+                $config->skipRoute('Domain list in administration is not available when only 1 domain exists.');
+             }
+    +    })
+    +    ->customizeByRouteName('admin_access_denied', function (RouteConfig $config) {
+    +        $config->changeDefaultRequestDataSet('This route serves as "access_denied_url" (see security.yml) and always redirects to a referer (or dashboard).')
+    +           ->setExpectedStatusCode(302);
+             });
+        }
+    ```
+    - change expected status code for testing superadmin routes from code `404` to `302`
+    ```diff
+         if (preg_match('~^admin_(superadmin_|translation_list$)~', $info->getRouteName())) {
+             $config->changeDefaultRequestDataSet('Only superadmin should be able to see this route.')
+    -           ->setExpectedStatusCode(404);
+    +           ->setExpectedStatusCode(302);
+    ```
+    ```diff
+        ->customizeByRouteName('admin_administrator_edit', function (RouteConfig $config) {
+            $config->changeDefaultRequestDataSet('Standard admin is not allowed to edit superadmin (with ID 1)')
+    -           ->setExpectedStatusCode(404);
+    +           ->setExpectedStatusCode(302);
+    ```
 
 ### Tools
 

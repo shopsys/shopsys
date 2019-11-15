@@ -2,13 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
+use Shopsys\FrameworkBundle\Model\Security\Roles;
+
 class AdministratorData
 {
-    /**
-     * @var bool
-     */
-    public $superadmin;
-
     /**
      * @var string|null
      */
@@ -29,8 +26,13 @@ class AdministratorData
      */
     public $email;
 
+    /**
+     * @var string[]
+     */
+    public $roles;
+
     public function __construct()
     {
-        $this->superadmin = false;
+        $this->roles[] = Roles::ROLE_ADMIN;
     }
 }

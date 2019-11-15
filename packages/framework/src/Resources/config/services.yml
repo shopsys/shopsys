@@ -673,6 +673,9 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactory
 
+    Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactory
+
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactory
 
@@ -822,6 +825,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory
+
+    Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory
 
     Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory

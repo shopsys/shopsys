@@ -32,6 +32,6 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
         $administratorData->email = $administrator->getEmail();
         $administratorData->realName = $administrator->getRealName();
         $administratorData->username = $administrator->getUsername();
-        $administratorData->superadmin = $administrator->isSuperadmin();
+        $administratorData->roles = $administrator->getRoles();
     }
 }

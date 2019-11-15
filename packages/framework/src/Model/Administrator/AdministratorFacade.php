@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
@@ -24,6 +25,11 @@ class AdministratorFacade
     protected $administratorFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade
+     */
+    protected $administratorRoleFacade;
+
+    /**
      * @var \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface
      */
     protected $encoderFactory;
@@ -37,6 +43,7 @@ class AdministratorFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface $administratorFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade
      * @param \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      */
@@ -44,12 +51,14 @@ class AdministratorFacade
         EntityManagerInterface $em,
         AdministratorRepository $administratorRepository,
         AdministratorFactoryInterface $administratorFactory,
+        AdministratorRoleFacade $administratorRoleFacade,
         EncoderFactoryInterface $encoderFactory,
         TokenStorageInterface $tokenStorage
     ) {
         $this->administratorRepository = $administratorRepository;
         $this->em = $em;
         $this->administratorFactory = $administratorFactory;
+        $this->administratorRoleFacade = $administratorRoleFacade;
         $this->encoderFactory = $encoderFactory;
         $this->tokenStorage = $tokenStorage;
     }
@@ -70,6 +79,8 @@ class AdministratorFacade
         $this->em->persist($administrator);
         $this->em->flush();
 
+        $this->administratorRoleFacade->refreshAdministratorRoles($administrator, $administratorData->roles);
+
         return $administrator;
     }
 
@@ -88,6 +99,8 @@ class AdministratorFacade
         }
 
         $this->em->flush();
+
+        $this->administratorRoleFacade->refreshAdministratorRoles($administrator, $administratorData->roles);
 
         return $administrator;
     }
@@ -172,5 +185,14 @@ class AdministratorFacade
     public function getAllListableQueryBuilder()
     {
         return $this->administratorRepository->getAllListableQueryBuilder();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
+     */
+    public function setRolesChangedNow(Administrator $administrator)
+    {
+        $administrator->setRolesChangedNow();
+        $this->em->flush($administrator);
     }
 }

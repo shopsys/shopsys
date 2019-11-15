@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class AdministratorRepository
 {
@@ -101,10 +102,10 @@ class AdministratorRepository
      */
     public function getAllListableQueryBuilder()
     {
-        return $this->getAdministratorRepository()
-            ->createQueryBuilder('a')
-            ->where('a.superadmin = :isSuperadmin')
-            ->setParameter('isSuperadmin', false);
+        return $this->getAdministratorRepository()->createQueryBuilder('a')
+            ->join('a.roles', 'ar')
+            ->where('ar.role = :role')
+            ->setParameter('role', Roles::ROLE_ADMIN);
     }
 
     /**
@@ -115,13 +116,5 @@ class AdministratorRepository
         return (int)($this->getAllListableQueryBuilder()
             ->select('COUNT(a)')
             ->getQuery()->getSingleScalarResult());
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator[]
-     */
-    public function getAllSuperadmins()
-    {
-        return $this->getAdministratorRepository()->findBy(['superadmin' => true]);
     }
 }
