@@ -690,7 +690,7 @@ There you can find links to upgrade notes for other versions too.
 
 - add Basic styleguide ([#1463](https://github.com/shopsys/shopsys/pull/1463))
 
-    - update config file [.eslintignore]
+    - update config file `.eslintignore`
         ```diff
           /src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins
         + /src/Shopsys/ShopBundle/Resources/scripts/styleguide
@@ -718,12 +718,12 @@ There you can find links to upgrade notes for other versions too.
 
     ```diff
         + styleguide: {
-        +    files: {
-        +        'web/assets/styleguide/styles/styleguide_{{ cssVersion }}.css': '{{ customResourcesDirectory }}/styles/styleguide/main.less'
-        +    },
-        +    options: {
-        +        compress: true
-        +    }
+        +     files: {
+        +         'web/assets/styleguide/styles/styleguide_{{ cssVersion }}.css': '{{ customResourcesDirectory }}/styles/styleguide/main.less'
+        +     },
+        +     options: {
+        +         compress: true
+        +     }
         + },
     ```
 
