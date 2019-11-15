@@ -648,26 +648,7 @@ There you can find links to upgrade notes for other versions too.
 
 - add image and iframe LazyLoad ([#1483](https://github.com/shopsys/shopsys/pull/1483))
 
-    - update [listGrid.html.twig](https://github.com/shopsys/project-base/blob/master/packages/framework/src/Resources/views/Admin/Content/Advert/listGrid.html.twig)
-        ```diff
-          {% if row.advert.type == TYPE_IMAGE %}
-        -    {{ image(row.advert, {size: 'original', height: 30}) }}
-        +    {{ image(row.advert, {size: 'original', height: 30, lazy: false}) }}
-           {% else %}
-        ```
-    - update [imageuploadFields.html.twig](https://github.com/shopsys/project-base/blob/master/packages/framework/src/Resources/views/Admin/Form/imageuploadFields.html.twig)
-        ```diff
-          <div class="list-images__item__image js-image-upload-preview {% if isRemoved %}list-images__item__in--removed{% endif %}">
-        -     {{ image(image, {size: 'original', height: '100', type: image_type}) }}
-        +     {{ image(image, {size: 'original', height: '100', type: image_type, lazy: false}) }}
-          </div>
-          <div class="form-line__item">
-        -      {{ image(entity, { size: 'original', height: 100, type: image_type }) }}
-        +      {{ image(entity, { size: 'original', height: 100, type: image_type, lazy: false }) }}
-          </div>
-        ```
-
-    - update [ajaxMoreLoader.js](https://github.com/shopsys/project-base/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/components/ajaxMoreLoader.js)
+    - update `src/Shopsys/ShopBundle/Resources/scripts/frontend/components/ajaxMoreLoader.js`
         ```diff
                  $paginationToItemSpan.text(paginationToItem);
                  updateLoadMoreButton();
@@ -675,42 +656,19 @@ There you can find links to upgrade notes for other versions too.
                  Shopsys.register.registerNewContent($nextItems);
              }
         ```
-    - update [productList.AjaxFilter.js](https://github.com/shopsys/project-base/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/product/productList.AjaxFilter.js)
+    - update `src/Shopsys/ShopBundle/Resources/scripts/frontend/product/productList.AjaxFilter.js`
         ```diff
                  $productsWithControls.show();
         +        Shopsys.lazyLoadCall.inContainer($productsWithControls);
                  Shopsys.register.registerNewContent($productsWithControls);
              };
         ```
-    - add new file [project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/lazyLoadInit.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/lazyLoadInit.js)
+    - add new file [src/Shopsys/ShopBundle/Resources/scripts/frontend/lazyLoadInit.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/lazyLoadInit.js)
 
-    - add new file [project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/minilazyload.min.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/minilazyload.min.js)
-
-    - update admin files
-      - [listGrid.html.twig](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Content/Advert/listGrid.html.twig)
-
-      ```diff
-        {% if row.advert.type == TYPE_IMAGE %}
-      -     {{ image(row.advert, {size: 'original', height: 30}) }}
-      +     {{ image(row.advert, {size: 'original', height: 30, lazy: false}) }}
-        {% else %}
-      ```
-      - [imageuploadFields.html.twig](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Form/imageuploadFields.html.twig})
-
-      ```diff
-        <div class="list-images__item__image js-image-upload-preview {% if isRemoved %}list-images__item__in--removed{% endif %}">
-      -     {{ image(image, {size: 'original', height: '100', type: image_type}) }}
-      +     {{ image(image, {size: 'original', height: '100', type: image_type, lazy: false}) }}
-        </div>
-
-        <div class="form-line__item">
-            {{ image(entity, { size: 'original', height: 100, type: image_type }) }}
-            {{ image(entity, { size: 'original', height: 100, type: image_type, lazy: false }) }}
-        </div>
-      ```
+    - add new file [src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/minilazyload.min.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/minilazyload.min.js)
 
     - update frontend files and disable image lazyload
-      - [index.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Default/index.html.twig)
+      - `src/Shopsys/ShopBundle/Resources/views/Front/Content/Default/index.html.twig`
 
       ```diff
         <div class="box-slider__item">
@@ -718,7 +676,7 @@ There you can find links to upgrade notes for other versions too.
       +     <a href="{{ item.link }}">{{ image(item, { lazy: false }) }}</a>
         </div>
       ```
-      - [detail.html.twig](https://github.com/shopsys/project-base/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/detail.html.twig)
+      - `src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/detail.html.twig`
 
       ```diff
         <div class="box-slider__item">
@@ -727,9 +685,9 @@ There you can find links to upgrade notes for other versions too.
         </div>
       ```
     - update test files according to PR:
-        - [ReadModelBundle/Functional/Twig/ImageExtensionTest.php](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ReadModelBundle/Functional/Twig/ImageExtensionTest.php)
-        - [ReadModelBundle/Functional/Twig/Resources/picture.twig](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ReadModelBundle/Functional/Twig/Resources/picture.twig)
-        - [ShopBundle/Functional/Twig/Resources/picture.twig](https://github.com/shopsys/shopsys/blob/master/project-base/tests/ShopBundle/Functional/Twig/Resources/picture.twig)
+        - `tests/ReadModelBundle/Functional/Twig/ImageExtensionTest.php`
+        - `tests/ReadModelBundle/Functional/Twig/Resources/picture.twig`
+        - `tests/ShopBundle/Functional/Twig/Resources/picture.twig`
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
