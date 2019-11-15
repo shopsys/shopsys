@@ -709,7 +709,7 @@ There you can find links to upgrade notes for other versions too.
         - [src/Shopsys/ShopBundle/Resources/views/Styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/)
         - [src/Shopsys/ShopBundle/Resources/styles/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/)
     - update `src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig` and add task
-    ```diff
+        ```diff
         + styleguide: {
         +     files: {
         +         'web/assets/styleguide/styles/styleguide_{{ cssVersion }}.css': '{{ customResourcesDirectory }}/styles/styleguide/main.less'
@@ -718,7 +718,7 @@ There you can find links to upgrade notes for other versions too.
         +         compress: true
         +     }
         + },
-    ```
+        ```
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
