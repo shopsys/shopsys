@@ -689,52 +689,32 @@ There you can find links to upgrade notes for other versions too.
         - [`tests/ShopBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-b57160edc2db5a01659693b4b417dafd)
 
 - add Basic styleguide ([#1463](https://github.com/shopsys/shopsys/pull/1463))
-    - update build file [build.xml](https://github.com/shopsys/shopsys/tree/master/packages/framework/build.xml)
-        ```diff
-          <property name="path.web.styles.front" value="${path.web}/assets/frontend/styles"/>
-        + <property name="path.web.styles.styleguide" value="${path.web}/assets/styleguide/styles"/>
-          <property name="path.yaml-standards.executable" value="${path.bin}/yaml-standards"/>
-        ```
-        ```diff
-          <fileset dir="${path.web.styles.front}/">
-              <exclude name="/"/>
-          </fileset>
-        + <fileset dir="${path.web.styles.styleguide}/">
-        +     <exclude name="/"/>
-        + </fileset>
-        ```
 
-    - update config file [services.yml](https://github.com/shopsys/shopsys/tree/master/packages/framework/src/Resources/config/services.yml)
-        ```diff
-        - ['admin/', 'common/', 'custom_admin/', 'frontend/']
-        + ['admin/', 'common/', 'custom_admin/', 'frontend/', 'styleguide/']
-        ```
-
-    - update config file [.eslintignore](https://github.com/shopsys/shopsys/tree/master/project-base/.eslintignore)
+    - update config file [.eslintignore]
         ```diff
           /src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins
         + /src/Shopsys/ShopBundle/Resources/scripts/styleguide
         ```
 
-    - add route and contorller according to PR
-        update [routing_dev.yml](https://github.com/shopsys/shopsys/project-base/app/config/routing_dev.yml)
+    - add route and controller according to PR
+        update `app/config/routing_dev.yml`
         ```diff
         + _styleguide:
         +    path: /_styleguide/
         +    defaults: { _controller: ShopsysShopBundle:Styleguide\Styleguide:styleguide}
         ```
 
-        add styleguide controller:
-        - [StyleguideController.php](project-base/src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php)
+    - add styleguide controller:
+        - [src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php)
 
     - add styleguide files according to PR
 
-        - [project-base/web/assets/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/web/assets/styleguide/)
-        - [project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/)
-        - [project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/)
-        - [project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/)
+        - [web/assets/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/web/assets/styleguide/)
+        - [src/Shopsys/ShopBundle/Resources/scripts/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/)
+        - [src/Shopsys/ShopBundle/Resources/views/Styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/)
+        - [src/Shopsys/ShopBundle/Resources/styles/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/)
 
-    - update [gruntfile.js.twig](https://github.com/shopsys/shopsys/project-base/src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig ) and add task
+    - update `src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig` and add task
 
     ```diff
         + styleguide: {
