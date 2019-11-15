@@ -13,7 +13,7 @@ fi
 
 set -e
 
-echo "Start with specifying your operating system:
+echo "Start with specifying your operating system: \
 
     1) Linux
     2) Mac
