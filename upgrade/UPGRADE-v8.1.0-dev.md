@@ -647,7 +647,6 @@ There you can find links to upgrade notes for other versions too.
         ```
 
 - add image and iframe LazyLoad ([#1483](https://github.com/shopsys/shopsys/pull/1483))
-
     - update `src/Shopsys/ShopBundle/Resources/scripts/frontend/components/ajaxMoreLoader.js`
         ```diff
                  $paginationToItemSpan.text(paginationToItem);
@@ -685,9 +684,9 @@ There you can find links to upgrade notes for other versions too.
         </div>
       ```
     - update test files according to PR:
-        - `tests/ReadModelBundle/Functional/Twig/ImageExtensionTest.php`
-        - `tests/ReadModelBundle/Functional/Twig/Resources/picture.twig`
-        - `tests/ShopBundle/Functional/Twig/Resources/picture.twig`
+        - [`tests/ReadModelBundle/Functional/Twig/ImageExtensionTest.php`](https://github.com/shopsys/shopsys/pull/1483/files#diff-00773500c9249efed8065b6832744d31)
+        - [`tests/ReadModelBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-f9ab2d66d30131a8d66df0a7c6eed4e4)
+        - [`tests/ShopBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-b57160edc2db5a01659693b4b417dafd)
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
