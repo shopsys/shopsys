@@ -666,19 +666,7 @@ There you can find links to upgrade notes for other versions too.
         +      {{ image(entity, { size: 'original', height: 100, type: image_type, lazy: false }) }}
           </div>
         ```
-    - update [ImageExtension.php](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Twig/ImageExtension.php)
-        ```diff
-           $htmlAttributes = $attributes;
-           unset($htmlAttributes['type'], $htmlAttributes['size']);
-        +  $useLazyLoading = array_key_exists('lazy', $attributes) ? (bool)$attributes['lazy'] : true;
-        +  unset($htmlAttributes['lazy']);
-        +  if ($useLazyLoading === true) {
-              $htmlAttributes['loading'] = 'lazy';
-              $htmlAttributes['data-src'] = $htmlAttributes['src'];
-              $htmlAttributes['src'] = '';
-        +  }
-        +
-        ```
+
     - update [ajaxMoreLoader.js](https://github.com/shopsys/project-base/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/components/ajaxMoreLoader.js)
         ```diff
                  $paginationToItemSpan.text(paginationToItem);
@@ -694,9 +682,9 @@ There you can find links to upgrade notes for other versions too.
                  Shopsys.register.registerNewContent($productsWithControls);
              };
         ```
-    - add new file [lazyLoadInit.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/lazyLoadInit.js)
+    - add new file [project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/lazyLoadInit.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/lazyLoadInit.js)
 
-    - add new file [minilazyload.min.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/minilazyload.min.js)
+    - add new file [project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/minilazyload.min.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/minilazyload.min.js)
 
     - update admin files
       - [listGrid.html.twig](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Content/Advert/listGrid.html.twig)
@@ -720,7 +708,6 @@ There you can find links to upgrade notes for other versions too.
             {{ image(entity, { size: 'original', height: 100, type: image_type, lazy: false }) }}
         </div>
       ```
-
 
     - update frontend files and disable image lazyload
       - [index.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Default/index.html.twig)
