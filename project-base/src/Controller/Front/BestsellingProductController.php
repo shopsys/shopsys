@@ -53,7 +53,7 @@ class BestsellingProductController extends FrontBaseController
             $this->currentCustomer->getPricingGroup()
         );
 
-        return $this->render('@ShopsysShop/Front/Content/Product/bestsellingProductsList.html.twig', [
+        return $this->render('Front/Content/Product/bestsellingProductsList.html.twig', [
             'products' => $bestsellingProducts,
             'maxShownProducts' => BestsellingProductFacade::MAX_SHOW_RESULTS,
         ]);

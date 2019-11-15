@@ -30,7 +30,7 @@
         {% block content %}{% endblock %}
 
         <div class="web__footer{% if not isCookiesConsentGiven() %} web__footer--with-cookies js-eu-cookies-consent-footer-gap{% endif %}">
-            {% include '@ShopsysShop/Front/Layout/footer.html.twig' %}
+            {% include 'Front/Layout/footer.html.twig' %}
         </div>
     </div>
     {% if not isCookiesConsentGiven() %}

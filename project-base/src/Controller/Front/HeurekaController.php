@@ -46,7 +46,7 @@ class HeurekaController extends FrontBaseController
             return new Response('');
         }
 
-        return $this->render('@ShopsysShop/Front/Content/Heureka/widget.html.twig', [
+        return $this->render('Front/Content/Heureka/widget.html.twig', [
             'widgetCode' => $this->heurekaSetting->getHeurekaShopCertificationWidgetByDomainId($domainId),
         ]);
     }

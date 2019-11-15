@@ -121,7 +121,7 @@ class PersonalDataController extends FrontBaseController
 
         $content = $this->setting->getForDomain(Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT, $this->domain->getId());
 
-        return $this->render('@ShopsysShop/Front/Content/PersonalData/index.html.twig', [
+        return $this->render('Front/Content/PersonalData/index.html.twig', [
             'personalDataSiteContent' => $content,
             'title' => t('Personal information overview'),
             'form' => $form->createView(),
@@ -151,7 +151,7 @@ class PersonalDataController extends FrontBaseController
 
         $content = $this->setting->getForDomain(Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT, $this->domain->getId());
 
-        return $this->render('@ShopsysShop/Front/Content/PersonalData/index.html.twig', [
+        return $this->render('Front/Content/PersonalData/index.html.twig', [
             'personalDataSiteContent' => $content,
             'title' => t('Personal information export'),
             'form' => $form->createView(),
@@ -182,7 +182,7 @@ class PersonalDataController extends FrontBaseController
                 $this->domain->getId()
             );
 
-            return $this->render('@ShopsysShop/Front/Content/PersonalData/detail.html.twig', [
+            return $this->render('Front/Content/PersonalData/detail.html.twig', [
                 'personalDataAccessRequest' => $personalDataAccessRequest,
                 'orders' => $orders,
                 'user' => $user,
@@ -216,7 +216,7 @@ class PersonalDataController extends FrontBaseController
                 $this->domain->getId()
             );
 
-            return $this->render('@ShopsysShop/Front/Content/PersonalData/export.html.twig', [
+            return $this->render('Front/Content/PersonalData/export.html.twig', [
                 'personalDataAccessRequest' => $personalDataAccessRequest,
                 'domainName' => $this->domain->getName(),
                 'hash' => $hash,
@@ -255,7 +255,7 @@ class PersonalDataController extends FrontBaseController
                 $this->domain->getId()
             );
 
-            $xmlContent = $this->render('@ShopsysShop/Front/Content/PersonalData/export.xml.twig', [
+            $xmlContent = $this->render('Front/Content/PersonalData/export.xml.twig', [
                 'user' => $user,
                 'newsletterSubscriber' => $newsletterSubscriber,
                 'orders' => $orders,

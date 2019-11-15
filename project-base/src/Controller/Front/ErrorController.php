@@ -114,7 +114,7 @@ class ErrorController extends FrontBaseController
 
         $code = $exception->getStatusCode();
 
-        return $this->render('@ShopsysShop/Front/Content/Error/error.' . $format . '.twig', [
+        return $this->render('Front/Content/Error/error.' . $format . '.twig', [
             'status_code' => $code,
             'status_text' => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
             'exception' => $exception,

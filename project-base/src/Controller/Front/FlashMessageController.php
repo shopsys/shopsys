@@ -11,7 +11,7 @@ class FlashMessageController extends FrontBaseController
         /** @var \Shopsys\FrameworkBundle\Component\FlashMessage\Bag $flashMessageBag */
         $flashMessageBag = $this->get('shopsys.shop.component.flash_message.bag.front');
 
-        return $this->render('@ShopsysShop/Front/Inline/FlashMessage/index.html.twig', [
+        return $this->render('Front/Inline/FlashMessage/index.html.twig', [
             'errorMessages' => $flashMessageBag->getErrorMessages(),
             'infoMessages' => $flashMessageBag->getInfoMessages(),
             'successMessages' => $flashMessageBag->getSuccessMessages(),

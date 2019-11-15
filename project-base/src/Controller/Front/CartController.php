@@ -125,7 +125,7 @@ class CartController extends FrontBaseController
             $domainId
         );
 
-        return $this->render('@ShopsysShop/Front/Content/Cart/index.html.twig', [
+        return $this->render('Front/Content/Cart/index.html.twig', [
             'cart' => $cart,
             'cartItems' => $cartItems,
             'cartItemPrices' => $orderPreview->getQuantifiedItemsPrices(),
@@ -142,7 +142,7 @@ class CartController extends FrontBaseController
     {
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser();
 
-        return $this->render('@ShopsysShop/Front/Inline/Cart/cartBox.html.twig', [
+        return $this->render('Front/Inline/Cart/cartBox.html.twig', [
             'cart' => $this->cartFacade->findCartOfCurrentCustomer(),
             'productsPrice' => $orderPreview->getProductsPrice(),
         ]);
@@ -159,7 +159,7 @@ class CartController extends FrontBaseController
             'action' => $this->generateUrl('front_cart_add_product'),
         ]);
 
-        return $this->render('@ShopsysShop/Front/Inline/Cart/addProduct.html.twig', [
+        return $this->render('Front/Inline/Cart/addProduct.html.twig', [
             'form' => $form->createView(),
             'product' => $product,
             'type' => $type,
@@ -176,7 +176,7 @@ class CartController extends FrontBaseController
             'action' => $this->generateUrl('front_cart_add_product'),
         ]);
 
-        return $this->render('@ShopsysShop/Front/Inline/Cart/productAction.html.twig', [
+        return $this->render('Front/Inline/Cart/productAction.html.twig', [
             'form' => $form->createView(),
             'productActionView' => $productActionView,
             'type' => $type,
@@ -248,7 +248,7 @@ class CartController extends FrontBaseController
                     self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
                 );
 
-                return $this->render('@ShopsysShop/Front/Inline/Cart/afterAddWindow.html.twig', [
+                return $this->render('Front/Inline/Cart/afterAddWindow.html.twig', [
                     'accessories' => $accessories,
                     'ACCESSORIES_ON_BUY' => ModuleList::ACCESSORIES_ON_BUY,
                 ]);

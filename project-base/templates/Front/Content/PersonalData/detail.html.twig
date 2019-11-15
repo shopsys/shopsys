@@ -95,7 +95,7 @@
                     {% endif %}
 
                     {% if orders|length != 0 %}
-                        {% include '@ShopsysShop/Front/Content/PersonalData/order.html.twig' with { 'orders': orders } %}
+                        {% include 'Front/Content/PersonalData/order.html.twig' with { 'orders': orders } %}
                     {% endif %}
 
                     {% if newsletterSubscriber %}

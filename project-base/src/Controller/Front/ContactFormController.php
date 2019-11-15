@@ -71,7 +71,7 @@ class ContactFormController extends FrontBaseController
             }
         }
 
-        $contactFormHtml = $this->renderView('@ShopsysShop/Front/Content/ContactForm/contactForm.html.twig', [
+        $contactFormHtml = $this->renderView('Front/Content/ContactForm/contactForm.html.twig', [
             'form' => $form->createView(),
             'privacyPolicyArticle' => $privacyPolicyArticle,
         ]);
@@ -90,7 +90,7 @@ class ContactFormController extends FrontBaseController
             'action' => $this->generateUrl('front_contact_form_send'),
         ]);
 
-        return $this->render('@ShopsysShop/Front/Content/ContactForm/contactForm.html.twig', [
+        return $this->render('Front/Content/ContactForm/contactForm.html.twig', [
             'form' => $form->createView(),
             'privacyPolicyArticle' => $privacyPolicyArticle,
         ]);

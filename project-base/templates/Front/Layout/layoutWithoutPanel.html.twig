@@ -1,4 +1,4 @@
-{% extends '@ShopsysShop/Front/Layout/layout.html.twig' %}
+{% extends 'Front/Layout/layout.html.twig' %}
 
 {% block content %}
     <div class="web__main">
@@ -12,7 +12,7 @@
                     {{ render(controller('App\\Controller\\Front\\FlashMessageController:indexAction')) }}
                 </div>
             </div>
-            
+
             {% block main_content %}{% endblock %}
         </div>
     </div>

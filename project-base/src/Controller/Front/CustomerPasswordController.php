@@ -77,7 +77,7 @@ class CustomerPasswordController extends FrontBaseController
             }
         }
 
-        return $this->render('@ShopsysShop/Front/Content/Registration/resetPassword.html.twig', [
+        return $this->render('Front/Content/Registration/resetPassword.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -124,7 +124,7 @@ class CustomerPasswordController extends FrontBaseController
             return $this->redirectToRoute('front_homepage');
         }
 
-        return $this->render('@ShopsysShop/Front/Content/Registration/setNewPassword.html.twig', [
+        return $this->render('Front/Content/Registration/setNewPassword.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -29,7 +29,7 @@ class ArticleController extends FrontBaseController
     {
         $article = $this->articleFacade->getVisibleById($id);
 
-        return $this->render('@ShopsysShop/Front/Content/Article/detail.html.twig', [
+        return $this->render('Front/Content/Article/detail.html.twig', [
             'article' => $article,
         ]);
     }
@@ -38,7 +38,7 @@ class ArticleController extends FrontBaseController
     {
         $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(Article::PLACEMENT_TOP_MENU);
 
-        return $this->render('@ShopsysShop/Front/Content/Article/menu.html.twig', [
+        return $this->render('Front/Content/Article/menu.html.twig', [
             'articles' => $articles,
         ]);
     }
@@ -47,7 +47,7 @@ class ArticleController extends FrontBaseController
     {
         $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(Article::PLACEMENT_FOOTER);
 
-        return $this->render('@ShopsysShop/Front/Content/Article/menu.html.twig', [
+        return $this->render('Front/Content/Article/menu.html.twig', [
             'articles' => $articles,
         ]);
     }

@@ -28,7 +28,7 @@ class AdvertController extends FrontBaseController
     {
         $advert = $this->advertFacade->findRandomAdvertByPositionOnCurrentDomain($positionName);
 
-        return $this->render('@ShopsysShop/Front/Content/Advert/box.html.twig', [
+        return $this->render('Front/Content/Advert/box.html.twig', [
             'advert' => $advert,
         ]);
     }

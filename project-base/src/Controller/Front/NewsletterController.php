@@ -92,7 +92,7 @@ class NewsletterController extends FrontBaseController
     {
         $privacyPolicyArticle = $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId());
 
-        return $this->render('@ShopsysShop/Front/Inline/Newsletter/subscription.html.twig', [
+        return $this->render('Front/Inline/Newsletter/subscription.html.twig', [
             'form' => $form->createView(),
             'success' => $form->isSubmitted() && $form->isValid(),
             'privacyPolicyArticle' => $privacyPolicyArticle,

@@ -42,14 +42,14 @@ class LoginController extends FrontBaseController
             $form->addError(new FormError(t('This account doesn\'t exist or password is incorrect')));
         }
 
-        return $this->render('@ShopsysShop/Front/Content/Login/loginForm.html.twig', [
+        return $this->render('Front/Content/Login/loginForm.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     public function windowFormAction()
     {
-        return $this->render('@ShopsysShop/Front/Content/Login/windowForm.html.twig', [
+        return $this->render('Front/Content/Login/windowForm.html.twig', [
             'form' => $this->getLoginForm()->createView(),
         ]);
     }

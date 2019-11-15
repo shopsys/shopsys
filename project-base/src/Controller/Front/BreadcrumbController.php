@@ -30,7 +30,7 @@ class BreadcrumbController extends FrontBaseController
     {
         $breadcrumbItems = $this->breadcrumbResolver->resolveBreadcrumbItems($routeName, $routeParameters);
 
-        return $this->render('@ShopsysShop/Front/Inline/Breadcrumb/breadcrumb.html.twig', [
+        return $this->render('Front/Inline/Breadcrumb/breadcrumb.html.twig', [
             'breadcrumbItems' => $breadcrumbItems,
         ]);
     }

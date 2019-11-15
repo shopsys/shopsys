@@ -54,7 +54,7 @@ class HomepageController extends FrontBaseController
         $sliderItems = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
         $topProducts = $this->listedProductViewFacade->getAllTop();
 
-        return $this->render('@ShopsysShop/Front/Content/Default/index.html.twig', [
+        return $this->render('Front/Content/Default/index.html.twig', [
             'sliderItems' => $sliderItems,
             'topProducts' => $topProducts,
             'title' => $this->seoSettingFacade->getTitleMainPage($this->domain->getId()),

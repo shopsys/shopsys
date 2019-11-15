@@ -101,7 +101,7 @@ class CustomerController extends FrontBaseController
             $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('@ShopsysShop/Front/Content/Customer/edit.html.twig', [
+        return $this->render('Front/Content/Customer/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -117,7 +117,7 @@ class CustomerController extends FrontBaseController
         $user = $this->getUser();
 
         $orders = $this->orderFacade->getCustomerOrderList($user);
-        return $this->render('@ShopsysShop/Front/Content/Customer/orders.html.twig', [
+        return $this->render('Front/Content/Customer/orders.html.twig', [
             'orders' => $orders,
         ]);
     }
@@ -165,7 +165,7 @@ class CustomerController extends FrontBaseController
 
         $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById($order->getItems());
 
-        return $this->render('@ShopsysShop/Front/Content/Customer/orderDetail.html.twig', [
+        return $this->render('Front/Content/Customer/orderDetail.html.twig', [
             'order' => $order,
             'orderItemTotalPricesById' => $orderItemTotalPricesById,
         ]);

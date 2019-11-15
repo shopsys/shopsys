@@ -10,6 +10,6 @@ class StyleguideController extends FrontBaseController
 {
     public function styleguideAction()
     {
-        return $this->render('@ShopsysShop/Styleguide/styleguide.html.twig');
+        return $this->render('Styleguide/styleguide.html.twig');
     }
 }

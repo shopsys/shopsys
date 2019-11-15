@@ -49,7 +49,7 @@ class SearchController extends FrontBaseController
         $productsPaginationResult = $this->productOnCurrentDomainFacade
             ->getSearchAutocompleteProducts($searchText, self::AUTOCOMPLETE_PRODUCT_LIMIT);
 
-        return $this->render('@ShopsysShop/Front/Content/Search/autocomplete.html.twig', [
+        return $this->render('Front/Content/Search/autocomplete.html.twig', [
             'searchUrl' => $searchUrl,
             'categoriesPaginationResult' => $categoriesPaginationResult,
             'productsPaginationResult' => $productsPaginationResult,
@@ -63,7 +63,7 @@ class SearchController extends FrontBaseController
     {
         $searchText = $request->query->get(ProductController::SEARCH_TEXT_PARAMETER);
 
-        return $this->render('@ShopsysShop/Front/Content/Search/searchBox.html.twig', [
+        return $this->render('Front/Content/Search/searchBox.html.twig', [
             'searchText' => $searchText,
             'SEARCH_TEXT_PARAMETER' => ProductController::SEARCH_TEXT_PARAMETER,
         ]);

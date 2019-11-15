@@ -52,7 +52,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
 
         $twig = $this->getContainer()->get('twig');
 
-        $generatedXml = $twig->render('@ShopsysShop/Front/Content/PersonalData/export.xml.twig', [
+        $generatedXml = $twig->render('Front/Content/PersonalData/export.xml.twig', [
             'user' => $user,
             'orders' => [0 => $order],
             'newsletterSubscriber' => null,

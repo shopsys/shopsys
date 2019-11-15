@@ -10,7 +10,7 @@ use Twig_SimpleFunction;
 class FormThemeExtension extends \Twig_Extension
 {
     protected const ADMIN_THEME = '@ShopsysFramework/Admin/Form/theme.html.twig';
-    protected const FRONT_THEME = '@ShopsysShop/Front/Form/theme.html.twig';
+    protected const FRONT_THEME = 'Front/Form/theme.html.twig';
 
     /**
      * @var \Symfony\Component\HttpFoundation\RequestStack
