@@ -4,5 +4,6 @@ arrange:
     - introduction-to-less.md
     - configuring-image-sizes-for-individual-devices-width.md
     - frontend-troubleshooting.md
+    - stylelint-settings.md
     - understanding-the-style-directory.md
     - basic-design-styleguide.md

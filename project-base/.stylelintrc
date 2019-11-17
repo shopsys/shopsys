@@ -10,7 +10,9 @@
             "ignore": ["stylelint-commands", "after-comment"]
         } ],
         "declaration-colon-space-after": "always",
-        "declaration-block-no-duplicate-properties": true,
+        "declaration-block-no-duplicate-properties": [ true, {
+            ignore: ["consecutive-duplicates"]
+        } ],
         "function-calc-no-unspaced-operator": true,
         "indentation": [ 4, {
             "except": ["value"],
