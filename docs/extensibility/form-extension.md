@@ -89,7 +89,7 @@ $builder
 The output will be: A => B => C => D => E => F => G.
 
 !!! tip
-    More examples can be found [here](https://github.com/egeloen/ivory-ordered-form/blob/master/doc/usage.md#position).
+    More examples can be found [here](https://github.com/shopsys/ordered-form/blob/master/doc/usage.md#position).
 
 ### Changing order of existing groups and fields
 
