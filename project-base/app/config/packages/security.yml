@@ -32,9 +32,6 @@ security:
             logout:
                 path: admin_logout
                 success_handler: Shopsys\FrameworkBundle\Model\Security\AdminLogoutHandler
-                csrf_parameter: _csrf_token
-                csrf_token_generator: security.csrf.token_manager
-                csrf_token_id: admin_logout
                 invalidate_session: false
 
         frontend:
@@ -60,9 +57,6 @@ security:
             logout:
                 path: front_logout
                 success_handler: Shopsys\FrameworkBundle\Model\Security\FrontLogoutHandler
-                csrf_parameter: _csrf_token
-                csrf_token_generator: security.csrf.token_manager
-                csrf_token_id: frontend_logout
                 invalidate_session: false
 
     access_control:
