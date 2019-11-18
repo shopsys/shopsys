@@ -688,6 +688,37 @@ There you can find links to upgrade notes for other versions too.
         - [`tests/ReadModelBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-f9ab2d66d30131a8d66df0a7c6eed4e4)
         - [`tests/ShopBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-b57160edc2db5a01659693b4b417dafd)
 
+- add Basic styleguide ([#1463](https://github.com/shopsys/shopsys/pull/1463))
+    - update config file `.eslintignore`
+        ```diff
+          /src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins
+        + /src/Shopsys/ShopBundle/Resources/scripts/styleguide
+        ```
+    - add route and controller according to PR update `app/config/routing_dev.yml`
+        ```diff
+        + _styleguide:
+        +    path: /_styleguide/
+        +    defaults: { _controller: ShopsysShopBundle:Styleguide\Styleguide:styleguide }
+        ```
+    - add styleguide controller:
+        - [src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php)
+    - add styleguide files according to PR
+        - [web/assets/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/web/assets/styleguide/)
+        - [src/Shopsys/ShopBundle/Resources/scripts/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/)
+        - [src/Shopsys/ShopBundle/Resources/views/Styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/)
+        - [src/Shopsys/ShopBundle/Resources/styles/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/)
+    - update `src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig` and add task
+        ```diff
+        + styleguide: {
+        +     files: {
+        +         'web/assets/styleguide/styles/styleguide_{{ cssVersion }}.css': '{{ customResourcesDirectory }}/styles/styleguide/main.less'
+        +     },
+        +     options: {
+        +         compress: true
+        +     }
+        + },
+        ```
+
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
     - the `RedisCacheFactory` was deprecated, use DIC configuration in YAML instead
