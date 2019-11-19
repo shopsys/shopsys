@@ -262,12 +262,12 @@ class CurrencyFacade
     protected function createTransportAndPaymentPrices(Currency $currency)
     {
         $toFlush = [];
-        foreach ($this->paymentRepository->getAll() as $payment) {
+        foreach ($this->paymentRepository->getAllIncludingDeleted() as $payment) {
             $paymentPrice = $this->paymentPriceFactory->create($payment, $currency, Money::zero());
             $this->em->persist($paymentPrice);
             $toFlush[] = $paymentPrice;
         }
-        foreach ($this->transportRepository->getAll() as $transport) {
+        foreach ($this->transportRepository->getAllIncludingDeleted() as $transport) {
             $transportPrice = $this->transportPriceFactory->create($transport, $currency, Money::zero());
             $this->em->persist($transportPrice);
             $toFlush[] = $transportPrice;
