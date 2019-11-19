@@ -1,11 +1,11 @@
 # StyleLint Settings
-This document describes style lint setting according linter [stylelint.io](https://stylelint.io/).
+This document describes stylelint setting according linter [stylelint.io](https://stylelint.io/).
 
 ## Editor plugins
-You can try to find StyleLint plugin in your editor package manager. For more info please [visit stylelint.io user guide](https://stylelint.io/user-guide/complementary-tools#editor-plugins)
+You can try to find stylelint plugin in your editor package manager. For more info please [visit stylelint.io user guide](https://stylelint.io/user-guide/complementary-tools#editor-plugins)
 
 ## Check and fix all files
-If you want to fix all files in your command line, you can install Stylelint library from npm:
+If you want to fix all files in your command line, you can install stylelint library from npm:
 
 ``` sh
 npm install stylelint --save -dev
