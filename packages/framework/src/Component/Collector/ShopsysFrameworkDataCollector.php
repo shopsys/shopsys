@@ -113,16 +113,16 @@ final class ShopsysFrameworkDataCollector extends DataCollector
     protected function resolveDocsVersion(string $versionString): string
     {
         $version = new Version($versionString);
-        $versionMinorValue = (int) $version->getMinor()->getValue();
+        $versionMinorValue = (int)$version->getMinor()->getValue();
 
         if ($version->hasPreReleaseSuffix()
             && $version->getPreReleaseSuffix()->getValue() === 'dev'
-            && (int) $version->getPatch()->getValue() === 0
+            && (int)$version->getPatch()->getValue() === 0
             && $versionMinorValue > 0
         ) {
             $versionMinorValue--;
         }
 
-        return sprintf('%d.%d', (int) $version->getMajor()->getValue(), $versionMinorValue);
+        return sprintf('%d.%d', (int)$version->getMajor()->getValue(), $versionMinorValue);
     }
 }
