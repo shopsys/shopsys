@@ -33,7 +33,7 @@ There you can find links to upgrade notes for other versions too.
         - `src/Resources/views/Admin/Content/Category/detail.html.twig`
         - `src/Resources/views/Admin/Content/Product/detail.html.twig`
 - add [`app/getEnvironment.php`](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/getEnvironment.php) file to your project ([#1368](https://github.com/shopsys/shopsys/pull/1368))
-- add optional [Frontend API](https://github.com/shopsys/shopsys/blob/9.0/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445)):
+- add optional [Frontend API](https://github.com/shopsys/shopsys/blob/9.0/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489)):
     - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
     - register necessary bundles in `app/AppKernel.php`
         ```diff
@@ -59,17 +59,7 @@ There you can find links to upgrade notes for other versions too.
         +     resource: "@ShopsysFrontendApiBundle/Resources/config/routing_dev.yml"
         +     prefix: /graphql
         ```
-    - copy necessary type definitions
-        [Query.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Query.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Query.types.yml`
-        [Category.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml`
-- add optional frontend API - products to your project ([#1471](https://github.com/shopsys/shopsys/pull/1471)):
-    - copy necessary type definitions:
-        [Availability.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Availability.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Availability.types.yml`
-        [Flag.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Flag.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Flag.types.yml`
-        [Money.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Money.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Money.types.yml`
-        [Price.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Price.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Price.types.yml`
-        [Product.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Product.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Product.types.yml`
-        [Unit.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Unit.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Unit.types.yml`
+    - copy [type definitions from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/) into `src/Shopsys/ShopBundle/Resources/graphql-types/` folder
     - copy necessary configuration [shopsys_frontend_api.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/packages/shopsys_frontend_api.yml) to `app/config/packages/shopsys_frontend_api.yml`
     - copy [tests for FrontendApiBundle from Github](https://github.com/shopsys/shopsys/tree/9.0/project-base/tests/FrontendApiBundle) to your `tests` folder
     - enable Frontend API for desired domains in `app/config/parameters_common.yml` file  
@@ -80,22 +70,10 @@ There you can find links to upgrade notes for other versions too.
         +     shopsys.frontend_api.domains:
         +         - 1
         +         - 2
-- add optional fronted API - product and category images to your project ([#1486](https://github.com/shopsys/shopsys/pull/1486))
-    - copy necessary type definitions:
-        [Category.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml`
-        [Image.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Image.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Image.types.yml`
-        [Product.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Product.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Product.types.yml`
     - update your `easy-coding-standard.yml` file:
         - add `'*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
 - removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437)) 
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
-
-- add optional frontend API - products variant to your project ([#1489](https://github.com/shopsys/shopsys/pull/1489)):
-    - copy necessary type definitions:
-        [MainVariant.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/MainVariant.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/MainVariant.types.yml`
-        [RegularProduct.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/RegularProduct.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/RegularProduct.types.yml`
-        [Variant.types.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/Variant.types.yml) to `src/Shopsys/ShopBundle/Resources/graphql-types/Variant.types.yml`
-        
 - add access denied url to `security.yml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
     ```diff
          administration:

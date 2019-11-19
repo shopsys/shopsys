@@ -319,6 +319,57 @@ class ProductRepository
     }
 
     /**
+     * @param int $domainId
+     * @param string $locale
+     * @param string $orderingModeId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllListableTranslatedAndOrderedQueryBuilder(
+        int $domainId,
+        string $locale,
+        string $orderingModeId,
+        PricingGroup $pricingGroup
+    ): QueryBuilder {
+        $queryBuilder = $this->getAllListableQueryBuilder(
+            $domainId,
+            $pricingGroup
+        );
+
+        $this->addTranslation($queryBuilder, $locale);
+        $this->applyOrdering($queryBuilder, $orderingModeId, $pricingGroup, $locale);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $locale
+     * @param string $orderingModeId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllListableTranslatedAndOrderedQueryBuilderByCategory(
+        int $domainId,
+        string $locale,
+        string $orderingModeId,
+        PricingGroup $pricingGroup,
+        Category $category
+    ): QueryBuilder {
+        $queryBuilder = $this->getListableInCategoryQueryBuilder(
+            $domainId,
+            $pricingGroup,
+            $category
+        );
+
+        $this->addTranslation($queryBuilder, $locale);
+        $this->applyOrdering($queryBuilder, $orderingModeId, $pricingGroup, $locale);
+
+        return $queryBuilder;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @param int $domainId
      * @param string $locale

@@ -2,7 +2,7 @@ ProductDecorator:
     type: interface
     decorator: true
     config:
-        description: "Represents a category"
+        description: "Represents a product"
         fields:
             uuid:
                 type: "ID!"

@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
@@ -11,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\ShopBundle\Model\Category\Category;
 
 class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterface
 {
@@ -141,6 +143,41 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->currentCustomer->getPricingGroup(),
             $page,
             $limit
+        );
+    }
+
+    /**
+     * @param string $orderingModeId
+     * @param \Shopsys\ShopBundle\Model\Category\Category $category
+     * @return \Doctrine\ORM\QueryBuilder
+     * @deprecated This method will be removed after changing dependency in ProductsResolver from ProductOnCurrentDomainFacade to ProductOnCurrentDomainFacadeInterface
+     */
+    public function getAllListableTranslatedAndOrderedQueryBuilderByCategory(
+        string $orderingModeId,
+        Category $category
+    ): QueryBuilder {
+        return $this->productRepository->getAllListableTranslatedAndOrderedQueryBuilderByCategory(
+            $this->domain->getId(),
+            $this->domain->getLocale(),
+            $orderingModeId,
+            $this->currentCustomer->getPricingGroup(),
+            $category
+        );
+    }
+
+    /**
+     * @param string $orderingModeId
+     * @return \Doctrine\ORM\QueryBuilder
+     * @deprecated This method will be removed after changing dependency in ProductsResolver from ProductOnCurrentDomainFacade to ProductOnCurrentDomainFacadeInterface
+     */
+    public function getAllListableTranslatedAndOrderedQueryBuilder(
+        string $orderingModeId
+    ): QueryBuilder {
+        return $this->productRepository->getAllListableTranslatedAndOrderedQueryBuilder(
+            $this->domain->getId(),
+            $this->domain->getLocale(),
+            $orderingModeId,
+            $this->currentCustomer->getPricingGroup()
         );
     }
 

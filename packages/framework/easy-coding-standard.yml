@@ -48,6 +48,7 @@ parameters:
             - '*/tests/Test/Codeception/ActorInterface.php'
             - '*/tests/Unit/Component/Money/MoneyTest.php'
             - '*/src/Model/Product/Search/FilterQuery.php'
+            - '*/src/Model/Category/CategoryRepository.php'
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff.DetectedWhile:
             - '*/src/Model/Product/Availability/ProductAvailabilityRecalculator.php'

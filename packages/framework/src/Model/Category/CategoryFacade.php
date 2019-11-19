@@ -109,6 +109,15 @@ class CategoryFacade
     }
 
     /**
+     * @param string $categoryUuid
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category
+     */
+    public function getByUuid(string $categoryUuid): Category
+    {
+        return $this->categoryRepository->getOneByUuid($categoryUuid);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
