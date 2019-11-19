@@ -2,6 +2,7 @@
     "rules": {
         "block-no-empty": true,
         "block-closing-brace-empty-line-before": "never",
+        "block-opening-brace-space-before": "always",
         "color-no-invalid-hex": true,
         "color-hex-case": [ "lower", {
             "message": "Lowercase letters are easier to distinguish from numbers"

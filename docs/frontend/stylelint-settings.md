@@ -23,6 +23,7 @@ All rules are defined at `.stylelintrc`:
 
 - [block-no-empty](https://stylelint.io/user-guide/rules/block-no-empty) : true
 - [block-closing-brace-empty-line-before](https://stylelint.io/user-guide/rules/block-closing-brace-empty-line-before) : "never"
+- [block-opening-brace-space-before](https://stylelint.io/user-guide/rules/block-closing-brace-empty-line-before) : "always"
 - [color-no-invalid-hex](https://stylelint.io/user-guide/rules/color-no-invalid-hex) : true
 - [color-hex-case](https://stylelint.io/user-guide/rules/color-hex-case) : "lower"
 - [comment-empty-line-before](https://stylelint.io/user-guide/rules/comment-empty-line-before) : "always"
