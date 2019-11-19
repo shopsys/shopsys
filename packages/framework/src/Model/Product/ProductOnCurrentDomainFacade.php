@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
@@ -12,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
-use Shopsys\ShopBundle\Model\Category\Category;
 
 class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterface
 {
@@ -148,7 +148,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
 
     /**
      * @param string $orderingModeId
-     * @param \Shopsys\ShopBundle\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Doctrine\ORM\QueryBuilder
      * @deprecated This method will be removed after changing dependency in ProductsResolver from ProductOnCurrentDomainFacade to ProductOnCurrentDomainFacadeInterface
      */

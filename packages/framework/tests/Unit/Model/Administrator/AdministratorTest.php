@@ -6,10 +6,10 @@ namespace Tests\FrameworkBundle\Unit\Model\Administrator;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorData;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\MandatoryAdministratorRoleIsMissingException;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleData;
-use Shopsys\ShopBundle\Model\Administrator\AdministratorData;
 
 class AdministratorTest extends TestCase
 {
