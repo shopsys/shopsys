@@ -10,4 +10,5 @@
 ## Implementation
 * [Lazyload](./lazyload.md)
 * [Override admin styles from project-base](./override-admin-styles.md)
+* [Graphic checkboxes and radiobuttons](./graphic-checkboxes-and-radiobuttons.md)
 * [Page layout design](./page-layout-design.md)

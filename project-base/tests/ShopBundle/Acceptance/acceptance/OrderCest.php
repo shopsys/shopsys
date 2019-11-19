@@ -13,6 +13,9 @@ use Tests\ShopBundle\Test\Codeception\Helper\SymfonyHelper;
 
 class OrderCest
 {
+    private const TRANSPORT_CZECH_POST_POSITION = 0;
+    private const PAYMENT_CACHE_ON_DELIVERY = 1;
+
     /**
      * @param \Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\ProductListPage $productListPage
      * @param \Tests\ShopBundle\Acceptance\acceptance\PageObject\Front\OrderPage $orderPage
@@ -32,9 +35,9 @@ class OrderCest
         $me->clickByTranslationFrontend('Order [verb]');
 
         $orderPage->assertTransportIsNotSelected('Czech post');
-        $orderPage->selectTransport('Czech post');
+        $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
         $orderPage->assertPaymentIsNotSelected('Cash on delivery');
-        $orderPage->selectPayment('Cash on delivery');
+        $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
         $me->waitForAjax();
         $me->clickByTranslationFrontend('Continue in order');
         $me->clickByTranslationFrontend('Back to shipping and payment selection');
@@ -62,9 +65,9 @@ class OrderCest
         $me->clickByTranslationFrontend('Order [verb]');
 
         $orderPage->assertTransportIsNotSelected('Czech post');
-        $orderPage->selectTransport('Czech post');
+        $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
         $orderPage->assertPaymentIsNotSelected('Cash on delivery');
-        $orderPage->selectPayment('Cash on delivery');
+        $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
         $me->waitForAjax();
         $me->clickByTranslationFrontend('Continue in order');
         $me->amOnLocalizedRoute('front_order_index');
@@ -87,8 +90,8 @@ class OrderCest
         $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
         $me->clickByTranslationFrontend('Go to cart');
         $me->clickByTranslationFrontend('Order [verb]');
-        $orderPage->selectTransport('Czech post');
-        $orderPage->selectPayment('Cash on delivery');
+        $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
+        $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
         $me->waitForAjax();
         $me->clickByTranslationFrontend('Continue in order');
 
@@ -145,8 +148,8 @@ class OrderCest
         $me->clickByTranslationFrontend('Go to cart');
         $me->clickByTranslationFrontend('Order [verb]');
 
-        $orderPage->selectTransport('Czech post');
-        $orderPage->selectPayment('Cash on delivery');
+        $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
+        $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
         $me->waitForAjax();
         $me->clickByTranslationFrontend('Continue in order');
 

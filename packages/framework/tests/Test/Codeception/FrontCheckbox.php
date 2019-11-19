@@ -9,12 +9,12 @@ namespace Tests\FrameworkBundle\Test\Codeception;
  * Allows to manipulate checkboxes and read their state
  * (The original input is hidden by JS and replaced by a graphical element, therefore it cannot be manipulated directly)
  */
-class AdminCheckbox extends AbstractCheckbox
+class FrontCheckbox extends AbstractCheckbox
 {
     /**
      * @param \Tests\FrameworkBundle\Test\Codeception\ActorInterface $tester
      * @param string $cssSelector
-     * @return \Tests\FrameworkBundle\Test\Codeception\AdminCheckbox
+     * @return \Tests\FrameworkBundle\Test\Codeception\FrontCheckbox
      */
     public static function createByCss(ActorInterface $tester, string $cssSelector): self
     {
@@ -30,7 +30,7 @@ class AdminCheckbox extends AbstractCheckbox
     {
         $imageElementClass = 'js-checkbox-image-' . rand();
 
-        $script = sprintf('$("%s").next(".css-checkbox__image").addClass("%s")', $this->cssSelector, $imageElementClass);
+        $script = sprintf('$("%s").next().addClass("%s")', $this->cssSelector, $imageElementClass);
         $this->tester->executeJS($script);
 
         return $imageElementClass;

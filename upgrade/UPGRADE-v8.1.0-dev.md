@@ -639,6 +639,89 @@ There you can find links to upgrade notes for other versions too.
         ```
         - for more information you can see the [PR](https://github.com/shopsys/shopsys/pull/1461)
 
+- add graphic checkboxes and radiobuttons ([#1465](https://github.com/shopsys/shopsys/pull/1465))
+    - update following files
+    - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/box/chooser.less` (line 18)
+        ```diff
+          align-items: flex-start;
+        + cursor: pointer;
+
+          &__check {
+        ```
+    - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/form/choice.less` (line 4)
+        ```diff
+          display: inline-block;
+        - padding-left: 20px;
+          line-height: 20px;
+        ```
+
+    - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/in/icon.less` (line 13)
+        ```diff
+          font-size: 16px;
+        + height: 16px;
+          cursor: help;
+        ```
+
+    - add new file `ttps://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/core/form/custom-inputs.less` according to pull request
+    - link this new file in `ttps://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/main.less`
+
+    ```diff
+          @import "core/form/input.less";
+        + @import "core/form/custom-inputs.less";
+          @import "core/form/btn.less";
+    ```
+
+    - Update `ttps://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Form/theme.html.less`
+
+    ```diff
+          {% block checkbox_row %}
+        -     <dl class="{{ rowClass|default('form-line') }}">
+        -        <dt></dt>
+        -        <dd>
+        -            <div class="form-choice">
+        -                <div class="form-choice__input">
+        -                    {{ form_widget(form) }}
+        -                </div>
+        -                <div class="form-choice__label">
+        -                    {{ form_label(form, label) }}
+        -                    {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
+        -                    {{ form_errors(form, { errors_attr: errors_attr } ) }}
+        -                    {{ block('icon') }}
+        -                </div>
+        -            </div>
+        -        </dd>
+        -     </dl>
+        +     <div class="{{ rowClass|default('form-line') }}">
+        +        <div class="form-choice">
+        +            {{ form_widget(form, { attr: { class: "css-checkbox" } }) }}
+        +            {{ form_label(form, label, { label_attr: { class: "css-c+heckbox__image" }}) }}
+        +            {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
+        +            {{ form_errors(form, { errors_attr: errors_attr } ) }}
+        +            {{ block('icon') }}
+        +        </div>
+        +     </div>
+          {% endblock checkbox_row %}
+     ```
+
+    - update all twig files according to pull request or find all checkboxes and add them `{ attr: { class: "css-checkbox" } }` and direct after input tag add label with `class="css-checkbox__image"`. You can change class name to `css-radio` and `css-radio__image` according to input type.
+
+        - [loginForm.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Login/loginForm.html.twig)
+        - [windowForm.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Login/windowForm.html.twig)
+        - [step2.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step2.html.twig)
+        - [step3.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step3.html.twig)
+        - [filterFormMacro.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/filterFormMacro.html.twig)
+        - [register.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Registration/register.html.twig)
+        - [subscription.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Inline/Newsletter/subscription.html.twig)
+
+    - you can use tag `<span class="css-checkbox_image">` instead of label, if label wraps form input and text
+    - update all test according to pull request - so it can accept new graphic inputs
+
+        - [OrderCest.php](https://github.com/shopsys/shopsys/blob/8.1/project-base/tests/ShopBundle/Acceptance/acceptance/OrderCest.php)
+        - [OrderPage.php](https://github.com/shopsys/shopsys/blob/8.1/project-base/tests/ShopBundle/Acceptance/acceptance/PageObject/Front/OrderPage.php)
+        - [ProductFilterPage.php](https://github.com/shopsys/shopsys/blob/8.1/project-base/tests/ShopBundle/Acceptance/acceptance/PageObject/Front/ProductFilterPage.php)
+        - [RegistrationPage.php](https://github.com/shopsys/shopsys/blob/8.1/project-base/tests/ShopBundle/Acceptance/acceptance/PageObject/Front/RegistrationPage.php)
+        - [ProductFilterCest.php](https://github.com/shopsys/shopsys/blob/8.1/project-base/tests/ShopBundle/Acceptance/acceptance/ProductFilterCest.php)
+
 - change required version for `symfony/monolog-bundle` ([#1506](https://github.com/shopsys/shopsys/pull/1506))
     - edit `composer.json`
         ```diff
