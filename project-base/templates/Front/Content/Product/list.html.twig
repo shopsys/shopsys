@@ -1,0 +1,68 @@
+{% extends 'Front/Layout/layoutWithPanel.html.twig' %}
+{% import 'Front/Inline/Paginator/paginator.html.twig' as paginator %}
+{% import 'Front/Content/Product/filterFormMacro.html.twig' as productFilterForm %}
+
+{% set domain = getDomain() %}
+
+{% block meta_robots %}
+    {{ paginator.metaRobots(paginationResult) }}
+{% endblock %}
+
+{% block meta_description %}
+    {{- category.getSeoMetaDescription(domain.id)|default(getSeoMetaDescription()) -}}
+{% endblock %}
+
+{% block title %}
+    {{ category.getSeoTitle(domain.id)|default(category.name) }}
+{% endblock %}
+
+{% block main_content %}
+    <div class="box-list">
+        {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productList'})) }}
+        <h1>
+            {{ category.getSeoH1(domain.id)|default(category.name) }}
+        </h1>
+        {% if visibleChildren is not empty %}
+            <h2>{{ 'List of subcategories'|trans }}</h2>
+
+            {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: visibleChildren})) }}
+        {% endif %}
+
+        {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
+
+        <div class="js-product-list-with-filter">
+            {% if paginationResult.results|length > 0 or filterFormSubmitted %}
+                <div class="box-filter js-product-filter">
+                    {{ productFilterForm.filterForm(
+                        filterForm,
+                        url('front_product_list', { id: category.id }),
+                        url('front_product_list', { id: category.id }),
+                        null,
+                        'product_list',
+                        productFilterCountData,
+                        priceRange
+                    ) }}
+                </div>
+            {% endif %}
+
+            <div class="js-product-list-ajax-filter-products-with-controls">
+                <div>
+                    {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListAction')) }}
+                </div>
+                {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted} %}
+            </div>
+        </div>
+
+        <div class="box-list__description">
+            <div class="js-category-description box-list__description__text in-user-text">
+                {{ category.getDescription(domain.id)|raw }}
+            </div>
+            <div class="box-list__description__more">
+                <span class="js-category-description-load-more link-style box-list__description__more__btn">
+                    {{ 'View more'|trans }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

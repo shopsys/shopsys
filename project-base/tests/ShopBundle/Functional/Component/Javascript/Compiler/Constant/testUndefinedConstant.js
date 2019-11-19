@@ -1,1 +1,0 @@
-var undefinedConstant = Shopsys.constant('Tests\\ShopBundle\\Functional\\\Component\\Javascript\\Compiler\\Constant\\Testclass::BAR');

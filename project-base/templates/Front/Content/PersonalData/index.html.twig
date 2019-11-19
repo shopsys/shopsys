@@ -1,0 +1,37 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block title %}
+    {{ 'Personal information overview'|trans }}
+{% endblock %}
+
+{% block meta_description %}
+    {{ parent() }}
+{% endblock %}
+
+{% block meta_robots -%}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line">
+        <div class="web__container">
+            <div class="in-user-text">
+                <h1>{{ title }}</h1>
+
+                {{ personalDataSiteContent|raw }}
+
+                <div class="padding-20">
+                    {{ form_start(form, { method: 'POST' }) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.send) }}
+                    {{ form_end(form) }}
+                    {{ form_errors(form, { errors_attr: { class : 'in-message--alert' } }) }}
+                </div>
+            </div>
+
+            {% if user is defined %}
+                {{ include('Front/Content/PersonalData/detail.html.twig') }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,98 @@
+imports:
+    - { resource: forms.yml }
+    - { resource: services/*.yml }
+    - { resource: paths.yml }
+    - { resource: parameters_common.yml }
+    - { resource: parameters.yml }
+    - { resource: directories.yml }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Controller\:
+        resource: '../src/Controller/'
+        public: true
+        tags: ['controller.service_arguments']
+
+    App\:
+        resource: '../src/**/*{Calculation,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer}.php'
+        exclude: '../src/{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
+
+    League\Flysystem\MountManager:
+        arguments:
+            -
+                local: '@local_filesystem'
+                main: '@main_filesystem'
+
+    App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
+
+    Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface: '@App\Form\Front\Order\DomainAwareOrderFlowFactory'
+
+    Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface: '@App\Model\Article\ArticleDataFactory'
+
+    App\Model\Category\CurrentCategoryResolver: ~
+
+    League\Flysystem\FilesystemInterface: '@main_filesystem'
+
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface: '@App\Model\Administrator\AdministratorDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface: '@App\Model\Category\CategoryDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface: '@App\Model\Customer\UserDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@App\Model\Order\OrderDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@App\Model\Order\Item\OrderItemDataFactory'
+
+    App\Model\Order\OrderDataMapper: ~
+
+    Shopsys\FrameworkBundle\Model\Order\OrderDataMapper: '@App\Model\Order\OrderDataMapper'
+
+    Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface: '@App\Model\Transport\TransportDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface: '@App\Model\Payment\PaymentDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@App\Model\Product\ProductDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface: '@Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade'
+
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface: '@Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade'
+
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@App\Model\Product\Brand\BrandDataFactory'
+
+    App\DataFixtures\Performance\CategoryDataFixture:
+        arguments:
+            - "%shopsys.performance_data.category.counts_by_level%"
+
+    App\DataFixtures\Performance\OrderDataFixture:
+        arguments:
+            - "%shopsys.performance_data.order.total_count%"
+            - "%shopsys.performance_data.order.item_count_per_order%"
+
+    App\DataFixtures\Performance\ProductDataFixture:
+        arguments:
+            - "%shopsys.performance_data.product.total_count%"
+
+    App\DataFixtures\Performance\UserDataFixture:
+        arguments:
+            - "%shopsys.performance_data.user.count_per_domain%"
+
+    App\DataFixtures\Demo\ImageDataFixture:
+        arguments:
+            - '%shopsys.data_fixtures_images.resources_dir%'
+            - '%shopsys.image_dir%'
+            - '%shopsys.domain_images_dir%'
+        tags: ['doctrine.fixture.orm']
+
+    Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
+        arguments:
+            $useInlineEditation: false
+
+    App\Controller\Front\ErrorController:
+        arguments:
+            $environment: '%kernel.environment%'

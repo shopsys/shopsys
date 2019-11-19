@@ -2,16 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopsys;
+namespace App;
 
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 
-/**
- * Helper class for use in {@see \Shopsys\Bootstrap}
- */
 class Environment
 {
     /**

@@ -10,7 +10,7 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class ProductImagesTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\ShopBundle\Model\Product\Product
+     * @var \App\Model\Product\Product
      */
     private $product;
 

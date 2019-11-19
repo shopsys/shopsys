@@ -15,3 +15,6 @@
 .DS_Store
 /docker-compose.yml
 /docker-sync.yml
+/.env.local
+/.env.local.php
+/.env.*.local

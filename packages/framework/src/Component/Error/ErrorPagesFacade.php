@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Error;
 
-use AppKernel;
+use App\Kernel;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
@@ -143,7 +143,7 @@ class ErrorPagesFacade
      */
     protected function getUrlContent($errorPageUrl, $expectedStatusCode)
     {
-        $errorPageKernel = new AppKernel(EnvironmentType::PRODUCTION, false);
+        $errorPageKernel = new Kernel(EnvironmentType::PRODUCTION, false);
 
         $errorPageFakeRequest = Request::create($errorPageUrl);
 

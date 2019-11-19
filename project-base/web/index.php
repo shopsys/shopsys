@@ -1,16 +1,40 @@
 <?php
 
-// if you don't want to setup permissions the proper way, just uncomment the following PHP line
-// read http://symfony.com/doc/current/book/installation.html#configuration-and-setup for more information
-umask(0002);
-
-use Shopsys\Bootstrap;
+use App\Environment;
+use App\Kernel;
+use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Symfony\Component\Debug\Debug;
+use Symfony\Component\HttpFoundation\Request;
 
 if (file_exists(__DIR__ . '/../MAINTENANCE')) {
     require __DIR__ . '/../app/maintenance.php';
-} else {
-    require_once __DIR__ . '/../app/autoload.php';
 
-    $bootstrap = new Bootstrap();
-    $bootstrap->run();
+    exit;
 }
+
+require dirname(__DIR__) . '/app/autoload.php';
+
+$_SERVER['APP_ENV'] = Environment::getEnvironment(false);
+$_SERVER['APP_DEBUG'] = EnvironmentType::isDebug($_SERVER['APP_ENV']);
+
+require dirname(__DIR__).'/config/bootstrap.php';
+
+if ($_SERVER['APP_DEBUG']) {
+    umask(0000);
+
+    Debug::enable();
+}
+
+if ($trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? $_ENV['TRUSTED_PROXIES'] ?? false) {
+    Request::setTrustedProxies(explode(',', $trustedProxies), Request::HEADER_X_FORWARDED_ALL ^ Request::HEADER_X_FORWARDED_HOST);
+}
+
+if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? $_ENV['TRUSTED_HOSTS'] ?? false) {
+    Request::setTrustedHosts([$trustedHosts]);
+}
+
+$kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
+$request = Request::createFromGlobals();
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);

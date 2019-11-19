@@ -11,9 +11,9 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade;
-use Shopsys\ShopBundle\Model\Category\Category;
 
 class ProductsResolver implements ResolverInterface, AliasedInterface
 {
@@ -66,7 +66,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Shopsys\ShopBundle\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
     public function resolveByCategory(Argument $argument, Category $category)
@@ -91,7 +91,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     }
 
     /**
-     * @param \Shopsys\ShopBundle\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int $offset
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]

@@ -10,3 +10,6 @@
 /project-base/composer.lock
 /project-base/package-lock.json
 /project-base/migrations-lock.yml
+/.env.local
+/.env.local.php
+/.env.*.local

@@ -69,7 +69,7 @@ class ClassExtensionRegistry
         foreach ($finder as $file) {
             /** @var \Symfony\Component\Finder\SplFileInfo $file */
             $frameworkClassFqcn = $this->getFqcn($file->getPathname());
-            $projectClassFqcn = str_replace('Shopsys\FrameworkBundle', 'Shopsys\ShopBundle', $frameworkClassFqcn);
+            $projectClassFqcn = str_replace('Shopsys\FrameworkBundle', 'App', $frameworkClassFqcn);
             if (class_exists($projectClassFqcn)) {
                 $otherClassesMap[$frameworkClassFqcn] = $projectClassFqcn;
             }

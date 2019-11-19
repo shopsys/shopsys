@@ -1,0 +1,31 @@
+{% extends 'Front/Layout/layout.html.twig' %}
+
+{% block content %}
+    <div class="web__main web__main--with-panel">
+        <div class="web__main__content js-main-content">
+            {% block breadcrumb %}
+                {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+            {% endblock %}
+
+            <div class="web__line">
+                <div class="web__container">
+                    {{ render(controller('App\\Controller\\Front\\FlashMessageController:indexAction')) }}
+                </div>
+            </div>
+
+            {% block main_content %}{% endblock %}
+        </div>
+
+        <div class="web__main__panel dont-print">
+            {{ render(controller('App\\Controller\\Front\\CategoryController:panelAction', { request: app.request } )) }}
+
+            {% block panel_content %}{% endblock %}
+
+            <div id="js-contact-form-container">
+                {{ render(controller('App\\Controller\\Front\\ContactFormController:indexAction')) }}
+            </div>
+
+            {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'leftSidebar'})) }}
+        </div>
+    </div>
+{% endblock %}

@@ -23,9 +23,9 @@ class AnnotationsReplacerTest extends TestCase
     protected function setUp(): void
     {
         $replacementMap = new AnnotationsReplacementsMap([
-            'Shopsys\FrameworkBundle\Model\Category\CategoryFacade' => 'Shopsys\ShopBundle\Model\Category\CategoryFacade',
-            'Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface' => 'Shopsys\ShopBundle\Model\MyProduct\ProductDataFactory',
-            'Shopsys\FrameworkBundle\Model\Article\ArticleData' => 'Shopsys\ShopBundle\Model\Article\ArticleData',
+            'Shopsys\FrameworkBundle\Model\Category\CategoryFacade' => 'App\Model\Category\CategoryFacade',
+            'Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface' => 'App\Model\MyProduct\ProductDataFactory',
+            'Shopsys\FrameworkBundle\Model\Article\ArticleData' => 'App\Model\Article\ArticleData',
         ]);
 
         $this->annotationsReplacer = new AnnotationsReplacer($replacementMap);
@@ -39,15 +39,15 @@ class AnnotationsReplacerTest extends TestCase
         return [
             [
                 'input' => '@var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade',
-                'output' => '@var \Shopsys\ShopBundle\Model\Category\CategoryFacade',
+                'output' => '@var \App\Model\Category\CategoryFacade',
             ],
             [
                 'input' => '@var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface',
-                'output' => '@var \Shopsys\ShopBundle\Model\MyProduct\ProductDataFactory',
+                'output' => '@var \App\Model\MyProduct\ProductDataFactory',
             ],
             [
                 'input' => '@var \Shopsys\FrameworkBundle\Model\Article\ArticleData',
-                'output' => '@var \Shopsys\ShopBundle\Model\Article\ArticleData',
+                'output' => '@var \App\Model\Article\ArticleData',
             ],
             [
                 'input' => '@var \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory',
@@ -59,19 +59,19 @@ class AnnotationsReplacerTest extends TestCase
             ],
             [
                 'input' => '@param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade',
-                'output' => '@param \Shopsys\ShopBundle\Model\Category\CategoryFacade',
+                'output' => '@param \App\Model\Category\CategoryFacade',
             ],
             [
                 'input' => '@return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade',
-                'output' => '@return \Shopsys\ShopBundle\Model\Category\CategoryFacade',
+                'output' => '@return \App\Model\Category\CategoryFacade',
             ],
             [
                 'input' => '@return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade[]',
-                'output' => '@return \Shopsys\ShopBundle\Model\Category\CategoryFacade[]',
+                'output' => '@return \App\Model\Category\CategoryFacade[]',
             ],
             [
                 'input' => '@return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|null',
-                'output' => '@return \Shopsys\ShopBundle\Model\Category\CategoryFacade|null',
+                'output' => '@return \App\Model\Category\CategoryFacade|null',
             ],
             [
                 'input' => '@return int',
@@ -98,9 +98,9 @@ class AnnotationsReplacerTest extends TestCase
         $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
 
         return [
-            [$reflectionClass->getMethod('returnsFrameworkCategoryFacade'), '\Shopsys\ShopBundle\Model\Category\CategoryFacade'],
-            [$reflectionClass->getMethod('returnsFrameworkCategoryFacadeOrNull'), '\Shopsys\ShopBundle\Model\Category\CategoryFacade|null'],
-            [$reflectionClass->getMethod('returnsFrameworkArticleDataArray'), '\Shopsys\ShopBundle\Model\Article\ArticleData[]'],
+            [$reflectionClass->getMethod('returnsFrameworkCategoryFacade'), '\App\Model\Category\CategoryFacade'],
+            [$reflectionClass->getMethod('returnsFrameworkCategoryFacadeOrNull'), '\App\Model\Category\CategoryFacade|null'],
+            [$reflectionClass->getMethod('returnsFrameworkArticleDataArray'), '\App\Model\Article\ArticleData[]'],
             [$reflectionClass->getMethod('returnsInt'), 'int'],
         ];
     }
@@ -123,9 +123,9 @@ class AnnotationsReplacerTest extends TestCase
         $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
 
         return [
-            [$reflectionClass->getProperty('categoryFacadeOrNull'), '\Shopsys\ShopBundle\Model\Category\CategoryFacade|null'],
+            [$reflectionClass->getProperty('categoryFacadeOrNull'), '\App\Model\Category\CategoryFacade|null'],
             [$reflectionClass->getProperty('integer'), 'int'],
-            [$reflectionClass->getProperty('articleDataArray'), '\Shopsys\ShopBundle\Model\Article\ArticleData[]'],
+            [$reflectionClass->getProperty('articleDataArray'), '\App\Model\Article\ArticleData[]'],
         ];
     }
 
@@ -148,9 +148,9 @@ class AnnotationsReplacerTest extends TestCase
         $reflectionMethod = $reflectionClass->getMethod('acceptsVariousParameters');
 
         return [
-            [$reflectionMethod->getParameter('categoryFacade'), '\Shopsys\ShopBundle\Model\Category\CategoryFacade'],
-            [$reflectionMethod->getParameter('categoryFacadeOrNull'), '\Shopsys\ShopBundle\Model\Category\CategoryFacade|null'],
-            [$reflectionMethod->getParameter('array'), '\Shopsys\ShopBundle\Model\Article\ArticleData[]'],
+            [$reflectionMethod->getParameter('categoryFacade'), '\App\Model\Category\CategoryFacade'],
+            [$reflectionMethod->getParameter('categoryFacadeOrNull'), '\App\Model\Category\CategoryFacade|null'],
+            [$reflectionMethod->getParameter('array'), '\App\Model\Article\ArticleData[]'],
             [$reflectionMethod->getParameter('integer'), 'int'],
         ];
     }

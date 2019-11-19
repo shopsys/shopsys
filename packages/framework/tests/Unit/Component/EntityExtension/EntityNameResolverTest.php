@@ -25,32 +25,32 @@ class EntityNameResolverTest extends TestCase
                 'expected' => 'Shopsys\FrameworkBundle\Model\Entity',
             ],
             'replacing exact match' => [
-                'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity'],
+                'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity'],
                 'value' => 'Shopsys\FrameworkBundle\Model\Entity',
-                'expected' => 'Shopsys\ShopBundle\Model\MyEntity',
+                'expected' => 'App\Model\MyEntity',
             ],
             'not replacing other entity name (that is not in map)' => [
-                'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity'],
+                'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity'],
                 'value' => 'Shopsys\FrameworkBundle\Model\OtherEntity',
                 'expected' => 'Shopsys\FrameworkBundle\Model\OtherEntity',
             ],
             'not replacing partially matching entity name' => [
-                'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity'],
+                'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity'],
                 'value' => 'Shopsys\FrameworkBundle\Model\Entity\Item',
                 'expected' => 'Shopsys\FrameworkBundle\Model\Entity\Item',
             ],
             'not replacing in DQL' => [
-                'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity'],
+                'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity'],
                 'value' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity',
                 'expected' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity',
             ],
             'replacing exact match in multiple-item map' => [
                 'map' => [
-                    'Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity',
-                    'Shopsys\FrameworkBundle\Model\OtherEntity' => 'Shopsys\ShopBundle\Model\MyOtherEntity',
+                    'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
+                    'Shopsys\FrameworkBundle\Model\OtherEntity' => 'App\Model\MyOtherEntity',
                 ],
                 'value' => 'Shopsys\FrameworkBundle\Model\OtherEntity',
-                'expected' => 'Shopsys\ShopBundle\Model\MyOtherEntity',
+                'expected' => 'App\Model\MyOtherEntity',
             ],
         ];
     }
@@ -79,22 +79,22 @@ class EntityNameResolverTest extends TestCase
 
         return $resolveDataProvider + [
                 'replacing in DQL' => [
-                    'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity'],
+                    'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity'],
                     'value' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity',
-                    'expected' => 'SELECT * FROM Shopsys\ShopBundle\Model\MyEntity',
+                    'expected' => 'SELECT * FROM App\Model\MyEntity',
                 ],
                 'replacing multiple occurrences of the same entity name' => [
-                    'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity'],
+                    'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity'],
                     'value' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity JOIN Shopsys\FrameworkBundle\Model\Entity',
-                    'expected' => 'SELECT * FROM Shopsys\ShopBundle\Model\MyEntity JOIN Shopsys\ShopBundle\Model\MyEntity',
+                    'expected' => 'SELECT * FROM App\Model\MyEntity JOIN App\Model\MyEntity',
                 ],
                 'replacing multiple entity names' => [
                     'map' => [
-                        'Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity',
-                        'Shopsys\FrameworkBundle\Model\OtherEntity' => 'Shopsys\ShopBundle\Model\MyOtherEntity',
+                        'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
+                        'Shopsys\FrameworkBundle\Model\OtherEntity' => 'App\Model\MyOtherEntity',
                     ],
                     'value' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity JOIN Shopsys\FrameworkBundle\Model\OtherEntity',
-                    'expected' => 'SELECT * FROM Shopsys\ShopBundle\Model\MyEntity JOIN Shopsys\ShopBundle\Model\MyOtherEntity',
+                    'expected' => 'SELECT * FROM App\Model\MyEntity JOIN App\Model\MyOtherEntity',
                 ],
             ];
     }
@@ -122,8 +122,8 @@ class EntityNameResolverTest extends TestCase
     public function testResolvingInArray(): void
     {
         $entityNameResolver = new EntityNameResolver([
-            'Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity',
-            'Shopsys\FrameworkBundle\Model\OtherEntity' => 'Shopsys\ShopBundle\Model\MyOtherEntity',
+            'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
+            'Shopsys\FrameworkBundle\Model\OtherEntity' => 'App\Model\MyOtherEntity',
         ]);
 
         $resolvedValue = $entityNameResolver->resolveIn([
@@ -137,11 +137,11 @@ class EntityNameResolverTest extends TestCase
         ]);
 
         $this->assertSame([
-            'in DQL' => 'SELECT * FROM Shopsys\ShopBundle\Model\MyEntity',
-            'multiple entity names' => 'SELECT * FROM Shopsys\ShopBundle\Model\MyEntity JOIN Shopsys\ShopBundle\Model\MyOtherEntity',
+            'in DQL' => 'SELECT * FROM App\Model\MyEntity',
+            'multiple entity names' => 'SELECT * FROM App\Model\MyEntity JOIN App\Model\MyOtherEntity',
             'recursive' => [
-                'Shopsys\ShopBundle\Model\MyEntity',
-                'SELECT * FROM Shopsys\ShopBundle\Model\MyEntity',
+                'App\Model\MyEntity',
+                'SELECT * FROM App\Model\MyEntity',
                 'Shopsys\FrameworkBundle\Model\Entity\NonExtendedItem',
             ],
         ], $resolvedValue);
@@ -150,7 +150,7 @@ class EntityNameResolverTest extends TestCase
     public function testResolvingInPropertiesReturnsSameObject(): void
     {
         $entityNameResolver = new EntityNameResolver([
-            'Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity',
+            'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
         ]);
         $object = new stdClass();
         $object->property = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
@@ -163,20 +163,20 @@ class EntityNameResolverTest extends TestCase
     public function testResolvingInPublicProperty(): void
     {
         $entityNameResolver = new EntityNameResolver([
-            'Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity',
+            'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
         ]);
         $object = new stdClass();
         $object->property = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
 
         $entityNameResolver->resolveIn($object);
 
-        $this->assertSame('SELECT * FROM Shopsys\ShopBundle\Model\MyEntity', $object->property);
+        $this->assertSame('SELECT * FROM App\Model\MyEntity', $object->property);
     }
 
     public function testResolvingInPrivateProperty(): void
     {
         $entityNameResolver = new EntityNameResolver([
-            'Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity',
+            'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
         ]);
         $object = new class() {
             private $property = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
@@ -192,13 +192,13 @@ class EntityNameResolverTest extends TestCase
 
         $entityNameResolver->resolveIn($object);
 
-        $this->assertSame('SELECT * FROM Shopsys\ShopBundle\Model\MyEntity', $object->getProperty());
+        $this->assertSame('SELECT * FROM App\Model\MyEntity', $object->getProperty());
     }
 
     public function testResolvingInPropertiesRecursively(): void
     {
         $entityNameResolver = new EntityNameResolver([
-            'Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity',
+            'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
         ]);
         $innerObject = new class() {
             private $property = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
@@ -216,13 +216,13 @@ class EntityNameResolverTest extends TestCase
 
         $entityNameResolver->resolveIn($object);
 
-        $this->assertSame('SELECT * FROM Shopsys\ShopBundle\Model\MyEntity', $object->property->getProperty());
+        $this->assertSame('SELECT * FROM App\Model\MyEntity', $object->property->getProperty());
     }
 
     public function testResolvingInMultipleProperties(): void
     {
         $entityNameResolver = new EntityNameResolver([
-            'Shopsys\FrameworkBundle\Model\Entity' => 'Shopsys\ShopBundle\Model\MyEntity',
+            'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
         ]);
         $object = new stdClass();
         $object->dql = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
@@ -234,10 +234,10 @@ class EntityNameResolverTest extends TestCase
 
         $entityNameResolver->resolveIn($object);
 
-        $this->assertSame('SELECT * FROM Shopsys\ShopBundle\Model\MyEntity', $object->dql);
+        $this->assertSame('SELECT * FROM App\Model\MyEntity', $object->dql);
         $this->assertSame('Shopsys\FrameworkBundle\Model\OtherEntity', $object->otherEntity);
         $this->assertSame([
-            'Shopsys\ShopBundle\Model\MyEntity',
+            'App\Model\MyEntity',
             'Shopsys\FrameworkBundle\Model\Entity\NonExtendedItem',
         ], $object->array);
     }

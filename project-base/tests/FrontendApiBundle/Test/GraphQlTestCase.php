@@ -6,7 +6,7 @@ namespace Tests\FrontendApiBundle\Test;
 
 use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\ShopBundle\Test\FunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
 abstract class GraphQlTestCase extends FunctionalTestCase
 {

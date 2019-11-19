@@ -41,7 +41,7 @@ class FilesystemLoader extends BaseFilesystemLoader
     {
         $templateName = (string)$template;
         $multidesignTemplate = null;
-        if (strpos($templateName, '@ShopsysShop/Front/') === 0) {
+        if (strpos($templateName, 'Front/') === 0) {
             $multidesignTemplate = $this->findMultidesignTemplate($templateName);
         }
 

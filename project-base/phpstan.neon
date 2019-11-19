@@ -3,39 +3,35 @@ parameters:
         -
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @(param|return) has invalid value (.|\n)+ expected TOKEN_IDENTIFIER at offset \d+$#'
-            path: %currentWorkingDirectory%/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php
+            path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
-            path: %currentWorkingDirectory%/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php
-        -
-            # Actually, the method is called on NodeBuilder which is implementing the interface, however, annotating would worsen the readability of the code in Configuration class
-            message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)\.$#'
-            path: %currentWorkingDirectory%/src/Shopsys/ShopBundle/DependencyInjection/Configuration.php
+            path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
             # In data fixtures, we often access persistent references using $this->getReference()
-            message: '#^Property Shopsys\\.+::\$.+ \(Shopsys\\.+\) does not accept object\.$#'
-            path: %currentWorkingDirectory%/src/Shopsys/ShopBundle/DataFixtures/*
+            message: '#^Property (App|Shopsys)\\.+::\$.+ \((App|Shopsys)\\.+\) does not accept object\.$#'
+            path: %currentWorkingDirectory%/src/DataFixtures/*
         -
             # In tests, we often grab services using $container->get() or access persistent references using $this->getReference()
             message: '#^Property (Shopsys|Tests)\\.+::\$.+ \(.+\) does not accept (object|object\|null)\.$#'
-            path: %currentWorkingDirectory%/tests/ShopBundle/*
+            path: %currentWorkingDirectory%/tests/App/*
         -
             # In tests, there are helper methods for grabbing services using $container->get()
             message: '#^Method .+::.+\(\) should return .+ but returns (object|object\|null)\.$#'
-            path: %currentWorkingDirectory%/tests/ShopBundle/*
+            path: %currentWorkingDirectory%/tests/App/*
         -
             # Actually, we are setting an array item using "$array[] = $this->getReference()"
             message: '#^Array \(array<.+>\) does not accept object\.$#'
-            path: %currentWorkingDirectory%/tests/ShopBundle/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php
+            path: %currentWorkingDirectory%/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php
         -
             # Actually, we are setting an array item using "$array[] = $this->getReference()"
             message: '#^Array \(array<.+>\) does not accept object\.$#'
-            path: %currentWorkingDirectory%/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixture.php
+            path: %currentWorkingDirectory%/src/DataFixtures/Demo/ProductDataFixture.php
         -
             # We need to have undefined variable for testing purposes
             message: '#^Undefined variable: \$undefined$#'
-            path: %currentWorkingDirectory%/src/Shopsys/ShopBundle/Controller/Test/ErrorHandlerController.php
+            path: %currentWorkingDirectory%/src/Controller/Test/ErrorHandlerController.php
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

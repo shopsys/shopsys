@@ -1,0 +1,167 @@
+front_cart_add_product:
+    path: /cart/addProduct/
+    defaults:
+        _controller: App\Controller\Front\CartController:addProductAction
+    methods: [POST]
+
+front_cart_add_product_ajax:
+    path: /cart/addProductAjax/
+    defaults:
+        _controller: App\Controller\Front\CartController:addProductAjaxAction
+    methods: [POST]
+
+front_cart_box:
+    path: /cart/box/
+    defaults:
+        _controller: App\Controller\Front\CartController:boxAction
+
+front_cart_delete:
+    path: /cart/delete/{cartItemId}/
+    defaults:
+        _controller: App\Controller\Front\CartController:deleteAction
+    requirements:
+        cartItemId: \d+
+
+front_category_branch:
+    path: /categoryPanel/{parentCategoryId}/
+    defaults:
+        _controller: App\Controller\Front\CategoryController:branchAction
+    condition: "request.isXmlHttpRequest()"
+
+front_contact_form_send:
+    path: /contactForm/
+    defaults:
+        _controller: App\Controller\Front\ContactFormController:sendAction
+    methods: [POST]
+    condition: "request.isXmlHttpRequest()"
+
+front_customer_login_as_remembered_user:
+    # same path must be in security.yml
+    path: /login-as-remembered-user/
+    defaults:
+        _controller: App\Controller\Front\CustomerController:loginAsRememberedUserAction
+
+front_error_page:
+    path: /_error/{code}/
+    defaults:
+        _controller: App\Controller\Front\ErrorController:errorPageAction
+    requirements:
+        code: \d+
+
+front_error_page_format:
+    path: /_error/{code}/{_format}/
+    defaults:
+        _controller: App\Controller\Front\ErrorController:errorPageAction
+    requirements:
+        code: \d+
+        _format: css|html|js|json|txt|xml
+
+front_homepage:
+    path: /
+    defaults:
+        _controller: App\Controller\Front\HomepageController:indexAction
+
+front_image:
+    path: '/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/{imageId}.{extension}'
+    defaults:
+        _controller: App\Controller\Front\ImageController:getImageAction
+    requirements:
+        imageId: \d+
+
+front_additional_image:
+    path: "/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/additional_{additionalIndex}_{imageId}.{extension}"
+    defaults:
+        _controller: App\Controller\Front\ImageController:getAdditionalImageAction
+    requirements:
+        imageId: \d+
+        additionalIndex: \d+
+
+front_image_without_type:
+    path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/{imageId}.{extension}"
+    defaults:
+        _controller: App\Controller\Front\ImageController:getImageAction
+        type: ~
+    requirements:
+        imageId: \d+
+
+front_additional_image_without_type:
+    path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/additional_{additionalIndex}_{imageId}.{extension}"
+    defaults:
+        _controller: App\Controller\Front\ImageController:getAdditionalImageAction
+        type: ~
+    requirements:
+        imageId: \d+
+        additionalIndex: \d+
+
+front_login_check:
+    # controller's action is unnecessary, because firewall processes whole request
+    path: /login/check/
+
+front_newsletter_send:
+    path: /newsletter/subscribe-email/
+    defaults:
+        _controller: App\Controller\Front\NewsletterController:subscribeEmailAction
+    methods: [POST]
+    condition: "request.isXmlHttpRequest()"
+
+front_order_preview:
+    path: /order/preview/
+    defaults:
+        _controller: App\Controller\Front\OrderController:previewAction
+    condition: "request.isXmlHttpRequest()"
+    methods: [GET]
+
+front_order_save_form:
+    path: /order/save-form/
+    defaults:
+        _controller: App\Controller\Front\OrderController:saveOrderFormAction
+    methods: [POST]
+
+front_order_terms_and_conditions:
+    path: /order/terms-and-conditions/
+    defaults:
+        _controller: App\Controller\Front\OrderController:termsAndConditionsAction
+
+front_order_terms_and_conditions_download:
+    path: /order/terms-and-conditions-download/
+    defaults:
+        _controller: App\Controller\Front\OrderController:TermsAndConditionsDownloadAction
+
+front_promo_code_apply:
+    path: /promo-code/apply/
+    defaults:
+        _controller: App\Controller\Front\PromoCodeController:applyAction
+    methods: [POST]
+
+front_promo_code_remove:
+    path: /promo-code/remove/
+    defaults:
+        _controller: App\Controller\Front\PromoCodeController:removeAction
+
+front_robots_txt:
+    path: /robots.txt
+    defaults:
+        _controller: App\Controller\Front\RobotsController:indexAction
+
+front_search_autocomplete:
+    path: /search/autocomplete/
+    defaults:
+        _controller: App\Controller\Front\SearchController:autocompleteAction
+    methods: [POST]
+
+front_registration_exists_email:
+    path: /registration/exists-email
+    defaults:
+        _controller: App\Controller\Front\RegistrationController:existsEmailAction
+    methods: [POST]
+
+front_export_personal_data:
+    path: /personal-overview-export/xml/{hash}
+    defaults:
+        _controller: App\Controller\Front\PersonalDataController:exportXmlAction
+
+front_login_window_form:
+    path: /login/form
+    defaults:
+        _controller: App\Controller\Front\LoginController:windowFormAction
+    methods: [POST]

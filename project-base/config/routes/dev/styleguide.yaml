@@ -1,0 +1,3 @@
+_styleguide:
+    path: /_styleguide/
+    defaults: { _controller: App\Controller\Styleguide\StyleguideController:styleguideAction}

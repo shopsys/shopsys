@@ -7,7 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnot
 class ChildClass3 extends BaseClass3
 {
     /**
-     * @return \Shopsys\ShopBundle\Model\Category\CategoryFacade
+     * @return \App\Model\Category\CategoryFacade
      */
     public function getCategoryFacade()
     {

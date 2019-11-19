@@ -1,0 +1,40 @@
+{% extends 'Front/Layout/layoutWithPanel.html.twig' %}
+{% import 'Front/Inline/Paginator/paginator.html.twig' as paginator %}
+{% import 'Front/Content/Product/filterFormMacro.html.twig' as productFilterForm %}
+
+{% block title %}
+    {{ 'Search results for "%searchText%"'|trans({ '%searchText%': searchText }) }}
+{% endblock %}
+
+{% block meta_robots %}
+    {{ paginator.metaRobots(paginationResult) }}
+{% endblock %}
+
+{% block main_content %}
+    <h1>{{ 'Search results for "%searchText%"'|trans({ '%searchText%': searchText }) }}</h1>
+
+    {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: foundCategories})) }}
+
+    <div class="js-product-list-with-filter">
+        {% if paginationResult.results|length > 0 or filterFormSubmitted %}
+            <div class="box-filter js-product-filter">
+                {{ productFilterForm.filterForm(
+                    filterForm,
+                    url('front_product_search'),
+                    url('front_product_search', { (SEARCH_TEXT_PARAMETER) : searchText }),
+                    searchText,
+                    'search',
+                    productFilterCountData,
+                    priceRange
+                ) }}
+            </div>
+        {% endif %}
+
+        <div class="js-product-list-ajax-filter-products-with-controls">
+            <div>
+                {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForSearchAction')) }}
+            </div>
+            {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, searchText: searchText} %}
+        </div>
+    </div>
+{% endblock %}

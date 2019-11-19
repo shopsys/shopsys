@@ -10,7 +10,7 @@ use Twig_SimpleFunction;
 class FormThemeExtension extends \Twig_Extension
 {
     protected const ADMIN_THEME = '@ShopsysFramework/Admin/Form/theme.html.twig';
-    protected const FRONT_THEME = '@ShopsysShop/Front/Form/theme.html.twig';
+    protected const FRONT_THEME = 'Front/Form/theme.html.twig';
 
     /**
      * @var \Symfony\Component\HttpFoundation\RequestStack
@@ -55,7 +55,7 @@ class FormThemeExtension extends \Twig_Extension
     protected function isAdmin(string $controller): bool
     {
         return strpos($controller, 'Shopsys\FrameworkBundle\Controller\Admin') === 0 ||
-            strpos($controller, 'Shopsys\ShopBundle\Controller\Admin') === 0;
+            strpos($controller, 'App\Controller\Admin') === 0;
     }
 
     /**

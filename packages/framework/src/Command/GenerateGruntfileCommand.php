@@ -88,10 +88,11 @@ class GenerateGruntfileCommand extends Command
         $this->cssFacade->setCssVersion($cssVersion);
 
         $output->writeln('Start of generating Gruntfile.js.');
-        $gruntfileContents = $this->twig->render('@ShopsysShop/Grunt/gruntfile.js.twig', [
+        $gruntfileContents = $this->twig->render('Grunt/gruntfile.js.twig', [
             'domains' => $this->domain->getAll(),
             'customResourcesDirectory' => $this->customResourcesDirectory,
             'frameworkResourcesDirectory' => $this->frameworkResourcesDirectory,
+            'gruntTemplateDirectory' => $this->rootDirectory . '/templates/Grunt',
             'cssVersion' => $cssVersion,
         ]);
         $path = $this->rootDirectory;

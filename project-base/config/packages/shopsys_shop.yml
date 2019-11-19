@@ -1,0 +1,3 @@
+parameters:
+    shopsys.router.locale_router_filepath_mask: '%shopsys.root_dir%/config/shopsys-routing/routing_front_*.yml'
+    shopsys.router.friendly_url_router_filepath: '%shopsys.root_dir%/config/shopsys-routing/routing_friendly_url.yml'

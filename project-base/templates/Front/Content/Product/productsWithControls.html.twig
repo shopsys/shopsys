@@ -1,0 +1,29 @@
+{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
+{% import 'Front/Inline/Paginator/paginator.html.twig' as paginator %}
+
+{% if paginationResult.results|length > 0 %}
+    <div class="js-product-list-with-paginator">
+        {% set entityName = 'products'|trans %}
+        {{ paginator.paginatorNavigation(paginationResult, entityName) }}
+
+        {{ productList.list(paginationResult.results) }}
+
+        <div class="text-center margin-bottom-20">
+            {{ paginator.loadMoreButton(paginationResult) }}
+        </div>
+
+        {{ paginator.paginatorNavigation(paginationResult, entityName) }}
+    </div>
+{% else %}
+    <div class="in-message in-message--info margin-bottom-20">
+        {% if (filterFormSubmitted) %}
+            {{ 'No results matching filter'|trans }}
+        {% elseif searchText is defined %}
+            {{ 'Search didn\'t find any products.'|trans }}
+        {% elseif category is defined %}
+            {{ 'This category contains no products.'|trans }}
+        {% else %}
+            {{ 'No products found for this brand'|trans }}
+        {% endif %}
+    </div>
+{% endif %}

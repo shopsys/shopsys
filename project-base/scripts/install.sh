@@ -39,9 +39,9 @@ if [[ -d "project-base" ]]; then
 fi
 
 echo "Creating config files.."
-cp -f "${projectPathPrefix}app/config/parameters.yml.dist" "${projectPathPrefix}app/config/parameters.yml"
-cp -f "${projectPathPrefix}app/config/parameters_test.yml.dist" "${projectPathPrefix}app/config/parameters_test.yml"
-cp -f "${projectPathPrefix}app/config/domains_urls.yml.dist" "${projectPathPrefix}app/config/domains_urls.yml"
+cp -f "${projectPathPrefix}config/parameters.yml.dist" "${projectPathPrefix}config/parameters.yml"
+cp -f "${projectPathPrefix}config/parameters_test.yml.dist" "${projectPathPrefix}config/parameters_test.yml"
+cp -f "${projectPathPrefix}config/domains_urls.yml.dist" "${projectPathPrefix}config/domains_urls.yml"
 
 echo "Creating docker configuration.."
 case "$operatingSystem" in

@@ -1,12 +1,12 @@
-namespace: Tests\ShopBundle\Test\Codeception
+namespace: Tests\App\Test\Codeception
 actor: Tester
 paths:
-    tests: ../tests/ShopBundle/Acceptance
-    log: ../var/logs/codeception
-    data: ../tests/ShopBundle/Acceptance/data
-    support: ../tests/ShopBundle/Test/Codeception
+    tests: ../tests/App/Acceptance
+    log: ../var/log/codeception
+    data: ../tests/App/Acceptance/data
+    support: ../tests/App/Test/Codeception
 params:
-    - ../app/config/parameters_test.yml
+    - ../config/parameters_test.yml
 settings:
     bootstrap: _bootstrap.php
     colors: true

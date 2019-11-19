@@ -1,0 +1,23 @@
+{% extends 'Front/Layout/layout.html.twig' %}
+
+{% block content %}
+    <div class="web__main">
+        <div class="web__main__content js-main-content">
+            {% block breadcrumb %}
+                {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+            {% endblock %}
+
+            <div class="web__line">
+                <div class="web__container">
+                    {{ render(controller('App\\Controller\\Front\\FlashMessageController:indexAction')) }}
+                </div>
+            </div>
+
+            {% block main_content %}{% endblock %}
+        </div>
+    </div>
+
+    <div class="display-none display-block-tablet">
+        {{ render(controller('App\\Controller\\Front\\CategoryController:panelAction', { request: app.request } )) }}
+    </div>
+{% endblock %}

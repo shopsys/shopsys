@@ -6,7 +6,7 @@ namespace Tests\ReadModelBundle\Functional\Image;
 
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ReadModelBundle\Image\ImageView;
-use Tests\ShopBundle\Test\FunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
 class ImageViewFacadeTest extends FunctionalTestCase
 {
