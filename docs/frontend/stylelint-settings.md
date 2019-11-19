@@ -1,10 +1,10 @@
 # StyleLint Settings
 This document describes style lint setting according linter [stylelint.io](https://stylelint.io/).
 
-## Editor Plugins
+## Editor plugins
 You can try to find StyleLint plugin in your editor package manager. For more info please [visit stylelint.io user guide](https://stylelint.io/user-guide/complementary-tools#editor-plugins)
 
-## Check and Fix All Files
+## Check and fix all files
 If you want to fix all files in your command line, you can install Stylelint library from npm:
 
 ``` sh
@@ -17,7 +17,7 @@ stylelint src/**/*.less --fix
 ```
 
 
-## Used Stylelint Rules
+## Used stylelint rules
 
 All rules are defined at `.stylelintrc`:
 
@@ -41,5 +41,5 @@ All rules are defined at `.stylelintrc`:
 - [unit-case](https://stylelint.io/user-guide/rules/unit-case) : "lower"
 - [unit-whitelist](https://stylelint.io/user-guide/rules/unit-whitelist) : ["em", "rem", "%", "px", "s", "ms", "deg", "vh"]
 
-## Excluded Files
+## Excluded files
 You can define and exclude unneeded files at `.stylelintignore` file. By default we exclude generated and third party plugin files. These files are excluded during fixing standards in command line.

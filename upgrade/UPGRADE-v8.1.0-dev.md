@@ -266,6 +266,48 @@ There you can find links to upgrade notes for other versions too.
     - a lot of the possible issues should be already resolved if you followed the previous instruction and ran the `php phing annotations-fix` phing command
     - some of the issues related to class extension need to be addressed manually nevertheless (see the ["Framework extensibility" article](../introduction/framework-extensibility.md#problem-3)) for more information
     - you need to resolve all the other reported problems (it is up to you whether you decide to address them directly or add ignores in your `phpstan.neon`). You can find inspiration in [#1381](https://github.com/shopsys/shopsys/pull/1381) and [#1040](https://github.com/shopsys/shopsys/pull/1040)
+
+- if you want to add stylelint rules to check style coding standards [#1511](https://github.com/shopsys/shopsys/pull/1511)
+    -  add new file [.stylelintignore](https://github.com/shopsys/shopsys/blob/master/project-base/.stylelintignore)
+    -  add new file [.stylelintrc](https://github.com/shopsys/shopsys/blob/master/project-base/.stylelintrc)
+    - update `gruntfile.js.twig` and add new task
+        ```diff
+        + stylelint: {
+        +     all: [
+        +         'src/**/*.less',
+        +     ]
+        + },
+
+          watch: {
+              admin: {
+        ```
+        ```diff
+          {% else -%}
+        -     ['frontendLess{{ domain.id }}']
+        +     ['frontendLess{{ domain.id }}','stylelint']
+          {% endif -%}
+        ```
+        ```diff
+          grunt.loadNpmTasks('grunt-spritesmith');
+        + grunt.loadNpmTasks('grunt-stylelint');
+
+        - grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss", "legacssy"]);
+        + grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss", "legacssy", "stylelint"]);
+        ```
+    - update `package.json`
+        ```diff
+              "grunt-spritesmith": "^6.6.2",
+        +     "grunt-stylelint": "^0.12.0",
+              "grunt-webfont": "^1.7.2",
+              "jit-grunt": "^0.10.0",
+        +     "stylelint": "^11.1.1",
+              "time-grunt": "^1.4.0"
+        ```
+
+    - don't forget to rebuild your grunt file by command `php phing gruntifle` and install new npm packages by command `npm install`
+
+    - install `npm install stylelint --save -dev` to fix all your less files in command line by command `stylelint src/**/*.less --fix`
+
 ### Database migrations
 - run database migrations so products will use a DateTime type for columns for "Selling start date" (selling_from) and "Selling end date" (selling_to) ([#1343](https://github.com/shopsys/shopsys/pull/1343))
     - please check [`Version20190823110846`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Migrations/Version20190823110846.php)
