@@ -257,6 +257,9 @@ class SideMenuBuilder
         $seoMenu = $menu->addChild('seo', ['label' => t('SEO')]);
         $seoMenu->addChild('seo', ['route' => 'admin_seo_index', 'label' => t('SEO')]);
 
+        $contactFormSettingsMenu = $menu->addChild('contact_form_settings', ['label' => t('Contact form')]);
+        $contactFormSettingsMenu->addChild('contact_form_settings', ['route' => 'admin_contactformsettings_index', 'label' => t('Contact form')]);
+
         if ($this->authorizationChecker->isGranted(Roles::ROLE_SUPER_ADMIN)) {
             $superadminMenu = $menu->addChild('superadmin', ['label' => t('Superadmin')]);
             $superadminMenu->setExtra('superadmin', true);
