@@ -2,6 +2,10 @@ front_cart:
     path: /cart/
     defaults: { _controller: App\Controller\Front\CartController:indexAction }
 
+front_contact:
+    path: /contact/
+    defaults: { _controller: App\Controller\Front\ContactFormController:indexAction }
+
 front_customer_edit:
     path: /customer/edit/
     defaults: { _controller: App\Controller\Front\CustomerController:editAction }

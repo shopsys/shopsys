@@ -19,6 +19,7 @@
                 {{ getShopInfoPhoneNumber() }}
                 {{ getShopInfoEmail() }}
                 {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction')) }}
+                <a class="menu__item__link" href="{{ url('front_contact') }}">{{ 'Contact'|trans }}</a>
             </div>
         </footer>
     </div>

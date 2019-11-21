@@ -2,6 +2,10 @@ front_cart:
     path: /kosik/
     defaults: { _controller: App\Controller\Front\CartController:indexAction }
 
+front_contact:
+    path: /kontakt/
+    defaults: { _controller: App\Controller\Front\ContactFormController:indexAction }
+
 front_customer_edit:
     path: /zakaznik/upravit-udaje/
     defaults: { _controller: App\Controller\Front\CustomerController:editAction }
