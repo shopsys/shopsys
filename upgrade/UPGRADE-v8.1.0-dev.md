@@ -693,7 +693,8 @@ There you can find links to upgrade notes for other versions too.
         -     </dl>
         +     <div class="{{ rowClass|default('form-line') }}">
         +        <div class="form-choice">
-        +            {{ form_widget(form, { attr: { class: "css-checkbox" } }) }}
+        +            {% set checkboxAttr = attr|merge({'class': (attr.class|default('') ~ ' css-checkbox')|trim}) %}
+        +            {{ form_widget(form, { attr: checkboxAttr }) }}
         +            {{ form_label(form, label, { label_attr: { class: "css-c+heckbox__image" }}) }}
         +            {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
         +            {{ form_errors(form, { errors_attr: errors_attr } ) }}
