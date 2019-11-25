@@ -13,4 +13,5 @@ When adding a new page on the frontend, you need to implement new `BreadcrumbGen
     - `getRouteNames` method where you have to provide names of the routes for which you want to use your breadcrumb generator
 - visit some URL matching your route and check if everything works fine
 
-*Note: Administration breadcrumb navigations is generated from [Administration menu](../administration/administration-menu.md#routing-extension).*
+!!! note
+    Administration breadcrumb navigations is generated from [Administration menu](../administration/administration-menu.md#routing-extension).

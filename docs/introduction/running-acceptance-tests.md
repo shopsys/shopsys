@@ -10,14 +10,13 @@ docker exec -it shopsys-framework-php-fpm bash
 
 !!! note
     For `selenium-server` to be able to connect to you `webserver` container and access your application, all domains should have URL set to `http://webserver:8000`.
-    This is done via parameter `%overwrite_domain_url%` defined in `parameters_test.yml`.
+    This is done via parameter `%overwrite_domain_url%` defined in `config/parameters_test.yml`.
     Everything should be configured for you by default but it is important to keep the domain URL overwriting in mind when dealing with acceptance tests.
 
 If you are logged into your `php-fpm` container and have the `%overwrite_domain_url%` parameter properly set,
 you can run acceptance tests:
-```
+```sh
 php phing tests-acceptance
-
 ```
 
 !!! hint
@@ -27,23 +26,28 @@ php phing tests-acceptance
 ### How to watch what is going on in the selenium browser
 By default, Shopsys Framework uses `selenium/standalone-chrome` image for `selenium-server` service which means you are not able to watch what is going on in the selenium browser.
 However, there is a quick solution which allows you to watch the progress of your acceptance tests:
-1. In your `docker-compose.yml`, use `standalone-chrome-debug` image for `selenium-server` service and new settings of ports:
-    ```diff
-      selenium-server:
-    -    image: selenium/standalone-chrome:3.11
-    +    image: selenium/standalone-chrome-debug:3.11
-         container_name: shopsys-framework-acceptance-tests
-             ports:
-                 - "4400:4444"
-    +            - "5900:5900"
-    ```
 
-1. Run `docker-compose up -d`
-1. From your local machine, connect to the remote desktop on `vnc://127.0.0.1:5900`
-    - for the connection, you can use e.g. *Remmina* tool that is installed by default in Ubuntu
-    - on Mac, you can run `open vnc://127.0.0.1:5900` in your terminal
-    - the default password for the connection is `secret`
-1. Run acceptance tests as described in [the paragraph above](#running-in-docker)
+In your `docker-compose.yml`, use `standalone-chrome-debug` image for `selenium-server` service and new settings of ports:
+
+```diff
+  selenium-server:
+-    image: selenium/standalone-chrome:3.11
++    image: selenium/standalone-chrome-debug:3.11
+     container_name: shopsys-framework-acceptance-tests
+         ports:
+             - "4400:4444"
++            - "5900:5900"
+```
+
+Run `docker-compose up -d`
+
+From your local machine, connect to the remote desktop on `vnc://127.0.0.1:5900`
+
+- for the connection, you can use e.g. *Remmina* tool that is installed by default in Ubuntu
+- on Mac, you can run `open vnc://127.0.0.1:5900` in your terminal
+- the default password for the connection is `secret`
+
+Run acceptance tests as described in [the paragraph above](#running-in-docker)
 
 ## Native installation
 For running acceptance tests you need to install [Google Chrome browser](https://www.google.com/chrome/browser/desktop/) and download [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/).
@@ -51,28 +55,28 @@ For running acceptance tests you need to install [Google Chrome browser](https:/
 You must choose compatible versions of Google Chrome and ChromeDriver.
 As Chrome browser has auto-update enabled by default this may require you to update ChromeDriver from time to time.
 
-When installing Shopsys Framework natively, it is important to update parameters in `parameters_test.yml`:
+When installing Shopsys Framework natively, it is important to update parameters in `config/parameters_test.yml`:
 
 * `overwrite_domain_url: ~` (disables domain URL overwriting in `TEST` environment)
 * `selenium_server_host: 127.0.0.1`
 
 ### Installing Google Chrome browser
-Download and install Google Chrome browser from https://www.google.com/chrome/browser/desktop/
+Download and install Google Chrome browser from <https://www.google.com/chrome/browser/desktop/>
 
 ### Setting-up ChromeDriver (Selenium WebDriver)
-ChromeDriver can be downloaded from: https://sites.google.com/a/chromium.org/chromedriver/downloads
+ChromeDriver can be downloaded from: <https://sites.google.com/a/chromium.org/chromedriver/downloads>
 
 Extract the executable in your system `PATH` directory.
 Alternatively, you can extract it anywhere and just point to the executable from your `build/build.local.properties` file.
 Example:
-```
+```sh
 path.chromedriver.executable=C:\tools\chrome-driver\chromedriver.exe
 ```
 
 ## Running the whole acceptance test suite
 After finishing the steps above, running acceptance tests is easy.
 Just run the following commands (each in a separate terminal):
-```
+```sh
 # run PHP web server
 php phing server-run
 
@@ -94,7 +98,7 @@ php phing tests-acceptance
 Sometimes you may want to debug individual test without running the whole acceptance test suite (which can take several minutes).
 
 ### Prepare database dump and switch to TEST environment
-```
+```sh
 # create test database and fill it with demo data and export products to elasticsearch test index
 php phing test-db-demo
 
@@ -109,8 +113,8 @@ echo.>TEST
 ```
 
 ### Run individual tests
-```
-vendor/bin/codecept run -c build/codeception.yml acceptance tests/ShopBundle/Acceptance/acceptance/OrderCest.php:testOrderCanBeCompleted
+```sh
+vendor/bin/codecept run -c build/codeception.yml acceptance tests/App/Acceptance/acceptance/OrderCest.php:testOrderCanBeCompleted
 ```
 
 Do not forget to run both PHP web server and Selenium server. See [Running the whole acceptance test suite](#running-the-whole-acceptance-test-suite).
@@ -119,7 +123,7 @@ Do not forget to run both PHP web server and Selenium server. See [Running the w
     In Windows CMD you have to use backslashes in the path of the executable: `vendor\bin\codecept run ...`
 
 ### Do not forget to restore your original environment afterward
-```
+```sh
 # on Unix systems (Linux, Mac OSX)
 rm TEST
 # in Windows CMD

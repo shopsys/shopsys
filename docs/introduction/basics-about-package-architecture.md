@@ -50,10 +50,10 @@ composer create-project shopsys/project-base --no-install --keep-vcs
 ```
 For more detailed instructions, follow [Installation Using Docker](../installation/installation-guide.md#installation-using-docker).
 #### Why not clone or fork?
-`composer create-project` ensures that new project will be created from the latest release of `shopsys/project-base`.
-`git clone` creates a new project from current repository master branch.
+`composer create-project` ensures that new project will be created from the latest release of `shopsys/project-base`  
+`git clone` creates a new project from current repository master branch  
 We do not recommend forking for the same reason.
-Forking also copies the `shopsys/project-base` under your Gihub account and the copy is public by default, and you probably do not need that.
+Forking also copies the `shopsys/project-base` under your Github account and the copy is public by default, and you probably do not need that.
 
 ### Upgrading
 We know that upgrading should be as easy as possible, ideally without requiring any modification of your code.

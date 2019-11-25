@@ -19,13 +19,21 @@ Any Phing target can execute a subset of other targets or console commands.
 Let us take `build` target for example.
 It is located in `build.xml` file in the `shopsys/framework` package and it looks like this:
 ```xml
-<target name="build" depends="build-deploy-part-1-db-independent, build-deploy-part-2-db-dependent" description="Builds application for production preserving your DB."/>
+<target
+    name="build"
+    depends="build-deploy-part-1-db-independent, build-deploy-part-2-db-dependent"
+    description="Builds application for production preserving your DB."
+/>
 ```
 This means that every time you run `php phing build` the `build-deploy-part-1-db-independent` and `build-deploy-part-2-db-dependent` targets are executed.
 But what do those targets do?
 Let us take look at the first one, that is located in the same file:
 ```xml
-<target name="build-deploy-part-1-db-independent" depends="clean,composer-prod,npm,dirs-create,domains-urls-check,assets" description="First part of application build for production preserving your DB (can be run without maintenance page)."/>
+<target
+    name="build-deploy-part-1-db-independent"
+    depends="clean,composer-prod,npm,dirs-create,domains-urls-check,assets"
+    description="First part of application build for production preserving your DB (can be run without maintenance page)."
+/>
 ```
 Target `build-deploy-part-1-db-independent` also executes subset of Phing targets (`clean`,`composer-prod`,`npm`,`dirs-create`,`domains-urls-check`,`assets`).
 
@@ -106,8 +114,8 @@ Useful in a development environment and during deploying to production.
 
 #### backend-api-oauth-keys-generate
 
-Generates OAuth2 private and public key to directory `app/config/packages/oauth2/`, be careful never commit private keys.
-Generates also encryption key to file `app/config/packages/oauth2/parameters_oauth.yml`.
+Generates OAuth2 private and public key to directory `config/oauth2/`, be careful never commit private keys.
+Generates also encryption key to file `config/oauth2/parameters_oauth.yml`.
 
 These keys are used by API OAuth2. The private key is used to sign tokens and public key is used to verify the signatures.
 
@@ -116,7 +124,7 @@ These keys are used by API OAuth2. The private key is used to sign tokens and pu
 Generates a Symfony configuration `build-version` variable that is used to distinguish different application builds.
 The variable itself contains current datetime in PHP format `YmdHis` (16 digits, eg. `20190311135223`) and you can use it in any configuration file by `'%build-version%'`.
 
-The variable is generated to file `app/config/parameters_version.yml` and this file is excluded from git.
+The variable is generated to file `config/parameters_version.yml` and this file is excluded from git.
 
 ### Database
 
@@ -131,7 +139,7 @@ Executes [database migrations](database-migrations.md) and checks schema.
 #### db-create
 Creates database with required db extensions and collations (that are operating system specific, unfortunately).
 
-The target interactively asks for DB superuser credentials in order to perform all the actions so it is not needed to put superuser credentials into `app/config/parameters.yml`.
+The target interactively asks for DB superuser credentials in order to perform all the actions so it is not needed to put superuser credentials into `config/parameters.yml`.
 
 When a locale is not supported by the operating system the command explains the situation and links to the documentation.
 
@@ -151,7 +159,7 @@ Recreates Elasticsearch indexes structure.
 Consists of two sub-tasks that can be run independently:
 
 * `product-search-delete-structure` - deletes existing indexes structure
-* `product-search-create-structure` - creates new indexes structure by json definitions stored in [the resources directory](/project-base/src/Shopsys/ShopBundle/Resources/definition).
+* `product-search-create-structure` - creates new indexes structure by json definitions stored in the resources directory `src/Resources/definition`
 
 #### product-search-migrate-structure
 Migrates Elasticsearch indexes if there is change between currently used structure and the one in `*.json`.
@@ -212,7 +220,7 @@ Runs performance tests on a newly built test database with performance data.
 
 It may take a few hours as the generation of performance data is very time-consuming. Should be executed on CI server only.
 
-The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/parameters_common.yml).
+The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/parameters_common.yml).
 You can easily override the default values in your `parameters.yml` or `parameters_test.yml` configuration files.
 
 ### Other
@@ -279,8 +287,6 @@ Reverts changes done by `backend-api-install` because we don't commit the backen
 If the install script was successful, the uninstall will be successful as well.
 
 ## Customization of Phing targets and properties
-*If you're not yet using `v7.3.0`, all Phing targets are defined in `build.xml` in the project repository only - you can directly modify them or delete them instead of overwriting them.*
-
 You can override and replace any Phing target or property defined in the `shopsys/framework` package by redefining it in your `build.xml` config.
 
 When you override a Phing target, the original is renamed to `shopsys_framework.TARGET_NAME` (see [Target Overriding in Phing docs](https://www.phing.info/phing/guide/en/output/chunkhtml/ImportTask.html#idp4684)).

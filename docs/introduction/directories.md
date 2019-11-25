@@ -11,7 +11,7 @@ There are 2 types of directories that are created.
 ### Internal directories
 Directories that are used by application and do not need to be public, typically cache or logs.
 
-These directories are grouped under `internal_directores` in `app/config/directories.yml` file and their definition is an absolute path.
+These directories are grouped under `internal_directores` in `config/directories.yml` file and their definition is an absolute path.
 
 For example:
 ```yaml
@@ -22,7 +22,7 @@ internal_directories:
 ### Public directories
 Directories that needs to be available for public usage, for example feeds or sitemaps.
 
-These directories are grouped under `public_directores` in `app/config/directories.yml` file and their definition is relative path to the root directory of a project.
+These directories are grouped under `public_directores` in `config/directories.yml` file and their definition is relative path to the root directory of a project.
 
 For example:
 ```yaml
@@ -31,12 +31,12 @@ public_directories:
 ```
 
 ## Adding a new directory
-In case you need to create your own directories, you can simply add them into  `app/config/directories.yml` under suitable type as an array element.
+In case you need to create your own directories, you can simply add them into  `config/directories.yml` under suitable type as an array element.
 
 For example:
 
 ```diff
-// app/config/directories.yml
+// config/directories.yml
 
 parameters:
     public_directories:

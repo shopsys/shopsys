@@ -24,7 +24,7 @@ The output will consist of log messages on separate lines, starting with the con
 ```no-highlight
 shopsys-framework-redis | 1:M 23 Jul 11:32:57.000 * Ready to accept connections
 shopsys-framework-php-fpm | [2018-07-23 11:39:12] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
-shopsys-framework-php-fpm | [2018-07-23 11:42:41] slow.NOTICE: 3.14159265359 Shopsys\ShopBundle\Controller\Front\ProductController::listByCategoryAction /test-category/ [] []
+shopsys-framework-php-fpm | [2018-07-23 11:42:41] slow.NOTICE: 3.14159265359 App\Controller\Front\ProductController::listByCategoryAction /test-category/ [] []
 ```
 
 !!! tip
