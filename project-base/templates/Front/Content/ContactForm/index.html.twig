@@ -5,42 +5,42 @@
 {% endblock %}
 
 {% block main_content %}
-    <div>
-        {{ mainText }}
+    <div class="h2">{{ 'Contact us'|trans }}</div>
+
+    <div class="in-user-text margin-bottom-20">
+        {{ mainText|raw }}
     </div>
 
     {{ form_start(form) }}
-    <div class="h2">{{ 'Contact us'|trans }}</div>
 
     {{ form_errors(form) }}
 
-        {{ form_row(form.name, { label: 'Full name'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
-        {{ form_row(form.email, { label: 'Email'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
-        {{ form_row(form.message, { label: 'Message'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
-        {% if privacyPolicyArticle is not null %}
-            {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
-            {{ form_row(
-                form.privacyPolicy,
-                {
-                    label:  'I agree with  <a href="%url%" target="_blank">privacy policy</a>.'|trans({'%url%': articleUrl}),
-                    errors_attr: { class: 'form-error--choice' },
-                    rawLabel:true,
-                    rowClass: 'form-line-block'
-                }
-            )}}
-        {% else %}
-            {{ form_row(
-                form.privacyPolicy,
-                {
-                    label:  'I agree with privacy policy.'|trans,
-                    errors_attr: { class: 'form-error--choice' },
-                    rowClass: 'form-line-block'
-                }
-            )}}
-        {% endif %}
-        <div class="text-right">
-            {{ form_widget(form.send, { label: 'Send'|trans }) }}
-        </div>
+        {{ form_row(form.name, { label: 'Full name'|trans }) }}
+        {{ form_row(form.email, { label: 'Email'|trans }) }}
+        {{ form_row(form.message, { label: 'Message'|trans }) }}
+        <dl class="form-line">
+            <dt></dt>
+            <dd>
+                <div class="form-choice">
+                    {{ form_widget(form.privacyPolicy, { attr: { class: "css-checkbox" }} )}}
+                    <label for="{{ form.privacyPolicy.vars.id }}" class="css-checkbox__image">
+                        {% if privacyPolicyArticle is not null %}
+                            {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
+                            {{ 'I agree with <a href="%url%" target="_blank">privacy policy</a>.'|trans({'%url%': articleUrl})|raw }}
+                        {% else %}
+                            {{ 'I agree with privacy policy.'|trans }}
+                        {% endif %}
+                    </label>
+                    <span class="js-validation-errors-list js-validation-error-list-{{ form.privacyPolicy.vars.id }} form-error form-error--choice display-none">
+                        <span class="form-error__icon">
+                            <i class="svg svg-warning"></i>
+                        </span>
+                        <ul class="form-error__list"></ul>
+                    </span>
+                </div>
+            </dd>
+        </dl>
+        {{ form_widget(form.send, { label: 'Send'|trans }) }}
 
     {{ form_end(form) }}
 {% endblock %}
