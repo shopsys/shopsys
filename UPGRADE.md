@@ -38,7 +38,8 @@ Follow the instructions in the [monorepo upgrade guide](upgrade/upgrading-monore
 * even we care a lot about these instructions, it is possible we miss something. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
 ## Upgrade guides
-* ### [From v7.3.1 to v7.3.2-dev](upgrade/UPGRADE-v7.3.2-dev.md)
+* ### [From v7.3.2 to v7.3.3-dev](upgrade/UPGRADE-v7.3.3-dev.md)
+* ### [From v7.3.1 to v7.3.2](upgrade/UPGRADE-v7.3.2.md)
 * ### [From v7.3.0 to v7.3.1](upgrade/UPGRADE-v7.3.1.md)
 * ### [From v7.2.2 to v7.3.0](upgrade/UPGRADE-v7.3.0.md)
 * ### [From v7.2.1 to v7.2.2](upgrade/UPGRADE-v7.2.2.md)
