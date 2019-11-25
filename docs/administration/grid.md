@@ -50,7 +50,7 @@ Read the [separate article](../administration/grid-rendering-customization.md) t
 Usually, the grids are created in their factories (e.g. `\Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory`)
 in `create()` method. If you need to add a new column, in most cases it should be sufficient to override the method:
 ```php
-namespace Shopsys\ShopBundle\Grid\Payment;
+namespace App\Grid\Payment;
 
 use Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory as BasePaymentGridFactory;
 
@@ -65,9 +65,9 @@ class PaymentGridFactory extends BasePaymentGridFactory
     }
 }
 ```
-and then set your class as an alias for the original one in `services.yml` configuration file:
+and then set your class as an alias for the original one in `services.yaml` configuration file:
 ```yaml
-Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory: '@Shopsys\ShopBundle\Grid\PaymentGridFactory'
+Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory: '@App\Grid\PaymentGridFactory'
 ```
 
 However, not all grids have their own factories, sometimes they are created in protected method of a controller, and sometimes you may need to perform some more advanced customizations (e.g. change the data source for the grid).
