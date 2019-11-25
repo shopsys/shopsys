@@ -6,13 +6,13 @@
 
 Require `shopsys/backend-api` package in the `composer.json` or run
 
-```bash
+```sh
 composer require shopsys/backend-api
 ```
 
 Backend API installation is fully automated, so you have to run only (you have to be in the project root directory)
 
-```bash
+```sh
 ./vendor/shopsys/backend-api/install/install.sh
 ```
 
@@ -20,13 +20,13 @@ If it was successful, you'll see `Backend API installation was successful!`
 
 Update your composer because the `install.sh` added a composer dependency
 
-```bash
+```sh
 composer update trikoder/oauth2-bundle
 ```
 
 Run database migrations
 
-```bash
+```sh
 php phing db-migrations
 ```
 
@@ -50,6 +50,7 @@ In other words the installation script doesn't stop on the first patch error.
 
 In case of error you'll see error messages like `Patch for app/AppKernel.php cannot be applied!`.
 In such case please take a look into [install directory](https://github.com/shopsys/shopsys/tree/9.0/packages/backend-api/install), and apply all patches manually.
+
 * You have to only add code into files, so copy only lines that starts with plus `+ ` symbol
     * eg. from `composer.json.patch` copy the line `"trikoder/oauth2-bundle": "^1.1",` into your `composer.json`
 * The directory structure in the installation directory matches the directory structure in your project

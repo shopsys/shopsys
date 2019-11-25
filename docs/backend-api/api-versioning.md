@@ -26,9 +26,9 @@ It is probable that there will be multiple API versions supported at once and yo
 To enable the endpoints for a particular version, you just need to add them explicitly in your routing setting.
 You can expect such instructions in the upgrading notes.
 ```diff
-# /app/config/routing.yml
-shopsys_api:
-    resource: "@ShopsysBackendApiBundle/Resources/config/v1/routing.yml"
+# config/routes/backend-api.yml
+  shopsys_api_v1:
+      resource: "@ShopsysBackendApiBundle/Resources/config/v1/routing.yml"
 + shopsys_api_v2:
 +     resource: "@ShopsysBackendApiBundle/Resources/config/v2/routing.yml"
 ```
