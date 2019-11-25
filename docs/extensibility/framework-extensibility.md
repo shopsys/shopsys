@@ -13,7 +13,7 @@ as well as a list of customizations that are not (and will not be) possible at a
     * [Extending particular forms](form-extension.md) without the need of the template overriding
 * [Customizing database migrations](../introduction/database-migrations.md)
     * adding a new migration as well as skipping and reordering the existing ones
-* Configuring the smoke tests (see [`RouteConfigCustomization`](/ShopBundle/Smoke/Http/RouteConfigCustomization.php) class)
+* Configuring the smoke tests (see [`RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/9.0/project-base/tests/App/Smoke/Http/RouteConfigCustomization.php) class)
     * *Note: This is now achievable as the configuration class is located in the open box project-base.
     However, that makes the upgrading of the component harder so the configuration is planned to be re-worked.*
 * [Implementing custom product feed or modifying an existing one](../model/product-feeds.md)
@@ -26,7 +26,7 @@ as well as a list of customizations that are not (and will not be) possible at a
     * e.g. adding new entities, changing the FE design, customization of FE javascripts, adding new FE pages (routes and controllers), ...
 * [Hiding the existing features and functionality](https://github.com/shopsys/demoshop/pull/13)
 * adding a new javascript into admin
-    * add the new javascript files into the directory `src/Shopsys/ShopBundle/Resources/scripts/custom_admin` and they will be loaded automatically
+    * add the new javascript files into the directory `src/Resources/scripts/custom_admin` and they will be loaded automatically
 
 ## What is achievable with additional effort
 
@@ -85,7 +85,7 @@ Imagine this situation:
 
 - You have a controller that is dependent on a framework service:
 ```php
-namespace Shopsys\ShopBundle\Controller\Front;
+namespace App\Controller\Front;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
@@ -107,7 +107,7 @@ class ProductController
 ```
 - In your project, you extend the framework's `ProductFacade` service:
 ```php
-namespace Shopsys\ShopBundle\Model\Product;
+namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 
@@ -121,7 +121,7 @@ class ProductFacade extends BaseProductFacade
 ```
 - You register your extension in DI services configuration and thanks to that, your class is used in `ProductController` instead of the one from `FrameworkBundle`, so far so good:
 ```yaml
-Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@Shopsys\ShopBundle\Model\Product\ProductFacade'
+Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
 ```
 **However, when you want to use your `myCustomAwesomeFunction()` in `ProductController`, the static analysis is not aware of that function.**
 #### Solution
@@ -131,13 +131,13 @@ class ProductController
 {
       /**
 -      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-+      * @var \Shopsys\ShopBundle\Model\Product\ProductFacade
++      * @var \App\Model\Product\ProductFacade
        */
       protected $productFacade;
 
       /**
 -      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-+      * @param \Shopsys\ShopBundle\Model\Product\ProductFacade $productFacade
++      * @param \App\Model\Product\ProductFacade $productFacade
        */
       public function __construct(ProductFacade $productFacade)
       {
@@ -174,7 +174,7 @@ class ProductFacade
 - In your project, you extend `ProductRepository` and `ProductFacade` as well.
 - Then, in your extended facade, you want to access the repository (generally speaking, you want to access the parent's property that has a type that is extended in your project, or you want to access a method that returns a type that is already extended):
 ```php
-namespace Shopsys\ShopBundle\Model\Product;
+namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 
@@ -191,13 +191,13 @@ class ProductFacade extends BaseProductFacade
 #### Solution
 To fix this, you don't need to override the method or property, you just need to add proper `@method` and `@property` annotations to your class:
 ```diff
-namespace Shopsys\ShopBundle\Model\Product;
+namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 
 + /**
-+  * @method \Shopsys\ShopBundle\Model\Product\ProductRepository getProductRepository()
-+  * @property \Shopsys\ShopBundle\Model\Product\ProductRepository $productRepository
++  * @method \App\Model\Product\ProductRepository getProductRepository()
++  * @property \App\Model\Product\ProductRepository $productRepository
 +  */
   class ProductFacade extends BaseProductFacade
   {
@@ -236,7 +236,7 @@ class ProductFacade
 ```
 - You have a controller that is dependent on the framework service:
 ```php
-namespace Shopsys\ShopBundle\Controller\Front;
+namespace App\Controller\Front;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
@@ -258,7 +258,7 @@ class ProductController
     /**
      * @param int $id
      * Your Product instance is returned indeed, but static analysis is confused
-     * @return \Shopsys\ShopBundle\Model\Product\Product
+     * @return \App\Model\Product\Product
      */
     private function myAwesomeMethod($id)
     {
@@ -272,7 +272,7 @@ This needs to be fixed manually using a local variable with an inline annotation
 ```diff
 private function myAwesomeMethod($id)
 {
-+    /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
++    /** @var \App\Model\Product\Product $product */
 +    $product = $this->productFacade->getById($id);
 
 
@@ -281,7 +281,7 @@ private function myAwesomeMethod($id)
 }
 ```
 
-As a workaround for this, you can create an empty class extending the one from the framework, register the extension in your `services.yml`, and then use `php phing annotations-fix` to fix appropriate annotations for you.
+As a workaround for this, you can create an empty class extending the one from the framework, register the extension in your `services.yaml`, and then use `php phing annotations-fix` to fix appropriate annotations for you.
 
 Which way to go really depends on your situation. If you are likely to extend the given framework class sooner or later, or the same problem with the class is reported in many places, it would be better to create the empty extended class right away.
 Otherwise, it might be better just extracting and annotating the variable manually (like in [this commit in monorepo](https://github.com/shopsys/shopsys/commit/efd008b8d))

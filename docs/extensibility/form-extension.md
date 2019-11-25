@@ -20,15 +20,15 @@ We created some form types which can help you with creating your own form types.
 Imagine that you have added new property into `Product entity` and you want this property to be set in administration
 using forms.
 
-For this cases you can use `FormExtensions` in namespace `ShopBundle/Form/Admin` that extends `Symfony\Component\Form\AbstractTypeExtension`, which has function called `getExtendedType()`.
+For this cases you can use `FormExtensions` in namespace `App/Form/Admin` that extends `Symfony\Component\Form\AbstractTypeExtension`, which has function called `getExtendedType()`.
 Implement this function and return `class` of `ProductFormType` and add your fields into form.
-If you create new extension you need to register it in [`forms.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/forms.yml)
+If you create new extension you need to register it in [`config/forms.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/forms.yml)
 
 ## Changing rendering of already existing form type
 If you want to change way the form is rendered or if you want to add your own classes you need to follow few steps.
 Many of our forms have their own theme which describe on how to render form row. These files are located in `Shopsys/FrameworkBundle/Resources/views/Admin/Form` folder.
 Copy theme of form type you want to change into your project namespace and replace file you want to
-change with your own file in `twig/form_themes` in `app/config/packages/twig.yml` file. Now you can change whatever you want.
+change with your own file in `twig/form_themes` in `config/packages/twig.yml` file. Now you can change whatever you want.
 
 Remember that files that you copy into your project cannot be automatically upgraded with newer versions of Shopsys Framework.
 
@@ -40,8 +40,8 @@ You can read more about `theme.html.twig` below.
 You can add your own form type if you want. Just create your own FormType, for example `MyAmazingFormType`, if you want
 to influence how this form type will be displayed you need to create theme for this form type.
 
-Create new file into `Shopsys/ShopBundle/Resources/views/Front/Form` directory, name it for example `myAmazingFields.html.twig` and register
-this theme into `twig/form_themes` in `app/config/packages/twig.yml`.
+Create new file into `templates/Front/Form` directory, name it for example `myAmazingFields.html.twig` and register
+this theme into `twig/form_themes` in `config/packages/twig.yml`.
 
 Now you can define how form type will be rendered. There are two options with which you can influence rendering of form type.
 
@@ -56,7 +56,7 @@ rendering of `MyAmazingFormType` your `form_widget` and `form_row` should be nam
 
 ## `theme.html.twig`
 This template is used for custom rendering of forms and form fields and it extends `form_div_layout.html.twig` from Symfony.
-There are two `theme.html.twig` files as one is used for [administration](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) and the other for [front-end](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Form/theme.html.twig).
+There are two `theme.html.twig` files as one is used for [administration](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) and the other for [front-end](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Form/theme.html.twig).
 It contains definition of blocks that are used for rendering forms
 
 - `form_start` - renders the start tag of the form
