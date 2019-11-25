@@ -2,7 +2,6 @@
 
 namespace Tests\FrameworkBundle\Unit\Component\UploadedFile;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
@@ -47,27 +46,19 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
         ]);
 
         $uploadedFileFacadeMock = $this->getMockBuilder(UploadedFileFacade::class)
-            ->setMethods(['findUploadedFileByEntity'])
+            ->setMethods(['deleteAllUploadedFilesByEntity'])
             ->disableOriginalConstructor()
             ->getMock();
         $uploadedFileFacadeMock
             ->expects($this->once())
-            ->method('findUploadedFileByEntity')
-            ->with($this->equalTo($entity))
-            ->willReturn($uploadedFile);
-
-        $emMock = $this->getMockBuilder(EntityManager::class)
-            ->setMethods(['remove'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $emMock->expects($this->once())->method('remove')->with($uploadedFile);
+            ->method('deleteAllUploadedFilesByEntity')
+            ->with($this->equalTo($entity));
 
         $args = $this->getMockBuilder(LifecycleEventArgs::class)
             ->setMethods(['getEntity', 'getEntityManager'])
             ->disableOriginalConstructor()
             ->getMock();
         $args->method('getEntity')->willReturn($entity);
-        $args->method('getEntityManager')->willReturn($emMock);
 
         $doctrineListener = new UploadedFileDeleteDoctrineListener($uploadedFileConfig, $uploadedFileFacadeMock);
         $doctrineListener->preRemove($args);

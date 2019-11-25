@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 
 class UploadedFileFacade
 {
@@ -72,39 +73,20 @@ class UploadedFileFacade
     public function uploadFile(object $entity, ?array $temporaryFilenames): void
     {
         if ($temporaryFilenames !== null && count($temporaryFilenames) > 0) {
-            $entitiesForFlush = [];
             $uploadedFileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfig($entity);
             $entityId = $this->getEntityId($entity);
-            $oldUploadedFile = $this->uploadedFileRepository->findUploadedFileByEntity(
-                $uploadedFileEntityConfig->getEntityName(),
-                $entityId
-            );
 
-            if ($oldUploadedFile !== null) {
-                $this->em->remove($oldUploadedFile);
-                $entitiesForFlush[] = $oldUploadedFile;
-            }
+            $this->deleteAllUploadedFilesByEntity($entity);
 
             $newUploadedFile = $this->uploadedFileFactory->create(
                 $uploadedFileEntityConfig->getEntityName(),
                 $entityId,
                 $temporaryFilenames
             );
+
             $this->em->persist($newUploadedFile);
-            $entitiesForFlush[] = $newUploadedFile;
-
-            $this->em->flush($entitiesForFlush);
+            $this->em->flush($newUploadedFile);
         }
-    }
-
-    /**
-     * @param object $entity
-     */
-    public function deleteUploadedFileByEntity(object $entity): void
-    {
-        $uploadedFile = $this->getUploadedFileByEntity($entity);
-        $this->em->remove($uploadedFile);
-        $this->em->flush();
     }
 
     /**
@@ -121,23 +103,28 @@ class UploadedFileFacade
 
     /**
      * @param object $entity
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
-    public function getUploadedFileByEntity(object $entity): UploadedFile
+    public function deleteAllUploadedFilesByEntity(object $entity): void
     {
-        return $this->uploadedFileRepository->getUploadedFileByEntity(
+        $uploadedFiles = $this->uploadedFileRepository->getAllUploadedFilesByEntity(
             $this->uploadedFileConfig->getEntityName($entity),
             $this->getEntityId($entity)
         );
+
+        foreach ($uploadedFiles as $uploadedFile) {
+            $this->em->remove($uploadedFile);
+        }
+
+        $this->em->flush($uploadedFiles);
     }
 
     /**
      * @param object $entity
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile|null
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
-    public function findUploadedFileByEntity(object $entity): ?UploadedFile
+    public function getUploadedFilesByEntity(object $entity): array
     {
-        return $this->uploadedFileRepository->findUploadedFileByEntity(
+        return $this->uploadedFileRepository->getUploadedFilesByEntity(
             $this->uploadedFileConfig->getEntityName($entity),
             $this->getEntityId($entity)
         );
@@ -166,21 +153,6 @@ class UploadedFileFacade
     public function getById(int $uploadedFileId): UploadedFile
     {
         return $this->uploadedFileRepository->getById($uploadedFileId);
-    }
-
-    /**
-     * @param object $entity
-     * @return bool
-     */
-    public function hasUploadedFile(object $entity): bool
-    {
-        try {
-            $uploadedFile = $this->getUploadedFileByEntity($entity);
-        } catch (\Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException $e) {
-            return false;
-        }
-
-        return $this->uploadedFileLocator->fileExists($uploadedFile);
     }
 
     /**

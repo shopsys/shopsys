@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 class UploadedFileRepository
 {
@@ -22,7 +25,7 @@ class UploadedFileRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getUploadedFileRepository()
+    protected function getUploadedFileRepository(): EntityRepository
     {
         return $this->em->getRepository(UploadedFile::class);
     }
@@ -30,37 +33,36 @@ class UploadedFileRepository
     /**
      * @param string $entityName
      * @param int $entityId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile|null
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
-    public function findUploadedFileByEntity($entityName, $entityId)
+    public function getAllUploadedFilesByEntity(string $entityName, int $entityId): array
     {
-        return $this->getUploadedFileRepository()->findOneBy([
+        return $this->getUploadedFileRepository()->findBy(
+            [
+                'entityName' => $entityName,
+                'entityId' => $entityId,
+            ]
+        );
+    }
+
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
+     */
+    public function getUploadedFilesByEntity(string $entityName, int $entityId): array
+    {
+        return $this->getUploadedFileRepository()->findBy([
             'entityName' => $entityName,
             'entityId' => $entityId,
         ]);
     }
 
     /**
-     * @param string $entityName
-     * @param int $entityId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     */
-    public function getUploadedFileByEntity($entityName, $entityId)
-    {
-        $uploadedFile = $this->findUploadedFileByEntity($entityName, $entityId);
-        if ($uploadedFile === null) {
-            $message = 'UploadedFile not found for entity "' . $entityName . '" with ID ' . $entityId;
-            throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException($message);
-        }
-
-        return $uploadedFile;
-    }
-
-    /**
      * @param int $uploadedFileId
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
-    public function getById($uploadedFileId)
+    public function getById(int $uploadedFileId): UploadedFile
     {
         $uploadedFile = $this->getUploadedFileRepository()->find($uploadedFileId);
 

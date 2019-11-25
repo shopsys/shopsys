@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 use Twig_Extension;
@@ -59,7 +60,7 @@ class UploadedFileExtension extends Twig_Extension
      */
     public function hasUploadedFile($entity)
     {
-        return $this->uploadedFileFacade->hasUploadedFile($entity);
+        return $this->getUploadedFileByEntity($entity) instanceof UploadedFile;
     }
 
     /**
@@ -105,7 +106,7 @@ class UploadedFileExtension extends Twig_Extension
      */
     public function getUploadedFileByEntity($entity)
     {
-        return $this->uploadedFileFacade->getUploadedFileByEntity($entity);
+        return reset($this->uploadedFileFacade->getUploadedFilesByEntity($entity));
     }
 
     /**

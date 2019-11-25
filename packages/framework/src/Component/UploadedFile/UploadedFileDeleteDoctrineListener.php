@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -32,14 +34,12 @@ class UploadedFileDeleteDoctrineListener
     /**
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
+
         if ($this->uploadedFileConfig->hasUploadedFileEntityConfig($entity)) {
-            $uploadedFile = $this->uploadedFileFacade->findUploadedFileByEntity($entity);
-            if ($uploadedFile !== null) {
-                $args->getEntityManager()->remove($uploadedFile);
-            }
+            $this->uploadedFileFacade->deleteAllUploadedFilesByEntity($entity);
         } elseif ($entity instanceof UploadedFile) {
             $this->uploadedFileFacade->deleteFileFromFilesystem($entity);
         }
