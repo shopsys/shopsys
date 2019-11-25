@@ -1,5 +1,5 @@
 # Understanding the style directory
-In folder `src/Shopsys/ShopBundle/Resources/styles/front/` there exists folders containing styles for individual domains.
+In folder `src/Resources/styles/front/` there exists folders containing styles for individual domains.
 
 For each domain exists the same folder structure consists of some folders and files.
 This document is about describing the meaning of these files and folders.
@@ -29,7 +29,7 @@ According to a component type, we will move LESS component file into appropriate
 For example component `list-products` will have following file path `components/list/products.less`.
 
 ## Root directory
-In the root directory for common styles `src/Shopsys/ShopBundle/Resources/styles/front/common` you will see following files and folders.
+In the root directory for common styles `src/Resources/styles/front/common` you will see following files and folders.
 
 - `main.less` - import all `Less` files needed to style its domain design. For more information about importing `Less` files, please see our document [Introduction to less](./introduction-to-less.md)
 - `helpers.less` - imports base configuration located in `core/` and helper classes located in files placed in `helpers/`
@@ -77,7 +77,7 @@ It is best practice not to hide element through styles but to place this class t
 
 ### Example 1 - Setting green color on title in product list
 In order to style the product list, you will have to find an appropriate `LESS component`.
-In our case it would be placed in `src/Shopsys/ShopBundle/Resources/styles/front/common/print/components/list/products.less`.
+In our case it would be placed in `src/Resources/styles/front/common/print/components/list/products.less`.
 It is also recommended to respect the way of writing a class name and its definition.
 We use BEM methodology in Shopsys Framework (for more information please visit [Introduction to BEM](http://getbem.com/introduction/)).
 
@@ -97,7 +97,7 @@ The code in file `print/components/list/products.less` would look like as it is 
 ### Example 2 - Hiding all advert places
 In order to hide all advert places, we will proceed as recommended within best practices part.
 
-File `src/Shopsys/ShopBundle/Resources/views/Front/Content/Advert/box.html.twig` would look like is shown below.
+File `templates/Front/Content/Advert/box.html.twig` would look like is shown below.
 ```twig
 {% if advert %}
     <div class="in-place in-place--{{advert.positionName}} dont-print">
