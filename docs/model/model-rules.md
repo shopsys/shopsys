@@ -3,17 +3,17 @@ In this article you will learn about model rules, what is and what is not model,
 
 ## Hierarchy nesting
 All classes related to the model are nested in the `Model` namespace inside the bundle namespace.
-In your ecommerce project based on Shopsys Framework, you should put your classes inside `Shopsys\ShopBundle\Model\<MODEL>` (this namespace will be used below).
+In your ecommerce project based on Shopsys Framework, you should put your classes inside `App\Model\<MODEL>` (this namespace will be used below).
 Core model classes of SSFW can be found in `Shopsys\FrameworkBundle\Model\<MODEL>`.
 
-They can also be nested into deeper directory such as `Shopsys\ShopBundle\Model\Product\Search` if it encapsulate group of classes representing some specific functionality, for example search functionality for a `Product` entity.
+They can also be nested into deeper directory such as `App\Model\Product\Search` if it encapsulate group of classes representing some specific functionality, for example search functionality for a `Product` entity.
 
 ## Rules
 - Classes inside the model are grouped into model namespaces.  
-  For example, if you want to add a new functionality that works with product, your class should be created in `\Shopsys\ShopBundle\Model\Product`.
+  For example, if you want to add a new functionality that works with product, your class should be created in `App\Model\Product`.
 - Main parts of a model such as `Facade` or `Repository` are grouped by a model they are responsible for, not by their type.  
-  Eg. classes `Product`, `ProductRepository` and `ProductFacade` should all be inside the `Shopsys\ShopBundle\Model\Product` namespace together.
-- All exceptions in a model should be in in a `Shopsys\ShopBundle\<MODEL>\Exception` namespace and they should implement a common interface using the [Marker Interface Pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern), eg. [ProductException](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Product/Exception/ProductException.php).
+  Eg. classes `Product`, `ProductRepository` and `ProductFacade` should all be inside the `App\Model\Product` namespace together.
+- All exceptions in a model should be in in a `App\<MODEL>\Exception` namespace and they should implement a common interface using the [Marker Interface Pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern), eg. [ProductException](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Product/Exception/ProductException.php).
 - All DQL and SQL operations related to a model should be in a model repository.
 - Integration code is not a part of the model.  
   For example, forms or controllers should be outside the `Model` namespace.

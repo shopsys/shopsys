@@ -418,7 +418,7 @@ For boolean multidomain properties, we recommend using default value filled in t
 
 #### Multilanguage
 
-[Multilanguage property](../introduction/domain-multidomain-multilanguage.md#multilanguage-attribute) is an array and has to be indexed by `locale` - a string identifier of language (you can find them in [`domains.yml`](/project-base/app/config/domains.yml)).
+[Multilanguage property](../introduction/domain-multidomain-multilanguage.md#multilanguage-attribute) is an array and has to be indexed by `locale` - a string identifier of language (you can find them in [`domains.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/domains.yml)).
 An example of such property is a `descriptions` in the `BrandData` example above.
 Data factory has to create an item in this array for each locale, otherwise translation entities would not be created correctly (a translation entity should exist for each locale, even with null values).
 Therefore the multidomain field has PHPDoc annotation `string[]|null[]`.
