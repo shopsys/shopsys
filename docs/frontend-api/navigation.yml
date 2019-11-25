@@ -2,3 +2,4 @@ title: Frontend API
 arrange:
     - index.md
     - introduction-to-frontend-api.md
+    - pagination.md
