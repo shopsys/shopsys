@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config;
 
 use Symfony\Component\Config\Definition\Processor;
@@ -35,7 +37,7 @@ class UploadedFileConfigLoader
      * @param string $filename
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig
      */
-    public function loadFromYaml($filename)
+    public function loadFromYaml(string $filename): UploadedFileConfig
     {
         $yamlParser = new Parser();
 
@@ -58,7 +60,7 @@ class UploadedFileConfigLoader
     /**
      * @param array $outputConfig
      */
-    protected function loadFileEntityConfigsFromArray($outputConfig)
+    protected function loadFileEntityConfigsFromArray(array $outputConfig): void
     {
         $this->uploadedFileEntityConfigsByClass = [];
         $this->entityNamesByEntityNames = [];
@@ -81,7 +83,7 @@ class UploadedFileConfigLoader
      * @param array $entityConfig
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
      */
-    protected function processEntityConfig($entityConfig)
+    protected function processEntityConfig(array $entityConfig): UploadedFileEntityConfig
     {
         $entityClass = $entityConfig[UploadedFileConfigDefinition::CONFIG_CLASS];
         $entityName = $entityConfig[UploadedFileConfigDefinition::CONFIG_ENTITY_NAME];

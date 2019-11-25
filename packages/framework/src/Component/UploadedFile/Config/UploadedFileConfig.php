@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config;
 
 class UploadedFileConfig
@@ -18,19 +20,19 @@ class UploadedFileConfig
     }
 
     /**
-     * @param Object $entity
+     * @param object $entity
      * @return string
      */
-    public function getEntityName($entity)
+    public function getEntityName(object $entity): string
     {
         return $this->getUploadedFileEntityConfig($entity)->getEntityName();
     }
 
     /**
-     * @param Object|null $entity
+     * @param object $entity
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
      */
-    public function getUploadedFileEntityConfig($entity)
+    public function getUploadedFileEntityConfig(object $entity): UploadedFileEntityConfig
     {
         foreach ($this->uploadedFileEntityConfigsByClass as $className => $entityConfig) {
             if ($entity instanceof $className) {
@@ -38,16 +40,14 @@ class UploadedFileConfig
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileEntityConfigNotFoundException(
-            $entity ? get_class($entity) : null
-        );
+        throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileEntityConfigNotFoundException(get_class($entity));
     }
 
     /**
      * @param object $entity
      * @return bool
      */
-    public function hasUploadedFileEntityConfig($entity)
+    public function hasUploadedFileEntityConfig(object $entity): bool
     {
         foreach ($this->uploadedFileEntityConfigsByClass as $className => $entityConfig) {
             if ($entity instanceof $className) {
@@ -60,7 +60,7 @@ class UploadedFileConfig
     /**
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[]
      */
-    public function getAllUploadedFileEntityConfigs()
+    public function getAllUploadedFileEntityConfigs(): array
     {
         return $this->uploadedFileEntityConfigsByClass;
     }

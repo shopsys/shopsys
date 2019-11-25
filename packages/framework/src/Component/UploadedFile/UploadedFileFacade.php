@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -67,7 +69,7 @@ class UploadedFileFacade
      * @param object $entity
      * @param array|null $temporaryFilenames
      */
-    public function uploadFile($entity, $temporaryFilenames)
+    public function uploadFile(object $entity, ?array $temporaryFilenames): void
     {
         if ($temporaryFilenames !== null && count($temporaryFilenames) > 0) {
             $entitiesForFlush = [];
@@ -98,7 +100,7 @@ class UploadedFileFacade
     /**
      * @param object $entity
      */
-    public function deleteUploadedFileByEntity($entity)
+    public function deleteUploadedFileByEntity(object $entity): void
     {
         $uploadedFile = $this->getUploadedFileByEntity($entity);
         $this->em->remove($uploadedFile);
@@ -108,7 +110,7 @@ class UploadedFileFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      */
-    public function deleteFileFromFilesystem(UploadedFile $uploadedFile)
+    public function deleteFileFromFilesystem(UploadedFile $uploadedFile): void
     {
         $filepath = $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFile);
 
@@ -121,7 +123,7 @@ class UploadedFileFacade
      * @param object $entity
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
-    public function getUploadedFileByEntity($entity)
+    public function getUploadedFileByEntity(object $entity): UploadedFile
     {
         return $this->uploadedFileRepository->getUploadedFileByEntity(
             $this->uploadedFileConfig->getEntityName($entity),
@@ -133,7 +135,7 @@ class UploadedFileFacade
      * @param object $entity
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile|null
      */
-    public function findUploadedFileByEntity($entity)
+    public function findUploadedFileByEntity(object $entity): ?UploadedFile
     {
         return $this->uploadedFileRepository->findUploadedFileByEntity(
             $this->uploadedFileConfig->getEntityName($entity),
@@ -145,7 +147,7 @@ class UploadedFileFacade
      * @param object $entity
      * @return int
      */
-    protected function getEntityId($entity)
+    protected function getEntityId(object $entity): int
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
         $identifier = $entityMetadata->getIdentifierValues($entity);
@@ -161,16 +163,16 @@ class UploadedFileFacade
      * @param int $uploadedFileId
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
-    public function getById($uploadedFileId)
+    public function getById(int $uploadedFileId): UploadedFile
     {
         return $this->uploadedFileRepository->getById($uploadedFileId);
     }
 
     /**
-     * @param Object $entity
+     * @param object $entity
      * @return bool
      */
-    public function hasUploadedFile($entity)
+    public function hasUploadedFile(object $entity): bool
     {
         try {
             $uploadedFile = $this->getUploadedFileByEntity($entity);
@@ -185,7 +187,7 @@ class UploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile)
+    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile): string
     {
         return $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFile);
     }
@@ -195,7 +197,7 @@ class UploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile)
+    public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
         return $this->uploadedFileLocator->getUploadedFileUrl($domainConfig, $uploadedFile);
     }

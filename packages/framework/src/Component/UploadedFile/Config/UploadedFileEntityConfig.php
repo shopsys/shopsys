@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config;
 
 class UploadedFileEntityConfig
@@ -18,7 +20,7 @@ class UploadedFileEntityConfig
      * @param string $entityName
      * @param string $entityClass
      */
-    public function __construct($entityName, $entityClass)
+    public function __construct(string $entityName, string $entityClass)
     {
         $this->entityName = $entityName;
         $this->entityClass = $entityClass;
@@ -27,7 +29,7 @@ class UploadedFileEntityConfig
     /**
      * @return string
      */
-    public function getEntityName()
+    public function getEntityName(): string
     {
         return $this->entityName;
     }
@@ -35,7 +37,7 @@ class UploadedFileEntityConfig
     /**
      * @return string
      */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }
