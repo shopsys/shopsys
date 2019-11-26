@@ -1,4 +1,4 @@
-{% block file_upload_widget %}
+{% block abstract_file_upload_widget %}
     {% import _self as self %}
     {% spaceless %}
         {%  set attr = attr|merge({'class': attr.class|default('') ~ ' js-file-upload box-upload'}) %}
@@ -78,4 +78,4 @@
         </div>
 
     {% endspaceless %}
-{% endblock file_upload_widget %}
+{% endblock abstract_file_upload_widget %}
