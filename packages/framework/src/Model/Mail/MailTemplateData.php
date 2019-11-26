@@ -34,15 +34,9 @@ class MailTemplateData
      */
     public $attachment;
 
-    /**
-     * @var bool
-     */
-    public $deleteAttachment;
-
     public function __construct()
     {
         $this->sendMail = false;
         $this->attachment = [];
-        $this->deleteAttachment = false;
     }
 }

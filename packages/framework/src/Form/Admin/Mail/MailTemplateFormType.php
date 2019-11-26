@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\FileUploadType;
 use Shopsys\FrameworkBundle\Form\Transformers\EmptyWysiwygTransformer;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
+use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -59,8 +60,9 @@ class MailTemplateFormType extends AbstractType
                             . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
+                'entity' => $options['entity'],
+                'file_entity_class' => MailTemplate::class,
             ])
-            ->add('deleteAttachment', CheckboxType::class)
             ->add('sendMail', CheckboxType::class, ['required' => false]);
     }
 
@@ -122,9 +124,10 @@ class MailTemplateFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['required_subject_variables', 'required_body_variables'])
+            ->setRequired(['required_subject_variables', 'required_body_variables', 'entity'])
             ->setAllowedTypes('required_subject_variables', 'array')
             ->setAllowedTypes('required_body_variables', 'array')
+            ->setAllowedTypes('entity', MailTemplate::class)
             ->setDefaults([
                 'required_subject_variables' => [],
                 'required_body_variables' => [],

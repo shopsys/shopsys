@@ -47,40 +47,26 @@ class UploadedFileExtension extends Twig_Extension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('hasUploadedFile', [$this, 'hasUploadedFile']),
             new Twig_SimpleFunction('uploadedFileUrl', [$this, 'getUploadedFileUrl']),
             new Twig_SimpleFunction('uploadedFilePreview', [$this, 'getUploadedFilePreviewHtml'], ['is_safe' => ['html']]),
-            new Twig_SimpleFunction('getUploadedFile', [$this, 'getUploadedFileByEntity']),
         ];
     }
 
     /**
-     * @param Object $entity
-     * @return bool
-     */
-    public function hasUploadedFile($entity)
-    {
-        return $this->getUploadedFileByEntity($entity) instanceof UploadedFile;
-    }
-
-    /**
-     * @param Object $entity
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getUploadedFileUrl($entity)
+    public function getUploadedFileUrl(UploadedFile $uploadedFile)
     {
-        $uploadedFile = $this->getUploadedFileByEntity($entity);
-
         return $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getCurrentDomainConfig(), $uploadedFile);
     }
 
     /**
-     * @param Object $entity
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getUploadedFilePreviewHtml($entity)
+    public function getUploadedFilePreviewHtml(UploadedFile $uploadedFile)
     {
-        $uploadedFile = $this->getUploadedFileByEntity($entity);
         $filepath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
         $fileThumbnailInfo = $this->fileThumbnailExtension->getFileThumbnailInfo($filepath);
 
@@ -98,17 +84,6 @@ class UploadedFileExtension extends Twig_Extension
         } else {
             return '<img src="' . $fileThumbnailInfo->getImageUri() . '"/>';
         }
-    }
-
-    /**
-     * @param Object $entity
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     */
-    public function getUploadedFileByEntity($entity)
-    {
-        $uploadedFiles = $this->uploadedFileFacade->getUploadedFilesByEntity($entity);
-
-        return reset($uploadedFiles);
     }
 
     /**
