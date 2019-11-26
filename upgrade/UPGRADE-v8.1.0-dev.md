@@ -487,7 +487,7 @@ There you can find links to upgrade notes for other versions too.
         + </div>
     ```
 - improve functional and smoke tests to be more readable and easier to write [#1392](https://github.com/shopsys/shopsys/pull/1392)
-    - add a new package via composer into your project `composer require --dev zalas/phpunit-injector`
+    - add a new package via composer into your project `composer require --dev zalas/phpunit-injector ^1.2`
     - edit `phpunit.xml` by adding a listener
         ```diff
                 </filter>
