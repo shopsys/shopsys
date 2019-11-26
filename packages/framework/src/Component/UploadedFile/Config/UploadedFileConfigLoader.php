@@ -80,6 +80,30 @@ class UploadedFileConfigLoader
     }
 
     /**
+     * @param array $typesConfig
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig[]
+     */
+    protected function prepareTypes(array $typesConfig): array
+    {
+        $result = [];
+        foreach ($typesConfig as $typeConfig) {
+            $typeName = $typeConfig[UploadedFileConfigDefinition::CONFIG_TYPE_NAME];
+
+            if ($typeName === null) {
+                throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\NotSupportedTypeNameException($typeName);
+            }
+
+            if (!array_key_exists($typeName, $result)) {
+                $result[$typeName] = new UploadedFileTypeConfig($typeName);
+            } else {
+                throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\DuplicateTypeNameException($typeName);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * @param array $entityConfig
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
      */
@@ -94,6 +118,8 @@ class UploadedFileConfigLoader
             throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\DuplicateEntityNameException($entityName);
         }
 
-        return new UploadedFileEntityConfig($entityName, $entityClass);
+        $typesByName = $this->prepareTypes($entityConfig[UploadedFileConfigDefinition::CONFIG_TYPES]);
+
+        return new UploadedFileEntityConfig($entityName, $entityClass, $typesByName);
     }
 }

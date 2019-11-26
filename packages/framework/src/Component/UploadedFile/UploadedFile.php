@@ -56,6 +56,13 @@ class UploadedFile implements EntityFileUploadInterface
     protected $modifiedAt;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $type;
+
+    /**
      * @var string|null
      */
     protected $temporaryFilename;
@@ -63,12 +70,14 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @param string $entityName
      * @param int $entityId
+     * @param string $type
      * @param string|null $temporaryFilename
      */
-    public function __construct(string $entityName, int $entityId, ?string $temporaryFilename)
+    public function __construct(string $entityName, int $entityId, string $type, ?string $temporaryFilename)
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
+        $this->type = $type;
         $this->setTemporaryFilename($temporaryFilename);
     }
 
@@ -153,5 +162,13 @@ class UploadedFile implements EntityFileUploadInterface
     public function getExtension(): string
     {
         return $this->extension;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
     }
 }

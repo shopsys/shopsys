@@ -10,6 +10,8 @@ class UploadedFileConfigDefinition implements ConfigurationInterface
 {
     public const CONFIG_CLASS = 'class';
     public const CONFIG_ENTITY_NAME = 'name';
+    public const CONFIG_TYPES = 'types';
+    public const CONFIG_TYPE_NAME = 'name';
 
     /**
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
@@ -36,6 +38,13 @@ class UploadedFileConfigDefinition implements ConfigurationInterface
             ->children()
                 ->scalarNode(self::CONFIG_ENTITY_NAME)->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode(self::CONFIG_CLASS)->isRequired()->cannotBeEmpty()->end()
+                ->arrayNode(self::CONFIG_TYPES)
+                    ->defaultValue([])
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode(self::CONFIG_TYPE_NAME)->isRequired()->cannotBeEmpty()->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end();
     }

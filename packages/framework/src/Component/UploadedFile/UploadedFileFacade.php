@@ -69,11 +69,16 @@ class UploadedFileFacade
     /**
      * @param object $entity
      * @param array|null $temporaryFilenames
+     * @param string $type
      */
-    public function uploadFile(object $entity, ?array $temporaryFilenames): void
+    public function uploadFile(object $entity, ?array $temporaryFilenames, string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME): void
     {
         if ($temporaryFilenames !== null && count($temporaryFilenames) > 0) {
             $uploadedFileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfig($entity);
+
+            # will be used in next commit - now just checks existence of such type
+            $uploadedFileTypeConfig = $uploadedFileEntityConfig->getTypeByName($type);
+
             $entityId = $this->getEntityId($entity);
 
             $this->deleteAllUploadedFilesByEntity($entity);
@@ -81,6 +86,7 @@ class UploadedFileFacade
             $newUploadedFile = $this->uploadedFileFactory->create(
                 $uploadedFileEntityConfig->getEntityName(),
                 $entityId,
+                $type,
                 $temporaryFilenames
             );
 
@@ -120,13 +126,15 @@ class UploadedFileFacade
 
     /**
      * @param object $entity
+     * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
-    public function getUploadedFilesByEntity(object $entity): array
+    public function getUploadedFilesByEntity(object $entity, string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME): array
     {
         return $this->uploadedFileRepository->getUploadedFilesByEntity(
             $this->uploadedFileConfig->getEntityName($entity),
-            $this->getEntityId($entity)
+            $this->getEntityId($entity),
+            $type
         );
     }
 

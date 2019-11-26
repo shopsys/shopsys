@@ -32,18 +32,20 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
     /**
      * @param string $entityName
      * @param int $entityId
+     * @param string $type
      * @param array $temporaryFilenames
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
     public function create(
         string $entityName,
         int $entityId,
+        string $type,
         array $temporaryFilenames
     ): UploadedFile {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath(array_pop($temporaryFilenames));
 
         $classData = $this->entityNameResolver->resolve(UploadedFile::class);
 
-        return new $classData($entityName, $entityId, pathinfo($temporaryFilepath, PATHINFO_BASENAME));
+        return new $classData($entityName, $entityId, $type, pathinfo($temporaryFilepath, PATHINFO_BASENAME));
     }
 }

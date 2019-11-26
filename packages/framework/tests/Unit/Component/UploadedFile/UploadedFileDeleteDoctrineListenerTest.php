@@ -6,6 +6,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDeleteDoctrineListener;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
@@ -14,7 +15,7 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
 {
     public function testPreRemoveDeleteFile()
     {
-        $uploadedFile = new UploadedFile('entityName', 1, 'dummy.txt');
+        $uploadedFile = new UploadedFile('entityName', 1, 'default', 'dummy.txt');
 
         $uploadedFileConfig = new UploadedFileConfig([]);
 
@@ -38,9 +39,11 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
     public function testPreRemoveDeleteUploadedFile()
     {
         $entity = new Dummy();
-        $uploadedFile = new UploadedFile('entitzId', 1, 'dummy.txt');
+        $uploadedFile = new UploadedFile('entitzId', 1, 'default', 'dummy.txt');
 
-        $uploadedFileEntityConfig = new UploadedFileEntityConfig('entityName', Dummy::class);
+        $uploadedFileTypeConfig = new UploadedFileTypeConfig('default');
+
+        $uploadedFileEntityConfig = new UploadedFileEntityConfig('entityName', Dummy::class, [$uploadedFileTypeConfig]);
         $uploadedFileConfig = new UploadedFileConfig([
             Dummy::class => $uploadedFileEntityConfig,
         ]);

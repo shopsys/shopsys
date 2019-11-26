@@ -1,2 +1,12 @@
+# It is best practice to name first type as "default"
+#
+# Example:
+# -   name: mailTemplate
+#     class: Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+#     types:
+#         -   name: default
+
 -   name: mailTemplate
     class: Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+    types:
+        -   name: default

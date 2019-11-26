@@ -48,13 +48,15 @@ class UploadedFileRepository
     /**
      * @param string $entityName
      * @param int $entityId
+     * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
-    public function getUploadedFilesByEntity(string $entityName, int $entityId): array
+    public function getUploadedFilesByEntity(string $entityName, int $entityId, string $type): array
     {
         return $this->getUploadedFileRepository()->findBy([
             'entityName' => $entityName,
             'entityId' => $entityId,
+            'type' => $type,
         ]);
     }
 
