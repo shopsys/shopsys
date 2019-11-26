@@ -662,8 +662,8 @@ There you can find links to upgrade notes for other versions too.
           cursor: help;
         ```
 
-    - add new file `ttps://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/core/form/custom-inputs.less` according to pull request
-    - link this new file in `ttps://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/main.less`
+    - add new [`src/Shopsys/ShopBundle/Resources/styles/front/common/core/form/custom-inputs.less`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/core/form/custom-inputs.less) file according to pull request
+    - link this new file in [main.less](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/main.less)
 
     ```diff
           @import "core/form/input.less";
@@ -671,7 +671,7 @@ There you can find links to upgrade notes for other versions too.
           @import "core/form/btn.less";
     ```
 
-    - Update `ttps://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Form/theme.html.less`
+    - Update [theme.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Form/theme.html.twig)
 
     ```diff
           {% block checkbox_row %}
@@ -693,7 +693,8 @@ There you can find links to upgrade notes for other versions too.
         -     </dl>
         +     <div class="{{ rowClass|default('form-line') }}">
         +        <div class="form-choice">
-        +            {{ form_widget(form, { attr: { class: "css-checkbox" } }) }}
+        +            {% set checkboxAttr = attr|merge({'class': (attr.class|default('') ~ ' css-checkbox')|trim}) %}
+        +            {{ form_widget(form, { attr: checkboxAttr }) }}
         +            {{ form_label(form, label, { label_attr: { class: "css-c+heckbox__image" }}) }}
         +            {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
         +            {{ form_errors(form, { errors_attr: errors_attr } ) }}
