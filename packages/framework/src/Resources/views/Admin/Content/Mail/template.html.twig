@@ -27,23 +27,23 @@
                                     {{ 'Attachment'|trans }}:
                                 </label>
                                 <div class="form-line__line">
-                                    <div class="list-images__item">
-                                        <div class="list-images__item__in">
-                                            <a href="{{ uploadedFileUrl(mailTemplate) }}" target="_blank" class="list-images__item__image">
+                                    <div class="list-files__item">
+                                        <div class="list-files__item__in">
+                                            <a href="{{ uploadedFileUrl(mailTemplate) }}" target="_blank" class="list-files__item__image">
                                                 {{ uploadedFilePreview(mailTemplate) }}
                                                 <div>{{ getUploadedFile(mailTemplate).filename }}</div>
                                             </a>
-                                            <button class="js-mail-template-attachment-delete-button btn-no-style list-images__item__remove" type="button" title="{{ 'Delete'|trans }}">
+                                            <button class="js-mail-template-attachment-delete-button btn-no-style list-files__item__remove" type="button" title="{{ 'Delete'|trans }}">
                                                 <i class="svg svg-circle-cross"></i>
                                             </button>
                                             <button
-                                                class="btn-no-style js-mail-template-attachment-delete-revert-button list-images__item__revert js-mail-template-attachment-delete-revert"
+                                                class="btn-no-style js-mail-template-attachment-delete-revert-button list-files__item__revert js-mail-template-attachment-delete-revert"
                                                 type="button"
                                                 title="{{ 'Return back'|trans }}"
                                             >
                                                 <i class="svg svg-arrow-back"></i>
                                             </button>
-                                            <span class="list-images__item__overlay js-mail-template-attachment-delete-revert">{{ 'File will be deleted after saving.'|trans }}</span>
+                                            <span class="list-files__item__overlay js-mail-template-attachment-delete-revert">{{ 'File will be deleted after saving.'|trans }}</span>
                                             {{ form_widget(templateForm.deleteAttachment, {attr: {class: 'display-none js-mail-template-attachment-delete-checkbox'}}) }}
                                         </div>
                                     </div>

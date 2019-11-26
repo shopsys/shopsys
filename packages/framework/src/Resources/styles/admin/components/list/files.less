@@ -1,16 +1,16 @@
-@list-images-pipe-height: 31px;
-@list-images-pipe-bg: #d2a550;
-@list-images-pipe-color: #fcbd46;
+@list-files-pipe-height: 31px;
+@list-files-pipe-bg: #d2a550;
+@list-files-pipe-color: #fcbd46;
 
-@list-images-icon-size: 18px;
-@list-images-icon-background: #2a384e;
-@list-images-icon-color: @color-f;
-@list-images-icon-font-size: 10px;
-@list-images-item-gap: 24px;
+@list-files-icon-size: 18px;
+@list-files-icon-background: #2a384e;
+@list-files-icon-color: @color-f;
+@list-files-icon-font-size: 10px;
+@list-files-item-gap: 24px;
 
-.list-images {
+.list-files {
     .reset-ul();
-    margin: 0 -@list-images-item-gap/2;
+    margin: 0 -@list-files-item-gap/2;
 
     font-size: 0;
 
@@ -24,7 +24,7 @@
         width: calc(~"100% / 4");
         vertical-align: top;
         margin: 0;
-        padding: 0 @list-images-item-gap/2 @list-images-item-gap @list-images-item-gap/2;
+        padding: 0 @list-files-item-gap/2 @list-files-item-gap @list-files-item-gap/2;
 
         &__in {
             position: relative;
@@ -32,7 +32,7 @@
             border: 1px solid @color-f;
             border-radius: @radius;
 
-            .list-images__item:first-child & {
+            .list-files__item:first-child & {
                 border-color: @color-orange;
             }
 
@@ -41,7 +41,7 @@
             }
         }
 
-        &__image {
+        &__file {
             display: block;
             height: 164px;
             position: relative;
@@ -50,7 +50,7 @@
             border-radius: @radius;
             background: @color-f;
 
-            .list-images__item:first-child & {
+            .list-files__item:first-child & {
                 border: 1px solid @color-f;
             }
 
@@ -103,26 +103,26 @@
         &__move,
         &__revert {
             position: absolute;
-            width: @list-images-icon-size;
-            height: @list-images-icon-size;
-            line-height: @list-images-icon-size;
-            top: -@list-images-icon-size/2;
-            right: -@list-images-icon-size/2;
+            width: @list-files-icon-size;
+            height: @list-files-icon-size;
+            line-height: @list-files-icon-size;
+            top: -@list-files-icon-size/2;
+            right: -@list-files-icon-size/2;
             z-index: 3;
 
             .svg {
-                line-height: @list-images-icon-size;
-                width: @list-images-icon-size;
-                height: @list-images-icon-size;
-                font-size: @list-images-icon-font-size;
-                background-color: @list-images-icon-background;
-                color: @list-images-icon-color;
+                line-height: @list-files-icon-size;
+                width: @list-files-icon-size;
+                height: @list-files-icon-size;
+                font-size: @list-files-icon-font-size;
+                background-color: @list-files-icon-background;
+                color: @list-files-icon-color;
                 border-radius: 50%;
                 text-align: center;
                 cursor: pointer;
 
                 &:hover {
-                    color: @list-images-icon-color;
+                    color: @list-files-icon-color;
                 }
             }
         }
@@ -132,11 +132,11 @@
         }
 
         &__move {
-            left: -@list-images-icon-size/2;
+            left: -@list-files-icon-size/2;
             right: auto;
 
             .svg {
-                font-size: @list-images-icon-font-size + 2px;
+                font-size: @list-files-icon-font-size + 2px;
                 cursor: move;
             }
         }
@@ -165,7 +165,7 @@
         &__main {
             display: none;
 
-            .list-images__item:first-child & {
+            .list-files__item:first-child & {
                 position: absolute;
                 display: block;
                 top: 0px;
@@ -189,20 +189,20 @@
             top: 50%;
             left: 50%;
             width: 122px;
-            height: @list-images-pipe-height;
-            margin: -@list-images-pipe-height/2 0 0 -60px;
-            line-height: @list-images-pipe-height;
+            height: @list-files-pipe-height;
+            margin: -@list-files-pipe-height/2 0 0 -60px;
+            line-height: @list-files-pipe-height;
 
             border-radius: @radius;
-            background: @list-images-pipe-bg;
+            background: @list-files-pipe-bg;
 
             &__line {
                 display: block;
                 position: relative;
-                height: @list-images-pipe-height;
+                height: @list-files-pipe-height;
                 width: 0;
 
-                background: @list-images-pipe-color;
+                background: @list-files-pipe-color;
                 border-radius: @radius;
                 text-align: center;
                 color: @color-f;

@@ -12,7 +12,7 @@
         var $progressBarValue = $file.find('.js-file-upload-progress-bar-value');
         var $input = $file.find('.js-file-upload-input');
         var $iconType = $file.find('.js-file-upload-icon-type');
-        var $imageThumbnail = $file.find('.js-file-upload-image-thumbnail');
+        var $imageThumbnail = $file.find('.js-file-upload-file-thumbnail');
 
         this.init = function () {
             $progress.hide();

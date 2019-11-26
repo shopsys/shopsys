@@ -88,8 +88,8 @@ class UploadedFileExtension extends Twig_Extension
             $classes = [
                 'svg',
                 'svg-file-' . $fileThumbnailInfo->getIconType(),
-                'list-images__item__image__type',
-                'list-images__item__image__type--' . $fileThumbnailInfo->getIconType(),
+                'list-files__item__file__type',
+                'list-files__item__file__type--' . $fileThumbnailInfo->getIconType(),
                 'text-no-decoration',
                 'cursor-pointer',
             ];
@@ -106,7 +106,9 @@ class UploadedFileExtension extends Twig_Extension
      */
     public function getUploadedFileByEntity($entity)
     {
-        return reset($this->uploadedFileFacade->getUploadedFilesByEntity($entity));
+        $uploadedFiles = $this->uploadedFileFacade->getUploadedFilesByEntity($entity);
+
+        return reset($uploadedFiles);
     }
 
     /**
