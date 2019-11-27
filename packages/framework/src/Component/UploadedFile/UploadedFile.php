@@ -63,7 +63,7 @@ class UploadedFile implements EntityFileUploadInterface
     protected $type;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $temporaryFilename;
 
@@ -71,9 +71,9 @@ class UploadedFile implements EntityFileUploadInterface
      * @param string $entityName
      * @param int $entityId
      * @param string $type
-     * @param string|null $temporaryFilename
+     * @param string $temporaryFilename
      */
-    public function __construct(string $entityName, int $entityId, string $type, ?string $temporaryFilename)
+    public function __construct(string $entityName, int $entityId, string $type, string $temporaryFilename)
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
@@ -115,9 +115,9 @@ class UploadedFile implements EntityFileUploadInterface
     }
 
     /**
-     * @param string|null $temporaryFilename
+     * @param string $temporaryFilename
      */
-    public function setTemporaryFilename(?string $temporaryFilename): void
+    public function setTemporaryFilename(string $temporaryFilename): void
     {
         $this->temporaryFilename = $temporaryFilename;
         // workaround: Entity must be changed so that preUpdate and postUpdate are called

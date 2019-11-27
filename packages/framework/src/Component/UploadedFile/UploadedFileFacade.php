@@ -94,12 +94,12 @@ class UploadedFileFacade
     /**
      * @param object $entity
      * @param string $entityName
-     * @param array|null $temporaryFilenames
+     * @param array $temporaryFilenames
      * @param string $type
      */
-    protected function uploadFile(object $entity, string $entityName, ?array $temporaryFilenames, string $type): void
+    protected function uploadFile(object $entity, string $entityName, array $temporaryFilenames, string $type): void
     {
-        if ($temporaryFilenames !== null && count($temporaryFilenames) > 0) {
+        if (count($temporaryFilenames) > 0) {
             $entityId = $this->getEntityId($entity);
 
             $this->deleteAllUploadedFilesByEntity($entity);
