@@ -1050,6 +1050,7 @@
             <arg value="--dir=${path.src}/Shopsys/ShopBundle"/>
             <arg value="--dir=${path.app}/Resources"/>
             <arg value="--exclude-dir=frontend/plugins"/>
+            <arg value="--exclude-dir=styleguide/plugins"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.src}/Shopsys/ShopBundle/Resources/translations"/>
             <arg line="${translations.dump.flags}"/>
