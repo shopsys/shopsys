@@ -24,12 +24,12 @@ Our server is running [CentOS 7](https://www.centos.org/).
 Following commands are for CentOS and may be different on other distributions.
 
 Install repositories required by Docker and Kubernetes:
-```bash
+```sh
 yum install -y yum-utils device-mapper-persistent-data lvm2
 ```
 
 Install Docker:
-```bash
+```sh
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
 yum install -y docker-ce
@@ -38,12 +38,12 @@ systemctl enable docker && systemctl start docker
 ```
 
 Install Kubernetes and tools for controlling it (Kubelet, Kubectl, Kubeadm):
-```bash
+```sh
 yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 ```
 
 Enable Kubelet as a service so it starts with system reboot:
-```bash
+```sh
 systemctl enable kubelet && systemctl start kubelet
 ```
 
@@ -87,7 +87,7 @@ Build of the application is then executed by one single command since the build 
 Build is performed using a container running [shopsys/kubernetes-buildpack](https://github.com/shopsys/kubernetes-buildpack) that is prepared for our build process.
 
 Copy this command into your CI build configuration:
-```bash
+```sh
 docker run \
     -v $WORKSPACE:/tmp \
     -v ~/.kube/config:/root/.kube/config \
@@ -103,7 +103,7 @@ docker run \
     .ci/build_kubernetes.sh
 ```
 
-This command executes [`build_kubernetes.sh`](/.ci/build_kubernetes.sh) in the `shopsys/kubernetes-buildpack` container.
+This command executes [`build_kubernetes.sh`](https://github.com/shopsys/shopsys/blob/9.0/.ci/build_kubernetes.sh) in the `shopsys/kubernetes-buildpack` container.
 
 To summarize, the shell script prepares the application config files and Kubernetes manifests for deployment, copies the prepared source code into the image and installs Composer dependencies in the application `php-fpm` container.
 Then it builds `elasticsearch` image with ICU Analysis plugin and both images are then pushed and tagged into Docker Hub and these tags are then set into Kubernetes manifests.
