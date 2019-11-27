@@ -64,4 +64,19 @@ class UploadedFileConfig
     {
         return $this->uploadedFileEntityConfigsByClass;
     }
+
+    /**
+     * @param string $entityClass
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
+     */
+    public function getUploadedFileEntityConfigByClass(string $entityClass): UploadedFileEntityConfig
+    {
+        foreach ($this->uploadedFileEntityConfigsByClass as $className => $entityConfig) {
+            if ($entityClass === $className) {
+                return $entityConfig;
+            }
+        }
+
+        throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileEntityConfigNotFoundException($entityClass);
+    }
 }

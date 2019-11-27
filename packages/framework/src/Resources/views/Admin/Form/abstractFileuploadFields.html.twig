@@ -62,7 +62,11 @@
                         <i class="svg svg-upload"></i>
                     </div>
                     <div class="box-upload__place__drop__title">
-                        {{ 'Drag your files here'|trans }}
+                        {% if form.vars.multiple is same as(true) %}
+                            {{ 'Drag your files here'|trans }}
+                        {% else %}
+                            {{ 'Drag your file here'|trans }}
+                        {% endif %}
                     </div>
                     <div class="box-upload__place__drop__info">
                         {{ info_text|default('') }}

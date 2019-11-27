@@ -751,6 +751,9 @@ msgstr "Byla upravena doména <strong>{{ name }}</strong>. Nevidíte-li novou ik
 msgid "Domain name"
 msgstr "Název domény"
 
+msgid "Drag your file here"
+msgstr "Zde přetáhněte svůj soubor"
+
 msgid "Drag your files here"
 msgstr "Zde přetáhněte své soubory"
 

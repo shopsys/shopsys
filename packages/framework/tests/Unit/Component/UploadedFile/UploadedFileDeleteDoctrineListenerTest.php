@@ -43,7 +43,7 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
 
         $uploadedFileTypeConfig = new UploadedFileTypeConfig('default');
 
-        $uploadedFileEntityConfig = new UploadedFileEntityConfig('entityName', Dummy::class, [$uploadedFileTypeConfig]);
+        $uploadedFileEntityConfig = new UploadedFileEntityConfig('entityName', Dummy::class, ['default' => $uploadedFileTypeConfig]);
         $uploadedFileConfig = new UploadedFileConfig([
             Dummy::class => $uploadedFileEntityConfig,
         ]);

@@ -80,15 +80,29 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileEntityConfig->getTypeByName('test');
     }
 
+    public function testTypesHaveRightMultipleSet()
+    {
+        $entity = new Dummy();
+        $uploadedFileConfig = $this->getUploadedFileConfig();
+        $uploadedFileEntityConfig = $uploadedFileConfig->getUploadedFileEntityConfig($entity);
+        $uploadedFileTypeConfig1 = $uploadedFileEntityConfig->getTypeByName('default');
+        $uploadedFileTypeConfig2 = $uploadedFileEntityConfig->getTypeByName('additional');
+
+        $this->assertFalse($uploadedFileTypeConfig1->isMultiple());
+        $this->assertTrue($uploadedFileTypeConfig2->isMultiple());
+    }
+
     /**
      * @return array
      */
     private function getFileEntityConfigsByClass(): array
     {
-        $uploadedFileType1 = new UploadedFileTypeConfig('default');
-        $uploadedFileType2 = new UploadedFileTypeConfig('additional');
+        $uploadedFileType1 = new UploadedFileTypeConfig('default', false);
+        $uploadedFileType2 = new UploadedFileTypeConfig('additional', true);
 
-        $uploadedFileEntityConfig = new UploadedFileEntityConfig('entityName', Dummy::class, [$uploadedFileType1, $uploadedFileType2]);
+        $uploadedFileTypes = ['default' => $uploadedFileType1, 'additional' => $uploadedFileType2];
+
+        $uploadedFileEntityConfig = new UploadedFileEntityConfig('entityName', Dummy::class, $uploadedFileTypes);
 
         $fileEntityConfigsByClass = [
             Dummy::class => $uploadedFileEntityConfig,

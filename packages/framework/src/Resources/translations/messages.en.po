@@ -751,6 +751,9 @@ msgstr ""
 msgid "Domain name"
 msgstr ""
 
+msgid "Drag your file here"
+msgstr ""
+
 msgid "Drag your files here"
 msgstr ""
 

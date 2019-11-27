@@ -69,35 +69,38 @@ class UploadedFileFacade
     /**
      * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
-     * @param string|null $type
+     * @param string $type
      */
     public function manageFiles(object $entity, UploadedFileData $uploadedFileData, string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME): void
     {
         $uploadedFileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfig($entity);
-
-        # will be used in next commit - now just checks existence of such type
         $uploadedFileTypeConfig = $uploadedFileEntityConfig->getTypeByName($type);
 
         $uploadedFiles = $uploadedFileData->uploadedFiles;
         $orderedFiles = $uploadedFileData->orderedFiles;
 
-        if (count($orderedFiles) > 1) {
-            array_shift($orderedFiles);
-            $this->deleteFiles($entity, $orderedFiles);
+        if ($uploadedFileTypeConfig->isMultiple()) {
+            $this->updateFilesOrder($orderedFiles);
+            $this->uploadFiles($entity, $uploadedFileEntityConfig->getEntityName(), $type, $uploadedFiles, count($orderedFiles));
+        } else {
+            if (count($orderedFiles) > 1) {
+                array_shift($orderedFiles);
+                $this->deleteFiles($entity, $orderedFiles);
+            }
+
+            $this->uploadFile($entity, $uploadedFileEntityConfig->getEntityName(), $type, $uploadedFiles);
         }
 
         $this->deleteFiles($entity, $uploadedFileData->filesToDelete);
-
-        $this->uploadFile($entity, $uploadedFileEntityConfig->getEntityName(), $uploadedFiles, $type);
     }
 
     /**
      * @param object $entity
      * @param string $entityName
-     * @param array $temporaryFilenames
      * @param string $type
+     * @param array $temporaryFilenames
      */
-    protected function uploadFile(object $entity, string $entityName, array $temporaryFilenames, string $type): void
+    protected function uploadFile(object $entity, string $entityName, string $type, array $temporaryFilenames): void
     {
         if (count($temporaryFilenames) > 0) {
             $entityId = $this->getEntityId($entity);
@@ -108,11 +111,32 @@ class UploadedFileFacade
                 $entityName,
                 $entityId,
                 $type,
-                $temporaryFilenames
+                array_pop($temporaryFilenames)
             );
 
             $this->em->persist($newUploadedFile);
             $this->em->flush($newUploadedFile);
+        }
+    }
+
+    /**
+     * @param object $entity
+     * @param string $entityName
+     * @param string $type
+     * @param array $temporaryFilenames
+     * @param int $existingFilesCount
+     */
+    protected function uploadFiles(object $entity, string $entityName, string $type, array $temporaryFilenames, int $existingFilesCount): void
+    {
+        if (count($temporaryFilenames) > 0) {
+            $entityId = $this->getEntityId($entity);
+            $files = $this->uploadedFileFactory->createMultiple($entityName, $entityId, $type, $temporaryFilenames, $existingFilesCount);
+
+            foreach ($files as $file) {
+                $this->em->persist($file);
+            }
+
+            $this->em->flush($files);
         }
     }
 
@@ -217,5 +241,18 @@ class UploadedFileFacade
     public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
         return $this->uploadedFileLocator->getUploadedFileUrl($domainConfig, $uploadedFile);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
+     */
+    protected function updateFilesOrder(array $uploadedFiles): void
+    {
+        $i = 0;
+        foreach ($uploadedFiles as $uploadedFile) {
+            $uploadedFile->setPosition($i++);
+        }
+
+        $this->em->flush($uploadedFiles);
     }
 }

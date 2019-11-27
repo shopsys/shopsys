@@ -52,7 +52,6 @@ class MailTemplateFormType extends AbstractType
             )
             ->add('attachments', FileUploadType::class, [
                 'required' => false,
-                'multiple' => false,
                 'file_constraints' => [
                     new Constraints\File([
                         'maxSize' => '2M',

@@ -68,17 +68,26 @@ class UploadedFile implements EntityFileUploadInterface
     protected $temporaryFilename;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $position;
+
+    /**
      * @param string $entityName
      * @param int $entityId
      * @param string $type
      * @param string $temporaryFilename
+     * @param int $position
      */
-    public function __construct(string $entityName, int $entityId, string $type, string $temporaryFilename)
+    public function __construct(string $entityName, int $entityId, string $type, string $temporaryFilename, int $position)
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
         $this->type = $type;
         $this->setTemporaryFilename($temporaryFilename);
+        $this->position = $position;
     }
 
     /**
@@ -188,5 +197,13 @@ class UploadedFile implements EntityFileUploadInterface
                 )
             );
         }
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition(int $position): void
+    {
+        $this->position = $position;
     }
 }

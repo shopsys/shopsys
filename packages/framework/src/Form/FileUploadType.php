@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
@@ -31,13 +32,23 @@ class FileUploadType extends AbstractType
     private $filesIdsToFilesTransformer;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig
+     */
+    private $uploadedFileConfig;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer $filesIdsToFilesTransformer
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
      */
-    public function __construct(UploadedFileFacade $uploadedFileFacade, FilesIdsToFilesTransformer $filesIdsToFilesTransformer)
-    {
+    public function __construct(
+        UploadedFileFacade $uploadedFileFacade,
+        FilesIdsToFilesTransformer $filesIdsToFilesTransformer,
+        UploadedFileConfig $uploadedFileConfig
+    ) {
         $this->uploadedFileFacade = $uploadedFileFacade;
         $this->filesIdsToFilesTransformer = $filesIdsToFilesTransformer;
+        $this->uploadedFileConfig = $uploadedFileConfig;
     }
 
     /**
@@ -65,6 +76,7 @@ class FileUploadType extends AbstractType
 
         $view->vars['files_by_id'] = $this->getFilesIndexedById($options);
         $view->vars['entity'] = $options['entity'];
+        $view->vars['multiple'] = $this->isMultiple($options);
     }
 
     /**
@@ -91,7 +103,7 @@ class FileUploadType extends AbstractType
                 'choice_value' => 'id',
             ])
             ->add('file', FileType::class, [
-                'multiple' => false,
+                'multiple' => $this->isMultiple($options),
                 'mapped' => false,
             ]);
     }
@@ -114,6 +126,22 @@ class FileUploadType extends AbstractType
         }
 
         return $uploadedFilesIndexedById;
+    }
+
+    /**
+     * @param array $options
+     * @return bool
+     */
+    private function isMultiple(array $options): bool
+    {
+        if ($options['file_entity_class'] === null) {
+            return false;
+        }
+
+        $fileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfigByClass($options['file_entity_class']);
+        $fileTypeConfig = $fileEntityConfig->getTypeByName($options['file_type']);
+
+        return $fileTypeConfig->isMultiple();
     }
 
     /**

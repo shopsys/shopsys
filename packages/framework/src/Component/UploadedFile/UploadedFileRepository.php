@@ -53,11 +53,17 @@ class UploadedFileRepository
      */
     public function getUploadedFilesByEntity(string $entityName, int $entityId, string $type): array
     {
-        return $this->getUploadedFileRepository()->findBy([
-            'entityName' => $entityName,
-            'entityId' => $entityId,
-            'type' => $type,
-        ]);
+        return $this->getUploadedFileRepository()->findBy(
+            [
+                'entityName' => $entityName,
+                'entityId' => $entityId,
+                'type' => $type,
+            ],
+            [
+                'position' => 'asc',
+                'id' => 'asc',
+            ]
+        );
     }
 
     /**

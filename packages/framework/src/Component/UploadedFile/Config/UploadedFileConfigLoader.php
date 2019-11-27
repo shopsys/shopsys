@@ -88,13 +88,14 @@ class UploadedFileConfigLoader
         $result = [];
         foreach ($typesConfig as $typeConfig) {
             $typeName = $typeConfig[UploadedFileConfigDefinition::CONFIG_TYPE_NAME];
+            $typeMultiple = $typeConfig[UploadedFileConfigDefinition::CONFIG_TYPE_MULTIPLE];
 
             if ($typeName === null) {
                 throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\NotSupportedTypeNameException($typeName);
             }
 
             if (!array_key_exists($typeName, $result)) {
-                $result[$typeName] = new UploadedFileTypeConfig($typeName);
+                $result[$typeName] = new UploadedFileTypeConfig($typeName, $typeMultiple);
             } else {
                 throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\DuplicateTypeNameException($typeName);
             }

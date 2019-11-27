@@ -10,3 +10,4 @@
     class: Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     types:
         -   name: default
+            multiple: false
