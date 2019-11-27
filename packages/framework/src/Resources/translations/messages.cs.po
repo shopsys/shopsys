@@ -406,8 +406,17 @@ msgstr "IČ"
 msgid "Complement to title"
 msgstr "Doplněk k titulku"
 
+msgid "Contact"
+msgstr "Kontakt"
+
 msgid "Contact form"
 msgstr "Kontaktní formulář"
+
+msgid "Contact form settings"
+msgstr "Nastavení kontaktní stránky"
+
+msgid "Contact form settings modified"
+msgstr "Nastavení kontaktní stránky bylo změněno"
 
 msgid "Contact us"
 msgstr "Napište nám"
@@ -1251,6 +1260,9 @@ msgstr "Hlavní obrázek"
 
 msgid "Main page products"
 msgstr "Zboží na titulní stránce"
+
+msgid "Main text"
+msgstr "Text"
 
 msgid "Main variant"
 msgstr "Hlavní varianta"

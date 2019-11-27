@@ -562,9 +562,6 @@ msgstr "Konektory"
 msgid "Construction"
 msgstr "Konstrukce"
 
-msgid "Contact"
-msgstr "Kontakty"
-
 msgid "Coupon valued to 100 Czech crowns. You can cash it at any exchange office"
 msgstr "Poukázka na 100 Kč. Můžete ji využít v libovolné směnárně."
 

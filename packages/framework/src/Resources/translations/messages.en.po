@@ -406,7 +406,16 @@ msgstr ""
 msgid "Complement to title"
 msgstr ""
 
+msgid "Contact"
+msgstr ""
+
 msgid "Contact form"
+msgstr ""
+
+msgid "Contact form settings"
+msgstr ""
+
+msgid "Contact form settings modified"
 msgstr ""
 
 msgid "Contact us"
@@ -1250,6 +1259,9 @@ msgid "Main image"
 msgstr ""
 
 msgid "Main page products"
+msgstr ""
+
+msgid "Main text"
 msgstr ""
 
 msgid "Main variant"
