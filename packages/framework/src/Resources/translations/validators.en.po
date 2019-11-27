@@ -214,6 +214,9 @@ msgstr ""
 msgid "Please enter currency exchange rate"
 msgstr ""
 
+msgid "Please enter currency minimum fraction digits"
+msgstr ""
+
 msgid "Please enter default VAT"
 msgstr ""
 

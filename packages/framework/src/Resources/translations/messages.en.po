@@ -1117,6 +1117,9 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
+msgid "If you change currency settings, prices of all products will be recalculated"
+msgstr ""
+
 msgid "If you want for these changes to manifest everywhere (on production, devel, localhost etc.) instruct a programmer to commit the changes into GIT!"
 msgstr ""
 
@@ -1283,6 +1286,9 @@ msgid "Message"
 msgstr ""
 
 msgid "Meta description"
+msgstr ""
+
+msgid "Min fraction digits"
 msgstr ""
 
 msgid "Modifications"
@@ -1790,6 +1796,9 @@ msgid "Rounding"
 msgstr ""
 
 msgid "Rounding item with 0 % VAT will be added to your order. It is used for payment in cash."
+msgstr ""
+
+msgid "Rounding type"
 msgstr ""
 
 msgid "SEO"
@@ -2315,6 +2324,9 @@ msgid "XML availability feeds"
 msgstr ""
 
 msgid "Yes"
+msgstr ""
+
+msgid "You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page."
 msgstr ""
 
 msgid "You can drag additional content here."

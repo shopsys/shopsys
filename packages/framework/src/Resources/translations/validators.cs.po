@@ -214,6 +214,9 @@ msgstr "Vyplňte prosím kód měny"
 msgid "Please enter currency exchange rate"
 msgstr "Vyplňte prosím kurz měny"
 
+msgid "Please enter currency minimum fraction digits"
+msgstr "Vyplňte prosím minimum destinných čísel"
+
 msgid "Please enter default VAT"
 msgstr "Prosím zadejte výchozí výši DPH"
 
@@ -432,4 +435,3 @@ msgstr "Musíte vybrat nějakou doménu."
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
-

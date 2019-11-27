@@ -1117,6 +1117,9 @@ msgstr "IP adresa"
 msgid "Icon"
 msgstr "Ikona"
 
+msgid "If you change currency settings, prices of all products will be recalculated"
+msgstr "Pokud změníte nastavení měny, přepočítají se ceny všech produktů"
+
 msgid "If you want for these changes to manifest everywhere (on production, devel, localhost etc.) instruct a programmer to commit the changes into GIT!"
 msgstr "Pokud chcete, aby se změny projevily všude (na produkci, develu, localhostu apod.), dejte vědět programátorovi, aby změny zavedl do GITu!"
 
@@ -1284,6 +1287,9 @@ msgstr "Vzkaz"
 
 msgid "Meta description"
 msgstr "Meta description"
+
+msgid "Min fraction digits"
+msgstr "Minimum desetinných čísel"
 
 msgid "Modifications"
 msgstr "Úpravy"
@@ -1791,6 +1797,9 @@ msgstr "Zaokrouhlení"
 
 msgid "Rounding item with 0 % VAT will be added to your order. It is used for payment in cash."
 msgstr "Do objednávky bude přidána zaokrouhlovací položka s 0% DPH. Používá se pro platbu v hotovosti."
+
+msgid "Rounding type"
+msgstr "Zaokrouhlení"
 
 msgid "SEO"
 msgstr "SEO"
@@ -2511,4 +2520,3 @@ msgstr "bez umístění"
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."
-
