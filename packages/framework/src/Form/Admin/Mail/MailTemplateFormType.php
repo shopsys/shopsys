@@ -50,7 +50,7 @@ class MailTemplateFormType extends AbstractType
                     ])
                     ->addModelTransformer(new EmptyWysiwygTransformer())
             )
-            ->add('attachment', FileUploadType::class, [
+            ->add('attachments', FileUploadType::class, [
                 'required' => false,
                 'multiple' => false,
                 'file_constraints' => [

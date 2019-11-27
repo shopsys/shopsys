@@ -1,10 +1,11 @@
 {% block file_upload_row %}
     {% if entity is not null %}
-        {% if files_by_id|length > 0 %}
+        {% if form.orderedFiles|length > 0 %}
             <div class="list-files__wrap">
                 <ul class="list-files js-file-upload">
-                    {% for fileId, file in files_by_id %}
-                        <li class="list-files__item js-file-upload-file" data-id="{{ fileId }}">
+                    {% for fileForm in form.orderedFiles %}
+                        {% set file = files_by_id[fileForm.vars.value] %}
+                        <li class="list-files__item js-file-upload-file" data-id="{{ file.id }}" data-delete-input="#{{ form.filesToDelete.vars.id }}">
                             <div class="list-files__item__in">
                                 <div class="list-files__item__file js-file-upload-preview">
                                     <a href="{{ uploadedFileUrl(file) }}" target="_blank">
@@ -22,11 +23,17 @@
                                     {{ 'File will be deleted after saving.'|trans }}
                                 </span>
                             </div>
+                            {{ form_widget(fileForm, { full_name: form.orderedFiles.vars.full_name ~ '[]'}) }}
                         </li>
                     {% endfor %}
                 </ul>
             </div>
+        {% else %}
+            {% do form.orderedFiles.setRendered %}
         {% endif %}
+        <div class="display-none">
+            {{ form_widget(form.filesToDelete) }}
+        </div>
     {% endif %}
     <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}

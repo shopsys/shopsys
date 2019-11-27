@@ -129,7 +129,8 @@ class MailTemplateFacade
         foreach ($mailTemplatesData as $mailTemplateData) {
             $mailTemplate = $this->mailTemplateRepository->getByNameAndDomainId($mailTemplateData->name, $domainId);
             $mailTemplate->edit($mailTemplateData);
-            $this->uploadedFileFacade->uploadFile($mailTemplate, $mailTemplateData->attachment);
+
+            $this->uploadedFileFacade->manageFiles($mailTemplate, $mailTemplateData->attachments);
         }
 
         $this->em->flush();

@@ -171,4 +171,22 @@ class UploadedFile implements EntityFileUploadInterface
     {
         return $this->type;
     }
+
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     */
+    public function checkForDelete(string $entityName, int $entityId): void
+    {
+        if ($this->entityName !== $entityName || $this->entityId !== $entityId) {
+            throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException(
+                sprintf(
+                    'Entity "%s" with ID "%s" does not own file with ID "%s"',
+                    $entityName,
+                    $entityId,
+                    $this->id
+                )
+            );
+        }
+    }
 }

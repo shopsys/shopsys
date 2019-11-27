@@ -2,10 +2,24 @@
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 
 class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
+     */
+    protected $uploadedFileFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     */
+    public function __construct(UploadedFileFacade $uploadedFileFacade)
+    {
+        $this->uploadedFileFacade = $uploadedFileFacade;
+    }
+
     /**
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData
      */
@@ -22,6 +36,7 @@ class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
     {
         $mailTemplateData = new MailTemplateData();
         $this->fillFromMailTemplate($mailTemplateData, $mailTemplate);
+        $mailTemplateData->attachments->orderedFiles = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
 
         return $mailTemplateData;
     }
