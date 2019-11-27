@@ -2326,6 +2326,9 @@ msgstr "XML dostupnostní feedy"
 msgid "Yes"
 msgstr "Ano"
 
+msgid "You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page."
+msgstr "Nemáte přístup k požadované stránce. Požádejte správce, aby vám udělil přístup."
+
 msgid "You can drag additional content here."
 msgstr "Zde můžete přetáhnout další obsah."
 
