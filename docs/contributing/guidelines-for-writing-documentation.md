@@ -9,7 +9,7 @@
     * You can even access the rendered docs under `/documentation/` sub-folder for any branch that is built on our Jenkins CI server.
     * The main [`mkdocs.yml`](https://github.com/shopsys/shopsys/blob/9.0/mkdocs.yml) configuration file is located in the monorepo root.
 * All documentation files should be named same as first heading (in lowercase, non-alphanumeric characters replaced by dash).
-* References to project files and classes have to be absolute links to the GitHub in proper version - eg. `[app/config/config.yml](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/config.yml)`.
+* References to project files and classes have to be absolute links to the GitHub in proper version - eg. `[config/parameters_common.yml](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/parameters_common.yml)`.
     * there is an exception for files [CHANGELOG](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) and [UPGRADE](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) - these files should be always linked in the latest (i.e. `master`) version.
 * References among the docs files must be relative - e.g. `[read this article](../introduction/using-form-types.md)`.
 * All words in a title except conjunctions (and, or, but...), articles (a, an, the), and short prepositions (in, to, of...) should be capitalized. Other headings should not be capitalized.
