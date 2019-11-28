@@ -42,24 +42,32 @@ class ImageExtension extends Twig_Extension
     protected $templating;
 
     /**
+     * @var bool
+     */
+    protected $isLazyLoadEnabled;
+
+    /**
      * @param string $frontDesignImageUrlPrefix
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface $templating
+     * @param bool $isLazyLoadEnabled
      */
     public function __construct(
         $frontDesignImageUrlPrefix,
         Domain $domain,
         ImageLocator $imageLocator,
         ImageFacade $imageFacade,
-        EngineInterface $templating
+        EngineInterface $templating,
+        ?bool $isLazyLoadEnabled = false
     ) {
         $this->frontDesignImageUrlPrefix = rtrim($frontDesignImageUrlPrefix, '/');
         $this->domain = $domain;
         $this->imageLocator = $imageLocator;
         $this->imageFacade = $imageFacade;
         $this->templating = $templating;
+        $this->isLazyLoadEnabled = $isLazyLoadEnabled;
     }
 
     /**
@@ -210,7 +218,7 @@ class ImageExtension extends Twig_Extension
         $htmlAttributes = $attributes;
         unset($htmlAttributes['type'], $htmlAttributes['size']);
 
-        $useLazyLoading = array_key_exists('lazy', $attributes) ? (bool)$attributes['lazy'] : true;
+        $useLazyLoading = array_key_exists('lazy', $attributes) ? (bool)$attributes['lazy'] : $this->isLazyLoadEnabled;
         unset($htmlAttributes['lazy']);
 
         if ($useLazyLoading === true) {
