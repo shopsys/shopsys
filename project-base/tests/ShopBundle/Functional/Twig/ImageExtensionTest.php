@@ -33,7 +33,7 @@ class ImageExtensionTest extends FunctionalTestCase
             new AdditionalImageData('(max-width: 480px)', 'http://webserver:8080/additional_1_2.jpg'),
         ]);
 
-        $imageExtension = new ImageExtension('', $this->domain, $this->imageLocator, $imageFacade, $templating);
+        $imageExtension = new ImageExtension('', $this->domain, $this->imageLocator, $imageFacade, $templating, true);
 
         $html = $imageExtension->getImageHtml($image);
 

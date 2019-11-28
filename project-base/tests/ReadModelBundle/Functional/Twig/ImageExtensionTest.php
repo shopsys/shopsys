@@ -39,7 +39,7 @@ class ImageExtensionTest extends FunctionalTestCase
 
         $imageView = new ImageView($productId, $fileExtension, $entityName, null);
 
-        $readModelBundleImageExtension = $this->createImageExtension('', $imageFacadeMock);
+        $readModelBundleImageExtension = $this->createImageExtension('', $imageFacadeMock, true);
         $html = $readModelBundleImageExtension->getImageHtml($imageView);
 
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/Resources/picture.twig', $html);
@@ -55,7 +55,7 @@ class ImageExtensionTest extends FunctionalTestCase
 
         $imageView = new ImageView($productId, $fileExtension, $entityName, null);
 
-        $readModelBundleImageExtension = $this->createImageExtension();
+        $readModelBundleImageExtension = $this->createImageExtension('', null, true);
         $html = $readModelBundleImageExtension->getImageHtml($imageView);
 
         $expected = '<picture>';
@@ -91,7 +91,7 @@ class ImageExtensionTest extends FunctionalTestCase
 
     public function testGetNoImageHtml(): void
     {
-        $readModelBundleImageExtension = $this->createImageExtension();
+        $readModelBundleImageExtension = $this->createImageExtension('', null, true);
 
         $html = $readModelBundleImageExtension->getImageHtml(null);
 
@@ -108,7 +108,7 @@ class ImageExtensionTest extends FunctionalTestCase
     {
         $defaultFrontDesignImageUrlPrefix = '/assets/frontend/images/';
 
-        $readModelBundleImageExtension = $this->createImageExtension($defaultFrontDesignImageUrlPrefix);
+        $readModelBundleImageExtension = $this->createImageExtension($defaultFrontDesignImageUrlPrefix, null, true);
         $html = $readModelBundleImageExtension->getImageHtml(null);
 
         $expected = '<picture>';
@@ -133,11 +133,14 @@ class ImageExtensionTest extends FunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
      * @return \Shopsys\ReadModelBundle\Twig\ImageExtension
      */
-    private function createImageExtension(string $frontDesignImageUrlPrefix = '', ?ImageFacade $imageFacade = null): ImageExtension
-    {
+    private function createImageExtension(
+        string $frontDesignImageUrlPrefix = '',
+        ?ImageFacade $imageFacade = null,
+        ?bool $enableLazyLoad = false
+    ): ImageExtension {
         $templating = $this->getContainer()->get('templating');
         $imageFacade = $imageFacade ?: $this->imageFacade;
 
-        return new ImageExtension($frontDesignImageUrlPrefix, $this->domain, $this->imageLocator, $imageFacade, $templating);
+        return new ImageExtension($frontDesignImageUrlPrefix, $this->domain, $this->imageLocator, $imageFacade, $templating, $enableLazyLoad);
     }
 }
