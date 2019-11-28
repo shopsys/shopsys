@@ -60,7 +60,7 @@ class ImageExtension extends Twig_Extension
         ImageLocator $imageLocator,
         ImageFacade $imageFacade,
         EngineInterface $templating,
-        ?bool $isLazyLoadEnabled = false
+        bool $isLazyLoadEnabled = false
     ) {
         $this->frontDesignImageUrlPrefix = rtrim($frontDesignImageUrlPrefix, '/');
         $this->domain = $domain;

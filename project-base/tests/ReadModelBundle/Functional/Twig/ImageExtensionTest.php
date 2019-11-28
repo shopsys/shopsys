@@ -131,12 +131,13 @@ class ImageExtensionTest extends FunctionalTestCase
     /**
      * @param string $frontDesignImageUrlPrefix
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
+     * @param bool $enableLazyLoad
      * @return \Shopsys\ReadModelBundle\Twig\ImageExtension
      */
     private function createImageExtension(
         string $frontDesignImageUrlPrefix = '',
         ?ImageFacade $imageFacade = null,
-        ?bool $enableLazyLoad = false
+        bool $enableLazyLoad = false
     ): ImageExtension {
         $templating = $this->getContainer()->get('templating');
         $imageFacade = $imageFacade ?: $this->imageFacade;
