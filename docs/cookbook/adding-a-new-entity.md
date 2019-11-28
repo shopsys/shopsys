@@ -8,9 +8,9 @@ however, you can continue with another [cookbook](./create-basic-grid.md) that w
 ## 1. Create a new class `Salesman` and set it as an entity using Doctrine annotation
 
 ```php
-// src\Shopsys\ShopBundle\Model\Salesman\Salesman.php
+// src\Model\Salesman\Salesman.php
 
-namespace Shopsys\ShopBundle\Model\Salesman;
+namespace App\Model\Salesman;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,7 +32,7 @@ Each salesman entity will have the following properties.
 - `registeredAt` - registration date of the salesman
 
 ```diff
-namespace Shopsys\ShopBundle\Model\Salesman;
+namespace App\Model\Salesman;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -81,7 +81,7 @@ php phing db-migrations-generate
 The command will print a filename of the database migration with content like this.
 
 ```php
-namespace Shopsys\ShopBundle\Migrations;
+namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
@@ -120,7 +120,7 @@ class Version20190301122526 extends AbstractMigration
 Now we add some entries into the new database table by modifying the database migration.
 
 ```diff
-namespace Shopsys\ShopBundle\Migrations;
+namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;

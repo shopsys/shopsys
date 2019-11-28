@@ -49,7 +49,7 @@ The source is mocked with [apiari.io service](http://docs.ssfwbasicdataimportdem
 ]
 ```
 
-### Step 1 - Add `$extId` to [Product](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Model/Product/Product.php) [entity](../model/introduction-to-model-architecture.md#entity)
+### Step 1 - Add `$extId` to [Product](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Model/Product/Product.php) [entity](../model/introduction-to-model-architecture.md#entity)
 
 We need to store the relation between your application database and the external source of data because later, in data transfer processing,
 we will be deciding whether to create a new product or update existing one, based on the `$extId` attribute.
@@ -63,9 +63,9 @@ because they can be scheduled, run on background and even iterated when necessar
 #### 2.1 - Add new `ImportProductsCronModule` class that implements [`SimpleCronModuleInterface`](https://github.com/shopsys/shopsys/blob/9.0/packages/plugin-interface/src/Cron/SimpleCronModuleInterface.php)
 
 ```php
-// src/Shopsys/ShopBundle/Model/Product/ImportProductsCronModule.php
+// src/Model/Product/ImportProductsCronModule.php
 
-namespace Shopsys\ShopBundle\Model\Product;
+namespace App\Model\Product;
 
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
@@ -88,9 +88,9 @@ class ImportProductsCronModule implements SimpleCronModuleInterface
 !!! warning
     Cron modules are not suitable for data transfers initialized by an external source, you should implement Web Services for that purpose.
 
-#### 2.2 - Add cron configuration to [`cron.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services/cron.yml)
+#### 2.2 - Add cron configuration to [`cron.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services/cron.yml)
 ```diff
-# src/Shopsys/ShopBundle/Resources/config/services/cron.yml
+# config/services/cron.yml
 
 services:
     _defaults:
@@ -98,8 +98,7 @@ services:
         autoconfigure: true
         public: false
 
-+   Shopsys\ShopBundle\Model\Product\ImportProductsCronModule:
-+       class: Shopsys\ShopBundle\Model\Product\ImportProductsCronModule
++   App\Model\Product\ImportProductsCronModule:
 +       tags:
 +           - { name: shopsys.cron, hours: '*', minutes: '*' }
 ```
@@ -113,11 +112,11 @@ and then decide whether to create or update existing product based on `$extId`.
 #### 3.2 - Download external data and create or update product based on `$extId`
 If a product exists with given `$extId` we modify it, otherwise, we need to create a new one.
 ```php
-// src/Shopsys/ShopBundle/Model/Product/ImportProductsCronModule.php
+// src/Model/Product/ImportProductsCronModule.php
 
 // ...
 
-use Shopsys\ShopBundle\Model\Product\ProductFacade;
+use App\Model\Product\ProductFacade;
 
 // ...
 
@@ -126,14 +125,14 @@ const PRODUCT_DATA_URL = 'https://private-anon-38d0154157-ssfwbasicdataimportdem
 // ...
 
 /**
- * @var \Shopsys\ShopBundle\Model\Product\ProductFacade
+ * @var \App\Model\Product\ProductFacade
  */
 private $productFacade;
 
 // ...
 
 /**
- * @param \Shopsys\ShopBundle\Model\Product\ProductFacade $productFacade
+ * @param \App\Model\Product\ProductFacade $productFacade
  */
 public function __construct(
     ProductFacade $productFacade
@@ -174,10 +173,10 @@ private function importExternalProductsData(array $externalProductsData)
     We will extend the framework classes and implement new methods in the next two steps.
 
 #### 3.2 - Extend [`ProductRepository`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Product/ProductRepository.php) and implement method `findByExternalId()` in order to be able find a [`Product`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Product/Product.php) by an external ID
-Create new class `Shopsys/ShopBundle/Model/Product/ProductRepository` that extends `ProductRepository` from the framework.
+Create new class `App/Model/Product/ProductRepository` that extends `ProductRepository` from the framework.
 ```php
-// src/Shopsys/ShopBundle/Model/Product/ProductRepository.php
-namespace Shopsys\ShopBundle\Model\Product;
+// src/Model/Product/ProductRepository.php
+namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
 
@@ -194,27 +193,27 @@ class ProductRepository extends BaseProductRepository
 }
 ```
 
-Add information about the class extension into the container configuration in [`services.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml) as well.
+Add information about the class extension into the container configuration in [`services.yaml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services.yaml).
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services_test.yml) as well.
 
 ```yaml
-Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@Shopsys\ShopBundle\Model\Product\ProductRepository'
+Shopsys\FrameworkBundle\Model\Product\ProductRepository: '@App\Model\Product\ProductRepository'
 ```
 
 #### 3.3 - Extend [`ProductFacade`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Product/ProductFacade.php) and implement method `findByExternalId()` in order to get [`Product`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Product/Product.php) from repository
 
-Create new class `Shopsys/ShopBundle/Model/Product/ProductFacade` that extends `ProductFacade` from the framework.
+Create new class `App/Model/Product/ProductFacade` that extends `ProductFacade` from the framework.
 
 ```php
-// src/Shopsys/ShopBundle/Model/Product/ProductFacade.php
-namespace Shopsys\ShopBundle\Model\Product;
+// src/Model/Product/ProductFacade.php
+namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 
 class ProductFacade extends BaseProductFacade
 {
     /**
-     * @var \Shopsys\ShopBundle\Model\Product\ProductRepository
+     * @var \App\Model\Product\ProductRepository
      */
     protected $productRepository;
 
@@ -232,11 +231,12 @@ class ProductFacade extends BaseProductFacade
 !!! tip
     You should overwrite `protected $productRepository` annotation so IDE knows that you are using the extended `ProductRepository`
 
-Add information about the class extension into the container configuration in [`services.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml) as well.
+Add information about the class extension into the container configuration in [`services.yaml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services.yaml).
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for),
+you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services_test.yml) as well.
 
 ```yaml
-Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@Shopsys\ShopBundle\Model\Product\ProductFacade'
+Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
 ```
 
 #### 3.4 - Implement `ImportProductsCronModule::createProduct()` and `ImportProductsCronModule::updateProduct()`
@@ -248,24 +248,24 @@ Those methods expect [`ProductData`](https://github.com/shopsys/shopsys/blob/9.0
 class as a parameter, you can use [`ProductDataFactory`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Model/Product/ProductDataFactory.php) to create it.
 
 ```php
-// src/Shopsys/ShopBundle/Model/Product/ImportProductsCronModule.php
+// src/Model/Product/ImportProductsCronModule.php
 
 // ...
 
-use Shopsys\ShopBundle\Model\Product\ProductDataFactory;
+use App\Model\Product\ProductDataFactory;
 
 // ...
 
 /**
- * @var \Shopsys\ShopBundle\Model\Product\ProductDataFactory
+ * @var \App\Model\Product\ProductDataFactory
  */
 private $productDataFactory;
 
 // ...
 
 /**
- * @param \Shopsys\ShopBundle\Model\Product\ProductFacade $productFacade
- * @param \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory
+ * @param \App\Model\Product\ProductFacade $productFacade
+ * @param \App\Model\Product\ProductDataFactory $productDataFactory
  */
 public function __construct(
     ProductFacade $productFacade,
@@ -289,7 +289,7 @@ private function createProduct(array $externalProductData) {
 }
 
 /**
- * @param \Shopsys\ShopBundle\Model\Product\Product $product
+ * @param \App\Model\Product\Product $product
  * @param array $externalProductData
  */
 private function editProduct(Product $product, array $externalProductData) {
@@ -306,13 +306,13 @@ Finally, we can implement the private method for filling data object
 [`ProductData`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Product/ProductData.php) with external source data.
 
 ```php
-// src/Shopsys/ShopBundle/Model/Product/ImportProductsCronModule.php
+// src/Model/Product/ImportProductsCronModule.php
 
 // ...
 
+use App\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
-use Shopsys\ShopBundle\Model\Pricing\Vat\VatFacade;
 
 // ...
 
@@ -323,7 +323,7 @@ const PRICING_GROUP_ID = 1;
 // ...
 
 /**
- * @var \Shopsys\ShopBundle\Model\Pricing\Vat\VatFacade
+ * @var \App\Model\Pricing\Vat\VatFacade
  */
 private $vatFacade;
 
@@ -339,7 +339,7 @@ public function __construct(
 
 
 /**
- * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+ * @param \App\Model\Product\ProductData $productData
  * @param array $externalProductData
  */
 private function fillProductData(ProductData $productData, array $externalProductData)
@@ -372,9 +372,9 @@ private function fillProductData(ProductData $productData, array $externalProduc
 #### 3.6 - Extend [`VatRepository`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Pricing/Vat/VatRepository.php) and implement method `getVatByPercent()` in order to load [`Vat`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Pricing/Vat/Vat.php) by percent
 
 ```php
-// src/Shopsys/ShopBundle/Model/Pricing/Vat/VatRepository.php
+// src/Model/Pricing/Vat/VatRepository.php
 
-namespace Shopsys\ShopBundle\Model\Pricing\Vat;
+namespace App\Model\Pricing\Vat;
 
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository as BaseVatRepository;
 
@@ -397,10 +397,10 @@ class VatRepository extends BaseVatRepository
 }
 ```
 
-Add information about the class extension into the container configuration in [`services.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml)
+Add information about the class extension into the container configuration in [`services.yaml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services.yaml)
 
 ```yaml
-Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository: '@Shopsys\ShopBundle\Model\Pricing\Vat\VatRepository'
+Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository: '@App\Model\Pricing\Vat\VatRepository'
 ```
 
 !!! danger
@@ -410,16 +410,16 @@ Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository: '@Shopsys\ShopBundle\Mo
 #### 3.7 - Extend [`VatFacade`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Pricing/Vat/VatFacade.php) and implement method `getVatByPercent()` in it
 
 ```php
-// Shopsys/ShopBundle/Model/Pricing/Vat/VatFacade.php
+// src/Model/Pricing/Vat/VatFacade.php
 
-namespace Shopsys\ShopBundle\Model\Pricing\Vat;
+namespace App\Model\Pricing\Vat;
 
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade as BaseVatFacade;
 
 class VatFacade extends BaseVatFacade
 {
     /**
-     * @var \Shopsys\ShopBundle\Model\Pricing\Vat\VatRepository
+     * @var \App\Model\Pricing\Vat\VatRepository
      */
     protected $vatRepository;
 
@@ -437,11 +437,11 @@ class VatFacade extends BaseVatFacade
 !!! tip
     You should overwrite `protected $vatRepository` annotation so IDE knows that you are using the extended `VatRepository`
 
-Add information about the class extension into the container configuration in [`services.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml).
-To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml) as well.
+Add information about the class extension into the container configuration in [`services.yaml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services.yaml).
+To [make the service public in TEST environment](../introduction/faq-and-common-issues.md#what-is-the-configuration-file-services_testyml-good-for), you need to add the same line into [`services_test.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services_test.yml) as well.
 
 ```yaml
-Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade: '@Shopsys\ShopBundle\Model\Pricing\Vat\VatFacade'
+Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade: '@App\Model\Pricing\Vat\VatFacade'
 ```
 
 ### Step 4 - Everything is done, you can run it now
@@ -463,13 +463,13 @@ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\Pro
 php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\ProductVisibilityMidnightCronModule"
 php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule"
 php bin/console shopsys:cron --module="Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule"
-php bin/console shopsys:cron --module="Shopsys\ShopBundle\Model\Product\ImportProductsCronModule"
+php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModule"
 ```
 
 #### 4.2 - Find your module and run appropriate console command
 
 ```sh
-php bin/console shopsys:cron --module="Shopsys\ShopBundle\Model\Product\ImportProductsCronModule"
+php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModule"
 ```
 
 !!! hint
@@ -500,7 +500,7 @@ for changes in all mapped entities and after time it consumes a huge amount of r
     - You should load any entity again after clearing identity map because any attempt to flush the old one will result in an exception.
 - Use streamed input for XML and JSON.
     - So you do not load huge files at once (can lead to memory overflow).
-- Store external source credentials in `app/config/parameters.yml`.
+- Store external source credentials in `config/parameters.yml`.
     - Storing credentials in local configuration instead of hard-coding them in source code prevents from accidental corrupting of production data.
 - Restrict editing of the transferred fields in administration.
     - At least, mark them as transferred to avoid confusion when an administrator changes the field value and then data import overrides the value.

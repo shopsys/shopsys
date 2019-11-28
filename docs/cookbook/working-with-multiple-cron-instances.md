@@ -15,7 +15,7 @@ You do not have to register the instance anywhere else.
 We just edit earlier created configuration to place our `ImportProductsCronModule` to different cron instance.
 
 ```diff
-# src/Shopsys/ShopBundle/Resources/config/services/cron.yml
+# config/services/cron.yml
 
 services:
     _defaults:
@@ -23,8 +23,7 @@ services:
         autoconfigure: true
         public: false
 
-    Shopsys\ShopBundle\Model\Product\ImportProductsCronModule:
-        class: Shopsys\ShopBundle\Model\Product\ImportProductsCronModule
+    App\Model\Product\ImportProductsCronModule:
         tags:
 -            - { name: shopsys.cron, hours: '*/3', minutes: '0' }
 +            - { name: shopsys.cron, hours: '*/3', minutes: '0', instanceName: products}
@@ -42,7 +41,7 @@ Now by running `php phing cron-list` in a console, we can see a list of all avai
 products
 --------
 
- php bin/console shopsys:cron --module="Shopsys\ShopBundle\Model\Product\ImportProductsCronModule" --instance-name=products
+ php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModule" --instance-name=products
 
 default
 -------

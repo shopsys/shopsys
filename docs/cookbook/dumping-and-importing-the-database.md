@@ -30,11 +30,11 @@ Then you can import the dump:
 psql --quiet --username=database_user --host=database_host target_database_name < dump.sql
 ```
 
-Replace `database_user`, `database_host` and `target_database_name` with the correct values (from your `app/config/parameters.yml`).
+Replace `database_user`, `database_host` and `target_database_name` with the correct values (from your `config/parameters.yml`).
 The command will prompt you for the user's password.
 
 ## Importing database into a new database
-First, edit your `app/config/parameters.yml` and set the new database name.
+First, edit your `config/parameters.yml` and set the new database name.
 
 !!! note
     If you are not in the DEVELOPMENT environment you will have to clear the cache via `php phing clean` for the changes to take effect.
@@ -49,5 +49,5 @@ Then you can import the dump:
 psql --quiet --username=database_user --host=database_host target_database_name < dump.sql
 ```
 
-Replace `database_user`, `database_host` and `target_database_name` with the correct values (from your `app/config/parameters.yml`).
+Replace `database_user`, `database_host` and `target_database_name` with the correct values (from your `config/parameters.yml`).
 The command will prompt you for the user's password.

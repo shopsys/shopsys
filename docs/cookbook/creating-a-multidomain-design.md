@@ -8,9 +8,9 @@ If you want to know the basic technologies we use for the frontend implementatio
 ### Scenario 1 - I want to use red color for links on my 2nd domain
 
 This is very easy as there are already prepared `less` files for the second domain in `domain2` folder
-that is configured for usage by `styles_directory` parameter in [`domains.yml`](/project-base/app/config/domains.yml).
+that is configured for usage by `styles_directory` parameter in [`domains.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/domains.yml).
 
-Edit `src/Shopsys/ShopBundle/Resources/styles/front/domain2/core/variables.less`:
+Edit `src/Resources/styles/front/domain2/core/variables.less`:
 
 ```diff
 - @color-link: @color-green;
@@ -33,7 +33,7 @@ php phing grunt
 In the left panel, by default, there is a category tree and an advert box.
 Let us say we want to change the elements so the advert box goes first, then the category tree.
 
-Open [`domains.yml`](/project-base/app/config/domains.yml) and set `design_id` parameter for your 2nd domain.
+Open [`domains.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/domains.yml) and set `design_id` parameter for your 2nd domain.
 
 ```diff
    domains:
@@ -48,16 +48,16 @@ Open [`domains.yml`](/project-base/app/config/domains.yml) and set `design_id` p
 +          design_id: my-design
 ```
 
-Duplicate [`layoutWithPanel.html.twig`](/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Layout/layoutWithPanel.html.twig)
+Duplicate [`layoutWithPanel.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Layout/layoutWithPanel.html.twig)
 and name the new file `layoutWithPanel.my-design.html.twig`. The new file must be in the same folder as the original one.
 
 In your new `layoutWithPanel.my-design.html.twig`, re-order the elements in the div element with class `web__main__panel`:
 
 ```twig
     <div class="web__main__panel">
-        {{ render(controller('ShopsysShopBundle:Front/Advert:box',{'positionName' : 'leftSidebar'})) }}
+        {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction', {'positionName' : 'leftSidebar'})) }}
 
-        {{ render(controller('ShopsysShopBundle:Front/Category:panel', { request: app.request } )) }}
+        {{ render(controller('App\\Controller\\Front\\CategoryController:panelAction', { request: app.request } )) }}
 
         {% block panel_content %}{% endblock %}
     </div>

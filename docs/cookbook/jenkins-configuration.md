@@ -277,8 +277,8 @@ This section shows configuration of jenkins, which will allow build of applicati
 Our `parameters.yml.dist` is already set for running application in docker as default so we just need to create `parameters.yml` file from dist file:
 
 ```sh
-cp $WORKSPACE/project-base/app/config/parameters.yml.dist $WORKSPACE/project-base/app/config/parameters.yml
-cp $WORKSPACE/project-base/app/config/parameters_test.yml.dist $WORKSPACE/project-base/app/config/parameters_test.yml
+cp $WORKSPACE/project-base/config/parameters.yml.dist $WORKSPACE/project-base/config/parameters.yml
+cp $WORKSPACE/project-base/config/parameters_test.yml.dist $WORKSPACE/project-base/config/parameters_test.yml
 ```
 
 #### Set domains
@@ -287,19 +287,19 @@ that way domain names are related with the git branches, this makes jenkins more
 
 ```sh
 # Copy domains_urls.yml from the template
-cp $WORKSPACE/project-base/app/config/domains_urls.yml.dist $WORKSPACE/project-base/app/config/domains_urls.yml
+cp $WORKSPACE/project-base/config/domains_urls.yml.dist $WORKSPACE/project-base/config/domains_urls.yml
 
 # Fetch all domain IDs
-DOMAIN_IDS=$(cat $WORKSPACE/project-base/app/config/domains_urls.yml|grep -Po 'id: ([0-9]+)$'|sed 's/id: \([0-9]\+\)/\1/')
+DOMAIN_IDS=$(cat $WORKSPACE/project-base/config/domains_urls.yml|grep -Po 'id: ([0-9]+)$'|sed 's/id: \([0-9]\+\)/\1/')
 
 # Modify public URLs to $DOMAIN_ID.$JOB_NAME.your-server-name.com ($DOMAIN_ID is ommited for first domain)
 for DOMAIN_ID in $DOMAIN_IDS; do
   if [ "$DOMAIN_ID" == "1" ]; then
     # 1st domain has URL without number prefix
-    sed -i "/id: 1/,/url:/{s/url:.*/url: http:\/\/$JOB_NAME.your-server-name.com/}" $WORKSPACE/project-base/app/config/domains_urls.yml
+    sed -i "/id: 1/,/url:/{s/url:.*/url: http:\/\/$JOB_NAME.your-server-name.com/}" $WORKSPACE/project-base/config/domains_urls.yml
   else
     # 2nd and subsequent domains have URLs with DOMAIN_ID prefix
-    sed -i "/id: $DOMAIN_ID/,/url:/{s/url:.*/url: http:\/\/$DOMAIN_ID.$JOB_NAME.your-server-name.com/}" $WORKSPACE/project-base/app/config/domains_urls.yml
+    sed -i "/id: $DOMAIN_ID/,/url:/{s/url:.*/url: http:\/\/$DOMAIN_ID.$JOB_NAME.your-server-name.com/}" $WORKSPACE/project-base/config/domains_urls.yml
   fi
 done
 ```
