@@ -111,6 +111,63 @@ There you can find links to upgrade notes for other versions too.
     -           ->setExpectedStatusCode(404);
     +           ->setExpectedStatusCode(302);
     ```
+- update your project to use refactored FileUpload functionality with added support for multiple files ([#1531])(https://github.com/shopsys/shopsys/pull/1531/) 
+    - there were changes in framework classes, styles and scripts so update your project appropriately:
+        - `UploadedFileEntityConfigNotFoundException::getEntityClassOrName()` has been removed
+        - `UploadedFileFacade::findUploadedFileByEntity()` and `UploadedFileFacade::getUploadedFileByEntity()` has been removed, use `UploadedFileFacade::getUploadedFilesByEntity()` instead
+        - `UploadedFileFacade::uploadFile()` is now protected, use `UploadedFileFacade::manageFiles()` instead
+        - `UploadedFileRepository::findUploadedFileByEntity()` and `UploadedFileRepository::getUploadedFileByEntity()` has been removed, use `UploadedFileRepository::getUploadedFilesByEntity()` or `UploadedFileRepository::getAllUploadedFilesByEntity()` instead
+        - `UploadedFileFacade::hasUploadedFile()` has been removed
+        - `UploadedFileFacade::deleteUploadedFileByEntity()` has been removed use `UploadedFileFacade::deleteFiles()` instead
+        - `src/Resources/scripts/admin/mailTemplate.attachmentDelete.js` has been removed
+        - `UploadedFileExtension::getUploadedFileByEntity()` and `UploadedFileExtension::hasUploadedFile()` has been removed including its Twig functions `hasUploadedFile` and `getUploadedFile`
+        - `UploadedFileExtension::getUploadedFileUrl()` and `UploadedFileExtension::getUploadedFilePreviewHtml()` now expect `UploadedFile` instead of entity that applies also for their Twig functions `uploadedFileUrl` and `uploadedFilePreview` 
+        - `UploadedFile::setTemporaryFilename()` does not longer accept null
+        - `FileUploadType` now requires options `entity`, `file_entity_class` and `file_type` see [documentation](https://docs.shopsys.com/en/9.0/introduction/using-form-types/#fileuploadtype) for more info
+        - `MailTemplateData::attachment()` and `MailTemplateData::deleteAttachment()` has been replaced by `MailTemplateData::attachments()` that is of type `\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData`
+        - `src/Resources/scripts/admin/imageUpload.js` has been renamed to `src/Resources/scripts/admin/fileUpload.js` and all form of word `image` has been changed to `file`
+        - `src/Resources/styles/admin/component/list/images.less` has been renamed to `src/Resources/styles/admin/component/list/files.less` and all form of word `image` has been changed to `file`
+    - following methods has changed their interface:
+        - `UploadedFileEntityConfig::__construct()` 
+            ```diff
+             - public function __construct($entityName, $entityClass)
+             + public function __construct(string $entityName, string $entityClass, array $types)
+            ```
+        - `UploadedFile::__construct()` 
+            ```diff
+             - public function __construct($entityName, $entityId, $temporaryFilename)
+             + public function __construct(string $entityName, int $entityId, string $type, string $temporaryFilename, int $position)
+            ```
+        - `UploadedFileFactory::create()` and `UploadedFileFactoryInterface::create`
+            ```diff
+             - public function create(string $entityName, int $entityId, array $temporaryFilenames)
+             + public function create(string $entityName, int $entityId, string $type, string $temporaryFilename, int $position = 0)
+            ```
+    - update your project configuration files accordingly:
+        - `config/packages/twig.yaml`
+            ```diff
+                - '@ShopsysFramework/Admin/Form/colorpickerFields.html.twig'
+            +   - '@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig'
+                - '@ShopsysFramework/Admin/Form/fileuploadFields.html.twig'
+                - '@ShopsysFramework/Admin/Form/imageuploadFields.html.twig'
+            ```
+        - `config/uploaded_files.yml`
+            ```diff
+            +   # It is best practice to name first type as "default"
+            +   #
+            +   # Example:
+            +   # -   name: mailTemplate
+            +   #     class: Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+            +   #     types:
+            +   #         -   name: default
+            +   #             multiple: false
+            +   
+                -   name: mailTemplate
+                    class: Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+            +       types:
+            +           -   name: default
+            +               multiple: true
+            ```
 
 ### Tools
 
