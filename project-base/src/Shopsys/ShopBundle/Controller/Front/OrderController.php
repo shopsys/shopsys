@@ -225,7 +225,7 @@ class OrderController extends FrontBaseController
 
                 try {
                     $this->sendMail($order);
-                } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $e) {
+                } catch (\Exception $e) {
                     $this->getFlashMessageSender()->addErrorFlash(
                         t('Unable to send some emails, please contact us for order verification.')
                     );

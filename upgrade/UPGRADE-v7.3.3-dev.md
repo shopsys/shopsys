@@ -60,3 +60,16 @@ There you can find links to upgrade notes for other versions too.
     - `tests/ShopBundle/Functional/Model/Cart/Watcher/CartWatcherTest.php`
 
 - exception `CartIsEmptyException` has been marked as deprecated and will be removed in 9.0 ([#1494](https://github.com/shopsys/shopsys/pull/1494))
+
+- prevent throwing error 500 for users when your SMTP server is down ([#1529](https://github.com/shopsys/shopsys/pull/1529))
+    - update your `indexAction` method in `src\Shopsys\ShopBundle\Controller\Front\OrderController.php` 
+        ```diff
+            try {
+                $this->sendMail($order);
+        -    } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $e) {
+        +    } catch (\Exception $e) {
+                $this->getFlashMessageSender()->addErrorFlash(
+                    t('Unable to send some emails, please contact us for order verification.')
+                );
+            }
+        ```
