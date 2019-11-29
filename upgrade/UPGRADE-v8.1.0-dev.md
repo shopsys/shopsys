@@ -736,8 +736,8 @@ There you can find links to upgrade notes for other versions too.
                 shopsys.display_timezone: Europe/Prague
         +       shopsys.image.enable_lazy_load: true
         ```
-        !!! note
-            lazy loading will be enabled by default in next major
+
+        Note: _lazy loading __will be enabled__ by default in next major_
 
     - update `src/Shopsys/ShopBundle/Resources/scripts/frontend/components/ajaxMoreLoader.js`
         ```diff
