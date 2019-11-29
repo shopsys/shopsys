@@ -673,7 +673,7 @@ There you can find links to upgrade notes for other versions too.
 
     ```diff
           @import "core/form/input.less";
-        + @import "core/form/custom-inputs.less";
+    +     @import "core/form/custom-inputs.less";
           @import "core/form/btn.less";
     ```
 
@@ -681,32 +681,32 @@ There you can find links to upgrade notes for other versions too.
 
     ```diff
           {% block checkbox_row %}
-        -     <dl class="{{ rowClass|default('form-line') }}">
-        -        <dt></dt>
-        -        <dd>
-        -            <div class="form-choice">
-        -                <div class="form-choice__input">
-        -                    {{ form_widget(form) }}
-        -                </div>
-        -                <div class="form-choice__label">
-        -                    {{ form_label(form, label) }}
-        -                    {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
-        -                    {{ form_errors(form, { errors_attr: errors_attr } ) }}
-        -                    {{ block('icon') }}
-        -                </div>
-        -            </div>
-        -        </dd>
-        -     </dl>
-        +     <div class="{{ rowClass|default('form-line') }}">
-        +        <div class="form-choice">
-        +            {% set checkboxAttr = attr|merge({'class': (attr.class|default('') ~ ' css-checkbox')|trim}) %}
-        +            {{ form_widget(form, { attr: checkboxAttr }) }}
-        +            {{ form_label(form, label, { label_attr: { class: "css-c+heckbox__image" }}) }}
-        +            {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
-        +            {{ form_errors(form, { errors_attr: errors_attr } ) }}
-        +            {{ block('icon') }}
-        +        </div>
-        +     </div>
+    -         <dl class="{{ rowClass|default('form-line') }}">
+    -            <dt></dt>
+    -            <dd>
+    -                <div class="form-choice">
+    -                    <div class="form-choice__input">
+    -                        {{ form_widget(form) }}
+    -                    </div>
+    -                    <div class="form-choice__label">
+    -                        {{ form_label(form, label) }}
+    -                        {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
+    -                        {{ form_errors(form, { errors_attr: errors_attr } ) }}
+    -                        {{ block('icon') }}
+    -                    </div>
+    -                </div>
+    -            </dd>
+    -         </dl>
+    +         <div class="{{ rowClass|default('form-line') }}">
+    +            <div class="form-choice">
+    +                {% set checkboxAttr = attr|merge({'class': (attr.class|default('') ~ ' css-checkbox')|trim}) %}
+    +                {{ form_widget(form, { attr: checkboxAttr }) }}
+    +                {{ form_label(form, label, { label_attr: { class: "css-c+heckbox__image" }}) }}
+    +                {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
+    +                {{ form_errors(form, { errors_attr: errors_attr } ) }}
+    +                {{ block('icon') }}
+    +            </div>
+    +         </div>
           {% endblock checkbox_row %}
      ```
 
