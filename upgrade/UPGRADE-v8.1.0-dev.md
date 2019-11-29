@@ -778,7 +778,7 @@ There you can find links to upgrade notes for other versions too.
         - [`tests/ReadModelBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-f9ab2d66d30131a8d66df0a7c6eed4e4)
         - [`tests/ShopBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-b57160edc2db5a01659693b4b417dafd)
 
-- add Basic styleguide ([#1463](https://github.com/shopsys/shopsys/pull/1463))
+- add Basic styleguide ([#1485](https://github.com/shopsys/shopsys/pull/1485))
     - update config file `.eslintignore`
         ```diff
           /src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins
