@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -42,9 +44,9 @@ class UploadedFileExtension extends Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig_SimpleFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new Twig_SimpleFunction('uploadedFileUrl', [$this, 'getUploadedFileUrl']),
@@ -56,7 +58,7 @@ class UploadedFileExtension extends Twig_Extension
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getUploadedFileUrl(UploadedFile $uploadedFile)
+    public function getUploadedFileUrl(UploadedFile $uploadedFile): string
     {
         return $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getCurrentDomainConfig(), $uploadedFile);
     }
@@ -65,7 +67,7 @@ class UploadedFileExtension extends Twig_Extension
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getUploadedFilePreviewHtml(UploadedFile $uploadedFile)
+    public function getUploadedFilePreviewHtml(UploadedFile $uploadedFile): string
     {
         $filepath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
         $fileThumbnailInfo = $this->fileThumbnailExtension->getFileThumbnailInfo($filepath);
@@ -89,7 +91,7 @@ class UploadedFileExtension extends Twig_Extension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'file_extension';
     }
