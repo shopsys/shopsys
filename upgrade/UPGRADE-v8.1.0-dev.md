@@ -640,6 +640,12 @@ There you can find links to upgrade notes for other versions too.
         - for more information you can see the [PR](https://github.com/shopsys/shopsys/pull/1461)
 
 - add graphic checkboxes and radiobuttons ([#1465](https://github.com/shopsys/shopsys/pull/1465))
+    - add images to
+        - `web/assets/frontend/images/custom_checkbox.png`
+        - `web/assets/frontend/images/custom_radio.png`
+        
+        you can [download ours](https://github.com/shopsys/shopsys/blob/8.1/project-base/web/assets/frontend/images/) or use yours
+    - download new images or add yours into `/web/assets/frontend/images/custom_checkbox.png`
     - update following files
     - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/box/chooser.less` (line 18)
         ```diff
