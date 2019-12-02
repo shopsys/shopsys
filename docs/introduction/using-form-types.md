@@ -136,17 +136,23 @@ Defaults to `false`.
 If you set this option to `true`, domain url will be shown instead of domain name.
 
 ### [FileUploadType](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Form/FileUploadType.php)
-Displays a widget that lets you to upload files by dragging them to the widget or selecting them from your computer.
-After a file or files are uploaded it shows box for every file and lets you to download the files or delete them.
+Uses `AbstractFileUploadType` to display a widget for files upload and to work with them (same as `ImageUploadType`).
+After a file or files are uploaded it shows box for every file and lets you to downloads, order or delete files.
 
 #### file_constraints
 An array of constraints that should be applied for the uploaded file.
 
-#### multiple
-Boolean option that defines if you are able to upload more than one file.
+#### file_entity_class
+Defines which entity class (defined in [uploaded_files.yml](https://github.com/shopsys/shopsys/blob/9.0/config/uploaded_files.yml)) should the files be assigned to.
+
+#### file_type
+Defines which type of file (defined in [uploaded_files.yml](https://github.com/shopsys/shopsys/blob/9.0/config/uploaded_files.yml)) should the files be assigned to.
 
 #### info_text
 Required option that needs to be string or null and is a text that is shown under the upload icon.
+
+#### entity
+Defines which entity should the files be assigned to.
 
 ### [FriendlyUrlType](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Form/FriendlyUrlType.php)
 Displays a select box with domain urls and text field that lets you to create friendly url on selected domain with your valid slug.
@@ -162,7 +168,7 @@ Defines which route should the URLs go into.
 Defines what is the entity ID that the URLs are assigned to.
 
 ### [ImageUploadType](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Form/ImageUploadType.php)
-Uses `FileUploadType` displays a widget to upload images and to work with them (same as `FileUploadType`).
+Uses `AbstractFileUploadType` to display a widget for images upload and to work with them (same as `FileUploadType`).
 
 #### entity
 Defines which entity should the images be assigned to.

@@ -129,10 +129,8 @@ class MailTemplateFacade
         foreach ($mailTemplatesData as $mailTemplateData) {
             $mailTemplate = $this->mailTemplateRepository->getByNameAndDomainId($mailTemplateData->name, $domainId);
             $mailTemplate->edit($mailTemplateData);
-            if ($mailTemplateData->deleteAttachment === true) {
-                $this->uploadedFileFacade->deleteUploadedFileByEntity($mailTemplate);
-            }
-            $this->uploadedFileFacade->uploadFile($mailTemplate, $mailTemplateData->attachment);
+
+            $this->uploadedFileFacade->manageFiles($mailTemplate, $mailTemplateData->attachments);
         }
 
         $this->em->flush();
@@ -215,9 +213,9 @@ class MailTemplateFacade
     public function getMailTemplateAttachmentsFilepaths(MailTemplate $mailTemplate)
     {
         $filepaths = [];
-        if ($this->uploadedFileFacade->hasUploadedFile($mailTemplate)) {
-            $uploadedFile = $this->uploadedFileFacade->getUploadedFileByEntity($mailTemplate);
+        $uploadedFiles = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
 
+        foreach ($uploadedFiles as $uploadedFile) {
             $temporaryFilePath = $this->mailTemplateAttachmentFilepathProvider->getTemporaryFilepath($uploadedFile);
 
             $filepaths[] = $temporaryFilePath;

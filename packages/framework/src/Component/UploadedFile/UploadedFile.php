@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use DateTime;
@@ -54,26 +56,44 @@ class UploadedFile implements EntityFileUploadInterface
     protected $modifiedAt;
 
     /**
-     * @var string|null
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $type;
+
+    /**
+     * @var string
      */
     protected $temporaryFilename;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $position;
+
+    /**
      * @param string $entityName
      * @param int $entityId
-     * @param string|null $temporaryFilename
+     * @param string $type
+     * @param string $temporaryFilename
+     * @param int $position
      */
-    public function __construct($entityName, $entityId, $temporaryFilename)
+    public function __construct(string $entityName, int $entityId, string $type, string $temporaryFilename, int $position)
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
+        $this->type = $type;
         $this->setTemporaryFilename($temporaryFilename);
+        $this->position = $position;
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload[]
      */
-    public function getTemporaryFilesForUpload()
+    public function getTemporaryFilesForUpload(): array
     {
         if ($this->temporaryFilename === null) {
             return [];
@@ -94,7 +114,7 @@ class UploadedFile implements EntityFileUploadInterface
      * @param string $key
      * @param string $originalFilename
      */
-    public function setFileAsUploaded($key, $originalFilename)
+    public function setFileAsUploaded(string $key, string $originalFilename): void
     {
         if ($key === static::UPLOAD_KEY) {
             $this->extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
@@ -104,9 +124,9 @@ class UploadedFile implements EntityFileUploadInterface
     }
 
     /**
-     * @param string|null $temporaryFilename
+     * @param string $temporaryFilename
      */
-    public function setTemporaryFilename($temporaryFilename)
+    public function setTemporaryFilename(string $temporaryFilename): void
     {
         $this->temporaryFilename = $temporaryFilename;
         // workaround: Entity must be changed so that preUpdate and postUpdate are called
@@ -116,7 +136,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return string
      */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->id . '.' . $this->extension;
     }
@@ -124,7 +144,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -132,7 +152,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return string
      */
-    public function getEntityName()
+    public function getEntityName(): string
     {
         return $this->entityName;
     }
@@ -140,7 +160,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return int
      */
-    public function getEntityId()
+    public function getEntityId(): int
     {
         return $this->entityId;
     }
@@ -148,8 +168,42 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return string
      */
-    public function getExtension()
+    public function getExtension(): string
     {
         return $this->extension;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     */
+    public function checkForDelete(string $entityName, int $entityId): void
+    {
+        if ($this->entityName !== $entityName || $this->entityId !== $entityId) {
+            throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException(
+                sprintf(
+                    'Entity "%s" with ID "%s" does not own file with ID "%s"',
+                    $entityName,
+                    $entityId,
+                    $this->id
+                )
+            );
+        }
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition(int $position): void
+    {
+        $this->position = $position;
     }
 }

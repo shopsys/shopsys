@@ -1,0 +1,85 @@
+{% block abstract_file_upload_widget %}
+    {% import _self as self %}
+    {% spaceless %}
+        {%  set attr = attr|merge({'class': attr.class|default('') ~ ' js-file-upload box-upload'}) %}
+        {%  set attr = attr|merge({'data-fileupload-url': url('admin_fileupload_upload')}) %}
+        {%  set attr = attr|merge({'data-fileupload-delete-url': url('admin_fileupload_deletetemporaryfile')}) %}
+        <div {{ block('widget_attributes') }}>
+            <div class="js-file-upload-item box-upload__result">
+                <div class="info">
+                    {% macro uploadedFile(uploadedFile, label, iconType, thumbnailUri, class) %}
+                        <li class="js-file-upload-uploaded-file list-files__item {{ class|default('') }}">
+                            <div class="list-files__item__in">
+                                <div class="list-files__item__file">
+                                    {% if iconType is not null %}
+                                        <i class="svg svg-file-{{ iconType }} js-file-upload-icon-type list-files__item__file__type list-files__item__file__type--{{ iconType }}"></i>
+                                    {% endif %}
+
+                                    {% if thumbnailUri is same as(false) %}
+                                        {# Tag cannot contain empty "src" attribute because browser loads it when parsing in JavaScript. #}
+                                        <img class="js-file-upload-file-thumbnail" />
+                                    {% elseif thumbnailUri is not null %}
+                                        <img src="{{ thumbnailUri }}" class="js-file-upload-file-thumbnail" />
+                                    {% endif %}
+                                    <button class="js-file-upload-delete-button btn-no-style list-files__item__remove" type="button" title="{{ 'Delete'|trans }}">
+                                        <i class="svg svg-delete js-file-upload-delete"></i>
+                                    </button>
+
+                                    <div class="js-file-upload-progress list-files__item__pipe">
+                                        <div class="js-file-upload-progress-bar list-files__item__pipe__line">
+                                            <span class="js-file-upload-progress-bar-value list-files__item__pipe__line__value">0%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-files__item__info">
+                                    <span class="js-file-upload-label">{{ label }}</span>
+                                </div>
+
+                                {{ form_widget(uploadedFile, { attr: { class: 'js-file-upload-input' }}) }}
+                            </div>
+                        </li>
+                    {% endmacro %}
+
+                    <ul class="list-files js-file-upload-uploaded-files" data-prototype="{{ self.uploadedFile(form.uploadedFiles.vars.prototype, '', '__icon-type__', false, 'js-file-upload-uploaded-file-template display-none')|escape }}">
+                        {% for uploadedFile in form.uploadedFiles %}
+                            {% set fileThumbnailInfo = getFileThumbnailInfoByTemporaryFilename(uploadedFile.vars.value) %}
+                            {{ self.uploadedFile(uploadedFile, getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri) }}
+                        {% else %}
+                            <li>
+                                {% do form.children.uploadedFiles.setRendered %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="display-none">
+                         <span class="js-file-upload-status in-message in-message--info box-upload__uploading">{{ 'Status'|trans }}: {{ 'Successfully uploaded'|trans }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="js-file-upload-input box-upload__place">
+                <div class="js-file-upload-fallback-hide box-upload__place__drop">
+                    <div class="box-upload__place__drop__icon">
+                        <i class="svg svg-upload"></i>
+                    </div>
+                    <div class="box-upload__place__drop__title">
+                        {% if form.vars.multiple is same as(true) %}
+                            {{ 'Drag your files here'|trans }}
+                        {% else %}
+                            {{ 'Drag your file here'|trans }}
+                        {% endif %}
+                    </div>
+                    <div class="box-upload__place__drop__info">
+                        {{ info_text|default('') }}
+                    </div>
+                </div>
+                <div class="box-upload__place__button">
+                    {{ form_widget(form.children.file) }}
+                </div>
+                <div class="js-file-upload-fallback-hide box-upload__place__between">
+                    {{ 'or'|trans }}
+                </div>
+            </div>
+        </div>
+
+    {% endspaceless %}
+{% endblock abstract_file_upload_widget %}

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Form\Transformers\ImagesIdsToImagesTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -86,10 +87,9 @@ class ImageUploadType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['entity'] = $options['entity'];
-        $view->vars['multiple'] = $options['multiple'];
         $view->vars['images_by_id'] = $this->getImagesIndexedById($options);
         $view->vars['image_type'] = $options['image_type'];
-        $view->vars['multiple'] = $options['multiple'] ?? $this->isMultiple($options);
+        $view->vars['multiple'] = $this->isMultiple($options);
     }
 
     /**
@@ -113,6 +113,10 @@ class ImageUploadType extends AbstractType
             'choices' => $this->getImagesIndexedById($options),
             'choice_label' => 'filename',
             'choice_value' => 'id',
+        ])
+        ->add('file', FileType::class, [
+            'multiple' => $this->isMultiple($options),
+            'mapped' => false,
         ]);
     }
 
@@ -135,6 +139,10 @@ class ImageUploadType extends AbstractType
      */
     private function isMultiple(array $options)
     {
+        if ($options['multiple'] !== null) {
+            return $options['multiple'];
+        }
+
         if ($options['image_entity_class'] === null) {
             return false;
         }
@@ -149,6 +157,6 @@ class ImageUploadType extends AbstractType
      */
     public function getParent()
     {
-        return FileUploadType::class;
+        return AbstractFileUploadType::class;
     }
 }

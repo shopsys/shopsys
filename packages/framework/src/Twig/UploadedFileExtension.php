@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 use Twig_Extension;
@@ -41,45 +44,31 @@ class UploadedFileExtension extends Twig_Extension
     }
 
     /**
-     * @return array
+     * @return \Twig_SimpleFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new Twig_SimpleFunction('hasUploadedFile', [$this, 'hasUploadedFile']),
             new Twig_SimpleFunction('uploadedFileUrl', [$this, 'getUploadedFileUrl']),
             new Twig_SimpleFunction('uploadedFilePreview', [$this, 'getUploadedFilePreviewHtml'], ['is_safe' => ['html']]),
-            new Twig_SimpleFunction('getUploadedFile', [$this, 'getUploadedFileByEntity']),
         ];
     }
 
     /**
-     * @param Object $entity
-     * @return bool
-     */
-    public function hasUploadedFile($entity)
-    {
-        return $this->uploadedFileFacade->hasUploadedFile($entity);
-    }
-
-    /**
-     * @param Object $entity
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getUploadedFileUrl($entity)
+    public function getUploadedFileUrl(UploadedFile $uploadedFile): string
     {
-        $uploadedFile = $this->getUploadedFileByEntity($entity);
-
         return $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getCurrentDomainConfig(), $uploadedFile);
     }
 
     /**
-     * @param Object $entity
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getUploadedFilePreviewHtml($entity)
+    public function getUploadedFilePreviewHtml(UploadedFile $uploadedFile): string
     {
-        $uploadedFile = $this->getUploadedFileByEntity($entity);
         $filepath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
         $fileThumbnailInfo = $this->fileThumbnailExtension->getFileThumbnailInfo($filepath);
 
@@ -87,8 +76,8 @@ class UploadedFileExtension extends Twig_Extension
             $classes = [
                 'svg',
                 'svg-file-' . $fileThumbnailInfo->getIconType(),
-                'list-images__item__image__type',
-                'list-images__item__image__type--' . $fileThumbnailInfo->getIconType(),
+                'list-files__item__file__type',
+                'list-files__item__file__type--' . $fileThumbnailInfo->getIconType(),
                 'text-no-decoration',
                 'cursor-pointer',
             ];
@@ -100,18 +89,9 @@ class UploadedFileExtension extends Twig_Extension
     }
 
     /**
-     * @param Object $entity
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     */
-    public function getUploadedFileByEntity($entity)
-    {
-        return $this->uploadedFileFacade->getUploadedFileByEntity($entity);
-    }
-
-    /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'file_extension';
     }

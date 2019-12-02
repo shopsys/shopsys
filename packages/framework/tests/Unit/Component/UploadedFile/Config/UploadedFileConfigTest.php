@@ -5,6 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Component\UploadedFile\Config;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Tests\FrameworkBundle\Unit\Component\UploadedFile\Dummy;
 
 class UploadedFileConfigTest extends TestCase
@@ -12,10 +13,7 @@ class UploadedFileConfigTest extends TestCase
     public function testGetEntityName()
     {
         $entity = new Dummy();
-        $fileEntityConfigsByClass = [
-            Dummy::class => new UploadedFileEntityConfig('entityName', Dummy::class),
-        ];
-        $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
+        $uploadedFileConfig = $this->getUploadedFileConfig();
 
         $this->assertSame('entityName', $uploadedFileConfig->getEntityName($entity));
     }
@@ -34,9 +32,7 @@ class UploadedFileConfigTest extends TestCase
 
     public function testGetAllUploadedFileEntityConfigs()
     {
-        $fileEntityConfigsByClass = [
-            Dummy::class => new UploadedFileEntityConfig('entityName', Dummy::class),
-        ];
+        $fileEntityConfigsByClass = $this->getFileEntityConfigsByClass();
         $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
 
         $this->assertSame($fileEntityConfigsByClass, $uploadedFileConfig->getAllUploadedFileEntityConfigs());
@@ -57,10 +53,7 @@ class UploadedFileConfigTest extends TestCase
     public function testHasUploadedFileEntityConfig()
     {
         $entity = new Dummy();
-        $fileEntityConfigsByClass = [
-            Dummy::class => new UploadedFileEntityConfig('entityName', Dummy::class),
-        ];
-        $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
+        $uploadedFileConfig = $this->getUploadedFileConfig();
 
         $this->assertTrue($uploadedFileConfig->hasUploadedFileEntityConfig($entity));
     }
@@ -72,5 +65,60 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
 
         $this->assertFalse($uploadedFileConfig->hasUploadedFileEntityConfig($entity));
+    }
+
+    public function testGetNotExistingUploadedFileTypeConfig()
+    {
+        $entity = new Dummy();
+        $uploadedFileConfig = $this->getUploadedFileConfig();
+        $uploadedFileEntityConfig = $uploadedFileConfig->getUploadedFileEntityConfig($entity);
+
+        $this->expectException(
+            \Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileTypeConfigNotFoundException::class
+        );
+
+        $uploadedFileEntityConfig->getTypeByName('test');
+    }
+
+    public function testTypesHaveRightMultipleSet()
+    {
+        $entity = new Dummy();
+        $uploadedFileConfig = $this->getUploadedFileConfig();
+        $uploadedFileEntityConfig = $uploadedFileConfig->getUploadedFileEntityConfig($entity);
+        $uploadedFileTypeConfig1 = $uploadedFileEntityConfig->getTypeByName('default');
+        $uploadedFileTypeConfig2 = $uploadedFileEntityConfig->getTypeByName('additional');
+
+        $this->assertFalse($uploadedFileTypeConfig1->isMultiple());
+        $this->assertTrue($uploadedFileTypeConfig2->isMultiple());
+    }
+
+    /**
+     * @return array
+     */
+    private function getFileEntityConfigsByClass(): array
+    {
+        $uploadedFileType1 = new UploadedFileTypeConfig('default', false);
+        $uploadedFileType2 = new UploadedFileTypeConfig('additional', true);
+
+        $uploadedFileTypes = ['default' => $uploadedFileType1, 'additional' => $uploadedFileType2];
+
+        $uploadedFileEntityConfig = new UploadedFileEntityConfig('entityName', Dummy::class, $uploadedFileTypes);
+
+        $fileEntityConfigsByClass = [
+            Dummy::class => $uploadedFileEntityConfig,
+        ];
+
+        return $fileEntityConfigsByClass;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig
+     */
+    private function getUploadedFileConfig(): UploadedFileConfig
+    {
+        $fileEntityConfigsByClass = $this->getFileEntityConfigsByClass();
+        $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
+
+        return $uploadedFileConfig;
     }
 }
