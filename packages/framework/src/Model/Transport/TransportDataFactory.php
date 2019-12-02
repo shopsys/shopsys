@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class TransportDataFactory implements TransportDataFactoryInterface
@@ -79,10 +80,10 @@ class TransportDataFactory implements TransportDataFactoryInterface
      */
     protected function fillNew(TransportData $transportData)
     {
-        $transportData->vat = $this->vatFacade->getDefaultVat();
-
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = true;
+            $transportData->pricesIndexedByDomainId[$domainId] = Money::zero();
+            $transportData->vatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -127,18 +128,14 @@ class TransportDataFactory implements TransportDataFactoryInterface
         $transportData->description = $descriptions;
         $transportData->instructions = $instructions;
         $transportData->hidden = $transport->isHidden();
-        $transportData->vat = $transport->getVat();
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = $transport->isEnabled($domainId);
+            $transportData->pricesIndexedByDomainId[$domainId] = $transport->getPrice($domainId)->getPrice();
+            $transportData->vatsIndexedByDomainId[$domainId] = $transport->getTransportDomain($domainId)->getVat();
         }
 
         $transportData->payments = $transport->getPayments();
-
-        foreach ($transport->getPrices() as $transportPrice) {
-            $transportData->pricesByCurrencyId[$transportPrice->getCurrency()->getId()] = $transportPrice->getPrice();
-        }
-
         $transportData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($transport, null);
     }
 }

@@ -339,8 +339,8 @@ class OrderFacade
         $order = $this->orderRepository->getById($orderId);
         $originalOrderStatus = $order->getStatus();
 
-        $this->calculateOrderItemDataPrices($orderData->orderTransport);
-        $this->calculateOrderItemDataPrices($orderData->orderPayment);
+        $this->calculateOrderItemDataPrices($orderData->orderTransport, $order->getDomainId());
+        $this->calculateOrderItemDataPrices($orderData->orderPayment, $order->getDomainId());
         $this->refreshOrderItemsWithoutTransportAndPayment($order, $orderData);
 
         $orderEditResult = $order->edit($orderData);
@@ -530,7 +530,7 @@ class OrderFacade
                 $order,
                 $product->getName($locale),
                 $quantifiedItemPrice->getUnitPrice(),
-                $product->getVat()->getPercent(),
+                $product->getVatForDomain($order->getDomainId())->getPercent(),
                 $quantifiedProduct->getQuantity(),
                 $product->getUnit()->getName($locale),
                 $product->getCatnum(),
@@ -561,7 +561,7 @@ class OrderFacade
             $order,
             $payment->getName($locale),
             $paymentPrice,
-            $payment->getVat()->getPercent(),
+            $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent(),
             1,
             $payment
         );
@@ -586,7 +586,7 @@ class OrderFacade
             $order,
             $transport->getName($locale),
             $transportPrice,
-            $transport->getVat()->getPercent(),
+            $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent(),
             1,
             $transport
         );
@@ -651,7 +651,7 @@ class OrderFacade
         foreach ($order->getItemsWithoutTransportAndPayment() as $orderItem) {
             if (array_key_exists($orderItem->getId(), $orderItemsWithoutTransportAndPaymentData)) {
                 $orderItemData = $orderItemsWithoutTransportAndPaymentData[$orderItem->getId()];
-                $this->calculateOrderItemDataPrices($orderItemData);
+                $this->calculateOrderItemDataPrices($orderItemData, $order->getDomainId());
                 $orderItem->edit($orderItemData);
             } else {
                 $order->removeItem($orderItem);
@@ -659,7 +659,7 @@ class OrderFacade
         }
 
         foreach ($orderData->getNewItemsWithoutTransportAndPayment() as $newOrderItemData) {
-            $this->calculateOrderItemDataPrices($newOrderItemData);
+            $this->calculateOrderItemDataPrices($newOrderItemData, $order->getDomainId());
 
             $newOrderItem = $this->orderItemFactory->createProduct(
                 $order,
@@ -681,11 +681,12 @@ class OrderFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
+     * @param int $domainId
      */
-    protected function calculateOrderItemDataPrices(OrderItemData $orderItemData): void
+    protected function calculateOrderItemDataPrices(OrderItemData $orderItemData, int $domainId): void
     {
         if ($orderItemData->usePriceCalculation) {
-            $orderItemData->priceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat($orderItemData);
+            $orderItemData->priceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat($orderItemData, $domainId);
             $orderItemData->totalPriceWithVat = null;
             $orderItemData->totalPriceWithoutVat = null;
         } else {

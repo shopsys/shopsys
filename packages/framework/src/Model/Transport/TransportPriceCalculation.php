@@ -50,22 +50,21 @@ class TransportPriceCalculation
             return Price::zero();
         }
 
-        return $this->calculateIndependentPrice($transport, $currency);
+        return $this->calculateIndependentPrice($transport, $currency, $domainId);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function calculateIndependentPrice(
-        Transport $transport,
-        Currency $currency
-    ): Price {
+    public function calculateIndependentPrice(Transport $transport, Currency $currency, int $domainId): Price
+    {
         return $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
-            $transport->getPrice($currency)->getPrice(),
+            $transport->getPrice($domainId)->getPrice(),
             $this->pricingSetting->getInputPriceType(),
-            $transport->getVat(),
+            $transport->getTransportDomain($domainId)->getVat(),
             $currency
         );
     }

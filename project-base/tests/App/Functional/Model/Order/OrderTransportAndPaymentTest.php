@@ -7,8 +7,6 @@ namespace Tests\App\Functional\Model\Order;
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
@@ -40,18 +38,16 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisibleTransport()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $enabledForDomains = [
             Domain::FIRST_DOMAIN_ID => true,
             Domain::SECOND_DOMAIN_ID => false,
         ];
-        $transport = $this->getDefaultTransport($vat, $enabledForDomains, false);
-        $payment = $this->getDefaultPayment($vat, $enabledForDomains, false);
+        $transport = $this->getDefaultTransport($enabledForDomains, false);
+        $payment = $this->getDefaultPayment($enabledForDomains, false);
 
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->flush();
         $em->persist($payment);
@@ -66,18 +62,16 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisibleTransportHiddenTransport()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $enabledOnDomains = [
             1 => true,
             2 => false,
         ];
-        $transport = $this->getDefaultTransport($vat, $enabledOnDomains, true);
-        $payment = $this->getDefaultPayment($vat, $enabledOnDomains, false);
+        $transport = $this->getDefaultTransport($enabledOnDomains, true);
+        $payment = $this->getDefaultPayment($enabledOnDomains, false);
 
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->persist($payment);
         $em->flush();
@@ -91,7 +85,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisibleTransportHiddenPayment()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $transportEnabledForDomains = [
             1 => true,
@@ -102,12 +95,11 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
             2 => false,
         ];
 
-        $transport = $this->getDefaultTransport($vat, $transportEnabledForDomains, false);
-        $payment = $this->getDefaultPayment($vat, $paymentEnabledForDomains, true);
+        $transport = $this->getDefaultTransport($transportEnabledForDomains, false);
+        $payment = $this->getDefaultPayment($paymentEnabledForDomains, true);
 
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->persist($payment);
         $em->flush();
@@ -121,15 +113,13 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisibleTransportNoPayment()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $enabledForDomains = [
             1 => true,
             2 => false,
         ];
-        $transport = $this->getDefaultTransport($vat, $enabledForDomains, false);
+        $transport = $this->getDefaultTransport($enabledForDomains, false);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->flush();
 
@@ -142,7 +132,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisibleTransportOnDifferentDomain()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $paymentEnabledForDomains = [
             1 => true,
@@ -153,12 +142,11 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
             2 => true,
         ];
 
-        $transport = $this->getDefaultTransport($vat, $transportEnabledForDomains, false);
-        $payment = $this->getDefaultPayment($vat, $paymentEnabledForDomains, false);
+        $transport = $this->getDefaultTransport($transportEnabledForDomains, false);
+        $payment = $this->getDefaultPayment($paymentEnabledForDomains, false);
 
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->persist($payment);
         $em->flush();
@@ -172,7 +160,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisibleTransportPaymentOnDifferentDomain()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $paymentEnabledForDomains = [
             1 => false,
@@ -182,11 +169,10 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
             1 => true,
             2 => false,
         ];
-        $transport = $this->getDefaultTransport($vat, $transportEnabledForDomains, false);
-        $payment = $this->getDefaultPayment($vat, $paymentEnabledForDomains, false);
+        $transport = $this->getDefaultTransport($transportEnabledForDomains, false);
+        $payment = $this->getDefaultPayment($paymentEnabledForDomains, false);
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->persist($payment);
         $em->flush();
@@ -200,18 +186,16 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisiblePayment()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $enabledForDomains = [
             1 => true,
             2 => false,
         ];
-        $transport = $this->getDefaultTransport($vat, $enabledForDomains, false);
-        $payment = $this->getDefaultPayment($vat, $enabledForDomains, false);
+        $transport = $this->getDefaultTransport($enabledForDomains, false);
+        $payment = $this->getDefaultPayment($enabledForDomains, false);
 
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->persist($payment);
         $em->flush();
@@ -224,18 +208,16 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisiblePaymentHiddenTransport()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $enabledForDomains = [
             1 => true,
             2 => false,
         ];
-        $transport = $this->getDefaultTransport($vat, $enabledForDomains, true);
-        $payment = $this->getDefaultPayment($vat, $enabledForDomains, false);
+        $transport = $this->getDefaultTransport($enabledForDomains, true);
+        $payment = $this->getDefaultPayment($enabledForDomains, false);
 
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->persist($payment);
         $em->flush();
@@ -248,18 +230,16 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisiblePaymentHiddenPayment()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $enabledForDomains = [
             1 => true,
             2 => false,
         ];
-        $transport = $this->getDefaultTransport($vat, $enabledForDomains, false);
-        $payment = $this->getDefaultPayment($vat, $enabledForDomains, true);
+        $transport = $this->getDefaultTransport($enabledForDomains, false);
+        $payment = $this->getDefaultPayment($enabledForDomains, true);
 
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->persist($payment);
         $em->flush();
@@ -272,15 +252,13 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisiblePaymentNoTransport()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $enabledForDomains = [
             1 => true,
             2 => false,
         ];
-        $payment = $this->getDefaultPayment($vat, $enabledForDomains, false);
+        $payment = $this->getDefaultPayment($enabledForDomains, false);
 
-        $em->persist($vat);
         $em->persist($payment);
         $em->flush();
 
@@ -292,7 +270,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisiblePaymentOnDifferentDomain()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $transportEnabledForDomains = [
             1 => true,
@@ -302,11 +279,10 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
             1 => false,
             2 => true,
         ];
-        $transport = $this->getDefaultTransport($vat, $transportEnabledForDomains, false);
-        $payment = $this->getDefaultPayment($vat, $paymentEnabledForDomains, false);
+        $transport = $this->getDefaultTransport($transportEnabledForDomains, false);
+        $payment = $this->getDefaultPayment($paymentEnabledForDomains, false);
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->persist($payment);
         $em->flush();
@@ -319,7 +295,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     public function testVisiblePaymentTransportOnDifferentDomain()
     {
         $em = $this->getEntityManager();
-        $vat = $this->getDefaultVat();
 
         $transportEnabledForDomains = [
             1 => true,
@@ -329,12 +304,11 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
             1 => false,
             2 => true,
         ];
-        $transport = $this->getDefaultTransport($vat, $transportEnabledForDomains, false);
-        $payment = $this->getDefaultPayment($vat, $paymentEnabledForDomains, false);
+        $transport = $this->getDefaultTransport($transportEnabledForDomains, false);
+        $payment = $this->getDefaultPayment($paymentEnabledForDomains, false);
 
         $payment->addTransport($transport);
 
-        $em->persist($vat);
         $em->persist($transport);
         $em->persist($payment);
         $em->flush();
@@ -345,12 +319,11 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param bool[] $enabledForDomains
      * @param bool $hidden
      * @return \App\Model\Payment\Payment
      */
-    public function getDefaultPayment(Vat $vat, $enabledForDomains, $hidden)
+    public function getDefaultPayment($enabledForDomains, $hidden)
     {
         $paymentDataFactory = $this->paymentDataFactory;
 
@@ -360,7 +333,6 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
             $names[$locale] = 'paymentName';
         }
         $paymentData->name = $names;
-        $paymentData->vat = $vat;
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $enabledForDomains;
 
@@ -368,12 +340,11 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param bool[] $enabledForDomains
      * @param bool $hidden
      * @return \App\Model\Transport\Transport
      */
-    public function getDefaultTransport(Vat $vat, $enabledForDomains, $hidden)
+    public function getDefaultTransport($enabledForDomains, $hidden)
     {
         $transportDataFactory = $this->transportDataFactory;
 
@@ -384,21 +355,9 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
         }
         $transportData->name = $names;
 
-        $transportData->vat = $vat;
         $transportData->hidden = $hidden;
         $transportData->enabled = $enabledForDomains;
 
         return new Transport($transportData);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    private function getDefaultVat()
-    {
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        return new Vat($vatData);
     }
 }

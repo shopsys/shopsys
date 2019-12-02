@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\Model\Product\Product;
+use App\Model\Product\ProductData;
 use Doctrine\ORM\EntityManager;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -22,6 +23,12 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
      * @inject
      */
     private $productDataFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     * @inject
+     */
+    private $vatFacade;
 
     /**
      * @dataProvider getTestCalculateAvailabilityData
@@ -48,6 +55,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $productData->availability = $availability;
         $productData->outOfStockAction = $outOfStockAction;
         $productData->outOfStockAvailability = $outOfStockAvailability;
+        $this->setVats($productData);
 
         $product = Product::create($productData);
 
@@ -130,6 +138,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
     public function testCalculateAvailabilityMainVariant()
     {
         $productData = $this->productDataFactory->create();
+        $this->setVats($productData);
 
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $variant1 = Product::create($productData);
@@ -144,7 +153,9 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $variant4 = Product::create($productData);
 
         $variants = [$variant1, $variant2, $variant3, $variant4];
-        $mainVariant = Product::createMainVariant($this->productDataFactory->create(), $variants);
+        $mainVariantData = $this->productDataFactory->create();
+        $this->setVats($mainVariantData);
+        $mainVariant = Product::createMainVariant($mainVariantData, $variants);
 
         $availabilityFacadeMock = $this->createMock(AvailabilityFacade::class);
         $productSellingDeniedRecalculatorMock = $this->createMock(ProductSellingDeniedRecalculator::class);
@@ -180,9 +191,13 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
     {
         $productData = $this->productDataFactory->create();
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);
+        $this->setVats($productData);
+
         $variant = Product::create($productData);
 
-        $mainVariant = Product::createMainVariant($this->productDataFactory->create(), [$variant]);
+        $mainVariantData = $this->productDataFactory->create();
+        $this->setVats($mainVariantData);
+        $mainVariant = Product::createMainVariant($mainVariantData, [$variant]);
 
         $availabilityFacadeMock = $this->getMockBuilder(AvailabilityFacade::class)
             ->setMethods(['getDefaultInStockAvailability'])
@@ -217,5 +232,17 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $mainVariantCalculatedAvailability = $productAvailabilityCalculation->calculateAvailability($mainVariant);
 
         $this->assertSame($defaultInStockAvailability, $mainVariantCalculatedAvailability);
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function setVats(ProductData $productData): void
+    {
+        $productVatsIndexedByDomainId = [];
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+        }
+        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 }

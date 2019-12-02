@@ -3,8 +3,6 @@
 namespace Tests\FrameworkBundle\Unit\Model\Product\BestsellingProduct;
 
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
@@ -16,14 +14,8 @@ class BestsellingProductCombinatorTest extends TestCase
         $bestsellingProductCombinator = new BestsellingProductCombinator();
 
         $maxResults = 4;
-
-        $vatData = new VatData();
-        $vatData->name = 'vat';
-        $vatData->percent = '21';
-        $vat = new Vat($vatData);
         $productData = new ProductData();
         $productData->name = ['cs' => 'Product 1'];
-        $productData->vat = $vat;
         $product1 = Product::create($productData);
         $product2 = Product::create($productData);
         $product3 = Product::create($productData);

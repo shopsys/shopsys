@@ -6,7 +6,8 @@ interface VatFactoryInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $data
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function create(VatData $data): Vat;
+    public function create(VatData $data, int $domainId): Vat;
 }

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 /**
  * @ORM\Table(
@@ -86,6 +89,14 @@ class ProductDomain
      * @ORM\Column(type="text", nullable=true)
      */
     protected $seoH1;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     *
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $vat;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
@@ -183,5 +194,21 @@ class ProductDomain
     public function setShortDescription($shortDescription)
     {
         $this->shortDescription = $shortDescription;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     */
+    public function getVat(): Vat
+    {
+        return $this->vat;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     */
+    public function setVat(Vat $vat): void
+    {
+        $this->vat = $vat;
     }
 }

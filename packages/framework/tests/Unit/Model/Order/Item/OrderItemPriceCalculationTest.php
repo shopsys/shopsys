@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Order\Item;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -28,7 +29,7 @@ class OrderItemPriceCalculationTest extends TestCase
         $orderItemData->vatPercent = '10';
 
         $orderItemPriceCalculation = new OrderItemPriceCalculation($priceCalculationMock, new VatFactory(new EntityNameResolver([])), new VatDataFactory());
-        $priceWithoutVat = $orderItemPriceCalculation->calculatePriceWithoutVat($orderItemData);
+        $priceWithoutVat = $orderItemPriceCalculation->calculatePriceWithoutVat($orderItemData, Domain::FIRST_DOMAIN_ID);
 
         $this->assertThat($priceWithoutVat, new IsMoneyEqual(Money::create(900)));
     }
@@ -43,6 +44,17 @@ class OrderItemPriceCalculationTest extends TestCase
 
         $orderItemPriceCalculation = new OrderItemPriceCalculation($priceCalculationMock, new VatFactory(new EntityNameResolver([])), new VatDataFactory());
 
+        $order = $this->getMockForAbstractClass(
+            OrderItem::class,
+            [],
+            '',
+            false,
+            true,
+            true,
+            ['getDomainId']
+        );
+        $order->expects($this->once())->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
+
         $orderItem = $this->getMockForAbstractClass(
             OrderItem::class,
             [],
@@ -50,11 +62,12 @@ class OrderItemPriceCalculationTest extends TestCase
             false,
             true,
             true,
-            ['getPriceWithVat', 'getQuantity', 'getVatPercent']
+            ['getPriceWithVat', 'getQuantity', 'getVatPercent', 'getOrder']
         );
         $orderItem->expects($this->once())->method('getPriceWithVat')->willReturn(Money::create(100));
         $orderItem->expects($this->once())->method('getQuantity')->willReturn(2);
         $orderItem->expects($this->once())->method('getVatPercent')->willReturn(1);
+        $orderItem->expects($this->once())->method('getOrder')->willReturn($order);
 
         $totalPrice = $orderItemPriceCalculation->calculateTotalPrice($orderItem);
 

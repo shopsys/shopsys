@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
@@ -35,21 +36,29 @@ class InputPriceRecalculator
     protected $transportPriceCalculation;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    protected $currencyFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceCalculation $inputPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         InputPriceCalculation $inputPriceCalculation,
         PaymentPriceCalculation $paymentPriceCalculation,
-        TransportPriceCalculation $transportPriceCalculation
+        TransportPriceCalculation $transportPriceCalculation,
+        CurrencyFacade $currencyFacade
     ) {
         $this->em = $em;
         $this->inputPriceCalculation = $inputPriceCalculation;
         $this->paymentPriceCalculation = $paymentPriceCalculation;
         $this->transportPriceCalculation = $transportPriceCalculation;
+        $this->currencyFacade = $currencyFacade;
     }
 
     public function recalculateToInputPricesWithoutVat()
@@ -85,13 +94,14 @@ class InputPriceRecalculator
             foreach ($payment->getPrices() as $paymentInputPrice) {
                 $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice(
                     $payment,
-                    $paymentInputPrice->getCurrency()
+                    $this->currencyFacade->getDomainDefaultCurrencyByDomainId($paymentInputPrice->getDomainId()),
+                    $paymentInputPrice->getDomainId()
                 );
 
                 $newInputPrice = $this->inputPriceCalculation->getInputPrice(
                     $toInputPriceType,
                     $paymentPrice->getPriceWithVat(),
-                    $payment->getVat()->getPercent()
+                    $payment->getPaymentDomain($paymentInputPrice->getDomainId())->getVat()->getPercent()
                 );
 
                 $paymentInputPrice->setPrice($newInputPrice);
@@ -111,15 +121,17 @@ class InputPriceRecalculator
 
         $this->batchProcessQuery($query, function (Transport $transport) use ($toInputPriceType) {
             foreach ($transport->getPrices() as $transportInputPrice) {
+                $defaultCurrencyForDomain = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($transportInputPrice->getDomainId());
                 $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice(
                     $transport,
-                    $transportInputPrice->getCurrency()
+                    $defaultCurrencyForDomain,
+                    $transportInputPrice->getDomainId()
                 );
 
                 $newInputPrice = $this->inputPriceCalculation->getInputPrice(
                     $toInputPriceType,
                     $transportPrice->getPriceWithVat(),
-                    $transport->getVat()->getPercent()
+                    $transport->getTransportDomain($transportInputPrice->getDomainId())->getVat()->getPercent()
                 );
 
                 $transportInputPrice->setPrice($newInputPrice);

@@ -9,10 +9,8 @@ use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\PriceTableType;
+use Shopsys\FrameworkBundle\Form\PriceAndVatTableByDomainsType;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
@@ -27,19 +25,9 @@ use Symfony\Component\Validator\Constraints;
 class TransportFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    private $vatFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
      */
     private $paymentFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private $currencyFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
@@ -47,20 +35,14 @@ class TransportFormType extends AbstractType
     private $transportFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      */
     public function __construct(
-        VatFacade $vatFacade,
         PaymentFacade $paymentFacade,
-        CurrencyFacade $currencyFacade,
         TransportFacade $transportFacade
     ) {
-        $this->vatFacade = $vatFacade;
         $this->paymentFacade = $paymentFacade;
-        $this->currencyFacade = $currencyFacade;
         $this->transportFacade = $transportFacade;
     }
 
@@ -118,21 +100,12 @@ class TransportFormType extends AbstractType
         $builderPricesGroup = $builder->create('prices', GroupType::class, [
             'label' => t('Prices'),
         ]);
-        $builderPricesGroup
-            ->add('vat', ChoiceType::class, [
-                'required' => true,
-                'choices' => $this->vatFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
-                ],
-                'label' => t('VAT'),
-            ])
-            ->add('pricesByCurrencyId', PriceTableType::class, [
-                'currencies' => $this->currencyFacade->getAllIndexedById(),
-                'base_prices' => $transport !== null ? $this->transportFacade->getIndependentBasePricesIndexedByCurrencyId($transport) : [],
-            ]);
+
+        $builderPricesGroup->add('pricesByDomains', PriceAndVatTableByDomainsType::class, [
+            'pricesIndexedByDomainId' => $this->transportFacade->getPricesIndexedByDomainId($transport),
+            'inherit_data' => true,
+            'render_form_row' => false,
+        ]);
 
         $builderAdditionalInformationGroup = $builder->create('additionalInformation', GroupType::class, [
             'label' => t('Additional information'),

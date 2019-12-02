@@ -198,6 +198,8 @@ There you can find links to upgrade notes for other versions too.
             </div>
         ```
 
+- vats can be create and manage per domains ([#1498](https://github.com/shopsys/shopsys/pull/1498))
+    - please read [upgrade instruction for vats per domain](https://github.com/shopsys/shopsys/blob/9.0/upgrade/upgrade-instruction-for-vats-per-domain.md)
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))

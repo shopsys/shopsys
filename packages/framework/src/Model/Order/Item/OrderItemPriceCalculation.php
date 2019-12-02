@@ -44,14 +44,15 @@ class OrderItemPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function calculatePriceWithoutVat(OrderItemData $orderItemData): Money
+    public function calculatePriceWithoutVat(OrderItemData $orderItemData, int $domainId): Money
     {
         $vatData = $this->vatDataFactory->create();
         $vatData->name = 'orderItemVat';
         $vatData->percent = $orderItemData->vatPercent;
-        $vat = $this->vatFactory->create($vatData);
+        $vat = $this->vatFactory->create($vatData, $domainId);
         $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($orderItemData->priceWithVat, $vat);
 
         return $orderItemData->priceWithVat->subtract($vatAmount);
@@ -70,7 +71,7 @@ class OrderItemPriceCalculation
         $vatData = $this->vatDataFactory->create();
         $vatData->name = 'orderItemVat';
         $vatData->percent = $orderItem->getVatPercent();
-        $vat = $this->vatFactory->create($vatData);
+        $vat = $this->vatFactory->create($vatData, $orderItem->getOrder()->getDomainId());
 
         $totalPriceWithVat = $orderItem->getPriceWithVat()->multiply($orderItem->getQuantity());
         $totalVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat);

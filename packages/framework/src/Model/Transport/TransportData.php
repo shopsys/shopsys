@@ -12,11 +12,6 @@ class TransportData
     public $name;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
-     */
-    public $vat;
-
-    /**
      * @var string[]|null[]
      */
     public $description;
@@ -42,14 +37,19 @@ class TransportData
     public $payments;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]
-     */
-    public $pricesByCurrencyId;
-
-    /**
      * @var bool[]
      */
     public $enabled;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]
+     */
+    public $pricesIndexedByDomainId;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
+     */
+    public $vatsIndexedByDomainId;
 
     public function __construct()
     {
@@ -59,7 +59,8 @@ class TransportData
         $this->hidden = false;
         $this->enabled = [];
         $this->image = new ImageUploadData();
-        $this->pricesByCurrencyId = [];
         $this->payments = [];
+        $this->pricesIndexedByDomainId = [];
+        $this->vatsIndexedByDomainId = [];
     }
 }

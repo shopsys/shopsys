@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 final class ProductVariantCreationTest extends TransactionFunctionalTestCase
@@ -29,6 +30,12 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     private $productDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     * @inject
+     */
+    private $vatFacade;
+
+    /**
      * @return array
      */
     public function variantsWithAvailabilitiesCanBeCreatedProvider(): array
@@ -49,6 +56,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     {
         $productData = $this->productDataFactory->create();
         $productData->availability = $this->getReference($availabilityReference);
+        $this->setVats($productData);
 
         $mainProduct = $this->productFacade->create($productData);
         $secondProduct = $this->productFacade->create($productData);
@@ -96,6 +104,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
         if ($outOfStockAvailabilityReference !== null) {
             $productData->outOfStockAvailability = $this->getReference($outOfStockAvailabilityReference);
         }
+        $this->setVats($productData);
 
         $mainProduct = $this->productFacade->create($productData);
         $secondProduct = $this->productFacade->create($productData);
@@ -109,7 +118,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
 
     /**
      * @param \App\Model\Product\Product[] $expectedVariants
-     * @param \App\Model\Product\Product $mainVariant
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
      */
     private function assertContainsAllVariants(array $expectedVariants, Product $mainVariant): void
     {
@@ -121,5 +130,17 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
         foreach ($actualVariants as $actualVariant) {
             $this->assertTrue($actualVariant->isVariant());
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     */
+    private function setVats(ProductData $productData): void
+    {
+        $productVatsIndexedByDomainId = [];
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+        }
+        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 }

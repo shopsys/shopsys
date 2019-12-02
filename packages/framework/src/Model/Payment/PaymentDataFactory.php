@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class PaymentDataFactory implements PaymentDataFactoryInterface
@@ -79,10 +80,10 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
      */
     protected function fillNew(PaymentData $paymentData): void
     {
-        $paymentData->vat = $this->vatFacade->getDefaultVat();
-
         foreach ($this->domain->getAllIds() as $domainId) {
             $paymentData->enabled[$domainId] = true;
+            $paymentData->pricesIndexedByDomainId[$domainId] = Money::zero();
+            $paymentData->vatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -110,7 +111,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
      */
     protected function fillFromPayment(PaymentData $paymentData, Payment $payment)
     {
-        $paymentData->vat = $payment->getVat();
         $paymentData->hidden = $payment->isHidden();
         $paymentData->czkRounding = $payment->isCzkRounding();
         $paymentData->transports = $payment->getTransports();
@@ -134,10 +134,8 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $paymentData->enabled[$domainId] = $payment->isEnabled($domainId);
-        }
-
-        foreach ($payment->getPrices() as $paymentPrice) {
-            $paymentData->pricesByCurrencyId[$paymentPrice->getCurrency()->getId()] = $paymentPrice->getPrice();
+            $paymentData->pricesIndexedByDomainId[$domainId] = $payment->getPrice($domainId)->getPrice();
+            $paymentData->vatsIndexedByDomainId[$domainId] = $payment->getPaymentDomain($domainId)->getVat();
         }
 
         $paymentData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($payment, null);
