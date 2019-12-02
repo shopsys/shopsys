@@ -486,7 +486,7 @@ There you can find links to upgrade notes for other versions too.
         + </div>
     ```
 - improve functional and smoke tests to be more readable and easier to write [#1392](https://github.com/shopsys/shopsys/pull/1392)
-    - add a new package via composer into your project `composer require --dev zalas/phpunit-injector`
+    - add a new package via composer into your project `composer require --dev zalas/phpunit-injector ^1.2`
     - edit `phpunit.xml` by adding a listener
         ```diff
                 </filter>
@@ -500,7 +500,22 @@ There you can find links to upgrade notes for other versions too.
         - make the class implement `Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase` and implement required method `createContainer()`
         - in `setUp()` remove getting class `Domain` directly from container and add `@inject` annotation to its private property instead
         - change visibility of property `$domain` from `private` to `protected`
+            - doing so will break `\Tests\ShopBundle\Smoke\NewProductTest` which might be fixed by specifying correct hostname
+                
+                ```diff
+                    public function testCreateOrEditProduct($relativeUrl)
+                    {
+                +       $domainUrl = $this->getContainer()->getParameter('overwrite_domain_url');
+                +       $server = [
+                +           'HTTP_HOST' => sprintf('%s:%d', parse_url($domainUrl, PHP_URL_HOST), parse_url($domainUrl, PHP_URL_PORT)),
+                +       ];
+                        $client1 = $this->getClient(false, 'admin', 'admin123');
+                -       $crawler = $client1->request('GET', $relativeUrl);
+                +       $crawler = $client1->request('GET', $relativeUrl, [], [], $server);
+                ```
+               
         - the diff should look like this
+
             ```diff
                 namespace Tests\ShopBundle\Test;
 
@@ -542,6 +557,7 @@ There you can find links to upgrade notes for other versions too.
             +         return $this->getContainer();
             +       }
             ```
+
     - to achieve the goal you should find and replace all occurrences of accessing class directly from container, e.g. `$this->getContainer()->get(FooBar::class)` and define it as a class property with an inject annotation instead
     - in case you want to change it in data provides you will need to say good bye to `@dataProvider` annotations
         - since data providers are called earlier than injecting our services you might need to do some workaround for it
@@ -551,6 +567,7 @@ There you can find links to upgrade notes for other versions too.
                 - `ElasticsearchStructureUpdateCheckerTest::testUpdateIsNotNecessaryWhenNothingIsChanged()`
                 - `ElasticsearchStructureUpdateCheckerTest::testUpdateIsNecessaryWhenStructureHasAdditionalProperty()`
             - the workaround is to remove `@dataProvider` from the test and call it directly inside a loop
+
                 ```diff
                 -   /**
                 -    * @param string $searchText
