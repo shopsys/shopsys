@@ -21,10 +21,6 @@
 
             {% block panel_content %}{% endblock %}
 
-            <div id="js-contact-form-container">
-                {{ render(controller('App\\Controller\\Front\\ContactFormController:indexAction')) }}
-            </div>
-
             {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'leftSidebar'})) }}
         </div>
     </div>

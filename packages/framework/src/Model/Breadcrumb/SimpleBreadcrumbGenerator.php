@@ -51,6 +51,7 @@ class SimpleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
                 'front_product_search' => t('Search [noun]'),
                 'front_registration_register' => t('Registration'),
                 'front_brand_list' => t('Brand overview'),
+                'front_contact' => t('Contact'),
             ];
         }
 

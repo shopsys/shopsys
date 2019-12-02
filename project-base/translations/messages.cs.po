@@ -106,6 +106,9 @@ msgstr "Název firmy"
 msgid "Company number"
 msgstr "IČ"
 
+msgid "Contact"
+msgstr "Kontakt"
+
 msgid "Contact us"
 msgstr "Napište nám"
 

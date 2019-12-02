@@ -406,8 +406,17 @@ msgstr "IČ"
 msgid "Complement to title"
 msgstr "Doplněk k titulku"
 
+msgid "Contact"
+msgstr "Kontakt"
+
 msgid "Contact form"
 msgstr "Kontaktní formulář"
+
+msgid "Contact form settings"
+msgstr "Nastavení kontaktní stránky"
+
+msgid "Contact form settings modified"
+msgstr "Nastavení kontaktní stránky bylo změněno"
 
 msgid "Contact us"
 msgstr "Napište nám"
@@ -1108,6 +1117,9 @@ msgstr "IP adresa"
 msgid "Icon"
 msgstr "Ikona"
 
+msgid "If you change currency settings, prices of all products will be recalculated"
+msgstr "Pokud změníte nastavení měny, přepočítají se ceny všech produktů"
+
 msgid "If you want for these changes to manifest everywhere (on production, devel, localhost etc.) instruct a programmer to commit the changes into GIT!"
 msgstr "Pokud chcete, aby se změny projevily všude (na produkci, develu, localhostu apod.), dejte vědět programátorovi, aby změny zavedl do GITu!"
 
@@ -1252,6 +1264,9 @@ msgstr "Hlavní obrázek"
 msgid "Main page products"
 msgstr "Zboží na titulní stránce"
 
+msgid "Main text"
+msgstr "Text"
+
 msgid "Main variant"
 msgstr "Hlavní varianta"
 
@@ -1272,6 +1287,9 @@ msgstr "Vzkaz"
 
 msgid "Meta description"
 msgstr "Meta description"
+
+msgid "Min fraction digits"
+msgstr "Minimum desetinných čísel"
 
 msgid "Modifications"
 msgstr "Úpravy"
@@ -1779,6 +1797,9 @@ msgstr "Zaokrouhlení"
 
 msgid "Rounding item with 0 % VAT will be added to your order. It is used for payment in cash."
 msgstr "Do objednávky bude přidána zaokrouhlovací položka s 0% DPH. Používá se pro platbu v hotovosti."
+
+msgid "Rounding type"
+msgstr "Zaokrouhlení"
 
 msgid "SEO"
 msgstr "SEO"
@@ -2305,6 +2326,9 @@ msgstr "XML dostupnostní feedy"
 msgid "Yes"
 msgstr "Ano"
 
+msgid "You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page."
+msgstr "Nemáte přístup k požadované stránce. Požádejte správce, aby vám udělil přístup."
+
 msgid "You can drag additional content here."
 msgstr "Zde můžete přetáhnout další obsah."
 
@@ -2499,4 +2523,3 @@ msgstr "bez umístění"
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."
-

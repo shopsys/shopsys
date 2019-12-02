@@ -106,6 +106,9 @@ msgstr ""
 msgid "Company number"
 msgstr ""
 
+msgid "Contact"
+msgstr ""
+
 msgid "Contact us"
 msgstr ""
 
@@ -675,4 +678,3 @@ msgstr ""
 
 msgid "{1}Load next %loadNextCount% product|[2,Inf]Load next %loadNextCount% products"
 msgstr ""
-

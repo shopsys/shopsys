@@ -30,8 +30,8 @@ php phing grunt
 
 ### Scenario 2 - I want to change layout in left panel on my 2nd domain
 
-In the left panel, by default, there is a category tree, a contact form, and an advert box.
-Let us say we want to change the elements so the contact form goes first, then the category tree, and the advert box is not there at all.
+In the left panel, by default, there is a category tree and an advert box.
+Let us say we want to change the elements so the advert box goes first, then the category tree.
 
 Open [`domains.yml`](/project-base/app/config/domains.yml) and set `design_id` parameter for your 2nd domain.
 
@@ -55,9 +55,7 @@ In your new `layoutWithPanel.my-design.html.twig`, re-order the elements in the 
 
 ```twig
     <div class="web__main__panel">
-        <div id="js-contact-form-container">
-            {{ render(controller('ShopsysShopBundle:Front/ContactForm:index')) }}
-        </div>
+        {{ render(controller('ShopsysShopBundle:Front/Advert:box',{'positionName' : 'leftSidebar'})) }}
 
         {{ render(controller('ShopsysShopBundle:Front/Category:panel', { request: app.request } )) }}
 
