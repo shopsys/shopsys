@@ -406,7 +406,7 @@ There you can find links to upgrade notes for other versions too.
 
 - add possibility to override admin styles from project-base
  ([#1472](https://github.com/shopsys/shopsys/pull/1472))
-    - delete all files from `src/Shopsys/ShopBundle/styles/admin/` and create two new files in it - `main.less` and `todo.less`
+    - delete all files from `src/Shopsys/ShopBundle/Resources/styles/admin/` and create two new files in it - `main.less` and `todo.less`
 
     - todo.less file content:
     ```css
@@ -417,7 +417,6 @@ There you can find links to upgrade notes for other versions too.
     ```css
     // load main.less file from framework, variable frameworkResourcesDirectory is set in gruntfile.js
     @import "@{frameworkResourcesDirectory}/styles/admin/main.less";
-
     // file for temporary styles eg. added by a programmer
     @import "todo.less";
     ```
@@ -426,16 +425,16 @@ There you can find links to upgrade notes for other versions too.
     ```diff
         admin: {
             files: {
-        -       'web/assets/admin/styles/index_{{ cssVersion }}.css': '{{ frameworkResourcesDirectory|raw }}/styles/admin/main.less'
-        +       'web/assets/admin/styles/index_{{ cssVersion }}.css': '{{ customResourcesDirectory|raw }}/styles/admin/main.less'
+    -           'web/assets/admin/styles/index_{{ cssVersion }}.css': '{{ frameworkResourcesDirectory|raw }}/styles/admin/main.less'
+    +           'web/assets/admin/styles/index_{{ cssVersion }}.css': '{{ customResourcesDirectory|raw }}/styles/admin/main.less'
             },
             options: {
-        -       sourceMapRootpath: '../../../'
-        +       sourceMapRootpath: '../../../',
+    -           sourceMapRootpath: '../../../'
+    +           sourceMapRootpath: '../../../',
 
-        +       modifyVars: {
-        +           frameworkResourcesDirectory: '{{ frameworkResourcesDirectory|raw }}',
-        +       }
+    +           modifyVars: {
+    +               frameworkResourcesDirectory: '{{ frameworkResourcesDirectory|raw }}',
+    +           }
     ```
 
 - update pages layout to webline layout ([#1464](https://github.com/shopsys/shopsys/pull/1464))
