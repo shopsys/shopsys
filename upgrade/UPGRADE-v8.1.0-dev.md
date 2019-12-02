@@ -747,6 +747,14 @@ There you can find links to upgrade notes for other versions too.
         ```
 
 - add image and iframe LazyLoad ([#1483](https://github.com/shopsys/shopsys/pull/1483))
+    - lazy load is by default disabled, you can enable it by configuring new parameter in [`parameters_common`](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/parameters_common.yml)
+        ```diff
+                shopsys.display_timezone: Europe/Prague
+        +       shopsys.image.enable_lazy_load: true
+        ```
+
+        Note: _lazy loading __will be enabled__ by default in next major_
+
     - update `src/Shopsys/ShopBundle/Resources/scripts/frontend/components/ajaxMoreLoader.js`
         ```diff
                  $paginationToItemSpan.text(paginationToItem);

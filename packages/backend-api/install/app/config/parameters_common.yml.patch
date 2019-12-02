@@ -1,5 +1,5 @@
-@@ -31,3 +31,4 @@
-         Shopsys\FrameworkBundle\Model\Product\Brand\Brand: Shopsys\ShopBundle\Model\Product\Brand\Brand
+@@ -32,3 +32,4 @@
      build-version: '0000000000000000'
      shopsys.display_timezone: Europe/Prague
+     shopsys.image.enable_lazy_load: true
 +    oauth2_encryption_key: '0' #placeholder for correctly running composer post script, replaced by app/config/packages/oauth2/parameters_oauth.yml

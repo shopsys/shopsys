@@ -14,6 +14,8 @@ parameters:
     # Default extended classes mapping
     shopsys.entity_extension.map: {}
 
+    shopsys.image.enable_lazy_load: false
+
     env(IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK): '0'
     env(REDIS_PREFIX): ''
     env(ELASTIC_SEARCH_INDEX_PREFIX): ''
