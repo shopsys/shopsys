@@ -656,6 +656,12 @@ There you can find links to upgrade notes for other versions too.
         - for more information you can see the [PR](https://github.com/shopsys/shopsys/pull/1461)
 
 - add graphic checkboxes and radiobuttons ([#1465](https://github.com/shopsys/shopsys/pull/1465))
+    - add images to
+        - `web/assets/frontend/images/custom_checkbox.png`
+        - `web/assets/frontend/images/custom_radio.png`
+        
+        you can [download ours](https://github.com/shopsys/shopsys/blob/8.1/project-base/web/assets/frontend/images/) or use yours
+    - download new images or add yours into `/web/assets/frontend/images/custom_checkbox.png`
     - update following files
     - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/box/chooser.less` (line 18)
         ```diff
@@ -683,7 +689,7 @@ There you can find links to upgrade notes for other versions too.
 
     ```diff
           @import "core/form/input.less";
-        + @import "core/form/custom-inputs.less";
+    +     @import "core/form/custom-inputs.less";
           @import "core/form/btn.less";
     ```
 
@@ -691,32 +697,32 @@ There you can find links to upgrade notes for other versions too.
 
     ```diff
           {% block checkbox_row %}
-        -     <dl class="{{ rowClass|default('form-line') }}">
-        -        <dt></dt>
-        -        <dd>
-        -            <div class="form-choice">
-        -                <div class="form-choice__input">
-        -                    {{ form_widget(form) }}
-        -                </div>
-        -                <div class="form-choice__label">
-        -                    {{ form_label(form, label) }}
-        -                    {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
-        -                    {{ form_errors(form, { errors_attr: errors_attr } ) }}
-        -                    {{ block('icon') }}
-        -                </div>
-        -            </div>
-        -        </dd>
-        -     </dl>
-        +     <div class="{{ rowClass|default('form-line') }}">
-        +        <div class="form-choice">
-        +            {% set checkboxAttr = attr|merge({'class': (attr.class|default('') ~ ' css-checkbox')|trim}) %}
-        +            {{ form_widget(form, { attr: checkboxAttr }) }}
-        +            {{ form_label(form, label, { label_attr: { class: "css-c+heckbox__image" }}) }}
-        +            {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
-        +            {{ form_errors(form, { errors_attr: errors_attr } ) }}
-        +            {{ block('icon') }}
-        +        </div>
-        +     </div>
+    -         <dl class="{{ rowClass|default('form-line') }}">
+    -            <dt></dt>
+    -            <dd>
+    -                <div class="form-choice">
+    -                    <div class="form-choice__input">
+    -                        {{ form_widget(form) }}
+    -                    </div>
+    -                    <div class="form-choice__label">
+    -                        {{ form_label(form, label) }}
+    -                        {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
+    -                        {{ form_errors(form, { errors_attr: errors_attr } ) }}
+    -                        {{ block('icon') }}
+    -                    </div>
+    -                </div>
+    -            </dd>
+    -         </dl>
+    +         <div class="{{ rowClass|default('form-line') }}">
+    +            <div class="form-choice">
+    +                {% set checkboxAttr = attr|merge({'class': (attr.class|default('') ~ ' css-checkbox')|trim}) %}
+    +                {{ form_widget(form, { attr: checkboxAttr }) }}
+    +                {{ form_label(form, label, { label_attr: { class: "css-checkbox__image" }}) }}
+    +                {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
+    +                {{ form_errors(form, { errors_attr: errors_attr } ) }}
+    +                {{ block('icon') }}
+    +            </div>
+    +         </div>
           {% endblock checkbox_row %}
      ```
 
@@ -796,7 +802,7 @@ There you can find links to upgrade notes for other versions too.
         - [`tests/ReadModelBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-f9ab2d66d30131a8d66df0a7c6eed4e4)
         - [`tests/ShopBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-b57160edc2db5a01659693b4b417dafd)
 
-- add Basic styleguide ([#1463](https://github.com/shopsys/shopsys/pull/1463))
+- add Basic styleguide ([#1485](https://github.com/shopsys/shopsys/pull/1485))
     - update config file `.eslintignore`
         ```diff
           /src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins
