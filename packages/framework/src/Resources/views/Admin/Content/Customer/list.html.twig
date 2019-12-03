@@ -24,12 +24,14 @@
 
                 {{ form_start(quickSearchForm) }}
                     <div class="box-quick-search">
-                        {{ form_widget(quickSearchForm.text, { attr: { class : 'box-quick-search__input' } }) }}
+                        <div class="box-quick-search__input">
+                            {{ form_widget(quickSearchForm.text) }}
+                            <i class="svg svg-info cursor-help js-tooltip box-quick-search__icon in-icon in-icon--info"
+                               data-toggle="tooltip" data-placement="top"
+                               title="{{ 'Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?.'|trans }}"
+                            ></i>
+                        </div>
                         {{ form_widget(quickSearchForm.submit, { attr: { class : 'box-quick-search__btn' }, label: 'Search [verb]'|trans, full_name: ''}) }}
-                        <i class="svg svg-info cursor-help js-tooltip box-quick-search__icon in-icon in-icon--info"
-                         data-toggle="tooltip" data-placement="top"
-                         title="{{ 'Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?.'|trans }}"
-                        ></i>
                     </div>
                 {{ form_end(quickSearchForm) }}
             </div>
