@@ -439,8 +439,8 @@ There you can find links to upgrade notes for other versions too.
 
 - update pages layout to webline layout ([#1464](https://github.com/shopsys/shopsys/pull/1464))
     - if you have your custom design you can skip this task
-    - we have to remove global and restrictive `web__line` and `web__container` and add thes to every single page
-    - update your custom created pages and wrap them to two new div with classes `web__line` and `web__container`
+    - you need to remove classes `.web__line` and `.web__container` from global file and add them to every single page
+    - update your custom created pages and wrap them into two new `div` with classes `web__line` and `web__container`
 
         ```html
         {% block blockname %}
@@ -451,7 +451,7 @@ There you can find links to upgrade notes for other versions too.
             </div>
         {% endblock %}
         ```
-    - update all default pages according this pull request (https://github.com/shopsys/shopsys/pull/1464/files)
+    - update all default pages according to the [PR #1464](https://github.com/shopsys/shopsys/pull/1464/files)
 
     - remove global `.web__line` and `.web__container` and unify main three parts (`.web__header`, `.web__main`, `.web__footer`) in file `src/Shopsys/ShopBundle/Resources/views/Front/Layout/layout.html.twig`
 
@@ -665,7 +665,6 @@ There you can find links to upgrade notes for other versions too.
         - `web/assets/frontend/images/custom_radio.png`
 
         you can [download ours](https://github.com/shopsys/shopsys/blob/8.1/project-base/web/assets/frontend/images/) or use yours
-    - download new images or add yours into `/web/assets/frontend/images/custom_checkbox.png` and `/web/assets/frontend/images/custom_radio.png`
     - update following files
     - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/box/chooser.less` (line 18)
         ```diff
