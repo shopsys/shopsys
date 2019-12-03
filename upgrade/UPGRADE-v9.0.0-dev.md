@@ -7,6 +7,10 @@ There you can find links to upgrade notes for other versions too.
 
 ## [shopsys/framework]
 
+- Before doing any other upgrade instructions, you have to upgrade your application to Symfony Flex as some file paths are changed.
+  Follow upgrade instructions in the [separate article](./upgrade-instructions-for-symfony-flex.md) ([#1492](https://github.com/shopsys/shopsys/pull/1492))  
+  All following upgrade instructions are written for upgraded application with Symfony Flex
+
 ### Infrastructure
 - update your `kubernetes/deployments/webserver-php-fpm.yml` file: ([#1368](https://github.com/shopsys/shopsys/pull/1368))
     ```diff
@@ -19,50 +23,36 @@ There you can find links to upgrade notes for other versions too.
 ### Application
 
 - update your twig files ([#1284](https://github.com/shopsys/shopsys/pull/1284/)):
-    - `src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/list.html.twig`
-        - remove: `{% import '@ShopsysShop/Front/Content/Product/productListMacro.html.twig' as productList %}`
-    - `src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/listByBrand.html.twig`
-        - remove: `{% import '@ShopsysShop/Front/Content/Product/productListMacro.html.twig' as productList %}`
-    - `src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/productListMacro.html.twig`
-        - remove: `{% import '@ShopsysShop/Front/Inline/Product/productFlagsMacro.html.twig' as productFlags %}`
-    - `src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/search.html.twig`
-        - remove: `{% import '@ShopsysShop/Front/Content/Product/productListMacro.html.twig' as productList %}`
+    - `templates/Front/Content/Product/list.html.twig`
+        - remove: `{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}`
+    - `templates/Front/Content/Product/listByBrand.html.twig`
+        - remove: `{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}`
+    - `templates/Front/Content/Product/productListMacro.html.twig`
+        - remove: `{% import 'Front/Inline/Product/productFlagsMacro.html.twig' as productFlags %}`
+    - `templates/Front/Content/Product/search.html.twig`
+        - remove: `{% import 'Front/Content/Product/productListMacro.html.twig' as productList %}`
     - check your templates if you are extending or importing any of the following templates as imports of unused macros were removed from them:
-        - `src/Resources/views/Admin/Content/Article/detail.html.twig`
-        - `src/Resources/views/Admin/Content/Brand/detail.html.twig`
-        - `src/Resources/views/Admin/Content/Category/detail.html.twig`
-        - `src/Resources/views/Admin/Content/Product/detail.html.twig`
+        - `templates/Admin/Content/Article/detail.html.twig`
+        - `templates/Admin/Content/Brand/detail.html.twig`
+        - `templates/Admin/Content/Category/detail.html.twig`
+        - `templates/Admin/Content/Product/detail.html.twig`
 - add [`app/getEnvironment.php`](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/getEnvironment.php) file to your project ([#1368](https://github.com/shopsys/shopsys/pull/1368))
 - add optional [Frontend API](https://github.com/shopsys/shopsys/blob/9.0/docs/frontend-api/introduction-to-frontend-api.md) to your project ([#1445](https://github.com/shopsys/shopsys/pull/1445), [#1486](https://github.com/shopsys/shopsys/pull/1486), [#1493](https://github.com/shopsys/shopsys/pull/1493), [#1489](https://github.com/shopsys/shopsys/pull/1489)):
     - add `shopsys/frontend-api` dependency with `composer require shopsys/frontend-api`
-    - register necessary bundles in `app/AppKernel.php`
+    - register necessary bundles in `config/bundles.php`
         ```diff
-          new JMS\TranslationBundle\JMSTranslationBundle(),
-          new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-        + new Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle(),
-        + new Overblog\GraphQLBundle\OverblogGraphQLBundle(),
-          new Presta\SitemapBundle\PrestaSitemapBundle(),
+            Shopsys\FormTypesBundle\ShopsysFormTypesBundle::class => ['all' => true],
+        +   Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
+        +   Overblog\GraphQLBundle\OverblogGraphQLBundle::class => ['all' => true],
+        +   Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
+            Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],
         ```
-        ```diff
-          if ($this->getEnvironment() === EnvironmentType::DEVELOPMENT) {
-        +     $bundles[] = new Overblog\GraphiQLBundle\OverblogGraphiQLBundle();
-        ```
-    - add new route resource at the end of `app/config/routing.yml`
-        ```diff
-        + shopsys_frontend_api:
-        +     resource: "@ShopsysFrontendApiBundle/Resources/config/routing.yml"
-        +     prefix: /graphql
-        ```
-    - add new route resource at the end of `app/config/routing_dev.yml`
-        ```diff
-        + shopsys_frontend_api:
-        +     resource: "@ShopsysFrontendApiBundle/Resources/config/routing_dev.yml"
-        +     prefix: /graphql
-        ```
-    - copy [type definitions from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/graphql-types/) into `src/Shopsys/ShopBundle/Resources/graphql-types/` folder
-    - copy necessary configuration [shopsys_frontend_api.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/packages/shopsys_frontend_api.yml) to `app/config/packages/shopsys_frontend_api.yml`
+    - add new route file [`config/routes/frontend-api.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/routes/frontend-api.yml) from GitHub
+    - add new route file [`config/routes/dev/frontend-api-graphiql.yaml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/routes/dev/frontend-api-graphiql.yaml) from GitHub
+    - copy [type definitions from Github](https://github.com/shopsys/shopsys/tree/9.0/project-base/config/graphql/types) into `config/graphql/types/` folder
+    - copy necessary configuration [shopsys_frontend_api.yml from Github](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/packages/shopsys_frontend_api.yml) to `config/packages/shopsys_frontend_api.yml`
     - copy [tests for FrontendApiBundle from Github](https://github.com/shopsys/shopsys/tree/9.0/project-base/tests/FrontendApiBundle) to your `tests` folder
-    - enable Frontend API for desired domains in `app/config/parameters_common.yml` file  
+    - enable Frontend API for desired domains in `config/parameters_common.yml` file  
     for example
         ```diff
           parmeters:
@@ -74,7 +64,7 @@ There you can find links to upgrade notes for other versions too.
         - add `'*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'` in `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff` part
 - removed unused `block domain` defined in `Admin/Content/Slider/edit.html.twig` ([#1437](https://github.com/shopsys/shopsys/pull/1437)) 
     - in case you are using this block of code you should copy it into your project (see PR mentioned above for more details)
-- add access denied url to `security.yml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
+- add access denied url to `config/packages/security.yml` for users which are not granted with access to the requested page ([#1504](https://github.com/shopsys/shopsys/pull/1504))
     ```diff
          administration:
              pattern: ^/(admin/|efconnect|elfinder)
@@ -203,16 +193,6 @@ There you can find links to upgrade notes for other versions too.
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
-    - add `app/router.php` to skipped files for two rules in your `easy-coding-standard.yml`:
-        ```diff
-          Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff:
-              - '*/tests/ShopBundle/Functional/EntityExtension/EntityExtensionTest.php'
-              - '*/tests/ShopBundle/Test/Codeception/_generated/AcceptanceTesterActions.php'
-        +     - '*/app/router.php'
-
-        + Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff:
-        +     - '*/app/router.php'
-        ```
   - run `php phing standards-fix` and fix possible violations that need to be fixed manually
 
 [shopsys/framework]: https://github.com/shopsys/framework
