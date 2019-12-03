@@ -1,5 +1,6 @@
 @list-menu-padding-right: 25px;
 @list-menu-arrow-size: 25px;
+@list-menu-height: 30px;
 
 // global settings
 .list-menu {
@@ -43,7 +44,7 @@
     .list-menu {
         .reset-ul();
 
-        background: @list-menu-mobile-bg;
+        background-color: @list-menu-mobile-bg;
 
         &--root {
             display: none;
@@ -112,20 +113,39 @@
 @media @query-lg {
     .list-menu {
         .reset-ul();
-        margin-bottom: @margin-gap;
+        display: none;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: @list-menu-height;
+        z-index: 9;
+
+        &--root {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            top: 0;
+            margin-bottom: @margin-gap;
+
+            background-color: @color-light;
+        }
+
+        &--dropdown {
+            position: relative;
+            top: 0px;
+        }
 
         &__item {
-            display: block;
+            background-color: @color-light;
 
-            border-top: 1px solid @color-border;
-            background: @color-light;
-
-            &:first-child {
-                border-top: 0;
+            .list-menu--root & {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
             }
 
             &__link {
-                display: block;
                 padding: 8px @list-menu-padding-right 8px 50px;
 
                 text-decoration: none;
@@ -168,6 +188,7 @@
             margin-bottom: 0;
 
             border-top: 1px solid @color-border;
+            background-color: @color-light;
         }
     }
 }
