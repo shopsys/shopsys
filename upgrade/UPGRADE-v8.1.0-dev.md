@@ -438,8 +438,11 @@ There you can find links to upgrade notes for other versions too.
     ```
 
 - update pages layout to webline layout ([#1464](https://github.com/shopsys/shopsys/pull/1464))
-    - update your custom created pages and wrap them to
-    ```html
+    - if you have your custom design you can skip this task
+    - we have to remove global and restrictive `web__line` and `web__container` and add thes to every single page
+    - update your custom created pages and wrap them to two new div with classes `web__line` and `web__container`
+
+        ```html
         {% block blockname %}
             <div class="web__line">
                 <div class="web__container">
@@ -447,19 +450,19 @@ There you can find links to upgrade notes for other versions too.
                 </div>
             </div>
         {% endblock %}
-    ```
-    - update default pages according this pull request (https://github.com/shopsys/shopsys/pull/1464/files)
+        ```
+    - update all default pages according this pull request (https://github.com/shopsys/shopsys/pull/1464/files)
 
     - remove global `.web__line` and `.web__container` and unify main three parts (`.web__header`, `.web__main`, `.web__footer`) in file `src/Shopsys/ShopBundle/Resources/views/Front/Layout/layout.html.twig`
 
-    ```diff
+        ```diff
         -    <div class="web__line">
         -        <div class="web__header">
         +    <div class="web__header">
         +        <div class="web__line">
-    ```
+        ```
 
-    ```diff
+        ```diff
         -        <div class="web__container">
         -            {% block content %}{% endblock %}
         -        </div>
@@ -473,18 +476,19 @@ There you can find links to upgrade notes for other versions too.
         +    <div class="web__footer{% if not isCookiesConsentGiven() %} web__footer--with-cookies js-eu-cookies-consent-footer-gap{% endif %}">
         +        {% include '@ShopsysShop/Front/Layout/footer.html.twig' %}
         +    </div>
-    ```
+        ```
 
     - add `.web__line` and `.web__container` around flashmessages in files `src/Shopsys/ShopBundle/Resources/views/Front/Layout/layoutWithPanel.html.twig`, `src/Shopsys/ShopBundle/Resources/views/Front/Layout/layoutWithoutPanel.html.twig`
 
-    ```diff
+        ```diff
         - {{ render(controller('ShopsysShopBundle:Front/FlashMessage:index')) }}
         + <div class="web__line">
         +     <div class="web__container">
         +         {{ render(controller('ShopsysShopBundle:Front/FlashMessage:index')) }}
         +     </div>
         + </div>
-    ```
+        ```
+
 - improve functional and smoke tests to be more readable and easier to write [#1392](https://github.com/shopsys/shopsys/pull/1392)
     - add a new package via composer into your project `composer require --dev zalas/phpunit-injector ^1.2`
     - edit `phpunit.xml` by adding a listener
@@ -501,7 +505,7 @@ There you can find links to upgrade notes for other versions too.
         - in `setUp()` remove getting class `Domain` directly from container and add `@inject` annotation to its private property instead
         - change visibility of property `$domain` from `private` to `protected`
             - doing so will break `\Tests\ShopBundle\Smoke\NewProductTest` which might be fixed by specifying correct hostname
-                
+
                 ```diff
                     public function testCreateOrEditProduct($relativeUrl)
                     {
@@ -513,7 +517,7 @@ There you can find links to upgrade notes for other versions too.
                 -       $crawler = $client1->request('GET', $relativeUrl);
                 +       $crawler = $client1->request('GET', $relativeUrl, [], [], $server);
                 ```
-               
+
         - the diff should look like this
 
             ```diff
@@ -659,72 +663,81 @@ There you can find links to upgrade notes for other versions too.
     - add images to
         - `web/assets/frontend/images/custom_checkbox.png`
         - `web/assets/frontend/images/custom_radio.png`
-        
+
         you can [download ours](https://github.com/shopsys/shopsys/blob/8.1/project-base/web/assets/frontend/images/) or use yours
-    - download new images or add yours into `/web/assets/frontend/images/custom_checkbox.png`
+    - download new images or add yours into `/web/assets/frontend/images/custom_checkbox.png` and `/web/assets/frontend/images/custom_radio.png`
     - update following files
     - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/box/chooser.less` (line 18)
         ```diff
-          align-items: flex-start;
-        + cursor: pointer;
+          &__item {
+              width: 100%;
+              padding: @box-chooser-item-padding;
+              display: flex;
+              align-items: flex-start;
+        +     cursor: pointer;
 
-          &__check {
+              &__check {
         ```
     - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/form/choice.less` (line 4)
         ```diff
-          display: inline-block;
-        - padding-left: 20px;
-          line-height: 20px;
+          .form-choice {
+              position: relative;
+              display: inline-block;
+        -     padding-left: 20px;
+              line-height: 20px;
         ```
 
     - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/in/icon.less` (line 13)
         ```diff
-          font-size: 16px;
-        + height: 16px;
-          cursor: help;
+          .in-icon {
+              &--info {
+                  color: @color-blue;
+                  font-size: 16px;
+        +         height: 16px;
+                  cursor: help;
         ```
 
     - add new [`src/Shopsys/ShopBundle/Resources/styles/front/common/core/form/custom-inputs.less`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/core/form/custom-inputs.less) file according to pull request
     - link this new file in [main.less](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/main.less)
 
-    ```diff
-          @import "core/form/input.less";
-    +     @import "core/form/custom-inputs.less";
-          @import "core/form/btn.less";
-    ```
+        ```diff
+           @import "core/form/input.less";
+        +  @import "core/form/custom-inputs.less";
+           @import "core/form/btn.less";
+        ```
 
     - Update [theme.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Form/theme.html.twig)
 
-    ```diff
-          {% block checkbox_row %}
-    -         <dl class="{{ rowClass|default('form-line') }}">
-    -            <dt></dt>
-    -            <dd>
-    -                <div class="form-choice">
-    -                    <div class="form-choice__input">
-    -                        {{ form_widget(form) }}
-    -                    </div>
-    -                    <div class="form-choice__label">
-    -                        {{ form_label(form, label) }}
-    -                        {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
-    -                        {{ form_errors(form, { errors_attr: errors_attr } ) }}
-    -                        {{ block('icon') }}
-    -                    </div>
-    -                </div>
-    -            </dd>
-    -         </dl>
-    +         <div class="{{ rowClass|default('form-line') }}">
-    +            <div class="form-choice">
-    +                {% set checkboxAttr = attr|merge({'class': (attr.class|default('') ~ ' css-checkbox')|trim}) %}
-    +                {{ form_widget(form, { attr: checkboxAttr }) }}
-    +                {{ form_label(form, label, { label_attr: { class: "css-checkbox__image" }}) }}
-    +                {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
-    +                {{ form_errors(form, { errors_attr: errors_attr } ) }}
-    +                {{ block('icon') }}
-    +            </div>
-    +         </div>
-          {% endblock checkbox_row %}
-     ```
+        ```diff
+              {% block checkbox_row %}
+        -         <dl class="{{ rowClass|default('form-line') }}">
+        -            <dt></dt>
+        -            <dd>
+        -                <div class="form-choice">
+        -                    <div class="form-choice__input">
+        -                        {{ form_widget(form) }}
+        -                    </div>
+        -                    <div class="form-choice__label">
+        -                        {{ form_label(form, label) }}
+        -                        {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
+        -                        {{ form_errors(form, { errors_attr: errors_attr } ) }}
+        -                        {{ block('icon') }}
+        -                    </div>
+        -                </div>
+        -            </dd>
+        -         </dl>
+        +         <div class="{{ rowClass|default('form-line') }}">
+        +            <div class="form-choice">
+        +                {% set checkboxAttr = attr|merge({'class': (attr.class|default('') ~ ' css-checkbox')|trim}) %}
+        +                {{ form_widget(form, { attr: checkboxAttr }) }}
+        +                {{ form_label(form, label, { label_attr: { class: "css-checkbox__image" }}) }}
+        +                {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
+        +                {{ form_errors(form, { errors_attr: errors_attr } ) }}
+        +                {{ block('icon') }}
+        +            </div>
+        +         </div>
+              {% endblock checkbox_row %}
+         ```
 
     - update all twig files according to pull request or find all checkboxes and add them `{ attr: { class: "css-checkbox" } }` and direct after input tag add label with `class="css-checkbox__image"`. You can change class name to `css-radio` and `css-radio__image` according to input type.
 
