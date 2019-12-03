@@ -166,7 +166,7 @@ There you can find links to upgrade notes for other versions too.
     - in `ContactFormController` remove action `sendAction()`, it is not needed anymore
     - remove `src/Resources/scripts/frontend/contactForm.js`, it is not needed anymore
     - new localized route `front_contact` has been introduced with slug `contact`. This slug can be already in use in your project, because
-      previous SSFW versions have an article called `Contact` which was used as the contact page. Please move the article's content to the new contact page and completely remove the article.
+      previous SSFW versions have an article called `Contact` which is used as the contact page. Please move the article's content to the new contact page and completely remove the article.
       To remove the article, please create [new migration](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Migrations/Version20191121171000.php) in you project which removes the article and its slug.
       
       If you don't want to remove the article, you will need to change path for the new route in the next step
@@ -188,7 +188,7 @@ There you can find links to upgrade notes for other versions too.
             </div>
         ```
 
-- vats can be create and manage per domains ([#1498](https://github.com/shopsys/shopsys/pull/1498))
+- vats can be created and managed per domains ([#1498](https://github.com/shopsys/shopsys/pull/1498))
     - please read [upgrade instruction for vats per domain](https://github.com/shopsys/shopsys/blob/9.0/upgrade/upgrade-instruction-for-vats-per-domain.md)
 ### Tools
 
