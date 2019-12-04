@@ -738,7 +738,7 @@ There you can find links to upgrade notes for other versions too.
               {% endblock checkbox_row %}
          ```
 
-    - update all twig files according to pull request or find all checkboxes and add them `{ attr: { class: "css-checkbox" } }` and direct after input tag add label with `class="css-checkbox__image"`. You can change class name to `css-radio` and `css-radio__image` according to input type.
+    - update all twig files according to pull request or find all checkboxes, add following code `{ attr: { class: "css-checkbox" } }` to them and immediately after input tag add label with `class="css-checkbox__image"`. You can change class name to `css-radio` and `css-radio__image` according to input type.
 
         - [loginForm.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Login/loginForm.html.twig)
         - [windowForm.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Login/windowForm.html.twig)
