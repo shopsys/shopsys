@@ -1,35 +1,40 @@
 {{ form_start(form, {attr: {'data-on-submit': 'contactFormAjaxSubmit'}}) }}
-<div class="h2">{{ 'Contact us'|trans }}</div>
 
-{{ form_errors(form) }}
+<div class="web__line">
+    <div class="web__container">
+        <div class="h2">{{ 'Contact us'|trans }}</div>
 
-    {{ form_row(form.name, { label: 'Full name'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
-    {{ form_row(form.email, { label: 'Email'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
-    {{ form_row(form.message, { label: 'Message'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
-    {% if privacyPolicyArticle is not null %}
-        {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
-        {{ form_row(
-            form.privacyPolicy,
-            {
-                label:  'I agree with  <a href="%url%" target="_blank">privacy policy</a>.'|trans({'%url%': articleUrl}),
-                errors_attr: { class: 'form-error--choice' },
-                rawLabel:true,
-                rowClass: 'form-line-block'
-            }
-        )}}
-    {% else %}
-        {{ form_row(
-            form.privacyPolicy,
-            {
-                label:  'I agree with privacy policy.'|trans,
-                errors_attr: { class: 'form-error--choice' },
-                rowClass: 'form-line-block'
-            }
-        )}}
-    {% endif %}
-    <div class="text-right">
-        {{ form_widget(form.send, { label: 'Send'|trans }) }}
+        {{ form_errors(form) }}
+
+            {{ form_row(form.name, { label: 'Full name'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
+            {{ form_row(form.email, { label: 'Email'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
+            {{ form_row(form.message, { label: 'Message'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
+            {% if privacyPolicyArticle is not null %}
+                {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
+                {{ form_row(
+                    form.privacyPolicy,
+                    {
+                        label:  'I agree with  <a href="%url%" target="_blank">privacy policy</a>.'|trans({'%url%': articleUrl}),
+                        errors_attr: { class: 'form-error--choice' },
+                        rawLabel:true,
+                        rowClass: 'form-line-block'
+                    }
+                )}}
+            {% else %}
+                {{ form_row(
+                    form.privacyPolicy,
+                    {
+                        label:  'I agree with privacy policy.'|trans,
+                        errors_attr: { class: 'form-error--choice' },
+                        rowClass: 'form-line-block'
+                    }
+                )}}
+            {% endif %}
+            <div class="text-right">
+                {{ form_widget(form.send, { label: 'Send'|trans }) }}
+            </div>
+
+        {{ form_end(form) }}
+        {{ init_js_validation(form, true) }}
     </div>
-
-{{ form_end(form) }}
-{{ init_js_validation(form, true) }}
+</div>
