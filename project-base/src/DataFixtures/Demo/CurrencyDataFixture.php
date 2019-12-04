@@ -52,8 +52,9 @@ class CurrencyDataFixture extends AbstractReferenceFixture
     public function load(ObjectManager $manager)
     {
         /**
-         * The "CZK" currency is created in database migration.
+         * The "CZK" and "EUR" currencies are created in database migrations.
          * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135342
+         * @see \Shopsys\ShopBundle\Migrations\Version20190918155540
          */
         $currencyCzk = $this->currencyFacade->getById(1);
         $currencyData = $this->currencyDataFactory->createFromCurrency($currencyCzk);
@@ -62,15 +63,7 @@ class CurrencyDataFixture extends AbstractReferenceFixture
         $currencyCzk = $this->currencyFacade->edit($currencyCzk->getId(), $currencyData);
         $this->addReference(self::CURRENCY_CZK, $currencyCzk);
 
-        if (count($this->domain->getAll()) > 1) {
-            $currencyData = $this->currencyDataFactory->create();
-            $currencyData->name = 'Euro';
-            $currencyData->code = Currency::CODE_EUR;
-            $currencyData->exchangeRate = '25';
-            $currencyData->minFractionDigits = Currency::DEFAULT_MIN_FRACTION_DIGITS;
-            $currencyData->roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS;
-            $currencyEuro = $this->currencyFacade->create($currencyData);
-            $this->addReference(self::CURRENCY_EUR, $currencyEuro);
-        }
+        $currencyCzk = $this->currencyFacade->getById(2);
+        $this->addReference(self::CURRENCY_EUR, $currencyCzk);
     }
 }
