@@ -16,7 +16,7 @@ Easy steps to do that are described in [API Authentication - OAuth2](./api-authe
 
 ### Get the Bearer token that is used for authentication when accessing API
 
-```bash
+```sh
 curl -X POST \
   'http://127.0.0.1:8000/api/token' \
   -d 'grant_type=client_credentials' \
@@ -35,7 +35,7 @@ Don't be surprised, the `access_token` is long.
 
 Use the `access_token` (eg. `eyJ...lKQ`) for the request Bearer authorization
 
-```bash
+```sh
 curl -X GET \
   'http://127.0.0.1:8000/api/v1/products' \
   -H 'Authorization: Bearer eyJ...lKQ'
@@ -86,7 +86,7 @@ e.g. provided there is a GET route `products/` in the core, you need to add your
 ```php
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Controller\Api\V1\Product;
+namespace App\Controller\Api\V1\Product;
 
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\Get;

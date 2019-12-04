@@ -27,7 +27,7 @@ VALUES ('alan', 'xxx', 'client_credentials password', '1');
 
 Run following code in bash
 
-```bash
+```sh
 curl -X POST \
   'http://127.0.0.1:8000/api/token' \
   -d 'grant_type=client_credentials' \

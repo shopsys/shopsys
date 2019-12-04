@@ -44,12 +44,14 @@ git rebase origin/master
 As we [support multiple versions](./backward-compatibility-promise.md#current-release-plan) of Shopsys Framework while keeping [Backward Compatibility Promise](./backward-compatibility-promise.md), it is important to think about proper targeting of your pull request.
 
 If your pull request:
+
 * **fixes a bug and does not contain any BC break**, it should be targeted to the oldest supported version where the bug occurs.
 * **does not contain any BC break**, it should be targeted to `master`.
 * **contains any BC break**, it should be targeted to a branch where the next major release is being prepared.
     * E.g., if the latest release is `v7.1.0` and you want to introduce a breaking change, you need to rebase your branch on `8.0` branch and target your PR against it.
 
-*Note: Always rebase your branch onto the base branch before retargeting, otherwise your PR might contain more commits than you'd want to merge.*
+!!! note
+    Always rebase your branch onto the base branch before retargeting, otherwise your PR might contain more commits than you'd want to merge.
 
 ## 2. Changes after review
 During the review, reviewer will write comments how to improve the solution or fix bugs. CR can end in `Approved` or `RequestChanges` status when further edits are needed. After completing the CR, it is necessary to correct errors encountered by the reviewer.

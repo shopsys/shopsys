@@ -26,7 +26,7 @@ administrator is now not allowed to put h1 headings to wysiwyg
 * Message should contain the information **what** changed and **why**.
 * If your commit message is too long it might be a good idea to split it into several commits.
 * First letter of a commit message is in lowercase, except when the first word is a proper name (eg. name of a class).
-* When a commit is related only to a specific part (admin, docs, design) or only to one class or file (composer.json, services.yml), it should be prefixed with that name.
+* When a commit is related only to a specific part (admin, docs, design) or only to one class or file (composer.json, services.yaml), it should be prefixed with that name.
 * Present tense is used for describing the change of application behavior. It is helpful to use words to define time, such as "now", in order to describe the current state. Otherwise, the message could be misunderstood as a description of an error that was fixed.
 
 ``` markdown

@@ -226,10 +226,10 @@ Entities and supporting classes (like recalculators, schedulers) processes data 
 ## Model extension
 Entity extension is described in [Entity Extension article](../extensibility/entity-extension.md).
 
-Other parts of a model can be extended by class inheritance and adding an alias to your `services.yml`, eg.:
+Other parts of a model can be extended by class inheritance and adding an alias to your `services.yaml`, eg.:
 ```yaml
 services:
-    Shopsys\FrameworkBundle\Model\Article\ArticleFacade: '@Shopsys\ShopBundle\Model\Article\ArticleFacade'
+    Shopsys\FrameworkBundle\Model\Article\ArticleFacade: '@App\Model\Article\ArticleFacade'
 ```
 
 ### Extending from a bundle

@@ -387,7 +387,7 @@ Example:
 ```php
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
-use Tests\ShopBundle\Test\FunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
 class MyTest extends FunctionalTestCase
 {

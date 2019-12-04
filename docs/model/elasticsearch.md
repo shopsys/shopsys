@@ -20,7 +20,7 @@ You can also create or delete indexes manually using Phing targets `product-sear
 
 Unique index is created for each domain as some product attributes can have distinct values for each domain.
 To discover the exact mapping setting, you can look at the JSON configuration files
-that are located in `src/Shopsys/ShopBundle/Resources/definition/` directory in [`shopsys/project-base`](https://github.com/shopsys/project-base).
+that are located in `src/Resources/definition/` directory in [`shopsys/project-base`](https://github.com/shopsys/project-base).
 The directory is configured using `%shopsys.elasticsearch.structure_dir%` parameter.
 
 ### Product data export
@@ -63,7 +63,7 @@ which ensures that alphabetical sorting is correct for every language and its se
 When using docker installation, Elasticsearch API is available on the address [http://127.0.0.1:9200](http://127.0.0.1:9200).
 
 ## How to change the default index and data export setting?
-If you wish to reconfigure the indexes setting, simply change the JSON configurations in `src/Shopsys/ShopBundle/Resources/Resources/definition/`.
+If you wish to reconfigure the indexes setting, simply change the JSON configurations in `src/Resources/definition/`.
 Configurations use the `<index>/<domain_id>.json` naming pattern.
 
 If you need to change the data that are exported into Elasticsearch, overwrite appropriate methods in `ProductSearchExportWithFilterRepository` and `ProductElasticsearchConverter` classes.

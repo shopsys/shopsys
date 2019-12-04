@@ -90,7 +90,7 @@ CategoryDecorator:          # Object is named "Category"
                 description: "Ancestor category"
 ```
 
-The `Category` object type in your project in `src/Shopsys/ShopBundle/Resources/graphql-types/Category.types.yml` is the one will be really used and you can adjust it as you want.
+The `Category` object type in your project in `config/graphql/types/Category.types.yml` is the one will be really used and you can adjust it as you want.
 For example adding new field to the `Category` could be like:
 ```diff
  Category:
@@ -105,7 +105,7 @@ For example adding new field to the `Category` could be like:
 ```
 
 !!! note
-    Fields in the definitions have to be named the same way as they are in the appropriate entity (in this case `\Shopsys\ShopBundle\Model\Category\Category`)
+    Fields in the definitions have to be named the same way as they are in the appropriate entity (in this case `\App\Model\Category\Category`)
 
 ### Query type
 The base query type is defined with the decorator approach the same way as objects are.
@@ -120,7 +120,7 @@ QueryDecorator:
                 resolve: "@=resolver('categories')"   # Define the resolver responsible for returning the data. See the resolvers section below.
 ```
 
-And specific `Query` type is defined in `src/Shopsys/ShopBundle/Resources/graphql-types/Query.types.yml`
+And specific `Query` type is defined in `config/graphql/types/Query.types.yml`
 ```yaml
 Query:
     type: object
@@ -165,7 +165,7 @@ If we map GraphQl objects to entities, it may happen that automatic transformati
 This can happen when we want to use getter for some entity attribute and such getter requires parameter.
 
 For this transformation we can use a `ResolverMap` object .
-`ResolverMap` is a Symfoy service that implements `Overblog\GraphQLBundle\Resolver\ResolverMapInterface`.
+`ResolverMap` is a Symfony service that implements `Overblog\GraphQLBundle\Resolver\ResolverMapInterface`.
 ResolverMap can be created as a child of `Overblog\GraphQLBundle\Resolver\ResolverMap` class too and overload the `map` method.
 
 Example of `ResolverMap`:
@@ -192,7 +192,7 @@ class ProductResolverMap extends ResolverMap
 }
 ```
 
-You  can register `ResolverMap` in `app/config/packages/shopsys_frontend_api.yml`:
+You  can register `ResolverMap` in `config/packages/shopsys_frontend_api.yml`:
 
 ```yaml
 overblog_graphql:

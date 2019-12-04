@@ -14,11 +14,11 @@ As a preparation for that, we need to implement the creation and editing logic, 
 
 ### 1.1 Create `SalesmanData` class
 ```php
-// src/Shopsys/ShopBundle/Model/Salesman/SalesmanData.php
+// src/Model/Salesman/SalesmanData.php
 
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Model\Salesman;
+namespace App\Model\Salesman;
 
 class SalesmanData
 {
@@ -37,12 +37,12 @@ class SalesmanData
 
 ### 1.2 Add constructor, `edit` method, and getters to `Salesman` entity
 ```diff
-// src/Shopsys/ShopBundle/Model/Salesman/Salesman.php
+// src/Model/Salesman/Salesman.php
 
 class Salesman
 {
 +     /**
-+      * @param \Shopsys\ShopBundle\Model\Salesman\SalesmanData $salesmanData
++      * @param \App\Model\Salesman\SalesmanData $salesmanData
 +      */
 +     public function __construct(SalesmanData $salesmanData)
 +     {
@@ -50,7 +50,7 @@ class Salesman
 +     }
 
 +     /**
-+      * @param \Shopsys\ShopBundle\Model\Salesman\SalesmanData $salesmanData
++      * @param \App\Model\Salesman\SalesmanData $salesmanData
 +      */
 +     public function edit(SalesmanData $salesmanData)
 +     {
@@ -86,16 +86,16 @@ class Salesman
 
 ### 1.3 Create `SalesmanDataFactory` class with `create` and `createFromSalesman` methods
 ```php
-// src/Shopsys/ShopBundle/Model/Salesman/SalesmanDataFactory.php
+// src/Model/Salesman/SalesmanDataFactory.php
 
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Model\Salesman;
+namespace App\Model\Salesman;
 
 class SalesmanDataFactory
 {
     /**
-     * @return \Shopsys\ShopBundle\Model\Salesman\SalesmanData
+     * @return \App\Model\Salesman\SalesmanData
      */
     public function create(): SalesmanData
     {
@@ -106,8 +106,8 @@ class SalesmanDataFactory
     }
 
     /**
-     * @param \Shopsys\ShopBundle\Model\Salesman\Salesman $salesman
-     * @return \Shopsys\ShopBundle\Model\Salesman\SalesmanData
+     * @param \App\Model\Salesman\Salesman $salesman
+     * @return \App\Model\Salesman\SalesmanData
      */
     public function createFromSalesman(Salesman $salesman): SalesmanData
     {
@@ -122,13 +122,13 @@ class SalesmanDataFactory
 
 ### 1.4 Add `create`, `edit`, and `getById` methods into `SalesmanFacade` class
 ```diff
-// src/Shopsys/ShopBundle/Model/Salesman/SalesmanFacade.php
+// src/Model/Salesman/SalesmanFacade.php
 
 class SalesmanFacade
 {
 +    /**
-+     * @param \Shopsys\ShopBundle\Model\Salesman\SalesmanData $salesmanData
-+     * @return \Shopsys\ShopBundle\Model\Salesman\Salesman
++     * @param \App\Model\Salesman\SalesmanData $salesmanData
++     * @return \App\Model\Salesman\Salesman
 +     */
 +    public function create(SalesmanData $salesmanData): Salesman
 +    {
@@ -141,8 +141,8 @@ class SalesmanFacade
 +
 +    /**
 +     * @param int $salesmanId
-+     * @param \Shopsys\ShopBundle\Model\Salesman\SalesmanData $salesmanData
-+     * @return \Shopsys\ShopBundle\Model\Salesman\Salesman
++     * @param \App\Model\Salesman\SalesmanData $salesmanData
++     * @return \App\Model\Salesman\Salesman
 +     */
 +    public function edit(int $salesmanId, SalesmanData $salesmanData): Salesman
 +    {
@@ -155,7 +155,7 @@ class SalesmanFacade
 
 +    /**
 +     * @param $salesmanId
-+     * @return \Shopsys\ShopBundle\Model\Salesman\Salesman
++     * @return \App\Model\Salesman\Salesman
 +     */
 +    public function getById($salesmanId): Salesman
 +    {
@@ -167,14 +167,14 @@ class SalesmanFacade
 ### 1.5 Create new form defined by `SalesmanFormType` class
 When using a grid for inline editing, a form is rendered in the grid row. We need to prepare that form now.
 ```php
-// src/Shopsys/ShopBundle/Form/Admin/SalesmanFormType.php
+// src/Form/Admin/SalesmanFormType.php
 
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Form\Admin;
+namespace App\Form\Admin;
 
+use App\Model\Salesman\SalesmanData;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
-use Shopsys\ShopBundle\Model\Salesman\SalesmanData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -221,25 +221,25 @@ Now, we have everything prepared and we are able to put it all together in new c
 The class needs to extend `AbstractGridInlineEdit` and implement three methods -`getForm`, `editEntity`, and `createEntityAndGetId`.
 We also have to inject the original `SalesmanGridFactory` to the new class constructor.
 ```php
-// src/Shopsys/ShopBundle/Grid/Salesman/SalesmanGridInlineEdit.php
+// src/Grid/Salesman/SalesmanGridInlineEdit.php
 
-namespace Shopsys\ShopBundle\Grid\Salesman;
+namespace App\Grid\Salesman;
 
+use App\Form\Admin\SalesmanFormType;
+use App\Model\Salesman\SalesmanDataFactory;
+use App\Model\Salesman\SalesmanFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
-use Shopsys\ShopBundle\Form\Admin\SalesmanFormType;
-use Shopsys\ShopBundle\Model\Salesman\SalesmanDataFactory;
-use Shopsys\ShopBundle\Model\Salesman\SalesmanFacade;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class SalesmanGridInlineEdit extends AbstractGridInlineEdit
 {
     /**
-     * @var \Shopsys\ShopBundle\Grid\Salesman\SalesmanGridFactory
+     * @var \App\Grid\Salesman\SalesmanGridFactory
      */
     private $salesmanGridFactory;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Salesman\SalesmanFacade
+     * @var \App\Model\Salesman\SalesmanFacade
      */
     private $salesmanFacade;
 
@@ -249,7 +249,7 @@ class SalesmanGridInlineEdit extends AbstractGridInlineEdit
     private $formFactory;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Salesman\SalesmanDataFactory
+     * @var \App\Model\Salesman\SalesmanDataFactory
      */
     private $salesmanDataFactory;
 
@@ -284,7 +284,7 @@ class SalesmanGridInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param int $salesmanId
-     * @param \Shopsys\ShopBundle\Model\Salesman\SalesmanData $salesmanData
+     * @param \App\Model\Salesman\SalesmanData $salesmanData
      */
     protected function editEntity($salesmanId, $salesmanData)
     {
@@ -292,7 +292,7 @@ class SalesmanGridInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param \Shopsys\ShopBundle\Model\Salesman\SalesmanData $salesmanData
+     * @param \App\Model\Salesman\SalesmanData $salesmanData
      * @return int
      */
     protected function createEntityAndGetId($salesmanData)
@@ -303,36 +303,36 @@ class SalesmanGridInlineEdit extends AbstractGridInlineEdit
     }
 }
 ```
-The new class must be registered in `services.yml`:
+The new class must be registered in `services.yaml`:
 ```yaml
-    Shopsys\ShopBundle\Grid\Salesman\SalesmanGridInlineEdit: ~
+    App\Grid\Salesman\SalesmanGridInlineEdit: ~
 ```
 
 ### 1.7 Use `SalesmanGridInlineEdit` in `SalesmanController`
 To make the salesman grid inline editable now, we need to use the `SalesmanGridInlineEdit::getGrid` method to get the grid instead of calling `SalesmanGridFactory::create` method directly:
 ```diff
-// src/Shopsys/ShopBundle/Controller/Admin/SalesmanController.php
+// src/Controller/Admin/SalesmanController.php
 
-namespace Shopsys\ShopBundle\Controller\Admin;
+namespace App\Controller\Admin;
 
+-use App\Grid\Salesman\SalesmanGridFactory;
++use App\Grid\Salesman\SalesmanGridInlineEdit;
+use App\Model\Salesman\SalesmanFacade;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
--use Shopsys\ShopBundle\Grid\Salesman\SalesmanGridFactory;
-+use Shopsys\ShopBundle\Grid\Salesman\SalesmanGridInlineEdit;
-use Shopsys\ShopBundle\Model\Salesman\SalesmanFacade;
 
 class SalesmanController extends AdminBaseController
 {
     /**
--     * @var \Shopsys\ShopBundle\Grid\Salesman\SalesmanGridFactory
-+     * @var \Shopsys\ShopBundle\Grid\Salesman\SalesmanGridInlineEdit
+-     * @var \App\Grid\Salesman\SalesmanGridFactory
++     * @var \App\Grid\Salesman\SalesmanGridInlineEdit
      */
 -    protected $salesmanGridFactory;
 +    protected $salesmanGridInlineEdit;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Salesman\SalesmanFacade
+     * @var \App\Model\Salesman\SalesmanFacade
      */
     protected $salesmanFacade;
 
@@ -352,7 +352,7 @@ class SalesmanController extends AdminBaseController
 -        $grid = $this->salesmanGridFactory->create();
 +        $grid = $this->salesmanGridInlineEdit->getGrid();
 
-        return $this->render('@ShopsysShop/Admin/Content/Salesman/list.html.twig', [
+        return $this->render('Admin/Content/Salesman/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -368,7 +368,7 @@ In this part, we will enable drag and drop sorting of our salesmen using the gri
 
 ### 2.1 Add `$position` to `Salesman` entity and mark it as DB column using Doctrine ORM annotation
 ```diff
-// src/Shopsys/ShopBundle/Model/Salesman/Salesman.php
+// src/Model/Salesman/Salesman.php
 
 class Salesman
 {
@@ -390,7 +390,7 @@ php phing db-migrations-generate
 The command prints a file name the migration was generated into.
 The migration will look like this:
 ```php
-namespace Shopsys\ShopBundle\Migrations;
+namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
@@ -423,7 +423,7 @@ php phing db-migrations
 
 ### 2.2 Make the `Salesman` entity implement `OrderableEntityInterface`
 ```diff
-// src/Shopsys/ShopBundle/Model/Salesman/Salesman.php
+// src/Model/Salesman/Salesman.php
 
 + use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
@@ -442,7 +442,7 @@ php phing db-migrations
 
 ### 2.3 Enable drag and drop sorting in `SalesmanGridFactory`
 ```diff
-// src/Shopsys/ShopBundle/Grid/Salesman/SalesmanGridFactory.php
+// src/Grid/Salesman/SalesmanGridFactory.php
 
 class SalesmanGridFactory implements GridFactoryInterface
 {

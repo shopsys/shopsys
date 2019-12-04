@@ -11,7 +11,7 @@ In this article, we describe tools and recommendations for translations.
    You can find more in [Symfony translation documentation](https://symfony.com/doc/current/components/translation/usage.html).
 
 1. Once you have translations in your code, you have to extract them by running `php phing translations-dump`.
-   This command extracts the translatable texts into `*.po` translation files located in directory [src/Shopsys/ShopBundle/Resources/translations/](/project-base/src/Shopsys/ShopBundle/Resources/translations/).
+   This command extracts the translatable texts into `*.po` translation files located in `translations/` directory.
    For more information about phing targets in general, see the [separate article](./console-commands-for-application-management-phing-targets.md).
 
 1. Now you have to translate the newly extracted texts.

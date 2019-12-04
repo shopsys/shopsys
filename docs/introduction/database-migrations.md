@@ -5,7 +5,7 @@ Our [MigrationsBundle](https://hithub.com/shopsys/migrations) supports the insta
 
 ## Where to store migrations
 
-Migrations should be saved in a directory `Migrations` in the root of any registered bundle.
+Migrations of your application should be saved in a directory `src/Migrations` or in a directory `Migrations` in the root of any registered bundle.
 
 Just use the namespace of your bundle with `Migrations` at the end (eg. `\Shopsys\FrameworkBundle\Migrations`) and extend the class `\Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration`.
 From now on, the migrations will be automatically registered for installation.

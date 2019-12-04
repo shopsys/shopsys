@@ -25,7 +25,7 @@ Besides the rules that are checked by automatic tools, we have few rules for whi
     <div class="js-bestselling-products list-products-line">
     ```
 
-- Names in configuration files (eg. [`parameters.yml.dist`](https://github.com/shopsys/project-base/blob/7.3/app/config/parameters.yml.dist)) are underscored
+- Names in configuration files (eg. [`parameters.yml.dist`](https://github.com/shopsys/project-base/blob/9.0/config/parameters.yml.dist)) are underscored
     ```
     shopsys.doctrine.cache_driver.query_cache
     ```

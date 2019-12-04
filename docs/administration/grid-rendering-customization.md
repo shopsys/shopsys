@@ -22,7 +22,7 @@ and we want to display all their names bold, and also, we want to be more specif
 
     <!-- language: lang-twig -->
 
-        {# src/Shopsys/ShopBundle/Resources/views/Admin/Content/Salesman/listGrid.html.twig #}
+        {# templates/Admin/Content/Salesman/listGrid.html.twig #}
         {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
 
         {% block grid_no_data %}
@@ -37,4 +37,4 @@ and we want to display all their names bold, and also, we want to be more specif
 
     <!-- language: lang-php -->
 
-        $grid->setTheme('@ShopsysShop/Admin/Content/Salesman/listGrid.html.twig');
+        $grid->setTheme('Admin/Content/Salesman/listGrid.html.twig');

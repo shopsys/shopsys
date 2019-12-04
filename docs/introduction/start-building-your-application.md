@@ -3,7 +3,8 @@
 Installation of the Shopsys Framework is complete and now you can start building your application.
 Here are first steps you should start with.
 
-*Note: If you don't have a working application, [install it](../installation/installation-guide.md) first.*
+!!! note
+    If you don't have a working application, [install it](../installation/installation-guide.md) first.
 
 ## Set up timezone to display dates
 
@@ -29,7 +30,7 @@ Read [settings and working with domain](./how-to-set-up-domains-and-locales.md#s
 We highly recommend to set up domains in the beginning of your project correctly. It will save you a lot of time.
 
 !!! note
-    * If you add a domain, please create and upload an icon for the new domain (Administration > Settings >  E-shop identification). You'll make shop administrators happy.
+    If you add a domain, please create and upload an icon for the new domain (Administration > Settings >  E-shop identification). You'll make shop administrators happy.
 
 ## Set up locales
 
@@ -53,7 +54,7 @@ You are likely to adjust the Elasticsearch configuration for example if you have
 !!! note
     Find more in detailed article about [Elasticsearch](../model/elasticsearch.md) usage.
 
-Every domain has defined one [Elasticsearch index](../model/elasticsearch.md#elasticsearch-index-setting). Definition of this index can be found in `src/Shopsys/ShopBundle/Resources/definition/<domain_id>.json` files.
+Every domain has defined one [Elasticsearch index](../model/elasticsearch.md#elasticsearch-index-setting). Definition of this index can be found in `src/Resources/definition/<domain_id>.json` files.
 The most often change is adding [fields](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) and changing [analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html) to justify search behavior.
 
 ## Set up routing
@@ -63,7 +64,7 @@ You are likely to adjust routing when you need translated routes for a new local
 
 *We use Symfony routing, so please find more in the [official documentation](https://symfony.com/doc/3.4/routing.html)*
 
-You can adjust the routing in `src/Shopsys/ShopBundle/Resources/config/routing_front.yml` file and [locale specific](./how-to-set-up-domains-and-locales.md#32-frontend-routes) in `src/Shopsys/ShopBundle/Resources/config/routing_front_xx.yml` files.
+You can adjust the routing in `config/shopsys-routing/routing_friendly_url.yml` file and [locale specific](./how-to-set-up-domains-and-locales.md#32-frontend-routes) in `config/shopsys-routing/routing_front_xx.yml` files.
 
 ## Set up default currency
 
@@ -141,7 +142,7 @@ We recommend to use the same version in your `php-fpm`'s `Dockerfile`, so that d
 After all, your production server is the one that matters the most.
 
 First, run `php -v` on your server to find our the exact version, for example:
-```
+``` no-highlight
 PHP 7.2.19-0ubuntu0.18.04.1 (cli) (built: Jun  4 2019 14:48:12) ( NTS )
 Copyright (c) 1997-2018 The PHP Group
 Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies

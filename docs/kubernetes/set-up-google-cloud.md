@@ -8,7 +8,7 @@ For these steps you will need to install gcloud command tool, you can install it
 
 If you choose to use `kubernetes-buildpack`, start buildpack container like this
 
-```
+```sh
 docker run -it shopsys/kubernetes-buildpack sh
 ```
 
@@ -34,42 +34,42 @@ First of all you need to login and verify your account, execute this and follow 
 
 `project-name` used as a variable is project id obtained before.
 
-```
+```sh
 gcloud auth login
 ```
 
 Create new Google Cloud project:
-```
+```sh
 gcloud projects create --set-as-default --name <project-name>
 ```
 
 Now we need to link our billing account for google to be able to create services that are paid.
 
 List your billing accounts:
-```
+```sh
 gcloud beta billing accounts list
 ```
 
 Select one and link project to a billing account:
-```
+```sh
 gcloud beta billing projects link <project-name> --billing-account <billing-account-id>
 ```
 
 Create service account and key for Terraform:
-```
+```sh
 gcloud iam service-accounts create terraform --display-name "Terraform admin account"
 gcloud projects add-iam-policy-binding <project-name> --member serviceAccount:terraform@<project-name>.iam.gserviceaccount.com --role roles/owner
 gcloud iam service-accounts keys create service-account.json --iam-account terraform@<project-name>.iam.gserviceaccount.com
 ```
 
 Create service account for Google Cloud Storage account
-```
+```sh
 gcloud iam service-accounts create gcs-service-account --display-name "GCS admin account"
 gcloud projects add-iam-policy-binding <project-name> --member serviceAccount:gcs-service-account@<project-name>.iam.gserviceaccount.com --role roles/storage.admin
 ```
 
 Enable Google Cloud APIs that are used for deploy
-```
+```sh
 gcloud services enable cloudbilling.googleapis.com
 gcloud services enable cloudresourcemanager.googleapis.com
 gcloud services enable iam.googleapis.com

@@ -120,6 +120,7 @@ Value is internally converted from [display time zone](./working-with-date-time-
 Defaults to `DateTimeType::FORMAT_PHP`.  
 Defines in what format should be the date shown.
 DatePickerType has constant that can be used:
+
 - FORMAT_PHP = 'dd.MM.yyyy HH:mm:ss'
 
 ### [DisplayOnlyDomainIconType](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Form/DisplayOnlyDomainIconType.php)

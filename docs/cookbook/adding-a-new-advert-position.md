@@ -16,7 +16,7 @@ If you want to add a new custom position, let us say on the product detail page,
 Create a new class that extends `AdvertPositionRegistry` and override `getAllLabelsIndexedByNames()` method where you add a translated description for your new advert position to the existing ones.
 
 ```php
-namespace Shopsys\ShopBundle\Model\Advert;
+namespace App\Model\Advert;
 
 use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry as BaseAdvertPositionRegistry;
 
@@ -35,23 +35,23 @@ class AdvertPositionRegistry extends BaseAdvertPositionRegistry
 }
 ```
 
-In your `services.yml`, set your new class as an alias for the base one.
+In your `services.yaml`, set your new class as an alias for the base one.
 
 ```yaml
 Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry:
-    class: Shopsys\ShopBundle\Model\Advert\AdvertPositionRegistry
+    class: App\Model\Advert\AdvertPositionRegistry
 ```
 
 Render the new advert on the product detail page (or wherever else you want) by adding the following line into the corresponding twig template.
 
 ```twig
-{{ render(controller('ShopsysShopBundle:Front/Advert:box',{'positionName' : 'productDetail'})) }}
+{{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productDetail'})) }}
 ```
 
 If you misspell the position name (or otherwise use a non-registered one) an exception will be thrown including the list of all registered positions.
 So don't worry about calling the controller in a wrong way.
 
-Add new entry into `noticer` section in `src/Shopsys/ShopBundle/Resources/config/images.yml` config if you want to provide additional information about the new position for the images overview admin page (`Settings > Image size > Image size` on URL `admin/image/overview/`)
+Add new entry into `noticer` section in `config/images.yml` config if you want to provide additional information about the new position for the images overview admin page (`Settings > Image size > Image size` on URL `admin/image/overview/`)
 
 ```yaml
 -   name: noticer

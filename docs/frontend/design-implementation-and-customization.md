@@ -2,22 +2,22 @@
 Here are the basic technologies we use in Shopsys Framework for design implementation:
 
 - [LESS pre-processor](http://lesscss.org/) for definition of cascading style sheets (i.e. [CSS](https://www.w3.org/Style/CSS/Overview.en.html))
-    - the LESS files are located in `src/Shopsys/ShopBundle/Resources/styles`  
+    - the LESS files are located in `src/Resources/styles`  
     - you can read more about LESS in separate article [Introduction to Less](./introduction-to-less.md)
 - [Grunt task runner](https://gruntjs.com/) for generation of CSS from LESS
-    - `Gruntfile.js` is generated from `src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig` during application build using `gruntfile` by [phing target](../introduction/console-commands-for-application-management-phing-targets.md)
+    - `Gruntfile.js` is generated from `templates/Grunt/gruntfile.js.twig` during application build using `gruntfile` by [Phing target](../introduction/console-commands-for-application-management-phing-targets.md)
 - [Twig templating engine](https://twig.symfony.com/) for definition of HTML (and other) templates
-    - the Twig templates are located in `src/Shopsys/ShopBundle/Resources/views`
+    - the Twig templates are located in `templates` directory
 
-When you want to customize the styles or templates, you can modify any of the files directly, as all of them are located in `ShopBundle` (i.e. in your project).
+When you want to customize the styles or templates, you can modify any of the files directly, as all of them are located in your project.
 
 ## Multidomain design customization
 Shopsys Framework provides an ability of running multiple domains as a single application,
 if you want to know more about this concept, you can read [the separate article](../introduction/domain-multidomain-multilanguage.md).
-In order to change your multidomain appearance, you can set two parameters [`domains.yml`](/project-base/app/config/domains.yml) configuration file:
+In order to change your multidomain appearance, you can set two parameters [`domains.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/domains.yml) configuration file:
 
 - `styles_directory`
-    - allows you to define a custom sub-folder with LESS files in `src/Shopsys/ShopBundle/Resources/styles`
+    - allows you to define a custom sub-folder with LESS files in `src/Resources/styles`
     - if you need to use custom styles for a particular domain, put your LESS files in this sub-folder
     - you can create your own directories structure in the sub-folder that suits your needs
 - `design_id`

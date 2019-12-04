@@ -15,7 +15,7 @@ We want to display a brand name for each product so we need to add the attribute
 ```php
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Model\Product\View;
+namespace App\Model\Product\View;
 
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\ReadModelBundle\Image\ImageView;
@@ -69,7 +69,7 @@ class ListedProductView extends BaseListedProductView
 ### 2. Add new attribute to Elasticsearch
 
 In order to add new attribute to Elasticsearch you need to add it to the structure first.
-You can do that by adding it to `mappings` in all `src/Shopsys/ShopBundle/Resources/definition/product/*.json` files like this:
+You can do that by adding it to `mappings` in all `src/Resources/definition/product/*.json` files like this:
 ```diff
   "mappings": {
     "_doc": {
@@ -85,7 +85,7 @@ The class responsible for exporting products to Elasticsearch is `ProductSearchE
 ```php
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Model\Product\Search\Export;
+namespace App\Model\Product\Search\Export;
 
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository as BaseProductSearchExportWithFilterRepository;
@@ -93,7 +93,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithF
 class ProductSearchExportWithFilterRepository extends BaseProductSearchExportWithFilterRepository
 {
    /**
-    * @param \Shopsys\ShopBundle\Model\Product\Product $product
+    * @param \App\Model\Product\Product $product
     * @param int $domainId
     * @param string $locale
     * @return array
@@ -109,10 +109,10 @@ class ProductSearchExportWithFilterRepository extends BaseProductSearchExportWit
 }
 ```
 
-You need to register your new class as an alias for the one from the FrameworkBundle in `services.yml` and `services_test.yml`:
+You need to register your new class as an alias for the one from the FrameworkBundle in `services.yaml` and `services_test.yml`:
 
 ```yml
-Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: '@Shopsys\ShopBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository'
+Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: '@App\Model\Product\Search\Export\ProductSearchExportWithFilterRepository'
 ```
 
 Then you need to fix `ProductSearchExportRepositoryTest::getExpectedStructureForRepository` (because this test check if your structure is correct) by adding new attribute:
@@ -144,7 +144,7 @@ So you have to provide default values for the case of reading such old documents
 ```php
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Model\Product\Search;
+namespace App\Model\Product\Search;
 
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter as BaseProductElasticsearchConverter;
 
@@ -164,11 +164,11 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
 }
 ```
 
-You need to register your new class in `services.yml` and add it as an alias for the one from the bundle
+You need to register your new class in `services.yaml` and add it as an alias for the one from the bundle
 
 ```yml
-Shopsys\ShopBundle\Model\Product\Search\ProductElasticsearchConverter: ~
-Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@Shopsys\ShopBundle\Model\Product\View\ListedProductViewFactory'
+App\Model\Product\Search\ProductElasticsearchConverter: ~
+Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@App\Model\Product\View\ListedProductViewFactory'
 ```
 
 ### 5. Extend `ListedProductViewFactory` so it returns the new required data
@@ -178,7 +178,7 @@ The class is responsible for creating the view object. We need to ensure that th
 ```php
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Model\Product\View;
+namespace App\Model\Product\View;
 
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -194,7 +194,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $imageView
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $productActionView
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\ShopBundle\Model\Product\View\ListedProductView
+     * @return \App\Model\Product\View\ListedProductView
      */
     public function createFromArray(array $productArray, ?ImageView $imageView, ProductActionView $productActionView, PricingGroup $pricingGroup): BaseListedProductView
     {
@@ -212,10 +212,10 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
     }
 
     /**
-     * @param \Shopsys\ShopBundle\Model\Product\Product $product
+     * @param \App\Model\Product\Product $product
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $imageView
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $productActionView
-     * @return \Shopsys\ShopBundle\Model\Product\View\ListedProductView
+     * @return \App\Model\Product\View\ListedProductView
      */
     public function createFromProduct(Product $product, ?ImageView $imageView, ProductActionView $productActionView): BaseListedProductView
     {
@@ -234,10 +234,10 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
 }
 ```
 
-You need to register your new class as an alias for the one from the bundle in `services.yml`:
+You need to register your new class as an alias for the one from the bundle in `services.yaml`:
 
 ```yaml
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@Shopsys\ShopBundle\Model\Product\View\ListedProductViewFactory'
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@App\Model\Product\View\ListedProductViewFactory'
 ```
 
 ### 6. Modify the frontend template for rendering product lists so it displays the new attribute
@@ -245,7 +245,7 @@ You need to register your new class as an alias for the one from the bundle in `
 All product lists are rendered using `productListMacro.html.twig`. You can modify this macro to display product brand name wherever it is suitable for you.
 
 ```diff
-{# src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/productListMacro.html.twig #}
+{# templates/Front/Content/Product/productListMacro.html.twig #}
 
 <p class="list-products__item__info__description">
 +    {{ productView.brandName }}

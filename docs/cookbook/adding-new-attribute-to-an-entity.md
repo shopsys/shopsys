@@ -13,12 +13,12 @@ It is a common modification when you need your ecommerce application and ERP sys
     Most common entities (including `Product`) are already extended in `project-base` to ease your development.
     However, when extending any other entity, there are [few more steps](../extensibility/entity-extension.md#how-can-i-extend-an-entity) that need to be done.
 
-Add new `extId` field with Doctrine ORM annotations and a getter for the field into `Shopsys\ShopBundle\Model\Product\Product` class.
+Add new `extId` field with Doctrine ORM annotations and a getter for the field into `App\Model\Product\Product` class.
 
 Overwrite constructor for creating `Product` instances.
 
 ```php
-namespace Shopsys\ShopBundle\Model\Product;
+namespace App\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
@@ -38,8 +38,8 @@ class Product extends BaseProduct
     protected $extId;
 
     /**
-     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
-     * @param \Shopsys\ShopBundle\Model\Product\Product[]|null $variants
+     * @param \App\Model\Product\ProductData $productData
+     * @param \App\Model\Product\Product[]|null $variants
      */
     protected function __construct(BaseProductData $productData, array $variants = null)
     {
@@ -74,7 +74,7 @@ The command prints a file name the migration was generated into:
 ```text
 Checking database schema...
 Database schema is not satisfying ORM, a new migration was generated!
-Migration file ".../src/Shopsys/ShopBundle/Migrations/Version20180503133713.php" was saved (525 B).
+Migration file ".../src/Migrations/Version20180503133713.php" was saved (525 B).
 ```
 
 As you are adding not nullable field, you need to manually modify the generated migration
@@ -97,10 +97,10 @@ php phing db-migrations
 
 ### ProductData class
 
-Add public `extId` field into `Shopsys\ShopBundle\Model\Product\ProductData` class.
+Add public `extId` field into `App\Model\Product\ProductData` class.
 
 ```php
-namespace Shopsys\ShopBundle\Model\Product;
+namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
@@ -118,13 +118,13 @@ class ProductData extends BaseProductData
 In the following steps, we will overwrite all services that are responsible
 for `Product` and `ProductData` instantiation to make them take our new attribute into account.
 
-Edit `Shopsys\ShopBundle\Model\Product\ProductDataFactory` - overwrite `create()` and `createFromProduct()` methods.
+Edit `App\Model\Product\ProductDataFactory` - overwrite `create()` and `createFromProduct()` methods.
 
 *Alternatively you can create an independent class by implementing
 [`Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Product/ProductDataFactoryInterface.php).*
 
 ```php
-namespace Shopsys\ShopBundle\Model\Product;
+namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
@@ -133,8 +133,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory as BaseProductDataF
 class ProductDataFactory extends BaseProductDataFactory
 {
     /**
-     * @param \Shopsys\ShopBundle\Model\Product\Product $product
-     * @return \Shopsys\ShopBundle\Model\Product\ProductData
+     * @param \App\Model\Product\Product $product
+     * @return \App\Model\Product\ProductData
      */
     public function createFromProduct(BaseProduct $product): BaseProductData
     {
@@ -146,7 +146,7 @@ class ProductDataFactory extends BaseProductDataFactory
     }
 
     /**
-     * @return \Shopsys\ShopBundle\Model\Product\ProductData
+     * @return \App\Model\Product\ProductData
      */
     public function create(): BaseProductData
     {
@@ -159,20 +159,20 @@ class ProductDataFactory extends BaseProductDataFactory
 }
 ```
 
-Your `ProductDataFactory` is already registered in [`services.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml)
+Your `ProductDataFactory` is already registered in [`services.yaml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services.yaml)
 as an alias for the original interface.
 
 ```yaml
-Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@Shopsys\ShopBundle\Model\Product\ProductDataFactory'
+Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@App\Model\Product\ProductDataFactory'
 ```
 
 ## Enable administrator to edit the `extId` field
 
-Add your `extId` field into the form by editing `ProductFormTypeExtension` in `Shopsys\ShopBundle\Form\Admin` namespace.
+Add your `extId` field into the form by editing `ProductFormTypeExtension` in `App\Form\Admin` namespace.
 The original `ProductFormType` is set as the extended type by implementation of `getExtendedType()` method.
 
 ```php
-namespace Shopsys\ShopBundle\Form\Admin;
+namespace App\Form\Admin;
 
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -214,7 +214,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 In your `Product` class, overwrite the `edit()` method.
 
 ```php
-namespace Shopsys\ShopBundle\Model\Product;
+namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
@@ -222,7 +222,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
  * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
- * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
+ * @param \App\Model\Product\ProductData $productData
  */
 public function edit(
     array $productCategoryDomains  
@@ -237,7 +237,7 @@ public function edit(
 In your `ProductDataFactory` class, update the `createFromProduct()` method so it sets your new `extId` field.
 
 ```php
-namespace Shopsys\ShopBundle\Model\Product;
+namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
@@ -247,8 +247,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 class ProductDataFactory extends BaseProductDataFactory
 {
     /**
-     * @param \Shopsys\ShopBundle\Model\Product\Product $product
-     * @return \Shopsys\ShopBundle\Model\Product\ProductData
+     * @param \App\Model\Product\Product $product
+     * @return \App\Model\Product\ProductData
      */
     public function createFromProduct(BaseProduct $product): BaseProductData
     {
@@ -265,7 +265,7 @@ class ProductDataFactory extends BaseProductDataFactory
 
 ## Front-end
 In order to display your new attribute on a front-end page, you can modify the corresponding template directly
-as it is a part of your open-box, eg. [`detail.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/detail.html.twig).
+as it is a part of your open-box, eg. [`detail.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Product/detail.html.twig).
 
 ```twig
 {{ product.extId }}
@@ -273,11 +273,11 @@ as it is a part of your open-box, eg. [`detail.html.twig`](https://github.com/sh
 
 ## Data fixtures
 
-You can modify data fixtures in `src/Shopsys/ShopBundle/DataFixtures/` of your project
+You can modify data fixtures in `src/DataFixtures/` of your project
 
 ### Random `extId`
 
-If you want to add unique random `extId` for products from data fixtures you can add it in `createProduct` method of [`ProductDataFixture.php`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixture.php).
+If you want to add unique random `extId` for products from data fixtures you can add it in `createProduct` method of [`ProductDataFixture.php`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
 You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random numbers like this:
 
 ```diff
@@ -295,7 +295,7 @@ You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random nu
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\ShopBundle\Model\Product\ProductDataFactory $productDataFactory
+     * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
@@ -333,13 +333,13 @@ You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random nu
     //...
 
     /**
-     * @param \Shopsys\ShopBundle\Model\Product\ProductData $productData
-     * @return \Shopsys\ShopBundle\Model\Product\Product
+     * @param \App\Model\Product\ProductData $productData
+     * @return \App\Model\Product\Product
      */
     protected function createProduct(ProductData $productData): Product
     {
 +       $productData->extId = $this->faker->unique()->numberBetween(1, 10000);
-        /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
+        /** @var \App\Model\Product\Product $product */
         $product = $this->productFacade->create($productData);
 
         $this->addProductReference($product);
@@ -350,7 +350,7 @@ You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random nu
 
 ### Specific `extId`
 
-If you need to add specific `extId` to products in data fixture you will have to update creation of products in [`ProductDataFixture::load`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/DataFixtures/Demo/ProductDataFixture.php).
+If you need to add specific `extId` to products in data fixture you will have to update creation of products in [`ProductDataFixture::load`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
 
 ```diff
 

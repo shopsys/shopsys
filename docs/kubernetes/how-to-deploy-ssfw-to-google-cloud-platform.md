@@ -21,7 +21,7 @@ Terraform applies infrastructure based on configuration provided, Shopsys Framew
 Initialization Terraform will get Terraform connected with providers, for example, one of these providers is Kubernetes, Terraform is able to connect with Kubernetes cluster and persist its configuration file which serves as a authentication file.
 
 Command for initialization would look like this:
-```bash
+```sh
 terraform init
 ```
 
@@ -31,14 +31,14 @@ Terraform creates a `tfstate` file which describes the current state of installe
 
 For applying a change of infrastructure we need to execute this command:
 
-```bash
+```sh
 terraform apply
 ```
 
 #### Destroy infrastructure
 To stop running infrastructure:
 
-```bash
+```sh
 terraform destroy
 ```
 
@@ -51,25 +51,25 @@ The production environment is a little bit different than the one used on CI.
 For example, on Google Cloud we use storage tools like [Postgres](https://www.postgresql.org/) and [Redis](https://redis.io/) provided by Google Cloud platform.
 
 That means that we do not use always the same manifests, with Kustomize you can divide your manifests into `variants`, for example `CI`, `production` etc.
-These variants are located in [kubernetes/kustomize/overlays](/project-base/kubernetes/kustomize/overlays).
+These variants are located in [kubernetes/kustomize/overlays](https://github.com/shopsys/shopsys/tree/9.0/project-base/kubernetes/kustomize/overlays).
 Each variant has `kustomization.yml`, which can independently select own manifests using `resources` or generate config maps, create secrets etc.
 
 ### Usage Examples
 Select the environment, in our case `production` and go to the variant folder:
 
-```bash
+```sh
 cd kubernetes/overlays/production
 ```
 
 You can build final manifest from variant by executing:
 
-```bash
+```sh
 kustomize build
 ```
 
 This outputs a final yaml file into a stream, you can use this output with kubectl to apply it into cluster like this:
 
-```bash
+```sh
 kustomize build | kubectl apply -f -
 ```
 

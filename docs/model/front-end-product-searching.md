@@ -25,8 +25,8 @@ Searching is performed with `ProductElasticsearchRepository` class, more specifi
 This method gets product IDs from Elasticsearch with a query that is represented by `Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery` object.
 
 The searched fields and their priority are defined directly in the `FilterQuery::search()` method,
-so to change the search behavior is enough to extend the `FilterQuery` class and use your implementation in `services.yml` file
+so to change the search behavior is enough to extend the `FilterQuery` class and use your implementation in `services.yaml` file
 ```yaml
 Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery:
-    alias: Shopsys\ShopBundle\Model\Product\Search\FilterQuery
+    alias: App\Model\Product\Search\FilterQuery
 ```

@@ -1,6 +1,6 @@
 # Application Configuration
 For operating Shopsys Framework it is needed to have correctly set connections to external services via `parameters.yml` config.
-From the clean project, during composer installation process it will prompt you to set the values of parameters (`app/config/parameters.yml`):
+From the clean project, during composer installation process it will prompt you to set the values of parameters (`config/parameters.yml`):
 
 | Name                                     | Description                                                                                                  |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -23,7 +23,7 @@ From the clean project, during composer installation process it will prompt you 
 | `env(REDIS_PREFIX)`                      | separates more projects that use the same redis service                                                      |
 | `env(ELASTIC_SEARCH_INDEX_PREFIX)`       | separates more projects that use the same elasticsearch service                                              |
 
-Composer will then prompt you to set parameters for testing environment (`app/config/parameters_test.yml`):
+Composer will then prompt you to set parameters for testing environment (`config/parameters_test.yml`):
 
 | Name                               | Description                                                                   |
 | ---------------------------------- | ----------------------------------------------------------------------------- |

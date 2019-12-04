@@ -45,7 +45,7 @@ spec:
         secretName: domain-${DOMAIN_NUMBER}-ssl-certificates
 ```
 
-Open [.ci/deploy-to-google-cloud.sh](/project-base/.ci/deploy-to-google-cloud.sh) file and set your new domain host to `ingress.yml` and `webserver-php-fpm.yml` host name:
+Open [.ci/deploy-to-google-cloud.sh](https://github.com/shopsys/shopsys/blob/9.0//project-base/.ci/deploy-to-google-cloud.sh) file and set your new domain host to `ingress.yml` and `webserver-php-fpm.yml` host name:
 
 ```sh
 // .ci/deploy-to-google-cloud.sh

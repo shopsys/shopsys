@@ -6,10 +6,10 @@ We will see how to create a new admin controller, what template to extend, and h
 ## New admin controller
 
 The first step to create a new page is creating a controller (for details, see [Symfony Controller documentation](https://symfony.com/doc/3.4/controller.html)).
-Create a class extending `AdminBaseController` in `src/Shopsys/ShopBundle/Controller/Admin` directory with a single method (action):
+Create a class extending `AdminBaseController` in `src/Controller/Admin` directory with a single method (action):
 
 ```php
-namespace Shopsys\ShopBundle\Controller\Admin;
+namespace App\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
@@ -21,7 +21,7 @@ class DashboardController extends AdminBaseController
      */
     public function ssfwTwitterAction()
     {
-        return $this->render('@ShopsysShop/Admin/Content/Dashboard/ssfw_twitter.html.twig');
+        return $this->render('Admin/Content/Dashboard/ssfw_twitter.html.twig');
     }
 }
 ```
@@ -36,7 +36,7 @@ If you'd like to create something more complicated, you can require other servic
 
 ## Twig template
 
-Create a new Twig template named `ssfw_twitter.html.twig` in `src/Shopsys/ShopBundle/Resources/views/Admin/Content` (you'll have to create the directory).
+Create a new Twig template named `ssfw_twitter.html.twig` in `templates/Admin/Content` (you'll have to create the directory).
 
 The template should extend `@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig` and extend its blocks `title`, `h1` and `block main_content`:
 
@@ -79,7 +79,7 @@ In the subscriber, you should add a new child to the menu with the route of your
 As the Dashboard menu currently has no children, you can remove the link and add a new child with the original dashboard, so it's still accessible:
 
 ```php
-namespace Shopsys\ShopBundle\Controller\Admin;
+namespace App\Controller\Admin;
 
 use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;

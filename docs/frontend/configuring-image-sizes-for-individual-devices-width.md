@@ -8,7 +8,7 @@ This document serves for introducing you with the process of managing images on 
     In order to get correct image sizes of additional images then your original image must be larger than highest size in additional image size.
 
 ## Configuration file
-In order to set right sizes for individual devices width you have to configure `src/Shopsys/ShopBundle/Resources/config/images.yml`.
+In order to set right sizes for individual devices width you have to configure `config/images.yml`.
 
 Let us explain example code in configuration file `images.yml` of attribute `additionalSizes`. The following code show section `product` with types `gallery` and `main`.
 ```yml

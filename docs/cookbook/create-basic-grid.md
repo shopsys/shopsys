@@ -12,7 +12,7 @@ In the end, we will be able to even sort our grid by column, paginate large resu
 ### 1.1 Create grid factory
 First, we need to create a factory responsible for the creation of our new grid.
 
-In `Shopsys\ShopBundle\Grid\Salesman` namespace we create the new class that will implement `GridFactoryInterface`.
+In `App\Grid\Salesman` namespace we create the new class that will implement `GridFactoryInterface`.
 This interface forces us to implement `SalesmanGridFactory::create` method responsible for creating the grid itself.
 
 General class `GridFactory` helps us with preparation of the grid, so we will request this service in the constructor.
@@ -20,7 +20,7 @@ General class `GridFactory` helps us with preparation of the grid, so we will re
 ```php
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Grid\Salesman;
+namespace App\Grid\Salesman;
 
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -51,9 +51,9 @@ class SalesmanGridFactory implements GridFactoryInterface
 }
 ```
 
-In `services.yml`, we need to register this new class.
+In `services.yaml`, we need to register this new class.
 ```yaml
-    Shopsys\ShopBundle\Grid\Salesman\SalesmanGridFactory: ~
+    App\Grid\Salesman\SalesmanGridFactory: ~
 ```
 
 ### 1.2 Configure grid data source
@@ -92,9 +92,9 @@ And because we want to get data from the database, we use data source created fr
 
 Now, let's implement `createAndGetDataSource` method that should be in the same `SalesmanGridFactory` and will look like this.
 ```php
+use App\Model\Salesman\Salesman;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
-use Shopsys\ShopBundle\Model\Salesman\Salesman;
 
 // ...
 
@@ -112,7 +112,7 @@ use Shopsys\ShopBundle\Model\Salesman\Salesman;
     }
 ```
 
-Do not forget to add import of `Shopsys\ShopBundle\Model\Salesman\Salesman` to `SalesmanGridFactory`.
+Do not forget to add import of `App\Model\Salesman\Salesman` to `SalesmanGridFactory`.
 
 ### 1.3 Add columns to the grid
 We prepared our grid, but for now, it is not rendered anywhere and does not contain any columns.
@@ -144,21 +144,21 @@ And we just need to render grid itself using a controller.
 ### 2.1 Create a new controller & action
 We need to inject (pass through constructor) `SalesmanGridFactory` created earlier and pass grid view to the template.
 ```php
-namespace Shopsys\ShopBundle\Controller\Admin;
+namespace App\Controller\Admin;
 
+use App\Grid\Salesman\SalesmanGridFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
-use Shopsys\ShopBundle\Grid\Salesman\SalesmanGridFactory;
 
 class SalesmanController extends AdminBaseController
 {
     /**
-     * @var \Shopsys\ShopBundle\Grid\Salesman\SalesmanGridFactory
+     * @var \App\Grid\Salesman\SalesmanGridFactory
      */
     protected $salesmanGridFactory;
 
     /**
-     * @param \Shopsys\ShopBundle\Grid\Salesman\SalesmanGridFactory $salesmanGridFactory
+     * @param \App\Grid\Salesman\SalesmanGridFactory $salesmanGridFactory
      */
     public function __construct(SalesmanGridFactory $salesmanGridFactory)
     {
@@ -172,7 +172,7 @@ class SalesmanController extends AdminBaseController
     {
         $grid = $this->salesmanGridFactory->create();
 
-        return $this->render('@ShopsysShop/Admin/Content/Salesman/list.html.twig', [
+        return $this->render('Admin/Content/Salesman/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -180,7 +180,7 @@ class SalesmanController extends AdminBaseController
 ```
 
 ### 2.2 Create a new template
-Finally, it is time to create a new twig template, `src/Shopsys/ShopBundle/Resources/views/Admin/Content/Salesman/list.html.twig` with the following content:
+Finally, it is time to create a new twig template, `templates/Admin/Content/Salesman/list.html.twig` with the following content:
 ```twig
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
@@ -204,7 +204,7 @@ As you probably noticed, dates in the third column are not printed much friendly
 To adjust appearance (e.g., let's say we are in Germany and want to format the dates appropriately) we just need to extend the default grid template and modify it accordingly.
 
 ### 3.1 Create a new template
-We create the new twig template `listGrid.html.twig` in `src/Shopsys/ShopBundle/Resources/views/Admin/Content/Salesman`.
+We create the new twig template `listGrid.html.twig` in `templates/Admin/Content/Salesman`.
 The template has to extend `@ShopsysFramework/Admin/Grid/Grid.html.twig` and override block `grid_value_cell_id_registeredAt` where we apply a Twig filter to the value.
 [You can read more about blocks here](../administration/grid-rendering-customization.md).
 
@@ -220,7 +220,7 @@ The template has to extend `@ShopsysFramework/Admin/Grid/Grid.html.twig` and ove
 Now that we have template ready, we just need to set it as the theme in grid factory.
 
 ```diff
-// src/Shopsys/ShopBundle/Grid/Salesman/SalesmanGridFactory
+// src/Grid/Salesman/SalesmanGridFactory
 
     public function create(): Grid
     {
@@ -228,7 +228,7 @@ Now that we have template ready, we just need to set it as the theme in grid fac
 
         ...
 
-+       $grid->setTheme('@ShopsysShop/Admin/Content/Salesman/listGrid.html.twig');
++       $grid->setTheme('Admin/Content/Salesman/listGrid.html.twig');
 
         return $grid;
     }
@@ -241,7 +241,7 @@ We may want to ease finding of a certain salesman by allowing to sort rows by na
 A default order will be by date with newest salesmen at the top.
 
 ```diff
-// src/Shopsys/ShopBundle/Grid/Salesman/SalesmanGridFactory
+// src/Grid/Salesman/SalesmanGridFactory
 
     public function create(): Grid
     {
@@ -266,7 +266,7 @@ To keep work with grid enjoyable, we can split data across several pages with pa
 In the grid is just a matter of calling one method.
 
 ```diff
-// src/Shopsys/ShopBundle/Grid/Salesman/SalesmanGridFactory
+// src/Grid/Salesman/SalesmanGridFactory
 
     public function create(): Grid
     {
@@ -289,10 +289,10 @@ We will follow the basic concepts of Shopsys Framework (see ["Basics about model
 
 #### 6.1.1 Create `SalesmanRepository` and implement `getById` method
 ```php
-// src\Shopsys\ShopBundle\Model\Salesman\SalesmanRepository.php
+// src\Model\Salesman\SalesmanRepository.php
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Model\Salesman;
+namespace App\Model\Salesman;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -314,7 +314,7 @@ class SalesmanRepository
 
     /**
      * @param int $salesmanId
-     * @return \Shopsys\ShopBundle\Model\Salesman\Salesman
+     * @return \App\Model\Salesman\Salesman
      */
     public function getById(int $salesmanId): Salesman
     {
@@ -339,10 +339,10 @@ class SalesmanRepository
 
 #### 6.1.2 Create `SalesmanFacade` and implement `deleteById` method
 ```php
-// src\Shopsys\ShopBundle\Model\Salesman\SalesmanFacade.php
+// src\Model\Salesman\SalesmanFacade.php
 declare(strict_types=1);
 
-namespace Shopsys\ShopBundle\Model\Salesman;
+namespace App\Model\Salesman;
 
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -354,13 +354,13 @@ class SalesmanFacade
     protected $entityManager;
 
     /**
-     * @var \Shopsys\ShopBundle\Model\Salesman\SalesmanRepository
+     * @var \App\Model\Salesman\SalesmanRepository
      */
     protected $salesmanRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\ShopBundle\Model\Salesman\SalesmanRepository $salesmanRepository
+     * @param \App\Model\Salesman\SalesmanRepository $salesmanRepository
      */
     public function __construct(EntityManagerInterface $entityManager, SalesmanRepository $salesmanRepository)
     {
@@ -384,19 +384,19 @@ class SalesmanFacade
 ### 6.2 Add delete action to the controller
 In our `SalesmanController`, we add the new action to delete the salesman using `SalesmanFacade`.
 ```diff
-// src/Shopsys/ShopBundle/Controller/Admin/SalesmanController
-namespace Shopsys\ShopBundle\Controller\Admin;
+// src/Controller/Admin/SalesmanController
+namespace App\Controller\Admin;
 
+use App\Grid\Salesman\SalesmanGridFactory;
++ use App\Model\Salesman\SalesmanFacade;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 + use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
-use Shopsys\ShopBundle\Grid\Salesman\SalesmanGridFactory;
-+ use Shopsys\ShopBundle\Model\Salesman\SalesmanFacade;
 
 class SalesmanController extends AdminBaseController
 {
 +    /**
-+     * @var \Shopsys\ShopBundle\Model\Salesman\SalesmanFacade
++     * @var \App\Model\Salesman\SalesmanFacade
 +     */
 +    protected $salesmanFacade;
 
@@ -429,7 +429,7 @@ class SalesmanController extends AdminBaseController
 We just use `addDeleteActionColumn` in existing `SalesmanGridFactory` with arguments `admin_salesman_delete` as a route  and request parameters (action have to know id of the salesman to delete).
 To prevent accidental deletion we can also set a confirmation message.
 ```diff
-// src/Shopsys/ShopBundle/Grid/Salesman/SalesmanGridFactory
+// src/Grid/Salesman/SalesmanGridFactory
 
     public function create(): Grid
     {

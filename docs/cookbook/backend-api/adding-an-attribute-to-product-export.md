@@ -8,7 +8,7 @@ Let's say you have added `extId` attribute to `Product` entity following [the co
 [`ApiProductTransformer`](https://github.com/shopsys/shopsys/blob/9.0/packages/backend-api/src/Controller/V1/Product/ApiProductTransformer.php) is responsible for providing array of product data to backend API controllers.
 You need to add your attribute to the array that is returned in `transform()` method.
 ```php
-namespace Shopsys\ShopBundle\Controller\Api\V1\Product;
+namespace App\Controller\Api\V1\Product;
 
 use Shopsys\BackendApiBundle\Controller\V1\Product\ApiProductTransformer as BaseApiProductTransformer;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 class ApiProductTransformer extends BaseApiProductTransformer
 {
     /**
-     * @param \Shopsys\ShopBundle\Model\Product\Product $product
+     * @param \App\Model\Product\Product $product
      * @return array
      */
     public function transform(Product $product): array
@@ -29,9 +29,9 @@ class ApiProductTransformer extends BaseApiProductTransformer
 }
 ```
 
-## 2. Add information about the class extension into the container configuration in [`services.yml`](/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml)
+## 2. Add information about the class extension into the container configuration in [`services.yaml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services.yaml)
 ```yaml
-Shopsys\BackendApiBundle\Controller\V1\Product\ApiProductTransformer: '@Shopsys\ShopBundle\Controller\Api\V1\Product\ApiProductTransformer'
+Shopsys\BackendApiBundle\Controller\V1\Product\ApiProductTransformer: '@App\Controller\Api\V1\Product\ApiProductTransformer'
 ```
 
 ## Conclusion

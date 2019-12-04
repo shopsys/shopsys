@@ -4,7 +4,7 @@ This article describes a quick way to extend your entity and the internals of en
 
 ## How can I extend an entity?
 
-* Create a new entity in your `src/Shopsys/ShopBundle/Model` directory that extends already existing framework entity
+* Create a new entity in your `src/Model` directory that extends already existing framework entity
     * there are entities that are already prepared out of the box
         * `Administrator`
         * `Article`
@@ -19,26 +19,26 @@ This article describes a quick way to extend your entity and the internals of en
     * keep entity and table annotations
     * you can add new properties and use annotations to configure ORM
 * Add information about the entity extension into the container configuration
-    * add it to the configuration parameter `shopsys.entity_extension.map` placed in `app/config/parameters_common.yml` file
+    * add it to the configuration parameter `shopsys.entity_extension.map` placed in `config/parameters_common.yml` file
     * use the parent entity name as a key and the extended entity name as a value
-    * eg. `Shopsys\FrameworkBundle\Model\Product\Product: Shopsys\ShopBundle\Model\Product\Product`
-* Create a new data object in your `src/Shopsys/ShopBundle/Model` directory that extends already existing framework entity data
+    * eg. `Shopsys\FrameworkBundle\Model\Product\Product: App\Model\Product\Product`
+* Create a new data object in your `src/Model` directory that extends already existing framework entity data
 * Create a factory for this entity data that extends existing framework factory or implements the factory interface from the framework
     * Rewrite Symfony configuration for the interface to alias your factory
         * eg.
 ```yaml
 Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
-  alias: Shopsys\ShopBundle\Model\Product\ProductDataFactory
+  alias: App\Model\Product\ProductDataFactory
 ```
 * Now your extended entity is automatically used instead of the parent entity:
     * in hydrated Doctrine references
     * in the EntityManager, Repositories and QueryBuilders
     * in newly created entities
-* If you are running tests, update also `\Tests\ShopBundle\Functional\EntityExtension\EntityExtensionTest`
+* If you are running tests, update also `\Tests\App\Functional\EntityExtension\EntityExtensionTest`
     * add your extended entity into `$entityExtensionMap` in the `setUp()` method
 
 !!! tip
-    To see how it works in practice check out `\Tests\ShopBundle\Functional\EntityExtension\EntityExtensionTest` that tests end-to-end extensibility of `Product`, `Category` and `OrderItem`.
+    To see how it works in practice check out `\Tests\App\Functional\EntityExtension\EntityExtensionTest` that tests end-to-end extensibility of `Product`, `Category` and `OrderItem`.
 
 ## Limitations
 

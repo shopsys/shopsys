@@ -262,7 +262,7 @@ echo $'domains:
     -   id: 1
         name: <YOUR_DOMAIN_NAME_HERE>
         locale: en
-' > app/config/domains.yml
+' > config/domains.yml
 ```
 
 
@@ -272,10 +272,10 @@ For each domain we need to create config with domain url.
 echo $'domains_urls:
     -   id: 1
         url: https://<YOUR_DOMAIN_HERE>
-' >  app/config/domains_urls.yml
+' >  config/domains_urls.yml
 ```
 
-Then we check whether `mailer_master_email_address` property in [`parameters.yml.dist`](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/parameters.yml.dist) is set correctly.
+Then we check whether `mailer_master_email_address` property in [`parameters.yml.dist`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/parameters.yml.dist) is set correctly.
 
 After the project is setup correctly, we launch the build of php-fpm container by docker build command that will build image with composer, npm packages and created assets.
 

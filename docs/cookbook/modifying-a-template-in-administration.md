@@ -22,7 +22,7 @@ vendor/shopsys/framework/src/Resources/views/Admin/Content/Product/detail.html.t
 ```
 therefore, the copy must be located in
 ```text
-app/Resources/ShopsysFrameworkBundle/views/Admin/Content/Product/detail.html.twig
+templates/bundles/ShopsysFrameworkBundle/Admin/Content/Product/detail.html.twig
 ```
 
 See especially the new directory `ShopsysFrameworkBundle` whose title is based on the name of the bundle with original template.
@@ -57,7 +57,7 @@ View in the administration before the modification:
 
 ![Admin product detail before](img/modifying-a-template-product-before.png)
 
-Now, add the simple condition, wrapped into the divs for a prettier look, into `app/Resources/ShopsysFrameworkBundle/views/Admin/Content/Product/detail.html.twig` to display the product transfer status
+Now, add the simple condition, wrapped into the divs for a prettier look, into `templates/bundles/ShopsysFrameworkBundle/Admin/Content/Product/detail.html.twig` to display the product transfer status
 
 ```twig
     <div class="form-line">

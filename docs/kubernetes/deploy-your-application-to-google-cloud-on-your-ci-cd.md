@@ -10,7 +10,7 @@ To deploy a project to Google Cloud, you need a couple of technologies, to not b
 ### Deploy to Kubernetes
 Script used for building current state of an application into Google Cloud.
 
-[deploy-to-google-cloud.sh](/project-base/.ci/deploy-to-google-cloud.sh)
+[deploy-to-google-cloud.sh](https://github.com/shopsys/shopsys/blob/9.0/project-base/.ci/deploy-to-google-cloud.sh)
 
 #### Environment variables
 | Variable name                    | Description
@@ -67,7 +67,7 @@ Mount your service-account.json obtained from google-cloud
 #### Usage
 Use Kubernetes buildpack with environment variable set:
 
-```bash
+```sh
 docker run \
     -v $WORKSPACE:/tmp \
     -v /var/run/docker.sock:/var/run/docker.sock \
@@ -95,7 +95,7 @@ After running the script above, you will have your application running in Google
 The script used for deleting infrastructure on google.
 Script sends request to Google Cloud to stop all the resources provided by Terraform and updates `tfstate` file.
 
-[destroy-google-cloud-infrastructure.sh](/project-base/.ci/destroy-google-cloud-infrastructure.sh)
+[destroy-google-cloud-infrastructure.sh](https://github.com/shopsys/shopsys/blob/9.0/project-base/.ci/destroy-google-cloud-infrastructure.sh)
 
 #### Environment variables
 | Variable name                    | Description
@@ -120,9 +120,9 @@ Terraform state mounted locally to be able to apply changes or destroy Terraform
 ```
 
 #### Usage
-```bash
+```sh
 docker run \
-    -v $WORKSPACE:/tmp \  
+    -v $WORKSPACE:/tmp \
     -v ~/google-cloud/.terraform/tfstate:/tmp/infrastructure/google-cloud/tfstate \
     -v ~/google-cloud/service-account.json:/tmp/infrastructure/google-cloud/service-account.json \
     -e GOOGLE_CLOUD_STORAGE_BUCKET_NAME \

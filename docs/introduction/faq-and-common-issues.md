@@ -42,7 +42,7 @@ Demo data are used for automatic tests and also for installation of demo shop wi
 
 ## How to change a domain URL?
 The change of domain url requires two steps.
-In the first step, you need to modify the domain url in the configuration file `app/config/domains_urls.yml`.
+In the first step, you need to modify the domain url in the configuration file `config/domains_urls.yml`.
 In the second step, you need to replace all occurrences of the old url address in the database with the new url address.
 This scenario is described in more detail in the tutorial [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md#4-change-the-url-address-for-an-existing-domain).
 
@@ -62,12 +62,12 @@ Modifications are detected via git by comparison against the origin/master versi
 
 ## Is the application https ready or does it need some extra setting?
 Shopsys Framework is fully prepared for HTTPS.
-You can just use `https://<your-domain>` in your `domains_urls.yml` configuration file.
+You can just use `https://<your-domain>` in your `config/domains_urls.yml` configuration file.
 Of course, an SSL certificate must be installed on your server.
 
 ## How can I easily translate and set up my new language constants?
 To set up the user translations of labels and messages, use the files `messages.en.po` and `validators.en.po`, where `en` represents the locale.
-These files are generated for each locale you use, and you can find them in the `ShopBundle/Resources/translations/` directory.
+These files are generated for each locale you use, and you can find them in the `translations/` directory.
 Language settings are described more in detail in the tutorial [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md#3-locale-settings).
 For more information about translations, see [the separate article](./translations.md).
 
@@ -77,7 +77,7 @@ See how to install Shopsys Framework in production and how to proceed when deplo
 
 ## How to set up the administration with a different locale/language (e.g. Czech)?
 The administration uses `en` locale by default.
-If you want to switch it to the another locale, set a parameter `shopsys.admin_locale` in your `parameters_common.yml` configuration.
+If you want to switch it to the another locale, set a parameter `shopsys.admin_locale` in your `config/parameters_common.yml` configuration.
 However, the selected locale has to be one of registered domains locale.
 This scenario is described in more detail in the tutorial [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md#36-locale-in-administration).
 
@@ -107,9 +107,9 @@ We are using [entity data objects](../model/entities.md#entity-data) instead of 
 because Symfony forms need setters for all fields and we don't want to mess entities with them.
 
 ## What is the configuration file `services_test.yml` good for?
-[`services_test.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services_test.yml)
+[`services_test.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services_test.yml)
 is a service configuration file that is loaded in TEST environment in addition to
-the standard configuration defined in [`services.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Shopsys/ShopBundle/Resources/config/services.yml) as sometimes the configuration differs from the standard one and we need to override it.
+the standard configuration defined in [`services.yaml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/services.yaml) as sometimes the configuration differs from the standard one and we need to override it.
 E.g., by default, all our services are defined as private. However, in tests, we are retrieving some services directly from the container hence we need to have them public in TEST environment.
 
 ## How to change the behavior of the product search on the front-end?
@@ -120,7 +120,7 @@ If you want to change its behavior (e.g. make the EAN not as important or change
 Project uses `SwiftMailer` package for sending e-mails and defaultly it has set `spool queue` that stores all mails into `memory` until the script execution is at the end.  
 This spooling method helps the user not to wait for the next page to load while the email is sending.
 However, based on implementations of many projects, project gained functionality that releases spool after the `*cronModule` run is ended in case of `cron` phing target that runs all cron modules at once.
-It is also possible to turn the spool off by removing it from [swiftmailer.yml](https://github.com/shopsys/shopsys/blob/9.0/project-base/app/config/packages/swiftmailer.yml) or changing the behavior of storing e-mails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html) or [snc_redis docs](https://github.com/snc/SncRedisBundle/blob/master/Resources/doc/index.md#swiftmailer-spooling).
+It is also possible to turn the spool off by removing it from [swiftmailer.yaml](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/packages/swiftmailer.yaml) or changing the behavior of storing e-mails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html) or [snc_redis docs](https://github.com/snc/SncRedisBundle/blob/master/Resources/doc/index.md#swiftmailer-spooling).
 
 ## Where does the business logic belong?
 The business logic should be implemented directly in an entity every time when there is no need for external services.
