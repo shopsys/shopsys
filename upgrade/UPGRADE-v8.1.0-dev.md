@@ -266,6 +266,7 @@ There you can find links to upgrade notes for other versions too.
     - a lot of the possible issues should be already resolved if you followed the previous instruction and ran the `php phing annotations-fix` phing command
     - some of the issues related to class extension need to be addressed manually nevertheless (see the ["Framework extensibility" article](../introduction/framework-extensibility.md#problem-3)) for more information
     - you need to resolve all the other reported problems (it is up to you whether you decide to address them directly or add ignores in your `phpstan.neon`). You can find inspiration in [#1381](https://github.com/shopsys/shopsys/pull/1381) and [#1040](https://github.com/shopsys/shopsys/pull/1040)
+
 ### Database migrations
 - run database migrations so products will use a DateTime type for columns for "Selling start date" (selling_from) and "Selling end date" (selling_to) ([#1343](https://github.com/shopsys/shopsys/pull/1343))
     - please check [`Version20190823110846`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Migrations/Version20190823110846.php)
@@ -491,27 +492,27 @@ There you can find links to upgrade notes for other versions too.
     - edit `phpunit.xml` by adding a listener
         ```diff
                 </filter>
-        +  
+        +
         +       <listeners>
         +           <listener class="Zalas\Injector\PHPUnit\TestListener\ServiceInjectorListener" />
-        +       </listeners>   
+        +       </listeners>
             </phpunit>
         ```
     - edit `FunctionalTestCase`
         - make the class implement `Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase` and implement required method `createContainer()`
         - in `setUp()` remove getting class `Domain` directly from container and add `@inject` annotation to its private property instead
         - change visibility of property `$domain` from `private` to `protected`
-        - the diff should look like this 
+        - the diff should look like this
             ```diff
                 namespace Tests\ShopBundle\Test;
-    
+
             +   use Psr\Container\ContainerInterface;
                 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
                 use Shopsys\FrameworkBundle\Component\Domain\Domain;
                 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
                 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
             +   use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
-    
+
             -   abstract class FunctionalTestCase extends WebTestCase
             +   abstract class FunctionalTestCase extends WebTestCase implements ServiceContainerTestCase
                 {
@@ -519,7 +520,7 @@ There you can find links to upgrade notes for other versions too.
                      * @var \Symfony\Bundle\FrameworkBundle\Client
                      */
                     private $client;
-    
+
                     /**
             -        * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|null
             +        * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -527,7 +528,7 @@ There you can find links to upgrade notes for other versions too.
                      */
             -       private $domain;
             +       protected $domain;
-    
+
                     protected function setUpDomain()
                     {
             -           /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
@@ -543,7 +544,7 @@ There you can find links to upgrade notes for other versions too.
             +         return $this->getContainer();
             +       }
             ```
-    - to achieve the goal you should find and replace all occurrences of accessing class directly from container, e.g. `$this->getContainer()->get(FooBar::class)` and define it as a class property with an inject annotation instead 
+    - to achieve the goal you should find and replace all occurrences of accessing class directly from container, e.g. `$this->getContainer()->get(FooBar::class)` and define it as a class property with an inject annotation instead
     - in case you want to change it in data provides you will need to say good bye to `@dataProvider` annotations
         - since data providers are called earlier than injecting our services you might need to do some workaround for it
             - in our case there were 4 tests where it was changed

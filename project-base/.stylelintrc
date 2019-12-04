@@ -1,0 +1,35 @@
+{
+    "rules": {
+        "block-no-empty": true,
+        "block-closing-brace-empty-line-before": "never",
+        "block-opening-brace-space-before": "always",
+        "color-no-invalid-hex": true,
+        "color-hex-case": [ "lower", {
+            "message": "Lowercase letters are easier to distinguish from numbers"
+        } ],
+        "comment-empty-line-before": [ "always", {
+            "ignore": ["stylelint-commands", "after-comment"]
+        } ],
+        "declaration-colon-space-after": "always",
+        "declaration-block-no-duplicate-properties": [ true, {
+            ignore: ["consecutive-duplicates"]
+        } ],
+        "function-calc-no-unspaced-operator": true,
+        "indentation": [ 4, {
+            "except": ["value"],
+            "message": "Please use 4 spaces for indentation."
+        }],
+        "length-zero-no-unit": true,
+        "max-empty-lines": 2,
+        "media-feature-name-case": "lower",
+        "no-extra-semicolons": true,
+        "property-blacklist": [ "widht", "marign", "pading", "blcok" ],
+        "property-case": "lower",
+        "rule-empty-line-before": [ "always", {
+            "except": ["first-nested"],
+            "ignore": ["after-comment"]
+        } ],
+        "unit-case": "lower",
+        "unit-whitelist": ["em", "rem", "%", "px", "s", "ms", "deg", "vh"]
+    }
+}

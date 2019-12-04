@@ -30,6 +30,7 @@
     <property name="path.root" value="."/>
     <property name="path.src" value="${path.root}/src"/>
     <property name="path.templates" value="${path.root}/templates"/>
+    <property name="path.stylelint.executable" value="${path.root}/node_modules/.bin/stylelint"/>
     <property name="path.test.database.dump" value="${path.var}/cache/test-db-dump.sql"/>
     <property name="path.tests" value="${path.root}/tests"/>
     <property name="path.var" value="${path.root}/var"/>
@@ -791,6 +792,20 @@
     <target name="standards-fix" depends="ecs-fix,annotations-fix,yaml-standards-fix,eslint-fix" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
 
     <target name="standards-fix-diff" depends="ecs-fix-diff,annotations-fix,yaml-standards-fix,eslint-fix-diff" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
+
+    <target name="stylelint" description="Checks conventions in styles">
+        <exec executable="${path.stylelint.executable}" logoutput="true" passthru="true" checkreturn="true" dir="${path.root}">
+            <arg value="--color"/>
+            <arg path="${path.src}/**/*.less"/>
+        </exec>
+    </target>
+
+    <target name="stylelint-fix" description="Checks conventions in styles and fixes the violations automatically if possible">
+        <exec executable="${path.stylelint.executable}" logoutput="true" passthru="true" checkreturn="true" dir="${path.root}">
+            <arg path="${path.src}/**/*.less"/>
+            <arg value="--fix"/>
+        </exec>
+    </target>
 
     <target name="test-db-create" depends="production-protection" description="Creates test database for application with required configuration.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
