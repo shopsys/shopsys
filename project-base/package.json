@@ -1,8 +1,18 @@
 {
     "name": "shopsys",
     "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
     "preferGlobal": false,
     "devDependencies": {
+        "@symfony/webpack-encore": "^0.28.0",
+        "core-js": "^3.0.0",
+        "regenerator-runtime": "^0.13.2",
+        "webpack-notifier": "^1.6.0",
         "autoprefixer": "^9.4.4",
         "es6-promise": "^4.2.5",
         "eslint": "^5.12.0",
@@ -22,5 +32,14 @@
         "jit-grunt": "^0.10.0",
         "stylelint": "^11.1.1",
         "time-grunt": "^1.4.0"
+    },
+    "dependencies": {
+        "jquery": "^3.4.1",
+        "jquery-ui": "^1.12.1",
+        "jquery-ui-touch-punch": "^0.2.3",
+        "jquery.cookie": "^1.4.1",
+        "magnific-popup": "^1.1.0",
+        "minilazyload": "^2.3.3",
+        "slick-carousel": "1.6.0"
     }
 }

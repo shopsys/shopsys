@@ -18,3 +18,7 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+
+/web/build/
+npm-debug.log
+yarn-error.log

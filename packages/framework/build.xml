@@ -29,6 +29,7 @@
     <property name="path.phpunit.executable" value="${path.bin}/phpunit"/>
     <property name="path.root" value="."/>
     <property name="path.src" value="${path.root}/src"/>
+    <property name="path.assets" value="${path.root}/assets"/>
     <property name="path.templates" value="${path.root}/templates"/>
     <property name="path.stylelint.executable" value="${path.root}/node_modules/.bin/stylelint"/>
     <property name="path.test.database.dump" value="${path.var}/cache/test-db-dump.sql"/>
@@ -353,6 +354,7 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
+            <arg path="${path.assets}"/>
         </exec>
 
         <property name="diff.files.all" value="${git.files.changed}${line.separator}${git.files.unstaged}">
@@ -561,7 +563,7 @@
     <target name="eslint-check" description="Find JS coding standard violations in all files using ESLint and print human readable output." hidden="true">
         <exec executable="${path.eslint.executable}" passthru="true" checkreturn="true">
             <arg value="--color"/>
-            <arg path="${path.src}"/>
+            <arg path="${path.assets}"/>
             <arg value="--config"/>
             <arg path="${path.root}/.eslintrc.json"/>
             <arg value="--ignore-path"/>
@@ -591,7 +593,7 @@
         <exec executable="${path.eslint.executable}" passthru="true" checkreturn="true">
             <arg value="--color"/>
             <arg value="--fix"/>
-            <arg path="${path.src}"/>
+            <arg path="${path.assets}"/>
             <arg value="--config"/>
             <arg path="${path.root}/.eslintrc.json"/>
             <arg value="--ignore-path"/>

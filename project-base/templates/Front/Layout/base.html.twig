@@ -10,12 +10,10 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/index' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/print' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="print">
 
-        {# bootstrap/tooltip.js must be imported before bootstrap/popover.js #}
         {{ importJavascripts([
-            'bundles/bmatznerjquery/js/jquery.min.js',
-            'bundles/bmatznerjquery/js/jquery-migrate.js',
-            'bundles/fpjsformvalidator/js/fp_js_validator.js',
+            'bundles/fpjsformvalidator/js/fp_js_validator.js'
         ]) }}
+
         {{ js_validator_config() }}
         {{ init_js_validation() }}
 
@@ -33,30 +31,7 @@
 
         {% block html_body %}{% endblock %}
 
-        {% if app.environment == 'dev' %}
-            <script async src="//localhost:35729/livereload.js"></script>
-        {% endif %}
-
-
-        {{ importJavascripts([
-            'frontend/plugins/*.js',
-            'common/components/escape.js',
-            'common/components/keyCodes.js',
-            'common/register.js',
-            'common/bootstrap/tooltip.js',
-            'common/bootstrap/popover.js',
-            'common/plugins/*.js',
-            'frontend/validation/form/*.js',
-            'common/validation/*.js',
-            'frontend/cart/*.js',
-            'frontend/order/*.js',
-            'frontend/product/*.js',
-            'common/*.js',
-            'frontend/*.js',
-            'common/components/*.js',
-            'frontend/components/*.js',
-        ]) }}
-
+        {{ encore_entry_script_tags('app') }}
         {% block javascripts_bottom %}{% endblock %}
     </body>
 </html>
