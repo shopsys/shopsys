@@ -1,11 +1,9 @@
-{{ form_start(form, {attr: {'data-on-submit': 'contactFormAjaxSubmit'}}) }}
-
 <div class="web__line">
     <div class="web__container">
         <div class="h2">{{ 'Contact us'|trans }}</div>
 
-        {{ form_errors(form) }}
-
+        {{ form_start(form, {attr: {'data-on-submit': 'contactFormAjaxSubmit'}}) }}
+            {{ form_errors(form) }}
             {{ form_row(form.name, { label: 'Full name'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
             {{ form_row(form.email, { label: 'Email'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
             {{ form_row(form.message, { label: 'Message'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line-block' } }) }}
@@ -33,7 +31,6 @@
             <div class="text-right">
                 {{ form_widget(form.send, { label: 'Send'|trans }) }}
             </div>
-
         {{ form_end(form) }}
         {{ init_js_validation(form, true) }}
     </div>
