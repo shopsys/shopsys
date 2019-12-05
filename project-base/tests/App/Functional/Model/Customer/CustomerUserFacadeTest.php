@@ -8,19 +8,19 @@ use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
-class CustomerFacadeTest extends TransactionFunctionalTestCase
+class CustomerUserFacadeTest extends TransactionFunctionalTestCase
 {
     protected const EXISTING_EMAIL_ON_DOMAIN_1 = 'no-reply.3@shopsys.com';
     protected const EXISTING_EMAIL_ON_DOMAIN_2 = 'no-reply.4@shopsys.com';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      * @inject
      */
     protected $customerFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      * @inject
      */
     protected $customerDataFactory;
@@ -56,7 +56,7 @@ class CustomerFacadeTest extends TransactionFunctionalTestCase
         $user = $this->customerFacade->findUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, 1);
         $customerData = $this->customerDataFactory->createFromUser($user);
         $customerData->userData->password = 'password';
-        $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException::class);
+        $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailUserException::class);
 
         $this->customerFacade->create($customerData);
     }
@@ -67,7 +67,7 @@ class CustomerFacadeTest extends TransactionFunctionalTestCase
         $customerData = $this->customerDataFactory->createFromUser($user);
         $customerData->userData->password = 'password';
         $customerData->userData->email = mb_strtoupper(self::EXISTING_EMAIL_ON_DOMAIN_1);
-        $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException::class);
+        $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailUserException::class);
 
         $this->customerFacade->create($customerData);
     }

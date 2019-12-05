@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier;
 
 class CartRepository
 {
@@ -31,10 +31,11 @@ class CartRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
-    public function findByCustomerIdentifier(CustomerIdentifier $customerIdentifier)
+    public function findByCustomerIdentifier(CustomerUserIdentifier $customerIdentifier)
     {
         $criteria = [];
         if ($customerIdentifier->getUser() !== null) {

@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
-class CustomerListAdminFacade
+class CustomerUserListAdminFacade
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\UserRepository

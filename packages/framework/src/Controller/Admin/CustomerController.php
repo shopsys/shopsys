@@ -10,14 +10,14 @@ use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecorator;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\Form\Admin\Customer\CustomerFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Customer\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerListAdminFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -35,12 +35,12 @@ class CustomerController extends AdminBaseController
     protected $userDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerListAdminFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserListAdminFacade
      */
     protected $customerListAdminFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      */
     protected $customerFacade;
 
@@ -80,14 +80,14 @@ class CustomerController extends AdminBaseController
     protected $domainRouterFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
     protected $customerDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface $userDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerListAdminFacade $customerListAdminFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserListAdminFacade $customerListAdminFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
@@ -95,12 +95,12 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
      */
     public function __construct(
         UserDataFactoryInterface $userDataFactory,
-        CustomerListAdminFacade $customerListAdminFacade,
-        CustomerFacade $customerFacade,
+        CustomerUserListAdminFacade $customerListAdminFacade,
+        CustomerUserFacade $customerFacade,
         BreadcrumbOverrider $breadcrumbOverrider,
         AdministratorGridFacade $administratorGridFacade,
         GridFactory $gridFactory,
@@ -108,7 +108,7 @@ class CustomerController extends AdminBaseController
         OrderFacade $orderFacade,
         LoginAsUserFacade $loginAsUserFacade,
         DomainRouterFactory $domainRouterFactory,
-        CustomerDataFactoryInterface $customerDataFactory
+        CustomerUserDataFactoryInterface $customerDataFactory
     ) {
         $this->userDataFactory = $userDataFactory;
         $this->customerListAdminFacade = $customerListAdminFacade;
@@ -133,7 +133,7 @@ class CustomerController extends AdminBaseController
         $user = $this->customerFacade->getUserById($id);
         $customerData = $this->customerDataFactory->createFromUser($user);
 
-        $form = $this->createForm(CustomerFormType::class, $customerData, [
+        $form = $this->createForm(CustomerUserFormType::class, $customerData, [
             'user' => $user,
             'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
@@ -230,7 +230,7 @@ class CustomerController extends AdminBaseController
         $userData = $this->userDataFactory->createForDomainId($selectedDomainId);
         $customerData->userData = $userData;
 
-        $form = $this->createForm(CustomerFormType::class, $customerData, [
+        $form = $this->createForm(CustomerUserFormType::class, $customerData, [
             'user' => null,
             'domain_id' => $selectedDomainId,
         ]);
@@ -278,7 +278,7 @@ class CustomerController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException $ex) {
+        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundUserException $ex) {
             $this->getFlashMessageSender()->addErrorFlash(t('Selected customer doesn\'t exist.'));
         }
 

@@ -4,10 +4,10 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class CustomerIdentifierFactory
+class CustomerUserIdentifierFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
     protected $currentCustomer;
 
@@ -17,17 +17,17 @@ class CustomerIdentifierFactory
     protected $session;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
-    public function __construct(CurrentCustomer $currentCustomer, SessionInterface $session)
+    public function __construct(CurrentCustomerUser $currentCustomer, SessionInterface $session)
     {
         $this->currentCustomer = $currentCustomer;
         $this->session = $session;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier
      */
     public function get()
     {
@@ -39,17 +39,18 @@ class CustomerIdentifierFactory
             $cartIdentifier = $this->session->getId();
         }
 
-        $customerIdentifier = new CustomerIdentifier($cartIdentifier, $this->currentCustomer->findCurrentUser());
+        $customerIdentifier = new CustomerUserIdentifier($cartIdentifier, $this->currentCustomer->findCurrentUser());
 
         return $customerIdentifier;
     }
 
     /**
      * @param string $cartIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier
      */
     public function getOnlyWithCartIdentifier($cartIdentifier)
     {
-        return new CustomerIdentifier($cartIdentifier, null);
+        return new CustomerUserIdentifier($cartIdentifier, null);
     }
 }

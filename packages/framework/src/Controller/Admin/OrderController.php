@@ -126,7 +126,7 @@ class OrderController extends AdminBaseController
                     ]
                 );
                 return $this->redirectToRoute('admin_order_list');
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException $e) {
+            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundUserException $e) {
                 $this->getFlashMessageSender()->addErrorFlash(
                     t('Entered customer not found, please check entered data.')
                 );

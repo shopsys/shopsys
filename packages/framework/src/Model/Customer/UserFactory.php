@@ -17,17 +17,17 @@ class UserFactory implements UserFactoryInterface
     protected $encoderFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade
      */
     protected $customerPasswordFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade $customerPasswordFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade $customerPasswordFacade
      */
     public function __construct(
         EntityNameResolver $entityNameResolver,
-        CustomerPasswordFacade $customerPasswordFacade
+        CustomerUserPasswordFacade $customerPasswordFacade
     ) {
         $this->entityNameResolver = $entityNameResolver;
         $this->customerPasswordFacade = $customerPasswordFacade;

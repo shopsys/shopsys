@@ -7,8 +7,8 @@ namespace Tests\App\Functional\Model\Cart;
 use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartFacadeTest extends TransactionFunctionalTestCase
@@ -32,7 +32,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     private $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      * @inject
      */
     private $currentCustomer;
@@ -81,8 +81,8 @@ class CartFacadeTest extends TransactionFunctionalTestCase
 
     public function testAddProductToCartAddsItemsOnlyToCurrentCart()
     {
-        $customerIdentifier = new CustomerIdentifier('secretSessionHash');
-        $anotherCustomerIdentifier = new CustomerIdentifier('anotherSecretSessionHash');
+        $customerIdentifier = new CustomerUserIdentifier('secretSessionHash');
+        $anotherCustomerIdentifier = new CustomerUserIdentifier('anotherSecretSessionHash');
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
@@ -109,7 +109,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
         $productId = $product->getId();
         $quantity = 1;
 
-        $customerIdentifier = new CustomerIdentifier('secretSessionHash');
+        $customerIdentifier = new CustomerUserIdentifier('secretSessionHash');
         $cartFacade = $this->createCartFacade($customerIdentifier);
 
         $this->expectException('\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException');
@@ -128,7 +128,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\Product $product2 */
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
 
-        $customerIdentifier = new CustomerIdentifier('secretSessionHash');
+        $customerIdentifier = new CustomerUserIdentifier('secretSessionHash');
         $cartFacade = $this->createCartFacade($customerIdentifier);
 
         $cartItem1 = $cartFacade->addProductToCart($product1->getId(), 1)->getCartItem();
@@ -153,7 +153,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
 
     public function testCannotDeleteNonexistentCartItem()
     {
-        $customerIdentifier = new CustomerIdentifier('secretSessionHash');
+        $customerIdentifier = new CustomerUserIdentifier('secretSessionHash');
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
@@ -176,7 +176,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
         // because CartWatcherFacade works with entity translations.
         $this->translatableListener->setCurrentLocale('cs');
 
-        $customerIdentifier = new CustomerIdentifier('secretSessionHash');
+        $customerIdentifier = new CustomerUserIdentifier('secretSessionHash');
 
         /** @var \App\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
@@ -234,10 +234,11 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      */
-    private function createCartFacade(CustomerIdentifier $customerIdentifier)
+    private function createCartFacade(CustomerUserIdentifier $customerIdentifier)
     {
         return new CartFacade(
             $this->getEntityManager(),
@@ -255,10 +256,11 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
-    private function getCartByCustomerIdentifier(CustomerIdentifier $customerIdentifier)
+    private function getCartByCustomerIdentifier(CustomerUserIdentifier $customerIdentifier)
     {
         return $this->cartFacadeFromContainer->getCartByCustomerIdentifierCreateIfNotExists($customerIdentifier);
     }
@@ -285,12 +287,13 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    private function getCustomerIdentifierFactoryMock(CustomerIdentifier $customerIdentifier)
+    private function getCustomerIdentifierFactoryMock(CustomerUserIdentifier $customerIdentifier)
     {
-        $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerIdentifierFactory::class)
+        $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
 

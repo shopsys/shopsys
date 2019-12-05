@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Form\Front\Customer\CustomerFormType;
+use App\Form\Front\Customer\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomerController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      */
     private $customerFacade;
 
@@ -42,25 +42,25 @@ class CustomerController extends FrontBaseController
     private $loginAsUserFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
     private $customerDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
      */
     public function __construct(
-        CustomerFacade $customerFacade,
+        CustomerUserFacade $customerFacade,
         OrderFacade $orderFacade,
         Domain $domain,
         OrderItemPriceCalculation $orderItemPriceCalculation,
         LoginAsUserFacade $loginAsUserFacade,
-        CustomerDataFactoryInterface $customerDataFactory
+        CustomerUserDataFactoryInterface $customerDataFactory
     ) {
         $this->customerFacade = $customerFacade;
         $this->orderFacade = $orderFacade;
@@ -83,7 +83,7 @@ class CustomerController extends FrontBaseController
         $user = $this->getUser();
         $customerData = $this->customerDataFactory->createFromUser($user);
 
-        $form = $this->createForm(CustomerFormType::class, $customerData, [
+        $form = $this->createForm(CustomerUserFormType::class, $customerData, [
             'domain_id' => $this->domain->getId(),
         ]);
         $form->handleRequest($request);
@@ -179,7 +179,7 @@ class CustomerController extends FrontBaseController
     {
         try {
             $this->loginAsUserFacade->loginAsRememberedUser($request);
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException $e) {
+        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundUserException $e) {
             /** @var \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender $adminFlashMessageSender */
             $adminFlashMessageSender = $this->get('shopsys.shop.component.flash_message.sender.admin');
             $adminFlashMessageSender->addErrorFlash(t('User not found.'));

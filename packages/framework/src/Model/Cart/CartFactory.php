@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Cart;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier;
 
 class CartFactory
 {
@@ -21,10 +21,11 @@ class CartFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
-    public function create(CustomerIdentifier $customerIdentifier): Cart
+    public function create(CustomerUserIdentifier $customerIdentifier): Cart
     {
         $classData = $this->entityNameResolver->resolve(Cart::class);
 

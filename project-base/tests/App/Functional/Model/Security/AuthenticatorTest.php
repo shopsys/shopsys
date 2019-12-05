@@ -18,7 +18,7 @@ class AuthenticatorTest extends FunctionalTestCase
     private $authenticator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      * @inject
      */
     private $customerFacade;

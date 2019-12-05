@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
@@ -32,7 +32,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
     protected $currentCustomer;
 
@@ -69,7 +69,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository
@@ -80,7 +80,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     public function __construct(
         ProductRepository $productRepository,
         Domain $domain,
-        CurrentCustomer $currentCustomer,
+        CurrentCustomerUser $currentCustomer,
         ProductAccessoryRepository $productAccessoryRepository,
         ProductElasticsearchRepository $productElasticsearchRepository,
         ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,

@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\User;
@@ -42,7 +42,7 @@ class UserFactoryTest extends TestCase
      */
     private function getUserFactory(): UserFactory
     {
-        $customerPasswordFacade = $this->createMock(CustomerPasswordFacade::class);
+        $customerPasswordFacade = $this->createMock(CustomerUserPasswordFacade::class);
 
         return new UserFactory(new EntityNameResolver([]), $customerPasswordFacade);
     }

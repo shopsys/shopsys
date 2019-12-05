@@ -6,7 +6,7 @@ namespace App\Controller\Front;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade;
 
@@ -23,19 +23,19 @@ class BestsellingProductController extends FrontBaseController
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
     private $currentCustomer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
      */
     public function __construct(
         CachedBestsellingProductFacade $cachedBestsellingProductFacade,
         Domain $domain,
-        CurrentCustomer $currentCustomer
+        CurrentCustomerUser $currentCustomer
     ) {
         $this->cachedBestsellingProductFacade = $cachedBestsellingProductFacade;
         $this->domain = $domain;

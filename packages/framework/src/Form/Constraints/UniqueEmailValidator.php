@@ -3,14 +3,14 @@
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class UniqueEmailValidator extends ConstraintValidator
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      */
     private $customerFacade;
 
@@ -20,11 +20,11 @@ class UniqueEmailValidator extends ConstraintValidator
     private $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CustomerFacade $customerFacade,
+        CustomerUserFacade $customerFacade,
         Domain $domain
     ) {
         $this->customerFacade = $customerFacade;

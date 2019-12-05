@@ -8,8 +8,8 @@ use DateTime;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
@@ -27,7 +27,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     private $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      * @inject
      */
     private $currentCustomer;
@@ -69,7 +69,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     private $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      * @inject
      */
     private $customerFacade;
@@ -169,10 +169,11 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      */
-    private function getCartFacadeForCustomer(CustomerIdentifier $customerIdentifier)
+    private function getCartFacadeForCustomer(CustomerUserIdentifier $customerIdentifier)
     {
         return new CartFacade(
             $this->getEntityManager(),
@@ -190,12 +191,13 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    private function getCustomerIdentifierFactoryMock(CustomerIdentifier $customerIdentifier)
+    private function getCustomerIdentifierFactoryMock(CustomerUserIdentifier $customerIdentifier)
     {
-        $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerIdentifierFactory::class)
+        $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -206,10 +208,10 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
      * @param string $message
      */
-    private function assertCartIsDeleted(CartFacade $cartFacade, CustomerIdentifier $customerIdentifier, $message)
+    private function assertCartIsDeleted(CartFacade $cartFacade, CustomerUserIdentifier $customerIdentifier, $message)
     {
         $cart = $cartFacade->findCartByCustomerIdentifier($customerIdentifier);
         $this->assertNull($cart, $message);
@@ -217,39 +219,40 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
      * @param string $message
      */
-    private function assertCartIsNotDeleted(CartFacade $cartFacade, CustomerIdentifier $customerIdentifier, $message)
+    private function assertCartIsNotDeleted(CartFacade $cartFacade, CustomerUserIdentifier $customerIdentifier, $message)
     {
         $cart = $cartFacade->findCartByCustomerIdentifier($customerIdentifier);
         $this->assertNotNull($cart, $message);
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier
      */
     private function getCustomerIdentifierForRegisteredCustomer()
     {
         $user = $this->customerFacade->getUserById(1);
 
-        return new CustomerIdentifier('', $user);
+        return new CustomerUserIdentifier('', $user);
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier
      */
     private function getCustomerIdentifierForUnregisteredCustomer()
     {
-        return new CustomerIdentifier('randomString');
+        return new CustomerUserIdentifier('randomString');
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
-    private function createCartWithProduct(CustomerIdentifier $customerIdentifier, CartFacade $cartFacade)
+    private function createCartWithProduct(CustomerUserIdentifier $customerIdentifier, CartFacade $cartFacade)
     {
         $em = $this->getEntityManager();
 

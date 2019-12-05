@@ -412,7 +412,7 @@ services:
         arguments:
             - '%kernel.environment%'
 
-    Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer: ~
+    Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser: ~
 
     Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail: ~
 
@@ -843,8 +843,8 @@ services:
     Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Country\CountryDataFactory
 
-    Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory
+    Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory
 
     Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory

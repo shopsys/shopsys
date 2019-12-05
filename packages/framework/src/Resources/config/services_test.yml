@@ -63,12 +63,12 @@ services:
 
     Shopsys\FrameworkBundle\Model\Country\CountryFacade: ~
 
-    Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer: ~
+    Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser: ~
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade: ~
 
-    Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory
+    Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory
 
     Shopsys\FrameworkBundle\Model\Feed\Delivery\DeliveryFeedItemRepository: ~
 

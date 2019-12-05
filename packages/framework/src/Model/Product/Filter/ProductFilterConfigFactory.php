@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
 
 class ProductFilterConfigFactory
 {
@@ -18,7 +18,7 @@ class ProductFilterConfigFactory
     protected $flagFilterChoiceRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
     protected $currentCustomer;
 
@@ -35,14 +35,14 @@ class ProductFilterConfigFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository $parameterFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository $flagFilterChoiceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository $brandFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository $priceRangeRepository
      */
     public function __construct(
         ParameterFilterChoiceRepository $parameterFilterChoiceRepository,
         FlagFilterChoiceRepository $flagFilterChoiceRepository,
-        CurrentCustomer $currentCustomer,
+        CurrentCustomerUser $currentCustomer,
         BrandFilterChoiceRepository $brandFilterChoiceRepository,
         PriceRangeRepository $priceRangeRepository
     ) {

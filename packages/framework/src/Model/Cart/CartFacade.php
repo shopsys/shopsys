@@ -7,9 +7,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -35,7 +35,7 @@ class CartFacade
     protected $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory
      */
     protected $customerIdentifierFactory;
 
@@ -45,7 +45,7 @@ class CartFacade
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
     protected $currentCustomer;
 
@@ -78,9 +78,9 @@ class CartFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory $customerIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory $customerIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
@@ -91,9 +91,9 @@ class CartFacade
         EntityManagerInterface $em,
         CartFactory $cartFactory,
         ProductRepository $productRepository,
-        CustomerIdentifierFactory $customerIdentifierFactory,
+        CustomerUserIdentifierFactory $customerIdentifierFactory,
         Domain $domain,
-        CurrentCustomer $currentCustomer,
+        CurrentCustomerUser $currentCustomer,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
         ProductPriceCalculationForUser $productPriceCalculation,
         CartItemFactoryInterface $cartItemFactory,
@@ -233,10 +233,11 @@ class CartFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
-    public function findCartByCustomerIdentifier(CustomerIdentifier $customerIdentifier)
+    public function findCartByCustomerIdentifier(CustomerUserIdentifier $customerIdentifier)
     {
         $cart = $this->cartRepository->findByCustomerIdentifier($customerIdentifier);
 
@@ -274,10 +275,11 @@ class CartFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
-    public function getCartByCustomerIdentifierCreateIfNotExists(CustomerIdentifier $customerIdentifier)
+    public function getCartByCustomerIdentifierCreateIfNotExists(CustomerUserIdentifier $customerIdentifier)
     {
         $cart = $this->cartRepository->findByCustomerIdentifier($customerIdentifier);
 

@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Customer\UserData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -34,7 +34,7 @@ class ProductPriceCalculationForUserTest extends TestCase
         $user = new User($userData, $billingAddress, null);
         $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), false);
 
-        $currentCustomerMock = $this->createMock(CurrentCustomer::class);
+        $currentCustomerMock = $this->createMock(CurrentCustomerUser::class);
         $pricingGroupSettingFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
 
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
@@ -65,7 +65,7 @@ class ProductPriceCalculationForUserTest extends TestCase
         $pricingGroup = new PricingGroup($pricingGroupData, $domainId);
         $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), false);
 
-        $currentCustomerMock = $this->createMock(CurrentCustomer::class);
+        $currentCustomerMock = $this->createMock(CurrentCustomerUser::class);
 
         $pricingGroupFacadeMock = $this->getMockBuilder(PricingGroupSettingFacade::class)
             ->setMethods(['getDefaultPricingGroupByDomainId'])

@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Preview;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -30,7 +30,7 @@ class OrderPreviewFactory
     protected $currencyFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
     protected $currentCustomer;
 
@@ -48,7 +48,7 @@ class OrderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      */
@@ -56,7 +56,7 @@ class OrderPreviewFactory
         OrderPreviewCalculation $orderPreviewCalculation,
         Domain $domain,
         CurrencyFacade $currencyFacade,
-        CurrentCustomer $currentCustomer,
+        CurrentCustomerUser $currentCustomer,
         CartFacade $cartFacade,
         CurrentPromoCodeFacade $currentPromoCodeFacade
     ) {

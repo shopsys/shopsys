@@ -26,7 +26,7 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
     private $productPriceRecalculator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      * @inject
      */
     private $customerFacade;
@@ -38,7 +38,7 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
     private $userDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      * @inject
      */
     private $customerDataFactory;

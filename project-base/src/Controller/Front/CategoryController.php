@@ -8,7 +8,7 @@ use App\Model\Category\CurrentCategoryResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
 use Symfony\Component\HttpFoundation\Request;
 
 class CategoryController extends FrontBaseController
@@ -34,7 +34,7 @@ class CategoryController extends FrontBaseController
     private $topCategoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
     private $currentCustomer;
 
@@ -43,14 +43,14 @@ class CategoryController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CurrentCategoryResolver $currentCategoryResolver
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
      */
     public function __construct(
         Domain $domain,
         CategoryFacade $categoryFacade,
         CurrentCategoryResolver $currentCategoryResolver,
         TopCategoryFacade $topCategoryFacade,
-        CurrentCustomer $currentCustomer
+        CurrentCustomerUser $currentCustomer
     ) {
         $this->domain = $domain;
         $this->categoryFacade = $categoryFacade;

@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
-class CustomerIdentifier
+class CustomerUserIdentifier
 {
     /**
      * @var string
@@ -22,7 +22,7 @@ class CustomerIdentifier
     {
         if ($cartIdentifier === '' && $user === null) {
             $message = 'Can not be created empty CustomerIdentifier';
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerIdentifierException($message);
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerUserIdentifierUserException($message);
         }
 
         $this->user = $user;

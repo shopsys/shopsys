@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
 use Shopsys\FrameworkBundle\Form\OrderListType;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -11,17 +11,17 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomerFormType extends AbstractType
+class CustomerUserFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
     private $customerDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
      */
-    public function __construct(CustomerDataFactoryInterface $customerDataFactory)
+    public function __construct(CustomerUserDataFactoryInterface $customerDataFactory)
     {
         $this->customerDataFactory = $customerDataFactory;
     }

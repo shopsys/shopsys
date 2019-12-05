@@ -99,7 +99,7 @@ class NewsletterController extends AdminBaseController
                     'email' => $email,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException $ex) {
+        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundUserException $ex) {
             $this->getFlashMessageSender()->addErrorFlash(t('Selected subscriber doesn\'t exist.'));
         }
 

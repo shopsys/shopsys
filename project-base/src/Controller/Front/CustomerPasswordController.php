@@ -7,14 +7,14 @@ namespace App\Controller\Front;
 use App\Form\Front\Customer\Password\NewPasswordFormType;
 use App\Form\Front\Customer\Password\ResetPasswordFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Symfony\Component\HttpFoundation\Request;
 
 class CustomerPasswordController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade
      */
     private $customerPasswordFacade;
 
@@ -30,12 +30,12 @@ class CustomerPasswordController extends FrontBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade $customerPasswordFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade $customerPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      */
     public function __construct(
         Domain $domain,
-        CustomerPasswordFacade $customerPasswordFacade,
+        CustomerUserPasswordFacade $customerPasswordFacade,
         Authenticator $authenticator
     ) {
         $this->domain = $domain;
@@ -116,7 +116,7 @@ class CustomerPasswordController extends FrontBaseController
                         'registrationLink' => $this->generateUrl('front_registration_register'),
                     ]
                 );
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashException $ex) {
+            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException $ex) {
                 $this->getFlashMessageSender()->addErrorFlash(t('The link to change your password expired.'));
             }
 

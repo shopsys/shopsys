@@ -6,7 +6,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
@@ -27,7 +27,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
     protected $currentCustomer;
 
@@ -54,7 +54,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountRepository $productFilterCountRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
@@ -63,7 +63,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     public function __construct(
         ProductRepository $productRepository,
         Domain $domain,
-        CurrentCustomer $currentCustomer,
+        CurrentCustomerUser $currentCustomer,
         CategoryRepository $categoryRepository,
         ProductFilterCountRepository $productFilterCountRepository,
         ProductAccessoryRepository $productAccessoryRepository,

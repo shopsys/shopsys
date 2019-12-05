@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
@@ -26,7 +26,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 
-class CustomerDataFactoryTest extends TestCase
+class CustomerUserDataFactoryTest extends TestCase
 {
     private const DOMAIN_ID = 1;
 
@@ -212,14 +212,14 @@ class CustomerDataFactoryTest extends TestCase
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory
      */
-    private function getCustomerDataFactory(): CustomerDataFactory
+    private function getCustomerDataFactory(): CustomerUserDataFactory
     {
         $billingAddressDataFactory = new BillingAddressDataFactory();
         $deliveryAddressDataFactory = new DeliveryAddressDataFactory();
         $userDataFactory = new UserDataFactory($this->createMock(PricingGroupSettingFacade::class));
-        $customerDataFactory = new CustomerDataFactory($billingAddressDataFactory, $deliveryAddressDataFactory, $userDataFactory);
+        $customerDataFactory = new CustomerUserDataFactory($billingAddressDataFactory, $deliveryAddressDataFactory, $userDataFactory);
 
         return $customerDataFactory;
     }

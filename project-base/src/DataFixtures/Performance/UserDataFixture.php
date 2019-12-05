@@ -12,8 +12,8 @@ use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -43,7 +43,7 @@ class UserDataFixture
     private $sqlLoggerFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      */
     private $customerEditFacade;
 
@@ -68,7 +68,7 @@ class UserDataFixture
     private $progressBarFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
     private $customerDataFactory;
 
@@ -87,12 +87,12 @@ class UserDataFixture
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerEditFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerEditFacade
      * @param \App\Model\Customer\UserDataFactory $userDataFactory
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      */
@@ -101,12 +101,12 @@ class UserDataFixture
         EntityManagerInterface $em,
         Domain $domain,
         SqlLoggerFacade $sqlLoggerFacade,
-        CustomerFacade $customerEditFacade,
+        CustomerUserFacade $customerEditFacade,
         UserDataFactoryInterface $userDataFactory,
         Faker $faker,
         PersistentReferenceFacade $persistentReferenceFacade,
         ProgressBarFactory $progressBarFactory,
-        CustomerDataFactoryInterface $customerDataFactory,
+        CustomerUserDataFactoryInterface $customerDataFactory,
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
     ) {
@@ -172,7 +172,7 @@ class UserDataFixture
     /**
      * @param int $domainId
      * @param int $userNumber
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
      */
     private function getRandomCustomerDataByDomainId($domainId, $userNumber)
     {

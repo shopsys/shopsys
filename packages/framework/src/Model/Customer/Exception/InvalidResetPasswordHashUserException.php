@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\Exception;
 
 use Exception;
 
-class InvalidResetPasswordHashException extends Exception implements CustomerException
+class InvalidResetPasswordHashUserException extends Exception implements CustomerUserException
 {
     /**
      * @param string $message

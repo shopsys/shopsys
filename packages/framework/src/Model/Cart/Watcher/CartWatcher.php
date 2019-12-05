@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Watcher;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
@@ -59,10 +59,11 @@ class CartWatcher
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
-    public function getNotListableItems(Cart $cart, CurrentCustomer $currentCustomer)
+    public function getNotListableItems(Cart $cart, CurrentCustomerUser $currentCustomer)
     {
         $notListableItems = [];
         foreach ($cart->getItems() as $item) {

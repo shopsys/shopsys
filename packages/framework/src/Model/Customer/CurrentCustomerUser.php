@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class CurrentCustomer
+class CurrentCustomerUser
 {
     /**
      * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface

@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 
@@ -14,7 +14,7 @@ class CartTest extends TestCase
 {
     public function testGetItemsCountZero()
     {
-        $customerIdentifier = new CustomerIdentifier('randomString');
+        $customerIdentifier = new CustomerUserIdentifier('randomString');
         $cart = new Cart($customerIdentifier->getCartIdentifier());
 
         $this->assertSame(0, $cart->getItemsCount());
@@ -22,7 +22,7 @@ class CartTest extends TestCase
 
     public function testGetItemsCount()
     {
-        $customerIdentifier = new CustomerIdentifier('randomString');
+        $customerIdentifier = new CustomerUserIdentifier('randomString');
 
         $productData1 = new ProductData();
         $productData1->name = ['cs' => 'Product 1'];
@@ -45,7 +45,7 @@ class CartTest extends TestCase
 
     public function testIsEmpty()
     {
-        $customerIdentifier = new CustomerIdentifier('randomString');
+        $customerIdentifier = new CustomerUserIdentifier('randomString');
 
         $cart = new Cart($customerIdentifier->getCartIdentifier());
 
@@ -54,7 +54,7 @@ class CartTest extends TestCase
 
     public function testIsNotEmpty()
     {
-        $customerIdentifier = new CustomerIdentifier('randomString');
+        $customerIdentifier = new CustomerUserIdentifier('randomString');
         $productData = new ProductData();
         $productData->name = ['cs' => 'Product 1'];
         $product = Product::create($productData);
@@ -69,7 +69,7 @@ class CartTest extends TestCase
 
     public function testClean()
     {
-        $customerIdentifier = new CustomerIdentifier('randomString');
+        $customerIdentifier = new CustomerUserIdentifier('randomString');
         $productData1 = new ProductData();
         $productData1->name = ['cs' => 'Product 1'];
         $product1 = Product::create($productData1);

@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Customer;
 
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomerFormType extends AbstractType
+class CustomerUserFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
     private $customerDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
      */
-    public function __construct(CustomerDataFactoryInterface $customerDataFactory)
+    public function __construct(CustomerUserDataFactoryInterface $customerDataFactory)
     {
         $this->customerDataFactory = $customerDataFactory;
     }

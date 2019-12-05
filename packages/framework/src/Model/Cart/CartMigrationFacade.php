@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 class CartMigrationFacade
@@ -18,7 +18,7 @@ class CartMigrationFacade
     protected $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory
      */
     protected $customerIdentifierFactory;
 
@@ -34,13 +34,13 @@ class CartMigrationFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory $customerIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory $customerIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         EntityManagerInterface $em,
-        CustomerIdentifierFactory $customerIdentifierFactory,
+        CustomerUserIdentifierFactory $customerIdentifierFactory,
         CartItemFactoryInterface $cartItemFactory,
         CartFacade $cartFacade
     ) {

@@ -4,7 +4,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Customer\UserData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class CurrentCustomerTest extends TestCase
+class CurrentCustomerUserTest extends TestCase
 {
     public function testGetPricingGroupForUnregisteredCustomerReturnsDefaultPricingGroup()
     {
@@ -24,7 +24,7 @@ class CurrentCustomerTest extends TestCase
         $tokenStorageMock = $this->createMock(TokenStorage::class);
         $pricingGroupSettingFacadeMock = $this->getPricingGroupSettingFacadeMockReturningDefaultPricingGroup($expectedPricingGroup);
 
-        $currentCustomer = new CurrentCustomer($tokenStorageMock, $pricingGroupSettingFacadeMock);
+        $currentCustomer = new CurrentCustomerUser($tokenStorageMock, $pricingGroupSettingFacadeMock);
 
         $pricingGroup = $currentCustomer->getPricingGroup();
         $this->assertSame($expectedPricingGroup, $pricingGroup);
@@ -40,7 +40,7 @@ class CurrentCustomerTest extends TestCase
         $tokenStorageMock = $this->getTokenStorageMockForUser($user);
         $pricingGroupFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
 
-        $currentCustomer = new CurrentCustomer($tokenStorageMock, $pricingGroupFacadeMock);
+        $currentCustomer = new CurrentCustomerUser($tokenStorageMock, $pricingGroupFacadeMock);
 
         $pricingGroup = $currentCustomer->getPricingGroup();
         $this->assertSame($expectedPricingGroup, $pricingGroup);

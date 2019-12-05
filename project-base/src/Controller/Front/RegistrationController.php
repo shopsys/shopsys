@@ -6,7 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Registration\RegistrationFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RegistrationController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      */
     private $customerFacade;
 
@@ -44,14 +44,14 @@ class RegistrationController extends FrontBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\UserDataFactory $userDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      */
     public function __construct(
         Domain $domain,
         UserDataFactoryInterface $userDataFactory,
-        CustomerFacade $customerFacade,
+        CustomerUserFacade $customerFacade,
         Authenticator $authenticator,
         LegalConditionsFacade $legalConditionsFacade
     ) {

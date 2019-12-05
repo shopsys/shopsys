@@ -12,9 +12,9 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
@@ -24,7 +24,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     public const USER_WITH_RESET_PASSWORD_HASH = 'user_with_reset_password_hash';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      */
     protected $customerFacade;
 
@@ -49,7 +49,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
     protected $customerDataFactory;
 
@@ -69,23 +69,23 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     protected $deliveryAddressDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
      * @param \App\Model\Customer\UserDataFactory $userDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      */
     public function __construct(
-        CustomerFacade $customerFacade,
+        CustomerUserFacade $customerFacade,
         Generator $faker,
         EntityManagerInterface $em,
         HashGenerator $hashGenerator,
         Domain $domain,
-        CustomerDataFactoryInterface $customerDataFactory,
+        CustomerUserDataFactoryInterface $customerDataFactory,
         UserDataFactoryInterface $userDataFactory,
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
@@ -128,7 +128,8 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData[]
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData[]
      */
     protected function getDefaultCustomersData(int $domainId): array
     {
@@ -287,7 +288,8 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData[]
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData[]
      */
     protected function getDistinctCustomersData(int $domainId): array
     {
@@ -411,7 +413,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
      */
     protected function resetPassword(User $customer)
     {
-        $resetPasswordHash = $this->hashGenerator->generateHash(CustomerPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
+        $resetPasswordHash = $this->hashGenerator->generateHash(CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
         $customer->setResetPasswordHash($resetPasswordHash);
         $this->em->flush($customer);
     }

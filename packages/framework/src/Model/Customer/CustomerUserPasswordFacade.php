@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
-class CustomerPasswordFacade
+class CustomerUserPasswordFacade
 {
     public const RESET_PASSWORD_HASH_LENGTH = 50;
 
@@ -99,7 +99,7 @@ class CustomerPasswordFacade
         $user = $this->userRepository->getUserByEmailAndDomain($email, $domainId);
 
         if (!$user->isResetPasswordHashValid($resetPasswordHash)) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashException();
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException();
         }
 
         $this->changePassword($user, $newPassword);

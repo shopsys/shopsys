@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
-class CustomerDataFactory implements CustomerDataFactoryInterface
+class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface
@@ -38,11 +38,11 @@ class CustomerDataFactory implements CustomerDataFactoryInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
      */
-    public function create(): CustomerData
+    public function create(): CustomerUserData
     {
-        return new CustomerData(
+        return new CustomerUserData(
             $this->billingAddressDataFactory->create(),
             $this->deliveryAddressDataFactory->create(),
             $this->userDataFactory->create()
@@ -51,11 +51,12 @@ class CustomerDataFactory implements CustomerDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
      */
-    public function createFromUser(User $user): CustomerData
+    public function createFromUser(User $user): CustomerUserData
     {
-        $customerData = new CustomerData(
+        $customerData = new CustomerUserData(
             $this->billingAddressDataFactory->createFromBillingAddress($user->getBillingAddress()),
             $this->getDeliveryAddressDataFromUser($user),
             $this->userDataFactory->createFromUser($user)
@@ -80,9 +81,10 @@ class CustomerDataFactory implements CustomerDataFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerData
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
      */
-    public function createAmendedByOrder(User $user, Order $order): CustomerData
+    public function createAmendedByOrder(User $user, Order $order): CustomerUserData
     {
         $billingAddress = $user->getBillingAddress();
         $deliveryAddress = $user->getDeliveryAddress();

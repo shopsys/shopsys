@@ -9,7 +9,7 @@ use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -32,7 +32,7 @@ class CartItemTest extends TransactionFunctionalTestCase
     {
         $em = $this->getEntityManager();
 
-        $customerIdentifier = new CustomerIdentifier('randomString');
+        $customerIdentifier = new CustomerUserIdentifier('randomString');
 
         $availabilityData = new AvailabilityData();
         $availabilityData->dispatchTime = 0;
