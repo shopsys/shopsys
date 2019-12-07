@@ -181,7 +181,15 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_default_schedulecron', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to schedule cron')
-                    ->setExpectedStatusCode(404);
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('Superadmin can schedule cron')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('admin_default_switchcron', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Standard admin is not allowed to enable/disable cron')
+                    ->setParameter('action', 'disable')
+                    ->setExpectedStatusCode(302);
                 $config->addExtraRequestDataSet('Superadmin can schedule cron')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(302);

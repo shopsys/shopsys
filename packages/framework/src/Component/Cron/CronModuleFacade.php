@@ -146,6 +146,18 @@ class CronModuleFacade
 
     /**
      * @param string $serviceId
+     * @param bool $enabled
+     */
+    public function switchCronModule(string $serviceId, bool $enabled): void
+    {
+        $cronModule = $this->getCronModuleByServiceId($serviceId);
+        $cronModule->setEnabled($enabled);
+
+        $this->em->flush($cronModule);
+    }
+
+    /**
+     * @param string $serviceId
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule
      */
     public function getCronModuleByServiceId(string $serviceId): CronModule

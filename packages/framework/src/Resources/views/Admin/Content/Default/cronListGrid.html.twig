@@ -27,14 +27,27 @@
 {% endblock %}
 
 {% block grid_value_cell_id_actions %}
-    {% if row.scheduled == false %}
+    {% if row.scheduled == false and row.enabled != false %}
         <a href="{{ url(
             'admin_default_schedulecron', {
                 serviceId: row.id,
             }
-        ) }}" class="btn btn--small">{{ 'Schedule'|trans }}</a>
-    {% else %}
-        <span class="btn btn--small btn--disabled">{{ 'Scheduled'|trans }}</span>
+        ) }}" class="in-icon in-icon--edit svg svg-schedule" title="{{ 'Schedule'|trans }}"></a>
     {% endif %}
 
+    {% if row.enabled == false %}
+        <a href="{{ url(
+            'admin_default_switchcron', {
+                serviceId: row.id,
+                action: 'enable'
+            }
+        ) }}" class="in-icon in-icon--edit svg svg-power" style="color: red;" title="{{ 'Enable'|trans }}"></a>
+    {% else %}
+        <a href="{{ url(
+            'admin_default_switchcron', {
+                serviceId: row.id,
+                action: 'disable'
+            }
+        ) }}" class="in-icon in-icon--edit svg svg-power" style="color: green;" title="{{ 'Disable'|trans }}"></a>
+    {% endif %}
 {% endblock %}

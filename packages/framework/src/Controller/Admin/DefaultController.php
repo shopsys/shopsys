@@ -304,7 +304,7 @@ class DefaultController extends AdminBaseController
         $cronListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col table-col-10');
 
         if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {
-            $cronListGrid->addColumn('actions', 'actions', t('Action'))->setClassAttribute('column--superadmin');
+            $cronListGrid->addColumn('actions', 'actions', t('Modifications'))->setClassAttribute('table-grid__cell--actions column--superadmin');
         }
 
         $cronListGrid->setTheme('@ShopsysFramework/Admin/Content/Default/cronListGrid.html.twig');
@@ -313,13 +313,31 @@ class DefaultController extends AdminBaseController
     }
 
     /**
-     * @Route("/cron-schedule/{serviceId}")
+     * @Route("/cron/schedule/{serviceId}")
      * @param string $serviceId
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function scheduleCronAction(string $serviceId): Response
     {
         $this->cronModuleFacade->schedule($serviceId);
+        $this->getFlashMessageSender()->addSuccessFlash(
+            t('Cron with serviceID `%serviceId%` was scheduled', ['%serviceId%' => $serviceId])
+        );
+
+        return $this->redirectToRoute('admin_default_dashboard');
+    }
+
+    /**
+     * @Route("/cron/switch/{serviceId}/{action}", requirements={
+     *     "action": "enable|disable"
+     * }))
+     * @param string $serviceId
+     * @param string $action
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function switchCronAction(string $serviceId, string $action): Response
+    {
+        $this->cronModuleFacade->switchCronModule($serviceId, $action === 'enable');
         $this->getFlashMessageSender()->addSuccessFlash(
             t('Cron with serviceID `%serviceId%` was scheduled', ['%serviceId%' => $serviceId])
         );

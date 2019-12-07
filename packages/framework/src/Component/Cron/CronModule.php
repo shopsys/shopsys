@@ -134,6 +134,14 @@ class CronModule
     }
 
     /**
+     * @param bool $enabled
+     */
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled === true;
+    }
+
+    /**
      * @param bool $active
      */
     public function setActive(bool $active): void

@@ -6,8 +6,6 @@ Periodically executed Cron modules recalculate visibility, generate XML feeds an
 
 By default you can configure your own cron configurations in `config/services/cron.yml` file.
 
-You can disable specific Cron module in database table `cron_modules` where you need to set `enabled` to false.
-
 If you want to show Cron overview table for non superadmin users you need to override `DefaulController::getCronGridViews` and remove superadmin protection:
 ```diff
 protected function getCronGridViews(): ?array
