@@ -1,5 +1,5 @@
 <customer_addresses>
-    {% set billingAddress = user.billingAddress %}
+    {% set billingAddress = user.customer.billingAddress %}
     <address>
         <address_type>billing</address_type>
         <street><![CDATA[{{ billingAddress.street }}]]></street>

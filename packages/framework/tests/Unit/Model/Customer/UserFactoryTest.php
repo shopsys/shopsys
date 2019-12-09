@@ -19,7 +19,6 @@ class UserFactoryTest extends TestCase
     {
         $customerService = $this->getUserFactory();
 
-        $billingAddress = $this->createBillingAddress();
         $deliveryAddress = $this->createDeliveryAddress();
         $userData = new UserData();
         $userData->firstName = 'firstName';
@@ -28,11 +27,7 @@ class UserFactoryTest extends TestCase
         $userData->password = 'pa55w0rd';
         $userData->domainId = 1;
 
-        $user = $customerService->create(
-            $userData,
-            $billingAddress,
-            $deliveryAddress
-        );
+        $user = $customerService->create($userData, $deliveryAddress);
 
         $this->assertInstanceOf(User::class, $user);
     }

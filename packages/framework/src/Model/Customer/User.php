@@ -64,11 +64,6 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
     protected $lastActivity;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     */
-    protected $billingAddress;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      * @ORM\OneToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=true)
@@ -121,17 +116,14 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
     public function __construct(
         UserData $userData,
-        BillingAddress $billingAddress,
         ?DeliveryAddress $deliveryAddress
     ) {
         $this->firstName = $userData->firstName;
         $this->lastName = $userData->lastName;
-        $this->billingAddress = $billingAddress;
         $this->deliveryAddress = $deliveryAddress;
         if ($userData->createdAt !== null) {
             $this->createdAt = $userData->createdAt;
@@ -272,19 +264,11 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
      */
     public function getFullName()
     {
-        if ($this->getBillingAddress()->isCompanyCustomer()) {
-            return $this->getBillingAddress()->getCompanyName();
+        if ($this->getCustomer()->getBillingAddress()->isCompanyCustomer()) {
+            return $this->getCustomer()->getBillingAddress()->getCompanyName();
         }
 
         return $this->lastName . ' ' . $this->firstName;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     */
-    public function getBillingAddress()
-    {
-        return $this->getCustomer()->getBillingAddress();
     }
 
     /**

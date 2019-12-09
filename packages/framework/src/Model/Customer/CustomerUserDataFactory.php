@@ -57,7 +57,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     public function createFromUser(User $user): CustomerUserData
     {
         $customerData = new CustomerUserData(
-            $this->billingAddressDataFactory->createFromBillingAddress($user->getBillingAddress()),
+            $this->billingAddressDataFactory->createFromBillingAddress($user->getCustomer()->getBillingAddress()),
             $this->getDeliveryAddressDataFromUser($user),
             $this->userDataFactory->createFromUser($user)
         );
@@ -86,7 +86,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      */
     public function createAmendedByOrder(User $user, Order $order): CustomerUserData
     {
-        $billingAddress = $user->getBillingAddress();
+        $billingAddress = $user->getCustomer()->getBillingAddress();
         $deliveryAddress = $user->getDeliveryAddress();
 
         $customerData = $this->createFromUser($user);

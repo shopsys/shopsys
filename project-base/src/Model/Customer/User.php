@@ -26,15 +26,13 @@ class User extends BaseUser
 {
     /**
      * @param \App\Model\Customer\UserData $userData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
     public function __construct(
         BaseUserData $userData,
-        BillingAddress $billingAddress,
         ?DeliveryAddress $deliveryAddress
     ) {
-        parent::__construct($userData, $billingAddress, $deliveryAddress);
+        parent::__construct($userData, $deliveryAddress);
     }
 
     /**

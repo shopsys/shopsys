@@ -74,10 +74,9 @@ class CustomerUserDataFactoryTest extends TestCase
         $deliveryAddressData->telephone = 'deliveryTelephone';
         $deliveryAddressData->country = $deliveryCountry;
 
-        $billingAddress = $this->createBillingAddress($billingAddressData);
-        $customer->addBillingAddress($billingAddress);
+        $customer->addBillingAddress($this->createBillingAddress($billingAddressData));
         $deliveryAddress = $this->createDeliveryAddress($deliveryAddressData);
-        $user = new User($userData, $billingAddress, $deliveryAddress);
+        $user = new User($userData, $deliveryAddress);
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
@@ -151,9 +150,8 @@ class CustomerUserDataFactoryTest extends TestCase
 
         $billingAddressData = new BillingAddressData();
         $billingAddressData->customer = $customer;
-        $billingAddress = $this->createBillingAddress($billingAddressData);
-        $customer->addBillingAddress($billingAddress);
-        $user = new User($userData, $billingAddress, null);
+        $customer->addBillingAddress($this->createBillingAddress($billingAddressData));
+        $user = new User($userData, null);
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];

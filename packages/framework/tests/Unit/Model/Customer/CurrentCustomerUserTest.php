@@ -70,13 +70,12 @@ class CurrentCustomerUserTest extends TestCase
      */
     private function getUserWithPricingGroup(PricingGroup $pricingGroup)
     {
-        $billingAddress = $this->createMock(BillingAddress::class);
         $userData = new UserData();
         $userData->email = 'no-reply@shopsys.com';
         $userData->pricingGroup = $pricingGroup;
         $userData->domainId = 1;
 
-        return new User($userData, $billingAddress, null);
+        return new User($userData, null);
     }
 
     /**

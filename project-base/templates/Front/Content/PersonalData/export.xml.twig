@@ -11,12 +11,12 @@
                 <email><![CDATA[{{ user.email }}]]></email>
             </customer_name>
 
-            {% if user.billingAdress is defined or user.deliveryAddress is defined %}
+            {% if user.customer.billingAdress is defined or user.deliveryAddress is defined %}
                 {% include 'Front/Content/PersonalData/adress.xml.twig' with {'user' : user} %}
             {% endif %}
 
-            {% if user.billingAddress is defined and user.billingAddress.companyCustomer %}
-                {% set billingAddress = user.billingAddress %}
+            {% if user.customer.billingAddress is defined and user.customer.billingAddress.companyCustomer %}
+                {% set billingAddress = user.customer.billingAddress %}
                 <customer_company>
                     {% if billingAddress.companyName is not null %}
                         <company_name><![CDATA[{{ billingAddress.companyName }}]]></company_name>

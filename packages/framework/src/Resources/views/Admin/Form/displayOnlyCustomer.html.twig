@@ -5,8 +5,8 @@
                 {{ 'unregistered customer'|trans }}
             {% else %}
                 <a href="{{ path('admin_customer_edit', { id: customer.id }) }}" target="_blank">
-                    {% if customer.billingAddress.companyCustomer %}
-                        {{ customer.billingAddress.companyName }} -
+                    {% if customer.customer.billingAddress.companyCustomer %}
+                        {{ customer.customer.billingAddress.companyName }} -
                     {% endif %}
                     {{ customer.lastName }}
                     {{ customer.firstName }}

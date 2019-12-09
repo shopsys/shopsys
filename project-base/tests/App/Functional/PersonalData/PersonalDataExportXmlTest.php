@@ -36,10 +36,9 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
     {
         $country = $this->createCountry();
         $customer = new Customer();
-        $billingAddress = $this->createBillingAddress($country, $customer);
-        $customer->addBillingAddress($billingAddress);
+        $customer->addBillingAddress($this->createBillingAddress($country, $customer));
         $deliveryAddress = $this->createDeliveryAddress($country);
-        $user = $this->createUser($billingAddress, $deliveryAddress, $customer);
+        $user = $this->createUser($deliveryAddress, $customer);
         $status = $this->createMock(OrderStatus::class);
         $currencyData = new CurrencyData();
         $currencyData->name = 'CZK';
@@ -124,12 +123,11 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \App\Model\Customer\User
      */
-    private function createUser(BillingAddress $billingAddress, DeliveryAddress $deliveryAddress, Customer $customer)
+    private function createUser(DeliveryAddress $deliveryAddress, Customer $customer)
     {
         $userData = new UserData();
         $userData->firstName = 'Jaromír';
@@ -140,7 +138,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $userData->telephone = '+420987654321';
         $userData->customer = $customer;
 
-        $user = new User($userData, $billingAddress, $deliveryAddress);
+        $user = new User($userData, $deliveryAddress);
 
         return $user;
     }

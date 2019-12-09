@@ -35,18 +35,14 @@ class UserFactory implements UserFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    public function create(
-        UserData $userData,
-        BillingAddress $billingAddress,
-        ?DeliveryAddress $deliveryAddress
-    ): User {
+    public function create(UserData $userData, ?DeliveryAddress $deliveryAddress): User
+    {
         $classData = $this->entityNameResolver->resolve(User::class);
 
-        $user = new $classData($userData, $billingAddress, $deliveryAddress);
+        $user = new $classData($userData, $deliveryAddress);
 
         $this->customerPasswordFacade->changePassword($user, $userData->password);
 

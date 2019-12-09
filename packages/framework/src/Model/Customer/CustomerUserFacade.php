@@ -125,17 +125,12 @@ class CustomerUserFacade
         $billingAddressData->customer = $customer;
         $userData->customer = $customer;
 
-        $billingAddress = $this->billingAddressFactory->create($billingAddressData);
-        $customer->addBillingAddress($billingAddress);
+        $customer->addBillingAddress($this->billingAddressFactory->create($billingAddressData));
 
         $this->em->persist($customer);
         $this->em->flush($customer);
 
-        $user = $this->userFactory->create(
-            $userData,
-            $billingAddress,
-            null
-        );
+        $user = $this->userFactory->create($userData, null);
 
         $this->setEmail($userData->email, $user);
 
@@ -159,18 +154,13 @@ class CustomerUserFacade
         $customerData->billingAddressData->customer = $customer;
         $customerData->userData->customer = $customer;
 
-        $billingAddress = $this->billingAddressFactory->create($customerData->billingAddressData);
-        $customer->addBillingAddress($billingAddress);
+        $customer->addBillingAddress($this->billingAddressFactory->create($customerData->billingAddressData));
         $this->em->persist($customer);
         $this->em->flush($customer);
 
         $deliveryAddress = $this->deliveryAddressFactory->create($customerData->deliveryAddressData);
 
-        $user = $this->userFactory->create(
-            $customerData->userData,
-            $billingAddress,
-            $deliveryAddress
-        );
+        $user = $this->userFactory->create($customerData->userData, $deliveryAddress);
 
         $this->setEmail($customerData->userData->email, $user);
 
@@ -200,7 +190,7 @@ class CustomerUserFacade
             $this->customerPasswordFacade->changePassword($user, $customerData->userData->password);
         }
 
-        $user->getBillingAddress()->edit($customerData->billingAddressData);
+        $user->getCustomer()->getBillingAddress()->edit($customerData->billingAddressData);
 
         $this->editDeliveryAddress($user, $customerData->deliveryAddressData);
 
