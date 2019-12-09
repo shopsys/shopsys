@@ -1,4 +1,5 @@
 packages/framework/src/Resources/scripts/admin/plugins/
 packages/framework/src/Resources/scripts/admin/components/jquery.dmuploader.js
 packages/framework/src/Resources/scripts/common/bootstrap/
+packages/framework/src/Resources/scripts/common/plugins/
 project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/
