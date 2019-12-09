@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
@@ -34,6 +35,8 @@ class CustomerUserDataFactoryTest extends TestCase
     {
         $customerDataFactory = $this->getCustomerDataFactory();
 
+        $customer = new Customer();
+
         $userData = new UserData();
         $userData->firstName = 'firstName';
         $userData->lastName = 'lastName';
@@ -41,6 +44,7 @@ class CustomerUserDataFactoryTest extends TestCase
         $userData->telephone = 'telephone';
         $userData->email = 'no-reply@shopsys.com';
         $userData->domainId = 1;
+        $userData->customer = $customer;
 
         $billingCountryData = new CountryData();
         $billingCountryData->names = ['cs' => 'Česká republika'];
@@ -54,6 +58,7 @@ class CustomerUserDataFactoryTest extends TestCase
         $billingAddressData->companyNumber = 'companyNumber';
         $billingAddressData->companyTaxNumber = 'companyTaxNumber';
         $billingAddressData->country = $billingCountry;
+        $billingAddressData->customer = $customer;
 
         $deliveryCountryData = new CountryData();
         $deliveryCountryData->names = ['cs' => 'Slovenská republika'];
@@ -70,6 +75,7 @@ class CustomerUserDataFactoryTest extends TestCase
         $deliveryAddressData->country = $deliveryCountry;
 
         $billingAddress = $this->createBillingAddress($billingAddressData);
+        $customer->addBillingAddress($billingAddress);
         $deliveryAddress = $this->createDeliveryAddress($deliveryAddressData);
         $user = new User($userData, $billingAddress, $deliveryAddress);
 
@@ -134,14 +140,19 @@ class CustomerUserDataFactoryTest extends TestCase
 
         $billingCountry = new Country($billingCountryData);
         $deliveryCountry = new Country($deliveryCountryData);
+        $customer = new Customer();
         $userData = new UserData();
         $userData->firstName = 'firstName';
         $userData->lastName = 'lastName';
         $userData->email = 'no-reply@shopsys.com';
         $userData->createdAt = new DateTime();
         $userData->domainId = 1;
+        $userData->customer = $customer;
 
-        $billingAddress = $this->createBillingAddress();
+        $billingAddressData = new BillingAddressData();
+        $billingAddressData->customer = $customer;
+        $billingAddress = $this->createBillingAddress($billingAddressData);
+        $customer->addBillingAddress($billingAddress);
         $user = new User($userData, $billingAddress, null);
 
         $transportData = new TransportData();

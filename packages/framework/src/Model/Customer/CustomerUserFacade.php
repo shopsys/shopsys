@@ -24,6 +24,11 @@ class CustomerUserFacade
     protected $customerDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface
+     */
+    protected $customerFactory;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade
      */
     protected $customerMailFacade;
@@ -57,6 +62,7 @@ class CustomerUserFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface $deliveryAddressFactory
@@ -68,6 +74,7 @@ class CustomerUserFacade
         EntityManagerInterface $em,
         UserRepository $userRepository,
         CustomerUserDataFactoryInterface $customerDataFactory,
+        CustomerFactoryInterface $customerFactory,
         CustomerMailFacade $customerMailFacade,
         BillingAddressFactoryInterface $billingAddressFactory,
         DeliveryAddressFactoryInterface $deliveryAddressFactory,
@@ -78,6 +85,7 @@ class CustomerUserFacade
         $this->em = $em;
         $this->userRepository = $userRepository;
         $this->customerDataFactory = $customerDataFactory;
+        $this->customerFactory = $customerFactory;
         $this->customerMailFacade = $customerMailFacade;
         $this->billingAddressFactory = $billingAddressFactory;
         $this->deliveryAddressFactory = $deliveryAddressFactory;
@@ -111,8 +119,17 @@ class CustomerUserFacade
      */
     public function register(UserData $userData)
     {
+        $customer = $this->customerFactory->create();
         $billingAddressData = $this->billingAddressDataFactory->create();
+
+        $billingAddressData->customer = $customer;
+        $userData->customer = $customer;
+
         $billingAddress = $this->billingAddressFactory->create($billingAddressData);
+        $customer->addBillingAddress($billingAddress);
+
+        $this->em->persist($customer);
+        $this->em->flush($customer);
 
         $user = $this->userFactory->create(
             $userData,
@@ -122,7 +139,6 @@ class CustomerUserFacade
 
         $this->setEmail($userData->email, $user);
 
-        $this->em->persist($billingAddress);
         $this->em->persist($user);
         $this->em->flush();
 
@@ -138,7 +154,16 @@ class CustomerUserFacade
      */
     public function create(CustomerUserData $customerData)
     {
+        $customer = $this->customerFactory->create();
+
+        $customerData->billingAddressData->customer = $customer;
+        $customerData->userData->customer = $customer;
+
         $billingAddress = $this->billingAddressFactory->create($customerData->billingAddressData);
+        $customer->addBillingAddress($billingAddress);
+        $this->em->persist($customer);
+        $this->em->flush($customer);
+
         $deliveryAddress = $this->deliveryAddressFactory->create($customerData->deliveryAddressData);
 
         $user = $this->userFactory->create(

@@ -74,5 +74,6 @@ class UserDataFactory implements UserDataFactoryInterface
         $userData->pricingGroup = $user->getPricingGroup();
         $userData->createdAt = $user->getCreatedAt();
         $userData->telephone = $user->getTelephone();
+        $userData->customer = $user->getCustomer();
     }
 }

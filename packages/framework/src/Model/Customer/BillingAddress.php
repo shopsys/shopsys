@@ -20,6 +20,14 @@ class BillingAddress
     protected $id;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
+     *
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\Customer", inversedBy="billingAddresses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $customer;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
@@ -90,6 +98,7 @@ class BillingAddress
             $this->companyTaxNumber = $billingAddressData->companyTaxNumber;
         }
         $this->country = $billingAddressData->country;
+        $this->customer = $billingAddressData->customer;
     }
 
     /**
@@ -175,5 +184,13 @@ class BillingAddress
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
+     */
+    public function getCustomer(): Customer
+    {
+        return $this->customer;
     }
 }

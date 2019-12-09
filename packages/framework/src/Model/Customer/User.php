@@ -31,6 +31,14 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
     protected $id;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
+     *
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\Customer")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $customer;
+
+    /**
      * @ORM\Column(type="string", length=100)
      */
     protected $firstName;
@@ -57,8 +65,6 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     * @ORM\OneToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\BillingAddress", cascade={"persist"})
-     * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id", nullable=false)
      */
     protected $billingAddress;
 
@@ -136,6 +142,7 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
         $this->pricingGroup = $userData->pricingGroup;
         $this->telephone = $userData->telephone;
         $this->setEmail($userData->email);
+        $this->customer = $userData->customer;
     }
 
     /**
@@ -205,6 +212,14 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
+     */
+    public function getCustomer(): Customer
+    {
+        return $this->customer;
+    }
+
+    /**
      * @return int
      */
     public function getDomainId()
@@ -257,8 +272,8 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
      */
     public function getFullName()
     {
-        if ($this->billingAddress->isCompanyCustomer()) {
-            return $this->billingAddress->getCompanyName();
+        if ($this->getBillingAddress()->isCompanyCustomer()) {
+            return $this->getBillingAddress()->getCompanyName();
         }
 
         return $this->lastName . ' ' . $this->firstName;
@@ -269,7 +284,7 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
      */
     public function getBillingAddress()
     {
-        return $this->billingAddress;
+        return $this->getCustomer()->getBillingAddress();
     }
 
     /**

@@ -44,6 +44,11 @@ class UserData
      */
     public $telephone;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
+     */
+    public $customer;
+
     public function __construct()
     {
     }

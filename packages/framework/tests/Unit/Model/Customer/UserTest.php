@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Customer\UserData;
 
@@ -14,12 +15,15 @@ class UserTest extends TestCase
 {
     public function testGetFullNameReturnsLastnameAndFirstnameForUser()
     {
+        $customer = new Customer();
         $userData = new UserData();
         $userData->firstName = 'Firstname';
         $userData->lastName = 'Lastname';
         $userData->email = 'no-reply@shopsys.com';
         $userData->domainId = 1;
+        $userData->customer = $customer;
         $billingAddress = $this->createBillingAddress();
+        $customer->addBillingAddress($billingAddress);
         $user = new User($userData, $billingAddress, null);
 
         $this->assertSame('Lastname Firstname', $user->getFullName());
@@ -27,15 +31,18 @@ class UserTest extends TestCase
 
     public function testGetFullNameReturnsCompanyNameForCompanyUser()
     {
+        $customer = new Customer();
         $userData = new UserData();
         $userData->firstName = 'Firstname';
         $userData->lastName = 'Lastname';
         $userData->email = 'no-reply@shopsys.com';
         $userData->domainId = 1;
+        $userData->customer = $customer;
         $billingAddressData = new BillingAddressData();
         $billingAddressData->companyCustomer = true;
         $billingAddressData->companyName = 'CompanyName';
         $billingAddress = new BillingAddress($billingAddressData);
+        $customer->addBillingAddress($billingAddress);
         $user = new User($userData, $billingAddress, null);
 
         $this->assertSame('CompanyName', $user->getFullName());
