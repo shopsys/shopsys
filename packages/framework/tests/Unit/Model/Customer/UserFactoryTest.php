@@ -4,8 +4,6 @@ namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
@@ -40,14 +38,6 @@ class UserFactoryTest extends TestCase
         $customerPasswordFacade = $this->createMock(CustomerUserPasswordFacade::class);
 
         return new UserFactory(new EntityNameResolver([]), $customerPasswordFacade);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     */
-    private function createBillingAddress()
-    {
-        return new BillingAddress(new BillingAddressData());
     }
 
     /**

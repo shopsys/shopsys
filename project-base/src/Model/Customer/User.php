@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User as BaseUser;
 use Shopsys\FrameworkBundle\Model\Customer\UserData as BaseUserData;
