@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
@@ -106,6 +107,15 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
                 'allow_add' => true,
                 'constraints' => [
                     new Constraints\Callback([$this, 'validateUploadedFiles']),
+                ],
+            ])
+            ->add('uploadedFilenames', CollectionType::class, [
+                'entry_type' => TextType::class,
+                'allow_add' => true,
+                'entry_options' => [
+                    'constraints' => [
+                        new Constraints\Length(['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']),
+                    ],
                 ],
             ]);
 

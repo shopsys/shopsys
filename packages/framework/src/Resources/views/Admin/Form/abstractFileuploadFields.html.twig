@@ -7,7 +7,7 @@
         <div {{ block('widget_attributes') }}>
             <div class="js-file-upload-item box-upload__result">
                 <div class="info">
-                    {% macro uploadedFile(uploadedFile, label, iconType, thumbnailUri, class) %}
+                    {% macro uploadedFile(uploadedFile, uploadedFilename, label, iconType, thumbnailUri, class) %}
                         <li class="js-file-upload-uploaded-file list-files__item {{ class|default('') }}">
                             <div class="list-files__item__in">
                                 <div class="list-files__item__file">
@@ -36,14 +36,16 @@
                                 </div>
 
                                 {{ form_widget(uploadedFile, { attr: { class: 'js-file-upload-input' }}) }}
+                                {{ form_widget(uploadedFilename, { attr: { class: 'js-file-upload-name-input' }}) }}
                             </div>
                         </li>
                     {% endmacro %}
 
-                    <ul class="list-files js-file-upload-uploaded-files" data-prototype="{{ self.uploadedFile(form.uploadedFiles.vars.prototype, '', '__icon-type__', false, 'js-file-upload-uploaded-file-template display-none')|escape }}">
-                        {% for uploadedFile in form.uploadedFiles %}
+                    <ul class="list-files js-file-upload-uploaded-files" data-prototype="{{ self.uploadedFile(form.uploadedFiles.vars.prototype, form.uploadedFilenames.vars.prototype, '', '__icon-type__', false, 'js-file-upload-uploaded-file-template display-none')|escape }}">
+                        {% for uploadedFile, key in form.uploadedFiles %}
+                            
                             {% set fileThumbnailInfo = getFileThumbnailInfoByTemporaryFilename(uploadedFile.vars.value) %}
-                            {{ self.uploadedFile(uploadedFile, getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri) }}
+                            {{ self.uploadedFile(uploadedFile, form.uploadedFilenames[key], getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri) }}
                         {% else %}
                             <li>
                                 {% do form.children.uploadedFiles.setRendered %}

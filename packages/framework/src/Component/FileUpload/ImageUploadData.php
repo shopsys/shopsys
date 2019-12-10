@@ -10,6 +10,11 @@ class ImageUploadData
     public $uploadedFiles = [];
 
     /**
+     * @var string[]
+     */
+    public $uploadedFilenames = [];
+
+    /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     public $imagesToDelete = [];

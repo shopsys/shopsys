@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 /**
  * @ORM\Table(name="uploaded_files", indexes={@ORM\Index(columns={"entity_name", "entity_id"})})
@@ -26,6 +27,20 @@ class UploadedFile implements EntityFileUploadInterface
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $slug;
 
     /**
      * @var string
@@ -79,14 +94,16 @@ class UploadedFile implements EntityFileUploadInterface
      * @param int $entityId
      * @param string $type
      * @param string $temporaryFilename
+     * @param string $uploadedFilename
      * @param int $position
      */
-    public function __construct(string $entityName, int $entityId, string $type, string $temporaryFilename, int $position)
+    public function __construct(string $entityName, int $entityId, string $type, string $temporaryFilename, string $uploadedFilename, int $position)
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
         $this->type = $type;
         $this->setTemporaryFilename($temporaryFilename);
+        $this->setNameAndSlug($uploadedFilename);
         $this->position = $position;
     }
 
@@ -152,6 +169,46 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return string
      */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemporaryFilename(): string
+    {
+        return $this->temporaryFilename;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return string
+     */
     public function getEntityName(): string
     {
         return $this->entityName;
@@ -205,5 +262,16 @@ class UploadedFile implements EntityFileUploadInterface
     public function setPosition(int $position): void
     {
         $this->position = $position;
+    }
+
+    /**
+     * @param string $temporaryFilename
+     */
+    public function setNameAndSlug(string $temporaryFilename): void
+    {
+        $filenameWithoutExtension = pathinfo($temporaryFilename, PATHINFO_FILENAME);
+
+        $this->setName($filenameWithoutExtension);
+        $this->setSlug(TransformString::stringToFriendlyUrlSlug($filenameWithoutExtension));
     }
 }

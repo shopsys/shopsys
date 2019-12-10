@@ -923,6 +923,9 @@ services:
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
 
+    Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory
+
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer: ~
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator: ~

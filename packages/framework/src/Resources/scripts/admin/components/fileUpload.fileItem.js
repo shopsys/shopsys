@@ -6,6 +6,7 @@
     Shopsys.fileUpload.FileItem = function (uploader, $file, loaded) {
         var self = this;
         var $label = $file.find('.js-file-upload-label');
+        var $name = $file.find('.js-file-upload-name-input');
         var $deleteButton = $file.find('.js-file-upload-delete');
         var $progress = $file.find('.js-file-upload-progress');
         var $progressBar = $file.find('.js-file-upload-progress-bar');
@@ -38,6 +39,10 @@
         this.setLabel = function (filename, filesize) {
             var sizeInMB = Math.round(filesize / 1000 / 1000 * 100) / 100; // https://en.wikipedia.org/wiki/Binary_prefix
             $label.text(filename + ' (' + sizeInMB + ' MB)');
+        };
+
+        this.setName = function (filename) {
+            $name.val(filename);
         };
 
         this.setProgress = function (percent) {

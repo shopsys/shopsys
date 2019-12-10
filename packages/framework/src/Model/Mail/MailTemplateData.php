@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
-
 class MailTemplateData
 {
     /**
@@ -39,6 +37,5 @@ class MailTemplateData
     public function __construct()
     {
         $this->sendMail = false;
-        $this->attachments = new UploadedFileData();
     }
 }

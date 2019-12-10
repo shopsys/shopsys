@@ -61,6 +61,9 @@ msgstr "Pole se musí shodovat."
 msgid "File extension {{ value }} is too long. It should have {{ limit }} character or less."
 msgstr "Přípona souboru {{ value }} je příliš dlouhá. Měla by mít {{ limit }} znaků nebo méně."
 
+msgid "File name cannot be longer than {{ limit }} characters"
+msgstr "Název souboru nesmí být delší než {{ limit }} znaků"
+
 msgid "First name cannot be longer then {{ limit }} characters"
 msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 
@@ -435,3 +438,4 @@ msgstr "Musíte vybrat nějakou doménu."
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
+
