@@ -14,6 +14,7 @@ Encore
     // order entry?
     // product entry?
     // cart entry?
+    .addEntry('styleguide', './assets/js/styleguide/styleguide.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction())

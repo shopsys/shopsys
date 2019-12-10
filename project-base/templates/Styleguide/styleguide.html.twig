@@ -6,15 +6,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/styleguide/styles/styleguide_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
 {% endblock %}
 
-{% block javascripts %}
-    <!-- codemirror -->
-    {{ importJavascripts([
-        'styleguide/styleguide.js',
-        'styleguide/plugins/codemirror/codemirror.minified.js'
-    ]) }}
-
-{% endblock %}
-
 {% block html_body %}
     <main class="container">
         <header class="styleguide-header">
@@ -1121,5 +1112,7 @@
             </main>
         </div>
     </main>
+
+    {{ encore_entry_script_tags('styleguide') }}
 
 {% endblock %}

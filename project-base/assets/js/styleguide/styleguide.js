@@ -1,3 +1,4 @@
+import 'codemirror';
 /**
  * Script used for the Styleguide structure only
  */
