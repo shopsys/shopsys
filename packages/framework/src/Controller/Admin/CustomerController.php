@@ -82,7 +82,7 @@ class CustomerController extends AdminBaseController
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
-    protected $customerDataFactory;
+    protected $customerUserDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface $userDataFactory
@@ -95,7 +95,7 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
      */
     public function __construct(
         UserDataFactoryInterface $userDataFactory,
@@ -108,7 +108,7 @@ class CustomerController extends AdminBaseController
         OrderFacade $orderFacade,
         LoginAsUserFacade $loginAsUserFacade,
         DomainRouterFactory $domainRouterFactory,
-        CustomerUserDataFactoryInterface $customerDataFactory
+        CustomerUserDataFactoryInterface $customerUserDataFactory
     ) {
         $this->userDataFactory = $userDataFactory;
         $this->customerListAdminFacade = $customerListAdminFacade;
@@ -120,7 +120,7 @@ class CustomerController extends AdminBaseController
         $this->orderFacade = $orderFacade;
         $this->loginAsUserFacade = $loginAsUserFacade;
         $this->domainRouterFactory = $domainRouterFactory;
-        $this->customerDataFactory = $customerDataFactory;
+        $this->customerUserDataFactory = $customerUserDataFactory;
     }
 
     /**
@@ -131,7 +131,7 @@ class CustomerController extends AdminBaseController
     public function editAction(Request $request, $id)
     {
         $user = $this->customerFacade->getUserById($id);
-        $customerData = $this->customerDataFactory->createFromUser($user);
+        $customerData = $this->customerUserDataFactory->createFromUser($user);
 
         $form = $this->createForm(CustomerUserFormType::class, $customerData, [
             'user' => $user,
@@ -225,7 +225,7 @@ class CustomerController extends AdminBaseController
      */
     public function newAction(Request $request)
     {
-        $customerData = $this->customerDataFactory->create();
+        $customerData = $this->customerUserDataFactory->create();
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $userData = $this->userDataFactory->createForDomainId($selectedDomainId);
         $customerData->userData = $userData;
@@ -278,7 +278,7 @@ class CustomerController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundUserException $ex) {
+        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException $ex) {
             $this->getFlashMessageSender()->addErrorFlash(t('Selected customer doesn\'t exist.'));
         }
 

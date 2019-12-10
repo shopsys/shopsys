@@ -19,18 +19,18 @@ class UserFactory implements UserFactoryInterface
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade
      */
-    protected $customerPasswordFacade;
+    protected $customerUserPasswordFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade $customerPasswordFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade $customerUserPasswordFacade
      */
     public function __construct(
         EntityNameResolver $entityNameResolver,
-        CustomerUserPasswordFacade $customerPasswordFacade
+        CustomerUserPasswordFacade $customerUserPasswordFacade
     ) {
         $this->entityNameResolver = $entityNameResolver;
-        $this->customerPasswordFacade = $customerPasswordFacade;
+        $this->customerUserPasswordFacade = $customerUserPasswordFacade;
     }
 
     /**
@@ -44,7 +44,7 @@ class UserFactory implements UserFactoryInterface
 
         $user = new $classData($userData, $deliveryAddress);
 
-        $this->customerPasswordFacade->changePassword($user, $userData->password);
+        $this->customerUserPasswordFacade->changePassword($user, $userData->password);
 
         return $user;
     }

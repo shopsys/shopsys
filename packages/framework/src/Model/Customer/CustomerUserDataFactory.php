@@ -56,13 +56,13 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      */
     public function createFromUser(User $user): CustomerUserData
     {
-        $customerData = new CustomerUserData(
+        $customerUserData = new CustomerUserData(
             $this->billingAddressDataFactory->createFromBillingAddress($user->getCustomer()->getBillingAddress()),
             $this->getDeliveryAddressDataFromUser($user),
             $this->userDataFactory->createFromUser($user)
         );
 
-        return $customerData;
+        return $customerUserData;
     }
 
     /**
@@ -89,14 +89,14 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
         $billingAddress = $user->getCustomer()->getBillingAddress();
         $deliveryAddress = $user->getDeliveryAddress();
 
-        $customerData = $this->createFromUser($user);
+        $customerUserData = $this->createFromUser($user);
 
-        $customerData->userData->firstName = Utils::ifNull($user->getFirstName(), $order->getFirstName());
-        $customerData->userData->lastName = Utils::ifNull($user->getLastName(), $order->getLastName());
-        $customerData->billingAddressData = $this->getAmendedBillingAddressDataByOrder($order, $billingAddress);
-        $customerData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder($order, $deliveryAddress);
+        $customerUserData->userData->firstName = Utils::ifNull($user->getFirstName(), $order->getFirstName());
+        $customerUserData->userData->lastName = Utils::ifNull($user->getLastName(), $order->getLastName());
+        $customerUserData->billingAddressData = $this->getAmendedBillingAddressDataByOrder($order, $billingAddress);
+        $customerUserData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder($order, $deliveryAddress);
 
-        return $customerData;
+        return $customerUserData;
     }
 
     /**

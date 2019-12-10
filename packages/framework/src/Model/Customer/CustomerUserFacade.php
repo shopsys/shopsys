@@ -21,7 +21,7 @@ class CustomerUserFacade
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
-    protected $customerDataFactory;
+    protected $customerUserDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface
@@ -56,42 +56,42 @@ class CustomerUserFacade
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade
      */
-    protected $customerPasswordFacade;
+    protected $customerUserPasswordFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface $deliveryAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface $userFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade $customerPasswordFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade $customerUserPasswordFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         UserRepository $userRepository,
-        CustomerUserDataFactoryInterface $customerDataFactory,
+        CustomerUserDataFactoryInterface $customerUserDataFactory,
         CustomerFactoryInterface $customerFactory,
         CustomerMailFacade $customerMailFacade,
         BillingAddressFactoryInterface $billingAddressFactory,
         DeliveryAddressFactoryInterface $deliveryAddressFactory,
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         UserFactoryInterface $userFactory,
-        CustomerUserPasswordFacade $customerPasswordFacade
+        CustomerUserPasswordFacade $customerUserPasswordFacade
     ) {
         $this->em = $em;
         $this->userRepository = $userRepository;
-        $this->customerDataFactory = $customerDataFactory;
+        $this->customerUserDataFactory = $customerUserDataFactory;
         $this->customerFactory = $customerFactory;
         $this->customerMailFacade = $customerMailFacade;
         $this->billingAddressFactory = $billingAddressFactory;
         $this->deliveryAddressFactory = $deliveryAddressFactory;
         $this->billingAddressDataFactory = $billingAddressDataFactory;
         $this->userFactory = $userFactory;
-        $this->customerPasswordFacade = $customerPasswordFacade;
+        $this->customerUserPasswordFacade = $customerUserPasswordFacade;
     }
 
     /**
@@ -176,23 +176,23 @@ class CustomerUserFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    protected function edit($userId, CustomerUserData $customerData)
+    protected function edit($userId, CustomerUserData $customerUserData)
     {
         $user = $this->getUserById($userId);
 
-        $user->edit($customerData->userData);
+        $user->edit($customerUserData->userData);
 
-        if ($customerData->userData->password !== null) {
-            $this->customerPasswordFacade->changePassword($user, $customerData->userData->password);
+        if ($customerUserData->userData->password !== null) {
+            $this->customerUserPasswordFacade->changePassword($user, $customerUserData->userData->password);
         }
 
-        $user->getCustomer()->getBillingAddress()->edit($customerData->billingAddressData);
+        $user->getCustomer()->getBillingAddress()->edit($customerUserData->billingAddressData);
 
-        $this->editDeliveryAddress($user, $customerData->deliveryAddressData);
+        $this->editDeliveryAddress($user, $customerUserData->deliveryAddressData);
 
         return $user;
     }
@@ -218,15 +218,15 @@ class CustomerUserFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    public function editByAdmin($userId, CustomerUserData $customerData)
+    public function editByAdmin($userId, CustomerUserData $customerUserData)
     {
-        $user = $this->edit($userId, $customerData);
+        $user = $this->edit($userId, $customerUserData);
 
-        $this->setEmail($customerData->userData->email, $user);
+        $this->setEmail($customerUserData->userData->email, $user);
 
         $this->em->flush();
 
@@ -235,13 +235,13 @@ class CustomerUserFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    public function editByCustomer($userId, CustomerUserData $customerData)
+    public function editByCustomer($userId, CustomerUserData $customerUserData)
     {
-        $user = $this->edit($userId, $customerData);
+        $user = $this->edit($userId, $customerUserData);
 
         $this->em->flush();
 
@@ -267,7 +267,7 @@ class CustomerUserFacade
     {
         $this->edit(
             $user->getId(),
-            $this->customerDataFactory->createAmendedByOrder($user, $order)
+            $this->customerUserDataFactory->createAmendedByOrder($user, $order)
         );
 
         $this->em->flush();

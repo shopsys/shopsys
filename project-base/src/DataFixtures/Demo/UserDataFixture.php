@@ -27,7 +27,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      */
-    protected $customerFacade;
+    protected $customerUserFacade;
 
     /**
      * @var \Faker\Generator
@@ -52,7 +52,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
-    protected $customerDataFactory;
+    protected $customerUserDataFactory;
 
     /**
      * @var \App\Model\Customer\UserDataFactory
@@ -75,35 +75,35 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     protected $customerFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerUserFacade
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
      * @param \App\Model\Customer\UserDataFactory $userDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      */
     public function __construct(
-        CustomerUserFacade $customerFacade,
+        CustomerUserFacade $customerUserFacade,
         Generator $faker,
         EntityManagerInterface $em,
         HashGenerator $hashGenerator,
         Domain $domain,
-        CustomerUserDataFactoryInterface $customerDataFactory,
+        CustomerUserDataFactoryInterface $customerUserDataFactory,
         UserDataFactoryInterface $userDataFactory,
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
         CustomerFactoryInterface $customerFactory
     ) {
-        $this->customerFacade = $customerFacade;
+        $this->customerUserFacade = $customerUserFacade;
         $this->faker = $faker;
         $this->em = $em;
         $this->hashGenerator = $hashGenerator;
         $this->domain = $domain;
-        $this->customerDataFactory = $customerDataFactory;
+        $this->customerUserDataFactory = $customerUserDataFactory;
         $this->userDataFactory = $userDataFactory;
         $this->billingAddressDataFactory = $billingAddressDataFactory;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
@@ -118,15 +118,15 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             if ($domainId === Domain::SECOND_DOMAIN_ID) {
-                $customersData = $this->getDistinctCustomersData($domainId);
+                $customerUserData = $this->getDistinctCustomersData($domainId);
             } else {
-                $customersData = $this->getDefaultCustomersData($domainId);
+                $customerUserData = $this->getDefaultCustomersData($domainId);
             }
 
-            foreach ($customersData as $customerData) {
+            foreach ($customerUserData as $customerData) {
                 $customerData->userData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
 
-                $customer = $this->customerFacade->create($customerData);
+                $customer = $this->customerUserFacade->create($customerData);
                 if ($customer->getId() === 1) {
                     $this->resetPassword($customer);
                     $this->addReference(self::USER_WITH_RESET_PASSWORD_HASH, $customer);
@@ -142,17 +142,17 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
      */
     protected function getDefaultCustomersData(int $domainId): array
     {
-        $customersData = [];
+        $customersUserData = [];
 
         // no-reply@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $userData->firstName = 'Jaromír';
         $userData->lastName = 'Jágr';
         $userData->email = 'no-reply@shopsys.com';
         $userData->password = 'user123';
         $userData->telephone = '605000123';
-        $billingAddressData = $customerData->billingAddressData;
+        $billingAddressData = $customerUserData->billingAddressData;
         $customer = $this->customerFactory->create();
         $userData->customer = $customer;
         $billingAddressData->customer = $customer;
@@ -163,12 +163,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $billingAddressData->city = 'Ostrava';
         $billingAddressData->postcode = '70200';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
+        $customerUserData->userData = $userData;
+        $customerUserData->billingAddressData = $billingAddressData;
+        $customersUserData[] = $customerUserData;
 
         // no-reply.3@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Igor';
@@ -181,12 +181,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Budišov nad Budišovkou';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
+        $customerUserData->userData = $userData;
+        $customerUserData->billingAddressData = $billingAddressData;
+        $customersUserData[] = $customerUserData;
 
         // no-reply.5@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Hana';
@@ -199,12 +199,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Brno';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
+        $customerUserData->userData = $userData;
+        $customerUserData->billingAddressData = $billingAddressData;
+        $customersUserData[] = $customerUserData;
 
         // no-reply.9@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Alexandr';
@@ -220,12 +220,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $billingAddressData->street = 'Na Strzi 3';
         $billingAddressData->postcode = '69084';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
+        $customerUserData->userData = $userData;
+        $customerUserData->billingAddressData = $billingAddressData;
+        $customersUserData[] = $customerUserData;
 
         // no-reply.10@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Pavel';
@@ -241,19 +241,19 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $billingAddressData->street = 'Turínská 5';
         $billingAddressData->postcode = '12345';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $deliveryAddressData = $customerData->deliveryAddressData;
+        $deliveryAddressData = $customerUserData->deliveryAddressData;
         $deliveryAddressData->addressFilled = true;
         $deliveryAddressData->city = 'Bahamy';
         $deliveryAddressData->postcode = '99999';
         $deliveryAddressData->street = 'Bahamská 99';
         $deliveryAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->deliveryAddressData = $deliveryAddressData;
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
+        $customerUserData->deliveryAddressData = $deliveryAddressData;
+        $customerUserData->userData = $userData;
+        $customerUserData->billingAddressData = $billingAddressData;
+        $customersUserData[] = $customerUserData;
 
         // vitek@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Rostislav';
@@ -270,7 +270,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $billingAddressData->street = 'Hlubinská 5';
         $billingAddressData->postcode = '70200';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $deliveryAddressData = $customerData->deliveryAddressData;
+        $deliveryAddressData = $customerUserData->deliveryAddressData;
         $deliveryAddressData->addressFilled = true;
         $deliveryAddressData->companyName = 'Rockpoint';
         $deliveryAddressData->firstName = 'Eva';
@@ -280,13 +280,13 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $deliveryAddressData->street = 'Rudná';
         $deliveryAddressData->telephone = '123456789';
         $deliveryAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->deliveryAddressData = $deliveryAddressData;
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
+        $customerUserData->deliveryAddressData = $deliveryAddressData;
+        $customerUserData->userData = $userData;
+        $customerUserData->billingAddressData = $billingAddressData;
+        $customersUserData[] = $customerUserData;
 
         // no-reply.11@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Ľubomír';
@@ -302,18 +302,18 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $billingAddressData->street = 'Brněnská';
         $billingAddressData->postcode = '1010';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA);
-        $deliveryAddressData = $customerData->deliveryAddressData;
+        $deliveryAddressData = $customerUserData->deliveryAddressData;
         $deliveryAddressData->addressFilled = true;
         $deliveryAddressData->city = 'Bratislava';
         $deliveryAddressData->postcode = '10100';
         $deliveryAddressData->street = 'Ostravská 55/65A';
         $deliveryAddressData->telephone = '758686320';
         $deliveryAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
+        $customerUserData->userData = $userData;
+        $customerUserData->billingAddressData = $billingAddressData;
+        $customersUserData[] = $customerUserData;
 
-        return $customersData;
+        return $customersUserData;
     }
 
     /**
@@ -326,7 +326,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $customersData = [];
 
         // no-reply.2@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Jana';
@@ -344,7 +344,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $customersData[] = $customerData;
 
         // no-reply.4@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Ida';
@@ -362,7 +362,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $customersData[] = $customerData;
 
         // no-reply.6@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Petr';
@@ -386,7 +386,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $customersData[] = $customerData;
 
         // no-reply.7@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Silva';
@@ -404,7 +404,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $customersData[] = $customerData;
 
         // no-reply.8@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Derick';
@@ -422,7 +422,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $customersData[] = $customerData;
 
         // no-reply@shopsys.com
-        $customerData = $this->customerDataFactory->create();
+        $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Johny';

@@ -9,7 +9,7 @@ class CustomerUserIdentifierFactory
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
@@ -17,12 +17,12 @@ class CustomerUserIdentifierFactory
     protected $session;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
-    public function __construct(CurrentCustomerUser $currentCustomer, SessionInterface $session)
+    public function __construct(CurrentCustomerUser $currentCustomerUser, SessionInterface $session)
     {
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
         $this->session = $session;
     }
 
@@ -39,7 +39,7 @@ class CustomerUserIdentifierFactory
             $cartIdentifier = $this->session->getId();
         }
 
-        $customerIdentifier = new CustomerUserIdentifier($cartIdentifier, $this->currentCustomer->findCurrentUser());
+        $customerIdentifier = new CustomerUserIdentifier($cartIdentifier, $this->currentCustomerUser->findCurrentUser());
 
         return $customerIdentifier;
     }

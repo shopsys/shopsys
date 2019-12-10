@@ -54,7 +54,7 @@ class UserRepository
         $user = $this->findUserByEmailAndDomain($email, $domainId);
 
         if ($user === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundByEmailAndDomainException(
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\ByEmailAndDomainNotFoundException(
                 $email,
                 $domainId
             );
@@ -71,7 +71,7 @@ class UserRepository
     {
         $user = $this->findById($id);
         if ($user === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundUserException($id);
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException($id);
         }
         return $user;
     }
