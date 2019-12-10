@@ -28,10 +28,10 @@ php phing grunt
 !!! hint
     If you are not familiar with `phing`, there is [a separate article](../introduction/console-commands-for-application-management-phing-targets.md) about it as well.
 
-### Scenario 2 - I want to change layout in left panel on my 2nd domain
+### Scenario 2 - I want to change layout in footer on my 2nd domain
 
-In the left panel, by default, there is a category tree and an advert box.
-Let us say we want to change the elements so the advert box goes first, then the category tree.
+In the footer, among other things, are on the right side contact phone number and email, list of articles and link to contact page.
+Let us say we want to change the elements so the list of articles goes first, then link to contact page, and the phone number and email are last.
 
 Open [`domains.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/config/domains.yml) and set `design_id` parameter for your 2nd domain.
 
@@ -48,18 +48,17 @@ Open [`domains.yml`](https://github.com/shopsys/shopsys/blob/9.0/project-base/co
 +          design_id: my-design
 ```
 
-Duplicate [`layoutWithPanel.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Layout/layoutWithPanel.html.twig)
-and name the new file `layoutWithPanel.my-design.html.twig`. The new file must be in the same folder as the original one.
+Duplicate [`footer.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Layout/footer.html.twig)
+and name the new file `footer.my-design.html.twig`. The new file must be in the same folder as the original one.
 
-In your new `layoutWithPanel.my-design.html.twig`, re-order the elements in the div element with class `web__main__panel`:
+In your new `footer.my-design.html.twig`, re-order the elements in the div element with class `footer__bottom__articles`:
 
 ```twig
-    <div class="web__main__panel">
-        {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction', {'positionName' : 'leftSidebar'})) }}
-
-        {{ render(controller('App\\Controller\\Front\\CategoryController:panelAction', { request: app.request } )) }}
-
-        {% block panel_content %}{% endblock %}
+    <div class="footer__bottom__articles">
+        <a class="menu__item__link" href="{{ url('front_contact') }}">{{ 'Contact'|trans }}</a>
+        {{ getShopInfoPhoneNumber() }}
+        {{ getShopInfoEmail() }}
+        {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction')) }}
     </div>
 ```
 

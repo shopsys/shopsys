@@ -17,11 +17,7 @@
         </div>
 
         <div class="web__main__panel dont-print">
-            {{ render(controller('App\\Controller\\Front\\CategoryController:panelAction', { request: app.request } )) }}
-
             {% block panel_content %}{% endblock %}
-
-            {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'leftSidebar'})) }}
         </div>
     </div>
 {% endblock %}

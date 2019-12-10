@@ -193,6 +193,7 @@ There you can find links to upgrade notes for other versions too.
 
 - remove left panel web layout and add horizontal menu ([#1540](https://github.com/shopsys/shopsys/pull/1540))
     - if you have your custom design you can skip this all task about twig files
+    - because of removing left panel, we also removed unnecessary advert position called `leftSidebar`. You can remove it by creating migration and update data fixtures. If you want to remove it, please make sure that all stuff linked to old position is moved to a new position.
     - because we don't have left panel on frontend anymore we have to center banner slider (or change its width to 100% - don't forget to change image size) [src/Resources/styles/front/common/components/box/slider.less](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/components/box/slider.less)
         ```diff
           @box-slider-width: @web-width - @web-panel-width - 2*@web-padding;
