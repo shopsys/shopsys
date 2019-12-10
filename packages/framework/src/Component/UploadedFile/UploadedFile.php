@@ -175,6 +175,14 @@ class UploadedFile implements EntityFileUploadInterface
     }
 
     /**
+     * @return string
+     */
+    public function getNameWithExtension(): string
+    {
+        return $this->name . '.' . $this->extension;
+    }
+
+    /**
      * @param string $name
      */
     public function setName(string $name): void
@@ -196,6 +204,14 @@ class UploadedFile implements EntityFileUploadInterface
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlugWithExtension(): string
+    {
+        return $this->slug . '.' . $this->extension;
     }
 
     /**

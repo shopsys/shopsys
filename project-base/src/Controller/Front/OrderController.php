@@ -366,7 +366,8 @@ class OrderController extends FrontBaseController
 
         return new DownloadFileResponse(
             $this->legalConditionsFacade->getTermsAndConditionsDownloadFilename(),
-            $response->getContent()
+            $response->getContent(),
+            'text/html'
         );
     }
 

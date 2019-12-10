@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 
 class UploadedFileLocator
 {
@@ -23,15 +24,26 @@ class UploadedFileLocator
     protected $filesystem;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
+     */
+    protected $domainRouterFactory;
+
+    /**
      * @param string $uploadedFileDir
      * @param string $uploadedFileUrlPrefix
      * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
-    public function __construct($uploadedFileDir, $uploadedFileUrlPrefix, FilesystemInterface $filesystem)
-    {
+    public function __construct(
+        $uploadedFileDir,
+        $uploadedFileUrlPrefix,
+        FilesystemInterface $filesystem,
+        DomainRouterFactory $domainRouterFactory
+    ) {
         $this->uploadedFileDir = $uploadedFileDir;
         $this->uploadedFileUrlPrefix = $uploadedFileUrlPrefix;
         $this->filesystem = $filesystem;
+        $this->domainRouterFactory = $domainRouterFactory;
     }
 
     /**
@@ -60,9 +72,12 @@ class UploadedFileLocator
     public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile)
     {
         if ($this->fileExists($uploadedFile)) {
-            return $domainConfig->getUrl()
-            . $this->uploadedFileUrlPrefix
-            . $this->getRelativeUploadedFileFilepath($uploadedFile);
+            $domainRouter = $this->domainRouterFactory->getRouter($domainConfig->getId());
+
+            return $domainRouter->generate('front_download_uploaded_file', [
+                'uploadedFileId' => $uploadedFile->getId(),
+                'uploadedFilename' => $uploadedFile->getSlugWithExtension(),
+            ]);
         }
 
         throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException();

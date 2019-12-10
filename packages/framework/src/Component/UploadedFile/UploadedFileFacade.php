@@ -273,4 +273,15 @@ class UploadedFileFacade
             $this->em->flush($file);
         }
     }
+
+    /**
+     * @param int $uploadedFileId
+     * @param string $uploadedFileSlug
+     * @param string $uploadedFileExtension
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
+     */
+    public function getByIdSlugAndExtension(int $uploadedFileId, string $uploadedFileSlug, string $uploadedFileExtension): UploadedFile
+    {
+        return $this->uploadedFileRepository->getByIdSlugAndExtension($uploadedFileId, $uploadedFileSlug, $uploadedFileExtension);
+    }
 }
