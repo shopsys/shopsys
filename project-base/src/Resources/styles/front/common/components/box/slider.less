@@ -1,5 +1,6 @@
 @box-slider-width: @web-width - @web-panel-width - 2*@web-padding;
 @box-slider-point-size: 8px;
+@box-slider-bottom-gap: 30px;
 
 .box-slider {
     display: none;
@@ -7,9 +8,9 @@
     @media @query-lg {
         display: block;
         position: relative;
-        margin-bottom: @margin-gap;
         width: @box-slider-width;
         max-width: 100%;
+        margin: 0 auto @box-slider-bottom-gap auto;
         visibility: hidden;
 
         &__in {

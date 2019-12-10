@@ -13,7 +13,6 @@ class AdvertPositionRegistry
             'header' => t('under heading'),
             'footer' => t('above footer'),
             'productList' => t('in category (above the category name)'),
-            'leftSidebar' => t('in left panel (under category tree)'),
         ];
     }
 

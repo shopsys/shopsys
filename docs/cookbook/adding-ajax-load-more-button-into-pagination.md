@@ -87,7 +87,7 @@ We will also define `pageQueryParameter` variable so it will have unique name an
 
 ```twig
 {# templates/Front/Content/Brand/list.html.twig #}
-{% extends 'Front/Layout/layoutWithPanel.html.twig' %}
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
 
 {% block title %}
     {{ 'Brand overview'|trans }}

@@ -1,5 +1,13 @@
 @list-menu-padding-right: 25px;
 @list-menu-arrow-size: 25px;
+@list-menu-height: 30px;
+
+@list-menu-bg: @color-primary;
+@list-menu-submenu-bg: darken(@list-menu-bg, 10%);
+@list-menu-border-color: lighten(@list-menu-bg, 5%);
+
+@list-menu-font-color: @color-f;
+@list-menu-font-hover-color: @color-f;
 
 // global settings
 .list-menu {
@@ -11,7 +19,7 @@
         &__control {
             position: absolute;
             top: 50%;
-            right: 0;
+            right: auto;
             margin-top: -@list-menu-arrow-size/2;
             height: @list-menu-arrow-size;
             line-height: @list-menu-arrow-size;
@@ -36,14 +44,10 @@
 
 // mobile + tablet version
 @media @query-tablet {
-    @list-menu-mobile-bg: @color-primary;
-    @list-menu-mobile-border-color: lighten(@list-menu-mobile-bg, 5%);
     @list-menu-mobile-position: @web-header-mobile-dropdown-position;
 
     .list-menu {
         .reset-ul();
-
-        background: @list-menu-mobile-bg;
 
         &--root {
             display: none;
@@ -57,7 +61,12 @@
         &__item {
             display: block;
 
-            border-top: 1px solid @list-menu-mobile-border-color;
+            border-top: 1px solid @list-menu-border-color;
+            background-color: @list-menu-bg;
+
+            &.active {
+                background-color: @list-menu-submenu-bg;
+            }
 
             &:first-child {
                 border-top: 0;
@@ -67,15 +76,15 @@
                 display: block;
                 padding: 10px @list-menu-padding-right 10px 20px;
 
-                color: @color-f;
+                color: @list-menu-font-color;
+                font-size: 11px;
                 text-decoration: none;
 
                 &:hover {
-                    background: @list-menu-mobile-border-color;
-                    color: @color-f;
+                    background-color: @list-menu-border-color;
+                    color: @list-menu-font-hover-color;
                 }
 
-                font-size: 11px;
 
                 &--level-1 {
                     font-size: 12px;
@@ -94,7 +103,9 @@
                 }
 
                 &.current {
-                    background: @list-menu-mobile-border-color;
+                    background-color: @list-menu-border-color;
+
+                    color: @list-menu-font-color;
                     font-weight: bold;
                 }
             }
@@ -103,7 +114,11 @@
         & & {
             margin-bottom: 0;
 
-            border-top: 1px solid @list-menu-mobile-border-color;
+            border-top: 1px solid @list-menu-border-color;
+
+            .list-menu__item {
+                background-color: @list-menu-submenu-bg;
+            }
         }
     }
 }
@@ -112,24 +127,60 @@
 @media @query-lg {
     .list-menu {
         .reset-ul();
-        margin-bottom: @margin-gap;
+        display: none;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 100%;
+        z-index: 9;
+
+        &--root {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            top: 0;
+            margin-bottom: @margin-gap;
+
+            background-color: @list-menu-bg;
+        }
+
+        &--dropdown {
+            position: relative;
+            top: 0;
+        }
 
         &__item {
-            display: block;
+            background-color: @list-menu-submenu-bg;
 
-            border-top: 1px solid @color-border;
-            background: @color-light;
+            .list-menu--root & {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                background-color: @list-menu-bg;
+            }
 
-            &:first-child {
-                border-top: 0;
+            &.active {
+                background-color: @list-menu-submenu-bg;
             }
 
             &__link {
-                display: block;
+                width: 100%;
                 padding: 8px @list-menu-padding-right 8px 50px;
 
-                text-decoration: none;
+                color: @list-menu-font-color;
                 font-size: 11px;
+                text-decoration: none;
+
+                &:hover {
+                    color: @list-menu-font-hover-color;
+                    background-color: @list-menu-border-color;
+
+                    .svg {
+                        text-decoration: none;
+                    }
+                }
 
                 &--level-1 {
                     padding-left: 10px;
@@ -150,16 +201,16 @@
                 }
 
                 &.current {
-                    color: @color-base;
+                    color: @list-menu-font-hover-color;
                     font-weight: bold;
                 }
             }
 
             &__control {
-                color: @color-a;
+                color: @list-menu-font-color;
 
                 &:hover {
-                    color: @color-link-hover;
+                    color: @list-menu-font-hover-color;
                 }
             }
         }
@@ -168,6 +219,10 @@
             margin-bottom: 0;
 
             border-top: 1px solid @color-border;
+
+            .list-menu__item {
+                background-color: @list-menu-submenu-bg;
+            }
         }
     }
 }

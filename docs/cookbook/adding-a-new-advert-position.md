@@ -3,7 +3,6 @@
 By default, you can place an advert banner on these predefined positions:
 
 - under the page header
-- in the left panel (under the category tree)
 - above the page footer
 - in a category detail (above the category name)
 

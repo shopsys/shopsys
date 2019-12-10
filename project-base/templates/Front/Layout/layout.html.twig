@@ -26,6 +26,11 @@
                 </div>
             </div>
         </div>
+        <div class="web__line">
+            <div class="web__container">
+                {{ render(controller('App\\Controller\\Front\\CategoryController:panelAction', { request: app.request } )) }}
+            </div>
+        </div>
 
         {% block content %}{% endblock %}
 
