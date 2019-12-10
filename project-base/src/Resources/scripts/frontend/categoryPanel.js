@@ -19,10 +19,10 @@
 
         if (isOpen) {
             $categoryList.slideUp('fast');
-            $categoryItem.removeClass("active");
+            $categoryItem.removeClass('active');
         } else if ($categoryList.length > 0) {
             $categoryList.slideDown('fast');
-            $categoryItem.addClass("active");
+            $categoryItem.addClass('active');
         } else {
             loadCategoryItemContent($categoryItem, $categoryCollapseControl.data('url'));
         }
