@@ -12,9 +12,9 @@ use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class UserDataFixture
@@ -42,7 +42,7 @@ class UserDataFixture
     private $sqlLoggerFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
      */
     private $customerUserEditFacade;
 
@@ -81,7 +81,7 @@ class UserDataFixture
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerUserEditFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $customerUserEditFacade
      * @param \App\Model\Customer\UserDataFactory $userDataFactory
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
@@ -94,7 +94,7 @@ class UserDataFixture
         EntityManagerInterface $em,
         Domain $domain,
         SqlLoggerFacade $sqlLoggerFacade,
-        CustomerUserFacade $customerUserEditFacade,
+        UserFacade $customerUserEditFacade,
         UserDataFactoryInterface $userDataFactory,
         Faker $faker,
         PersistentReferenceFacade $persistentReferenceFacade,
@@ -152,10 +152,10 @@ class UserDataFixture
      */
     private function createCustomerOnDomain($domainId, $userNumber)
     {
-        $customerData = $this->getRandomCustomerDataByDomainId($domainId, $userNumber);
+        $customerUserData = $this->getRandomCustomerUserDataByDomainId($domainId, $userNumber);
 
         /** @var \App\Model\Customer\User $user */
-        $user = $this->customerUserEditFacade->create($customerData);
+        $user = $this->customerUserEditFacade->create($customerUserData);
 
         return $user;
     }
@@ -165,7 +165,7 @@ class UserDataFixture
      * @param int $userNumber
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
      */
-    private function getRandomCustomerDataByDomainId($domainId, $userNumber)
+    private function getRandomCustomerUserDataByDomainId($domainId, $userNumber)
     {
         $customerUserData = $this->customerUserDataFactory->create();
         $country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);

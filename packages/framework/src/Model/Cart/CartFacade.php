@@ -37,7 +37,7 @@ class CartFacade
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory
      */
-    protected $customerIdentifierFactory;
+    protected $customerUserIdentifierFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -78,7 +78,7 @@ class CartFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory $customerIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
@@ -91,7 +91,7 @@ class CartFacade
         EntityManagerInterface $em,
         CartFactory $cartFactory,
         ProductRepository $productRepository,
-        CustomerUserIdentifierFactory $customerIdentifierFactory,
+        CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         Domain $domain,
         CurrentCustomerUser $currentCustomer,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
@@ -103,7 +103,7 @@ class CartFacade
         $this->em = $em;
         $this->cartFactory = $cartFactory;
         $this->productRepository = $productRepository;
-        $this->customerIdentifierFactory = $customerIdentifierFactory;
+        $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
         $this->domain = $domain;
         $this->currentCustomer = $currentCustomer;
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
@@ -259,7 +259,7 @@ class CartFacade
      */
     public function findCartOfCurrentCustomer()
     {
-        $customerIdentifier = $this->customerIdentifierFactory->get();
+        $customerIdentifier = $this->customerUserIdentifierFactory->get();
 
         return $this->findCartByCustomerIdentifier($customerIdentifier);
     }
@@ -269,7 +269,7 @@ class CartFacade
      */
     public function getCartOfCurrentCustomerCreateIfNotExists()
     {
-        $customerIdentifier = $this->customerIdentifierFactory->get();
+        $customerIdentifier = $this->customerUserIdentifierFactory->get();
 
         return $this->getCartByCustomerIdentifierCreateIfNotExists($customerIdentifier);
     }

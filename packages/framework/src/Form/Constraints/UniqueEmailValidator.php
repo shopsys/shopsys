@@ -3,16 +3,16 @@
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class UniqueEmailValidator extends ConstraintValidator
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
      */
-    private $customerFacade;
+    private $userFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -20,14 +20,14 @@ class UniqueEmailValidator extends ConstraintValidator
     private $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $userFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CustomerUserFacade $customerFacade,
+        UserFacade $userFacade,
         Domain $domain
     ) {
-        $this->customerFacade = $customerFacade;
+        $this->userFacade = $userFacade;
         $this->domain = $domain;
     }
 
@@ -45,7 +45,7 @@ class UniqueEmailValidator extends ConstraintValidator
 
         $domainId = $constraint->domainId ?? $this->domain->getId();
 
-        if ($constraint->ignoredEmail != $value && $this->customerFacade->findUserByEmailAndDomain($email, $domainId) !== null) {
+        if ($constraint->ignoredEmail != $value && $this->userFacade->findUserByEmailAndDomain($email, $domainId) !== null) {
             $this->context->addViolation(
                 $constraint->message,
                 [

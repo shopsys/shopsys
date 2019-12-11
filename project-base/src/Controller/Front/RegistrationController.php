@@ -6,8 +6,8 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Registration\RegistrationFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 class RegistrationController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
      */
-    private $customerFacade;
+    private $userFacade;
 
     /**
      * @var \App\Model\Customer\UserDataFactory
@@ -44,20 +44,20 @@ class RegistrationController extends FrontBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\UserDataFactory $userDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $userFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      */
     public function __construct(
         Domain $domain,
         UserDataFactoryInterface $userDataFactory,
-        CustomerUserFacade $customerFacade,
+        UserFacade $userFacade,
         Authenticator $authenticator,
         LegalConditionsFacade $legalConditionsFacade
     ) {
         $this->domain = $domain;
         $this->userDataFactory = $userDataFactory;
-        $this->customerFacade = $customerFacade;
+        $this->userFacade = $userFacade;
         $this->authenticator = $authenticator;
         $this->legalConditionsFacade = $legalConditionsFacade;
     }
@@ -68,7 +68,7 @@ class RegistrationController extends FrontBaseController
     public function existsEmailAction(Request $request)
     {
         $email = $request->get('email');
-        $user = $this->customerFacade->findUserByEmailAndDomain($email, $this->domain->getId());
+        $user = $this->userFacade->findUserByEmailAndDomain($email, $this->domain->getId());
 
         return new JsonResponse($user !== null);
     }
@@ -90,7 +90,7 @@ class RegistrationController extends FrontBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $userData = $form->getData();
 
-            $user = $this->customerFacade->register($userData);
+            $user = $this->userFacade->register($userData);
             $this->authenticator->loginUser($user, $request);
 
             $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));

@@ -7,7 +7,7 @@ namespace App\Controller\Front;
 use App\Form\Front\Customer\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomerController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
      */
-    private $customerFacade;
+    private $userFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -44,30 +44,30 @@ class CustomerController extends FrontBaseController
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
-    private $customerDataFactory;
+    private $customerUserDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $userFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
      */
     public function __construct(
-        CustomerUserFacade $customerFacade,
+        UserFacade $userFacade,
         OrderFacade $orderFacade,
         Domain $domain,
         OrderItemPriceCalculation $orderItemPriceCalculation,
         LoginAsUserFacade $loginAsUserFacade,
-        CustomerUserDataFactoryInterface $customerDataFactory
+        CustomerUserDataFactoryInterface $customerUserDataFactory
     ) {
-        $this->customerFacade = $customerFacade;
+        $this->userFacade = $userFacade;
         $this->orderFacade = $orderFacade;
         $this->domain = $domain;
         $this->orderItemPriceCalculation = $orderItemPriceCalculation;
         $this->loginAsUserFacade = $loginAsUserFacade;
-        $this->customerDataFactory = $customerDataFactory;
+        $this->customerUserDataFactory = $customerUserDataFactory;
     }
 
     /**
@@ -81,17 +81,17 @@ class CustomerController extends FrontBaseController
         }
 
         $user = $this->getUser();
-        $customerData = $this->customerDataFactory->createFromUser($user);
+        $customerUserData = $this->customerUserDataFactory->createFromUser($user);
 
-        $form = $this->createForm(CustomerUserFormType::class, $customerData, [
+        $form = $this->createForm(CustomerUserFormType::class, $customerUserData, [
             'domain_id' => $this->domain->getId(),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $customerData = $form->getData();
+            $customerUserData = $form->getData();
 
-            $this->customerFacade->editByCustomer($user->getId(), $customerData);
+            $this->userFacade->editByCustomer($user->getId(), $customerUserData);
 
             $this->getFlashMessageSender()->addSuccessFlash(t('Your data had been successfully updated'));
             return $this->redirectToRoute('front_customer_edit');

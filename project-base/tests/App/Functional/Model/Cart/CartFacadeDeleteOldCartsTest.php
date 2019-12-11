@@ -69,10 +69,10 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     private $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
      * @inject
      */
-    private $customerFacade;
+    private $userFacade;
 
     public function testOldUnregisteredCustomerCartGetsDeleted()
     {
@@ -155,7 +155,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      */
     private function getCartFacadeForRegisteredCustomer()
     {
-        $user = $this->customerFacade->getUserById(1);
+        $user = $this->userFacade->getUserById(1);
 
         return $this->getCartFacadeForCustomer($this->getCustomerIdentifierForRegisteredCustomer());
     }
@@ -179,7 +179,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
             $this->getEntityManager(),
             $this->cartFactory,
             $this->productRepository,
-            $this->getCustomerIdentifierFactoryMock($customerIdentifier),
+            $this->getCustomerUserIdentifierFactoryMock($customerIdentifier),
             $this->domain,
             $this->currentCustomer,
             $this->currentPromoCodeFacade,
@@ -195,15 +195,15 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    private function getCustomerIdentifierFactoryMock(CustomerUserIdentifier $customerIdentifier)
+    private function getCustomerUserIdentifierFactoryMock(CustomerUserIdentifier $customerIdentifier)
     {
-        $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
+        $customerUserIdentifierFactoryMock = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $customerIdentifierFactoryMock->method('get')->willReturn($customerIdentifier);
+        $customerUserIdentifierFactoryMock->method('get')->willReturn($customerIdentifier);
 
-        return $customerIdentifierFactoryMock;
+        return $customerUserIdentifierFactoryMock;
     }
 
     /**
@@ -233,7 +233,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      */
     private function getCustomerIdentifierForRegisteredCustomer()
     {
-        $user = $this->customerFacade->getUserById(1);
+        $user = $this->userFacade->getUserById(1);
 
         return new CustomerUserIdentifier('', $user);
     }

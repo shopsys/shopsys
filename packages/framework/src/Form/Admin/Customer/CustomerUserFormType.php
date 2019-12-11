@@ -16,14 +16,14 @@ class CustomerUserFormType extends AbstractType
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
-    private $customerDataFactory;
+    private $customerUserDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
      */
-    public function __construct(CustomerUserDataFactoryInterface $customerDataFactory)
+    public function __construct(CustomerUserDataFactoryInterface $customerUserDataFactory)
     {
-        $this->customerDataFactory = $customerDataFactory;
+        $this->customerUserDataFactory = $customerUserDataFactory;
     }
 
     /**
@@ -79,7 +79,7 @@ class CustomerUserFormType extends AbstractType
             ->setAllowedTypes('user', [User::class, 'null'])
             ->setAllowedTypes('domain_id', 'int')
             ->setDefaults([
-                'empty_data' => $this->customerDataFactory->create(),
+                'empty_data' => $this->customerUserDataFactory->create(),
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
     }

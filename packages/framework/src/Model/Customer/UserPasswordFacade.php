@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
-class CustomerUserPasswordFacade
+class UserPasswordFacade
 {
     public const RESET_PASSWORD_HASH_LENGTH = 50;
 

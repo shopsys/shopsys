@@ -20,7 +20,7 @@ class CartMigrationFacade
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory
      */
-    protected $customerIdentifierFactory;
+    protected $customerUserIdentifierFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
@@ -34,18 +34,18 @@ class CartMigrationFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory $customerIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         EntityManagerInterface $em,
-        CustomerUserIdentifierFactory $customerIdentifierFactory,
+        CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         CartItemFactoryInterface $cartItemFactory,
         CartFacade $cartFacade
     ) {
         $this->em = $em;
-        $this->customerIdentifierFactory = $customerIdentifierFactory;
+        $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
         $this->cartItemFactory = $cartItemFactory;
         $this->cartFacade = $cartFacade;
     }
@@ -55,7 +55,7 @@ class CartMigrationFacade
      */
     public function mergeCurrentCartWithCart(Cart $cart): void
     {
-        $customerIdentifier = $this->customerIdentifierFactory->get();
+        $customerIdentifier = $this->customerUserIdentifierFactory->get();
         $currentCart = $this->cartFacade->getCartByCustomerIdentifierCreateIfNotExists($customerIdentifier);
 
         foreach ($cart->getItems() as $itemToMerge) {
@@ -92,7 +92,7 @@ class CartMigrationFacade
 
         $previousCartIdentifier = $session->get(static::SESSION_PREVIOUS_CART_IDENTIFIER);
         if (!empty($previousCartIdentifier) && $previousCartIdentifier !== $session->getId()) {
-            $previousCustomerIdentifier = $this->customerIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
+            $previousCustomerIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
             $cart = $this->cartFacade->findCartByCustomerIdentifier($previousCustomerIdentifier);
 
             if ($cart !== null) {

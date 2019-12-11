@@ -26,10 +26,10 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
     private $productPriceRecalculator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
      * @inject
      */
-    private $customerFacade;
+    private $userFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface
@@ -41,7 +41,7 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      * @inject
      */
-    private $customerDataFactory;
+    private $customerUserDataFactory;
 
     public function testCreate()
     {
@@ -72,13 +72,13 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroupToReplaceWith */
         $pricingGroupToReplaceWith = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
         /** @var \App\Model\Customer\User $user */
-        $user = $this->customerFacade->getUserById(1);
+        $user = $this->userFacade->getUserById(1);
 
         $userData = $this->userDataFactory->createFromUser($user);
         $userData->pricingGroup = $pricingGroupToDelete;
-        $customerData = $this->customerDataFactory->create();
-        $customerData->userData = $userData;
-        $this->customerFacade->editByAdmin($user->getId(), $customerData);
+        $customerUserData = $this->customerUserDataFactory->create();
+        $customerUserData->userData = $userData;
+        $this->userFacade->editByAdmin($user->getId(), $customerUserData);
 
         $this->pricingGroupFacade->delete($pricingGroupToDelete->getId(), $pricingGroupToReplaceWith->getId());
 

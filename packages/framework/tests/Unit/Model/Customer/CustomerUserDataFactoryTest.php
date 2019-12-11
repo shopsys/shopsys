@@ -33,9 +33,9 @@ class CustomerUserDataFactoryTest extends TestCase
 {
     private const DOMAIN_ID = 1;
 
-    public function testGetAmendedCustomerDataByOrderWithoutChanges()
+    public function testGetAmendedCustomerUserDataByOrderWithoutChanges()
     {
-        $customerDataFactory = $this->getCustomerDataFactory();
+        $customerUserDataFactory = $this->getCustomerUserDataFactory();
 
         $customer = new Customer();
 
@@ -122,16 +122,16 @@ class CustomerUserDataFactoryTest extends TestCase
             'companyTaxNumber'
         );
 
-        $customerData = $customerDataFactory->createAmendedByOrder($user, $order);
+        $customerUserData = $customerUserDataFactory->createAmendedByOrder($user, $order);
 
-        $this->assertEquals($userData, $customerData->userData);
-        $this->assertEquals($billingAddressData, $customerData->billingAddressData);
-        $this->assertEquals($deliveryAddressData, $customerData->deliveryAddressData);
+        $this->assertEquals($userData, $customerUserData->userData);
+        $this->assertEquals($billingAddressData, $customerUserData->billingAddressData);
+        $this->assertEquals($deliveryAddressData, $customerUserData->deliveryAddressData);
     }
 
-    public function testGetAmendedCustomerDataByOrder()
+    public function testGetAmendedCustomerUserDataByOrder()
     {
-        $customerDataFactory = $this->getCustomerDataFactory();
+        $customerUserDataFactory = $this->getCustomerUserDataFactory();
 
         $billingCountryData = new CountryData();
         $billingCountryData->names = ['cs' => 'Česká republika'];
@@ -208,24 +208,24 @@ class CustomerUserDataFactoryTest extends TestCase
         $deliveryAddressData->telephone = $order->getDeliveryTelephone();
         $deliveryAddressData->country = $deliveryCountry;
 
-        $customerData = $customerDataFactory->createAmendedByOrder($user, $order);
+        $customerUserData = $customerUserDataFactory->createAmendedByOrder($user, $order);
 
-        $this->assertEquals($userData, $customerData->userData);
-        $this->assertEquals($deliveryAddressData, $customerData->deliveryAddressData);
-        $this->assertTrue($customerData->billingAddressData->companyCustomer);
-        $this->assertSame($order->getCompanyName(), $customerData->billingAddressData->companyName);
-        $this->assertSame($order->getCompanyNumber(), $customerData->billingAddressData->companyNumber);
-        $this->assertSame($order->getCompanyTaxNumber(), $customerData->billingAddressData->companyTaxNumber);
-        $this->assertSame($order->getStreet(), $customerData->billingAddressData->street);
-        $this->assertSame($order->getCity(), $customerData->billingAddressData->city);
-        $this->assertSame($order->getPostcode(), $customerData->billingAddressData->postcode);
-        $this->assertSame($order->getCountry(), $customerData->billingAddressData->country);
+        $this->assertEquals($userData, $customerUserData->userData);
+        $this->assertEquals($deliveryAddressData, $customerUserData->deliveryAddressData);
+        $this->assertTrue($customerUserData->billingAddressData->companyCustomer);
+        $this->assertSame($order->getCompanyName(), $customerUserData->billingAddressData->companyName);
+        $this->assertSame($order->getCompanyNumber(), $customerUserData->billingAddressData->companyNumber);
+        $this->assertSame($order->getCompanyTaxNumber(), $customerUserData->billingAddressData->companyTaxNumber);
+        $this->assertSame($order->getStreet(), $customerUserData->billingAddressData->street);
+        $this->assertSame($order->getCity(), $customerUserData->billingAddressData->city);
+        $this->assertSame($order->getPostcode(), $customerUserData->billingAddressData->postcode);
+        $this->assertSame($order->getCountry(), $customerUserData->billingAddressData->country);
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory
      */
-    private function getCustomerDataFactory(): CustomerUserDataFactory
+    private function getCustomerUserDataFactory(): CustomerUserDataFactory
     {
         return new CustomerUserDataFactory(
             new BillingAddressDataFactory(),

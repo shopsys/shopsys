@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper;
@@ -98,7 +98,7 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createMock(AdministratorFrontSecurityFacade::class),
             $this->createMock(CurrentPromoCodeFacade::class),
             $this->createMock(CartFacade::class),
-            $this->createMock(CustomerUserFacade::class),
+            $this->createMock(UserFacade::class),
             $this->createMock(CurrentCustomerUser::class),
             $this->createMock(OrderPreviewFactory::class),
             $this->createMock(OrderProductFacade::class),

@@ -9,8 +9,8 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -98,9 +98,9 @@ class OrderFacade
     protected $cartFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
      */
-    protected $customerFacade;
+    protected $userFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
@@ -180,7 +180,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $userFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
@@ -208,7 +208,7 @@ class OrderFacade
         AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
         CartFacade $cartFacade,
-        CustomerUserFacade $customerFacade,
+        UserFacade $userFacade,
         CurrentCustomerUser $currentCustomer,
         OrderPreviewFactory $orderPreviewFactory,
         OrderProductFacade $orderProductFacade,
@@ -234,7 +234,7 @@ class OrderFacade
         $this->administratorFrontSecurityFacade = $administratorFrontSecurityFacade;
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
         $this->cartFacade = $cartFacade;
-        $this->customerFacade = $customerFacade;
+        $this->userFacade = $userFacade;
         $this->currentCustomer = $currentCustomer;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->orderProductFacade = $orderProductFacade;
@@ -306,7 +306,7 @@ class OrderFacade
         $this->cartFacade->deleteCartOfCurrentCustomer();
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
         if ($user instanceof User) {
-            $this->customerFacade->amendCustomerDataFromOrder($user, $order);
+            $this->userFacade->amendUserDataFromOrder($user, $order);
         }
 
         return $order;

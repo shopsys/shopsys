@@ -8,7 +8,7 @@ use App\Form\Front\PersonalData\PersonalDataFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade;
@@ -31,9 +31,9 @@ class PersonalDataController extends FrontBaseController
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
      */
-    private $customerFacade;
+    private $userFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
@@ -68,7 +68,7 @@ class PersonalDataController extends FrontBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $userFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade $personalDataAccessMailFacade
@@ -79,7 +79,7 @@ class PersonalDataController extends FrontBaseController
     public function __construct(
         Setting $setting,
         Domain $domain,
-        CustomerUserFacade $customerFacade,
+        UserFacade $userFacade,
         OrderFacade $orderFacade,
         NewsletterFacade $newsletterFacade,
         PersonalDataAccessMailFacade $personalDataAccessMailFacade,
@@ -89,7 +89,7 @@ class PersonalDataController extends FrontBaseController
     ) {
         $this->setting = $setting;
         $this->domain = $domain;
-        $this->customerFacade = $customerFacade;
+        $this->userFacade = $userFacade;
         $this->orderFacade = $orderFacade;
         $this->newsletterFacade = $newsletterFacade;
         $this->personalDataAccessMailFacade = $personalDataAccessMailFacade;
@@ -169,7 +169,7 @@ class PersonalDataController extends FrontBaseController
         );
 
         if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY) {
-            $user = $this->customerFacade->findUserByEmailAndDomain(
+            $user = $this->userFacade->findUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
                 $this->domain->getId()
             );
@@ -204,7 +204,7 @@ class PersonalDataController extends FrontBaseController
         );
 
         if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT) {
-            $user = $this->customerFacade->findUserByEmailAndDomain($personalDataAccessRequest->getEmail(), $this->domain->getId());
+            $user = $this->userFacade->findUserByEmailAndDomain($personalDataAccessRequest->getEmail(), $this->domain->getId());
 
             $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
                 $personalDataAccessRequest->getEmail(),
@@ -240,7 +240,7 @@ class PersonalDataController extends FrontBaseController
         );
 
         if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT) {
-            $user = $this->customerFacade->findUserByEmailAndDomain(
+            $user = $this->userFacade->findUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
                 $this->domain->getId()
             );

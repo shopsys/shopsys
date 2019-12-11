@@ -58,11 +58,11 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
             ->setMethods(['persist', 'flush'])
             ->disableOriginalConstructor()
             ->getMock();
-        $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
+        $customerUserIdentifierFactory = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
             ->setMethods(['get'])
             ->disableOriginalConstructor()
             ->getMock();
-        $customerIdentifierFactoryMock
+        $customerUserIdentifierFactory
             ->expects($this->any())->method('get')
             ->willReturn($customerIdentifier1);
         $cartFacadeMock = $this->getMockBuilder(CartFacade::class)
@@ -78,7 +78,7 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
 
         $cartMigrationFacade = new CartMigrationFacade(
             $entityManagerMock,
-            $customerIdentifierFactoryMock,
+            $customerUserIdentifierFactory,
             $this->cartItemFactory,
             $cartFacadeMock
         );

@@ -16,8 +16,8 @@ use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -88,9 +88,9 @@ class OrderDataFixture
     private $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
      */
-    private $customerFacade;
+    private $userFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory
@@ -112,7 +112,7 @@ class OrderDataFixture
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $userFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      */
@@ -126,7 +126,7 @@ class OrderDataFixture
         OrderFacade $orderFacade,
         OrderPreviewFactory $orderPreviewFactory,
         ProductFacade $productFacade,
-        CustomerUserFacade $customerFacade,
+        UserFacade $userFacade,
         ProgressBarFactory $progressBarFactory,
         OrderDataFactoryInterface $orderDataFactory
     ) {
@@ -140,7 +140,7 @@ class OrderDataFixture
         $this->orderFacade = $orderFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->productFacade = $productFacade;
-        $this->customerFacade = $customerFacade;
+        $this->userFacade = $userFacade;
         $this->progressBarFactory = $progressBarFactory;
         $this->orderDataFactory = $orderDataFactory;
     }
@@ -321,7 +321,7 @@ class OrderDataFixture
         if ($shouldBeRegisteredUser) {
             $userId = $this->faker->randomElement($this->performanceUserIds);
             /** @var \App\Model\Customer\User $user */
-            $user = $this->customerFacade->getUserById($userId);
+            $user = $this->userFacade->getUserById($userId);
 
             return $user;
         } else {

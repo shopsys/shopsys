@@ -244,7 +244,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
             $this->getEntityManager(),
             $this->cartFactory,
             $this->productRepository,
-            $this->getCustomerIdentifierFactoryMock($customerIdentifier),
+            $this->getCustomerUserIdentifierFactoryMock($customerIdentifier),
             $this->domain,
             $this->currentCustomer,
             $this->currentPromoCodeFacade,
@@ -291,15 +291,15 @@ class CartFacadeTest extends TransactionFunctionalTestCase
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    private function getCustomerIdentifierFactoryMock(CustomerUserIdentifier $customerIdentifier)
+    private function getCustomerUserIdentifierFactoryMock(CustomerUserIdentifier $customerIdentifier)
     {
-        $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
+        $customerUserIdentifierFactoryMock = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $customerIdentifierFactoryMock->method('get')->willReturn($customerIdentifier);
+        $customerUserIdentifierFactoryMock->method('get')->willReturn($customerIdentifier);
 
-        return $customerIdentifierFactoryMock;
+        return $customerUserIdentifierFactoryMock;
     }
 
     /**

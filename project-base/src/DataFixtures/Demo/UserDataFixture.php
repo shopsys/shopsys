@@ -15,11 +15,11 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\UserPasswordFacade;
 
 class UserDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -48,9 +48,9 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     protected const KEY_ADDRESS_LAST_NAME = 'lastName';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
      */
-    protected $customerUserFacade;
+    protected $userFacade;
 
     /**
      * @var \Faker\Generator
@@ -98,7 +98,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     protected $customerFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $userFacade
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
@@ -110,7 +110,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      */
     public function __construct(
-        CustomerUserFacade $customerUserFacade,
+        UserFacade $userFacade,
         Generator $faker,
         EntityManagerInterface $em,
         HashGenerator $hashGenerator,
@@ -121,7 +121,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
         CustomerFactoryInterface $customerFactory
     ) {
-        $this->customerUserFacade = $customerUserFacade;
+        $this->userFacade = $userFacade;
         $this->faker = $faker;
         $this->em = $em;
         $this->hashGenerator = $hashGenerator;
@@ -147,10 +147,10 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
             }
 
             foreach ($customersDataProvider as $customerDataProvider) {
-                $customerData = $this->getCustomerUserData($domainId, $customerDataProvider);
-                $customerData->userData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
+                $customerUserData = $this->getCustomerUserData($domainId, $customerDataProvider);
+                $customerUserData->userData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
 
-                $customer = $this->customerUserFacade->create($customerData);
+                $customer = $this->userFacade->create($customerUserData);
                 if ($customer->getId() === 1) {
                     $this->resetPassword($customer);
                     $this->addReference(self::USER_WITH_RESET_PASSWORD_HASH, $customer);
@@ -461,7 +461,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
      */
     protected function resetPassword(User $customer)
     {
-        $resetPasswordHash = $this->hashGenerator->generateHash(CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
+        $resetPasswordHash = $this->hashGenerator->generateHash(UserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
         $customer->setResetPasswordHash($resetPasswordHash);
         $this->em->flush($customer);
     }
