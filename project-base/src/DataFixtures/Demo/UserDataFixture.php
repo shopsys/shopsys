@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade;
@@ -23,6 +24,28 @@ use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
 class UserDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const USER_WITH_RESET_PASSWORD_HASH = 'user_with_reset_password_hash';
+
+    protected const KEY_USER_DATA = 'userData';
+    protected const KEY_BILLING_ADDRESS = 'billingAddress';
+    protected const KEY_DELIVERY_ADDRESS = 'deliveryAddress';
+
+    protected const KEY_USER_DATA_FIRST_NAME = 'firstName';
+    protected const KEY_USER_DATA_LAST_NAME = 'lastName';
+    protected const KEY_USER_DATA_EMAIL = 'email';
+    protected const KEY_USER_DATA_PASSWORD = 'password';
+    protected const KEY_USER_DATA_TELEPHONE = 'telephone';
+
+    protected const KEY_ADDRESS_COMPANY_CUSTOMER = 'companyCustomer';
+    protected const KEY_ADDRESS_COMPANY_NAME = 'companyName';
+    protected const KEY_ADDRESS_COMPANY_NUMBER = 'companyNumber';
+    protected const KEY_ADDRESS_STREET = 'street';
+    protected const KEY_ADDRESS_CITY = 'city';
+    protected const KEY_ADDRESS_POSTCODE = 'postcode';
+    protected const KEY_ADDRESS_COUNTRY = 'country';
+    protected const KEY_ADDRESS_ADDRESS_FILLED = 'addressFilled';
+    protected const KEY_ADDRESS_TELEPHONE = 'telephone';
+    protected const KEY_ADDRESS_FIRST_NAME = 'firstName';
+    protected const KEY_ADDRESS_LAST_NAME = 'lastName';
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
@@ -118,12 +141,13 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             if ($domainId === Domain::SECOND_DOMAIN_ID) {
-                $customerUserData = $this->getDistinctCustomersData($domainId);
+                $customersDataProvider = $this->getDistinctCustomersDataProvider();
             } else {
-                $customerUserData = $this->getDefaultCustomersData($domainId);
+                $customersDataProvider = $this->getDefaultCustomersDataProvider();
             }
 
-            foreach ($customerUserData as $customerData) {
+            foreach ($customersDataProvider as $customerDataProvider) {
+                $customerData = $this->getCustomerUserData($domainId, $customerDataProvider);
                 $customerData->userData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
 
                 $customer = $this->customerUserFacade->create($customerData);
@@ -137,287 +161,289 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
 
     /**
      * @param int $domainId
+     * @param array $data
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData[]
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
      */
-    protected function getDefaultCustomersData(int $domainId): array
+    protected function getCustomerUserData(int $domainId, array $data): CustomerUserData
     {
-        $customersUserData = [];
-
-        // no-reply@shopsys.com
         $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Jaromír';
-        $userData->lastName = 'Jágr';
-        $userData->email = 'no-reply@shopsys.com';
-        $userData->password = 'user123';
-        $userData->telephone = '605000123';
+        $userData->firstName = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_FIRST_NAME] ?? null;
+        $userData->lastName = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_LAST_NAME] ?? null;
+        $userData->email = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_EMAIL] ?? null;
+        $userData->password = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_PASSWORD] ?? null;
+        $userData->telephone = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_TELEPHONE] ?? null;
         $userData->customer = $customerUserData->userData->customer;
+
         $billingAddressData = $customerUserData->billingAddressData;
-        $billingAddressData->companyCustomer = true;
-        $billingAddressData->companyName = 'Shopsys';
-        $billingAddressData->companyNumber = '123456';
-        $billingAddressData->street = 'Hlubinská';
-        $billingAddressData->city = 'Ostrava';
-        $billingAddressData->postcode = '70200';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $billingAddressData->companyCustomer = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_CUSTOMER];
+        $billingAddressData->companyName = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_NAME] ?? null;
+        $billingAddressData->companyNumber = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_NUMBER] ?? null;
+        $billingAddressData->city = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_CITY] ?? null;
+        $billingAddressData->street = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_STREET] ?? null;
+        $billingAddressData->postcode = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_POSTCODE] ?? null;
+        $billingAddressData->country = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COUNTRY];
+
+        if (isset($data[self::KEY_DELIVERY_ADDRESS])) {
+            $deliveryAddressData = $customerUserData->deliveryAddressData;
+            $deliveryAddressData->addressFilled = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_ADDRESS_FILLED] ?? null;
+            $deliveryAddressData->companyName = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_COMPANY_NAME] ?? null;
+            $deliveryAddressData->firstName = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_FIRST_NAME] ?? null;
+            $deliveryAddressData->lastName = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_LAST_NAME] ?? null;
+            $deliveryAddressData->city = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_CITY] ?? null;
+            $deliveryAddressData->postcode = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_POSTCODE] ?? null;
+            $deliveryAddressData->street = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_STREET] ?? null;
+            $deliveryAddressData->telephone = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_TELEPHONE] ?? null;
+            $deliveryAddressData->country = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_COUNTRY];
+        }
+
         $customerUserData->userData = $userData;
         $customerUserData->billingAddressData = $billingAddressData;
-        $customersUserData[] = $customerUserData;
 
-        // no-reply.3@shopsys.com
-        $customerUserData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Igor';
-        $userData->lastName = 'Anpilogov';
-        $userData->email = 'no-reply.3@shopsys.com';
-        $userData->password = 'no-reply.3';
-        $userData->customer = $customerUserData->userData->customer;
-        $billingAddressData = $customerUserData->billingAddressData;
-        $billingAddressData->companyCustomer = false;
-        $billingAddressData->city = 'Budišov nad Budišovkou';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerUserData->userData = $userData;
-        $customerUserData->billingAddressData = $billingAddressData;
-        $customersUserData[] = $customerUserData;
-
-        // no-reply.5@shopsys.com
-        $customerUserData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Hana';
-        $userData->lastName = 'Anrejsová';
-        $userData->email = 'no-reply.5@shopsys.com';
-        $userData->password = 'no-reply.5';
-        $userData->customer = $customerUserData->userData->customer;
-        $billingAddressData = $customerUserData->billingAddressData;
-        $billingAddressData->companyCustomer = false;
-        $billingAddressData->city = 'Brno';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerUserData->userData = $userData;
-        $customerUserData->billingAddressData = $billingAddressData;
-        $customersUserData[] = $customerUserData;
-
-        // no-reply.9@shopsys.com
-        $customerUserData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Alexandr';
-        $userData->lastName = 'Ton';
-        $userData->email = 'no-reply.9@shopsys.com';
-        $userData->password = 'no-reply.9';
-        $userData->telephone = '606060606';
-        $userData->customer = $customerUserData->userData->customer;
-        $billingAddressData = $customerUserData->billingAddressData;
-        $billingAddressData->companyCustomer = false;
-        $billingAddressData->city = 'Bohumín';
-        $billingAddressData->street = 'Na Strzi 3';
-        $billingAddressData->postcode = '69084';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerUserData->userData = $userData;
-        $customerUserData->billingAddressData = $billingAddressData;
-        $customersUserData[] = $customerUserData;
-
-        // no-reply.10@shopsys.com
-        $customerUserData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Pavel';
-        $userData->lastName = 'Nedvěd';
-        $userData->email = 'no-reply.10@shopsys.com';
-        $userData->password = 'no-reply.10';
-        $userData->telephone = '606060606';
-        $userData->customer = $customerUserData->userData->customer;
-        $billingAddressData = $customerUserData->billingAddressData;
-        $billingAddressData->companyCustomer = false;
-        $billingAddressData->city = 'Turín';
-        $billingAddressData->street = 'Turínská 5';
-        $billingAddressData->postcode = '12345';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $deliveryAddressData = $customerUserData->deliveryAddressData;
-        $deliveryAddressData->addressFilled = true;
-        $deliveryAddressData->city = 'Bahamy';
-        $deliveryAddressData->postcode = '99999';
-        $deliveryAddressData->street = 'Bahamská 99';
-        $deliveryAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerUserData->deliveryAddressData = $deliveryAddressData;
-        $customerUserData->userData = $userData;
-        $customerUserData->billingAddressData = $billingAddressData;
-        $customersUserData[] = $customerUserData;
-
-        // vitek@shopsys.com
-        $customerUserData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Rostislav';
-        $userData->lastName = 'Vítek';
-        $userData->email = 'vitek@shopsys.com';
-        $userData->password = 'user123';
-        $userData->telephone = '606060606';
-        $userData->customer = $customerUserData->userData->customer;
-        $billingAddressData = $customerUserData->billingAddressData;
-        $billingAddressData->companyCustomer = true;
-        $billingAddressData->companyName = 'Shopsys';
-        $billingAddressData->city = 'Ostrava';
-        $billingAddressData->street = 'Hlubinská 5';
-        $billingAddressData->postcode = '70200';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $deliveryAddressData = $customerUserData->deliveryAddressData;
-        $deliveryAddressData->addressFilled = true;
-        $deliveryAddressData->companyName = 'Rockpoint';
-        $deliveryAddressData->firstName = 'Eva';
-        $deliveryAddressData->lastName = 'Wallicová';
-        $deliveryAddressData->city = 'Ostrava';
-        $deliveryAddressData->postcode = '70030';
-        $deliveryAddressData->street = 'Rudná';
-        $deliveryAddressData->telephone = '123456789';
-        $deliveryAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerUserData->deliveryAddressData = $deliveryAddressData;
-        $customerUserData->userData = $userData;
-        $customerUserData->billingAddressData = $billingAddressData;
-        $customersUserData[] = $customerUserData;
-
-        // no-reply.11@shopsys.com
-        $customerUserData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Ľubomír';
-        $userData->lastName = 'Novák';
-        $userData->email = 'no-reply.11@shopsys.com';
-        $userData->password = 'test123';
-        $userData->telephone = '606060606';
-        $userData->customer = $customerUserData->userData->customer;
-        $billingAddressData = $customerUserData->billingAddressData;
-        $billingAddressData->companyCustomer = false;
-        $billingAddressData->city = 'Bratislava';
-        $billingAddressData->street = 'Brněnská';
-        $billingAddressData->postcode = '1010';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA);
-        $deliveryAddressData = $customerUserData->deliveryAddressData;
-        $deliveryAddressData->addressFilled = true;
-        $deliveryAddressData->city = 'Bratislava';
-        $deliveryAddressData->postcode = '10100';
-        $deliveryAddressData->street = 'Ostravská 55/65A';
-        $deliveryAddressData->telephone = '758686320';
-        $deliveryAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA);
-        $customerUserData->userData = $userData;
-        $customerUserData->billingAddressData = $billingAddressData;
-        $customersUserData[] = $customerUserData;
-
-        return $customersUserData;
+        return $customerUserData;
     }
 
     /**
-     * @param int $domainId
-     *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData[]
+     * @return array
      */
-    protected function getDistinctCustomersData(int $domainId): array
+    protected function getDefaultCustomersDataProvider(): array
     {
-        $customersData = [];
+        return [
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Jaromír',
+                    self::KEY_USER_DATA_LAST_NAME => 'Jágr',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'user123',
+                    self::KEY_USER_DATA_TELEPHONE => '605000123',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
+                    self::KEY_ADDRESS_COMPANY_NAME => 'Shopsys',
+                    self::KEY_ADDRESS_COMPANY_NUMBER => '123456',
+                    self::KEY_ADDRESS_STREET => 'Hlubinská',
+                    self::KEY_ADDRESS_CITY => 'Ostrava',
+                    self::KEY_ADDRESS_POSTCODE => '70200',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Igor',
+                    self::KEY_USER_DATA_LAST_NAME => 'Anpilogov',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply.3@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'no-reply.3',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
+                    self::KEY_ADDRESS_CITY => 'Budišov nad Budišovkou',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Hana',
+                    self::KEY_USER_DATA_LAST_NAME => 'Anrejsová',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply.5@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'no-reply.5',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
+                    self::KEY_ADDRESS_CITY => 'Brno',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Alexandr',
+                    self::KEY_USER_DATA_LAST_NAME => 'Ton',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply.9@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'no-reply.9',
+                    self::KEY_USER_DATA_TELEPHONE => '606060606',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
+                    self::KEY_ADDRESS_CITY => 'Bohumín',
+                    self::KEY_ADDRESS_STREET => 'Na Strzi 3',
+                    self::KEY_ADDRESS_POSTCODE => '69084',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Pavel',
+                    self::KEY_USER_DATA_LAST_NAME => 'Nedvěd',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply.10@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'no-reply.10',
+                    self::KEY_USER_DATA_TELEPHONE => '606060606',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
+                    self::KEY_ADDRESS_CITY => 'Turín',
+                    self::KEY_ADDRESS_STREET => 'Turínská 5',
+                    self::KEY_ADDRESS_POSTCODE => '12345',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+                self::KEY_DELIVERY_ADDRESS => [
+                    self::KEY_ADDRESS_CITY => 'Bahamy',
+                    self::KEY_ADDRESS_POSTCODE => '99999',
+                    self::KEY_ADDRESS_STREET => 'Bahamská 99',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Rostislav',
+                    self::KEY_USER_DATA_LAST_NAME => 'Vítek',
+                    self::KEY_USER_DATA_EMAIL => 'vitek@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'user123',
+                    self::KEY_USER_DATA_TELEPHONE => '606060606',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
+                    self::KEY_ADDRESS_COMPANY_NAME => 'Shopsys',
+                    self::KEY_ADDRESS_CITY => 'Ostrava',
+                    self::KEY_ADDRESS_STREET => 'Hlubinská 5',
+                    self::KEY_ADDRESS_POSTCODE => '70200',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+                self::KEY_DELIVERY_ADDRESS => [
+                    self::KEY_ADDRESS_ADDRESS_FILLED => true,
+                    self::KEY_ADDRESS_COMPANY_NAME => 'Rockpoint',
+                    self::KEY_ADDRESS_FIRST_NAME => 'Eva',
+                    self::KEY_ADDRESS_LAST_NAME => 'Wallicová',
+                    self::KEY_ADDRESS_CITY => 'Ostrava',
+                    self::KEY_ADDRESS_POSTCODE => '70030',
+                    self::KEY_ADDRESS_STREET => 'Rudná',
+                    self::KEY_ADDRESS_TELEPHONE => '123456789',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Ľubomír',
+                    self::KEY_USER_DATA_LAST_NAME => 'Novák',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply.11@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'test123',
+                    self::KEY_USER_DATA_TELEPHONE => '606060606',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
+                    self::KEY_ADDRESS_CITY => 'Bratislava',
+                    self::KEY_ADDRESS_STREET => 'Brněnská',
+                    self::KEY_ADDRESS_POSTCODE => '1010',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA),
+                ],
+                self::KEY_DELIVERY_ADDRESS => [
+                    self::KEY_ADDRESS_ADDRESS_FILLED => true,
+                    self::KEY_ADDRESS_COMPANY_NAME => 'Rockpoint',
+                    self::KEY_ADDRESS_CITY => 'Bratislava',
+                    self::KEY_ADDRESS_POSTCODE => '10100',
+                    self::KEY_ADDRESS_STREET => 'Ostravská 55/65A',
+                    self::KEY_ADDRESS_TELEPHONE => '758686320',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA),
+                ],
+            ],
+        ];
+    }
 
-        // no-reply.2@shopsys.com
-        $customerData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Jana';
-        $userData->lastName = 'Anovčínová';
-        $userData->email = 'no-reply.2@shopsys.com';
-        $userData->password = 'no-reply.2';
-        $userData->customer = $customerData->userData->customer;
-        $billingAddressData = $customerData->billingAddressData;
-        $billingAddressData->companyCustomer = false;
-        $billingAddressData->city = 'Aš';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
-
-        // no-reply.4@shopsys.com
-        $customerData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Ida';
-        $userData->lastName = 'Anpilogova';
-        $userData->email = 'no-reply.4@shopsys.com';
-        $userData->password = 'no-reply.4';
-        $userData->customer = $customerData->userData->customer;
-        $billingAddressData = $customerData->billingAddressData;
-        $billingAddressData->companyCustomer = false;
-        $billingAddressData->city = 'Praha';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
-
-        // no-reply.6@shopsys.com
-        $customerData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Petr';
-        $userData->lastName = 'Anrig';
-        $userData->email = 'no-reply.6@shopsys.com';
-        $userData->password = 'no-reply.6';
-        $userData->customer = $customerData->userData->customer;
-        $billingAddressData = $customerData->billingAddressData;
-        $billingAddressData->companyCustomer = false;
-        $billingAddressData->city = 'Jeseník';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $deliveryAddressData = $customerData->deliveryAddressData;
-        $deliveryAddressData->addressFilled = true;
-        $deliveryAddressData->city = 'Opava';
-        $deliveryAddressData->postcode = '70000';
-        $deliveryAddressData->street = 'Ostravská';
-        $deliveryAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
-
-        // no-reply.7@shopsys.com
-        $customerData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Silva';
-        $userData->lastName = 'Anrigová';
-        $userData->email = 'no-reply.7@shopsys.com';
-        $userData->password = 'no-reply.7';
-        $userData->customer = $customerData->userData->customer;
-        $billingAddressData = $customerData->billingAddressData;
-        $billingAddressData->companyCustomer = false;
-        $billingAddressData->city = 'Ostrava';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
-
-        // no-reply.8@shopsys.com
-        $customerData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Derick';
-        $userData->lastName = 'Ansah';
-        $userData->email = 'no-reply.8@shopsys.com';
-        $userData->password = 'no-reply.8';
-        $userData->customer = $customerData->userData->customer;
-        $billingAddressData = $customerData->billingAddressData;
-        $billingAddressData->companyCustomer = false;
-        $billingAddressData->city = 'Opava';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
-
-        // no-reply@shopsys.com
-        $customerData = $this->customerUserDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = 'Johny';
-        $userData->lastName = 'English';
-        $userData->email = 'no-reply@shopsys.com';
-        $userData->password = 'user123';
-        $userData->telephone = '603123456';
-        $userData->customer = $customerData->userData->customer;
-        $billingAddressData = $customerData->billingAddressData;
-        $billingAddressData->companyCustomer = true;
-        $billingAddressData->companyName = 'Shopsys';
-        $billingAddressData->city = 'Ostrava';
-        $billingAddressData->street = 'Hlubinská';
-        $billingAddressData->postcode = '70200';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $customerData->userData = $userData;
-        $customerData->billingAddressData = $billingAddressData;
-        $customersData[] = $customerData;
-
-        return $customersData;
+    /**
+     * @return array
+     */
+    protected function getDistinctCustomersDataProvider(): array
+    {
+        return [
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Jana',
+                    self::KEY_USER_DATA_LAST_NAME => 'Anovčínová',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply.2@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'no-reply.2',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
+                    self::KEY_ADDRESS_CITY => 'Aš',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Ida',
+                    self::KEY_USER_DATA_LAST_NAME => 'Anpilogova',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply.4@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'no-reply.4',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
+                    self::KEY_ADDRESS_CITY => 'Praha',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Petr',
+                    self::KEY_USER_DATA_LAST_NAME => 'Anrig',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply.6@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'no-reply.6',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
+                    self::KEY_ADDRESS_CITY => 'Jeseník',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+                self::KEY_DELIVERY_ADDRESS => [
+                    self::KEY_ADDRESS_ADDRESS_FILLED => true,
+                    self::KEY_ADDRESS_CITY => 'Opava',
+                    self::KEY_ADDRESS_POSTCODE => '70000',
+                    self::KEY_ADDRESS_STREET => 'Ostravská',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Silva',
+                    self::KEY_USER_DATA_LAST_NAME => 'Anrigová',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply.7@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'no-reply.7',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
+                    self::KEY_ADDRESS_CITY => 'Ostrava',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Derick',
+                    self::KEY_USER_DATA_LAST_NAME => 'Ansah',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply.8@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'no-reply.8',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
+                    self::KEY_ADDRESS_CITY => 'Opava',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+            [
+                self::KEY_USER_DATA => [
+                    self::KEY_USER_DATA_FIRST_NAME => 'Johny',
+                    self::KEY_USER_DATA_LAST_NAME => 'English',
+                    self::KEY_USER_DATA_EMAIL => 'no-reply@shopsys.com',
+                    self::KEY_USER_DATA_PASSWORD => 'user123',
+                    self::KEY_USER_DATA_TELEPHONE => '603123456',
+                ],
+                self::KEY_BILLING_ADDRESS => [
+                    self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
+                    self::KEY_ADDRESS_COMPANY_NAME => 'Shopsys',
+                    self::KEY_ADDRESS_CITY => 'Ostrava',
+                    self::KEY_ADDRESS_STREET => 'Hlubinská',
+                    self::KEY_ADDRESS_POSTCODE => '70200',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
+            ],
+        ];
     }
 
     /**
