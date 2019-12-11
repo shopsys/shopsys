@@ -70,7 +70,7 @@ class SlowLogSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::REQUEST => 'initStartTime',
+            KernelEvents::REQUEST => ['initStartTime', 512],
             KernelEvents::TERMINATE => 'addNotice',
         ];
     }
