@@ -12,4 +12,12 @@ This guide contains instructions to upgrade from version v8.0.0 to v8.0.1-dev.
 **Before you start, don't forget to take a look at [general instructions](/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
 
+### Application
+- change required version for `symfony/monolog-bundle` ([#1506](https://github.com/shopsys/shopsys/pull/1506))
+    - edit `composer.json`
+        ```diff
+        -       "symfony/monolog-bundle": "^3.3.1",
+        +       "symfony/monolog-bundle": "~3.4.0",
+        ```
+
 [shopsys/framework]: https://github.com/shopsys/framework

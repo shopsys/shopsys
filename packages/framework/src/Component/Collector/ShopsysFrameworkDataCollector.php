@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Collector;
 
 use BadMethodCallException;
+use PharIo\Version\Version;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\ShopsysFrameworkBundle;
@@ -156,10 +157,17 @@ final class ShopsysFrameworkDataCollector extends DataCollector
      */
     protected function resolveDocsVersion(string $versionString): string
     {
-        if (strpos($versionString, '-dev') !== false) {
-            return 'master';
+        $version = new Version($versionString);
+        $versionMinorValue = (int)$version->getMinor()->getValue();
+
+        if ($version->hasPreReleaseSuffix()
+            && $version->getPreReleaseSuffix()->getValue() === 'dev'
+            && (int)$version->getPatch()->getValue() === 0
+            && $versionMinorValue > 0
+        ) {
+            $versionMinorValue--;
         }
 
-        return 'v' . $versionString;
+        return sprintf('%d.%d', (int)$version->getMajor()->getValue(), $versionMinorValue);
     }
 }
