@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Customer\Mail;
 
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
@@ -25,18 +26,26 @@ class CustomerMailFacade
     protected $registrationMail;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
+     */
+    protected $uploadedFileFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail $registrationMail
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
         Mailer $mailer,
         MailTemplateFacade $mailTemplateFacade,
-        RegistrationMail $registrationMail
+        RegistrationMail $registrationMail,
+        UploadedFileFacade $uploadedFileFacade
     ) {
         $this->mailer = $mailer;
         $this->mailTemplateFacade = $mailTemplateFacade;
         $this->registrationMail = $registrationMail;
+        $this->uploadedFileFacade = $uploadedFileFacade;
     }
 
     /**
@@ -46,7 +55,7 @@ class CustomerMailFacade
     {
         $mailTemplate = $this->mailTemplateFacade->get(MailTemplate::REGISTRATION_CONFIRM_NAME, $user->getDomainId());
         $messageData = $this->registrationMail->createMessage($mailTemplate, $user);
-        $messageData->attachmentsFilepaths = $this->mailTemplateFacade->getMailTemplateAttachmentsFilepaths($mailTemplate);
+        $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
         $this->mailer->send($messageData);
     }
 }

@@ -45,9 +45,9 @@ class MessageData
     public $variablesReplacementsForBody;
 
     /**
-     * @var string[]
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
-    public $attachmentsFilepaths;
+    public $attachments;
 
     /**
      * @var string|null
@@ -63,7 +63,7 @@ class MessageData
      * @param string $fromName
      * @param string[] $variablesReplacementsForBody
      * @param string[] $variablesReplacementsForSubject
-     * @param string[] $attachmentsFilepaths
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $attachments
      * @param string|null $replyTo
      */
     public function __construct(
@@ -75,7 +75,7 @@ class MessageData
         $fromName,
         array $variablesReplacementsForBody = [],
         array $variablesReplacementsForSubject = [],
-        array $attachmentsFilepaths = [],
+        array $attachments = [],
         $replyTo = null
     ) {
         $this->toEmail = $toEmail;
@@ -90,7 +90,7 @@ class MessageData
         } else {
             $this->variablesReplacementsForSubject = $variablesReplacementsForBody;
         }
-        $this->attachmentsFilepaths = $attachmentsFilepaths;
+        $this->attachments = $attachments;
         $this->replyTo = $replyTo;
     }
 }
