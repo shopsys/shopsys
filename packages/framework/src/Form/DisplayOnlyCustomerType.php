@@ -16,8 +16,8 @@ class DisplayOnlyCustomerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['customer'])
-            ->setAllowedTypes('customer', [User::class, 'null'])
+            ->setRequired(['user'])
+            ->setAllowedTypes('user', [User::class, 'null'])
             ->setDefaults([
                 'mapped' => false,
                 'required' => false,
@@ -33,6 +33,6 @@ class DisplayOnlyCustomerType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
-        $view->vars['customer'] = $options['customer'];
+        $view->vars['user'] = $options['user'];
     }
 }

@@ -89,7 +89,7 @@ class OrderItemFacade
         $productPrice = $this->productPriceCalculationForUser->calculatePriceForUserAndDomainId(
             $product,
             $order->getDomainId(),
-            $order->getCustomer()
+            $order->getUser()
         );
 
         $orderProduct = $this->orderItemFactory->createProduct(

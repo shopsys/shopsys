@@ -37,9 +37,9 @@ class Order
      * @var \Shopsys\FrameworkBundle\Model\Customer\User|null
      *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User")
-     * @ORM\JoinColumn(nullable=true, name="customer_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(nullable=true, name="user_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $customer;
+    protected $user;
 
     /**
      * @var \DateTime
@@ -329,7 +329,7 @@ class Order
         $this->setDeliveryAddress($orderData);
         $this->number = $orderNumber;
         $this->status = $orderData->status;
-        $this->customer = $user;
+        $this->user = $user;
         $this->deleted = false;
         if ($orderData->createdAt === null) {
             $this->createdAt = new DateTime();
@@ -615,9 +615,9 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
      */
-    public function getCustomer()
+    public function getUser()
     {
-        return $this->customer;
+        return $this->user;
     }
 
     /**

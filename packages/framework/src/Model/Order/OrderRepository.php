@@ -62,7 +62,7 @@ class OrderRepository
     public function getOrdersByUserId($userId)
     {
         return $this->createOrderQueryBuilder()
-            ->andWhere('o.customer = :customer')->setParameter(':customer', $userId)
+            ->andWhere('o.user = :user')->setParameter(':user', $userId)
             ->getQuery()->getResult();
     }
 
@@ -73,7 +73,7 @@ class OrderRepository
     public function findLastByUserId($userId)
     {
         return $this->createOrderQueryBuilder()
-            ->andWhere('o.customer = :customer')->setParameter(':customer', $userId)
+            ->andWhere('o.user = :user')->setParameter(':user', $userId)
             ->orderBy('o.createdAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
@@ -136,7 +136,7 @@ class OrderRepository
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder
-                ->leftJoin(User::class, 'u', Join::WITH, 'o.customer = u.id')
+                ->leftJoin(User::class, 'u', Join::WITH, 'o.user = u.id')
                 ->andWhere('
                     (
                         o.number LIKE :text
@@ -168,9 +168,9 @@ class OrderRepository
             ->join('o.status', 'os')
             ->join('os.translations', 'ost')
             ->join('o.currency', 'c')
-            ->andWhere('o.customer = :customer')
+            ->andWhere('o.user = :user')
             ->orderBy('o.createdAt', 'DESC')
-            ->setParameter('customer', $user)
+            ->setParameter('user', $user)
             ->getQuery()->execute();
     }
 
@@ -219,7 +219,7 @@ class OrderRepository
     {
         $order = $this->createOrderQueryBuilder()
             ->andWhere('o.number = :number')->setParameter(':number', $orderNumber)
-            ->andWhere('o.customer = :customer')->setParameter(':customer', $user)
+            ->andWhere('o.user = :user')->setParameter(':user', $user)
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
 
@@ -281,6 +281,6 @@ class OrderRepository
             ->join('o.status', 'os')
             ->join('os.translations', 'ost')
             ->join('o.currency', 'c')
-            ->leftJoin('o.customer', 'cu');
+            ->leftJoin('o.user', 'cu');
     }
 }
