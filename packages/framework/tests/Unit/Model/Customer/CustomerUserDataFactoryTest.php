@@ -4,12 +4,14 @@ namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerFactory;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
@@ -225,12 +227,12 @@ class CustomerUserDataFactoryTest extends TestCase
      */
     private function getCustomerDataFactory(): CustomerUserDataFactory
     {
-        $billingAddressDataFactory = new BillingAddressDataFactory();
-        $deliveryAddressDataFactory = new DeliveryAddressDataFactory();
-        $userDataFactory = new UserDataFactory($this->createMock(PricingGroupSettingFacade::class));
-        $customerDataFactory = new CustomerUserDataFactory($billingAddressDataFactory, $deliveryAddressDataFactory, $userDataFactory);
-
-        return $customerDataFactory;
+        return new CustomerUserDataFactory(
+            new BillingAddressDataFactory(),
+            new DeliveryAddressDataFactory(),
+            new UserDataFactory($this->createMock(PricingGroupSettingFacade::class)),
+            new CustomerFactory($this->createMock(EntityNameResolver::class))
+        );
     }
 
     /**

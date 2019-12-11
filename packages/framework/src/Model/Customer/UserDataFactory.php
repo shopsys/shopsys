@@ -28,12 +28,23 @@ class UserDataFactory implements UserDataFactoryInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\UserData
+     */
+    public function createForCustomer(Customer $customer): UserData
+    {
+        $userData = $this->create();
+        $userData->customer = $customer;
+        return $userData;
+    }
+
+    /**
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Customer\UserData
      */
     public function createForDomainId(int $domainId): UserData
     {
-        $userData = new UserData();
+        $userData = $this->create();
         $this->fillForDomainId($userData, $domainId);
 
         return $userData;
@@ -55,7 +66,7 @@ class UserDataFactory implements UserDataFactoryInterface
      */
     public function createFromUser(User $user): UserData
     {
-        $userData = new UserData();
+        $userData = $this->create();
         $this->fillFromUser($userData, $user);
 
         return $userData;

@@ -10,6 +10,12 @@ interface BillingAddressDataFactoryInterface
     public function create(): BillingAddressData;
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
+     */
+    public function createForCustomer(Customer $customer): BillingAddressData;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
      */

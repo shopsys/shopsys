@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Customer;
 
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User as BaseUser;
 use Shopsys\FrameworkBundle\Model\Customer\UserData as BaseUserData;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactory as BaseUserDataFactory;
@@ -28,12 +29,23 @@ class UserDataFactory extends BaseUserDataFactory
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \App\Model\Customer\UserData
+     */
+    public function createForCustomer(Customer $customer): BaseUserData
+    {
+        $userData = $this->create();
+        $userData->customer = $customer;
+        return $userData;
+    }
+
+    /**
      * @param int $domainId
      * @return \App\Model\Customer\UserData
      */
-    public function createForDomainId(int $domainId): BaseUserData
+    public function createForDomainId(int $domainId): BaseUserData // @todo -> createForDomainIdAndCustomer
     {
-        $userData = new UserData();
+        $userData = $this->create();
         $this->fillForDomainId($userData, $domainId);
 
         return $userData;
@@ -45,7 +57,7 @@ class UserDataFactory extends BaseUserDataFactory
      */
     public function createFromUser(BaseUser $user): BaseUserData
     {
-        $userData = new UserData();
+        $userData = $this->create();
         $this->fillFromUser($userData, $user);
 
         return $userData;

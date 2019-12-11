@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
@@ -73,11 +72,6 @@ class UserDataFixture
     private $customerUserDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface
-     */
-    private $billingAddressDataFactory;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface
      */
     private $deliveryAddressDataFactory;
@@ -93,7 +87,6 @@ class UserDataFixture
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      */
     public function __construct(
@@ -107,7 +100,6 @@ class UserDataFixture
         PersistentReferenceFacade $persistentReferenceFacade,
         ProgressBarFactory $progressBarFactory,
         CustomerUserDataFactoryInterface $customerUserDataFactory,
-        BillingAddressDataFactoryInterface $billingAddressDataFactory,
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
     ) {
         $this->em = $em;
@@ -120,7 +112,6 @@ class UserDataFixture
         $this->userCountPerDomain = $userCountPerDomain;
         $this->progressBarFactory = $progressBarFactory;
         $this->customerUserDataFactory = $customerUserDataFactory;
-        $this->billingAddressDataFactory = $billingAddressDataFactory;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
     }
 
@@ -177,7 +168,6 @@ class UserDataFixture
     private function getRandomCustomerDataByDomainId($domainId, $userNumber)
     {
         $customerUserData = $this->customerUserDataFactory->create();
-
         $country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
 
         $userData = $this->userDataFactory->createForDomainId($domainId);
@@ -188,10 +178,10 @@ class UserDataFixture
         $userData->domainId = $domainId;
         $userData->createdAt = $this->faker->dateTimeBetween('-1 year', 'now');
         $userData->telephone = $this->faker->phoneNumber;
-
+        $userData->customer = $customerUserData->billingAddressData->customer;
         $customerUserData->userData = $userData;
 
-        $billingAddressData = $this->billingAddressDataFactory->create();
+        $billingAddressData = $customerUserData->billingAddressData;
         $billingAddressData->companyCustomer = $this->faker->boolean();
         if ($billingAddressData->companyCustomer === true) {
             $billingAddressData->companyName = $this->faker->company;

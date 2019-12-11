@@ -10,6 +10,12 @@ interface UserDataFactoryInterface
     public function create(): UserData;
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\UserData
+     */
+    public function createForCustomer(Customer $customer): UserData;
+
+    /**
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Customer\UserData
      */

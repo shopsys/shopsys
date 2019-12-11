@@ -152,10 +152,8 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $userData->email = 'no-reply@shopsys.com';
         $userData->password = 'user123';
         $userData->telephone = '605000123';
+        $userData->customer = $customerUserData->userData->customer;
         $billingAddressData = $customerUserData->billingAddressData;
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
         $billingAddressData->companyCustomer = true;
         $billingAddressData->companyName = 'Shopsys';
         $billingAddressData->companyNumber = '123456';
@@ -170,14 +168,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply.3@shopsys.com
         $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Igor';
         $userData->lastName = 'Anpilogov';
         $userData->email = 'no-reply.3@shopsys.com';
         $userData->password = 'no-reply.3';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerUserData->userData->customer;
+        $billingAddressData = $customerUserData->billingAddressData;
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Budišov nad Budišovkou';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
@@ -188,14 +184,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply.5@shopsys.com
         $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Hana';
         $userData->lastName = 'Anrejsová';
         $userData->email = 'no-reply.5@shopsys.com';
         $userData->password = 'no-reply.5';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerUserData->userData->customer;
+        $billingAddressData = $customerUserData->billingAddressData;
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Brno';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
@@ -206,15 +200,13 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply.9@shopsys.com
         $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Alexandr';
         $userData->lastName = 'Ton';
         $userData->email = 'no-reply.9@shopsys.com';
         $userData->password = 'no-reply.9';
         $userData->telephone = '606060606';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerUserData->userData->customer;
+        $billingAddressData = $customerUserData->billingAddressData;
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Bohumín';
         $billingAddressData->street = 'Na Strzi 3';
@@ -227,15 +219,13 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply.10@shopsys.com
         $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Pavel';
         $userData->lastName = 'Nedvěd';
         $userData->email = 'no-reply.10@shopsys.com';
         $userData->password = 'no-reply.10';
         $userData->telephone = '606060606';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerUserData->userData->customer;
+        $billingAddressData = $customerUserData->billingAddressData;
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Turín';
         $billingAddressData->street = 'Turínská 5';
@@ -255,15 +245,13 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // vitek@shopsys.com
         $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Rostislav';
         $userData->lastName = 'Vítek';
         $userData->email = 'vitek@shopsys.com';
         $userData->password = 'user123';
         $userData->telephone = '606060606';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerUserData->userData->customer;
+        $billingAddressData = $customerUserData->billingAddressData;
         $billingAddressData->companyCustomer = true;
         $billingAddressData->companyName = 'Shopsys';
         $billingAddressData->city = 'Ostrava';
@@ -288,15 +276,13 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply.11@shopsys.com
         $customerUserData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Ľubomír';
         $userData->lastName = 'Novák';
         $userData->email = 'no-reply.11@shopsys.com';
         $userData->password = 'test123';
         $userData->telephone = '606060606';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerUserData->userData->customer;
+        $billingAddressData = $customerUserData->billingAddressData;
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Bratislava';
         $billingAddressData->street = 'Brněnská';
@@ -328,14 +314,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply.2@shopsys.com
         $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Jana';
         $userData->lastName = 'Anovčínová';
         $userData->email = 'no-reply.2@shopsys.com';
         $userData->password = 'no-reply.2';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerData->userData->customer;
+        $billingAddressData = $customerData->billingAddressData;
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Aš';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
@@ -346,14 +330,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply.4@shopsys.com
         $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Ida';
         $userData->lastName = 'Anpilogova';
         $userData->email = 'no-reply.4@shopsys.com';
         $userData->password = 'no-reply.4';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerData->userData->customer;
+        $billingAddressData = $customerData->billingAddressData;
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Praha';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
@@ -364,14 +346,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply.6@shopsys.com
         $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Petr';
         $userData->lastName = 'Anrig';
         $userData->email = 'no-reply.6@shopsys.com';
         $userData->password = 'no-reply.6';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerData->userData->customer;
+        $billingAddressData = $customerData->billingAddressData;
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Jeseník';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
@@ -388,14 +368,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply.7@shopsys.com
         $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Silva';
         $userData->lastName = 'Anrigová';
         $userData->email = 'no-reply.7@shopsys.com';
         $userData->password = 'no-reply.7';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerData->userData->customer;
+        $billingAddressData = $customerData->billingAddressData;
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Ostrava';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
@@ -406,14 +384,12 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply.8@shopsys.com
         $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Derick';
         $userData->lastName = 'Ansah';
         $userData->email = 'no-reply.8@shopsys.com';
         $userData->password = 'no-reply.8';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerData->userData->customer;
+        $billingAddressData = $customerData->billingAddressData;
         $billingAddressData->companyCustomer = false;
         $billingAddressData->city = 'Opava';
         $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
@@ -424,15 +400,13 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         // no-reply@shopsys.com
         $customerData = $this->customerUserDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
-        $billingAddressData = $this->billingAddressDataFactory->create();
         $userData->firstName = 'Johny';
         $userData->lastName = 'English';
         $userData->email = 'no-reply@shopsys.com';
         $userData->password = 'user123';
         $userData->telephone = '603123456';
-        $customer = $this->customerFactory->create();
-        $userData->customer = $customer;
-        $billingAddressData->customer = $customer;
+        $userData->customer = $customerData->userData->customer;
+        $billingAddressData = $customerData->billingAddressData;
         $billingAddressData->companyCustomer = true;
         $billingAddressData->companyName = 'Shopsys';
         $billingAddressData->city = 'Ostrava';

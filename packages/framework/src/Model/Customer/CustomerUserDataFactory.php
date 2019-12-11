@@ -23,18 +23,26 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     protected $userDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface
+     */
+    protected $customerFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface $userDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      */
     public function __construct(
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
-        UserDataFactoryInterface $userDataFactory
+        UserDataFactoryInterface $userDataFactory,
+        CustomerFactoryInterface $customerFactory
     ) {
         $this->billingAddressDataFactory = $billingAddressDataFactory;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
         $this->userDataFactory = $userDataFactory;
+        $this->customerFactory = $customerFactory;
     }
 
     /**
@@ -42,10 +50,12 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      */
     public function create(): CustomerUserData
     {
+        $customer = $this->customerFactory->create();
+
         return new CustomerUserData(
-            $this->billingAddressDataFactory->create(),
+            $this->billingAddressDataFactory->createForCustomer($customer),
             $this->deliveryAddressDataFactory->create(),
-            $this->userDataFactory->create()
+            $this->userDataFactory->createForCustomer($customer)
         );
     }
 

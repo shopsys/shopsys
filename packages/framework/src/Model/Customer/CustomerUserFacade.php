@@ -120,22 +120,13 @@ class CustomerUserFacade
     public function register(UserData $userData)
     {
         $customer = $this->customerFactory->create();
-        $billingAddressData = $this->billingAddressDataFactory->create();
-
-        $billingAddressData->customer = $customer;
         $userData->customer = $customer;
 
-        $customer->addBillingAddress($this->billingAddressFactory->create($billingAddressData));
-
-        $this->em->persist($customer);
-        $this->em->flush($customer);
-
-        $user = $this->userFactory->create($userData, null);
-
-        $this->setEmail($userData->email, $user);
-
-        $this->em->persist($user);
-        $this->em->flush();
+        $this->createCustomerWithBillingAddress(
+            $customer,
+            $this->billingAddressFactory->create($this->billingAddressDataFactory->createForCustomer($customer))
+        );
+        $user = $this->createUser($userData);
 
         $this->customerMailFacade->sendRegistrationMail($user);
 
@@ -149,27 +140,52 @@ class CustomerUserFacade
      */
     public function create(CustomerUserData $customerData)
     {
-        $customer = $this->customerFactory->create();
-
-        $customerData->billingAddressData->customer = $customer;
-        $customerData->userData->customer = $customer;
-
-        $customer->addBillingAddress($this->billingAddressFactory->create($customerData->billingAddressData));
-        $this->em->persist($customer);
-        $this->em->flush($customer);
-
-        $deliveryAddress = $this->deliveryAddressFactory->create($customerData->deliveryAddressData);
-
-        $user = $this->userFactory->create($customerData->userData, $deliveryAddress);
-
-        $this->setEmail($customerData->userData->email, $user);
-
-        $this->em->persist($user);
-        $this->em->flush($user);
+        $this->createCustomerWithBillingAddress(
+            $customerData->billingAddressData->customer,
+            $this->billingAddressFactory->create($customerData->billingAddressData)
+        );
+        $user = $this->createUser($customerData->userData, $customerData->deliveryAddressData);
 
         if ($customerData->sendRegistrationMail) {
             $this->customerMailFacade->sendRegistrationMail($user);
         }
+
+        return $user;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
+     */
+    protected function createCustomerWithBillingAddress(Customer $customer, BillingAddress $billingAddress): void
+    {
+        $customer->addBillingAddress($billingAddress);
+        $this->em->persist($customer);
+        $this->em->flush($customer);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null $deliveryAddressData
+     *
+     * @throws \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailUserException
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User
+     */
+    protected function createUser(
+        UserData $userData,
+        ?DeliveryAddressData $deliveryAddressData = null
+    ): User {
+        if ($deliveryAddressData) {
+            $deliveryAddress = $this->deliveryAddressFactory->create($deliveryAddressData);
+        } else {
+            $deliveryAddress = null;
+        }
+
+        $user = $this->userFactory->create($userData, $deliveryAddress);
+        $this->setEmail($userData->email, $user);
+
+        $this->em->persist($user);
+        $this->em->flush();
 
         return $user;
     }

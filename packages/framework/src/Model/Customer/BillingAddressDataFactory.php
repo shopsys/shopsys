@@ -13,12 +13,24 @@ class BillingAddressDataFactory implements BillingAddressDataFactoryInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
+     */
+    public function createForCustomer(Customer $customer): BillingAddressData
+    {
+        $billingAddressData = $this->create();
+        $billingAddressData->customer = $customer;
+        return $billingAddressData;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
      */
     public function createFromBillingAddress(BillingAddress $billingAddress): BillingAddressData
     {
-        $billingAddressData = new BillingAddressData();
+        $billingAddressData = $this->create();
         $this->fillFromBillingAddress($billingAddressData, $billingAddress);
 
         return $billingAddressData;
