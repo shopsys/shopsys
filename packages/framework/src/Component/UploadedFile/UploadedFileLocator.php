@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use League\Flysystem\FilesystemInterface;
@@ -29,7 +31,7 @@ class UploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
-        $uploadedFileDir,
+        string $uploadedFileDir,
         FilesystemInterface $filesystem,
         DomainRouterFactory $domainRouterFactory
     ) {
@@ -42,7 +44,7 @@ class UploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getRelativeUploadedFileFilepath(UploadedFile $uploadedFile)
+    public function getRelativeUploadedFileFilepath(UploadedFile $uploadedFile): string
     {
         return $this->getRelativeFilePath($uploadedFile->getEntityName()) . '/' . $uploadedFile->getFilename();
     }
@@ -51,7 +53,7 @@ class UploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile)
+    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile): string
     {
         return $this->getAbsoluteFilePath($uploadedFile->getEntityName()) . '/' . $uploadedFile->getFilename();
     }
@@ -61,7 +63,7 @@ class UploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */
-    public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile)
+    public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
         if ($this->fileExists($uploadedFile)) {
             $domainRouter = $this->domainRouterFactory->getRouter($domainConfig->getId());
@@ -79,7 +81,7 @@ class UploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return bool
      */
-    public function fileExists(UploadedFile $uploadedFile)
+    public function fileExists(UploadedFile $uploadedFile): bool
     {
         $fileFilepath = $this->getAbsoluteUploadedFileFilepath($uploadedFile);
 
@@ -90,7 +92,7 @@ class UploadedFileLocator
      * @param string $entityName
      * @return string
      */
-    protected function getRelativeFilePath($entityName)
+    protected function getRelativeFilePath(string $entityName): string
     {
         return $entityName;
     }
@@ -99,7 +101,7 @@ class UploadedFileLocator
      * @param string $entityName
      * @return string
      */
-    public function getAbsoluteFilePath($entityName)
+    public function getAbsoluteFilePath(string $entityName): string
     {
         return $this->uploadedFileDir . $this->getRelativeFilePath($entityName);
     }
