@@ -43,7 +43,7 @@ class UserDataFactory extends BaseUserDataFactory
      * @param int $domainId
      * @return \App\Model\Customer\UserData
      */
-    public function createForDomainId(int $domainId): BaseUserData // @todo -> createForDomainIdAndCustomer
+    public function createForDomainId(int $domainId): BaseUserData
     {
         $userData = $this->create();
         $this->fillForDomainId($userData, $domainId);
