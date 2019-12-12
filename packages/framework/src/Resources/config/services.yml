@@ -399,7 +399,6 @@ services:
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator:
         arguments:
             - '%shopsys.uploaded_file_dir%'
-            - '%shopsys.uploaded_file_url_prefix%'
 
     Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator:
         tags:

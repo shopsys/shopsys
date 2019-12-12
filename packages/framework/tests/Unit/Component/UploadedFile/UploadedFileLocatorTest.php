@@ -32,16 +32,15 @@ class UploadedFileLocatorTest extends TestCase
         $uploadedFileMock->method('getFilename')->willReturn('non-existent.txt');
         $uploadedFileMock->method('getEntityName')->willReturn('entityName');
 
-        $uploadedFileLocator = $this->createUploadedFileLocator('', false);
+        $uploadedFileLocator = $this->createUploadedFileLocator(false);
         $this->assertFalse($uploadedFileLocator->fileExists($uploadedFileMock));
     }
 
     public function testGetAbsoluteFilePath()
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
-        $uploadedFileUrlPrefix = '';
 
-        $uploadedFileLocator = $this->createUploadedFileLocator($uploadedFileUrlPrefix);
+        $uploadedFileLocator = $this->createUploadedFileLocator();
         $this->assertSame(
             $uploadedFileDir . 'entityName',
             $uploadedFileLocator->getAbsoluteFilePath('entityName')
@@ -82,11 +81,10 @@ class UploadedFileLocatorTest extends TestCase
     }
 
     /**
-     * @param string $uploadedFileUrlPrefix
      * @param bool $has
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
      */
-    private function createUploadedFileLocator($uploadedFileUrlPrefix = '', $has = true)
+    private function createUploadedFileLocator($has = true)
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
 
@@ -98,6 +96,6 @@ class UploadedFileLocatorTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        return new UploadedFileLocator($uploadedFileDir, $uploadedFileUrlPrefix, $filesystemMock, $domainRouterFactoryMock);
+        return new UploadedFileLocator($uploadedFileDir, $filesystemMock, $domainRouterFactoryMock);
     }
 }

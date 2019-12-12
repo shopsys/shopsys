@@ -14,11 +14,6 @@ class UploadedFileLocator
     protected $uploadedFileDir;
 
     /**
-     * @var string
-     */
-    protected $uploadedFileUrlPrefix;
-
-    /**
      * @var \League\Flysystem\FilesystemInterface
      */
     protected $filesystem;
@@ -30,18 +25,15 @@ class UploadedFileLocator
 
     /**
      * @param string $uploadedFileDir
-     * @param string $uploadedFileUrlPrefix
      * @param \League\Flysystem\FilesystemInterface $filesystem
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
         $uploadedFileDir,
-        $uploadedFileUrlPrefix,
         FilesystemInterface $filesystem,
         DomainRouterFactory $domainRouterFactory
     ) {
         $this->uploadedFileDir = $uploadedFileDir;
-        $this->uploadedFileUrlPrefix = $uploadedFileUrlPrefix;
         $this->filesystem = $filesystem;
         $this->domainRouterFactory = $domainRouterFactory;
     }
