@@ -203,7 +203,7 @@ There you can find links to upgrade notes for other versions too.
                     script:
                         - sudo apt install ruby
                         - gem install docker-sync
-                        - sed -i -r "s#sed -i -E#sed -i -r#" ./scripts/install.sh
+                        - sed -i -r "s#sed -i '' -E#sed -i -r#" ./scripts/install.sh
                         - mkdir -p ./var/elasticsearch-data
                         - chmod -R 777 ./var/elasticsearch-data
                         - echo 2 | ./scripts/install.sh --skip-aliasing
@@ -225,8 +225,8 @@ There you can find links to upgrade notes for other versions too.
 
         -        echo "You will be asked to enter sudo password in case to allow second domain alias in your system config.."
         -        sudo ifconfig lo0 alias 127.0.0.2 up
-        +        sed -i -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
-        +        sed -i -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
+        +        sed -i '' -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
+        +        sed -i '' -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
         +
         +        if [[ $1 != --skip-aliasing ]]; then
         +            echo "You will be asked to enter sudo password in case to allow second domain alias in your system config.."
@@ -266,7 +266,6 @@ There you can find links to upgrade notes for other versions too.
     - a lot of the possible issues should be already resolved if you followed the previous instruction and ran the `php phing annotations-fix` phing command
     - some of the issues related to class extension need to be addressed manually nevertheless (see the ["Framework extensibility" article](../introduction/framework-extensibility.md#problem-3)) for more information
     - you need to resolve all the other reported problems (it is up to you whether you decide to address them directly or add ignores in your `phpstan.neon`). You can find inspiration in [#1381](https://github.com/shopsys/shopsys/pull/1381) and [#1040](https://github.com/shopsys/shopsys/pull/1040)
-
 ### Database migrations
 - run database migrations so products will use a DateTime type for columns for "Selling start date" (selling_from) and "Selling end date" (selling_to) ([#1343](https://github.com/shopsys/shopsys/pull/1343))
     - please check [`Version20190823110846`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Migrations/Version20190823110846.php)
@@ -407,7 +406,7 @@ There you can find links to upgrade notes for other versions too.
 
 - add possibility to override admin styles from project-base
  ([#1472](https://github.com/shopsys/shopsys/pull/1472))
-    - delete all files from `src/Shopsys/ShopBundle/styles/admin/` and create two new files in it - `main.less` and `todo.less`
+    - delete all files from `src/Shopsys/ShopBundle/Resources/styles/admin/` and create two new files in it - `main.less` and `todo.less`
 
     - todo.less file content:
     ```css
@@ -418,7 +417,6 @@ There you can find links to upgrade notes for other versions too.
     ```css
     // load main.less file from framework, variable frameworkResourcesDirectory is set in gruntfile.js
     @import "@{frameworkResourcesDirectory}/styles/admin/main.less";
-
     // file for temporary styles eg. added by a programmer
     @import "todo.less";
     ```
@@ -427,21 +425,24 @@ There you can find links to upgrade notes for other versions too.
     ```diff
         admin: {
             files: {
-        -       'web/assets/admin/styles/index_{{ cssVersion }}.css': '{{ frameworkResourcesDirectory|raw }}/styles/admin/main.less'
-        +       'web/assets/admin/styles/index_{{ cssVersion }}.css': '{{ customResourcesDirectory|raw }}/styles/admin/main.less'
+    -           'web/assets/admin/styles/index_{{ cssVersion }}.css': '{{ frameworkResourcesDirectory|raw }}/styles/admin/main.less'
+    +           'web/assets/admin/styles/index_{{ cssVersion }}.css': '{{ customResourcesDirectory|raw }}/styles/admin/main.less'
             },
             options: {
-        -       sourceMapRootpath: '../../../'
-        +       sourceMapRootpath: '../../../',
+    -           sourceMapRootpath: '../../../'
+    +           sourceMapRootpath: '../../../',
 
-        +       modifyVars: {
-        +           frameworkResourcesDirectory: '{{ frameworkResourcesDirectory|raw }}',
-        +       }
+    +           modifyVars: {
+    +               frameworkResourcesDirectory: '{{ frameworkResourcesDirectory|raw }}',
+    +           }
     ```
 
 - update pages layout to webline layout ([#1464](https://github.com/shopsys/shopsys/pull/1464))
-    - update your custom created pages and wrap them to
-    ```html
+    - if you have your custom design you can skip this task
+    - you need to remove classes `.web__line` and `.web__container` from global file and add them to every single page
+    - update your custom created pages and wrap them into two new `div` with classes `web__line` and `web__container`
+
+        ```html
         {% block blockname %}
             <div class="web__line">
                 <div class="web__container">
@@ -449,19 +450,19 @@ There you can find links to upgrade notes for other versions too.
                 </div>
             </div>
         {% endblock %}
-    ```
-    - update default pages according this pull request (https://github.com/shopsys/shopsys/pull/1464/files)
+        ```
+    - update all default pages according to the [PR #1464](https://github.com/shopsys/shopsys/pull/1464/files)
 
     - remove global `.web__line` and `.web__container` and unify main three parts (`.web__header`, `.web__main`, `.web__footer`) in file `src/Shopsys/ShopBundle/Resources/views/Front/Layout/layout.html.twig`
 
-    ```diff
+        ```diff
         -    <div class="web__line">
         -        <div class="web__header">
         +    <div class="web__header">
         +        <div class="web__line">
-    ```
+        ```
 
-    ```diff
+        ```diff
         -        <div class="web__container">
         -            {% block content %}{% endblock %}
         -        </div>
@@ -475,20 +476,21 @@ There you can find links to upgrade notes for other versions too.
         +    <div class="web__footer{% if not isCookiesConsentGiven() %} web__footer--with-cookies js-eu-cookies-consent-footer-gap{% endif %}">
         +        {% include '@ShopsysShop/Front/Layout/footer.html.twig' %}
         +    </div>
-    ```
+        ```
 
     - add `.web__line` and `.web__container` around flashmessages in files `src/Shopsys/ShopBundle/Resources/views/Front/Layout/layoutWithPanel.html.twig`, `src/Shopsys/ShopBundle/Resources/views/Front/Layout/layoutWithoutPanel.html.twig`
 
-    ```diff
+        ```diff
         - {{ render(controller('ShopsysShopBundle:Front/FlashMessage:index')) }}
         + <div class="web__line">
         +     <div class="web__container">
         +         {{ render(controller('ShopsysShopBundle:Front/FlashMessage:index')) }}
         +     </div>
         + </div>
-    ```
+        ```
+
 - improve functional and smoke tests to be more readable and easier to write [#1392](https://github.com/shopsys/shopsys/pull/1392)
-    - add a new package via composer into your project `composer require --dev zalas/phpunit-injector`
+    - add a new package via composer into your project `composer require --dev zalas/phpunit-injector ^1.2`
     - edit `phpunit.xml` by adding a listener
         ```diff
                 </filter>
@@ -502,7 +504,22 @@ There you can find links to upgrade notes for other versions too.
         - make the class implement `Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase` and implement required method `createContainer()`
         - in `setUp()` remove getting class `Domain` directly from container and add `@inject` annotation to its private property instead
         - change visibility of property `$domain` from `private` to `protected`
+            - doing so will break `\Tests\ShopBundle\Smoke\NewProductTest` which might be fixed by specifying correct hostname
+
+                ```diff
+                    public function testCreateOrEditProduct($relativeUrl)
+                    {
+                +       $domainUrl = $this->getContainer()->getParameter('overwrite_domain_url');
+                +       $server = [
+                +           'HTTP_HOST' => sprintf('%s:%d', parse_url($domainUrl, PHP_URL_HOST), parse_url($domainUrl, PHP_URL_PORT)),
+                +       ];
+                        $client1 = $this->getClient(false, 'admin', 'admin123');
+                -       $crawler = $client1->request('GET', $relativeUrl);
+                +       $crawler = $client1->request('GET', $relativeUrl, [], [], $server);
+                ```
+
         - the diff should look like this
+
             ```diff
                 namespace Tests\ShopBundle\Test;
 
@@ -544,6 +561,7 @@ There you can find links to upgrade notes for other versions too.
             +         return $this->getContainer();
             +       }
             ```
+
     - to achieve the goal you should find and replace all occurrences of accessing class directly from container, e.g. `$this->getContainer()->get(FooBar::class)` and define it as a class property with an inject annotation instead
     - in case you want to change it in data provides you will need to say good bye to `@dataProvider` annotations
         - since data providers are called earlier than injecting our services you might need to do some workaround for it
@@ -553,6 +571,7 @@ There you can find links to upgrade notes for other versions too.
                 - `ElasticsearchStructureUpdateCheckerTest::testUpdateIsNotNecessaryWhenNothingIsChanged()`
                 - `ElasticsearchStructureUpdateCheckerTest::testUpdateIsNecessaryWhenStructureHasAdditionalProperty()`
             - the workaround is to remove `@dataProvider` from the test and call it directly inside a loop
+
                 ```diff
                 -   /**
                 -    * @param string $searchText
@@ -640,12 +659,192 @@ There you can find links to upgrade notes for other versions too.
         ```
         - for more information you can see the [PR](https://github.com/shopsys/shopsys/pull/1461)
 
+- add graphic checkboxes and radiobuttons ([#1465](https://github.com/shopsys/shopsys/pull/1465))
+    - add images to
+        - `web/assets/frontend/images/custom_checkbox.png`
+        - `web/assets/frontend/images/custom_radio.png`
+
+        you can [download ours](https://github.com/shopsys/shopsys/blob/8.1/project-base/web/assets/frontend/images/) or use yours
+    - update following files
+    - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/box/chooser.less` (line 18)
+        ```diff
+          &__item {
+              width: 100%;
+              padding: @box-chooser-item-padding;
+              display: flex;
+              align-items: flex-start;
+        +     cursor: pointer;
+
+              &__check {
+        ```
+    - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/form/choice.less` (line 4)
+        ```diff
+          .form-choice {
+              position: relative;
+              display: inline-block;
+        -     padding-left: 20px;
+              line-height: 20px;
+        ```
+
+    - `project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/components/in/icon.less` (line 13)
+        ```diff
+          .in-icon {
+              &--info {
+                  color: @color-blue;
+                  font-size: 16px;
+        +         height: 16px;
+                  cursor: help;
+        ```
+
+    - add new [`src/Shopsys/ShopBundle/Resources/styles/front/common/core/form/custom-inputs.less`](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/core/form/custom-inputs.less) file according to pull request
+    - link this new file in [main.less](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/styles/front/common/main.less)
+
+        ```diff
+           @import "core/form/input.less";
+        +  @import "core/form/custom-inputs.less";
+           @import "core/form/btn.less";
+        ```
+
+    - Update [theme.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Form/theme.html.twig)
+
+        ```diff
+              {% block checkbox_row %}
+        -         <dl class="{{ rowClass|default('form-line') }}">
+        -            <dt></dt>
+        -            <dd>
+        -                <div class="form-choice">
+        -                    <div class="form-choice__input">
+        -                        {{ form_widget(form) }}
+        -                    </div>
+        -                    <div class="form-choice__label">
+        -                        {{ form_label(form, label) }}
+        -                        {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
+        -                        {{ form_errors(form, { errors_attr: errors_attr } ) }}
+        -                        {{ block('icon') }}
+        -                    </div>
+        -                </div>
+        -            </dd>
+        -         </dl>
+        +         <div class="{{ rowClass|default('form-line') }}">
+        +            <div class="form-choice">
+        +                {% set checkboxAttr = attr|merge({'class': (attr.class|default('') ~ ' css-checkbox')|trim}) %}
+        +                {{ form_widget(form, { attr: checkboxAttr }) }}
+        +                {{ form_label(form, label, { label_attr: { class: "css-checkbox__image" }}) }}
+        +                {% set errors_attr = errors_attr|default({})|merge({'class': (errors_attr.class|default('form-error--choice'))}) %}
+        +                {{ form_errors(form, { errors_attr: errors_attr } ) }}
+        +                {{ block('icon') }}
+        +            </div>
+        +         </div>
+              {% endblock checkbox_row %}
+         ```
+
+    - update all twig files according to pull request or find all checkboxes, add following code `{ attr: { class: "css-checkbox" } }` to them and immediately after input tag add label with `class="css-checkbox__image"`. You can change class name to `css-radio` and `css-radio__image` according to input type.
+
+        - [loginForm.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Login/loginForm.html.twig)
+        - [windowForm.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Login/windowForm.html.twig)
+        - [step2.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step2.html.twig)
+        - [step3.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Order/step3.html.twig)
+        - [filterFormMacro.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/filterFormMacro.html.twig)
+        - [register.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Registration/register.html.twig)
+        - [subscription.html.twig](https://github.com/shopsys/shopsys/blob/8.1/project-base/src/Shopsys/ShopBundle/Resources/views/Front/Inline/Newsletter/subscription.html.twig)
+
+    - you can use tag `<span class="css-checkbox_image">` instead of label, if label wraps form input and text
+    - update all test according to pull request - so it can accept new graphic inputs
+
+        - [OrderCest.php](https://github.com/shopsys/shopsys/blob/8.1/project-base/tests/ShopBundle/Acceptance/acceptance/OrderCest.php)
+        - [OrderPage.php](https://github.com/shopsys/shopsys/blob/8.1/project-base/tests/ShopBundle/Acceptance/acceptance/PageObject/Front/OrderPage.php)
+        - [ProductFilterPage.php](https://github.com/shopsys/shopsys/blob/8.1/project-base/tests/ShopBundle/Acceptance/acceptance/PageObject/Front/ProductFilterPage.php)
+        - [RegistrationPage.php](https://github.com/shopsys/shopsys/blob/8.1/project-base/tests/ShopBundle/Acceptance/acceptance/PageObject/Front/RegistrationPage.php)
+        - [ProductFilterCest.php](https://github.com/shopsys/shopsys/blob/8.1/project-base/tests/ShopBundle/Acceptance/acceptance/ProductFilterCest.php)
+
 - change required version for `symfony/monolog-bundle` ([#1506](https://github.com/shopsys/shopsys/pull/1506))
     - edit `composer.json`
         ```diff
         -       "symfony/monolog-bundle": "^3.3.1",
         +       "symfony/monolog-bundle": "~3.4.0",
         ```
+
+- add image and iframe LazyLoad ([#1483](https://github.com/shopsys/shopsys/pull/1483))
+    - lazy load is by default disabled, you can enable it by configuring new parameter in [`parameters_common`](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/parameters_common.yml)
+        ```diff
+                shopsys.display_timezone: Europe/Prague
+        +       shopsys.image.enable_lazy_load: true
+        ```
+
+        Note: _lazy loading __will be enabled__ by default in next major_
+
+    - update `src/Shopsys/ShopBundle/Resources/scripts/frontend/components/ajaxMoreLoader.js`
+        ```diff
+                 $paginationToItemSpan.text(paginationToItem);
+                 updateLoadMoreButton();
+        +        Shopsys.lazyLoadCall.inContainer($currentList);
+                 Shopsys.register.registerNewContent($nextItems);
+             }
+        ```
+    - update `src/Shopsys/ShopBundle/Resources/scripts/frontend/product/productList.AjaxFilter.js`
+        ```diff
+                 $productsWithControls.show();
+        +        Shopsys.lazyLoadCall.inContainer($productsWithControls);
+                 Shopsys.register.registerNewContent($productsWithControls);
+             };
+        ```
+    - add new file [src/Shopsys/ShopBundle/Resources/scripts/frontend/lazyLoadInit.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/lazyLoadInit.js)
+
+    - add new file [src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/minilazyload.min.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins/minilazyload.min.js)
+
+    - update frontend files and disable image lazyload
+      - `src/Shopsys/ShopBundle/Resources/views/Front/Content/Default/index.html.twig`
+
+      ```diff
+        <div class="box-slider__item">
+      -     <a href="{{ item.link }}">{{ image(item) }}</a>
+      +     <a href="{{ item.link }}">{{ image(item, { lazy: false }) }}</a>
+        </div>
+      ```
+      - `src/Shopsys/ShopBundle/Resources/views/Front/Content/Product/detail.html.twig`
+
+      ```diff
+        <div class="box-slider__item">
+      -     <a href="{{ item.link }}">{{ image(item) }}</a>
+      +     <a href="{{ item.link }}">{{ image(item, { lazy: false }) }}</a>
+        </div>
+      ```
+    - update test files according to PR:
+        - [`tests/ReadModelBundle/Functional/Twig/ImageExtensionTest.php`](https://github.com/shopsys/shopsys/pull/1483/files#diff-00773500c9249efed8065b6832744d31)
+        - [`tests/ReadModelBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-f9ab2d66d30131a8d66df0a7c6eed4e4)
+        - [`tests/ShopBundle/Functional/Twig/Resources/picture.twig`](https://github.com/shopsys/shopsys/pull/1483/files#diff-b57160edc2db5a01659693b4b417dafd)
+
+- add Basic styleguide ([#1485](https://github.com/shopsys/shopsys/pull/1485))
+    - update config file `.eslintignore`
+        ```diff
+          /src/Shopsys/ShopBundle/Resources/scripts/frontend/plugins
+        + /src/Shopsys/ShopBundle/Resources/scripts/styleguide
+        ```
+    - add route and controller according to PR update `app/config/routing_dev.yml`
+        ```diff
+        + _styleguide:
+        +    path: /_styleguide/
+        +    defaults: { _controller: ShopsysShopBundle:Styleguide\Styleguide:styleguide }
+        ```
+    - add styleguide controller:
+        - [src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php](https://github.com/shopsys/shopsys/blob/master/project-base/src/Shopsys/ShopBundle/Controller/Styleguide/StyleguideController.php)
+    - add styleguide files according to PR
+        - [web/assets/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/web/assets/styleguide/)
+        - [src/Shopsys/ShopBundle/Resources/scripts/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/scripts/styleguide/)
+        - [src/Shopsys/ShopBundle/Resources/views/Styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/views/Styleguide/)
+        - [src/Shopsys/ShopBundle/Resources/styles/styleguide/*](https://github.com/shopsys/shopsys/tree/master/project-base/src/Shopsys/ShopBundle/Resources/styles/styleguide/)
+    - update `src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig` and add task
+        ```diff
+        + styleguide: {
+        +     files: {
+        +         'web/assets/styleguide/styles/styleguide_{{ cssVersion }}.css': '{{ customResourcesDirectory }}/styles/styleguide/main.less'
+        +     },
+        +     options: {
+        +         compress: true
+        +     }
+        + },
+        ```
+
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
     - the `RedisCacheFactory` was deprecated, use DIC configuration in YAML instead

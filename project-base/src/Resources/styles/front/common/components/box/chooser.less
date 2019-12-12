@@ -1,6 +1,6 @@
 @box-chooser-item-padding: 10px;
 
-@box-chooser-check-width: 20px;
+@box-chooser-check-width: 28px;
 @box-chooser-image-width: 40px;
 @box-chooser-price-width: 80px;
 @box-chooser-title-width: ~"calc(100% - @{box-chooser-check-width} - @{box-chooser-image-width} - @{box-chooser-price-width})";
@@ -16,8 +16,10 @@
         padding: @box-chooser-item-padding;
         display: flex;
         align-items: flex-start;
+        cursor: pointer;
 
         &__check {
+            margin-top: -5px;
             width: @box-chooser-check-width;
         }
 

@@ -24,15 +24,12 @@
                     }
                 }) }}
                 {{ form_row(form.password.second, { label: 'Password again'|trans }) }}
-                <dl class="form-line">
-                    <dt></dt>
-                    <dd>
-                        <div class="form-choice">
-                            <div class="form-choice__input">
-                                {{ form_widget(form.privacyPolicy) }}
-                            </div>
-                            <div class="form-choice__label">
-                                <label for="{{ form.privacyPolicy.vars.id }}">
+                    <dl class="form-line">
+                        <dt></dt>
+                        <dd>
+                            <div class="form-choice">
+                                {{ form_widget(form.privacyPolicy, { attr: { class: "css-checkbox" } }) }}
+                                <label for="{{ form.privacyPolicy.vars.id }}" class="css-checkbox__image">
                                     {% if privacyPolicyArticle is not null %}
                                         {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
                                         {{ 'I agree with <a href="%url%" target="_blank">privacy policy</a>.'|trans({'%url%': articleUrl})|raw }}
@@ -46,12 +43,9 @@
                                     </span>
                                     <ul class="form-error__list"></ul>
                                 </span>
-
                             </div>
-                        </div>
-                    </dd>
-                </dl>
-
+                        </dd>
+                    </dl>
                 {{ form_widget(form.save, { label: 'Register'|trans }) }}
             {{ form_end(form) }}
         </div>

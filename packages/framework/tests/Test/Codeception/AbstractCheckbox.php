@@ -1,0 +1,85 @@
+<?php
+
+namespace Tests\FrameworkBundle\Test\Codeception;
+
+use PHPUnit\Framework\Assert;
+
+abstract class AbstractCheckbox
+{
+    /**
+     * @var \Tests\FrameworkBundle\Test\Codeception\ActorInterface
+     */
+    protected $tester;
+
+    /**
+     * @var string
+     */
+    protected $cssSelector;
+
+    /**
+     * @param \Tests\FrameworkBundle\Test\Codeception\ActorInterface $tester
+     * @param string $cssSelector
+     */
+    protected function __construct(ActorInterface $tester, string $cssSelector)
+    {
+        $this->tester = $tester;
+        $this->cssSelector = $cssSelector;
+    }
+
+    /**
+     * Method will mark the particular image element with a generated class via JS so it can be targeted by Selenium easily.
+     *
+     * @return string
+     */
+    abstract protected function getImageElementClass(): string;
+
+    public function check(): void
+    {
+        $this->isChecked() ? $this->assertVisible() : $this->toggle();
+    }
+
+    protected function assertVisible(): void
+    {
+        $imageElementClass = $this->getImageElementClass();
+
+        $this->tester->canSeeElement(['css' => '.' . $imageElementClass]);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isChecked(): bool
+    {
+        $script = sprintf('return $("%s").is(":checked")', $this->cssSelector);
+
+        return (bool)$this->tester->executeJS($script);
+    }
+
+    public function uncheck(): void
+    {
+        $this->isChecked() ? $this->toggle() : $this->assertVisible();
+    }
+
+    public function toggle(): void
+    {
+        $imageElementClass = '.' . $this->getImageElementClass();
+
+        $this->tester->clickWithLeftButton(['css' => $imageElementClass], 0, 0);
+    }
+
+    public function assertChecked(): void
+    {
+        $this->assertVisible();
+
+        $message = sprintf('Admin checkbox "%s" should be checked but it\'s unchecked.', $this->cssSelector);
+        Assert::assertTrue($this->isChecked(), $message);
+    }
+
+    public function assertUnchecked(): void
+    {
+        $this->assertVisible();
+
+        $message = sprintf('Admin checkbox "%s" should be unchecked but it\'s checked.', $this->cssSelector);
+        Assert::assertFalse($this->isChecked(), $message);
+    }
+}

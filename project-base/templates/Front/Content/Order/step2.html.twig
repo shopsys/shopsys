@@ -22,9 +22,10 @@
                                 {% for child in form.transport %}
                                     {% set choice = form.transport.vars.choices[child.vars.name] %}
                                     {% set transportPrice = transportsPrices[choice.data.id] %}
-                                    <label class="box-chooser__item">
+                                    <label class="box-chooser__item" for="{{ child.vars.id }}">
                                         <span class="box-chooser__item__check">
-                                            {{ form_widget(child, { attr: { class: 'js-order-transport-input', 'data-id': choice.data.id} }) }}
+                                            {{ form_widget(child, { attr: { class: 'css-checkbox js-order-transport-input', 'data-id': choice.data.id} }) }}
+                                            <span class="css-checkbox__image"></span>
                                         </span>
 
                                         <span class="box-chooser__item__image">
@@ -67,9 +68,10 @@
                                 {% for child in form.payment %}
                                     {% set choice = form.payment.vars.choices[child.vars.name] %}
                                     {% set paymentPrice = paymentsPrices[choice.data.id] %}
-                                    <label class="box-chooser__item">
+                                    <label class="box-chooser__item" for="{{ child.vars.id }}">
                                         <span class="box-chooser__item__check">
-                                            {{ form_widget(child, { attr: { class: 'js-order-payment-input', 'data-id': choice.data.id} }) }}
+                                            {{ form_widget(child, { attr: { class: 'css-checkbox js-order-payment-input', 'data-id': choice.data.id} }) }}
+                                            <span class="css-checkbox__image"></span>
                                         </span>
 
                                         <span class="box-chooser__item__image">

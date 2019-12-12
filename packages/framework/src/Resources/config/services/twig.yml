@@ -16,7 +16,9 @@ services:
             - '%shopsys.domain_images_url_prefix%'
 
     Shopsys\FrameworkBundle\Twig\ImageExtension:
-        arguments: ['%shopsys.front_design_image_url_prefix%']
+        arguments:
+            $frontDesignImageUrlPrefix: '%shopsys.front_design_image_url_prefix%'
+            $isLazyLoadEnabled: '%shopsys.image.enable_lazy_load%'
 
     Shopsys\FrameworkBundle\Twig\LocalizationExtension:
         arguments:

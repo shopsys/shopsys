@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
+use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class OrderPage extends AbstractPage
 {
@@ -29,11 +30,15 @@ class OrderPage extends AbstractPage
     }
 
     /**
-     * @param string $transportTitle
+     * @param int $transportPosition
      */
-    public function selectTransport($transportTitle)
+    public function selectTransport($transportPosition)
     {
-        $this->tester->checkOptionByLabelTranslationFrontend($transportTitle, 'dataFixtures');
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#transport_and_payment_form_transport_' . $transportPosition
+        );
+        $frontCheckboxClicker->check();
     }
 
     /**
@@ -55,11 +60,15 @@ class OrderPage extends AbstractPage
     }
 
     /**
-     * @param string $paymentTitle
+     * @param int $paymentPosition
      */
-    public function selectPayment($paymentTitle)
+    public function selectPayment($paymentPosition)
     {
-        $this->tester->checkOptionByLabelTranslationFrontend($paymentTitle, 'dataFixtures');
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#transport_and_payment_form_payment_' . $paymentPosition
+        );
+        $frontCheckboxClicker->check();
     }
 
     /**
@@ -114,6 +123,10 @@ class OrderPage extends AbstractPage
 
     public function acceptLegalConditions()
     {
-        $this->tester->checkOptionByLabelTranslationFrontend('I agree with terms and conditions and privacy policy.');
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#order_personal_info_form_legalConditionsAgreement'
+        );
+        $frontCheckboxClicker->check();
     }
 }

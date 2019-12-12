@@ -6,6 +6,7 @@ namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
+use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class RegistrationPage extends AbstractPage
 {
@@ -23,8 +24,13 @@ class RegistrationPage extends AbstractPage
         $this->tester->fillFieldByName('registration_form[email]', $email);
         $this->tester->fillFieldByName('registration_form[password][first]', $firstPassword);
         $this->tester->fillFieldByName('registration_form[password][second]', $secondPassword);
-        $translatedLabelForAgreementWithPrivacyPolicy = t('I agree with privacy policy.', [], 'messages', $this->tester->getFrontendLocale());
-        $this->tester->checkOptionByLabel($translatedLabelForAgreementWithPrivacyPolicy);
+
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#registration_form_privacyPolicy'
+        );
+        $frontCheckboxClicker->check();
+
         $this->tester->wait(TimedFormTypeExtension::MINIMUM_FORM_FILLING_SECONDS);
         $this->tester->clickByName('registration_form[save]');
     }

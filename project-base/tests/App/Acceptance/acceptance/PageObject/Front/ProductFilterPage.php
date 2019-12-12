@@ -9,6 +9,7 @@ use Facebook\WebDriver\WebDriverKeys;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
 use Tests\App\Test\Codeception\Module\StrictWebDriver;
+use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class ProductFilterPage extends AbstractPage
 {
@@ -45,11 +46,15 @@ class ProductFilterPage extends AbstractPage
     }
 
     /**
-     * @param string $label
+     * @param int $brandPosition
      */
-    public function filterByBrand($label)
+    public function filterByBrand($brandPosition)
     {
-        $this->tester->checkOptionByLabelTranslationFrontend($label);
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#product_filter_form_brands_' . $brandPosition
+        );
+        $frontCheckboxClicker->check();
         $this->waitForFilter();
     }
 

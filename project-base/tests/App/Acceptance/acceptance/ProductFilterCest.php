@@ -10,6 +10,9 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 
 class ProductFilterCest
 {
+    private const BRAND_LG_POSITION = 3;
+    private const BRAND_HYUNDAI_POSITION = 2;
+
     /**
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\ProductFilterPage $productFilterPage
@@ -31,10 +34,10 @@ class ProductFilterCest
         $productFilterPage->setMaximalPrice(10000);
         $productListPage->assertProductsTotalCount(16);
 
-        $productFilterPage->filterByBrand('LG');
+        $productFilterPage->filterByBrand(static::BRAND_LG_POSITION);
         $productListPage->assertProductsTotalCount(3);
 
-        $productFilterPage->filterByBrand('Hyundai');
+        $productFilterPage->filterByBrand(static::BRAND_HYUNDAI_POSITION);
         $productListPage->assertProductsTotalCount(7);
 
         $productFilterPage->filterByParameter('HDMI', 'Yes');
