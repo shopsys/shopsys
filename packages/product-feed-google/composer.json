@@ -26,6 +26,7 @@
         "ext-json": "*",
         "doctrine/dbal": "^2.7",
         "doctrine/doctrine-bundle": "^1.8",
+        "doctrine/persistence": "~1.2.0",
         "shopsys/doctrine-orm": "^2.6.2",
         "shopsys/form-types-bundle": "7.3.x-dev",
         "shopsys/framework": "7.3.x-dev",
