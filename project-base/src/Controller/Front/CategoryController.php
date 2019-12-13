@@ -36,27 +36,27 @@ class CategoryController extends FrontBaseController
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
-    private $currentCustomer;
+    private $currentCustomerUser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CurrentCategoryResolver $currentCategoryResolver
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         Domain $domain,
         CategoryFacade $categoryFacade,
         CurrentCategoryResolver $currentCategoryResolver,
         TopCategoryFacade $topCategoryFacade,
-        CurrentCustomerUser $currentCustomer
+        CurrentCustomerUser $currentCustomerUser
     ) {
         $this->domain = $domain;
         $this->categoryFacade = $categoryFacade;
         $this->currentCategoryResolver = $currentCategoryResolver;
         $this->topCategoryFacade = $topCategoryFacade;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**
@@ -121,7 +121,7 @@ class CategoryController extends FrontBaseController
     public function categoryListAction(array $categories, $showProductsCountByCategory = true)
     {
         if ($showProductsCountByCategory === true) {
-            $pricingGroup = $this->currentCustomer->getPricingGroup();
+            $pricingGroup = $this->currentCustomerUser->getPricingGroup();
             $domainId = $this->domain->getId();
 
             $listableProductCountsIndexedByCategoryId = $this->categoryFacade

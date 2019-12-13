@@ -31,17 +31,17 @@ class CartRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerUserIdentifier
      *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
-    public function findByCustomerIdentifier(CustomerUserIdentifier $customerIdentifier)
+    public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
     {
         $criteria = [];
-        if ($customerIdentifier->getUser() !== null) {
-            $criteria['user'] = $customerIdentifier->getUser()->getId();
+        if ($customerUserIdentifier->getUser() !== null) {
+            $criteria['user'] = $customerUserIdentifier->getUser()->getId();
         } else {
-            $criteria['cartIdentifier'] = $customerIdentifier->getCartIdentifier();
+            $criteria['cartIdentifier'] = $customerUserIdentifier->getCartIdentifier();
         }
 
         return $this->getCartRepository()->findOneBy($criteria, ['id' => 'desc']);

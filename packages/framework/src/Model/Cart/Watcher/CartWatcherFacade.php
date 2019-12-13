@@ -27,24 +27,24 @@ class CartWatcherFacade
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender $flashMessageSender
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         FlashMessageSender $flashMessageSender,
         EntityManagerInterface $em,
         CartWatcher $cartWatcher,
-        CurrentCustomerUser $currentCustomer
+        CurrentCustomerUser $currentCustomerUser
     ) {
         $this->flashMessageSender = $flashMessageSender;
         $this->em = $em;
         $this->cartWatcher = $cartWatcher;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**
@@ -80,7 +80,7 @@ class CartWatcherFacade
      */
     protected function checkNotListableItems(Cart $cart)
     {
-        $notVisibleItems = $this->cartWatcher->getNotListableItems($cart, $this->currentCustomer);
+        $notVisibleItems = $this->cartWatcher->getNotListableItems($cart, $this->currentCustomerUser);
 
         $toFlush = [];
         foreach ($notVisibleItems as $cartItem) {

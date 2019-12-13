@@ -14,15 +14,15 @@ class CartTest extends TestCase
 {
     public function testGetItemsCountZero()
     {
-        $customerIdentifier = new CustomerUserIdentifier('randomString');
-        $cart = new Cart($customerIdentifier->getCartIdentifier());
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
 
         $this->assertSame(0, $cart->getItemsCount());
     }
 
     public function testGetItemsCount()
     {
-        $customerIdentifier = new CustomerUserIdentifier('randomString');
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
         $productData1 = new ProductData();
         $productData1->name = ['cs' => 'Product 1'];
@@ -32,7 +32,7 @@ class CartTest extends TestCase
         $productData2->name = ['cs' => 'Product 2'];
         $product2 = Product::create($productData2);
 
-        $cart = new Cart($customerIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
 
         $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
         $cart->addItem($cartItem1);
@@ -45,21 +45,21 @@ class CartTest extends TestCase
 
     public function testIsEmpty()
     {
-        $customerIdentifier = new CustomerUserIdentifier('randomString');
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
-        $cart = new Cart($customerIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
 
         $this->assertTrue($cart->isEmpty());
     }
 
     public function testIsNotEmpty()
     {
-        $customerIdentifier = new CustomerUserIdentifier('randomString');
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
         $productData = new ProductData();
         $productData->name = ['cs' => 'Product 1'];
         $product = Product::create($productData);
 
-        $cart = new Cart($customerIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
 
         $cartItem = new CartItem($cart, $product, 1, Money::zero());
         $cart->addItem($cartItem);
@@ -69,7 +69,7 @@ class CartTest extends TestCase
 
     public function testClean()
     {
-        $customerIdentifier = new CustomerUserIdentifier('randomString');
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
         $productData1 = new ProductData();
         $productData1->name = ['cs' => 'Product 1'];
         $product1 = Product::create($productData1);
@@ -79,7 +79,7 @@ class CartTest extends TestCase
 
         $product2 = Product::create($productData2);
 
-        $cart = new Cart($customerIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
 
         $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
         $cart->addItem($cartItem1);

@@ -105,7 +105,7 @@ class OrderFacade
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
@@ -181,7 +181,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $userFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
@@ -209,7 +209,7 @@ class OrderFacade
         CurrentPromoCodeFacade $currentPromoCodeFacade,
         CartFacade $cartFacade,
         UserFacade $userFacade,
-        CurrentCustomerUser $currentCustomer,
+        CurrentCustomerUser $currentCustomerUser,
         OrderPreviewFactory $orderPreviewFactory,
         OrderProductFacade $orderProductFacade,
         HeurekaFacade $heurekaFacade,
@@ -235,7 +235,7 @@ class OrderFacade
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
         $this->cartFacade = $cartFacade;
         $this->userFacade = $userFacade;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->orderProductFacade = $orderProductFacade;
         $this->heurekaFacade = $heurekaFacade;
@@ -298,12 +298,12 @@ class OrderFacade
     {
         $orderData->status = $this->orderStatusRepository->getDefault();
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment);
-        $user = $this->currentCustomer->findCurrentUser();
+        $user = $this->currentCustomerUser->findCurrentUser();
 
         $order = $this->createOrder($orderData, $orderPreview, $user);
         $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
 
-        $this->cartFacade->deleteCartOfCurrentCustomer();
+        $this->cartFacade->deleteCartOfCurrentCustomerUser();
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
         if ($user instanceof User) {
             $this->userFacade->amendUserDataFromOrder($user, $order);

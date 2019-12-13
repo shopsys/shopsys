@@ -40,11 +40,11 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
         $cartIdentifier1 = 'abc123';
         $cartIdentifier2 = 'def456';
 
-        $customerIdentifier1 = new CustomerUserIdentifier($cartIdentifier1);
-        $mainCart = new Cart($customerIdentifier1->getCartIdentifier());
+        $customerUserIdentifier1 = new CustomerUserIdentifier($cartIdentifier1);
+        $mainCart = new Cart($customerUserIdentifier1->getCartIdentifier());
 
-        $customerIdentifier2 = new CustomerUserIdentifier($cartIdentifier2);
-        $mergingCart = new Cart($customerIdentifier2->getCartIdentifier());
+        $customerUserIdentifier2 = new CustomerUserIdentifier($cartIdentifier2);
+        $mergingCart = new Cart($customerUserIdentifier2->getCartIdentifier());
 
         $cartItem = new CartItem($mainCart, $product1, 2, Money::zero());
         $mainCart->addItem($cartItem);
@@ -64,13 +64,13 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
             ->getMock();
         $customerUserIdentifierFactory
             ->expects($this->any())->method('get')
-            ->willReturn($customerIdentifier1);
+            ->willReturn($customerUserIdentifier1);
         $cartFacadeMock = $this->getMockBuilder(CartFacade::class)
-            ->setMethods(['getCartByCustomerIdentifierCreateIfNotExists', 'deleteCart'])
+            ->setMethods(['getCartByCustomerUserIdentifierCreateIfNotExists', 'deleteCart'])
             ->disableOriginalConstructor()
             ->getMock();
         $cartFacadeMock
-            ->expects($this->once())->method('getCartByCustomerIdentifierCreateIfNotExists')
+            ->expects($this->once())->method('getCartByCustomerUserIdentifierCreateIfNotExists')
             ->willReturn($mainCart);
         $cartFacadeMock
             ->expects($this->once())->method('deleteCart')

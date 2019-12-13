@@ -25,21 +25,21 @@ class BestsellingProductController extends FrontBaseController
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
-    private $currentCustomer;
+    private $currentCustomerUser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         CachedBestsellingProductFacade $cachedBestsellingProductFacade,
         Domain $domain,
-        CurrentCustomerUser $currentCustomer
+        CurrentCustomerUser $currentCustomerUser
     ) {
         $this->cachedBestsellingProductFacade = $cachedBestsellingProductFacade;
         $this->domain = $domain;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**
@@ -50,7 +50,7 @@ class BestsellingProductController extends FrontBaseController
         $bestsellingProducts = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProducts(
             $this->domain->getId(),
             $category,
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
 
         return $this->render('Front/Content/Product/bestsellingProductsList.html.twig', [

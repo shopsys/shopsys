@@ -32,7 +32,7 @@ class OrderPreviewFactory
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
@@ -48,7 +48,7 @@ class OrderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      */
@@ -56,14 +56,14 @@ class OrderPreviewFactory
         OrderPreviewCalculation $orderPreviewCalculation,
         Domain $domain,
         CurrencyFacade $currencyFacade,
-        CurrentCustomerUser $currentCustomer,
+        CurrentCustomerUser $currentCustomerUser,
         CartFacade $cartFacade,
         CurrentPromoCodeFacade $currentPromoCodeFacade
     ) {
         $this->orderPreviewCalculation = $orderPreviewCalculation;
         $this->domain = $domain;
         $this->currencyFacade = $currencyFacade;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
         $this->cartFacade = $cartFacade;
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
     }
@@ -88,7 +88,7 @@ class OrderPreviewFactory
             $this->cartFacade->getQuantifiedProductsOfCurrentCustomer(),
             $transport,
             $payment,
-            $this->currentCustomer->findCurrentUser(),
+            $this->currentCustomerUser->findCurrentUser(),
             $validEnteredPromoCodePercent
         );
     }

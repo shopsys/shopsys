@@ -20,7 +20,7 @@ class ProductFilterConfigFactory
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository
@@ -35,20 +35,20 @@ class ProductFilterConfigFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository $parameterFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository $flagFilterChoiceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository $brandFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository $priceRangeRepository
      */
     public function __construct(
         ParameterFilterChoiceRepository $parameterFilterChoiceRepository,
         FlagFilterChoiceRepository $flagFilterChoiceRepository,
-        CurrentCustomerUser $currentCustomer,
+        CurrentCustomerUser $currentCustomerUser,
         BrandFilterChoiceRepository $brandFilterChoiceRepository,
         PriceRangeRepository $priceRangeRepository
     ) {
         $this->parameterFilterChoiceRepository = $parameterFilterChoiceRepository;
         $this->flagFilterChoiceRepository = $flagFilterChoiceRepository;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
         $this->brandFilterChoiceRepository = $brandFilterChoiceRepository;
         $this->priceRangeRepository = $priceRangeRepository;
     }
@@ -61,7 +61,7 @@ class ProductFilterConfigFactory
      */
     public function createForCategory($domainId, $locale, Category $category)
     {
-        $pricingGroup = $this->currentCustomer->getPricingGroup();
+        $pricingGroup = $this->currentCustomerUser->getPricingGroup();
         $parameterFilterChoices = $this->parameterFilterChoiceRepository
             ->getParameterFilterChoicesInCategory($domainId, $pricingGroup, $locale, $category);
         $flagFilterChoices = $this->flagFilterChoiceRepository
@@ -82,7 +82,7 @@ class ProductFilterConfigFactory
     public function createForSearch($domainId, $locale, $searchText)
     {
         $parameterFilterChoices = [];
-        $pricingGroup = $this->currentCustomer->getPricingGroup();
+        $pricingGroup = $this->currentCustomerUser->getPricingGroup();
         $flagFilterChoices = $this->flagFilterChoiceRepository
             ->getFlagFilterChoicesForSearch($domainId, $pricingGroup, $locale, $searchText);
         $brandFilterChoices = $this->brandFilterChoiceRepository

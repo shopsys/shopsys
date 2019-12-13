@@ -33,7 +33,7 @@ class CartTest extends TransactionFunctionalTestCase
     {
         $em = $this->getEntityManager();
 
-        $customerIdentifier = new CustomerUserIdentifier('randomString');
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
         $availabilityData = new AvailabilityData();
         $availabilityData->dispatchTime = 0;
@@ -47,7 +47,7 @@ class CartTest extends TransactionFunctionalTestCase
         $product1 = Product::create($productData);
         $product2 = Product::create($productData);
 
-        $cart = new Cart($customerIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
 
         $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
         $cart->addItem($cartItem1);
@@ -73,9 +73,9 @@ class CartTest extends TransactionFunctionalTestCase
     {
         $product = $this->createProduct();
 
-        $customerIdentifier = new CustomerUserIdentifier('randomString');
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
-        $cart = new Cart($customerIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
 
         $cartItem = new CartItem($cart, $product, 1, Money::zero());
         $cart->addItem($cartItem);

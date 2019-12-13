@@ -55,8 +55,8 @@ class CartMigrationFacade
      */
     public function mergeCurrentCartWithCart(Cart $cart): void
     {
-        $customerIdentifier = $this->customerUserIdentifierFactory->get();
-        $currentCart = $this->cartFacade->getCartByCustomerIdentifierCreateIfNotExists($customerIdentifier);
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
+        $currentCart = $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
 
         foreach ($cart->getItems() as $itemToMerge) {
             $similarItem = $currentCart->findSimilarItemByItem($itemToMerge);
@@ -92,8 +92,8 @@ class CartMigrationFacade
 
         $previousCartIdentifier = $session->get(static::SESSION_PREVIOUS_CART_IDENTIFIER);
         if (!empty($previousCartIdentifier) && $previousCartIdentifier !== $session->getId()) {
-            $previousCustomerIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
-            $cart = $this->cartFacade->findCartByCustomerIdentifier($previousCustomerIdentifier);
+            $previousCustomerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
+            $cart = $this->cartFacade->findCartByCustomerUserIdentifier($previousCustomerUserIdentifier);
 
             if ($cart !== null) {
                 $this->mergeCurrentCartWithCart($cart);

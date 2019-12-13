@@ -39,7 +39,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade
@@ -70,7 +70,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory $listedProductViewFactory
@@ -81,7 +81,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
         ProductFacade $productFacade,
         ProductAccessoryFacade $productAccessoryFacade,
         Domain $domain,
-        CurrentCustomerUser $currentCustomer,
+        CurrentCustomerUser $currentCustomerUser,
         TopProductFacade $topProductFacade,
         ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         ListedProductViewFactory $listedProductViewFactory,
@@ -91,7 +91,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
         $this->productFacade = $productFacade;
         $this->productAccessoryFacade = $productAccessoryFacade;
         $this->domain = $domain;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
         $this->topProductFacade = $topProductFacade;
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->listedProductViewFactory = $listedProductViewFactory;
@@ -107,7 +107,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
     {
         $topProducts = $this->topProductFacade->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
 
         $topProducts = array_slice($topProducts, 0, $limit);
@@ -122,7 +122,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
     {
         $topProducts = $this->topProductFacade->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
 
         return $this->createFromProducts($topProducts);
@@ -140,7 +140,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
         $accessories = $this->productAccessoryFacade->getTopOfferedAccessories(
             $product,
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             $limit
         );
 
@@ -158,7 +158,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
         $accessories = $this->productAccessoryFacade->getTopOfferedAccessories(
             $product,
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             null
         );
 

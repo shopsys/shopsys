@@ -29,7 +29,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
@@ -54,7 +54,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountRepository $productFilterCountRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
@@ -63,7 +63,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     public function __construct(
         ProductRepository $productRepository,
         Domain $domain,
-        CurrentCustomerUser $currentCustomer,
+        CurrentCustomerUser $currentCustomerUser,
         CategoryRepository $categoryRepository,
         ProductFilterCountRepository $productFilterCountRepository,
         ProductAccessoryRepository $productAccessoryRepository,
@@ -71,7 +71,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     ) {
         $this->productRepository = $productRepository;
         $this->domain = $domain;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
         $this->categoryRepository = $categoryRepository;
         $this->productFilterCountRepository = $productFilterCountRepository;
         $this->productAccessoryRepository = $productAccessoryRepository;
@@ -87,7 +87,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         return $this->productRepository->getVisible(
             $productId,
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
     }
 
@@ -100,7 +100,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         return $this->productAccessoryRepository->getAllOfferedAccessoriesByProduct(
             $product,
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
     }
 
@@ -113,7 +113,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         return $this->productRepository->getAllSellableVariantsByMainVariant(
             $product,
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
     }
 
@@ -140,7 +140,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getLocale(),
             $productFilterData,
             $orderingModeId,
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             $page,
             $limit
         );
@@ -160,7 +160,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getId(),
             $this->domain->getLocale(),
             $orderingModeId,
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             $category
         );
     }
@@ -177,7 +177,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getId(),
             $this->domain->getLocale(),
             $orderingModeId,
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
     }
 
@@ -201,7 +201,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getId(),
             $this->domain->getLocale(),
             $orderingModeId,
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             $page,
             $limit
         );
@@ -228,7 +228,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getLocale(),
             $productFilterData,
             $orderingModeId,
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             $page,
             $limit
         );
@@ -251,7 +251,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getLocale(),
             $emptyProductFilterData,
             ProductListOrderingConfig::ORDER_BY_RELEVANCE,
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             $page,
             $limit
         );
@@ -272,7 +272,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     ) {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             $this->categoryRepository->getById($categoryId)
         );
 
@@ -281,7 +281,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getLocale(),
             $productFilterConfig,
             $productFilterData,
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
     }
 
@@ -298,7 +298,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     ) {
         $productsQueryBuilder = $this->productRepository->getListableBySearchTextQueryBuilder(
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             $this->domain->getLocale(),
             $searchText
         );
@@ -308,7 +308,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getLocale(),
             $productFilterConfig,
             $productFilterData,
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
     }
 
@@ -319,7 +319,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     {
         return $this->productRepository->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
     }
 }

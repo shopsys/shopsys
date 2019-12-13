@@ -21,8 +21,8 @@ class CustomerUserIdentifier
     public function __construct($cartIdentifier, ?User $user = null)
     {
         if ($cartIdentifier === '' && $user === null) {
-            $message = 'Can not be created empty CustomerIdentifier';
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerUserIdentifierUserException($message);
+            $message = 'Can not be created empty CustomerUserIdentifier';
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerIdentifierException($message);
         }
 
         $this->user = $user;

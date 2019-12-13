@@ -39,9 +39,9 @@ class CustomerUserIdentifierFactory
             $cartIdentifier = $this->session->getId();
         }
 
-        $customerIdentifier = new CustomerUserIdentifier($cartIdentifier, $this->currentCustomerUser->findCurrentUser());
+        $customerUserIdentifier = new CustomerUserIdentifier($cartIdentifier, $this->currentCustomerUser->findCurrentUser());
 
-        return $customerIdentifier;
+        return $customerUserIdentifier;
     }
 
     /**

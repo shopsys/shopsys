@@ -56,7 +56,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $user = $this->userFacade->findUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, 1);
         $customerUserData = $this->customerUserDataFactory->createFromUser($user);
         $customerUserData->userData->password = 'password';
-        $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailUserException::class);
+        $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException::class);
 
         $this->userFacade->create($customerUserData);
     }
@@ -67,7 +67,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $customerUserData = $this->customerUserDataFactory->createFromUser($user);
         $customerUserData->userData->password = 'password';
         $customerUserData->userData->email = mb_strtoupper(self::EXISTING_EMAIL_ON_DOMAIN_1);
-        $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailUserException::class);
+        $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException::class);
 
         $this->userFacade->create($customerUserData);
     }

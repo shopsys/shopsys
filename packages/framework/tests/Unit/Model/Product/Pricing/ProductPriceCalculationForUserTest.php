@@ -32,7 +32,7 @@ class ProductPriceCalculationForUserTest extends TestCase
         $user = new User($userData, null);
         $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), false);
 
-        $currentCustomerMock = $this->createMock(CurrentCustomerUser::class);
+        $currentCustomerUserMock = $this->createMock(CurrentCustomerUser::class);
         $pricingGroupSettingFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
 
         $productPriceCalculationMock = $this->getMockBuilder(ProductPriceCalculation::class)
@@ -45,7 +45,7 @@ class ProductPriceCalculationForUserTest extends TestCase
 
         $productPriceCalculationForUser = new ProductPriceCalculationForUser(
             $productPriceCalculationMock,
-            $currentCustomerMock,
+            $currentCustomerUserMock,
             $pricingGroupSettingFacadeMock,
             $domainMock
         );
@@ -63,7 +63,7 @@ class ProductPriceCalculationForUserTest extends TestCase
         $pricingGroup = new PricingGroup($pricingGroupData, $domainId);
         $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), false);
 
-        $currentCustomerMock = $this->createMock(CurrentCustomerUser::class);
+        $currentCustomerUserMock = $this->createMock(CurrentCustomerUser::class);
 
         $pricingGroupFacadeMock = $this->getMockBuilder(PricingGroupSettingFacade::class)
             ->setMethods(['getDefaultPricingGroupByDomainId'])
@@ -85,7 +85,7 @@ class ProductPriceCalculationForUserTest extends TestCase
 
         $productPriceCalculationForUser = new ProductPriceCalculationForUser(
             $productPriceCalculationMock,
-            $currentCustomerMock,
+            $currentCustomerUserMock,
             $pricingGroupFacadeMock,
             $domainMock
         );

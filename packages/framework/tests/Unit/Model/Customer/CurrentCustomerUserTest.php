@@ -23,9 +23,9 @@ class CurrentCustomerUserTest extends TestCase
         $tokenStorageMock = $this->createMock(TokenStorage::class);
         $pricingGroupSettingFacadeMock = $this->getPricingGroupSettingFacadeMockReturningDefaultPricingGroup($expectedPricingGroup);
 
-        $currentCustomer = new CurrentCustomerUser($tokenStorageMock, $pricingGroupSettingFacadeMock);
+        $currentCustomerUser = new CurrentCustomerUser($tokenStorageMock, $pricingGroupSettingFacadeMock);
 
-        $pricingGroup = $currentCustomer->getPricingGroup();
+        $pricingGroup = $currentCustomerUser->getPricingGroup();
         $this->assertSame($expectedPricingGroup, $pricingGroup);
     }
 
@@ -39,9 +39,9 @@ class CurrentCustomerUserTest extends TestCase
         $tokenStorageMock = $this->getTokenStorageMockForUser($user);
         $pricingGroupFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
 
-        $currentCustomer = new CurrentCustomerUser($tokenStorageMock, $pricingGroupFacadeMock);
+        $currentCustomerUser = new CurrentCustomerUser($tokenStorageMock, $pricingGroupFacadeMock);
 
-        $pricingGroup = $currentCustomer->getPricingGroup();
+        $pricingGroup = $currentCustomerUser->getPricingGroup();
         $this->assertSame($expectedPricingGroup, $pricingGroup);
     }
 

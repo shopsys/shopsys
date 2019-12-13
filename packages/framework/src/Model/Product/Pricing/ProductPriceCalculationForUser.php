@@ -18,7 +18,7 @@ class ProductPriceCalculationForUser
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
@@ -32,18 +32,18 @@ class ProductPriceCalculationForUser
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         ProductPriceCalculation $productPriceCalculation,
-        CurrentCustomerUser $currentCustomer,
+        CurrentCustomerUser $currentCustomerUser,
         PricingGroupSettingFacade $pricingGroupSettingFacade,
         Domain $domain
     ) {
         $this->productPriceCalculation = $productPriceCalculation;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
         $this->domain = $domain;
     }
@@ -57,7 +57,7 @@ class ProductPriceCalculationForUser
         return $this->productPriceCalculation->calculatePrice(
             $product,
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
     }
 

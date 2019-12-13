@@ -53,11 +53,11 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
     public function testGetModifiedPriceItemsAndUpdatePrices()
     {
-        $customerIdentifier = new CustomerUserIdentifier('randomString');
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
 
         $productPrice = $this->productPriceCalculationForUser->calculatePriceForCurrentUser($product);
-        $cart = new Cart($customerIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
         $cartItem = new CartItem($cart, $product, 1, $productPrice->getPriceWithVat());
         $cart->addItem($cartItem);
 
@@ -77,7 +77,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
     public function testGetNotListableItemsWithItemWithoutProduct()
     {
-        $customerIdentifier = new CustomerUserIdentifier('randomString');
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
         $cartItemMock = $this->getMockBuilder(CartItem::class)
             ->disableOriginalConstructor()
@@ -85,25 +85,25 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             ->getMock();
 
         $expectedPricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-        $currentCustomerMock = $this->getMockBuilder(CurrentCustomerUser::class)
+        $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
             ->disableOriginalConstructor()
             ->setMethods(['getPricingGroup'])
             ->getMock();
-        $currentCustomerMock
+        $currentCustomerUserMock
             ->expects($this->any())
             ->method('getPricingGroup')
             ->willReturn($expectedPricingGroup);
 
-        $cart = new Cart($customerIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
         $cart->addItem($cartItemMock);
 
-        $notListableItems = $this->cartWatcher->getNotListableItems($cart, $currentCustomerMock);
+        $notListableItems = $this->cartWatcher->getNotListableItems($cart, $currentCustomerUserMock);
         $this->assertCount(1, $notListableItems);
     }
 
     public function testGetNotListableItemsWithVisibleButNotSellableProduct()
     {
-        $customerIdentifier = new CustomerUserIdentifier('randomString');
+        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
@@ -121,11 +121,11 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             ->willReturn($product);
 
         $expectedPricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-        $currentCustomerMock = $this->getMockBuilder(CurrentCustomerUser::class)
+        $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
             ->disableOriginalConstructor()
             ->setMethods(['getPricingGroup'])
             ->getMock();
-        $currentCustomerMock
+        $currentCustomerUserMock
             ->expects($this->any())
             ->method('getPricingGroup')
             ->willReturn($expectedPricingGroup);
@@ -150,10 +150,10 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $cartWatcher = new CartWatcher($this->productPriceCalculationForUser, $productVisibilityRepositoryMock, $this->domain);
 
-        $cart = new Cart($customerIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
         $cart->addItem($cartItemMock);
 
-        $notListableItems = $cartWatcher->getNotListableItems($cart, $currentCustomerMock);
+        $notListableItems = $cartWatcher->getNotListableItems($cart, $currentCustomerUserMock);
         $this->assertCount(1, $notListableItems);
     }
 

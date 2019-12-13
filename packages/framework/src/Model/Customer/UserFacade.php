@@ -157,7 +157,7 @@ class UserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null $deliveryAddressData
      *
-     * @throws \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailUserException
+     * @throws \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
     protected function createUser(
@@ -290,7 +290,7 @@ class UserFacade
         );
 
         if ($userByEmailAndDomain !== null && $user->getId() !== $userByEmailAndDomain->getId()) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailUserException($email);
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException($email);
         }
 
         $user->setEmail($email);

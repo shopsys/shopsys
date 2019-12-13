@@ -21,14 +21,14 @@ class CartFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerUserIdentifier
      *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
-    public function create(CustomerUserIdentifier $customerIdentifier): Cart
+    public function create(CustomerUserIdentifier $customerUserIdentifier): Cart
     {
         $classData = $this->entityNameResolver->resolve(Cart::class);
 
-        return new $classData($customerIdentifier->getCartIdentifier(), $customerIdentifier->getUser());
+        return new $classData($customerUserIdentifier->getCartIdentifier(), $customerUserIdentifier->getUser());
     }
 }

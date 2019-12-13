@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\Exception;
 
 use Exception;
 
-class DuplicateEmailUserException extends Exception implements CustomerUserException
+class DuplicateEmailException extends Exception implements CustomerUserException
 {
     /**
      * @var string
