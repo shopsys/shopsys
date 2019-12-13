@@ -36,6 +36,7 @@ class OrderCest
 
         $orderPage->assertTransportIsNotSelected('Czech post');
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
+        $me->waitForAjax();
         $orderPage->assertPaymentIsNotSelected('Cash on delivery');
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
         $me->waitForAjax();
