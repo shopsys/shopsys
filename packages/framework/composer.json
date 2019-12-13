@@ -52,6 +52,7 @@
         "doctrine/dbal": "^2.7",
         "doctrine/doctrine-bundle": "^1.8.1",
         "doctrine/doctrine-fixtures-bundle": "^3.0.2",
+        "doctrine/persistence": "~1.2.0",
         "elasticsearch/elasticsearch": "^6.0.1",
         "fp/jsformvalidator-bundle": "^1.5.1",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
