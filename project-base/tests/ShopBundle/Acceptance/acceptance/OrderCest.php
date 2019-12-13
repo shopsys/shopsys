@@ -32,6 +32,7 @@ class OrderCest
 
         $orderPage->assertTransportIsNotSelected('Czech post');
         $orderPage->selectTransport('Czech post');
+        $me->waitForAjax();
         $orderPage->assertPaymentIsNotSelected('Cash on delivery');
         $orderPage->selectPayment('Cash on delivery');
         $me->waitForAjax();

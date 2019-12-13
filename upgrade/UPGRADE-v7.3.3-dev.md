@@ -60,3 +60,9 @@ There you can find links to upgrade notes for other versions too.
     - `tests/ShopBundle/Functional/Model/Cart/Watcher/CartWatcherTest.php`
 
 - exception `CartIsEmptyException` has been marked as deprecated and will be removed in 9.0 ([#1494](https://github.com/shopsys/shopsys/pull/1494))
+- update your `OrderCest` so it is more reliable ([#1551](https://github.com/shopsys/shopsys/pull/1551))
+    ```diff
+        $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
+    +   $me->waitForAjax();
+        $orderPage->assertPaymentIsNotSelected('Cash on delivery');
+    ```
