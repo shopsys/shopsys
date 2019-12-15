@@ -13,4 +13,3 @@ OrderProductInputDecorator:
             unitPrice:
                 type: "PriceInput!"
                 description: "Product price per unit"
-

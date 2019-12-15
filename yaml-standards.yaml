@@ -11,3 +11,4 @@
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
             parameters:
                 { indents: 4, indentsCommentsWithoutParent: default }
+        -   pathToChecker: YamlStandards\Model\YamlEmptyLineAtEnd\YamlEmptyLineAtEndChecker

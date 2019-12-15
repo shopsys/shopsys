@@ -10,4 +10,3 @@ PaymentInputDecorator:
             price:
                 type: "PriceInput!"
                 description: "Price for payment"
-

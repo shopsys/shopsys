@@ -10,4 +10,3 @@ TransportInputDecorator:
             price:
                 type: "PriceInput!"
                 description: "Price for transport"
-
