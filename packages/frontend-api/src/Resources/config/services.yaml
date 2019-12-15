@@ -30,4 +30,5 @@ services:
 
     Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory: ~
 
-    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface: '@Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory'
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface:
+        alias: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory

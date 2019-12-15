@@ -15,7 +15,8 @@ services:
         arguments:
             - "%shopsys.entity_extension.map%"
 
-    Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver: '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
+    Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver:
+        alias: Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
 
     Tests\App\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber:
         arguments:
@@ -29,4 +30,5 @@ services:
 
     Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~
 
-    League\Flysystem\FilesystemInterface: '@main_filesystem'
+    League\Flysystem\FilesystemInterface:
+        alias: main_filesystem
