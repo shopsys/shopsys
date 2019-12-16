@@ -34,13 +34,13 @@ class UploadedFileController
 
     /**
      * @param int $uploadedFileId
-     * @param string $uploadedFileName
+     * @param string $uploadedFilename
      * @return \Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse
      */
-    public function downloadAction(int $uploadedFileId, string $uploadedFileName): DownloadFileResponse
+    public function downloadAction(int $uploadedFileId, string $uploadedFilename): DownloadFileResponse
     {
-        $uploadedFileSlug = pathinfo($uploadedFileName, PATHINFO_FILENAME);
-        $uploadedFileExtension = pathinfo($uploadedFileName, PATHINFO_EXTENSION);
+        $uploadedFileSlug = pathinfo($uploadedFilename, PATHINFO_FILENAME);
+        $uploadedFileExtension = pathinfo($uploadedFilename, PATHINFO_EXTENSION);
 
         $uploadedFile = $this->uploadedFileFacade->getByIdSlugAndExtension($uploadedFileId, $uploadedFileSlug, $uploadedFileExtension);
         $filePath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
