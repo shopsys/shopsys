@@ -9,12 +9,12 @@ use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class FrontendUserProvider implements UserProviderInterface
+class FrontendCustomerUserProvider implements UserProviderInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository
      */
-    protected $userRepository;
+    protected $customerUserRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -22,24 +22,25 @@ class FrontendUserProvider implements UserProviderInterface
     protected $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(UserRepository $userRepository, Domain $domain)
+    public function __construct(CustomerUserRepository $customerUserRepository, Domain $domain)
     {
-        $this->userRepository = $userRepository;
+        $this->customerUserRepository = $customerUserRepository;
         $this->domain = $domain;
     }
 
     /**
      * @param string $email
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
      */
     public function loadUserByUsername($email)
     {
-        $user = $this->userRepository->findUserByEmailAndDomain(mb_strtolower($email), $this->domain->getId());
+        $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(mb_strtolower($email), $this->domain->getId());
 
-        if ($user === null) {
+        if ($customerUser === null) {
             $message = sprintf(
                 'Unable to find an active Shopsys\FrameworkBundle\Model\Customer\User object identified by email "%s".',
                 $email
@@ -47,12 +48,13 @@ class FrontendUserProvider implements UserProviderInterface
             throw new \Symfony\Component\Security\Core\Exception\UsernameNotFoundException($message, 0);
         }
 
-        return $user;
+        return $customerUser;
     }
 
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
      */
     public function refreshUser(UserInterface $userInterface)
     {
@@ -62,27 +64,27 @@ class FrontendUserProvider implements UserProviderInterface
             throw new \Symfony\Component\Security\Core\Exception\UnsupportedUserException($message);
         }
 
-        /** @var \Shopsys\FrameworkBundle\Model\Customer\User $user */
-        $user = $userInterface;
+        /** @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser */
+        $customerUser = $userInterface;
 
-        if ($user instanceof TimelimitLoginInterface) {
-            if (time() - $user->getLastActivity()->getTimestamp() > 3600 * 24) {
+        if ($customerUser instanceof TimelimitLoginInterface) {
+            if (time() - $customerUser->getLastActivity()->getTimestamp() > 3600 * 24) {
                 throw new \Symfony\Component\Security\Core\Exception\UsernameNotFoundException('User was too long unactive');
             }
-            $user->setLastActivity(new DateTime());
+            $customerUser->setLastActivity(new DateTime());
         }
 
-        if ($user instanceof UniqueLoginInterface) {
-            $freshUser = $this->userRepository->findByIdAndLoginToken($user->getId(), $user->getLoginToken());
+        if ($customerUser instanceof UniqueLoginInterface) {
+            $freshCustomerUser = $this->customerUserRepository->findByIdAndLoginToken($customerUser->getId(), $customerUser->getLoginToken());
         } else {
-            $freshUser = $this->userRepository->findById($user->getId());
+            $freshCustomerUser = $this->customerUserRepository->findById($customerUser->getId());
         }
 
-        if ($freshUser === null) {
+        if ($freshCustomerUser === null) {
             throw new \Symfony\Component\Security\Core\Exception\UsernameNotFoundException('Unable to find an active user');
         }
 
-        return $freshUser;
+        return $freshCustomerUser;
     }
 
     /**
@@ -91,6 +93,6 @@ class FrontendUserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === User::class || is_subclass_of($class, User::class);
+        return $class === CustomerUser::class || is_subclass_of($class, CustomerUser::class);
     }
 }

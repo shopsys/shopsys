@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -50,17 +50,18 @@ class QuantifiedProductPriceCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null $customerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice
      */
-    public function calculatePrice(QuantifiedProduct $quantifiedProduct, int $domainId, ?User $user = null): QuantifiedItemPrice
+    public function calculatePrice(QuantifiedProduct $quantifiedProduct, int $domainId, ?CustomerUser $customerUser = null): QuantifiedItemPrice
     {
         $product = $quantifiedProduct->getProduct();
 
-        $productPrice = $this->productPriceCalculationForUser->calculatePriceForUserAndDomainId(
+        $productPrice = $this->productPriceCalculationForUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainId,
-            $user
+            $customerUser
         );
 
         $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice);
@@ -105,14 +106,15 @@ class QuantifiedProductPriceCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null $customerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[]
      */
-    public function calculatePrices(array $quantifiedProducts, int $domainId, ?User $user = null): array
+    public function calculatePrices(array $quantifiedProducts, int $domainId, ?CustomerUser $customerUser = null): array
     {
         $quantifiedItemsPrices = [];
         foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {
-            $quantifiedItemsPrices[$quantifiedItemIndex] = $this->calculatePrice($quantifiedProduct, $domainId, $user);
+            $quantifiedItemsPrices[$quantifiedItemIndex] = $this->calculatePrice($quantifiedProduct, $domainId, $customerUser);
         }
 
         return $quantifiedItemsPrices;

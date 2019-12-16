@@ -100,7 +100,7 @@ class ZboziFeedItemFactory
      */
     protected function getPrice(Product $product, DomainConfig $domainConfig): Price
     {
-        return $this->productPriceCalculationForUser->calculatePriceForUserAndDomainId(
+        return $this->productPriceCalculationForUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
             null

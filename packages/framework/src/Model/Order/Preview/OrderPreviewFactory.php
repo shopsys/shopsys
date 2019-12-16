@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Preview;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -88,7 +88,7 @@ class OrderPreviewFactory
             $this->cartFacade->getQuantifiedProductsOfCurrentCustomer(),
             $transport,
             $payment,
-            $this->currentCustomerUser->findCurrentUser(),
+            $this->currentCustomerUser->findCurrentCustomerUser(),
             $validEnteredPromoCodePercent
         );
     }
@@ -99,8 +99,9 @@ class OrderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport|null $transport
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview
      */
     public function create(
@@ -109,7 +110,7 @@ class OrderPreviewFactory
         array $quantifiedProducts,
         ?Transport $transport = null,
         ?Payment $payment = null,
-        ?User $user = null,
+        ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null
     ) {
         return $this->orderPreviewCalculation->calculatePreview(
@@ -118,7 +119,7 @@ class OrderPreviewFactory
             $quantifiedProducts,
             $transport,
             $payment,
-            $user,
+            $customerUser,
             $promoCodeDiscountPercent
         );
     }

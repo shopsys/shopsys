@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Customer;
 
-use Shopsys\FrameworkBundle\Model\Customer\UserData as BaseUserData;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData as BaseUserData;
 
-class UserData extends BaseUserData
+class CustomerUserData extends BaseUserData
 {
     public function __construct()
     {

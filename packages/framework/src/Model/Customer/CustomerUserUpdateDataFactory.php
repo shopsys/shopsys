@@ -18,9 +18,9 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     protected $deliveryAddressDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
      */
-    protected $userDataFactory;
+    protected $customerUserDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface
@@ -30,18 +30,18 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface $userDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      */
     public function __construct(
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
-        UserDataFactoryInterface $userDataFactory,
+        CustomerUserDataFactoryInterface $customerUserDataFactory,
         CustomerFactoryInterface $customerFactory
     ) {
         $this->billingAddressDataFactory = $billingAddressDataFactory;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
-        $this->userDataFactory = $userDataFactory;
+        $this->customerUserDataFactory = $customerUserDataFactory;
         $this->customerFactory = $customerFactory;
     }
 
@@ -50,59 +50,58 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
      */
     public function create(): CustomerUserUpdateData
     {
-        $customer = $this->customerFactory->create();
-
         return new CustomerUserUpdateData(
-            $this->billingAddressDataFactory->createForCustomer($customer),
+            $this->billingAddressDataFactory->create(),
             $this->deliveryAddressDataFactory->create(),
-            $this->userDataFactory->createForCustomer($customer)
+            $this->customerUserDataFactory->create()
         );
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
      */
-    public function createFromUser(User $user): CustomerUserUpdateData
+    public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserUpdateData
     {
         $customerUserUpdateData = new CustomerUserUpdateData(
-            $this->billingAddressDataFactory->createFromBillingAddress($user->getCustomer()->getBillingAddress()),
-            $this->getDeliveryAddressDataFromUser($user),
-            $this->userDataFactory->createFromUser($user)
+            $this->billingAddressDataFactory->createFromBillingAddress($customerUser->getCustomer()->getBillingAddress()),
+            $this->getDeliveryAddressDataFromCustomerUser($customerUser),
+            $this->customerUserDataFactory->createFromCustomerUser($customerUser)
         );
 
         return $customerUserUpdateData;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      */
-    protected function getDeliveryAddressDataFromUser(User $user): DeliveryAddressData
+    protected function getDeliveryAddressDataFromCustomerUser(CustomerUser $customerUser): DeliveryAddressData
     {
-        if ($user->getDeliveryAddress()) {
-            return $this->deliveryAddressDataFactory->createFromDeliveryAddress($user->getDeliveryAddress());
+        if ($customerUser->getDeliveryAddress()) {
+            return $this->deliveryAddressDataFactory->createFromDeliveryAddress($customerUser->getDeliveryAddress());
         }
 
         return $this->deliveryAddressDataFactory->create();
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
      */
-    public function createAmendedByOrder(User $user, Order $order): CustomerUserUpdateData
+    public function createAmendedByOrder(CustomerUser $customerUser, Order $order): CustomerUserUpdateData
     {
-        $billingAddress = $user->getCustomer()->getBillingAddress();
-        $deliveryAddress = $user->getDeliveryAddress();
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+        $deliveryAddress = $customerUser->getDeliveryAddress();
 
-        $customerUserUpdateData = $this->createFromUser($user);
+        $customerUserUpdateData = $this->createFromCustomerUser($customerUser);
 
-        $customerUserUpdateData->userData->firstName = Utils::ifNull($user->getFirstName(), $order->getFirstName());
-        $customerUserUpdateData->userData->lastName = Utils::ifNull($user->getLastName(), $order->getLastName());
+        $customerUserUpdateData->customerUserData->firstName = Utils::ifNull($customerUser->getFirstName(), $order->getFirstName());
+        $customerUserUpdateData->customerUserData->lastName = Utils::ifNull($customerUser->getLastName(), $order->getLastName());
         $customerUserUpdateData->billingAddressData = $this->getAmendedBillingAddressDataByOrder($order, $billingAddress);
         $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder($order, $deliveryAddress);
 

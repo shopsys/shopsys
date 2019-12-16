@@ -2,21 +2,21 @@
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
 
 class FrontOrderDataMapper
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    public function prefillFrontFormData(FrontOrderData $frontOrderData, User $user, ?Order $order)
+    public function prefillFrontFormData(FrontOrderData $frontOrderData, CustomerUser $customerUser, ?Order $order)
     {
         if ($order instanceof Order) {
             $this->prefillTransportAndPaymentFromOrder($frontOrderData, $order);
         }
-        $this->prefillFrontFormDataFromCustomer($frontOrderData, $user);
+        $this->prefillFrontFormDataFromCustomer($frontOrderData, $customerUser);
     }
 
     /**
@@ -31,15 +31,15 @@ class FrontOrderDataMapper
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
      */
-    protected function prefillFrontFormDataFromCustomer(FrontOrderData $frontOrderData, User $user)
+    protected function prefillFrontFormDataFromCustomer(FrontOrderData $frontOrderData, CustomerUser $customerUser)
     {
-        $frontOrderData->firstName = $user->getFirstName();
-        $frontOrderData->lastName = $user->getLastName();
-        $frontOrderData->email = $user->getEmail();
-        $frontOrderData->telephone = $user->getTelephone();
-        $billingAddress = $user->getCustomer()->getBillingAddress();
+        $frontOrderData->firstName = $customerUser->getFirstName();
+        $frontOrderData->lastName = $customerUser->getLastName();
+        $frontOrderData->email = $customerUser->getEmail();
+        $frontOrderData->telephone = $customerUser->getTelephone();
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
         $frontOrderData->companyCustomer = $billingAddress->isCompanyCustomer();
         $frontOrderData->companyName = $billingAddress->getCompanyName();
         $frontOrderData->companyNumber = $billingAddress->getCompanyNumber();
@@ -48,16 +48,16 @@ class FrontOrderDataMapper
         $frontOrderData->city = $billingAddress->getCity();
         $frontOrderData->postcode = $billingAddress->getPostcode();
         $frontOrderData->country = $billingAddress->getCountry();
-        if ($user->getDeliveryAddress() !== null) {
+        if ($customerUser->getDeliveryAddress() !== null) {
             $frontOrderData->deliveryAddressSameAsBillingAddress = false;
-            $frontOrderData->deliveryFirstName = $user->getDeliveryAddress()->getFirstName();
-            $frontOrderData->deliveryLastName = $user->getDeliveryAddress()->getLastName();
-            $frontOrderData->deliveryCompanyName = $user->getDeliveryAddress()->getCompanyName();
-            $frontOrderData->deliveryTelephone = $user->getDeliveryAddress()->getTelephone();
-            $frontOrderData->deliveryStreet = $user->getDeliveryAddress()->getStreet();
-            $frontOrderData->deliveryCity = $user->getDeliveryAddress()->getCity();
-            $frontOrderData->deliveryPostcode = $user->getDeliveryAddress()->getPostcode();
-            $frontOrderData->deliveryCountry = $user->getDeliveryAddress()->getCountry();
+            $frontOrderData->deliveryFirstName = $customerUser->getDeliveryAddress()->getFirstName();
+            $frontOrderData->deliveryLastName = $customerUser->getDeliveryAddress()->getLastName();
+            $frontOrderData->deliveryCompanyName = $customerUser->getDeliveryAddress()->getCompanyName();
+            $frontOrderData->deliveryTelephone = $customerUser->getDeliveryAddress()->getTelephone();
+            $frontOrderData->deliveryStreet = $customerUser->getDeliveryAddress()->getStreet();
+            $frontOrderData->deliveryCity = $customerUser->getDeliveryAddress()->getCity();
+            $frontOrderData->deliveryPostcode = $customerUser->getDeliveryAddress()->getPostcode();
+            $frontOrderData->deliveryCountry = $customerUser->getDeliveryAddress()->getCountry();
         } else {
             $frontOrderData->deliveryAddressSameAsBillingAddress = true;
         }

@@ -13,15 +13,15 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User;
-use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\UserPasswordFacade;
 
-class UserDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
+class CustomerUserDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const USER_WITH_RESET_PASSWORD_HASH = 'user_with_reset_password_hash';
 
@@ -48,9 +48,9 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     protected const KEY_ADDRESS_LAST_NAME = 'lastName';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      */
-    protected $userFacade;
+    protected $customerUserFacade;
 
     /**
      * @var \Faker\Generator
@@ -78,9 +78,9 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     protected $customerUserUpdateDataFactory;
 
     /**
-     * @var \App\Model\Customer\UserDataFactory
+     * @var \App\Model\Customer\CustomerUserDataFactory
      */
-    protected $userDataFactory;
+    protected $customerUserDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface
@@ -98,36 +98,36 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     protected $customerFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $userFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerUserFacade
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
-     * @param \App\Model\Customer\UserDataFactory $userDataFactory
+     * @param \App\Model\Customer\CustomerUserDataFactory $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      */
     public function __construct(
-        UserFacade $userFacade,
+        CustomerUserFacade $customerUserFacade,
         Generator $faker,
         EntityManagerInterface $em,
         HashGenerator $hashGenerator,
         Domain $domain,
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        UserDataFactoryInterface $userDataFactory,
+        CustomerUserDataFactoryInterface $customerUserDataFactory,
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
         CustomerFactoryInterface $customerFactory
     ) {
-        $this->userFacade = $userFacade;
+        $this->customerUserFacade = $customerUserFacade;
         $this->faker = $faker;
         $this->em = $em;
         $this->hashGenerator = $hashGenerator;
         $this->domain = $domain;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
-        $this->userDataFactory = $userDataFactory;
+        $this->customerUserDataFactory = $customerUserDataFactory;
         $this->billingAddressDataFactory = $billingAddressDataFactory;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
         $this->customerFactory = $customerFactory;
@@ -148,9 +148,9 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
 
             foreach ($customersDataProvider as $customerDataProvider) {
                 $customerUserUpdateData = $this->getCustomerUserUpdateData($domainId, $customerDataProvider);
-                $customerUserUpdateData->userData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
+                $customerUserUpdateData->customerUserData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
 
-                $customer = $this->userFacade->create($customerUserUpdateData);
+                $customer = $this->customerUserFacade->create($customerUserUpdateData);
                 if ($customer->getId() === 1) {
                     $this->resetPassword($customer);
                     $this->addReference(self::USER_WITH_RESET_PASSWORD_HASH, $customer);
@@ -168,13 +168,13 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     protected function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_FIRST_NAME] ?? null;
-        $userData->lastName = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_LAST_NAME] ?? null;
-        $userData->email = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_EMAIL] ?? null;
-        $userData->password = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_PASSWORD] ?? null;
-        $userData->telephone = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_TELEPHONE] ?? null;
-        $userData->customer = $customerUserUpdateData->userData->customer;
+        $customerUserData = $this->customerUserDataFactory->createForDomainId($domainId);
+        $customerUserData->firstName = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_FIRST_NAME] ?? null;
+        $customerUserData->lastName = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_LAST_NAME] ?? null;
+        $customerUserData->email = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_EMAIL] ?? null;
+        $customerUserData->password = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_PASSWORD] ?? null;
+        $customerUserData->telephone = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_TELEPHONE] ?? null;
+        $customerUserData->customer = $customerUserUpdateData->customerUserData->customer;
 
         $billingAddressData = $customerUserUpdateData->billingAddressData;
         $billingAddressData->companyCustomer = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_CUSTOMER];
@@ -198,7 +198,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
             $deliveryAddressData->country = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_COUNTRY];
         }
 
-        $customerUserUpdateData->userData = $userData;
+        $customerUserUpdateData->customerUserData = $customerUserData;
         $customerUserUpdateData->billingAddressData = $billingAddressData;
 
         return $customerUserUpdateData;
@@ -457,11 +457,11 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     }
 
     /**
-     * @param \App\Model\Customer\User $customer
+     * @param \App\Model\Customer\CustomerUser $customer
      */
-    protected function resetPassword(User $customer)
+    protected function resetPassword(CustomerUser $customer)
     {
-        $resetPasswordHash = $this->hashGenerator->generateHash(UserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
+        $resetPasswordHash = $this->hashGenerator->generateHash(CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
         $customer->setResetPasswordHash($resetPasswordHash);
         $this->em->flush($customer);
     }

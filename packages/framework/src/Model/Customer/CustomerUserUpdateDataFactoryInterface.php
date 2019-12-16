@@ -12,17 +12,17 @@ interface CustomerUserUpdateDataFactoryInterface
     public function create(): CustomerUserUpdateData;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
      */
-    public function createFromUser(User $user): CustomerUserUpdateData;
+    public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserUpdateData;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
      */
-    public function createAmendedByOrder(User $user, Order $order): CustomerUserUpdateData;
+    public function createAmendedByOrder(CustomerUser $customerUser, Order $order): CustomerUserUpdateData;
 }

@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\Mail;
 
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTypeInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
@@ -78,46 +78,49 @@ class ResetPasswordMail implements MailTypeInterface, MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $template, $user)
+    public function createMessage(MailTemplate $template, $customerUser)
     {
         return new MessageData(
-            $user->getEmail(),
+            $customerUser->getEmail(),
             $template->getBccEmail(),
             $template->getBody(),
             $template->getSubject(),
-            $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $user->getDomainId()),
-            $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $user->getDomainId()),
-            $this->getBodyValuesIndexedByVariableName($user),
-            $this->getSubjectValuesIndexedByVariableName($user)
+            $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $customerUser->getDomainId()),
+            $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $customerUser->getDomainId()),
+            $this->getBodyValuesIndexedByVariableName($customerUser),
+            $this->getSubjectValuesIndexedByVariableName($customerUser)
         );
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     *
      * @return string[]
      */
-    protected function getBodyValuesIndexedByVariableName(User $user)
+    protected function getBodyValuesIndexedByVariableName(CustomerUser $customerUser)
     {
         return [
-            self::VARIABLE_EMAIL => htmlspecialchars($user->getEmail(), ENT_QUOTES),
-            self::VARIABLE_NEW_PASSWORD_URL => $this->getVariableNewPasswordUrl($user),
+            self::VARIABLE_EMAIL => htmlspecialchars($customerUser->getEmail(), ENT_QUOTES),
+            self::VARIABLE_NEW_PASSWORD_URL => $this->getVariableNewPasswordUrl($customerUser),
         ];
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     *
      * @return string
      */
-    protected function getVariableNewPasswordUrl(User $user)
+    protected function getVariableNewPasswordUrl(CustomerUser $customerUser)
     {
-        $router = $this->domainRouterFactory->getRouter($user->getDomainId());
+        $router = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
 
         $routeParameters = [
-            'email' => $user->getEmail(),
-            'hash' => $user->getResetPasswordHash(),
+            'email' => $customerUser->getEmail(),
+            'hash' => $customerUser->getResetPasswordHash(),
         ];
 
         return $router->generate(
@@ -128,11 +131,12 @@ class ResetPasswordMail implements MailTypeInterface, MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     *
      * @return string[]
      */
-    protected function getSubjectValuesIndexedByVariableName(User $user)
+    protected function getSubjectValuesIndexedByVariableName(CustomerUser $customerUser)
     {
-        return $this->getBodyValuesIndexedByVariableName($user);
+        return $this->getBodyValuesIndexedByVariableName($customerUser);
     }
 }

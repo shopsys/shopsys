@@ -10,23 +10,23 @@ class CustomerUserIdentifier
     protected $cartIdentifier = '';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User|null
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
      */
-    protected $user;
+    protected $customerUser;
 
     /**
      * @param string $cartIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null $customerUser
      */
-    public function __construct($cartIdentifier, ?User $user = null)
+    public function __construct($cartIdentifier, ?CustomerUser $customerUser = null)
     {
-        if ($cartIdentifier === '' && $user === null) {
+        if ($cartIdentifier === '' && $customerUser === null) {
             $message = 'Can not be created empty CustomerUserIdentifier';
             throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerIdentifierException($message);
         }
 
-        $this->user = $user;
-        if ($this->user === null) {
+        $this->customerUser = $customerUser;
+        if ($this->customerUser === null) {
             $this->cartIdentifier = $cartIdentifier;
         }
     }
@@ -40,11 +40,11 @@ class CustomerUserIdentifier
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
      */
-    public function getUser()
+    public function getCustomerUser()
     {
-        return $this->user;
+        return $this->customerUser;
     }
 
     /**
@@ -52,11 +52,11 @@ class CustomerUserIdentifier
      */
     public function getObjectHash()
     {
-        if ($this->user instanceof User) {
-            $userId = $this->user->getId();
+        if ($this->customerUser instanceof CustomerUser) {
+            $customerUserId = $this->customerUser->getId();
         } else {
-            $userId = 'NULL';
+            $customerUserId = 'NULL';
         }
-        return 'session:' . $this->cartIdentifier . ';userId:' . $userId . ';';
+        return 'session:' . $this->cartIdentifier . ';userId:' . $customerUserId . ';';
     }
 }

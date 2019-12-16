@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use Shopsys\FrameworkBundle\Form\Admin\Customer\UserFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Customer\CustomerUserFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class UserFormTypeExtension extends AbstractTypeExtension
+class CustomerUserFormTypeExtension extends AbstractTypeExtension
 {
     /**
      * {@inheritdoc}
@@ -22,6 +22,6 @@ class UserFormTypeExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return UserFormType::class;
+        return CustomerUserFormType::class;
     }
 }

@@ -59,11 +59,11 @@ class CartWatcher
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
      *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
-    public function getNotListableItems(Cart $cart, CurrentCustomerUser $currentCustomer)
+    public function getNotListableItems(Cart $cart, CurrentCustomerUser $currentCustomerUser)
     {
         $notListableItems = [];
         foreach ($cart->getItems() as $item) {
@@ -72,7 +72,7 @@ class CartWatcher
                 $productVisibility = $this->productVisibilityRepository
                     ->getProductVisibility(
                         $product,
-                        $currentCustomer->getPricingGroup(),
+                        $currentCustomerUser->getPricingGroup(),
                         $this->domain->getId()
                     );
 

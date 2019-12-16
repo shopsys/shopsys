@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User;
-use Shopsys\FrameworkBundle\Model\Customer\UserData;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -25,11 +25,11 @@ class ProductPriceCalculationForUserTest extends TestCase
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
         $pricingGroup = new PricingGroup($pricingGroupData, 1);
-        $userData = new UserData();
-        $userData->pricingGroup = $pricingGroup;
-        $userData->email = 'no-reply@shopsys.com';
-        $userData->domainId = 1;
-        $user = new User($userData, null);
+        $customerUserData = new CustomerUserData();
+        $customerUserData->pricingGroup = $pricingGroup;
+        $customerUserData->email = 'no-reply@shopsys.com';
+        $customerUserData->domainId = 1;
+        $customerUser = new CustomerUser($customerUserData, null);
         $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), false);
 
         $currentCustomerUserMock = $this->createMock(CurrentCustomerUser::class);
@@ -50,7 +50,7 @@ class ProductPriceCalculationForUserTest extends TestCase
             $domainMock
         );
 
-        $productPrice = $productPriceCalculationForUser->calculatePriceForUserAndDomainId($product, 1, $user);
+        $productPrice = $productPriceCalculationForUser->calculatePriceForCustomerUserAndDomainId($product, 1, $customerUser);
         $this->assertSame($expectedProductPrice, $productPrice);
     }
 
@@ -90,7 +90,7 @@ class ProductPriceCalculationForUserTest extends TestCase
             $domainMock
         );
 
-        $productPrice = $productPriceCalculationForUser->calculatePriceForUserAndDomainId($product, $domainId, null);
+        $productPrice = $productPriceCalculationForUser->calculatePriceForCustomerUserAndDomainId($product, $domainId, null);
         $this->assertSame($expectedProductPrice, $productPrice);
     }
 }

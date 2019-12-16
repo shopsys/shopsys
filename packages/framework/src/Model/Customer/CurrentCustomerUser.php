@@ -19,14 +19,14 @@ class CurrentCustomerUser
 
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $ricingGroupSettingFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
-        PricingGroupSettingFacade $ricingGroupSettingFacade
+        PricingGroupSettingFacade $pricingGroupSettingFacade
     ) {
         $this->tokenStorage = $tokenStorage;
-        $this->pricingGroupSettingFacade = $ricingGroupSettingFacade;
+        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
     /**
@@ -34,29 +34,29 @@ class CurrentCustomerUser
      */
     public function getPricingGroup()
     {
-        $user = $this->findCurrentUser();
-        if ($user === null) {
+        $customerUser = $this->findCurrentCustomerUser();
+        if ($customerUser === null) {
             return $this->pricingGroupSettingFacade->getDefaultPricingGroupByCurrentDomain();
         } else {
-            return $user->getPricingGroup();
+            return $customerUser->getPricingGroup();
         }
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
      */
-    public function findCurrentUser()
+    public function findCurrentCustomerUser()
     {
         $token = $this->tokenStorage->getToken();
         if ($token === null) {
             return null;
         }
 
-        $user = $token->getUser();
-        if (!$user instanceof User) {
+        $customerUser = $token->getUser();
+        if (!$customerUser instanceof CustomerUser) {
             return null;
         }
 
-        return $user;
+        return $customerUser;
     }
 }

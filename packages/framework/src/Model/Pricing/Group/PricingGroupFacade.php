@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\UserRepository;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
@@ -47,9 +47,9 @@ class PricingGroupFacade
     protected $productCalculatedPriceRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository
      */
-    protected $userRepository;
+    protected $customerUserRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactoryInterface
@@ -64,7 +64,7 @@ class PricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository $productCalculatedPriceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactoryInterface $pricingGroupFactory
      */
     public function __construct(
@@ -75,7 +75,7 @@ class PricingGroupFacade
         PricingGroupSettingFacade $pricingGroupSettingFacade,
         ProductVisibilityRepository $productVisibilityRepository,
         ProductCalculatedPriceRepository $productCalculatedPriceRepository,
-        UserRepository $userRepository,
+        CustomerUserRepository $customerUserRepository,
         PricingGroupFactoryInterface $pricingGroupFactory
     ) {
         $this->em = $em;
@@ -85,7 +85,7 @@ class PricingGroupFacade
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
         $this->productVisibilityRepository = $productVisibilityRepository;
         $this->productCalculatedPriceRepository = $productCalculatedPriceRepository;
-        $this->userRepository = $userRepository;
+        $this->customerUserRepository = $customerUserRepository;
         $this->pricingGroupFactory = $pricingGroupFactory;
     }
 
@@ -146,7 +146,7 @@ class PricingGroupFacade
         $oldPricingGroup = $this->pricingGroupRepository->getById($oldPricingGroupId);
         if ($newPricingGroupId !== null) {
             $newPricingGroup = $this->pricingGroupRepository->getById($newPricingGroupId);
-            $this->userRepository->replaceUsersPricingGroup($oldPricingGroup, $newPricingGroup);
+            $this->customerUserRepository->replaceUsersPricingGroup($oldPricingGroup, $newPricingGroup);
         } else {
             $newPricingGroup = null;
         }

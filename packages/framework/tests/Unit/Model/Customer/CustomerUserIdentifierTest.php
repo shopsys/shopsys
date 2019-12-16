@@ -11,9 +11,9 @@ class CustomerUserIdentifierTest extends TestCase
     public function testCannotCreateIdentifierForEmptyCartIdentifierAndNullUser()
     {
         $cartIdentifier = '';
-        $user = null;
+        $customerUser = null;
 
         $this->expectException(EmptyCustomerIdentifierException::class);
-        new CustomerUserIdentifier($cartIdentifier, $user);
+        new CustomerUserIdentifier($cartIdentifier, $customerUser);
     }
 }

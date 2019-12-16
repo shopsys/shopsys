@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginListener;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
@@ -87,7 +87,7 @@ class LoginListenerTest extends TestCase
             ->getMock();
         $emMock->expects($this->any())->method('flush');
 
-        $userMock = $this->getMockBuilder(User::class)
+        $userMock = $this->getMockBuilder(CustomerUser::class)
             ->setMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();

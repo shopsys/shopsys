@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Model\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser as BaseUser;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData as BaseUserData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
-use Shopsys\FrameworkBundle\Model\Customer\User as BaseUser;
-use Shopsys\FrameworkBundle\Model\Customer\UserData as BaseUserData;
 
 /**
  * @ORM\Table(
- *     name="users",
+ *     name="customer_users",
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(name="email_domain", columns={"email", "domain_id"})
  *     },
@@ -21,24 +21,24 @@ use Shopsys\FrameworkBundle\Model\Customer\UserData as BaseUserData;
  * )
  * @ORM\Entity
  */
-class User extends BaseUser
+class CustomerUser extends BaseUser
 {
     /**
-     * @param \App\Model\Customer\UserData $userData
+     * @param \App\Model\Customer\CustomerUserData $customerUserData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
     public function __construct(
-        BaseUserData $userData,
+        BaseUserData $customerUserData,
         ?DeliveryAddress $deliveryAddress
     ) {
-        parent::__construct($userData, $deliveryAddress);
+        parent::__construct($customerUserData, $deliveryAddress);
     }
 
     /**
-     * @param \App\Model\Customer\UserData $userData
+     * @param \App\Model\Customer\CustomerUserData $customerUserData
      */
-    public function edit(BaseUserData $userData)
+    public function edit(BaseUserData $customerUserData)
     {
-        parent::edit($userData);
+        parent::edit($customerUserData);
     }
 }

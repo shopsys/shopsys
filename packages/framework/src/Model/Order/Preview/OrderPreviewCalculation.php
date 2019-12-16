@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Preview;
 
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
@@ -69,8 +69,9 @@ class OrderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport|null $transport
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview
      */
     public function calculatePreview(
@@ -79,13 +80,13 @@ class OrderPreviewCalculation
         array $quantifiedProducts,
         ?Transport $transport = null,
         ?Payment $payment = null,
-        ?User $user = null,
+        ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null
     ): OrderPreview {
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
             $domainId,
-            $user
+            $customerUser
         );
         $quantifiedItemsDiscounts = $this->quantifiedProductDiscountCalculation->calculateDiscountsRoundedByCurrency(
             $quantifiedItemsPrices,

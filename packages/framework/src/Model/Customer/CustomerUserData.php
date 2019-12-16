@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
-class UserData
+class CustomerUserData
 {
     /**
      * @var string|null

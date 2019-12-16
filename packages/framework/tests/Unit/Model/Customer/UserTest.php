@@ -8,42 +8,42 @@ use ReflectionClass;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
-use Shopsys\FrameworkBundle\Model\Customer\User;
-use Shopsys\FrameworkBundle\Model\Customer\UserData;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
 
 class UserTest extends TestCase
 {
     public function testGetFullNameReturnsLastnameAndFirstnameForUser()
     {
         $customer = new Customer();
-        $userData = new UserData();
-        $userData->firstName = 'Firstname';
-        $userData->lastName = 'Lastname';
-        $userData->email = 'no-reply@shopsys.com';
-        $userData->domainId = 1;
-        $userData->customer = $customer;
+        $customerUserData = new CustomerUserData();
+        $customerUserData->firstName = 'Firstname';
+        $customerUserData->lastName = 'Lastname';
+        $customerUserData->email = 'no-reply@shopsys.com';
+        $customerUserData->domainId = 1;
+        $customerUserData->customer = $customer;
         $customer->addBillingAddress($this->createBillingAddress());
-        $user = new User($userData, null);
+        $customerUser = new CustomerUser($customerUserData, null);
 
-        $this->assertSame('Lastname Firstname', $user->getFullName());
+        $this->assertSame('Lastname Firstname', $customerUser->getFullName());
     }
 
     public function testGetFullNameReturnsCompanyNameForCompanyUser()
     {
         $customer = new Customer();
-        $userData = new UserData();
-        $userData->firstName = 'Firstname';
-        $userData->lastName = 'Lastname';
-        $userData->email = 'no-reply@shopsys.com';
-        $userData->domainId = 1;
-        $userData->customer = $customer;
+        $customerUserData = new CustomerUserData();
+        $customerUserData->firstName = 'Firstname';
+        $customerUserData->lastName = 'Lastname';
+        $customerUserData->email = 'no-reply@shopsys.com';
+        $customerUserData->domainId = 1;
+        $customerUserData->customer = $customer;
         $billingAddressData = new BillingAddressData();
         $billingAddressData->companyCustomer = true;
         $billingAddressData->companyName = 'CompanyName';
         $customer->addBillingAddress(new BillingAddress($billingAddressData));
-        $user = new User($userData, null);
+        $customerUser = new CustomerUser($customerUserData, null);
 
-        $this->assertSame('CompanyName', $user->getFullName());
+        $this->assertSame('CompanyName', $customerUser->getFullName());
     }
 
     public function isResetPasswordHashValidProvider()
@@ -95,30 +95,30 @@ class UserTest extends TestCase
         $sentHash,
         $isExpectedValid
     ) {
-        $userData = new UserData();
-        $userData->email = 'no-reply@shopsys.com';
-        $userData->domainId = 1;
-        $user = new User($userData, null);
+        $customerUserData = new CustomerUserData();
+        $customerUserData->email = 'no-reply@shopsys.com';
+        $customerUserData->domainId = 1;
+        $customerUser = new CustomerUser($customerUserData, null);
 
-        $this->setProperty($user, 'resetPasswordHash', $resetPasswordHash);
-        $this->setProperty($user, 'resetPasswordHashValidThrough', $resetPasswordHashValidThrough);
+        $this->setProperty($customerUser, 'resetPasswordHash', $resetPasswordHash);
+        $this->setProperty($customerUser, 'resetPasswordHashValidThrough', $resetPasswordHashValidThrough);
 
-        $isResetPasswordHashValid = $user->isResetPasswordHashValid($sentHash);
+        $isResetPasswordHashValid = $customerUser->isResetPasswordHashValid($sentHash);
 
         $this->assertSame($isExpectedValid, $isResetPasswordHashValid);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
      * @param string $propertyName
      * @param mixed $value
      */
-    private function setProperty(User $user, string $propertyName, $value)
+    private function setProperty(CustomerUser $customerUser, string $propertyName, $value)
     {
-        $reflection = new ReflectionClass($user);
+        $reflection = new ReflectionClass($customerUser);
         $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
-        $property->setValue($user, $value);
+        $property->setValue($customerUser, $value);
     }
 
     /**

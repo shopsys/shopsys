@@ -29,6 +29,6 @@ class CartFactory
     {
         $classData = $this->entityNameResolver->resolve(Cart::class);
 
-        return new $classData($customerUserIdentifier->getCartIdentifier(), $customerUserIdentifier->getUser());
+        return new $classData($customerUserIdentifier->getCartIdentifier(), $customerUserIdentifier->getCustomerUser());
     }
 }

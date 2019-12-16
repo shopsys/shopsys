@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Form;
 
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -17,7 +17,7 @@ class DisplayOnlyCustomerType extends AbstractType
     {
         $resolver
             ->setRequired(['user'])
-            ->setAllowedTypes('user', [User::class, 'null'])
+            ->setAllowedTypes('user', [CustomerUser::class, 'null'])
             ->setDefaults([
                 'mapped' => false,
                 'required' => false,

@@ -1,8 +1,8 @@
 {% extends '@ShopsysFramework/Admin/Content/Customer/detail.html.twig' %}
 
-{% block title %}- {{ 'Editing customer'|trans }} - {{ user.fullName }}{% endblock %}
+{% block title %}- {{ 'Editing customer'|trans }} - {{ customerUser.fullName }}{% endblock %}
 {% block h1 %}
-    {{ 'Editing customer'|trans }} - {{ user.fullName }}
+    {{ 'Editing customer'|trans }} - {{ customerUser.fullName }}
     <a href="{{ ssoLoginAsUserUrl }}" target="_blank" class="btn-link-style btn-link-style--iconic-l">
         <i class="svg svg-forward-page"></i>
         <span>

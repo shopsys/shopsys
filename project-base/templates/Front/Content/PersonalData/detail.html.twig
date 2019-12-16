@@ -21,34 +21,34 @@
                 </div>
             </div>
             <div class="padding-20">
-                {% if user is null and orders|length == 0 and newsletterSubscriber is null %}
+                {% if customerUser is null and orders|length == 0 and newsletterSubscriber is null %}
                     <h2>{{ 'No personal data for this email address'|trans }}</h2>
                 {% else %}
-                    {% if user is not null %}
+                    {% if customerUser is not null %}
                     <div class="wrap-box">
                         <h2 class="wrap-box__title">{{ 'Personal data of registered customer'|trans }}</h2>
                         <div class="wrap-box__in">
                             <table class="table-params">
                                 <tr>
                                     <th>{{ 'First name'|trans }}:</th>
-                                    <td>{{ user.firstName }} </td>
+                                    <td>{{ customerUser.firstName }} </td>
                                 </tr>
                                 <tr>
                                     <th>{{ 'Last name'|trans }}:</th>
-                                    <td>{{ user.lastName }} </td>
+                                    <td>{{ customerUser.lastName }} </td>
                                 </tr>
-                                {% if user.telephone is not null %}
+                                {% if customerUser.telephone is not null %}
                                     <tr>
                                         <th>{{ 'Telephone'|trans }}:</th>
-                                        <td>{{ user.telephone }} </td>
+                                        <td>{{ customerUser.telephone }} </td>
                                     </tr>
                                 {% endif %}
                                 <tr>
                                     <th>{{ 'Email'|trans }}:</th>
-                                    <td>{{ user.email }} </td>
+                                    <td>{{ customerUser.email }} </td>
                                 </tr>
-                                {% if user.customer.billingAddress is not null %}
-                                    {% set addr = user.customer.billingAddress %}
+                                {% if customerUser.customer.billingAddress is not null %}
+                                    {% set addr = customerUser.customer.billingAddress %}
                                     {% if addr.street is not null or addr.city is not null or addr.postCode is not null or addr.country.name is defined %}
                                         <tr>
                                             <th>{{ 'Billing address'|trans }}:</th>
@@ -59,9 +59,9 @@
                                         </tr>
                                     {% endif %}
                                 {% endif %}
-                                {% if user.deliveryAddress is not null %}
-                                    {% if user.deliveryAddress is not null %}
-                                        {% set delivery = user.deliveryAddress %}
+                                {% if customerUser.deliveryAddress is not null %}
+                                    {% if customerUser.deliveryAddress is not null %}
+                                        {% set delivery = customerUser.deliveryAddress %}
                                         {% if delivery.firstName is not null or delivery.lastName is not null or
                                             delivery.companyName is not null or delivery.street is not null or
                                             delivery.city is not null or delivery.postcode is not null or
@@ -78,13 +78,13 @@
                                     {% endif %}
                                 {% endif %}
 
-                                {% if user.customer.billingAddress.companyTaxNumber is not null or
-                                    user.customer.billingAddress.companyNumber is not null or
-                                    user.customer.billingAddress.companyName is not null %}
+                                {% if customerUser.customer.billingAddress.companyTaxNumber is not null or
+                                    customerUser.customer.billingAddress.companyNumber is not null or
+                                    customerUser.customer.billingAddress.companyName is not null %}
                                     <tr>
                                         <th>{{ 'Company'|trans }}:</th>
                                         <td>
-                                            {% set address = user.customer.billingAddress %}
+                                            {% set address = customerUser.customer.billingAddress %}
                                             {{ [address.companyName, address.companyNumber, address.companyTaxNumber ]|joinNoneEmpty }}
                                         </td>
                                     </tr>

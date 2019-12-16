@@ -38,8 +38,8 @@ class CartRepository
     public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
     {
         $criteria = [];
-        if ($customerUserIdentifier->getUser() !== null) {
-            $criteria['user'] = $customerUserIdentifier->getUser()->getId();
+        if ($customerUserIdentifier->getCustomerUser() !== null) {
+            $criteria['customerUser'] = $customerUserIdentifier->getCustomerUser()->getId();
         } else {
             $criteria['cartIdentifier'] = $customerUserIdentifier->getCartIdentifier();
         }
@@ -56,7 +56,7 @@ class CartRepository
             'DELETE FROM cart_items WHERE cart_id IN (
                 SELECT C.id
                 FROM carts C
-                WHERE C.modified_at <= :timeLimit AND user_id IS NULL)',
+                WHERE C.modified_at <= :timeLimit AND customer_user_id IS NULL)',
             new ResultSetMapping()
         );
 
@@ -65,7 +65,7 @@ class CartRepository
         ]);
 
         $nativeQuery = $this->em->createNativeQuery(
-            'DELETE FROM carts WHERE modified_at <= :timeLimit AND user_id IS NULL',
+            'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NULL',
             new ResultSetMapping()
         );
 
@@ -83,7 +83,7 @@ class CartRepository
             'DELETE FROM cart_items WHERE cart_id IN (
                 SELECT C.id
                 FROM carts C
-                WHERE C.modified_at <= :timeLimit AND user_id IS NOT NULL)',
+                WHERE C.modified_at <= :timeLimit AND customer_user_id IS NOT NULL)',
             new ResultSetMapping()
         );
 
@@ -92,7 +92,7 @@ class CartRepository
         ]);
 
         $nativeQuery = $this->em->createNativeQuery(
-            'DELETE FROM carts WHERE modified_at <= :timeLimit AND user_id IS NOT NULL',
+            'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NOT NULL',
             new ResultSetMapping()
         );
 

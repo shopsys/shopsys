@@ -11,13 +11,13 @@ use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UserDataFixture
+class CustomerUserDataFixture
 {
     public const FIRST_PERFORMANCE_USER = 'first_performance_user';
 
@@ -42,14 +42,14 @@ class UserDataFixture
     private $sqlLoggerFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      */
     private $customerUserEditFacade;
 
     /**
-     * @var \App\Model\Customer\UserDataFactory
+     * @var \App\Model\Customer\CustomerUserDataFactory
      */
-    private $userDataFactory;
+    private $customerUserDataFactory;
 
     /**
      * @var \Faker\Generator
@@ -81,8 +81,8 @@ class UserDataFixture
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $customerUserEditFacade
-     * @param \App\Model\Customer\UserDataFactory $userDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerUserEditFacade
+     * @param \App\Model\Customer\CustomerUserDataFactory $customerUserDataFactory
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
@@ -94,8 +94,8 @@ class UserDataFixture
         EntityManagerInterface $em,
         Domain $domain,
         SqlLoggerFacade $sqlLoggerFacade,
-        UserFacade $customerUserEditFacade,
-        UserDataFactoryInterface $userDataFactory,
+        CustomerUserFacade $customerUserEditFacade,
+        CustomerUserDataFactoryInterface $customerUserDataFactory,
         Faker $faker,
         PersistentReferenceFacade $persistentReferenceFacade,
         ProgressBarFactory $progressBarFactory,
@@ -106,7 +106,7 @@ class UserDataFixture
         $this->domain = $domain;
         $this->sqlLoggerFacade = $sqlLoggerFacade;
         $this->customerUserEditFacade = $customerUserEditFacade;
-        $this->userDataFactory = $userDataFactory;
+        $this->customerUserDataFactory = $customerUserDataFactory;
         $this->faker = $faker;
         $this->persistentReferenceFacade = $persistentReferenceFacade;
         $this->userCountPerDomain = $userCountPerDomain;
@@ -126,16 +126,16 @@ class UserDataFixture
 
         $progressBar = $this->progressBarFactory->create($output, count($domains) * $this->userCountPerDomain);
 
-        $isFirstUser = true;
+        $isFirstCustomerUser = true;
 
         foreach ($domains as $domainConfig) {
             for ($i = 0; $i < $this->userCountPerDomain; $i++) {
-                $user = $this->createCustomerOnDomain($domainConfig->getId(), $i);
+                $customerUser = $this->createCustomerCustomerOnDomain($domainConfig->getId(), $i);
                 $progressBar->advance();
 
-                if ($isFirstUser) {
-                    $this->persistentReferenceFacade->persistReference(self::FIRST_PERFORMANCE_USER, $user);
-                    $isFirstUser = false;
+                if ($isFirstCustomerUser) {
+                    $this->persistentReferenceFacade->persistReference(self::FIRST_PERFORMANCE_USER, $customerUser);
+                    $isFirstCustomerUser = false;
                 }
 
                 $this->em->clear();
@@ -148,16 +148,17 @@ class UserDataFixture
     /**
      * @param int $domainId
      * @param int $userNumber
-     * @return \App\Model\Customer\User
+     *
+     * @return \App\Model\Customer\CustomerUser
      */
-    private function createCustomerOnDomain($domainId, $userNumber)
+    private function createCustomerCustomerOnDomain($domainId, $userNumber)
     {
         $customerUserUpdateData = $this->getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber);
 
-        /** @var \App\Model\Customer\User $user */
-        $user = $this->customerUserEditFacade->create($customerUserUpdateData);
+        /** @var \App\Model\Customer\CustomerUser $customerUser */
+        $customerUser = $this->customerUserEditFacade->create($customerUserUpdateData);
 
-        return $user;
+        return $customerUser;
     }
 
     /**
@@ -170,16 +171,16 @@ class UserDataFixture
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
 
-        $userData = $this->userDataFactory->createForDomainId($domainId);
-        $userData->firstName = $this->faker->firstName;
-        $userData->lastName = $this->faker->lastName;
-        $userData->email = $userNumber . '.' . $this->faker->safeEmail;
-        $userData->password = $this->faker->password;
-        $userData->domainId = $domainId;
-        $userData->createdAt = $this->faker->dateTimeBetween('-1 year', 'now');
-        $userData->telephone = $this->faker->phoneNumber;
-        $userData->customer = $customerUserUpdateData->billingAddressData->customer;
-        $customerUserUpdateData->userData = $userData;
+        $customerUserData = $this->customerUserDataFactory->createForDomainId($domainId);
+        $customerUserData->firstName = $this->faker->firstName;
+        $customerUserData->lastName = $this->faker->lastName;
+        $customerUserData->email = $userNumber . '.' . $this->faker->safeEmail;
+        $customerUserData->password = $this->faker->password;
+        $customerUserData->domainId = $domainId;
+        $customerUserData->createdAt = $this->faker->dateTimeBetween('-1 year', 'now');
+        $customerUserData->telephone = $this->faker->phoneNumber;
+        $customerUserData->customer = $customerUserUpdateData->billingAddressData->customer;
+        $customerUserUpdateData->customerUserData = $customerUserData;
 
         $billingAddressData = $customerUserUpdateData->billingAddressData;
         $billingAddressData->companyCustomer = $this->faker->boolean();

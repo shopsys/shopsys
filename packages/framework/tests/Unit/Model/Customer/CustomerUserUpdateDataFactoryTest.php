@@ -12,13 +12,13 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactory;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
-use Shopsys\FrameworkBundle\Model\Customer\User;
-use Shopsys\FrameworkBundle\Model\Customer\UserData;
-use Shopsys\FrameworkBundle\Model\Customer\UserDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
@@ -39,14 +39,14 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
 
         $customer = new Customer();
 
-        $userData = new UserData();
-        $userData->firstName = 'firstName';
-        $userData->lastName = 'lastName';
-        $userData->createdAt = new DateTime();
-        $userData->telephone = 'telephone';
-        $userData->email = 'no-reply@shopsys.com';
-        $userData->domainId = 1;
-        $userData->customer = $customer;
+        $customerUserData = new CustomerUserData();
+        $customerUserData->firstName = 'firstName';
+        $customerUserData->lastName = 'lastName';
+        $customerUserData->createdAt = new DateTime();
+        $customerUserData->telephone = 'telephone';
+        $customerUserData->email = 'no-reply@shopsys.com';
+        $customerUserData->domainId = 1;
+        $customerUserData->customer = $customer;
 
         $billingCountryData = new CountryData();
         $billingCountryData->names = ['cs' => 'Česká republika'];
@@ -78,7 +78,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
 
         $customer->addBillingAddress($this->createBillingAddress($billingAddressData));
         $deliveryAddress = $this->createDeliveryAddress($deliveryAddressData);
-        $user = new User($userData, $deliveryAddress);
+        $customerUser = new CustomerUser($customerUserData, $deliveryAddress);
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
@@ -122,9 +122,9 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
             'companyTaxNumber'
         );
 
-        $customerUserUpdateData = $customerUserUpdateUpdateDataFactory->createAmendedByOrder($user, $order);
+        $customerUserUpdateData = $customerUserUpdateUpdateDataFactory->createAmendedByOrder($customerUser, $order);
 
-        $this->assertEquals($userData, $customerUserUpdateData->userData);
+        $this->assertEquals($customerUserData, $customerUserUpdateData->customerUserData);
         $this->assertEquals($billingAddressData, $customerUserUpdateData->billingAddressData);
         $this->assertEquals($deliveryAddressData, $customerUserUpdateData->deliveryAddressData);
     }
@@ -142,18 +142,18 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $billingCountry = new Country($billingCountryData);
         $deliveryCountry = new Country($deliveryCountryData);
         $customer = new Customer();
-        $userData = new UserData();
-        $userData->firstName = 'firstName';
-        $userData->lastName = 'lastName';
-        $userData->email = 'no-reply@shopsys.com';
-        $userData->createdAt = new DateTime();
-        $userData->domainId = 1;
-        $userData->customer = $customer;
+        $customerUserData = new CustomerUserData();
+        $customerUserData->firstName = 'firstName';
+        $customerUserData->lastName = 'lastName';
+        $customerUserData->email = 'no-reply@shopsys.com';
+        $customerUserData->createdAt = new DateTime();
+        $customerUserData->domainId = 1;
+        $customerUserData->customer = $customer;
 
         $billingAddressData = new BillingAddressData();
         $billingAddressData->customer = $customer;
         $customer->addBillingAddress($this->createBillingAddress($billingAddressData));
-        $user = new User($userData, null);
+        $customerUser = new CustomerUser($customerUserData, null);
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
@@ -208,9 +208,9 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $deliveryAddressData->telephone = $order->getDeliveryTelephone();
         $deliveryAddressData->country = $deliveryCountry;
 
-        $customerUserUpdateData = $customerUserUpdateDataFactory->createAmendedByOrder($user, $order);
+        $customerUserUpdateData = $customerUserUpdateDataFactory->createAmendedByOrder($customerUser, $order);
 
-        $this->assertEquals($userData, $customerUserUpdateData->userData);
+        $this->assertEquals($customerUserData, $customerUserUpdateData->customerUserData);
         $this->assertEquals($deliveryAddressData, $customerUserUpdateData->deliveryAddressData);
         $this->assertTrue($customerUserUpdateData->billingAddressData->companyCustomer);
         $this->assertSame($order->getCompanyName(), $customerUserUpdateData->billingAddressData->companyName);
@@ -230,7 +230,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         return new CustomerUserUpdateDataFactory(
             new BillingAddressDataFactory(),
             new DeliveryAddressDataFactory(),
-            new UserDataFactory($this->createMock(PricingGroupSettingFacade::class)),
+            new CustomerUserDataFactory($this->createMock(PricingGroupSettingFacade::class)),
             new CustomerFactory($this->createMock(EntityNameResolver::class))
         );
     }

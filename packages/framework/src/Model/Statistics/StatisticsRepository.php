@@ -39,7 +39,7 @@ class StatisticsRepository
 
         $query = $this->em->createNativeQuery(
             'SELECT DATE(u.created_at) AS date, COUNT(u.created_at) AS count
-            FROM users u
+            FROM customer_users u
             WHERE u.created_at BETWEEN :start_date AND :end_date
             GROUP BY date
             ORDER BY date ASC',
@@ -101,7 +101,7 @@ class StatisticsRepository
 
         $query = $this->em->createNativeQuery(
             'SELECT COUNT(u.created_at) AS count
-            FROM users u
+            FROM customer_users u
             WHERE u.created_at BETWEEN :start_date AND :end_date',
             $resultSetMapping
         );

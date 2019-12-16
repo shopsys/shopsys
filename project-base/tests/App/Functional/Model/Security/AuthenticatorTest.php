@@ -18,19 +18,19 @@ class AuthenticatorTest extends FunctionalTestCase
     private $authenticator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      * @inject
      */
-    private $userFacade;
+    private $customerUserFacade;
 
     public function testSessionIdIsChangedAfterLogin(): void
     {
-        $user = $this->userFacade->getUserById(1);
+        $customerUser = $this->customerUserFacade->getCustomerUserById(1);
         $mockedRequest = $this->createMockedRequest();
 
         $beforeLoginSessionId = $mockedRequest->getSession()->getId();
 
-        $this->authenticator->loginUser($user, $mockedRequest);
+        $this->authenticator->loginUser($customerUser, $mockedRequest);
 
         $afterLoginSessionId = $mockedRequest->getSession()->getId();
 

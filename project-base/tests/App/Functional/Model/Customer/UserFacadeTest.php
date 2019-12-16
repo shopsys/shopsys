@@ -14,10 +14,10 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     protected const EXISTING_EMAIL_ON_DOMAIN_2 = 'no-reply.4@shopsys.com';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      * @inject
      */
-    protected $userFacade;
+    protected $customerUserFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
@@ -27,11 +27,11 @@ class UserFacadeTest extends TransactionFunctionalTestCase
 
     public function testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException()
     {
-        $user = $this->userFacade->findUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, Domain::FIRST_DOMAIN_ID);
-        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromUser($user);
-        $customerUserUpdateData->userData->email = self::EXISTING_EMAIL_ON_DOMAIN_2;
+        $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, Domain::FIRST_DOMAIN_ID);
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+        $customerUserUpdateData->customerUserData->email = self::EXISTING_EMAIL_ON_DOMAIN_2;
 
-        $this->userFacade->editByAdmin($user->getId(), $customerUserUpdateData);
+        $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
 
         $this->expectNotToPerformAssertions();
     }
@@ -39,36 +39,36 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     public function testCreateNotDuplicateEmail()
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
-        $customerUserUpdateData->userData->pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-        $customerUserUpdateData->userData->domainId = 1;
-        $customerUserUpdateData->userData->email = 'unique-email@shopsys.com';
-        $customerUserUpdateData->userData->firstName = 'John';
-        $customerUserUpdateData->userData->lastName = 'Doe';
-        $customerUserUpdateData->userData->password = 'password';
+        $customerUserUpdateData->customerUserData->pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $customerUserUpdateData->customerUserData->domainId = 1;
+        $customerUserUpdateData->customerUserData->email = 'unique-email@shopsys.com';
+        $customerUserUpdateData->customerUserData->firstName = 'John';
+        $customerUserUpdateData->customerUserData->lastName = 'Doe';
+        $customerUserUpdateData->customerUserData->password = 'password';
 
-        $this->userFacade->create($customerUserUpdateData);
+        $this->customerUserFacade->create($customerUserUpdateData);
 
         $this->expectNotToPerformAssertions();
     }
 
     public function testCreateDuplicateEmail()
     {
-        $user = $this->userFacade->findUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, 1);
-        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromUser($user);
-        $customerUserUpdateData->userData->password = 'password';
+        $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, 1);
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+        $customerUserUpdateData->customerUserData->password = 'password';
         $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException::class);
 
-        $this->userFacade->create($customerUserUpdateData);
+        $this->customerUserFacade->create($customerUserUpdateData);
     }
 
     public function testCreateDuplicateEmailCaseInsentitive()
     {
-        $user = $this->userFacade->findUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, 1);
-        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromUser($user);
-        $customerUserUpdateData->userData->password = 'password';
-        $customerUserUpdateData->userData->email = mb_strtoupper(self::EXISTING_EMAIL_ON_DOMAIN_1);
+        $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, 1);
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+        $customerUserUpdateData->customerUserData->password = 'password';
+        $customerUserUpdateData->customerUserData->email = mb_strtoupper(self::EXISTING_EMAIL_ON_DOMAIN_1);
         $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException::class);
 
-        $this->userFacade->create($customerUserUpdateData);
+        $this->customerUserFacade->create($customerUserUpdateData);
     }
 }

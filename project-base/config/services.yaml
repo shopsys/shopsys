@@ -41,7 +41,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface: '@App\Model\Category\CategoryDataFactory'
 
-    Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface: '@App\Model\Customer\UserDataFactory'
+    Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface: '@App\Model\Customer\CustomerUserDataFactory'
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@App\Model\Order\OrderDataFactory'
 
@@ -78,7 +78,7 @@ services:
         arguments:
             - "%shopsys.performance_data.product.total_count%"
 
-    App\DataFixtures\Performance\UserDataFixture:
+    App\DataFixtures\Performance\CustomerUserDataFixture:
         arguments:
             - "%shopsys.performance_data.user.count_per_domain%"
 

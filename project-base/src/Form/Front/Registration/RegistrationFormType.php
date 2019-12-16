@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueEmail;
 use Shopsys\FrameworkBundle\Form\HoneyPotType;
-use Shopsys\FrameworkBundle\Model\Customer\UserData;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -81,7 +81,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => UserData::class,
+            'data_class' => CustomerUserData::class,
             'attr' => ['novalidate' => 'novalidate'],
             TimedFormTypeExtension::OPTION_ENABLED => true,
             'constraints' => [

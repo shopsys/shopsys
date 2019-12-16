@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Form;
 
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -30,8 +30,8 @@ class OrderListType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired('user')
-            ->setAllowedTypes('user', User::class)
+        $resolver->setRequired('customerUser')
+            ->setAllowedTypes('customerUser', CustomerUser::class)
             ->setDefaults([
                 'mapped' => false,
             ]);
@@ -45,7 +45,7 @@ class OrderListType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
-        $view->vars['orders'] = $this->orderFacade->getCustomerOrderList($options['user']);
+        $view->vars['orders'] = $this->orderFacade->getCustomerUserOrderList($options['customerUser']);
     }
 
     /**

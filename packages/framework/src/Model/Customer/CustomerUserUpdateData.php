@@ -5,9 +5,9 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 class CustomerUserUpdateData
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserData
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
      */
-    public $userData;
+    public $customerUserData;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
@@ -27,14 +27,14 @@ class CustomerUserUpdateData
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
      */
     public function __construct(
         BillingAddressData $billingAddressData,
         DeliveryAddressData $deliveryAddressData,
-        UserData $userData
+        CustomerUserData $customerUserData
     ) {
-        $this->userData = $userData;
+        $this->customerUserData = $customerUserData;
         $this->billingAddressData = $billingAddressData;
         $this->deliveryAddressData = $deliveryAddressData;
         $this->sendRegistrationMail = false;

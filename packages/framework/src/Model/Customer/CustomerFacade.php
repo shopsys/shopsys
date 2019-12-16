@@ -39,11 +39,14 @@ class CustomerFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
-    public function createCustomerWithBillingAddress(Customer $customer, BillingAddress $billingAddress): void
+    public function createCustomerWithBillingAddress(Customer $customer, BillingAddress $billingAddress): Customer
     {
         $customer->addBillingAddress($billingAddress);
         $this->em->persist($customer);
         $this->em->flush($customer);
+
+        return $customer;
     }
 }

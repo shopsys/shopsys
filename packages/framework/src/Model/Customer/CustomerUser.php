@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(
- *     name="users",
+ *     name="customer_users",
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(name="email_domain", columns={"email", "domain_id"})
  *     },
@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * )
  * @ORM\Entity
  */
-class User implements UserInterface, TimelimitLoginInterface, Serializable
+class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializable
 {
     /**
      * @ORM\Column(type="integer")
@@ -115,37 +115,37 @@ class User implements UserInterface, TimelimitLoginInterface, Serializable
     protected $telephone;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
     public function __construct(
-        UserData $userData,
+        CustomerUserData $customerUserData,
         ?DeliveryAddress $deliveryAddress
     ) {
-        $this->firstName = $userData->firstName;
-        $this->lastName = $userData->lastName;
+        $this->firstName = $customerUserData->firstName;
+        $this->lastName = $customerUserData->lastName;
         $this->deliveryAddress = $deliveryAddress;
-        if ($userData->createdAt !== null) {
-            $this->createdAt = $userData->createdAt;
+        if ($customerUserData->createdAt !== null) {
+            $this->createdAt = $customerUserData->createdAt;
         } else {
             $this->createdAt = new \DateTime();
         }
-        $this->domainId = $userData->domainId;
-        $this->pricingGroup = $userData->pricingGroup;
-        $this->telephone = $userData->telephone;
-        $this->setEmail($userData->email);
-        $this->customer = $userData->customer;
+        $this->domainId = $customerUserData->domainId;
+        $this->pricingGroup = $customerUserData->pricingGroup;
+        $this->telephone = $customerUserData->telephone;
+        $this->setEmail($customerUserData->email);
+        $this->customer = $customerUserData->customer;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserData $userData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
      */
-    public function edit(UserData $userData)
+    public function edit(CustomerUserData $customerUserData)
     {
-        $this->firstName = $userData->firstName;
-        $this->lastName = $userData->lastName;
-        $this->pricingGroup = $userData->pricingGroup;
-        $this->telephone = $userData->telephone;
+        $this->firstName = $customerUserData->firstName;
+        $this->lastName = $customerUserData->lastName;
+        $this->pricingGroup = $customerUserData->pricingGroup;
+        $this->telephone = $customerUserData->telephone;
     }
 
     /**

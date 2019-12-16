@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
 
 class PricingGroupRepository
 {
@@ -92,7 +92,7 @@ class PricingGroupRepository
     {
         $query = $this->em->createQuery('
             SELECT COUNT(u)
-            FROM ' . User::class . ' u
+            FROM ' . CustomerUser::class . ' u
             WHERE u.pricingGroup = :pricingGroup')
             ->setParameter('pricingGroup', $pricingGroup);
         return $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;

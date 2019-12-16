@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
-class UserRepository
+class CustomerUserRepository
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -26,19 +26,20 @@ class UserRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getUserRepository()
+    protected function getCustomerUserRepository()
     {
-        return $this->em->getRepository(User::class);
+        return $this->em->getRepository(CustomerUser::class);
     }
 
     /**
      * @param string $email
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
      */
-    public function findUserByEmailAndDomain($email, $domainId)
+    public function findCustomerUserByEmailAndDomain($email, $domainId)
     {
-        return $this->getUserRepository()->findOneBy([
+        return $this->getCustomerUserRepository()->findOneBy([
             'email' => mb_strtolower($email),
             'domainId' => $domainId,
         ]);
@@ -47,52 +48,56 @@ class UserRepository
     /**
      * @param string $email
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
      */
-    public function getUserByEmailAndDomain($email, $domainId)
+    public function getCustomerUserByEmailAndDomain($email, $domainId)
     {
-        $user = $this->findUserByEmailAndDomain($email, $domainId);
+        $customerUser = $this->findCustomerUserByEmailAndDomain($email, $domainId);
 
-        if ($user === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\ByEmailAndDomainNotFoundException(
+        if ($customerUser === null) {
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundByEmailAndDomainException(
                 $email,
                 $domainId
             );
         }
 
-        return $user;
+        return $customerUser;
     }
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
      */
-    public function getUserById($id)
+    public function getCustomerUserById($id)
     {
-        $user = $this->findById($id);
-        if ($user === null) {
+        $customerUser = $this->findById($id);
+        if ($customerUser === null) {
             throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException($id);
         }
-        return $user;
+        return $customerUser;
     }
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
      */
     public function findById($id)
     {
-        return $this->getUserRepository()->find($id);
+        return $this->getCustomerUserRepository()->find($id);
     }
 
     /**
      * @param int $id
      * @param string $loginToken
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
      */
     public function findByIdAndLoginToken($id, $loginToken)
     {
-        return $this->getUserRepository()->findOneBy([
+        return $this->getCustomerUserRepository()->findOneBy([
             'id' => $id,
             'loginToken' => $loginToken,
         ]);
@@ -121,12 +126,12 @@ class UserRepository
                 COUNT(o.id) ordersCount,
                 SUM(o.totalPriceWithVat) ordersSumPrice,
                 MAX(o.createdAt) lastOrderAt')
-            ->from(User::class, 'u')
+            ->from(CustomerUser::class, 'u')
             ->where('u.domainId = :selectedDomainId')
             ->setParameter('selectedDomainId', $domainId)
             ->join('u.customer', 'c')
             ->leftJoin(BillingAddress::class, 'ba', 'WITH', 'c.id = ba.customer')
-            ->leftJoin(Order::class, 'o', 'WITH', 'o.user = u.id AND o.deleted = :deleted')
+            ->leftJoin(Order::class, 'o', 'WITH', 'o.customerUser = u.id AND o.deleted = :deleted')
             ->setParameter('deleted', false)
             ->leftJoin(PricingGroup::class, 'pg', 'WITH', 'pg.id = u.pricingGroup')
             ->groupBy('u.id');
@@ -157,7 +162,7 @@ class UserRepository
     public function replaceUsersPricingGroup(PricingGroup $oldPricingGroup, PricingGroup $newPricingGroup)
     {
         $this->em->createQueryBuilder()
-            ->update(User::class, 'u')
+            ->update(CustomerUser::class, 'u')
             ->set('u.pricingGroup', ':newPricingGroup')->setParameter('newPricingGroup', $newPricingGroup)
             ->where('u.pricingGroup = :oldPricingGroup')->setParameter('oldPricingGroup', $oldPricingGroup)
             ->getQuery()->execute();

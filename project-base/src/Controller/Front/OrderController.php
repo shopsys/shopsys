@@ -11,7 +11,7 @@ use App\Model\Order\OrderDataMapper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
@@ -177,12 +177,12 @@ class OrderController extends FrontBaseController
             return $this->redirectToRoute('front_cart');
         }
 
-        $user = $this->getUser();
+        $customerUser = $this->getUser();
 
         $frontOrderFormData = new FrontOrderData();
         $frontOrderFormData->deliveryAddressSameAsBillingAddress = true;
-        if ($user instanceof User) {
-            $this->orderFacade->prefillFrontOrderData($frontOrderFormData, $user);
+        if ($customerUser instanceof CustomerUser) {
+            $this->orderFacade->prefillFrontOrderData($frontOrderFormData, $customerUser);
         }
         $domainId = $this->domain->getId();
         $frontOrderFormData->domainId = $domainId;

@@ -7,16 +7,16 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 class CustomerUserListAdminFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository
      */
-    protected $userRepository;
+    protected $customerUserRepository;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository $customerUserRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(CustomerUserRepository $customerUserRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->customerUserRepository = $customerUserRepository;
     }
 
     /**
@@ -28,7 +28,7 @@ class CustomerUserListAdminFacade
         $domainId,
         QuickSearchFormData $quickSearchData
     ) {
-        return $this->userRepository->getCustomerListQueryBuilderByQuickSearchData(
+        return $this->customerUserRepository->getCustomerListQueryBuilderByQuickSearchData(
             $domainId,
             $quickSearchData
         );

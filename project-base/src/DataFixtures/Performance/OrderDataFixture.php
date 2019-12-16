@@ -9,15 +9,15 @@ use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
+use App\DataFixtures\Performance\CustomerUserDataFixture as PerformanceUserDataFixture;
 use App\DataFixtures\Performance\ProductDataFixture as PerformanceProductDataFixture;
-use App\DataFixtures\Performance\UserDataFixture as PerformanceUserDataFixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User;
-use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -88,9 +88,9 @@ class OrderDataFixture
     private $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
      */
-    private $userFacade;
+    private $customerUserFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory
@@ -112,7 +112,7 @@ class OrderDataFixture
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserFacade $userFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      */
@@ -126,7 +126,7 @@ class OrderDataFixture
         OrderFacade $orderFacade,
         OrderPreviewFactory $orderPreviewFactory,
         ProductFacade $productFacade,
-        UserFacade $userFacade,
+        CustomerUserFacade $customerUserFacade,
         ProgressBarFactory $progressBarFactory,
         OrderDataFactoryInterface $orderDataFactory
     ) {
@@ -140,7 +140,7 @@ class OrderDataFixture
         $this->orderFacade = $orderFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->productFacade = $productFacade;
-        $this->userFacade = $userFacade;
+        $this->customerUserFacade = $customerUserFacade;
         $this->progressBarFactory = $progressBarFactory;
         $this->orderDataFactory = $orderDataFactory;
     }
@@ -175,8 +175,8 @@ class OrderDataFixture
 
     private function createOrder()
     {
-        $user = $this->getRandomUserOrNull();
-        $orderData = $this->createOrderData($user);
+        $customerUser = $this->getRandomCustomerUserOrNull();
+        $orderData = $this->createOrderData($customerUser);
         $quantifiedProducts = $this->createQuantifiedProducts();
 
         $orderPreview = $this->orderPreviewFactory->create(
@@ -185,28 +185,29 @@ class OrderDataFixture
             $quantifiedProducts,
             $orderData->transport,
             $orderData->payment,
-            $user,
+            $customerUser,
             null
         );
 
-        $this->orderFacade->createOrder($orderData, $orderPreview, $user);
+        $this->orderFacade->createOrder($orderData, $orderPreview, $customerUser);
     }
 
     /**
-     * @param \App\Model\Customer\User $user
+     * @param \App\Model\Customer\CustomerUser $customerUser
+     *
      * @return \App\Model\Order\OrderData
      */
-    private function createOrderData(?User $user = null)
+    private function createOrderData(?CustomerUser $customerUser = null)
     {
         $orderData = $this->orderDataFactory->create();
 
-        if ($user !== null) {
-            $orderData->firstName = $user->getFirstName();
-            $orderData->lastName = $user->getLastName();
-            $orderData->email = $user->getEmail();
+        if ($customerUser !== null) {
+            $orderData->firstName = $customerUser->getFirstName();
+            $orderData->lastName = $customerUser->getLastName();
+            $orderData->email = $customerUser->getEmail();
 
-            $billingAddress = $user->getCustomer()->getBillingAddress();
-            $orderData->telephone = $user->getTelephone();
+            $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+            $orderData->telephone = $customerUser->getTelephone();
             $orderData->street = $billingAddress->getStreet();
             $orderData->city = $billingAddress->getCity();
             $orderData->postcode = $billingAddress->getPostcode();
@@ -295,14 +296,14 @@ class OrderDataFixture
 
     private function loadPerformanceUserIdsOnFirstDomain()
     {
-        /** @var \App\Model\Customer\User $firstPerformanceUser */
+        /** @var \App\Model\Customer\CustomerUser $firstPerformanceUser */
         $firstPerformanceUser = $this->persistentReferenceFacade->getReference(
             PerformanceUserDataFixture::FIRST_PERFORMANCE_USER
         );
 
         $qb = $this->em->createQueryBuilder()
             ->select('u.id')
-            ->from(User::class, 'u')
+            ->from(CustomerUser::class, 'u')
             ->where('u.id >= :firstPerformanceUserId')
             ->andWhere('u.domainId = :domainId')
             ->setParameter('firstPerformanceUserId', $firstPerformanceUser->getId())
@@ -312,18 +313,18 @@ class OrderDataFixture
     }
 
     /**
-     * @return \App\Model\Customer\User|null
+     * @return \App\Model\Customer\CustomerUser|null
      */
-    private function getRandomUserOrNull()
+    private function getRandomCustomerUserOrNull()
     {
         $shouldBeRegisteredUser = $this->faker->boolean(self::PERCENTAGE_OF_ORDERS_BY_REGISTERED_USERS);
 
         if ($shouldBeRegisteredUser) {
-            $userId = $this->faker->randomElement($this->performanceUserIds);
-            /** @var \App\Model\Customer\User $user */
-            $user = $this->userFacade->getUserById($userId);
+            $customerUserId = $this->faker->randomElement($this->performanceUserIds);
+            /** @var \App\Model\Customer\CustomerUser $customerUser */
+            $customerUser = $this->customerUserFacade->getCustomerUserById($customerUserId);
 
-            return $user;
+            return $customerUser;
         } else {
             return null;
         }

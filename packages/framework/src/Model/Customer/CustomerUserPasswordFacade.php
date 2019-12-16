@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
-class UserPasswordFacade
+class CustomerUserPasswordFacade
 {
     public const RESET_PASSWORD_HASH_LENGTH = 50;
 
@@ -19,9 +19,9 @@ class UserPasswordFacade
     protected $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository
      */
-    protected $userRepository;
+    protected $customerUserRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade
@@ -40,20 +40,20 @@ class UserPasswordFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository $customerUserRepository
      * @param \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
         EntityManagerInterface $em,
-        UserRepository $userRepository,
+        CustomerUserRepository $customerUserRepository,
         EncoderFactoryInterface $encoderFactory,
         ResetPasswordMailFacade $resetPasswordMailFacade,
         HashGenerator $hashGenerator
     ) {
         $this->em = $em;
-        $this->userRepository = $userRepository;
+        $this->customerUserRepository = $customerUserRepository;
         $this->encoderFactory = $encoderFactory;
         $this->resetPasswordMailFacade = $resetPasswordMailFacade;
         $this->hashGenerator = $hashGenerator;
@@ -65,13 +65,13 @@ class UserPasswordFacade
      */
     public function resetPassword($email, $domainId)
     {
-        $user = $this->userRepository->getUserByEmailAndDomain($email, $domainId);
+        $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
 
         $resetPasswordHash = $this->hashGenerator->generateHash(static::RESET_PASSWORD_HASH_LENGTH);
-        $user->setResetPasswordHash($resetPasswordHash);
+        $customerUser->setResetPasswordHash($resetPasswordHash);
 
-        $this->em->flush($user);
-        $this->resetPasswordMailFacade->sendMail($user);
+        $this->em->flush($customerUser);
+        $this->resetPasswordMailFacade->sendMail($customerUser);
     }
 
     /**
@@ -82,9 +82,9 @@ class UserPasswordFacade
      */
     public function isResetPasswordHashValid($email, $domainId, $hash)
     {
-        $user = $this->userRepository->getUserByEmailAndDomain($email, $domainId);
+        $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
 
-        return $user->isResetPasswordHashValid($hash);
+        return $customerUser->isResetPasswordHashValid($hash);
     }
 
     /**
@@ -92,29 +92,30 @@ class UserPasswordFacade
      * @param int $domainId
      * @param string|null $resetPasswordHash
      * @param string $newPassword
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
      */
-    public function setNewPassword(string $email, int $domainId, ?string $resetPasswordHash, string $newPassword): User
+    public function setNewPassword(string $email, int $domainId, ?string $resetPasswordHash, string $newPassword): CustomerUser
     {
-        $user = $this->userRepository->getUserByEmailAndDomain($email, $domainId);
+        $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
 
-        if (!$user->isResetPasswordHashValid($resetPasswordHash)) {
+        if (!$customerUser->isResetPasswordHashValid($resetPasswordHash)) {
             throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException();
         }
 
-        $this->changePassword($user, $newPassword);
+        $this->changePassword($customerUser, $newPassword);
 
-        return $user;
+        return $customerUser;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
      * @param string $password
      */
-    public function changePassword(User $user, string $password): void
+    public function changePassword(CustomerUser $customerUser, string $password): void
     {
-        $encoder = $this->encoderFactory->getEncoder($user);
+        $encoder = $this->encoderFactory->getEncoder($customerUser);
         $passwordHash = $encoder->encodePassword($password, null);
-        $user->setPasswordHash($passwordHash);
+        $customerUser->setPasswordHash($passwordHash);
     }
 }
