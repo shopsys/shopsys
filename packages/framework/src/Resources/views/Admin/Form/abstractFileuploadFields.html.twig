@@ -42,8 +42,7 @@
                     {% endmacro %}
 
                     <ul class="list-files js-file-upload-uploaded-files" data-prototype="{{ self.uploadedFile(form.uploadedFiles.vars.prototype, form.uploadedFilenames.vars.prototype, '', '__icon-type__', false, 'js-file-upload-uploaded-file-template display-none')|escape }}">
-                        {% for uploadedFile, key in form.uploadedFiles %}
-                            
+                        {% for key, uploadedFile in form.uploadedFiles %}
                             {% set fileThumbnailInfo = getFileThumbnailInfoByTemporaryFilename(uploadedFile.vars.value) %}
                             {{ self.uploadedFile(uploadedFile, form.uploadedFilenames[key], getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri) }}
                         {% else %}
