@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactory;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
@@ -29,13 +29,13 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 
-class CustomerUserDataFactoryTest extends TestCase
+class CustomerUserUpdateDataFactoryTest extends TestCase
 {
     private const DOMAIN_ID = 1;
 
-    public function testGetAmendedCustomerUserDataByOrderWithoutChanges()
+    public function testGetAmendedCustomerUserUpdateDataByOrderWithoutChanges()
     {
-        $customerUserDataFactory = $this->getCustomerUserDataFactory();
+        $customerUserUpdateUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 
         $customer = new Customer();
 
@@ -122,16 +122,16 @@ class CustomerUserDataFactoryTest extends TestCase
             'companyTaxNumber'
         );
 
-        $customerUserData = $customerUserDataFactory->createAmendedByOrder($user, $order);
+        $customerUserUpdateData = $customerUserUpdateUpdateDataFactory->createAmendedByOrder($user, $order);
 
-        $this->assertEquals($userData, $customerUserData->userData);
-        $this->assertEquals($billingAddressData, $customerUserData->billingAddressData);
-        $this->assertEquals($deliveryAddressData, $customerUserData->deliveryAddressData);
+        $this->assertEquals($userData, $customerUserUpdateData->userData);
+        $this->assertEquals($billingAddressData, $customerUserUpdateData->billingAddressData);
+        $this->assertEquals($deliveryAddressData, $customerUserUpdateData->deliveryAddressData);
     }
 
-    public function testGetAmendedCustomerUserDataByOrder()
+    public function testGetAmendedCustomerUserUpdateDataByOrder()
     {
-        $customerUserDataFactory = $this->getCustomerUserDataFactory();
+        $customerUserUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 
         $billingCountryData = new CountryData();
         $billingCountryData->names = ['cs' => 'Česká republika'];
@@ -208,26 +208,26 @@ class CustomerUserDataFactoryTest extends TestCase
         $deliveryAddressData->telephone = $order->getDeliveryTelephone();
         $deliveryAddressData->country = $deliveryCountry;
 
-        $customerUserData = $customerUserDataFactory->createAmendedByOrder($user, $order);
+        $customerUserUpdateData = $customerUserUpdateDataFactory->createAmendedByOrder($user, $order);
 
-        $this->assertEquals($userData, $customerUserData->userData);
-        $this->assertEquals($deliveryAddressData, $customerUserData->deliveryAddressData);
-        $this->assertTrue($customerUserData->billingAddressData->companyCustomer);
-        $this->assertSame($order->getCompanyName(), $customerUserData->billingAddressData->companyName);
-        $this->assertSame($order->getCompanyNumber(), $customerUserData->billingAddressData->companyNumber);
-        $this->assertSame($order->getCompanyTaxNumber(), $customerUserData->billingAddressData->companyTaxNumber);
-        $this->assertSame($order->getStreet(), $customerUserData->billingAddressData->street);
-        $this->assertSame($order->getCity(), $customerUserData->billingAddressData->city);
-        $this->assertSame($order->getPostcode(), $customerUserData->billingAddressData->postcode);
-        $this->assertSame($order->getCountry(), $customerUserData->billingAddressData->country);
+        $this->assertEquals($userData, $customerUserUpdateData->userData);
+        $this->assertEquals($deliveryAddressData, $customerUserUpdateData->deliveryAddressData);
+        $this->assertTrue($customerUserUpdateData->billingAddressData->companyCustomer);
+        $this->assertSame($order->getCompanyName(), $customerUserUpdateData->billingAddressData->companyName);
+        $this->assertSame($order->getCompanyNumber(), $customerUserUpdateData->billingAddressData->companyNumber);
+        $this->assertSame($order->getCompanyTaxNumber(), $customerUserUpdateData->billingAddressData->companyTaxNumber);
+        $this->assertSame($order->getStreet(), $customerUserUpdateData->billingAddressData->street);
+        $this->assertSame($order->getCity(), $customerUserUpdateData->billingAddressData->city);
+        $this->assertSame($order->getPostcode(), $customerUserUpdateData->billingAddressData->postcode);
+        $this->assertSame($order->getCountry(), $customerUserUpdateData->billingAddressData->country);
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactory
      */
-    private function getCustomerUserDataFactory(): CustomerUserDataFactory
+    private function getCustomerUserUpdateDataFactory(): CustomerUserUpdateDataFactory
     {
-        return new CustomerUserDataFactory(
+        return new CustomerUserUpdateDataFactory(
             new BillingAddressDataFactory(),
             new DeliveryAddressDataFactory(),
             new UserDataFactory($this->createMock(PricingGroupSettingFacade::class)),

@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
 use Shopsys\FrameworkBundle\Form\OrderListType;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -14,16 +14,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomerUserFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
      */
-    private $customerUserDataFactory;
+    private $customerUserUpdateDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      */
-    public function __construct(CustomerUserDataFactoryInterface $customerUserDataFactory)
+    public function __construct(CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory)
     {
-        $this->customerUserDataFactory = $customerUserDataFactory;
+        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
     }
 
     /**
@@ -79,7 +79,7 @@ class CustomerUserFormType extends AbstractType
             ->setAllowedTypes('user', [User::class, 'null'])
             ->setAllowedTypes('domain_id', 'int')
             ->setDefaults([
-                'empty_data' => $this->customerUserDataFactory->create(),
+                'empty_data' => $this->customerUserUpdateDataFactory->create(),
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
     }

@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\UserFacade;
@@ -67,9 +67,9 @@ class UserDataFixture
     private $progressBarFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
      */
-    private $customerUserDataFactory;
+    private $customerUserUpdateDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface
@@ -86,7 +86,7 @@ class UserDataFixture
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      */
     public function __construct(
@@ -99,7 +99,7 @@ class UserDataFixture
         Faker $faker,
         PersistentReferenceFacade $persistentReferenceFacade,
         ProgressBarFactory $progressBarFactory,
-        CustomerUserDataFactoryInterface $customerUserDataFactory,
+        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
     ) {
         $this->em = $em;
@@ -111,7 +111,7 @@ class UserDataFixture
         $this->persistentReferenceFacade = $persistentReferenceFacade;
         $this->userCountPerDomain = $userCountPerDomain;
         $this->progressBarFactory = $progressBarFactory;
-        $this->customerUserDataFactory = $customerUserDataFactory;
+        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
     }
 
@@ -152,10 +152,10 @@ class UserDataFixture
      */
     private function createCustomerOnDomain($domainId, $userNumber)
     {
-        $customerUserData = $this->getRandomCustomerUserDataByDomainId($domainId, $userNumber);
+        $customerUserUpdateData = $this->getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber);
 
         /** @var \App\Model\Customer\User $user */
-        $user = $this->customerUserEditFacade->create($customerUserData);
+        $user = $this->customerUserEditFacade->create($customerUserUpdateData);
 
         return $user;
     }
@@ -163,11 +163,11 @@ class UserDataFixture
     /**
      * @param int $domainId
      * @param int $userNumber
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
      */
-    private function getRandomCustomerUserDataByDomainId($domainId, $userNumber)
+    private function getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber)
     {
-        $customerUserData = $this->customerUserDataFactory->create();
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
 
         $userData = $this->userDataFactory->createForDomainId($domainId);
@@ -178,10 +178,10 @@ class UserDataFixture
         $userData->domainId = $domainId;
         $userData->createdAt = $this->faker->dateTimeBetween('-1 year', 'now');
         $userData->telephone = $this->faker->phoneNumber;
-        $userData->customer = $customerUserData->billingAddressData->customer;
-        $customerUserData->userData = $userData;
+        $userData->customer = $customerUserUpdateData->billingAddressData->customer;
+        $customerUserUpdateData->userData = $userData;
 
-        $billingAddressData = $customerUserData->billingAddressData;
+        $billingAddressData = $customerUserUpdateData->billingAddressData;
         $billingAddressData->companyCustomer = $this->faker->boolean();
         if ($billingAddressData->companyCustomer === true) {
             $billingAddressData->companyName = $this->faker->company;
@@ -192,7 +192,7 @@ class UserDataFixture
         $billingAddressData->city = $this->faker->city;
         $billingAddressData->postcode = $this->faker->postcode;
         $billingAddressData->country = $country;
-        $customerUserData->billingAddressData = $billingAddressData;
+        $customerUserUpdateData->billingAddressData = $billingAddressData;
 
         $deliveryAddressData = $this->deliveryAddressDataFactory->create();
         $deliveryAddressData->addressFilled = true;
@@ -204,8 +204,8 @@ class UserDataFixture
         $deliveryAddressData->country = $country;
         $deliveryAddressData->street = $this->faker->streetAddress;
         $deliveryAddressData->telephone = $this->faker->phoneNumber;
-        $customerUserData->deliveryAddressData = $deliveryAddressData;
+        $customerUserUpdateData->deliveryAddressData = $deliveryAddressData;
 
-        return $customerUserData;
+        return $customerUserUpdateData;
     }
 }

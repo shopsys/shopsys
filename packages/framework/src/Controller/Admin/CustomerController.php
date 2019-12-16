@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
@@ -80,9 +80,9 @@ class CustomerController extends AdminBaseController
     protected $domainRouterFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
      */
-    protected $customerUserDataFactory;
+    protected $customerUserUpdateDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface $userDataFactory
@@ -95,7 +95,7 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      */
     public function __construct(
         UserDataFactoryInterface $userDataFactory,
@@ -108,7 +108,7 @@ class CustomerController extends AdminBaseController
         OrderFacade $orderFacade,
         LoginAsUserFacade $loginAsUserFacade,
         DomainRouterFactory $domainRouterFactory,
-        CustomerUserDataFactoryInterface $customerUserDataFactory
+        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
     ) {
         $this->userDataFactory = $userDataFactory;
         $this->customerUserListAdminFacade = $customerUserListAdminFacade;
@@ -120,7 +120,7 @@ class CustomerController extends AdminBaseController
         $this->orderFacade = $orderFacade;
         $this->loginAsUserFacade = $loginAsUserFacade;
         $this->domainRouterFactory = $domainRouterFactory;
-        $this->customerUserDataFactory = $customerUserDataFactory;
+        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
     }
 
     /**
@@ -131,16 +131,16 @@ class CustomerController extends AdminBaseController
     public function editAction(Request $request, $id)
     {
         $user = $this->userFacade->getUserById($id);
-        $customerUserData = $this->customerUserDataFactory->createFromUser($user);
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromUser($user);
 
-        $form = $this->createForm(CustomerUserFormType::class, $customerUserData, [
+        $form = $this->createForm(CustomerUserFormType::class, $customerUserUpdateData, [
             'user' => $user,
             'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->userFacade->editByAdmin($id, $customerUserData);
+            $this->userFacade->editByAdmin($id, $customerUserUpdateData);
 
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
@@ -225,20 +225,20 @@ class CustomerController extends AdminBaseController
      */
     public function newAction(Request $request)
     {
-        $customerUserData = $this->customerUserDataFactory->create();
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $userData = $this->userDataFactory->createForDomainId($selectedDomainId);
-        $customerUserData->userData = $userData;
+        $customerUserUpdateData->userData = $userData;
 
-        $form = $this->createForm(CustomerUserFormType::class, $customerUserData, [
+        $form = $this->createForm(CustomerUserFormType::class, $customerUserUpdateData, [
             'user' => null,
             'domain_id' => $selectedDomainId,
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $customerUserData = $form->getData();
-            $user = $this->userFacade->create($customerUserData);
+            $customerUserUpdateData = $form->getData();
+            $user = $this->userFacade->create($customerUserUpdateData);
 
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> created'),

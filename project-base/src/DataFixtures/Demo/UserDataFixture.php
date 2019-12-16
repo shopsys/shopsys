@@ -13,8 +13,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
@@ -73,9 +73,9 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
      */
-    protected $customerUserDataFactory;
+    protected $customerUserUpdateDataFactory;
 
     /**
      * @var \App\Model\Customer\UserDataFactory
@@ -103,7 +103,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \App\Model\Customer\UserDataFactory $userDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
@@ -115,7 +115,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         EntityManagerInterface $em,
         HashGenerator $hashGenerator,
         Domain $domain,
-        CustomerUserDataFactoryInterface $customerUserDataFactory,
+        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         UserDataFactoryInterface $userDataFactory,
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
@@ -126,7 +126,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $this->em = $em;
         $this->hashGenerator = $hashGenerator;
         $this->domain = $domain;
-        $this->customerUserDataFactory = $customerUserDataFactory;
+        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->userDataFactory = $userDataFactory;
         $this->billingAddressDataFactory = $billingAddressDataFactory;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
@@ -147,10 +147,10 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
             }
 
             foreach ($customersDataProvider as $customerDataProvider) {
-                $customerUserData = $this->getCustomerUserData($domainId, $customerDataProvider);
-                $customerUserData->userData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
+                $customerUserUpdateData = $this->getCustomerUserUpdateData($domainId, $customerDataProvider);
+                $customerUserUpdateData->userData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
 
-                $customer = $this->userFacade->create($customerUserData);
+                $customer = $this->userFacade->create($customerUserUpdateData);
                 if ($customer->getId() === 1) {
                     $this->resetPassword($customer);
                     $this->addReference(self::USER_WITH_RESET_PASSWORD_HASH, $customer);
@@ -163,20 +163,20 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
      * @param int $domainId
      * @param array $data
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
      */
-    protected function getCustomerUserData(int $domainId, array $data): CustomerUserData
+    protected function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData
     {
-        $customerUserData = $this->customerUserDataFactory->create();
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $userData = $this->userDataFactory->createForDomainId($domainId);
         $userData->firstName = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_FIRST_NAME] ?? null;
         $userData->lastName = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_LAST_NAME] ?? null;
         $userData->email = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_EMAIL] ?? null;
         $userData->password = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_PASSWORD] ?? null;
         $userData->telephone = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_TELEPHONE] ?? null;
-        $userData->customer = $customerUserData->userData->customer;
+        $userData->customer = $customerUserUpdateData->userData->customer;
 
-        $billingAddressData = $customerUserData->billingAddressData;
+        $billingAddressData = $customerUserUpdateData->billingAddressData;
         $billingAddressData->companyCustomer = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_CUSTOMER];
         $billingAddressData->companyName = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_NAME] ?? null;
         $billingAddressData->companyNumber = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_NUMBER] ?? null;
@@ -186,7 +186,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $billingAddressData->country = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COUNTRY];
 
         if (isset($data[self::KEY_DELIVERY_ADDRESS])) {
-            $deliveryAddressData = $customerUserData->deliveryAddressData;
+            $deliveryAddressData = $customerUserUpdateData->deliveryAddressData;
             $deliveryAddressData->addressFilled = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_ADDRESS_FILLED] ?? null;
             $deliveryAddressData->companyName = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_COMPANY_NAME] ?? null;
             $deliveryAddressData->firstName = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_FIRST_NAME] ?? null;
@@ -198,10 +198,10 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
             $deliveryAddressData->country = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_COUNTRY];
         }
 
-        $customerUserData->userData = $userData;
-        $customerUserData->billingAddressData = $billingAddressData;
+        $customerUserUpdateData->userData = $userData;
+        $customerUserUpdateData->billingAddressData = $billingAddressData;
 
-        return $customerUserData;
+        return $customerUserUpdateData;
     }
 
     /**

@@ -19,9 +19,9 @@ class UserFacade
     protected $userRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
      */
-    protected $customerUserDataFactory;
+    protected $customerUserUpdateDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade
@@ -61,7 +61,7 @@ class UserFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface $deliveryAddressFactory
@@ -73,7 +73,7 @@ class UserFacade
     public function __construct(
         EntityManagerInterface $em,
         UserRepository $userRepository,
-        CustomerUserDataFactoryInterface $customerUserDataFactory,
+        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         CustomerMailFacade $customerMailFacade,
         BillingAddressFactoryInterface $billingAddressFactory,
         DeliveryAddressFactoryInterface $deliveryAddressFactory,
@@ -84,7 +84,7 @@ class UserFacade
     ) {
         $this->em = $em;
         $this->userRepository = $userRepository;
-        $this->customerUserDataFactory = $customerUserDataFactory;
+        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerMailFacade = $customerMailFacade;
         $this->billingAddressFactory = $billingAddressFactory;
         $this->deliveryAddressFactory = $deliveryAddressFactory;
@@ -134,19 +134,19 @@ class UserFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData $customerUserUpdateData
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    public function create(CustomerUserData $customerUserData)
+    public function create(CustomerUserUpdateData $customerUserUpdateData)
     {
         $this->customerFacade->createCustomerWithBillingAddress(
-            $customerUserData->billingAddressData->customer,
-            $this->billingAddressFactory->create($customerUserData->billingAddressData)
+            $customerUserUpdateData->billingAddressData->customer,
+            $this->billingAddressFactory->create($customerUserUpdateData->billingAddressData)
         );
-        $user = $this->createUser($customerUserData->userData, $customerUserData->deliveryAddressData);
+        $user = $this->createUser($customerUserUpdateData->userData, $customerUserUpdateData->deliveryAddressData);
 
-        if ($customerUserData->sendRegistrationMail) {
+        if ($customerUserUpdateData->sendRegistrationMail) {
             $this->customerMailFacade->sendRegistrationMail($user);
         }
 
@@ -181,23 +181,23 @@ class UserFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData $customerUserUpdateData
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    protected function edit($userId, CustomerUserData $customerUserData)
+    protected function edit($userId, CustomerUserUpdateData $customerUserUpdateData)
     {
         $user = $this->getUserById($userId);
 
-        $user->edit($customerUserData->userData);
+        $user->edit($customerUserUpdateData->userData);
 
-        if ($customerUserData->userData->password !== null) {
-            $this->userPasswordFacade->changePassword($user, $customerUserData->userData->password);
+        if ($customerUserUpdateData->userData->password !== null) {
+            $this->userPasswordFacade->changePassword($user, $customerUserUpdateData->userData->password);
         }
 
-        $user->getCustomer()->getBillingAddress()->edit($customerUserData->billingAddressData);
+        $user->getCustomer()->getBillingAddress()->edit($customerUserUpdateData->billingAddressData);
 
-        $this->editDeliveryAddress($user, $customerUserData->deliveryAddressData);
+        $this->editDeliveryAddress($user, $customerUserUpdateData->deliveryAddressData);
 
         return $user;
     }
@@ -223,15 +223,15 @@ class UserFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData $customerUserUpdateData
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    public function editByAdmin($userId, CustomerUserData $customerUserData)
+    public function editByAdmin($userId, CustomerUserUpdateData $customerUserUpdateData)
     {
-        $user = $this->edit($userId, $customerUserData);
+        $user = $this->edit($userId, $customerUserUpdateData);
 
-        $this->setEmail($customerUserData->userData->email, $user);
+        $this->setEmail($customerUserUpdateData->userData->email, $user);
 
         $this->em->flush();
 
@@ -240,13 +240,13 @@ class UserFacade
 
     /**
      * @param int $userId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData $customerUserUpdateData
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User
      */
-    public function editByCustomer($userId, CustomerUserData $customerUserData)
+    public function editByCustomer($userId, CustomerUserUpdateData $customerUserUpdateData)
     {
-        $user = $this->edit($userId, $customerUserData);
+        $user = $this->edit($userId, $customerUserUpdateData);
 
         $this->em->flush();
 
@@ -272,7 +272,7 @@ class UserFacade
     {
         $this->edit(
             $user->getId(),
-            $this->customerUserDataFactory->createAmendedByOrder($user, $order)
+            $this->customerUserUpdateDataFactory->createAmendedByOrder($user, $order)
         );
 
         $this->em->flush();

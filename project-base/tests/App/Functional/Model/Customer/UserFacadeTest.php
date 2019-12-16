@@ -20,33 +20,33 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     protected $userFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
      * @inject
      */
-    protected $customerUserDataFactory;
+    protected $customerUserUpdateDataFactory;
 
     public function testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException()
     {
         $user = $this->userFacade->findUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, Domain::FIRST_DOMAIN_ID);
-        $customerUserData = $this->customerUserDataFactory->createFromUser($user);
-        $customerUserData->userData->email = self::EXISTING_EMAIL_ON_DOMAIN_2;
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromUser($user);
+        $customerUserUpdateData->userData->email = self::EXISTING_EMAIL_ON_DOMAIN_2;
 
-        $this->userFacade->editByAdmin($user->getId(), $customerUserData);
+        $this->userFacade->editByAdmin($user->getId(), $customerUserUpdateData);
 
         $this->expectNotToPerformAssertions();
     }
 
     public function testCreateNotDuplicateEmail()
     {
-        $customerUserData = $this->customerUserDataFactory->create();
-        $customerUserData->userData->pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-        $customerUserData->userData->domainId = 1;
-        $customerUserData->userData->email = 'unique-email@shopsys.com';
-        $customerUserData->userData->firstName = 'John';
-        $customerUserData->userData->lastName = 'Doe';
-        $customerUserData->userData->password = 'password';
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
+        $customerUserUpdateData->userData->pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $customerUserUpdateData->userData->domainId = 1;
+        $customerUserUpdateData->userData->email = 'unique-email@shopsys.com';
+        $customerUserUpdateData->userData->firstName = 'John';
+        $customerUserUpdateData->userData->lastName = 'Doe';
+        $customerUserUpdateData->userData->password = 'password';
 
-        $this->userFacade->create($customerUserData);
+        $this->userFacade->create($customerUserUpdateData);
 
         $this->expectNotToPerformAssertions();
     }
@@ -54,21 +54,21 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     public function testCreateDuplicateEmail()
     {
         $user = $this->userFacade->findUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, 1);
-        $customerUserData = $this->customerUserDataFactory->createFromUser($user);
-        $customerUserData->userData->password = 'password';
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromUser($user);
+        $customerUserUpdateData->userData->password = 'password';
         $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException::class);
 
-        $this->userFacade->create($customerUserData);
+        $this->userFacade->create($customerUserUpdateData);
     }
 
     public function testCreateDuplicateEmailCaseInsentitive()
     {
         $user = $this->userFacade->findUserByEmailAndDomain(self::EXISTING_EMAIL_ON_DOMAIN_1, 1);
-        $customerUserData = $this->customerUserDataFactory->createFromUser($user);
-        $customerUserData->userData->password = 'password';
-        $customerUserData->userData->email = mb_strtoupper(self::EXISTING_EMAIL_ON_DOMAIN_1);
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromUser($user);
+        $customerUserUpdateData->userData->password = 'password';
+        $customerUserUpdateData->userData->email = mb_strtoupper(self::EXISTING_EMAIL_ON_DOMAIN_1);
         $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException::class);
 
-        $this->userFacade->create($customerUserData);
+        $this->userFacade->create($customerUserUpdateData);
     }
 }

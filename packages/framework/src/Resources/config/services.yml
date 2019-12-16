@@ -843,8 +843,8 @@ services:
     Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Country\CountryDataFactory
 
-    Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory
+    Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactory
 
     Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory

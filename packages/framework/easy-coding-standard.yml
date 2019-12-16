@@ -26,7 +26,7 @@ parameters:
             - '*/src/Model/Product/ProductVisibilityRepository.php'
             - '*/src/Model/Product/Search/FilterQuery.php'
             - '*/src/Controller/Admin/AdministratorController.php'
-            - '*/tests/Unit/Model/Customer/CustomerUserDataFactoryTest.php'
+            - '*/tests/Unit/Model/Customer/CustomerUserUpdateDataFactoryTest.php'
             - '*/tests/Unit/Component/Domain/DomainDataCreatorTest.php'
             - '*/tests/Unit/Component/Image/ImageLocatorTest.php'
             - '*/tests/Unit/Component/Image/Config/ImageConfigLoaderTest.php'
