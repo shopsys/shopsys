@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
+namespace Shopsys\FrameworkBundle\Form\Admin\Customer\User;
 
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
@@ -10,8 +10,8 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
@@ -54,7 +54,7 @@ class CustomerUserFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /* @var $customerUser \Shopsys\FrameworkBundle\Model\Customer\CustomerUser */
+        /* @var $customerUser \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser */
         $customerUser = $options['customerUser'];
 
         $builderSystemDataGroup = $builder->create('systemData', GroupType::class, [

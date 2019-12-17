@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Front\Customer;
+namespace App\Form\Front\Customer\User;
 
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
+use App\Form\Front\Customer\BillingAddressFormType;
+use App\Form\Front\Customer\DeliveryAddressFormType;
+use App\Form\Front\Customer\User\CustomerUserFormType;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,12 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomerUserUpdateFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      */
     private $customerUserUpdateDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      */
     public function __construct(CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory)
     {

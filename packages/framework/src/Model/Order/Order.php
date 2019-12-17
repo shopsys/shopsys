@@ -6,7 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -34,9 +34,9 @@ class Order
     protected $number;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      *
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\CustomerUser")
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
      * @ORM\JoinColumn(nullable=true, name="customer_user_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $customerUser;
@@ -301,7 +301,7 @@ class Order
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function __construct(
         OrderData $orderData,
@@ -613,7 +613,7 @@ class Order
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function getCustomerUser()
     {

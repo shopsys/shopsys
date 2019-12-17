@@ -1,10 +1,13 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
+namespace Shopsys\FrameworkBundle\Form\Admin\Customer\User;
 
+use Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Customer\DeliveryAddressFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Form\OrderListType;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -14,12 +17,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomerUserUpdateFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      */
     private $customerUserUpdateDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      */
     public function __construct(CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory)
     {

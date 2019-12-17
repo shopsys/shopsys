@@ -9,8 +9,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
@@ -23,7 +23,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     public const ORDER_PREFIX = 'order_';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
      */
     protected $customerUserRepository;
 
@@ -58,7 +58,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     protected $currencyFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository $customerUserRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
@@ -719,7 +719,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \App\Model\Order\OrderData $orderData
      * @param array $products
-     * @param \App\Model\Customer\CustomerUser $customerUser
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
      */
     protected function createOrder(
         OrderData $orderData,

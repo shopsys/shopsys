@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 
 class ProductFilterConfigFactory
 {
@@ -18,7 +18,7 @@ class ProductFilterConfigFactory
     protected $flagFilterChoiceRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
     protected $currentCustomerUser;
 
@@ -35,7 +35,7 @@ class ProductFilterConfigFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository $parameterFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository $flagFilterChoiceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository $brandFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository $priceRangeRepository
      */

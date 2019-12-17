@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Form\Front\Customer\CustomerUserUpdateFormType;
+use App\Form\Front\Customer\User\CustomerUserUpdateFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomerController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
     private $customerUserFacade;
 
@@ -42,17 +42,17 @@ class CustomerController extends FrontBaseController
     private $loginAsUserFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      */
     private $customerUserUpdateDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      */
     public function __construct(
         CustomerUserFacade $customerUserFacade,
@@ -113,7 +113,7 @@ class CustomerController extends FrontBaseController
             return $this->redirectToRoute('front_login');
         }
 
-        /** @var \App\Model\Customer\CustomerUser $customerUser */
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->getUser();
 
         $orders = $this->orderFacade->getCustomerUserOrderList($customerUser);
@@ -179,7 +179,7 @@ class CustomerController extends FrontBaseController
     {
         try {
             $this->loginAsUserFacade->loginAsRememberedUser($request);
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException $e) {
+        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $e) {
             /** @var \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender $adminFlashMessageSender */
             $adminFlashMessageSender = $this->get('shopsys.shop.component.flash_message.sender.admin');
             $adminFlashMessageSender->addErrorFlash(t('User not found.'));

@@ -1,8 +1,13 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 
 class CustomerUserFactory implements CustomerUserFactoryInterface
 {
@@ -12,13 +17,13 @@ class CustomerUserFactory implements CustomerUserFactoryInterface
     protected $entityNameResolver;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade
      */
     protected $customerUserPasswordFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade $customerUserPasswordFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      */
     public function __construct(
         EntityNameResolver $entityNameResolver,
@@ -29,10 +34,10 @@ class CustomerUserFactory implements CustomerUserFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function create(CustomerUserData $customerUserData, ?DeliveryAddress $deliveryAddress): CustomerUser
     {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Customer;
+namespace App\Model\Customer\User;
 
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser as BaseUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData as BaseUserData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 
 /**
@@ -24,7 +24,7 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 class CustomerUser extends BaseUser
 {
     /**
-     * @param \App\Model\Customer\CustomerUserData $customerUserData
+     * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
     public function __construct(
@@ -35,7 +35,7 @@ class CustomerUser extends BaseUser
     }
 
     /**
-     * @param \App\Model\Customer\CustomerUserData $customerUserData
+     * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function edit(BaseUserData $customerUserData)
     {

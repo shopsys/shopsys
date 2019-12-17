@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class CustomerUserPasswordFacade
@@ -19,7 +21,7 @@ class CustomerUserPasswordFacade
     protected $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
      */
     protected $customerUserRepository;
 
@@ -40,7 +42,7 @@ class CustomerUserPasswordFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository $customerUserRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
@@ -93,7 +95,7 @@ class CustomerUserPasswordFacade
      * @param string|null $resetPasswordHash
      * @param string $newPassword
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function setNewPassword(string $email, int $domainId, ?string $resetPasswordHash, string $newPassword): CustomerUser
     {
@@ -109,7 +111,7 @@ class CustomerUserPasswordFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $password
      */
     public function changePassword(CustomerUser $customerUser, string $password): void

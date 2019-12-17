@@ -7,8 +7,8 @@ namespace Tests\App\Functional\Model\Cart;
 use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartFacadeTest extends TransactionFunctionalTestCase
@@ -32,7 +32,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     private $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      * @inject
      */
     private $currentCustomerUser;
@@ -234,7 +234,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerUserIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      *
      * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      */
@@ -256,7 +256,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerUserIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
@@ -287,7 +287,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier $customerUserIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */

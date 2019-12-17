@@ -355,7 +355,7 @@ class RouteConfigCustomization
                     ]);
             })
             ->customizeByRouteName('front_registration_set_new_password', function (RouteConfig $config) {
-                /** @var \App\Model\Customer\CustomerUser $customer */
+                /** @var \App\Model\Customer\User\CustomerUser $customer */
                 $customer = $this->getPersistentReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
 
                 $config->changeDefaultRequestDataSet('See new password page for customer with reset password hash.')

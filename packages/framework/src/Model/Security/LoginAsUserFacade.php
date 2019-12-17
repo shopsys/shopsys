@@ -3,8 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Security;
 
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -33,7 +33,7 @@ class LoginAsUserFacade
     protected $session;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
      */
     protected $customerUserRepository;
 
@@ -46,7 +46,7 @@ class LoginAsUserFacade
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository $customerUserRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      */
     public function __construct(
@@ -64,7 +64,7 @@ class LoginAsUserFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
     public function rememberLoginAsUser(CustomerUser $customerUser)
     {
@@ -85,7 +85,7 @@ class LoginAsUserFacade
         }
 
         $unserializedUser = unserialize($this->session->get(static::SESSION_LOGIN_AS));
-        /* @var $unserializedUser \Shopsys\FrameworkBundle\Model\Customer\CustomerUser */
+        /* @var $unserializedUser \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser */
         $this->session->remove(static::SESSION_LOGIN_AS);
         $freshUser = $this->customerUserRepository->getCustomerUserById($unserializedUser->getId());
 

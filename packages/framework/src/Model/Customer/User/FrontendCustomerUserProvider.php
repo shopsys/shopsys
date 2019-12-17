@@ -1,9 +1,11 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class FrontendCustomerUserProvider implements UserProviderInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
      */
     protected $customerUserRepository;
 
@@ -22,7 +24,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
     protected $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository $customerUserRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(CustomerUserRepository $customerUserRepository, Domain $domain)
@@ -34,7 +36,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
     /**
      * @param string $email
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function loadUserByUsername($email)
     {
@@ -54,7 +56,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function refreshUser(UserInterface $userInterface)
     {
@@ -64,7 +66,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
             throw new \Symfony\Component\Security\Core\Exception\UnsupportedUserException($message);
         }
 
-        /** @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser */
+        /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $userInterface;
 
         if ($customerUser instanceof TimelimitLoginInterface) {

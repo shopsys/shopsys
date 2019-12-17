@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 interface OrderFactoryInterface
 {
@@ -10,7 +10,7 @@ interface OrderFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */

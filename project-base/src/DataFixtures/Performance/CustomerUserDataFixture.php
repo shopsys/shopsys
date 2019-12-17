@@ -11,9 +11,9 @@ use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -42,12 +42,12 @@ class CustomerUserDataFixture
     private $sqlLoggerFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
     private $customerUserEditFacade;
 
     /**
-     * @var \App\Model\Customer\CustomerUserDataFactory
+     * @var \App\Model\Customer\User\CustomerUserDataFactory
      */
     private $customerUserDataFactory;
 
@@ -67,7 +67,7 @@ class CustomerUserDataFixture
     private $progressBarFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      */
     private $customerUserUpdateDataFactory;
 
@@ -81,12 +81,12 @@ class CustomerUserDataFixture
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerUserEditFacade
-     * @param \App\Model\Customer\CustomerUserDataFactory $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserEditFacade
+     * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      */
     public function __construct(
@@ -149,13 +149,13 @@ class CustomerUserDataFixture
      * @param int $domainId
      * @param int $userNumber
      *
-     * @return \App\Model\Customer\CustomerUser
+     * @return \App\Model\Customer\User\CustomerUser
      */
     private function createCustomerCustomerOnDomain($domainId, $userNumber)
     {
         $customerUserUpdateData = $this->getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber);
 
-        /** @var \App\Model\Customer\CustomerUser $customerUser */
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserEditFacade->create($customerUserUpdateData);
 
         return $customerUser;
@@ -164,7 +164,7 @@ class CustomerUserDataFixture
     /**
      * @param int $domainId
      * @param int $userNumber
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     private function getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber)
     {

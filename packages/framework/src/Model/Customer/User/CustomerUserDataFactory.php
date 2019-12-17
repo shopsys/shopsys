@@ -1,7 +1,11 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
@@ -20,7 +24,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
      */
     public function create(): CustomerUserData
     {
@@ -30,7 +34,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
      */
     public function createForCustomer(Customer $customer): CustomerUserData
     {
@@ -42,7 +46,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     /**
      * @param int $domainId
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
      */
     public function createForDomainId(int $domainId): CustomerUserData
     {
@@ -53,7 +57,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @param int $domainId
      */
     protected function fillForDomainId(CustomerUserData $customerUserData, int $domainId)
@@ -63,9 +67,9 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
      */
     public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserData
     {
@@ -76,8 +80,8 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
     protected function fillFromUser(CustomerUserData $customerUserData, CustomerUser $customerUser)
     {

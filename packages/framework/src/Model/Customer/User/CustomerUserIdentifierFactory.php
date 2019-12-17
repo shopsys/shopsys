@@ -1,13 +1,15 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CustomerUserIdentifierFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
     protected $currentCustomerUser;
 
@@ -17,7 +19,7 @@ class CustomerUserIdentifierFactory
     protected $session;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
     public function __construct(CurrentCustomerUser $currentCustomerUser, SessionInterface $session)
@@ -27,7 +29,7 @@ class CustomerUserIdentifierFactory
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
      */
     public function get()
     {
@@ -47,7 +49,7 @@ class CustomerUserIdentifierFactory
     /**
      * @param string $cartIdentifier
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserIdentifier
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
      */
     public function getOnlyWithCartIdentifier($cartIdentifier)
     {

@@ -1,7 +1,8 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -43,7 +44,7 @@ class CurrentCustomerUser
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function findCurrentCustomerUser()
     {

@@ -1,10 +1,13 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Serializable;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -115,7 +118,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     protected $telephone;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
     public function __construct(
@@ -138,7 +141,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function edit(CustomerUserData $customerUserData)
     {

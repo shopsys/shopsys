@@ -1,8 +1,18 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInterface
@@ -18,7 +28,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     protected $deliveryAddressDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface
      */
     protected $customerUserDataFactory;
 
@@ -30,7 +40,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      */
     public function __construct(
@@ -46,7 +56,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     public function create(): CustomerUserUpdateData
     {
@@ -58,9 +68,9 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     public function createFromCustomerUser(CustomerUser $customerUser): CustomerUserUpdateData
     {
@@ -74,7 +84,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      */
@@ -88,10 +98,10 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     public function createAmendedByOrder(CustomerUser $customerUser, Order $order): CustomerUserUpdateData
     {

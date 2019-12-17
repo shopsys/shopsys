@@ -6,7 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 
 /**
@@ -32,9 +32,9 @@ class Cart
     protected $cartIdentifier;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      *
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\CustomerUser")
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
      * @ORM\JoinColumn(name="customer_user_id", referencedColumnName="id", nullable = true, onDelete="CASCADE")
      */
     protected $customerUser;
@@ -61,7 +61,7 @@ class Cart
 
     /**
      * @param string $cartIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function __construct(string $cartIdentifier, ?CustomerUser $customerUser = null)
     {

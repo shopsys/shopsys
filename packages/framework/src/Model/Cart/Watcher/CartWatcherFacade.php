@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Watcher;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 
 class CartWatcherFacade
 {
@@ -25,7 +25,7 @@ class CartWatcherFacade
     protected $flashMessageSender;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
     protected $currentCustomerUser;
 
@@ -33,7 +33,7 @@ class CartWatcherFacade
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender $flashMessageSender
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         FlashMessageSender $flashMessageSender,

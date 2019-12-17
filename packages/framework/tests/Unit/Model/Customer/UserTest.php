@@ -8,8 +8,8 @@ use ReflectionClass;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 
 class UserTest extends TestCase
 {
@@ -109,7 +109,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $propertyName
      * @param mixed $value
      */

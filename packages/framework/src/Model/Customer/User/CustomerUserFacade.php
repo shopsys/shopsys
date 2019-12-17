@@ -1,9 +1,23 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserFacade
@@ -14,12 +28,12 @@ class CustomerUserFacade
     protected $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
      */
     protected $customerUserRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      */
     protected $customerUserUpdateDataFactory;
 
@@ -44,12 +58,12 @@ class CustomerUserFacade
     protected $billingAddressDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface
      */
     protected $customerUserFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade
      */
     protected $customerUserPasswordFacade;
 
@@ -60,14 +74,14 @@ class CustomerUserFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserRepository $customerUserRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface $deliveryAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFactoryInterface $customerUserFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade $customerUserPasswordFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      */
     public function __construct(
@@ -97,7 +111,7 @@ class CustomerUserFacade
     /**
      * @param int $customerUserId
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function getCustomerUserById($customerUserId)
     {
@@ -107,7 +121,8 @@ class CustomerUserFacade
     /**
      * @param string $email
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     *
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function findCustomerUserByEmailAndDomain($email, $domainId)
     {
@@ -115,9 +130,9 @@ class CustomerUserFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function register(CustomerUserData $customerUserData)
     {
@@ -135,9 +150,9 @@ class CustomerUserFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData $customerUserUpdateData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function create(CustomerUserUpdateData $customerUserUpdateData)
     {
@@ -158,11 +173,11 @@ class CustomerUserFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null $deliveryAddressData
      *
+     *@return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      *@throws \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
      */
     protected function createCustomerUser(
         Customer $customer,
@@ -186,9 +201,9 @@ class CustomerUserFacade
 
     /**
      * @param int $customerUserId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData $customerUserUpdateData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     protected function edit($customerUserId, CustomerUserUpdateData $customerUserUpdateData)
     {
@@ -208,7 +223,7 @@ class CustomerUserFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
      */
     protected function editDeliveryAddress(CustomerUser $customerUser, DeliveryAddressData $deliveryAddressData): void
@@ -228,9 +243,9 @@ class CustomerUserFacade
 
     /**
      * @param int $customerUserId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData $customerUserUpdateData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function editByAdmin($customerUserId, CustomerUserUpdateData $customerUserUpdateData)
     {
@@ -245,9 +260,9 @@ class CustomerUserFacade
 
     /**
      * @param int $customerUserId
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData $customerUserUpdateData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function editByCustomer($customerUserId, CustomerUserUpdateData $customerUserUpdateData)
     {
@@ -270,7 +285,7 @@ class CustomerUserFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
     public function amendUserDataFromOrder(CustomerUser $customerUser, Order $order)
@@ -285,7 +300,7 @@ class CustomerUserFacade
 
     /**
      * @param string $email
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
     protected function setEmail(string $email, CustomerUser $customerUser): void
     {

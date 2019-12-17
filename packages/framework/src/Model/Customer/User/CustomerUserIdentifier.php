@@ -1,6 +1,8 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
+
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUserIdentifier
 {
@@ -10,19 +12,19 @@ class CustomerUserIdentifier
     protected $cartIdentifier = '';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     protected $customerUser;
 
     /**
      * @param string $cartIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function __construct($cartIdentifier, ?CustomerUser $customerUser = null)
     {
         if ($cartIdentifier === '' && $customerUser === null) {
             $message = 'Can not be created empty CustomerUserIdentifier';
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerIdentifierException($message);
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerUserIdentifierException($message);
         }
 
         $this->customerUser = $customerUser;
@@ -40,7 +42,7 @@ class CustomerUserIdentifier
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function getCustomerUser()
     {

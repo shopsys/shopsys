@@ -4,6 +4,6 @@ namespace Shopsys\FrameworkBundle\Model\Customer\Exception;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class UserNotFoundException extends NotFoundHttpException implements CustomerUserException
+class CustomerUserNotFoundException extends NotFoundHttpException implements CustomerUserException
 {
 }

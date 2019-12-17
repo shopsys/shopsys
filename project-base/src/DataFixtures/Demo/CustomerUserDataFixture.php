@@ -13,12 +13,12 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 
 class CustomerUserDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -48,7 +48,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     protected const KEY_ADDRESS_LAST_NAME = 'lastName';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
     protected $customerUserFacade;
 
@@ -73,12 +73,12 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      */
     protected $customerUserUpdateDataFactory;
 
     /**
-     * @var \App\Model\Customer\CustomerUserDataFactory
+     * @var \App\Model\Customer\User\CustomerUserDataFactory
      */
     protected $customerUserDataFactory;
 
@@ -98,13 +98,13 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     protected $customerFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
-     * @param \App\Model\Customer\CustomerUserDataFactory $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
@@ -163,7 +163,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      * @param int $domainId
      * @param array $data
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     protected function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData
     {
@@ -457,7 +457,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @param \App\Model\Customer\CustomerUser $customer
+     * @param \App\Model\Customer\User\CustomerUser $customer
      */
     protected function resetPassword(CustomerUser $customer)
     {

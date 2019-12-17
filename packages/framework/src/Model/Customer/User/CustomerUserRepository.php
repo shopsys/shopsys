@@ -1,10 +1,12 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Customer;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
@@ -35,7 +37,7 @@ class CustomerUserRepository
      * @param string $email
      * @param int $domainId
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function findCustomerUserByEmailAndDomain($email, $domainId)
     {
@@ -49,14 +51,14 @@ class CustomerUserRepository
      * @param string $email
      * @param int $domainId
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function getCustomerUserByEmailAndDomain($email, $domainId)
     {
         $customerUser = $this->findCustomerUserByEmailAndDomain($email, $domainId);
 
         if ($customerUser === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundByEmailAndDomainException(
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException(
                 $email,
                 $domainId
             );
@@ -68,13 +70,13 @@ class CustomerUserRepository
     /**
      * @param int $id
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function getCustomerUserById($id)
     {
         $customerUser = $this->findById($id);
         if ($customerUser === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException($id);
+            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException($id);
         }
         return $customerUser;
     }
@@ -82,7 +84,7 @@ class CustomerUserRepository
     /**
      * @param int $id
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function findById($id)
     {
@@ -93,7 +95,7 @@ class CustomerUserRepository
      * @param int $id
      * @param string $loginToken
      *
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUser|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
     public function findByIdAndLoginToken($id, $loginToken)
     {

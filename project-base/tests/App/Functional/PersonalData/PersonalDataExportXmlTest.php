@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\PersonalData;
 
-use App\Model\Customer\CustomerUser;
-use App\Model\Customer\CustomerUserData;
+use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\CustomerUserData;
 use App\Model\Order\Order;
 use App\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -126,7 +126,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      *
-     * @return \App\Model\Customer\CustomerUser
+     * @return \App\Model\Customer\User\CustomerUser
      */
     private function createCustomerUser(DeliveryAddress $deliveryAddress, Customer $customer)
     {

@@ -4,10 +4,10 @@ namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFactory;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 
@@ -31,7 +31,7 @@ class UserFactoryTest extends TestCase
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFactory
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory
      */
     private function getUserFactory(): CustomerUserFactory
     {

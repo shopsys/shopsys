@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\Mail;
 
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTypeInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
@@ -78,7 +78,7 @@ class ResetPasswordMail implements MailTypeInterface, MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      *
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
@@ -97,7 +97,7 @@ class ResetPasswordMail implements MailTypeInterface, MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      *
      * @return string[]
      */
@@ -110,7 +110,7 @@ class ResetPasswordMail implements MailTypeInterface, MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      *
      * @return string
      */
@@ -131,7 +131,7 @@ class ResetPasswordMail implements MailTypeInterface, MessageFactoryInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      *
      * @return string[]
      */

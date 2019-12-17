@@ -16,8 +16,8 @@ use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -88,7 +88,7 @@ class OrderDataFixture
     private $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
     private $customerUserFacade;
 
@@ -112,7 +112,7 @@ class OrderDataFixture
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      */
@@ -193,7 +193,7 @@ class OrderDataFixture
     }
 
     /**
-     * @param \App\Model\Customer\CustomerUser $customerUser
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
      *
      * @return \App\Model\Order\OrderData
      */
@@ -296,7 +296,7 @@ class OrderDataFixture
 
     private function loadPerformanceUserIdsOnFirstDomain()
     {
-        /** @var \App\Model\Customer\CustomerUser $firstPerformanceUser */
+        /** @var \App\Model\Customer\User\CustomerUser $firstPerformanceUser */
         $firstPerformanceUser = $this->persistentReferenceFacade->getReference(
             PerformanceUserDataFixture::FIRST_PERFORMANCE_USER
         );
@@ -313,7 +313,7 @@ class OrderDataFixture
     }
 
     /**
-     * @return \App\Model\Customer\CustomerUser|null
+     * @return \App\Model\Customer\User\CustomerUser|null
      */
     private function getRandomCustomerUserOrNull()
     {
@@ -321,7 +321,7 @@ class OrderDataFixture
 
         if ($shouldBeRegisteredUser) {
             $customerUserId = $this->faker->randomElement($this->performanceUserIds);
-            /** @var \App\Model\Customer\CustomerUser $customerUser */
+            /** @var \App\Model\Customer\User\CustomerUser $customerUser */
             $customerUser = $this->customerUserFacade->getCustomerUserById($customerUserId);
 
             return $customerUser;

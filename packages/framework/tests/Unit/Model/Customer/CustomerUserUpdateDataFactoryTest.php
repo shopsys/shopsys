@@ -12,10 +12,10 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactory;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserData;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserDataFactory;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
@@ -223,7 +223,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\CustomerUserUpdateDataFactory
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
      */
     private function getCustomerUserUpdateDataFactory(): CustomerUserUpdateDataFactory
     {
