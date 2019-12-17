@@ -15,6 +15,8 @@ Encore
     // product entry?
     // cart entry?
     .addEntry('styleguide', './assets/js/styleguide/styleguide.js')
+    .addEntry('admin', '../packages/framework/assets/js/admin/index.js')
+    .addEntry('jquery', '../packages/framework/assets/js/admin/jquery.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction())
@@ -26,4 +28,10 @@ Encore
     .enableBuildNotifications()
 ;
 
-module.exports = Encore.getWebpackConfig();
+const config = Encore.getWebpackConfig();
+
+config.resolve.alias = {
+    'jquery-ui': 'jquery-ui/ui/widgets/'
+};
+
+module.exports = config;

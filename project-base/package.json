@@ -35,6 +35,7 @@
     },
     "dependencies": {
         "codemirror": "^5.49.2",
+        "framework": "file:../packages/framework",
         "jquery": "^3.4.1",
         "jquery-ui": "^1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",

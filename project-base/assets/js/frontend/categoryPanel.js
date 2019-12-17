@@ -15,8 +15,10 @@ export default class CategoryPanel {
 
         if (isOpen) {
             $categoryList.slideUp('fast');
+            $categoryItem.removeClass('active');
         } else if ($categoryList.length > 0) {
             $categoryList.slideDown('fast');
+            $categoryItem.addClass('active');
         } else {
             this.loadCategoryItemContent($categoryItem, $categoryCollapseControl.data('url'));
         }

@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import 'jquery-ui/ui/widgets/slider';
+import 'jquery-ui/slider';
 
 import { parseNumber, formatDecimalNumber } from '../copyFromFw/common/number';
 import Register from '../copyFromFw/register';

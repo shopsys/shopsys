@@ -5,45 +5,15 @@
         <meta name="robots" content="noindex, nofollow">
 
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/styles/index_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/flick/jquery-ui.css') }}">
 
-        {# bootstrap/tooltip.js must be imported before bootstrap/popover.js #}
+        {{ encore_entry_script_tags('jquery') }}
+
         {{ importJavascripts([
-            'bundles/bmatznerjquery/js/jquery.min.js',
-            'bundles/bmatznerjquery/js/jquery-migrate.js',
-            'bundles/bmatznerjqueryui/js/minified/jquery-ui.min.js',
-            'common/components/filterAllNodes.js',
-            'common/components/keyCodes.js',
-            'common/components/escape.js',
-            'common/register.js',
-            'common/components/hybridTabs.js',
-            'common/components/tabs.js',
-            'common/components/timeout.js',
-            'common/components/toggleElement.js',
-            'common/plugins/BazingaJsTranslationBundle.translator.js',
-            'bundles/fpjsformvalidator/js/fp_js_validator.js',
-            'common/loaderOverlay.js',
-            'common/ajax.js',
-            'common/plugins/jquery.fix.clone.js',
-            'common/plugins/jquery.magnific-popup.js',
-            'common/plugins/jquery.ui.datepicker-cs.js',
-            'common/plugins/fastclick.js',
-            'common/validation/*.js',
-            'common/checkboxToggle.js',
-            'common/magnificPopup.custom.js',
-            'common/number.js',
-            'common/translator.js',
-            'common/bootstrap/tooltip.js',
-            'common/bootstrap/*.js',
-            'common/components/datePicker.js',
-            'common/components/tooltip.js',
-            'admin/plugins/*.js',
-            'admin/validation/form/*.js',
-            'admin/validation/*.js',
-            'admin/components/*.js',
-            'admin/*.js',
-            'custom_admin/*.js',
+            'bundles/fpjsformvalidator/js/fp_js_validator.js'
         ]) }}
+
+        {{ encore_entry_script_tags('admin') }}
+
         {{ js_validator_config() }}
         {{ init_js_validation() }}
 
@@ -58,9 +28,5 @@
 
     <body>
         {% block html_body %}{% endblock %}
-
-        {% if app.environment == 'dev' %}
-            <script async src="//localhost:35729/livereload.js"></script>
-        {% endif %}
     </body>
 </html>
