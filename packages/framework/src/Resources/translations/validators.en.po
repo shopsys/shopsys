@@ -61,6 +61,9 @@ msgstr ""
 msgid "File extension {{ value }} is too long. It should have {{ limit }} character or less."
 msgstr ""
 
+msgid "File name cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "First name cannot be longer then {{ limit }} characters"
 msgstr "First name cannot be longer than {{ limit }} characters"
 

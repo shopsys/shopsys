@@ -25,6 +25,7 @@
         "ext-ctype": "*",
         "ext-curl": "*",
         "ext-dom": "*",
+        "ext-fileinfo": "*",
         "ext-filter": "*",
         "ext-gd": "*",
         "ext-iconv": "*",

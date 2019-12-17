@@ -93,6 +93,7 @@
             items[id] = new Shopsys.fileUpload.FileItem(self, $uploadedfile);
             items[id].init();
             items[id].setLabel(file.name, file.size);
+            items[id].setName(file.name.split('.').slice(0, -1).join('.'));
             $uploadedFiles.append($uploadedfile);
         };
 

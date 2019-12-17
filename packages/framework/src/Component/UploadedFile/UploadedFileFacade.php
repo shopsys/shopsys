@@ -77,18 +77,23 @@ class UploadedFileFacade
         $uploadedFileTypeConfig = $uploadedFileEntityConfig->getTypeByName($type);
 
         $uploadedFiles = $uploadedFileData->uploadedFiles;
+        $uploadedFilenames = $uploadedFileData->uploadedFilenames;
         $orderedFiles = $uploadedFileData->orderedFiles;
 
+        $this->updateFilesOrder($orderedFiles);
+        $this->updateFilenamesAndSlugs($uploadedFileData->currentFilenamesIndexedById);
+
         if ($uploadedFileTypeConfig->isMultiple()) {
-            $this->updateFilesOrder($orderedFiles);
-            $this->uploadFiles($entity, $uploadedFileEntityConfig->getEntityName(), $type, $uploadedFiles, count($orderedFiles));
+            $this->uploadFiles($entity, $uploadedFileEntityConfig->getEntityName(), $type, $uploadedFiles, $uploadedFilenames, count($orderedFiles));
         } else {
             if (count($orderedFiles) > 1) {
                 array_shift($orderedFiles);
                 $this->deleteFiles($entity, $orderedFiles);
             }
 
-            $this->uploadFile($entity, $uploadedFileEntityConfig->getEntityName(), $type, $uploadedFiles);
+            $this->deleteAllUploadedFilesByEntity($entity);
+
+            $this->uploadFile($entity, $uploadedFileEntityConfig->getEntityName(), $type, array_pop($uploadedFiles), array_pop($uploadedFilenames));
         }
 
         $this->deleteFiles($entity, $uploadedFileData->filesToDelete);
@@ -98,25 +103,23 @@ class UploadedFileFacade
      * @param object $entity
      * @param string $entityName
      * @param string $type
-     * @param array $temporaryFilenames
+     * @param string $temporaryFilename
+     * @param string $uploadedFilename
      */
-    protected function uploadFile(object $entity, string $entityName, string $type, array $temporaryFilenames): void
+    protected function uploadFile(object $entity, string $entityName, string $type, string $temporaryFilename, string $uploadedFilename): void
     {
-        if (count($temporaryFilenames) > 0) {
-            $entityId = $this->getEntityId($entity);
+        $entityId = $this->getEntityId($entity);
 
-            $this->deleteAllUploadedFilesByEntity($entity);
+        $newUploadedFile = $this->uploadedFileFactory->create(
+            $entityName,
+            $entityId,
+            $type,
+            $temporaryFilename,
+            $uploadedFilename
+        );
 
-            $newUploadedFile = $this->uploadedFileFactory->create(
-                $entityName,
-                $entityId,
-                $type,
-                array_pop($temporaryFilenames)
-            );
-
-            $this->em->persist($newUploadedFile);
-            $this->em->flush($newUploadedFile);
-        }
+        $this->em->persist($newUploadedFile);
+        $this->em->flush($newUploadedFile);
     }
 
     /**
@@ -124,13 +127,14 @@ class UploadedFileFacade
      * @param string $entityName
      * @param string $type
      * @param array $temporaryFilenames
+     * @param array $uploadedFilenames
      * @param int $existingFilesCount
      */
-    protected function uploadFiles(object $entity, string $entityName, string $type, array $temporaryFilenames, int $existingFilesCount): void
+    protected function uploadFiles(object $entity, string $entityName, string $type, array $temporaryFilenames, array $uploadedFilenames, int $existingFilesCount): void
     {
         if (count($temporaryFilenames) > 0) {
             $entityId = $this->getEntityId($entity);
-            $files = $this->uploadedFileFactory->createMultiple($entityName, $entityId, $type, $temporaryFilenames, $existingFilesCount);
+            $files = $this->uploadedFileFactory->createMultiple($entityName, $entityId, $type, $temporaryFilenames, $uploadedFilenames, $existingFilesCount);
 
             foreach ($files as $file) {
                 $this->em->persist($file);
@@ -254,5 +258,30 @@ class UploadedFileFacade
         }
 
         $this->em->flush($uploadedFiles);
+    }
+
+    /**
+     * @param array $fileNamesIndexedByFileId
+     */
+    protected function updateFilenamesAndSlugs(array $fileNamesIndexedByFileId): void
+    {
+        foreach ($fileNamesIndexedByFileId as $fileId => $fileName) {
+            $file = $this->getById($fileId);
+
+            $file->setNameAndSlug($fileName);
+
+            $this->em->flush($file);
+        }
+    }
+
+    /**
+     * @param int $uploadedFileId
+     * @param string $uploadedFileSlug
+     * @param string $uploadedFileExtension
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
+     */
+    public function getByIdSlugAndExtension(int $uploadedFileId, string $uploadedFileSlug, string $uploadedFileExtension): UploadedFile
+    {
+        return $this->uploadedFileRepository->getByIdSlugAndExtension($uploadedFileId, $uploadedFileSlug, $uploadedFileExtension);
     }
 }

@@ -13,7 +13,6 @@
                             <div class="list-files__item__in">
                                 <div class="list-files__item__file js-file-upload-preview{% if isRemoved %} list-files__item__in--removed{% endif %}">
                                     <a href="{{ uploadedFileUrl(file) }}" target="_blank">
-                                        <div>{{ file.filename }}</div>
                                         {{ uploadedFilePreview(file) }}
                                     </a>
                                 </div>
@@ -35,6 +34,7 @@
                                 </span>
                             </div>
                             {{ form_widget(fileForm, { full_name: form.orderedFiles.vars.full_name ~ '[]'}) }}
+                            {{ form_widget(form.currentFilenamesIndexedById.children[fileForm.vars.value]) }}
                         </li>
                     {% endfor %}
                 </ul>

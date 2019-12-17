@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
@@ -207,21 +208,12 @@ class MailTemplateFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @return string[]
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $attachment
+     * @return string
      */
-    public function getMailTemplateAttachmentsFilepaths(MailTemplate $mailTemplate)
+    public function getMailTemplateAttachmentFilepath(UploadedFile $attachment)
     {
-        $filepaths = [];
-        $uploadedFiles = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
-
-        foreach ($uploadedFiles as $uploadedFile) {
-            $temporaryFilePath = $this->mailTemplateAttachmentFilepathProvider->getTemporaryFilepath($uploadedFile);
-
-            $filepaths[] = $temporaryFilePath;
-        }
-
-        return $filepaths;
+        return $this->mailTemplateAttachmentFilepathProvider->getTemporaryFilepath($attachment);
     }
 
     /**

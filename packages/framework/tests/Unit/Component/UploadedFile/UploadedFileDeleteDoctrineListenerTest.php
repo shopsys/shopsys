@@ -15,7 +15,7 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
 {
     public function testPreRemoveDeleteFile()
     {
-        $uploadedFile = new UploadedFile('entityName', 1, 'default', 'dummy.txt', 0);
+        $uploadedFile = new UploadedFile('entityName', 1, 'default', 'dummy.txt', 'dummy.txt', 0);
 
         $uploadedFileConfig = new UploadedFileConfig([]);
 
@@ -39,7 +39,6 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
     public function testPreRemoveDeleteUploadedFile()
     {
         $entity = new Dummy();
-        $uploadedFile = new UploadedFile('entitzId', 1, 'default', 'dummy.txt', 0);
 
         $uploadedFileTypeConfig = new UploadedFileTypeConfig('default', false);
 

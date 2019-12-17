@@ -2,22 +2,22 @@
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 
 class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface
      */
-    protected $uploadedFileFacade;
+    protected $uploadedFileDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface $uploadedFileDataFactory
      */
-    public function __construct(UploadedFileFacade $uploadedFileFacade)
+    public function __construct(UploadedFileDataFactoryInterface $uploadedFileDataFactory)
     {
-        $this->uploadedFileFacade = $uploadedFileFacade;
+        $this->uploadedFileDataFactory = $uploadedFileDataFactory;
     }
 
     /**
@@ -25,7 +25,10 @@ class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
      */
     public function create(): MailTemplateData
     {
-        return new MailTemplateData();
+        $mailTemplateData = new MailTemplateData();
+        $mailTemplateData->attachments = $this->uploadedFileDataFactory->create();
+
+        return $mailTemplateData;
     }
 
     /**
@@ -36,7 +39,7 @@ class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
     {
         $mailTemplateData = new MailTemplateData();
         $this->fillFromMailTemplate($mailTemplateData, $mailTemplate);
-        $mailTemplateData->attachments->orderedFiles = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
+        $mailTemplateData->attachments = $this->uploadedFileDataFactory->createByEntity($mailTemplate);
 
         return $mailTemplateData;
     }

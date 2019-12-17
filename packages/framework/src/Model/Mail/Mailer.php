@@ -20,13 +20,20 @@ class Mailer
     protected $swiftMailer;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade
+     */
+    protected $mailTemplateFacade;
+
+    /**
      * @param \Swift_Mailer $swiftMailer
      * @param \Swift_Transport $realSwiftTransport
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      */
-    public function __construct(Swift_Mailer $swiftMailer, Swift_Transport $realSwiftTransport)
+    public function __construct(Swift_Mailer $swiftMailer, Swift_Transport $realSwiftTransport, MailTemplateFacade $mailTemplateFacade)
     {
         $this->swiftMailer = $swiftMailer;
         $this->realSwiftTransport = $realSwiftTransport;
+        $this->mailTemplateFacade = $mailTemplateFacade;
     }
 
     public function flushSpoolQueue()
@@ -89,8 +96,11 @@ class Mailer
         $message->setContentType('text/plain; charset=UTF-8');
         $message->setBody(htmlspecialchars_decode(strip_tags($body), ENT_QUOTES), 'text/plain');
         $message->addPart($body, 'text/html');
-        foreach ($messageData->attachmentsFilepaths as $attachmentFilepath) {
-            $message->attach(Swift_Attachment::fromPath($attachmentFilepath));
+
+        foreach ($messageData->attachments as $attachment) {
+            $swiftAttachment = Swift_Attachment::fromPath($this->mailTemplateFacade->getMailTemplateAttachmentFilepath($attachment));
+            $swiftAttachment->setFilename($attachment->getNameWithExtension());
+            $message->attach($swiftAttachment);
         }
 
         return $message;

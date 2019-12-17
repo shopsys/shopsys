@@ -81,4 +81,34 @@ class UploadedFileRepository
 
         return $uploadedFile;
     }
+
+    /**
+     * @param int $uploadedFileId
+     * @param string $uploadedFileSlug
+     * @param string $uploadedFileExtension
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
+     */
+    public function getByIdSlugAndExtension(int $uploadedFileId, string $uploadedFileSlug, string $uploadedFileExtension): UploadedFile
+    {
+        $uploadedFile = $this->getUploadedFileRepository()->findOneBy(
+            [
+                'id' => $uploadedFileId,
+                'slug' => $uploadedFileSlug,
+                'extension' => $uploadedFileExtension,
+            ]
+        );
+
+        if ($uploadedFile === null) {
+            throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException(
+                sprintf(
+                    'UploadedFile with ID "%s", slug "%s" and extension "%s" does not exist.',
+                    $uploadedFileId,
+                    $uploadedFileSlug,
+                    $uploadedFileExtension
+                )
+            );
+        }
+
+        return $uploadedFile;
+    }
 }

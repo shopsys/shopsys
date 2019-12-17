@@ -12,9 +12,19 @@ class UploadedFileData
     public $uploadedFiles = [];
 
     /**
+     * @var string[]
+     */
+    public $uploadedFilenames = [];
+
+    /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     public $filesToDelete = [];
+
+    /**
+     * @var string[]
+     */
+    public $currentFilenamesIndexedById = [];
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]

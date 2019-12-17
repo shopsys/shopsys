@@ -397,6 +397,8 @@ class RouteConfigCustomization
                 $config->addExtraRequestDataSet('Check personal data XML export with right hash')
                     ->setParameter('hash', $personalDataAccessRequest->getHash())
                     ->setExpectedStatusCode(200);
+            })->customizeByRouteName(['front_download_uploaded_file'], function (RouteConfig $config) {
+                $config->skipRoute('Downloading uploaded files is not tested.');
             });
     }
 

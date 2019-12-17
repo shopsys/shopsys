@@ -14,10 +14,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 
 class FileUploadType extends AbstractType
 {
@@ -93,6 +95,17 @@ class FileUploadType extends AbstractType
                     'required' => false,
                     'entry_type' => HiddenType::class,
                 ])->addModelTransformer($this->filesIdsToFilesTransformer)
+            )
+            ->add(
+                $builder->create('currentFilenamesIndexedById', CollectionType::class, [
+                    'required' => false,
+                    'entry_type' => TextType::class,
+                    'entry_options' => [
+                        'constraints' => [
+                            new Constraints\Length(['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']),
+                        ],
+                    ],
+                ])
             )
             ->add('filesToDelete', ChoiceType::class, [
                 'required' => false,

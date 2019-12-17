@@ -11,6 +11,7 @@ interface UploadedFileFactoryInterface
      * @param int $entityId
      * @param string $type
      * @param string $temporaryFilename
+     * @param string $uploadedFilename
      * @param int $position
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
@@ -19,6 +20,7 @@ interface UploadedFileFactoryInterface
         int $entityId,
         string $type,
         string $temporaryFilename,
+        string $uploadedFilename,
         int $position = 0
     ): UploadedFile;
 
@@ -27,6 +29,7 @@ interface UploadedFileFactoryInterface
      * @param int $entityId
      * @param string $type
      * @param array $temporaryFilenames
+     * @param array $uploadedFilenames
      * @param int $existingFilesCount
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
@@ -35,6 +38,7 @@ interface UploadedFileFactoryInterface
         int $entityId,
         string $type,
         array $temporaryFilenames,
+        array $uploadedFilenames,
         int $existingFilesCount
     ): array;
 }

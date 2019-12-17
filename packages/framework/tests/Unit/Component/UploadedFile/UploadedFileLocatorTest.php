@@ -4,7 +4,7 @@ namespace Tests\FrameworkBundle\Unit\Component\UploadedFile;
 
 use League\Flysystem\FilesystemInterface;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
 
@@ -32,16 +32,15 @@ class UploadedFileLocatorTest extends TestCase
         $uploadedFileMock->method('getFilename')->willReturn('non-existent.txt');
         $uploadedFileMock->method('getEntityName')->willReturn('entityName');
 
-        $uploadedFileLocator = $this->createUploadedFileLocator('', false);
+        $uploadedFileLocator = $this->createUploadedFileLocator(false);
         $this->assertFalse($uploadedFileLocator->fileExists($uploadedFileMock));
     }
 
     public function testGetAbsoluteFilePath()
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
-        $uploadedFileUrlPrefix = '';
 
-        $uploadedFileLocator = $this->createUploadedFileLocator($uploadedFileUrlPrefix);
+        $uploadedFileLocator = $this->createUploadedFileLocator();
         $this->assertSame(
             $uploadedFileDir . 'entityName',
             $uploadedFileLocator->getAbsoluteFilePath('entityName')
@@ -81,35 +80,22 @@ class UploadedFileLocatorTest extends TestCase
         );
     }
 
-    public function testGetUploadedFileUrl()
-    {
-        $domainConfig = new DomainConfig(1, 'http://www.example.com', 'example domain', 'en');
-
-        $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->setMethods(['getFilename', 'getEntityName'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $uploadedFileMock->method('getFilename')->willReturn('dummy.txt');
-        $uploadedFileMock->method('getEntityName')->willReturn('entityName');
-
-        $uploadedFileLocator = $this->createUploadedFileLocator('/assets/');
-        $this->assertSame(
-            'http://www.example.com/assets/entityName/dummy.txt',
-            $uploadedFileLocator->getUploadedFileUrl($domainConfig, $uploadedFileMock)
-        );
-    }
-
     /**
-     * @param string $uploadedFileUrlPrefix
      * @param bool $has
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
      */
-    private function createUploadedFileLocator($uploadedFileUrlPrefix = '', $has = true)
+    private function createUploadedFileLocator($has = true)
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
-        $filesystemMock = $this->createMock(FilesystemInterface::class);
 
+        $filesystemMock = $this->createMock(FilesystemInterface::class);
         $filesystemMock->method('has')->willReturn($has);
-        return new UploadedFileLocator($uploadedFileDir, $uploadedFileUrlPrefix, $filesystemMock);
+
+        $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)
+            ->setMethods(['__construct', 'getRouter'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return new UploadedFileLocator($uploadedFileDir, $filesystemMock, $domainRouterFactoryMock);
     }
 }

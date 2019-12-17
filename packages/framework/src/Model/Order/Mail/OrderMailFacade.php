@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Order\Mail;
 
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -25,18 +26,26 @@ class OrderMailFacade
     protected $orderMail;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
+     */
+    protected $uploadedFileFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail $orderMail
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
         Mailer $mailer,
         MailTemplateFacade $mailTemplateFacade,
-        OrderMail $orderMail
+        OrderMail $orderMail,
+        UploadedFileFacade $uploadedFileFacade
     ) {
         $this->mailer = $mailer;
         $this->mailTemplateFacade = $mailTemplateFacade;
         $this->orderMail = $orderMail;
+        $this->uploadedFileFacade = $uploadedFileFacade;
     }
 
     /**
@@ -46,7 +55,7 @@ class OrderMailFacade
     {
         $mailTemplate = $this->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
         $messageData = $this->orderMail->createMessage($mailTemplate, $order);
-        $messageData->attachmentsFilepaths = $this->mailTemplateFacade->getMailTemplateAttachmentsFilepaths($mailTemplate);
+        $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
         $this->mailer->send($messageData);
     }
 

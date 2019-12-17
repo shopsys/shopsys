@@ -165,3 +165,10 @@ front_login_window_form:
     defaults:
         _controller: App\Controller\Front\LoginController:windowFormAction
     methods: [POST]
+
+front_download_uploaded_file:
+    path: /file/{uploadedFileId}/{uploadedFilename}
+    defaults: { _controller: App\Controller\Front\UploadedFileController:downloadAction }
+    methods: [GET]
+    requirements:
+        uploadedFileId: \d+
