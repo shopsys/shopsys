@@ -3,7 +3,6 @@ There is a new base html layout with horizontal menu and product filter placed i
 
 **Notice: If you have your custom design you can skip this all task about twig files**
 
-
 - remove left panel web layout and add horizontal menu ([#1540](https://github.com/shopsys/shopsys/pull/1540))
     - because of removing left panel, we also removed unnecessary advert position called `leftSidebar`. You can remove it by creating migration and update data fixtures. If you want to remove it, please make sure that all stuff linked to old position is moved to a new position.
     - because we don't have left panel on frontend anymore we have to center banner slider (or change its width to 100% - don't forget to change image size) [src/Resources/styles/front/common/components/box/slider.less](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/components/box/slider.less)
@@ -97,9 +96,9 @@ There is a new base html layout with horizontal menu and product filter placed i
 
         Because we removed panel, we have to wrap all content to `.web__line` and `.web__container` elements
         ```diff
-        -    <div class="web__line">
+        +    <div class="web__line">
         +        <div class="web__container">
-        +            ... old content ...
+                     ... old content ...
         +        </div>
         +    </div>
         ```
@@ -139,9 +138,10 @@ There is a new base html layout with horizontal menu and product filter placed i
             {% if categoriesWithLazyLoadedVisibleChildren|length > 0 %}
           -     <ul class="js-category-list list-menu dont-print {% if isFirstLevel %}list-menu--root{% endif %}" {% if isFirstLevel %}id="js-categories"{% endif %}>
 
-          +     <ul class="js-category-list list-menu dont-print {% if isFirstLevel %}list-menu--root{% endif %}
-          +     {% if categoriesWithLazyLoadedVisibleChildren[0].category.level > 2 %}list-menu--dropdown{% endif %}
-          +     " {% if isFirstLevel %}id="js-categories"{% endif %}>
+          +     <ul class="js-category-list list-menu dont-print
+          +         {% if isFirstLevel %} list-menu--root{% endif %}
+          +         {% if categoriesWithLazyLoadedVisibleChildren[0].category.level > 2 %} list-menu--dropdown{% endif %}"
+          +         {% if isFirstLevel %}id="js-categories"{% endif %}>
           ```
           ```diff
             {{ categoryWithLazyLoadedVisibleChildren.category.name }}

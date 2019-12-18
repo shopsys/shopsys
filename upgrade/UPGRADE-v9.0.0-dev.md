@@ -163,6 +163,7 @@ There you can find links to upgrade notes for other versions too.
 
   There are few steps need to be done, to make contact form work on FE
     - in `ContactFormController` change previous `indexAction` with [the new one](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Controller/Front/ContactFormController.php). Please pay attention if you have some modification in previous implementation.
+    - in `ContactFormController` add `ContactFormSettingsFacade` as dependency in constructor
     - in `ContactFormController` remove action `sendAction()`, it is not needed anymore
     - remove `src/Resources/scripts/frontend/contactForm.js`, it is not needed anymore
     - new localized route `front_contact` has been introduced with slug `contact`. This slug can be already in use in your project, because
@@ -175,7 +176,7 @@ There you can find links to upgrade notes for other versions too.
         ```diff
         +    front_contact:
         +       path: /contact/
-        +       defaults: { _controller: ShopsysShopBundle:Front\ContactForm:index }
+        +       defaults: { _controller: App\Controller\Front\ContactFormController:indexAction }
         ```
     - add new template [`templates/Front/Content/ContactForm/index.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/ContactForm/index.html.twig)
     - add link to new contact page somewhere in templates (e.g in `footer.html.twig`)
@@ -208,7 +209,7 @@ There you can find links to upgrade notes for other versions too.
     - add this route to the end of your `config/routes/shopsys_front.yml`
         ```diff
         +   front_download_uploaded_file:
-        +       path: /file/{uploadedFileId}/{uploadedFileName}
+        +       path: /file/{uploadedFileId}/{uploadedFilename}
         +       defaults: { _controller: App\Controller\Front\UploadedFileController:downloadAction }
         +       methods: [GET]
         +       requirements:
@@ -328,8 +329,8 @@ There you can find links to upgrade notes for other versions too.
         ```
         ```diff
             {% else -%}
-         -      ['frontendLess{{ domain.id }}']
-         +      ['frontendLess{{ domain.id }}','stylelint']
+        -       ['frontendLess{{ domain.id }}']
+        +       ['frontendLess{{ domain.id }}','stylelint']
             {% endif -%}
         ```
         ```diff
@@ -352,8 +353,6 @@ There you can find links to upgrade notes for other versions too.
         +   "stylelint": "^11.1.1",
             "time-grunt": "^1.4.0"
         ```
-
-    - don't forget to rebuild your grunt file by command `php phing gruntifle` and update your npm dependencies by command `npm install`
-
+    - don't forget to rebuild your grunt file by command `php phing gruntfile` and update your npm dependencies by command `npm install`
     - to fix all your less files in command line by command `php phing stylelint-fix`
 [shopsys/framework]: https://github.com/shopsys/framework
