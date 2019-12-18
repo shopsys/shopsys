@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { createLoaderOverlay, showLoaderOverlay, removeLoaderOverlay } from './loaderOverlay';
 import Window from '../frontend/window';
+import Translator from 'bazinga-translator';
 
 export default class Ajax {
 
@@ -40,8 +41,7 @@ export default class Ajax {
     static showDefaultError () {
         // eslint-disable-next-line no-new
         new Window({
-            // content: Shopsys.translator.trans('Error occurred, try again please.')
-            content: 'Error occurred, try again please.'
+            content: Translator.trans('Error occurred, try again please.')
         });
     };
 

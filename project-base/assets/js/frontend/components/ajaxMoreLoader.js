@@ -4,15 +4,15 @@ import '../../copyFromFw/components';
 import Ajax from '../../copyFromFw/ajax';
 import { lazyLoadCall } from '../lazyLoadInit';
 import Register from '../../copyFromFw/register';
+import Translator from 'bazinga-translator';
 
 const optionsDefaults = {
     buttonTextCallback: function (loadNextCount) {
-        return '{1}Load next %loadNextCount% item|[2,Inf]Load next %loadNextCount% items' + loadNextCount;
-        /* return Shopsys.translator.transChoice(
+        return Translator.transChoice(
             '{1}Load next %loadNextCount% item|[2,Inf]Load next %loadNextCount% items',
             loadNextCount,
-            { '%loadNextCount%': loadNextCount }
-        ); */
+            { 'loadNextCount': loadNextCount }
+        );
     }
 };
 

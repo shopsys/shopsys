@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import './bootstrap/tooltip';
 import Register from '../common/register';
+import Translator from 'bazinga-translator';
 
 export default class ProductsPickerWindow {
 
@@ -22,8 +23,7 @@ export default class ProductsPickerWindow {
         const originalIconText = $addButton.find('.js-products-picker-icon').text();
         $addButton
             .addClass('cursor-auto btn--success').removeClass('btn--plus btn--light')
-            // .find('.js-products-picker-label').text(Shopsys.translator.trans('Added')).end()
-            .find('.js-products-picker-label').text('Added').end()
+            .find('.js-products-picker-label').text(Translator.trans('Added')).end()
             .find('.js-products-picker-icon').addClass('svg svg-checked').empty().end()
             .on('click.removeProduct', function () {
                 this.onClickOnAddedButton($addButton, originalLabelText, originalIconText);
@@ -37,12 +37,10 @@ export default class ProductsPickerWindow {
         $addButton
             .addClass('cursor-help')
             .tooltip({
-                // title: Shopsys.translator.trans('Not possible to assign product to itself'),
-                title: 'Not possible to assign product to itself',
+                title: Translator.trans('Not possible to assign product to itself'),
                 placement: 'left'
             })
-            // .find('.js-products-picker-label').text(Shopsys.translator.trans('Unable to add'))
-            .find('.js-products-picker-label').text('Unable to add')
+            .find('.js-products-picker-label').text(Translator.trans('Unable to add'))
             .find('.js-products-picker-icon').removeClass('svg-circle-plus in-icon in-icon--add').addClass('svg-circle-remove in-icon in-icon--denied').end()
             .click(() => false);
     }

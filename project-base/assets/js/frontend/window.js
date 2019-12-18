@@ -1,16 +1,15 @@
 import $ from 'jquery';
 import { KeyCodes } from '../copyFromFw/components/keyCodes';
 import Timeout from '../copyFromFw/components/timeout';
+import Translator from 'bazinga-translator';
 
 const defaults = {
     content: '',
     buttonClose: true,
     buttonCancel: false,
     buttonContinue: false,
-    // textContinue: Shopsys.translator.trans('Yes'),
-    // textCancel: Shopsys.translator.trans('No'),
-    textContinue: 'Yes',
-    textCancel: 'No',
+    textContinue: Translator.trans('Yes'),
+    textCancel: Translator.trans('No'),
     textHeading: '',
     urlContinue: '#',
     cssClass: 'window-popup--standard',
@@ -84,8 +83,7 @@ export default class Window {
 
         this.$window.append($windowContent);
         if (this.options.buttonClose) {
-            // const $windowButtonClose = $('<a href="#" class="window-button-close window-popup__close js-window-button-close" title="' + Shopsys.translator.trans('Close (Esc)') + '"><i class="svg svg-remove-thin"></i></a>');
-            const $windowButtonClose = $('<a href="#" class="window-button-close window-popup__close js-window-button-close" title="' + 'Close (Esc)' + '"><i class="svg svg-remove-thin"></i></a>');
+            const $windowButtonClose = $('<a href="#" class="window-button-close window-popup__close js-window-button-close" title="' + Translator.trans('Close (Esc)') + '"><i class="svg svg-remove-thin"></i></a>');
             $windowButtonClose
                 .bind('click.window', this.options.eventClose)
                 .bind('click.windowClose', function () {

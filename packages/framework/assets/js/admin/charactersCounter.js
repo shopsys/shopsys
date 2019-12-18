@@ -1,4 +1,5 @@
 import Register from '../common/register';
+import Translator from 'bazinga-translator';
 
 export default class CharactersCounter {
 
@@ -20,15 +21,13 @@ export default class CharactersCounter {
             currentLength = placeholder.length;
         }
 
-        charactersCounter.$info.text('Used: ' + currentLength + ' characters. Recommended max. ' + charactersCounter.recommendedLength + '');
-
-        /* charactersCounter.$info.text(Shopsys.translator.trans(
+        charactersCounter.$info.text(Translator.trans(
             'Used: %currentLength% characters. Recommended max. %recommendedLength%',
             {
-                '%currentLength%': currentLength,
-                '%recommendedLength%': recommendedLength
+                'currentLength': currentLength,
+                'recommendedLength': charactersCounter.recommendedLength
             }
-        )); */
+        ));
     };
 
     static init ($container) {

@@ -3,6 +3,7 @@ import { highlightSubmitButtons, findElementsToHighlight } from './validation';
 import constant from '../../admin/constant';
 import Timeout from '../components/timeout';
 import Window from '../../admin/window';
+import Translator from 'bazinga-translator';
 
 export const isFormValid = (form) => $(form).find('.js-validation-errors-message').length === 0;
 
@@ -238,8 +239,7 @@ const showFormErrorsWindow = (container) => {
     const $window = $('#js-window');
 
     const $errorListHtml = '<div class="text-left">'
-        // + Shopsys.translator.trans('Please check the entered values.<br>')
-        + 'Please check the entered values.<br>'
+        + Translator.trans('Please check the entered values.<br>')
         + $formattedFormErrors[0].outerHTML
         + '</div>';
 

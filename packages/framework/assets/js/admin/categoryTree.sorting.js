@@ -3,6 +3,7 @@ import Window from './window';
 import FormChangeInfo from './formChangeInfo';
 import Register from '../common/register';
 import 'nestedSortable';
+import Translator from 'bazinga-translator';
 
 export default class CategoryTreeSorting {
 
@@ -49,15 +50,13 @@ export default class CategoryTreeSorting {
                 FormChangeInfo.removeInfo();
                 // eslint-disable-next-line no-new
                 new Window({
-                    // content: Shopsys.translator.trans('Order saved.')
-                    content: 'Order saved.'
+                    content: Translator.trans('Order saved.')
                 });
             },
             error: function () {
                 // eslint-disable-next-line no-new
                 new Window({
-                    // content: Shopsys.translator.trans('There was an error while saving. The order isn\'t saved.')
-                    content: 'There was an error while saving. The order isn\'t saved.'
+                    content: Translator.trans('There was an error while saving. The order isn\'t saved.')
                 });
             }
         });

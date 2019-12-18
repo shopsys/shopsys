@@ -6,6 +6,7 @@ import { escapeHtml } from '../common/components/escape';
 import Window from './window';
 import constant from './constant';
 import './bootstrap/tooltip';
+import Translator from 'bazinga-translator';
 
 export default class OrderItems {
 
@@ -31,8 +32,7 @@ export default class OrderItems {
             $items.find('.js-order-item-remove')
                 .addClass('text-disabled')
                 .tooltip({
-                    // title: Shopsys.translator.trans('Order must contain at least one item'),
-                    title: 'Order must contain at least one item',
+                    title: Translator.trans('Order must contain at least one item'),
                     placement: 'bottom'
                 });
         } else {
@@ -65,8 +65,7 @@ export default class OrderItems {
 
                 // eslint-disable-next-line no-new
                 new Window({
-                    // content: Shopsys.translator.trans('Product saved in order')
-                    content: 'Product saved in order',
+                    content: Translator.trans('Product saved in order'),
                     buttonCancel: false,
                     buttonContinue: false
                 });
@@ -74,8 +73,7 @@ export default class OrderItems {
             error: function () {
                 // eslint-disable-next-line no-new
                 new Window({
-                    // content: Shopsys.translator.trans('Unable to add product')
-                    content: 'Unable to add product',
+                    content: Translator.trans('Unable to add product'),
                     buttonCancel: false,
                     buttonContinue: false
                 });
@@ -91,8 +89,7 @@ export default class OrderItems {
 
             // eslint-disable-next-line no-new
             new Window({
-                // content: Shopsys.translator.trans('Do you really want to remove item "<i>%itemName%</i>" from the order?', { '%itemName%': itemName }),
-                content: 'Do you really want to remove item "<i>' + itemName + '</i>" from the order?',
+                content: Translator.trans('Do you really want to remove item "<i>%itemName%</i>" from the order?', { '%itemName%': itemName }),
                 buttonCancel: true,
                 buttonContinue: true,
                 eventContinue: () => {

@@ -1,9 +1,11 @@
-Shopsys.translator.trans('trans test');
+var Translator = require('bazinga-translator');
 
-Shopsys.translator.transChoice('transChoice test', 5);
+Translator.trans('trans test');
 
-Shopsys.translator.trans('trans test with domain', {}, 'testDomain');
+Translator.transChoice('transChoice test', 5);
 
-Shopsys.translator.transChoice('transChoice test with domain', 5, [], 'testDomain');
+Translator.trans('trans test with domain', {}, 'testDomain');
 
-Shopsys.translator.trans('concatenated' + ' ' + 'message');
+Translator.transChoice('transChoice test with domain', 5, [], 'testDomain');
+
+Translator.trans('concatenated' + ' ' + 'message');

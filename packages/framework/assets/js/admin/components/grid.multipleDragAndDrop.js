@@ -1,6 +1,7 @@
 import Ajax from '../../common/ajax';
 import Window from '../window';
 import Register from '../../common/register';
+import Translator from 'bazinga-translator';
 
 export default class GridMultipleDragAndDrop {
 
@@ -36,15 +37,13 @@ export default class GridMultipleDragAndDrop {
             success: function () {
                 // eslint-disable-next-line no-new
                 new Window({
-                    // content: Shopsys.translator.trans('Order saved')
-                    content: 'Order saved'
+                    content: Translator.trans('Order saved')
                 });
             },
             error: function () {
                 // eslint-disable-next-line no-new
                 new Window({
-                    // content: Shopsys.translator.trans('Order saving failed')
-                    content: 'Order saving failed'
+                    content: Translator.trans('Order saving failed')
                 });
             }
         });

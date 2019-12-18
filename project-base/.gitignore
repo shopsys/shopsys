@@ -22,3 +22,5 @@
 /web/build/
 npm-debug.log
 yarn-error.log
+
+/assets/js/translations.json

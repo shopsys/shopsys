@@ -3,6 +3,7 @@ import Ajax from '../copyFromFw/ajax';
 import Register from '../copyFromFw/register';
 import { createLoaderOverlay, showLoaderOverlay } from '../copyFromFw/loaderOverlay';
 import Window from './window';
+import Translator from 'bazinga-translator';
 
 export default class Login {
 
@@ -13,8 +14,7 @@ export default class Login {
             success: function (data) {
                 const $window = new Window({
                     content: data,
-                    // textHeading: Shopsys.translator.trans('Login')
-                    textHeading: 'Login'
+                    textHeading: Translator.trans('Login')
                 });
 
                 $window.getWindow().on('submit', '.js-front-login-window', login.onSubmit);
@@ -40,8 +40,7 @@ export default class Login {
                     const $validationErrors = $('.js-window-validation-errors');
                     if ($validationErrors.hasClass('display-none')) {
                         $validationErrors
-                            // .text(Shopsys.translator.trans('This account doesn\'t exist or password is incorrect'))
-                            .text('This account doesn\'t exist or password is incorrect')
+                            .text(Translator.trans('This account doesn\'t exist or password is incorrect'))
                             .show();
                     }
                 }

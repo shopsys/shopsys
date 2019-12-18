@@ -5,6 +5,7 @@ import { forceValidateElement } from '../validation/validation';
 import formChangeInfo from '../formChangeInfo';
 import Ajax from '../../common/ajax';
 import Register from '../../common/register';
+import Translator from 'bazinga-translator';
 
 export default class FileUpload {
 
@@ -28,8 +29,7 @@ export default class FileUpload {
         if (!this.ready) {
             // eslint-disable-next-line no-new
             new Window({
-                // content: Shopsys.translator.trans('Please wait until all files are uploaded and try again.')
-                content: 'Please wait until all files are uploaded and try again.'
+                content: Translator.trans('Please wait until all files are uploaded and try again.')
             });
             event.preventDefault();
         }
@@ -60,8 +60,7 @@ export default class FileUpload {
 
     onBeforeUpload (id) {
         this.ready = false;
-        // this.updateFileStatus('uploading', Shopsys.translator.trans('Uploading...'));
-        this.updateFileStatus('uploading', 'Uploading...');
+        this.updateFileStatus('uploading', Translator.trans('Uploading...'));
     }
 
     updateFileStatus (status, message) {
@@ -93,8 +92,7 @@ export default class FileUpload {
 
     onUploadProgress (id, percent) {
         this.items[id].setProgress(percent);
-        // this.updateFileStatus('uploading', Shopsys.translator.trans('Uploading...'));
-        this.updateFileStatus('uploading', 'Uploading...');
+        this.updateFileStatus('uploading', Translator.trans('Uploading...'));
     };
 
     onUploadSuccess (id, data) {
@@ -104,16 +102,14 @@ export default class FileUpload {
             }
             this.lastUploadItemId = id;
             this.items[id].setAsUploaded(data.filename, data.iconType, data.imageThumbnailUri);
-            // this.updateFileStatus('success', Shopsys.translator.trans('Successfully uploaded'));
-            this.updateFileStatus('success', 'Successfully uploaded');
+            this.updateFileStatus('success', Translator.trans('Successfully uploaded'));
             this.$status.parent().fadeOut(4000);
             formChangeInfo.showInfo();
         } else {
             this.items[id].deleteItem();
             // eslint-disable-next-line no-new
             new Window({
-                // content: Shopsys.translator.trans('Error occurred while uploading file.')
-                content: 'Error occurred while uploading file.'
+                content: Translator.trans('Error occurred while uploading file.')
             });
         }
     }
@@ -121,16 +117,13 @@ export default class FileUpload {
     onUploadError (id, message, code) {
         this.items[id].deleteItem();
         if (code === 413) {
-            // message = Shopsys.translator.trans('File is too big');
-            message = 'File is too big';
+            message = Translator.trans('File is too big');
         } else if (code === 415) {
-            // message = Shopsys.translator.trans('File is in unsupported format');
-            message = 'File is in unsupported format';
+            message = Translator.trans('File is in unsupported format');
         }
         // eslint-disable-next-line no-new
         new Window({
-            // content: Shopsys.translator.trans('Error occurred while uploading file: %message%', { '%message%': message })
-            content: 'Error occurred while uploading file: ' + message
+            content: Translator.trans('Error occurred while uploading file: %message%', { 'message': message })
         });
     }
 

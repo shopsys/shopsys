@@ -2,6 +2,7 @@ import $ from 'jquery';
 
 // import 'jquery-ui-touch-punch';
 
+import './copyFromFw/loadTranslations';
 import './copyFromFw/components';
 
 import './frontend/lazyLoadInit';

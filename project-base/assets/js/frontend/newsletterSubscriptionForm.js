@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Ajax from '../copyFromFw/ajax';
 import Register from '../copyFromFw/register';
 import Window from './window';
+import Translator from 'bazinga-translator';
 
 const subscriptionFormSelector = 'form[name="subscription_form"]';
 
@@ -31,11 +32,9 @@ export default class NewsletterSubscriptionForm {
 
             // eslint-disable-next-line no-new
             new Window({
-                // content: Shopsys.translator.trans('You have been successfully subscribed to our newsletter.'),
-                content: 'You have been successfully subscribed to our newsletter.',
+                content: Translator.trans('You have been successfully subscribed to our newsletter.'),
                 buttonCancel: true,
-                // textCancel: Shopsys.translator.trans('Close')
-                textCancel: 'Close'
+                textCancel: Translator.trans('Close')
             });
         }
     };

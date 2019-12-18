@@ -1,3 +1,5 @@
+import Translator from 'bazinga-translator';
+
 /*
   Bootstrap - File Input
   ======================
@@ -24,8 +26,7 @@
             }
 
             // Set the word to be displayed on the button
-            // var buttonWord = Shopsys.translator.trans('Browse files');
-            var buttonWord = 'Browse files';
+            var buttonWord = Translator.trans('Browse files');
 
             if (typeof $elem.attr('title') != 'undefined') {
                 buttonWord = $elem.attr('title');

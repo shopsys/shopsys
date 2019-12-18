@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Ajax from '../../copyFromFw/ajax';
 import Register from '../../copyFromFw/register';
 import Window from '../window';
+import Translator from 'bazinga-translator';
 
 export default class AddProduct {
     static ajaxSubmit (event) {
@@ -28,8 +29,7 @@ export default class AddProduct {
                 content: data,
                 cssClass: cssClass,
                 buttonContinue: true,
-                // textContinue: Shopsys.translator.trans('Go to cart'),
-                textContinue: 'Go to cart',
+                textContinue: Translator.trans('Go to cart'),
                 urlContinue: buttonContinueUrl,
                 cssClassContinue: 'btn--success'
             });
@@ -41,8 +41,7 @@ export default class AddProduct {
                 content: data,
                 cssClass: cssClass,
                 buttonCancel: true,
-                // textCancel: Shopsys.translator.trans('Close'),
-                textCancel: 'Close',
+                textCancel: Translator.trans('Close'),
                 cssClassCancel: 'btn--success'
             });
         }
@@ -53,8 +52,7 @@ export default class AddProduct {
         if (jqXHR.status !== 0) {
             // eslint-disable-next-line no-new
             new Window({
-                // content: Shopsys.translator.trans('Operation failed')
-                content: 'Operation failed'
+                content: Translator.trans('Operation failed')
             });
         }
     };

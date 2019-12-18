@@ -2,6 +2,7 @@ import { KeyCodes } from '../../common/components/keyCodes';
 import Ajax from '../../common/ajax';
 import Register from '../../common/register';
 import Window from '../window';
+import Translator from 'bazinga-translator';
 
 export default class GridInlineEdit {
 
@@ -34,12 +35,10 @@ export default class GridInlineEdit {
                 const $formRow = $(this).closest('.js-grid-editing-row');
                 // eslint-disable-next-line no-new
                 new Window({
-                    // content: Shopsys.translator.trans('Do you really want to discard all changes?'),
-                    content: 'Do you really want to discard all changes?',
+                    content: Translator.trans('Do you really want to discard all changes?'),
                     buttonCancel: true,
                     buttonContinue: true,
-                    // textContinue: Shopsys.translator.trans('Yes'),
-                    textContinue: 'Yes',
+                    textContinue: Translator.trans('Yes'),
                     eventContinue: function () {
                         _this.cancelEdit($formRow);
                     }
@@ -94,16 +93,14 @@ export default class GridInlineEdit {
                     $saving.hide();
                     // eslint-disable-next-line no-new
                     new Window({
-                        // content: Shopsys.translator.trans('Please check following information:') + '<br/><br/>• ' + saveResult.errors.join('<br/>• ')
-                        content: 'Please check following information:<br/><br/> ' + saveResult.errors.join('<br/>• ')
+                        content: Translator.trans('Please check following information:') + '<br/><br/>• ' + saveResult.errors.join('<br/>• ')
                     });
                 }
             },
             error: function () {
                 // eslint-disable-next-line no-new
                 new Window({
-                    // content: Shopsys.translator.trans('Error occurred, try again please.')
-                    content: 'Error occurred, try again please.'
+                    content: Translator.trans('Error occurred, try again please.')
                 });
                 $buttons.show();
                 $saving.hide();

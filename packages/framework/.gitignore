@@ -3,3 +3,4 @@
 /vendor
 /composer.lock
 /node_modules
+/assets/js/translations.json

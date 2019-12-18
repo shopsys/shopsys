@@ -7,11 +7,13 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "trans": "./assets/js/commands/loadTranslation.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bazinga-translator": "^2.6.6",
     "chart.js": "^2.9.3",
     "jquery": "^3.4.1",
     "jquery-hoverintent": "^1.10.1",
@@ -25,12 +27,15 @@
     "waypoints": "^4.0.1"
   },
   "devDependencies": {
+    "@babel/parser": "^7.7.7",
+    "@babel/traverse": "^7.7.4",
     "core-js": "^3.0.0",
     "eslint": "^5.12.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "pofile": "^1.1.0"
   }
 }

@@ -3,6 +3,7 @@ import Window from './window';
 import Register from '../copyFromFw/register';
 import constant from './constant';
 import { KeyCodes } from '../copyFromFw/components/keyCodes';
+import Translator from 'bazinga-translator';
 
 const PROMOCODE_SUBMIT_BUTTON_ID = '#js-promo-code-submit-button';
 
@@ -31,8 +32,7 @@ export default class PromoCode {
         } else {
             // eslint-disable-next-line no-new
             new Window({
-                // content: Shopsys.translator.trans('Please enter promo code.')
-                content: 'Please enter promo code.'
+                content: Translator.trans('Please enter promo code.')
             });
         }
     };

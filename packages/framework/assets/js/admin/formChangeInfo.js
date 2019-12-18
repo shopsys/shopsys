@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Register from '../common/register';
+import Translator from 'bazinga-translator';
 
 export default class FormChangeInfo {
 
@@ -27,8 +28,7 @@ export default class FormChangeInfo {
 
         $(window).on('beforeunload', function () {
             if (FormChangeInfo.isInfoShown && !FormChangeInfo.isFormSubmitted) {
-                // return Shopsys.translator.trans('You have unsaved changes!');
-                return 'You have unsaved changes!';
+                return Translator.trans('You have unsaved changes!');
             }
         });
     }
@@ -46,8 +46,7 @@ export default class FormChangeInfo {
     }
 
     static showInfo () {
-        // var textToShow = Shopsys.translator.trans('You have made changes, don\'t forget to save them!');
-        const textToShow = 'You have made changes, don\'t forget to save them!';
+        const textToShow = Translator.trans('You have made changes, don\'t forget to save them!');
         const $fixedBarIn = $('.web__content .window-fixed-bar .window-fixed-bar__in');
         const $infoDiv = $fixedBarIn.find('#js-form-change-info');
         if (!FormChangeInfo.isInfoShown) {

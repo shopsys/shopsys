@@ -1,6 +1,7 @@
 import constant from './constant';
 import Window from './window';
 import Register from '../common/register';
+import Translator from 'bazinga-translator';
 
 export default class MassActionConfirm {
 
@@ -25,8 +26,7 @@ export default class MassActionConfirm {
 
                 // eslint-disable-next-line no-new
                 new Window({
-                    // content: Shopsys.translator.trans('Do you really want to %action% %count% product?', { '%action%': action, '%count%': count }),
-                    content: 'Do you really want to ' + action + ' ' + count + ' product?',
+                    content: Translator.trans('Do you really want to %action% %count% product?', { 'action': action, 'count': count }),
                     buttonCancel: true,
                     buttonContinue: true,
                     eventContinue: () => {

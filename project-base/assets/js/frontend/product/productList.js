@@ -3,6 +3,7 @@ import 'jquery.cookie';
 import '../../copyFromFw/components';
 import AjaxMoreLoader from '../components/ajaxMoreLoader';
 import Register from '../../copyFromFw/register';
+import Translator from 'bazinga-translator';
 
 export default class ProductList {
     static init ($container) {
@@ -20,12 +21,11 @@ export default class ProductList {
             // eslint-disable-next-line no-new
             new AjaxMoreLoader($(this), {
                 buttonTextCallback: function (loadNextCount) {
-                    /* return Shopsys.translator.transChoice(
+                    return Translator.transChoice(
                         '{1}Load next %loadNextCount% product|[2,Inf]Load next %loadNextCount% products',
                         loadNextCount,
-                        { '%loadNextCount%': loadNextCount }
-                    ); */
-                    return '{1}Load next %loadNextCount% product|[2,Inf]Load next %loadNextCount% products';
+                        { 'loadNextCount': loadNextCount }
+                    );
                 }
             });
         });

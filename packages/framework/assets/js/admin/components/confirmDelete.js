@@ -1,4 +1,5 @@
 import Ajax from '../../common/ajax';
+import Translator from 'bazinga-translator';
 
 export default class ConfirmDelete {
 
@@ -48,8 +49,7 @@ export default class ConfirmDelete {
             this.$confirmDeleteFormButton
                 .addClass('btn--disabled cursor-help')
                 .tooltip({
-                    // title: Shopsys.translator.trans('Choose new value first'),
-                    title: 'Choose new value first',
+                    title: Translator.trans('Choose new value first'),
                     placement: 'right'
                 });
         }
