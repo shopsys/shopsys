@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
@@ -110,7 +109,7 @@ class CustomerUserRepository
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getCustomerListQueryBuilderByQuickSearchData(
+    public function getCustomerUserListQueryBuilderByQuickSearchData(
         $domainId,
         QuickSearchFormData $quickSearchData
     ) {
@@ -161,7 +160,7 @@ class CustomerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $oldPricingGroup
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $newPricingGroup
      */
-    public function replaceUsersPricingGroup(PricingGroup $oldPricingGroup, PricingGroup $newPricingGroup)
+    public function replaceCustomerUsersPricingGroup(PricingGroup $oldPricingGroup, PricingGroup $newPricingGroup)
     {
         $this->em->createQueryBuilder()
             ->update(CustomerUser::class, 'u')

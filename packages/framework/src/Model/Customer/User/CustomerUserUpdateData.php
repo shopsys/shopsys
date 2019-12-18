@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 
 class CustomerUserUpdateData
 {

@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
 interface CustomerUserUpdateDataFactoryInterface

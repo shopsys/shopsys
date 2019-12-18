@@ -50,7 +50,7 @@ class CartRepository
     /**
      * @param int $daysLimit
      */
-    public function deleteOldCartsForUnregisteredCustomers($daysLimit)
+    public function deleteOldCartsForUnregisteredCustomerUsers($daysLimit)
     {
         $nativeQuery = $this->em->createNativeQuery(
             'DELETE FROM cart_items WHERE cart_id IN (
@@ -77,7 +77,7 @@ class CartRepository
     /**
      * @param int $daysLimit
      */
-    public function deleteOldCartsForRegisteredCustomers($daysLimit)
+    public function deleteOldCartsForRegisteredCustomerUsers($daysLimit)
     {
         $nativeQuery = $this->em->createNativeQuery(
             'DELETE FROM cart_items WHERE cart_id IN (

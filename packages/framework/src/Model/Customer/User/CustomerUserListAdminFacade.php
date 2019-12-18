@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 
 class CustomerUserListAdminFacade
 {
@@ -25,11 +24,11 @@ class CustomerUserListAdminFacade
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getCustomerListQueryBuilderByQuickSearchData(
+    public function getCustomerUserListQueryBuilderByQuickSearchData(
         $domainId,
         QuickSearchFormData $quickSearchData
     ) {
-        return $this->customerUserRepository->getCustomerListQueryBuilderByQuickSearchData(
+        return $this->customerUserRepository->getCustomerUserListQueryBuilderByQuickSearchData(
             $domainId,
             $quickSearchData
         );

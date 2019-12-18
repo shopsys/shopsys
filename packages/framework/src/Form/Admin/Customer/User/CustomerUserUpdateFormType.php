@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Customer\User;
 
 use Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\DeliveryAddressFormType;
-use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Form\OrderListType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;

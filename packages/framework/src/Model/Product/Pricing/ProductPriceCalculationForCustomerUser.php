@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
-class ProductPriceCalculationForUser
+class ProductPriceCalculationForCustomerUser
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation

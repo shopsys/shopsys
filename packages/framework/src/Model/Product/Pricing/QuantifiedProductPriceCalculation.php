@@ -16,9 +16,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 class QuantifiedProductPriceCalculation
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      */
-    protected $productPriceCalculationForUser;
+    protected $productPriceCalculationForCustomerUser;
 
     /**
      * @deprecated Will be removed in the next major release, this service is not used here
@@ -33,16 +33,16 @@ class QuantifiedProductPriceCalculation
     protected $priceCalculation;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculationForUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      */
     public function __construct(
-        ProductPriceCalculationForUser $productPriceCalculationForUser,
+        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         Rounding $rounding,
         PriceCalculation $priceCalculation
     ) {
-        $this->productPriceCalculationForUser = $productPriceCalculationForUser;
+        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
         $this->rounding = $rounding;
         $this->priceCalculation = $priceCalculation;
     }
@@ -58,7 +58,7 @@ class QuantifiedProductPriceCalculation
     {
         $product = $quantifiedProduct->getProduct();
 
-        $productPrice = $this->productPriceCalculationForUser->calculatePriceForCustomerUserAndDomainId(
+        $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainId,
             $customerUser

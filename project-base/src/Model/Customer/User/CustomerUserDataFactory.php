@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
-use App\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData;

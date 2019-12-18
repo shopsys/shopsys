@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItem;
 use Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory;
@@ -23,9 +23,9 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 class ZboziFeedItemTest extends TestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $productPriceCalculationForUserMock;
+    private $productPriceCalculationForCustomerUserMock;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader|\PHPUnit\Framework\MockObject\MockObject
@@ -59,13 +59,13 @@ class ZboziFeedItemTest extends TestCase
 
     public function setUp()
     {
-        $this->productPriceCalculationForUserMock = $this->createMock(ProductPriceCalculationForUser::class);
+        $this->productPriceCalculationForCustomerUserMock = $this->createMock(ProductPriceCalculationForCustomerUser::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
         $this->productParametersBatchLoaderMock = $this->createMock(ProductParametersBatchLoader::class);
         $this->categoryFacadeMock = $this->createMock(CategoryFacade::class);
 
         $this->zboziFeedItemFactory = new ZboziFeedItemFactory(
-            $this->productPriceCalculationForUserMock,
+            $this->productPriceCalculationForCustomerUserMock,
             $this->productUrlsBatchLoaderMock,
             $this->productParametersBatchLoaderMock,
             $this->categoryFacadeMock
@@ -83,7 +83,7 @@ class ZboziFeedItemTest extends TestCase
         $this->defaultProduct->method('getCalculatedAvailability')->willReturn($availabilityMock);
 
         $productPrice = new ProductPrice(Price::zero(), false);
-        $this->productPriceCalculationForUserMock->method('calculatePriceForUserAndDomainId')
+        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForUserAndDomainId')
             ->with($this->defaultProduct, 1, null)->willReturn($productPrice);
 
         $this->productUrlsBatchLoaderMock->method('getProductUrl')

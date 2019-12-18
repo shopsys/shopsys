@@ -146,7 +146,7 @@ class PricingGroupFacade
         $oldPricingGroup = $this->pricingGroupRepository->getById($oldPricingGroupId);
         if ($newPricingGroupId !== null) {
             $newPricingGroup = $this->pricingGroupRepository->getById($newPricingGroupId);
-            $this->customerUserRepository->replaceUsersPricingGroup($oldPricingGroup, $newPricingGroup);
+            $this->customerUserRepository->replaceCustomerUsersPricingGroup($oldPricingGroup, $newPricingGroup);
         } else {
             $newPricingGroup = null;
         }

@@ -39,10 +39,10 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     private $currentPromoCodeFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      * @inject
      */
-    private $productPriceCalculationForUser;
+    private $productPriceCalculationForCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
@@ -181,7 +181,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
             $this->domain,
             $this->currentCustomerUser,
             $this->currentPromoCodeFacade,
-            $this->productPriceCalculationForUser,
+            $this->productPriceCalculationForCustomerUser,
             $this->cartItemFactoryInterface,
             $this->cartRepository,
             $this->cartWatcherFacade

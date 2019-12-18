@@ -3,8 +3,8 @@
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerUserIdentifierException;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 
 class CustomerUserIdentifierTest extends TestCase
 {

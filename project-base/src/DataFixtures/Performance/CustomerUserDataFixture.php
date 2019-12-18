@@ -11,10 +11,10 @@ use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CustomerUserDataFixture
@@ -130,7 +130,7 @@ class CustomerUserDataFixture
 
         foreach ($domains as $domainConfig) {
             for ($i = 0; $i < $this->userCountPerDomain; $i++) {
-                $customerUser = $this->createCustomerCustomerOnDomain($domainConfig->getId(), $i);
+                $customerUser = $this->createCustomerUserOnDomain($domainConfig->getId(), $i);
                 $progressBar->advance();
 
                 if ($isFirstCustomerUser) {
@@ -151,7 +151,7 @@ class CustomerUserDataFixture
      *
      * @return \App\Model\Customer\User\CustomerUser
      */
-    private function createCustomerCustomerOnDomain($domainId, $userNumber)
+    private function createCustomerUserOnDomain($domainId, $userNumber)
     {
         $customerUserUpdateData = $this->getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber);
 

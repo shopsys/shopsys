@@ -6,9 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class CustomerUserPasswordFacade

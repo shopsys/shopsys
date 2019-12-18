@@ -13,27 +13,27 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 
 class CustomerUserDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const USER_WITH_RESET_PASSWORD_HASH = 'user_with_reset_password_hash';
 
-    protected const KEY_USER_DATA = 'userData';
+    protected const KEY_CUSTOMER_USER_DATA = 'customerUserData';
     protected const KEY_BILLING_ADDRESS = 'billingAddress';
     protected const KEY_DELIVERY_ADDRESS = 'deliveryAddress';
 
-    protected const KEY_USER_DATA_FIRST_NAME = 'firstName';
-    protected const KEY_USER_DATA_LAST_NAME = 'lastName';
-    protected const KEY_USER_DATA_EMAIL = 'email';
-    protected const KEY_USER_DATA_PASSWORD = 'password';
-    protected const KEY_USER_DATA_TELEPHONE = 'telephone';
+    protected const KEY_CUSTOMER_USER_DATA_FIRST_NAME = 'firstName';
+    protected const KEY_CUSTOMER_USER_DATA_LAST_NAME = 'lastName';
+    protected const KEY_CUSTOMER_USER_DATA_EMAIL = 'email';
+    protected const KEY_CUSTOMER_USER_DATA_PASSWORD = 'password';
+    protected const KEY_CUSTOMER_USER_DATA_TELEPHONE = 'telephone';
 
     protected const KEY_ADDRESS_COMPANY_CUSTOMER = 'companyCustomer';
     protected const KEY_ADDRESS_COMPANY_NAME = 'companyName';
@@ -141,9 +141,9 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             if ($domainId === Domain::SECOND_DOMAIN_ID) {
-                $customersDataProvider = $this->getDistinctCustomersDataProvider();
+                $customersDataProvider = $this->getDistinctCustomerUsersDataProvider();
             } else {
-                $customersDataProvider = $this->getDefaultCustomersDataProvider();
+                $customersDataProvider = $this->getDefaultCustomerUsersDataProvider();
             }
 
             foreach ($customersDataProvider as $customerDataProvider) {
@@ -169,11 +169,11 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $customerUserData = $this->customerUserDataFactory->createForDomainId($domainId);
-        $customerUserData->firstName = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_FIRST_NAME] ?? null;
-        $customerUserData->lastName = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_LAST_NAME] ?? null;
-        $customerUserData->email = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_EMAIL] ?? null;
-        $customerUserData->password = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_PASSWORD] ?? null;
-        $customerUserData->telephone = $data[self::KEY_USER_DATA][self::KEY_USER_DATA_TELEPHONE] ?? null;
+        $customerUserData->firstName = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_FIRST_NAME] ?? null;
+        $customerUserData->lastName = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_LAST_NAME] ?? null;
+        $customerUserData->email = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_EMAIL] ?? null;
+        $customerUserData->password = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_PASSWORD] ?? null;
+        $customerUserData->telephone = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_TELEPHONE] ?? null;
         $customerUserData->customer = $customerUserUpdateData->customerUserData->customer;
 
         $billingAddressData = $customerUserUpdateData->billingAddressData;
@@ -207,16 +207,16 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @return array
      */
-    protected function getDefaultCustomersDataProvider(): array
+    protected function getDefaultCustomerUsersDataProvider(): array
     {
         return [
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Jaromír',
-                    self::KEY_USER_DATA_LAST_NAME => 'Jágr',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_USER_DATA_TELEPHONE => '605000123',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Jaromír',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Jágr',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '605000123',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
@@ -229,11 +229,11 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Igor',
-                    self::KEY_USER_DATA_LAST_NAME => 'Anpilogov',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply.3@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'no-reply.3',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Igor',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Anpilogov',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.3@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.3',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -242,11 +242,11 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Hana',
-                    self::KEY_USER_DATA_LAST_NAME => 'Anrejsová',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply.5@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'no-reply.5',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Hana',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Anrejsová',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.5@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.5',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -255,12 +255,12 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Alexandr',
-                    self::KEY_USER_DATA_LAST_NAME => 'Ton',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply.9@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'no-reply.9',
-                    self::KEY_USER_DATA_TELEPHONE => '606060606',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Alexandr',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Ton',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.9@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.9',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -271,12 +271,12 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Pavel',
-                    self::KEY_USER_DATA_LAST_NAME => 'Nedvěd',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply.10@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'no-reply.10',
-                    self::KEY_USER_DATA_TELEPHONE => '606060606',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Pavel',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Nedvěd',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.10@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.10',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -293,12 +293,12 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Rostislav',
-                    self::KEY_USER_DATA_LAST_NAME => 'Vítek',
-                    self::KEY_USER_DATA_EMAIL => 'vitek@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_USER_DATA_TELEPHONE => '606060606',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Rostislav',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Vítek',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'vitek@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
@@ -321,12 +321,12 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Ľubomír',
-                    self::KEY_USER_DATA_LAST_NAME => 'Novák',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply.11@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'test123',
-                    self::KEY_USER_DATA_TELEPHONE => '606060606',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Ľubomír',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Novák',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.11@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'test123',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -351,15 +351,15 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @return array
      */
-    protected function getDistinctCustomersDataProvider(): array
+    protected function getDistinctCustomerUsersDataProvider(): array
     {
         return [
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Jana',
-                    self::KEY_USER_DATA_LAST_NAME => 'Anovčínová',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply.2@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'no-reply.2',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Jana',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Anovčínová',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.2@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.2',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -368,11 +368,11 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Ida',
-                    self::KEY_USER_DATA_LAST_NAME => 'Anpilogova',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply.4@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'no-reply.4',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Ida',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Anpilogova',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.4@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.4',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -381,11 +381,11 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Petr',
-                    self::KEY_USER_DATA_LAST_NAME => 'Anrig',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply.6@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'no-reply.6',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Petr',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Anrig',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.6@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.6',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -401,11 +401,11 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Silva',
-                    self::KEY_USER_DATA_LAST_NAME => 'Anrigová',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply.7@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'no-reply.7',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Silva',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Anrigová',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.7@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.7',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -414,11 +414,11 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Derick',
-                    self::KEY_USER_DATA_LAST_NAME => 'Ansah',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply.8@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'no-reply.8',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Derick',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Ansah',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.8@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.8',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -427,12 +427,12 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
             [
-                self::KEY_USER_DATA => [
-                    self::KEY_USER_DATA_FIRST_NAME => 'Johny',
-                    self::KEY_USER_DATA_LAST_NAME => 'English',
-                    self::KEY_USER_DATA_EMAIL => 'no-reply@shopsys.com',
-                    self::KEY_USER_DATA_PASSWORD => 'user123',
-                    self::KEY_USER_DATA_TELEPHONE => '603123456',
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Johny',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'English',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '603123456',
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,

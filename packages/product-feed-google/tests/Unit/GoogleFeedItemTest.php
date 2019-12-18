@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItem;
 use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory;
@@ -20,9 +20,9 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 class GoogleFeedItemTest extends TestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $productPriceCalculationForUserMock;
+    private $productPriceCalculationForCustomerUserMock;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|\PHPUnit\Framework\MockObject\MockObject
@@ -56,12 +56,12 @@ class GoogleFeedItemTest extends TestCase
 
     public function setUp()
     {
-        $this->productPriceCalculationForUserMock = $this->createMock(ProductPriceCalculationForUser::class);
+        $this->productPriceCalculationForCustomerUserMock = $this->createMock(ProductPriceCalculationForCustomerUser::class);
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
 
         $this->googleFeedItemFactory = new GoogleFeedItemFactory(
-            $this->productPriceCalculationForUserMock,
+            $this->productPriceCalculationForCustomerUserMock,
             $this->currencyFacadeMock,
             $this->productUrlsBatchLoaderMock
         );
@@ -123,7 +123,7 @@ class GoogleFeedItemTest extends TestCase
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
         $productPrice = new ProductPrice($price, false);
-        $this->productPriceCalculationForUserMock->method('calculatePriceForUserAndDomainId')
+        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForUserAndDomainId')
             ->with($product, $domain->getId(), null)->willReturn($productPrice);
     }
 

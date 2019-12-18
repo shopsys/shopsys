@@ -7,17 +7,10 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserFacade
@@ -176,8 +169,8 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null $deliveryAddressData
      *
-     *@return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      *@throws \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException
+     *@return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     protected function createCustomerUser(
         Customer $customer,

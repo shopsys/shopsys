@@ -3,11 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 
 class CustomerUserFactory implements CustomerUserFactoryInterface
 {

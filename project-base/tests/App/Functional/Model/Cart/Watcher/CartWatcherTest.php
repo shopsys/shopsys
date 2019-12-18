@@ -22,10 +22,10 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 class CartWatcherTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      * @inject
      */
-    private $productPriceCalculationForUser;
+    private $productPriceCalculationForCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher
@@ -56,7 +56,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
 
-        $productPrice = $this->productPriceCalculationForUser->calculatePriceForCurrentUser($product);
+        $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());
         $cartItem = new CartItem($cart, $product, 1, $productPrice->getPriceWithVat());
         $cart->addItem($cartItem);
@@ -148,7 +148,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             ->method('getProductVisibility')
             ->willReturn($productVisibilityMock);
 
-        $cartWatcher = new CartWatcher($this->productPriceCalculationForUser, $productVisibilityRepositoryMock, $this->domain);
+        $cartWatcher = new CartWatcher($this->productPriceCalculationForCustomerUser, $productVisibilityRepositoryMock, $this->domain);
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());
         $cart->addItem($cartItemMock);

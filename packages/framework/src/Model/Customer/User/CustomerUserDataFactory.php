@@ -3,9 +3,6 @@
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class CustomerUserDataFactory implements CustomerUserDataFactoryInterface

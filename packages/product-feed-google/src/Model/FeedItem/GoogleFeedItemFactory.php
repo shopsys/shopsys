@@ -7,15 +7,15 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class GoogleFeedItemFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      */
-    protected $productPriceCalculationForUser;
+    protected $productPriceCalculationForCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
@@ -28,16 +28,16 @@ class GoogleFeedItemFactory
     protected $productUrlsBatchLoader;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculationForUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      */
     public function __construct(
-        ProductPriceCalculationForUser $productPriceCalculationForUser,
+        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         CurrencyFacade $currencyFacade,
         ProductUrlsBatchLoader $productUrlsBatchLoader
     ) {
-        $this->productPriceCalculationForUser = $productPriceCalculationForUser;
+        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
         $this->currencyFacade = $currencyFacade;
         $this->productUrlsBatchLoader = $productUrlsBatchLoader;
     }
@@ -82,7 +82,7 @@ class GoogleFeedItemFactory
      */
     protected function getPrice(Product $product, DomainConfig $domainConfig): Price
     {
-        return $this->productPriceCalculationForUser->calculatePriceForCustomerUserAndDomainId(
+        return $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
             null

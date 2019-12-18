@@ -6,7 +6,6 @@ namespace App\Form\Front\Customer\User;
 
 use App\Form\Front\Customer\BillingAddressFormType;
 use App\Form\Front\Customer\DeliveryAddressFormType;
-use App\Form\Front\Customer\User\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

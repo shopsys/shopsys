@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class CartFacade
@@ -55,7 +55,7 @@ class CartFacade
     protected $currentPromoCodeFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      */
     protected $productPriceCalculation;
 
@@ -82,7 +82,7 @@ class CartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
@@ -95,7 +95,7 @@ class CartFacade
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
-        ProductPriceCalculationForUser $productPriceCalculation,
+        ProductPriceCalculationForCustomerUser $productPriceCalculation,
         CartItemFactoryInterface $cartItemFactory,
         CartRepository $cartRepository,
         CartWatcherFacade $cartWatcherFacade
@@ -309,7 +309,7 @@ class CartFacade
 
     public function deleteOldCarts()
     {
-        $this->cartRepository->deleteOldCartsForUnregisteredCustomers(static::DAYS_LIMIT_FOR_UNREGISTERED);
-        $this->cartRepository->deleteOldCartsForRegisteredCustomers(static::DAYS_LIMIT_FOR_REGISTERED);
+        $this->cartRepository->deleteOldCartsForUnregisteredCustomerUsers(static::DAYS_LIMIT_FOR_UNREGISTERED);
+        $this->cartRepository->deleteOldCartsForRegisteredCustomerUsers(static::DAYS_LIMIT_FOR_REGISTERED);
     }
 }

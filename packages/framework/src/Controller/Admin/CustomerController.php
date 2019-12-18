@@ -165,7 +165,7 @@ class CustomerController extends AdminBaseController
             'form' => $form->createView(),
             'customerUser' => $customerUser,
             'orders' => $orders,
-            'ssoLoginAsUserUrl' => $this->getSsoLoginAsUserUrl($customerUser),
+            'ssoLoginAsUserUrl' => $this->getSsoLoginAsCustomerUserUrl($customerUser),
         ]);
     }
 
@@ -181,7 +181,7 @@ class CustomerController extends AdminBaseController
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $queryBuilder = $this->customerUserListAdminFacade->getCustomerListQueryBuilderByQuickSearchData(
+        $queryBuilder = $this->customerUserListAdminFacade->getCustomerUserListQueryBuilderByQuickSearchData(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
             $quickSearchForm->getData()
         );
@@ -302,7 +302,7 @@ class CustomerController extends AdminBaseController
      *
      * @return string
      */
-    protected function getSsoLoginAsUserUrl(CustomerUser $customerUser)
+    protected function getSsoLoginAsCustomerUserUrl(CustomerUser $customerUser)
     {
         $customerDomainRouter = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
         $loginAsUserUrl = $customerDomainRouter->generate(

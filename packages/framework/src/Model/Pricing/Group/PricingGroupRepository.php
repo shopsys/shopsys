@@ -88,7 +88,7 @@ class PricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return bool
      */
-    public function existsUserWithPricingGroup(PricingGroup $pricingGroup)
+    public function existsCustomerUserWithPricingGroup(PricingGroup $pricingGroup)
     {
         $query = $this->em->createQuery('
             SELECT COUNT(u)

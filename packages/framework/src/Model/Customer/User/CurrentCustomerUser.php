@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
