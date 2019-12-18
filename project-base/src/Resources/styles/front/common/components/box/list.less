@@ -4,6 +4,27 @@
 @box-list-producer-image-space-around: 10px;
 
 .box-list {
+    display: flex;
+    flex-direction: column;
+
+    @media @query-lg {
+        flex-direction: row;
+    }
+
+    &__panel {
+        width: 100%;
+
+        @media @query-lg {
+            width: @web-panel-width;
+            padding-right: @web-panel-gap;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+    }
+
     &__description {
         &__text {
             margin-bottom: @margin-gap/2;

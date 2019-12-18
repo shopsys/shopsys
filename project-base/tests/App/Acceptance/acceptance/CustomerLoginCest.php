@@ -23,6 +23,7 @@ class CustomerLoginCest
         $me->wantTo('login as a customer from main page');
         $me->amOnPage('/');
         $layoutPage->openLoginPopup();
+        $me->wait(10);
         $loginPage->login('no-reply@shopsys.com', 'user123');
         $me->see('Jaromír Jágr');
         $layoutPage->logout();
@@ -44,6 +45,7 @@ class CustomerLoginCest
         // personal-computers-accessories
         $me->amOnLocalizedRoute('front_product_list', ['id' => 6]);
         $layoutPage->openLoginPopup();
+        $me->wait(10);
         $loginPage->login('no-reply@shopsys.com', 'user123');
         $me->see('Jaromír Jágr');
         $layoutPage->logout();

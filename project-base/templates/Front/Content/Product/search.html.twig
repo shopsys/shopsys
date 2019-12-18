@@ -17,26 +17,36 @@
 
             {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: foundCategories})) }}
 
-            <div class="js-product-list-with-filter">
+            <div class="box-list js-product-list-with-filter">
                 {% if paginationResult.results|length > 0 or filterFormSubmitted %}
-                    <div class="box-filter js-product-filter">
-                        {{ productFilterForm.filterForm(
-                            filterForm,
-                            url('front_product_search'),
-                            url('front_product_search', { (SEARCH_TEXT_PARAMETER) : searchText }),
-                            searchText,
-                            'search',
-                            productFilterCountData,
-                            priceRange
-                        ) }}
+                    <div class="box-list__panel">
+                        <div class="box-filter__opener">
+                            <button type="button" class="btn btn--primary js-product-filter-open-button">
+                                {{ 'Product filter'|trans }}
+                                <i class="svg svg-arrow"></i>
+                            </button>
+                        </div>
+                        <div class="box-filter js-product-filter">
+                            {{ productFilterForm.filterForm(
+                                filterForm,
+                                url('front_product_search'),
+                                url('front_product_search', { (SEARCH_TEXT_PARAMETER) : searchText }),
+                                searchText,
+                                'search',
+                                productFilterCountData,
+                                priceRange
+                            ) }}
+                        </div>
                     </div>
                 {% endif %}
 
-                <div class="js-product-list-ajax-filter-products-with-controls">
-                    <div>
-                        {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForSearchAction')) }}
+                <div class="box-list__content">
+                    <div class="js-product-list-ajax-filter-products-with-controls">
+                        <div>
+                            {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForSearchAction')) }}
+                        </div>
+                        {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, searchText: searchText} %}
                     </div>
-                    {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, searchText: searchText} %}
                 </div>
             </div>
         </div>
