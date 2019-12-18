@@ -5,6 +5,20 @@ There is a new base html layout with horizontal menu and product filter placed i
 
 - remove left panel web layout and add horizontal menu ([#1540](https://github.com/shopsys/shopsys/pull/1540))
     - because of removing left panel, we also removed unnecessary advert position called `leftSidebar`. You can remove it by creating migration and update data fixtures. If you want to remove it, please make sure that all stuff linked to old position is moved to a new position.
+    - remove configuration for `leftSidebar` from `images.yml` file
+        ```diff
+                additionalSizes:
+                    - {width: 440, height: ~, media: "(max-width: 479px)"}
+                    - {width: 730, height: ~, media: "(max-width: 1023px)"}
+        -   -   name: leftSidebar
+        -       width: 240
+        -       height: ~
+        -       crop: false
+        -       occurrence: 'Front-end: Advertising in the left panel under the category tree'
+        -       additionalSizes:
+        -           - {width: 440, height: ~, media: "(max-width: 479px)"}
+        -           - {width: 730, height: ~, media: "(max-width: 768px)"}
+        ```
     - because we don't have left panel on frontend anymore we have to center banner slider (or change its width to 100% - don't forget to change image size) [src/Resources/styles/front/common/components/box/slider.less](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/components/box/slider.less)
         ```diff
           @box-slider-width: @web-width - @web-panel-width - 2*@web-padding;

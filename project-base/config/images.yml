@@ -120,14 +120,6 @@
             additionalSizes:
                 - {width: 440, height: ~, media: "(max-width: 479px)"}
                 - {width: 730, height: ~, media: "(max-width: 1023px)"}
-        -   name: leftSidebar
-            width: 240
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Advertising in the left panel under the category tree'
-            additionalSizes:
-                - {width: 440, height: ~, media: "(max-width: 479px)"}
-                - {width: 730, height: ~, media: "(max-width: 768px)"}
 
 -   name: brand
     class: Shopsys\FrameworkBundle\Model\Product\Brand\Brand
