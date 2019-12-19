@@ -21,7 +21,7 @@
                     {{ 'Clicking on the link below you can download in XML format your personal information, which we have in evidence
                     in our online store %domain%.'|trans({ '%domain%': domainName }) }}
                 </div>
-                {% if user is null and newsletterSubscriber is null and ordersCount == 0 %}
+                {% if customerUser is null and newsletterSubscriber is null and ordersCount == 0 %}
                 <div class="padding-20">
                     <h2>{{ 'No personal data for this email address'|trans }}</h2>
                 </div>

@@ -412,7 +412,7 @@ services:
         arguments:
             - '%kernel.environment%'
 
-    Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer: ~
+    Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser: ~
 
     Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail: ~
 
@@ -496,7 +496,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Pricing\PricingSetting: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser: ~
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator:
         tags:
@@ -816,8 +816,8 @@ services:
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface:
         alias: Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory
 
-    Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\UserFactory
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory
 
     Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory
@@ -843,17 +843,20 @@ services:
     Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Country\CountryDataFactory
 
-    Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
 
     Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory
 
+    Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerFactory
+
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory
 
-    Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\UserDataFactory
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory
 
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory

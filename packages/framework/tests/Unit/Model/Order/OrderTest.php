@@ -120,10 +120,10 @@ class OrderTest extends TestCase
     public function testOrderCreatedWithEmptyCreatedAtIsCreatedNow()
     {
         $orderData = new OrderData();
-        $user = null;
+        $customerUser = null;
 
         $orderData->createdAt = null;
-        $order = new Order($orderData, 'orderNumber', 'urlHash', $user);
+        $order = new Order($orderData, 'orderNumber', 'urlHash', $customerUser);
 
         $this->assertDateTimeIsCloseTo(new DateTime(), $order->getCreatedAt(), 5);
     }
@@ -131,11 +131,11 @@ class OrderTest extends TestCase
     public function testOrderCanBeCreatedWithSpecificCreatedAt()
     {
         $orderData = new OrderData();
-        $user = null;
+        $customerUser = null;
 
         $createAt = new DateTime('2000-01-01 01:00:00');
         $orderData->createdAt = $createAt;
-        $order = new Order($orderData, 'orderNumber', 'urlHash', $user);
+        $order = new Order($orderData, 'orderNumber', 'urlHash', $customerUser);
 
         $this->assertEquals($createAt, $order->getCreatedAt());
     }

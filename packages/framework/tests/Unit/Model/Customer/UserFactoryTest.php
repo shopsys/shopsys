@@ -4,55 +4,40 @@ namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
-use Shopsys\FrameworkBundle\Model\Customer\User;
-use Shopsys\FrameworkBundle\Model\Customer\UserData;
-use Shopsys\FrameworkBundle\Model\Customer\UserFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 
 class UserFactoryTest extends TestCase
 {
     public function testCreate()
     {
-        $customerService = $this->getUserFactory();
+        $customerUserFactory = $this->getUserFactory();
 
-        $billingAddress = $this->createBillingAddress();
         $deliveryAddress = $this->createDeliveryAddress();
-        $userData = new UserData();
-        $userData->firstName = 'firstName';
-        $userData->lastName = 'lastName';
-        $userData->email = 'no-reply@shopsys.com';
-        $userData->password = 'pa55w0rd';
-        $userData->domainId = 1;
+        $customerUserData = new CustomerUserData();
+        $customerUserData->firstName = 'firstName';
+        $customerUserData->lastName = 'lastName';
+        $customerUserData->email = 'no-reply@shopsys.com';
+        $customerUserData->password = 'pa55w0rd';
+        $customerUserData->domainId = 1;
 
-        $user = $customerService->create(
-            $userData,
-            $billingAddress,
-            $deliveryAddress
-        );
+        $customerUser = $customerUserFactory->create($customerUserData, $deliveryAddress);
 
-        $this->assertInstanceOf(User::class, $user);
+        $this->assertInstanceOf(CustomerUser::class, $customerUser);
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\UserFactory
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory
      */
-    private function getUserFactory(): UserFactory
+    private function getUserFactory(): CustomerUserFactory
     {
-        $customerPasswordFacade = $this->createMock(CustomerPasswordFacade::class);
+        $customerUserPasswordFacade = $this->createMock(CustomerUserPasswordFacade::class);
 
-        return new UserFactory(new EntityNameResolver([]), $customerPasswordFacade);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     */
-    private function createBillingAddress()
-    {
-        return new BillingAddress(new BillingAddressData());
+        return new CustomerUserFactory(new EntityNameResolver([]), $customerUserPasswordFacade);
     }
 
     /**

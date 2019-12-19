@@ -3,8 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Security;
 
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User;
-use Shopsys\FrameworkBundle\Model\Customer\UserRepository;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -33,9 +33,9 @@ class LoginAsUserFacade
     protected $session;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
      */
-    protected $userRepository;
+    protected $customerUserRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
@@ -46,29 +46,29 @@ class LoginAsUserFacade
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         EventDispatcherInterface $eventDispatcher,
         SessionInterface $session,
-        UserRepository $userRepository,
+        CustomerUserRepository $customerUserRepository,
         AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->eventDispatcher = $eventDispatcher;
         $this->session = $session;
-        $this->userRepository = $userRepository;
+        $this->customerUserRepository = $customerUserRepository;
         $this->administratorFrontSecurityFacade = $administratorFrontSecurityFacade;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
-    public function rememberLoginAsUser(User $user)
+    public function rememberLoginAsUser(CustomerUser $customerUser)
     {
-        $this->session->set(static::SESSION_LOGIN_AS, serialize($user));
+        $this->session->set(static::SESSION_LOGIN_AS, serialize($customerUser));
     }
 
     /**
@@ -85,9 +85,9 @@ class LoginAsUserFacade
         }
 
         $unserializedUser = unserialize($this->session->get(static::SESSION_LOGIN_AS));
-        /* @var $unserializedUser \Shopsys\FrameworkBundle\Model\Customer\User */
+        /* @var $unserializedUser \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser */
         $this->session->remove(static::SESSION_LOGIN_AS);
-        $freshUser = $this->userRepository->getUserById($unserializedUser->getId());
+        $freshUser = $this->customerUserRepository->getCustomerUserById($unserializedUser->getId());
 
         $password = '';
         $firewallName = 'frontend';

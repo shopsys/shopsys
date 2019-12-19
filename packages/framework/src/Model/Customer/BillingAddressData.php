@@ -44,6 +44,11 @@ class BillingAddressData
      */
     public $country;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
+     */
+    public $customer;
+
     public function __construct()
     {
         $this->companyCustomer = false;

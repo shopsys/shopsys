@@ -8,7 +8,7 @@ use App\Model\Category\CurrentCategoryResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\HttpFoundation\Request;
 
 class CategoryController extends FrontBaseController
@@ -34,29 +34,29 @@ class CategoryController extends FrontBaseController
     private $topCategoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
-    private $currentCustomer;
+    private $currentCustomerUser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CurrentCategoryResolver $currentCategoryResolver
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         Domain $domain,
         CategoryFacade $categoryFacade,
         CurrentCategoryResolver $currentCategoryResolver,
         TopCategoryFacade $topCategoryFacade,
-        CurrentCustomer $currentCustomer
+        CurrentCustomerUser $currentCustomerUser
     ) {
         $this->domain = $domain;
         $this->categoryFacade = $categoryFacade;
         $this->currentCategoryResolver = $currentCategoryResolver;
         $this->topCategoryFacade = $topCategoryFacade;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**
@@ -121,7 +121,7 @@ class CategoryController extends FrontBaseController
     public function categoryListAction(array $categories, $showProductsCountByCategory = true)
     {
         if ($showProductsCountByCategory === true) {
-            $pricingGroup = $this->currentCustomer->getPricingGroup();
+            $pricingGroup = $this->currentCustomerUser->getPricingGroup();
             $domainId = $this->domain->getId();
 
             $listableProductCountsIndexedByCategoryId = $this->categoryFacade

@@ -4,16 +4,16 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Watcher;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
 class CartWatcher
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      */
-    protected $productPriceCalculationForUser;
+    protected $productPriceCalculationForCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository
@@ -26,16 +26,16 @@ class CartWatcher
     protected $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculationForUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ProductPriceCalculationForUser $productPriceCalculationForUser,
+        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         ProductVisibilityRepository $productVisibilityRepository,
         Domain $domain
     ) {
-        $this->productPriceCalculationForUser = $productPriceCalculationForUser;
+        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
         $this->productVisibilityRepository = $productVisibilityRepository;
         $this->domain = $domain;
     }
@@ -48,7 +48,7 @@ class CartWatcher
     {
         $modifiedItems = [];
         foreach ($cart->getItems() as $cartItem) {
-            $productPrice = $this->productPriceCalculationForUser->calculatePriceForCurrentUser($cartItem->getProduct());
+            $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($cartItem->getProduct());
             if (!$productPrice->getPriceWithVat()->equals($cartItem->getWatchedPrice())) {
                 $modifiedItems[] = $cartItem;
             }
@@ -59,10 +59,11 @@ class CartWatcher
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
-    public function getNotListableItems(Cart $cart, CurrentCustomer $currentCustomer)
+    public function getNotListableItems(Cart $cart, CurrentCustomerUser $currentCustomerUser)
     {
         $notListableItems = [];
         foreach ($cart->getItems() as $item) {
@@ -71,7 +72,7 @@ class CartWatcher
                 $productVisibility = $this->productVisibilityRepository
                     ->getProductVisibility(
                         $product,
-                        $currentCustomer->getPricingGroup(),
+                        $currentCustomerUser->getPricingGroup(),
                         $this->domain->getId()
                     );
 

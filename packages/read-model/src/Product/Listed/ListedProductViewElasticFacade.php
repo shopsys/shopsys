@@ -6,7 +6,7 @@ namespace Shopsys\ReadModelBundle\Product\Listed;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -37,9 +37,9 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade
@@ -70,7 +70,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory $listedProductViewFactory
@@ -81,7 +81,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         ProductFacade $productFacade,
         ProductAccessoryFacade $productAccessoryFacade,
         Domain $domain,
-        CurrentCustomer $currentCustomer,
+        CurrentCustomerUser $currentCustomerUser,
         TopProductFacade $topProductFacade,
         ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         ListedProductViewFactory $listedProductViewFactory,
@@ -91,7 +91,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         $this->productFacade = $productFacade;
         $this->productAccessoryFacade = $productAccessoryFacade;
         $this->domain = $domain;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
         $this->topProductFacade = $topProductFacade;
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->listedProductViewFactory = $listedProductViewFactory;
@@ -107,7 +107,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     {
         $topProducts = $this->topProductFacade->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
 
         $topProducts = array_slice($topProducts, 0, $limit);
@@ -122,7 +122,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     {
         $topProducts = $this->topProductFacade->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
 
         return $this->createFromProducts($topProducts);
@@ -140,7 +140,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         $accessories = $this->productAccessoryFacade->getTopOfferedAccessories(
             $product,
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             $limit
         );
 
@@ -158,7 +158,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         $accessories = $this->productAccessoryFacade->getTopOfferedAccessories(
             $product,
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup(),
+            $this->currentCustomerUser->getPricingGroup(),
             null
         );
 
@@ -238,7 +238,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
                 $productArray,
                 $imageViews[$productId],
                 $this->productActionViewFacade->getForArray($productArray),
-                $this->currentCustomer->getPricingGroup()
+                $this->currentCustomerUser->getPricingGroup()
             );
         }
 

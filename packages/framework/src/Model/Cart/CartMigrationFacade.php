@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 class CartMigrationFacade
@@ -18,9 +18,9 @@ class CartMigrationFacade
     protected $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory
      */
-    protected $customerIdentifierFactory;
+    protected $customerUserIdentifierFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
@@ -34,18 +34,18 @@ class CartMigrationFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory $customerIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         EntityManagerInterface $em,
-        CustomerIdentifierFactory $customerIdentifierFactory,
+        CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         CartItemFactoryInterface $cartItemFactory,
         CartFacade $cartFacade
     ) {
         $this->em = $em;
-        $this->customerIdentifierFactory = $customerIdentifierFactory;
+        $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
         $this->cartItemFactory = $cartItemFactory;
         $this->cartFacade = $cartFacade;
     }
@@ -55,8 +55,8 @@ class CartMigrationFacade
      */
     public function mergeCurrentCartWithCart(Cart $cart): void
     {
-        $customerIdentifier = $this->customerIdentifierFactory->get();
-        $currentCart = $this->cartFacade->getCartByCustomerIdentifierCreateIfNotExists($customerIdentifier);
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
+        $currentCart = $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
 
         foreach ($cart->getItems() as $itemToMerge) {
             $similarItem = $currentCart->findSimilarItemByItem($itemToMerge);
@@ -92,8 +92,8 @@ class CartMigrationFacade
 
         $previousCartIdentifier = $session->get(static::SESSION_PREVIOUS_CART_IDENTIFIER);
         if (!empty($previousCartIdentifier) && $previousCartIdentifier !== $session->getId()) {
-            $previousCustomerIdentifier = $this->customerIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
-            $cart = $this->cartFacade->findCartByCustomerIdentifier($previousCustomerIdentifier);
+            $previousCustomerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($previousCartIdentifier);
+            $cart = $this->cartFacade->findCartByCustomerUserIdentifier($previousCustomerUserIdentifier);
 
             if ($cart !== null) {
                 $this->mergeCurrentCartWithCart($cart);

@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\Mail;
 
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Mail\MessageFactoryInterface;
@@ -41,34 +41,36 @@ class RegistrationMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $mailTemplate, $user)
+    public function createMessage(MailTemplate $mailTemplate, $customerUser)
     {
         return new MessageData(
-            $user->getEmail(),
+            $customerUser->getEmail(),
             $mailTemplate->getBccEmail(),
             $mailTemplate->getBody(),
             $mailTemplate->getSubject(),
-            $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $user->getDomainId()),
-            $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $user->getDomainId()),
-            $this->getVariablesReplacements($user)
+            $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $customerUser->getDomainId()),
+            $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $customerUser->getDomainId()),
+            $this->getVariablesReplacements($customerUser)
         );
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     *
      * @return array
      */
-    protected function getVariablesReplacements(User $user)
+    protected function getVariablesReplacements(CustomerUser $customerUser)
     {
-        $router = $this->domainRouterFactory->getRouter($user->getDomainId());
+        $router = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
 
         return [
-            self::VARIABLE_FIRST_NAME => htmlspecialchars($user->getFirstName(), ENT_QUOTES),
-            self::VARIABLE_LAST_NAME => htmlspecialchars($user->getLastName(), ENT_QUOTES),
-            self::VARIABLE_EMAIL => htmlspecialchars($user->getEmail(), ENT_QUOTES),
+            self::VARIABLE_FIRST_NAME => htmlspecialchars($customerUser->getFirstName(), ENT_QUOTES),
+            self::VARIABLE_LAST_NAME => htmlspecialchars($customerUser->getLastName(), ENT_QUOTES),
+            self::VARIABLE_EMAIL => htmlspecialchars($customerUser->getEmail(), ENT_QUOTES),
             self::VARIABLE_URL => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
             self::VARIABLE_LOGIN_PAGE => $router->generate('front_login', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ];

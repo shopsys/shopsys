@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Watcher;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 
 class CartWatcherFacade
 {
@@ -25,26 +25,26 @@ class CartWatcherFacade
     protected $flashMessageSender;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender $flashMessageSender
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         FlashMessageSender $flashMessageSender,
         EntityManagerInterface $em,
         CartWatcher $cartWatcher,
-        CurrentCustomer $currentCustomer
+        CurrentCustomerUser $currentCustomerUser
     ) {
         $this->flashMessageSender = $flashMessageSender;
         $this->em = $em;
         $this->cartWatcher = $cartWatcher;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**
@@ -80,7 +80,7 @@ class CartWatcherFacade
      */
     protected function checkNotListableItems(Cart $cart)
     {
-        $notVisibleItems = $this->cartWatcher->getNotListableItems($cart, $this->currentCustomer);
+        $notVisibleItems = $this->cartWatcher->getNotListableItems($cart, $this->currentCustomerUser);
 
         $toFlush = [];
         foreach ($notVisibleItems as $cartItem) {

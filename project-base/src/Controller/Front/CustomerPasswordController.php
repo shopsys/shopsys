@@ -7,16 +7,16 @@ namespace App\Controller\Front;
 use App\Form\Front\Customer\Password\NewPasswordFormType;
 use App\Form\Front\Customer\Password\ResetPasswordFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Symfony\Component\HttpFoundation\Request;
 
 class CustomerPasswordController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade
      */
-    private $customerPasswordFacade;
+    private $customerUserPasswordFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -30,16 +30,16 @@ class CustomerPasswordController extends FrontBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerPasswordFacade $customerPasswordFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      */
     public function __construct(
         Domain $domain,
-        CustomerPasswordFacade $customerPasswordFacade,
+        CustomerUserPasswordFacade $customerUserPasswordFacade,
         Authenticator $authenticator
     ) {
         $this->domain = $domain;
-        $this->customerPasswordFacade = $customerPasswordFacade;
+        $this->customerUserPasswordFacade = $customerUserPasswordFacade;
         $this->authenticator = $authenticator;
     }
 
@@ -56,7 +56,7 @@ class CustomerPasswordController extends FrontBaseController
             $email = $formData['email'];
 
             try {
-                $this->customerPasswordFacade->resetPassword($email, $this->domain->getId());
+                $this->customerUserPasswordFacade->resetPassword($email, $this->domain->getId());
 
                 $this->getFlashMessageSender()->addSuccessFlashTwig(
                     t('Link to password reset sent to email <strong>{{ email }}</strong>.'),
@@ -65,7 +65,7 @@ class CustomerPasswordController extends FrontBaseController
                     ]
                 );
                 return $this->redirectToRoute('front_registration_reset_password');
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundByEmailAndDomainException $ex) {
+            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException $ex) {
                 $this->getFlashMessageSender()->addErrorFlashTwig(
                     t('Customer with email address <strong>{{ email }}</strong> doesn\'t exist. '
                         . '<a href="{{ registrationLink }}"> Register</a>'),
@@ -90,7 +90,7 @@ class CustomerPasswordController extends FrontBaseController
         $email = $request->query->get('email');
         $hash = $request->query->get('hash');
 
-        if (!$this->customerPasswordFacade->isResetPasswordHashValid($email, $this->domain->getId(), $hash)) {
+        if (!$this->customerUserPasswordFacade->isResetPasswordHashValid($email, $this->domain->getId(), $hash)) {
             $this->getFlashMessageSender()->addErrorFlash(t('The link to change your password expired.'));
             return $this->redirectToRoute('front_homepage');
         }
@@ -104,10 +104,10 @@ class CustomerPasswordController extends FrontBaseController
             $newPassword = $formData['newPassword'];
 
             try {
-                $user = $this->customerPasswordFacade->setNewPassword($email, $this->domain->getId(), $hash, $newPassword);
+                $customerUser = $this->customerUserPasswordFacade->setNewPassword($email, $this->domain->getId(), $hash, $newPassword);
 
-                $this->authenticator->loginUser($user, $request);
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundByEmailAndDomainException $ex) {
+                $this->authenticator->loginUser($customerUser, $request);
+            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException $ex) {
                 $this->getFlashMessageSender()->addErrorFlashTwig(
                     t('Customer with email address <strong>{{ email }}</strong> doesn\'t exist. '
                         . '<a href="{{ registrationLink }}"> Register</a>'),
@@ -116,7 +116,7 @@ class CustomerPasswordController extends FrontBaseController
                         'registrationLink' => $this->generateUrl('front_registration_register'),
                     ]
                 );
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashException $ex) {
+            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException $ex) {
                 $this->getFlashMessageSender()->addErrorFlash(t('The link to change your password expired.'));
             }
 

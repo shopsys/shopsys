@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -56,24 +56,26 @@ class OrderRepository
     }
 
     /**
-     * @param int $userId
+     * @param int $customerUserId
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getOrdersByUserId($userId)
+    public function getOrdersByCustomerUserId($customerUserId)
     {
         return $this->createOrderQueryBuilder()
-            ->andWhere('o.customer = :customer')->setParameter(':customer', $userId)
+            ->andWhere('o.customerUser = :user')->setParameter(':user', $customerUserId)
             ->getQuery()->getResult();
     }
 
     /**
-     * @param int $userId
+     * @param int $customerUserId
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    public function findLastByUserId($userId)
+    public function findLastByCustomerUserId($customerUserId)
     {
         return $this->createOrderQueryBuilder()
-            ->andWhere('o.customer = :customer')->setParameter(':customer', $userId)
+            ->andWhere('o.customerUser = :user')->setParameter(':user', $customerUserId)
             ->orderBy('o.createdAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
@@ -136,7 +138,7 @@ class OrderRepository
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder
-                ->leftJoin(User::class, 'u', Join::WITH, 'o.customer = u.id')
+                ->leftJoin(CustomerUser::class, 'u', Join::WITH, 'o.customerUser = u.id')
                 ->andWhere('
                     (
                         o.number LIKE :text
@@ -157,10 +159,11 @@ class OrderRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getCustomerOrderList(User $user)
+    public function getCustomerUserOrderList(CustomerUser $customerUser)
     {
         return $this->createOrderQueryBuilder()
             ->select('o, oi, os, ost, c')
@@ -168,9 +171,9 @@ class OrderRepository
             ->join('o.status', 'os')
             ->join('os.translations', 'ost')
             ->join('o.currency', 'c')
-            ->andWhere('o.customer = :customer')
+            ->andWhere('o.customerUser = :customerUser')
             ->orderBy('o.createdAt', 'DESC')
-            ->setParameter('customer', $user)
+            ->setParameter('customerUser', $customerUser)
             ->getQuery()->execute();
     }
 
@@ -212,19 +215,20 @@ class OrderRepository
 
     /**
      * @param string $orderNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByOrderNumberAndUser($orderNumber, User $user)
+    public function getByOrderNumberAndCustomerUser($orderNumber, CustomerUser $customerUser)
     {
         $order = $this->createOrderQueryBuilder()
             ->andWhere('o.number = :number')->setParameter(':number', $orderNumber)
-            ->andWhere('o.customer = :customer')->setParameter(':customer', $user)
+            ->andWhere('o.customerUser = :customerUser')->setParameter(':customerUser', $customerUser)
             ->setMaxResults(1)
             ->getQuery()->getOneOrNullResult();
 
         if ($order === null) {
-            $message = 'Order with number "' . $orderNumber . '" and userId "' . $user->getId() . '" not found.';
+            $message = 'Order with number "' . $orderNumber . '" and customerUserId "' . $customerUser->getId() . '" not found.';
             throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException($message);
         }
 
@@ -281,6 +285,6 @@ class OrderRepository
             ->join('o.status', 'os')
             ->join('os.translations', 'ost')
             ->join('o.currency', 'c')
-            ->leftJoin('o.customer', 'cu');
+            ->leftJoin('o.customerUser', 'cu');
     }
 }

@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class OrderItemFacade
@@ -29,9 +29,9 @@ class OrderItemFacade
     protected $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      */
-    protected $productPriceCalculationForUser;
+    protected $productPriceCalculationForCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -52,7 +52,7 @@ class OrderItemFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculationForUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface $orderItemFactory
@@ -61,7 +61,7 @@ class OrderItemFacade
         EntityManagerInterface $em,
         OrderRepository $orderRepository,
         ProductRepository $productRepository,
-        ProductPriceCalculationForUser $productPriceCalculationForUser,
+        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         Domain $domain,
         OrderPriceCalculation $orderPriceCalculation,
         OrderItemFactoryInterface $orderItemFactory
@@ -69,7 +69,7 @@ class OrderItemFacade
         $this->em = $em;
         $this->orderRepository = $orderRepository;
         $this->productRepository = $productRepository;
-        $this->productPriceCalculationForUser = $productPriceCalculationForUser;
+        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
         $this->domain = $domain;
         $this->orderPriceCalculation = $orderPriceCalculation;
         $this->orderItemFactory = $orderItemFactory;
@@ -86,10 +86,10 @@ class OrderItemFacade
         $product = $this->productRepository->getById($productId);
         $orderDomainConfig = $this->domain->getDomainConfigById($order->getDomainId());
 
-        $productPrice = $this->productPriceCalculationForUser->calculatePriceForUserAndDomainId(
+        $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $order->getDomainId(),
-            $order->getCustomer()
+            $order->getCustomerUser()
         );
 
         $orderProduct = $this->orderItemFactory->createProduct(

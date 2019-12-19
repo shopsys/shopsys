@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Form\Front\Customer\CustomerFormType;
+use App\Form\Front\Customer\User\CustomerUserUpdateFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomerController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
-    private $customerFacade;
+    private $customerUserFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -42,32 +42,32 @@ class CustomerController extends FrontBaseController
     private $loginAsUserFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      */
-    private $customerDataFactory;
+    private $customerUserUpdateDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      */
     public function __construct(
-        CustomerFacade $customerFacade,
+        CustomerUserFacade $customerUserFacade,
         OrderFacade $orderFacade,
         Domain $domain,
         OrderItemPriceCalculation $orderItemPriceCalculation,
         LoginAsUserFacade $loginAsUserFacade,
-        CustomerDataFactoryInterface $customerDataFactory
+        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
     ) {
-        $this->customerFacade = $customerFacade;
+        $this->customerUserFacade = $customerUserFacade;
         $this->orderFacade = $orderFacade;
         $this->domain = $domain;
         $this->orderItemPriceCalculation = $orderItemPriceCalculation;
         $this->loginAsUserFacade = $loginAsUserFacade;
-        $this->customerDataFactory = $customerDataFactory;
+        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
     }
 
     /**
@@ -80,18 +80,18 @@ class CustomerController extends FrontBaseController
             return $this->redirectToRoute('front_login');
         }
 
-        $user = $this->getUser();
-        $customerData = $this->customerDataFactory->createFromUser($user);
+        $customerUser = $this->getUser();
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
 
-        $form = $this->createForm(CustomerFormType::class, $customerData, [
+        $form = $this->createForm(CustomerUserUpdateFormType::class, $customerUserUpdateData, [
             'domain_id' => $this->domain->getId(),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $customerData = $form->getData();
+            $customerUserUpdateData = $form->getData();
 
-            $this->customerFacade->editByCustomer($user->getId(), $customerData);
+            $this->customerUserFacade->editByCustomer($customerUser->getId(), $customerUserUpdateData);
 
             $this->getFlashMessageSender()->addSuccessFlash(t('Your data had been successfully updated'));
             return $this->redirectToRoute('front_customer_edit');
@@ -113,10 +113,10 @@ class CustomerController extends FrontBaseController
             return $this->redirectToRoute('front_login');
         }
 
-        /** @var \App\Model\Customer\User $user */
-        $user = $this->getUser();
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = $this->getUser();
 
-        $orders = $this->orderFacade->getCustomerOrderList($user);
+        $orders = $this->orderFacade->getCustomerUserOrderList($customerUser);
         return $this->render('Front/Content/Customer/orders.html.twig', [
             'orders' => $orders,
         ]);
@@ -150,10 +150,10 @@ class CustomerController extends FrontBaseController
                 return $this->redirectToRoute('front_login');
             }
 
-            $user = $this->getUser();
+            $customerUser = $this->getUser();
             try {
                 /** @var \App\Model\Order\Order $order */
-                $order = $this->orderFacade->getByOrderNumberAndUser($orderNumber, $user);
+                $order = $this->orderFacade->getByOrderNumberAndUser($orderNumber, $customerUser);
             } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $ex) {
                 $this->getFlashMessageSender()->addErrorFlash(t('Order not found'));
                 return $this->redirectToRoute('front_customer_orders');
@@ -179,7 +179,7 @@ class CustomerController extends FrontBaseController
     {
         try {
             $this->loginAsUserFacade->loginAsRememberedUser($request);
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException $e) {
+        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $e) {
             /** @var \Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageSender $adminFlashMessageSender */
             $adminFlashMessageSender = $this->get('shopsys.shop.component.flash_message.sender.admin');
             $adminFlashMessageSender->addErrorFlash(t('User not found.'));

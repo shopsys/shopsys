@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Security;
 
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -62,12 +62,12 @@ class Authenticator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function loginUser(User $user, Request $request)
+    public function loginUser(CustomerUser $customerUser, Request $request)
     {
-        $token = new UsernamePasswordToken($user, $user->getPassword(), 'frontend', $user->getRoles());
+        $token = new UsernamePasswordToken($customerUser, $customerUser->getPassword(), 'frontend', $customerUser->getRoles());
         $this->tokenStorage->setToken($token);
 
         // dispatch the login event

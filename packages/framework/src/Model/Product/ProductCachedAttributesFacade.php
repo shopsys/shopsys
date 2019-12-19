@@ -4,14 +4,14 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 
 class ProductCachedAttributesFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      */
-    protected $productPriceCalculationForUser;
+    protected $productPriceCalculationForCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
@@ -34,16 +34,16 @@ class ProductCachedAttributesFacade
     protected $parameterValuesByProductId;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculationForUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        ProductPriceCalculationForUser $productPriceCalculationForUser,
+        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         ParameterRepository $parameterRepository,
         Localization $localization
     ) {
-        $this->productPriceCalculationForUser = $productPriceCalculationForUser;
+        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
         $this->parameterRepository = $parameterRepository;
         $this->localization = $localization;
     }
@@ -58,7 +58,7 @@ class ProductCachedAttributesFacade
             return $this->sellingPricesByProductId[$product->getId()];
         }
         try {
-            $productPrice = $this->productPriceCalculationForUser->calculatePriceForCurrentUser($product);
+            $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
         } catch (\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException $ex) {
             $productPrice = null;
         }

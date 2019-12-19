@@ -6,8 +6,8 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Registration\RegistrationFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
@@ -17,14 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
 class RegistrationController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
-    private $customerFacade;
+    private $customerUserFacade;
 
     /**
-     * @var \App\Model\Customer\UserDataFactory
+     * @var \App\Model\Customer\User\CustomerUserDataFactory
      */
-    private $userDataFactory;
+    private $customerUserDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -43,21 +43,21 @@ class RegistrationController extends FrontBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Customer\UserDataFactory $userDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      */
     public function __construct(
         Domain $domain,
-        UserDataFactoryInterface $userDataFactory,
-        CustomerFacade $customerFacade,
+        CustomerUserDataFactoryInterface $customerUserDataFactory,
+        CustomerUserFacade $customerUserFacade,
         Authenticator $authenticator,
         LegalConditionsFacade $legalConditionsFacade
     ) {
         $this->domain = $domain;
-        $this->userDataFactory = $userDataFactory;
-        $this->customerFacade = $customerFacade;
+        $this->customerUserDataFactory = $customerUserDataFactory;
+        $this->customerUserFacade = $customerUserFacade;
         $this->authenticator = $authenticator;
         $this->legalConditionsFacade = $legalConditionsFacade;
     }
@@ -68,9 +68,9 @@ class RegistrationController extends FrontBaseController
     public function existsEmailAction(Request $request)
     {
         $email = $request->get('email');
-        $user = $this->customerFacade->findUserByEmailAndDomain($email, $this->domain->getId());
+        $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $this->domain->getId());
 
-        return new JsonResponse($user !== null);
+        return new JsonResponse($customerUser !== null);
     }
 
     /**
@@ -82,16 +82,16 @@ class RegistrationController extends FrontBaseController
             return $this->redirectToRoute('front_homepage');
         }
 
-        $userData = $this->userDataFactory->createForDomainId($this->domain->getId());
+        $customerUserData = $this->customerUserDataFactory->createForDomainId($this->domain->getId());
 
-        $form = $this->createForm(RegistrationFormType::class, $userData);
+        $form = $this->createForm(RegistrationFormType::class, $customerUserData);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userData = $form->getData();
+            $customerUserData = $form->getData();
 
-            $user = $this->customerFacade->register($userData);
-            $this->authenticator->loginUser($user, $request);
+            $customerUser = $this->customerUserFacade->register($customerUserData);
+            $this->authenticator->loginUser($customerUser, $request);
 
             $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
             return $this->redirectToRoute('front_homepage');

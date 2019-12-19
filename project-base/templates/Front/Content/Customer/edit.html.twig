@@ -16,14 +16,14 @@
             {{ form_start(form) }}
                 {{ form_errors(form) }}
 
-                <div id="{{ form.userData.vars.id }}">
+                <div id="{{ form.customerUserData.vars.id }}">
                     <div class="wrap-box">
                         <h2 class="wrap-box__title">{{ 'Personal data'|trans }}</h2>
                         <div class="wrap-box__in">
-                            {{ form_row(form.userData.firstName, { label: 'First name'|trans}) }}
-                            {{ form_row(form.userData.lastName, { label: 'Last name'|trans}) }}
-                            {{ form_row(form.userData.telephone, { label: 'Telephone'|trans}) }}
-                            {{ form_row(form.userData.email, { label: 'Email'|trans}) }}
+                            {{ form_row(form.customerUserData.firstName, { label: 'First name'|trans}) }}
+                            {{ form_row(form.customerUserData.lastName, { label: 'Last name'|trans}) }}
+                            {{ form_row(form.customerUserData.telephone, { label: 'Telephone'|trans}) }}
+                            {{ form_row(form.customerUserData.email, { label: 'Email'|trans}) }}
                             <p>
                                 {{ 'To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us.'|trans }}
                             </p>
@@ -32,15 +32,15 @@
 
                     <div class="wrap-box">
                         <h2 class="wrap-box__title">{{ 'Changing password'|trans }}</h2>
-                        <div class="wrap-box__in" id="{{ form.userData.password.vars.id }}">
-                            {{ form_row(form.userData.password.first, { label: 'Password'|trans}) }}
+                        <div class="wrap-box__in" id="{{ form.customerUserData.password.vars.id }}">
+                            {{ form_row(form.customerUserData.password.first, { label: 'Password'|trans}) }}
                             <i class="svg svg-info in-icon in-icon--info form-line__info js-tooltip"
                                 data-toggle="tooltip"
                                 data-placement="right"
                                 title=""
                                 data-original-title="{{ 'Password must be at least six characters and can\'t be the same as entered email or its part before at sign.'|trans }}">
                              </i>
-                            {{ form_row(form.userData.password.second, { label: 'Password again'|trans}) }}
+                            {{ form_row(form.customerUserData.password.second, { label: 'Password again'|trans}) }}
                         </div>
                     </div>
                 </div>

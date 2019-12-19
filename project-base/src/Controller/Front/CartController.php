@@ -84,7 +84,7 @@ class CartController extends FrontBaseController
      */
     public function indexAction(Request $request)
     {
-        $cart = $this->cartFacade->findCartOfCurrentCustomer();
+        $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         $cartItems = $cart === null ? [] : $cart->getItems();
 
         $cartFormData = ['quantities' => []];
@@ -143,7 +143,7 @@ class CartController extends FrontBaseController
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser();
 
         return $this->render('Front/Inline/Cart/cartBox.html.twig', [
-            'cart' => $this->cartFacade->findCartOfCurrentCustomer(),
+            'cart' => $this->cartFacade->findCartOfCurrentCustomerUser(),
             'productsPrice' => $orderPreview->getProductsPrice(),
         ]);
     }

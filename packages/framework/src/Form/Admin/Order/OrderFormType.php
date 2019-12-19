@@ -183,9 +183,9 @@ class OrderFormType extends AbstractType
         }
 
         $builderBasicInformationGroup
-            ->add('customer', DisplayOnlyCustomerType::class, [
+            ->add('user', DisplayOnlyCustomerType::class, [
                 'label' => t('Customer'),
-                'customer' => $order->getCustomer(),
+                'user' => $order->getCustomerUser(),
             ]);
 
         return $builderBasicInformationGroup;

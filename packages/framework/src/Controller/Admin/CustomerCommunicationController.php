@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Form\Admin\CustomerCommunication\CustomerCommunicationFormType;
+use Shopsys\FrameworkBundle\Form\Admin\CustomerCommunication\CustomerUserCommunicationFormType;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -42,7 +42,7 @@ class CustomerCommunicationController extends AdminBaseController
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $domainId);
 
-        $form = $this->createForm(CustomerCommunicationFormType::class, ['content' => $orderSentPageContent]);
+        $form = $this->createForm(CustomerUserCommunicationFormType::class, ['content' => $orderSentPageContent]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

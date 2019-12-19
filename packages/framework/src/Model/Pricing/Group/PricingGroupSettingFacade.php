@@ -52,7 +52,7 @@ class PricingGroupSettingFacade
      */
     public function isPricingGroupUsedOnSelectedDomain(PricingGroup $pricingGroup)
     {
-        return $this->pricingGroupRepository->existsUserWithPricingGroup($pricingGroup)
+        return $this->pricingGroupRepository->existsCustomerUserWithPricingGroup($pricingGroup)
             || $this->isPricingGroupDefaultOnSelectedDomain($pricingGroup);
     }
 

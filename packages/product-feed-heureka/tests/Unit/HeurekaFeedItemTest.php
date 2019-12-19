@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItem;
 use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory;
@@ -23,9 +23,9 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 class HeurekaFeedItemTest extends TestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $productPriceCalculationForUserMock;
+    private $productPriceCalculationForCustomerUserMock;
 
     /**
      * @var \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader|\PHPUnit\Framework\MockObject\MockObject
@@ -59,13 +59,13 @@ class HeurekaFeedItemTest extends TestCase
 
     public function setUp()
     {
-        $this->productPriceCalculationForUserMock = $this->createMock(ProductPriceCalculationForUser::class);
+        $this->productPriceCalculationForCustomerUserMock = $this->createMock(ProductPriceCalculationForCustomerUser::class);
         $this->heurekaProductDataBatchLoaderMock = $this->createMock(HeurekaProductDataBatchLoader::class);
         $this->heurekaCategoryFacadeMock = $this->createMock(HeurekaCategoryFacade::class);
         $this->categoryFacadeMock = $this->createMock(CategoryFacade::class);
 
         $this->heurekaFeedItemFactory = new HeurekaFeedItemFactory(
-            $this->productPriceCalculationForUserMock,
+            $this->productPriceCalculationForCustomerUserMock,
             $this->heurekaProductDataBatchLoaderMock,
             $this->heurekaCategoryFacadeMock,
             $this->categoryFacadeMock
@@ -83,7 +83,7 @@ class HeurekaFeedItemTest extends TestCase
         $this->defaultProduct->method('getCalculatedAvailability')->willReturn($availabilityMock);
 
         $productPrice = new ProductPrice(Price::zero(), false);
-        $this->productPriceCalculationForUserMock->method('calculatePriceForUserAndDomainId')
+        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForUserAndDomainId')
             ->with($this->defaultProduct, 1, null)->willReturn($productPrice);
 
         $this->heurekaProductDataBatchLoaderMock->method('getProductUrl')

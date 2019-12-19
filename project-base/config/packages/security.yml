@@ -12,7 +12,7 @@ security:
             id: Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorUserProvider
 
         user_identities:
-            id: Shopsys\FrameworkBundle\Model\Customer\FrontendUserProvider
+            id: Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
 
     firewalls:
         # see Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade

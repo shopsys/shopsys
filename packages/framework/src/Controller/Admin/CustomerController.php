@@ -10,16 +10,16 @@ use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecorator;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\Form\Admin\Customer\CustomerFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserUpdateFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerListAdminFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User;
-use Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,19 +30,19 @@ class CustomerController extends AdminBaseController
     protected const LOGIN_AS_TOKEN_ID_PREFIX = 'loginAs';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface
      */
-    protected $userDataFactory;
+    protected $customerUserDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerListAdminFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade
      */
-    protected $customerListAdminFacade;
+    protected $customerUserListAdminFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
-    protected $customerFacade;
+    protected $customerUserFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
@@ -80,14 +80,14 @@ class CustomerController extends AdminBaseController
     protected $domainRouterFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      */
-    protected $customerDataFactory;
+    protected $customerUserUpdateDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface $userDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerListAdminFacade $customerListAdminFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade $customerUserListAdminFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
@@ -95,12 +95,12 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      */
     public function __construct(
-        UserDataFactoryInterface $userDataFactory,
-        CustomerListAdminFacade $customerListAdminFacade,
-        CustomerFacade $customerFacade,
+        CustomerUserDataFactoryInterface $customerUserDataFactory,
+        CustomerUserListAdminFacade $customerUserListAdminFacade,
+        CustomerUserFacade $customerUserFacade,
         BreadcrumbOverrider $breadcrumbOverrider,
         AdministratorGridFacade $administratorGridFacade,
         GridFactory $gridFactory,
@@ -108,11 +108,11 @@ class CustomerController extends AdminBaseController
         OrderFacade $orderFacade,
         LoginAsUserFacade $loginAsUserFacade,
         DomainRouterFactory $domainRouterFactory,
-        CustomerDataFactoryInterface $customerDataFactory
+        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
     ) {
-        $this->userDataFactory = $userDataFactory;
-        $this->customerListAdminFacade = $customerListAdminFacade;
-        $this->customerFacade = $customerFacade;
+        $this->customerUserDataFactory = $customerUserDataFactory;
+        $this->customerUserListAdminFacade = $customerUserListAdminFacade;
+        $this->customerUserFacade = $customerUserFacade;
         $this->breadcrumbOverrider = $breadcrumbOverrider;
         $this->administratorGridFacade = $administratorGridFacade;
         $this->gridFactory = $gridFactory;
@@ -120,7 +120,7 @@ class CustomerController extends AdminBaseController
         $this->orderFacade = $orderFacade;
         $this->loginAsUserFacade = $loginAsUserFacade;
         $this->domainRouterFactory = $domainRouterFactory;
-        $this->customerDataFactory = $customerDataFactory;
+        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
     }
 
     /**
@@ -130,23 +130,23 @@ class CustomerController extends AdminBaseController
      */
     public function editAction(Request $request, $id)
     {
-        $user = $this->customerFacade->getUserById($id);
-        $customerData = $this->customerDataFactory->createFromUser($user);
+        $customerUser = $this->customerUserFacade->getCustomerUserById($id);
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
 
-        $form = $this->createForm(CustomerFormType::class, $customerData, [
-            'user' => $user,
+        $form = $this->createForm(CustomerUserUpdateFormType::class, $customerUserUpdateData, [
+            'customerUser' => $customerUser,
             'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->customerFacade->editByAdmin($id, $customerData);
+            $this->customerUserFacade->editByAdmin($id, $customerUserUpdateData);
 
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                 [
-                    'name' => $user->getFullName(),
-                    'url' => $this->generateUrl('admin_customer_edit', ['id' => $user->getId()]),
+                    'name' => $customerUser->getFullName(),
+                    'url' => $this->generateUrl('admin_customer_edit', ['id' => $customerUser->getId()]),
                 ]
             );
 
@@ -157,15 +157,15 @@ class CustomerController extends AdminBaseController
             $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing customer - %name%', ['%name%' => $user->getFullName()]));
+        $this->breadcrumbOverrider->overrideLastItem(t('Editing customer - %name%', ['%name%' => $customerUser->getFullName()]));
 
-        $orders = $this->orderFacade->getCustomerOrderList($user);
+        $orders = $this->orderFacade->getCustomerUserOrderList($customerUser);
 
         return $this->render('@ShopsysFramework/Admin/Content/Customer/edit.html.twig', [
             'form' => $form->createView(),
-            'user' => $user,
+            'customerUser' => $customerUser,
             'orders' => $orders,
-            'ssoLoginAsUserUrl' => $this->getSsoLoginAsUserUrl($user),
+            'ssoLoginAsUserUrl' => $this->getSsoLoginAsCustomerUserUrl($customerUser),
         ]);
     }
 
@@ -181,7 +181,7 @@ class CustomerController extends AdminBaseController
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
-        $queryBuilder = $this->customerListAdminFacade->getCustomerListQueryBuilderByQuickSearchData(
+        $queryBuilder = $this->customerUserListAdminFacade->getCustomerUserListQueryBuilderByQuickSearchData(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
             $quickSearchForm->getData()
         );
@@ -225,26 +225,26 @@ class CustomerController extends AdminBaseController
      */
     public function newAction(Request $request)
     {
-        $customerData = $this->customerDataFactory->create();
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
-        $userData = $this->userDataFactory->createForDomainId($selectedDomainId);
-        $customerData->userData = $userData;
+        $customerUserData = $this->customerUserDataFactory->createForDomainId($selectedDomainId);
+        $customerUserUpdateData->customerUserData = $customerUserData;
 
-        $form = $this->createForm(CustomerFormType::class, $customerData, [
-            'user' => null,
+        $form = $this->createForm(CustomerUserUpdateFormType::class, $customerUserUpdateData, [
+            'customerUser' => null,
             'domain_id' => $selectedDomainId,
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $customerData = $form->getData();
-            $user = $this->customerFacade->create($customerData);
+            $customerUserUpdateData = $form->getData();
+            $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
 
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                 [
-                    'name' => $user->getFullName(),
-                    'url' => $this->generateUrl('admin_customer_edit', ['id' => $user->getId()]),
+                    'name' => $customerUser->getFullName(),
+                    'url' => $this->generateUrl('admin_customer_edit', ['id' => $customerUser->getId()]),
                 ]
             );
 
@@ -268,9 +268,9 @@ class CustomerController extends AdminBaseController
     public function deleteAction($id)
     {
         try {
-            $fullName = $this->customerFacade->getUserById($id)->getFullName();
+            $fullName = $this->customerUserFacade->getCustomerUserById($id)->getFullName();
 
-            $this->customerFacade->delete($id);
+            $this->customerUserFacade->delete($id);
 
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Customer <strong>{{ name }}</strong> deleted'),
@@ -278,7 +278,7 @@ class CustomerController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\UserNotFoundException $ex) {
+        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $ex) {
             $this->getFlashMessageSender()->addErrorFlash(t('Selected customer doesn\'t exist.'));
         }
 
@@ -286,28 +286,29 @@ class CustomerController extends AdminBaseController
     }
 
     /**
-     * @Route("/customer/login-as-user/{userId}/", requirements={"id" = "\d+"})
-     * @param int $userId
+     * @Route("/customer/login-as-user/{customerUserId}/", requirements={"id" = "\d+"})
+     * @param int $customerUserId
      */
-    public function loginAsUserAction($userId)
+    public function loginAsUserAction($customerUserId)
     {
-        $user = $this->customerFacade->getUserById($userId);
-        $this->loginAsUserFacade->rememberLoginAsUser($user);
+        $customerUser = $this->customerUserFacade->getCustomerUserById($customerUserId);
+        $this->loginAsUserFacade->rememberLoginAsUser($customerUser);
 
         return $this->redirectToRoute('front_customer_login_as_remembered_user');
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     *
      * @return string
      */
-    protected function getSsoLoginAsUserUrl(User $user)
+    protected function getSsoLoginAsCustomerUserUrl(CustomerUser $customerUser)
     {
-        $customerDomainRouter = $this->domainRouterFactory->getRouter($user->getDomainId());
+        $customerDomainRouter = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
         $loginAsUserUrl = $customerDomainRouter->generate(
             'admin_customer_loginasuser',
             [
-                'userId' => $user->getId(),
+                'customerUserId' => $customerUser->getId(),
             ],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
@@ -316,7 +317,7 @@ class CustomerController extends AdminBaseController
         $ssoLoginAsUserUrl = $mainAdminDomainRouter->generate(
             'admin_login_sso',
             [
-                LoginController::ORIGINAL_DOMAIN_ID_PARAMETER_NAME => $user->getDomainId(),
+                LoginController::ORIGINAL_DOMAIN_ID_PARAMETER_NAME => $customerUser->getDomainId(),
                 LoginController::ORIGINAL_REFERER_PARAMETER_NAME => $loginAsUserUrl,
             ],
             UrlGeneratorInterface::ABSOLUTE_URL

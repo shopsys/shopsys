@@ -18,7 +18,7 @@ class BillingAddressDataFactory implements BillingAddressDataFactoryInterface
      */
     public function createFromBillingAddress(BillingAddress $billingAddress): BillingAddressData
     {
-        $billingAddressData = new BillingAddressData();
+        $billingAddressData = $this->create();
         $this->fillFromBillingAddress($billingAddressData, $billingAddress);
 
         return $billingAddressData;
@@ -38,5 +38,6 @@ class BillingAddressDataFactory implements BillingAddressDataFactoryInterface
         $billingAddressData->city = $billingAddress->getCity();
         $billingAddressData->postcode = $billingAddress->getPostcode();
         $billingAddressData->country = $billingAddress->getCountry();
+        $billingAddressData->customer = $billingAddress->getCustomer();
     }
 }

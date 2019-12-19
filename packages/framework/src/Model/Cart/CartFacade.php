@@ -7,11 +7,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class CartFacade
@@ -35,9 +35,9 @@ class CartFacade
     protected $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory
      */
-    protected $customerIdentifierFactory;
+    protected $customerUserIdentifierFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -45,9 +45,9 @@ class CartFacade
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade
@@ -55,7 +55,7 @@ class CartFacade
     protected $currentPromoCodeFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      */
     protected $productPriceCalculation;
 
@@ -78,11 +78,11 @@ class CartFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory $customerIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
@@ -91,11 +91,11 @@ class CartFacade
         EntityManagerInterface $em,
         CartFactory $cartFactory,
         ProductRepository $productRepository,
-        CustomerIdentifierFactory $customerIdentifierFactory,
+        CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         Domain $domain,
-        CurrentCustomer $currentCustomer,
+        CurrentCustomerUser $currentCustomerUser,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
-        ProductPriceCalculationForUser $productPriceCalculation,
+        ProductPriceCalculationForCustomerUser $productPriceCalculation,
         CartItemFactoryInterface $cartItemFactory,
         CartRepository $cartRepository,
         CartWatcherFacade $cartWatcherFacade
@@ -103,9 +103,9 @@ class CartFacade
         $this->em = $em;
         $this->cartFactory = $cartFactory;
         $this->productRepository = $productRepository;
-        $this->customerIdentifierFactory = $customerIdentifierFactory;
+        $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
         $this->domain = $domain;
-        $this->currentCustomer = $currentCustomer;
+        $this->currentCustomerUser = $currentCustomerUser;
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
         $this->productPriceCalculation = $productPriceCalculation;
         $this->cartItemFactory = $cartItemFactory;
@@ -123,9 +123,9 @@ class CartFacade
         $product = $this->productRepository->getSellableById(
             $productId,
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
-        $cart = $this->getCartOfCurrentCustomerCreateIfNotExists();
+        $cart = $this->getCartOfCurrentCustomerUserCreateIfNotExists();
 
         if (!is_int($quantity) || $quantity <= 0) {
             throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($quantity);
@@ -160,7 +160,7 @@ class CartFacade
      */
     public function changeQuantities(array $quantitiesByCartItemId)
     {
-        $cart = $this->findCartOfCurrentCustomer();
+        $cart = $this->findCartOfCurrentCustomerUser();
 
         if ($cart === null) {
             return;
@@ -175,7 +175,7 @@ class CartFacade
      */
     public function deleteCartItem($cartItemId)
     {
-        $cart = $this->findCartOfCurrentCustomer();
+        $cart = $this->findCartOfCurrentCustomerUser();
 
         if ($cart === null) {
             return;
@@ -191,9 +191,9 @@ class CartFacade
         }
     }
 
-    public function deleteCartOfCurrentCustomer()
+    public function deleteCartOfCurrentCustomerUser()
     {
-        $cart = $this->findCartOfCurrentCustomer();
+        $cart = $this->findCartOfCurrentCustomerUser();
 
         if ($cart !== null) {
             $this->deleteCart($cart);
@@ -217,7 +217,7 @@ class CartFacade
      */
     public function getProductByCartItemId($cartItemId)
     {
-        $cart = $this->findCartOfCurrentCustomer();
+        $cart = $this->findCartOfCurrentCustomerUser();
 
         if ($cart === null) {
             $message = 'CartItem with id = ' . $cartItemId . ' not found in cart.';
@@ -233,12 +233,13 @@ class CartFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
-    public function findCartByCustomerIdentifier(CustomerIdentifier $customerIdentifier)
+    public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
     {
-        $cart = $this->cartRepository->findByCustomerIdentifier($customerIdentifier);
+        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
 
         if ($cart !== null) {
             $this->cartWatcherFacade->checkCartModifications($cart);
@@ -256,33 +257,34 @@ class CartFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
-    public function findCartOfCurrentCustomer()
+    public function findCartOfCurrentCustomerUser()
     {
-        $customerIdentifier = $this->customerIdentifierFactory->get();
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
 
-        return $this->findCartByCustomerIdentifier($customerIdentifier);
+        return $this->findCartByCustomerUserIdentifier($customerUserIdentifier);
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
-    public function getCartOfCurrentCustomerCreateIfNotExists()
+    public function getCartOfCurrentCustomerUserCreateIfNotExists()
     {
-        $customerIdentifier = $this->customerIdentifierFactory->get();
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
 
-        return $this->getCartByCustomerIdentifierCreateIfNotExists($customerIdentifier);
+        return $this->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
+     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
-    public function getCartByCustomerIdentifierCreateIfNotExists(CustomerIdentifier $customerIdentifier)
+    public function getCartByCustomerUserIdentifierCreateIfNotExists(CustomerUserIdentifier $customerUserIdentifier)
     {
-        $cart = $this->cartRepository->findByCustomerIdentifier($customerIdentifier);
+        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
 
         if ($cart === null) {
-            $cart = $this->cartFactory->create($customerIdentifier);
+            $cart = $this->cartFactory->create($customerUserIdentifier);
 
             $this->em->persist($cart);
             $this->em->flush($cart);
@@ -296,7 +298,7 @@ class CartFacade
      */
     public function getQuantifiedProductsOfCurrentCustomer()
     {
-        $cart = $this->findCartOfCurrentCustomer();
+        $cart = $this->findCartOfCurrentCustomerUser();
 
         if ($cart === null) {
             return [];
@@ -307,7 +309,7 @@ class CartFacade
 
     public function deleteOldCarts()
     {
-        $this->cartRepository->deleteOldCartsForUnregisteredCustomers(static::DAYS_LIMIT_FOR_UNREGISTERED);
-        $this->cartRepository->deleteOldCartsForRegisteredCustomers(static::DAYS_LIMIT_FOR_REGISTERED);
+        $this->cartRepository->deleteOldCartsForUnregisteredCustomerUsers(static::DAYS_LIMIT_FOR_UNREGISTERED);
+        $this->cartRepository->deleteOldCartsForRegisteredCustomerUsers(static::DAYS_LIMIT_FOR_REGISTERED);
     }
 }

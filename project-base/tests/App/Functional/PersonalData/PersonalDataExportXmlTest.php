@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\PersonalData;
 
-use App\Model\Customer\User;
-use App\Model\Customer\UserData;
+use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\CustomerUserData;
 use App\Model\Order\Order;
 use App\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -34,9 +35,10 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
     public function testExportXml()
     {
         $country = $this->createCountry();
-        $billingAddress = $this->createBillingAddress($country);
+        $customer = new Customer();
+        $customer->addBillingAddress($this->createBillingAddress($country, $customer));
         $deliveryAddress = $this->createDeliveryAddress($country);
-        $user = $this->createUser($billingAddress, $deliveryAddress);
+        $customerUser = $this->createCustomerUser($deliveryAddress, $customer);
         $status = $this->createMock(OrderStatus::class);
         $currencyData = new CurrencyData();
         $currencyData->name = 'CZK';
@@ -53,7 +55,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $twig = $this->getContainer()->get('twig');
 
         $generatedXml = $twig->render('Front/Content/PersonalData/export.xml.twig', [
-            'user' => $user,
+            'customerUser' => $customerUser,
             'orders' => [0 => $order],
             'newsletterSubscriber' => null,
         ]);
@@ -79,9 +81,10 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
      */
-    private function createBillingAddress(Country $country)
+    private function createBillingAddress(Country $country, Customer $customer)
     {
         $billingAddressData = new BillingAddressData();
         $billingAddressData->country = $country;
@@ -92,6 +95,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $billingAddressData->companyNumber = '123456';
         $billingAddressData->companyTaxNumber = '123456';
         $billingAddressData->postcode = '70200';
+        $billingAddressData->customer = $customer;
 
         $billingAddress = new BillingAddress($billingAddressData);
 
@@ -119,23 +123,23 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
-     * @return \App\Model\Customer\User
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     *
+     * @return \App\Model\Customer\User\CustomerUser
      */
-    private function createUser(BillingAddress $billingAddress, DeliveryAddress $deliveryAddress)
+    private function createCustomerUser(DeliveryAddress $deliveryAddress, Customer $customer)
     {
-        $userData = new UserData();
-        $userData->firstName = 'Jaromír';
-        $userData->lastName = 'Jágr';
-        $userData->domainId = self::DOMAIN_ID_FIRST;
-        $userData->createdAt = new \DateTime('2018-04-13');
-        $userData->email = 'no-reply@shopsys.com';
-        $userData->telephone = '+420987654321';
+        $customerUserData = new CustomerUserData();
+        $customerUserData->firstName = 'Jaromír';
+        $customerUserData->lastName = 'Jágr';
+        $customerUserData->domainId = self::DOMAIN_ID_FIRST;
+        $customerUserData->createdAt = new \DateTime('2018-04-13');
+        $customerUserData->email = 'no-reply@shopsys.com';
+        $customerUserData->telephone = '+420987654321';
+        $customerUserData->customer = $customer;
 
-        $user = new User($userData, $billingAddress, $deliveryAddress);
-
-        return $user;
+        return new CustomerUser($customerUserData, $deliveryAddress);
     }
 
     /**

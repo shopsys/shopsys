@@ -8,9 +8,9 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -98,14 +98,14 @@ class OrderFacade
     protected $cartFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
-    protected $customerFacade;
+    protected $customerUserFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
-    protected $currentCustomer;
+    protected $currentCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
@@ -180,8 +180,8 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer $currentCustomer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
@@ -208,8 +208,8 @@ class OrderFacade
         AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
         CartFacade $cartFacade,
-        CustomerFacade $customerFacade,
-        CurrentCustomer $currentCustomer,
+        CustomerUserFacade $customerUserFacade,
+        CurrentCustomerUser $currentCustomerUser,
         OrderPreviewFactory $orderPreviewFactory,
         OrderProductFacade $orderProductFacade,
         HeurekaFacade $heurekaFacade,
@@ -234,8 +234,8 @@ class OrderFacade
         $this->administratorFrontSecurityFacade = $administratorFrontSecurityFacade;
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
         $this->cartFacade = $cartFacade;
-        $this->customerFacade = $customerFacade;
-        $this->currentCustomer = $currentCustomer;
+        $this->customerUserFacade = $customerUserFacade;
+        $this->currentCustomerUser = $currentCustomerUser;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->orderProductFacade = $orderProductFacade;
         $this->heurekaFacade = $heurekaFacade;
@@ -254,10 +254,11 @@ class OrderFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function createOrder(OrderData $orderData, OrderPreview $orderPreview, ?User $user = null)
+    public function createOrder(OrderData $orderData, OrderPreview $orderPreview, ?CustomerUser $customerUser = null)
     {
         $orderNumber = $this->orderNumberSequenceRepository->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
@@ -269,7 +270,7 @@ class OrderFacade
             $orderData,
             $orderNumber,
             $orderUrlHash,
-            $user
+            $customerUser
         );
         $toFlush[] = $order;
 
@@ -298,15 +299,15 @@ class OrderFacade
     {
         $orderData->status = $this->orderStatusRepository->getDefault();
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment);
-        $user = $this->currentCustomer->findCurrentUser();
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
-        $order = $this->createOrder($orderData, $orderPreview, $user);
+        $order = $this->createOrder($orderData, $orderPreview, $customerUser);
         $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
 
-        $this->cartFacade->deleteCartOfCurrentCustomer();
+        $this->cartFacade->deleteCartOfCurrentCustomerUser();
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
-        if ($user instanceof User) {
-            $this->customerFacade->amendCustomerDataFromOrder($user, $order);
+        if ($customerUser instanceof CustomerUser) {
+            $this->customerUserFacade->amendUserDataFromOrder($customerUser, $order);
         }
 
         return $order;
@@ -389,12 +390,12 @@ class OrderFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
-    public function prefillFrontOrderData(FrontOrderData $orderData, User $user)
+    public function prefillFrontOrderData(FrontOrderData $orderData, CustomerUser $customerUser)
     {
-        $order = $this->orderRepository->findLastByUserId($user->getId());
-        $this->frontOrderDataMapper->prefillFrontFormData($orderData, $user, $order);
+        $order = $this->orderRepository->findLastByCustomerUserId($customerUser->getId());
+        $this->frontOrderDataMapper->prefillFrontFormData($orderData, $customerUser, $order);
     }
 
     /**
@@ -411,12 +412,13 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getCustomerOrderList(User $user)
+    public function getCustomerUserOrderList(CustomerUser $customerUser)
     {
-        return $this->orderRepository->getCustomerOrderList($user);
+        return $this->orderRepository->getCustomerUserOrderList($customerUser);
     }
 
     /**
@@ -450,12 +452,13 @@ class OrderFacade
 
     /**
      * @param string $orderNumber
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     *
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByOrderNumberAndUser($orderNumber, User $user)
+    public function getByOrderNumberAndUser($orderNumber, CustomerUser $customerUser)
     {
-        return $this->orderRepository->getByOrderNumberAndUser($orderNumber, $user);
+        return $this->orderRepository->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
     }
 
     /**

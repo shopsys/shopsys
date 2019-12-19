@@ -3,20 +3,20 @@
 <customers>
     <customer>
 
-        {% if user is not null %}
+        {% if customerUser is not null %}
             <customer_name>
-                <firstname><![CDATA[{{ user.firstName }}]]></firstname>
-                <lastname><![CDATA[{{ user.lastName }}]]></lastname>
-                <phone><![CDATA[{{ user.telephone }}]]></phone>
-                <email><![CDATA[{{ user.email }}]]></email>
+                <firstname><![CDATA[{{ customerUser.firstName }}]]></firstname>
+                <lastname><![CDATA[{{ customerUser.lastName }}]]></lastname>
+                <phone><![CDATA[{{ customerUser.telephone }}]]></phone>
+                <email><![CDATA[{{ customerUser.email }}]]></email>
             </customer_name>
 
-            {% if user.billingAdress is defined or user.deliveryAddress is defined %}
-                {% include 'Front/Content/PersonalData/adress.xml.twig' with {'user' : user} %}
+            {% if customerUser.customer.billingAdress is defined or customerUser.deliveryAddress is defined %}
+                {% include 'Front/Content/PersonalData/adress.xml.twig' with {'customerUser' : customerUser} %}
             {% endif %}
 
-            {% if user.billingAddress is defined and user.billingAddress.companyCustomer %}
-                {% set billingAddress = user.billingAddress %}
+            {% if customerUser.customer.billingAddress is defined and customerUser.customer.billingAddress.companyCustomer %}
+                {% set billingAddress = customerUser.customer.billingAddress %}
                 <customer_company>
                     {% if billingAddress.companyName is not null %}
                         <company_name><![CDATA[{{ billingAddress.companyName }}]]></company_name>

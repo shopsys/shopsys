@@ -13,8 +13,8 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartMigrationFacadeTest extends TransactionFunctionalTestCase
@@ -40,11 +40,11 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
         $cartIdentifier1 = 'abc123';
         $cartIdentifier2 = 'def456';
 
-        $customerIdentifier1 = new CustomerIdentifier($cartIdentifier1);
-        $mainCart = new Cart($customerIdentifier1->getCartIdentifier());
+        $customerUserIdentifier1 = new CustomerUserIdentifier($cartIdentifier1);
+        $mainCart = new Cart($customerUserIdentifier1->getCartIdentifier());
 
-        $customerIdentifier2 = new CustomerIdentifier($cartIdentifier2);
-        $mergingCart = new Cart($customerIdentifier2->getCartIdentifier());
+        $customerUserIdentifier2 = new CustomerUserIdentifier($cartIdentifier2);
+        $mergingCart = new Cart($customerUserIdentifier2->getCartIdentifier());
 
         $cartItem = new CartItem($mainCart, $product1, 2, Money::zero());
         $mainCart->addItem($cartItem);
@@ -58,19 +58,19 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
             ->setMethods(['persist', 'flush'])
             ->disableOriginalConstructor()
             ->getMock();
-        $customerIdentifierFactoryMock = $this->getMockBuilder(CustomerIdentifierFactory::class)
+        $customerUserIdentifierFactory = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
             ->setMethods(['get'])
             ->disableOriginalConstructor()
             ->getMock();
-        $customerIdentifierFactoryMock
+        $customerUserIdentifierFactory
             ->expects($this->any())->method('get')
-            ->willReturn($customerIdentifier1);
+            ->willReturn($customerUserIdentifier1);
         $cartFacadeMock = $this->getMockBuilder(CartFacade::class)
-            ->setMethods(['getCartByCustomerIdentifierCreateIfNotExists', 'deleteCart'])
+            ->setMethods(['getCartByCustomerUserIdentifierCreateIfNotExists', 'deleteCart'])
             ->disableOriginalConstructor()
             ->getMock();
         $cartFacadeMock
-            ->expects($this->once())->method('getCartByCustomerIdentifierCreateIfNotExists')
+            ->expects($this->once())->method('getCartByCustomerUserIdentifierCreateIfNotExists')
             ->willReturn($mainCart);
         $cartFacadeMock
             ->expects($this->once())->method('deleteCart')
@@ -78,7 +78,7 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
 
         $cartMigrationFacade = new CartMigrationFacade(
             $entityManagerMock,
-            $customerIdentifierFactoryMock,
+            $customerUserIdentifierFactory,
             $this->cartItemFactory,
             $cartFacadeMock
         );

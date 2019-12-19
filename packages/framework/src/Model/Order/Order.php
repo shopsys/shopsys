@@ -6,7 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -34,12 +34,12 @@ class Order
     protected $number;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User|null
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      *
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User")
-     * @ORM\JoinColumn(nullable=true, name="customer_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
+     * @ORM\JoinColumn(nullable=true, name="customer_user_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $customer;
+    protected $customerUser;
 
     /**
      * @var \DateTime
@@ -301,13 +301,13 @@ class Order
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User|null $user
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function __construct(
         OrderData $orderData,
         $orderNumber,
         $urlHash,
-        ?User $user = null
+        ?CustomerUser $customerUser = null
     ) {
         $this->transport = $orderData->transport;
         $this->payment = $orderData->payment;
@@ -329,7 +329,7 @@ class Order
         $this->setDeliveryAddress($orderData);
         $this->number = $orderNumber;
         $this->status = $orderData->status;
-        $this->customer = $user;
+        $this->customerUser = $customerUser;
         $this->deleted = false;
         if ($orderData->createdAt === null) {
             $this->createdAt = new DateTime();
@@ -613,11 +613,11 @@ class Order
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function getCustomer()
+    public function getCustomerUser()
     {
-        return $this->customer;
+        return $this->customerUser;
     }
 
     /**

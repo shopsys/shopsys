@@ -63,12 +63,12 @@ services:
 
     Shopsys\FrameworkBundle\Model\Country\CountryFacade: ~
 
-    Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer: ~
+    Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser: ~
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade: ~
 
-    Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
 
     Shopsys\FrameworkBundle\Model\Feed\Delivery\DeliveryFeedItemRepository: ~
 
@@ -173,7 +173,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser: ~
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
 
     Shopsys\FrameworkBundle\Model\Product\ProductRepository: ~
 

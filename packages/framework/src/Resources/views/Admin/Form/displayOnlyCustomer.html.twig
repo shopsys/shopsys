@@ -1,15 +1,15 @@
 {% block display_only_customer_widget %}
     <div class="form-line__side">
         <div class="form-line__item form-line__item--text">
-            {% if customer is null%}
+            {% if user is null%}
                 {{ 'unregistered customer'|trans }}
             {% else %}
-                <a href="{{ path('admin_customer_edit', { id: customer.id }) }}" target="_blank">
-                    {% if customer.billingAddress.companyCustomer %}
-                        {{ customer.billingAddress.companyName }} -
+                <a href="{{ path('admin_customer_edit', { id: user.id }) }}" target="_blank">
+                    {% if user.customer.billingAddress.companyCustomer %}
+                        {{ user.customer.billingAddress.companyName }} -
                     {% endif %}
-                    {{ customer.lastName }}
-                    {{ customer.firstName }}
+                    {{ user.lastName }}
+                    {{ user.firstName }}
                     <i class="svg svg-forward-page"></i>
                 </a>
             {% endif %}

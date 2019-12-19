@@ -8,7 +8,7 @@ use App\Form\Front\PersonalData\PersonalDataFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade;
@@ -31,9 +31,9 @@ class PersonalDataController extends FrontBaseController
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
-    private $customerFacade;
+    private $customerUserFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
@@ -68,7 +68,7 @@ class PersonalDataController extends FrontBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade $personalDataAccessMailFacade
@@ -79,7 +79,7 @@ class PersonalDataController extends FrontBaseController
     public function __construct(
         Setting $setting,
         Domain $domain,
-        CustomerFacade $customerFacade,
+        CustomerUserFacade $customerUserFacade,
         OrderFacade $orderFacade,
         NewsletterFacade $newsletterFacade,
         PersonalDataAccessMailFacade $personalDataAccessMailFacade,
@@ -89,7 +89,7 @@ class PersonalDataController extends FrontBaseController
     ) {
         $this->setting = $setting;
         $this->domain = $domain;
-        $this->customerFacade = $customerFacade;
+        $this->customerUserFacade = $customerUserFacade;
         $this->orderFacade = $orderFacade;
         $this->newsletterFacade = $newsletterFacade;
         $this->personalDataAccessMailFacade = $personalDataAccessMailFacade;
@@ -169,7 +169,7 @@ class PersonalDataController extends FrontBaseController
         );
 
         if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY) {
-            $user = $this->customerFacade->findUserByEmailAndDomain(
+            $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
                 $this->domain->getId()
             );
@@ -185,7 +185,7 @@ class PersonalDataController extends FrontBaseController
             return $this->render('Front/Content/PersonalData/detail.html.twig', [
                 'personalDataAccessRequest' => $personalDataAccessRequest,
                 'orders' => $orders,
-                'user' => $user,
+                'customerUser' => $customerUser,
                 'newsletterSubscriber' => $newsletterSubscriber,
             ]);
         }
@@ -204,7 +204,7 @@ class PersonalDataController extends FrontBaseController
         );
 
         if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT) {
-            $user = $this->customerFacade->findUserByEmailAndDomain($personalDataAccessRequest->getEmail(), $this->domain->getId());
+            $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($personalDataAccessRequest->getEmail(), $this->domain->getId());
 
             $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
                 $personalDataAccessRequest->getEmail(),
@@ -220,7 +220,7 @@ class PersonalDataController extends FrontBaseController
                 'personalDataAccessRequest' => $personalDataAccessRequest,
                 'domainName' => $this->domain->getName(),
                 'hash' => $hash,
-                'user' => $user,
+                'customerUser' => $customerUser,
                 'newsletterSubscriber' => $newsletterSubscriber,
                 'ordersCount' => $ordersCount,
             ]);
@@ -240,7 +240,7 @@ class PersonalDataController extends FrontBaseController
         );
 
         if ($personalDataAccessRequest !== null && $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT) {
-            $user = $this->customerFacade->findUserByEmailAndDomain(
+            $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
                 $this->domain->getId()
             );
@@ -256,7 +256,7 @@ class PersonalDataController extends FrontBaseController
             );
 
             $xmlContent = $this->render('Front/Content/PersonalData/export.xml.twig', [
-                'user' => $user,
+                'customerUser' => $customerUser,
                 'newsletterSubscriber' => $newsletterSubscriber,
                 'orders' => $orders,
 
