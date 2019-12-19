@@ -72,7 +72,7 @@ abstract class GraphQlTestCase extends FunctionalTestCase
      */
     private function getResponseForQuery(string $query, array $variables): ?Response
     {
-        $path = $this->getContainer()->get('router')->generate('overblog_graphql_endpoint');
+        $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
 
         $this->client->request(
             'GET',

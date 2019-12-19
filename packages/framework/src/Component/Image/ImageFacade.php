@@ -229,6 +229,21 @@ class ImageFacade
     }
 
     /**
+     * @param int $entityId
+     * @param string $entityName
+     * @param string|null $type
+     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
+     */
+    public function getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, $type)
+    {
+        return $this->imageRepository->getImagesByEntityIndexedById(
+            $entityName,
+            $entityId,
+            $type
+        );
+    }
+
+    /**
      * @param object $entity
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */

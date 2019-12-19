@@ -30,6 +30,9 @@ class FilterQuery
     /** @var array */
     protected $match;
 
+    /** @var int|null */
+    protected $from;
+
     /**
      * @param string $indexName
      */
@@ -393,6 +396,19 @@ class FilterQuery
     }
 
     /**
+     * @param int $from
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function setFrom(int $from): self
+    {
+        $clone = clone $this;
+
+        $clone->from = $from;
+
+        return $clone;
+    }
+
+    /**
      * @return array
      */
     public function getQuery(): array
@@ -401,7 +417,7 @@ class FilterQuery
             'index' => $this->indexName,
             'type' => '_doc',
             'body' => [
-                'from' => $this->countFrom($this->page, $this->limit),
+                'from' => $this->from !== null ? $this->from : $this->countFrom($this->page, $this->limit),
                 'size' => $this->limit,
                 'sort' => $this->sorting,
                 'query' => [

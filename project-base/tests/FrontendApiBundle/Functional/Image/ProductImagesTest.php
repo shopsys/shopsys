@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Image;
 
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductImagesTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Model\Product\Product
+     * @var \Shopsys\FrameworkBundle\Model\Product\Product
      */
     private $product;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     * @inject
+     */
+    private $productFacade;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $productFacade = $this->getContainer()->get(ProductFacade::class);
-        $this->product = $productFacade->getById(1);
+        $this->product = $this->productFacade->getById(1);
     }
 
     public function testFirstProductWithAllImages(): void

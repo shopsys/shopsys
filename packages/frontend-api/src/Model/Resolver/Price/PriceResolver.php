@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 
 class PriceResolver implements ResolverInterface, AliasedInterface
 {
@@ -18,19 +19,29 @@ class PriceResolver implements ResolverInterface, AliasedInterface
     protected $productCachedAttributesFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
      */
-    public function __construct(ProductCachedAttributesFacade $productCachedAttributesFacade)
-    {
+    protected $productOnCurrentDomainFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+     */
+    public function __construct(
+        ProductCachedAttributesFacade $productCachedAttributesFacade,
+        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+    ) {
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
+        $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function resolveByProduct(Product $product): ProductPrice
+    public function resolveByProduct($data): ProductPrice
     {
+        $product = $data instanceof Product ? $data : $this->productOnCurrentDomainFacade->getVisibleProductById($data['id']);
         return $this->productCachedAttributesFacade->getProductSellingPrice($product);
     }
 

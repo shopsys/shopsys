@@ -208,7 +208,7 @@
         "availability": {
           "type": "text"
         },
-        "main_variant": {
+        "is_main_variant": {
           "type": "boolean"
         },
         "detail_url": {
@@ -224,6 +224,24 @@
               "type": "boolean"
             }
           }
+        },
+        "uuid": {
+          "type": "text"
+        },
+        "unit": {
+          "type": "text"
+        },
+        "is_using_stock": {
+          "type": "boolean"
+        },
+        "stock_quantity": {
+          "type": "integer"
+        },
+        "variants": {
+          "type": "integer"
+        },
+        "main_variant": {
+          "type": "integer"
         }
       }
     }
