@@ -129,12 +129,7 @@ class CustomerUserFacade
      */
     public function register(CustomerUserData $customerUserData)
     {
-        $customer = $this->customerFacade->createCustomer();
-
-        $customer = $this->customerFacade->createCustomerWithBillingAddress(
-            $customer,
-            $this->billingAddressFactory->create($this->billingAddressDataFactory->createForCustomer($customer))
-        );
+        $customer = $this->customerFacade->createCustomerWithBillingAddress($this->billingAddressDataFactory->create());
         $customerUser = $this->createCustomerUser($customer, $customerUserData);
 
         $this->customerMailFacade->sendRegistrationMail($customerUser);
@@ -149,12 +144,7 @@ class CustomerUserFacade
      */
     public function create(CustomerUserUpdateData $customerUserUpdateData)
     {
-        $customer = $this->customerFacade->createCustomer();
-        $customerUserUpdateData->billingAddressData->customer = $customer;
-        $customer = $this->customerFacade->createCustomerWithBillingAddress(
-            $customer,
-            $this->billingAddressFactory->create($customerUserUpdateData->billingAddressData)
-        );
+        $customer = $this->customerFacade->createCustomerWithBillingAddress($customerUserUpdateData->billingAddressData);
         $customerUser = $this->createCustomerUser($customer, $customerUserUpdateData->customerUserData, $customerUserUpdateData->deliveryAddressData);
 
         if ($customerUserUpdateData->sendRegistrationMail) {
