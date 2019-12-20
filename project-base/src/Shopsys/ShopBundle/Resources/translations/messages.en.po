@@ -544,6 +544,9 @@ msgstr ""
 msgid "The price of shipping {{ transportName }} changed during ordering process. Check your order, please."
 msgstr ""
 
+msgid "There was an error trying to log out. If you really want to sign out, please try it again."
+msgstr ""
+
 msgid "This account doesn't exist or password is incorrect"
 msgstr ""
 

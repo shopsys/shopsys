@@ -105,3 +105,7 @@ services:
     Shopsys\ShopBundle\Controller\Front\ErrorController:
         arguments:
             $environment: '%kernel.environment%'
+
+    Shopsys\ShopBundle\Model\Security\FrontLogoutHandler:
+        arguments:
+            $flashMessageSender: '@shopsys.shop.component.flash_message.sender.front'

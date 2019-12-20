@@ -59,7 +59,7 @@ security:
                 remember_me_parameter: "front_login_form[rememberMe]"
             logout:
                 path: front_logout
-                success_handler: Shopsys\FrameworkBundle\Model\Security\FrontLogoutHandler
+                success_handler: Shopsys\ShopBundle\Model\Security\FrontLogoutHandler
                 csrf_parameter: _csrf_token
                 csrf_token_generator: security.csrf.token_manager
                 csrf_token_id: frontend_logout

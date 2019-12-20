@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 
+/**
+ * @deprecated This class is deprecated since SSFW 7.3.3 and will be removed in next major release, use Shopsys\ShopBundle\Model\Security\FrontLogoutHandler instead.
+ */
 class FrontLogoutHandler implements LogoutSuccessHandlerInterface
 {
     /**

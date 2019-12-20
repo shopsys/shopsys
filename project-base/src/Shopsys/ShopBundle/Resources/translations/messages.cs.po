@@ -544,6 +544,9 @@ msgstr "V průběhu objednávkového procesu byla změněna cena platby {{ payme
 msgid "The price of shipping {{ transportName }} changed during ordering process. Check your order, please."
 msgstr "V průběhu objednávkového procesu byla změněna cena dopravy {{ transportName }}. Prosím, překontrolujte si objednávku."
 
+msgid "There was an error trying to log out. If you really want to sign out, please try it again."
+msgstr "Při pokusu o odhlášení došlo k problému. Pokud se opravdu chcete odhlásit, prosím, zkuste to ještě jednou."
+
 msgid "This account doesn't exist or password is incorrect"
 msgstr "Zadali jste špatné uživatelské jméno nebo heslo"
 
