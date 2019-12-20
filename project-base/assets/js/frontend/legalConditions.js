@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Register from '../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 
 (new Register()).registerCallback(() => {
     $('#js-terms-and-conditions-print').on('click', function () {

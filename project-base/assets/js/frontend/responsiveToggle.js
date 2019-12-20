@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Responsive from './responsive';
 import Timeout from '../copyFromFw/components/timeout';
-import Register from '../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 
 /*
  1. add to button class 'js-responsive-toggle'

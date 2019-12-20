@@ -3,7 +3,7 @@ import '../../copyFromFw/components';
 
 import Ajax from '../../copyFromFw/ajax';
 import { lazyLoadCall } from '../lazyLoadInit';
-import Register from '../../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 import Translator from 'bazinga-translator';
 
 const optionsDefaults = {

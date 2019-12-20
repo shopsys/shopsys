@@ -10,7 +10,6 @@ export default function validationCustomer () {
                 groups.push(constant('\\Shopsys\\FrameworkBundle\\Form\\Admin\\Customer\\DeliveryAddressFormType::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS'));
             }
 
-            console.log(groups);
             return groups;
         }
     });

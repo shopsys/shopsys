@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Ajax from '../../copyFromFw/ajax';
 import Timeout from '../../copyFromFw/components/timeout';
-import Register from '../../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 import constant from '../constant';
 
 export default class CartRecalculator {

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import constant from './constant';
-import Register from '../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 
 const cookieName = constant('\\Shopsys\\FrameworkBundle\\Model\\Cookies\\CookiesFacade::EU_COOKIES_COOKIE_CONSENT_NAME');
 const tenYears = 10 * 365;

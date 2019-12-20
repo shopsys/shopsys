@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Ajax from '../copyFromFw/ajax';
-import Register from '../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 import { createLoaderOverlay, showLoaderOverlay } from '../copyFromFw/loaderOverlay';
 import Window from './window';
 import Translator from 'bazinga-translator';

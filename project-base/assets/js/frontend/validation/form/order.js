@@ -1,10 +1,8 @@
-import $ from 'jquery';
 import constant from '../../constant';
-import Register from '../../../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 
 export default function orderValidator () {
-
-    const $transportAndPaymentForm = $('#transport_and_payment_form');
+    const $transportAndPaymentForm = window.$('#transport_and_payment_form');
     $transportAndPaymentForm.jsFormValidator({
         callbacks: {
             validateTransportPaymentRelation: function () {
@@ -14,7 +12,7 @@ export default function orderValidator () {
         }
     });
 
-    const $orderPersonalInfoForm = $('form[name="order_personal_info_form"]');
+    const $orderPersonalInfoForm = window.$('form[name="order_personal_info_form"]');
     $orderPersonalInfoForm.jsFormValidator({
         'groups': function () {
 

@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Register from '../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 
 export default function slickInit () {
     $('#js-slider-homepage').slick({

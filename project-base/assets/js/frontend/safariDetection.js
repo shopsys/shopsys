@@ -1,4 +1,4 @@
-import Register from '../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 
 const safariDetection = () => {
     if (navigator.vendor

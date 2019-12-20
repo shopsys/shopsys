@@ -2,7 +2,7 @@ import $ from 'jquery';
 import 'magnific-popup';
 import 'slick-carousel';
 import Responsive from '../responsive';
-import Register from '../../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 
 class ProductDetail {
 

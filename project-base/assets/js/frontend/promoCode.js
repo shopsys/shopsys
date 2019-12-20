@@ -1,6 +1,6 @@
 import Ajax from '../copyFromFw/ajax';
 import Window from './window';
-import Register from '../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 import constant from './constant';
 import { KeyCodes } from '../copyFromFw/components/keyCodes';
 import Translator from 'bazinga-translator';

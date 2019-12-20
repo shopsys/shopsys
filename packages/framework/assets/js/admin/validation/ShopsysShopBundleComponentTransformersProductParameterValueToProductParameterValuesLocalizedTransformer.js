@@ -3,8 +3,6 @@
     ShopsysFrameworkBundleComponentTransformersProductParameterValueToProductParameterValuesLocalizedTransformer = function () {
 
         this.transform = function (normData) {
-            console.log('transform', normData);
-
             return normData;
         };
 

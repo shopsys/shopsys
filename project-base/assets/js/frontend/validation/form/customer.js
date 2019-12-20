@@ -1,9 +1,9 @@
-import $ from 'jquery';
 import constant from '../../constant';
-import Register from '../../../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 
 export default function customerValidator () {
-    const $customerDeliveryAddressForm = $('#customer_form_deliveryAddressData');
+
+    const $customerDeliveryAddressForm = window.$('#customer_form_deliveryAddressData');
     $customerDeliveryAddressForm.jsFormValidator({
         'groups': function () {
 
@@ -16,7 +16,7 @@ export default function customerValidator () {
         }
     });
 
-    const $customerBillingAddressForm = $('#customer_form_billingAddressData');
+    const $customerBillingAddressForm = window.$('#customer_form_billingAddressData');
     $customerBillingAddressForm.jsFormValidator({
         'groups': function () {
 

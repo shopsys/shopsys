@@ -2,7 +2,7 @@ import $ from 'jquery';
 import 'jquery.cookie';
 import '../../copyFromFw/components';
 import AjaxMoreLoader from '../components/ajaxMoreLoader';
-import Register from '../../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 import Translator from 'bazinga-translator';
 
 export default class ProductList {

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { lazyLoadCall } from '../lazyLoadInit';
-import Register from '../../copyFromFw/register';
+import Register from 'framework/assets/js/common/register';
 import Ajax from '../../copyFromFw/ajax';
 import getBaseUrl from '../url';
 import pushReloadState from '../history';
