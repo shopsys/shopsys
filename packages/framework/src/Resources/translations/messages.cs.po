@@ -647,7 +647,7 @@ msgid "Discount"
 msgstr "Sleva"
 
 msgid "Discount (%)"
-msgstr ""
+msgstr "Sleva (%)"
 
 msgid "Display"
 msgstr "Zobrazit"
@@ -878,10 +878,10 @@ msgid "Editing product - %name%"
 msgstr "Editace zboží - %name%"
 
 msgid "Editing promo code"
-msgstr ""
+msgstr "Editace slevového kupónu"
 
 msgid "Editing promo code - %code%"
-msgstr ""
+msgstr "Editace slevového kupónu - %code%"
 
 msgid "Editing script"
 msgstr "Editace skriptu"
@@ -1334,7 +1334,7 @@ msgid "New product"
 msgstr "Nové zboží"
 
 msgid "New promo code"
-msgstr ""
+msgstr "Nový slevový kupón"
 
 msgid "New registered customers"
 msgstr "Nově registrovaní zákazníci"
@@ -1730,10 +1730,10 @@ msgid "Promo code"
 msgstr "Slevový kupón"
 
 msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
-msgstr ""
+msgstr "Byl vytvořen slevový kupón <strong><a href=\"{{ url }}\">{{ code }}</a></strong>"
 
 msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> was modified"
-msgstr ""
+msgstr "Byl upraven slevový kupón <strong><a href=\"{{ url }}\">{{ code }}</a></strong>"
 
 msgid "Promo code <strong>{{ code }}</strong> deleted."
 msgstr "Slevový kupón <strong>{{ code }}</strong> byl smazán"
