@@ -844,6 +844,12 @@ There you can find links to upgrade notes for other versions too.
         +     }
         + },
         ```
+- message error with long words ([#1561](https://github.com/shopsys/shopsys/pull/1561))
+    - update `src/Shopsys/ShopBundle/Resources/views/Front/Inline/FlashMessage/index.html.twig`
+        ```diff
+        - {% include '@ShopsysShop/Front/Inline/FlashMessage/messages.html.twig' with {type: 'danger', messages: errorMessages} only %}
+        + {% include '@ShopsysShop/Front/Inline/FlashMessage/messages.html.twig' with {type: 'error', messages: errorMessages} only %}
+        ```
 
 ## Configuration
 - use DIC configuration instead of `RedisCacheFactory` to create redis caches ([#1361](https://github.com/shopsys/shopsys/pull/1361))
