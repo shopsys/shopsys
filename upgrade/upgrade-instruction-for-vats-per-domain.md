@@ -7,7 +7,7 @@ We deleted managing transports and payments prices by currencies  with this upgr
 ## Changes in project-base
 
 ### Form types 
- - project-base/app/config/packages/twig.yml
+ - config/packages/twig.yml
     ```diff
           '@ShopsysFramework/Admin/Form/imageuploadFields.html.twig'
         - '@ShopsysFramework/Admin/Form/pricetableFields.html.twig'
@@ -16,7 +16,7 @@ We deleted managing transports and payments prices by currencies  with this upgr
     ```
 
 ### Changes in twig templates
- - project-base/src/Shopsys/ShopBundle/Resources/views/Front/Content/Cart/index.html.twig
+ - src/Resources/views/Front/Content/Cart/index.html.twig
     ```diff
         <td class="table-cart__cell table-cart__cell--price">
             - {{ cartItem.product.vat.percent|formatPercent }}
@@ -103,7 +103,6 @@ We deleted managing transports and payments prices by currencies  with this upgr
 - change VAT access in `VatDataFixture`
     - look at [diff](https://github.com/shopsys/shopsys/pull/1498/files#diff-e739c6a126c3dda0c19d2e5e9f493074)
 
-
 ### Tests
  - `CartTest`
     - look at [diff](https://github.com/shopsys/shopsys/pull/1498/files#diff-b3d3aec98c03f8f906b6d577171532f4)
@@ -129,9 +128,11 @@ We deleted managing transports and payments prices by currencies  with this upgr
     - look at [diff](https://github.com/shopsys/shopsys/pull/1498/files#diff-dc2c542c2ef2ee7a82a43f14f1a0fdd0)
  - `VatFacadeTest`
     - look at [diff](https://github.com/shopsys/shopsys/pull/1498/files#diff-7846a28218f377d20e7d550c362b43d2)
- 
+ - `InputPriceRecalculationSchedulerTest`
+    - look at [diff](https://github.com/shopsys/shopsys/pull/1498/files#diff-2ebc48b08154340d7348f33faf3ca575)
+
 #### Smoke test
- - project-base/tests/ShopBundle/Smoke/Http/RouteConfigCustomization.php
+ - tests/App/Smoke/Http/RouteConfigCustomization.php
  ```diff
     /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
 -   $vat = $this->getPersistentReference(VatDataFixture::VAT_SECOND_LOW);
@@ -140,7 +141,7 @@ We deleted managing transports and payments prices by currencies  with this upgr
 -   $newVat = $this->getPersistentReference(VatDataFixture::VAT_LOW);
 +   $newVat = $this->getPersistentReference(VatDataFixture::VAT_LOW, Domain::FIRST_DOMAIN_ID); 
 ```
- - project-base/tests/ShopBundle/Smoke/NewProductTest.php
+ - tests/App/Smoke/NewProductTest.php
     - look at [diff](https://github.com/shopsys/shopsys/pull/1498/files#diff-f96ae419b9841369f8e31b8921b9af6d)
 
  ## Following methods have changed their signatures:
