@@ -1,3 +1,4 @@
+@in-message-bottom-gap: @height-fixed-bar; // due to fixed bar
 @in-message-padding-horizontal: 15px;
 @in-message-padding-vertical: 14px;
 
@@ -139,6 +140,7 @@
         top: 100%;
         left: 0;
         margin-top: @in-message-pin-position*2;
+        margin-bottom: @in-message-bottom-gap;
         min-width: @in-message-pin-width;
         width: auto;
         z-index: 99;
