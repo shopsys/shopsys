@@ -629,7 +629,7 @@ class OrderFacade
             $orderItem->getName()
         );
 
-        $this->orderItemFactory->createProduct(
+        $this->orderItemFactory->createDiscount(
             $orderItem->getOrder(),
             $name,
             $quantifiedItemDiscount->inverse(),
@@ -637,7 +637,7 @@ class OrderFacade
             1,
             null,
             null,
-            null
+            $orderItem->getProduct()
         );
     }
 

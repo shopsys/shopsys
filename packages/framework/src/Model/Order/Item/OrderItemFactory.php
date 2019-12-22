@@ -130,4 +130,44 @@ class OrderItemFactory implements OrderItemFactoryInterface
         $orderTransport->setTransport($transport);
         return $orderTransport;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param string $name
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param string $vatPercent
+     * @param int $quantity
+     * @param string|null $unitName
+     * @param string|null $catnum
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
+    public function createDiscount(
+        Order $order,
+        string $name,
+        Price $price,
+        string $vatPercent,
+        int $quantity,
+        ?string $unitName,
+        ?string $catnum,
+        ?Product $product = null
+    ): OrderItem {
+        $classData = $this->entityNameResolver->resolve(OrderItem::class);
+
+        /** @var \Shopsys\ShopBundle\Model\Order\Item\OrderItem $orderDiscount */
+        $orderDiscount = new $classData(
+            $order,
+            $name,
+            $price,
+            $vatPercent,
+            $quantity,
+            OrderItem::TYPE_DISCOUNT,
+            $unitName,
+            $catnum
+        );
+
+        $orderDiscount->setProduct($product);
+
+        return $orderDiscount;
+    }
 }

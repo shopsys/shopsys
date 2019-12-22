@@ -22,7 +22,8 @@ class OrderItem
     public const
         TYPE_PAYMENT = 'payment',
         TYPE_PRODUCT = 'product',
-        TYPE_TRANSPORT = 'transport';
+        TYPE_TRANSPORT = 'transport',
+        TYPE_DISCOUNT = 'discount';
 
     /**
      * @var int|null
@@ -355,7 +356,7 @@ class OrderItem
      */
     public function getProduct(): ?Product
     {
-        $this->checkTypeProduct();
+        $this->checkTypeProductOrDiscount();
         return $this->product;
     }
 
@@ -364,7 +365,7 @@ class OrderItem
      */
     public function hasProduct()
     {
-        $this->checkTypeProduct();
+        $this->checkTypeProductOrDiscount();
         return $this->product !== null;
     }
 
@@ -373,7 +374,7 @@ class OrderItem
      */
     public function setProduct(?Product $product): void
     {
-        $this->checkTypeProduct();
+        $this->checkTypeProductOrDiscount();
 
         if ($product !== null && $product->isMainVariant()) {
             throw new MainVariantCannotBeOrderedException();
@@ -406,6 +407,21 @@ class OrderItem
         return $this->type === self::TYPE_TRANSPORT;
     }
 
+    /**
+     * @return bool
+     */
+    public function isTypeDiscount(): bool
+    {
+        return $this->type === self::TYPE_DISCOUNT;
+    }
+
+    protected function checkTypeDiscount(): void
+    {
+        if (!$this->isTypeDiscount()) {
+            throw new WrongItemTypeException(self::TYPE_DISCOUNT, $this->type);
+        }
+    }
+
     protected function checkTypeTransport(): void
     {
         if (!$this->isTypeTransport()) {
@@ -420,9 +436,19 @@ class OrderItem
         }
     }
 
+    /**
+     * @deprecated This method is deprecated since 8.1.0 and will be removed in next major release, use OrderItem::checkTypeProductOrDiscount() instead
+     */
     protected function checkTypeProduct(): void
     {
         if (!$this->isTypeProduct()) {
+            throw new WrongItemTypeException(self::TYPE_PRODUCT, $this->type);
+        }
+    }
+
+    protected function checkTypeProductOrDiscount(): void
+    {
+        if (!$this->isTypeProduct() && !$this->isTypeDiscount()) {
             throw new WrongItemTypeException(self::TYPE_PRODUCT, $this->type);
         }
     }
