@@ -10,7 +10,7 @@
                 <a href="{{ url('front_product_list', { id: categoryWithLazyLoadedVisibleChildren.category.id }) }}" class="list-menu__item__link list-menu__item__link--level-{{ categoryWithLazyLoadedVisibleChildren.category.level }} {% if isCurrentCategory %}current{% endif %}">
                     {{ categoryWithLazyLoadedVisibleChildren.category.name }}
                     {% if categoryWithLazyLoadedVisibleChildren.hasChildren %}
-                        <i class="list-menu__item__control svg svg-arrow js-category-collapse-control" data-url="{{ url('front_category_branch', { parentCategoryId: categoryWithLazyLoadedVisibleChildren.category.id }) }}"></i>
+                        <i class="list-menu__item__control svg svg-arrow js-category-collapse-control js-hover-intent" data-hover-intent-force-click="true" data-url="{{ url('front_category_branch', { parentCategoryId: categoryWithLazyLoadedVisibleChildren.category.id }) }}"></i>
                     {% endif %}
                 </a>
                 {% if categoryWithLazyLoadedVisibleChildren.category in openCategories %}
