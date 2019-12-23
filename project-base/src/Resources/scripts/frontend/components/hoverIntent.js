@@ -66,7 +66,7 @@
                 over: function () {
                     hideAllOpenedIntent();
 
-                    if(hoverIntentSetting.getForceClick()){
+                    if (hoverIntentSetting.getForceClick()) {
                         $(this).click();
                     }
 
@@ -85,7 +85,7 @@
                         $(this).removeClass(hoverIntentSetting.getClassForOpen());
                     }
 
-                    if(hoverIntentSetting.getForceClick()){
+                    if (hoverIntentSetting.getForceClick()) {
                         $(this).click();
                     }
                 }
