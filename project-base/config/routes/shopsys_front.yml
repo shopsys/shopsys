@@ -22,6 +22,14 @@ front_cart_delete:
     requirements:
         cartItemId: \d+
 
+front_cart_delete_ajax:
+    path: /cart/delete-ajax/{cartItemId}/
+    defaults:
+        _controller: App\Controller\Front\CartController:deleteAjaxAction
+    requirements:
+        cartItemId: \d+
+    condition: "request.isXmlHttpRequest()"
+
 front_category_branch:
     path: /categoryPanel/{parentCategoryId}/
     defaults:

@@ -80,10 +80,6 @@
             </div>
         </div>
 
-        <div class="header__cart dont-print">
-            {{ render(controller('App\\Controller\\Front\\CartController:boxAction')) }}
-        </div>
-
         <div class="header__top dont-print">
             <div class="header__top__left">
                 {{ render(controller('App\\Controller\\Front\\ArticleController:menuAction')) }}
@@ -138,6 +134,10 @@
                     {% endif %}
                 </ul>
             </div>
+        </div>
+
+        <div class="header__cart dont-print">
+            {{ render(controller('App\\Controller\\Front\\CartController:boxAction')) }}
         </div>
     </header>
 
