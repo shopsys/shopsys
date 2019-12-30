@@ -302,7 +302,7 @@ There you can find links to upgrade notes for other versions too.
              - public function __construct(string $entityName, int $entityId, string $type, string $temporaryFilename, int $position)
              + public function __construct(string $entityName, int $entityId, string $type, string $temporaryFilename, string $uploadedFilename, int $position)
             ```
-          
+
  - There is a new base html layout with horizontal menu and product filter placed in left panel, for detail information see [the separate article](upgrade-instructions-for-base-layout.md)
 
 - update your project to use refactored customer structure ([#1543](https://github.com/shopsys/shopsys/pull/1543))
@@ -378,6 +378,29 @@ There you can find links to upgrade notes for other versions too.
                 +   {% set address = user.customer.billingAddress %}
                 ```
         - method `Shopsys\FrameworkBundle\Model\Customer\UserFacade::createCustomerWithBillingAddress()` was extracted to new class `Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade`
+
+- add hover timeout to horizontal menu ([#1564](https://github.com/shopsys/shopsys/pull/1564))
+    - you can skip this task if you have your custom design
+    - move loader to hidden submenu - so it can not interrupt hover `src/Resources/scripts/frontend/categoryPanel.js`
+        ```diff
+          function loadCategoryItemContent ($categoryItem, url) {
+              Shopsys.ajax({
+        -          loaderElement: $categoryItem,
+        +          loaderElement: $categoryItem.find('.js-category-list-placeholder'),
+        ```
+
+    - add new js plugin hoverIntent v1.10.1 `src/Resources/scripts/frontend/plugins/jquery.hoverIntent.js` (https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/scripts/frontend/plugins/jquery.hoverIntent.js)
+
+    - add new js component `src/Resources/scripts/frontend/components/hoverIntent.js` (https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/scripts/frontend/components/hoverIntent.js)
+
+    - add classes to hover menu `templates/Front/Content/Category/panel.html.twig`
+        ```diff
+          {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
+              {% set isCurrentCategory = (currentCategory is not null and currentCategory == categoryWithLazyLoadedVisibleChildren.category) %}
+        -     <li class="list-menu__item js-category-item">
+        +     <li class="list-menu__item js-category-item js-hover-intent" data-hover-intent-force-click="true" data-hover-intent-force-click-element=".js-category-collapse-control">
+                  <a href="{{ url('front_product_list'
+        ```
 
 ### Tools
 
