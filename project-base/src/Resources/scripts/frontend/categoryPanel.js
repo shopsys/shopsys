@@ -32,7 +32,7 @@
 
     function loadCategoryItemContent ($categoryItem, url) {
         Shopsys.ajax({
-            loaderElement: $categoryItem,
+            loaderElement: $categoryItem.find('.js-category-list-placeholder'),
             url: url,
             dataType: 'html',
             success: function (data) {
