@@ -8,6 +8,7 @@
         var timeout = 300;
         var classForOpen = 'open';
         var forceClick = false;
+        var forceClickElement = '';
         var linkOnMobile = false;
         var $selector = $hoverIntentParent;
 
@@ -26,6 +27,10 @@
 
             if ($hoverIntentParent.data('hover-intent-force-click')) {
                 forceClick = $hoverIntentParent.data('hover-intent-force-click');
+            }
+
+            if ($hoverIntentParent.data('hover-intent-force-click-element')) {
+                forceClickElement = $hoverIntentParent.data('hover-intent-force-click-element');
             }
 
             if ($hoverIntentParent.data('hover-intent-link-on-mobile')) {
@@ -53,6 +58,10 @@
             return forceClick;
         };
 
+        this.getForceClickElement = function () {
+            return forceClickElement;
+        };
+
         this.getLinkOnMobile = function () {
             return linkOnMobile;
         };
@@ -67,7 +76,7 @@
                     hideAllOpenedIntent();
 
                     if (hoverIntentSetting.getForceClick()) {
-                        $(this).click();
+                        $(this).find(hoverIntentSetting.getForceClickElement()).click();
                     }
 
                     if (hoverIntentSetting.getLinkOnMobile()) {
@@ -81,13 +90,14 @@
 
                 },
                 out: function () {
+                    if (hoverIntentSetting.getForceClick()) {
+                        $(this).find(hoverIntentSetting.getForceClickElement()).click();
+                    }
+
                     if ($(this).find('input:focus').size() === 0) {
                         $(this).removeClass(hoverIntentSetting.getClassForOpen());
                     }
 
-                    if (hoverIntentSetting.getForceClick()) {
-                        $(this).click();
-                    }
                 }
             });
         });
