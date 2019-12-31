@@ -1,6 +1,6 @@
 # hoverIntent Component
-This JS component is used for add timeout for hover over and hover out events.
-This component uses hoverIntent plugin (http://briancherne.github.io/jquery-hoverIntent/).
+This JS component is used to add timeout for hover over and hover out events.
+This component uses [hoverIntent plugin](http://briancherne.github.io/jquery-hoverIntent/) from jQuery.
 
 ## Plugin settings
 You can set default values in file `src/Resources/scripts/frontend/components/hoverIntent.js` or you can set variables manually by data attributes.
