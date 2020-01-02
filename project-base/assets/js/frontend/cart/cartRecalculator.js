@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import Ajax from '../../copyFromFw/ajax';
-import Timeout from '../../copyFromFw/components/timeout';
+import Ajax from 'framework/assets/js/common/ajax';
+import Timeout from 'framework/assets/js/common/components/timeout';
 import Register from 'framework/assets/js/common/register';
 import constant from '../constant';
 

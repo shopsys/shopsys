@@ -1,5 +1,5 @@
-import $ from 'jquery';
-import Ajax from '../../copyFromFw/ajax';
+import 'framework/assets/js/common/components';
+import Ajax from 'framework/assets/js/common/ajax';
 import Register from 'framework/assets/js/common/register';
 
 export default class OrderPreview {

@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Register from '../common/register';
 import Translator from 'bazinga-translator';
 

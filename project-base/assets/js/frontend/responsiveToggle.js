@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Responsive from './responsive';
-import Timeout from '../copyFromFw/components/timeout';
+import Timeout from 'framework/assets/js/common/components/timeout';
 import Register from 'framework/assets/js/common/register';
 
 /*

@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import { KeyCodes } from '../copyFromFw/components/keyCodes';
-import Timeout from '../copyFromFw/components/timeout';
+import { KeyCodes } from 'framework/assets/js/common/components/keyCodes';
+import Timeout from 'framework/assets/js/common/components/timeout';
 import Translator from 'bazinga-translator';
 
 const defaults = {

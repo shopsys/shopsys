@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import Ajax from '../copyFromFw/ajax';
+import Ajax from 'framework/assets/js/common/ajax';
 import Register from 'framework/assets/js/common/register';
-import { createLoaderOverlay, showLoaderOverlay } from '../copyFromFw/loaderOverlay';
+import { createLoaderOverlay, showLoaderOverlay } from 'framework/assets/js/common/loaderOverlay';
 import Window from './window';
 import Translator from 'bazinga-translator';
 

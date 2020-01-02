@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Timeout from '../copyFromFw/components/timeout';
+import Timeout from 'framework/assets/js/common/components/timeout';
 
 export default class Responsive {
 

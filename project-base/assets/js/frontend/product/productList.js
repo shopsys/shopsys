@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import 'jquery.cookie';
-import '../../copyFromFw/components';
+import 'framework/assets/js/common/components';
 import AjaxMoreLoader from '../components/ajaxMoreLoader';
 import Register from 'framework/assets/js/common/register';
 import Translator from 'bazinga-translator';

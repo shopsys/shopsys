@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import '../../copyFromFw/components';
+import 'framework/assets/js/common/components';
 
-import Ajax from '../../copyFromFw/ajax';
+import Ajax from 'framework/assets/js/common/ajax';
 import { lazyLoadCall } from '../lazyLoadInit';
 import Register from 'framework/assets/js/common/register';
 import Translator from 'bazinga-translator';
