@@ -1,4 +1,4 @@
-import { getFormattedFormErrors, isFormValid } from '../../common/validation/customizeBundle';
+import CustomizeBundle from '../../common/validation/customizeBundle';
 import Register from '../../common/register';
 
 export function forceValidateElement ($element) {
@@ -20,7 +20,7 @@ export function findElementsToHighlight ($formInput) {
 export function highlightSubmitButtons ($form) {
     const $submitButtons = $form.find('.btn[type="submit"]');
 
-    if (isFormValid($form)) {
+    if (CustomizeBundle.isFormValid($form)) {
         $submitButtons.removeClass('btn--disabled');
     } else {
         $submitButtons.addClass('btn--disabled');
@@ -28,7 +28,7 @@ export function highlightSubmitButtons ($form) {
 }
 
 export function init () {
-    const $formattedFormErrors = getFormattedFormErrors(document);
+    const $formattedFormErrors = CustomizeBundle.getFormattedFormErrors(document);
     $('.js-flash-message.in-message--danger').append($formattedFormErrors);
 
     $('.js-no-validate-button').click((event) => {

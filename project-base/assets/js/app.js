@@ -1,9 +1,14 @@
-import $ from 'jquery';
-
 // import 'jquery-ui-touch-punch';
 
-import './copyFromFw/loadTranslations';
-import './copyFromFw/components';
+import 'framework/assets/js/common/components';
+
+import CustomizeBundle from 'framework/assets/js/common/validation/customizeBundle';
+import showFormErrorsWindowOnFrontend from './frontend/customizeBundle';
+
+CustomizeBundle.showFormErrorsWindow = showFormErrorsWindowOnFrontend;
+
+import 'framework/assets/js/common/checkboxToggle';
+import 'framework/assets/js/common/loadTranslations';
 
 import './frontend/lazyLoadInit';
 import './frontend/cookies';
@@ -21,7 +26,8 @@ import './frontend/rangeSlider';
 import './frontend/components/ajaxMoreLoader';
 import './frontend/responsiveTooltip';
 import './frontend/searchAutocomplete';
-// import './frontend/validation/form';
+
+import './frontend/validation/form';
 
 // HP entry?
 import './frontend/slickInit';
@@ -44,7 +50,12 @@ import './frontend/cart/cartBox';
 // cart entry?
 import './frontend/cart/cartRecalculator';
 
-import Register from './copyFromFw/register';
+import 'framework/assets/js/common/validation/customizeFpValidator';
+import './frontend/validation/validationInit';
+import 'framework/assets/js/common/validation';
+
+import Register from 'framework/assets/js/common/register';
+import 'framework/assets/js/common/components';
 
 $(document).ready(function () {
     const register = new Register();

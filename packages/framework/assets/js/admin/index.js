@@ -41,7 +41,7 @@ import './components/selectToggle';
 import './components';
 
 import '../common/components/toggleElement';
-import '../common/validation/customizeBundle';
+import '../common/validation/customizeFpValidator';
 import '../common/validation/validation';
 import '../common/validation';
 

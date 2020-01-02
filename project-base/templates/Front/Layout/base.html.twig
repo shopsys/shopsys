@@ -10,6 +10,8 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/index' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/print' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="print">
 
+        {{ encore_entry_script_tags('jquery') }}
+
         {{ importJavascripts([
             'bundles/fpjsformvalidator/js/fp_js_validator.js'
         ]) }}
@@ -31,7 +33,8 @@
 
         {% block html_body %}{% endblock %}
 
-        {{ encore_entry_script_tags('app') }}
         {% block javascripts_bottom %}{% endblock %}
+
+        {{ encore_entry_script_tags('app') }}
     </body>
 </html>
