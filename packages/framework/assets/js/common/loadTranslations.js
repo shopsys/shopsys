@@ -5,7 +5,11 @@ const translations = require('../translations.json');
 export default function loadTranslations () {
     Object.keys(translations).forEach(locale => {
         translations[locale].forEach(translation => {
-            Translation.add(translation.msgid, translation.msgstr, null, locale);
+            let msgstr = translation.msgstr;
+            if (msgstr === '') {
+                msgstr = translation.msgid;
+            }
+            Translation.add(translation.msgid, msgstr, null, locale);
         });
     });
 }

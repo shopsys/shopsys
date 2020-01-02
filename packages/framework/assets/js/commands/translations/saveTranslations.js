@@ -6,23 +6,30 @@ const findLang = require('./findLang');
 function saveTranslations (translations, dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
 
     fileWalker(dirWithTranslations, (err, filePaths) => {
+        if (err) {
+            console.log(err);
+        }
 
         const promises = filePaths.map(filePath => {
 
-            if(filePath.match(/(\w*)\.po$/) === null){
+            if (filePath.match(/(\w*)\.po$/) === null) {
                 return;
             }
 
             const lang = findLang(filePath);
             return new Promise((resolve, reject) => {
                 PO.load(filePath, (err, po) => {
+                    if (err) {
+                        console.log(err);
+                    }
+
                     const translated = [];
                     po.items
                         .filter(item => translations.includes(item.msgid))
                         .forEach(item => {
                             translated.push({
                                 msgid: item.msgid,
-                                msgstr: item.msgstr
+                                msgstr: item.msgstr[0]
                             });
                         });
                     resolve({ lang, translated });
@@ -41,7 +48,7 @@ function saveTranslations (translations, dirWithJsFiles, dirWithTranslations, ou
             });
 
             fs.writeFile(outputDirForExportedTranslations + 'translations.json', JSON.stringify(translations), (err) => {
-                if(err) {
+                if (err) {
                     return console.log(err);
                 }
             });

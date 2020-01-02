@@ -1,7 +1,6 @@
 import constant from '../../admin/constant';
 import CustomizeBundle from './customizeBundle';
 
-
 const FpJsFormValidator = window.FpJsFormValidator;
 
 // Issue in dynamic collections validation that causes duplication of substrings in identifiers
