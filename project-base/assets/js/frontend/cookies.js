@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import constant from './constant';
 import Register from 'framework/assets/js/common/register';
 

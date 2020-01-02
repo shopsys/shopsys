@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import CodeMirror from 'codemirror';
 /**
  * Script used for the Styleguide structure only

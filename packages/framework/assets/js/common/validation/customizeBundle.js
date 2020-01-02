@@ -352,4 +352,3 @@ export default class CustomizeBundle {
 }
 
 CustomizeBundle.delayedValidators = {};
-

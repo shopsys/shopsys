@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import 'framework/assets/js/common/components';
 
 import Ajax from 'framework/assets/js/common/ajax';

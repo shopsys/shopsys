@@ -5,8 +5,6 @@ import 'framework/assets/js/common/components';
 import CustomizeBundle from 'framework/assets/js/common/validation/customizeBundle';
 import showFormErrorsWindowOnFrontend from './frontend/customizeBundle';
 
-CustomizeBundle.showFormErrorsWindow = showFormErrorsWindowOnFrontend;
-
 import 'framework/assets/js/common/checkboxToggle';
 import 'framework/assets/js/common/loadTranslations';
 
@@ -30,7 +28,7 @@ import './frontend/searchAutocomplete';
 import './frontend/validation/form';
 
 // HP entry?
-import './frontend/slickInit';
+import SlickInit from './frontend/slickInit';
 
 // order entry?
 import './frontend/order/order';
@@ -41,7 +39,7 @@ import './frontend/order/preview';
 import './frontend/product/addProduct';
 import './frontend/product/bestsellingProducts';
 import './frontend/product/gallery';
-import './frontend/product/productList.AjaxFilter';
+import ProductListAjaxFilter from './frontend/product/productList.AjaxFilter';
 import './frontend/product/productList';
 import './frontend/product/productListCategoryToggler';
 
@@ -55,11 +53,15 @@ import './frontend/validation/validationInit';
 import 'framework/assets/js/common/validation';
 
 import Register from 'framework/assets/js/common/register';
-import 'framework/assets/js/common/components';
+
+CustomizeBundle.showFormErrorsWindow = showFormErrorsWindowOnFrontend;
 
 $(document).ready(function () {
     const register = new Register();
     register.registerNewContent($('body'));
+
+    SlickInit();
+    ProductListAjaxFilter.init();
 });
 
 $(window).on('popstate', function (event) {

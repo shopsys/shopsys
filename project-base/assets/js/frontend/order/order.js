@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Register from 'framework/assets/js/common/register';
 
 export default class PaymentTransportRelations {

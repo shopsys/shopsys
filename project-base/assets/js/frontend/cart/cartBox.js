@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Ajax from 'framework/assets/js/common/ajax';
 import Register from 'framework/assets/js/common/register';
 

@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 /* eslint-disable no-new */
 import MiniLazyload from 'minilazyload';
 

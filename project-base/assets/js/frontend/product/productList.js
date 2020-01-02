@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import 'jquery.cookie';
 import 'framework/assets/js/common/components';
 import AjaxMoreLoader from '../components/ajaxMoreLoader';

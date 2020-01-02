@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import '../components/filterAllNodes';
 import 'magnific-popup';
 import 'slick-carousel';
 import Responsive from '../responsive';
@@ -6,9 +7,9 @@ import Register from 'framework/assets/js/common/register';
 
 class ProductDetail {
 
-    static init () {
-        $('.js-gallery-main-image').click(function (event) {
-            var $slides = $('.js-gallery .slick-slide:not(.slick-cloned) .js-gallery-slide-link');
+    static init ($container) {
+        $container.filterAllNodes('.js-gallery-main-image').click(function (event) {
+            const $slides = $('.js-gallery .slick-slide:not(.slick-cloned) .js-gallery-slide-link');
             $slides.filter(':first').trigger('click', event);
 
             return false;

@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { KeyCodes } from 'framework/assets/js/common/components/keyCodes';
 import Timeout from 'framework/assets/js/common/components/timeout';
 import Translator from 'bazinga-translator';

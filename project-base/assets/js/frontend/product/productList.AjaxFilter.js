@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import { lazyLoadCall } from '../lazyLoadInit';
 import Register from 'framework/assets/js/common/register';
 import Ajax from 'framework/assets/js/common/ajax';
@@ -106,9 +105,9 @@ export default class ProductListAjaxFilter {
     };
 
     static init () {
-        // eslint-disable-next-line no-new
-        new ProductListAjaxFilter();
+        $('.js-product-list-with-paginator').each(function () {
+            // eslint-disable-next-line no-new
+            new ProductListAjaxFilter();
+        });
     };
 }
-
-new Register().registerCallback(ProductListAjaxFilter.init);
