@@ -129,6 +129,7 @@
 
 // Modifications - special type - pinned
 @in-message-pin-width: 230px;
+@in-message-pin-max-width: calc(~"@{width-web} - @{width-panel} - @{content-gap}");
 @in-message-pin-place-for-close: 25px;
 @in-message-pin-padding: 10px;
 @in-message-pin-position: 5px;
@@ -142,12 +143,14 @@
         margin-top: @in-message-pin-position*2;
         margin-bottom: @in-message-bottom-gap;
         min-width: @in-message-pin-width;
+        max-width: @in-message-pin-max-width;
         width: auto;
         z-index: 99;
         padding: @in-message-pin-padding @in-message-pin-place-for-close @in-message-pin-padding @in-message-pin-padding;
 
         text-align: left;
         border: 1px solid darken(@color-message-alert, 15%);
+        word-wrap: break-word;
 
         &:after {
             display: block;
