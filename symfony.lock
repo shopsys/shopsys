@@ -419,6 +419,9 @@
     "phing/phing": {
         "version": "2.16.1"
     },
+    "php": {
+        "version": "7.3"
+    },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
     },
@@ -613,6 +616,9 @@
     },
     "shopsys/migrations": {
         "version": "dev-mg-weird-flex-but-ok"
+    },
+    "shopsys/ordered-form": {
+        "version": "4.0.0"
     },
     "shopsys/plugin-interface": {
         "version": "dev-mg-weird-flex-but-ok"
@@ -912,6 +918,9 @@
         "files": [
             "config/packages/security.yaml"
         ]
+    },
+    "symfony/service-contracts": {
+        "version": "v2.0.1"
     },
     "symfony/stopwatch": {
         "version": "v3.4.33"
