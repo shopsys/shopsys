@@ -1,4 +1,4 @@
-import CustomizeBundle from 'framework/assets/js/common/validation/customizeBundle';
+import CustomizeBundle from 'framework/common/validation/customizeBundle';
 import Window from './window';
 import Translator from 'bazinga-translator';
 

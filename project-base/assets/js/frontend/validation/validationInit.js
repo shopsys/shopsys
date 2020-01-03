@@ -1,5 +1,5 @@
-import Register from 'framework/assets/js/common/register';
-import CustomizeBundle from 'framework/assets/js/common/validation/customizeBundle';
+import Register from 'framework/common/register';
+import CustomizeBundle from 'framework/common/validation/customizeBundle';
 
 export const initClasses = ($container) => {
     $container.filterAllNodes('.js-no-validate-button').click(function () {

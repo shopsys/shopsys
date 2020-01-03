@@ -1,6 +1,6 @@
-import Ajax from 'framework/assets/js/common/ajax';
-import Timeout from 'framework/assets/js/common/components/timeout';
-import Register from 'framework/assets/js/common/register';
+import Ajax from 'framework/common/ajax';
+import Timeout from 'framework/common/components/timeout';
+import Register from 'framework/common/register';
 import constant from '../constant';
 
 export default class CartRecalculator {

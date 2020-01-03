@@ -1,6 +1,6 @@
 import Responsive from './responsive';
-import Timeout from 'framework/assets/js/common/components/timeout';
-import Register from 'framework/assets/js/common/register';
+import Timeout from 'framework/common/components/timeout';
+import Register from 'framework/common/register';
 
 /*
  1. add to button class 'js-responsive-toggle'

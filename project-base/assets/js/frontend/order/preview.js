@@ -1,6 +1,6 @@
-import 'framework/assets/js/common/components';
-import Ajax from 'framework/assets/js/common/ajax';
-import Register from 'framework/assets/js/common/register';
+import 'framework/common/components';
+import Ajax from 'framework/common/ajax';
+import Register from 'framework/common/register';
 
 export default class OrderPreview {
 

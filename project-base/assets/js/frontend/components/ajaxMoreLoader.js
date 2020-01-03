@@ -1,8 +1,8 @@
-import 'framework/assets/js/common/components';
+import 'framework/common/components';
 
-import Ajax from 'framework/assets/js/common/ajax';
+import Ajax from 'framework/common/ajax';
 import { lazyLoadCall } from '../lazyLoadInit';
-import Register from 'framework/assets/js/common/register';
+import Register from 'framework/common/register';
 import Translator from 'bazinga-translator';
 
 const optionsDefaults = {

@@ -1,4 +1,4 @@
-import Timeout from 'framework/assets/js/common/components/timeout';
+import Timeout from 'framework/common/components/timeout';
 
 export default class Responsive {
 

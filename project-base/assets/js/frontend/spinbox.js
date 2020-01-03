@@ -1,5 +1,5 @@
 import Repeater from './repeater';
-import Register from 'framework/assets/js/common/register';
+import Register from 'framework/common/register';
 
 export default class Spinbox {
 

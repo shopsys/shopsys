@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const processTrans = require('./translations/process');
+const processTrans = require('../commands/translations/process');
 const dirWithJsFiles = './assets/js/';
-const dirWithTranslations = './src/Resources/translations/';
+const dirWithTranslations = './translations/';
 const outputDirForExportedTranslations = dirWithJsFiles;
 
 processTrans(dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations);

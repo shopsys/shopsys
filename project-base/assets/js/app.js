@@ -1,12 +1,12 @@
 // import 'jquery-ui-touch-punch';
 
-import 'framework/assets/js/common/components';
+import 'framework/common/components';
 
-import CustomizeBundle from 'framework/assets/js/common/validation/customizeBundle';
+import CustomizeBundle from 'framework/common/validation/customizeBundle';
 import showFormErrorsWindowOnFrontend from './frontend/customizeBundle';
 
-import 'framework/assets/js/common/checkboxToggle';
-import 'framework/assets/js/common/loadTranslations';
+import 'framework/common/checkboxToggle';
+import './loadTranslations';
 
 import './frontend/lazyLoadInit';
 import './frontend/cookies';
@@ -48,11 +48,11 @@ import './frontend/cart/cartBox';
 // cart entry?
 import './frontend/cart/cartRecalculator';
 
-import 'framework/assets/js/common/validation/customizeFpValidator';
+import 'framework/common/validation/customizeFpValidator';
 import './frontend/validation/validationInit';
-import 'framework/assets/js/common/validation';
+import 'framework/common/validation';
 
-import Register from 'framework/assets/js/common/register';
+import Register from 'framework/common/register';
 
 CustomizeBundle.showFormErrorsWindow = showFormErrorsWindowOnFrontend;
 

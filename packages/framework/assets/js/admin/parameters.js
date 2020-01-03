@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Register from '../common/register';
-import { addNewItemToCollection, removeItemFromCollection } from '../common/validation/customizeBundle';
+import { addNewItemToCollection, removeItemFromCollection } from './validation/customizeCollectionBundle';
 
 export default class Parameters {
 

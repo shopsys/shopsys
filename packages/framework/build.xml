@@ -662,6 +662,21 @@
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="install"/>
         </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="copyFw"/>
+        </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="trans"/>
+        </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="build"/>
+        </exec>
     </target>
 
     <target name="phplint" description="Checks syntax of PHP files." hidden="true">

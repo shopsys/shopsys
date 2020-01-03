@@ -1,5 +1,5 @@
-import Ajax from 'framework/assets/js/common/ajax';
-import Register from 'framework/assets/js/common/register';
+import Ajax from 'framework/common/ajax';
+import Register from 'framework/common/register';
 import Window from './window';
 import Translator from 'bazinga-translator';
 

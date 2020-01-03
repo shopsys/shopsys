@@ -1,8 +1,8 @@
 import $ from 'jquery';
 import 'jquery-ui/slider';
 
-import { parseNumber, formatDecimalNumber } from 'framework/assets/js/common/number';
-import Register from 'framework/assets/js/common/register';
+import { parseNumber, formatDecimalNumber } from 'framework/common/number';
+import Register from 'framework/common/register';
 
 export default class RangeSlider {
 

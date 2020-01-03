@@ -1,6 +1,6 @@
 import { lazyLoadCall } from '../lazyLoadInit';
-import Register from 'framework/assets/js/common/register';
-import Ajax from 'framework/assets/js/common/ajax';
+import Register from 'framework/common/register';
+import Ajax from 'framework/common/ajax';
 import getBaseUrl from '../url';
 import pushReloadState from '../history';
 

@@ -24,3 +24,4 @@ npm-debug.log
 yarn-error.log
 
 /assets/js/translations.json
+/assets/js/framework

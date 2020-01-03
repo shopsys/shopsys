@@ -1,5 +1,5 @@
-import { KeyCodes } from 'framework/assets/js/common/components/keyCodes';
-import Timeout from 'framework/assets/js/common/components/timeout';
+import { KeyCodes } from 'framework/common/components/keyCodes';
+import Timeout from 'framework/common/components/timeout';
 import Translator from 'bazinga-translator';
 
 const defaults = {

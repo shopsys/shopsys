@@ -3,7 +3,7 @@ import '../components/filterAllNodes';
 import 'magnific-popup';
 import 'slick-carousel';
 import Responsive from '../responsive';
-import Register from 'framework/assets/js/common/register';
+import Register from 'framework/common/register';
 
 class ProductDetail {
 

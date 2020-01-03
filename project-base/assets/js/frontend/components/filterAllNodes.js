@@ -1,4 +1,4 @@
-import $ from 'jquery';
+const $ = window.jQuery || global.jQuery || jQuery;
 
 $.fn.filterAllNodes = function (selector) {
     const $result = $(this).find(selector).addBack(selector);

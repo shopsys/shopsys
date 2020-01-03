@@ -1,4 +1,4 @@
-import Register from 'framework/assets/js/common/register';
+import Register from 'framework/common/register';
 
 (new Register()).registerCallback(() => {
     $('#js-terms-and-conditions-print').on('click', function () {

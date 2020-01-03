@@ -1,4 +1,4 @@
-import Register from 'framework/assets/js/common/register';
+import Register from 'framework/common/register';
 
 export default function disableDoubleSubmit ($container) {
     $container.filterAllNodes('form').each(function () {

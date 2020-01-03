@@ -1,6 +1,6 @@
 import Ajax from '../common/ajax';
 import Register from '../common/register';
-import { addNewItemToCollection, removeItemFromCollection } from '../common/validation/customizeBundle';
+import { addNewItemToCollection, removeItemFromCollection } from './validation/customizeCollectionBundle';
 import ProductPicker from './productPicker';
 import { escapeHtml } from '../common/components/escape';
 import Window from './window';

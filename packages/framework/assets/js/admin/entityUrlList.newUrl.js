@@ -1,4 +1,4 @@
-import { addNewItemToCollection, removeItemFromCollection } from '../common/validation/customizeBundle';
+import { addNewItemToCollection, removeItemFromCollection } from './validation/customizeCollectionBundle';
 import Register from '../common/register';
 
 export default class EntityUrlsNew {
