@@ -6,13 +6,13 @@
     },
     "analysis": {
       "filter": {
-        "english_stop": {
+        "czech_stop": {
           "type": "stop",
-          "stopwords": "_english_"
+          "stopwords": "_czech_"
         },
-        "english_stemmer": {
+        "czech_stemmer": {
           "type": "stemmer",
-          "language": "english"
+          "language": "czech"
         },
         "edge_ngram": {
           "type": "edgeNGram",
@@ -44,8 +44,8 @@
           "tokenizer": "standard",
           "filter": [
             "lowercase",
-            "english_stemmer",
-            "english_stop",
+            "czech_stemmer",
+            "czech_stop",
             "asciifolding"
           ]
         },
@@ -107,7 +107,7 @@
             },
             "keyword": {
               "type": "icu_collation_keyword",
-              "language": "en",
+              "language": "cs",
               "index": false
             }
           }

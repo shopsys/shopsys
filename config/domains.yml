@@ -5,5 +5,5 @@ domains:
 
     -   id: 2
         name: sconto.sk
-        locale: cs
+        locale: sk
         styles_directory: sk
