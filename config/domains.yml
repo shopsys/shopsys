@@ -1,9 +1,9 @@
 domains:
     -   id: 1
-        name: shopsys
-        locale: en
+        name: sconto.cz
+        locale: cs
 
     -   id: 2
-        name: 2.shopsys
+        name: sconto.sk
         locale: cs
-        styles_directory: domain2
+        styles_directory: sk
