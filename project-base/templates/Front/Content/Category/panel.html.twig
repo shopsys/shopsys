@@ -6,7 +6,7 @@
         {% if isFirstLevel %}id="js-categories"{% endif %}>
         {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
             {% set isCurrentCategory = (currentCategory is not null and currentCategory == categoryWithLazyLoadedVisibleChildren.category) %}
-            <li class="list-menu__item js-category-item js-hover-intent" data-hover-intent-force-click="true" data-hover-intent-force-click-element=".js-category-collapse-control">
+            <li class="list-menu__item js-category-item {% if isFirstLevel %}js-hover-intent{% endif %}" data-hover-intent-force-click="true" data-hover-intent-force-click-element=".js-category-collapse-control">
                 <a href="{{ url('front_product_list', { id: categoryWithLazyLoadedVisibleChildren.category.id }) }}" class="list-menu__item__link list-menu__item__link--level-{{ categoryWithLazyLoadedVisibleChildren.category.level }} {% if isCurrentCategory %}current{% endif %}">
                     {{ categoryWithLazyLoadedVisibleChildren.category.name }}
                     {% if categoryWithLazyLoadedVisibleChildren.hasChildren %}
