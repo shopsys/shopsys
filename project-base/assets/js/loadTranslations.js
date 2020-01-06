@@ -1,4 +1,4 @@
-import Register from 'framework/common/register';
+import Register from 'framework/common/utils/register';
 import Translation from 'bazinga-translator';
 const translations = require('./translations.json');
 

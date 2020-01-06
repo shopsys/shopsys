@@ -1,6 +1,6 @@
-import { parseNumber } from '../number';
+import { parseNumber } from '../utils/number';
 
-(function (w) {
+(function (window) {
 
     const SymfonyComponentValidatorConstraintNotIdenticalTo = function () {
         this.message = '';
@@ -26,6 +26,6 @@ import { parseNumber } from '../number';
         };
     };
 
-    w.SymfonyComponentValidatorConstraintNotIdenticalTo = SymfonyComponentValidatorConstraintNotIdenticalTo;
+    window.SymfonyComponentValidatorConstraintNotIdenticalTo = SymfonyComponentValidatorConstraintNotIdenticalTo;
 
 })(window);

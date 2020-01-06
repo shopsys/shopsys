@@ -1,7 +1,7 @@
-import { KeyCodes } from '../../common/components/keyCodes';
-import Ajax from '../../common/ajax';
-import Register from '../../common/register';
-import Window from '../window';
+import { KeyCodes } from '../../common/utils/keyCodes';
+import Ajax from '../../common/utils/ajax';
+import Register from '../../common/utils/register';
+import Window from '../utils/window';
 import Translator from 'bazinga-translator';
 
 export default class GridInlineEdit {
@@ -48,8 +48,8 @@ export default class GridInlineEdit {
 
         $grid
             .off('click', '.js-inline-edit-save')
-            .on('click', '.js-inline-edit-save', function () {
-                _this.saveRow($(this).closest('.js-grid-editing-row'), $grid);
+            .on('click', '.js-inline-edit-save', (event) => {
+                _this.saveRow($(event.target).closest('.js-grid-editing-row'), $grid);
                 $grid.find('.js-drag-and-drop-grid-rows').sortable('enable');
                 return false;
             });
@@ -58,7 +58,7 @@ export default class GridInlineEdit {
             .off('keyup', '.js-grid-editing-row input')
             .on('keyup', '.js-grid-editing-row input', function (event) {
                 if (event.keyCode == KeyCodes.ENTER) {
-                    _this.saveRow($(this).closest('.js-grid-editing-row'), $grid);
+                    _this.saveRow($(event.target).closest('.js-grid-editing-row'), $grid);
                 }
                 return false;
             });
@@ -77,6 +77,12 @@ export default class GridInlineEdit {
             $virtualForm.append($('<input type="hidden" name="rowId" />').val($originalRow.data('inline-edit-row-id')));
             $originalRow.data('inline-edit-row-id');
         }
+
+        $formRow.find('select').each((idx, select) => {
+            const id = $(select).attr('id');
+            const originalValue = $('#' + id).val();
+            $virtualForm.find('#' + id).val(originalValue);
+        });
 
         Ajax.ajax({
             url: $grid.data('inline-edit-url-save-form'),

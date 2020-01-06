@@ -4,8 +4,8 @@ const path = require('path');
 function fileWalker (dir, done) {
     let results = [];
 
-    fs.readdir(dir, function (err, list) {
-        if (err) return done(err);
+    fs.readdir(dir, function (readErr, list) {
+        if (readErr) return done(readErr);
 
         let pending = list.length;
 
@@ -14,16 +14,16 @@ function fileWalker (dir, done) {
         list.forEach(filePath => {
             filePath = path.resolve(dir, filePath);
 
-            fs.stat(filePath, (err, stat) => {
-                if (err) {
-                    console.log(err);
+            fs.stat(filePath, (statErr, stat) => {
+                if (statErr) {
+                    console.log(statErr);
                 }
 
                 // If directory, execute a recursive call
                 if (stat && stat.isDirectory()) {
-                    fileWalker(filePath, (err, res) => {
-                        if (err) {
-                            console.log(err);
+                    fileWalker(filePath, (walkErr, res) => {
+                        if (walkErr) {
+                            console.log(walkErr);
                         }
 
                         results = results.concat(res);

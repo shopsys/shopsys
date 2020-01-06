@@ -1,4 +1,4 @@
-import Register from 'framework/common/register';
+import Register from 'framework/common/utils/register';
 import CustomizeBundle from 'framework/common/validation/customizeBundle';
 
 export const initClasses = ($container) => {

@@ -2,8 +2,8 @@ import $ from 'jquery';
 import '../components/filterAllNodes';
 import 'magnific-popup';
 import 'slick-carousel';
-import Responsive from '../responsive';
-import Register from 'framework/common/register';
+import Responsive from '../utils/responsive';
+import Register from 'framework/common/utils/register';
 
 class ProductDetail {
 
@@ -31,7 +31,8 @@ class ProductDetail {
             }
         });
 
-        $gallery.filterAllNodes('.js-gallery-slides').slick({
+        const $sliders = $gallery.filterAllNodes('.js-gallery-slides');
+        $sliders.not('.slick-initialized').slick({
             dots: false,
             arrows: true,
             slidesToShow: 2,

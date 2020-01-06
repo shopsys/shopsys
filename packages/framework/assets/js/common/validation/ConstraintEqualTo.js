@@ -1,8 +1,8 @@
-import { parseNumber } from '../number';
+import { parseNumber } from '../utils/number';
 
-(function (w) {
+(function (window) {
 
-    SymfonyComponentValidatorConstraintsEqualTo = function () {
+    const SymfonyComponentValidatorConstraintsEqualTo = function () {
         this.message = '';
         this.value = null;
 
@@ -26,6 +26,6 @@ import { parseNumber } from '../number';
         };
     };
 
-    w.SymfonyComponentValidatorConstraintsEqualTo = SymfonyComponentValidatorConstraintsEqualTo;
+    window.SymfonyComponentValidatorConstraintsEqualTo = SymfonyComponentValidatorConstraintsEqualTo;
 
 })(window);

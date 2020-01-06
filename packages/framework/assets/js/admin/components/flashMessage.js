@@ -1,4 +1,4 @@
-import Register from '../../common/register';
+import Register from '../../common/utils/register';
 
 export default class FlashMessage {
 

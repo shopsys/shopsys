@@ -1,6 +1,6 @@
-(function (w) {
+(function (window) {
 
-    ShopsysFrameworkBundleFormConstraintsContains = function () {
+    const ShopsysFrameworkBundleFormConstraintsContains = function () {
         const self = this;
         this.message = '';
         this.needle = null;
@@ -22,6 +22,6 @@
         };
     };
 
-    w.ShopsysFrameworkBundleFormConstraintsContains = ShopsysFrameworkBundleFormConstraintsContains;
+    window.ShopsysFrameworkBundleFormConstraintsContains = ShopsysFrameworkBundleFormConstraintsContains;
 
 })(window);

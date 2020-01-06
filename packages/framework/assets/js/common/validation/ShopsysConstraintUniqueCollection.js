@@ -1,6 +1,6 @@
-(function ($, w) {
+(function ($, window) {
 
-    ShopsysFrameworkBundleFormConstraintsUniqueCollection = function () {
+    const ShopsysFrameworkBundleFormConstraintsUniqueCollection = function () {
         const self = this;
         this.message = '';
         this.fields = null;
@@ -60,6 +60,6 @@
         }
     };
 
-    w.ShopsysFrameworkBundleFormConstraintsUniqueCollection = ShopsysFrameworkBundleFormConstraintsUniqueCollection;
+    window.ShopsysFrameworkBundleFormConstraintsUniqueCollection = ShopsysFrameworkBundleFormConstraintsUniqueCollection;
 
 })(jQuery, window);

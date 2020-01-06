@@ -1,7 +1,7 @@
 import { highlightSubmitButtons, findElementsToHighlight } from './validation';
-import constant from '../../admin/constant';
-import Timeout from '../components/timeout';
-import Window from '../../admin/window';
+import constant from '../../admin/utils/constant';
+import Timeout from '../utils/timeout';
+import Window from '../../admin/utils/window';
 import Translator from 'bazinga-translator';
 
 const $ = window.$;
@@ -161,7 +161,7 @@ export default class CustomizeBundle {
         }
 
         return closestCommonAncestor;
-    };
+    }
 
     static reverseCollectionToArray ($collection) {
         const result = [];
@@ -180,8 +180,8 @@ export default class CustomizeBundle {
     static isExpandedChoiceEmpty (value) {
         let isEmpty = true;
 
-        $.each(value, function (key, value) {
-            if (value !== false) {
+        $.each(value, function (key, element) {
+            if (element !== false) {
                 isEmpty = false;
                 return false;
             }
@@ -255,7 +255,7 @@ export default class CustomizeBundle {
     static getClosestLabel ($input, selector) {
         const $formLine = $input.closest('.form-line:has(' + selector + '), .js-form-group:has(' + selector + '), .form-full:has(' + selector + ')');
         return $formLine.find(selector).filter(':first');
-    };
+    }
 
     static addLabelError (errorsByLabel, labelText, errorMessage) {
         labelText = CustomizeBundle.normalizeLabelText(labelText);
@@ -324,9 +324,9 @@ export default class CustomizeBundle {
         let $errorList = $('.' + errorListClass);
         if ($errorList.length === 0) {
             $errorList = $($.parseHTML(
-                '<div class="in-message in-message--danger js-validation-errors-list ' + errorListClass + '">\
-                <ul class="in-message__list"></ul>\
-            </div>'
+                '<div class="in-message in-message--danger js-validation-errors-list ' + errorListClass + '">'
+                + '<ul class="in-message__list"></ul>'
+            + '</div>'
             ));
             $errorList.insertBefore($formInput);
         }

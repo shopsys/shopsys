@@ -1,5 +1,5 @@
-import constant from '../../constant';
-import Register from '../../../common/register';
+import constant from '../../utils/constant';
+import Register from '../../../common/utils/register';
 
 export default function validationOrder ($container) {
     const $orderForm = $container.filterAllNodes('form[name="order_form"]');

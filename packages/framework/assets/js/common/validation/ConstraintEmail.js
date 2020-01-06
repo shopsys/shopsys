@@ -1,6 +1,6 @@
-(function (w) {
+(function (window) {
 
-    SymfonyComponentValidatorConstraintsEmail = function () {
+    const SymfonyComponentValidatorConstraintsEmail = function () {
         this.message = '';
 
         this.validate = function (value) {
@@ -16,6 +16,6 @@
         };
     };
 
-    w.SymfonyComponentValidatorConstraintsEmail = SymfonyComponentValidatorConstraintsEmail;
+    window.SymfonyComponentValidatorConstraintsEmail = SymfonyComponentValidatorConstraintsEmail;
 
 })(window);

@@ -1,7 +1,7 @@
-import formChangeInfo from '../formChangeInfo';
-import Ajax from '../../common/ajax';
-import Window from '../window';
-import Register from '../../common/register';
+import formChangeInfo from './formChangeInfo';
+import Ajax from '../../common/utils/ajax';
+import Window from '../utils/window';
+import Register from '../../common/utils/register';
 import Translator from 'bazinga-translator';
 
 export default class GridDragAndDrop {
@@ -37,7 +37,7 @@ export default class GridDragAndDrop {
 
         $grid.data('positionsChanged', false);
         this.highlightChanges($grid, false);
-    };
+    }
 
     onUpdate (event, ui) {
         const $grid = $(event.target).closest('.js-grid');

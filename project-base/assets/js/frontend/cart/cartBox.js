@@ -1,5 +1,5 @@
-import Ajax from 'framework/common/ajax';
-import Register from 'framework/common/register';
+import Ajax from 'framework/common/utils/ajax';
+import Register from 'framework/common/utils/register';
 
 export default class CartBox {
     static reload (event) {

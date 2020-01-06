@@ -1,7 +1,7 @@
 import 'jquery.cookie';
 import 'framework/common/components';
 import AjaxMoreLoader from '../components/ajaxMoreLoader';
-import Register from 'framework/common/register';
+import Register from 'framework/common/utils/register';
 import Translator from 'bazinga-translator';
 
 export default class ProductList {

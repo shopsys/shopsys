@@ -1,9 +1,9 @@
 import ToggleOption from './toggleOption';
-import Register from '../../common/register';
+import Register from '../../common/utils/register';
 
-export default class SelectToggle{
+export default class SelectToggle {
 
-    constructor($container) {
+    constructor ($container) {
         this.optionClassPrefix = 'js-select-toggle-option-';
 
         const $selects = $container.filterAllNodes('.js-toggle-opt-group');
@@ -32,11 +32,11 @@ export default class SelectToggle{
     }
 
     setOptgroupClassByLabel ($select, classPrefix) {
-        $select.find('optgroup').each((index, element) => {
-            const $optgroup = $(element);
+        $select.find('optgroup').each((groupIndex, optgroup) => {
+            const $optgroup = $(optgroup);
             const optgroupLabel = $optgroup.attr('label');
-            $optgroup.find('option').each((index, element) => {
-                $(element)
+            $optgroup.find('option').each((optionIndex, option) => {
+                $(option)
                     .addClass(classPrefix + optgroupLabel)
                     .appendTo($select);
             });
@@ -56,7 +56,7 @@ export default class SelectToggle{
         });
     }
 
-    static init($container) {
+    static init ($container) {
         // eslint-disable-next-line no-new
         new SelectToggle($container);
     }

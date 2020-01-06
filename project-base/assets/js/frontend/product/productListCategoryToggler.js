@@ -1,4 +1,4 @@
-import Register from 'framework/common/register';
+import Register from 'framework/common/utils/register';
 
 export default class CategoryDescription {
     static init () {

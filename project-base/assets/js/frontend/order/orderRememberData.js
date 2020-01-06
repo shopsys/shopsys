@@ -1,5 +1,5 @@
-import Ajax from 'framework/common/ajax';
-import Register from 'framework/common/register';
+import Ajax from 'framework/common/utils/ajax';
+import Register from 'framework/common/utils/register';
 
 export default class OrderRememberData {
 
@@ -9,18 +9,18 @@ export default class OrderRememberData {
         OrderRememberData.delayedSaveDataTimer = setTimeout(function () {
             $this.trigger('change.orderRememberData');
         }, OrderRememberData.delayedSaveDataDelay);
-    };
+    }
 
-    static saveData () {
+    static saveData (event) {
         clearTimeout(OrderRememberData.delayedSaveDataTimer);
         const $orderForm = $('#js-order-form');
         Ajax.ajaxPendingCall('Shopsys.orderRememberData.saveData', {
             type: 'POST',
             url: $orderForm.data('ajax-save-url'),
             data: $orderForm.serialize(),
-            loaderElement: null
+            loaderElement: $(event.target)
         });
-    };
+    }
 
     static init ($container) {
         $container.filterAllNodes('#js-order-form input, #js-order-form select, #js-order-form textarea')
@@ -28,7 +28,7 @@ export default class OrderRememberData {
 
         $container.filterAllNodes('#js-order-form input, #js-order-form textarea')
             .on('keyup.orderRememberData', OrderRememberData.delayedSaveData);
-    };
+    }
 }
 
 OrderRememberData.delayedSaveDataTimer = null;

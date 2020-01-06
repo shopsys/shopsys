@@ -1,7 +1,8 @@
-import Ajax from 'framework/common/ajax';
-import Timeout from 'framework/common/components/timeout';
-import Register from 'framework/common/register';
-import constant from '../constant';
+import Ajax from 'framework/common/utils/ajax';
+import Timeout from 'framework/common/utils/timeout';
+import Register from 'framework/common/utils/register';
+import constant from '../utils/constant';
+import { KeyCodes } from 'framework/common/utils/keyCodes';
 
 export default class CartRecalculator {
 
@@ -25,7 +26,7 @@ export default class CartRecalculator {
                 });
             })
             .keydown(function (event) {
-                if (event.keyCode === Shopsys.keyCodes.ENTER) {
+                if (event.keyCode === KeyCodes.ENTER) {
                     _this.reloadWithDelay(0, _this);
                     event.preventDefault();
                 }
@@ -74,7 +75,7 @@ export default class CartRecalculator {
     static init ($container) {
         // eslint-disable-next-line no-new
         new CartRecalculator($container);
-    };
+    }
 
 }
 

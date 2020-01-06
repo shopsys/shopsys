@@ -1,15 +1,14 @@
-import $ from 'jquery';
-import 'waypoints/lib/jquery.waypoints';
-import 'jquery.counterup/jquery.counterup';
-import Register from '../../common/register';
+import counterUp from 'counterup2';
+import Register from '../../common/utils/register';
 
 export default class CounterUp {
 
-    static init ($container) {
-        window.jQuery = window.$ = $;
-        $container.filterAllNodes("[data-counter='counterup']").counterUp({
-            delay: 10,
-            time: 1000
+    static init () {
+        document.querySelectorAll('.js-counter').forEach(counterItem => {
+            counterUp(counterItem, {
+                duration: 1000,
+                delay: 10
+            });
         });
     }
 

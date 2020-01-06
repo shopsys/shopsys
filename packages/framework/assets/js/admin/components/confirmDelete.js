@@ -1,4 +1,4 @@
-import Ajax from '../../common/ajax';
+import Ajax from '../../common/utils/ajax';
 import Translator from 'bazinga-translator';
 
 export default class ConfirmDelete {

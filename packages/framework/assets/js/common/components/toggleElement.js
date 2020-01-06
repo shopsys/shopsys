@@ -1,4 +1,4 @@
-import Register from '../register';
+import Register from '../utils/register';
 
 export default class ToggleElement {
 
@@ -10,7 +10,7 @@ export default class ToggleElement {
         $content.slideDown('fast', function () {
             $content.removeClass('display-none');
         });
-    };
+    }
 
     static hide ($container) {
         const $content = $container.find('.js-toggle-content');
@@ -20,7 +20,7 @@ export default class ToggleElement {
         $content.slideUp('fast', function () {
             $content.addClass('display-none');
         });
-    };
+    }
 
     static toggle () {
         const $container = $(this).closest('.js-toggle-container');

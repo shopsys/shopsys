@@ -1,8 +1,8 @@
 import 'framework/common/components';
 
-import Ajax from 'framework/common/ajax';
-import { lazyLoadCall } from '../lazyLoadInit';
-import Register from 'framework/common/register';
+import Ajax from 'framework/common/utils/ajax';
+import { lazyLoadCall } from '../components/lazyLoadInit';
+import Register from 'framework/common/utils/register';
 import Translator from 'bazinga-translator';
 
 const optionsDefaults = {
@@ -59,7 +59,7 @@ export default class AjaxMoreLoader {
                 (new Register()).registerNewContent($nextItems);
             }
         });
-    };
+    }
 
     updateLoadMoreButton () {
         const remaining = this.totalCount - this.page * this.pageSize;
@@ -69,7 +69,7 @@ export default class AjaxMoreLoader {
         this.$loadMoreButton
             .val(buttonText)
             .toggle(remaining > 0);
-    };
+    }
 
     static init ($container) {
         $container.filterAllNodes('.js-list-with-paginator').each(function () {

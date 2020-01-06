@@ -47,7 +47,10 @@ class BestsellingProductFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'attr' => ['novalidate' => 'novalidate'],
+            'attr' => [
+                'novalidate' => 'novalidate',
+                'class' => 'js-no-validate',
+            ],
         ]);
     }
 }

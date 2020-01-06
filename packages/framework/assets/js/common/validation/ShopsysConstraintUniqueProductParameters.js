@@ -1,6 +1,6 @@
-(function (w) {
+(function (window) {
 
-    ShopsysFrameworkBundleFormConstraintsUniqueProductParameters = function () {
+    const ShopsysFrameworkBundleFormConstraintsUniqueProductParameters = function () {
         this.message = '';
 
         /**
@@ -18,6 +18,6 @@
 
     };
 
-    w.ShopsysFrameworkBundleFormConstraintsUniqueProductParameters = ShopsysFrameworkBundleFormConstraintsUniqueProductParameters;
+    window.ShopsysFrameworkBundleFormConstraintsUniqueProductParameters = ShopsysFrameworkBundleFormConstraintsUniqueProductParameters;
 
 })(window);

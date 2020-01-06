@@ -1,6 +1,6 @@
-(function ($, w) {
+(function ($, window) {
 
-    ShopsysFrameworkBundleFormConstraintsUniqueEmail = function () {
+    const ShopsysFrameworkBundleFormConstraintsUniqueEmail = function () {
         this.message = null;
 
         this.validate = function (value, element) {
@@ -29,6 +29,6 @@
         };
     };
 
-    w.ShopsysFrameworkBundleFormConstraintsUniqueEmail = ShopsysFrameworkBundleFormConstraintsUniqueEmail;
+    window.ShopsysFrameworkBundleFormConstraintsUniqueEmail = ShopsysFrameworkBundleFormConstraintsUniqueEmail;
 
 })(jQuery, window);

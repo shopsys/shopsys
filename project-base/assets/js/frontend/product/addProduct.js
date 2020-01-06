@@ -1,7 +1,7 @@
 import 'framework/common/components';
-import Ajax from 'framework/common/ajax';
-import Register from 'framework/common/register';
-import Window from '../window';
+import Ajax from 'framework/common/utils/ajax';
+import Register from 'framework/common/utils/register';
+import Window from '../utils/window';
 import Translator from 'bazinga-translator';
 
 export default class AddProduct {
@@ -16,7 +16,7 @@ export default class AddProduct {
         });
 
         event.preventDefault();
-    };
+    }
 
     static onSuccess (data) {
         const buttonContinueUrl = $($.parseHTML(data)).filterAllNodes('.js-add-product-url-cart').data('url');
@@ -45,7 +45,7 @@ export default class AddProduct {
                 cssClassCancel: 'btn--success'
             });
         }
-    };
+    }
 
     static onError (jqXHR) {
         // on FireFox abort ajax request, but request was probably successful
@@ -55,7 +55,7 @@ export default class AddProduct {
                 content: Translator.trans('Operation failed')
             });
         }
-    };
+    }
 
     static init ($container) {
         $container.filterAllNodes('form.js-add-product').on('submit.addProductAjaxSubmit', AddProduct.ajaxSubmit);

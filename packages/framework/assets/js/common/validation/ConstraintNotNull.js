@@ -1,8 +1,8 @@
-import constant from '../../admin/constant';
+import constant from '../../admin/utils/constant';
 
-(function (w) {
+(function (window) {
 
-    SymfonyComponentValidatorConstraintsNotNull = function () {
+    const SymfonyComponentValidatorConstraintsNotNull = function () {
         this.message = '';
 
         this.validate = function (value, element) {
@@ -33,6 +33,6 @@ import constant from '../../admin/constant';
         };
     };
 
-    w.SymfonyComponentValidatorConstraintsNotNull = SymfonyComponentValidatorConstraintsNotNull;
+    window.SymfonyComponentValidatorConstraintsNotNull = SymfonyComponentValidatorConstraintsNotNull;
 
 })(window);

@@ -1,8 +1,8 @@
-import { parseNumber } from '../number';
+import { parseNumber } from '../utils/number';
 
-(function (w) {
+(function (window) {
 
-    SymfonyComponentValidatorConstraintsRange = function () {
+    const SymfonyComponentValidatorConstraintsRange = function () {
         this.maxMessage = '';
         this.minMessage = '';
         this.invalidMessage = '';
@@ -32,6 +32,6 @@ import { parseNumber } from '../number';
         };
     };
 
-    w.SymfonyComponentValidatorConstraintsRange = SymfonyComponentValidatorConstraintsRange;
+    window.SymfonyComponentValidatorConstraintsRange = SymfonyComponentValidatorConstraintsRange;
 
 })(window);

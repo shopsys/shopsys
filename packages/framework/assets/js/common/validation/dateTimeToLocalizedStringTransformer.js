@@ -1,6 +1,6 @@
-(function (w) {
+(function (window) {
 
-    SymfonyComponentFormExtensionCoreDataTransformerDateTimeToLocalizedStringTransformer = function () {
+    const SymfonyComponentFormExtensionCoreDataTransformerDateTimeToLocalizedStringTransformer = function () {
         this.reverseTransform = function (value) {
             if (this.pattern.toLowerCase() === 'dd.mm.yyyy') {
                 const regexp = /^(\d{2})\.(\d{2})\.(\d{4})$/;
@@ -13,6 +13,6 @@
         };
     };
 
-    w.SymfonyComponentFormExtensionCoreDataTransformerDateTimeToLocalizedStringTransformer = SymfonyComponentFormExtensionCoreDataTransformerDateTimeToLocalizedStringTransformer;
+    window.SymfonyComponentFormExtensionCoreDataTransformerDateTimeToLocalizedStringTransformer = SymfonyComponentFormExtensionCoreDataTransformerDateTimeToLocalizedStringTransformer;
 
 })(window);

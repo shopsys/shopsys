@@ -1,6 +1,6 @@
 import 'framework/common/components';
-import Ajax from 'framework/common/ajax';
-import Register from 'framework/common/register';
+import Ajax from 'framework/common/utils/ajax';
+import Register from 'framework/common/utils/register';
 
 export default class OrderPreview {
 
@@ -22,18 +22,18 @@ export default class OrderPreview {
             url: $orderPreview.data('url'),
             type: 'get',
             data: data,
-            success: function (data) {
-                $orderPreview.html(data);
+            success: function (successData) {
+                $orderPreview.html(successData);
                 (new Register()).registerNewContent($orderPreview);
             }
         });
-    };
+    }
 
     static init ($container) {
         $container
             .filterAllNodes('.js-order-transport-input, .js-order-payment-input')
             .change(OrderPreview.loadOrderPreview);
-    };
+    }
 }
 
 (new Register()).registerCallback(OrderPreview.init);

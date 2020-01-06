@@ -9,7 +9,7 @@ export default class ToggleOption {
         if ($element.parent('span.' + ToggleOption.wrapperClass).length === 0) {
             $element.wrap('<span class="' + ToggleOption.wrapperClass + '" style="display: none;" />');
         }
-    };
+    }
 
     static show ($element) {
         $element.show();

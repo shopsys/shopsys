@@ -1,6 +1,6 @@
-(function (w) {
+(function (window) {
 
-    SymfonyComponentValidatorConstraintsNotBlank = function () {
+    const SymfonyComponentValidatorConstraintsNotBlank = function () {
         this.message = '';
 
         this.validate = function (value, element) {
@@ -15,5 +15,6 @@
         };
     };
 
-    w.SymfonyComponentValidatorConstraintsNotBlank = SymfonyComponentValidatorConstraintsNotBlank;
+    window.SymfonyComponentValidatorConstraintsNotBlank = SymfonyComponentValidatorConstraintsNotBlank;
+
 })(window);

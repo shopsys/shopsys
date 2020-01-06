@@ -23,8 +23,8 @@
  * It is automatically initialized on all DOM containers with class "js-tabs".
  */
 
-import HybridTabs from './hybridTabs';
-import Register from '../register';
+import HybridTabs from '../utils/hybridTabs';
+import Register from '../utils/register';
 
 export default function tabs ($container) {
     $container.filterAllNodes('.js-tabs').each(function () {

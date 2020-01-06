@@ -1,4 +1,4 @@
-import Register from '../../common/register';
+import Register from '../../common/utils/register';
 import 'select2';
 
 export function initSelect2 ($container) {

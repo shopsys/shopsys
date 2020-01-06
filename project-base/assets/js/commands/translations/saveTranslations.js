@@ -5,9 +5,9 @@ const findLang = require('./findLang');
 
 function saveTranslations (translations, dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
 
-    fileWalker(dirWithTranslations, (err, filePaths) => {
-        if (err) {
-            console.log(err);
+    fileWalker(dirWithTranslations, (walkErr, filePaths) => {
+        if (walkErr) {
+            console.log(walkErr);
         }
 
         const promises = filePaths.map(filePath => {
@@ -18,9 +18,9 @@ function saveTranslations (translations, dirWithJsFiles, dirWithTranslations, ou
 
             const lang = findLang(filePath);
             return new Promise((resolve, reject) => {
-                PO.load(filePath, (err, po) => {
-                    if (err) {
-                        console.log(err);
+                PO.load(filePath, (loadErr, po) => {
+                    if (loadErr) {
+                        console.log(loadErr);
                     }
 
                     const translated = [];
@@ -38,18 +38,18 @@ function saveTranslations (translations, dirWithJsFiles, dirWithTranslations, ou
         });
 
         Promise.all(promises).then(value => {
-            const translations = {};
+            const allTranslations = {};
             value.forEach(translatedObject => {
-                if (!translations[translatedObject.lang]) {
-                    translations[translatedObject.lang] = [];
+                if (!allTranslations[translatedObject.lang]) {
+                    allTranslations[translatedObject.lang] = [];
                 }
 
-                translations[translatedObject.lang] = translations[translatedObject.lang].concat(translatedObject.translated);
+                allTranslations[translatedObject.lang] = allTranslations[translatedObject.lang].concat(translatedObject.translated);
             });
 
-            fs.writeFile(outputDirForExportedTranslations + 'translations.json', JSON.stringify(translations), (err) => {
-                if (err) {
-                    return console.log(err);
+            fs.writeFile(outputDirForExportedTranslations + 'translations.json', JSON.stringify(allTranslations), (writeErr) => {
+                if (writeErr) {
+                    return console.log(writeErr);
                 }
             });
         });

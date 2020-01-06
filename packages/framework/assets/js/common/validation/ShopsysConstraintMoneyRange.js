@@ -1,6 +1,6 @@
-import { parseNumber } from '../number';
+import { parseNumber } from '../utils/number';
 
-(function (w) {
+(function (window) {
 
     const ShopsysFrameworkBundleFormConstraintsMoneyRange = function () {
         const self = this;
@@ -25,6 +25,6 @@ import { parseNumber } from '../number';
         };
     };
 
-    w.ShopsysFrameworkBundleFormConstraintsMoneyRange = ShopsysFrameworkBundleFormConstraintsMoneyRange;
+    window.ShopsysFrameworkBundleFormConstraintsMoneyRange = ShopsysFrameworkBundleFormConstraintsMoneyRange;
 
 })(window);

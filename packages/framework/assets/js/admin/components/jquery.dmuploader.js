@@ -26,7 +26,7 @@
         dataType: null,
         fileName: 'file',
         onInit: function () {},
-        onFallbackMode: function () { message; },
+        onFallbackMode: function () {},
         onNewFile: function (id, file) {},
         onBeforeUpload: function (id) {},
         onComplete: function () {},

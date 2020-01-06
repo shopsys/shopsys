@@ -1,6 +1,6 @@
-(function (w) {
+(function (window) {
 
-    ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow = function () {
+    const ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow = function () {
         this.message = '';
 
         this.validate = function (value, ele) {
@@ -21,6 +21,6 @@
         };
     };
 
-    w.ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow = ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow;
+    window.ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow = ShopsysFrameworkBundleFormConstraintsNotSelectedDomainToShow;
 
 })(window);

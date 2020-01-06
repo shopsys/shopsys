@@ -1,5 +1,5 @@
-import constant from '../../constant';
-import Register from '../../../common/register';
+import constant from '../../utils/constant';
+import Register from '../../../common/utils/register';
 
 export default function validationProduct () {
     const $productForm = $('form[name="product_form"]');

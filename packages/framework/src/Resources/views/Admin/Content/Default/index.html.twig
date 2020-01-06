@@ -6,12 +6,10 @@
 {% macro statisticNumberWithPercent(number, percent) %}
     <div class="box-overview__item__percent box-overview__item__percent--{% if percent > 0 %}up{% elseif percent < 0 %}down{% else %}same{% endif %}">
         <i class="svg svg-arrow"></i>
-        <span class="box-overview__item__percent__value" data-counter="counterup" data-value="{{ percent|abs }}">0</span>%
+        <span class="box-overview__item__percent__value js-counter">{{ percent|abs }}</span>%
     </div>
 
-    <div class="box-overview__item__number" data-counter="counterup" data-value="{{ number }}">
-        0
-    </div>
+    <div class="box-overview__item__number js-counter">{{ number }}</div>
 {% endmacro %}
 
 {% block main_content %}
@@ -29,7 +27,7 @@
     <div class="margin-bottom-20">
         {% include '@ShopsysFramework/Admin/Content/Product/quickSearchFormContent.html.twig' with {quickSearchForm: quickProductSearchForm} %}
     </div>
-    
+
     <div class="box-overview">
         <h2>{{ 'Sales overview (last 7 days)'|trans }}</h2>
 

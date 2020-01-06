@@ -6,7 +6,7 @@ import CodeMirror from 'codemirror';
 // eslint-disable-next-line no-global-assign
 if (typeof window !== 'undefined') global = window;
 
-var StyleguideIndex = {
+const StyleguideIndex = {
     init: function () {
         this.$body = $('html, body');
         this.$breakpointsLinks = $('.styleguide-header__breakpoints__item__link');
@@ -30,7 +30,7 @@ var StyleguideIndex = {
    * should be registered here
    */
     events: function () {
-        var _this = this;
+        const _this = this;
 
         this.$breakpointsLinks.click(function () {
             _this.resizeContent($(this));
@@ -57,8 +57,8 @@ var StyleguideIndex = {
    * the breakpoint choice
    */
     resizeContent: function ($elem) {
-        var sizeLabel = $elem.data('size-label');
-        var size = sizeLabel === 'full' ? $elem.data('size') : parseInt($elem.data('size').replace('px', ''), 10);
+        const sizeLabel = $elem.data('size-label');
+        const size = sizeLabel === 'full' ? $elem.data('size') : parseInt($elem.data('size').replace('px', ''), 10);
 
         this.$iframe.width(size);
     },
@@ -74,10 +74,11 @@ var StyleguideIndex = {
         // It is not supported so we should not raise errors.
         if (window.location.hash === '#' || window.location.hash === '') return false;
 
-        var top = this.$iframeContent.find('section' + window.location.hash.replace('!', '')).offset().top;
+        const _this = this;
+        const top = this.$iframeContent.find('section' + window.location.hash.replace('!', '')).offset().top;
         if (this.$iframeContent.find('section' + window.location.hash.replace('!', '')).index() === 0) {
             $(window).on('load', function () {
-                this.$body.animate({ scrollTop: 0 }, 500);
+                _this.$body.animate({ scrollTop: 0 }, 500);
             });
         } else {
             this.$body.animate({ scrollTop: top - 50 }, 0);
@@ -93,7 +94,7 @@ var StyleguideIndex = {
         // Shutdown this feature in Chrome.
         // Chrome have a know issue with file protocol and iframe comunication.
         // It is not supported so we should not raise errors.
-        var top = this.$iframeContent.find('section' + $elem.attr('href')).offset().top - 50;
+        const top = this.$iframeContent.find('section' + $elem.attr('href')).offset().top - 50;
 
         // Use ! to prevent de default browser behavior of anchor navigation
         window.location.hash = '!' + $elem.attr('href').replace('#', '');
@@ -138,9 +139,9 @@ var StyleguideIndex = {
 $(window).on('load', function () {
     StyleguideIndex.init();
 
-    var textareas = document.querySelectorAll('.codemirror-html');
-    for (var i = 0; i < textareas.length; i++) {
-        CodeMirror.fromTextArea(textareas[i], {
+    const textareasHtml = document.querySelectorAll('.codemirror-html');
+    for (let i = 0; i < textareasHtml.length; i++) {
+        CodeMirror.fromTextArea(textareasHtml[i], {
             lineNumbers: true,
             theme: 'hopscotch',
             mode: 'htmlmixed',
@@ -150,9 +151,9 @@ $(window).on('load', function () {
     }
 
     // editor css
-    var textareas = document.querySelectorAll('.codemirror-css');
-    for (var i = 0; i < textareas.length; i++) {
-        CodeMirror.fromTextArea(textareas[i], {
+    const textareasCss = document.querySelectorAll('.codemirror-css');
+    for (let i = 0; i < textareasCss.length; i++) {
+        CodeMirror.fromTextArea(textareasCss[i], {
             lineNumbers: true,
             theme: 'hopscotch',
             mode: 'css',
@@ -162,9 +163,9 @@ $(window).on('load', function () {
     }
 
     // editor js
-    var textareas = document.querySelectorAll('.codemirror-js');
-    for (var i = 0; i < textareas.length; i++) {
-        CodeMirror.fromTextArea(textareas[i], {
+    const textareasJs = document.querySelectorAll('.codemirror-js');
+    for (let i = 0; i < textareasJs.length; i++) {
+        CodeMirror.fromTextArea(textareasJs[i], {
             lineNumbers: true,
             theme: 'hopscotch',
             mode: 'javascript',

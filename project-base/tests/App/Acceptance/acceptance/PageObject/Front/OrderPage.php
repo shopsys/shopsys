@@ -46,6 +46,7 @@ class OrderPage extends AbstractPage
      */
     public function assertPaymentIsNotSelected($paymentTitle)
     {
+        $this->scrollToPaymentForm();
         $translatedPaymentTitle = t($paymentTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $this->tester->dontSeeCheckboxIsCheckedByLabel($translatedPaymentTitle);
     }
@@ -55,6 +56,7 @@ class OrderPage extends AbstractPage
      */
     public function assertPaymentIsSelected($paymentTitle)
     {
+        $this->scrollToPaymentForm();
         $translatedPaymentTitle = t($paymentTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $this->tester->seeCheckboxIsCheckedByLabel($translatedPaymentTitle);
     }
@@ -64,6 +66,7 @@ class OrderPage extends AbstractPage
      */
     public function selectPayment($paymentPosition)
     {
+        $this->scrollToPaymentForm();
         $frontCheckboxClicker = FrontCheckbox::createByCss(
             $this->tester,
             '#transport_and_payment_form_payment_' . $paymentPosition
@@ -128,5 +131,10 @@ class OrderPage extends AbstractPage
             '#order_personal_info_form_legalConditionsAgreement'
         );
         $frontCheckboxClicker->check();
+    }
+
+    protected function scrollToPaymentForm()
+    {
+        $this->tester->scrollTo(['css' => '#transport_and_payment_form_payment']);
     }
 }

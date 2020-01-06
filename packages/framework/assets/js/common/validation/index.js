@@ -21,3 +21,7 @@ import './ShopsysConstraintUniqueCollection.js';
 import './ShopsysConstraintUniqueEmail.js';
 import './ShopsysConstraintUniqueProductParameters.js';
 import './ShopsysFrameworkBundleFormConstraintsEmail.js';
+
+import './customizeBundle';
+import './customizeFpValidator';
+import './validation';

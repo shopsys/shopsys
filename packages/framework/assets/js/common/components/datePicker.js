@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import 'jquery-ui/datepicker';
-import Register from '../register';
-import constant from '../../admin/constant';
+import Register from '../utils/register';
+import constant from '../../admin/utils/constant';
 
 /* Czech initialisation for the jQuery UI date picker plugin. */
 /* Written by Tomas Muller (tomas@tomas-muller.net). */
@@ -35,6 +35,6 @@ export default function datePicker ($container) {
 
         $(this).datepicker(options);
     });
-};
+}
 
 (new Register()).registerCallback(datePicker);

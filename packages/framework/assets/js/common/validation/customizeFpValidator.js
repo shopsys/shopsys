@@ -1,4 +1,4 @@
-import constant from '../../admin/constant';
+import constant from '../../admin/utils/constant';
 import CustomizeBundle from './customizeBundle';
 
 const FpJsFormValidator = window.FpJsFormValidator;
@@ -186,8 +186,8 @@ FpJsFormValidator.isValueEmty = function (value, element) {
     return FpJsFormValidator._isValueEmty(value);
 };
 
-const _SymfonyComponentValidatorConstraintsUrl = SymfonyComponentValidatorConstraintsUrl; // eslint-disable-line no-unused-vars
-SymfonyComponentValidatorConstraintsUrl = function () {
+const _SymfonyComponentValidatorConstraintsUrl = window.SymfonyComponentValidatorConstraintsUrl; // eslint-disable-line no-unused-vars
+const SymfonyComponentValidatorConstraintsUrl = function () {
     this.message = '';
 
     this.validate = function (value, element) {

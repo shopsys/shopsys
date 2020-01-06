@@ -1,6 +1,6 @@
-(function ($, w) {
+(function ($, window) {
 
-    ShopsysFrameworkBundleFormConstraintsNotInArray = function () {
+    const ShopsysFrameworkBundleFormConstraintsNotInArray = function () {
         const self = this;
         this.message = '';
         this.array = [];
@@ -23,6 +23,6 @@
         };
     };
 
-    w.ShopsysFrameworkBundleFormConstraintsNotInArray = ShopsysFrameworkBundleFormConstraintsNotInArray;
+    window.ShopsysFrameworkBundleFormConstraintsNotInArray = ShopsysFrameworkBundleFormConstraintsNotInArray;
 
 })(jQuery, window);

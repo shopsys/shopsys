@@ -1,6 +1,6 @@
-(function (w) {
+(function (window) {
 
-    ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount = function () {
+    const ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount = function () {
         const self = this;
         this.message = '';
 
@@ -13,6 +13,6 @@
         };
     };
 
-    w.ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount = ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount;
+    window.ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount = ShopsysFrameworkBundleFormConstraintsNotNegativeMoneyAmount;
 
 })(window);

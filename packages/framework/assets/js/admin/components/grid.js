@@ -1,5 +1,5 @@
-import { KeyCodes } from '../../common/components/keyCodes';
-import Register from '../../common/register';
+import { KeyCodes } from '../../common/utils/keyCodes';
+import Register from '../../common/utils/register';
 
 export default class Grid {
 

@@ -1,6 +1,6 @@
-import Ajax from '../../common/ajax';
-import Window from '../window';
-import Register from '../../common/register';
+import Ajax from '../../common/utils/ajax';
+import Window from '../utils/window';
+import Register from '../../common/utils/register';
 import Translator from 'bazinga-translator';
 
 export default class GridMultipleDragAndDrop {

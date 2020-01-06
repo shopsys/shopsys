@@ -1,7 +1,7 @@
 // Script is named "noticer.js" because scripts named "advert.js" are often blocked by browser (e.g. by AdBlock plugin)
 
-import constant from '../../constant';
-import Register from '../../../common/register';
+import constant from '../../utils/constant';
+import Register from '../../../common/utils/register';
 
 export default function validationAdvert () {
     const $advertForm = $('form[name="advert_form"]');

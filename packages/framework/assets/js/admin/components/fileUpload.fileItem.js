@@ -1,4 +1,4 @@
-import { forceValidateElement } from '../validation/validation';
+import { forceValidateElement } from '../validation/customization/validation';
 
 export default class FileItem {
 
@@ -36,7 +36,7 @@ export default class FileItem {
 
     setName (filename) {
         this.$name.val(filename);
-    };
+    }
 
     setProgress (percent) {
         this.$progress.show();

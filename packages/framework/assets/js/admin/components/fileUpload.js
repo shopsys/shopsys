@@ -1,10 +1,10 @@
 import './jquery.dmuploader';
 import FileItem from './fileUpload.fileItem';
-import Window from '../window';
-import { forceValidateElement } from '../validation/validation';
-import formChangeInfo from '../formChangeInfo';
-import Ajax from '../../common/ajax';
-import Register from '../../common/register';
+import Window from '../utils/window';
+import { forceValidateElement } from '../validation/customization/validation';
+import formChangeInfo from '../components/formChangeInfo';
+import Ajax from '../../common/utils/ajax';
+import Register from '../../common/utils/register';
 import Translator from 'bazinga-translator';
 
 export default class FileUpload {
@@ -75,7 +75,7 @@ export default class FileUpload {
         this.items[id].setLabel(file.name, file.size);
         this.items[id].setName(file.name.split('.').slice(0, -1).join('.'));
         this.$uploadedFiles.append($uploadedFile);
-    };
+    }
 
     createNewUploadedFile () {
         const templateHtml = this.$uploadedFiles.data('prototype').replace(/__name__/g, '');
@@ -93,11 +93,11 @@ export default class FileUpload {
     onUploadProgress (id, percent) {
         this.items[id].setProgress(percent);
         this.updateFileStatus('uploading', Translator.trans('Uploading...'));
-    };
+    }
 
     onUploadSuccess (id, data) {
         if (data.status === 'success') {
-            if (this.lastUploadItemId !== null && multiple === false) {
+            if (this.lastUploadItemId !== null && this.multiple === false) {
                 this.items[this.lastUploadItemId].deleteItem();
             }
             this.lastUploadItemId = id;

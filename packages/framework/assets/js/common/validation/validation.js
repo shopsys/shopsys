@@ -1,4 +1,4 @@
-import Register from '../register';
+import Register from '../utils/register';
 import CustomizeBundle from './customizeBundle';
 
 export const initClasses = ($container) => {

@@ -1,4 +1,4 @@
-import Register from 'framework/common/register';
+import Register from 'framework/common/utils/register';
 
 export default class PaymentTransportRelations {
 
@@ -18,7 +18,7 @@ export default class PaymentTransportRelations {
             this.paymentTransportRelations[paymentId] = {};
         }
         this.paymentTransportRelations[paymentId][transportId] = true;
-    };
+    }
 
     paymentTransportRelationExists (paymentId, transportId) {
         if (this.paymentTransportRelations[paymentId] !== undefined) {
@@ -28,7 +28,7 @@ export default class PaymentTransportRelations {
         }
 
         return false;
-    };
+    }
 
     updateTransports () {
         const $checkedPayment = $('.js-order-payment-input:checked');
@@ -59,7 +59,7 @@ export default class PaymentTransportRelations {
         if ($checkedTransport.length > 0) {
             $checkedTransport.closest('label.box-chooser__item').removeClass('box-chooser__item--inactive').addClass('box-chooser__item--active');
         }
-    };
+    }
 
     updatePayments () {
         const $checkedTransport = $('.js-order-transport-input:checked');
@@ -90,7 +90,7 @@ export default class PaymentTransportRelations {
         if ($checkedPayment.length > 0) {
             $checkedPayment.closest('label.box-chooser__item').removeClass('box-chooser__item--inactive').addClass('box-chooser__item--active');
         }
-    };
+    }
 
     onTransportChange (event, paymentTransportRelations) {
         const $this = $(event.currentTarget);
@@ -114,7 +114,7 @@ export default class PaymentTransportRelations {
         }
 
         paymentTransportRelations.updatePayments();
-    };
+    }
 
     onPaymentChange (event, paymentTransportRelations) {
         const $this = $(event.currentTarget);
@@ -138,7 +138,7 @@ export default class PaymentTransportRelations {
         }
 
         paymentTransportRelations.updateTransports();
-    };
+    }
 
     updateContinueButton () {
         const checkedTransport = $('.js-order-transport-input:checked');
@@ -149,7 +149,7 @@ export default class PaymentTransportRelations {
         } else {
             $('#transport_and_payment_form_save').addClass('btn--disabled');
         }
-    };
+    }
 
     static init ($container) {
         const $transportInputs = $container.filterAllNodes('.js-order-transport-input');
@@ -164,7 +164,7 @@ export default class PaymentTransportRelations {
         $transportInputs.change(paymentTransportRelations.updateContinueButton);
         $paymentInputs.change(paymentTransportRelations.updateContinueButton);
         paymentTransportRelations.updateContinueButton();
-    };
+    }
 }
 
 (new Register()).registerCallback(PaymentTransportRelations.init);

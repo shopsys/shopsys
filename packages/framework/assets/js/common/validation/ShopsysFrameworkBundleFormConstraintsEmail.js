@@ -1,6 +1,6 @@
-(function (w) {
+(function (window) {
 
-    ShopsysFrameworkBundleFormConstraintsEmail = function () {
+    const ShopsysFrameworkBundleFormConstraintsEmail = function () {
         this.message = '';
 
         this.validate = function (value) {
@@ -16,6 +16,6 @@
         };
     };
 
-    w.ShopsysFrameworkBundleFormConstraintsEmail = ShopsysFrameworkBundleFormConstraintsEmail;
+    window.ShopsysFrameworkBundleFormConstraintsEmail = ShopsysFrameworkBundleFormConstraintsEmail;
 
 })(window);
