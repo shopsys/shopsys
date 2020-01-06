@@ -4,8 +4,8 @@
     Shopsys.hoverIntent = Shopsys.hoverIntent || {};
 
     Shopsys.hoverIntent.HoverIntentSetting = function ($hoverIntentParent) {
-        var interval = 300;
-        var timeout = 300;
+        var interval = 50;
+        var timeout = 500;
         var classForOpen = 'open';
         var forceClick = false;
         var forceClickElement = '';
