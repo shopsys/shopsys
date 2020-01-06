@@ -1,0 +1,90 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+{% import 'Front/Inline/Paginator/paginator.html.twig' as paginator %}
+
+{% set domain = getDomain() %}
+
+{% block title %}
+    {{- blogCategory.getSeoTitle(domain.id)|default(blogCategory.name) -}}
+{% endblock %}
+
+{% block meta_description %}
+    {{- blogCategory.getSeoMetaDescription(domain.id)|default(getSeoMetaDescription()) -}}
+{% endblock %}
+
+{% block breadcrumb %}
+    {% if isMainPage is defined and isMainPage is same as(false) %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+    {% set entityName = 'blogArticles'|trans %}
+    <div class="web__line">
+        <div class="web__container web__container--big-padding">
+            <div class="box-blog">
+                <h1 class="box-blog__title">
+                    {% if blogCategory.getSeoH1(domain.id) is not null %}
+                        {{ blogCategory.getSeoH1(domain.id) }}
+                    {% else %}
+                        {{ blogCategory.name }}
+                    {% endif %}
+                </h1>
+                {% if imageExists(blogCategory) %}
+                    {{ image(blogCategory, { itemprop: 'image', lazy: true }) }}
+                {% else %}
+                    {{ noimage({ alt: blogCategory.name }) }}
+                {% endif %}
+                <div>
+                    {{ blogCategory.description|raw }}
+                </div>
+                <div class="box-blog__panel">
+                    <div class="box-blog__section">
+                        {{ render(controller('App\\Controller\\Front\\BlogCategoryController:list', { currentBlogCategory: blogCategory })) }}
+                    </div>
+                </div>
+                <div class="box-blog__content">
+                    <div class="box-blog__list">
+                        {% if blogArticlePaginationResult.results|length > 0 %}
+                            <div class="js-blog-list-with-paginator">
+                                <ul class="list-articles js-list">
+                                    {% for blogArticle in blogArticlePaginationResult.results %}
+                                        <li class="list-articles__item list-articles__item--full-size">
+                                            <div class="list-articles__item__image">
+                                                <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}">
+                                                    {{ image(blogArticle, { size: 'list', alt: blogArticle.name, lazy: true }) }}
+                                                </a>
+                                            </div>
+                                            <div class="list-articles__item__content">
+                                                <div class="list-tags">
+                                                    <span class="list-tags__tag">
+                                                        {{ render(controller('App\\Controller\\Front\\BlogArticleController:mainBlogCategoryForBlogArticle', { blogArticle: blogArticle, spanClass: 'list-tags__tag' })) }}
+                                                    </span>
+                                                </div>
+                                                <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
+                                                    {{ blogArticle.name }}
+                                                </a>
+                                                <div class="list-articles__item__content__text">
+                                                    {{ blogArticle.perex|truncate(100) }}{% if blogArticle.perex|length > 100 %}&hellip;{% endif %}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+                                <div class="text-center margin-bottom-20">
+                                    {{ paginator.loadMoreButton(blogArticlePaginationResult) }}
+                                </div>
+
+                                {{ paginator.paginatorNavigationControl(blogArticlePaginationResult, entityName) }}
+                            </div>
+                        {% else %}
+                            <div class="in-message in-message--info margin-bottom-20">
+                                {{ 'Tato rubrika neobsahuje žádné články.'|trans }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% macro article(blogArticle) %}
+    {% set domain = getDomain() %}
+    <li class="list-articles__item list-articles__item--full-size">
+        <div class="list-articles__item__image">
+            <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link">
+                {{ image(blogArticle, { size: 'list', alt: blogArticle.name, lazy: true }) }}
+            </a>
+        </div>
+        <div class="list-articles__item__content">
+            <div class="list-tags">
+                {{ render(controller('App\\Controller\\Front\\BlogArticleController:mainBlogCategoryForBlogArticle', { blogArticle: blogArticle, spanClass: 'list-tags__tag' })) }}
+            </div>
+            <a href="#" class="list-articles__item__content__title underline">
+                {{ blogArticle.name }}
+            </a>
+            <div class="list-articles__item__content__text">
+                {{ blogArticle.perex }}
+            </div>
+        </div>
+    </li>
+{% endmacro %}

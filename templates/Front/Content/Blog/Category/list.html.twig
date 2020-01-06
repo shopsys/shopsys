@@ -1,0 +1,12 @@
+{% if blogCategories|length > 0 %}
+    <div class="box-blog__categories">
+        <div class="box-blog__title">
+            {{ 'Rubriky blogu'|trans }}
+        </div>
+        {% for blogCategory in blogCategories %}
+            <a href="{{ url('front_blogcategory_detail', { id: blogCategory.id }) }}" class="box-blog__categories__item">
+                {{ blogCategory.name }}
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}

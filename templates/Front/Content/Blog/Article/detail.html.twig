@@ -1,0 +1,31 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block title %}
+    {{- blogArticle.getSeoTitle(domainId)|default(blogArticle.name) -}}
+{% endblock %}
+
+{% block meta_description %}
+    {{- blogArticle.getSeoMetaDescription(domainId)|default(getSeoMetaDescription()) -}}
+{% endblock %}
+
+{% block main_content %}
+    <h1>
+        {% if blogArticle.getSeoH1(domainId) is not null %}
+            {{ blogArticle.getSeoH1(domainId) }}
+        {% else %}
+            {{ blogArticle.name }}
+        {% endif %}
+    </h1>
+
+    {% if imageExists(blogArticle) %}
+        {{ image(blogArticle, { itemprop: 'image', lazy:true }) }}
+    {% else %}
+        {{ noimage({ alt: blogArticle.name }) }}
+    {% endif %}
+
+    <p>{{ blogArticle.createdAt|date('j.n.Y') }}</p>
+
+    <div class="in-user-text">
+        {{ blogArticle.description|raw }}
+    </div>
+{% endblock %}
