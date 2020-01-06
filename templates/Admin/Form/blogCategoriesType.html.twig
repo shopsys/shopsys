@@ -1,0 +1,42 @@
+{% block blog_categories_widget %}
+    <div class="form-line__line">
+        <div
+                class="form-tree form-tree--open js-category-tree-form"
+                data-prototype="{{
+                '<li class="form-tree__item js-category-tree-form-item">' ~
+                form_widget(form.vars.prototype) ~
+                '<ul class="js-category-tree-form-children-container">' ~
+                '</ul></li>'
+                }}"
+                data-hidden-item-class="form-tree__item--muted"
+        >
+            <ul class="js-category-tree-form-children-container form-tree__content">
+                {% set level = 1 %}
+
+                {% for child in form.children %}
+                {% set currentLevel = child.vars.level %}
+
+                {% if not loop.first %}
+                {% if currentLevel <= level %}
+                {% for i in currentLevel .. level %}</ul></li>{% endfor %}
+            {% endif %}
+            {% endif %}
+
+            <li
+                    class="form-tree__item {% if not child.vars.visible %}form-tree__item--muted{% endif %} js-category-tree-form-item"
+                    data-load-url="{{ url('admin_blogcategory_loadbranchjson', {id: child.vars.name, domainId: domain_id}) }}"
+                    data-has-children="{{ child.vars.has_children ? 'true' : 'false' }}"
+            >
+                {{ form_widget(child) }}
+                <ul class="js-category-tree-form-children-container">
+
+                    {% set level = currentLevel %}
+                    {% endfor %}
+
+                    {% for i in 1 .. level %}</ul></li>{% endfor %}
+            </ul>
+
+        </div>
+        {{- block('appendix_block') -}}
+    </div>
+{% endblock %}
