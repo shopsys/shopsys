@@ -4,3 +4,6 @@
 [Guidelines for Project Documentation](https://docs.shopsys.com/en/9.0/project/guidelines-for-project-documentation/)*.
 
 **{Put the content here}**
+
+# Přenosy:
+- [Akeneo](Transfers/Akeneo/index.md)
