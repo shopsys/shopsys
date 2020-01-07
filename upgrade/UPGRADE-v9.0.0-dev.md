@@ -322,7 +322,7 @@ There you can find links to upgrade notes for other versions too.
             - `Shopsys\FrameworkBundle\Model\Customer\CurrentCustomer` to `Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser`
             - `Shopsys\FrameworkBundle\Model\Customer\CustomerData` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData`
             - `Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory`
-            - `Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface` to `Shopsys\FrameworkBundle\Model\Customer\User\User\CustomerUserUpdateDataFactoryInterface`
+            - `Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface`
             - `Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier`
             - `Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory`
             - `Shopsys\FrameworkBundle\Model\Customer\CustomerListAdminFacade` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade`
@@ -336,12 +336,21 @@ There you can find links to upgrade notes for other versions too.
             - `Shopsys\FrameworkBundle\Model\Customer\UserData` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData`
             - `Shopsys\FrameworkBundle\Model\Customer\UserDataFactory` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory`
             - `Shopsys\FrameworkBundle\Model\Customer\UserDataFactoryInterface` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface`
-            - `Shopsys\FrameworkBundle\Model\Customer\UserFacade` to `Shopsys\FrameworkBundle\Model\Customer\UserFacade`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserFacade` to `Shopsys\FrameworkBundle\Model\Customer\CustomerUserFacade`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFactory` to `Shopsys\FrameworkBundle\Model\Customer\UserFactory`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface` to `Shopsys\FrameworkBundle\Model\Customer\UserFactoryInterface`
             - `Shopsys\FrameworkBundle\Model\Customer\UserRepository` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository`
             - `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForUser` to `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser`
             - `Tests\App\Functional\Model\Customer\CustomerFacadeTest` to `Tests\App\Functional\Model\Customer\CustomerUserFacadeTest`
+        - these methods were moved and/or changed interface
+            - `Shopsys\FrameworkBundle\Model\Cart\CartFacade::findCartOfCurrentCustomer()` to `Shopsys\FrameworkBundle\Model\Cart\CartFacade::findCartOfCurrentCustomerUser()`
+            - `Shopsys\FrameworkBundle\Model\Cart\CartFacade::getCartOfCurrentCustomerCreateIfNotExists()` to `Shopsys\FrameworkBundle\Model\Cart\CartFacade::getCartOfCurrentCustomerUserCreateIfNotExists()`
+            - `Shopsys\FrameworkBundle\Model\Cart\CartFacade::findCartByCustomerIdentifier()` to `Shopsys\FrameworkBundle\Model\Cart\CartFacade::findCartByCustomerUserIdentifier()`
+            - `Shopsys\FrameworkBundle\Model\Cart\CartFacade::getCartByCustomerIdentifierCreateIfNotExists()` to `Shopsys\FrameworkBundle\Model\Cart\CartFacade::getCartByCustomerUserIdentifierCreateIfNotExists()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserDataFactory::createFromUser()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory::createFromCustomerUser()`
+            - `Shopsys\FrameworkBundle\Model\Order\OrderFacade::getCustomerOrderList()` to `Shopsys\FrameworkBundle\Model\Order\OrderFacade::getCustomerUserOrderList()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::findUserByEmailAndDomain()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::findCustomerUserByEmailAndDomain()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::getUserById()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::getCustomerUserById()`
         - to keep your tests working you need tu update `UserDataFixture`
             - inject `CustomerFactoryInterface` via constructor into the class
             - create and assign an entity of `Customer` to `BillingAddressData` and `UserData`
