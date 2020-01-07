@@ -27,7 +27,7 @@ class DomainTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
     private function getDomainConfigs(): array
     {
@@ -37,7 +37,7 @@ class DomainTest extends TestCase
         ];
     }
 
-    public function testGetIdNotSet()
+    public function testGetIdNotSet(): void
     {
         $settingMock = $this->createMock(Setting::class);
 
@@ -46,7 +46,7 @@ class DomainTest extends TestCase
         $domain->getId();
     }
 
-    public function testSwitchDomainByRequest()
+    public function testSwitchDomainByRequest(): void
     {
         $settingMock = $this->createMock(Setting::class);
 
@@ -66,7 +66,7 @@ class DomainTest extends TestCase
         $this->assertSame('cs', $domain->getLocale());
     }
 
-    public function testGetAllIncludingDomainConfigsWithoutDataCreated()
+    public function testGetAllIncludingDomainConfigsWithoutDataCreated(): void
     {
         $domainConfigs = $this->getDomainConfigs();
         $settingMock = $this->createMock(Setting::class);
@@ -76,7 +76,7 @@ class DomainTest extends TestCase
         $this->assertSame($domainConfigs, $domain->getAllIncludingDomainConfigsWithoutDataCreated());
     }
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $domainConfigWithDataCreated = $this->createDomainConfigFirst();
         $domainConfigWithoutDataCreated = $this->createDomainConfigSecond();
@@ -101,7 +101,7 @@ class DomainTest extends TestCase
         $this->assertSame([$domainConfigWithDataCreated], $domain->getAll());
     }
 
-    public function testGetDomainConfigById()
+    public function testGetDomainConfigById(): void
     {
         $domainConfigs = $this->getDomainConfigs();
         $settingMock = $this->createMock(Setting::class);

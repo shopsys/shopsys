@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 class FriendlyUrlUniqueResultFactoryTest extends TestCase
 {
     /**
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
     private function getDomainConfigs(): array
     {
@@ -23,7 +23,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         ];
     }
 
-    public function testCreateNewUnique()
+    public function testCreateNewUnique(): void
     {
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($this->getDomainConfigs(), $settingMock);
@@ -44,7 +44,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $this->assertSame($friendlyUrl, $friendlyUrlUniqueResult->getFriendlyUrlForPersist());
     }
 
-    public function testCreateOldUnique()
+    public function testCreateOldUnique(): void
     {
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($this->getDomainConfigs(), $settingMock);
@@ -68,7 +68,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $this->assertNull($friendlyUrlUniqueResult->getFriendlyUrlForPersist());
     }
 
-    public function testCreateNotUnique()
+    public function testCreateNotUnique(): void
     {
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($this->getDomainConfigs(), $settingMock);
