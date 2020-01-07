@@ -4,4 +4,9 @@
             <a class="menu__item__link" href="{{ url('front_article_detail', { id: article.id }) }}">{{ article.name }}</a>
         </li>
     {% endfor %}
+    {% if showBlog is same as(true) %}
+        <li class="menu__item">
+            <a class="menu__item__link underline" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ 'Blog'|trans }}</a>
+        </li>
+    {% endif %}
 </ul>
