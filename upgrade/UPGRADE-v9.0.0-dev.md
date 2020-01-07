@@ -393,7 +393,7 @@ There you can find links to upgrade notes for other versions too.
 
     - add new js component `src/Resources/scripts/frontend/components/hoverIntent.js` (https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/scripts/frontend/components/hoverIntent.js)
 
-    - add classes to hover menu `templates/Front/Content/Category/panel.html.twig`
+    - add class and data attributes to hover menu `templates/Front/Content/Category/panel.html.twig`
         ```diff
           {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
               {% set isCurrentCategory = (currentCategory is not null and currentCategory == categoryWithLazyLoadedVisibleChildren.category) %}

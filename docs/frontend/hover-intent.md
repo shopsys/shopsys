@@ -1,4 +1,4 @@
-# hoverIntent Component
+# Hover Intent
 This JS component is used to add timeout for hover over and hover out events.
 This component uses [hoverIntent plugin](http://briancherne.github.io/jquery-hoverIntent/) from jQuery.
 
@@ -12,8 +12,8 @@ In some scenarios you need to add hover functionality and simulate click on enot
 
 ### Javascript default settings
 ```javascript
-var interval = 300;
-var timeout = 300;
+var interval = 50;
+var timeout = 500;
 var classForOpen = 'open';
 var forceClick = false;
 var forceClickElement = '';
@@ -23,8 +23,8 @@ var linkOnMobile = false;
 ### Html element settings
 ```html
 <div class="js-hover-intent"
-data-hover-intent-interval="300"
-data-hover-intent-timeout="300"
+data-hover-intent-interval="50"
+data-hover-intent-timeout="500"
 data-hover-intent-class-for-open="open"
 data-hover-intent-force-click="false"
 data-hover-intent-force-click-element=""
