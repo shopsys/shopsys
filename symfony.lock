@@ -1,4 +1,10 @@
 {
+    "akeneo/api-php-client": {
+        "version": "v5.0.0"
+    },
+    "akeneo/api-php-client-ee": {
+        "version": "v5.0.0"
+    },
     "arvenil/ninja-mutex": {
         "version": "0.4.1"
     },
@@ -268,6 +274,9 @@
     "heureka/overeno-zakazniky": {
         "version": "v2.0.6"
     },
+    "http-interop/http-factory-guzzle": {
+        "version": "1.0.0"
+    },
     "illuminate/contracts": {
         "version": "v5.8.35"
     },
@@ -425,6 +434,24 @@
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
     },
+    "php-http/discovery": {
+        "version": "1.7.4"
+    },
+    "php-http/guzzle6-adapter": {
+        "version": "v2.0.1"
+    },
+    "php-http/httplug": {
+        "version": "2.1.0"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
+    },
+    "php-http/multipart-stream-builder": {
+        "version": "1.1.0"
+    },
+    "php-http/promise": {
+        "version": "v1.0.0"
+    },
     "phpcollection/phpcollection": {
         "version": "0.5.0"
     },
@@ -499,6 +526,12 @@
     },
     "psr/container": {
         "version": "1.0.0"
+    },
+    "psr/http-client": {
+        "version": "1.0.0"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
     },
     "psr/http-message": {
         "version": "1.0.1"
