@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block main_content %}
-    {{ render(controller('App\\Controller\\Admin\\BlogArticleController:listDomainTabs')) }}
+    {{ render(controller('App\\Controller\\Admin\\BlogArticleController::listDomainTabsAction')) }}
 
     {{ gridView.render() }}
 {% endblock %}

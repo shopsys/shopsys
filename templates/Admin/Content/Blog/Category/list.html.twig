@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block main_content %}
-    {{ render(controller('App\\Controller\\Admin\\BlogCategoryController:listDomainTabs')) }}
+    {{ render(controller('App\\Controller\\Admin\\BlogCategoryController::listDomainTabsAction')) }}
 
     {% macro blogCategoryTreeItem(blogCategoriesWithPreloadedChildren, isFirstLevel) %}
         {% import _self as self %}
