@@ -60,12 +60,20 @@
                                                         {{ render(controller('App\\Controller\\Front\\BlogArticleController::mainBlogCategoryForBlogArticleAction', { blogArticle: blogArticle, spanClass: 'list-tags__tag' })) }}
                                                     </span>
                                                 </div>
-                                                <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
-                                                    {{ blogArticle.name }}
-                                                </a>
+                                                <h3>
+                                                    <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
+                                                        {{ blogArticle.getSeoH1(domain.id) }}
+                                                    </a>
+                                                </h3>
                                                 <div class="list-articles__item__content__text">
-                                                    {{ blogArticle.perex|slice(100) }}{% if blogArticle.perex|length > 100 %}&hellip;{% endif %}
+                                                    {{ blogArticle.perex|slice(0,100) }}{% if blogArticle.perex|length > 100 %}&hellip;{% endif %}
                                                 </div>
+                                                <div class="list-articles__item__content__text">
+                                                    <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
+                                                        {{ "číst dále"|trans }}
+                                                    </a>
+                                                </div>
+
                                             </div>
                                         </li>
                                     {% endfor %}
