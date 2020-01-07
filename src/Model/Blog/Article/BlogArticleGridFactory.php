@@ -72,7 +72,7 @@ class BlogArticleGridFactory
         $grid->addDeleteActionColumn('admin_blogarticle_deleteconfirm', ['id' => 'ba.id'])
             ->setAjaxConfirm();
 
-        $grid->setTheme('@ShopsysShop/Admin/Content/Blog/Article/listGrid.html.twig');
+        $grid->setTheme('Admin/Content/Blog/Article/listGrid.html.twig');
 
         return $grid;
     }

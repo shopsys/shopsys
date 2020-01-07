@@ -16,3 +16,11 @@ front_product_list:
 front_brand_detail:
     path: friendly-url
     defaults: { _controller: App\Controller\Front\ProductController:listByBrandAction }
+
+front_blogarticle_detail:
+    path: friendly-url
+    defaults: { _controller: App\Controller\Front\BlogArticleController:detailAction }
+
+front_blogcategory_detail:
+    path: friendly-url
+    defaults: { _controller: App\Controller\Front\BlogCategoryController:detailAction }
