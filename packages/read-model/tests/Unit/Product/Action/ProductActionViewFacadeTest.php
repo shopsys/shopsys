@@ -65,7 +65,7 @@ class ProductActionViewFacadeTest extends TestCase
      */
     protected function createDomainMock(): Domain
     {
-        $domainConfig = new DomainConfig(1, 'http://webserver:8080/', 'shopsys', 'en');
+        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://webserver:8080/', 'shopsys', 'en');
 
         $domain = $this->createMock(Domain::class);
         $domain->method('getCurrentDomainConfig')->willReturn($domainConfig);

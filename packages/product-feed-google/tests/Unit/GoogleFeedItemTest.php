@@ -4,6 +4,7 @@ namespace Tests\ProductFeed\GoogleBundle\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -67,7 +68,7 @@ class GoogleFeedItemTest extends TestCase
         );
 
         $this->defaultCurrency = $this->createCurrencyMock(1, 'EUR');
-        $this->defaultDomain = $this->createDomainConfigMock(1, 'https://example.com', 'en', $this->defaultCurrency);
+        $this->defaultDomain = $this->createDomainConfigMock(Domain::FIRST_DOMAIN_ID, 'https://example.com', 'en', $this->defaultCurrency);
 
         $this->defaultProduct = $this->createMock(Product::class);
         $this->defaultProduct->method('getId')->willReturn(1);

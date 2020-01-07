@@ -14,10 +14,10 @@ class CurrentDomainRouterTest extends TestCase
 {
     public function testDelegateRouter()
     {
-        $domainConfigs = new DomainConfig(1, 'http://example.com:8080', 'example', 'en');
+        $domainConfigs = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'en');
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain([$domainConfigs], $settingMock);
-        $domain->switchDomainById(1);
+        $domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
         $generateResult = 'generateResult';
         $pathInfo = 'pathInfo';

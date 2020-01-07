@@ -133,7 +133,7 @@ class OrderFacadeHeurekaTest extends TestCase
      */
     private function createDomain(): Domain
     {
-        $domainConfig = new DomainConfig(1, '', '', 'cs');
+        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs');
         $domain = new Domain([$domainConfig], $this->createMock(Setting::class));
 
         return $domain;
@@ -145,7 +145,7 @@ class OrderFacadeHeurekaTest extends TestCase
     private function createOrderMock(): MockObject
     {
         $order = $this->createMock(Order::class);
-        $order->method('getDomainId')->willReturn(1);
+        $order->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
 
         return $order;
     }

@@ -16,8 +16,8 @@ class FriendlyUrlFactoryTest extends TestCase
     public function testCreateForAllDomains()
     {
         $domainConfigs = [
-            new DomainConfig(1, 'http://example.cz', 'example.cz', 'cs'),
-            new DomainConfig(2, 'http://example.com', 'example.com', 'en'),
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'example.cz', 'cs'),
+            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'example.com', 'en'),
         ];
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($domainConfigs, $settingMock);

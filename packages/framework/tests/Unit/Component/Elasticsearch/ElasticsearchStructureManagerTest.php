@@ -5,6 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 use Elasticsearch\Client;
 use Elasticsearch\Namespaces\IndicesNamespace;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchStructureException;
 
@@ -50,14 +51,14 @@ class ElasticsearchStructureManagerTest extends TestCase
         ];
         $this->indices->expects($this->once())->method('create')->with($expected);
 
-        $this->structureManager->createIndex(1, static::ELASTICSEARCH_INDEX);
-        $this->structureManager->createAliasForIndex(1, static::ELASTICSEARCH_INDEX);
+        $this->structureManager->createIndex(Domain::FIRST_DOMAIN_ID, static::ELASTICSEARCH_INDEX);
+        $this->structureManager->createAliasForIndex(Domain::FIRST_DOMAIN_ID, static::ELASTICSEARCH_INDEX);
     }
 
     public function testCreateWhileJsonNotExistsFails(): void
     {
         $this->expectException(ElasticsearchStructureException::class);
-        $this->structureManager->createIndex(3, static::ELASTICSEARCH_INDEX);
+        $this->structureManager->createIndex(Domain::THIRD_DOMAIN_ID, static::ELASTICSEARCH_INDEX);
     }
 
     public function testCreateWhileJsonIsNotValidFails(): void
@@ -75,7 +76,7 @@ class ElasticsearchStructureManagerTest extends TestCase
         $expectedDelete = ['index' => '12345test-product1'];
         $this->indices->expects($this->once())->method('delete')->with($expectedDelete);
 
-        $this->structureManager->deleteCurrentIndex(1, static::ELASTICSEARCH_INDEX);
+        $this->structureManager->deleteCurrentIndex(Domain::FIRST_DOMAIN_ID, static::ELASTICSEARCH_INDEX);
     }
 
     public function testDeleteNotExisting(): void
@@ -84,6 +85,6 @@ class ElasticsearchStructureManagerTest extends TestCase
 
         $this->indices->expects($this->never())->method('delete');
 
-        $this->structureManager->deleteCurrentIndex(1, static::ELASTICSEARCH_INDEX);
+        $this->structureManager->deleteCurrentIndex(Domain::FIRST_DOMAIN_ID, static::ELASTICSEARCH_INDEX);
     }
 }

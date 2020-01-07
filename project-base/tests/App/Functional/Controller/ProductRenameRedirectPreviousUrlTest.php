@@ -34,7 +34,7 @@ class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . self::TESTED_PRODUCT_ID);
 
-        $previousFriendlyUrlSlug = $this->friendlyUrlFacade->findMainFriendlyUrl(1, 'front_product_detail', self::TESTED_PRODUCT_ID)->getSlug();
+        $previousFriendlyUrlSlug = $this->friendlyUrlFacade->findMainFriendlyUrl(Domain::FIRST_DOMAIN_ID, 'front_product_detail', self::TESTED_PRODUCT_ID)->getSlug();
 
         /** @var \App\Model\Product\Product $product */
         $productData = $this->productDataFactory->createFromProduct($product);

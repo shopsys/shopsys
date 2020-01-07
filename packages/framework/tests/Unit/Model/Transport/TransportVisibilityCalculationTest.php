@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Transport;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation;
@@ -13,7 +14,7 @@ class TransportVisibilityCalculationTest extends TestCase
 {
     public function testIsVisibleWhenIndepentlyInvisible()
     {
-        $domainId = 1;
+        $domainId = Domain::FIRST_DOMAIN_ID;
         $transportMock = $this->createMock(Transport::class);
 
         $independentTransportVisibilityCalculationMock = $this->getMockBuilder(IndependentTransportVisibilityCalculation::class)
@@ -39,7 +40,7 @@ class TransportVisibilityCalculationTest extends TestCase
 
     public function testIsVisibleWithHiddenPayment()
     {
-        $domainId = 1;
+        $domainId = Domain::FIRST_DOMAIN_ID;
         $transportMock = $this->createMock(Transport::class);
         $paymentMock = $this->createMock(Payment::class);
 
@@ -73,7 +74,7 @@ class TransportVisibilityCalculationTest extends TestCase
 
     public function testIsVisibleWithoutPayment()
     {
-        $domainId = 1;
+        $domainId = Domain::FIRST_DOMAIN_ID;
         $transportMock = $this->createMock(Transport::class);
         $paymentMock = $this->getMockBuilder(Payment::class)
             ->disableOriginalConstructor()
@@ -111,7 +112,7 @@ class TransportVisibilityCalculationTest extends TestCase
 
     public function testIsVisibleWithVisiblePayment()
     {
-        $domainId = 1;
+        $domainId = Domain::FIRST_DOMAIN_ID;
         $transportMock = $this->createMock(Transport::class);
         $paymentMock = $this->getMockBuilder(Payment::class)
             ->disableOriginalConstructor()
@@ -149,7 +150,7 @@ class TransportVisibilityCalculationTest extends TestCase
 
     public function testFilterVisible()
     {
-        $domainId = 1;
+        $domainId = Domain::FIRST_DOMAIN_ID;
         $transportHiddenMock = $this->createMock(Transport::class);
         $transportVisibleMock = $this->createMock(Transport::class);
         $paymentMock = $this->getMockBuilder(Payment::class)

@@ -134,8 +134,8 @@ class CountryFormTypeTest extends TypeTestCase
         $this->domain = $this->createMock(Domain::class);
         $this->domain->method('getAll')
             ->willReturn([
-                    new DomainConfig(1, '', '', 'cs'),
-                    new DomainConfig(2, '', '', 'en'),
+                    new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs'),
+                    new DomainConfig(Domain::SECOND_DOMAIN_ID, '', '', 'en'),
                 ]);
         $this->domain->method('getAllIds')->willReturn([1, 2]);
 

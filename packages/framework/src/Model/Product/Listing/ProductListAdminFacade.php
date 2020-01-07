@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
@@ -38,7 +39,7 @@ class ProductListAdminFacade
          * temporary solution -
          * when product price type calculation is set to manual, price for first domain is shown in admin product list
          */
-        $defaultPricingGroupId = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(1)->getId();
+        $defaultPricingGroupId = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(Domain::FIRST_DOMAIN_ID)->getId();
 
         return $this->productListAdminRepository->getProductListQueryBuilder($defaultPricingGroupId);
     }

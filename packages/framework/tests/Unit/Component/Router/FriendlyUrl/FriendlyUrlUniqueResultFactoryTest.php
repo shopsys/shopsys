@@ -13,18 +13,25 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class FriendlyUrlUniqueResultFactoryTest extends TestCase
 {
+    /**
+     * @return array
+     */
+    private function getDomainConfigs(): array
+    {
+        return [
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com', 'example.com', 'en'),
+        ];
+    }
+
     public function testCreateNewUnique()
     {
-        $domainConfigs = [
-            new DomainConfig(1, 'http://example.com', 'example.com', 'en'),
-        ];
         $settingMock = $this->createMock(Setting::class);
-        $domain = new Domain($domainConfigs, $settingMock);
+        $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(new FriendlyUrlFactory($domain, new EntityNameResolver([])));
 
         $attempt = 1;
-        $friendlyUrl = new FriendlyUrl('route_name', 7, 1, 'name');
+        $friendlyUrl = new FriendlyUrl('route_name', 7, Domain::FIRST_DOMAIN_ID, 'name');
         $matchedRouteData = null;
         $friendlyUrlUniqueResult = $friendlyUrlUniqueResultFactory->create(
             $attempt,
@@ -39,16 +46,13 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
 
     public function testCreateOldUnique()
     {
-        $domainConfigs = [
-            new DomainConfig(1, 'http://example.com', 'example.com', 'en'),
-        ];
         $settingMock = $this->createMock(Setting::class);
-        $domain = new Domain($domainConfigs, $settingMock);
+        $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(new FriendlyUrlFactory($domain, new EntityNameResolver([])));
 
         $attempt = 1;
-        $friendlyUrl = new FriendlyUrl('route_name', 7, 1, 'name');
+        $friendlyUrl = new FriendlyUrl('route_name', 7, Domain::FIRST_DOMAIN_ID, 'name');
         $matchedRouteData = [
             '_route' => $friendlyUrl->getRouteName(),
             'id' => $friendlyUrl->getEntityId(),
@@ -66,16 +70,13 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
 
     public function testCreateNotUnique()
     {
-        $domainConfigs = [
-            new DomainConfig(1, 'http://example.com', 'example.com', 'en'),
-        ];
         $settingMock = $this->createMock(Setting::class);
-        $domain = new Domain($domainConfigs, $settingMock);
+        $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(new FriendlyUrlFactory($domain, new EntityNameResolver([])));
 
         $attempt = 3;
-        $friendlyUrl = new FriendlyUrl('route_name', 7, 1, 'name');
+        $friendlyUrl = new FriendlyUrl('route_name', 7, Domain::FIRST_DOMAIN_ID, 'name');
         $matchedRouteData = [
             '_route' => 'another_route_name',
             'id' => 7,

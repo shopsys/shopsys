@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
@@ -23,7 +24,7 @@ class UserFactoryTest extends TestCase
         $customerUserData->lastName = 'lastName';
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->password = 'pa55w0rd';
-        $customerUserData->domainId = 1;
+        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
 
         $customerUser = $customerUserFactory->create($customerUserData, $deliveryAddress);
 

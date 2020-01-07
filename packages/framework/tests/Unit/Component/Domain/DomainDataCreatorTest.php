@@ -22,7 +22,7 @@ class DomainDataCreatorTest extends TestCase
     public function testCreateNewDomainsDataNoNewDomain()
     {
         $domainConfigs = [
-            new DomainConfig(1, 'http://example.com:8080', 'example', 'cs'),
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs'),
         ];
 
         $settingMock = $this->createMock(Setting::class);
@@ -61,8 +61,8 @@ class DomainDataCreatorTest extends TestCase
     public function testCreateNewDomainsDataOneNewDomain()
     {
         $domainConfigs = [
-            new DomainConfig(1, 'http://example.com:8080', 'example', 'cs'),
-            new DomainConfig(2, 'http://example.com:8080', 'example', 'cs'),
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs'),
+            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs'),
         ];
 
         $settingMock = $this->createMock(Setting::class);
@@ -70,7 +70,7 @@ class DomainDataCreatorTest extends TestCase
             ->method('getForDomain')
             ->willReturnCallback(function ($key, $domainId) {
                 $this->assertEquals(Setting::DOMAIN_DATA_CREATED, $key);
-                if ($domainId === 1) {
+                if ($domainId === Domain::FIRST_DOMAIN_ID) {
                     return true;
                 }
                 throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException();
@@ -128,8 +128,8 @@ class DomainDataCreatorTest extends TestCase
 
     public function testCreateNewDomainsDataNewLocale()
     {
-        $domainConfigWithDataCreated = new DomainConfig(1, 'http://example.com:8080', 'example', 'cs');
-        $domainConfigWithNewLocale = new DomainConfig(2, 'http://example.com:8080', 'example', 'en');
+        $domainConfigWithDataCreated = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs');
+        $domainConfigWithNewLocale = new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com:8080', 'example', 'en');
         $domainConfigs = [
             $domainConfigWithDataCreated,
             $domainConfigWithNewLocale,
@@ -140,7 +140,7 @@ class DomainDataCreatorTest extends TestCase
             ->method('get')
             ->willReturnCallback(function ($key, $domainId) {
                 $this->assertEquals(Setting::DOMAIN_DATA_CREATED, $key);
-                if ($domainId === 1) {
+                if ($domainId === Domain::FIRST_DOMAIN_ID) {
                     return true;
                 }
                 throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException();
