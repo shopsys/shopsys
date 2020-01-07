@@ -42,9 +42,13 @@ class BlogArticleController extends FrontBaseController
             $id
         );
 
+        $domainId = $this->domain->getId();
+        $blogCategory = $this->blogArticleFacade->findBlogArticleMainCategoryOnDomain($blogArticle, $domainId);
+
         return $this->render('Front/Content/Blog/Article/detail.html.twig', [
             'blogArticle' => $blogArticle,
             'domainId' => $this->domain->getId(),
+            'blogCategory' => $blogCategory,
         ]);
     }
 
