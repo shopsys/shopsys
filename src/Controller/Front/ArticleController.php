@@ -40,6 +40,7 @@ class ArticleController extends FrontBaseController
 
         return $this->render('Front/Content/Article/menu.html.twig', [
             'articles' => $articles,
+            'showBlog' => false,
         ]);
     }
 
@@ -49,6 +50,7 @@ class ArticleController extends FrontBaseController
 
         return $this->render('Front/Content/Article/menu.html.twig', [
             'articles' => $articles,
+            'showBlog' => true,
         ]);
     }
 }
