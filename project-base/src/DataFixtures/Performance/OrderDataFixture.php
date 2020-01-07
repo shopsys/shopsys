@@ -16,6 +16,7 @@ use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
@@ -243,7 +244,7 @@ class OrderDataFixture
         $orderData->deliveryCountry = $this->getRandomCountryFromFirstDomain();
         $orderData->note = $this->faker->text(200);
         $orderData->createdAt = $this->faker->dateTimeBetween('-1 year', 'now');
-        $orderData->domainId = 1;
+        $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->persistentReferenceFacade->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
         return $orderData;

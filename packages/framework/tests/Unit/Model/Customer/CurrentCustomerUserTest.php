@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
@@ -73,7 +74,7 @@ class CurrentCustomerUserTest extends TestCase
         $customerUserData = new CustomerUserData();
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->pricingGroup = $pricingGroup;
-        $customerUserData->domainId = 1;
+        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
 
         return new CustomerUser($customerUserData, null);
     }

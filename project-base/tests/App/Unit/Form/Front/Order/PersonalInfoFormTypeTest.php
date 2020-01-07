@@ -114,7 +114,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $this->countryFacade->method('getAllEnabledOnDomain')->willReturn([$countryMock]);
 
         $this->domain = $this->createMock(Domain::class);
-        $this->domain->method('getId')->willReturn(1);
+        $this->domain->method('getId')->willReturn(Domain::FIRST_DOMAIN_ID);
 
         $this->heurekaFacade = $this->createMock(HeurekaFacade::class);
         parent::setUp();

@@ -5,6 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Customer;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
@@ -20,7 +21,7 @@ class UserTest extends TestCase
         $customerUserData->firstName = 'Firstname';
         $customerUserData->lastName = 'Lastname';
         $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->domainId = 1;
+        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
         $customer->addBillingAddress($this->createBillingAddress());
         $customerUser = new CustomerUser($customerUserData, null);
@@ -35,7 +36,7 @@ class UserTest extends TestCase
         $customerUserData->firstName = 'Firstname';
         $customerUserData->lastName = 'Lastname';
         $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->domainId = 1;
+        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
         $billingAddressData = new BillingAddressData();
         $billingAddressData->companyCustomer = true;
@@ -97,7 +98,7 @@ class UserTest extends TestCase
     ) {
         $customerUserData = new CustomerUserData();
         $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->domainId = 1;
+        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUser = new CustomerUser($customerUserData, null);
 
         $this->setProperty($customerUser, 'resetPasswordHash', $resetPasswordHash);

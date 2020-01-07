@@ -61,7 +61,7 @@ class ProductControllerTest extends TestCase
     protected function createDomain(): Domain
     {
         return new Domain(
-            [new DomainConfig(1, 'http://example.com/', 'czech', 'cs')],
+            [new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com/', 'czech', 'cs')],
             $this->createMock(Setting::class)
         );
     }

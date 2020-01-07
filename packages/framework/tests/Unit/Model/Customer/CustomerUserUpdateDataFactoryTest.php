@@ -4,6 +4,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
@@ -45,7 +46,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $customerUserData->createdAt = new DateTime();
         $customerUserData->telephone = 'telephone';
         $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->domainId = 1;
+        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
 
         $billingCountryData = new CountryData();
@@ -147,7 +148,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $customerUserData->lastName = 'lastName';
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->createdAt = new DateTime();
-        $customerUserData->domainId = 1;
+        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
 
         $billingAddressData = new BillingAddressData();

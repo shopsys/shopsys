@@ -4,6 +4,7 @@ namespace Tests\ProductFeed\ZboziBundle\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -71,7 +72,7 @@ class ZboziFeedItemTest extends TestCase
             $this->categoryFacadeMock
         );
 
-        $this->defaultDomain = $this->createDomainConfigMock(1, 'https://example.cz', 'cs');
+        $this->defaultDomain = $this->createDomainConfigMock(Domain::FIRST_DOMAIN_ID, 'https://example.cz', 'cs');
 
         $this->defaultProduct = $this->createMock(Product::class);
         $this->defaultProduct->method('getId')->willReturn(1);
@@ -84,7 +85,7 @@ class ZboziFeedItemTest extends TestCase
 
         $productPrice = new ProductPrice(Price::zero(), false);
         $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForUserAndDomainId')
-            ->with($this->defaultProduct, 1, null)->willReturn($productPrice);
+            ->with($this->defaultProduct, Domain::FIRST_DOMAIN_ID, null)->willReturn($productPrice);
 
         $this->productUrlsBatchLoaderMock->method('getProductUrl')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/product-1');

@@ -47,7 +47,7 @@ class AllFeedsTest extends KernelTestCase
 
         $container = self::$kernel->getContainer();
         $container->get(Domain::class)
-            ->switchDomainById(1);
+            ->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
         $this->maxDuration = $container->getParameter('shopsys.performance_test.feed.max_duration_seconds');
         $this->deliveryMaxDuration = $container->getParameter('shopsys.performance_test.feed.delivery.max_duration_seconds');

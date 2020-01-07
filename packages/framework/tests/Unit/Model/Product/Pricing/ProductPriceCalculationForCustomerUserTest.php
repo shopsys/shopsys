@@ -28,7 +28,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
         $customerUserData = new CustomerUserData();
         $customerUserData->pricingGroup = $pricingGroup;
         $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->domainId = 1;
+        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUser = new CustomerUser($customerUserData, null);
         $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), false);
 
@@ -50,13 +50,13 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $domainMock
         );
 
-        $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId($product, 1, $customerUser);
+        $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId($product, Domain::FIRST_DOMAIN_ID, $customerUser);
         $this->assertSame($expectedProductPrice, $productPrice);
     }
 
     public function testCalculatePriceByUserAndDomainIdWithoutUser()
     {
-        $domainId = 1;
+        $domainId = Domain::FIRST_DOMAIN_ID;
         $product = $this->createMock(Product::class);
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';

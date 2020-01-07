@@ -10,28 +10,47 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DomainTest extends TestCase
 {
-    public function testGetIdNotSet()
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
+     */
+    private function createDomainConfigFirst(): DomainConfig
     {
-        $domainConfigs = [
-            new DomainConfig(1, 'http://example.com:8080', 'example', 'cs'),
-            new DomainConfig(2, 'http://example.org:8080', 'example.org', 'en'),
+        return new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example.com', 'cs');
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
+     */
+    private function createDomainConfigSecond(): DomainConfig
+    {
+        return new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.org:8080', 'example.org', 'en');
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
+     */
+    private function getDomainConfigs(): array
+    {
+        return [
+            $this->createDomainConfigFirst(),
+            $this->createDomainConfigSecond(),
         ];
+    }
+
+    public function testGetIdNotSet(): void
+    {
         $settingMock = $this->createMock(Setting::class);
 
-        $domain = new Domain($domainConfigs, $settingMock);
+        $domain = new Domain($this->getDomainConfigs(), $settingMock);
         $this->expectException(\Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException::class);
         $domain->getId();
     }
 
-    public function testSwitchDomainByRequest()
+    public function testSwitchDomainByRequest(): void
     {
-        $domainConfigs = [
-            new DomainConfig(1, 'http://example.com:8080', 'example.com', 'cs'),
-            new DomainConfig(2, 'http://example.org:8080', 'example.org', 'en'),
-        ];
         $settingMock = $this->createMock(Setting::class);
 
-        $domain = new Domain($domainConfigs, $settingMock);
+        $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
         $requestMock = $this->getMockBuilder(Request::class)
             ->setMethods(['getSchemeAndHttpHost'])
@@ -47,12 +66,9 @@ class DomainTest extends TestCase
         $this->assertSame('cs', $domain->getLocale());
     }
 
-    public function testGetAllIncludingDomainConfigsWithoutDataCreated()
+    public function testGetAllIncludingDomainConfigsWithoutDataCreated(): void
     {
-        $domainConfigs = [
-            new DomainConfig(1, 'http://example.com:8080', 'example.com', 'cs'),
-            new DomainConfig(2, 'http://example.org:8080', 'example.org', 'en'),
-        ];
+        $domainConfigs = $this->getDomainConfigs();
         $settingMock = $this->createMock(Setting::class);
 
         $domain = new Domain($domainConfigs, $settingMock);
@@ -60,10 +76,10 @@ class DomainTest extends TestCase
         $this->assertSame($domainConfigs, $domain->getAllIncludingDomainConfigsWithoutDataCreated());
     }
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
-        $domainConfigWithDataCreated = new DomainConfig(1, 'http://example.com:8080', 'example.com', 'cs');
-        $domainConfigWithoutDataCreated = new DomainConfig(2, 'http://example.org:8080', 'example.org', 'en');
+        $domainConfigWithDataCreated = $this->createDomainConfigFirst();
+        $domainConfigWithoutDataCreated = $this->createDomainConfigSecond();
         $domainConfigs = [
             $domainConfigWithDataCreated,
             $domainConfigWithoutDataCreated,
@@ -85,29 +101,26 @@ class DomainTest extends TestCase
         $this->assertSame([$domainConfigWithDataCreated], $domain->getAll());
     }
 
-    public function testGetDomainConfigById()
+    public function testGetDomainConfigById(): void
     {
-        $domainConfigs = [
-            new DomainConfig(1, 'http://example.com:8080', 'example.com', 'cs'),
-            new DomainConfig(2, 'http://example.org:8080', 'example.org', 'en'),
-        ];
+        $domainConfigs = $this->getDomainConfigs();
         $settingMock = $this->createMock(Setting::class);
 
         $domain = new Domain($domainConfigs, $settingMock);
 
-        $this->assertSame($domainConfigs[0], $domain->getDomainConfigById(1));
-        $this->assertSame($domainConfigs[1], $domain->getDomainConfigById(2));
+        $this->assertSame($domainConfigs[0], $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
+        $this->assertSame($domainConfigs[1], $domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID));
 
         $this->expectException(\Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException::class);
-        $domain->getDomainConfigById(3);
+        $domain->getDomainConfigById(Domain::THIRD_DOMAIN_ID);
     }
 
     public function testGetAllLocales(): void
     {
         $domainConfigs = [
-            new DomainConfig(1, 'http://example.com:8080', 'example.com', 'cs'),
-            new DomainConfig(2, 'http://example.org:8080', 'example.org', 'en'),
-            new DomainConfig(3, 'http://example.cz:8080', 'example.cz', 'cs'),
+            $this->createDomainConfigFirst(),
+            $this->createDomainConfigSecond(),
+            new DomainConfig(Domain::THIRD_DOMAIN_ID, 'http://example.cz:8080', 'example.cz', 'cs'),
         ];
         $settingMock = $this->createMock(Setting::class);
 

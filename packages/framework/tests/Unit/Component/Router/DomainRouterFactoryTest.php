@@ -19,7 +19,7 @@ class DomainRouterFactoryTest extends TestCase
 {
     public function testGetRouter()
     {
-        $domainConfig = new DomainConfig(3, 'http://example.com:8080', 'example', 'en');
+        $domainConfig = new DomainConfig(Domain::THIRD_DOMAIN_ID, 'http://example.com:8080', 'example', 'en');
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain([$domainConfig], $settingMock);
 
@@ -69,7 +69,7 @@ class DomainRouterFactoryTest extends TestCase
             $requestStackMock
         );
 
-        $router = $domainRouterFactory->getRouter(3);
+        $router = $domainRouterFactory->getRouter(Domain::THIRD_DOMAIN_ID);
 
         $this->assertInstanceOf(RouterInterface::class, $router);
     }

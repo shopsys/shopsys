@@ -67,7 +67,7 @@ class OrderMailTest extends FunctionalTestCase
         $dateTimeFormatterExtensionMock = $this->getMockBuilder(DateTimeFormatterExtension::class)->disableOriginalConstructor()->getMock();
         $orderUrlGeneratorMock = $this->getMockBuilder(OrderUrlGenerator::class)->disableOriginalConstructor()->getMock();
 
-        $domainConfig = new DomainConfig(1, 'http://example.com:8080', 'example', 'cs');
+        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs');
         $domain = new Domain([$domainConfig], $settingMock);
 
         $orderMail = new OrderMail(
@@ -86,7 +86,7 @@ class OrderMailTest extends FunctionalTestCase
         $mailTemplateData = new MailTemplateData();
         $mailTemplateData->subject = 'subject';
         $mailTemplateData->body = 'body';
-        $mailTemplate = new MailTemplate('templateName', 1, $mailTemplateData);
+        $mailTemplate = new MailTemplate('templateName', Domain::FIRST_DOMAIN_ID, $mailTemplateData);
 
         $messageData = $orderMail->createMessage($mailTemplate, $order);
 

@@ -20,8 +20,8 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     protected function createValidator()
     {
         $domainConfigs = [
-            new DomainConfig(1, 'http://example.cz', 'name1', 'cs'),
-            new DomainConfig(2, 'http://example.com', 'name2', 'en'),
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'name1', 'cs'),
+            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'name2', 'en'),
         ];
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($domainConfigs, $settingMock);
