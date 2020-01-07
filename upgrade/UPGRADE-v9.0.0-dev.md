@@ -304,7 +304,6 @@ There you can find links to upgrade notes for other versions too.
             ```
 
  - There is a new base html layout with horizontal menu and product filter placed in left panel, for detail information see [the separate article](upgrade-instructions-for-base-layout.md)
-
 - update your project to use refactored customer structure ([#1543](https://github.com/shopsys/shopsys/pull/1543))
     - database table was changed from `users` to `customer_users`, change ORM mapping for entity `User`
         ```diff
@@ -388,11 +387,8 @@ There you can find links to upgrade notes for other versions too.
         -          loaderElement: $categoryItem,
         +          loaderElement: $categoryItem.find('.js-category-list-placeholder'),
         ```
-
     - add new js plugin hoverIntent v1.10.1 `src/Resources/scripts/frontend/plugins/jquery.hoverIntent.js` (https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/scripts/frontend/plugins/jquery.hoverIntent.js)
-
     - add new js component `src/Resources/scripts/frontend/components/hoverIntent.js` (https://github.com/shopsys/shopsys/tree/master/project-base/src/Resources/scripts/frontend/components/hoverIntent.js)
-
     - add class and data attributes to hover menu `templates/Front/Content/Category/panel.html.twig`
         ```diff
           {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
