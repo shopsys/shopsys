@@ -6,11 +6,16 @@ namespace App\Controller\Front;
 
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleFacade;
+use App\Model\Blog\Category\BlogCategory;
+use App\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\HttpFoundation\Response;
 
 class BlogArticleController extends FrontBaseController
 {
+    public const HOMEPAGE_BLOG_ARTICLES = 2;
+    public const MAIN_BLOG_CATEGORY_ID = BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID;
+
     /**
      * @var \App\Model\Blog\Article\BlogArticleFacade
      */
@@ -62,6 +67,24 @@ class BlogArticleController extends FrontBaseController
         return $this->render('Front/Content/Blog/Article/mainBlogCategoryForBlogArticle.html.twig', [
             'blogCategory' => $this->blogArticleFacade->findBlogArticleMainCategoryOnDomain($blogArticle, $this->domain->getId()),
             'spanClass' => $spanClass,
+        ]);
+    }
+
+    /**
+     * @param BlogCategoryFacade $blogCategoryFacade
+     * @return Response
+     */
+    public function homepageArticlesAction(BlogCategoryFacade $blogCategoryFacade): Response
+    {
+        $mainCategory = $blogCategoryFacade->getVisibleOnDomainById($this->domain->getId(), self::MAIN_BLOG_CATEGORY_ID);
+
+        return $this->render('Front/Content/Blog/Article/homepageArticles.html.twig', [
+            'homepageArticles' => $this->blogArticleFacade->getHomepageBlogArticlesByDomainId(
+                $this->domain->getId(),
+                $this->domain->getLocale(),
+                self::HOMEPAGE_BLOG_ARTICLES
+            ),
+            'rootCategory' => $mainCategory,
         ]);
     }
 }

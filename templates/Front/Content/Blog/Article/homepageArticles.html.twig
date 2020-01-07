@@ -1,0 +1,42 @@
+{% if homepageArticles is not null %}
+    {% set domain = getDomain() %}
+    <div class="web__line">
+        <div class="web__container">
+            <div>
+                <h3>{{ rootCategory.getSeoH1(domain.id)|upper }}</h3>
+                <div class="web__content">
+                    {{ rootCategory.getDescription(domain.locale) }}
+                </div>
+                <a class="btn" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ "všechny články"|trans }}</a>
+            </div>
+            {% for blogArticle in homepageArticles %}
+                <div>
+                    {{ blogArticle.name }}
+
+
+                    <div class="list-articles__item__content">
+                        <div class="list-articles__item__image">
+                            <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}">
+                                {{ image(blogArticle, { size: 'list', alt: blogArticle.name, lazy: true }) }}
+                            </a>
+                        </div>
+                        <h3>
+                            <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
+                                {{ blogArticle.getSeoH1(domain.id) }}
+                            </a>
+                        </h3>
+                        <div class="list-articles__item__content__text">
+                            {{ blogArticle.perex|slice(0,100) }}{% if blogArticle.perex|length > 100 %}&hellip;{% endif %}
+                        </div>
+                        <div class="list-articles__item__content__text">
+                            <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
+                                {{ "číst dále"|trans }}
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
