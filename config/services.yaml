@@ -27,6 +27,10 @@ services:
                 local: '@local_filesystem'
                 main: '@main_filesystem'
 
+    App\Model\Blog\BlogVisibilityRecalculationListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface: '@App\Form\Front\Order\DomainAwareOrderFlowFactory'
