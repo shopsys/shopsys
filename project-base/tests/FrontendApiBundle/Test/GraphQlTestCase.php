@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Test;
 
-use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\App\Test\FunctionalTestCase;
 
@@ -15,13 +14,17 @@ abstract class GraphQlTestCase extends FunctionalTestCase
      */
     protected $client;
 
+    /**
+     * @var \Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker
+     * @inject
+     */
+    protected $enabledOnCurrentDomainChecker;
+
     protected function setUp(): void
     {
         $this->client = $this->getClient(true);
 
-        $enabledOnCurrentDomainChecker = $this->getContainer()->get(EnabledOnDomainChecker::class);
-
-        if (!$enabledOnCurrentDomainChecker->isEnabledOnCurrentDomain()) {
+        if (!$this->enabledOnCurrentDomainChecker->isEnabledOnCurrentDomain()) {
             $this->markTestSkipped('Frontend API disabled on domain');
         }
 
