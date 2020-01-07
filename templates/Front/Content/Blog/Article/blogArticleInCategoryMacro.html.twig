@@ -8,7 +8,7 @@
         </div>
         <div class="list-articles__item__content">
             <div class="list-tags">
-                {{ render(controller('App\\Controller\\Front\\BlogArticleController:mainBlogCategoryForBlogArticle', { blogArticle: blogArticle, spanClass: 'list-tags__tag' })) }}
+                {{ render(controller('App\\Controller\\Front\\BlogArticleController:mainBlogCategoryForBlogArticleAction', { blogArticle: blogArticle, spanClass: 'list-tags__tag' })) }}
             </div>
             <a href="#" class="list-articles__item__content__title underline">
                 {{ blogArticle.name }}
