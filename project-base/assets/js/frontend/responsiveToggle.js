@@ -66,8 +66,8 @@ export default class ResponsiveToggle {
         }
     }
 
-    static init () {
-        $('.js-responsive-toggle').each(function () {
+    static init ($container) {
+        $container.filterAllNodes('.js-responsive-toggle').each(function () {
             const $button = $(this);
             const $elementToHide = $('#' + $button.data('element'));
             const hideOnClickOut = $button.data('hide-on-click-out');
