@@ -17,17 +17,22 @@
         var $categoryList = $categoryItem.find('.js-category-list').first();
         var isOpen = $categoryCollapseControl.hasClass('open');
 
-        if (isOpen) {
-            $categoryList.slideUp('fast');
-            $categoryItem.removeClass('active');
-        } else if ($categoryList.length > 0) {
-            $categoryList.slideDown('fast');
-            $categoryItem.addClass('active');
-        } else {
-            loadCategoryItemContent($categoryItem, $categoryCollapseControl.data('url'));
-        }
+        if(!$categoryItem.hasClass("intented")){
 
-        $categoryCollapseControl.toggleClass('open', !isOpen);
+            if (isOpen) {
+                $categoryList.slideUp('fast');
+                $categoryItem.removeClass('active');
+                $categoryCollapseControl.removeClass('open');
+            } else if ($categoryList.length > 0) {
+                $categoryList.slideDown('fast');
+                $categoryItem.addClass('active');
+                $categoryCollapseControl.addClass('open');
+            } else {
+                loadCategoryItemContent($categoryItem, $categoryCollapseControl.data('url'));
+                $categoryItem.addClass('active');
+                $categoryCollapseControl.addClass('open');
+            }
+        }
     }
 
     function loadCategoryItemContent ($categoryItem, url) {

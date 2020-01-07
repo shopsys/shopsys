@@ -74,7 +74,6 @@
                 timeout: hoverIntentSetting.getTimeout(),
                 over: function () {
                     hideAllOpenedIntent();
-
                     if (hoverIntentSetting.getForceClick()) {
                         $(this).find(hoverIntentSetting.getForceClickElement()).click();
                     }
@@ -90,14 +89,13 @@
 
                 },
                 out: function () {
-                    if (hoverIntentSetting.getForceClick()) {
-                        $(this).find(hoverIntentSetting.getForceClickElement()).click();
-                    }
-
                     if ($(this).find('input:focus').size() === 0) {
                         $(this).removeClass(hoverIntentSetting.getClassForOpen());
                     }
 
+                    if (hoverIntentSetting.getForceClick()) {
+                        $(this).find(hoverIntentSetting.getForceClickElement()).click();
+                    }
                 }
             });
         });
