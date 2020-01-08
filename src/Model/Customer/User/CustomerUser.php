@@ -23,6 +23,13 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  */
 class CustomerUser extends BaseUser
 {
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $gender;
+
     /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
@@ -32,6 +39,7 @@ class CustomerUser extends BaseUser
         ?DeliveryAddress $deliveryAddress
     ) {
         parent::__construct($customerUserData, $deliveryAddress);
+        $this->gender = $customerUserData->gender;
     }
 
     /**
@@ -40,5 +48,22 @@ class CustomerUser extends BaseUser
     public function edit(BaseUserData $customerUserData)
     {
         parent::edit($customerUserData);
+        $this->gender = $customerUserData->gender;
     }
+
+    /**
+     * @return string
+     */
+    public function getGender(): string{
+        return $this->gender;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender(string $gender): void{
+        $this->gender = $gender;
+    }
+
+
 }

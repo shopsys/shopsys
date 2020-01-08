@@ -8,6 +8,12 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
 
 class CustomerUserData extends BaseUserData
 {
+
+    /**
+     * @var string|null
+     */
+    public $gender;
+
     public function __construct()
     {
         parent::__construct();
