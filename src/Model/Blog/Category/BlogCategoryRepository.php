@@ -263,6 +263,32 @@ class BlogCategoryRepository extends NestedTreeRepository
     }
 
     /**
+     * @param BlogArticle $blogArticle
+     * @param int $domainId
+     * @return \App\Model\Blog\Category\BlogCategory[]|null
+     */
+    public function findBlogArticleAllCategoriesOnDomain(BlogArticle $blogArticle, int $domainId):? array
+    {
+        $qb = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->join(
+                BlogArticleBlogCategoryDomain::class,
+                'babcd',
+                Join::WITH,
+                'babcd.blogArticle = :blogArticle
+                    AND babcd.blogCategory = bc
+                    AND babcd.domainId = :domainId'
+            )
+            ->orderBy('bc.level DESC, bc.lft');
+
+        $qb->setParameters([
+            'domainId' => $domainId,
+            'blogArticle' => $blogArticle,
+        ]);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * @param \App\Model\Blog\Article\BlogArticle $product
      * @param int $domainId
      * @return \App\Model\Blog\Category\BlogCategory
