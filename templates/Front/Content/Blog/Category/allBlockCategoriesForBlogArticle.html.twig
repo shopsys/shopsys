@@ -1,6 +1,6 @@
 {% if blogCategories is not null %}
     {% for blogCategory in blogCategories %}
-        {% if currentCategory.id == blogCategory.id %}
+        {% if currentBlogCategory.id == blogCategory.id %}
             <span class="current-blog-category">
             {{ blogCategory.name }}
             </span>

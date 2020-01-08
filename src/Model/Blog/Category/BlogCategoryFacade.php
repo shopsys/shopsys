@@ -297,4 +297,13 @@ class BlogCategoryFacade
     {
         return $this->blogCategoryRepository->getByIds($blogCategoryIds);
     }
+
+    /**
+     * @param BlogArticle $blogArticle
+     * @param int $domainId
+     * @return \App\Model\Blog\Category\BlogCategory[]
+     */
+    public function findBlogArticleAllCategoryOnDomain(BlogArticle $blogArticle, int $domainId): array{
+        return $this->blogCategoryRepository->findBlogArticleAllCategoriesOnDomain($blogArticle, $domainId);
+    }
 }

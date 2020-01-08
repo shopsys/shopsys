@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Controller\Front;
 
+use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleFacade;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Blog\Category\BlogCategoryFacade;
@@ -100,6 +101,19 @@ class BlogCategoryController extends FrontBaseController
 
         return $this->render('Front/Content/Blog/Category/list.html.twig', [
             'blogCategories' => $childrenBlogCategories,
+        ]);
+    }
+
+    /**
+     * @param BlogArticle $blogArticle
+     * @param BlogCategory $currentBlogCategory
+     * @return Response
+     */
+    public function allCategoriesForBlogArticleAction(BlogArticle $blogArticle, BlogCategory $currentBlogCategory): Response
+    {
+        return $this->render('Front/Content/Blog/Category/allBlockCategoriesForBlogArticle.html.twig', [
+            'blogCategories' => $this->blogCategoryFacade->findBlogArticleAllCategoryOnDomain($blogArticle, $this->domain->getId()),
+            'currentBlogCategory' => $currentBlogCategory
         ]);
     }
 }
