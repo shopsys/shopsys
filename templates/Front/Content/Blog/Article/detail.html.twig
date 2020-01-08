@@ -35,9 +35,6 @@
             </div>
 
             <div class="box-blog__panel">
-                <h3 class="box-blog__panel__title">
-                    {{ 'Kategorie článků'|trans }}
-                </h3>
                 {{ render(controller('App\\Controller\\Front\\BlogCategoryController:listAction', { currentBlogCategory: blogCategory })) }}
             </div>
 

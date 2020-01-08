@@ -71,8 +71,8 @@ class BlogArticleController extends FrontBaseController
     }
 
     /**
-     * @param BlogCategoryFacade $blogCategoryFacade
-     * @return Response
+     * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function homepageArticlesAction(BlogCategoryFacade $blogCategoryFacade): Response
     {

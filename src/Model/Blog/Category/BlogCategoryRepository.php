@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder;
 class BlogCategoryRepository extends NestedTreeRepository
 {
     public const MOVE_DOWN_TO_BOTTOM = true;
+    public const HIGHEST_CATEGORIES_PARENT_NUMBER = 1;
 
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -263,11 +264,11 @@ class BlogCategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param BlogArticle $blogArticle
+     * @param \App\Model\Blog\Article\BlogArticle $blogArticle
      * @param int $domainId
      * @return \App\Model\Blog\Category\BlogCategory[]|null
      */
-    public function findBlogArticleAllCategoriesOnDomain(BlogArticle $blogArticle, int $domainId):? array
+    public function findBlogArticleAllCategoriesOnDomain(BlogArticle $blogArticle, int $domainId): ?array
     {
         $qb = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
             ->join(
@@ -339,5 +340,19 @@ class BlogCategoryRepository extends NestedTreeRepository
     public function getByIds(array $blogCategoryIds)
     {
         return $this->getBlogCategoryRepository()->findBy(['id' => $blogCategoryIds]);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Blog\Category\BlogCategory[]
+     */
+    public function getAllVisibleBlogCategoriesByDomainId(int $domainId): array
+    {
+        return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+//            ->andWhere('bc.parent > :highestCategoriesLevelNumber')
+//            ->setParameter('highestCategoriesLevelNumber', self::HIGHEST_CATEGORIES_PARENT_NUMBER)
+
+            ->andWhere('bc.parent IS NOT NULL')
+            ->getQuery()->getResult();
     }
 }
