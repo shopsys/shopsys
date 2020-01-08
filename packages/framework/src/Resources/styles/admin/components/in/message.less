@@ -1,3 +1,4 @@
+@in-message-bottom-gap: @height-fixed-bar; // due to fixed bar
 @in-message-padding-horizontal: 15px;
 @in-message-padding-vertical: 14px;
 
@@ -19,6 +20,7 @@
     font-size: 14px;
     text-transform: none;
     font-weight: normal;
+    word-wrap: break-word;
 
     &__icon {
         margin-right: 2px;
@@ -128,6 +130,7 @@
 
 // Modifications - special type - pinned
 @in-message-pin-width: 230px;
+@in-message-pin-max-width: calc(~"@{width-web} - @{width-panel} - @{content-gap}");
 @in-message-pin-place-for-close: 25px;
 @in-message-pin-padding: 10px;
 @in-message-pin-position: 5px;
@@ -139,7 +142,10 @@
         top: 100%;
         left: 0;
         margin-top: @in-message-pin-position*2;
-        width: @in-message-pin-width;
+        margin-bottom: @in-message-bottom-gap;
+        min-width: @in-message-pin-width;
+        max-width: @in-message-pin-max-width;
+        width: auto;
         z-index: 99;
         padding: @in-message-pin-padding @in-message-pin-place-for-close @in-message-pin-padding @in-message-pin-padding;
 
