@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Controller\Admin;
-
 
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -17,7 +15,7 @@ class BlogSideMenuConfigurationSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param ConfigureMenuEvent $event
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
      */
     public function configureBlogMenus(ConfigureMenuEvent $event): void
     {
@@ -26,19 +24,16 @@ class BlogSideMenuConfigurationSubscriber implements EventSubscriberInterface
         $menu->addChild('blog', ['label' => t('Blog')]);
         $blogMenu = $menu->getChild('blog');
 
-
-        $blogMenu->addChild('blogCategories', ['route'=>'admin_blogcategory_list', 'label' => t('Rubriky blogu')]);
+        $blogMenu->addChild('blogCategories', ['route' => 'admin_blogcategory_list', 'label' => t('Rubriky blogu')]);
 
         $blogCategories = $blogMenu->getChild('blogCategories');
-        $blogCategories->addChild('newBlogCategories', ['route'=>'admin_blogcategory_new','display'=>false]);
-        $blogCategories->addChild('editBlogCategories', ['route'=>'admin_blogcategory_edit','display'=>false]);
+        $blogCategories->addChild('newBlogCategories', ['route' => 'admin_blogcategory_new', 'display' => false]);
+        $blogCategories->addChild('editBlogCategories', ['route' => 'admin_blogcategory_edit', 'display' => false]);
 
-
-        $blogMenu->addChild('blogArticles', ['route'=>'admin_blogarticle_list', 'label' => t('Články blogu')]);
+        $blogMenu->addChild('blogArticles', ['route' => 'admin_blogarticle_list', 'label' => t('Články blogu')]);
 
         $blogArticles = $blogMenu->getChild('blogArticles');
-        $blogArticles->addChild('newBlogArticles',['route'=>'admin_blogarticle_new','display'=>false]);
-        $blogArticles->addChild('editBlogArticles',['route'=>'admin_blogarticle_edit','display'=>false]);
+        $blogArticles->addChild('newBlogArticles', ['route' => 'admin_blogarticle_new', 'display' => false]);
+        $blogArticles->addChild('editBlogArticles', ['route' => 'admin_blogarticle_edit', 'display' => false]);
     }
-
 }

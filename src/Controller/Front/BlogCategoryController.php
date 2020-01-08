@@ -94,26 +94,29 @@ class BlogCategoryController extends FrontBaseController
      */
     public function listAction(BlogCategory $currentBlogCategory): Response
     {
-        $childrenBlogCategories = $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
-            $currentBlogCategory,
-            $this->domain->getId()
-        );
+//        $childrenBlogCategories = $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
+//            $currentBlogCategory,
+//            $this->domain->getId()
+//        );
+
+        $allVisibleBlogCategories = $this->blogCategoryFacade->getAllVisibleBlogCategoriesByDomainId($this->domain->getId());
 
         return $this->render('Front/Content/Blog/Category/list.html.twig', [
-            'blogCategories' => $childrenBlogCategories,
+            'blogCategories' => $allVisibleBlogCategories,
+            'currentBlogCategory' => $currentBlogCategory,
         ]);
     }
 
     /**
-     * @param BlogArticle $blogArticle
-     * @param BlogCategory $currentBlogCategory
-     * @return Response
+     * @param \App\Model\Blog\Article\BlogArticle $blogArticle
+     * @param \App\Model\Blog\Category\BlogCategory $currentBlogCategory
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function allCategoriesForBlogArticleAction(BlogArticle $blogArticle, BlogCategory $currentBlogCategory): Response
     {
         return $this->render('Front/Content/Blog/Category/allBlockCategoriesForBlogArticle.html.twig', [
             'blogCategories' => $this->blogCategoryFacade->findBlogArticleAllCategoryOnDomain($blogArticle, $this->domain->getId()),
-            'currentBlogCategory' => $currentBlogCategory
+            'currentBlogCategory' => $currentBlogCategory,
         ]);
     }
 }

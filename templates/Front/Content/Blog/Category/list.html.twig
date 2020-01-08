@@ -4,7 +4,7 @@
             {{ 'Rubriky blogu'|trans }}
         </div>
         {% for blogCategory in blogCategories %}
-            <a href="{{ url('front_blogcategory_detail', { id: blogCategory.id }) }}" class="box-blog__categories__item">
+            <a href="{{ url('front_blogcategory_detail', { id: blogCategory.id }) }}" class="box-blog__categories__item level-{{ blogCategory.level }}">
                 {{ blogCategory.name }}
             </a>
         {% endfor %}
