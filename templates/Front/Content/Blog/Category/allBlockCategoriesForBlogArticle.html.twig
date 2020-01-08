@@ -1,11 +1,9 @@
 {% if blogCategories is not null %}
     {% for blogCategory in blogCategories %}
-        {% if currentBlogCategory.id == blogCategory.id %}
-            <span class="current-blog-category">
+        <a href="{{ url('front_blogcategory_detail', { id: blogCategory.id }) }}" class="box-blog__categories__item
+            {% if currentBlogCategory.id == blogCategory.id %}current-blog-category{% endif %}
+        ">
             {{ blogCategory.name }}
-            </span>
-        {% else %}
-            {{ blogCategory.name }}
-        {% endif %}
+        </a>
     {% endfor %}
 {% endif %}
