@@ -4,10 +4,12 @@ declare(strict_types = 1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Blog\Article\BlogArticleData;
 use App\Model\Blog\Article\BlogArticleDataFactory;
 use App\Model\Blog\Article\BlogArticleFacade;
 use App\Model\Blog\BlogVisibilityFacade;
 use App\Model\Blog\Category\BlogCategory;
+use App\Model\Blog\Category\BlogCategoryData;
 use App\Model\Blog\Category\BlogCategoryDataFactory;
 use App\Model\Blog\Category\BlogCategoryFacade;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -16,6 +18,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class BlogArticleDataFixture extends AbstractReferenceFixture
 {
+    public const PAGES_IN_CATEGORY = 5;
+
+    public const LOCALES = ['cs','sk','de'];
+
     /**
      * @var \App\Model\Blog\Article\BlogArticleFacade
      */
@@ -45,6 +51,11 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
      * @var \App\Model\Blog\Category\BlogCategoryDataFactory
      */
     private $blogCategoryDataFactory;
+
+    /**
+     * @var int
+     */
+    private $articleCounter = 1;
 
     /**
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
@@ -78,25 +89,93 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
         $mainPageBlogCategory = $this->blogCategoryFacade->getById(BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID);
 
         $mainPageBlogCategoryData = $this->blogCategoryDataFactory->createFromBlogCategory($mainPageBlogCategory);
-        $mainPageBlogCategoryData->names['cs'] = 'Hlavní stránka blogu - cs';
-        $mainPageBlogCategoryData->names['sk'] = 'Hlavní stránka blogu - sk';
-        $mainPageBlogCategoryData->names['de'] = 'Hlavní stránka blogu - de';
+        foreach (self::LOCALES as $locale) {
+            $name = 'Hlavní stránka blogu';
+            $mainPageBlogCategoryData->names[$locale] = $name . ' - ' . $locale;
+            $mainPageBlogCategoryData->descriptions[$locale] = 'description - ' . $name . ' - ' . $locale;
+        }
         $this->blogCategoryFacade->edit($mainPageBlogCategory->getId(), $mainPageBlogCategoryData);
 
-        $blogArticleData = $this->blogArticleDataFactory->create();
-
-        foreach ($this->domain->getAll() as $domain) {
-            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$mainPageBlogCategory];
+        //only in main category
+        for ($i = 0 ; $i < self::PAGES_IN_CATEGORY ; $i++) {
+            $blogArticleData = $this->createArticle([$mainPageBlogCategory]);
+            $this->blogArticleFacade->create($blogArticleData);
         }
 
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $blogArticleData->names[$locale] = 'Ukázkový článek blogu ' . $locale;
-            $blogArticleData->descriptions[$locale] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.';
-            $blogArticleData->perexes[$locale] = $locale . ' perex lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.';
+        $firstSubcategoryData = $this->createSubcategory($mainPageBlogCategory, 'První podsekce');
+        $firstSubcategory = $this->blogCategoryFacade->create($firstSubcategoryData);
+
+        //in first subcategory
+        for ($i = 0 ; $i < self::PAGES_IN_CATEGORY ; $i++) {
+            $blogArticleData = $this->createArticle([$firstSubcategory]);
+            $this->blogArticleFacade->create($blogArticleData);
         }
 
-        $this->blogArticleFacade->create($blogArticleData);
+        $secondSubcategoryData = $this->createSubcategory($mainPageBlogCategory, 'Druhá podsekce');
+        $secondSubcategory = $this->blogCategoryFacade->create($secondSubcategoryData);
+
+        //in second subcategory
+        for ($i = 0 ; $i < self::PAGES_IN_CATEGORY ; $i++) {
+            $blogArticleData = $this->createArticle([$secondSubcategory]);
+            $this->blogArticleFacade->create($blogArticleData);
+        }
+
 
         $this->blogVisibilityFacade->refreshBlogArticlesVisibility();
+        $this->blogVisibilityFacade->refreshBlogCategoriesVisibility();
+    }
+
+    /**
+     * @param BlogCategory $parentCategory
+     * @param string $name
+     * @return BlogCategoryData
+     */
+    private function createSubcategory(BlogCategory $parentCategory, string $name):BlogCategoryData{
+
+        $blogCategoryData = $this->blogCategoryDataFactory->create();
+        $blogCategoryData->parent = $parentCategory;
+
+        foreach (self::LOCALES as $locale) {
+            $blogCategoryData->names[$locale] = $name . ' ' . $locale;
+            $blogCategoryData->descriptions[$locale] = 'description - ' . $name . ' - ' . $locale;
+        }
+
+        foreach ($this->domain->getAll() as $domain) {
+            $locale = $domain->getLocale();
+            $blogCategoryData->seoH1s[$domain->getId()] = $name . ' ' . $locale . ' - h1';
+            $blogCategoryData->seoTitles[$domain->getId()] = 'title - ' . $name . ' ' . $locale;
+
+        }
+
+        return $blogCategoryData;
+
+    }
+
+    /**
+     * @param BlogCategory[] $blogCategories
+     * @return BlogArticleData
+     */
+    private function createArticle(array $blogCategories):BlogArticleData
+    {
+        $blogArticleData = $this->blogArticleDataFactory->create();
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $blogArticleData->names[$locale] = 'Ukázkový článek blogu' . $this->articleCounter . ' ' . $locale;
+            $blogArticleData->descriptions[$locale] = 'description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.';
+            $blogArticleData->perexes[$locale] = $locale . ' perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.';
+        }
+
+        foreach ($this->domain->getAll() as $domain) {
+            $locale = $domain->getLocale();
+            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = $blogCategories;
+            $blogArticleData->seoTitles[$domain->getId()] = 'title - ' . $blogArticleData->names[$locale];
+            $blogArticleData->seoH1s[$domain->getId()] = $blogArticleData->names[$locale] . ' - H1';
+        }
+
+
+
+        $this->articleCounter++;
+
+        return $blogArticleData;
     }
 }
