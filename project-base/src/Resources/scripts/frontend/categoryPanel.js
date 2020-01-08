@@ -17,7 +17,7 @@
         var $categoryList = $categoryItem.find('.js-category-list').first();
         var isOpen = $categoryCollapseControl.hasClass('open');
 
-        if(!$categoryItem.hasClass("intented")){
+        if (!$categoryItem.hasClass("intented")) {
 
             if (isOpen) {
                 $categoryList.slideUp('fast');
