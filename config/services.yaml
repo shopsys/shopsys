@@ -96,3 +96,12 @@ services:
     App\Controller\Front\ErrorController:
         arguments:
             $environment: '%kernel.environment%'
+
+    App\Component\Akeneo\AkeneoConfig:
+        arguments:
+            $akeneoConfig: "%akeneo_config%"
+
+    App\Component\Akeneo\AkeneoClientFactory: ~
+
+    Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface:
+        factory: ['@App\Component\Akeneo\AkeneoClientFactory', createClient]

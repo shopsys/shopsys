@@ -24,3 +24,11 @@ parameters:
         - "127.0.0.1"
     env(REDIS_PREFIX): ''
     env(ELASTIC_SEARCH_INDEX_PREFIX): ''
+
+    akeneo_config:
+        enabled: false
+        base_uri: 'https://pim.scontodev.cz/api/oauth/v1/token' # TODO !!!!!
+        client_id: ''
+        secret: ''
+        user: ''
+        password: ''
