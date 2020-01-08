@@ -4,7 +4,11 @@
             {{ 'Rubriky blogu'|trans }}
         </div>
         {% for blogCategory in blogCategories %}
-            <a href="{{ url('front_blogcategory_detail', { id: blogCategory.id }) }}" class="box-blog__categories__item level-{{ blogCategory.level }}">
+            <a href="{{ url('front_blogcategory_detail', { id: blogCategory.id }) }}"
+               class="box-blog__categories__item level-{{ blogCategory.level }}
+               {% if blogCategory.id == currentBlogCategory.id %} selected{% endif %}
+                "
+            >
                 {{ blogCategory.name }}
             </a>
         {% endfor %}

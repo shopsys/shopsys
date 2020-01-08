@@ -279,7 +279,7 @@ class BlogCategoryRepository extends NestedTreeRepository
                     AND babcd.blogCategory = bc
                     AND babcd.domainId = :domainId'
             )
-            ->orderBy('bc.level DESC, bc.lft');
+            ->orderBy('bc.level ASC, bc.lft');
 
         $qb->setParameters([
             'domainId' => $domainId,
