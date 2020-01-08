@@ -8,6 +8,7 @@ body {
 .web {
     margin: 0 auto;
     width: 100%;
+    min-width: @min-width-web;
 
     &__header {
         position: fixed;
@@ -36,6 +37,7 @@ body {
             align-items: center;
             margin: 0 auto;
             width: 100%;
+            min-width: @min-width-web;
             height: @height-header;
 
             border-bottom-right-radius: @radius;
@@ -140,7 +142,7 @@ body {
         position: relative;
         margin: 0 auto;
         padding-top: calc(~"@{content-gap} - @{wrap-border-gap}");
-        padding-right: 0;
+        padding-right: @content-gap;
         padding-bottom: @content-gap;
         padding-left: @width-panel + @content-gap;
         max-width: @width-content;
@@ -151,18 +153,6 @@ body {
 
         &--padding-top {
             padding-top: 20px;
-        }
-    }
-}
-
-@media @query-xl {
-    .web {
-        width: @width-web;
-
-        &__header {
-            &__in {
-                width: @width-web;
-            }
         }
     }
 }

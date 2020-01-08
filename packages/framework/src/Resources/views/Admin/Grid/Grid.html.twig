@@ -301,6 +301,22 @@
 
 {% block grid_pager_results_perpage %}
     <div class="in-grid-control__item in-grid-control__item--settings">
+        <div class="js-grid-go-to in-grid-control__item__go">
+            <span class="in-grid-control__item__go__text">{{ 'Go to page:'|trans }}</span>
+            <div class="in-grid-control__item__go__block form-type-and-go">
+                <input
+                        type="number"
+                        min="1"
+                        max="{{ grid.pageCount }}"
+                        value="{{ grid.page }}"
+                        class="current input form-type-and-go__input js-grid-go-to-input"
+                        size="2"
+                />
+                <a class="btn btn--neutral form-type-and-go__btn js-grid-go-to-button" href="#" data-url="{{ gridView.url({'page' : '--page--'}) }}">
+                    <i class="svg svg-arrow-strong"></i>
+                </a>
+            </div>
+        </div>
         <span class="in-grid-control__item__go">
             <span class="in-grid-control__item__go__text">
                 {{ 'Items per page:'|trans }}
@@ -313,22 +329,6 @@
                 </select>
             </div>
         </span>
-        <div class="js-grid-go-to in-grid-control__item__go">
-            <span class="in-grid-control__item__go__text">{{ 'Go to page:'|trans }}</span>
-            <div class="in-grid-control__item__go__block form-type-and-go">
-                <input
-                    type="number"
-                    min="1"
-                    max="{{ grid.pageCount }}"
-                    value="{{ grid.page }}"
-                    class="current input form-type-and-go__input js-grid-go-to-input"
-                    size="2"
-                />
-                <a class="btn btn--neutral form-type-and-go__btn js-grid-go-to-button" href="#" data-url="{{ gridView.url({'page' : '--page--'}) }}">
-                    <i class="svg svg-arrow-strong"></i>
-                </a>
-            </div>
-        </div>
     </div>
 {% endblock %}
 
