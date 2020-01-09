@@ -47,6 +47,12 @@ services:
 
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
+    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface: '@App\Model\Order\PromoCode\PromoCodeDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface: '@App\Model\Order\PromoCode\PromoCodeFactory'
+
+    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository: '@App\Model\Order\PromoCode\PromoCodeRepository'
+
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface: '@App\Form\Front\Order\DomainAwareOrderFlowFactory'
 
     Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface: '@App\Model\Article\ArticleDataFactory'
@@ -111,8 +117,10 @@ services:
         tags: ['doctrine.fixture.orm']
 
     Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
+        class: 'App\Controller\Admin\PromoCodeController'
         arguments:
             $useInlineEditation: false
+
 
     App\Controller\Front\ErrorController:
         arguments:
