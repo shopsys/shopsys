@@ -247,7 +247,7 @@ class CustomerUserFacade
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function editByCustomer($customerUserId, CustomerUserUpdateData $customerUserUpdateData)
+    public function editByCustomerUser($customerUserId, CustomerUserUpdateData $customerUserUpdateData)
     {
         $customerUser = $this->edit($customerUserId, $customerUserUpdateData);
 
@@ -271,7 +271,7 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    public function amendUserDataFromOrder(CustomerUser $customerUser, Order $order)
+    public function amendCustomerUserDataFromOrder(CustomerUser $customerUser, Order $order)
     {
         $this->edit(
             $customerUser->getId(),
