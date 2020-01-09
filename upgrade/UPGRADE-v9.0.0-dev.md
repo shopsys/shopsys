@@ -351,6 +351,8 @@ There you can find links to upgrade notes for other versions too.
             - `Shopsys\FrameworkBundle\Model\Order\OrderFacade::getCustomerOrderList()` to `Shopsys\FrameworkBundle\Model\Order\OrderFacade::getCustomerUserOrderList()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::findUserByEmailAndDomain()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::findCustomerUserByEmailAndDomain()`
             - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::getUserById()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::getCustomerUserById()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::editByCustomer()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::editByCustomerUser()`
+            - `Shopsys\FrameworkBundle\Model\Customer\UserFacade::amendUserDataFromOrder()` to `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade::amendCustomerUserDataFromOrder()`
         - to keep your tests working you need tu update `UserDataFixture`
             - inject `CustomerFactoryInterface` via constructor into the class
             - create and assign an entity of `Customer` to `BillingAddressData` and `UserData`
