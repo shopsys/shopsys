@@ -14,6 +14,31 @@ class CustomerUserData extends BaseUserData
      */
     public $gender;
 
+    /**
+     * @var string|null
+     */
+    public $street;
+
+    /**
+     * @var string|null
+     */
+    public $city;
+
+    /**
+     * @var string|null
+     */
+    public $postcode;
+
+    /**
+     * @var boolean
+     */
+    public $companyCustomer = false;
+
+    /**
+     * @var bool
+     */
+    public $advertisingApproval = false;
+
     public function __construct()
     {
         parent::__construct();

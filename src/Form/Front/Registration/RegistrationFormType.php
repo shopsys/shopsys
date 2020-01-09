@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Registration;
 
+use App\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
@@ -13,6 +14,7 @@ use Shopsys\FrameworkBundle\Form\HoneyPotType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -31,6 +33,14 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('gender', ChoiceType::class, [
+                'label' => t('Oslovení'),
+                'choices' => CustomerUser::getAllGenders(),
+                'placeholder' => t('-- Vyber oslovení --'),
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please choose your gender']),
+                ],
+            ])
             ->add('firstName', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
@@ -41,6 +51,38 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter last name']),
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
+                ],
+            ])
+            ->add('telephone', TextType::class, [
+                'label' => t('Telefon'),
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter phone number']),
+                    new Constraints\Length(['max' => 20, 'maxMessage' => 'Phone number cannot be longer than {{ limit }} characters']),
+                ],
+            ])
+
+            ->add('street', TextType::class, [
+                'label' => t('Ulice'),
+                'required' => false,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter street']),
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
+                ],
+            ])
+            ->add('city', TextType::class, [
+                'label' => t('Město'),
+                'required' => false,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter city']),
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'City cannot be longer than {{ limit }} characters']),
+                ],
+            ])
+            ->add('postcode', TextType::class, [
+                'label' => t('PSČ'),
+                'required' => false,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter postcode']),
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Postcode cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('email', EmailType::class, [
@@ -65,6 +107,13 @@ class RegistrationFormType extends AbstractType
                 'invalid_message' => 'Passwords do not match',
             ])
             ->add('privacyPolicy', CheckboxType::class, [
+                'required' => true,
+                'mapped' => false,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'You have to agree with privacy policy']),
+                ],
+            ])
+            ->add('advertisingApproval', CheckboxType::class, [
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [

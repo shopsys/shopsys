@@ -24,6 +24,10 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
 class CustomerUser extends BaseUser
 {
 
+    public const GENDER_MALE = "man";
+    public const GENDER_FEMALE = "woman";
+
+
     /**
      * @var string
      * @ORM\Column(type="string", length=5)
@@ -63,6 +67,16 @@ class CustomerUser extends BaseUser
      */
     public function setGender(string $gender): void{
         $this->gender = $gender;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getAllGenders():array {
+        return [
+            self::GENDER_MALE => t(self::GENDER_MALE),
+            self::GENDER_FEMALE => t(self::GENDER_FEMALE),
+        ];
     }
 
 
