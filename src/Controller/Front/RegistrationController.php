@@ -90,7 +90,7 @@ class RegistrationController extends FrontBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $customerUserData = $form->getData();
 
-            $customerUser = $this->customerUserFacade->register($customerUserData);
+            $customerUser = $this->customerUserFacade->registerWithBillingAddress($customerUserData);
             $this->authenticator->loginUser($customerUser, $request);
 
             $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
