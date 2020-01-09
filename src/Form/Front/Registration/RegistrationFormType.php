@@ -34,8 +34,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('gender', ChoiceType::class, [
-                'label' => t('Oslovení'),
-                'choices' => CustomerUser::getAllGenders(),
+                'choices' => array_flip(CustomerUser::getAllGenders()),
                 'placeholder' => t('-- Vyber oslovení --'),
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please choose your gender']),
@@ -54,34 +53,27 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('telephone', TextType::class, [
-                'label' => t('Telefon'),
+                'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter phone number']),
                     new Constraints\Length(['max' => 20, 'maxMessage' => 'Phone number cannot be longer than {{ limit }} characters']),
                 ],
             ])
 
             ->add('street', TextType::class, [
-                'label' => t('Ulice'),
                 'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter street']),
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('city', TextType::class, [
-                'label' => t('Město'),
                 'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter city']),
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'City cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('postcode', TextType::class, [
-                'label' => t('PSČ'),
                 'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter postcode']),
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'Postcode cannot be longer than {{ limit }} characters']),
                 ],
             ])
@@ -114,11 +106,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('advertisingApproval', CheckboxType::class, [
-                'required' => true,
-                'mapped' => false,
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'You have to agree with privacy policy']),
-                ],
+                'required' => false,
             ])
             ->add('email2', HoneyPotType::class)
             ->add('save', SubmitType::class);

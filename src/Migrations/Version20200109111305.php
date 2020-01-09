@@ -7,14 +7,14 @@ namespace App\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20200108133933 extends AbstractMigration
+class Version20200109111305 extends AbstractMigration
 {
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE customer_users ADD gender VARCHAR(5) NOT NULL');
+        $this->sql('ALTER TABLE customer_users ADD advertising_approval BOOLEAN DEFAULT NULL');
     }
 
     /**

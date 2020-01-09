@@ -26,7 +26,6 @@ class CustomerUserFacade extends BaseCustomerUserFacade
 
         $customer = $this->customerFacade->createCustomerWithBillingAddress($billingAddress);
         $customerUserData->customer = $customer;
-
         $deliveryAddress = null;
 
         $customerUser = $this->customerUserFactory->create($customerUserData, $deliveryAddress);

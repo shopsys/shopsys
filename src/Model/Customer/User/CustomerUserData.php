@@ -32,12 +32,12 @@ class CustomerUserData extends BaseUserData
     /**
      * @var boolean
      */
-    public $companyCustomer = false;
+    public $companyCustomer;
 
     /**
-     * @var bool
+     * @var boolean
      */
-    public $advertisingApproval = false;
+    public $advertisingApproval;
 
     public function __construct()
     {

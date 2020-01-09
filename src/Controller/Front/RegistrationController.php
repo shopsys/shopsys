@@ -91,9 +91,10 @@ class RegistrationController extends FrontBaseController
             $customerUserData = $form->getData();
 
             $customerUser = $this->customerUserFacade->registerWithBillingAddress($customerUserData);
-            $this->authenticator->loginUser($customerUser, $request);
 
             $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
+
+            $this->authenticator->loginUser($customerUser, $request);
             return $this->redirectToRoute('front_homepage');
         }
 

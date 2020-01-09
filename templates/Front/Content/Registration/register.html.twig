@@ -13,9 +13,14 @@
 
             {{ form_start(form) }}
 
+                {{ form_row(form.gender, { label: 'Oslovení'|trans }) }}
                 {{ form_row(form.firstName, { label: 'First name'|trans }) }}
                 {{ form_row(form.lastName, { label: 'Last name'|trans }) }}
                 {{ form_row(form.email, { label: 'Email'|trans , attr: {'data-request-url' : url('front_registration_exists_email') } }) }}
+                {{ form_row(form.telephone, { label: 'Telefon:'|trans }) }}
+                {{ form_row(form.street, { label: 'Ulice:'|trans }) }}
+                {{ form_row(form.city, { label: 'Město:'|trans }) }}
+                {{ form_row(form.postcode, { label: 'PSČ:'|trans }) }}
                 {{ form_row(form.password.first, {
                     label: 'Password'|trans,
                     icon: {
@@ -43,6 +48,14 @@
                                     </span>
                                     <ul class="form-error__list"></ul>
                                 </span>
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl class="form-line">
+                        <dt></dt>
+                        <dd>
+                            <div class="form-choice">
+                                {{ form_row(form.advertisingApproval) }}
                             </div>
                         </dd>
                     </dl>
