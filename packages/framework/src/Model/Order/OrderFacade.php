@@ -307,7 +307,7 @@ class OrderFacade
         $this->cartFacade->deleteCartOfCurrentCustomerUser();
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
         if ($customerUser instanceof CustomerUser) {
-            $this->customerUserFacade->amendUserDataFromOrder($customerUser, $order);
+            $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order);
         }
 
         return $order;
