@@ -98,7 +98,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
         $this->blogCategoryFacade->edit($mainPageBlogCategory->getId(), $mainPageBlogCategoryData);
 
         //only in main category
-        for ($i = 0 ; $i < self::PAGES_IN_CATEGORY ; $i++) {
+        for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory]);
             $this->blogArticleFacade->create($blogArticleData);
         }
@@ -107,7 +107,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
         $firstSubcategory = $this->blogCategoryFacade->create($firstSubcategoryData);
 
         //in first subcategory
-        for ($i = 0 ; $i < self::PAGES_IN_CATEGORY ; $i++) {
+        for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$firstSubcategory]);
             $this->blogArticleFacade->create($blogArticleData);
         }
@@ -116,23 +116,22 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
         $secondSubcategory = $this->blogCategoryFacade->create($secondSubcategoryData);
 
         //in second subcategory
-        for ($i = 0 ; $i < self::PAGES_IN_CATEGORY ; $i++) {
+        for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$secondSubcategory]);
             $this->blogArticleFacade->create($blogArticleData);
         }
-
 
         $this->blogVisibilityFacade->refreshBlogArticlesVisibility();
         $this->blogVisibilityFacade->refreshBlogCategoriesVisibility();
     }
 
     /**
-     * @param BlogCategory $parentCategory
+     * @param \App\Model\Blog\Category\BlogCategory $parentCategory
      * @param string $name
-     * @return BlogCategoryData
+     * @return \App\Model\Blog\Category\BlogCategoryData
      */
-    private function createSubcategory(BlogCategory $parentCategory, string $name):BlogCategoryData{
-
+    private function createSubcategory(BlogCategory $parentCategory, string $name): BlogCategoryData
+    {
         $blogCategoryData = $this->blogCategoryDataFactory->create();
         $blogCategoryData->parent = $parentCategory;
 
@@ -145,18 +144,16 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
             $locale = $domain->getLocale();
             $blogCategoryData->seoH1s[$domain->getId()] = $name . ' ' . $locale . ' - h1';
             $blogCategoryData->seoTitles[$domain->getId()] = 'title - ' . $name . ' ' . $locale;
-
         }
 
         return $blogCategoryData;
-
     }
 
     /**
-     * @param BlogCategory[] $blogCategories
-     * @return BlogArticleData
+     * @param \App\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @return \App\Model\Blog\Article\BlogArticleData
      */
-    private function createArticle(array $blogCategories):BlogArticleData
+    private function createArticle(array $blogCategories): BlogArticleData
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
 
@@ -172,8 +169,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
             $blogArticleData->seoTitles[$domain->getId()] = 'title - ' . $blogArticleData->names[$locale];
             $blogArticleData->seoH1s[$domain->getId()] = $blogArticleData->names[$locale] . ' - H1';
         }
-
-
 
         $this->articleCounter++;
 
