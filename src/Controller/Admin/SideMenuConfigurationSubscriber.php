@@ -38,5 +38,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $marketingMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
         $promoCodeMenu = $marketingMenu->getChild('promo_codes');
         $promoCodeMenu->addChild('promo_codes_new', ['route' => 'admin_promocode_new', 'display' => false, 'label' => t('Nový slevový kupóny')]);
+        $promoCodeMenu->addChild('promo_codes_edit', ['route' => 'admin_promocode_edit', 'display' => false, 'label' => t('Editace slevového kupónu')]);
     }
 }

@@ -6,11 +6,11 @@ namespace App\Model\Order\PromoCode;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
 
 /**
  * @ORM\Table(name="promo_codes")
  * @ORM\Entity
- * @method edit(\App\Model\Order\PromoCode\PromoCodeData $promoCodeData)
  */
 class PromoCode extends BasePromoCode
 {
@@ -26,7 +26,16 @@ class PromoCode extends BasePromoCode
     public function __construct(PromoCodeData $promoCodeData)
     {
         parent::__construct($promoCodeData);
-        $this->setDomainId($promoCodeData->domainId);
+        $this->domainId = $promoCodeData->domainId;
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
+     */
+    public function edit(PromoCodeData $promoCodeData): void
+    {
+        parent::edit($promoCodeData);
+        $this->domainId = $promoCodeData->domainId;
     }
 
     /**
@@ -35,13 +44,5 @@ class PromoCode extends BasePromoCode
     public function getDomainId(): int
     {
         return $this->domainId;
-    }
-
-    /**
-     * @param int $domainId
-     */
-    public function setDomainId(int $domainId): void
-    {
-        $this->domainId = $domainId;
     }
 }
