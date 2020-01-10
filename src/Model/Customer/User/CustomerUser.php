@@ -36,11 +36,11 @@ class CustomerUser extends BaseUser
     protected $gender;
 
     /**
-     * @var bool
+     * @var bool|null
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $advertisingApproval = false;
+    protected $advertisingApproval;
 
     /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
@@ -51,8 +51,8 @@ class CustomerUser extends BaseUser
         ?DeliveryAddress $deliveryAddress
     ) {
         parent::__construct($customerUserData, $deliveryAddress);
-        $this->setGender($customerUserData->gender);
-        $this->setAdvertisingApproval($customerUserData->advertisingApproval);
+        $this->gender = $customerUserData->gender;
+        $this->advertisingApproval = $customerUserData->advertisingApproval;
     }
 
     /**
@@ -61,8 +61,8 @@ class CustomerUser extends BaseUser
     public function edit(BaseUserData $customerUserData)
     {
         parent::edit($customerUserData);
-        $this->setGender($customerUserData->gender);
-        $this->setAdvertisingApproval($customerUserData->advertisingApproval);
+        $this->gender = $customerUserData->gender;
+        $this->advertisingApproval = $customerUserData->advertisingApproval;
     }
 
     /**
@@ -73,24 +73,10 @@ class CustomerUser extends BaseUser
     }
 
     /**
-     * @param string $gender
-     */
-    public function setGender(string $gender): void{
-        $this->gender = $gender;
-    }
-
-    /**
      * @return bool
      */
     public function isAdvertisingApproval(): bool{
         return $this->advertisingApproval;
-    }
-
-    /**
-     * @param bool $advertisingApproval
-     */
-    public function setAdvertisingApproval(bool $advertisingApproval): void{
-        $this->advertisingApproval = $advertisingApproval;
     }
 
     /**

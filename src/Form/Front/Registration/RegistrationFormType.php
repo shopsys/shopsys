@@ -74,7 +74,7 @@ class RegistrationFormType extends AbstractType
             ->add('postcode', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Postcode cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Postcode cannot be longer than {{ limit }} characters']),
                 ],
             ])
             ->add('email', EmailType::class, [

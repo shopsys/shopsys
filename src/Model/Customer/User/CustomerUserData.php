@@ -30,14 +30,14 @@ class CustomerUserData extends BaseUserData
     public $postcode;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    public $companyCustomer;
+    public $companyCustomer = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    public $advertisingApproval;
+    public $advertisingApproval = false;
 
     public function __construct()
     {

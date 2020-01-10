@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade as BaseCustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
@@ -49,7 +50,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      * @throws \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException
      */
-    public function registerWithBillingAddress(CustomerUserData $customerUserData)
+    public function register(CustomerUserData $customerUserData): CustomerUserData
     {
 
         $billingAddress = $this->billingAddressDataFactory->create();
