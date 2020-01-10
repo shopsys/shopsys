@@ -29,6 +29,88 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
+## [v8.1.0](https://github.com/shopsys/shopsys/compare/v8.0.0...v8.1.0) - 2020-01-10
+
+### [shopsys/framework]
+
+#### Changed
+
+- [#1314] CronModuleExecutor is now service in DIC, Thanks to [@pk16011990]
+- [#1360] disallow administrator login with default credentials in production environment
+- [#1361] use DIC configuration instead of factory class to create Redis caches
+- [#1476] Unify working with images
+- [#1487] Improve working with currency rounding and fraction digits
+
+#### Fixed
+
+- [#1340] replace constants from other classes by literal values, Thanks to [@sspooky13]
+- [#1364] ProductCodeController now autowires PromoCodeDataFactoryInterface instead of PromoCodeDataFactory
+- [#1441] fixed image drag&drop in product gallery
+- [#1446] refactoring error messages at admin order detail form
+- [#1452] design - admin - sorting arrows not changing column width
+- [#1517] added missing translations for promo codes
+- [#1560] message error with long words
+
+### [shopsys/http-smoke-testing]
+
+- [#1423] HttpSmokeTestCase uses constants for kernel options
+- [#1451] Add annotation based configuration for smoke tests, Thanks to [@mariusbuescher]
+
+### [shopsys/project-base]
+
+#### Added
+
+- [#1342] added travis build for automated testing of installation script to project-base
+- [#1330] PHP-FPM pool configuration now can be changed
+- [#1465] Add graphic checkboxes and radiobuttons
+- [#1472] add posibility to override admin styles
+- [#1483] added support for image and iframe lazy loading
+
+#### Changed
+
+- [#1384] simplified filling variables in Kubernetes manifests
+- [#1464] webline layout
+
+#### Fixed
+
+- [#1285] redirect logged user from registration page to homepage, Thanks to [@pk16011990]
+- [#1313] force locale for number formatting, Thanks to [@pk16011990]
+- [#1336] fix typo (submited -> submitted), Thanks to [@sspooky13]
+- [#1346] fix wrong annotation in Administrator
+- [#1381] resolved (either fixed or ignored) all the errors reported by phpstan level 4
+- [#1479] fix functional tests for single domain
+- [#1524] preserve custom checkbox CSS classes
+- [#1561] error flash messages - add correct type to template
+
+### [shopsys/shopsys]
+
+#### Added
+
+- [#1343] Added support to display dates in different timezone
+- [#1393] added error ID to 500 error page
+- [#1485] Added styleguide to project
+
+#### Changed
+
+- [#1309] domain configuration is autoloaded in build.xml
+- [#1319] make promo codes editable on separate pages
+- [#1344] automated fixes and additions of annotations for extended classes
+- [#1392] Hack phpunit to make tests clean
+- [#1408] Dockerfile: stop defining default env vars
+- [#1425] Eased installation of project with different domains and locales settings
+- [#1532] made image lazy loading configurable
+
+#### Fixed
+
+- [#1289] composer.json enhancements (alphabetical sorting of extensions, 4 spaces as indentation), Thanks to [@sspooky13]
+- [#1506] fixed version of symfony/monolog-bundle
+
+#### Removed
+
+- [#1276] docker-compose-win.yml.dist: remove php.ini volume mount
+- [#1416] remove docker-sync version from install guide, Thanks to [@sspooky13]
+- [#1461] remove old IE support
+
 ## [v8.0.0](https://github.com/shopsys/shopsys/compare/v7.3.1...v8.0.0) - 2019-07-30
 
 ### [shopsys/framework]
@@ -2876,3 +2958,87 @@ That's why is this section formatted differently.
 [#906]: https://github.com/shopsys/shopsys/pull/906
 [#875]: https://github.com/shopsys/shopsys/pull/875
 [#539]: https://github.com/shopsys/shopsys/pull/539
+
+[#1561]: https://github.com/shopsys/shopsys/pull/1561
+[#1560]: https://github.com/shopsys/shopsys/pull/1560
+[#1537]: https://github.com/shopsys/shopsys/pull/1537
+[#1534]: https://github.com/shopsys/shopsys/pull/1534
+[#1533]: https://github.com/shopsys/shopsys/pull/1533
+[#1532]: https://github.com/shopsys/shopsys/pull/1532
+[#1528]: https://github.com/shopsys/shopsys/pull/1528
+[#1527]: https://github.com/shopsys/shopsys/pull/1527
+[#1526]: https://github.com/shopsys/shopsys/pull/1526
+[#1524]: https://github.com/shopsys/shopsys/pull/1524
+[#1523]: https://github.com/shopsys/shopsys/pull/1523
+[#1517]: https://github.com/shopsys/shopsys/pull/1517
+[#1506]: https://github.com/shopsys/shopsys/pull/1506
+[#1500]: https://github.com/shopsys/shopsys/pull/1500
+[#1499]: https://github.com/shopsys/shopsys/pull/1499
+[#1495]: https://github.com/shopsys/shopsys/pull/1495
+[#1488]: https://github.com/shopsys/shopsys/pull/1488
+[#1487]: https://github.com/shopsys/shopsys/pull/1487
+[#1485]: https://github.com/shopsys/shopsys/pull/1485
+[#1484]: https://github.com/shopsys/shopsys/pull/1484
+[#1483]: https://github.com/shopsys/shopsys/pull/1483
+[#1481]: https://github.com/shopsys/shopsys/pull/1481
+[#1479]: https://github.com/shopsys/shopsys/pull/1479
+[#1477]: https://github.com/shopsys/shopsys/pull/1477
+[#1476]: https://github.com/shopsys/shopsys/pull/1476
+[#1472]: https://github.com/shopsys/shopsys/pull/1472
+[#1469]: https://github.com/shopsys/shopsys/pull/1469
+[#1465]: https://github.com/shopsys/shopsys/pull/1465
+[#1464]: https://github.com/shopsys/shopsys/pull/1464
+[#1461]: https://github.com/shopsys/shopsys/pull/1461
+[#1452]: https://github.com/shopsys/shopsys/pull/1452
+[#1451]: https://github.com/shopsys/shopsys/pull/1451
+[#1446]: https://github.com/shopsys/shopsys/pull/1446
+[#1441]: https://github.com/shopsys/shopsys/pull/1441
+[#1426]: https://github.com/shopsys/shopsys/pull/1426
+[#1425]: https://github.com/shopsys/shopsys/pull/1425
+[#1423]: https://github.com/shopsys/shopsys/pull/1423
+[#1422]: https://github.com/shopsys/shopsys/pull/1422
+[#1421]: https://github.com/shopsys/shopsys/pull/1421
+[#1416]: https://github.com/shopsys/shopsys/pull/1416
+[#1408]: https://github.com/shopsys/shopsys/pull/1408
+[#1401]: https://github.com/shopsys/shopsys/pull/1401
+[#1400]: https://github.com/shopsys/shopsys/pull/1400
+[#1399]: https://github.com/shopsys/shopsys/pull/1399
+[#1393]: https://github.com/shopsys/shopsys/pull/1393
+[#1392]: https://github.com/shopsys/shopsys/pull/1392
+[#1386]: https://github.com/shopsys/shopsys/pull/1386
+[#1384]: https://github.com/shopsys/shopsys/pull/1384
+[#1382]: https://github.com/shopsys/shopsys/pull/1382
+[#1381]: https://github.com/shopsys/shopsys/pull/1381
+[#1379]: https://github.com/shopsys/shopsys/pull/1379
+[#1364]: https://github.com/shopsys/shopsys/pull/1364
+[#1361]: https://github.com/shopsys/shopsys/pull/1361
+[#1360]: https://github.com/shopsys/shopsys/pull/1360
+[#1354]: https://github.com/shopsys/shopsys/pull/1354
+[#1352]: https://github.com/shopsys/shopsys/pull/1352
+[#1346]: https://github.com/shopsys/shopsys/pull/1346
+[#1344]: https://github.com/shopsys/shopsys/pull/1344
+[#1343]: https://github.com/shopsys/shopsys/pull/1343
+[#1342]: https://github.com/shopsys/shopsys/pull/1342
+[#1340]: https://github.com/shopsys/shopsys/pull/1340
+[#1336]: https://github.com/shopsys/shopsys/pull/1336
+[#1330]: https://github.com/shopsys/shopsys/pull/1330
+[#1329]: https://github.com/shopsys/shopsys/pull/1329
+[#1320]: https://github.com/shopsys/shopsys/pull/1320
+[#1319]: https://github.com/shopsys/shopsys/pull/1319
+[#1314]: https://github.com/shopsys/shopsys/pull/1314
+[#1313]: https://github.com/shopsys/shopsys/pull/1313
+[#1310]: https://github.com/shopsys/shopsys/pull/1310
+[#1309]: https://github.com/shopsys/shopsys/pull/1309
+[#1308]: https://github.com/shopsys/shopsys/pull/1308
+[#1305]: https://github.com/shopsys/shopsys/pull/1305
+[#1299]: https://github.com/shopsys/shopsys/pull/1299
+[#1298]: https://github.com/shopsys/shopsys/pull/1298
+[#1289]: https://github.com/shopsys/shopsys/pull/1289
+[#1285]: https://github.com/shopsys/shopsys/pull/1285
+[#1281]: https://github.com/shopsys/shopsys/pull/1281
+[#1276]: https://github.com/shopsys/shopsys/pull/1276
+[#1270]: https://github.com/shopsys/shopsys/pull/1270
+[#1265]: https://github.com/shopsys/shopsys/pull/1265
+[#1252]: https://github.com/shopsys/shopsys/pull/1252
+[#1251]: https://github.com/shopsys/shopsys/pull/1251
+[@mariusbuescher]: https://github.com/mariusbuescher
