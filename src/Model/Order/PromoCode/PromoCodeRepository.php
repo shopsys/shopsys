@@ -17,4 +17,18 @@ class PromoCodeRepository extends BasePromoCodeRepository
         return $this->em->getRepository(PromoCode::class);
     }
 
+    /**
+     * @param $code
+     * @param $domainId
+     * @return PromoCode|null
+     */
+    public function findByCodeAndDomainId($code, $domainId)
+    {
+        d([$code,$domainId]);
+        $result = $this->getPromoCodeRepository()->findOneBy(['code' => $code,'domainId'=>$domainId]);
+        d($result);
+
+        return $result;
+    }
+
 }
