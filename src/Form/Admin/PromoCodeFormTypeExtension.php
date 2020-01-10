@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Form\Admin;
-
 
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
 use Shopsys\FrameworkBundle\Form\DomainType;
@@ -27,18 +25,18 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver){
+    public function configureOptions(OptionsResolver $resolver)
+    {
         parent::configureOptions($resolver);
         $resolver
             ->setRequired(['domain_id'])
             ->setAllowedTypes('domain_id', 'int');
     }
 
-
-    public function getExtendedType(){
+    public function getExtendedType()
+    {
         return PromoCodeFormType::class;
     }
-
 }

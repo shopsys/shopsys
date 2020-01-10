@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Order\PromoCode\Grid;
 
+use App\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory as BasePromoCodeGridFactory;
-use App\Model\Order\PromoCode\PromoCode;
-
 
 class PromoCodeGridFactory extends BasePromoCodeGridFactory
 {
@@ -17,17 +15,14 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
      * @param int $currentDomainId
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create($withEditButton = false, $currentDomainId = 1){
-
-        d($currentDomainId);
-
+    public function create($withEditButton = false, $currentDomainId = 1)
+    {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
             ->select('pc')
             ->from(PromoCode::class, 'pc')
-            ->where("pc.domainId = :domainId")
-            ->setParameter('domainId', $currentDomainId)
-        ;
+            ->where('pc.domainId = :domainId')
+            ->setParameter('domainId', $currentDomainId);
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pc.id');
 
         $grid = $this->gridFactory->create('promoCodeList', $dataSource);
@@ -48,5 +43,4 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
 
         return $grid;
     }
-
 }

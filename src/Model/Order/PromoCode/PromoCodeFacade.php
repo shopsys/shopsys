@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Order\PromoCode;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,33 +10,43 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade as BasePromoCo
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository;
 
+/**
+ * @property \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
+ * @property \App\Model\Order\PromoCode\PromoCodeFactory $promoCodeFactory
+ * @method \App\Model\Order\PromoCode\PromoCode create(\App\Model\Order\PromoCode\PromoCodeData $promoCodeData)
+ * @method \App\Model\Order\PromoCode\PromoCode edit(int $promoCodeId, \App\Model\Order\PromoCode\PromoCodeData $promoCodeData)
+ * @method \App\Model\Order\PromoCode\PromoCode getById(int $promoCodeId)
+ * @method \App\Model\Order\PromoCode\PromoCode[] getAll()
+ */
 class PromoCodeFacade extends BasePromoCodeFacade
 {
     /**
-     * @var Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * PromoCodeFacade constructor.
-     * @param EntityManagerInterface $em
-     * @param PromoCodeRepository $promoCodeRepository
-     * @param PromoCodeFactoryInterface $promoCodeFactory
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeFactory $promoCodeFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         EntityManagerInterface $em,
         PromoCodeRepository $promoCodeRepository,
         PromoCodeFactoryInterface $promoCodeFactory,
         Domain $domain
-    ){
+    ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
         $this->domain = $domain;
     }
 
-    public function findPromoCodeByCode($code){
-
+    /**
+     * @param mixed $code
+     */
+    public function findPromoCodeByCode($code)
+    {
         return $this->promoCodeRepository->findByCodeAndDomainId($code, $this->domain->getId());
     }
-
-
 }

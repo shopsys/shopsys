@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
@@ -17,17 +16,36 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @property \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
+ * @property \App\Model\Order\PromoCode\PromoCodeDataFactory|null $promoCodeDataFactory
+ * @property \App\Model\Order\PromoCode\Grid\PromoCodeGridFactory|null $promoCodeGridFactory
+ * @method setPromoCodeDataFactory(\App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory)
+ * @method setPromoCodeGridFactory(\App\Model\Order\PromoCode\Grid\PromoCodeGridFactory $promoCodeGridFactory)
+ */
 class PromoCodeController extends BasePromoCodeController
 {
     /**
-     * @var Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
+
     /**
-     * @var AdminDomainTabsFacade
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
      */
     private $adminDomainTabsFacade;
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeInlineEdit $promoCodeInlineEdit
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \App\Model\Order\PromoCode\PromoCodeDataFactory|null $promoCodeDataFactory
+     * @param \App\Model\Order\PromoCode\Grid\PromoCodeGridFactory|null $promoCodeGridFactory
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider|null $breadcrumbOverrider
+     * @param bool $useInlineEditation
+     */
     public function __construct(
         Domain $domain,
         PromoCodeFacade $promoCodeFacade,
@@ -38,21 +56,23 @@ class PromoCodeController extends BasePromoCodeController
         ?PromoCodeGridFactory $promoCodeGridFactory = null,
         ?BreadcrumbOverrider $breadcrumbOverrider = null,
         bool $useInlineEditation = false
-    ){
+    ) {
         parent::__construct($promoCodeFacade, $promoCodeInlineEdit, $administratorGridFacade, $promoCodeDataFactory, $promoCodeGridFactory, $breadcrumbOverrider, $useInlineEditation);
         $this->domain = $domain;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
-
-    public function newAction(Request $request){
-
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function newAction(Request $request)
+    {
         $promoCodeData = $this->promoCodeDataFactory->create();
 
         $form = $this->createForm(PromoCodeFormType::class, $promoCodeData, [
             'promo_code' => null,
             'isInlineEdit' => false,
-            'domain_id' => $this->domain->getId()
+            'domain_id' => $this->domain->getId(),
         ]);
         $form->handleRequest($request);
 
@@ -78,9 +98,10 @@ class PromoCodeController extends BasePromoCodeController
         ]);
     }
 
-    public function listAction(){
+    public function listAction()
+    {
         $administrator = $this->getUser();
-        /* @var $administrator \Shopsys\FrameworkBundle\Model\Administrator\Administrator */
+        /* @var $administrator \App\Model\Administrator\Administrator */
 
         $currentDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
@@ -101,6 +122,4 @@ class PromoCodeController extends BasePromoCodeController
             'useInlineEditation' => $this->useInlineEditation,
         ]);
     }
-
-
 }

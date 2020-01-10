@@ -12,18 +12,18 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 class PromoCodeDataFixture extends AbstractReferenceFixture
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade
+     * @var \App\Model\Order\PromoCode\PromoCodeFacade
      */
     protected $promoCodeFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface
+     * @var \App\Model\Order\PromoCode\PromoCodeDataFactory
      */
     protected $promoCodeDataFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface $promoCodeDataFactory
+     * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
+     * @param \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
