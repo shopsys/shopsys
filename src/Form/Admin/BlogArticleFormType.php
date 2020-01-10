@@ -6,7 +6,6 @@ namespace App\Form\Admin;
 
 use App\Form\BlogCategoriesType;
 
-
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleData;
 use DateTime;

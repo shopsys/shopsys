@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Domain;
-
 
 class DomainHelper
 {
@@ -13,6 +11,6 @@ class DomainHelper
 
     public const LOCALES = [
         self::LOCATION_CS,
-        self::LOCATION_SK
+        self::LOCATION_SK,
     ];
 }
