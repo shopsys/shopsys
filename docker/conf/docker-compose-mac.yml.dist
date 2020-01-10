@@ -96,6 +96,14 @@ services:
         environment:
             - discovery.type=single-node
 
+    kibana:
+        image: docker.elastic.co/kibana/kibana-oss:7.5.1
+        container_name: shopsys-framework-kibana
+        depends_on:
+            - elasticsearch
+        ports:
+            - "5601:5601"
+
     mkdocs:
         build:
             context: .
