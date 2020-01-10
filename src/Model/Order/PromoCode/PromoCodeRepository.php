@@ -24,10 +24,7 @@ class PromoCodeRepository extends BasePromoCodeRepository
      */
     public function findByCodeAndDomainId($code, $domainId)
     {
-        d([$code,$domainId]);
         $result = $this->getPromoCodeRepository()->findOneBy(['code' => $code,'domainId'=>$domainId]);
-        d($result);
-
         return $result;
     }
 
