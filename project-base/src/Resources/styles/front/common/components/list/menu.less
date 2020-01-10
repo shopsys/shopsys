@@ -61,15 +61,10 @@
         &__item {
             display: block;
 
-            border-top: 1px solid @list-menu-border-color;
             background-color: @list-menu-bg;
 
             &.active {
                 background-color: @list-menu-submenu-bg;
-            }
-
-            &:first-child {
-                border-top: 0;
             }
 
             &__link {
@@ -113,8 +108,6 @@
 
         & & {
             margin-bottom: 0;
-
-            border-top: 1px solid @list-menu-border-color;
 
             .list-menu__item {
                 background-color: @list-menu-submenu-bg;
@@ -167,7 +160,7 @@
 
             &__link {
                 width: 100%;
-                padding: 8px @list-menu-padding-right 8px 50px;
+                padding: 8px @list-menu-padding-right 7px 50px;
 
                 color: @list-menu-font-color;
                 font-size: 11px;
@@ -193,11 +186,11 @@
                 }
 
                 &--level-3 {
-                    padding-left: 30px;
+                    padding-left: 40px;
                 }
 
                 &--level-4 {
-                    padding-left: 40px;
+                    padding-left: 60px;
                 }
 
                 &.current {
@@ -217,8 +210,6 @@
 
         & & {
             margin-bottom: 0;
-
-            border-top: 1px solid @color-border;
 
             .list-menu__item {
                 background-color: @list-menu-submenu-bg;
