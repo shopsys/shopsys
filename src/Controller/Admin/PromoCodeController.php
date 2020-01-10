@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController as BasePromoCodeController;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
@@ -22,12 +23,17 @@ class PromoCodeController extends BasePromoCodeController
      * @var Domain
      */
     private $domain;
+    /**
+     * @var AdminDomainTabsFacade
+     */
+    private $adminDomainTabsFacade;
 
     public function __construct(
         Domain $domain,
         PromoCodeFacade $promoCodeFacade,
         PromoCodeInlineEdit $promoCodeInlineEdit,
         AdministratorGridFacade $administratorGridFacade,
+        AdminDomainTabsFacade $adminDomainTabsFacade,
         ?PromoCodeDataFactoryInterface $promoCodeDataFactory = null,
         ?PromoCodeGridFactory $promoCodeGridFactory = null,
         ?BreadcrumbOverrider $breadcrumbOverrider = null,
@@ -35,6 +41,7 @@ class PromoCodeController extends BasePromoCodeController
     ){
         parent::__construct($promoCodeFacade, $promoCodeInlineEdit, $administratorGridFacade, $promoCodeDataFactory, $promoCodeGridFactory, $breadcrumbOverrider, $useInlineEditation);
         $this->domain = $domain;
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
 
@@ -70,5 +77,30 @@ class PromoCodeController extends BasePromoCodeController
             'form' => $form->createView(),
         ]);
     }
+
+    public function listAction(){
+        $administrator = $this->getUser();
+        /* @var $administrator \Shopsys\FrameworkBundle\Model\Administrator\Administrator */
+
+        $currentDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+
+        if ($this->useInlineEditation === true) {
+            $grid = $this->promoCodeInlineEdit->getGrid();
+
+            $grid->enablePaging();
+        } else {
+            $grid = $this->promoCodeGridFactory->create(true, $currentDomainId);
+
+            $grid->enablePaging();
+        }
+
+        $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
+
+        return $this->render('Admin/Content/PromoCode/list.html.twig', [
+            'gridView' => $grid->createView(),
+            'useInlineEditation' => $this->useInlineEditation,
+        ]);
+    }
+
 
 }

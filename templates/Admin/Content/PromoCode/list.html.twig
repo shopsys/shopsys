@@ -1,0 +1,20 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Promo codes'|trans }}{% endblock %}
+{% block h1 %}{{ 'Promo codes'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+    {{ gridView.render() }}
+{% endblock %}
+
+{% block btn %}
+    {% if useInlineEditation == false %}
+        <div class="wrap-bar">
+            <a href="{{ url('admin_promocode_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+                <i class="btn__icon">+</i>
+                {{ 'Create promo code'|trans }}
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
