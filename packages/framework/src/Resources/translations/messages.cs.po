@@ -1105,6 +1105,9 @@ msgstr "IP adresa"
 msgid "Icon"
 msgstr "Ikona"
 
+msgid "If you change currency settings, prices of all products will be recalculated"
+msgstr "Pokud změníte nastavení měn, dojde k přepočítání cen všech produktů"
+
 msgid "If you want for these changes to manifest everywhere (on production, devel, localhost etc.) instruct a programmer to commit the changes into GIT!"
 msgstr "Pokud chcete, aby se změny projevily všude (na produkci, develu, localhostu apod.), dejte vědět programátorovi, aby změny zavedl do GITu!"
 
@@ -1269,6 +1272,9 @@ msgstr "Vzkaz"
 
 msgid "Meta description"
 msgstr "Meta description"
+
+msgid "Min fraction digits"
+msgstr "Minimální počet desetinných míst"
 
 msgid "Modifications"
 msgstr "Úpravy"
@@ -1776,6 +1782,9 @@ msgstr "Zaokrouhlení"
 
 msgid "Rounding item with 0 % VAT will be added to your order. It is used for payment in cash."
 msgstr "Do objednávky bude přidána zaokrouhlovací položka s 0% DPH. Používá se pro platbu v hotovosti."
+
+msgid "Rounding type"
+msgstr "Typ zaokrouhlení"
 
 msgid "SEO"
 msgstr "SEO"
