@@ -23,10 +23,8 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  */
 class CustomerUser extends BaseUser
 {
-
-    public const GENDER_MALE = "man";
-    public const GENDER_FEMALE = "woman";
-
+    public const GENDER_MALE = 'man';
+    public const GENDER_FEMALE = 'woman';
 
     /**
      * @var string|null
@@ -68,26 +66,27 @@ class CustomerUser extends BaseUser
     /**
      * @return string
      */
-    public function getGender(): string{
+    public function getGender(): string
+    {
         return $this->gender;
     }
 
     /**
      * @return bool
      */
-    public function isAdvertisingApproval(): bool{
+    public function isAdvertisingApproval(): bool
+    {
         return $this->advertisingApproval;
     }
 
     /**
      * @return array
      */
-    public static function getAllGenders():array {
+    public static function getAllGenders(): array
+    {
         return [
             self::GENDER_MALE => t('muž'),
             self::GENDER_FEMALE => t('žena'),
         ];
     }
-
-
 }

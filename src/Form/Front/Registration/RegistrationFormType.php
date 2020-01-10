@@ -32,6 +32,43 @@ class RegistrationFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->buildContactInformationFormPart($builder, $options);
+        $this->buildBillingAddressFormPart($builder, $options);
+
+        $builder
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'options' => [
+                    'attr' => ['autocomplete' => 'new-password'],
+                ],
+                'first_options' => [
+                    'constraints' => [
+                        new Constraints\NotBlank(['message' => 'Please enter password']),
+                        new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer than {{ limit }} characters']),
+                    ],
+                ],
+                'invalid_message' => 'Passwords do not match',
+            ])
+            ->add('privacyPolicy', CheckboxType::class, [
+                'required' => true,
+                'mapped' => false,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'You have to agree with privacy policy']),
+                ],
+            ])
+            ->add('advertisingApproval', CheckboxType::class, [
+                'required' => false,
+            ])
+            ->add('email2', HoneyPotType::class)
+            ->add('save', SubmitType::class);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildContactInformationFormPart(FormBuilderInterface $builder, array $options): void
+    {
         $builder
             ->add('gender', ChoiceType::class, [
                 'choices' => array_flip(CustomerUser::getAllGenders()),
@@ -58,13 +95,28 @@ class RegistrationFormType extends AbstractType
                     new Constraints\Length(['max' => 20, 'maxMessage' => 'Phone number cannot be longer than {{ limit }} characters']),
                 ],
             ])
-
-            ->add('street', TextType::class, [
-                'required' => false,
+            ->add('email', EmailType::class, [
                 'constraints' => [
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
+                    new Constraints\NotBlank(['message' => 'Please enter email']),
+                    new Email(['message' => 'Please enter valid email']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
+                    new UniqueEmail(['message' => 'This email is already registered']),
                 ],
-            ])
+            ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildBillingAddressFormPart(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->add('street', TextType::class, [
+            'required' => false,
+            'constraints' => [
+                new Constraints\Length(['max' => 100, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
+            ],
+        ])
             ->add('city', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -76,40 +128,7 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Constraints\Length(['max' => 30, 'maxMessage' => 'Postcode cannot be longer than {{ limit }} characters']),
                 ],
-            ])
-            ->add('email', EmailType::class, [
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter email']),
-                    new Email(['message' => 'Please enter valid email']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
-                    new UniqueEmail(['message' => 'This email is already registered']),
-                ],
-            ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'options' => [
-                    'attr' => ['autocomplete' => 'new-password'],
-                ],
-                'first_options' => [
-                    'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter password']),
-                        new Constraints\Length(['min' => 6, 'minMessage' => 'Password cannot be longer than {{ limit }} characters']),
-                    ],
-                ],
-                'invalid_message' => 'Passwords do not match',
-            ])
-            ->add('privacyPolicy', CheckboxType::class, [
-                'required' => true,
-                'mapped' => false,
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'You have to agree with privacy policy']),
-                ],
-            ])
-            ->add('advertisingApproval', CheckboxType::class, [
-                'required' => false,
-            ])
-            ->add('email2', HoneyPotType::class)
-            ->add('save', SubmitType::class);
+            ]);
     }
 
     /**

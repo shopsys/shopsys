@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Customer\User;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
@@ -23,10 +21,23 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 class CustomerUserFacade extends BaseCustomerUserFacade
 {
     /**
-     * @var NewsletterFacade
+     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
      */
     private $newsletterFacade;
 
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface $deliveryAddressFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     */
     public function __construct(
         EntityManagerInterface $em,
         CustomerUserRepository $customerUserRepository,
@@ -39,20 +50,18 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         CustomerUserPasswordFacade $customerUserPasswordFacade,
         CustomerFacade $customerFacade,
         NewsletterFacade $newsletterFacade
-    ){
+    ) {
         parent::__construct($em, $customerUserRepository, $customerUserUpdateDataFactory, $customerMailFacade, $billingAddressFactory, $deliveryAddressFactory, $billingAddressDataFactory, $customerUserFactory, $customerUserPasswordFacade, $customerFacade);
         $this->newsletterFacade = $newsletterFacade;
     }
 
-
     /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      * @throws \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException
+     * @return \App\Model\Customer\User\CustomerUser
      */
     public function register(CustomerUserData $customerUserData): CustomerUserData
     {
-
         $billingAddress = $this->billingAddressDataFactory->create();
         $billingAddress->city = $customerUserData->city;
         $billingAddress->street = $customerUserData->street;
@@ -62,7 +71,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         $customerUserData->customer = $customer;
         $deliveryAddress = null;
         /**
-         * @var CustomerUser $customerUser
+         * @var \App\Model\Customer\User\CustomerUser
          */
         $customerUser = $this->customerUserFactory->create($customerUserData, $deliveryAddress);
         $this->setEmail($customerUserData->email, $customerUser);
@@ -70,12 +79,11 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         $this->em->persist($customerUser);
         $this->em->flush();
 
-        if($customerUser->isAdvertisingApproval()){
+        if ($customerUser->isAdvertisingApproval()) {
             $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
         }
 
         $this->customerMailFacade->sendRegistrationMail($customerUser);
         return $customerUser;
     }
-
 }
