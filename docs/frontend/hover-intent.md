@@ -12,8 +12,8 @@ In some scenarios you need to add hover functionality and simulate click on enot
 
 ### Javascript default settings
 ```javascript
-var interval = 50;
-var timeout = 500;
+var interval = 200;
+var timeout = 200;
 var classForOpen = 'open';
 var forceClick = false;
 var forceClickElement = '';
@@ -23,8 +23,8 @@ var linkOnMobile = false;
 ### Html element settings
 ```html
 <div class="js-hover-intent"
-data-hover-intent-interval="50"
-data-hover-intent-timeout="500"
+data-hover-intent-interval="200"
+data-hover-intent-timeout="200"
 data-hover-intent-class-for-open="open"
 data-hover-intent-force-click="false"
 data-hover-intent-force-click-element=""
