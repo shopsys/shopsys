@@ -14,7 +14,8 @@ class Version20200109111305 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE customer_users ADD advertising_approval BOOLEAN DEFAULT NULL');
+        $this->sql('ALTER TABLE customer_users ADD advertising_approval BOOLEAN DEFAULT FALSE');
+        $this->sql('ALTER TABLE customer_users ALTER advertising_approval DROP DEFAULT');
     }
 
     /**
