@@ -12,6 +12,7 @@ use App\Model\Blog\Category\BlogCategory;
 use App\Model\Blog\Category\BlogCategoryData;
 use App\Model\Blog\Category\BlogCategoryDataFactory;
 use App\Model\Blog\Category\BlogCategoryFacade;
+use App\Model\Domain\DomainHelper;
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -20,7 +21,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
 {
     public const PAGES_IN_CATEGORY = 5;
 
-    public const LOCALES = ['cs','sk','de'];
+    public const LOCALES = DomainHelper::LOCALES;
 
     /**
      * @var \App\Model\Blog\Article\BlogArticleFacade

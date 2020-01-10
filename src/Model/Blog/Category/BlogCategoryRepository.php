@@ -349,9 +349,6 @@ class BlogCategoryRepository extends NestedTreeRepository
     public function getAllVisibleBlogCategoriesByDomainId(int $domainId): array
     {
         return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
-//            ->andWhere('bc.parent > :highestCategoriesLevelNumber')
-//            ->setParameter('highestCategoriesLevelNumber', self::HIGHEST_CATEGORIES_PARENT_NUMBER)
-
             ->andWhere('bc.parent IS NOT NULL')
             ->getQuery()->getResult();
     }

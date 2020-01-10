@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace App\Form\Admin;
 
-//TODO-RK is this class same as below ?
-//use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Blog\Category\BlogCategoryData;
 use App\Model\Blog\Category\BlogCategoryFacade;

@@ -94,11 +94,6 @@ class BlogCategoryController extends FrontBaseController
      */
     public function listAction(BlogCategory $currentBlogCategory): Response
     {
-//        $childrenBlogCategories = $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
-//            $currentBlogCategory,
-//            $this->domain->getId()
-//        );
-
         $allVisibleBlogCategories = $this->blogCategoryFacade->getAllVisibleBlogCategoriesByDomainId($this->domain->getId());
 
         return $this->render('Front/Content/Blog/Category/list.html.twig', [
