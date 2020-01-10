@@ -1010,6 +1010,14 @@
 
     <target name="test-elasticsearch-index-recreate" depends="production-protection,test-elasticsearch-index-delete,test-elasticsearch-index-create" description="Recreates structure for searching via elasticsearch in test environment (deletes existing structure and creates new one)"/>
 
+    <target name="test-error-pages-generate" depends="redis-check" description="Generates error pages displayed in production environment.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:error-page:generate-all"/>
+            <arg value="--env=test"/>
+        </exec>
+    </target>
+
     <target name="test-friendly-urls-generate" depends="production-protection" description="Generates friendly urls for supported entities when missing in test DB." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1026,7 +1034,7 @@
         </exec>
     </target>
 
-    <target name="tests" depends="npm-install-dependencies,test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,error-pages-generate,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
+    <target name="tests" depends="test-db-demo,assets,npm,test-elasticsearch-index-recreate,test-elasticsearch-export,test-error-pages-generate,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
 
     <target name="tests-acceptance" depends="production-protection,clean,clean-redis,test-db-dump" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
         <available file="${path.env.test}" type="file" property="path.env.test.existed"/>
