@@ -6,10 +6,8 @@ namespace App\Form\Admin;
 
 use App\Form\BlogCategoriesType;
 
-//TODO-RK is this class same as below ?
-//use Ivory\CKEditorBundle\Form\Type\CKEditorType;
-use App\Model\Blog\Article\BlogArticle;
 
+use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleData;
 use DateTime;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
