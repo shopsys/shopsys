@@ -63,7 +63,6 @@
 
                 Shopsys.register.registerNewContent($mainContent);
                 Shopsys.register.registerNewContent($cartBox);
-                Shopsys.lazyLoadCall.inContainer('.js-cart');
             }
         });
     };
