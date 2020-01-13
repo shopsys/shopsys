@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 
@@ -41,7 +42,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test';
         $promoCodeData->percent = 10.0;
-        $promoCodeData->domainId = 1;
+        $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
         $this->promoCodeFacade->create($promoCodeData);
     }
 }

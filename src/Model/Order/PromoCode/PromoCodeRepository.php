@@ -15,21 +15,12 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository as BasePro
 class PromoCodeRepository extends BasePromoCodeRepository
 {
     /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    protected function getPromoCodeRepository()
-    {
-        return $this->em->getRepository(PromoCode::class);
-    }
-
-    /**
      * @param $code
      * @param $domainId
      * @return \App\Model\Order\PromoCode\PromoCode|null
      */
     public function findByCodeAndDomainId($code, $domainId)
     {
-        $result = $this->getPromoCodeRepository()->findOneBy(['code' => $code, 'domainId' => $domainId]);
-        return $result;
+        return $this->getPromoCodeRepository()->findOneBy(['code' => $code, 'domainId' => $domainId]);
     }
 }

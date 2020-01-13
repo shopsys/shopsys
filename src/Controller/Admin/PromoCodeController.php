@@ -103,14 +103,14 @@ class PromoCodeController extends BasePromoCodeController
         $administrator = $this->getUser();
         /* @var $administrator \App\Model\Administrator\Administrator */
 
-        $currentDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+        $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
         if ($this->useInlineEditation === true) {
             $grid = $this->promoCodeInlineEdit->getGrid();
 
             $grid->enablePaging();
         } else {
-            $grid = $this->promoCodeGridFactory->create(true, $currentDomainId);
+            $grid = $this->promoCodeGridFactory->create(true, $selectedDomainId);
 
             $grid->enablePaging();
         }

@@ -49,8 +49,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface: '@App\Model\Order\PromoCode\PromoCodeDataFactory'
 
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface: '@App\Model\Order\PromoCode\PromoCodeFactory'
-
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade: '@App\Model\Order\PromoCode\PromoCodeFacade'
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository: '@App\Model\Order\PromoCode\PromoCodeRepository'
@@ -124,7 +122,6 @@ services:
         class: 'App\Controller\Admin\PromoCodeController'
         arguments:
             $useInlineEditation: false
-
 
     App\Controller\Front\ErrorController:
         arguments:

@@ -29,7 +29,6 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
         $grid->setDefaultOrder('code');
         $grid->addColumn('code', 'pc.code', t('Code'), true);
         $grid->addColumn('percent', 'pc.percent', t('Discount'), true);
-        //$grid->addColumn('domain', 'pc.domain_id', t('Doména'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
 
         if ($withEditButton === true) {
