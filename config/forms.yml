@@ -23,9 +23,9 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType }
 
-    App\Form\Admin\UserFormTypeExtension:
+    App\Form\Admin\CustomerUserFormTypeExtension:
         tags:
-            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\User\UserFormType }
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType }
 
     App\Form\Admin\OrderFormTypeExtension:
         tags:
