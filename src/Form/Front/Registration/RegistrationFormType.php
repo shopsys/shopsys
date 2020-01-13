@@ -56,7 +56,7 @@ class RegistrationFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'You have to agree with privacy policy']),
                 ],
             ])
-            ->add('advertisingApproval', CheckboxType::class, [
+            ->add('newsletterSubscription', CheckboxType::class, [
                 'required' => false,
             ])
             ->add('email2', HoneyPotType::class)

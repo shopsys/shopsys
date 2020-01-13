@@ -29,16 +29,16 @@ class CustomerUser extends BaseUser
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", length=5, nullable=true)
+     * @ORM\Column(type="string", length=5, nullable=false)
      */
     protected $gender;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $advertisingApproval;
+    protected $newsletterSubscription;
 
     /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
@@ -50,7 +50,7 @@ class CustomerUser extends BaseUser
     ) {
         parent::__construct($customerUserData, $deliveryAddress);
         $this->gender = $customerUserData->gender;
-        $this->advertisingApproval = $customerUserData->advertisingApproval;
+        $this->newsletterSubscription = $customerUserData->newsletterSubscription;
     }
 
     /**
@@ -60,7 +60,7 @@ class CustomerUser extends BaseUser
     {
         parent::edit($customerUserData);
         $this->gender = $customerUserData->gender;
-        $this->advertisingApproval = $customerUserData->advertisingApproval;
+        $this->newsletterSubscription = $customerUserData->newsletterSubscription;
     }
 
     /**
@@ -74,9 +74,9 @@ class CustomerUser extends BaseUser
     /**
      * @return bool
      */
-    public function isAdvertisingApproval(): bool
+    public function isNewsletterSubscription(): bool
     {
-        return $this->advertisingApproval;
+        return $this->newsletterSubscription;
     }
 
     /**

@@ -63,7 +63,7 @@ class CustomerUserDataFactory extends BaseUserDataFactory
         $customerUserData = $this->create();
         $this->fillFromUser($customerUserData, $customerUser);
         $customerUserData->gender = $customerUser->getGender();
-        $customerUserData->advertisingApproval = $customerUser->isAdvertisingApproval();
+        $customerUserData->newsletterSubscription = $customerUser->isNewsletterSubscription();
         return $customerUserData;
     }
 }

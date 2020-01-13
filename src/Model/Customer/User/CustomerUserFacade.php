@@ -60,7 +60,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @throws \Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException
      * @return \App\Model\Customer\User\CustomerUser
      */
-    public function register(CustomerUserData $customerUserData): CustomerUserData
+    public function register(CustomerUserData $customerUserData): CustomerUser
     {
         $billingAddress = $this->billingAddressDataFactory->create();
         $billingAddress->city = $customerUserData->city;
@@ -79,7 +79,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         $this->em->persist($customerUser);
         $this->em->flush();
 
-        if ($customerUser->isAdvertisingApproval()) {
+        if ($customerUser->isNewsletterSubscription()) {
             $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
         }
 
