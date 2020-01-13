@@ -39,24 +39,24 @@
             background: @color-f;
         }
 
-        &--next {
-            font-size: 10px;
-
-            transform: rotate(-90deg);
-
-            i {
-                font-size: 10px;
-            }
-        }
-
-        &--prev {
-            font-size: 10px;
+        i {
+            position: relative;
+            top: calc(~"50% - 5px");
 
             transform: rotate(90deg);
+            font-size: 10px;
+        }
 
+        &--next,
+        &--prev {
+            font-size: 10px;
+        }
+
+        &--next {
             i {
-                font-size: 10px;
+                transform: rotate(-90deg);                
             }
         }
+
     }
 }
