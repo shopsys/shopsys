@@ -38,8 +38,8 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 - [#1314] CronModuleExecutor is now service in DIC, Thanks to [@pk16011990]
 - [#1360] disallow administrator login with default credentials in production environment
 - [#1361] use DIC configuration instead of factory class to create Redis caches
-- [#1476] Unify working with images
-- [#1487] Improve working with currency rounding and fraction digits
+- [#1476] unify working with images
+- [#1487] improve working with currency rounding and fraction digits
 
 #### Fixed
 
@@ -47,9 +47,9 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 - [#1364] ProductCodeController now autowires PromoCodeDataFactoryInterface instead of PromoCodeDataFactory
 - [#1441] fixed image drag&drop in product gallery
 - [#1446] refactoring error messages at admin order detail form
-- [#1452] design - admin - sorting arrows not changing column width
+- [#1452] sorting arrows does not change column width in administration
 - [#1517] added missing translations for promo codes
-- [#1560] message error with long words
+- [#1560] improved appearance of error messages with long words
 
 ### [shopsys/http-smoke-testing]
 
@@ -63,7 +63,7 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 - [#1342] added travis build for automated testing of installation script to project-base
 - [#1330] PHP-FPM pool configuration now can be changed
 - [#1465] Add graphic checkboxes and radiobuttons
-- [#1472] add posibility to override admin styles
+- [#1472] added possibility to override admin styles
 - [#1483] added support for image and iframe lazy loading
 
 #### Changed
@@ -77,27 +77,27 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 - [#1313] force locale for number formatting, Thanks to [@pk16011990]
 - [#1336] fix typo (submited -> submitted), Thanks to [@sspooky13]
 - [#1346] fix wrong annotation in Administrator
-- [#1381] resolved (either fixed or ignored) all the errors reported by phpstan level 4
+- [#1381] resolved all the errors reported by PHPStan level 4
 - [#1479] fix functional tests for single domain
 - [#1524] preserve custom checkbox CSS classes
-- [#1561] error flash messages - add correct type to template
+- [#1561] fixed type of error flash message in template
 
 ### [shopsys/shopsys]
 
 #### Added
 
-- [#1343] Added support to display dates in different timezone
+- [#1343] added support to display dates in different timezone
 - [#1393] added error ID to 500 error page
-- [#1485] Added styleguide to project
+- [#1485] added styleguide to project
 
 #### Changed
 
 - [#1309] domain configuration is autoloaded in build.xml
 - [#1319] make promo codes editable on separate pages
 - [#1344] automated fixes and additions of annotations for extended classes
-- [#1392] Hack phpunit to make tests clean
+- [#1392] dependencies in tests are injected now
 - [#1408] Dockerfile: stop defining default env vars
-- [#1425] Eased installation of project with different domains and locales settings
+- [#1425] eased installation of project with different domains and locales settings
 - [#1532] made image lazy loading configurable
 
 #### Fixed
