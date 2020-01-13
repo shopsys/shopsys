@@ -20,7 +20,7 @@ class CustomerUserFormTypeExtension extends AbstractTypeExtension
     {
         $personalDataBuilder = $builder->get('personalData');
         $personalDataBuilder->add('gender', ChoiceType::class, [
-            'label' => 'Oslovení',
+            'label' => t('Oslovení'),
             'position' => 'first',
             'choices' => array_flip(CustomerUser::getAllGenders()),
             'placeholder' => t('-- Vyber oslovení --'),
