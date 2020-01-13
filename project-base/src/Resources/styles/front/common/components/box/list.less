@@ -46,18 +46,28 @@
     }
 
     &__producer {
-        .clearfix();
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
         width: 100%;
         margin-bottom: @margin-gap;
 
-        &__text {
-            text-align: justify;
+        @media @query-md {
+            flex-direction: row;
         }
 
         &__image {
-            float: right;
-            width: 30%;
-            margin: 0 0 @box-list-producer-image-space-around @box-list-producer-image-space-around;
+            align-self: center;
+            min-width: 170px;
+            padding-right: 20px;
+        }
+
+        &__text {
+            align-self: flex-start;
+
+            @media @query-md {
+                align-self: center;
+            }
         }
     }
 }

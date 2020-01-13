@@ -25,9 +25,11 @@
                     </h1>
 
                     <div class="box-list__producer">
-                        <div class="box-list__producer__image">
-                            {{ image(brand, { alt: brand.name }) }}
-                        </div>
+                        {% if imageExists(brand) %}
+                            <div class="box-list__producer__image">
+                                {{ image(brand, { alt: brand.name }) }}
+                            </div>
+                        {% endif %}
                         <div class="box-list__producer__text">
                             {% if brand.description is not null %}
                                 {{ brand.description|raw }}
