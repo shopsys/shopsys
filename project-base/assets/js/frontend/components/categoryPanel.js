@@ -13,22 +13,27 @@ export default class CategoryPanel {
         const $categoryList = $categoryItem.find('.js-category-list').first();
         const isOpen = $categoryCollapseControl.hasClass('open');
 
-        if (isOpen) {
-            $categoryList.slideUp('fast');
-            $categoryItem.removeClass('active');
-        } else if ($categoryList.length > 0) {
-            $categoryList.slideDown('fast');
-            $categoryItem.addClass('active');
-        } else {
-            this.loadCategoryItemContent($categoryItem, $categoryCollapseControl.data('url'));
-        }
+        if (!$categoryItem.hasClass('intented')) {
 
-        $categoryCollapseControl.toggleClass('open', !isOpen);
+            if (isOpen) {
+                $categoryList.slideUp('fast');
+                $categoryItem.removeClass('active');
+                $categoryCollapseControl.removeClass('open');
+            } else if ($categoryList.length > 0) {
+                $categoryList.slideDown('fast');
+                $categoryItem.addClass('active');
+                $categoryCollapseControl.addClass('open');
+            } else {
+                this.loadCategoryItemContent($categoryItem, $categoryCollapseControl.data('url'));
+                $categoryItem.addClass('active');
+                $categoryCollapseControl.addClass('open');
+            }
+        }
     }
 
     loadCategoryItemContent ($categoryItem, url) {
         Ajax.ajax({
-            loaderElement: $categoryItem,
+            loaderElement: $categoryItem.find('.js-category-list-placeholder'),
             url: url,
             dataType: 'html',
             success: function (data) {

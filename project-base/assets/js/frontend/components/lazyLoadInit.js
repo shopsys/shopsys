@@ -1,5 +1,6 @@
 /* eslint-disable no-new */
 import MiniLazyload from 'minilazyload';
+import Register from 'framework/common/utils/register';
 
 new MiniLazyload({
     rootMargin: '500px',
@@ -12,3 +13,5 @@ export function lazyLoadCall (container) {
         $(this).attr('src', $(this).data('src')).addClass('loaded');
     });
 }
+
+(new Register()).registerCallback(lazyLoadCall);

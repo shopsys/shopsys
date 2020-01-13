@@ -1,4 +1,3 @@
-import { lazyLoadCall } from '../components/lazyLoadInit';
 import Register from 'framework/common/utils/register';
 import Ajax from 'framework/common/utils/ajax';
 import getBaseUrl from '../utils/url';
@@ -48,7 +47,6 @@ export default class ProductListAjaxFilter {
         this.$productsWithControls.html($productsHtml.html());
         this.$productsWithControls.show();
 
-        lazyLoadCall(this.$productsWithControls);
         (new Register()).registerNewContent(this.$productsWithControls);
     }
 

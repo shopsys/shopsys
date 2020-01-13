@@ -1,7 +1,6 @@
 import 'framework/common/components';
 
 import Ajax from 'framework/common/utils/ajax';
-import { lazyLoadCall } from '../components/lazyLoadInit';
 import Register from 'framework/common/utils/register';
 import Translator from 'bazinga-translator';
 
@@ -55,7 +54,7 @@ export default class AjaxMoreLoader {
                 ajaxMoreLoader.paginationToItem += $nextItems.length;
                 ajaxMoreLoader.$paginationToItemSpan.text(ajaxMoreLoader.paginationToItem);
                 ajaxMoreLoader.updateLoadMoreButton();
-                lazyLoadCall(ajaxMoreLoader.$currentList);
+
                 (new Register()).registerNewContent($nextItems);
             }
         });

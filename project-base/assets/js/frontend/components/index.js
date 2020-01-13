@@ -4,6 +4,7 @@ import './cookies';
 import './filterAllNodes';
 import './form';
 import './history';
+import './hoverIntent';
 import './honeyPot';
 import './lazyLoadInit';
 import './legalConditions';
