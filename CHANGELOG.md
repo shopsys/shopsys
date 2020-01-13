@@ -93,6 +93,7 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 #### Changed
 
 - [#1309] domain configuration is autoloaded in build.xml
+- [#1354] upgrade the Adminer Docker image to 4.7
 - [#1319] make promo codes editable on separate pages
 - [#1344] automated fixes and additions of annotations for extended classes
 - [#1392] dependencies in tests are injected now
@@ -2961,31 +2962,16 @@ That's why is this section formatted differently.
 
 [#1561]: https://github.com/shopsys/shopsys/pull/1561
 [#1560]: https://github.com/shopsys/shopsys/pull/1560
-[#1537]: https://github.com/shopsys/shopsys/pull/1537
-[#1534]: https://github.com/shopsys/shopsys/pull/1534
-[#1533]: https://github.com/shopsys/shopsys/pull/1533
 [#1532]: https://github.com/shopsys/shopsys/pull/1532
-[#1528]: https://github.com/shopsys/shopsys/pull/1528
-[#1527]: https://github.com/shopsys/shopsys/pull/1527
-[#1526]: https://github.com/shopsys/shopsys/pull/1526
 [#1524]: https://github.com/shopsys/shopsys/pull/1524
-[#1523]: https://github.com/shopsys/shopsys/pull/1523
 [#1517]: https://github.com/shopsys/shopsys/pull/1517
 [#1506]: https://github.com/shopsys/shopsys/pull/1506
-[#1500]: https://github.com/shopsys/shopsys/pull/1500
-[#1499]: https://github.com/shopsys/shopsys/pull/1499
-[#1495]: https://github.com/shopsys/shopsys/pull/1495
-[#1488]: https://github.com/shopsys/shopsys/pull/1488
 [#1487]: https://github.com/shopsys/shopsys/pull/1487
 [#1485]: https://github.com/shopsys/shopsys/pull/1485
-[#1484]: https://github.com/shopsys/shopsys/pull/1484
 [#1483]: https://github.com/shopsys/shopsys/pull/1483
-[#1481]: https://github.com/shopsys/shopsys/pull/1481
 [#1479]: https://github.com/shopsys/shopsys/pull/1479
-[#1477]: https://github.com/shopsys/shopsys/pull/1477
 [#1476]: https://github.com/shopsys/shopsys/pull/1476
 [#1472]: https://github.com/shopsys/shopsys/pull/1472
-[#1469]: https://github.com/shopsys/shopsys/pull/1469
 [#1465]: https://github.com/shopsys/shopsys/pull/1465
 [#1464]: https://github.com/shopsys/shopsys/pull/1464
 [#1461]: https://github.com/shopsys/shopsys/pull/1461
@@ -2993,28 +2979,18 @@ That's why is this section formatted differently.
 [#1451]: https://github.com/shopsys/shopsys/pull/1451
 [#1446]: https://github.com/shopsys/shopsys/pull/1446
 [#1441]: https://github.com/shopsys/shopsys/pull/1441
-[#1426]: https://github.com/shopsys/shopsys/pull/1426
 [#1425]: https://github.com/shopsys/shopsys/pull/1425
 [#1423]: https://github.com/shopsys/shopsys/pull/1423
-[#1422]: https://github.com/shopsys/shopsys/pull/1422
-[#1421]: https://github.com/shopsys/shopsys/pull/1421
 [#1416]: https://github.com/shopsys/shopsys/pull/1416
 [#1408]: https://github.com/shopsys/shopsys/pull/1408
-[#1401]: https://github.com/shopsys/shopsys/pull/1401
-[#1400]: https://github.com/shopsys/shopsys/pull/1400
-[#1399]: https://github.com/shopsys/shopsys/pull/1399
 [#1393]: https://github.com/shopsys/shopsys/pull/1393
 [#1392]: https://github.com/shopsys/shopsys/pull/1392
-[#1386]: https://github.com/shopsys/shopsys/pull/1386
 [#1384]: https://github.com/shopsys/shopsys/pull/1384
-[#1382]: https://github.com/shopsys/shopsys/pull/1382
 [#1381]: https://github.com/shopsys/shopsys/pull/1381
-[#1379]: https://github.com/shopsys/shopsys/pull/1379
 [#1364]: https://github.com/shopsys/shopsys/pull/1364
 [#1361]: https://github.com/shopsys/shopsys/pull/1361
 [#1360]: https://github.com/shopsys/shopsys/pull/1360
 [#1354]: https://github.com/shopsys/shopsys/pull/1354
-[#1352]: https://github.com/shopsys/shopsys/pull/1352
 [#1346]: https://github.com/shopsys/shopsys/pull/1346
 [#1344]: https://github.com/shopsys/shopsys/pull/1344
 [#1343]: https://github.com/shopsys/shopsys/pull/1343
@@ -3022,23 +2998,11 @@ That's why is this section formatted differently.
 [#1340]: https://github.com/shopsys/shopsys/pull/1340
 [#1336]: https://github.com/shopsys/shopsys/pull/1336
 [#1330]: https://github.com/shopsys/shopsys/pull/1330
-[#1329]: https://github.com/shopsys/shopsys/pull/1329
-[#1320]: https://github.com/shopsys/shopsys/pull/1320
 [#1319]: https://github.com/shopsys/shopsys/pull/1319
 [#1314]: https://github.com/shopsys/shopsys/pull/1314
 [#1313]: https://github.com/shopsys/shopsys/pull/1313
-[#1310]: https://github.com/shopsys/shopsys/pull/1310
 [#1309]: https://github.com/shopsys/shopsys/pull/1309
-[#1308]: https://github.com/shopsys/shopsys/pull/1308
-[#1305]: https://github.com/shopsys/shopsys/pull/1305
-[#1299]: https://github.com/shopsys/shopsys/pull/1299
-[#1298]: https://github.com/shopsys/shopsys/pull/1298
 [#1289]: https://github.com/shopsys/shopsys/pull/1289
 [#1285]: https://github.com/shopsys/shopsys/pull/1285
-[#1281]: https://github.com/shopsys/shopsys/pull/1281
 [#1276]: https://github.com/shopsys/shopsys/pull/1276
-[#1270]: https://github.com/shopsys/shopsys/pull/1270
-[#1265]: https://github.com/shopsys/shopsys/pull/1265
-[#1252]: https://github.com/shopsys/shopsys/pull/1252
-[#1251]: https://github.com/shopsys/shopsys/pull/1251
 [@mariusbuescher]: https://github.com/mariusbuescher
