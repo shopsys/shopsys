@@ -15,7 +15,7 @@ Typical upgrade sequence should be:
 
 ## [From v8.1.0 to v8.2.0-dev]
 
-## [From v8.0.1-dev to v8.1.0]
+## [From v8.0.0 to v8.1.0]
 
 ## [From v8.0.0 to v8.0.1-dev]
 
