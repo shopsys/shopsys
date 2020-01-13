@@ -23,13 +23,13 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  */
 class CustomerUser extends BaseUser
 {
-    public const GENDER_MALE = 'man';
-    public const GENDER_FEMALE = 'woman';
+    public const GENDER_MALE = 'male';
+    public const GENDER_FEMALE = 'female';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", length=5, nullable=false)
+     * @ORM\Column(type="string", length=6, nullable=false)
      */
     protected $gender;
 

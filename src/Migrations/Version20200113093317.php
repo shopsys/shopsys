@@ -14,7 +14,7 @@ class Version20200113093317 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE customer_users ADD gender VARCHAR(5) NOT NULL DEFAULT \'man\'');
+        $this->sql('ALTER TABLE customer_users ADD gender VARCHAR(6) NOT NULL DEFAULT \'man\'');
         $this->sql('ALTER TABLE customer_users ALTER gender DROP DEFAULT');
         $this->sql('ALTER TABLE customer_users ADD newsletter_subscription BOOLEAN NOT NULL DEFAULT FALSE');
         $this->sql('ALTER TABLE customer_users ALTER newsletter_subscription DROP DEFAULT');
