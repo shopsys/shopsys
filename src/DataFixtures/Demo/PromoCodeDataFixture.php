@@ -41,6 +41,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test';
         $promoCodeData->percent = 10.0;
+        $promoCodeData->domainId = 1;
         $this->promoCodeFacade->create($promoCodeData);
     }
 }
