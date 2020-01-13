@@ -44,7 +44,6 @@
             var $productsHtml = $wrappedData.find('.js-product-list-ajax-filter-products-with-controls');
             $productsWithControls.html($productsHtml.html());
             $productsWithControls.show();
-            Shopsys.lazyLoadCall.inContainer($productsWithControls);
             Shopsys.register.registerNewContent($productsWithControls);
         };
 

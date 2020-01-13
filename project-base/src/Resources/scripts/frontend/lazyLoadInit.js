@@ -15,4 +15,5 @@
         });
     };
 
+    Shopsys.register.registerCallback(Shopsys.lazyLoadCall.inContainer);
 })(jQuery);

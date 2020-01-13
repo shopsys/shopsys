@@ -63,7 +63,6 @@
                     paginationToItem += $nextItems.length;
                     $paginationToItemSpan.text(paginationToItem);
                     updateLoadMoreButton();
-                    Shopsys.lazyLoadCall.inContainer($currentList);
                     Shopsys.register.registerNewContent($nextItems);
                 }
             });
