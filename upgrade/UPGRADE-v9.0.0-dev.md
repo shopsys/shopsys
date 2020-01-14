@@ -561,3 +561,8 @@ There you can find links to upgrade notes for other versions too.
     - don't forget to rebuild your grunt file by command `php phing gruntfile` and update your npm dependencies by command `npm install`
     - to fix all your less files in command line by command `php phing stylelint-fix`
 [shopsys/framework]: https://github.com/shopsys/framework
+
+### Frontend
+
+- javascript assets are managed by webpack and npm ([#1545](https://github.com/shopsys/shopsys/pull/1545))
+    - please read [upgrade instruction for webpack](./upgrade-instruction-for-webpack.md)
