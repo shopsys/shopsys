@@ -24,6 +24,9 @@ parmeters:
         - 2
 ```
 
+You can also configure the place from which are the data for products taken from by choosing implementation of `ProductOnCurrentDomainFacadeInterface`.  
+You can find more about this feature in [separate article](../model/front-end-product-filtering.md).
+
 ## Try it
 GraphQL endpoint is available directly on the domain of your online store on the `/graphql/` path (ie. while running locally on Docker, it's http://127.0.0.1:8000/graphql/).
 

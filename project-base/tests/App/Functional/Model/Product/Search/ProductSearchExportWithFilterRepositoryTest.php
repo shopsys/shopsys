@@ -55,8 +55,14 @@ class ProductSearchExportWithFilterRepositoryTest extends TransactionFunctionalT
             'ordering_priority',
             'calculated_selling_denied',
             'selling_denied',
-            'main_variant',
+            'is_main_variant',
             'visibility',
+            'uuid',
+            'unit',
+            'is_using_stock',
+            'stock_quantity',
+            'variants',
+            'main_variant',
         ];
     }
 }

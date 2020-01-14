@@ -397,6 +397,118 @@ There you can find links to upgrade notes for other versions too.
         +     <li class="list-menu__item js-category-item js-hover-intent" data-hover-intent-force-click="true" data-hover-intent-force-click-element=".js-category-collapse-control">
                   <a href="{{ url('front_product_list'
         ```
+- allow getting data for FE API from Elastic ([#1557](https://github.com/shopsys/shopsys/pull/1557))
+    - add and change fields in your elasticsearch definition files
+        ```diff
+        -   main_variant
+        +   is_main_variant
+         
+        +   "uuid": {
+        +      "type": "text"
+        +   },
+        +   "unit": {
+        +      "type": "text"
+        +   },
+        +   "is_using_stock": {
+        +      "type": "boolean"
+        +   },
+        +   "stock_quantity": {
+        +      "type": "boolean"
+        +   },
+        +   "variants": {
+        +       "type": "integer"
+        +   },
+        +   "main_variant": {
+        +      "type": "integer"
+        +   }
+        ```
+        Be aware that to make this change in production environment you'll need to delete old structure and then create
+        a new one because of the change of `type` in `main_variant` field. If you want to know more you can see [this article](../docs/introduction/console-commands-for-application-management-phing-targets.md#product-search-migrate-structure)
+
+    - change and include new fields in ProductSearchExportWithFilterRepositoryTest
+        ```diff
+            'selling_denied',
+        -   'main_variant',
+        +   'is_main_variant',
+            'visibility',
+        +   'uuid',
+        +   'unit',
+        +   'is_using_stock',
+        +   'stock_quantity',
+        +   'variants',
+        +   'main_variant',
+        ```
+    - if you extended these methods in `ProductOnCurrentDomainFacadeInterface`, `ProductOnCurrentDomainFacade` or `ProductOnCurrentDomainElasticFacade`,
+     change their definitions (as strict types and typehints were added or changed)
+        ```diff
+        -   public function getVisibleProductById($productId);
+        +   public function getVisibleProductById(int $productId): Product;
+
+        //...
+
+        -   public function getAccessoriesForProduct(Product $product);
+        +   public function getAccessoriesForProduct(Product $product): array;
+
+        //...
+
+        -   public function getVariantsForProduct(Product $product);
+        +   public function getVariantsForProduct(Product $product): array;
+
+        //...
+
+        -   public function getPaginatedProductsInCategory(ProductFilterData $productFilterData, $orderingModeId, $page, $limit, $categoryId);
+        +   public function getPaginatedProductsInCategory(
+        +       ProductFilterData $productFilterData,
+        +       string $orderingModeId,
+        +       int $page,
+        +       int $limit,
+        +       int $categoryId
+        +   ): PaginationResult;
+
+        //...
+
+        -   public function getPaginatedProductsForBrand($orderingModeId, $page, $limit, $brandId);
+        +   public function getPaginatedProductsForBrand(
+        +       string $orderingModeId,
+        +       int $page,
+        +       int $limit,
+        +       int $brandId
+        +   ): PaginationResult;
+
+        //...
+
+        -   public function getPaginatedProductsForSearch($searchText, ProductFilterData $productFilterData, $orderingModeId, $page, $limit);
+        +   public function getPaginatedProductsForSearch(
+        +       string $searchText,
+        +       ProductFilterData $productFilterData,
+        +       string $orderingModeId,
+        +       int $page,
+        +       int $limit
+        +   ): PaginationResult;
+
+        //...
+
+        -   public function getSearchAutocompleteProducts($searchText, $limit);
+        +   public function getSearchAutocompleteProducts(?string $searchText, int $limit): PaginationResult;
+
+        //...
+
+        -   public function getProductFilterCountDataInCategory($categoryId, ProductFilterConfig $productFilterConfig, ProductFilterData $productFilterData);
+        +   public function getProductFilterCountDataInCategory(
+        +       int $categoryId,
+        +       ProductFilterConfig $productFilterConfig,
+        +       ProductFilterData $productFilterData
+        +   ): ProductFilterCountData;
+
+        //...
+ 
+        -   public function getProductFilterCountDataForSearch($searchText, ProductFilterConfig $productFilterConfig, ProductFilterData $productFilterData);
+        +   public function getProductFilterCountDataForSearch(
+        +       ?string $searchText,
+        +       ProductFilterConfig $productFilterConfig,
+        +       ProductFilterData $productFilterData
+        +   ): ProductFilterCountData;
+        ```
 
 ### Tools
 

@@ -99,7 +99,9 @@ class ProductTest extends GraphQlTestCase
                     'unit' => [
                         'name' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
                     ],
-                    'availability' => null,
+                    'availability' => [
+                        'name' => t('In stock', [], 'dataFixtures', $firstDomainLocale),
+                    ],
                     'stockQuantity' => 300,
                     'categories' => [
                         [

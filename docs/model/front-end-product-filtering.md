@@ -36,7 +36,7 @@ Each filtering method calls appropriate method in `Shopsys\FrameworkBundle\Model
 ## Choose an Implementation
 You can choose which one of them will be used by setting one of the previously mentioned implementations in your `services.yaml` and `services_test.yml` configuration.
 
-Along with filtering the choice will influence the data source for the product lists for increased performance.
+Along with filtering the choice will influence the data source for the product lists and product data of front-end API for increased performance.
 
 You can find more about this topic in [Introduction to Read Model](./introduction-to-read-model.md#read-model-options).
 

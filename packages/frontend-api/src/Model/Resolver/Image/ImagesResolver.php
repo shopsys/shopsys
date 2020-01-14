@@ -49,14 +49,15 @@ class ImagesResolver implements ResolverInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
      * @param string|null $type
      * @param string|null $size
      * @return array
      */
-    public function resolveByProduct(Product $product, ?string $type, ?string $size): array
+    public function resolveByProduct($data, ?string $type, ?string $size): array
     {
-        return $this->resolveByEntity($product, static::IMAGE_ENTITY_PRODUCT, $type, $size);
+        $productId = $data instanceof Product ? $data->getId() : $data['id'];
+        return $this->resolveByEntityId($productId, static::IMAGE_ENTITY_PRODUCT, $type, $size);
     }
 
     /**
@@ -67,20 +68,20 @@ class ImagesResolver implements ResolverInterface
      */
     public function resolveByCategory(Category $category, ?string $type, ?string $size): array
     {
-        return $this->resolveByEntity($category, static::IMAGE_ENTITY_CATEGORY, $type, $size);
+        return $this->resolveByEntityId($category->getId(), static::IMAGE_ENTITY_CATEGORY, $type, $size);
     }
 
     /**
-     * @param object $entity
+     * @param int $entityId
      * @param string $entityName
      * @param string|null $type
      * @param string|null $size
      * @return array
      */
-    protected function resolveByEntity(object $entity, string $entityName, ?string $type, ?string $size): array
+    protected function resolveByEntityId(int $entityId, string $entityName, ?string $type, ?string $size): array
     {
         $sizeConfigs = $this->getSizeConfigs($type, $size, $entityName);
-        $images = $this->imageFacade->getImagesByEntityIndexedById($entity, $type);
+        $images = $this->imageFacade->getImagesByEntityIdAndNameIndexedById($entityId, $entityName, $type);
 
         return $this->getResolvedImages($images, $sizeConfigs);
     }

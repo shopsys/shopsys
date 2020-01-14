@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
-use Doctrine\ORM\Query;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
-use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
-use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 
 class ProductsResolver implements ResolverInterface, AliasedInterface
 {
     protected const DEFAULT_FIRST_LIMIT = 10;
+    protected const EDGE_COUNT = 2;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
      */
     protected $productOnCurrentDomainFacade;
 
@@ -30,10 +29,10 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     protected $connectionBuilder;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade $productOnCurrentDomainFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      */
     public function __construct(
-        ProductOnCurrentDomainFacade $productOnCurrentDomainFacade
+        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
     ) {
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->connectionBuilder = new ConnectionBuilder();
@@ -56,7 +55,12 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
             $offset = (int)$this->connectionBuilder->cursorToOffset($cursor);
         }
 
-        $products = $this->getProductsForAll($offset, $limit);
+        $products = $this->productOnCurrentDomainFacade->getProductsOnCurrentDomain(
+            $limit + static::EDGE_COUNT,
+            $offset,
+            ProductListOrderingConfig::ORDER_BY_PRIORITY
+        );
+
         $paginator = new Paginator(function () use ($products) {
             return $products;
         });
@@ -82,52 +86,17 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
             $offset = (int)$this->connectionBuilder->cursorToOffset($cursor);
         }
 
-        $products = $this->getProductsByCategory($category, $offset, $limit);
+        $products = $this->productOnCurrentDomainFacade->getProductsByCategory(
+            $category,
+            $limit + static::EDGE_COUNT,
+            $offset,
+            ProductListOrderingConfig::ORDER_BY_PRIORITY
+        );
         $paginator = new Paginator(function () use ($products) {
             return $products;
         });
 
         return $paginator->auto($argument, count($products));
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $offset
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    protected function getProductsByCategory(Category $category, int $offset, int $limit): array
-    {
-        $queryBuilder = $this->productOnCurrentDomainFacade->getAllListableTranslatedAndOrderedQueryBuilderByCategory(
-            ProductListOrderingConfig::ORDER_BY_PRIORITY,
-            $category
-        );
-
-        $queryBuilder->setFirstResult($offset)
-            ->setMaxResults($limit + 2);
-        $query = $queryBuilder->getQuery();
-        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, SortableNullsWalker::class);
-
-        return $query->execute();
-    }
-
-    /**
-     * @param int $offset
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    protected function getProductsForAll(int $offset, int $limit): array
-    {
-        $queryBuilder = $this->productOnCurrentDomainFacade->getAllListableTranslatedAndOrderedQueryBuilder(
-            ProductListOrderingConfig::ORDER_BY_PRIORITY
-        );
-
-        $queryBuilder->setFirstResult($offset)
-            ->setMaxResults($limit + 2);
-        $query = $queryBuilder->getQuery();
-        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, SortableNullsWalker::class);
-
-        return $query->execute();
     }
 
     /**
