@@ -47,19 +47,13 @@ Encore
             }
         }
     }))
-    .addPlugin(new CopyWebpackPlugin([
-        {
-            from: '../packages/framework/assets/js',
-            to: '../../assets/js/framework'
-        }
-    ]))
 ;
 
 const config = Encore.getWebpackConfig();
 
 config.resolve.alias = {
     'jquery-ui': 'jquery-ui/ui/widgets/',
-    'framework': path.resolve(__dirname, './assets/js/framework')
+    'framework': '@shopsys/framework/js'
 };
 
 module.exports = config;

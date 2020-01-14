@@ -653,7 +653,7 @@
         <touch file="${path.root}/MAINTENANCE"/>
     </target>
 
-    <target name="npm" description="Installs modules required for Grunt.">
+    <target name="npm" description="Installs node modules.">
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="prune"/>
             <arg value="--no-audit"/>
@@ -661,11 +661,6 @@
 
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="install"/>
-        </exec>
-
-        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="run"/>
-            <arg value="copyFw"/>
         </exec>
 
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">

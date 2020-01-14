@@ -2,11 +2,13 @@
 <project name="Shopsys Framework" default="list">
 
     <property name="check-and-fix-annotations" value="true"/>
+    <property name="npm.framework" value="@shopsys/framework"/>
     <property name="path.root" value="${project.basedir}/project-base"/>
     <property name="path.vendor" value="${project.basedir}/vendor"/>
     <property name="path.packages" value="${project.basedir}/packages"/>
     <property name="path.backend-api" value="${path.packages}/backend-api"/>
     <property name="path.framework" value="${path.packages}/framework"/>
+    <property name="path.framework-assets" value="${path.packages}/framework/assets"/>
     <property name="path.utils" value="${project.basedir}/utils"/>
     <property name="translations.dump.flags" value=""/>
 
@@ -149,11 +151,11 @@
         <phingcall target="shopsys_framework.eslint-check"/>
         <exec executable="${path.eslint.executable}" passthru="true" checkreturn="true">
             <arg value="--color"/>
-            <arg path="${path.framework}/assets"/>
+            <arg path="${path.framework-assets}"/>
             <arg value="--config"/>
             <arg path="${path.root}/.eslintrc.json"/>
             <arg value="--ignore-path"/>
-            <arg path="${path.root}/.eslintignore"/>
+            <arg path="${path.framework-assets}/.eslintignore"/>
         </exec>
     </target>
 
@@ -167,17 +169,47 @@
         <exec executable="${path.eslint.executable}" passthru="true" checkreturn="true">
             <arg value="--color"/>
             <arg value="--fix"/>
-            <arg path="${path.framework}/assets"/>
+            <arg path="${path.framework-assets}"/>
             <arg value="--config"/>
             <arg path="${path.root}/.eslintrc.json"/>
             <arg value="--ignore-path"/>
-            <arg path="${path.root}/.eslintignore"/>
+            <arg path="${path.framework-assets}/.eslintignore"/>
         </exec>
     </target>
 
     <target name="eslint-fix-diff" hidden="true">
         <echo level="info" message="Fixing only changed files via 'eslint-fix-diff' not supported in monorepo. Running 'eslint-fix' instead..."/>
         <phingcall target="eslint-fix"/>
+    </target>
+
+    <target name="npm" description="Installs node modules.">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="prune"/>
+            <arg value="--no-audit"/>
+        </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="install"/>
+        </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.framework-assets}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="link"/>
+        </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="link"/>
+            <arg value="${npm.framework}"/>
+        </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="trans"/>
+        </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="build"/>
+        </exec>
     </target>
 
     <target name="phing-config-check" description="Checks the syntax of Phing configuration." hidden="true">
@@ -399,6 +431,28 @@
             <arg value="${path.utils}"/>
             <arg value="--parse-tags"/>
         </exec>
+    </target>
+
+    <target name="yaml-standards" depends="yaml-lint" description="Checks YAML standards (needs sspooky13/yaml-standards)" hidden="true">
+        <available file="${path.yaml-standards.executable}" type="file" property="yaml-standards.executable.exists"/>
+        <if>
+            <equals arg1="${yaml-standards.executable.exists}" arg2="true"/>
+            <then>
+                <exec executable="${path.yaml-standards.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="${project.basedir}"/>
+                    <arg value="--exclude-dir=${path.vendor}"/>
+                    <arg value="--exclude-dir=${path.root}/node_modules"/>
+                    <arg value="--exclude-dir=${path.framework-assets}/node_modules"/>
+                    <arg value="--exclude-file=${path.config}/domains_urls.yml"/>
+                    <arg value="--check-indents-count-of-indents=${yaml-standards.indent-count}"/>
+                    <arg line="${yaml-standards.args}"/>
+                </exec>
+            </then>
+            <else>
+                <echo level="warning" message="The executable '${path.yaml-standards.executable}' is not available, your YAML files cannot be checked."/>
+                <echo level="info" message="You can require the package using Composer, run 'composer require --dev sspooky13/yaml-standards'"/>
+            </else>
+        </if>
     </target>
 
 </project>
