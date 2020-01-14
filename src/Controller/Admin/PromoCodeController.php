@@ -63,41 +63,8 @@ class PromoCodeController extends BasePromoCodeController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
-    {
-        $promoCodeData = $this->promoCodeDataFactory->create();
-
-        $form = $this->createForm(PromoCodeFormType::class, $promoCodeData, [
-            'promo_code' => null,
-            'isInlineEdit' => false,
-            'domain_id' => $this->domain->getId(),
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $promoCode = $this->promoCodeFacade->create($form->getData());
-
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
-                t('Promo code <strong><a href="{{ url }}">{{ code }}</a></strong> created'),
-                [
-                    'code' => $promoCode->getCode(),
-                    'url' => $this->generateUrl('admin_promocode_edit', ['id' => $promoCode->getId()]),
-                ]
-            );
-            return $this->redirectToRoute('admin_promocode_list');
-        }
-
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
-        }
-
-        return $this->render('@ShopsysFramework/Admin/Content/PromoCode/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
     public function listAction()
     {
         $administrator = $this->getUser();
@@ -124,43 +91,19 @@ class PromoCodeController extends BasePromoCodeController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param mixed $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id)
-    {
-        $promoCode = $this->promoCodeFacade->getById($id);
-        $promoCodeData = $this->promoCodeDataFactory->createFromPromoCode($promoCode);
+    public function newAction(Request $request){
+        return parent::newAction($request);
+    }
 
-        $form = $this->createForm(PromoCodeFormType::class, $promoCodeData, [
-            'promo_code' => $promoCode,
-            'isInlineEdit' => false,
-            'domain_id' => $promoCode->getDomainId(),
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->promoCodeFacade->edit($id, $promoCodeData);
-
-            $this->getFlashMessageSender()->addSuccessFlashTwig(
-                t('Promo code <strong><a href="{{ url }}">{{ code }}</a></strong> was modified'),
-                [
-                    'code' => $promoCode->getCode(),
-                    'url' => $this->generateUrl('admin_promocode_edit', ['id' => $promoCode->getId()]),
-                ]
-            );
-            return $this->redirectToRoute('admin_promocode_list');
-        }
-
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
-        }
-
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing promo code - %code%', ['%code%' => $promoCode->getCode()]));
-
-        return $this->render('@ShopsysFramework/Admin/Content/PromoCode/edit.html.twig', [
-            'form' => $form->createView(),
-            'promoCode' => $promoCode,
-        ]);
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request, $id){
+        return parent::editAction($request, $id);
     }
 }

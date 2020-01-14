@@ -17,22 +17,12 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('domainId', DomainType::class, [
+        if(empty($options['promo_code'])){
+            $builder->add('domainId', DomainType::class, [
                 'required' => true,
-                'data' => $options['domain_id'],
                 'label' => t('Domain'),
             ]);
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-        $resolver
-            ->setRequired(['domain_id'])
-            ->setAllowedTypes('domain_id', 'int');
+        }
     }
 
     public function getExtendedType()
