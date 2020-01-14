@@ -50,8 +50,10 @@
     {% else %}
         <a
             href="#"
-            onclick="Shopsys.productPicker.onClickSelectProduct('{{ parentInstanceId|e('js') }}', {{ row.p.id|e('js') }}, '{{ row.pt.name|e('js') }}'); return false;"
-            class="btn btn--light btn--plus btn--small"
+            class="btn btn--light btn--plus btn--small js-product-picker-select"
+            data-instance-id="{{ parentInstanceId }}"
+            data-product-id="{{ row.p.id }}"
+            data-product-name="{{ row.pt.name }}"
         >
             <i class="js-products-picker-icon btn__icon">+</i>
             <span class="js-products-picker-label">

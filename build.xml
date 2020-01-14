@@ -149,11 +149,11 @@
         <phingcall target="shopsys_framework.eslint-check"/>
         <exec executable="${path.eslint.executable}" passthru="true" checkreturn="true">
             <arg value="--color"/>
-            <arg path="${path.framework}/src/Resources/scripts"/>
+            <arg path="${path.framework}/assets"/>
             <arg value="--config"/>
-            <arg path="${path.framework}/.eslintrc.json"/>
+            <arg path="${path.root}/.eslintrc.json"/>
             <arg value="--ignore-path"/>
-            <arg path="${path.framework}/.eslintignore"/>
+            <arg path="${path.root}/.eslintignore"/>
         </exec>
     </target>
 
@@ -167,11 +167,11 @@
         <exec executable="${path.eslint.executable}" passthru="true" checkreturn="true">
             <arg value="--color"/>
             <arg value="--fix"/>
-            <arg path="${path.framework}/src/Resources/scripts"/>
+            <arg path="${path.framework}/assets"/>
             <arg value="--config"/>
-            <arg path="${path.framework}/.eslintrc.json"/>
+            <arg path="${path.root}/.eslintrc.json"/>
             <arg value="--ignore-path"/>
-            <arg path="${path.framework}/.eslintignore"/>
+            <arg path="${path.root}/.eslintignore"/>
         </exec>
     </target>
 

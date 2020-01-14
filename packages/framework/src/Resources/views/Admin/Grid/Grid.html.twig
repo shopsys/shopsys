@@ -214,19 +214,14 @@
     <a
         class="in-icon in-icon--{{ actionColumn.type }} svg svg-{{ icon }} table-action{% if actionColumn.classAttribute %} {{ actionColumn.classAttribute }}{% endif %}{% if actionColumn.ajaxConfirm %} js-ajax-confirm{% endif %}"
         {% if actionColumn.ajaxConfirm %}
-            data-ajax-confirm-on-open="Shopsys.createConfirmDelete(this);"
+            data-ajax-confirm-on-open="true"
         {% endif %}
             href="{{ actionColumn.targetUrl(row) }}"
             title = "{{ actionColumn.title }}"
         {% if actionColumn.confirmMessage is not empty -%}
-            onclick="
-                Shopsys.window({
-                    content: '{{ actionColumn.confirmMessage }}',
-                    buttonCancel: true,
-                    buttonContinue: true,
-                    urlContinue: '{{ actionColumn.targetUrl(row) }}'
-                });
-                return false;"
+            data-confirm-window
+            data-confirm-message="{{ actionColumn.confirmMessage }}"
+            data-confirm-contiue-url="{{ actionColumn.targetUrl(row) }}"
         {%- endif %}
     ></a>
 {% endblock %}

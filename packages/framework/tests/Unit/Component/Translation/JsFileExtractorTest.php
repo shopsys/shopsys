@@ -22,23 +22,23 @@ class JsFileExtractorTest extends TestCase
         $expected = new MessageCatalogue();
 
         $message = new Message('trans test', 'messages');
-        $message->addSource(new FileSource($fileName, 1));
-        $expected->add($message);
-
-        $message = new Message('transChoice test', 'messages');
         $message->addSource(new FileSource($fileName, 3));
         $expected->add($message);
 
-        $message = new Message('trans test with domain', 'testDomain');
+        $message = new Message('transChoice test', 'messages');
         $message->addSource(new FileSource($fileName, 5));
         $expected->add($message);
 
-        $message = new Message('transChoice test with domain', 'testDomain');
+        $message = new Message('trans test with domain', 'testDomain');
         $message->addSource(new FileSource($fileName, 7));
         $expected->add($message);
 
-        $message = new Message('concatenated message', 'messages');
+        $message = new Message('transChoice test with domain', 'testDomain');
         $message->addSource(new FileSource($fileName, 9));
+        $expected->add($message);
+
+        $message = new Message('concatenated message', 'messages');
+        $message->addSource(new FileSource($fileName, 11));
         $expected->add($message);
 
         $this->assertEquals($expected, $catalogue);
