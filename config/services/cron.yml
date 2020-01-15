@@ -4,7 +4,11 @@ services:
         autoconfigure: true
         public: false
 
-#   Example:
-#   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule:
-#       tags:
-#           - { name: shopsys.cron, hours: '*', minutes: '*' }
+    #   Example:
+    #   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule:
+    #       tags:
+    #           - { name: shopsys.cron, hours: '*', minutes: '*' }
+
+    App\Model\Product\Transfer\Akeneo\AkeneoImportProductCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*/5' }

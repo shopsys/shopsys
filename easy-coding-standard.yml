@@ -25,6 +25,8 @@ parameters:
             - '*/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php'
             - '*/tests/App/Functional/Model/Cart/CartMigrationFacadeTest.php'
             - '*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'
+            - '*/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoValidator.php'
+            - '*/src/Component/Akeneo/Transfer/AbstractAkeneoImportTransfer.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'

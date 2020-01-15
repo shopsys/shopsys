@@ -16,7 +16,9 @@ class ProductFacade extends BaseProductFacade
     public function findOneByCatnumExcludeMainVariants($productCatnum): ?Product
     {
         try {
-            return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
+            /** @var \App\Model\Product\Product $product */
+            $product = $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
+            return $product;
         } catch (ProductNotFoundException $exception) {
             return null;
         }

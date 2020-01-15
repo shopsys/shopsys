@@ -18,7 +18,7 @@ services:
         tags: ['controller.service_arguments']
 
     App\:
-        resource: '../src/**/*{Calculation,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer}.php'
+        resource: '../src/**/*{Calculation,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,Validator,Transfer}.php'
         exclude: '../src/{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
 
     League\Flysystem\MountManager:
@@ -105,3 +105,7 @@ services:
 
     Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface:
         factory: ['@App\Component\Akeneo\AkeneoClientFactory', createClient]
+
+    App\Component\Akeneo\Transfer\AkeneoImportTransferDependency:
+        arguments:
+            $logger: '@monolog.logger.cron'
