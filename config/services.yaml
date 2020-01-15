@@ -123,6 +123,11 @@ services:
         arguments:
             $useInlineEditation: false
 
+    sensio_framework_extra.routing.loader.annot_class:
+        class: App\Component\AnnotatedRouteControllerLoader
+        arguments:
+            - '@annotation_reader'
+
     App\Controller\Front\ErrorController:
         arguments:
             $environment: '%kernel.environment%'

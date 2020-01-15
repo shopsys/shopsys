@@ -5,24 +5,42 @@ declare(strict_types=1);
 namespace App\Model\Order\PromoCode\Grid;
 
 use App\Model\Order\PromoCode\PromoCode;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory as BasePromoCodeGridFactory;
 
 class PromoCodeGridFactory extends BasePromoCodeGridFactory
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
+     */
+    private $adminDomainTabsFacade;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     */
+    public function __construct(EntityManagerInterface $em, GridFactory $gridFactory, AdminDomainTabsFacade $adminDomainTabsFacade)
+    {
+        parent::__construct($em, $gridFactory);
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
+    }
+
+    /**
      * @param bool $withEditButton
-     * @param int $currentDomainId
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create($withEditButton = false, $currentDomainId = 1)
+    public function create($withEditButton = true)
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
             ->select('pc')
             ->from(PromoCode::class, 'pc')
             ->where('pc.domainId = :domainId')
-            ->setParameter('domainId', $currentDomainId);
+            ->setParameter('domainId', $this->adminDomainTabsFacade->getSelectedDomainId());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pc.id');
 
         $grid = $this->gridFactory->create('promoCodeList', $dataSource);
