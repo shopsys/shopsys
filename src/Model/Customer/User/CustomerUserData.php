@@ -14,26 +14,6 @@ class CustomerUserData extends BaseUserData
     public $gender;
 
     /**
-     * @var string|null
-     */
-    public $street;
-
-    /**
-     * @var string|null
-     */
-    public $city;
-
-    /**
-     * @var string|null
-     */
-    public $postcode;
-
-    /**
-     * @var bool|null
-     */
-    public $companyCustomer = false;
-
-    /**
      * @var bool|null
      */
     public $newsletterSubscription = false;

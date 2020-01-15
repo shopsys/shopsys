@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Form\Front\Registration;
 
 use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\RegistrationData;
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueEmail;
 use Shopsys\FrameworkBundle\Form\HoneyPotType;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -112,11 +112,11 @@ class RegistrationFormType extends AbstractType
     private function buildBillingAddressFormPart(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('street', TextType::class, [
-            'required' => false,
-            'constraints' => [
-                new Constraints\Length(['max' => 100, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
-            ],
-        ])
+                'required' => false,
+                'constraints' => [
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
+                ],
+            ])
             ->add('city', TextType::class, [
                 'required' => false,
                 'constraints' => [
@@ -137,7 +137,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => CustomerUserData::class,
+            'data_class' => RegistrationData::class,
             'attr' => ['novalidate' => 'novalidate'],
             TimedFormTypeExtension::OPTION_ENABLED => true,
             'constraints' => [

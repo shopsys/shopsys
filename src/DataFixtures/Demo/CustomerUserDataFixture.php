@@ -222,7 +222,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '605000123',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_MALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
@@ -241,7 +241,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.3@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.3',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_MALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -256,7 +256,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.5@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.5',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_FEMALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -272,7 +272,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.9',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_MALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -290,7 +290,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.10',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_MALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -314,7 +314,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_MALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => false
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => false,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
@@ -344,7 +344,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'test123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_MALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -379,7 +379,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.2@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.2',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_FEMALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => false
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => false,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -394,7 +394,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.4@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.4',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_FEMALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -409,7 +409,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.6@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.6',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_MALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -431,7 +431,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.7@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.7',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_FEMALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -446,7 +446,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_EMAIL => 'no-reply.8@shopsys.com',
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'no-reply.8',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_MALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
@@ -462,7 +462,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '603123456',
                     self::KEY_CUSTOMER_USER_DATA_GENDER => CustomerUser::GENDER_MALE,
-                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true
+                    self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,

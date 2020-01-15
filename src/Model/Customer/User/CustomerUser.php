@@ -27,16 +27,16 @@ class CustomerUser extends BaseUser
     public const GENDER_FEMALE = 'female';
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(type="string", length=6, nullable=false)
+     * @ORM\Column(type="string", length=6)
      */
     protected $gender;
 
     /**
-     * @var bool|null
+     * @var bool
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean")
      */
     protected $newsletterSubscription;
 

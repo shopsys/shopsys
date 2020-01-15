@@ -27,8 +27,12 @@ services:
                 local: '@local_filesystem'
                 main: '@main_filesystem'
 
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade:
-        class: 'App\Model\Customer\User\CustomerUserFacade'
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
+        class: 'App\Model\Customer\User\CustomerUserUpdateDataFactory'
+
+    App\Model\Customer\User\RegistrationDataFactory: ~
+
+    App\Model\Customer\User\RegistrationDataFactoryInterface: '@App\Model\Customer\User\RegistrationDataFactory'
 
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
