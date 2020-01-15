@@ -304,7 +304,7 @@ There you can find links to upgrade notes for other versions too.
 - update your administration acceptance tests after design face-lift ([#1245](https://github.com/shopsys/shopsys/pull/1245))
     - you don't have to do anything if you haven't modified the admin acceptance tests or written your own scenarios
         - implementing the `ActorInterface` (see below) is still recommended in the long-run
-    - implement `ActorInterface` in your `AcceptanceTesterClass`
+    - implement `ActorInterface` in your `AcceptanceTester` class
         ```diff
           use Facebook\WebDriver\Remote\RemoteWebDriver;
         + use Tests\FrameworkBundle\Test\Codeception\ActorInterface;
