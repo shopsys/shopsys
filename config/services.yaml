@@ -34,6 +34,10 @@ services:
 
     App\Model\Customer\User\RegistrationDataFactoryInterface: '@App\Model\Customer\User\RegistrationDataFactory'
 
+    App\Model\Customer\User\RegistrationFacade: ~
+
+    App\Model\Customer\User\RegistrationFacadeInterface: '@App\Model\Customer\User\RegistrationFacade'
+
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface: '@App\Form\Front\Order\DomainAwareOrderFlowFactory'
@@ -71,6 +75,9 @@ services:
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade: ~
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@App\Model\Product\Brand\BrandDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Country\CountryFacade:
+        class: 'App\Model\Country\CountryFacade'
 
     App\DataFixtures\Performance\CategoryDataFixture:
         arguments:

@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Form\Front\Registration\RegistrationFormType;
-use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use App\Model\Customer\User\RegistrationDataFactoryInterface;
+use App\Model\Customer\User\RegistrationFacadeInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
-use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -40,57 +38,42 @@ class RegistrationController extends FrontBaseController
     private $legalConditionsFacade;
 
     /**
-     * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory
-     */
-    private $customerUserUpdateDataFactory;
-
-    /**
      * @var \App\Model\Customer\User\RegistrationDataFactoryInterface
      */
     private $registrationDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
+     * @var \App\Model\Customer\User\RegistrationFacadeInterface
      */
-    private $newsletterFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    private $countryFacade;
+    private $registrationFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
-     * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\RegistrationDataFactoryInterface $registrationDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
+     * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
      */
     public function __construct(
         Domain $domain,
         CustomerUserFacade $customerUserFacade,
         Authenticator $authenticator,
         LegalConditionsFacade $legalConditionsFacade,
-        CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         RegistrationDataFactoryInterface $registrationDataFactory,
-        NewsletterFacade $newsletterFacade,
-        CountryFacade $countryFacade
+        RegistrationFacadeInterface $registrationFacade
     ) {
         $this->domain = $domain;
         $this->customerUserFacade = $customerUserFacade;
         $this->authenticator = $authenticator;
         $this->legalConditionsFacade = $legalConditionsFacade;
-        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->registrationDataFactory = $registrationDataFactory;
-        $this->newsletterFacade = $newsletterFacade;
-        $this->countryFacade = $countryFacade;
+        $this->registrationFacade = $registrationFacade;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function existsEmailAction(Request $request)
     {
@@ -118,14 +101,7 @@ class RegistrationController extends FrontBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $registrationData = $form->getData();
 
-            $countries = $this->countryFacade->getAllEnabledOnCurrentDomain();
-            $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromRegistrationData($registrationData);
-            $customerUserUpdateData->billingAddressData->country = $countries[0];
-
-            $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
-            if ($customerUser->isNewsletterSubscription()) {
-                $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
-            }
+            $customerUser = $this->registrationFacade->register($registrationData);
 
             $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
 
