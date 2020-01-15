@@ -11,8 +11,6 @@ parameters:
         - sslt
         - TomasGottvald
         - TomasLudvik
-        - tomshopsys
-        - topolanekmartin
         - vitek-rostislav
     names_to_urls:
         'shopsys/shopsys': 'https://github.com/shopsys/shopsys'
