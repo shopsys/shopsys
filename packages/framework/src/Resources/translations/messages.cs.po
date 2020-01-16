@@ -656,7 +656,7 @@ msgid "Discount"
 msgstr "Sleva"
 
 msgid "Discount (%)"
-msgstr ""
+msgstr "Sleva (%)"
 
 msgid "Display"
 msgstr "Zobrazit"
@@ -890,10 +890,10 @@ msgid "Editing product - %name%"
 msgstr "Editace zboží - %name%"
 
 msgid "Editing promo code"
-msgstr ""
+msgstr "Editace slevového kupónu"
 
 msgid "Editing promo code - %code%"
-msgstr ""
+msgstr "Editace slevového kupónu - %code%"
 
 msgid "Editing script"
 msgstr "Editace skriptu"
@@ -1118,7 +1118,7 @@ msgid "Icon"
 msgstr "Ikona"
 
 msgid "If you change currency settings, prices of all products will be recalculated"
-msgstr "Pokud změníte nastavení měny, přepočítají se ceny všech produktů"
+msgstr "Pokud změníte nastavení měn, dojde k přepočítání cen všech produktů"
 
 msgid "If you want for these changes to manifest everywhere (on production, devel, localhost etc.) instruct a programmer to commit the changes into GIT!"
 msgstr "Pokud chcete, aby se změny projevily všude (na produkci, develu, localhostu apod.), dejte vědět programátorovi, aby změny zavedl do GITu!"
@@ -1289,7 +1289,7 @@ msgid "Meta description"
 msgstr "Meta description"
 
 msgid "Min fraction digits"
-msgstr "Minimum desetinných čísel"
+msgstr "Minimální počet desetinných míst"
 
 msgid "Modifications"
 msgstr "Úpravy"
@@ -1355,7 +1355,7 @@ msgid "New product"
 msgstr "Nové zboží"
 
 msgid "New promo code"
-msgstr ""
+msgstr "Nový slevový kupón"
 
 msgid "New registered customers"
 msgstr "Nově registrovaní zákazníci"
@@ -1751,10 +1751,10 @@ msgid "Promo code"
 msgstr "Slevový kupón"
 
 msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
-msgstr ""
+msgstr "Byl vytvořen slevový kupón <strong><a href=\"{{ url }}\">{{ code }}</a></strong>"
 
 msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> was modified"
-msgstr ""
+msgstr "Byl upraven slevový kupón <strong><a href=\"{{ url }}\">{{ code }}</a></strong>"
 
 msgid "Promo code <strong>{{ code }}</strong> deleted."
 msgstr "Slevový kupón <strong>{{ code }}</strong> byl smazán"
@@ -1799,7 +1799,7 @@ msgid "Rounding item with 0 % VAT will be added to your order. It is used for pa
 msgstr "Do objednávky bude přidána zaokrouhlovací položka s 0% DPH. Používá se pro platbu v hotovosti."
 
 msgid "Rounding type"
-msgstr "Zaokrouhlení"
+msgstr "Typ zaokrouhlení"
 
 msgid "SEO"
 msgstr "SEO"

@@ -15,7 +15,11 @@ Typical upgrade sequence should be:
 
 ## [From v8.1.0-dev to v9.0.0-dev]
 
-## [From v8.0.1-dev to v8.1.0-dev]
+## [From v8.1.0 to v8.2.0-dev]
+
+## [From v8.0.1 to v8.1.0]
+
+## [From v8.0.0 to v8.1.0]
 
 ## [From v8.0.0 to v8.0.1-dev]
 
@@ -159,8 +163,10 @@ Typical upgrade sequence should be:
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running
 
-[From v8.1.0-dev to v9.0.0-dev]: https://github.com/shopsys/shopsys/compare/HEAD...9.0
-[From v8.0.1-dev to v8.1.0-dev]: https://github.com/shopsys/shopsys/compare/8.0...HEAD
+[From v8.1.0 to v9.0.0-dev]: https://github.com/shopsys/shopsys/compare/v8.1.0...9.0
+[From v8.1.0 to v8.2.0-dev]: https://github.com/shopsys/shopsys/compare/v8.1.0...master
+[From v8.0.1-dev to v8.1.0]: https://github.com/shopsys/shopsys/compare/8.0...v8.1.0
+[From v8.0.0 to v8.1.0]: https://github.com/shopsys/shopsys/compare/v8.0.0...v8.1.0
 [From v8.0.0 to v8.0.1-dev]: https://github.com/shopsys/shopsys/compare/v8.0.0...8.0
 [From v7.3.1 to v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.1...v8.0.0
 [From v7.3.2 to v7.3.3-dev]: https://github.com/shopsys/shopsys/compare/v7.3.2...7.3

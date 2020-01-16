@@ -1,20 +1,17 @@
 # setup for ChangelogLinker: https://github.com/Symplify/ChangelogLinker
 parameters:
     authors_to_ignore:
-        - boris-brtan
-        - LukasHeinz
-        - MattCzerner
-        - Miroslav-Stopka
-        - PetrHeinz
-        - simara-svatopluk
+        - DavidOstrozlik
+        - grossmannmartin
+        - malyMiso
+        - pesektomas
+        - PetraPiprekova
+        - petrsvob
+        - s3tezsky
+        - sslt
+        - TomasGottvald
         - TomasLudvik
         - vitek-rostislav
-        - topolanekmartin
-        - tomshopsys
-        - petrsvob
-        - grossmannmartin
-        - DavidOstrozlik
-        - PetraPiprekova
     names_to_urls:
         'shopsys/shopsys': 'https://github.com/shopsys/shopsys'
         'shopsys/project-base': 'https://github.com/shopsys/project-base'
