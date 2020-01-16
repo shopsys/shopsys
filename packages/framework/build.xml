@@ -653,17 +653,6 @@
         <touch file="${path.root}/MAINTENANCE"/>
     </target>
 
-    <target name="npm-install-dependencies" description="Installs node modules dependencies.">
-        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="prune"/>
-            <arg value="--no-audit"/>
-        </exec>
-
-        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="install"/>
-        </exec>
-    </target>
-
     <target name="npm" description="Build node modules.">
         <phingcall target="npm-install-dependencies"/>
 
@@ -675,6 +664,17 @@
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>
             <arg value="build"/>
+        </exec>
+    </target>
+
+    <target name="npm-install-dependencies" description="Installs node modules dependencies.">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="prune"/>
+            <arg value="--no-audit"/>
+        </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="install"/>
         </exec>
     </target>
 
