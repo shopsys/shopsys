@@ -41,7 +41,7 @@
     "dependencies": {
         "@babel/parser": "^7.7.7",
         "@babel/traverse": "^7.7.4",
-        "@shopsys/framework": "9.0.0-alpha.1",
+        "@shopsys/framework": "9.0.0-dev.1",
         "codemirror": "^5.49.2",
         "jquery-ui": "^1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",
