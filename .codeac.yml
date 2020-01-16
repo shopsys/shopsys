@@ -1,0 +1,6 @@
+version: '1'
+
+tools:
+  tflint:
+    files:
+      - project-base/infrastructure/google-cloud
