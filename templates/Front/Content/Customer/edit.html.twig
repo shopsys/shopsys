@@ -20,6 +20,7 @@
                     <div class="wrap-box">
                         <h2 class="wrap-box__title">{{ 'Personal data'|trans }}</h2>
                         <div class="wrap-box__in">
+                            {{ form_row(form.customerUserData.gender, { label: 'Oslovení'|trans}) }}
                             {{ form_row(form.customerUserData.firstName, { label: 'First name'|trans}) }}
                             {{ form_row(form.customerUserData.lastName, { label: 'Last name'|trans}) }}
                             {{ form_row(form.customerUserData.telephone, { label: 'Telephone'|trans}) }}
@@ -27,6 +28,14 @@
                             <p>
                                 {{ 'To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us.'|trans }}
                             </p>
+                            <dl class="form-line">
+                                <dt></dt>
+                                <dd>
+                                    <div class="form-choice">
+                                        {{ form_row(form.customerUserData.newsletterSubscription, { label: 'Souhlasím se zasíláním newsletteru'|trans }) }}
+                                    </div>
+                                </dd>
+                            </dl>
                         </div>
                     </div>
 

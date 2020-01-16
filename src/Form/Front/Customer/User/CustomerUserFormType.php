@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Customer\User;
 
+use App\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -25,6 +28,13 @@ class CustomerUserFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('gender', ChoiceType::class, [
+                'choices' => array_flip(CustomerUser::getAllGenders()),
+                'placeholder' => t('-- Vyber oslovení --'),
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please choose your gender']),
+                ],
+            ])
             ->add('firstName', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
@@ -62,6 +72,9 @@ class CustomerUserFormType extends AbstractType
                     ],
                 ],
                 'invalid_message' => 'Passwords do not match',
+            ])
+            ->add('newsletterSubscription', CheckboxType::class, [
+                'required' => false,
             ]);
     }
 
