@@ -156,8 +156,9 @@ and fix them appropriately (you can copy paste them from [Github](https://github
 - $cart->addProduct($product, 1, $productPriceCalculation, $cartItemFactory);
 + $cartFacade->addProductToCart($product->getId(), 1);
 ```
-- move `Tests\FrameworkBundle\Unit\Model\Product\ProductTest::testEditSchedulesPriceRecalculation` to `ProductFacadeTest`
-    - you can copy paste it from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Product/ProductFacadeTest.php#L133)
+- add new `ProductFacadeTest::testEditSchedulesPriceRecalculation()`
+    - it was originally in `Tests\FrameworkBundle\Unit\Model\Product\ProductTest`
+    - you can copy paste the test from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Product/ProductFacadeTest.php#L133)
 - rename `Tests\ShopBundle\Functional\Model\Pricing\ProductManualInputPriceTest` to `Tests\ShopBundle\Functional\Model\Pricing\ProductInputPriceRecalculatorTest` and use instance of `ProductInputPriceRecalculator` for input prices recalculations
     - you can copy paste the class from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Pricing/ProductInputPriceRecalculatorTest.php)
 - rename `Tests\ShopBundle\Functional\Model\Order\OrderEditTest` to `Tests\ShopBundle\Functional\Model\Order\OrderFacadeEditTest`
@@ -171,8 +172,8 @@ and fix them appropriately (you can copy paste them from [Github](https://github
         - add `OrderFacade` from the DIC
         - remove `OrderItemPriceCalculation`, `OrderItemFactoryInterface` and `OrderPriceCalculation`
     - you can see the test class on [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Order/OrderFacadeEditTest.php)
-- remove the following tests from `Tests\FrameworkBundle\Unit\Model\Customer\UserTest` and create new `Tests\ShopBundle\Functional\Model\Customer\CustomerFacadeTest` class that will test the behavior
-(you can copy paste the class from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Customer/CustomerFacadeTest.php))
+- create new `Tests\ShopBundle\Functional\Model\Customer\CustomerFacadeTest` class that will test the behavior that was originilly tested in ``Tests\FrameworkBundle\Unit\Model\Customer\UserTest``
+(you can copy paste the new class from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Customer/CustomerFacadeTest.php))
     - `testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException()`
     - `testCreateNotDuplicateEmail()`
     - `testCreateDuplicateEmail()`
