@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b895eafb5a54d089f9435c43e26582d3",
+    "content-hash": "42ce4bae7edb35b5840d2709770e004e",
     "packages": [
         {
             "name": "arvenil/ninja-mutex",
@@ -10612,6 +10612,55 @@
             "time": "2019-11-18T17:27:11+00:00"
         },
         {
+            "name": "symfony/stopwatch",
+            "version": "v3.4.36",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/stopwatch.git",
+                "reference": "efe0af281ad336bc3b10375c88b117499f1d8494"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/efe0af281ad336bc3b10375c88b117499f1d8494",
+                "reference": "efe0af281ad336bc3b10375c88b117499f1d8494",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Stopwatch\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Stopwatch Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-11-03T17:17:59+00:00"
+        },
+        {
             "name": "symfony/swiftmailer-bundle",
             "version": "v3.3.1",
             "source": {
@@ -14958,55 +15007,6 @@
             "time": "2019-10-24T15:33:53+00:00"
         },
         {
-            "name": "symfony/stopwatch",
-            "version": "v3.4.36",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/stopwatch.git",
-                "reference": "efe0af281ad336bc3b10375c88b117499f1d8494"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/efe0af281ad336bc3b10375c88b117499f1d8494",
-                "reference": "efe0af281ad336bc3b10375c88b117499f1d8494",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5.9|>=7.0.8"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Stopwatch\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Stopwatch Component",
-            "homepage": "https://symfony.com",
-            "time": "2019-11-03T17:17:59+00:00"
-        },
-        {
             "name": "symplify/better-phpdoc-parser",
             "version": "v5.4.16",
             "source": {
@@ -15397,16 +15397,16 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "shopsys/google-cloud-bundle": 20,
-        "shopsys/migrations": 20,
         "shopsys/form-types-bundle": 20,
         "shopsys/framework": 20,
         "shopsys/frontend-api": 20,
+        "shopsys/google-cloud-bundle": 20,
+        "shopsys/migrations": 20,
         "shopsys/plugin-interface": 20,
+        "shopsys/product-feed-google": 20,
         "shopsys/product-feed-heureka": 20,
         "shopsys/product-feed-heureka-delivery": 20,
         "shopsys/product-feed-zbozi": 20,
-        "shopsys/product-feed-google": 20,
         "shopsys/read-model": 20,
         "shopsys/coding-standards": 20,
         "shopsys/http-smoke-testing": 20

@@ -1,0 +1,48 @@
+image: docker:19.03.1
+
+services:
+    -   name: docker:dind
+        alias: docker
+
+stages:
+    - build
+    - test
+
+variables:
+    TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    DOCKER_DRIVER: overlay2
+
+before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build:
+    stage: build
+    script:
+        - docker pull $CI_REGISTRY_IMAGE || true
+        - docker build --cache-from $CI_REGISTRY_IMAGE -f ./docker/php-fpm/Dockerfile --target production --compress -t $TAG -t $CI_REGISTRY_IMAGE .
+        - docker push $TAG $CI_REGISTRY_IMAGE:latest
+
+test-standards:
+    stage: test
+    dependencies:
+        - build
+    variables:
+        GIT_STRATEGY: none
+    script:
+        - docker run -i $TAG /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev npm dirs-create test-dirs-create assets standards tests-unit tests-acceptance-build"
+
+test-functional:
+    image: tmaier/docker-compose:latest
+    stage: test
+    dependencies:
+        - build
+    script:
+        - cp -f ./docker/conf/docker-compose-ci.yml.dist ./docker-compose.yml
+        - docker pull $TAG
+        - docker tag $TAG php-fpm
+        - docker-compose pull --parallel postgres redis selenium-server webserver
+        - docker-compose build elasticsearch
+        - docker-compose up -d postgres elasticsearch redis selenium-server php-fpm webserver
+        - sleep 5
+        - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev npm dirs-create test-dirs-create assets db-create test-db-create build-demo-dev-quick error-pages-generate tests"
+
