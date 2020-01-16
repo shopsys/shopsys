@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Country\CountryFacade as BaseCountryFacade;
 
 class CountryFacade extends BaseCountryFacade
 {
-    public const DOMAIN_COUNTRY_CODE = [
+    public const COUNTRY_CODES_BY_DOMAIN_ID = [
         Domain::FIRST_DOMAIN_ID => 'CZ',
         Domain::SECOND_DOMAIN_ID => 'SK',
     ];
@@ -20,7 +20,7 @@ class CountryFacade extends BaseCountryFacade
      */
     public function getCountryOnCurrentDomain(): Country
     {
-        $countryCode = self::DOMAIN_COUNTRY_CODE[$this->domain->getId()];
+        $countryCode = self::COUNTRY_CODES_BY_DOMAIN_ID[$this->domain->getId()];
         return $this->countryRepository->findByCode($countryCode);
     }
 }
