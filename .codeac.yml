@@ -7,4 +7,4 @@ tools:
       
   kubeval:
     files:
-      - "project-base/kubernetes/**/*.yml"
+      - "project-base/kubernetes/**/*.{yml,yaml}"
