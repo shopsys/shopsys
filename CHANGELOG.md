@@ -29,7 +29,7 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
-## [v8.1.0](https://github.com/shopsys/shopsys/compare/v8.0.0...v8.1.0) - 2020-01-10
+## [v8.1.0](https://github.com/shopsys/shopsys/compare/v8.0.0...v8.1.0) - 2020-01-16
 
 ### [shopsys/framework]
 
