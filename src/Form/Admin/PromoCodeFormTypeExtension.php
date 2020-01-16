@@ -16,7 +16,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (empty($options['promo_code'])) {
+        if ($options['promo_code'] === null) {
             $builder->add('domainId', DomainType::class, [
                 'required' => true,
                 'label' => t('Domain'),
