@@ -91,7 +91,7 @@ To start using the read model, follow the instructions (you can also find inspir
             +     self::PRODUCTS_PER_PAGE
             + );
             ```
-        - in `CartController::addProductAjaxAxction`:
+        - in `CartController::addProductAjaxAction`:
             ```diff
             - $accessories = $this->productAccessoryFacade->getTopOfferedAccessories(
             -     $addProductResult->getCartItem()->getProduct(),
