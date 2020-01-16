@@ -172,7 +172,7 @@ and fix them appropriately (you can copy paste them from [Github](https://github
         - add `OrderFacade` from the DIC
         - remove `OrderItemPriceCalculation`, `OrderItemFactoryInterface` and `OrderPriceCalculation`
     - you can see the test class on [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Order/OrderFacadeEditTest.php)
-- create new `Tests\ShopBundle\Functional\Model\Customer\CustomerFacadeTest` class that will test the behavior that was originilly tested in ``Tests\FrameworkBundle\Unit\Model\Customer\UserTest``
+- create new `Tests\ShopBundle\Functional\Model\Customer\CustomerFacadeTest` class that will test the behavior that was originally tested in ``Tests\FrameworkBundle\Unit\Model\Customer\UserTest``
 (you can copy paste the new class from [Github](https://github.com/shopsys/project-base/blob/v8.0.0/tests/ShopBundle/Functional/Model/Customer/CustomerFacadeTest.php))
     - `testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException()`
     - `testCreateNotDuplicateEmail()`
