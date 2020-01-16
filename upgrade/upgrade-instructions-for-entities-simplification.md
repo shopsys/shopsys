@@ -153,6 +153,7 @@ and fix them appropriately (you can copy paste them from [Github](https://github
 - $productPriceCalculation = $this->getContainer()->get(ProductPriceCalculationForUser::class);
 - /** @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory */
 - $cartItemFactory = $this->getContainer()->get(CartItemFactory::class);
+- $cart = $cartFacade->getCartOfCurrentCustomerCreateIfNotExists();
 - $cart->addProduct($product, 1, $productPriceCalculation, $cartItemFactory);
 + $cartFacade->addProductToCart($product->getId(), 1);
 ```
