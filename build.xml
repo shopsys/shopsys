@@ -8,7 +8,7 @@
     <property name="path.packages" value="${project.basedir}/packages"/>
     <property name="path.backend-api" value="${path.packages}/backend-api"/>
     <property name="path.framework" value="${path.packages}/framework"/>
-    <property name="path.framework-assets" value="${path.packages}/framework/assets"/>
+    <property name="path.framework-assets" value="${path.framework}/assets"/>
     <property name="path.utils" value="${project.basedir}/utils"/>
     <property name="translations.dump.flags" value=""/>
 
