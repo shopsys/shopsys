@@ -11,7 +11,7 @@
     </rule>
     <rule ref="rulesets/naming.xml/LongVariable">
         <properties>
-            <property name="maximum" value="25"/>
+            <property name="maximum" value="30"/>
         </properties>
     </rule>
     <rule ref="rulesets/codesize.xml" />
