@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository;
 
 /**
  * @property \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
- * @property \App\Model\Order\PromoCode\PromoCodeFactory $promoCodeFactory
  * @method \App\Model\Order\PromoCode\PromoCode create(\App\Model\Order\PromoCode\PromoCodeData $promoCodeData)
  * @method \App\Model\Order\PromoCode\PromoCode edit(int $promoCodeId, \App\Model\Order\PromoCode\PromoCodeData $promoCodeData)
  * @method \App\Model\Order\PromoCode\PromoCode getById(int $promoCodeId)
@@ -26,10 +25,9 @@ class PromoCodeFacade extends BasePromoCodeFacade
     private $domain;
 
     /**
-     * PromoCodeFacade constructor.
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
-     * @param \App\Model\Order\PromoCode\PromoCodeFactory $promoCodeFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
