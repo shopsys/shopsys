@@ -182,16 +182,8 @@
         <phingcall target="eslint-fix"/>
     </target>
 
-    <target name="npm" description="Installs node modules.">
-        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="prune"/>
-            <arg value="--no-audit"/>
-        </exec>
-
-        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="install"/>
-        </exec>
-
+    <target name="npm-install-dependencies" description="Installs node modules dependencies.">
+        <phingcall target="shopsys_framework.npm-install-dependencies"/>
         <exec executable="${path.npm.executable}" dir="${path.framework-assets}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="link"/>
         </exec>
@@ -199,16 +191,6 @@
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="link"/>
             <arg value="${npm.framework}"/>
-        </exec>
-
-        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="run"/>
-            <arg value="trans"/>
-        </exec>
-
-        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="run"/>
-            <arg value="build"/>
         </exec>
     </target>
 
