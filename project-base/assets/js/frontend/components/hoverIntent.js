@@ -1,7 +1,8 @@
 import Responsive from '../utils/responsive';
 import HoverIntentSetting from './HoverIntentSetting';
 import Register from 'framework/common/utils/register';
-import 'jquery-hoverintent';
+import $ from 'jquery';
+import 'jquery-hoverintent/jquery.hoverIntent';
 
 export default class HoverIntent {
 

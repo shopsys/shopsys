@@ -9,7 +9,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-(function ($) {
+export default function ($) {
     'use strict';
 
     // TOOLTIP PUBLIC CLASS DEFINITION
@@ -394,5 +394,4 @@
         $.fn.tooltip = old;
         return this;
     };
-
-})(jQuery);
+}

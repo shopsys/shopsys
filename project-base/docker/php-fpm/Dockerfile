@@ -93,6 +93,9 @@ RUN usermod -m -d /home/www-data www-data && \
     mkdir -p /var/www/html && \
     chown -R www-data:www-data /home/www-data /var/www/html
 
+RUN mkdir /home/www-data/.npm-global
+ENV NPM_CONFIG_PREFIX /home/www-data/.npm-global
+
 # Switch to user
 USER www-data
 
