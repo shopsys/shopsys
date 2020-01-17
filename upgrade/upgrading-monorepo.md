@@ -13,17 +13,15 @@ Typical upgrade sequence should be:
 
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
-## [From v8.1.0 to v8.2.0-dev]
+## [From v8.1.0 to v8.1.1]
 
 ## [From v8.0.0 to v8.1.0]
 
-## [From v8.0.0 to v8.0.1-dev]
-
-## [From v7.3.1 to v8.0.0]
-
-## [From v7.3.2 to v7.3.3-dev]
+## [From v7.3.2 to v8.0.0]
 - add mkdocs container to your `docker-compose.yml` to be able to see rendered documentation ([#1432](https://github.com/shopsys/shopsys/pull/1432))
     - copy proper definition from dist file for your platform from `docker/conf` directory
+
+## [From v7.3.1 to v8.0.0]
 
 ## [From v7.3.1 to v7.3.2]
 
@@ -159,8 +157,9 @@ Typical upgrade sequence should be:
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running
 
-[From v8.1.0 to v8.2.0-dev]: https://github.com/shopsys/shopsys/compare/v8.1.0...master
+[From v8.1.0 to v8.1.1]: https://github.com/shopsys/shopsys/compare/v8.1.0...v8.1.1
 [From v8.0.0 to v8.1.0]: https://github.com/shopsys/shopsys/compare/v8.0.0...v8.1.0
+[From v7.3.2 to v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.2...v8.0.0
 [From v7.3.1 to v8.0.0]: https://github.com/shopsys/shopsys/compare/v7.3.1...v8.0.0
 [From v7.3.2 to v7.3.3-dev]: https://github.com/shopsys/shopsys/compare/v7.3.2...7.3
 [From v7.3.1 to v7.3.2]: https://github.com/shopsys/shopsys/compare/v7.3.1...v7.3.2

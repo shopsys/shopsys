@@ -29,6 +29,15 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
+## [v8.1.1](https://github.com/shopsys/shopsys/compare/v8.1.0...v8.1.1) - 2020-01-17
+
+
+### [shopsys/project-base]
+
+#### Fixed
+
+- [d29f6dd](https://github.com/shopsys/shopsys/commit/d29f6dd55591178001a58b6c36dd10010449a0d0) Lock NPM version to 6.13.2 due to invalid bin entry caused by newer versions of NPM
+
 ## [v8.1.0](https://github.com/shopsys/shopsys/compare/v8.0.0...v8.1.0) - 2020-01-16
 
 ### [shopsys/framework]
