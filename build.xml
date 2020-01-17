@@ -182,7 +182,7 @@
         <phingcall target="eslint-fix"/>
     </target>
 
-    <target name="npm-install-dependencies" description="Installs node modules dependencies.">
+    <target name="npm-install-dependencies" description="Installs node modules dependencies." hidden="true">
         <phingcall target="shopsys_framework.npm-install-dependencies"/>
         <exec executable="${path.npm.executable}" dir="${path.framework-assets}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="link"/>
