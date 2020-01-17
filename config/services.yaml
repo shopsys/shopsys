@@ -45,6 +45,18 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
+    App\Model\Product\Series\ProductSeriesFacade: ~
+
+    App\Model\Product\Series\ProductSeriesFacadeInterface: '@App\Model\Product\Series\ProductSeriesFacade'
+
+    App\Model\Product\Series\ProductSeriesFactory: ~
+
+    App\Model\Product\Series\ProductSeriesFactoryInterface: '@App\Model\Product\Series\ProductSeriesFactory'
+
+    App\Model\Product\Series\ProductSeriesDataFactory: ~
+
+    App\Model\Product\Series\ProductSeriesDataFactoryInterface: '@App\Model\Product\Series\ProductSeriesDataFactory'
+
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface: '@App\Model\Order\PromoCode\PromoCodeDataFactory'

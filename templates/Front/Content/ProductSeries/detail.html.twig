@@ -1,0 +1,21 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% set domain = getDomain() %}
+{% block meta_description %}
+    {{- productSeries.getSeoMetaDescription(domain.id)|default(getSeoMetaDescription()) -}}
+{% endblock %}
+
+{% block title %}
+    {{ productSeries.getSeoTitle(domain.id)|default(productSeries.getName(domain.locale)) }}
+{% endblock %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line">
+        <div class="web__container">
+            {{ productSeries.getName(domain.locale) }}
+        </div>
+    </div>
+{% endblock %}
