@@ -77,7 +77,7 @@ Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
 These images and packages are configured in `docker-compose.yml` and in `Dockerfile`. We do not redistribute these packages, we are only referencing them to download, user agrees to download these images by pulling and building images done by `docker-compose up` or `docker build`.
 
 ### Postgres
-Image: `Postgres:10.5-alpine`  
+Image: `Postgres:12.1-alpine`  
 License: PostgreSQL License  
 https://www.postgresql.org/about/licence/
 
