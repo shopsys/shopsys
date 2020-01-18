@@ -116,8 +116,8 @@ Configurations use the `<index>/<domain_id>.json` naming pattern.
 #### Check exported product
 
 You can easily check if there is a product exported in the Elasticsearch by putting following url address into your browser
-  `http://127.0.0.1:9200/{domain ID}/_doc/{product ID}?pretty`
-  eg. `http://127.0.0.1:9200/1/_doc/52?pretty`
+  `http://127.0.0.1:9200/{domain ID}/{product ID}?pretty`
+  eg. `http://127.0.0.1:9200/1/52?pretty`
 
 #### Export fails
 

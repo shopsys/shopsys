@@ -415,7 +415,6 @@ class FilterQuery
     {
         $query = [
             'index' => $this->indexName,
-            'type' => '_doc',
             'body' => [
                 'from' => $this->from !== null ? $this->from : $this->countFrom($this->page, $this->limit),
                 'size' => $this->limit,
@@ -462,7 +461,6 @@ class FilterQuery
     {
         return [
             'index' => $this->indexName,
-            'type' => '_doc',
             'body' => [
                 'size' => 0,
                 'aggs' => [
@@ -542,7 +540,6 @@ class FilterQuery
     {
         return [
             'index' => $this->indexName,
-            'type' => '_doc',
             'body' => [
                 'size' => 0,
                 'aggs' => [
@@ -579,7 +576,6 @@ class FilterQuery
     {
         return [
             'index' => $this->indexName,
-            'type' => '_doc',
             'body' => [
                 'size' => 0,
                 'aggs' => [
@@ -620,7 +616,6 @@ class FilterQuery
     {
         return [
             'index' => $this->indexName,
-            'type' => '_doc',
             'body' => [
                 'size' => 0,
                 'aggs' => [

@@ -12,60 +12,58 @@ This upgrade requires the [Upgrade Instructions for Read Model for Product Lists
 - update Elasticsearch structure in `src/Shopsys/ShopBundle/Resources/definition/product/*.json` like this:
     ```diff
     "mappings": {
-      "_doc": {
-        "properties": {
+      "properties": {
 
-           //...
+         //...
 
-          "prices": {
-            "type": "nested",
-            "properties": {
-              "pricing_group_id": {
-                "type": "integer"
-              },
-    -         "amount": {
-    +         "price_with_vat": {
-                "type": "float"
-    -         }
-    +         },
-    +         "price_without_vat": {
-    +           "type": "float"
-    +         },
-    +         "vat": {
-    +           "type": "float"
-    +         },
-    +         "price_from": {
-    +           "type": "boolean"
-    +         }
-            }
-          },
+        "prices": {
+          "type": "nested",
+          "properties": {
+            "pricing_group_id": {
+              "type": "integer"
+            },
+    -       "amount": {
+    +       "price_with_vat": {
+              "type": "float"
+    -       }
+    +       },
+    +       "price_without_vat": {
+    +         "type": "float"
+    +       },
+    +       "vat": {
+    +         "type": "float"
+    +       },
+    +       "price_from": {
+    +         "type": "boolean"
+    +       }
+          }
+        },
 
-          //...
+        //...
 
-    +     "selling_denied": {
-    +       "type": "boolean"
-    +     },
-    +     "availability": {
-    +       "type": "text"
-    +     },
-    +     "main_variant": {
-    +       "type": "boolean"
-    +     },
-    +     "detail_url": {
-    +       "type": "text"
-    +     },
-    +     "visibility": {
-    +       "type": "nested",
-    +       "properties": {
-    +         "pricing_group_id": {
-    +           "type": "integer"
-    +         },
-    +         "visible": {
-    +           "type": "boolean"
-    +         }
+    +   "selling_denied": {
+    +     "type": "boolean"
+    +   },
+    +   "availability": {
+    +     "type": "text"
+    +   },
+    +   "main_variant": {
+    +     "type": "boolean"
+    +   },
+    +   "detail_url": {
+    +     "type": "text"
+    +   },
+    +   "visibility": {
+    +     "type": "nested",
+    +     "properties": {
+    +       "pricing_group_id": {
+    +         "type": "integer"
+    +       },
+    +       "visible": {
+    +         "type": "boolean"
     +       }
     +     }
-        }
+    +   }
     ```
 - fix test `ProductSearchExportRepositoryTest::getExpectedStructureForRepository()` by adding new Elasticsearch fields to it
     ```diff
