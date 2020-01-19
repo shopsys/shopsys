@@ -20,7 +20,7 @@ class AkeneoProductHelper
 
         $mappedData = current($arrayData);
         if (is_array($mappedData)) {
-            return $mappedData['data'];
+            return (string)$mappedData['data'];
         }
 
         return null;

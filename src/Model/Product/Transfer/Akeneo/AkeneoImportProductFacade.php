@@ -79,6 +79,8 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      */
     protected function processItem(array $akeneoProductData): void
     {
+        $this->productTransferAkeneoValidator->validate($akeneoProductData);
+
         $product = $this->productFacade->findOneByCatnumExcludeMainVariants($akeneoProductData['identifier']);
         $productData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductData($akeneoProductData, $product);
 
