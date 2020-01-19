@@ -109,3 +109,7 @@ services:
     App\Component\Akeneo\Transfer\AkeneoImportTransferDependency:
         arguments:
             $logger: '@monolog.logger.cron'
+
+    App\Component\Setting\Setting: ~
+
+    Shopsys\FrameworkBundle\Component\Setting\Setting: '@App\Component\Setting\Setting'

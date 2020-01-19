@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PersonalDataController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
+     * @var \App\Component\Setting\Setting
      */
     private $setting;
 
@@ -66,7 +66,7 @@ class PersonalDataController extends FrontBaseController
     private $xmlResponse;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade

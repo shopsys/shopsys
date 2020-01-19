@@ -6,11 +6,18 @@ namespace App\Model\Product\Transfer\Akeneo;
 
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
+use App\Component\Setting\Setting;
 use App\Model\Product\ProductFacade;
+use DateTime;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 {
+    /**
+     * @var \App\Component\Setting\Setting
+     */
+    protected $setting;
+
     /**
      * @var \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade
      */
@@ -37,12 +44,18 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     private $productVisibilityFacade;
 
     /**
+     * @var \DateTime|null
+     */
+    private $lastProductUpdatedAtFromAkeneo;
+
+    /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade $productTransferAkeneoFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \App\Component\Setting\Setting $setting
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
@@ -50,7 +63,8 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         ProductTransferAkeneoValidator $productTransferAkeneoValidator,
         ProductTransferAkeneoMapper $productTransferAkeneoMapper,
         ProductFacade $productFacade,
-        ProductVisibilityFacade $productVisibilityFacade
+        ProductVisibilityFacade $productVisibilityFacade,
+        Setting $setting
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
@@ -59,6 +73,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
         $this->productFacade = $productFacade;
         $this->productVisibilityFacade = $productVisibilityFacade;
+        $this->setting = $setting;
     }
 
     /**
@@ -66,7 +81,14 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      */
     protected function getData(): ?\Generator
     {
-        return $this->productTransferAkeneoFacade->getAll();
+        $lastProductsUpdatedAt = $this->setting->get(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME);
+
+        $this->lastProductUpdatedAtFromAkeneo = $lastProductsUpdatedAt;
+        $allUpdatedProductsFromLastUpdate = $this->productTransferAkeneoFacade->getAllUpdatedProductsFromLastUpdate($lastProductsUpdatedAt);
+
+        $this->logger->addInfo(sprintf('Getting data from API for search greater than last updated : %s', $lastProductsUpdatedAt->format(DATE_ATOM)));
+
+        return $allUpdatedProductsFromLastUpdate;
     }
 
     protected function doBeforeTransfer(): void
@@ -91,11 +113,26 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
             $this->logger->addInfo(sprintf('Updating product catnum: %s', $product->getCatnum()));
             $this->productFacade->edit($product->getId(), $productData);
         }
+
+        $this->setLastUpdatedProduct($akeneoProductData['updated']);
     }
 
     protected function doAfterTransfer(): void
     {
+        $this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
         $this->logger->addInfo('Transfer is done.');
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
+    }
+
+    /**
+     * @param string $lastUpdated
+     */
+    private function setLastUpdatedProduct(string $lastUpdated): void
+    {
+        $lastUpdatedDateTime = new DateTime($lastUpdated);
+
+        if ($lastUpdatedDateTime > $this->lastProductUpdatedAtFromAkeneo) {
+            $this->lastProductUpdatedAtFromAkeneo = $lastUpdatedDateTime;
+        }
     }
 }
