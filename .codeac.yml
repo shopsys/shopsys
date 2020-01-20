@@ -1,10 +1,10 @@
 version: '1'
 
 tools:
-  tflint:
-    files:
-      - project-base/infrastructure/google-cloud
+    tflint:
+        files:
+            - project-base/infrastructure/google-cloud
       
-  kubeval:
-    files:
-      - "project-base/kubernetes/**/*.{yml,yaml}"
+    kubeval:
+        files:
+            - "project-base/kubernetes/**/*.{yml,yaml}"
