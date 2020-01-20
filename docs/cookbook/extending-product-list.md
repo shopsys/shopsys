@@ -168,7 +168,7 @@ You need to register your new class in `services.yml` and add it as an alias for
 
 ```yml
 Shopsys\ShopBundle\Model\Product\Search\ProductElasticsearchConverter: ~
-Shopsys\ReadModelBundle\Product\Search\ProductElasticsearchConverter: '@Shopsys\ShopBundle\Model\Product\Search\ProductElasticsearchConverter'
+Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: '@Shopsys\ShopBundle\Model\Product\Search\ProductElasticsearchConverter'
 ```
 
 ### 5. Extend `ListedProductViewFactory` so it returns the new required data
