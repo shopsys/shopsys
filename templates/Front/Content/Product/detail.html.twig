@@ -3,9 +3,6 @@
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 
 {% set domain = getDomain() %}
-{% set descriptionHeadline = 'Product information'|trans %}
-{% set parametersHeadline = 'Technical parameters'|trans %}
-{% set accessoriesHeadline = 'Accessories'|trans %}
 {% block meta_description %}
     {{- product.getSeoMetaDescription(domain.id)|default(getSeoMetaDescription()) -}}
 {% endblock %}
@@ -211,7 +208,7 @@
                 {% if product.getDescription(domain.id)%}
                     <div class="box-detail">
                         <div class="h3">
-                            {{ descriptionHeadline }}
+                            {{ 'Product information'|trans }}
                         </div>
                         <div>
                             {% if product.getDescription(domain.id) %}
@@ -224,7 +221,7 @@
                 {% endif %}
                 {% if accessories|length > 0 %}
                     <div class="box-detail">
-                        <div class="h3">{{ accessoriesHeadline }}</div>
+                        <div class="h3">{{ 'Accessories'|trans }}</div>
                         <div>
                             {{ productList.list(accessories) }}
                         </div>
@@ -232,7 +229,7 @@
                 {% endif %}
                 {% if productParameterValues > 0 %}
                     <div class="box-detail">
-                        <div class="h3">{{ parametersHeadline }}</div>
+                        <div class="h3">{{ 'Technical parameters'|trans }}</div>
                         <table class="table-params{% if product.getDescription(domain.id) %} margin-top-20{% endif %}">
                             <tbody>
                             {% for productParameterValue in productParameterValues %}
