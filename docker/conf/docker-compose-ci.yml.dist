@@ -4,7 +4,7 @@ services:
         image: postgres:10.5-alpine
         container_name: shopsys-framework-postgres
         volumes:
-            - ./var/postgres-data:/var/lib/postgresql/data
+            - postgres-data:/var/lib/postgresql/data:rw
             - ./docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
@@ -63,5 +63,7 @@ services:
             - "ES_JAVA_OPTS=-Xms512m -Xmx1024m"
 
 volumes:
-    elasticsearch-data:
-        driver: local
+    postgres-data:
+        driver_opts:
+            type: tmpfs
+            device: tmpfs
