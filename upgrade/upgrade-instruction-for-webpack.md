@@ -34,7 +34,6 @@ webpack_encore:
 
 - Remove folder `assets/js/plugins` (plugins are loaded with npm)
 
-TODO - update it !!!
 - Update your `package.json`
 ```diff
      "name": "shopsys",
@@ -46,29 +45,17 @@ TODO - update it !!!
 +        "trans": "./assets/js/bin/trans.js"
 +    },
 +    "dependencies": {
-+        "@babel/parser": "^7.7.7",
-+        "@babel/traverse": "^7.7.4",
-+        "bazinga-translator": "^2.6.6",
-+        "chart.js": "^2.9.3",
++        "@shopsys/framework": "9.0.0-dev.1",
 +        "codemirror": "^5.49.2",
-+        "counterup2": "^1.0.4",
-+        "jquery": "^3.4.1",
-+        "jquery-hoverintent": "^1.10.1",
-+        "jquery-minicolors": "^2.1.10",
 +        "jquery-ui": "^1.12.1",
 +        "jquery-ui-touch-punch": "^0.2.3",
 +        "jquery.cookie": "^1.4.1",
-+        "magnific-popup": "^1.1.0",
 +        "minilazyload": "^2.3.3",
-+        "ncp": "^2.0.0",
-+        "nestedSortable": "^1.3.4",
-+        "pofile": "^1.1.0",
-+        "select2": "^4.0.12",
-+        "sessionstorage": "^0.1.0",
-+        "slick-carousel": "1.6.0",
-+        "waypoints": "^4.0.1"
++        "slick-carousel": "1.6.0"
 +    },
      "devDependencies": {
++        "@babel/parser": "^7.7.7",
++        "@babel/traverse": "^7.7.4",
 +        "@symfony/webpack-encore": "^0.28.0",
          "autoprefixer": "^9.4.4",
 +        "copy-webpack-plugin": "^5.1.1",
@@ -92,73 +79,7 @@ TODO - update it !!!
 - Copy folder [`assets/js/bin`](https://github.com/shopsys/shopsys/tree/9.0/project-base/assets/js/bin) into your assets/js folder
 - Copy folder [`assets/js/utils`](https://github.com/shopsys/shopsys/tree/9.0/project-base/assets/js/utils) into your assets/js folder 
 
-// TODO check it !!!!
-- Create new js file `./assets/js/frontend.js` and import into it all your frontend javascripts (find inspiration on [GitHub](https://github.com/shopsys/shopsys/blob/9.0/project-base/assets/js/app.js)) or `frontend.js` can look like this:
-```js
-  import $ from 'jquery';
-
-  import showFormErrorsWindowOnFrontend from './frontend/utils/customizeBundle';
-  import CustomizeBundle from 'framework/common/validation/customizeBundle';
-  import Register from 'framework/common/utils/register';
-
-  import './frontend/cart/cartBox';
-  import './frontend/cart/cartRecalculator';
-  import './frontend/components/ajaxMoreLoader';
-  import './frontend/components/popup';
-  import './frontend/components/responsiveTabs';
-  import './frontend/order/order';
-  import './frontend/order/orderRememberData';
-  import './frontend/order/preview';
-  import './frontend/product/addProduct';
-  import './frontend/product/bestsellingProducts';
-  import './frontend/product/gallery';
-  import './frontend/product/productList.AjaxFilter';
-  import './frontend/product/productList';
-  import './frontend/product/productListCategoryToggler';
-  import './frontend/validation/form/customer';
-  import './frontend/validation/form/order';
-  import './frontend/categoryPanel.js';
-  import './frontend/constant.js';
-  import './frontend/cookies.js';
-  import './frontend/form.js';
-  import './frontend/history.js';
-  import './frontend/honeyPot.js';
-  import './frontend/lazyLoadInit.js';
-  import './frontend/legalConditions.js';
-  import './frontend/login.js';
-  import './frontend/modernizr.custom.js';
-  import './frontend/newsletterSubscriptionForm.js';
-  import './frontend/promoCode.js';
-  import './frontend/rangeSlider.js';
-  import './frontend/responsiveToggle.js';
-  import './frontend/responsiveTooltip.js';
-  import './frontend/safariDetection.js';
-  import './frontend/searchAutocomplete.js';
-  import './frontend/slickInit.js';
-  import './frontend/spinbox.js';
-  import './frontend/spinbox.window.js';
-  import './frontend/url.js';
-  import './frontend/window.js';
-  import './frontend/windowFunctions.js';
-
-  import 'framework/common/validation/customizeFpValidator';
-  import './frontend/validation/validationInit';
-  import 'framework/common/validation';
-
-  CustomizeBundle.showFormErrorsWindow = showFormErrorsWindowOnFrontend;
-
-  $(document).ready(function () {
-      const register = new Register();
-      register.registerNewContent($('body'));
-  });
-
-  $(window).on('popstate', function (event) {
-      const state = event.originalEvent.state;
-      if (state && state.hasOwnProperty('refreshOnPopstate') && state.refreshOnPopstate === true) {
-          location.reload();
-      }
-  });
-```
+- Create new js file `./assets/js/frontend.js` and import into it all your frontend javascripts (find inspiration on [GitHub](https://github.com/shopsys/shopsys/blob/9.0/project-base/assets/js/app.js))
 
 - Rename folder `assets/js/custom_admin` to `assets/js/admin`
 

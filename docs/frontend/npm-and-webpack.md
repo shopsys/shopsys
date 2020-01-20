@@ -11,7 +11,7 @@ A [webpack encore](https://github.com/symfony/webpack-encore) is powerful API fo
 
 ## What do we use them for?
 
-We use npm to manage and install frontend packages. 
+We use npm to manage and install frontend packages.
 We use npm also for maintain common scripts at [@shopsys/framework](https://www.npmjs.com/org/shopsys).
 
 To compile the code into something the browser understands we bundle the code through Webpack.
@@ -34,7 +34,7 @@ Once a dependency is installed you can use it in a JS file in your application.
 For example, if you install `counterup2` you can import and use it:
 
 ```js
-// assets/frontend/components/counterUpInit.js
+// assets/js/frontend/components/counterUpInit.js
 import counterUp from 'counterup2';
 
 export default function counterUpInit () {
@@ -50,11 +50,11 @@ When compiling your application the process is clever enough to understand when 
 However, you should import dependencies into each file to ensure that that particular file will work independently.
 
 If you want to add a new component that will listen to a certain event (for example), you have to import the component in the main file.
-For frontend, this is the `assets/frontend/frontend.js` file, for the administration is the `assets/admin/admin.js` file.
+For frontend, this is the `assets/js/frontend/frontend.js` file, for the administration is the `assets/js/admin/admin.js` file.
 The addition works just like a component installed over npm except that relative paths are used.
 
 ```js
-    // assets/frontend/frontend.js
+    // assets/js/frontend/frontend.js
     import './components/counterUpInit';
     // ...
 ```
@@ -68,7 +68,14 @@ The `npm run watch` command launches the webpack in development mode, which mean
 
 ## Constants and translations
 
-TODO ...
+In previous versions, the constants were automatically replaced from the backend to the frontend.
+This feature has been removed.
+Used constants have been moved to utils `assets/js/js/utils/constants.js`.
+It is up to you whether you have constants in this file or in individual files.
+We think that synchronization of frontend and backend constants is not necessary, but this point can be reopened in the future.
+
+By contrast, translations are included in the watch command, and with every change in the js file, the webpack finds the appropriate translations.
+You can manually generate translations using the `npm run trans` command. The resulting json translation file is created in the `assets/js/translations.json` and frontend works with this json file.
 
 ## Some use cases
 
@@ -82,16 +89,16 @@ TODO ...
 ### I want to add new javascript file to frontend
 
 - you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
-- you can create new javascript file (path of new file is `assets/frontend/myNewFile.js`)
+- you can create new javascript file (path of new file is `assets/js/frontend/myNewFile.js`)
 - you can use this new file in some other file (`import ./frontend/myNewFile.js`)
-- or, when file contains global event listener, import new file in `assets/frontend/frontend.js` (`import ./myNewFile.js`)
+- or, when file contains global event listener, import new file in `assets/js/frontend/frontend.js` (`import ./myNewFile.js`)
 
 ### I want to add new javascript file to admin
 
 - you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
-- you can create new javascript file (path of new file is `assets/admin/myNewFile.js`)
+- you can create new javascript file (path of new file is `assets/js/admin/myNewFile.js`)
 - you can use this new file in some other file (`import ./admin/myNewFile.js`)
-- or, when file contains global event listener, import new file in `assets/admin/admin.js` (`import ./myNewFile.js`)
+- or, when file contains global event listener, import new file in `assets/js/admin/admin.js` (`import ./myNewFile.js`)
 
 ### I want to add new package from npm repository
 
@@ -106,7 +113,7 @@ TODO ...
 For example, we can override method `showFormErrorsWindowOnFrontend` from `@shopsys/framework/common/validation/customizeBundle.js` on frontend.
 
 - you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
-- you have to import `CustomizeBundle` in `assets/frontend/frontend.js`
+- you have to import `CustomizeBundle` in `assets/js/frontend/frontend.js`
 ```js
 import CustomizeBundle from 'framework/common/validation/customizeBundle';
 // ...
