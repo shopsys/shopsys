@@ -4,7 +4,6 @@ tools:
     tflint:
         files:
             - project-base/infrastructure/google-cloud
-      
     kubeval:
         files:
             - "project-base/kubernetes/**/*.{yml,yaml}"
