@@ -1,0 +1,30 @@
+{% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Stocks overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Stocks overview'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('app_admin_stock_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+        <i class="btn__icon">+</i>{{ 'Create new stock'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+
+    <div class="js-multiple-grids-rows-unified">
+        {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+
+        {% if stocksCountOnSelectedDomain > 0 %}
+            <div class="wrap-divider wrap-divider--no-border">
+                <h2>{{ 'Stocks'|trans }}</h2>
+                {{ gridView.render() }}
+            </div>
+
+        {% else %}
+            <div class="in-message in-message--info">
+                {{ 'No stocks found on this domain. You have to create some first.'|trans }}
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

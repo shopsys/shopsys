@@ -1,0 +1,10 @@
+{% extends '@!ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('app_admin_stock_edit', { id: row.s.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'stocks'|trans %}
+    {{ parent() }}
+{% endblock %}

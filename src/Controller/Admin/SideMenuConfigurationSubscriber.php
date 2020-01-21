@@ -17,6 +17,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         return [
             ConfigureMenuEvent::SIDE_MENU_MARKETING => 'configureMarketingMenu',
             ConfigureMenuEvent::SIDE_MENU_PRICING => 'configurePricingMenu',
+            ConfigureMenuEvent::SIDE_MENU_PRODUCTS => 'configureStockMenu',
         ];
     }
 
@@ -39,5 +40,15 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $promoCodeMenu = $marketingMenu->getChild('promo_codes');
         $promoCodeMenu->addChild('promo_codes_new', ['route' => 'admin_promocode_new', 'display' => false, 'label' => t('Nový slevový kupóny')]);
         $promoCodeMenu->addChild('promo_codes_edit', ['route' => 'admin_promocode_edit', 'display' => false, 'label' => t('Editace slevového kupónu')]);
+    }
+
+    public function configureStockMenu(ConfigureMenuEvent $event): void
+    {
+        $menu = $event->getMenu();
+        $menu->addChild('stock', ['route' => 'app_admin_stock_list', 'label' => t('Skladovost')]);
+
+        $blogArticles = $menu->getChild('stock');
+        $blogArticles->addChild('new_stock', ['route' => 'app_admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
+        $blogArticles->addChild('edit_stock', ['route' => 'app_admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
     }
 }

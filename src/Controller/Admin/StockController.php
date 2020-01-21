@@ -1,0 +1,207 @@
+<?php
+
+declare(strict_types=1);
+
+
+namespace App\Controller\Admin;
+
+use App\Form\Admin\StockFormTypeExtension;
+use App\Model\Stock\Exception\StockNotFoundException;
+use App\Model\Stock\StockDataFactoryInterface;
+use App\Model\Stock\StockFacadeInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Article\Article;
+use Symfony\Component\HttpFoundation\Request;
+
+class StockController extends AdminBaseController
+{
+
+    /**
+     * @var \App\Model\Stock\StockFacadeInterface
+     */
+    private $stockFacade;
+    /**
+     * @var \App\Model\Stock\StockDataFactoryInterface
+     */
+    private $stockDataFactory;
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
+     */
+    private $adminDomainTabsFacade;
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
+     */
+    private $breadcrumbOverrider;
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
+     */
+    private $gridFactory;
+
+    public function __construct(
+        GridFactory $gridFactory,
+        BreadcrumbOverrider $breadcrumbOverrider,
+        AdminDomainTabsFacade $adminDomainTabsFacade,
+        StockFacadeInterface $stockFacade,
+        StockDataFactoryInterface $stockDataFactory
+    )
+    {
+        $this->stockFacade = $stockFacade;
+        $this->stockDataFactory = $stockDataFactory;
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
+        $this->breadcrumbOverrider = $breadcrumbOverrider;
+        $this->gridFactory = $gridFactory;
+    }
+
+    /**
+     * @Route("/stock/list/")
+     */
+    public function listAction()
+    {
+        $grid = $this->getGrid();
+
+        $articlesCountOnSelectedDomain = $this->stockFacade->getAllStockCountByDomainId($this->adminDomainTabsFacade->getSelectedDomainId());
+
+        return $this->render('Admin/Content/Stock/list.html.twig', [
+            'gridView' => $grid->createView(),
+            'stocksCountOnSelectedDomain' => $articlesCountOnSelectedDomain,
+        ]);
+    }
+
+    /**
+     * @Route("/stock/new/")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function newAction(Request $request)
+    {
+        $stockData = $this->stockDataFactory->create();
+
+        $form = $this->createForm(StockFormTypeExtension::class, $stockData, [
+            'stock' => null,
+            'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $stockData = $form->getData();
+
+            $stock = $this->stockFacade->create($stockData);
+
+            $this->getFlashMessageSender()
+                ->addSuccessFlashTwig(
+                    t('Stock <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
+                    [
+                        'name' => $stock->getName(),
+                        'url' => $this->generateUrl('app_admin_stock_edit', ['id' => $stock->getId()]),
+                    ]
+                );
+            return $this->redirectToRoute('app_admin_stock_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
+        return $this->render('Admin/Content/Stock/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/stock/edit/{id}", requirements={"id" = "\d+"})
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $id
+     */
+    public function editAction(Request $request,int $id)
+    {
+        $stock = $this->stockFacade->getById($id);
+        $stockData = $this->stockDataFactory->createFromStock($stock);
+
+        $form = $this->createForm(StockFormTypeExtension::class, $stockData, [
+            'stock' => $stock,
+            'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->stockFacade->edit($id, $stockData);
+
+            $this->getFlashMessageSender()
+                ->addSuccessFlashTwig(
+                    t('Stock <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
+                    [
+                        'name' => $stock->getName(),
+                        'url' => $this->generateUrl('app_admin_stock_edit', ['id' => $stock->getId()]),
+                    ]
+                );
+            return $this->redirectToRoute('app_admin_stock_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
+        $this->breadcrumbOverrider->overrideLastItem(t('Editing stock - %name%', ['%name%' => $stock->getName()]));
+
+        return $this->render('Admin/Content/Stock/edit.html.twig', [
+            'form' => $form->createView(),
+            'stock' => $stock,
+        ]);
+    }
+
+    /**
+     * @Route("/stock/delete/{id}", requirements={"id" = "\d+"})
+     * @CsrfProtection
+     * @param int $id
+     */
+    public function deleteAction(int $id)
+    {
+        try {
+            $fullName = $this->stockFacade->getById($id)->getName();
+
+            $this->stockFacade->delete($id);
+
+            $this->getFlashMessageSender()->addSuccessFlashTwig(
+                t('Stock <strong>{{ name }}</strong> deleted'),
+                [
+                    'name' => $fullName,
+                ]
+            );
+        } catch (StockNotFoundException $ex) {
+            $this->getFlashMessageSender()->addErrorFlash(t('Selected stock doesn\'t exist.'));
+        }
+
+        return $this->redirectToRoute('app_admin_stock_list');
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGrid()
+    {
+        $queryBuilder = $this->stockFacade->getAllStockQueryBuilderByDomain(
+            $this->adminDomainTabsFacade->getSelectedDomainId()
+        );
+
+        $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
+
+        $grid = $this->gridFactory->create('stockList', $dataSource);
+
+        $grid->setDefaultOrder('position');
+
+        $grid->addColumn('name', 's.name', t('Name'));
+
+        $grid->setActionColumnClassAttribute('table-col table-col-10');
+        $grid->addEditActionColumn('app_admin_stock_edit', ['id' => 's.id']);
+        $grid->addDeleteActionColumn('app_admin_stock_delete', ['id' => 's.id']);
+
+        $grid->setTheme('Admin/Content/Stock/listGrid.html.twig');
+
+        return $grid;
+    }
+}
