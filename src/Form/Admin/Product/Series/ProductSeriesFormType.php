@@ -229,11 +229,11 @@ class ProductSeriesFormType extends AbstractType
     }
 
     /**
-     * @param $locale
+     * @param string $locale
      * @param \App\Model\Product\Series\ProductSeries|null $productSeries
      * @return string|null
      */
-    private function getTitlePlaceholder($locale, ?ProductSeries $productSeries = null)
+    private function getTitlePlaceholder(string $locale, ?ProductSeries $productSeries = null)
     {
         return $productSeries !== null ? $productSeries->getName($locale) : '';
     }

@@ -37,10 +37,10 @@ class ProductSeriesRepository
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return \App\Model\Product\Series\ProductSeries
      */
-    public function findById($id): ProductSeries
+    public function findById(int $id): ProductSeries
     {
         $productSeries = $this->getRepository()->find($id);
         if ($productSeries === null) {

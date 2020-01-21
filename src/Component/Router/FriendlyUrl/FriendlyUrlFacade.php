@@ -48,7 +48,11 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
      */
     public function createFriendlyUrlForDomain($routeName, $entityId, $entityName, $domainId, $prefixes = [])
     {
-        $friendlyUrl = $this->friendlyUrlFactory->createFromPartsIfValid($routeName, $entityId, (string)$entityName, $domainId, null, $prefixes);
+        /**
+         * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFactory
+         */
+        $friendlyUrlFactory = $this->friendlyUrlFactory;
+        $friendlyUrl = $friendlyUrlFactory->createFromPartsIfValid($routeName, $entityId, (string)$entityName, $domainId, null, $prefixes);
         if ($friendlyUrl !== null) {
             $this->resolveUniquenessOfFriendlyUrlAndFlush($friendlyUrl, $entityName, $prefixes);
         }

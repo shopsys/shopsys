@@ -38,7 +38,11 @@ class FriendlyUrlUniqueResultFactory extends BaseFriendlyUrlUniqueResultFactory
             return new FriendlyUrlUniqueResult(true, null);
         }
 
-        $newIndexedFriendlyUrl = $this->friendlyUrlFactory->createFromPartsIfValid(
+        /**
+         * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFactory
+         */
+        $friendlyUrlFactory = $this->friendlyUrlFactory;
+        $newIndexedFriendlyUrl = $friendlyUrlFactory->createFromPartsIfValid(
             $friendlyUrl->getRouteName(),
             $friendlyUrl->getEntityId(),
             (string)$entityName,
