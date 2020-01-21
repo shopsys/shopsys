@@ -511,7 +511,7 @@ There you can find links to upgrade notes for other versions too.
         ```
 
 - fix footer advert background and image position ([#1590](https://github.com/shopsys/shopsys/pull/1590))
-    - if you have custom design you can skip this loadNpmTasks
+    - if you have custom design you can skip this
     - add footer modification to `src/Resources/styles/front/common/components/in/place.less`
         ```diff
               .in-place {
@@ -525,7 +525,7 @@ There you can find links to upgrade notes for other versions too.
             }
         ```
 
-    - remove unneede class from `src/Resources/styles/front/common/todo.less` if you have it There
+    - remove class `.in-place.in-place--footer` in `src/Resources/styles/front/common/todo.less` as it's no longer necessary
         ```diff
         - .in-place.in-place--footer {
         -     padding-top: 10px;
