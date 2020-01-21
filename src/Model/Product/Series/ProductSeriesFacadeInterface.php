@@ -21,6 +21,11 @@ interface ProductSeriesFacadeInterface
 
     /**
      * @param int $id
+     */
+    public function delete(int $id): void;
+
+    /**
+     * @param int $id
      * @return \App\Model\Product\Series\ProductSeries
      */
     public function getById(int $id): ProductSeries;
@@ -31,4 +36,9 @@ interface ProductSeriesFacadeInterface
      * @return \App\Model\Product\Series\ProductSeries
      */
     public function getVisibleProductSeriesById(int $id, int $domainId): ProductSeries;
+
+    /**
+     * @return \App\Model\Product\Series\ProductSeries[]
+     */
+    public function getAllVisibleProductSeriesByDomain(): array;
 }

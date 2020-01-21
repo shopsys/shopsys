@@ -57,6 +57,23 @@ services:
 
     App\Model\Product\Series\ProductSeriesDataFactoryInterface: '@App\Model\Product\Series\ProductSeriesDataFactory'
 
+    App\Model\Product\Series\Grid\ProductSeriesGridFactory: ~
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade:
+        class: App\Component\Router\FriendlyUrl\FriendlyUrlFacade
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory:
+        class: App\Component\Router\FriendlyUrl\FriendlyUrlFactory
+
+    App\Component\Router\FriendlyUrl\FriendlyUrlFactory: ~
+
+    App\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface: '@App\Component\Router\FriendlyUrl\FriendlyUrlFactory'
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface: '@App\Component\Router\FriendlyUrl\FriendlyUrlFactory'
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory:
+        class: App\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory
+
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface: '@App\Model\Order\PromoCode\PromoCodeDataFactory'

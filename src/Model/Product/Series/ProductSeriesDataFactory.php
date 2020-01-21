@@ -10,26 +10,31 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class ProductSeriesDataFactory implements ProductSeriesDataFactoryInterface
 {
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
      */
     private $imageFacade;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
      */
     private $friendlyUrlFacade;
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     */
     public function __construct(
         Domain $domain,
         ImageFacade $imageFacade,
         FriendlyUrlFacade $friendlyUrlFacade
-    )
-    {
+    ) {
         $this->domain = $domain;
         $this->imageFacade = $imageFacade;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
@@ -40,9 +45,25 @@ class ProductSeriesDataFactory implements ProductSeriesDataFactoryInterface
      */
     public function create(): ProductSeriesData
     {
-        return new ProductSeriesData();
+        $productSeriesData = new ProductSeriesData();
+        $this->fillDefaultData($productSeriesData);
+        return $productSeriesData;
     }
 
+    /**
+     * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
+     */
+    private function fillDefaultData(ProductSeriesData $productSeriesData)
+    {
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productSeriesData->hidden[$domainId] = true;
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Series\ProductSeries $productSeries
+     * @return \App\Model\Product\Series\ProductSeriesData
+     */
     public function createFromProductSeries(ProductSeries $productSeries): ProductSeriesData
     {
         $productSeriesData = $this->create();
@@ -70,9 +91,6 @@ class ProductSeriesDataFactory implements ProductSeriesDataFactoryInterface
 
         $productSeriesData->images->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($productSeries, null);
 
-
         return $productSeriesData;
     }
-
-
 }

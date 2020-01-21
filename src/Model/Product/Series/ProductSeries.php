@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Model\Product\Series;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException;
 
 /**
@@ -18,7 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundExcepti
  */
 class ProductSeries extends AbstractTranslatableEntity
 {
-    public const BASE_FRIENDY_URL = 'produktove-programy/';
+    public const BASE_FRIENDY_URL_CZ = 'nabytkove-programy';
 
     /**
      * @var int
@@ -71,7 +71,6 @@ class ProductSeries extends AbstractTranslatableEntity
         foreach ($productSeriesData->names as $locale => $name) {
             $this->translation($locale)->setName($name);
         }
-
 
         foreach ($productSeriesData->descriptions as $locale => $description) {
             $this->translation($locale)->setDescription($description);

@@ -1,4 +1,4 @@
-{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
 {% block title %}- {{ 'Produktové programy'|trans }}{% endblock %}
 {% block h1 %}{{ 'Produktové programy'|trans }}{% endblock %}
@@ -20,8 +20,8 @@
                                 {% endif %}
                             </div>
                             <div class="form-line__item form-line__item--text">
-                                <a href="{{ findUrlByDomainId('front_brand_list', {}, domain.id) }}" target="_blank">
-                                    {{ findUrlByDomainId('front_brand_list', {}, domain.id) }}
+                                <a href="{{ findUrlByDomainId('front_productseries_list', {}, domain.id) }}" target="_blank">
+                                    {{ findUrlByDomainId('front_productseries_list', {}, domain.id) }}
                                 </a>
                             </div>
                         </div>
@@ -36,5 +36,5 @@
             {{ 'Vytvořit nový produtový program'|trans }}
         </a>
     </div>
-{#    {{ gridView.render() }}#}
+    {{ gridView.render() }}
 {% endblock %}

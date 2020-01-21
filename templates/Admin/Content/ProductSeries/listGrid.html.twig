@@ -1,0 +1,14 @@
+{% extends '@!ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('admin_productseries_edit', { id: row.ps.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_no_data %}
+    <a href="{{ url('admin_productseries_new') }}">{{ 'No product series found. You have to create some first.'|trans }}</a>
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'productSeries'|trans %}
+    {{ parent() }}
+{% endblock %}

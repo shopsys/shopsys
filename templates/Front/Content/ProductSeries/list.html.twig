@@ -1,0 +1,37 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% set domain = getDomain() %}
+{% block meta_description %}
+    {{- "Nábytkové programy"|trans|default(getSeoMetaDescription()) -}}
+{% endblock %}
+
+{% block title %}
+    {{- "Nábytkové programy"|trans -}}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line">
+        <div class="web__container">
+            <h1>{{ "Nábytkové programy"|trans }}</h1>
+            <p>
+                {{ "Zde najdete přehled všech nábytkových programů."|trans }}
+            </p>
+            {% for series in productSeries %}
+                <div class="box-detail">
+                    <h3><a href="{{ url('front_productseries_detail', { id: series.id }) }}">{{ series.getName(domain.locale) }}</a></h3>
+                    <div class="box-detail__image">
+                        <div class="box-detail__image__main">
+                            {% if imageExists(series) %}
+                                <a href="{{ imageUrl(series, 'original') }}" class="js-popup-image">
+                                    {{ image(series, { itemprop: 'image' }) }}
+                                </a>
+                            {% else %}
+                                {{ noimage({ alt: series.getName(domain.locale) }) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

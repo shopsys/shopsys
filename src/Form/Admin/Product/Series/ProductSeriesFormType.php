@@ -8,16 +8,15 @@ use App\Model\Product\Series\ProductSeries;
 use App\Model\Product\Series\ProductSeriesData;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\MultidomainType;
+use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -94,7 +93,7 @@ class ProductSeriesFormType extends AbstractType
         ]);
 
         $builderDescriptionGroup->add('names', LocalizedType::class, [
-            'required' => false,
+            'required' => true,
             'entry_type' => TextType::class,
             'entry_options' => [
                 'constraints' => [
@@ -106,30 +105,27 @@ class ProductSeriesFormType extends AbstractType
         ->add('descriptions', LocalizedType::class, [
             'label' => t('Popis'),
             'entry_type' => CKEditorType::class,
-            'required' => false,
+            'required' => true,
             'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
         ]);
 
         return $builderDescriptionGroup;
     }
 
-    private function createVisibilityGroup(FormBuilderInterface $builder){
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function createVisibilityGroup(FormBuilderInterface $builder)
+    {
         $builderVisibilityGroup = $builder->create('visibilityGroup', GroupType::class, [
             'label' => t('Viditelnost'),
         ]);
 
-        $domainLabelOptions = [];
-        foreach ($this->domain->getAll() as $domain){
-            $domainLabelOptions[$domain->getId()]['label'] = t('Skrýt pro '  . $domain->getName());
-        }
-
         $builderVisibilityGroup
             ->add('hidden', MultidomainType::class, [
-                'entry_type' => CheckboxType::class,
+                'entry_type' => YesNoType::class,
                 'required' => false,
-                'entry_options' => ['data' => true],
                 'label' => t('Skrýt'),
-                'options_by_domain_id' => $domainLabelOptions,
             ]);
         return $builderVisibilityGroup;
     }
@@ -214,7 +210,7 @@ class ProductSeriesFormType extends AbstractType
         $builderImageGroup
             ->add('images', ImageUploadType::class, [
                 'required' => false,
-                'image_entity_class' => Product::class,
+                'image_entity_class' => ProductSeries::class,
                 'file_constraints' => [
                     new Constraints\Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],

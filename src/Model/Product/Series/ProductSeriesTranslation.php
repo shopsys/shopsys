@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Series;
 
-use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Doctrine\ORM\Mapping as ORM;
+use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 
 /**
  * @ORM\Table(name="product_series_translations")
