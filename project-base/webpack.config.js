@@ -13,7 +13,7 @@ Encore
     .setPublicPath('/build')
     .setManifestKeyPrefix('web')
     .cleanupOutputBeforeBuild()
-    .addEntry('app', './assets/js/app.js')
+    .addEntry('frontend', './assets/js/frontend.js')
     // hp entry?
     // order entry?
     // product entry?

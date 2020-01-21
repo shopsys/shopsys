@@ -993,7 +993,7 @@
         },
         "files": [
             "assets/css/app.css",
-            "assets/js/app.js",
+            "assets/js/frontend.js",
             "project-base/config/packages/assets.yaml",
             "project-base/config/packages/prod/webpack_encore.yaml",
             "project-base/config/packages/test/webpack_encore.yaml",

@@ -1,7 +1,7 @@
-/* eslint-disable no-new */
 import MiniLazyload from 'minilazyload';
 import Register from 'framework/common/utils/register';
 
+/* eslint-disable no-new */
 new MiniLazyload({
     rootMargin: '500px',
     threshold: 0.5,

@@ -57,9 +57,6 @@ RUN docker-php-ext-install \
     pdo_pgsql \
     zip
 
-# hotfix for https://github.com/npm/cli/issues/613
-RUN npm install -g npm@6.13.2
-
 # install grunt cli used by frontend developers for continuous generating of css files
 RUN npm install -g grunt-cli
 
@@ -93,11 +90,11 @@ RUN usermod -m -d /home/www-data www-data && \
     mkdir -p /var/www/html && \
     chown -R www-data:www-data /home/www-data /var/www/html
 
-RUN mkdir /home/www-data/.npm-global
-ENV NPM_CONFIG_PREFIX /home/www-data/.npm-global
-
 # Switch to user
 USER www-data
+
+RUN mkdir /home/www-data/.npm-global
+ENV NPM_CONFIG_PREFIX /home/www-data/.npm-global
 
 # hirak/prestissimo makes the install of Composer dependencies faster by parallel downloading
 RUN composer global require hirak/prestissimo

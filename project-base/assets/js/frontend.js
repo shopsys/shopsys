@@ -25,7 +25,7 @@ import './frontend/product';
 import './frontend/cart/cartBox';
 
 // cart entry?
-import './frontend/cart/cartRecalculator';
+import './frontend/cart';
 
 import 'framework/common/validation/customizeFpValidator';
 import './frontend/validation/validationInit';

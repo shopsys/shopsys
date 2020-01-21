@@ -262,6 +262,11 @@ Builds CSS from LESS via Grunt.
 
 Useful when modifying only LESS files.
 
+#### npm-watch
+Webpack keep ‘watch’-ing for any changes we make in our code and once we save the changes, it will rerun by itself to rebuild the package.
+
+Useful when modifying only js files.
+
 #### translations-dump
 Extracts translatable messages from the whole project including back-end.
 

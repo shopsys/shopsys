@@ -10,6 +10,8 @@
     },
     "preferGlobal": false,
     "devDependencies": {
+        "@babel/parser": "^7.7.7",
+        "@babel/traverse": "^7.7.4",
         "@symfony/webpack-encore": "^0.28.0",
         "autoprefixer": "^9.4.4",
         "copy-webpack-plugin": "^5.1.1",
@@ -38,8 +40,6 @@
         "pofile": "^1.1.0"
     },
     "dependencies": {
-        "@babel/parser": "^7.7.7",
-        "@babel/traverse": "^7.7.4",
         "@shopsys/framework": "9.0.0-dev.1",
         "codemirror": "^5.49.2",
         "jquery-ui": "^1.12.1",
