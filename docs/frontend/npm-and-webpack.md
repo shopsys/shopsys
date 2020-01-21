@@ -76,6 +76,7 @@ We think that synchronization of frontend and backend constants is not necessary
 
 By contrast, translations are included in the watch command, and with every change in the js file, the webpack finds the appropriate translations.
 You can manually generate translations using the `npm run trans` command. The resulting json translation file is created in the `assets/js/translations.json` and frontend works with this json file.
+How to work with translation you can read [translation](../introduction/translations.md) article.
 
 ## Some use cases
 
