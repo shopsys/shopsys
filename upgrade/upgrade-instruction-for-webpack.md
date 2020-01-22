@@ -79,7 +79,7 @@ webpack_encore:
 - Copy folder [`assets/js/bin`](https://github.com/shopsys/shopsys/tree/9.0/project-base/assets/js/bin) into your assets/js folder
 - Copy folder [`assets/js/utils`](https://github.com/shopsys/shopsys/tree/9.0/project-base/assets/js/utils) into your assets/js folder 
 
-- Create new js file `./assets/js/frontend.js` and import into it all your frontend javascripts (find inspiration on [GitHub](https://github.com/shopsys/shopsys/blob/9.0/project-base/assets/js/app.js))
+- Create new js file `./assets/js/frontend.js` and import into it all your frontend javascripts (find inspiration on [GitHub](https://github.com/shopsys/shopsys/blob/9.0/project-base/assets/js/frontend.js))
 
 - Rename folder `assets/js/custom_admin` to `assets/js/admin`
 
@@ -146,6 +146,8 @@ import 'framework/admin/jquery';
 ```diff
 + /assets/js/translations.json
 ```
+
+- Remove folder `tests/App/Functional/Component/Javascript`
 
 # Necessary steps to build javascripts
 
