@@ -311,9 +311,9 @@ There you can find links to upgrade notes for other versions too.
         -  *     name="users",
         +  *     name="customer_users",
            *     uniqueConstraints={
-        ``` 
+        ```
     - there were reorganized `User*` and `Customer*` classes and related methods
-        - these classes were renamed and/or moved to different namespace, walk through all code occurrences and process changes 
+        - these classes were renamed and/or moved to different namespace, walk through all code occurrences and process changes
             - `App\Form\Admin\UserFormTypeExtension` to `App\Form\Admin\CustomerUserFormTypeExtension`
             - `Shopsys\FrameworkBundle\Form\Admin\Customer\CustomerFormType` to `Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserUpdateFormType`
             - `Shopsys\FrameworkBundle\Form\Admin\Customer\UserFormType` to `Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType`
@@ -402,7 +402,7 @@ There you can find links to upgrade notes for other versions too.
         ```diff
         -   main_variant
         +   is_main_variant
-         
+
         +   "uuid": {
         +      "type": "text"
         +   },
@@ -501,13 +501,46 @@ There you can find links to upgrade notes for other versions too.
         +   ): ProductFilterCountData;
 
         //...
- 
+
         -   public function getProductFilterCountDataForSearch($searchText, ProductFilterConfig $productFilterConfig, ProductFilterData $productFilterData);
         +   public function getProductFilterCountDataForSearch(
         +       ?string $searchText,
         +       ProductFilterConfig $productFilterConfig,
         +       ProductFilterData $productFilterData
         +   ): ProductFilterCountData;
+        ```
+
+- fix footer advert background and image position ([#1590](https://github.com/shopsys/shopsys/pull/1590))
+    - if you have custom design you can skip this
+    - add footer modification to `src/Resources/styles/front/common/components/in/place.less`
+        ```diff
+              .in-place {
+                  margin-bottom: @in-place-margin;
+                  text-align: center;
+        +
+        +         &--footer {
+        +             padding: 10px 0;
+        +             margin-bottom: 0;
+        +         }
+            }
+        ```
+
+    - remove class `.in-place.in-place--footer` in `src/Resources/styles/front/common/todo.less` as it's no longer necessary
+        ```diff
+        - .in-place.in-place--footer {
+        -     padding-top: 10px;
+        - }
+        ```
+
+    - change classes in `templates/Front/Layout/footer.html.twig`
+        ```diff
+        - <div class="web__line web__line--split dont-print">
+        -     <div class="web__container footer__top">
+        + <div class="web__line web__line--grey dont-print">
+        +     <div class="web__container">
+                  {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'footer'})) }}
+              </div>
+          </div>
         ```
 
 ### Tools
