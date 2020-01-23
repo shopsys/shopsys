@@ -1,0 +1,45 @@
+version: "3.4"
+services:
+    webserver:
+        restart: always
+        image: nginx:1.13-alpine
+        depends_on:
+            - php-fpm
+        volumes:
+            - web-volume:/var/www/html/web
+            - nginx-conf:/etc/nginx/conf.d/
+        ports:
+            - 8080
+        environment:
+            LETSENCRYPT_HOST: ${HOSTS}
+            VIRTUAL_HOST: ${HOSTS}
+            VIRTUAL_PORT: 8080
+        networks:
+            - default
+            - nginx-proxy-network
+
+    php-fpm:
+        restart: always
+        image: ${TAG}
+        volumes:
+            - web-volume:/var/www/html/web
+            - nginx-conf:/var/www/html/docker/nginx
+        environment:
+            ELASTIC_SEARCH_INDEX_PREFIX: ${PHP_FPM_IMAGE_NAME}
+            IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
+            REDIS_PREFIX: ${PHP_FPM_IMAGE_NAME}
+        networks:
+            - default
+            - services-network
+
+volumes:
+    web-volume:
+    nginx-conf:
+
+networks:
+    nginx-proxy-network:
+        external:
+            name: ${CI_NGINX_PROXY_NETWORK}
+    services-network:
+        external:
+            name: ${CI_NETWORK}
