@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 /**
  * @ORM\Table(name="blog_articles")
  * @ORM\Entity
+ *
+ * @method translation($locale = null): BlogArticleTranslation
  */
 class BlogArticle extends AbstractTranslatableEntity
 {
@@ -39,7 +41,7 @@ class BlogArticle extends AbstractTranslatableEntity
     private $blogArticleBlogCategoryDomains;
 
     /**
-     * @var \App\Model\Blog\Article\BlogArticleTranslation[]
+     * @var \App\Model\Blog\Article\BlogArticleTranslation[]|\Doctrine\Common\Collections\ArrayCollection
      *
      * @Prezent\Translations(targetEntity="App\Model\Blog\Article\BlogArticleTranslation")
      */
@@ -100,7 +102,7 @@ class BlogArticle extends AbstractTranslatableEntity
         $this->setTranslations($blogArticleData);
 
         $this->hidden = $blogArticleData->hidden;
-        $this->createdAt = $blogArticleData->createdAt ?? new DateTime();
+        $this->createdAt = new DateTime();
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
         $this->publishDate = $blogArticleData->publishDate ?? new DateTime();
         $this->products = new ArrayCollection($blogArticleData->products);
@@ -170,7 +172,6 @@ class BlogArticle extends AbstractTranslatableEntity
     /**
      * @param \App\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory
      * @param array $blogCategoriesByDomainId
-     * @param \App\Model\Blog\Category\BlogCategory[]
      */
     public function setCategories(
         BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
@@ -203,7 +204,7 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \App\Model\Category\Category[] $newBlogCategories
+     * @param \App\Model\Blog\Category\BlogCategory[] $newBlogCategories
      * @param int $domainId
      */
     private function removeOldBlogArticleBlogCategoryDomains(array $newBlogCategories, int $domainId): void
@@ -235,7 +236,7 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \App\Model\Category\Category[]
+     * @return \App\Model\Blog\Category\BlogCategory[][]
      */
     public function getBlogCategoriesIndexedByDomainId()
     {
@@ -307,7 +308,6 @@ class BlogArticle extends AbstractTranslatableEntity
 
     /**
      * @param string|null $locale
-     * @param string locale
      * @return string|null
      */
     public function getDescription(?string $locale = null): ?string

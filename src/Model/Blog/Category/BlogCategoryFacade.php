@@ -160,7 +160,7 @@ class BlogCategoryFacade
         $rootCategory = $this->getRootBlogCategory();
 
         foreach ($parentIdByBlogCategoryId as $blogCategoryId => $parentId) {
-            if ($parentId === null) {
+            if ($parentId == null) {
                 $parent = $rootCategory;
             } else {
                 $parent = $this->blogCategoryRepository->getById($parentId);
@@ -200,7 +200,7 @@ class BlogCategoryFacade
 
     /**
      * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[]
+     * @return \App\Model\Blog\Category\BlogCategoryWithPreloadedChildren[]
      */
     public function getAllBlogCategoriesWithPreloadedChildren(string $locale): array
     {
@@ -213,7 +213,7 @@ class BlogCategoryFacade
     /**
      * @param int $domainId
      * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[]
+     * @return \App\Model\Blog\Category\BlogCategoryWithPreloadedChildren[]
      */
     public function getVisibleBlogCategoriesWithPreloadedChildrenOnDomain(int $domainId, string $locale): array
     {

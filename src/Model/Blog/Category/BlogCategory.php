@@ -15,6 +15,9 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @Gedmo\Tree(type="nested")
  * @ORM\Table(name="blog_categories")
  * @ORM\Entity
+ *
+ * @method translation($locale = null): BlogCategoryTranslation
+ *
  */
 class BlogCategory extends AbstractTranslatableEntity
 {
@@ -30,7 +33,7 @@ class BlogCategory extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \App\Model\Blog\Category\BlogCategoryTranslation[]
+     * @var \App\Model\Blog\Category\BlogCategoryTranslation[]|\Doctrine\Common\Collections\ArrayCollection
      *
      * @Prezent\Translations(targetEntity="App\Model\Blog\Category\BlogCategoryTranslation")
      */
@@ -269,7 +272,6 @@ class BlogCategory extends AbstractTranslatableEntity
 
     /**
      * @param string|null $locale
-     * @param string locale
      * @return string|null
      */
     public function getDescription(?string $locale = null): ?string

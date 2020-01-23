@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder;
+use Doctrine\ORM\QueryBuilder;
 
 class BlogCategoryRepository extends NestedTreeRepository
 {
@@ -43,7 +43,7 @@ class BlogCategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     private function getAllQueryBuilder(): QueryBuilder
     {
@@ -180,7 +180,7 @@ class BlogCategoryRepository extends NestedTreeRepository
 
     /**
      * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     private function getPreOrderTreeTraversalForAllBlogCategoriesQueryBuilder(string $locale): QueryBuilder
     {
@@ -195,7 +195,7 @@ class BlogCategoryRepository extends NestedTreeRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder $blogCategoriesQueryBuilder
+     * @param \Doctrine\ORM\QueryBuilder $blogCategoriesQueryBuilder
      * @param string $locale
      */
     protected function addTranslation(QueryBuilder $blogCategoriesQueryBuilder, string $locale): void
@@ -208,7 +208,7 @@ class BlogCategoryRepository extends NestedTreeRepository
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getAllVisibleByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
