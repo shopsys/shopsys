@@ -5,16 +5,37 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use Shopsys\FormTypesBundle\MultidomainType;
+use App\Model\Product\ProductData;
+use App\Model\Stock\StockFacadeInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
 class ProductFormTypeExtension extends AbstractTypeExtension
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private $domain;
+    /**
+     * @var \App\Model\Stock\StockFacadeInterface
+     */
+    private $stockFacade;
+
+    public function __construct(Domain $domain, StockFacadeInterface $stockFacade)
+    {
+        $this->domain = $domain;
+        $this->stockFacade = $stockFacade;
+
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -47,6 +68,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $this->setShortDescriptionsUspGroup($builder, $options);
+
+        $builder->get('displayAvailabilityGroup')->get('stockGroup')->remove('stockQuantity');
+        $this->stocksGroup($builder, $options);
     }
 
     /**
@@ -109,6 +133,26 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $builderSeoGroup = $builder->get('seoGroup');
 
         $builderSeoGroup->remove('seoH1s');
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function stocksGroup(FormBuilderInterface $builder, array $options){
+        $stockGroupBuilder = $builder->create('stocksGroup', GroupType::class, [
+            'label' => t('Stocks'),
+        ]);
+
+        d($builder->getData());
+
+        $stockGroupBuilder->add('stockProductData', StocksProductFormType::class,[
+            'required' => false,
+            'data' => $builder->getData()->stockProductData,
+
+        ]);
+
+        $builder->add($stockGroupBuilder);
     }
 
     /**

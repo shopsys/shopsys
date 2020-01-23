@@ -49,6 +49,11 @@ class ProductData extends BaseProductData
      */
     public $nameSufix;
 
+    /**
+     * @var \App\Model\Stock\StockProductData[]
+     */
+    public $stockProductData;
+
     public function __construct()
     {
         parent::__construct();
@@ -60,5 +65,7 @@ class ProductData extends BaseProductData
         $this->shortDescriptionUsp5 = [];
         $this->namePrefix = [];
         $this->nameSufix = [];
+        $this->stockProductData = [];
     }
+
 }

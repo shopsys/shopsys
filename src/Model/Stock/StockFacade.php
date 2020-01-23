@@ -88,9 +88,30 @@ class StockFacade implements StockFacadeInterface
         return $this->stockRepository->getStockByDomainQueryBuilder($domainId);
     }
 
+    /**
+     * @param int $domainId
+     * @return int
+     */
     public function getAllStockCountByDomainId(int $domainId): int
     {
         return $this->stockRepository->getAllStockCountByDomainId($domainId);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Stock\Stock[]
+     */
+    public function getAllStocksByDomainId(int $domainId): array
+    {
+        return $this->stockRepository->getAllStockByDomain($domainId);
+    }
+
+    /**
+     * @return \App\Model\Stock\Stock[]
+     */
+    public function getAllStocks(): array
+    {
+        return $this->stockRepository->getAllStocks();
     }
 
 

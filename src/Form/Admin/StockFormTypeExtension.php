@@ -12,7 +12,6 @@ use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +20,11 @@ use Symfony\Component\Validator\Constraints;
 
 class StockFormTypeExtension extends AbstractType
 {
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $stockDataBuilder = $builder->create('stockData', GroupType::class, [
@@ -47,13 +51,20 @@ class StockFormTypeExtension extends AbstractType
             'required' => false,
             'label' => t('Central stock'),
         ])
-        ->add('externalId', HiddenType::class);
+        ->add('externalId', TextType::class,
+            [
+                'required' => false,
+                'label' => t('External bridge ID'),
+            ]
+        );
 
         $builder->add($stockDataBuilder);
         $builder->add('save', SubmitType::class);
     }
 
-
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver

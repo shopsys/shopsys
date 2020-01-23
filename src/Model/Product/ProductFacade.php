@@ -7,6 +7,30 @@ namespace App\Model\Product;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
+use App\Model\Stock\StockProductDataFactoryInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler;
 
 /**
  * @method \App\Model\Product\Product getById(int $productId)
@@ -38,12 +62,55 @@ class ProductFacade extends BaseProductFacade
         }
     }
 
+    private $stockProductDataFactory;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        ProductRepository $productRepository,
+        ProductVisibilityFacade $productVisibilityFacade,
+        ParameterRepository $parameterRepository,
+        Domain $domain,
+        ImageFacade $imageFacade,
+        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
+        PricingGroupRepository $pricingGroupRepository,
+        ProductManualInputPriceFacade $productManualInputPriceFacade,
+        ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
+        FriendlyUrlFacade $friendlyUrlFacade,
+        ProductHiddenRecalculator $productHiddenRecalculator,
+        ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
+        ProductAccessoryRepository $productAccessoryRepository,
+        AvailabilityFacade $availabilityFacade,
+        PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+        ProductFactoryInterface $productFactory,
+        ProductAccessoryFactoryInterface $productAccessoryFactory,
+        ProductCategoryDomainFactoryInterface $productCategoryDomainFactory,
+        ProductParameterValueFactoryInterface $productParameterValueFactory,
+        ProductVisibilityFactoryInterface $productVisibilityFactory,
+        ProductPriceCalculation $productPriceCalculation,
+        ProductSearchExportScheduler $productSearchExportScheduler,
+        StockProductDataFactoryInterface $stockProductDataFactory
+    )
+    {
+        parent::__construct($em, $productRepository, $productVisibilityFacade, $parameterRepository, $domain, $imageFacade, $productPriceRecalculationScheduler, $pricingGroupRepository, $productManualInputPriceFacade, $productAvailabilityRecalculationScheduler, $friendlyUrlFacade, $productHiddenRecalculator, $productSellingDeniedRecalculator, $productAccessoryRepository, $availabilityFacade, $pluginCrudExtensionFacade, $productFactory, $productAccessoryFactory, $productCategoryDomainFactory, $productParameterValueFactory, $productVisibilityFactory, $productPriceCalculation, $productSearchExportScheduler);
+        $this->stockProductDataFactory = $stockProductDataFactory;
+    }
+
+    public function create(\Shopsys\FrameworkBundle\Model\Product\ProductData $productData)
+    {
+
+        $this->initStocksByProductData($productData);
+        $product = parent::create($productData);
+
+        return $product;
+    }
+
     /**
      * @param mixed $productId
      * @param \App\Model\Product\ProductData $productData
      */
     public function edit($productId, ProductData $productData)
     {
+        $this->initStocksByProductData($productData);
         /** @var \App\Model\Product\Product $product */
         $product = $this->productRepository->getById($productId);
 
@@ -75,5 +142,14 @@ class ProductFacade extends BaseProductFacade
         $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productToExport->getId());
 
         return $product;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function initStocksByProductData(ProductData $productData){
+        foreach ($productData->stockProductData as &$stockProductData){
+            $this->stockProductDataFactory->initStockByStockProductData($stockProductData);
+        }
     }
 }

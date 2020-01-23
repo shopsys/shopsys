@@ -51,6 +51,13 @@ class StockRepository
     }
 
     /**
+     * @return \App\Model\Stock\Stock[]
+     */
+    public function getAllStocks(): array{
+        return $this->getStockRepository()->findAll();
+    }
+
+    /**
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */

@@ -44,4 +44,15 @@ interface StockFacadeInterface
      */
     public function getAllStockCountByDomainId(int $domainId): int;
 
+    /**
+     * @param int $domainId
+     * @return \App\Model\Stock\Stock[]
+     */
+    public function getAllStocksByDomainId(int $domainId): array;
+
+    /**
+     * @return \App\Model\Stock\Stock[]
+     */
+    public function getAllStocks(): array;
+
 }

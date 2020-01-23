@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Model\Stock\Stock;
+use App\Model\Stock\StockProduct;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
+use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 
 /**
  * @ORM\Table(name="products")
@@ -34,6 +38,19 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  */
 class Product extends BaseProduct
 {
+
+    /**
+     * @var \App\Model\Stock\StockProduct[]|\Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(
+     *   targetEntity="App\Model\Stock\StockProduct",
+     *   mappedBy="product",
+     *   cascade={"persist"}
+     * )
+     *
+     */
+    protected $stockProducts;
+
     /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
@@ -41,6 +58,7 @@ class Product extends BaseProduct
     protected function __construct(BaseProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
+        $this->stockProducts = new ArrayCollection();
     }
 
     /**
@@ -52,6 +70,7 @@ class Product extends BaseProduct
         BaseProductData $productData
     ) {
         parent::edit($productCategoryDomains, $productData);
+        $this->setStockProducts($productData);
     }
 
     /**
@@ -171,6 +190,34 @@ class Product extends BaseProduct
     {
         return $this->translation($locale)->getNameSufix();
     }
+
+    /**
+     * @return \App\Model\Stock\StockProduct[]|\Doctrine\Common\Collections\Collection
+     */
+    public function getStockProducts()
+    {
+        return $this->stockProducts;
+    }
+
+    /**
+     * @param \App\Model\Stock\StockProduct[]|\Doctrine\Common\Collections\Collection $stockProducts
+     */
+    protected function setStockProducts(ProductData $productData): void
+    {
+        foreach ($productData->stockProductData as $stockProductData){
+            if(array_key_exists($stockProductData->stockId, $this->stockProducts)){
+                $this->stockProducts[$stockProductData->stockId]->setProductQuantity((int)$stockProductData->productQuantity);
+            }else{
+                $stockProduct = new StockProduct($stockProductData->stock, $this);
+                $stockProduct->setProductQuantity((int)$stockProductData->productQuantity);
+                $this->stockProducts->add($stockProduct);
+            }
+        }
+    }
+
+
+
+
 
     /**
      * @param string|null $locale

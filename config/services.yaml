@@ -81,9 +81,22 @@ services:
 
     App\Model\Stock\StockFacadeInterface: '@App\Model\Stock\StockFacade'
 
+    App\Model\Stock\StockProductFacade: ~
+
+    App\Model\Stock\StockProductFacadeInterface: '@App\Model\Stock\StockProductFacade'
+
     App\Model\Stock\StockDataFactory: ~
 
     App\Model\Stock\StockDataFactoryInterface: '@App\Model\Stock\StockDataFactory'
+
+    App\Model\Stock\StockProductFactory: ~
+
+    App\Model\Stock\StockProductDataFactory: ~
+
+    App\Model\Stock\StockProductDataFactoryInterface: '@App\Model\Stock\StockProductDataFactory'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductFacade:
+        class: App\Model\Product\ProductFacade
 
     App\Model\Order\OrderDataMapper: ~
 
