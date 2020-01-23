@@ -51,6 +51,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $customerUserUpdateData->customerUserData->firstName = 'John';
         $customerUserUpdateData->customerUserData->lastName = 'Doe';
         $customerUserUpdateData->customerUserData->password = 'password';
+        $customerUserUpdateData->customerUserData->gender = 'man';
 
         $this->customerUserFacade->create($customerUserUpdateData);
 

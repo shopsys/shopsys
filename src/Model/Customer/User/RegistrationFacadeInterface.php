@@ -8,7 +8,7 @@ interface RegistrationFacadeInterface
 {
     /**
      * @param \App\Model\Customer\User\RegistrationData $registrationData
-     * @return mixed
+     * @return \App\Model\Customer\User\CustomerUser
      */
     public function register(RegistrationData $registrationData): CustomerUser;
 }
