@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @ORM\Entity
  *
  * @method translation($locale = null): BlogCategoryTranslation
- *
  */
 class BlogCategory extends AbstractTranslatableEntity
 {

@@ -9,9 +9,9 @@ use App\Model\Blog\Article\BlogArticleBlogCategoryDomain;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Doctrine\ORM\QueryBuilder;
 
 class BlogCategoryRepository extends NestedTreeRepository
 {
