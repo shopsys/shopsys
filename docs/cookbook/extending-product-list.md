@@ -115,7 +115,7 @@ You need to register your new class as an alias for the one from the FrameworkBu
 Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: '@App\Model\Product\Search\Export\ProductSearchExportWithFilterRepository'
 ```
 
-Then you need to fix `ProductSearchExportRepositoryTest::getExpectedStructureForRepository` (because this test check if your structure is correct) by adding new attribute:
+Then you need to fix `ProductSearchExportWithFilterRepositoryTest::getExpectedStructureForRepository` (because this test check if your structure is correct) by adding new attribute:
 ```diff
 $structure = \array_merge($structure, [
     'availability',
@@ -168,7 +168,7 @@ You need to register your new class in `services.yaml` and add it as an alias fo
 
 ```yml
 App\Model\Product\Search\ProductElasticsearchConverter: ~
-Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@App\Model\Product\View\ListedProductViewFactory'
+Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: '@App\Model\Product\Search\ProductElasticsearchConverter'
 ```
 
 ### 5. Extend `ListedProductViewFactory` so it returns the new required data
