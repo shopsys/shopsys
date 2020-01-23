@@ -239,6 +239,13 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet($debugNote)
                     ->setParameter('id', $vat->getId())
                     ->setParameter('newId', $newVat->getId());
+            })
+            ->customizeByRouteName('admin_blogcategory_edit', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('It is forbidden to edit blog category with ID 1 as it is the root.')
+                    ->setExpectedStatusCode(404);
+                $config->addExtraRequestDataSet('Editing normal category should be OK.')
+                    ->setParameter('id', 2)
+                    ->setExpectedStatusCode(200);
             });
     }
 
@@ -397,8 +404,17 @@ class RouteConfigCustomization
                 $config->addExtraRequestDataSet('Check personal data XML export with right hash')
                     ->setParameter('hash', $personalDataAccessRequest->getHash())
                     ->setExpectedStatusCode(200);
-            })->customizeByRouteName(['front_download_uploaded_file'], function (RouteConfig $config) {
+            })
+            ->customizeByRouteName(['front_download_uploaded_file'], function (RouteConfig $config) {
                 $config->skipRoute('Downloading uploaded files is not tested.');
+            })
+            ->customizeByRouteName('front_blogarticle_detail', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Use ID 1 as default blog article.')
+                    ->setParameter('id', 1);
+            })
+            ->customizeByRouteName('front_blogcategory_detail', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Use ID 2 as default blog category.')
+                    ->setParameter('id', 2);
             });
     }
 
