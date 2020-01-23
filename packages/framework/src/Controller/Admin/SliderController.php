@@ -67,8 +67,11 @@ class SliderController extends AdminBaseController
      */
     public function listAction()
     {
+        /** @var \Doctrine\Common\Persistence\ManagerRegistry $doctrine */
+        $doctrine = $this->getDoctrine();
         /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
+
         $queryBuilder = $em->createQueryBuilder()
             ->select('s')
             ->from(SliderItem::class, 's')

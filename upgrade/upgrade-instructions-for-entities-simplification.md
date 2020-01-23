@@ -113,8 +113,8 @@ The change introduced many [BC breaks](/docs/contributing/backward-compatibility
 + User::edit(UserData $userData)
 ```
 ```diff
-- User::__construct(EntityNameResolver $entityNameResolver, EncoderFactoryInterface $encoderFactory)
-+ User::__construct(EntityNameResolver $entityNameResolver, CustomerPasswordFacade $customerPasswordFacade)
+- UserFactory::__construct(EntityNameResolver $entityNameResolver, EncoderFactoryInterface $encoderFactory)
++ UserFactory::__construct(EntityNameResolver $entityNameResolver, CustomerPasswordFacade $customerPasswordFacade)
 ```
 ```diff
 - Administrator::edit(AdministratorData $administratorData, EncoderFactoryInterface $encoderFactory, ?self $administratorByUserName)
