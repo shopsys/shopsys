@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 
@@ -49,7 +49,7 @@ class BlogArticleRepository
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getBlogArticlesByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
@@ -64,7 +64,7 @@ class BlogArticleRepository
     /**
      * @param int $domainId
      * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getBlogArticlesByDomainIdAndLocaleQueryBuilder(int $domainId, string $locale): QueryBuilder
     {
@@ -77,7 +77,7 @@ class BlogArticleRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder $queryBuilder
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param int $domainId
      */
     private function addBlogArticleBlogCategoryDomainsToQueryBuilder(QueryBuilder $queryBuilder, int $domainId): void
@@ -90,7 +90,7 @@ class BlogArticleRepository
 
     /**
      * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getAllBlogArticlesByLocaleQueryBuilder(string $locale): QueryBuilder
     {
@@ -105,7 +105,7 @@ class BlogArticleRepository
     /**
      * @param int $domainId
      * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Component\EntityExtension\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder(int $domainId, string $locale): QueryBuilder
     {

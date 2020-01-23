@@ -74,8 +74,8 @@ class BlogCategoryDetailFriendlyUrlDataProvider implements FriendlyUrlDataProvid
     public function createFromIdAndName(int $id, string $name): FriendlyUrlData
     {
         $friendlyUrlData = $this->friendlyUrlDataFactory->create();
-        $friendlyUrlData->name = $id;
-        $friendlyUrlData->id = $name;
+        $friendlyUrlData->id = $id;
+        $friendlyUrlData->name = $name;
 
         return $friendlyUrlData;
     }

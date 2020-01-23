@@ -15,7 +15,7 @@ class BlogArticleData
     public $names;
 
     /**
-     * @var \App\Model\Blog\Category\BlogCategory[]
+     * @var \App\Model\Blog\Category\BlogCategory[][]
      */
     public $blogCategoriesByDomainId;
 

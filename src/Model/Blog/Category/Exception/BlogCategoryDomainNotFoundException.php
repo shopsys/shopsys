@@ -9,7 +9,7 @@ use Exception;
 class BlogCategoryDomainNotFoundException extends Exception implements BlogCategoryException
 {
     /**
-     * @param int|null $blogCategoryId
+     * @param int $blogCategoryId
      * @param int $domainId
      * @param \Exception|null $previous
      */

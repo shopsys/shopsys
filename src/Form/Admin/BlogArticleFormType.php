@@ -69,7 +69,7 @@ class BlogArticleFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var $blogArticle \App\Model\Blog\Article\BlogArticle|null */
+        /** @var \App\Model\Blog\Article\BlogArticle|null $blogArticle */
         $blogArticle = $options['blogArticle'];
 
         $builderSettingsGroup = $this->createSettingsGroup($builder, $blogArticle);
