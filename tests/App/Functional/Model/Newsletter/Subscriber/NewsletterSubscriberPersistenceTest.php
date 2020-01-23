@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Newsletter\Subscriber;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\Assert;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -29,7 +30,7 @@ class NewsletterSubscriberPersistenceTest extends TransactionFunctionalTestCase
         ->from(NewsletterSubscriber::class, 'ns')
         ->where('ns.email = :email')
         ->andWhere('ns.domainId = :domainId')
-        ->setParameters(['email' => 'no-reply@shopsys.com', 'domainId' => 1])
+        ->setParameters(['email' => 'no-reply@shopsys.com', 'domainId' => Domain::FIRST_DOMAIN_ID])
         ->getQuery()->getOneOrNullResult();
 
         Assert::assertEquals($newsletterSubscriber, $found);

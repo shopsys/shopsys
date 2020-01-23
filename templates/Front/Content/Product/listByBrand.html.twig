@@ -19,26 +19,29 @@
     <div class="web__line">
         <div class="web__container">
             <div class="box-list">
-                <h1>
-                    {{ brand.getSeoH1(domain.id)|default(brand.name) }}
-                </h1>
+                <div class="box-list__content">
+                    <h1>
+                        {{ brand.getSeoH1(domain.id)|default(brand.name) }}
+                    </h1>
 
-                <div class="box-list__producer">
-                    <div class="box-list__producer__image">
-                        {{ image(brand, { alt: brand.name }) }}
-                    </div>
-                    <div class="box-list__producer__text">
-                        {% if brand.description is not null %}
-                            {{ brand.description|raw }}
+                    <div class="box-list__producer">
+                        {% if imageExists(brand) %}
+                            <div class="box-list__producer__image">
+                                {{ image(brand, { alt: brand.name }) }}
+                            </div>
                         {% endif %}
+                        <div class="box-list__producer__text">
+                            {% if brand.description is not null %}
+                                {{ brand.description|raw }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div>
+                        {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListByBrandAction')) }}
+                        {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: false } %}
                     </div>
                 </div>
-
-                <div>
-                    {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListByBrandAction')) }}
-                    {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: false } %}
-                </div>
-
             </div>
         </div>
     </div>

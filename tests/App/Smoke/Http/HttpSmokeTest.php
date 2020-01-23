@@ -16,7 +16,7 @@ class HttpSmokeTest extends HttpSmokeTestCase
         parent::setUp();
 
         self::$kernel->getContainer()->get(Domain::class)
-            ->switchDomainById(1);
+            ->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
 
     /**

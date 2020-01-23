@@ -23,7 +23,7 @@ class DomainHelper extends Module
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $domain = $symfonyHelper->grabServiceFromContainer(Domain::class);
 
-        $domainConfig = $domain->getDomainConfigById(1);
+        $domainConfig = $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
 
         $webDriver->_reconfigure(['url' => $domainConfig->getUrl()]);
     }
