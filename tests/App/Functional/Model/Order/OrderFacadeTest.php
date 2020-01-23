@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
 use App\Model\Order\Item\OrderItemData;
 use App\Model\Order\OrderData;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -104,7 +105,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->deliveryPostcode = 'deliveryPostcode';
         $orderData->deliveryCountry = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
         $orderData->note = 'note';
-        $orderData->domainId = 1;
+        $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);

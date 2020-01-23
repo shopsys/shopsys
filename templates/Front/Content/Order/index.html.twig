@@ -1,16 +1,5 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
 
-{% block javascripts_bottom %}
-    {{ parent() }}
-    <script type="text/javascript">
-        {% for payment in payments %}
-            {% for transport in payment.transports %}
-                Shopsys.order.addPaymentTransportRelation({{ payment.id }}, {{ transport.id }});
-            {% endfor %}
-        {% endfor %}
-    </script>
-{% endblock %}
-
 {% block meta_robots -%}
     <meta name="robots" content="noindex, follow">
 {% endblock %}
@@ -29,4 +18,6 @@
         {{ form_errors(form) }}
         {% include 'Front/Content/Order/step' ~ flow.getCurrentStepNumber() ~ '.html.twig' %}
     {{ form_end(form) }}
+
+    <span class="js-payment-transport-relations" data-relations="{{ paymentTransportRelations }}"></span>
 {% endblock %}

@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Newsletter\NewsletterRepository;
 
 use Doctrine\ORM\Internal\Hydration\IterableResult;
 use PHPUnit\Framework\Assert;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
@@ -20,13 +21,13 @@ class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
 
     public function testSubscriberFoundInFirstDomain(): void
     {
-        $iterator = $this->newsletterRepository->getAllEmailsDataIteratorByDomainId(1);
+        $iterator = $this->newsletterRepository->getAllEmailsDataIteratorByDomainId(Domain::FIRST_DOMAIN_ID);
         $this->assertContainsNewsletterSubscriber($iterator, self::FIRST_DOMAIN_SUBSCRIBER_EMAIL);
     }
 
     public function testSubscriberNotFoundInSecondDomain(): void
     {
-        $iterator = $this->newsletterRepository->getAllEmailsDataIteratorByDomainId(2);
+        $iterator = $this->newsletterRepository->getAllEmailsDataIteratorByDomainId(Domain::SECOND_DOMAIN_ID);
         $this->assertNotContainsNewsletterSubscriber($iterator, self::FIRST_DOMAIN_SUBSCRIBER_EMAIL);
     }
 

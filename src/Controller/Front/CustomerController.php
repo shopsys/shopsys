@@ -91,7 +91,7 @@ class CustomerController extends FrontBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $customerUserUpdateData = $form->getData();
 
-            $this->customerUserFacade->editByCustomer($customerUser->getId(), $customerUserUpdateData);
+            $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
 
             $this->getFlashMessageSender()->addSuccessFlash(t('Your data had been successfully updated'));
             return $this->redirectToRoute('front_customer_edit');
