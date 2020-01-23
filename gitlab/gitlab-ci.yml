@@ -84,7 +84,7 @@ deploy:review:stop:
     tags:
         - review
     needs:
-        - deploy
+        - build
     script:
         - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y product-search-delete-structure
