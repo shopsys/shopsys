@@ -62,9 +62,8 @@ deploy:review:
     needs:
         - build
     <<: *only-default
-
     script:
-        - cp -f ./gitlab/docker-compose-review.yml ./docker-compose.yml
+        - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
         - docker-compose up -d
         - "docker-compose exec -T php-fpm sed -i \"s/database_name:.*/database_name: ${PHP_FPM_IMAGE_NAME}/\" config/parameters.yml"
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/https:\/\/${PHP_FPM_IMAGE_NAME}.ci.scontodev.cz/g" config/domains_urls.yml
@@ -76,16 +75,16 @@ deploy:review:
 deploy:review:stop:
     stage: deploy
     variables:
+        GIT_STRATEGY: none
         CI_NETWORK: ci_default
         CI_NGINX_PROXY_NETWORK: ci_nginx-proxy-network
         PHP_FPM_IMAGE_NAME: $CI_COMMIT_REF_SLUG
-        PHP_FPM_IMAGE_TAG: $TAG
         HOSTS: $CI_COMMIT_REF_SLUG.ci.scontodev.cz,$CI_COMMIT_REF_SLUG.ci.scontodev.sk
         COMPOSE_PROJECT_NAME: $CI_COMMIT_REF_SLUG
     tags:
         - review
     script:
-        - cp -f ./gitlab/docker-compose-review.yml ./docker-compose.yml
+        - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y product-search-delete-structure
         - docker-compose down --rmi all -v
         - /home/ci/clean.sh ${CI_COMMIT_REF_SLUG}
