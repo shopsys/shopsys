@@ -37,9 +37,9 @@ class ProductTransferAkeneoFacade
 
     /**
      * @param \DateTime $lastUpdatedProducts
-     * @return \Generator|null
+     * @return \Generator
      */
-    public function getAllUpdatedProductsFromLastUpdate(DateTime $lastUpdatedProducts): ?\Generator
+    public function getAllUpdatedProductsFromLastUpdate(DateTime $lastUpdatedProducts): \Generator
     {
         $lastUpdatedProducts->setTimezone(new \DateTimeZone('UTC'));
 

@@ -9,6 +9,10 @@ services:
     #       tags:
     #           - { name: shopsys.cron, hours: '*', minutes: '*' }
 
+    App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '0' }
+
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5' }

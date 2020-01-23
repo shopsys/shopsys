@@ -33,6 +33,32 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
 class CategoryFacade extends BaseCategoryFacade
 {
     /**
+     * @param string $akeneoCode
+     * @return \App\Model\Category\Category|null
+     */
+    public function findByAkeneoCode(string $akeneoCode): ?Category
+    {
+        return $this->categoryRepository->findByAkeneoCode($akeneoCode);
+    }
+
+    /**
+     * @param string $akeneoCode
+     * @return \App\Model\Category\Category
+     */
+    public function getByAkeneoCode(string $akeneoCode): Category
+    {
+        return $this->categoryRepository->getByAkeneoCode($akeneoCode);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function getAllAkeneoCategoryCodes(): array
+    {
+        return $this->categoryRepository->getAllAkeneoCategoryCodes();
+    }
+
+    /*
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      * @return \App\Model\Category\Category[]

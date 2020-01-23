@@ -77,9 +77,9 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @return \Generator|null
+     * @return \Generator
      */
-    protected function getData(): ?\Generator
+    protected function getData(): \Generator
     {
         $lastProductsUpdatedAt = $this->setting->get(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME);
 

@@ -87,7 +87,7 @@ abstract class AbstractAkeneoImportTransfer
                 $this->logger->addDebug(
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
-                        $item['identifier'],
+                        $item['identifier'] ?? $item['code'],
                         $invalidDataSilentException->getMessage()
                     )
                 );
@@ -96,7 +96,7 @@ abstract class AbstractAkeneoImportTransfer
                 $this->logger->addWarning(
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
-                        $item['identifier'],
+                        $item['identifier'] ?? $item['code'],
                         $invalidDataSilentException->getMessage()
                     )
                 );
@@ -105,7 +105,7 @@ abstract class AbstractAkeneoImportTransfer
                 $this->logger->addWarning(
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
-                        $item['identifier'],
+                        $item['identifier'] ?? $item['code'],
                         $transferException->getMessage()
                     )
                 );
@@ -115,7 +115,7 @@ abstract class AbstractAkeneoImportTransfer
                     sprintf(
                         'Transfer of item with code key `%s` was aborted. '
                         . 'This error will be reported to Shopsys. Reason of this error: %s',
-                        $item['identifier'],
+                        $item['identifier'] ?? $item['code'],
                         $exception->getMessage()
                     )
                 );
@@ -144,9 +144,12 @@ abstract class AbstractAkeneoImportTransfer
      */
     abstract protected function processItem(array $akeneoProductData): void;
 
-    abstract protected function doBeforeTransfer();
+    abstract protected function doBeforeTransfer(): void;
 
-    abstract protected function doAfterTransfer();
+    abstract protected function doAfterTransfer(): void;
 
-    abstract protected function getData();
+    /**
+     * @return \Generator
+     */
+    abstract protected function getData(): \Generator;
 }
