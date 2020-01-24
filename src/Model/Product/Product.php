@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Stock\ProductStock;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
-use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
  * @ORM\Table(name="products")
@@ -195,31 +193,11 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    protected function setProductStocks(ProductData $productData): void
-    {
-        $allStockProductData = $productData->stockProductData;
-
-        //edit existing relations
-        foreach ($this->productStocks as $stockProduct) {
-            unset($allStockProductData[$stockProduct->getStock()->getId()]);
-            $stockProduct->setProductQuantity((int)$productData->stockProductData[$stockProduct->getStock()->getId()]->productQuantity);
-        }
-
-        //add new relations
-        foreach ($allStockProductData as $stockProductData) {
-            $stockProduct = new ProductStock($stockProductData->stock, $this);
-            $stockProduct->setProductQuantity((int)$stockProductData->productQuantity);
-            $this->productStocks->add($stockProduct);
-        }
-    }
-
-    /**
      * @param \App\Model\Stock\ProductStock $productStock
      * @return $this
      */
-    public function addProductStock(ProductStock $productStock){
+    public function addProductStock(ProductStock $productStock)
+    {
         $this->productStocks->add($productStock);
         return $this;
     }

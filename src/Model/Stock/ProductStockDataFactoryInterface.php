@@ -22,9 +22,4 @@ interface ProductStockDataFactoryInterface
      * @return \App\Model\Stock\ProductStockData
      */
     public function createFromProductStock(ProductStock $productStock);
-
-    /**
-     * @param \App\Model\Stock\ProductStockData $productStockData
-     */
-    public function initStockByProductStockData(ProductStockData $productStockData);
 }

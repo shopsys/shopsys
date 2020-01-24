@@ -15,11 +15,18 @@ class ProductStockFactory
     private $em;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @var \App\Model\Stock\ProductStockRepository
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    private $productStockRepository;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \App\Model\Stock\ProductStockRepository $productStockRepository
+     */
+    public function __construct(EntityManagerInterface $entityManager, ProductStockRepository $productStockRepository)
     {
         $this->em = $entityManager;
+        $this->productStockRepository = $productStockRepository;
     }
 
     /**
@@ -27,11 +34,13 @@ class ProductStockFactory
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Stock\ProductStock
      */
-    public function create(Stock $stock, Product $product): ProductStock
+    public function findOrCreateProductStock(Stock $stock, Product $product): ProductStock
     {
-        $stockProduct = new ProductStock($stock, $product);
-        $this->em->persist($stockProduct);
-        $this->em->flush();
-        return $stockProduct;
+        $productStock = $this->productStockRepository->getProductStockByStockAndProduct($stock, $product);
+        if (!$productStock) {
+            $productStock = new ProductStock($stock, $product);
+            $this->em->persist($productStock);
+        }
+        return $productStock;
     }
 }

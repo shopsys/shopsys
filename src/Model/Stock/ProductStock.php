@@ -23,7 +23,7 @@ class ProductStock
     protected $stock;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
+     * @var \App\Model\Product\Product|null
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Model\Product\Product", inversedBy="productStocks")
@@ -59,17 +59,17 @@ class ProductStock
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
+     * @return \App\Model\Product\Product|null
      */
-    public function getProduct(): ?\Shopsys\FrameworkBundle\Model\Product\Product
+    public function getProduct(): ?\App\Model\Product\Product
     {
         return $this->product;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \App\Model\Product\Product $product
      */
-    public function setProduct(\Shopsys\FrameworkBundle\Model\Product\Product $product): void
+    public function setProduct(\App\Model\Product\Product $product): void
     {
         $this->product = $product;
     }

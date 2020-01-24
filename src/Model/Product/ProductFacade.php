@@ -8,6 +8,8 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 use App\Model\Stock\ProductStockDataFactoryInterface;
+use App\Model\Stock\ProductStockFacadeInterface;
+use App\Model\Stock\StockFacadeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -63,9 +65,14 @@ class ProductFacade extends BaseProductFacade
     }
 
     /**
-     * @var \App\Model\Stock\ProductStockDataFactoryInterface
+     * @var \App\Model\Stock\StockFacadeInterface
      */
-    private $stockProductDataFactory;
+    private $stockFacade;
+
+    /**
+     * @var \App\Model\Stock\ProductStockFacadeInterface
+     */
+    private $productStockFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -91,7 +98,8 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
-     * @param \App\Model\Stock\ProductStockDataFactoryInterface $stockProductDataFactory
+     * @param \App\Model\Stock\ProductStockFacadeInterface $productStockFacade
+     * @param \App\Model\Stock\StockFacadeInterface $stockFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -117,20 +125,29 @@ class ProductFacade extends BaseProductFacade
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
         ProductSearchExportScheduler $productSearchExportScheduler,
-        ProductStockDataFactoryInterface $stockProductDataFactory
+        ProductStockFacadeInterface $productStockFacade,
+        StockFacadeInterface $stockFacade
     ) {
         parent::__construct($em, $productRepository, $productVisibilityFacade, $parameterRepository, $domain, $imageFacade, $productPriceRecalculationScheduler, $pricingGroupRepository, $productManualInputPriceFacade, $productAvailabilityRecalculationScheduler, $friendlyUrlFacade, $productHiddenRecalculator, $productSellingDeniedRecalculator, $productAccessoryRepository, $availabilityFacade, $pluginCrudExtensionFacade, $productFactory, $productAccessoryFactory, $productCategoryDomainFactory, $productParameterValueFactory, $productVisibilityFactory, $productPriceCalculation, $productSearchExportScheduler);
-        $this->stockProductDataFactory = $stockProductDataFactory;
+        $this->stockFacade = $stockFacade;
+        $this->productStockFacade = $productStockFacade;
     }
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     * @return \App\Model\Product\Product
      */
-    public function create(\Shopsys\FrameworkBundle\Model\Product\ProductData $productData)
+    public function create(\App\Model\Product\ProductData $productData)
     {
-        $this->initStocksByProductData($productData);
+        /**
+         * @var \App\Model\Product\Product
+         */
         $product = parent::create($productData);
+
+        foreach ($productData->stockProductData as $productStockData) {
+            $stock = $this->stockFacade->getById($productStockData->stockId);
+            $this->productStockFacade->setProductStockQuantity($product, $stock, (int)$productStockData->productQuantity);
+        }
 
         return $product;
     }
@@ -138,7 +155,7 @@ class ProductFacade extends BaseProductFacade
     /**
      * @param int $productId
      * @param \App\Model\Product\ProductData $productData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     * @return \App\Model\Product\Product
      */
     public function edit($productId, ProductData $productData)
     {
@@ -173,16 +190,10 @@ class ProductFacade extends BaseProductFacade
         $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
         $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productToExport->getId());
 
-        return $product;
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    protected function initStocksByProductData(ProductData $productData)
-    {
-        foreach ($productData->stockProductData as &$stockProductData) {
-            $this->stockProductDataFactory->initStockByProductStockData($stockProductData);
+        foreach ($productData->stockProductData as $productStockData) {
+            $stock = $this->stockFacade->getById($productStockData->stockId);
+            $this->productStockFacade->setProductStockQuantity($product, $stock, (int)$productStockData->productQuantity);
         }
+        return $product;
     }
 }

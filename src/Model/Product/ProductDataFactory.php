@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\Stock\StockFacadeInterface;
 use App\Model\Stock\ProductStockDataFactory;
 use App\Model\Stock\ProductStockFacadeInterface;
+use App\Model\Stock\StockFacadeInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;

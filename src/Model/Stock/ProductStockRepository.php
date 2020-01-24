@@ -42,6 +42,22 @@ class ProductStockRepository
     }
 
     /**
+     * @param \App\Model\Stock\Stock $stock
+     * @param \App\Model\Product\Product $product
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return \App\Model\Stock\ProductStock|null
+     */
+    public function getProductStockByStockAndProduct(Stock $stock, Product $product): ?ProductStock
+    {
+        return $this->getQueryBuilder()
+            ->where('sp.product = :product')
+            ->andWhere('sp.stock = :stock')
+            ->setParameter('product', $product)
+            ->setParameter('stock', $stock)
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Stock\ProductStock[]
      */

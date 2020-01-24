@@ -13,4 +13,11 @@ interface ProductStockFacadeInterface
      * @return \App\Model\Stock\ProductStock[]
      */
     public function getProductsStockByProduct(Product $product): array;
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Stock\Stock $stock
+     * @param int $productQuantity
+     */
+    public function setProductStockQuantity(Product $product, Stock $stock, int $productQuantity);
 }

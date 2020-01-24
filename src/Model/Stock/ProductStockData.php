@@ -21,11 +21,6 @@ class ProductStockData
      */
     public $name;
 
-    /**
-     * @var \App\Model\Stock\Stock|null
-     */
-    public $stock;
-
     public function __construct()
     {
         $this->productQuantity = 0;

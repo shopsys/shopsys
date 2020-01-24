@@ -7,19 +7,6 @@ namespace App\Model\Stock;
 class ProductStockDataFactory implements ProductStockDataFactoryInterface
 {
     /**
-     * @var \App\Model\Stock\StockFacade
-     */
-    private $stockFacade;
-
-    /**
-     * @param \App\Model\Stock\StockFacade $stockFacade
-     */
-    public function __construct(StockFacade $stockFacade)
-    {
-        $this->stockFacade = $stockFacade;
-    }
-
-    /**
      * @return \App\Model\Stock\ProductStockData
      */
     public function create()
@@ -50,13 +37,5 @@ class ProductStockDataFactory implements ProductStockDataFactoryInterface
         $productStockData->stockId = $productStock->getStock()->getId();
         $productStockData->productQuantity = $productStock->getProductQuantity();
         return $productStockData;
-    }
-
-    /**
-     * @param \App\Model\Stock\ProductStockData $productStockData
-     */
-    public function initStockByProductStockData(ProductStockData $productStockData)
-    {
-        $productStockData->stock = $this->stockFacade->getById($productStockData->stockId);
     }
 }
