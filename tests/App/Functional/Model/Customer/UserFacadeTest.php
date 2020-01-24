@@ -42,16 +42,20 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     public function testCreateNotDuplicateEmail()
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
-        $customerUserUpdateData->customerUserData->pricingGroup = $this->getReferenceForDomain(
+        /**
+         * @var \App\Model\Customer\User\CustomerUserData
+         */
+        $customerUserData = $customerUserUpdateData->customerUserData;
+        $customerUserData->pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID
         );
-        $customerUserUpdateData->customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
-        $customerUserUpdateData->customerUserData->email = 'unique-email@shopsys.com';
-        $customerUserUpdateData->customerUserData->firstName = 'John';
-        $customerUserUpdateData->customerUserData->lastName = 'Doe';
-        $customerUserUpdateData->customerUserData->password = 'password';
-        $customerUserUpdateData->customerUserData->gender = 'man';
+        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
+        $customerUserData->email = 'unique-email@shopsys.com';
+        $customerUserData->firstName = 'John';
+        $customerUserData->lastName = 'Doe';
+        $customerUserData->password = 'password';
+        $customerUserData->gender = 'man';
 
         $this->customerUserFacade->create($customerUserUpdateData);
 
