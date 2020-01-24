@@ -7,7 +7,7 @@ namespace App\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20200123112440 extends AbstractMigration
+class Version20200124120331 extends AbstractMigration
 {
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
@@ -21,22 +21,18 @@ class Version20200123112440 extends AbstractMigration
                 product_quantity INT NOT NULL,
                 PRIMARY KEY(stock_id, product_id)
             )');
-        $this->sql('CREATE INDEX IDX_8C01C025DCD6110 ON product_stocks (stock_id)');
-        $this->sql('CREATE INDEX IDX_8C01C0254584665A ON product_stocks (product_id)');
+        $this->sql('CREATE INDEX IDX_348BD9A1DCD6110 ON product_stocks (stock_id)');
+        $this->sql('CREATE INDEX IDX_348BD9A14584665A ON product_stocks (product_id)');
         $this->sql('
             ALTER TABLE
                 product_stocks
             ADD
-                CONSTRAINT FK_8C01C025DCD6110 FOREIGN KEY (stock_id) REFERENCES stocks (id) ON DELETE
-            SET
-                NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
+                CONSTRAINT FK_348BD9A1DCD6110 FOREIGN KEY (stock_id) REFERENCES stocks (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('
             ALTER TABLE
                 product_stocks
             ADD
-                CONSTRAINT FK_8C01C0254584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE
-            SET
-                NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
+                CONSTRAINT FK_348BD9A14584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
     /**
