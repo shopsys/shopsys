@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Stock;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,7 +31,7 @@ class StockRepository
     }
 
     /**
-     * @param $stockId
+     * @param int $stockId
      * @return \App\Model\Stock\Stock|null
      */
     public function findById($stockId)
@@ -53,7 +52,8 @@ class StockRepository
     /**
      * @return \App\Model\Stock\Stock[]
      */
-    public function getAllStocks(): array{
+    public function getAllStocks(): array
+    {
         return $this->getStockRepository()->findAll();
     }
 
@@ -82,7 +82,7 @@ class StockRepository
      * @param int $domainId
      * @return int
      */
-    public function getAllStockCountByDomainId(int $domainId):int
+    public function getAllStockCountByDomainId(int $domainId): int
     {
         return $this->getStockByDomainQueryBuilder($domainId)
             ->select('COUNT(s)')

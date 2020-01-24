@@ -2,15 +2,12 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Stock;
-
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 
 class StockDataFactory implements StockDataFactoryInterface
 {
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
      */
@@ -48,5 +45,4 @@ class StockDataFactory implements StockDataFactoryInterface
         $stockData->externalId = $stock->getExternalId();
         return $stockData;
     }
-
 }

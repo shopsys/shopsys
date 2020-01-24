@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Stock;
-
 
 class StockData
 {
@@ -27,6 +25,4 @@ class StockData
      * @var string|null
      */
     public $externalId;
-
-
 }

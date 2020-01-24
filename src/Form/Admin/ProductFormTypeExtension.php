@@ -137,16 +137,14 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      */
-    private function stocksGroup(FormBuilderInterface $builder, array $options){
+    private function stocksGroup(FormBuilderInterface $builder)
+    {
         $stockGroupBuilder = $builder->create('stocksGroup', GroupType::class, [
             'label' => t('Stocks'),
         ]);
 
-        d($builder->getData());
-
-        $stockGroupBuilder->add('stockProductData', StocksProductFormType::class,[
+        $stockGroupBuilder->add('stockProductData', StocksProductFormType::class, [
             'required' => false,
             'data' => $builder->getData()->stockProductData,
 

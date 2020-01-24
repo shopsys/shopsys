@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Stock\StockFacadeInterface;
-use App\Model\Stock\StockProductData;
 use App\Model\Stock\StockProductDataFactory;
 use App\Model\Stock\StockProductFacadeInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -31,15 +30,34 @@ class ProductDataFactory extends BaseProductDataFactory
      * @var \App\Model\Stock\StockProductFacadeInterface
      */
     private $stockProductFacade;
+
     /**
      * @var \App\Model\Stock\StockFacadeInterface
      */
     private $stockFacade;
+
     /**
      * @var \App\Model\Stock\StockProductDataFactory
      */
     private $stockProductDataFactory;
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
+     * @param \App\Model\Stock\StockProductFacadeInterface $stockProductFacade
+     * @param \App\Model\Stock\StockFacadeInterface $stockFacade
+     * @param \App\Model\Stock\StockProductDataFactory $stockProductDataFactory
+     */
     public function __construct(
         VatFacade $vatFacade,
         ProductInputPriceFacade $productInputPriceFacade,
@@ -49,15 +67,14 @@ class ProductDataFactory extends BaseProductDataFactory
         ParameterRepository $parameterRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         ProductAccessoryRepository $productAccessoryRepository,
-        ImageFacade $imageFacade, PluginCrudExtensionFacade
-        $pluginDataFormExtensionFacade,
+        ImageFacade $imageFacade,
+        PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         PricingGroupFacade $pricingGroupFacade,
         StockProductFacadeInterface $stockProductFacade,
         StockFacadeInterface $stockFacade,
         StockProductDataFactory $stockProductDataFactory
-    )
-    {
+    ) {
         parent::__construct($vatFacade, $productInputPriceFacade, $unitFacade, $domain, $productRepository, $parameterRepository, $friendlyUrlFacade, $productAccessoryRepository, $imageFacade, $pluginDataFormExtensionFacade, $productParameterValueDataFactory, $pricingGroupFacade);
         $this->stockProductFacade = $stockProductFacade;
         $this->stockFacade = $stockFacade;
@@ -131,10 +148,11 @@ class ProductDataFactory extends BaseProductDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \App\Model\Product\ProductData $productData
      */
-    protected function fillStockProductByStocks(BaseProductData $productData){
-        foreach ($this->stockFacade->getAllStocks() as $stock){
+    protected function fillStockProductByStocks(BaseProductData $productData)
+    {
+        foreach ($this->stockFacade->getAllStocks() as $stock) {
             $productData->stockProductData[$stock->getId()] = $this->stockProductDataFactory->createFromStock($stock);
         }
     }
@@ -143,11 +161,11 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product $product
      */
-    protected function fillStockProductByProduct(BaseProductData $productData, BaseProduct $product){
+    protected function fillStockProductByProduct(BaseProductData $productData, BaseProduct $product)
+    {
         $this->fillStockProductByStocks($productData);
-        foreach ($this->stockProductFacade->getStockProductsByProduct($product) as $stockProduct){
+        foreach ($this->stockProductFacade->getStockProductsByProduct($product) as $stockProduct) {
             $productData->stockProductData[$stockProduct->getStock()->getId()] = $this->stockProductDataFactory->createFromStockProduct($stockProduct);
         }
     }
-
 }

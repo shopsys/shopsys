@@ -2,11 +2,8 @@
 
 declare(strict_types=1);
 
-
 namespace App\Form\Admin;
 
-
-use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,7 +21,7 @@ class StocksProductFormType extends AbstractType
         $entryOptions['constraints'] = $entryOptions['constraints'] ?? [];
 
         /**
-         * @var \App\Model\Stock\StockProductData $stockProductData
+         * @var \App\Model\Stock\StockProductData
          */
         foreach ($builder->getData() as $stockProductData) {
             if (array_key_exists($stockProductData->stockId, $options['options_by_stock_id'])) {
@@ -33,11 +30,10 @@ class StocksProductFormType extends AbstractType
                 $stockProductOptions = $entryOptions;
             }
 
-            $stockProductOptions['data'] = $stockProductData;//->productQuantity;
+            $stockProductOptions['data'] = $stockProductData;
             $stockProductOptions['label'] = $stockProductData->name;
 
             $builder->add($stockProductData->stockId, $options['entry_type'], $stockProductOptions);
-
         }
     }
 
@@ -49,9 +45,9 @@ class StocksProductFormType extends AbstractType
         $resolver
             ->setDefaults([
             'compound' => true,
-            'entry_type' =>  StockProductFormType::class,
+            'entry_type' => StockProductFormType::class,
             'entry_options' => [],
-            'options_by_stock_id' => []
+            'options_by_stock_id' => [],
         ]);
     }
 }

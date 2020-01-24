@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Form\Admin;
-
 
 use App\Model\Stock\StockProductData;
 use Symfony\Component\Form\AbstractType;
@@ -15,7 +13,6 @@ use Symfony\Component\Validator\Constraints;
 
 class StockProductFormType extends AbstractType
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options

@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Stock
 {
-
     /**
      * @var int
      *
@@ -122,6 +121,4 @@ class Stock
     {
         return $this->externalId;
     }
-
-
 }

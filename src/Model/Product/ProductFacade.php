@@ -64,6 +64,32 @@ class ProductFacade extends BaseProductFacade
 
     private $stockProductDataFactory;
 
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface $productAccessoryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
+     * @param \App\Model\Stock\StockProductDataFactoryInterface $stockProductDataFactory
+     */
     public function __construct(
         EntityManagerInterface $em,
         ProductRepository $productRepository,
@@ -89,15 +115,17 @@ class ProductFacade extends BaseProductFacade
         ProductPriceCalculation $productPriceCalculation,
         ProductSearchExportScheduler $productSearchExportScheduler,
         StockProductDataFactoryInterface $stockProductDataFactory
-    )
-    {
+    ) {
         parent::__construct($em, $productRepository, $productVisibilityFacade, $parameterRepository, $domain, $imageFacade, $productPriceRecalculationScheduler, $pricingGroupRepository, $productManualInputPriceFacade, $productAvailabilityRecalculationScheduler, $friendlyUrlFacade, $productHiddenRecalculator, $productSellingDeniedRecalculator, $productAccessoryRepository, $availabilityFacade, $pluginCrudExtensionFacade, $productFactory, $productAccessoryFactory, $productCategoryDomainFactory, $productParameterValueFactory, $productVisibilityFactory, $productPriceCalculation, $productSearchExportScheduler);
         $this->stockProductDataFactory = $stockProductDataFactory;
     }
 
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     */
     public function create(\Shopsys\FrameworkBundle\Model\Product\ProductData $productData)
     {
-
         $this->initStocksByProductData($productData);
         $product = parent::create($productData);
 
@@ -105,8 +133,9 @@ class ProductFacade extends BaseProductFacade
     }
 
     /**
-     * @param mixed $productId
+     * @param int $productId
      * @param \App\Model\Product\ProductData $productData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     public function edit($productId, ProductData $productData)
     {
@@ -147,8 +176,9 @@ class ProductFacade extends BaseProductFacade
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    protected function initStocksByProductData(ProductData $productData){
-        foreach ($productData->stockProductData as &$stockProductData){
+    protected function initStocksByProductData(ProductData $productData)
+    {
+        foreach ($productData->stockProductData as &$stockProductData) {
             $this->stockProductDataFactory->initStockByStockProductData($stockProductData);
         }
     }

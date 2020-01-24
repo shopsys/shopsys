@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Controller\Admin;
 
 use App\Form\Admin\StockFormTypeExtension;
@@ -16,41 +15,49 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Article\Article;
 use Symfony\Component\HttpFoundation\Request;
 
 class StockController extends AdminBaseController
 {
-
     /**
      * @var \App\Model\Stock\StockFacadeInterface
      */
     private $stockFacade;
+
     /**
      * @var \App\Model\Stock\StockDataFactoryInterface
      */
     private $stockDataFactory;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
      */
     private $adminDomainTabsFacade;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
      */
     private $breadcrumbOverrider;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
      */
     private $gridFactory;
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \App\Model\Stock\StockFacadeInterface $stockFacade
+     * @param \App\Model\Stock\StockDataFactoryInterface $stockDataFactory
+     */
     public function __construct(
         GridFactory $gridFactory,
         BreadcrumbOverrider $breadcrumbOverrider,
         AdminDomainTabsFacade $adminDomainTabsFacade,
         StockFacadeInterface $stockFacade,
         StockDataFactoryInterface $stockDataFactory
-    )
-    {
+    ) {
         $this->stockFacade = $stockFacade;
         $this->stockDataFactory = $stockDataFactory;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
@@ -117,7 +124,7 @@ class StockController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request,int $id)
+    public function editAction(Request $request, int $id)
     {
         $stock = $this->stockFacade->getById($id);
         $stockData = $this->stockDataFactory->createFromStock($stock);

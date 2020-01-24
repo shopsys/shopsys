@@ -54,5 +54,4 @@ interface StockFacadeInterface
      * @return \App\Model\Stock\Stock[]
      */
     public function getAllStocks(): array;
-
 }

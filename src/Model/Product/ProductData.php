@@ -67,5 +67,4 @@ class ProductData extends BaseProductData
         $this->nameSufix = [];
         $this->stockProductData = [];
     }
-
 }

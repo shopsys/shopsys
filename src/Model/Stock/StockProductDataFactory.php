@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Stock;
-
 
 class StockProductDataFactory implements StockProductDataFactoryInterface
 {
-
     /**
      * @var \App\Model\Stock\StockFacade
      */
     private $stockFacade;
 
+    /**
+     * @param \App\Model\Stock\StockFacade $stockFacade
+     */
     public function __construct(StockFacade $stockFacade)
     {
         $this->stockFacade = $stockFacade;
@@ -55,7 +55,8 @@ class StockProductDataFactory implements StockProductDataFactoryInterface
     /**
      * @param \App\Model\Stock\StockProductData $stockProductData
      */
-    public function initStockByStockProductData(StockProductData $stockProductData){
+    public function initStockByStockProductData(StockProductData $stockProductData)
+    {
         $stockProductData->stock = $this->stockFacade->getById($stockProductData->stockId);
     }
 }

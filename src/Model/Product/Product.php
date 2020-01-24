@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\Stock\Stock;
 use App\Model\Stock\StockProduct;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
-use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 
 /**
  * @ORM\Table(name="products")
@@ -38,7 +36,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
  */
 class Product extends BaseProduct
 {
-
     /**
      * @var \App\Model\Stock\StockProduct[]|\Doctrine\Common\Collections\Collection
      *
@@ -59,6 +56,7 @@ class Product extends BaseProduct
     {
         parent::__construct($productData, $variants);
         $this->stockProducts = new ArrayCollection();
+        $this->setStockProducts($productData);
     }
 
     /**
@@ -69,8 +67,8 @@ class Product extends BaseProduct
         array $productCategoryDomains,
         BaseProductData $productData
     ) {
-        parent::edit($productCategoryDomains, $productData);
         $this->setStockProducts($productData);
+        parent::edit($productCategoryDomains, $productData);
     }
 
     /**
@@ -200,24 +198,25 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param \App\Model\Stock\StockProduct[]|\Doctrine\Common\Collections\Collection $stockProducts
+     * @param \App\Model\Product\ProductData $productData
      */
     protected function setStockProducts(ProductData $productData): void
     {
-        foreach ($productData->stockProductData as $stockProductData){
-            if(array_key_exists($stockProductData->stockId, $this->stockProducts)){
-                $this->stockProducts[$stockProductData->stockId]->setProductQuantity((int)$stockProductData->productQuantity);
-            }else{
-                $stockProduct = new StockProduct($stockProductData->stock, $this);
-                $stockProduct->setProductQuantity((int)$stockProductData->productQuantity);
-                $this->stockProducts->add($stockProduct);
-            }
+        $allStockProductData = $productData->stockProductData;
+
+        //edit existing relations
+        foreach ($this->stockProducts as $stockProduct) {
+            unset($allStockProductData[$stockProduct->getStock()->getId()]);
+            $stockProduct->setProductQuantity((int)$productData->stockProductData[$stockProduct->getStock()->getId()]->productQuantity);
+        }
+
+        //add new relations
+        foreach ($allStockProductData as $stockProductData) {
+            $stockProduct = new StockProduct($stockProductData->stock, $this);
+            $stockProduct->setProductQuantity((int)$stockProductData->productQuantity);
+            $this->stockProducts->add($stockProduct);
         }
     }
-
-
-
-
 
     /**
      * @param string|null $locale

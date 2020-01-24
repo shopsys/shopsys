@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Form\Admin;
-
 
 use App\Model\Stock\Stock;
 use App\Model\Stock\StockData;
@@ -20,7 +18,6 @@ use Symfony\Component\Validator\Constraints;
 
 class StockFormTypeExtension extends AbstractType
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -51,7 +48,9 @@ class StockFormTypeExtension extends AbstractType
             'required' => false,
             'label' => t('Central stock'),
         ])
-        ->add('externalId', TextType::class,
+        ->add(
+            'externalId',
+            TextType::class,
             [
                 'required' => false,
                 'label' => t('External bridge ID'),
@@ -75,6 +74,4 @@ class StockFormTypeExtension extends AbstractType
                 'data_class' => StockData::class,
             ]);
     }
-
-
 }

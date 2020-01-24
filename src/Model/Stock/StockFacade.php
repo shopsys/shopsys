@@ -2,20 +2,18 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Stock;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
 class StockFacade implements StockFacadeInterface
 {
-
     /**
      * @var \App\Model\Stock\StockRepository
      */
     private $stockRepository;
+
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
@@ -28,8 +26,7 @@ class StockFacade implements StockFacadeInterface
     public function __construct(
         EntityManagerInterface $em,
         StockRepository $stockRepository
-    )
-    {
+    ) {
         $this->stockRepository = $stockRepository;
         $this->em = $em;
     }
@@ -68,7 +65,6 @@ class StockFacade implements StockFacadeInterface
         $this->em->remove($stock);
         $this->em->flush();
     }
-
 
     /**
      * @param int $stockId
@@ -113,6 +109,4 @@ class StockFacade implements StockFacadeInterface
     {
         return $this->stockRepository->getAllStocks();
     }
-
-
 }

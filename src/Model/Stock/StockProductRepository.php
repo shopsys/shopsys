@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Stock;
-
 
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,12 +10,14 @@ use Doctrine\ORM\QueryBuilder;
 
 class StockProductRepository
 {
-
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
     private $em;
 
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -26,7 +26,8 @@ class StockProductRepository
     /**
      * @return \App\Model\Stock\StockProductRepository|\Doctrine\Common\Persistence\ObjectRepository
      */
-    public function getStockProductRepository(){
+    public function getStockProductRepository()
+    {
         return $this->em->getRepository(StockProduct::class);
     }
 
@@ -37,8 +38,7 @@ class StockProductRepository
     {
         return $this->em->createQueryBuilder()
             ->select('sp')
-            ->from(StockProduct::class, 'sp')
-            ;
+            ->from(StockProduct::class, 'sp');
     }
 
     /**

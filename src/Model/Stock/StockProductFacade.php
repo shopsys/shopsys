@@ -2,39 +2,25 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Stock;
-
 
 use App\Model\Product\Product;
 
 class StockProductFacade implements StockProductFacadeInterface
 {
-
     /**
      * @var \App\Model\Stock\StockProductRepository
      */
     private $stockProductRepository;
-    /**
-     * @var \App\Model\Stock\StockFacadeInterface
-     */
-    private $stockFacade;
-    /**
-     * @var \App\Model\Stock\StockProductFactory
-     */
-    private $stockProductFactory;
 
+    /**
+     * @param \App\Model\Stock\StockProductRepository $stockProductRepository
+     */
     public function __construct(
-        StockProductRepository $stockProductRepository,
-        StockFacadeInterface $stockFacade,
-        StockProductFactory $stockProductFactory
-    )
-    {
+        StockProductRepository $stockProductRepository
+    ) {
         $this->stockProductRepository = $stockProductRepository;
-        $this->stockFacade = $stockFacade;
-        $this->stockProductFactory = $stockProductFactory;
     }
-
 
     /**
      * @param \App\Model\Product\Product $product
@@ -44,5 +30,4 @@ class StockProductFacade implements StockProductFacadeInterface
     {
         return $this->stockProductRepository->getStockProductByProduct($product);
     }
-
 }

@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Stock;
-
 
 class StockProductData
 {
@@ -32,5 +30,4 @@ class StockProductData
     {
         $this->productQuantity = 0;
     }
-
 }
