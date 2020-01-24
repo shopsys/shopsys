@@ -96,6 +96,7 @@
         "symfony/web-link": "^3.4",
         "symfony/web-profiler-bundle": "^3.4",
         "symfony/web-server-bundle": "^3.4",
+        "symfony/webpack-encore-bundle": "^1.7",
         "symfony/workflow": "^3.4",
         "tracy/tracy": "^2.4.13",
         "twig/extensions": "^1.5.1",
