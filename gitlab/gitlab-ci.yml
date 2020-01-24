@@ -25,8 +25,8 @@ build:
     stage: build
     <<: *only-default
     script:
-        - docker build -f ./docker/php-fpm/Dockerfile --target production --compress -t $TAG -t $CI_REGISTRY_IMAGE:latest .
-        - docker push $CI_REGISTRY_IMAGE
+        - docker build -f ./docker/php-fpm/Dockerfile --target production --compress -t $TAG .
+        - docker push $TAG
 
 test:standards:
     stage: test
