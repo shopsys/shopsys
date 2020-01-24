@@ -51,14 +51,14 @@ class Stock
     protected $externalId;
 
     /**
-     * @var \App\Model\Stock\StockProduct[]|\Doctrine\Common\Collections\Collection
+     * @var \App\Model\Stock\ProductStock[]|\Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(
-     *   targetEntity="App\Model\Stock\StockProduct",
+     *   targetEntity="App\Model\Stock\ProductStock",
      *   mappedBy="stock"
      * )
      */
-    protected $stockProducts;
+    protected $productStocks;
 
     /**
      * @param \App\Model\Stock\StockData $stockData
@@ -69,7 +69,7 @@ class Stock
         $this->name = $stockData->name;
         $this->centralStock = $stockData->centralStock;
         $this->externalId = $stockData->externalId;
-        $this->stockProducts = new ArrayCollection();
+        $this->productStocks = new ArrayCollection();
     }
 
     /**

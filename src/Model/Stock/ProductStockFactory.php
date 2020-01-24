@@ -7,7 +7,7 @@ namespace App\Model\Stock;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 
-class StockProductFactory
+class ProductStockFactory
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -25,11 +25,11 @@ class StockProductFactory
     /**
      * @param \App\Model\Stock\Stock $stock
      * @param \App\Model\Product\Product $product
-     * @return \App\Model\Stock\StockProduct
+     * @return \App\Model\Stock\ProductStock
      */
-    public function create(Stock $stock, Product $product): StockProduct
+    public function create(Stock $stock, Product $product): ProductStock
     {
-        $stockProduct = new StockProduct($stock, $product);
+        $stockProduct = new ProductStock($stock, $product);
         $this->em->persist($stockProduct);
         $this->em->flush();
         return $stockProduct;

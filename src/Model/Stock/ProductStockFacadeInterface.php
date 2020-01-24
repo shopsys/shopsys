@@ -6,11 +6,11 @@ namespace App\Model\Stock;
 
 use App\Model\Product\Product;
 
-interface StockProductFacadeInterface
+interface ProductStockFacadeInterface
 {
     /**
      * @param \App\Model\Product\Product $product
-     * @return \App\Model\Stock\StockProduct[]
+     * @return \App\Model\Stock\ProductStock[]
      */
-    public function getStockProductsByProduct(Product $product): array;
+    public function getProductsStockByProduct(Product $product): array;
 }

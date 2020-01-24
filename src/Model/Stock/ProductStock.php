@@ -8,16 +8,16 @@ use App\Model\Product\Product;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="stock_products")
+ * @ORM\Table(name="product_stocks")
  * @ORM\Entity
  */
-class StockProduct
+class ProductStock
 {
     /**
      * @var \App\Model\Stock\Stock|null
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="\App\Model\Stock\Stock",inversedBy="stockProducts")
+     * @ORM\ManyToOne(targetEntity="\App\Model\Stock\Stock",inversedBy="productStocks")
      * @ORM\JoinColumn(name="stock_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     protected $stock;
@@ -26,8 +26,8 @@ class StockProduct
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="App\Model\Product\Product", inversedBy="stockProducts")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE", nullable=true )
+     * @ORM\ManyToOne(targetEntity="App\Model\Product\Product", inversedBy="productStocks")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE", nullable=false )
      */
     protected $product;
 
@@ -47,6 +47,7 @@ class StockProduct
         $this->stock = $stock;
         $this->product = $product;
         $this->productQuantity = 0;
+        $product->addProductStock($this);
     }
 
     /**

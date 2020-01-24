@@ -21,7 +21,7 @@ class StocksProductFormType extends AbstractType
         $entryOptions['constraints'] = $entryOptions['constraints'] ?? [];
 
         /**
-         * @var \App\Model\Stock\StockProductData
+         * @var \App\Model\Stock\ProductStockData
          */
         foreach ($builder->getData() as $stockProductData) {
             if (array_key_exists($stockProductData->stockId, $options['options_by_stock_id'])) {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Model\Stock\StockProductData;
+use App\Model\Stock\ProductStockData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,7 +35,7 @@ class StockProductFormType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => StockProductData::class,
+                'data_class' => ProductStockData::class,
             ]);
     }
 }

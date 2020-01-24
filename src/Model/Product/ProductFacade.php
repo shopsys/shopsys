@@ -7,7 +7,7 @@ namespace App\Model\Product;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
-use App\Model\Stock\StockProductDataFactoryInterface;
+use App\Model\Stock\ProductStockDataFactoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -62,6 +62,9 @@ class ProductFacade extends BaseProductFacade
         }
     }
 
+    /**
+     * @var \App\Model\Stock\ProductStockDataFactoryInterface
+     */
     private $stockProductDataFactory;
 
     /**
@@ -88,7 +91,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
-     * @param \App\Model\Stock\StockProductDataFactoryInterface $stockProductDataFactory
+     * @param \App\Model\Stock\ProductStockDataFactoryInterface $stockProductDataFactory
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -114,7 +117,7 @@ class ProductFacade extends BaseProductFacade
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
         ProductSearchExportScheduler $productSearchExportScheduler,
-        StockProductDataFactoryInterface $stockProductDataFactory
+        ProductStockDataFactoryInterface $stockProductDataFactory
     ) {
         parent::__construct($em, $productRepository, $productVisibilityFacade, $parameterRepository, $domain, $imageFacade, $productPriceRecalculationScheduler, $pricingGroupRepository, $productManualInputPriceFacade, $productAvailabilityRecalculationScheduler, $friendlyUrlFacade, $productHiddenRecalculator, $productSellingDeniedRecalculator, $productAccessoryRepository, $availabilityFacade, $pluginCrudExtensionFacade, $productFactory, $productAccessoryFactory, $productCategoryDomainFactory, $productParameterValueFactory, $productVisibilityFactory, $productPriceCalculation, $productSearchExportScheduler);
         $this->stockProductDataFactory = $stockProductDataFactory;
@@ -179,7 +182,7 @@ class ProductFacade extends BaseProductFacade
     protected function initStocksByProductData(ProductData $productData)
     {
         foreach ($productData->stockProductData as &$stockProductData) {
-            $this->stockProductDataFactory->initStockByStockProductData($stockProductData);
+            $this->stockProductDataFactory->initStockByProductStockData($stockProductData);
         }
     }
 }

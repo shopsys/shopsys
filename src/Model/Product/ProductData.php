@@ -50,7 +50,7 @@ class ProductData extends BaseProductData
     public $nameSufix;
 
     /**
-     * @var \App\Model\Stock\StockProductData[]
+     * @var \App\Model\Stock\ProductStockData[]
      */
     public $stockProductData;
 

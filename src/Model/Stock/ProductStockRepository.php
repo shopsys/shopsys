@@ -8,7 +8,7 @@ use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
-class StockProductRepository
+class ProductStockRepository
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -24,11 +24,11 @@ class StockProductRepository
     }
 
     /**
-     * @return \App\Model\Stock\StockProductRepository|\Doctrine\Common\Persistence\ObjectRepository
+     * @return \App\Model\Stock\ProductStockRepository|\Doctrine\Common\Persistence\ObjectRepository
      */
-    public function getStockProductRepository()
+    public function getProductStockRepository()
     {
-        return $this->em->getRepository(StockProduct::class);
+        return $this->em->getRepository(ProductStock::class);
     }
 
     /**
@@ -38,14 +38,14 @@ class StockProductRepository
     {
         return $this->em->createQueryBuilder()
             ->select('sp')
-            ->from(StockProduct::class, 'sp');
+            ->from(ProductStock::class, 'sp');
     }
 
     /**
      * @param \App\Model\Product\Product $product
-     * @return \App\Model\Stock\StockProduct[]
+     * @return \App\Model\Stock\ProductStock[]
      */
-    public function getStockProductByProduct(Product $product): array
+    public function getProductStockByProduct(Product $product): array
     {
         return $this->getQueryBuilder()
             ->where('sp.product = :product')

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\Stock\StockProduct;
+use App\Model\Stock\ProductStock;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
@@ -37,16 +37,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 class Product extends BaseProduct
 {
     /**
-     * @var \App\Model\Stock\StockProduct[]|\Doctrine\Common\Collections\Collection
-     *
+     * @var \App\Model\Stock\ProductStock[]|\Doctrine\Common\Collections\Collection
      * @ORM\OneToMany(
-     *   targetEntity="App\Model\Stock\StockProduct",
-     *   mappedBy="product",
-     *   cascade={"persist"}
+     *   targetEntity="App\Model\Stock\ProductStock",
+     *   mappedBy="product"
      * )
-     *
      */
-    protected $stockProducts;
+    protected $productStocks;
 
     /**
      * @param \App\Model\Product\ProductData $productData
@@ -55,8 +52,8 @@ class Product extends BaseProduct
     protected function __construct(BaseProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
-        $this->stockProducts = new ArrayCollection();
-        $this->setStockProducts($productData);
+        $this->productStocks = new ArrayCollection();
+        $this->setProductStocks($productData);
     }
 
     /**
@@ -67,7 +64,7 @@ class Product extends BaseProduct
         array $productCategoryDomains,
         BaseProductData $productData
     ) {
-        $this->setStockProducts($productData);
+        $this->setProductStocks($productData);
         parent::edit($productCategoryDomains, $productData);
     }
 
@@ -190,32 +187,41 @@ class Product extends BaseProduct
     }
 
     /**
-     * @return \App\Model\Stock\StockProduct[]|\Doctrine\Common\Collections\Collection
+     * @return \App\Model\Stock\ProductStock[]|\Doctrine\Common\Collections\Collection
      */
-    public function getStockProducts()
+    public function getProductStocks()
     {
-        return $this->stockProducts;
+        return $this->productStocks;
     }
 
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    protected function setStockProducts(ProductData $productData): void
+    protected function setProductStocks(ProductData $productData): void
     {
         $allStockProductData = $productData->stockProductData;
 
         //edit existing relations
-        foreach ($this->stockProducts as $stockProduct) {
+        foreach ($this->productStocks as $stockProduct) {
             unset($allStockProductData[$stockProduct->getStock()->getId()]);
             $stockProduct->setProductQuantity((int)$productData->stockProductData[$stockProduct->getStock()->getId()]->productQuantity);
         }
 
         //add new relations
         foreach ($allStockProductData as $stockProductData) {
-            $stockProduct = new StockProduct($stockProductData->stock, $this);
+            $stockProduct = new ProductStock($stockProductData->stock, $this);
             $stockProduct->setProductQuantity((int)$stockProductData->productQuantity);
-            $this->stockProducts->add($stockProduct);
+            $this->productStocks->add($stockProduct);
         }
+    }
+
+    /**
+     * @param \App\Model\Stock\ProductStock $productStock
+     * @return $this
+     */
+    public function addProductStock(ProductStock $productStock){
+        $this->productStocks->add($productStock);
+        return $this;
     }
 
     /**
