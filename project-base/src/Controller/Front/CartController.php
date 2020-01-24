@@ -159,8 +159,25 @@ class CartController extends FrontBaseController
         return $this->render('Front/Inline/Cart/cartBox.html.twig', [
             'cart' => $this->cartFacade->findCartOfCurrentCustomerUser(),
             'productsPrice' => $orderPreview->getProductsPrice(),
-            'isIntentActive' => $request->get('isIntentActive'),
+            'isIntentActive' => $request->query->getBoolean('isIntentActive'),
             'isCartHoverEnable' => !in_array($this->requestStack->getMasterRequest()->get('_route'), self::PAGES_WITH_DISABLED_CART_HOVER, true),
+            'loadItems' => $request->query->getBoolean('loadItems'),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function boxDetailAction(Request $request)
+    {
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser();
+
+        return $this->render('Front/Inline/Cart/cartBox.html.twig', [
+            'cart' => $this->cartFacade->findCartOfCurrentCustomerUser(),
+            'productsPrice' => $orderPreview->getProductsPrice(),
+            'isIntentActive' => true,
+            'isCartHoverEnable' => false,
+            'loadItems' => true,
         ]);
     }
 

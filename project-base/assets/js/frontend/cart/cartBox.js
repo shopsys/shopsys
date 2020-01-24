@@ -6,7 +6,7 @@ export default class CartBox {
         Ajax.ajax({
             loaderElement: '#js-cart-box',
             url: $(event.currentTarget).data('reload-url'),
-            data: { 'isIntentActive': $(event.currentTarget).hasClass('active') },
+            data: { 'isIntentActive': $(event.currentTarget).hasClass('active'), loadItems: true },
             type: 'get',
             success: function (data) {
                 $('#js-cart-box').replaceWith(data);

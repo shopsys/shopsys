@@ -563,7 +563,7 @@ There you can find links to upgrade notes for other versions too.
         Ajax.ajax({
             loaderElement: '#js-cart-box',
             url: $(event.currentTarget).data('reload-url'),
-      +     data: {'isIntentActive': $(event.currentTarget).hasClass('active')},
+      +     data: { 'isIntentActive': $(event.currentTarget).hasClass('active'), loadItems: true },
             type: 'get',
             success: function (data) {
                 $('#js-cart-box').replaceWith(data);
@@ -589,8 +589,14 @@ There you can find links to upgrade notes for other versions too.
       +     requirements:
       +         cartItemId: \d+
       +     condition: "request.isXmlHttpRequest()"
+      + front_cart_box_detail:
+      +     path: /cart/box-detail
+      +     defaults:
+      +         _controller: App\Controller\Front\CartController:boxDetailAction
       ```
-  
+
+  - Update your `assets/js/frontend/components/hoverIntent.js` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-0c8ac3a092aa65b5548bba44aaf47934)
+
   - Update your `tests/App/Acceptance/acceptance/CartCest.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-1cdd5de922474f9286fd26767312abe6) 
   - Update your `tests/App/Acceptance/acceptance/PageObject/Front/CartPage.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-22d067f5c4b216b5f2809f6d6340bfee)
   - Update your `tests/App/Acceptance/acceptance/OrderCest.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-d697251fab7d514841306ad608a65fc5)
