@@ -1,8 +1,7 @@
 image: docker:19.03.1
 
 services:
-    -   name: docker:dind
-        alias: docker
+    -   name: docker:19.03.1-dind
 
 stages:
     - build
@@ -17,6 +16,7 @@ stages:
 variables:
     TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: "/certs"
 
 before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
