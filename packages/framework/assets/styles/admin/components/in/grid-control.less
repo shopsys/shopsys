@@ -1,15 +1,26 @@
 @in-grid-height: @input-height-small;
 
 .in-grid-control {
+    display: flex;
+    flex-direction: column;
+
     font-size: 0;
+
+    @media @query-lg {
+        flex-direction: row;
+    }
 
     &__item {
         display: inline-block;
         vertical-align: top;
-        width: 30%;
+        width: 100%;
 
-        font-size: 12px;
         color: @color-0;
+        font-size: 12px;
+
+        @media @query-lg {
+            width: 30%;
+        }
 
         &--paging {
             text-align: center;
@@ -20,9 +31,15 @@
         }
 
         &--settings {
-            width: 40%;
-
+            display: flex;
+            flex-direction: row;
+            width: 100%;
             text-align: right;
+
+            @media @query-lg {
+                width: 40%;
+                flex-direction: column;
+            }
 
             .window-content & {
                 width: 42%;
@@ -31,6 +48,12 @@
 
         &--show {
             line-height: @in-grid-height;
+
+            text-align: center;
+
+            @media @query-lg {
+                text-align: left;
+            }
 
             .window-content & {
                 width: 20%;
@@ -41,9 +64,12 @@
         &__go {
             float: right;
             display: block;
-            margin-left: 40px;
+            text-align: center;
 
-            text-align: right;
+            @media @query-lg {
+                margin-left: 40px;
+                text-align: right;
+            }
 
             &__text {
                 line-height: @in-grid-height;
