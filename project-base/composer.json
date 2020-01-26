@@ -155,6 +155,9 @@
         "src-dir": "src",
         "var-dir": "var",
         "public-dir": "web",
+        "branch-alias": {
+            "dev-master": "9.0.x-dev"
+        },
         "symfony": {
             "allow-contrib": true,
             "require": "^3.4"

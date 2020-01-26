@@ -30,5 +30,10 @@
     },
     "conflict": {
         "symfony/dependency-injection": "3.4.15|3.4.16"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "9.0.x-dev"
+        }
     }
 }

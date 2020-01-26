@@ -34,5 +34,10 @@
     "require-dev": {
         "phpunit/phpunit": "^7.0",
         "shopsys/coding-standards": "9.0.x-dev"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "9.0.x-dev"
+        }
     }
 }

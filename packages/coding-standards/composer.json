@@ -37,5 +37,10 @@
         "psr-4": {
             "Tests\\CodingStandards\\": "tests/"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "9.0.x-dev"
+        }
     }
 }
