@@ -37,7 +37,6 @@ body {
             align-items: center;
             margin: 0 auto;
             width: 100%;
-            min-width: @min-width-web;
             height: @height-header;
 
             border-bottom-right-radius: @radius;
@@ -93,13 +92,17 @@ body {
 
     &__panel {
         position: fixed;
+        width: @width-panel-small;
         top: @height-header;
         bottom: 0;
         padding-bottom: @height-fixed-bar;
-        width: @width-panel;
         z-index: 1000;
 
         background-color: @color-f;
+
+        @media @query-lg {
+            width: @width-panel;
+        }
 
         .dump-mode & {
             position: absolute;
@@ -144,8 +147,12 @@ body {
         padding-top: calc(~"@{content-gap} - @{wrap-border-gap}");
         padding-right: @content-gap;
         padding-bottom: @content-gap;
-        padding-left: @width-panel + @content-gap;
+        padding-left: @width-panel-small + @content-gap/2;
         max-width: @width-content;
+
+        @media @query-lg {
+            padding-left: @width-panel + @content-gap;
+        }
 
         .web__container--blank & {
             padding-left: 0;

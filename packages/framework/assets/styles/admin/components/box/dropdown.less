@@ -34,6 +34,14 @@
             border-bottom-right-radius: 0;
         }
 
+        &__text {
+            display: none;
+
+            @media @query-lg {
+                display: inline;
+            }
+        }
+
         &__arrow {
             display: inline-block;
             width: @box-dropdown-arrow-size;
