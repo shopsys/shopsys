@@ -12,18 +12,29 @@
 
     &__wrap {
         display: flex;
-        flex-direction: row;
-        padding: @box-overview-padding 0;
+        flex-direction: column;
+        padding: @box-overview-padding/2 0;
 
         border-radius: @radius;
         background-color: @box-overview-bg;
+
+        @media @query-lg {
+            flex-direction: row;
+            padding: @box-overview-padding 0;
+        }
     }
 
     &__item {
-        width: calc(~"100%/@{box-overview-item-count}");
+        width: 100%;
         text-align: center;
+        padding: @box-overview-padding/2 0;
 
         border-left: 2px solid @color-grey-light;
+
+        @media @query-lg {
+            width: calc(~"100%/@{box-overview-item-count}");
+            padding: 0;
+        }
 
         &:first-child {
             border-left: none;
