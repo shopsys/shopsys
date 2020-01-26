@@ -8,6 +8,7 @@ parameters:
     exclude_files:
         - '*/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php'
         - '*/var/cache/*'
+        - '*/app/getEnvironment.php'
 
     skip:
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:

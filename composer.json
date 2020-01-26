@@ -21,9 +21,6 @@
             "Shopsys\\ReadModelBundle\\": "packages/read-model/src/",
             "Shopsys\\FrameworkBundle\\": "packages/framework/src/"
         },
-        "classmap": [
-            "project-base/app/Environment.php"
-        ],
         "files": [
             "packages/framework/src/Component/Filesystem/Flysystem/VolumeDriver.php",
             "packages/framework/src/Component/Translation/functions.php",
@@ -186,11 +183,9 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
         "post-update-cmd": [
-            "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
         "auto-scripts": {

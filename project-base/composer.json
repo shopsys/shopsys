@@ -8,10 +8,7 @@
             "App\\": [
                 "src/"
             ]
-        },
-        "classmap": [
-            "app/Environment.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {

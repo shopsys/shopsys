@@ -149,10 +149,6 @@ services:
         arguments:
             $secondsTimeout: 240
 
-    Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting:
-        arguments:
-            $environmentFileDirectory: '%shopsys.root_dir%'
-
     Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade:
         arguments:
             - '@shopsys.shop.component.flash_message.sender.front'
@@ -1006,8 +1002,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry:
         arguments:
-            $buildVersion: '%env(BUILD_VERSION)%'
-            $definitionDirectory: '%shopsys.elasticsearch.structure_dir%'
             $indexes: !tagged elasticsearch.index
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader:

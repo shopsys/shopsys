@@ -1,8 +1,6 @@
 <?php
 
-use App\Environment;
 use App\Kernel;
-use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,10 +11,6 @@ if (file_exists(__DIR__ . '/../MAINTENANCE')) {
 }
 
 require dirname(__DIR__) . '/app/autoload.php';
-
-$_SERVER['APP_ENV'] = Environment::getEnvironment(false);
-$_SERVER['APP_DEBUG'] = EnvironmentType::isDebug($_SERVER['APP_ENV']);
-
 require dirname(__DIR__).'/config/bootstrap.php';
 
 if ($_SERVER['APP_DEBUG']) {

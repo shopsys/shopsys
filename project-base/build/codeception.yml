@@ -6,7 +6,8 @@ paths:
     data: ../tests/App/Acceptance/data
     support: ../tests/App/Test/Codeception
 params:
-    - ../config/parameters_test.yml
+    - ../.env.test
+    - ../.env
 settings:
     bootstrap: _bootstrap.php
     colors: true
