@@ -9,14 +9,18 @@
 
 .form-line {
     .clearfix();
-    padding: @form-line-padding-vertical @form-line-padding-horizontal;
     position: relative;
+    padding: @form-line-padding-vertical/2 @form-line-padding-horizontal/2;
     min-height: @form-line-min-height;
 
     border: @form-line-border-style;
     border-left-color: @color-border-darker;
     border-right-color: @color-border-darker;
     background: @color-f;
+
+    @media @query-lg {
+        padding: @form-line-padding-vertical @form-line-padding-horizontal;
+    }
 
     &--no-top-border {
         border-top: none;
@@ -60,7 +64,12 @@
 
     .form-group & {
         &:first-child {
-            padding-top: 20px;
+            padding-top: 10px;
+
+            @media @query-lg {
+                padding-top: 20px;
+            }
+
 
             &.form-line--no-padd {
                 padding-top: 0;
@@ -68,12 +77,17 @@
         }
 
         &:last-child {
-            padding-bottom: 20px;
+            padding-bottom: 10px;
+
+            @media @query-lg {
+                padding-bottom: 20px;
+            }
+
         }
     }
 
     &__label {
-        width: @form-line-label-size;
+        width: 100%;
         padding: @form-line-inner-padding;
         float: left;
 
@@ -81,6 +95,10 @@
         font-size: 15px;
         font-weight: bold;
         color: @color-grey-middle;
+
+        @media @query-lg {
+            width: @form-line-label-size;
+        }
 
         &--input {
             padding-top: 0;
@@ -112,8 +130,12 @@
     }
 
     &__side {
-        margin-left: @form-line-input-size;
         .clearfix();
+
+        @media @query-lg {
+            margin-left: @form-line-input-size;
+        }
+
 
         & + .form-line__side {
             margin-top: 10px;
@@ -126,9 +148,11 @@
 
     &__item {
         display: inline-block;
+        width: 100%;
         padding-right: @form-line-gap-size;
         position: relative;
         vertical-align: middle;
+        word-break: break-all;
 
         &--text {
             padding-top: 15px;
