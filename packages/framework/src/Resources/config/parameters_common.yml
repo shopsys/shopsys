@@ -1,6 +1,6 @@
 parameters:
     # Default Redis keys prefix
-    build-version: '0000000000000000'
+    env(BUILD_VERSION): '0000000000000000'
 
     # Seed for demo data generation
     faker.seed: 1234

@@ -1,7 +1,7 @@
 framework:
     annotations:
         cache: shopsys.framework.cache_driver.annotations_cache
-    secret: "%secret%"
+    secret: '%env(APP_SECRET)%'
     router:
         strict_requirements: true
     form: ~

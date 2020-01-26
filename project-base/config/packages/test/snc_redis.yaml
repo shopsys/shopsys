@@ -3,6 +3,6 @@ snc_redis:
         test:
             type: 'phpredis'
             alias: 'test'
-            dsn: 'redis://%redis_host%'
+            dsn: '%env(REDIS_URL)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%test:'

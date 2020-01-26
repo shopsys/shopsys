@@ -3,7 +3,6 @@ imports:
     - { resource: services/*.yml }
     - { resource: paths.yml }
     - { resource: parameters_common.yml }
-    - { resource: parameters.yml }
     - { resource: directories.yml }
 
 services:

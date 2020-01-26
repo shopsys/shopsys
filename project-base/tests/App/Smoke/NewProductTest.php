@@ -26,7 +26,7 @@ class NewProductTest extends FunctionalTestCase
      */
     public function testCreateOrEditProduct($relativeUrl)
     {
-        $domainUrl = $this->getContainer()->getParameter('overwrite_domain_url');
+        $domainUrl = getenv('OVERWRITE_DOMAIN_URL');
         $server = [
             'HTTP_HOST' => sprintf('%s:%d', parse_url($domainUrl, PHP_URL_HOST), parse_url($domainUrl, PHP_URL_PORT)),
         ];

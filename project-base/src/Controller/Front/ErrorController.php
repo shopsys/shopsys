@@ -196,7 +196,7 @@ class ErrorController extends FrontBaseController
         $content = sprintf("You are trying to access an unknown domain '%s'.", $url);
 
         if ($this->environment === EnvironmentType::TEST) {
-            $overwriteDomainUrl = $this->getParameter('overwrite_domain_url');
+            $overwriteDomainUrl = getenv('OVERWRITE_DOMAIN_URL');
             $content .= sprintf(" TEST environment is active, current domain url is '%s'.", $overwriteDomainUrl);
         }
 

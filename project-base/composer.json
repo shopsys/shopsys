@@ -49,7 +49,6 @@
         "fzaninotto/faker": "^1.7.1",
         "helios-ag/fm-elfinder-bundle": "^9.2",
         "heureka/overeno-zakazniky": "^2.0.6",
-        "incenteev/composer-parameter-handler": "^2.1.3",
         "intervention/image": "^2.3.14",
         "jms/serializer-bundle": "^2.4",
         "jms/translation-bundle": "^1.4.1",
@@ -125,12 +124,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
@@ -161,16 +158,6 @@
         "symfony": {
             "allow-contrib": true,
             "require": "^3.4"
-        },
-        "incenteev-parameters": [
-            {
-                "file": "config/parameters.yml",
-                "keep-outdated": true
-            },
-            {
-                "file": "config/parameters_test.yml",
-                "keep-outdated": true
-            }
-        ]
+        }
     }
 }

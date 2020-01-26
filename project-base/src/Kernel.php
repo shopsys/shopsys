@@ -87,6 +87,9 @@ class Kernel extends BaseKernel
         if (file_exists($confDir . '/parameters_version.yml')) {
             $loader->load($confDir . '/parameters_version.yml');
         }
+
+        $container->setParameter('swiftmailer.disable_delivery', (bool)getenv('DISABLE_DELIVERY'));
+        $container->setParameter('swiftmailer.delivery_whitelist', json_decode(getenv('MAILER_DELIVERY_WHITELIST'), true));
     }
 
     /**

@@ -53,7 +53,7 @@ security:
                 failure_handler: Shopsys\FrameworkBundle\Model\Security\CustomerLoginHandler
                 remember_me: true
             remember_me:
-                secret: "%secret%"
+                secret: '%env(APP_SECRET)%'
                 lifetime: 2592000 # 30 days
                 path: /
                 domain: ~

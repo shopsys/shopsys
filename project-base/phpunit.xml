@@ -15,6 +15,7 @@
 >
     <php>
         <env name="KERNEL_CLASS" value="App\Kernel" />
+        <env name="APP_ENV" value="test" />
     </php>
 
     <testsuites>

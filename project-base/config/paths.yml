@@ -1,5 +1,6 @@
 parameters:
-    shopsys.content_dir_name: 'content'
+    env(CONTENT_DIR_NAME): 'content'
+    shopsys.content_dir_name: '%env(CONTENT_DIR_NAME)%'
     shopsys.css_version_filepath: '%shopsys.web_dir%/assets/cssVersion'
     shopsys.data_fixtures.resources_dir: '%shopsys.root_dir%/src/DataFixtures/resources'
     shopsys.default_db_schema_filepath: '%shopsys.framework.resources_dir%/database/schema.sql'

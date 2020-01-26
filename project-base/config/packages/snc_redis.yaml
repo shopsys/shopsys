@@ -3,37 +3,37 @@ snc_redis:
         bestselling_products:
             type: 'phpredis'
             alias: 'bestselling_products'
-            dsn: 'redis://%redis_host%'
+            dsn: '%env(REDIS_URL)%'
             options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:bestselling_products:'
+                prefix: '%env(REDIS_PREFIX)%%env(BUILD_VERSION)%:cache:bestselling_products:'
         doctrine_metadata:
             type: 'phpredis'
             alias: 'doctrine_metadata'
-            dsn: 'redis://%redis_host%'
+            dsn: '%env(REDIS_URL)%'
             options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:doctrine:metadata:'
+                prefix: '%env(REDIS_PREFIX)%%env(BUILD_VERSION)%:cache:doctrine:metadata:'
         doctrine_query:
             type: 'phpredis'
             alias: 'doctrine_query'
-            dsn: 'redis://%redis_host%'
+            dsn: '%env(REDIS_URL)%'
             options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:doctrine:query:'
+                prefix: '%env(REDIS_PREFIX)%%env(BUILD_VERSION)%:cache:doctrine:query:'
         framework_annotations:
             type: 'phpredis'
             alias: 'framework_annotations'
-            dsn: 'redis://%redis_host%'
+            dsn: '%env(REDIS_URL)%'
             options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:framework:annotations:'
+                prefix: '%env(REDIS_PREFIX)%%env(BUILD_VERSION)%:cache:framework:annotations:'
         global:
             type: 'phpredis'
             alias: 'global'
-            dsn: 'redis://%redis_host%'
+            dsn: '%env(REDIS_URL)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%'
         session:
             type: 'phpredis'
             alias: 'session'
-            dsn: 'redis://%redis_host%'
+            dsn: '%env(REDIS_URL)%'
     session:
         client: 'session'
         prefix: '%env(REDIS_PREFIX)%session:'

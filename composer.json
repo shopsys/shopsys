@@ -97,7 +97,6 @@
         "guzzlehttp/guzzle": "^6.3",
         "helios-ag/fm-elfinder-bundle": "^9.2",
         "heureka/overeno-zakazniky": "^2.0.6",
-        "incenteev/composer-parameter-handler": "^2.1.3",
         "intervention/image": "^2.3.14",
         "jakub-onderka/php-parallel-lint": "^0.9",
         "jdorn/sql-formatter": "^1.2",
@@ -187,12 +186,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
@@ -220,17 +217,7 @@
         "symfony": {
             "allow-contrib": true,
             "require": "^3.4"
-        },
-        "incenteev-parameters": [
-            {
-                "file": "project-base/config/parameters.yml",
-                "keep-outdated": true
-            },
-            {
-                "file": "project-base/config/parameters_test.yml",
-                "keep-outdated": true
-            }
-        ]
+        }
     },
     "replace": {
         "shopsys/backend-api": "self.version",

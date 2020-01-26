@@ -32,7 +32,7 @@ modules:
             populate: true
             cleanup: true
         Tests\App\Test\Codeception\Module\StrictWebDriver:
-            host: "%selenium_server_host%"
+            host: "%env(SELENIUM_SERVER_HOST)%"
             port: 4444
             url: ~
             browser: chrome
