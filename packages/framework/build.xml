@@ -750,14 +750,16 @@
     <target name="product-search-create-structure" description="Creates structure for searching via elasticsearch." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="shopsys:product-search:create-structure"/>
+            <arg value="shopsys:elasticsearch:indexes-create"/>
+            <arg value="product"/>
         </exec>
     </target>
 
     <target name="product-search-delete-structure" depends="production-protection" description="Deletes structure for searching via elasticsearch." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="shopsys:product-search:delete-structure"/>
+            <arg value="shopsys:elasticsearch:indexes-delete"/>
+            <arg value="product"/>
         </exec>
     </target>
 
@@ -971,7 +973,8 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
-            <arg value="shopsys:product-search:create-structure"/>
+            <arg value="shopsys:elasticsearch:indexes-create"/>
+            <arg value="product"/>
         </exec>
     </target>
 
@@ -979,7 +982,8 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
-            <arg value="shopsys:product-search:delete-structure"/>
+            <arg value="shopsys:elasticsearch:indexes-delete"/>
+            <arg value="product"/>
         </exec>
     </target>
 
