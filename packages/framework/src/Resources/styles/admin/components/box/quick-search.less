@@ -9,7 +9,7 @@
     &__input {
         display: inline;
         position: relative;
-        
+
         input {
             vertical-align: middle;
             width: 89%;
@@ -20,11 +20,14 @@
 
     &__btn {
         vertical-align: middle;
-        width: 10%;
         margin-left: 1%;
         height: @quick-search-btn-height;
 
         background: @color-blue;
+
+        @media @query-lg {
+            width: 10%;
+        }
 
         &:hover {
             background: darken(@color-blue, 10%);
