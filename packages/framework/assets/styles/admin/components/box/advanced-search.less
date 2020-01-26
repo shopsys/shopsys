@@ -1,12 +1,20 @@
 .box-advanced-search {
+    display: flex;
+    flex-direction: column;
     position: relative;
     margin: 0 -10px;
     padding: 0 10px;
 
     &__item {
+        display: flex;
+        flex-direction: column;
         margin: 5px -5px;
         display: flex;
         align-items: center;
+
+        @media @query-lg {
+            flex-direction: row;
+        }
 
         &__content {
             flex: 1;
