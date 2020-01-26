@@ -8,6 +8,9 @@
     "arvenil/ninja-mutex": {
         "version": "0.4.1"
     },
+    "aws/aws-sdk-php": {
+        "version": "3.133.6"
+    },
     "barryvdh/elfinder-flysystem-driver": {
         "version": "v0.2.1"
     },
@@ -82,6 +85,9 @@
     },
     "defuse/php-encryption": {
         "version": "v2.2.1"
+    },
+    "devops/kubernetes-deployment": {
+        "version": "dev-pk-finalization"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -339,6 +345,9 @@
     "league/flysystem": {
         "version": "1.0.57"
     },
+    "league/flysystem-aws-s3-v3": {
+        "version": "1.0.23"
+    },
     "league/flysystem-cached-adapter": {
         "version": "1.0.9"
     },
@@ -347,6 +356,9 @@
     },
     "monolog/monolog": {
         "version": "1.25.1"
+    },
+    "mtdowling/jmespath.php": {
+        "version": "2.5.0"
     },
     "myclabs/deep-copy": {
         "version": "1.9.3"

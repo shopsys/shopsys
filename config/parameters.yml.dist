@@ -25,6 +25,11 @@ parameters:
     env(REDIS_PREFIX): ''
     env(ELASTIC_SEARCH_INDEX_PREFIX): ''
 
+    env(S3_API_HOST): ''
+    env(S3_API_USERNAME): ''
+    env(S3_API_PASSWORD): ''
+    env(S3_API_BUCKET_NAME): ''
+
     akeneo_config:
         enabled: false
         base_uri: 'https://pim.scontodev.cz/'
