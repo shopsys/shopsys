@@ -3,22 +3,35 @@
 
 .wrap-box {
     display: flex;
+    flex-direction: column;
+
+    @media @query-lg {
+        flex-direction: row;
+    }
 
     &__half {
-        flex-direction: row;
-        width: 100%/2;
+        flex-direction: column;
+        width: 100%;
         padding: @wrap-box-padding;
+        margin-bottom: @wrap-box-item-gap;
 
         border-radius: @radius;
         background-color: @color-f;
 
-        &--in-row {
-            &:first-child {
-                margin-right: @wrap-box-item-gap;
-            }
+        @media @query-lg {
+            flex-direction: row;
+            width: 100%/2;
+        }
 
-            &:last-child {
-                margin-left: @wrap-box-item-gap;
+        &--in-row {
+            @media @query-lg {
+                &:first-child {
+                    margin-right: @wrap-box-item-gap;
+                }
+
+                &:last-child {
+                    margin-left: @wrap-box-item-gap;
+                }
             }
         }
     }
