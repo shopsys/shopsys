@@ -5,7 +5,10 @@
                     class="box-dropdown__select"
                     title="{{ 'Frontend'|trans }}"
             >
-                {{ 'Go to Frontend'|trans }}
+                <i class="svg svg-forward-page"></i>
+                <span class="box-dropdown__select__text">
+                    {{ 'Go to Frontend'|trans }}
+                </span>
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--up"></i>
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--down"></i>
             </div>
@@ -26,7 +29,9 @@
                     title="{{ 'Account'|trans }}"
             >
                 <i class="svg svg-person-man"></i>
-                {{ app.user.realName }}
+                <span class="box-dropdown__select__text">
+                    {{ app.user.realName }}
+                </span>
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--up"></i>
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--down"></i>
             </div>
