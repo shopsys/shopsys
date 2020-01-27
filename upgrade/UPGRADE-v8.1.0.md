@@ -331,7 +331,7 @@ There you can find links to upgrade notes for other versions too.
 
 ### Application
 
-- redirect logged users from the registration page to the personal data page ([#1285](https://github.com/shopsys/shopsys/pull/1285))
+- redirect logged users from the registration page to the homepage ([#1285](https://github.com/shopsys/shopsys/pull/1285))
     - modify your `Shopsys\ShopBundle\Controller\Front\RegistrationController::registerAction()`:
         ```diff
           use Shopsys\FrameworkBundle\Model\Security\Authenticator;
