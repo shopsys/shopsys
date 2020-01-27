@@ -20,6 +20,24 @@ There you can find links to upgrade notes for other versions too.
 - check all the phing targets that depend on the new `production-protection` target
     - if you use any of the targets in your automated build scripts in production environment, you need to pass the confirmation to the phing using `-D production.confirm.action=y`
 
+- update your `docker/php-fpm/Dockerfile` ([#1605](https://github.com/shopsys/shopsys/pull/1605))
+    - move switching user to `www-data` above creating `.npm-global` folder
+        ```diff
+        +   # Switch to user
+        +   USER www-data
+           
+            RUN mkdir /home/www-data/.npm-global
+            ENV NPM_CONFIG_PREFIX /home/www-data/.npm-global
+           
+        -   # Switch to user
+        -   USER www-data
+        ```
+    - remove lock for NPM version
+        ```diff
+        -   # hotfix for https://github.com/npm/cli/issues/613
+        -   RUN npm install -g npm@6.13.2
+        ```
+
 ### Application
 
 - update your twig files ([#1284](https://github.com/shopsys/shopsys/pull/1284/)):
