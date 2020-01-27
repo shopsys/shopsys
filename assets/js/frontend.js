@@ -16,6 +16,8 @@ import './frontend/validation/form';
 // HP entry?
 import './frontend/homepage/slickInit';
 
+import './frontend/blog/index';
+
 // order entry?
 import './frontend/order';
 

@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class BlogArticleDataFixture extends AbstractReferenceFixture
 {
-    public const PAGES_IN_CATEGORY = 5;
+    public const PAGES_IN_CATEGORY = 15;
 
     public const LOCALES = DomainHelper::LOCALES;
 
@@ -108,7 +108,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
 
         //in first subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
-            $blogArticleData = $this->createArticle([$firstSubcategory]);
+            $blogArticleData = $this->createArticle([$mainPageBlogCategory, $firstSubcategory]);
             $this->blogArticleFacade->create($blogArticleData);
         }
 
@@ -117,7 +117,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
 
         //in second subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
-            $blogArticleData = $this->createArticle([$secondSubcategory]);
+            $blogArticleData = $this->createArticle([$mainPageBlogCategory, $secondSubcategory]);
             $this->blogArticleFacade->create($blogArticleData);
         }
 
