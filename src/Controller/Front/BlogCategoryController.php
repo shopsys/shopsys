@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BlogCategoryController extends FrontBaseController
 {
-    private const BLOG_ARTICLES_PER_PAGE = 12;
+    private const BLOG_ARTICLES_PER_PAGE = 50;
     private const PAGE_QUERY_PARAMETER = 'page';
 
     /**

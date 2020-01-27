@@ -214,6 +214,7 @@ class BlogArticleRepository
         $this->addBlogArticleBlogCategoryDomainsToQueryBuilder($queryBuilder, $domainId);
         $queryBuilder->andWhere('babcd.blogCategory = :blogCategory');
         $queryBuilder->setParameter('blogCategory', $blogCategory);
+        $queryBuilder->orderBy('ba.publishDate', 'DESC');
 
         $queryPaginator = new QueryPaginator($queryBuilder);
 
