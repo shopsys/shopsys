@@ -99,7 +99,7 @@ class BlogCategoryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
         }
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editace rubriky blogu - %name%', ['%name%' => $blogCategory->getName()]));
@@ -140,7 +140,7 @@ class BlogCategoryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
         }
 
         return $this->render('Admin/Content/Blog/Category/new.html.twig', [

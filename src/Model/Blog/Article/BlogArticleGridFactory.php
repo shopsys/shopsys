@@ -65,7 +65,7 @@ class BlogArticleGridFactory
         $grid->setDefaultOrder('createdAt DESC');
 
         $grid->addColumn('name', 'bat.name', t('Name'));
-        $grid->addColumn('createdAt', 'ba.createdAt', t('Created at'));
+        $grid->addColumn('createdAt', 'ba.createdAt', t('Datum vytvoření'));
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_blogarticle_edit', ['id' => 'ba.id']);
