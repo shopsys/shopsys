@@ -49,6 +49,11 @@ class DeliveryAddressData
      */
     public $country;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\Customer|null
+     */
+    public $customer;
+
     public function __construct()
     {
         $this->addressFilled = false;

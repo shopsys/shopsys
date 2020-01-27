@@ -76,7 +76,7 @@ class CurrentCustomerUserTest extends TestCase
         $customerUserData->pricingGroup = $pricingGroup;
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
 
-        return new CustomerUser($customerUserData, null);
+        return new CustomerUser($customerUserData);
     }
 
     /**

@@ -59,9 +59,9 @@
                                         </tr>
                                     {% endif %}
                                 {% endif %}
-                                {% if customerUser.deliveryAddress is not null %}
-                                    {% if customerUser.deliveryAddress is not null %}
-                                        {% set delivery = customerUser.deliveryAddress %}
+                                {% if customerUser.customer.deliveryAddress is not null %}
+                                    {% if customerUser.customer.deliveryAddress is not null %}
+                                        {% set delivery = customerUser.customer.deliveryAddress %}
                                         {% if delivery.firstName is not null or delivery.lastName is not null or
                                             delivery.companyName is not null or delivery.street is not null or
                                             delivery.city is not null or delivery.postcode is not null or

@@ -48,16 +48,19 @@ class FrontOrderDataMapper
         $frontOrderData->city = $billingAddress->getCity();
         $frontOrderData->postcode = $billingAddress->getPostcode();
         $frontOrderData->country = $billingAddress->getCountry();
-        if ($customerUser->getDeliveryAddress() !== null) {
+
+        $deliveryAddress = $customerUser->getCustomer()->getDeliveryAddress();
+
+        if ($deliveryAddress !== null) {
             $frontOrderData->deliveryAddressSameAsBillingAddress = false;
-            $frontOrderData->deliveryFirstName = $customerUser->getDeliveryAddress()->getFirstName();
-            $frontOrderData->deliveryLastName = $customerUser->getDeliveryAddress()->getLastName();
-            $frontOrderData->deliveryCompanyName = $customerUser->getDeliveryAddress()->getCompanyName();
-            $frontOrderData->deliveryTelephone = $customerUser->getDeliveryAddress()->getTelephone();
-            $frontOrderData->deliveryStreet = $customerUser->getDeliveryAddress()->getStreet();
-            $frontOrderData->deliveryCity = $customerUser->getDeliveryAddress()->getCity();
-            $frontOrderData->deliveryPostcode = $customerUser->getDeliveryAddress()->getPostcode();
-            $frontOrderData->deliveryCountry = $customerUser->getDeliveryAddress()->getCountry();
+            $frontOrderData->deliveryFirstName = $deliveryAddress->getFirstName();
+            $frontOrderData->deliveryLastName = $deliveryAddress->getLastName();
+            $frontOrderData->deliveryCompanyName = $deliveryAddress->getCompanyName();
+            $frontOrderData->deliveryTelephone = $deliveryAddress->getTelephone();
+            $frontOrderData->deliveryStreet = $deliveryAddress->getStreet();
+            $frontOrderData->deliveryCity = $deliveryAddress->getCity();
+            $frontOrderData->deliveryPostcode = $deliveryAddress->getPostcode();
+            $frontOrderData->deliveryCountry = $deliveryAddress->getCountry();
         } else {
             $frontOrderData->deliveryAddressSameAsBillingAddress = true;
         }

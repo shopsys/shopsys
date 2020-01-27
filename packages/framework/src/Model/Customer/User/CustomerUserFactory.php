@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 
 class CustomerUserFactory implements CustomerUserFactoryInterface
 {
@@ -31,15 +30,13 @@ class CustomerUserFactory implements CustomerUserFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function create(CustomerUserData $customerUserData, ?DeliveryAddress $deliveryAddress): CustomerUser
+    public function create(CustomerUserData $customerUserData): CustomerUser
     {
         $classData = $this->entityNameResolver->resolve(CustomerUser::class);
 
-        $customerUser = new $classData($customerUserData, $deliveryAddress);
+        $customerUser = new $classData($customerUserData);
 
         $this->customerUserPasswordFacade->changePassword($customerUser, $customerUserData->password);
 

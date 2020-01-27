@@ -24,7 +24,7 @@ class UserTest extends TestCase
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
         $customer->addBillingAddress($this->createBillingAddress());
-        $customerUser = new CustomerUser($customerUserData, null);
+        $customerUser = new CustomerUser($customerUserData);
 
         $this->assertSame('Lastname Firstname', $customerUser->getFullName());
     }
@@ -42,7 +42,7 @@ class UserTest extends TestCase
         $billingAddressData->companyCustomer = true;
         $billingAddressData->companyName = 'CompanyName';
         $customer->addBillingAddress(new BillingAddress($billingAddressData));
-        $customerUser = new CustomerUser($customerUserData, null);
+        $customerUser = new CustomerUser($customerUserData);
 
         $this->assertSame('CompanyName', $customerUser->getFullName());
     }
@@ -99,7 +99,7 @@ class UserTest extends TestCase
         $customerUserData = new CustomerUserData();
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
-        $customerUser = new CustomerUser($customerUserData, null);
+        $customerUser = new CustomerUser($customerUserData);
 
         $this->setProperty($customerUser, 'resetPasswordHash', $resetPasswordHash);
         $this->setProperty($customerUser, 'resetPasswordHashValidThrough', $resetPasswordHashValidThrough);

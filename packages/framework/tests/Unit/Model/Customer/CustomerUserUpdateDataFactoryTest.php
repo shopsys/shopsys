@@ -76,10 +76,11 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $deliveryAddressData->lastName = 'deliveryLastName';
         $deliveryAddressData->telephone = 'deliveryTelephone';
         $deliveryAddressData->country = $deliveryCountry;
+        $deliveryAddressData->customer = $customer;
 
         $customer->addBillingAddress($this->createBillingAddress($billingAddressData));
-        $deliveryAddress = $this->createDeliveryAddress($deliveryAddressData);
-        $customerUser = new CustomerUser($customerUserData, $deliveryAddress);
+        $customer->addDeliveryAddress($this->createDeliveryAddress($deliveryAddressData));
+        $customerUser = new CustomerUser($customerUserData);
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
@@ -154,7 +155,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $billingAddressData = new BillingAddressData();
         $billingAddressData->customer = $customer;
         $customer->addBillingAddress($this->createBillingAddress($billingAddressData));
-        $customerUser = new CustomerUser($customerUserData, null);
+        $customerUser = new CustomerUser($customerUserData);
 
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];

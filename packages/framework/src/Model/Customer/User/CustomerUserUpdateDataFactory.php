@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
@@ -72,7 +73,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     {
         $customerUserUpdateData = new CustomerUserUpdateData(
             $this->billingAddressDataFactory->createFromBillingAddress($customerUser->getCustomer()->getBillingAddress()),
-            $this->getDeliveryAddressDataFromCustomerUser($customerUser),
+            $this->getDeliveryAddressDataFromCustomer($customerUser->getCustomer()),
             $this->customerUserDataFactory->createFromCustomerUser($customerUser)
         );
 
@@ -80,14 +81,14 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      *
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      */
-    protected function getDeliveryAddressDataFromCustomerUser(CustomerUser $customerUser): DeliveryAddressData
+    protected function getDeliveryAddressDataFromCustomer(Customer $customer): DeliveryAddressData
     {
-        if ($customerUser->getDeliveryAddress()) {
-            return $this->deliveryAddressDataFactory->createFromDeliveryAddress($customerUser->getDeliveryAddress());
+        if ($customer->getDeliveryAddress()) {
+            return $this->deliveryAddressDataFactory->createFromDeliveryAddress($customer->getDeliveryAddress());
         }
 
         return $this->deliveryAddressDataFactory->create();
@@ -102,7 +103,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     public function createAmendedByOrder(CustomerUser $customerUser, Order $order): CustomerUserUpdateData
     {
         $billingAddress = $customerUser->getCustomer()->getBillingAddress();
-        $deliveryAddress = $customerUser->getDeliveryAddress();
+        $deliveryAddress = $customerUser->getCustomer()->getDeliveryAddress();
 
         $customerUserUpdateData = $this->createFromCustomerUser($customerUser);
 

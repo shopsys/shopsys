@@ -7,9 +7,9 @@
         <postal_code><![CDATA[{{ billingAddress.postCode }}]]></postal_code>
         <country_code><![CDATA[{{ billingAddress.country.code|default('') }}]]></country_code>
     </address>
-    {% if customerUser.deliveryAddress is not null %}
+    {% if customerUser.customer.deliveryAddress is not null %}
         <address>
-            {% set deliveryAddress = customerUser.deliveryAddress %}
+            {% set deliveryAddress = customerUser.customer.deliveryAddress %}
             <address_type>shipping</address_type>
             {% if deliveryAddress.street is not null %}<street><![CDATA[{{ deliveryAddress.street }}]]></street>{% endif %}
             {% if deliveryAddress.city is not null %}<city><![CDATA[{{ deliveryAddress.city }}]]></city>{% endif %}
