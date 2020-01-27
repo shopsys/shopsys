@@ -1,12 +1,10 @@
 import formChangeInfo from './formChangeInfo';
 import { select, deselect, getSelectedValues } from './choiceControl';
 import Register from '../../common/utils/register';
-import FileUpload from './fileUpload';
 
 export default class FileUploadInit {
 
     static initDelete () {
-
         $('.js-file-upload-file').each(function () {
             const $file = $(this);
             const $filePreview = $file.find('.js-file-upload-preview');
@@ -25,7 +23,7 @@ export default class FileUploadInit {
                 return false;
             });
 
-            $revertButton.bind('click.deleteFile', () => {
+            $revertButton.on('click.deleteFile', () => {
                 deselect($file.data('delete-input'), fileId);
                 $filePreview.removeClass('list-files__item__in--removed');
                 $deleteButton.show();
@@ -49,10 +47,10 @@ export default class FileUploadInit {
     }
 
     static init () {
-        FileUpload.initDelete();
-        FileUpload.initSort();
+        FileUploadInit.initDelete();
+        FileUploadInit.initSort();
     }
 
 }
 
-(new Register()).registerCallback(FileUpload.init);
+(new Register()).registerCallback(FileUploadInit.init);
