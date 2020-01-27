@@ -74,7 +74,7 @@ class RegistrationFormType extends AbstractType
                 'choices' => array_flip(CustomerUser::getAllGenders()),
                 'placeholder' => t('-- Vyber oslovení --'),
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please choose your gender']),
+                    new Constraints\NotBlank(['message' => 'Prosím vyberte si oslovení']),
                 ],
             ])
             ->add('firstName', TextType::class, [

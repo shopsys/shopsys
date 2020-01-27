@@ -85,8 +85,8 @@ class CustomerUser extends BaseUser
     public static function getAllGenders(): array
     {
         return [
-            self::GENDER_MALE => t('muž'),
-            self::GENDER_FEMALE => t('žena'),
+            self::GENDER_MALE => t('pán'),
+            self::GENDER_FEMALE => t('paní/slečna'),
         ];
     }
 }

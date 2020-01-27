@@ -13,14 +13,15 @@
 
             {{ form_start(form) }}
 
+
                 {{ form_row(form.gender, { label: 'Oslovení'|trans }) }}
                 {{ form_row(form.firstName, { label: 'First name'|trans }) }}
                 {{ form_row(form.lastName, { label: 'Last name'|trans }) }}
                 {{ form_row(form.email, { label: 'Email'|trans , attr: {'data-request-url' : url('front_registration_exists_email') } }) }}
-                {{ form_row(form.telephone, { label: 'Telefon:'|trans }) }}
-                {{ form_row(form.street, { label: 'Ulice:'|trans }) }}
-                {{ form_row(form.city, { label: 'Město:'|trans }) }}
-                {{ form_row(form.postcode, { label: 'PSČ:'|trans }) }}
+                {{ form_row(form.telephone, { label: 'Telefon'|trans }) }}
+                {{ form_row(form.street, { label: 'Ulice'|trans }) }}
+                {{ form_row(form.city, { label: 'Město'|trans }) }}
+                {{ form_row(form.postcode, { label: 'PSČ'|trans }) }}
                 {{ form_row(form.password.first, {
                     label: 'Password'|trans,
                     icon: {
@@ -41,6 +42,7 @@
                                     {% else %}
                                         {{ 'I agree with privacy policy.'|trans }}
                                     {% endif %}
+                                    <span class="form-input-required">*</span>
                                 </label>
                                 <span class="js-validation-errors-list js-validation-error-list-{{ form.privacyPolicy.vars.id }} form-error form-error--choice display-none">
                                     <span class="form-error__icon">

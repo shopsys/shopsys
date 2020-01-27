@@ -80,6 +80,9 @@ class CustomerController extends FrontBaseController
             return $this->redirectToRoute('front_login');
         }
 
+        /**
+         * @var \App\Model\Customer\User\CustomerUser
+         */
         $customerUser = $this->getUser();
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
 
@@ -103,6 +106,7 @@ class CustomerController extends FrontBaseController
 
         return $this->render('Front/Content/Customer/edit.html.twig', [
             'form' => $form->createView(),
+            'isCompanyCustomer' => $customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer(),
         ]);
     }
 

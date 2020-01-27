@@ -37,7 +37,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         $customerUserUpdateData = $this->create();
         $customerUserUpdateData->billingAddressData = $billingAddressData;
         $customerUserUpdateData->customerUserData = $customerUserData;
-        $customerUserUpdateData->sendRegistrationMail = $registrationData->newsletterSubscription;
+        $customerUserUpdateData->sendRegistrationMail = true;
         return $customerUserUpdateData;
     }
 }
