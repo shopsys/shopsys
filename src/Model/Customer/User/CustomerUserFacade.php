@@ -62,9 +62,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      */
     protected function edit($customerUserId, CustomerUserUpdateData $customerUserUpdateData)
     {
-        /**
-         * @var \App\Model\Customer\User\CustomerUser $customerUser
-         */
+
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = parent::edit($customerUserId, $customerUserUpdateData);
 
         $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId($customerUser->getEmail(), $customerUser->getDomainId());
