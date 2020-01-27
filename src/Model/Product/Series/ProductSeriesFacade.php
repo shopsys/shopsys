@@ -123,9 +123,7 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
         $domains = $this->domain->getAll();
         foreach ($domains as $domain) {
 
-            /**
-             * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-             */
+            /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade */
             $friendlyUrlFacade = $this->friendlyUrlFacade;
             $friendlyUrlFacade->createFriendlyUrlForDomain(
                 'front_productseries_detail',
