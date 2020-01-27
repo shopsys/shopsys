@@ -160,15 +160,16 @@ class CartController extends FrontBaseController
             'cart' => $this->cartFacade->findCartOfCurrentCustomerUser(),
             'productsPrice' => $orderPreview->getProductsPrice(),
             'isIntentActive' => $request->query->getBoolean('isIntentActive'),
-            'isCartHoverEnable' => !in_array($this->requestStack->getMasterRequest()->get('_route'), self::PAGES_WITH_DISABLED_CART_HOVER, true),
+            'isCartHoverEnable' => $this->isCartHoverEnable(),
             'loadItems' => $request->query->getBoolean('loadItems'),
         ]);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function boxDetailAction(Request $request)
+    public function boxDetailAction(Request $request): Response
     {
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser();
 
@@ -394,5 +395,18 @@ class CartController extends FrontBaseController
         return $this->json([
             'success' => true,
         ]);
+    }
+
+    /**
+     * @return bool
+     */
+    private function isCartHoverEnable(): bool
+    {
+        $masterRequest = $this->requestStack->getMasterRequest();
+        if ($masterRequest === null) {
+            return false;
+        }
+
+        return !in_array($masterRequest->get('_route'), self::PAGES_WITH_DISABLED_CART_HOVER, true);
     }
 }
