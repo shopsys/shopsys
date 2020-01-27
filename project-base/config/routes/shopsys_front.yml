@@ -26,6 +26,7 @@ front_cart_box_detail:
     path: /cart/box-detail
     defaults:
         _controller: App\Controller\Front\CartController:boxDetailAction
+    condition: "request.isXmlHttpRequest()"
 
 front_cart_delete_ajax:
     path: /cart/delete-ajax/{cartItemId}/
