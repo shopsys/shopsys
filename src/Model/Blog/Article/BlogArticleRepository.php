@@ -190,7 +190,7 @@ class BlogArticleRepository
         return $this->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
             ->andWhere('ba.visibleOnHomepage = true')
             ->setMaxResults($limit)
-            ->orderBy('ba.publishDate', 'DESC')
+            ->orderBy('ba.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -211,10 +211,11 @@ class BlogArticleRepository
         int $limit
     ): PaginationResult {
         $queryBuilder = $this->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale);
+
         $this->addBlogArticleBlogCategoryDomainsToQueryBuilder($queryBuilder, $domainId);
         $queryBuilder->andWhere('babcd.blogCategory = :blogCategory');
         $queryBuilder->setParameter('blogCategory', $blogCategory);
-        $queryBuilder->orderBy('ba.publishDate', 'DESC');
+        $queryBuilder->distinct();
 
         $queryPaginator = new QueryPaginator($queryBuilder);
 

@@ -28,5 +28,9 @@
                 {% endif %}
             </li>
         {% endfor %}
+
+        <li class="list-menu__item">
+            <a class="list-menu__item__link" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ "Magazín"|trans }}</a>
+        </li>
     </ul>
 {% endif %}
