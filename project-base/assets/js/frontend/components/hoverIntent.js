@@ -43,10 +43,6 @@ export default class HoverIntent {
                             type: 'GET',
                             success: function (html) {
                                 let $html = $($.parseHTML(html));
-                                const childrenSelector = $(_this).data('after-children-selector');
-                                if (childrenSelector) {
-                                    $html = $html.find(childrenSelector);
-                                }
 
                                 $($(_this).data('after-replace-selector')).html($html);
                                 (new Register()).registerNewContent($html);
