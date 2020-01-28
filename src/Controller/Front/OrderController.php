@@ -181,8 +181,10 @@ class OrderController extends FrontBaseController
 
         $frontOrderFormData = new FrontOrderData();
         $frontOrderFormData->deliveryAddressSameAsBillingAddress = true;
+        $isCompanyCustomer = false;
         if ($customerUser instanceof CustomerUser) {
             $this->orderFacade->prefillFrontOrderData($frontOrderFormData, $customerUser);
+            $isCompanyCustomer = $customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer();
         }
         $domainId = $this->domain->getId();
         $frontOrderFormData->domainId = $domainId;
@@ -264,6 +266,7 @@ class OrderController extends FrontBaseController
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
             'paymentTransportRelations' => $this->getPaymentTransportRelations($payments),
+            'isCompanyCustomer' => $isCompanyCustomer,
         ]);
     }
 
