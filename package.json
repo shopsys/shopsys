@@ -40,6 +40,7 @@
         "pofile": "^1.1.0"
     },
     "dependencies": {
+        "@fancyapps/fancybox": "^3.5.7",
         "@shopsys/framework": "9.0.0-dev.1",
         "codemirror": "^5.49.2",
         "jquery-ui": "^1.12.1",
