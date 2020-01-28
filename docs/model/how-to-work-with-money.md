@@ -36,13 +36,13 @@ The scale has to be specified during [rounding](#rounding), [creating from float
 
 ## Money Class
 
-[`Money`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Component/Money/Money.php) is an immutable [value object](https://codete.com/blog/value-objects/).
+[`Money`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Money/Money.php) is an immutable [value object](https://codete.com/blog/value-objects/).
 
 It uses a decimal representation of the money amount and it does not contain any reference to the used currency.
 You can get the decimal representation as a `string` via the `getAmount` method.
 
 !!! tip
-    If in doubt about the results of any method, you can take a look at [its unit tests](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/tests/Unit/Component/Money/MoneyTest.php) which contain many examples of the class' behavior.
+    If in doubt about the results of any method, you can take a look at [its unit tests](https://github.com/shopsys/shopsys/blob/master/packages/framework/tests/Unit/Component/Money/MoneyTest.php) which contain many examples of the class' behavior.
 
 ### Construction
 
@@ -119,7 +119,7 @@ $orderItemFormBuilder->add('priceWithVat', MoneyType::class, [
 ]);
 ```
 
-The form type is configured with a model data transformer that converts the value into a `Money` object automatically ([`NumericToMoneyTransformer`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Form/Transformers/NumericToMoneyTransformer.php)).
+The form type is configured with a model data transformer that converts the value into a `Money` object automatically ([`NumericToMoneyTransformer`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/Transformers/NumericToMoneyTransformer.php)).
 Thanks to this approach you can use `Money` in your [data objects](./entities.md#entity-data) directly.
 
 In Shopsys Framework, the default value of the `currency` option is `false` instead of `EUR`, hiding the currency symbol by default.
@@ -422,7 +422,7 @@ class MyTest extends FunctionalTestCase
 
 ## Price Class
 
-[`Price`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Pricing/Price.php) is also an immutable [value object](https://codete.com/blog/value-objects/) used in pricing.
+[`Price`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Price.php) is also an immutable [value object](https://codete.com/blog/value-objects/) used in pricing.
 
 It represents a price with and without VAT and is used in many parts of Shopsys Framework.
 Price calculation classes usually output instances of `Price`.

@@ -71,7 +71,7 @@ Right now, the Dashboard menu looks like this:
 
 Create a new [event subscriber](https://symfony.com/doc/current/event_dispatcher.html) and subscribe to the `ConfigureMenuEvent::SIDE_MENU_DASHBOARD` event.
 This is an event that will allow you to reconfigure the Dashboard menu and add a new item there.
-You can take a look at the class [`ConfigureMenuEvent`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/AdminNavigation/ConfigureMenuEvent.php) to see other events you can subscribe to.
+You can take a look at the class [`ConfigureMenuEvent`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/AdminNavigation/ConfigureMenuEvent.php) to see other events you can subscribe to.
 
 You can put the subscriber right beside your new controller.
 
@@ -122,4 +122,4 @@ A similar approach could be used to add more complicated parametrized pages usin
 Also, we've not only added a new item to the menu, but we've modified some parameters of an already existing menu item, removing the link from it.
 This can be used for altering the menu in a more significant way.
 
-To see how the side menu works, you can see the [`SideMenuBuilder`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where it is created.
+To see how the side menu works, you can see the [`SideMenuBuilder`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where it is created.

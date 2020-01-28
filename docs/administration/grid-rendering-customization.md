@@ -1,6 +1,6 @@
 # Grid Rendering Customization
 
-Default [Twig](https://twig.symfony.com/) template for rendering of each grid can be found in [`src/Resources/views/Admin/Grid/Grid.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Resources/views/Admin/Grid/Grid.html.twig).
+Default [Twig](https://twig.symfony.com/) template for rendering of each grid can be found in [`src/Resources/views/Admin/Grid/Grid.html.twig`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Grid/Grid.html.twig).
 The template is composed of a set of Twig blocks and you are able to override any of them when there is a need for customization of the default appearance.
 
 To customize your grid, you just need to create a new template extending the original one, override appropriate blocks and then set the template as a theme of your grid using `Grid::setTheme` method.

@@ -17,5 +17,5 @@ Logs of Acceptance Tests cannot be streamed because they export images into appl
 In this case we use `kubectl cp` which is able to copy files (`/var/log/codeception`) from container to local folder.
 
 ## Scripts
-In [.ci](https://github.com/shopsys/shopsys/tree/9.0/.ci) folder you can find [export_logs.sh](https://github.com/shopsys/shopsys/tree/9.0/.ci/export_logs.sh) file which we use on our CI to export logs.
+In [.ci](https://github.com/shopsys/shopsys/tree/master/.ci) folder you can find [export_logs.sh](https://github.com/shopsys/shopsys/tree/master/.ci/export_logs.sh) file which we use on our CI to export logs.
 

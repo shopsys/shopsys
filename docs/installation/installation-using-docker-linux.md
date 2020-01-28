@@ -40,7 +40,7 @@ After the script is finished with installing the application, you can skip all t
 If you want to know more about what is happening during installation, continue with the steps [#2.1 - #2.4](#21-create-docker-composeyml-file).
 
 #### 2.1 Create docker-compose.yml file
-Create `docker-compose.yml` from template [`docker-compose.yml.dist`](https://github.com/shopsys/shopsys/blob/9.0/project-base/docker/conf/docker-compose.yml.dist).
+Create `docker-compose.yml` from template [`docker-compose.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose.yml.dist).
 ```sh
 cp docker/conf/docker-compose.yml.dist docker-compose.yml
 ```
@@ -57,7 +57,7 @@ docker-compose up -d --build
 ```
 
 !!! note
-    During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/9.0/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### 2.4 Setup the application
 [Application setup guide](installation-using-docker-application-setup.md)

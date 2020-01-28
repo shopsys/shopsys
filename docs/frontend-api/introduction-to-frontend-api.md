@@ -11,7 +11,7 @@ You should see the [GraphQL documentation](https://graphql.org/learn/) for more 
 
 ## Installation
 Frontend API package is installed by default in `shopsys/project-base`.  
-In case you want to add the package into an already existing project, you should follow [upgrade instructions](https://github.com/shopsys/shopsys/blob/9.0/upgrade/UPGRADE-v9.0.0-dev.md)
+In case you want to add the package into an already existing project, you should follow [upgrade instructions](https://github.com/shopsys/shopsys/blob/master/upgrade/UPGRADE-v9.0.0-dev.md)
 
 ## Configuration
 Frontend API is disabled by default and you need to enable it for each domain for which you want to use it.

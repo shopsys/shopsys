@@ -7,7 +7,7 @@ When adding a new page on the frontend, you need to implement new `BreadcrumbGen
 
 - create new class with name ending with `BreadcrumbGenerator`
 - this class has to implement `BreadcrumbGeneratorInterface`
-- this interface requires you to implement two methods *(see [ArticleBreadcrumbGenerator](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Model/Article/ArticleBreadcrumbGenerator.php) class as an example of the implementation)*:
+- this interface requires you to implement two methods *(see [ArticleBreadcrumbGenerator](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Article/ArticleBreadcrumbGenerator.php) class as an example of the implementation)*:
     - `getBreadcrumbItems` method that generates `BreadcrumbItems`
         - these include displayed name, and may include route and route parameters if you want to make a link from the item
     - `getRouteNames` method where you have to provide names of the routes for which you want to use your breadcrumb generator

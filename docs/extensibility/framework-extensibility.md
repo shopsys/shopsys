@@ -13,7 +13,7 @@ as well as a list of customizations that are not (and will not be) possible at a
     * [Extending particular forms](form-extension.md) without the need of the template overriding
 * [Customizing database migrations](../introduction/database-migrations.md)
     * adding a new migration as well as skipping and reordering the existing ones
-* Configuring the smoke tests (see [`RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/9.0/project-base/tests/App/Smoke/Http/RouteConfigCustomization.php) class)
+* Configuring the smoke tests (see [`RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Smoke/Http/RouteConfigCustomization.php) class)
     * *Note: This is now achievable as the configuration class is located in the open box project-base.
     However, that makes the upgrading of the component harder so the configuration is planned to be re-worked.*
 * [Implementing custom product feed or modifying an existing one](../model/product-feeds.md)
@@ -206,7 +206,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 
 ### Problem 3
 There is one kind of problem that is not fixed automatically and needs to be addressed manually.
-Shopsys Framework uses a kind of magic for working with extended entities (see [`EntityNameResolver` class](https://github.com/shopsys/shopsys/blob/9.0/packages/framework/src/Component/EntityExtension/EntityNameResolver.php)),
+Shopsys Framework uses a kind of magic for working with extended entities (see [`EntityNameResolver` class](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/EntityExtension/EntityNameResolver.php)),
 and static analysis tools are not aware of that fact.
 Imagine the following situation:
 - You have extended `Product` entity in your project

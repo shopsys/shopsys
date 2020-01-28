@@ -12,7 +12,7 @@ Also, entities have a lot of responsibilities that are useless (or even harmful)
 The main goal of the read model in Shopsys Framework is a clear separation of the model and view layer, and performance gain for the end user.
 This is achieved by avoiding the usage of Doctrine entities (and hence calls to SQL Database) in particular frontend templates.
 
-Each object in the read model has its specific purpose (e.g. there is [`ListedProductView`](https://github.com/shopsys/shopsys/blob/9.0/packages/read-model/src/Product/Listed/ListedProductView.php) object that is used on product lists only).
+Each object in the read model has its specific purpose (e.g. there is [`ListedProductView`](https://github.com/shopsys/shopsys/blob/master/packages/read-model/src/Product/Listed/ListedProductView.php) object that is used on product lists only).
 Unlike the entities, objects in the read model contain solely the information that are necessary for a particular use case
 and their data can be gathered from various sources (eg. Elasticsearch storage, and session).
 Read model is a view on the model from a specific perspective - from the reading view. You are using the read model for reading use-cases only and therefore the read model can be simple and very optimized.
