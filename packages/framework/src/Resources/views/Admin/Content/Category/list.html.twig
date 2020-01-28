@@ -75,14 +75,14 @@
                 {% endblock %}
             {% endembed %}
         {% else %}
+            <div class="in-message in-message--info margin-bottom-20">
+                {{ 'In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains'|trans }}
+            </div>
             <div class="wrap-divider">
                 <div class="form-line">
                     <div class="form-tree form-tree--open form-tree--dragable">
                         {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true) }}
                     </div>
-                </div>
-                <div>
-                    {{ 'In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains'|trans }}
                 </div>
             </div>
         {% endif %}
