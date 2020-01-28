@@ -134,8 +134,8 @@ class Version20190801103940 extends AbstractMigration
         $categoriesCount = $this->sql('SELECT count(*) FROM blog_categories')->fetchColumn(0);
 
         if ($categoriesCount <= 0) {
-            $this->sql('INSERT INTO blog_categories (id, parent_id, level, lft, rgt) VALUES (1, null, 0, 1, 2)');
-            $this->sql('INSERT INTO blog_categories (id, parent_id, level, lft, rgt) VALUES (2, 1, 1, 0, 3)');
+            $this->sql('INSERT INTO blog_categories (id, parent_id, level, lft, rgt) VALUES (1, null, 0, 0, 3)');
+            $this->sql('INSERT INTO blog_categories (id, parent_id, level, lft, rgt) VALUES (2, 1, 1, 1, 2)');
             $this->sql('ALTER SEQUENCE blog_categories_id_seq RESTART WITH 3');
 
             $categoryTranslationsCreated = [];
