@@ -620,7 +620,7 @@ There you can find links to upgrade notes for other versions too.
   - Update your `tests/App/Acceptance/acceptance/OrderCest.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-d697251fab7d514841306ad608a65fc5)
   - Update your `tests/App/Acceptance/acceptance/PageObject/Front/OrderPage.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-d2e52049c05d13eea5291229d1a2e6da)
 
-- webpack fixes [#1626](https://github.com/shopsys/shopsys/pull/1626)
+- set loaderElement of searchAutocomplete component to search button (removed from body) [#1626](https://github.com/shopsys/shopsys/pull/1626)
     - update your `assets/js/frontend/components/searchAutocomplete.js`
         ```diff
           Ajax.ajaxPendingCall('Shopsys.search.autocomplete.searchRequest', {
