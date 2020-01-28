@@ -766,7 +766,8 @@
     <target name="product-search-export-products" description="Exports all products for searching via elasticsearch.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="shopsys:product-search:export-products"/>
+            <arg value="shopsys:elasticsearch:data-export"/>
+            <arg value="product"/>
         </exec>
     </target>
 
@@ -991,7 +992,8 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
-            <arg value="shopsys:product-search:export-products"/>
+            <arg value="shopsys:elasticsearch:data-export"/>
+            <arg value="product"/>
         </exec>
     </target>
 

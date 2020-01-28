@@ -83,14 +83,16 @@ class ProductSearchExportWithFilterRepository
     /**
      * @param int $domainId
      * @param string $locale
-     * @param int $startFrom
+     * @param int $lastProcessedId
      * @param int $batchSize
      * @return array
      */
-    public function getProductsData(int $domainId, string $locale, int $startFrom, int $batchSize): array
+    public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize): array
     {
         $queryBuilder = $this->createQueryBuilder($domainId)
-            ->setFirstResult($startFrom)
+            ->andWhere('p.id > :lastProcessedId')
+            ->setParameter('lastProcessedId', $lastProcessedId)
+            // ->setFirstResult($startFrom)
             ->setMaxResults($batchSize);
 
         $query = $queryBuilder->getQuery();
@@ -98,7 +100,7 @@ class ProductSearchExportWithFilterRepository
         $results = [];
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
-            $results[] = $this->extractResult($product, $domainId, $locale);
+            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale);
         }
 
         return $results;

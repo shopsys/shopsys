@@ -1,16 +1,36 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Elasticsearch;
+namespace Tests\FrameworkBundle\Unit\Model\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Model\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductDataProvider;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
+use Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryDataProvider;
 use Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryIndex;
 
 class IndexDefinitionTest extends TestCase
 {
     /**
-     * @param AbstractIndex $index
+     * @return \Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryDataProvider|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private function getCategoryDataProviderMock(): CategoryDataProvider
+    {
+        return $this->createMock(CategoryDataProvider::class);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductDataProvider|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private function getProductDataProviderMock(): ProductDataProvider
+    {
+        return $this->createMock(ProductDataProvider::class);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex $index
      * @param string $definitionsDirectory
      * @param string $indexPrefix
      * @param int $domainId
@@ -28,28 +48,35 @@ class IndexDefinitionTest extends TestCase
         $this->assertSame($expectedResult, $indexDefinition->getIndexAlias());
     }
 
+    /**
+     * @return array
+     */
     public function indexDefinitionParametersForIndexAlias(): array
     {
+        $productIndex = new ProductIndex($this->getProductDataProviderMock());
+        $categoryIndex = new CategoryIndex($this->getCategoryDataProviderMock());
         return [
-            [new ProductIndex(), '', '', 1, 'product_1'],
-            [new ProductIndex(), '', '', 2, 'product_2'],
-            [new ProductIndex(), '', 'prefixed', 1, 'prefixed_product_1'],
-            [new CategoryIndex(), '', '', 1, 'category_1'],
-            [new ProductIndex(), '', 'pre', 2, 'pre_product_2'],
+            [$productIndex, '', '', 1, 'product_1'],
+            [$productIndex, '', '', 2, 'product_2'],
+            [$productIndex, '', 'prefixed', 1, 'prefixed_product_1'],
+            [$categoryIndex, '', '', 1, 'category_1'],
+            [$productIndex, '', 'pre', 2, 'pre_product_2'],
         ];
     }
 
     public function testGetDefinitionReturnsDefinition(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/valid/';
-        $indexDefinition = new IndexDefinition(new ProductIndex(), $definitionDirectory, '', 1);
+        $productIndex = new ProductIndex($this->getProductDataProviderMock());
+        $indexDefinition = new IndexDefinition($productIndex, $definitionDirectory, '', 1);
         $this->assertSame(['foo' => 'bar'], $indexDefinition->getDefinition());
     }
 
     public function testGetDefinitionOnInvalidJsonThrowsException(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/invalidJson/';
-        $indexDefinition = new IndexDefinition(new ProductIndex(), $definitionDirectory, '', 1);
+        $productIndex = new ProductIndex($this->getProductDataProviderMock());
+        $indexDefinition = new IndexDefinition($productIndex, $definitionDirectory, '', 1);
 
         $this->expectException(ElasticsearchIndexException::class);
         $this->expectExceptionMessage('Invalid JSON in product definition file');
@@ -59,7 +86,8 @@ class IndexDefinitionTest extends TestCase
     public function testGetDefinitionOnNonExistingDefinitionThrowsException(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/non-existing-folder-id-3e85ba/';
-        $indexDefinition = new IndexDefinition(new ProductIndex(), $definitionDirectory, '', 1);
+        $productIndex = new ProductIndex($this->getProductDataProviderMock());
+        $indexDefinition = new IndexDefinition($productIndex, $definitionDirectory, '', 1);
 
         $this->expectException(ElasticsearchIndexException::class);
         $this->expectExceptionMessage('Can\'t read definition file at path');
@@ -69,7 +97,8 @@ class IndexDefinitionTest extends TestCase
     public function testGetVersionedIndexName(): void
     {
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/valid/';
-        $indexDefinition = new IndexDefinition(new ProductIndex(), $definitionDirectory, '', 1);
+        $productIndex = new ProductIndex($this->getProductDataProviderMock());
+        $indexDefinition = new IndexDefinition($productIndex, $definitionDirectory, '', 1);
 
         $this->assertSame('product_1_49a3696adf0fbfacc12383a2d7400d51', $indexDefinition->getVersionedIndexName());
     }

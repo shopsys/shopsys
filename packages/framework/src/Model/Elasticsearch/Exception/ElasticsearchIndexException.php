@@ -99,4 +99,18 @@ class ElasticsearchIndexException extends Exception
             $indexName
         ));
     }
+
+    /**
+     * @param string $documentName
+     * @param array $errors
+     * @return static
+     */
+    public static function bulkUpdateError(string $documentName, array $errors): self
+    {
+        return new self(sprintf(
+            'One or more items return error when updating %s:' . PHP_EOL . '%s',
+            $documentName,
+            json_encode($errors)
+        ));
+    }
 }
