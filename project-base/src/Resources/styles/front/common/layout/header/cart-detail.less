@@ -1,0 +1,164 @@
+@cart-detail-width: 100%;
+@cart-detail-padding: 20px;
+@cart-detail-remove-size: 13px;
+
+@cart-detail-item-count: 5;
+@cart-detail-item-bottom-gap: 5px;
+@cart-detail-item-height: 71px;
+@cart-detail-item-image-size: 71px;
+@cart-detail-item-pieces-width: 50px;
+@cart-detail-item-remove-padding-width: 10px;
+@cart-detail-item-remove-width: @cart-detail-remove-size + 2*@cart-detail-item-remove-padding-width;
+@cart-detail-item-content-width: calc(~"100% - @{cart-detail-item-image-size} - @{cart-detail-item-pieces-width} - @{cart-detail-item-remove-width}");
+
+@cart-detail-total-text-width: 30%;
+
+.cart-detail {
+    .reset-ul();
+    padding-right: 5px; // scroll fix
+    display: flex;
+    flex-direction: column;
+    max-height: @cart-detail-item-count*@cart-detail-item-height;
+    width: @cart-detail-width;
+    overflow-y: auto;
+
+    &__wrap {
+        padding: @cart-detail-padding;
+        padding-right: @cart-detail-padding - 5px; // scroll fix
+        width: 100%;
+
+        background-color: @color-f;
+        border: 1px solid @color-border;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-bottom: @cart-detail-item-bottom-gap;
+        min-height: @cart-detail-item-height;
+
+        border-bottom: 1px solid @color-border;
+
+        &__image {
+            position: relative;
+            width: @cart-detail-item-image-size;
+            margin-right: 5px;
+
+            img {
+                .center-image();
+            }
+        }
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            @media @query-md {
+                width: @cart-detail-item-content-width;
+            }
+
+            &__title {
+                display: inline-block;
+                padding-bottom: 5px;
+
+                font-size: @font-size;
+                color: @color-base;
+                text-decoration: none;
+            }
+
+            &__price {
+                display: inline-block;
+                width: 100%;
+                padding-bottom: 5px;
+
+                font-weight: bold;
+            }
+        }
+
+        &__pieces {
+            align-self: center;
+            text-align: center;
+
+            font-size: @font-size;
+            color: @color-a;
+
+            @media @query-md {
+                width: @cart-detail-item-pieces-width;
+            }
+        }
+
+        &__remove {
+            align-self: center;
+            width: @cart-detail-item-remove-width;
+            padding: @cart-detail-item-remove-padding-width;
+            text-align: left;
+
+            text-decoration: none;
+            cursor: pointer;
+
+            .svg {
+                margin-top: 3px;
+
+                font-size: @cart-detail-remove-size;
+                color: @color-a;
+            }
+
+            &:hover {
+                .svg {
+                    color: @color-base;
+                }
+            }
+        }
+    }
+
+    &__total {
+        display: flex;
+        padding-top: @cart-detail-padding;
+        line-height: 28px;
+
+        background-color: @color-f;
+
+        &__text {
+            width: @cart-detail-total-text-width;
+            text-align: left;
+
+            font-size: 16px;
+        }
+
+        &__price {
+            width: calc(~"100% - @{cart-detail-total-text-width}");
+            text-align: right;
+            line-height: 28px;
+
+            font-size: 24px;
+            font-weight: bold;
+        }
+    }
+
+    &__bottom {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: @cart-detail-padding;
+
+        background-color: @color-border;
+
+        @media @query-md {
+            flex-direction: row;
+        }
+
+        &__button {
+            align-self: flex-end;
+            width: 100%;
+            padding-top: @cart-detail-padding;
+            text-align: center;
+
+            @media @query-md {
+                padding-top: 0;
+                text-align: right;
+            }
+        }
+    }
+}

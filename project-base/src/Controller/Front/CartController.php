@@ -17,13 +17,16 @@ use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFac
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 
 class CartController extends FrontBaseController
 {
     public const AFTER_ADD_WINDOW_ACCESSORIES_LIMIT = 3;
 
     public const RECALCULATE_ONLY_PARAMETER_NAME = 'recalculateOnly';
+
+    public const PAGES_WITH_DISABLED_CART_HOVER = ['front_cart', 'front_error_page', 'front_order_index', 'front_order_sent'];
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
@@ -56,12 +59,18 @@ class CartController extends FrontBaseController
     private $listedProductViewFacade;
 
     /**
+     * @var \Symfony\Component\HttpFoundation\RequestStack
+     */
+    private $requestStack;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(
         CartFacade $cartFacade,
@@ -69,7 +78,8 @@ class CartController extends FrontBaseController
         FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
         OrderPreviewFactory $orderPreviewFactory,
         ErrorExtractor $errorExtractor,
-        ListedProductViewFacadeInterface $listedProductViewFacade
+        ListedProductViewFacadeInterface $listedProductViewFacade,
+        RequestStack $requestStack
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
@@ -77,6 +87,7 @@ class CartController extends FrontBaseController
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->errorExtractor = $errorExtractor;
         $this->listedProductViewFacade = $listedProductViewFacade;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -138,13 +149,36 @@ class CartController extends FrontBaseController
         ]);
     }
 
-    public function boxAction()
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function boxAction(Request $request)
     {
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser();
 
         return $this->render('Front/Inline/Cart/cartBox.html.twig', [
             'cart' => $this->cartFacade->findCartOfCurrentCustomerUser(),
             'productsPrice' => $orderPreview->getProductsPrice(),
+            'isIntentActive' => $request->query->getBoolean('isIntentActive'),
+            'isCartHoverEnable' => $this->isCartHoverEnable(),
+            'loadItems' => $request->query->getBoolean('loadItems'),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function boxDetailAction(Request $request): Response
+    {
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser();
+
+        return $this->render('Front/Inline/Cart/cartBox.html.twig', [
+            'cart' => $this->cartFacade->findCartOfCurrentCustomerUser(),
+            'productsPrice' => $orderPreview->getProductsPrice(),
+            'isIntentActive' => true,
+            'isCartHoverEnable' => false,
+            'loadItems' => true,
         ]);
     }
 
@@ -305,13 +339,13 @@ class CartController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $cartItemId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction(Request $request, $cartItemId)
+    public function deleteAction(Request $request, int $cartItemId): Response
     {
-        $cartItemId = (int)$cartItemId;
-        $token = new CsrfToken('front_cart_delete_' . $cartItemId, $request->query->get('_token'));
+        $token = $request->query->get('_token');
 
-        if ($this->get('security.csrf.token_manager')->isTokenValid($token)) {
+        if ($this->isCsrfTokenValid('front_cart_delete_' . $cartItemId, $token)) {
             try {
                 $productName = $this->cartFacade->getProductByCartItemId($cartItemId)->getName();
 
@@ -331,5 +365,48 @@ class CartController extends FrontBaseController
         }
 
         return $this->redirectToRoute('front_cart');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $cartItemId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAjaxAction(Request $request, int $cartItemId): Response
+    {
+        $token = $request->query->get('_token');
+
+        if ($this->isCsrfTokenValid('front_cart_delete_' . $cartItemId, $token)) {
+            try {
+                $this->cartFacade->deleteCartItem($cartItemId);
+            } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException $ex) {
+                return $this->json([
+                    'success' => false,
+                    'errorMessage' => t('Unable to remove item from cart. The item is probably already removed.'),
+                ]);
+            }
+        } else {
+            return $this->json([
+                'success' => false,
+                'errorMessage' => t('Unable to remove item from cart. The link for removing it probably expired, try it again.'),
+            ]);
+        }
+
+        return $this->json([
+            'success' => true,
+        ]);
+    }
+
+    /**
+     * @return bool
+     */
+    private function isCartHoverEnable(): bool
+    {
+        $masterRequest = $this->requestStack->getMasterRequest();
+        if ($masterRequest === null) {
+            return false;
+        }
+
+        return !in_array($masterRequest->get('_route'), self::PAGES_WITH_DISABLED_CART_HOVER, true);
     }
 }

@@ -1,0 +1,26 @@
+{% macro item(cartItem) %}
+    {% set product = cartItem.product %}
+    <li class="cart-detail__item">
+        <div class="cart-detail__item__image">
+            {{ image(product) }}
+        </div>
+        <div class="cart-detail__item__content">
+            <a class="cart-detail__item__content__title" href="{{ url('front_product_detail', {'id': product.id}) }}" title="{{ product.name }}">
+                {{ product.name }}
+            </a>
+            <span class="cart-detail__item__content__price">
+                {{ cartItem.watchedPrice|price}}
+            </span>
+        </div>
+        <div class="cart-detail__item__pieces">
+            {{ cartItem.quantity|formatNumber }} {{ product.unit.name }}
+        </div>
+        <a
+            class="cart-detail__item__remove js-cart-box-item-remove-button"
+            href="{{ url('front_cart_delete_ajax', {cartItemId: cartItem.id, _token: csrf_token('front_cart_delete_' ~ cartItem.id)}) }}"
+            title="{{ 'Remove item'|trans }}"
+        >
+            <i class="svg svg-remove"></i>
+        </a>
+    </li>
+{% endmacro %}

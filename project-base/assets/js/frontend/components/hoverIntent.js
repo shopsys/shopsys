@@ -3,6 +3,7 @@ import HoverIntentSetting from './HoverIntentSetting';
 import Register from 'framework/common/utils/register';
 import $ from 'jquery';
 import 'jquery-hoverintent/jquery.hoverIntent';
+import Ajax from 'framework/common/utils/ajax';
 
 export default class HoverIntent {
 
@@ -33,6 +34,21 @@ export default class HoverIntent {
                         $(this).addClass(hoverIntentSetting.getClassForOpen());
                     }
 
+                    const reloadUrl = $(this).data('after-callback-url');
+                    const _this = this;
+                    if (reloadUrl) {
+                        Ajax.ajax({
+                            url: reloadUrl,
+                            loaderElement: '.cart',
+                            type: 'GET',
+                            success: function (html) {
+                                let $html = $($.parseHTML(html));
+
+                                $($(_this).data('after-replace-selector')).html($html);
+                                (new Register()).registerNewContent($html);
+                            }
+                        });
+                    }
                 },
                 out: function () {
                     if ($(this).find('input:focus').length === 0) {

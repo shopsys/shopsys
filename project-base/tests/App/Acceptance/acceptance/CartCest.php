@@ -146,7 +146,7 @@ class CartCest
         $me->amOnLocalizedRoute('front_product_detail', ['id' => 1]);
         $me->seeTranslationFrontend('Add to cart');
         $productDetailPage->addProductIntoCart(3);
-        $me->clickByTranslationFrontend('Go to cart');
+        $cartPage->clickGoToCartInPopUpWindow();
 
         $cartPage->changeProductQuantity('22" Sencor SLE 22F46DM4 HELLO KITTY', 10);
 

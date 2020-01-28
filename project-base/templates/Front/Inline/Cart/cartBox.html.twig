@@ -1,6 +1,17 @@
-<div id="js-cart-box" data-reload-url="{{ url('front_cart_box') }}">
+{% import 'Front/Inline/Cart/cartBoxItemMacro.html.twig' as cartBoxItem %}
+
+<div id="js-cart-box"
+    {% if cart is not null and isCartHoverEnable %}
+        class="display-inline-block js-hover-intent{% if isIntentActive %} active{% endif %}"
+        data-hover-intent-class-for-open="active"
+        data-after-callback-url="{{ url('front_cart_box_detail') }}"
+        data-after-replace-selector="#js-cart-box"
+    {% endif %}
+    data-reload-url="{{ url('front_cart_box') }}"
+>
     <div class="cart">
-        <a class="cart__block" href="{{ url('front_cart') }}">
+        <a {% if cart is not null %}href="{{ url('front_cart') }}"{% endif %}
+            class="cart__block {% if cart is null %} empty no-hover{% endif %}">
             <span class="cart__icon">
                 <i class="svg svg-cart"></i>
             </span>
@@ -14,6 +25,32 @@
                 {% endif %}
             </div>
         </a>
+        {% if loadItems %}
+            <div id="js-cart-box-content" class="cart__detail">
+                {% if cart is not null %}
+                    <div class="cart-detail__wrap">
+                        <ul class="cart-detail">
+                            {% for cartItem in cart.items %}
+                                {{ cartBoxItem.item(cartItem) }}
+                            {% endfor %}
+                        </ul>
+                        <div class="cart-detail__total">
+                            <div class="cart-detail__total__text">
+                                {{ 'Total'|trans }}
+                            </div>
+                            <div class="cart-detail__total__price">
+                                {{ productsPrice.priceWithVat|price }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cart-detail__bottom">
+                        <div class="cart-detail__bottom__button">
+                            <a href="{{ url('front_cart') }}" class="btn btn--success">{{ 'Go to cart'|trans }}</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 
     <div class="cart-mobile header__mobile-button">

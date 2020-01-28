@@ -561,6 +561,64 @@ There you can find links to upgrade notes for other versions too.
           </div>
         ```
 
+- add cart detail on hover ([#1565](https://github.com/shopsys/shopsys/pull/1565))
+  
+  - you can skip this task if you have your custom design
+  - Add new file [`src/Resources/styles/front/common/layout/header/cart-detail.less`](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/layout/header/cart-detail.less)
+  - Update your `src/Resources/styles/front/common/layout/header/cart.less` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-bc98fd209f1c026440cbf870086beece)
+  - Update your `src/Resources/styles/front/common/main.less`
+      ```diff
+        @import "layout/header/cart.less";
+      + @import "layout/header/cart-detail.less";
+        @import "layout/header/cart-mobile.less";
+      ```
+  - Add new file [`templates/Front/Inline/Cart/cartBoxItemMacro.html.twig`](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Inline/Cart/cartBoxItemMacro.html.twig)
+  - Update your `templates/Front/Inline/Cart/cartBox.html.twig` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-41605908c87d6192f16bdf03da67b192)
+  - Update your `templates/Front/Layout/header.html.twig` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-fec16681aa60ba908bc8e574d24de3fd)
+  - Add new file [`assets/js/frontend/cart/cartBoxItemRemover.js`](https://github.com/shopsys/shopsys/blob/9.0/project-base/assets/js/frontend/cart/cartBoxItemRemover.js)
+  - Update `assets/js/frontend/cart/cartBox.js`
+      ```diff
+        Ajax.ajax({
+            loaderElement: '#js-cart-box',
+            url: $(event.currentTarget).data('reload-url'),
+      +     data: { 'isIntentActive': $(event.currentTarget).hasClass('active'), loadItems: true },
+            type: 'get',
+            success: function (data) {
+                $('#js-cart-box').replaceWith(data);
+                ...
+            }
+        });
+      ```
+  
+  - Update `assets/js/frontend/cart/index.js`
+      ```diff
+        import './cartRecalculator';
+      + import './CartBoxItemRemover';
+      ```
+  
+  - Update your `src/Controller/Front/CartController.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-2cc95b0ea7402f2767d208da32b41333)
+  
+  - Update your `config/routes/shopsys_front.yml`
+      ```diff
+      + front_cart_delete_ajax:
+      +     path: /cart/delete-ajax/{cartItemId}/
+      +     defaults:
+      +         _controller: App\Controller\Front\CartController:deleteAjaxAction
+      +     requirements:
+      +         cartItemId: \d+
+      +     condition: "request.isXmlHttpRequest()"
+      + front_cart_box_detail:
+      +     path: /cart/box-detail
+      +     defaults:
+      +         _controller: App\Controller\Front\CartController:boxDetailAction
+      ```
+
+  - Update your `assets/js/frontend/components/hoverIntent.js` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-0c8ac3a092aa65b5548bba44aaf47934)
+
+  - Update your `tests/App/Acceptance/acceptance/CartCest.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-1cdd5de922474f9286fd26767312abe6) 
+  - Update your `tests/App/Acceptance/acceptance/PageObject/Front/CartPage.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-22d067f5c4b216b5f2809f6d6340bfee)
+  - Update your `tests/App/Acceptance/acceptance/OrderCest.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-d697251fab7d514841306ad608a65fc5)
+  - Update your `tests/App/Acceptance/acceptance/PageObject/Front/OrderPage.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-d2e52049c05d13eea5291229d1a2e6da)
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
