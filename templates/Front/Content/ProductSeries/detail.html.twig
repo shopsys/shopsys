@@ -22,12 +22,12 @@
                     </p>
                 </div>
                 <div class="box-detail__image">
-                    {% set galleryImages = getImages(productSeries) %}
+                    {% set galleryImages = getImages(productSeries, 'images') %}
                     {% set showGallery = galleryImages|length > 1 %}
                     <div class="box-detail__image__main">
-                        {% if imageExists(productSeries) %}
-                            <a href="{{ imageUrl(productSeries, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' : 'js-popup-image' }}">
-                                {{ image(productSeries, { itemprop: 'image' }) }}
+                        {% if imageExists(productSeries, 'mainImage') %}
+                            <a href="{{ imageUrl(productSeries, 'original', 'mainImage') }}" class="{{ false ? 'js-gallery-main-image' : 'js-popup-image' }}">
+                                {{ image(productSeries, { itemprop: 'image',type: 'mainImage' }) }}
                             </a>
                         {% else %}
                             {{ noimage({ alt: productSeries.name }) }}
@@ -43,7 +43,7 @@
                                 {% for galleryImage in galleryImages %}
                                     <div class="box-gallery__item">
                                         <a href="{{ imageUrl(galleryImage, 'original') }}" class="box-gallery__item__link js-gallery-slide-link">
-                                            {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false}) }}
+                                            {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, type:'images'}) }}
                                         </a>
                                     </div>
                                 {% endfor %}

@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -62,6 +63,7 @@ class ProductSeriesFormType extends AbstractType
         $builder->add($this->createDescriptionsGroup($builder, $productSeries));
         $builder->add($this->createVisibilityGroup($builder));
         $builder->add($this->createSeoGroup($builder, $productSeries));
+        $builder->add($this->createMainImageGroup($builder, $options));
         $builder->add($this->createImagesGroup($builder, $options));
         $builder->add('save', SubmitType::class);
     }
@@ -202,6 +204,39 @@ class ProductSeriesFormType extends AbstractType
      * @param array $options
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
+    private function createMainImageGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    {
+        $builderImageGroup = $builder->create('mainImageGroup', GroupType::class, [
+            'label' => t('Hlavní obrázek'),
+        ]);
+
+        $builderImageGroup
+            ->add('mainImage', ImageUploadType::class, [
+                'required' => false,
+                'image_entity_class' => ProductSeries::class,
+                'image_type' => 'mainImage',
+                'file_constraints' => [
+                    new Constraints\Image([
+                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ]),
+                ],
+                'entity' => $options['productSeries'],
+                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+                'label' => t('Hlavní obrázek'),
+            ]);
+
+        return $builderImageGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
     private function createImagesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builderImageGroup = $builder->create('imageGroup', GroupType::class, [
@@ -211,6 +246,7 @@ class ProductSeriesFormType extends AbstractType
             ->add('images', ImageUploadType::class, [
                 'required' => false,
                 'image_entity_class' => ProductSeries::class,
+                'image_type' => 'images',
                 'file_constraints' => [
                     new Constraints\Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],

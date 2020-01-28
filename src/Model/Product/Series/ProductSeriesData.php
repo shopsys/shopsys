@@ -49,6 +49,11 @@ class ProductSeriesData
      */
     public $images;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
+     */
+    public $mainImage;
+
     public function __construct()
     {
         //by language
@@ -63,5 +68,6 @@ class ProductSeriesData
 
         $this->urls = new UrlListData();
         $this->images = new ImageUploadData();
+        $this->mainImage = new ImageUploadData();
     }
 }

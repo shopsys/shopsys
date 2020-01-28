@@ -75,7 +75,9 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
         $this->em->persist($productSeries);
         $this->em->flush();
 
-        $this->imageFacade->manageImages($productSeries, $productSeriesData->images);
+        $this->imageFacade->manageImages($productSeries, $productSeriesData->images, 'images');
+
+        $this->imageFacade->manageImages($productSeries, $productSeriesData->mainImage, 'mainImage');
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_productseries_detail', $productSeries->getId(), $productSeriesData->urls);
 
@@ -95,7 +97,9 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
         $productSeries->edit($productSeriesData);
         $this->em->persist($productSeries);
 
-        $this->imageFacade->manageImages($productSeries, $productSeriesData->images);
+        $this->imageFacade->manageImages($productSeries, $productSeriesData->images, 'images');
+
+        $this->imageFacade->manageImages($productSeries, $productSeriesData->mainImage, 'mainImage');
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_productseries_detail', $productSeries->getId(), $productSeriesData->urls);
 
