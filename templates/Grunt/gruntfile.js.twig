@@ -315,12 +315,21 @@ module.exports = function(grunt) {
                     livereload: true,
                 }
             }
+        },
+        copy: {
+            css: {
+                expand: false,
+                src: 'node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css',
+                dest: 'web/assets/frontend/styles/fancybox/jquery.fancybox.min-{{ cssVersion }}.css',
+                filter: 'isFile',
+            },
         }
     });
     grunt.loadNpmTasks('grunt-spritesmith');
     grunt.loadNpmTasks('grunt-stylelint');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
-    grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss", "stylelint:frontend"]);
+    grunt.registerTask('default', ["sprite:admin", "sprite:frontend", "webfont", "less", "postcss", "stylelint:frontend", "copy"]);
 
     {% for domain in domains -%}
         grunt.registerTask('frontend{{ domain.id }}', ['webfont:frontend', 'sprite:frontend', 'less:frontend{{ domain.id }}', 'less:print{{ domain.id }}', 'less:wysiwyg{{ domain.id }}'], 'postcss', 'stylelint:frontend');
