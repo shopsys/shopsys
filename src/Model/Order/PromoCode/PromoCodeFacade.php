@@ -41,10 +41,21 @@ class PromoCodeFacade extends BasePromoCodeFacade
     }
 
     /**
-     * @param mixed $code
+     * @param string $code
+     * @return \App\Model\Order\PromoCode\PromoCode|null
      */
     public function findPromoCodeByCode($code)
     {
         return $this->promoCodeRepository->findByCodeAndDomainId($code, $this->domain->getId());
+    }
+
+    /**
+     * @param string $code
+     * @param int $domainId
+     * @return \App\Model\Order\PromoCode\PromoCode|null
+     */
+    public function findPromoCodeByCodeAndDomain(string $code, int $domainId)
+    {
+        return $this->promoCodeRepository->findByCodeAndDomainId($code, $domainId);
     }
 }

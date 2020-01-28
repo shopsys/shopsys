@@ -9,7 +9,11 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
 
 /**
- * @ORM\Table(name="promo_codes")
+ * @ORM\Table(name="promo_codes",
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="domain_code_unique", columns={
+ *         "domain_id", "code"
+ *     })}
+ * )
  * @ORM\Entity
  */
 class PromoCode extends BasePromoCode
@@ -19,6 +23,13 @@ class PromoCode extends BasePromoCode
      * @ORM\Column(type="integer")
      */
     protected $domainId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text",unique=false)
+     */
+    protected $code;
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
