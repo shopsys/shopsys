@@ -62,7 +62,7 @@
                                                 </div>
                                                 <h3>
                                                     <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
-                                                        {{ blogArticle.getSeoH1(domain.id) }}
+                                                        {{ blogArticle.getSeoH1(domain.id) ?? blogArticle.name }}
                                                     </a>
                                                 </h3>
                                                 <div class="list-articles__item__content__text">

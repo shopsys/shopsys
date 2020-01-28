@@ -4,7 +4,7 @@ import AjaxMoreLoader from '../components/ajaxMoreLoader';
 import Translator from 'bazinga-translator';
 
 export default function blogList ($container) {
-    $container.filterAllNodes('.js-load-more-button').each(function () {
+    $container.filterAllNodes('.js-blog-list-with-paginator').each(function () {
         // eslint-disable-next-line no-new
         new AjaxMoreLoader($(this), {
             buttonTextCallback: function (loadNextCount) {
