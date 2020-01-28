@@ -19,7 +19,7 @@ There is a new base html layout with horizontal menu and product filter placed i
         -           - {width: 440, height: ~, media: "(max-width: 479px)"}
         -           - {width: 730, height: ~, media: "(max-width: 768px)"}
         ```
-    - because we don't have left panel on frontend anymore we have to center banner slider (or change its width to 100% - don't forget to change image size) [src/Resources/styles/front/common/components/box/slider.less](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/components/box/slider.less)
+    - because we don't have left panel on frontend anymore we have to center banner slider (or change its width to 100% - don't forget to change image size) [src/Resources/styles/front/common/components/box/slider.less](https://github.com/shopsys/shopsys/blob/master/project-base/src/Resources/styles/front/common/components/box/slider.less)
         ```diff
           @box-slider-width: @web-width - @web-panel-width - 2*@web-padding;
           @box-slider-point-size: 8px;
@@ -37,7 +37,7 @@ There is a new base html layout with horizontal menu and product filter placed i
         +         margin: 0 auto @box-slider-bottom-gap auto;
                   visibility: hidden;
         ```
-    - change left menu to horizontal menu [src/Resources/styles/front/common/components/list/menu.less](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/components/list/menu.less)
+    - change left menu to horizontal menu [src/Resources/styles/front/common/components/list/menu.less](https://github.com/shopsys/shopsys/blob/master/project-base/src/Resources/styles/front/common/components/list/menu.less)
         ```diff
           @list-menu-padding-right: 25px;
           @list-menu-arrow-size: 25px;
@@ -118,19 +118,19 @@ There is a new base html layout with horizontal menu and product filter placed i
         ```
 
         - check all these changes in these files:
-            - [templates/Front/Content/Brand/list.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Brand/list.html.twig)
-            - [templates/Front/Content/ContactForm/contactForm.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/ContactForm/contactForm.html.twig)
-            - [templates/Front/Content/ContactForm/index.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/ContactForm/index.html.twig)
-            - [templates/Front/Content/Product/detail.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Product/detail.html.twig)
-            - [templates/Front/Content/Product/list.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Product/list.html.twig)
-            - [templates/Front/Content/Product/listByBrand.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Product/listByBrand.html.twig)
-            - [templates/Front/Content/Product/search.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Product/search.html.twig)
+            - [templates/Front/Content/Brand/list.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Brand/list.html.twig)
+            - [templates/Front/Content/ContactForm/contactForm.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/ContactForm/contactForm.html.twig)
+            - [templates/Front/Content/ContactForm/index.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/ContactForm/index.html.twig)
+            - [templates/Front/Content/Product/detail.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/detail.html.twig)
+            - [templates/Front/Content/Product/list.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/list.html.twig)
+            - [templates/Front/Content/Product/listByBrand.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/listByBrand.html.twig)
+            - [templates/Front/Content/Product/search.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/search.html.twig)
 
         - in these files we need to change only first line and change page layout:
-            - [templates/Front/Content/Error/error.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Error/error.html.twig)
-            - [templates/Front/Content/Default/index.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Default/index.html.twig)
+            - [templates/Front/Content/Error/error.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Error/error.html.twig)
+            - [templates/Front/Content/Default/index.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Default/index.html.twig)
 
-        - move left panel under header [templates/Front/Layout/layout.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Layout/layout.html.twig)
+        - move left panel under header [templates/Front/Layout/layout.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Layout/layout.html.twig)
             ```diff
               <div class="web__in">
                   <div class="web__header">
@@ -147,7 +147,7 @@ There is a new base html layout with horizontal menu and product filter placed i
             +     </div>
             ```
 
-      - add slidedown behaviour to horizontal menu [templates/Front/Content/Category/panel.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Category/panel.html.twig)
+      - add slidedown behaviour to horizontal menu [templates/Front/Content/Category/panel.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Category/panel.html.twig)
           ```diff
             {% if categoriesWithLazyLoadedVisibleChildren|length > 0 %}
           -     <ul class="js-category-list list-menu dont-print {% if isFirstLevel %}list-menu--root{% endif %}" {% if isFirstLevel %}id="js-categories"{% endif %}>
@@ -166,11 +166,11 @@ There is a new base html layout with horizontal menu and product filter placed i
           ```
         
 - move product list filter to left panel ([#1544](https://github.com/shopsys/shopsys/pull/1544))
-    - add new js file with product filter behaviour [src/Resources/scripts/frontend/product/productFilterBox.js](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/scripts/frontend/product/productFilterToggler.js)
+    - add new js file with product filter behaviour [src/Resources/scripts/frontend/product/productFilterBox.js](https://github.com/shopsys/shopsys/blob/master/project-base/src/Resources/scripts/frontend/product/productFilterToggler.js)
 
-    - replace box filter less file with new one [src/Resources/styles/front/common/components/box/filter.less](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/components/box/filter.less)
+    - replace box filter less file with new one [src/Resources/styles/front/common/components/box/filter.less](https://github.com/shopsys/shopsys/blob/master/project-base/src/Resources/styles/front/common/components/box/filter.less)
 
-    - update box list less component [src/Resources/styles/front/common/components/box/list.less](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/components/box/list.less)
+    - update box list less component [src/Resources/styles/front/common/components/box/list.less](https://github.com/shopsys/shopsys/blob/master/project-base/src/Resources/styles/front/common/components/box/list.less)
         ```diff
           .box-list {
         +     display: flex;
@@ -197,7 +197,7 @@ There is a new base html layout with horizontal menu and product filter placed i
               &__description {
         ```
 
-    - update in paging comoponent for new layout [src/Resources/styles/front/common/components/in/paging.less](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/components/in/paging.less)
+    - update in paging comoponent for new layout [src/Resources/styles/front/common/components/in/paging.less](https://github.com/shopsys/shopsys/blob/master/project-base/src/Resources/styles/front/common/components/in/paging.less)
         ```diff
           &__control {
              flex: 3;
@@ -213,7 +213,7 @@ There is a new base html layout with horizontal menu and product filter placed i
              &__item {
         ```
 
-    - delete panel atributes from layout component [src/Resources/styles/front/common/layout/layout.less](https://github.com/shopsys/shopsys/blob/9.0/project-base/src/Resources/styles/front/common/layout/layout.less)
+    - delete panel atributes from layout component [src/Resources/styles/front/common/layout/layout.less](https://github.com/shopsys/shopsys/blob/master/project-base/src/Resources/styles/front/common/layout/layout.less)
         ```diff
         - &__panel {
         -     width: 100%;
@@ -228,6 +228,6 @@ There is a new base html layout with horizontal menu and product filter placed i
         - }
         ```
 
-    - update filter macro and set defualt behaviour of left panel according to this file [templates/Front/Content/Product/filterFormMacro.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Product/filterFormMacro.html.twig) (it moves `.box-list` stragiht above paging and adds box filter panel)
+    - update filter macro and set defualt behaviour of left panel according to this file [templates/Front/Content/Product/filterFormMacro.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/filterFormMacro.html.twig) (it moves `.box-list` stragiht above paging and adds box filter panel)
 
-    - update product search according to this file [templates/Front/Content/Product/search.html.twig](https://github.com/shopsys/shopsys/blob/9.0/project-base/templates/Front/Content/Product/search.html.twig) (it adds `.box-list` and adds box filter panel)
+    - update product search according to this file [templates/Front/Content/Product/search.html.twig](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/search.html.twig) (it adds `.box-list` and adds box filter panel)

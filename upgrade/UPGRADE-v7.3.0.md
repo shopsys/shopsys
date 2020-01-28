@@ -91,7 +91,7 @@ There you can find links to upgrade notes for other versions too.
     - you'll find the configuration file in `src/Shopsys/ShopBundle/Resources/config/`
 
 ### Tools
-- use the `build.xml` [Phing configuration](https://docs.shopsys.com/en/9.0/introduction/console-commands-for-application-management-phing-targets/) from the `shopsys/framework` package ([#1068](https://github.com/shopsys/shopsys/pull/1068))
+- use the `build.xml` [Phing configuration](https://docs.shopsys.com/en/7.3/introduction/console-commands-for-application-management-phing-targets/) from the `shopsys/framework` package ([#1068](https://github.com/shopsys/shopsys/pull/1068))
     - assuming your `build.xml` and `build-dev.xml` are the same as in `shopsys/project-base` in `v7.2.2`, just remove `build-dev.xml` and replace `build.xml` with this file:
         ```xml
         <?xml version="1.0" encoding="UTF-8"?>
@@ -111,7 +111,7 @@ There you can find links to upgrade notes for other versions too.
         </project>
         ```
     - if there are any changes in the your phing configuration, you'll need to make some customizations
-        - read about [customization of phing targets and properties](https://docs.shopsys.com/en/9.0/introduction/console-commands-for-application-management-phing-targets/#customization-of-phing-targets-and-properties) in the docs
+        - read about [customization of phing targets and properties](https://docs.shopsys.com/en/7.3/introduction/console-commands-for-application-management-phing-targets/#customization-of-phing-targets-and-properties) in the docs
         - if you have some own additional target definitions, copy them into your `build.xml`
         - if you have modified any targets, overwrite them in your `build.xml`
             - examine the target in the `shopsys/framework` package (either on [GitHub](https://github.com/shopsys/shopsys/blob/7.3/packages/framework/build.xml) or locally in `vendor/shopsys/framework/build.xml`)
@@ -156,7 +156,7 @@ There you can find links to upgrade notes for other versions too.
         ```
     - in other places you might have used it in your custom code
 - follow instructions in [the separate article](upgrade-instructions-for-read-model-for-product-lists.md) to introduce read model for frontend product lists into your project ([#1018](https://github.com/shopsys/shopsys/pull/1018))
-    - we recommend to read [Introduction to Read Model](https://docs.shopsys.com/en/9.0/model/introduction-to-read-model/) article
+    - we recommend to read [Introduction to Read Model](https://docs.shopsys.com/en/7.3/model/introduction-to-read-model/) article
 - copy a new functional test to avoid regression of issues with creating product variants in the future ([#1113](https://github.com/shopsys/shopsys/pull/1113))
     - you can copy-paste the class [`ProductVariantCreationTest.php`](https://github.com/shopsys/project-base/blob/v7.3.0/tests/ShopBundle/Functional/Model/Product/ProductVariantCreationTest.php) into `tests/ShopBundle/Functional/Model/Product/` in your project
 - prevent indexing `CustomerPassword:setNewPassword` by robots ([#1119](https://github.com/shopsys/shopsys/pull/1119))

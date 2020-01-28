@@ -3,7 +3,7 @@
 In [#1492](https://github.com/shopsys/shopsys/pull/1492) we changed the application to be compatible with Symfony Flex.
 You can read more about upgrading Symfony application to Flex <https://symfony.com/doc/current/setup/flex.html>
 
-- copy [`.env`](https://github.com/shopsys/project-base/blob/9.0/.env) and [`.env.test`](https://github.com/shopsys/project-base/blob/9.0/.env.test) files from GitHub into the root folder
+- copy [`.env`](https://github.com/shopsys/project-base/blob/master/.env) and [`.env.test`](https://github.com/shopsys/project-base/blob/master/.env.test) files from GitHub into the root folder
 - add local environment files as ignored into `.gitignore`
 ```diff
     /docker-compose.yml
@@ -12,16 +12,16 @@ You can read more about upgrading Symfony application to Flex <https://symfony.c
 +   /.env.local.php
 +   /.env.*.local
 ```
-- copy [`symfony.lock`](https://github.com/shopsys/project-base/blob/9.0/symfony.lock) file from GitHub into the root folder
-- copy [`composer.json`](https://github.com/shopsys/project-base/blob/9.0/composer.json) file from GitHub into the root folder
+- copy [`symfony.lock`](https://github.com/shopsys/project-base/blob/master/symfony.lock) file from GitHub into the root folder
+- copy [`composer.json`](https://github.com/shopsys/project-base/blob/master/composer.json) file from GitHub into the root folder
     - add any project-specific dependencies
 - in `easy-coding-standard.yml` replace
     - `*/tests/ShopBundle/` with `*/tests/App/`
     - `*/src/Shopsys/ShopBundle/` with `*/src/`
-- replace `phpunit.xml` with [`phpunit.xml` version from GitHub](https://github.com/shopsys/project-base/blob/9.0/phpunit.xml)
-- replace `phpstan.neon` with [`phpstan.neon` version from GitHub](https://github.com/shopsys/project-base/blob/9.0/phpstan.neon)
+- replace `phpunit.xml` with [`phpunit.xml` version from GitHub](https://github.com/shopsys/project-base/blob/master/phpunit.xml)
+- replace `phpstan.neon` with [`phpstan.neon` version from GitHub](https://github.com/shopsys/project-base/blob/master/phpstan.neon)
     - add any project-specific configurations
-- replace `build/codeception.yml` with [`build/codeception.yml` version from GitHub](https://github.com/shopsys/project-base/blob/9.0/build/codeception.yml)
+- replace `build/codeception.yml` with [`build/codeception.yml` version from GitHub](https://github.com/shopsys/project-base/blob/master/build/codeception.yml)
 
 - move the original source code from `src/Shopsys/ShopBundle/` to `src/` and update the namespaces of every PHP file to be `App\...` (advanced IDEs can do this automatically)
 - remove bundle related files as the application itself is no longer a bundle
@@ -29,14 +29,14 @@ You can read more about upgrading Symfony application to Flex <https://symfony.c
     - `src/Shopsys/ShopBundle/DependencyInjection/Configuration.php`
     - `src/Shopsys/ShopBundle/DependencyInjection/ShopsysShopExtension.php`
 - update application bootstrapping:
-    - copy [`src/Kernel.php`](https://github.com/shopsys/project-base/blob/9.0/src/Kernel.php) file from GitHub into the `src` folder
+    - copy [`src/Kernel.php`](https://github.com/shopsys/project-base/blob/master/src/Kernel.php) file from GitHub into the `src` folder
     - delete `app/AppCache.php`, `app/AppKernel.php`, `app/router.php`, and `Bootstrap.php` as files are no longer necessary
     - change the namespace from `Shopsys` to `App` in `app/Environment.php`
-    - replace `web/index.php` with [`web/index.php` version from GitHub](https://github.com/shopsys/project-base/blob/9.0/web/index.php)
-    - replace `bin/console` with [`bin/console` version from GitHub](https://github.com/shopsys/project-base/blob/9.0/bin/console)
+    - replace `web/index.php` with [`web/index.php` version from GitHub](https://github.com/shopsys/project-base/blob/master/web/index.php)
+    - replace `bin/console` with [`bin/console` version from GitHub](https://github.com/shopsys/project-base/blob/master/bin/console)
 
 - all configuration files are now located in the `config` folder exclusively
-    - copy all config files to your project from the [config folder from the new version](https://github.com/shopsys/project-base/tree/9.0/config)
+    - copy all config files to your project from the [config folder from the new version](https://github.com/shopsys/project-base/tree/master/config)
     - merge your project-specific configurations from `app/config` and `src/Shopsys/ShopBundle/resources/config` folders into `config`. Keep in mind, that
         - `config.yml`, `config_dev.yml`, and `config_test.yml` should be deleted as they're no longer necessary
         - in `parameters_common.yml` all extended entities in `shopsys.entity_extension.map` have to have new namespace `App\...`

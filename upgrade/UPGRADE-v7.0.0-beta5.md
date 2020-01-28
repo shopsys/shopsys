@@ -16,7 +16,7 @@ There you can find links to upgrade notes for other versions too.
 - add `!docker/nginx` line into `.dockerignore` file so `docker/nginx` directory is not excluded during building `php-fpm` image ([#674](https://github.com/shopsys/shopsys/pull/674))
 - make sure your `webserver` service depends on `php-fpm` in your `docker-compose.yml` file so webserver will not fail on error `host not found in upstream php-fpm:9000` ([#679](https://github.com/shopsys/shopsys/pull/679))
 - on a production server enable compression of static files ([#703](https://github.com/shopsys/shopsys/pull/703))
-    - you can see example configuration in [Installation using Docker on Production Server](https://docs.shopsys.com/en/9.0/installation/installation-using-docker-on-production-server/) guide
+    - you can see example configuration in [Installation using Docker on Production Server](https://docs.shopsys.com/en/latest/installation/installation-using-docker-on-production-server/) guide
 - *(low priority)* Switched to Debian PHP-FPM image ([#702](https://github.com/shopsys/shopsys/pull/702))
     - update your Dockerfile to extend from debian image, follow [changes](https://github.com/shopsys/project-base/commit/023d6f20f3d041dce09d381522bd6c438ed9fa59) and [fix #740](https://github.com/shopsys/shopsys/pull/740/files)
     - change `runAsUser` value in `webserver-php-fpm.yml` manifest to 33 as it is Debian default `www-data` UID
