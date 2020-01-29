@@ -195,4 +195,61 @@ class IndexManager
         $progressBar->finish();
         $output->writeln('');
     }
+
+    /**
+     * @param string $indexAlias
+     * @return array
+     */
+    protected function findIndexNamesForAlias(string $indexAlias): array
+    {
+        $indexes = $this->elasticsearchClient->indices();
+
+        $params = ['name' => $indexAlias];
+
+        if (!$indexes->existsAlias($params)) {
+            throw ElasticsearchIndexException::aliasDoesntExists($indexAlias);
+        }
+
+        $indexesWithAlias = array_keys($indexes->getAlias($params));
+        if (empty($indexesWithAlias)) {
+            throw ElasticsearchIndexException::noIndexFoundForAlias($indexAlias);
+        }
+
+        return $indexesWithAlias;
+    }
+
+    /**
+     * @param string $indexAlias
+     * @return string
+     */
+    public function findCurrentIndexNameForAlias(string $indexAlias): string
+    {
+        $indexesWithAlias = $this->findIndexNamesForAlias($indexAlias);
+
+        if (count($indexesWithAlias) > 1) {
+            throw ElasticsearchIndexException::moreThanOneIndexFoundForAlias($indexAlias, $indexesWithAlias);
+        }
+
+        return $indexesWithAlias[0];
+    }
+
+    /**
+     * @param string $sourceIndexName
+     * @param string $destinationIndexName
+     */
+    public function reindex(string $sourceIndexName, string $destinationIndexName): void
+    {
+        $body = [
+            'source' => [
+                'index' => $sourceIndexName,
+            ],
+            'dest' => [
+                'index' => $destinationIndexName,
+            ],
+        ];
+
+        $this->elasticsearchClient->reindex([
+            'body' => $body,
+        ]);
+    }
 }

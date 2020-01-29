@@ -113,4 +113,42 @@ class ElasticsearchIndexException extends Exception
             json_encode($errors)
         ));
     }
+
+    /**
+     * @param string $alias
+     * @return static
+     */
+    public static function aliasDoesntExists(string $alias): self
+    {
+        return new self(sprintf(
+            'Can\' found any index with alias %s.',
+            $alias
+        ));
+    }
+
+    /**
+     * @param string $alias
+     * @return static
+     */
+    public static function noIndexFoundForAlias(string $alias): self
+    {
+        return new self(sprintf(
+            'Can\'t resolve index name, there aren\'t any indexes with alias %s.',
+            $alias
+        ));
+    }
+
+    /**
+     * @param string $alias
+     * @param array $indexesFound
+     * @return static
+     */
+    public static function moreThanOneIndexFoundForAlias(string $alias, array $indexesFound): self
+    {
+        return new self(sprintf(
+            'Can\'t resolve index name for alias %s. More than one index found (%s).',
+            $alias,
+            implode(',', $indexesFound)
+        ));
+    }
 }

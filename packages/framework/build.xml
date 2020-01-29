@@ -774,7 +774,8 @@
     <target name="product-search-migrate-structure" description="Creates new structure, reindexes it from old one, deletes old structure and add alias to new structure.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="shopsys:product-search:migrate-if-necessary"/>
+            <arg value="shopsys:elasticsearch:indexes-migrate"/>
+            <arg value="product"/>
         </exec>
     </target>
 

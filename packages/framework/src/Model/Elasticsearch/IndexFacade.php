@@ -112,4 +112,38 @@ class IndexFacade
             $this->exportByIndex($index, $output);
         }
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex[] $indexes
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    public function migrateByIndexes(array $indexes, OutputInterface $output): void
+    {
+        foreach ($indexes as $index) {
+            $this->migrateIndex($index, $output);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex $index
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    public function migrateIndex(AbstractIndex $index, OutputInterface $output): void
+    {
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($index, $domainConfig->getId());
+            $existingIndexName = $this->indexManager->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+            if ($existingIndexName === $indexDefinition->getVersionedIndexName()) {
+                $output->writeln(sprintf('Index "%s" on domain "%s" is up to date', $index->getName(), $domainConfig->getId()));
+                continue;
+            }
+
+            $output->writeln(sprintf('Migrating index "%s" on domain "%s"', $index->getName(), $domainConfig->getId()));
+
+            $this->indexManager->createIndex($indexDefinition);
+            $this->indexManager->reindex($existingIndexName, $indexDefinition->getVersionedIndexName());
+            $this->indexManager->createAlias($indexDefinition);
+            $this->indexManager->deleteIndex($existingIndexName);
+        }
+    }
 }
