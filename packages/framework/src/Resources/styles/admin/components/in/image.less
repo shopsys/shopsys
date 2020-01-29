@@ -35,11 +35,14 @@
         display: block;
         color: @color-f;
         width: @in-image-width;
-        height: @in-image-height;
         text-align: center;
 
         font-size: 12px;
         font-weight: bold;
+
+        .input__domain & {
+            height: @in-image-height - 2;
+        }
 
         &--1 {background: #b04454}
         &--2 {background: #c357a1}

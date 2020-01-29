@@ -1,16 +1,20 @@
 @in-domain-padding: 10px;
 
 .in-domain {
-
+    display: flex;
+    flex-direction: row;
     padding-bottom: 25px;
 
     border-radius: @radius;
 
     &__item {
-        display: inline-block;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         height: @in-image-height + 2*@in-domain-padding;
         line-height: @in-image-height;
         padding: 10px;
+        margin-right: 10px;
 
         background: @bg-page;
         border: 1px solid @color-border-dark;
