@@ -19,3 +19,4 @@ import './responsiveTooltip';
 import './safariDetection';
 import './SearchAutocomplete';
 import './spinbox';
+import './popup';
