@@ -23,11 +23,7 @@
         <div class="web__container web__container--big-padding">
             <div class="box-blog">
                 <h1 class="box-blog__title">
-                    {% if blogCategory.getSeoH1(domain.id) is not null %}
-                        {{ blogCategory.getSeoH1(domain.id) }}
-                    {% else %}
-                        {{ blogCategory.name }}
-                    {% endif %}
+                    {{ blogCategory.getSeoH1(domain.id) ?? blogCategory.name}}
                 </h1>
                 {% if imageExists(blogCategory) %}
                     {{ image(blogCategory, { itemprop: 'image', lazy: true }) }}
@@ -62,7 +58,7 @@
                                                 </div>
                                                 <h3>
                                                     <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
-                                                        {{ blogArticle.getSeoH1(domain.id) ?? blogArticle.name }}
+                                                        {{ blogArticle.name }}
                                                     </a>
                                                 </h3>
                                                 <div class="list-articles__item__content__text">

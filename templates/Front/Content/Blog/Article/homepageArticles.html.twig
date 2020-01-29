@@ -3,7 +3,7 @@
     <div class="web__line">
         <div class="web__container">
             <div>
-                <h3>{{ rootCategory.getSeoH1(domain.id)|upper }}</h3>
+                <h3>{{ rootCategory.getName(domain.locale)|upper }}</h3>
                 <div class="web__content">
                     {{ rootCategory.getDescription(domain.locale) }}
                 </div>
@@ -19,7 +19,7 @@
                         </div>
                         <h3>
                             <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
-                                {{ blogArticle.getSeoH1(domain.id) ?? blogArticle.name}}
+                                {{ blogArticle.name}}
                             </a>
                         </h3>
                         <div class="list-articles__item__content__text">
