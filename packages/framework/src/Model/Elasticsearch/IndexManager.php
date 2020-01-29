@@ -177,8 +177,7 @@ class IndexManager
         do {
             $currentBatchData = $dataProvider->getDataForBatch($domainId, $lastProcessedId, $restrictToIds);
             $currentBatchSize = count($currentBatchData);
-
-            if ($currentBatchSize < 1) {
+            if (empty($currentBatchData)) {
                 break;
             }
 
@@ -197,37 +196,45 @@ class IndexManager
     }
 
     /**
-     * @param string $indexAlias
+     * @param string $aliasName
      * @return array
      */
-    protected function findIndexNamesForAlias(string $indexAlias): array
+    protected function findIndexNamesForAlias(string $aliasName): array
     {
-        $indexes = $this->elasticsearchClient->indices();
-
-        $params = ['name' => $indexAlias];
-
-        if (!$indexes->existsAlias($params)) {
-            throw ElasticsearchIndexException::aliasDoesntExists($indexAlias);
+        if (!$this->isAliasCreated($aliasName)) {
+            throw ElasticsearchIndexException::aliasDoesntExists($aliasName);
         }
 
-        $indexesWithAlias = array_keys($indexes->getAlias($params));
+        $indexes = $this->elasticsearchClient->indices();
+
+        $indexesWithAlias = array_keys($indexes->getAlias(['name' => $aliasName]));
         if (empty($indexesWithAlias)) {
-            throw ElasticsearchIndexException::noIndexFoundForAlias($indexAlias);
+            throw ElasticsearchIndexException::noIndexFoundForAlias($aliasName);
         }
 
         return $indexesWithAlias;
     }
 
     /**
-     * @param string $indexAlias
+     * @param string $aliasName
+     * @return bool
+     */
+    protected function isAliasCreated(string $aliasName): bool
+    {
+        $indexes = $this->elasticsearchClient->indices();
+        return $indexes->existsAlias(['name' => $aliasName]);
+    }
+
+    /**
+     * @param string $aliasName
      * @return string
      */
-    public function findCurrentIndexNameForAlias(string $indexAlias): string
+    public function findCurrentIndexNameForAlias(string $aliasName): string
     {
-        $indexesWithAlias = $this->findIndexNamesForAlias($indexAlias);
+        $indexesWithAlias = $this->findIndexNamesForAlias($aliasName);
 
         if (count($indexesWithAlias) > 1) {
-            throw ElasticsearchIndexException::moreThanOneIndexFoundForAlias($indexAlias, $indexesWithAlias);
+            throw ElasticsearchIndexException::moreThanOneIndexFoundForAlias($aliasName, $indexesWithAlias);
         }
 
         return $indexesWithAlias[0];
@@ -239,17 +246,15 @@ class IndexManager
      */
     public function reindex(string $sourceIndexName, string $destinationIndexName): void
     {
-        $body = [
-            'source' => [
-                'index' => $sourceIndexName,
-            ],
-            'dest' => [
-                'index' => $destinationIndexName,
-            ],
-        ];
-
         $this->elasticsearchClient->reindex([
-            'body' => $body,
+            'body' => [
+                'source' => [
+                    'index' => $sourceIndexName,
+                ],
+                'dest' => [
+                    'index' => $destinationIndexName,
+                ],
+            ],
         ]);
     }
 }

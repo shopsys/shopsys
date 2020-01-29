@@ -92,7 +92,6 @@ class ProductSearchExportWithFilterRepository
         $queryBuilder = $this->createQueryBuilder($domainId)
             ->andWhere('p.id > :lastProcessedId')
             ->setParameter('lastProcessedId', $lastProcessedId)
-            // ->setFirstResult($startFrom)
             ->setMaxResults($batchSize);
 
         $query = $queryBuilder->getQuery();
