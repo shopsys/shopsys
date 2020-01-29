@@ -1,0 +1,52 @@
+{% block delivery_address_choice_row %}
+    {% if deliveryAddresses|length > 0 %}
+        <div class="wrap-divider">
+            <table class="table-main">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>{{ 'First name'|trans }}</th>
+                        <th>{{ 'Last name'|trans }}</th>
+                        <th>{{ 'Company name'|trans }}</th>
+                        <th>{{ 'Phone'|trans }}</th>
+                        <th>{{ 'Street'|trans }}</th>
+                        <th>{{ 'City'|trans }}</th>
+                        <th>{{ 'Postcode'|trans }}</th>
+                        <th>{{ 'Country'|trans }}</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for child in form %}
+                        {% if child.vars.value|isInteger %}
+                            {% set deliveryAddress = deliveryAddresses[child.vars.value] %}
+                            <tr class="js-delivery-address-row">
+                                <td>{{ form_widget(child, { attr: { class: 'js-delivery-address-input' } }) }}</td>
+                                <td><label for="{{ child.vars.id }}">{{ deliveryAddress.firstName }}</label></td>
+                                <td><label for="{{ child.vars.id }}">{{ deliveryAddress.lastName }}</label></td>
+                                <td><label for="{{ child.vars.id }}">{{ deliveryAddress.companyName }}</label></td>
+                                <td><label for="{{ child.vars.id }}">{{ deliveryAddress.telephone }}</label></td>
+                                <td><label for="{{ child.vars.id }}">{{ deliveryAddress.street }}</label></td>
+                                <td><label for="{{ child.vars.id }}">{{ deliveryAddress.city }}</label></td>
+                                <td><label for="{{ child.vars.id }}">{{ deliveryAddress.postcode }}</label></td>
+                                <td><label for="{{ child.vars.id }}">{{ deliveryAddress.country.name }}</label></td>
+                                <td>
+                                    <a data-href="{{ url('front_customer_delivery_address_delete', { deliveryAddressId: deliveryAddress.id }) }}" class="js-delivery-address-remove-button">
+                                        <i class="svg svg-remove"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tfoot>
+                                <tr>
+                                    <td>{{ form_widget(child, { attr: { class: 'js-delivery-address-input' } }) }}</td>
+                                    <td colspan="9"><label for="{{ child.vars.id }}">{{ 'New shipping address'|trans }}</label></td>
+                                </tr>
+                            </tfoot>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

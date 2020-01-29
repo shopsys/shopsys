@@ -615,6 +615,10 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator }
 
+    Shopsys\FrameworkBundle\Form\Constraints\DeliveryAddressOfCurrentCustomerValidator:
+        tags:
+            - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\DeliveryAddressOfCurrentCustomerValidator }
+
     monolog.activation_strategy.not_found:
         abstract: true
 

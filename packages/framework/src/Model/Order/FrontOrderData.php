@@ -19,6 +19,11 @@ class FrontOrderData extends OrderData
      */
     public $disallowHeurekaVerifiedByCustomers;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
+     */
+    public $deliveryAddress;
+
     public function __construct()
     {
         parent::__construct();

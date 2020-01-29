@@ -76,14 +76,10 @@ class Customer
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]
      */
-    public function getDeliveryAddress(): ?DeliveryAddress
+    public function getDeliveryAddresses(): array
     {
-        if (count($this->deliveryAddresses) > 0) {
-            return $this->deliveryAddresses->first();
-        }
-
-        return null;
+        return $this->deliveryAddresses->toArray();
     }
 }

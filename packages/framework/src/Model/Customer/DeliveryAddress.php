@@ -91,14 +91,7 @@ class DeliveryAddress
      */
     public function __construct(DeliveryAddressData $deliveryAddressData)
     {
-        $this->street = $deliveryAddressData->street;
-        $this->city = $deliveryAddressData->city;
-        $this->postcode = $deliveryAddressData->postcode;
-        $this->companyName = $deliveryAddressData->companyName;
-        $this->firstName = $deliveryAddressData->firstName;
-        $this->lastName = $deliveryAddressData->lastName;
-        $this->telephone = $deliveryAddressData->telephone;
-        $this->country = $deliveryAddressData->country;
+        $this->setData($deliveryAddressData);
         $this->customer = $deliveryAddressData->customer;
     }
 
@@ -106,6 +99,14 @@ class DeliveryAddress
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
      */
     public function edit(DeliveryAddressData $deliveryAddressData)
+    {
+        $this->setData($deliveryAddressData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
+     */
+    protected function setData(DeliveryAddressData $deliveryAddressData): void
     {
         $this->street = $deliveryAddressData->street;
         $this->city = $deliveryAddressData->city;

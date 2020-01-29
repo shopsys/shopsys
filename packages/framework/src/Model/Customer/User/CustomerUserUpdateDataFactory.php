@@ -5,7 +5,6 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
@@ -73,7 +72,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     {
         $customerUserUpdateData = new CustomerUserUpdateData(
             $this->billingAddressDataFactory->createFromBillingAddress($customerUser->getCustomer()->getBillingAddress()),
-            $this->getDeliveryAddressDataFromCustomer($customerUser->getCustomer()),
+            $this->getDeliveryAddressDataFromCustomerUser($customerUser),
             $this->customerUserDataFactory->createFromCustomerUser($customerUser)
         );
 
@@ -81,14 +80,13 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     *
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      */
-    protected function getDeliveryAddressDataFromCustomer(Customer $customer): DeliveryAddressData
+    protected function getDeliveryAddressDataFromCustomerUser(CustomerUser $customerUser): DeliveryAddressData
     {
-        if ($customer->getDeliveryAddress()) {
-            return $this->deliveryAddressDataFactory->createFromDeliveryAddress($customer->getDeliveryAddress());
+        if ($customerUser->getDefaultDeliveryAddress() !== null) {
+            return $this->deliveryAddressDataFactory->createFromDeliveryAddress($customerUser->getDefaultDeliveryAddress());
         }
 
         return $this->deliveryAddressDataFactory->create();
@@ -97,13 +95,12 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     *
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
-    public function createAmendedByOrder(CustomerUser $customerUser, Order $order): CustomerUserUpdateData
+    public function createAmendedByOrder(CustomerUser $customerUser, Order $order, ?DeliveryAddress $deliveryAddress): CustomerUserUpdateData
     {
         $billingAddress = $customerUser->getCustomer()->getBillingAddress();
-        $deliveryAddress = $customerUser->getCustomer()->getDeliveryAddress();
 
         $customerUserUpdateData = $this->createFromCustomerUser($customerUser);
 

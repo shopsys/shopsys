@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Serializable;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -109,6 +110,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     protected $telephone;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress")
+     * @ORM\JoinColumn(name="default_delivery_address_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $defaultDeliveryAddress;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function __construct(CustomerUserData $customerUserData)
@@ -125,6 +133,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
         $this->telephone = $customerUserData->telephone;
         $this->setEmail($customerUserData->email);
         $this->customer = $customerUserData->customer;
+        $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
     }
 
     /**
@@ -136,6 +145,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
         $this->lastName = $customerUserData->lastName;
         $this->pricingGroup = $customerUserData->pricingGroup;
         $this->telephone = $customerUserData->telephone;
+        $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
     }
 
     /**
@@ -314,13 +324,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
      */
     public function unserialize($serialized)
     {
-        list(
+        [
             $this->id,
             $this->email,
             $this->password,
             $timestamp,
             $this->domainId
-        ) = unserialize($serialized);
+        ] = unserialize($serialized);
         $this->lastActivity = new DateTime();
         $this->lastActivity->setTimestamp($timestamp);
     }
@@ -378,5 +388,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
         $now = new DateTime();
 
         return $this->resetPasswordHashValidThrough !== null && $this->resetPasswordHashValidThrough >= $now;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
+     */
+    public function getDefaultDeliveryAddress(): ?DeliveryAddress
+    {
+        return $this->defaultDeliveryAddress;
     }
 }

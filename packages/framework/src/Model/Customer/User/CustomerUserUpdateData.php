@@ -18,7 +18,7 @@ class CustomerUserUpdateData
     public $billingAddressData;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
+     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null
      */
     public $deliveryAddressData;
 

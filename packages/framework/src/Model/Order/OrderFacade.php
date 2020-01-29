@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -293,21 +294,25 @@ class OrderFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function createOrderFromFront(OrderData $orderData)
+    public function createOrderFromFront(OrderData $orderData, ?DeliveryAddress $deliveryAddress)
     {
         $orderData->status = $this->orderStatusRepository->getDefault();
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment);
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        $this->updateOrderDataWithDeliveryAddress($orderData, $deliveryAddress);
 
         $order = $this->createOrder($orderData, $orderPreview, $customerUser);
         $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
 
         $this->cartFacade->deleteCartOfCurrentCustomerUser();
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
+
         if ($customerUser instanceof CustomerUser) {
-            $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order);
+            $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);
         }
 
         return $order;
@@ -697,6 +702,24 @@ class OrderFacade
                 [$orderItemData->priceWithoutVat, $orderItemData->totalPriceWithVat, $orderItemData->totalPriceWithoutVat],
                 'When not using price calculation for an order item, all prices must be filled.'
             );
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     */
+    protected function updateOrderDataWithDeliveryAddress(OrderData $orderData, ?DeliveryAddress $deliveryAddress)
+    {
+        if ($deliveryAddress !== null) {
+            $orderData->deliveryFirstName = $deliveryAddress->getFirstName();
+            $orderData->deliveryLastName = $deliveryAddress->getLastName();
+            $orderData->deliveryCompanyName = $deliveryAddress->getCompanyName();
+            $orderData->deliveryStreet = $deliveryAddress->getStreet();
+            $orderData->deliveryPostcode = $deliveryAddress->getPostcode();
+            $orderData->deliveryCity = $deliveryAddress->getCity();
+            $orderData->deliveryCountry = $deliveryAddress->getCountry();
+            $orderData->deliveryTelephone = $deliveryAddress->getTelephone();
         }
     }
 }

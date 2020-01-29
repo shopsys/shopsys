@@ -6,9 +6,11 @@ namespace App\Form\Front\Order;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
+use Shopsys\FrameworkBundle\Form\DeliveryAddressChoiceType;
 use Shopsys\FrameworkBundle\Form\Transformers\InverseTransformer;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Order\FrontOrderData;
 use Symfony\Component\Form\AbstractType;
@@ -44,15 +46,26 @@ class PersonalInfoFormType extends AbstractType
     private $domain;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     */
+    private $currentCustomerUser;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
-    public function __construct(CountryFacade $countryFacade, HeurekaFacade $heurekaFacade, Domain $domain)
-    {
+    public function __construct(
+        CountryFacade $countryFacade,
+        HeurekaFacade $heurekaFacade,
+        Domain $domain,
+        CurrentCustomerUser $currentCustomerUser
+    ) {
         $this->countryFacade = $countryFacade;
         $this->heurekaFacade = $heurekaFacade;
         $this->domain = $domain;
+        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**
@@ -158,7 +171,15 @@ class PersonalInfoFormType extends AbstractType
                     'required' => false,
                     'property_path' => 'deliveryAddressSameAsBillingAddress',
                 ])
-                ->addModelTransformer(new InverseTransformer()))
+                ->addModelTransformer(new InverseTransformer()));
+
+        if ($this->currentCustomerUser->findCurrentCustomerUser() !== null) {
+            $builder->add('deliveryAddress', DeliveryAddressChoiceType::class, [
+                'required' => false,
+            ]);
+        }
+
+        $builder
             ->add('deliveryFirstName', TextType::class, [
                 'required' => true,
                 'constraints' => [
@@ -311,7 +332,8 @@ class PersonalInfoFormType extends AbstractType
                     if ($orderData->companyCustomer) {
                         $validationGroups[] = self::VALIDATION_GROUP_COMPANY_CUSTOMER;
                     }
-                    if (!$orderData->deliveryAddressSameAsBillingAddress) {
+
+                    if (!$orderData->deliveryAddressSameAsBillingAddress && $orderData->deliveryAddress === null) {
                         $validationGroups[] = self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS;
                     }
 

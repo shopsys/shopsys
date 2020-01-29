@@ -49,6 +49,11 @@ class CustomerUserData
      */
     public $customer;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
+     */
+    public $defaultDeliveryAddress;
+
     public function __construct()
     {
     }

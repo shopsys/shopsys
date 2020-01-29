@@ -90,5 +90,6 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
         $customerUserData->createdAt = $customerUser->getCreatedAt();
         $customerUserData->telephone = $customerUser->getTelephone();
         $customerUserData->customer = $customerUser->getCustomer();
+        $customerUserData->defaultDeliveryAddress = $customerUser->getDefaultDeliveryAddress();
     }
 }

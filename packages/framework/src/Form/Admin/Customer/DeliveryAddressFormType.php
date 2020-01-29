@@ -7,7 +7,6 @@ use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -48,14 +47,6 @@ class DeliveryAddressFormType extends AbstractType
             ],
         ]);
         $builderDeliveryAdress
-            ->add('addressFilled', CheckboxType::class, [
-                'required' => false,
-                'label' => t('I want to deliver products to different address than the billing one'),
-                'attr' => [
-                    'class' => 'js-checkbox-toggle',
-                    'data-checkbox-toggle-container-class' => 'js-delivery-address-fields',
-                ],
-            ])
             ->add(
                 $builderDeliveryAdress
                     ->create('deliveryAddressFields', FormType::class, [

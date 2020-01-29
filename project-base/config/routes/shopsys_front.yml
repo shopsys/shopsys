@@ -186,3 +186,12 @@ front_download_uploaded_file:
     methods: [GET]
     requirements:
         uploadedFileId: \d+
+
+front_customer_delivery_address_delete:
+    path: /customer/delete-delivery-address/{deliveryAddressId}
+    defaults:
+        _controller: App\Controller\Front\CustomerController:deleteDeliveryAddressAction
+    methods: [GET]
+    requirements:
+        deliveryAddressId: \d+
+

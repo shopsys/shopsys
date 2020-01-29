@@ -42,7 +42,14 @@ class DeliveryAddressFormType extends AbstractType
         $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
 
         $builder
-            ->add('addressFilled', CheckboxType::class, ['required' => false])
+            ->add('addressFilled', CheckboxType::class, [
+                'required' => false,
+                'label' => t('I want to edit delivery address'),
+                'attr' => [
+                    'class' => 'js-checkbox-toggle',
+                    'data-checkbox-toggle-container-class' => 'js-delivery-address-fields',
+                ],
+            ])
             ->add('companyName', TextType::class, [
                 'required' => false,
                 'constraints' => [

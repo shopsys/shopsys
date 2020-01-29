@@ -44,7 +44,7 @@ class DeliveryAddressFacade
      */
     public function edit(int $deliveryAddressId, DeliveryAddressData $deliveryAddressData): void
     {
-        $deliveryAddress = $this->deliveryAddressRepository->getById($deliveryAddressId);
+        $deliveryAddress = $this->getById($deliveryAddressId);
         $deliveryAddress->edit($deliveryAddressData);
 
         $this->em->flush();
@@ -76,5 +76,14 @@ class DeliveryAddressFacade
         $this->em->flush();
 
         return $deliveryAddress;
+    }
+
+    /**
+     * @param int $deliveryAddressId
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
+     */
+    public function getById(int $deliveryAddressId): DeliveryAddress
+    {
+        return $this->deliveryAddressRepository->getById($deliveryAddressId);
     }
 }
