@@ -27,7 +27,7 @@
                         {% set showGallery = galleryImages|length > 1 %}
                         <div class="box-detail__image__main">
                             {% if imageExists(product) %}
-                                <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(product, 'original') }}">
+                                <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(product, 'original') }}" class="{{ showGallery ? 'js-gallery-main-image' }}">
                                     {{ image(product, { itemprop: 'image' }) }}
                                 </a>
                             {% else %}
@@ -40,11 +40,13 @@
                             <div class="box-gallery dont-print js-gallery">
                                 <div class="box-gallery__in">
                                     {% for galleryImage in galleryImages %}
-                                        <div class="box-gallery__item js-gallery-item {% if loop.index > showGalleryMaxCount %}display-none{% endif %}">
-                                            <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(galleryImage, 'original') }}" class="box-gallery__item__link">
-                                                {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false}) }}
-                                            </a>
-                                        </div>
+                                        {% if loop.index != 1 %}
+                                            <div class="box-gallery__item js-gallery-item {% if loop.index > showGalleryMaxCount %}display-none{% endif %}">
+                                                <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(galleryImage, 'original') }}" class="box-gallery__item__link">
+                                                    {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false}) }}
+                                                </a>
+                                            </div>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                                 {% if galleryImages|length > showGalleryMaxCount %}
