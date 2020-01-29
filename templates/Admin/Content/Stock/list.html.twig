@@ -4,7 +4,7 @@
 {% block h1 %}{{ 'Stocks overview'|trans }}{% endblock %}
 
 {% block btn %}
-    <a href="{{ url('app_admin_stock_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+    <a href="{{ url('admin_stock_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
         <i class="btn__icon">+</i>{{ 'Create new stock'|trans }}
     </a>
 {% endblock %}
@@ -13,6 +13,13 @@
 
     <div class="js-multiple-grids-rows-unified">
         {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+
+        {% if settingsForm %}
+            <div class="stock-settings">
+                <h2>{{ 'Nastavení skladů'|trans  }}</h2>
+                {{ form(settingsForm) }}
+            </div>
+        {% endif %}
 
         {% if stocksCountOnSelectedDomain > 0 %}
             <div class="wrap-divider wrap-divider--no-border">

@@ -126,6 +126,8 @@ class ProductController extends FrontBaseController
      */
     public function detailAction($id)
     {
+
+        /** @var \App\Model\Product\Product $product */
         $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
 
         if ($product->isVariant()) {
@@ -143,6 +145,7 @@ class ProductController extends FrontBaseController
             'variants' => $variants,
             'productMainCategory' => $productMainCategory,
             'categoryList' => $categoryList,
+            'domain' => $this->domain,
         ]);
     }
 

@@ -262,6 +262,37 @@
                         </table>
                     </div>
                 {% endif %}
+
+                {% if product.getProductStocks.count > 0 %}
+                    <div class="h3">{{ "Skladové zásoby"|trans }}</div>
+                    <table class="table-grid margin-top-20">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {{ "Sklad"|trans }}
+                                </th>
+                                <th>
+                                    {{ "Skladem"|trans }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for productStock in product.getProductStocks %}
+                            {% if productStock.stock.domainId == domain.id %}
+                            <tr>
+                                <th>
+                                    {{ productStock.stock.name }}
+                                </th>
+                                <td>
+                                    {{ productStock.productQuantity }}
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
             </div>
         </div>
     </div>

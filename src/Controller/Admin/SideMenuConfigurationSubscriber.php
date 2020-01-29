@@ -45,10 +45,10 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureStockMenu(ConfigureMenuEvent $event): void
     {
         $menu = $event->getMenu();
-        $menu->addChild('stock', ['route' => 'app_admin_stock_list', 'label' => t('Skladovost')]);
+        $menu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Skladovost')]);
 
         $blogArticles = $menu->getChild('stock');
-        $blogArticles->addChild('new_stock', ['route' => 'app_admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
-        $blogArticles->addChild('edit_stock', ['route' => 'app_admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
+        $blogArticles->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
+        $blogArticles->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
     }
 }

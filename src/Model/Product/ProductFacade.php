@@ -137,11 +137,9 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\ProductData $productData
      * @return \App\Model\Product\Product
      */
-    public function create(\App\Model\Product\ProductData $productData)
+    public function create(ProductData $productData)
     {
-        /**
-         * @var \App\Model\Product\Product
-         */
+        /** @var \App\Model\Product\Product $product */
         $product = parent::create($productData);
 
         foreach ($productData->stockProductData as $productStockData) {

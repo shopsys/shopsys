@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Model\Stock\ProductStockData;
+use App\Model\Stock\StockSettingsData;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class StockProductFormType extends AbstractType
+class StockSettingsFromType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -20,12 +21,19 @@ class StockProductFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('productQuantity', TextType::class, [
-                'label' => $builder->getData()->name,
+            ->add('delivery', TextType::class, [
+                'label' => t('Dní do naskladnění'),
                 'constraints' => [
-                    new Constraints\GreaterThan(['value' => -1, 'message' => 'Na skladě nejde mít {{ compared_value }} produktů']),
+                    new Constraints\GreaterThan(['value' => -1, 'message' => 'Počet dní musí být kladný nebo 0']),
                 ],
-            ]);
+            ])
+            ->add('transfer', TextType::class, [
+                'label' => t('Dny pro přesun mezi sklady'),
+                'constraints' => [
+                    new Constraints\GreaterThan(['value' => -1, 'message' => 'Počet dní musí být kladný nebo 0']),
+                ],
+            ])
+            ->add('save', SubmitType::class);
     }
 
     /**
@@ -35,7 +43,7 @@ class StockProductFormType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => ProductStockData::class,
+                'data_class' => StockSettingsData::class,
             ]);
     }
 }

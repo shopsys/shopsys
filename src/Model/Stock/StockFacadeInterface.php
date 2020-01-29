@@ -54,4 +54,11 @@ interface StockFacadeInterface
      * @return \App\Model\Stock\Stock[]
      */
     public function getAllStocks(): array;
+
+    /**
+     * @param string $name
+     * @param int $domainId
+     * @return \App\Model\Stock\Stock|null
+     */
+    public function findStockByNameAndDomainId(string $name, int $domainId): ?Stock;
 }

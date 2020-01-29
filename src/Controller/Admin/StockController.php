@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Form\Admin\StockFormTypeExtension;
+use App\Form\Admin\StockSettingsFromType;
 use App\Model\Stock\Exception\StockNotFoundException;
 use App\Model\Stock\StockDataFactoryInterface;
 use App\Model\Stock\StockFacadeInterface;
+use App\Model\Stock\StockSettingsDataFacade;
+use App\Model\Stock\StockSettingsDataFactoryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -15,6 +18,7 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class StockController extends AdminBaseController
@@ -45,30 +49,48 @@ class StockController extends AdminBaseController
     private $gridFactory;
 
     /**
+     * @var \App\Model\Stock\StockSettingsDataFacadeInterface
+     */
+    private $stockSettingsDataFacade;
+
+    /**
+     * @var \App\Model\Stock\StockSettingsDataFactoryInterface
+     */
+    private $stockSettingsDataFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \App\Model\Stock\StockFacadeInterface $stockFacade
      * @param \App\Model\Stock\StockDataFactoryInterface $stockDataFactory
+     * @param \App\Model\Stock\StockSettingsDataFacadeInterface $stockSettingsDataFacade
+     * @param \App\Model\Stock\StockSettingsDataFactoryInterface $stockSettingsDataFactory
      */
     public function __construct(
         GridFactory $gridFactory,
         BreadcrumbOverrider $breadcrumbOverrider,
         AdminDomainTabsFacade $adminDomainTabsFacade,
         StockFacadeInterface $stockFacade,
-        StockDataFactoryInterface $stockDataFactory
+        StockDataFactoryInterface $stockDataFactory,
+        StockSettingsDataFacade $stockSettingsDataFacade,
+        StockSettingsDataFactoryInterface $stockSettingsDataFactory
     ) {
         $this->stockFacade = $stockFacade;
         $this->stockDataFactory = $stockDataFactory;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
         $this->breadcrumbOverrider = $breadcrumbOverrider;
         $this->gridFactory = $gridFactory;
+
+        $this->stockSettingsDataFacade = $stockSettingsDataFacade;
+        $this->stockSettingsDataFactory = $stockSettingsDataFactory;
     }
 
     /**
      * @Route("/stock/list/")
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
         $grid = $this->getGrid();
 
@@ -77,7 +99,45 @@ class StockController extends AdminBaseController
         return $this->render('Admin/Content/Stock/list.html.twig', [
             'gridView' => $grid->createView(),
             'stocksCountOnSelectedDomain' => $articlesCountOnSelectedDomain,
+            'settingsForm' => $this->getStockSettingsForm()->createView(),
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getStockSettingsForm(): FormInterface
+    {
+        $stockSettingsData = $this->stockSettingsDataFactory->create();
+        return $this->createForm(StockSettingsFromType::class, $stockSettingsData, [
+            'action' => $this->generateUrl('admin_stock_savesettings'),
+        ]);
+    }
+
+    /**
+     * @Route("/stock/savesettings/")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function saveSettingsAction(Request $request)
+    {
+        $form = $this->getStockSettingsForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $stockSettingsData = $form->getData();
+
+            $this->stockSettingsDataFacade->edit($stockSettingsData);
+
+            $this->getFlashMessageSender()
+                ->addSuccessFlashTwig(
+                    t('Nastavení ' . $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName() . ' skladů uloženo.')
+                );
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+        return $this->redirectToRoute('admin_stock_list');
     }
 
     /**
@@ -104,10 +164,10 @@ class StockController extends AdminBaseController
                     t('Stock <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                     [
                         'name' => $stock->getName(),
-                        'url' => $this->generateUrl('app_admin_stock_edit', ['id' => $stock->getId()]),
+                        'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
                     ]
                 );
-            return $this->redirectToRoute('app_admin_stock_list');
+            return $this->redirectToRoute('admin_stock_list');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -143,10 +203,10 @@ class StockController extends AdminBaseController
                     t('Stock <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                     [
                         'name' => $stock->getName(),
-                        'url' => $this->generateUrl('app_admin_stock_edit', ['id' => $stock->getId()]),
+                        'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
                     ]
                 );
-            return $this->redirectToRoute('app_admin_stock_list');
+            return $this->redirectToRoute('admin_stock_list');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -183,7 +243,7 @@ class StockController extends AdminBaseController
             $this->getFlashMessageSender()->addErrorFlash(t('Selected stock doesn\'t exist.'));
         }
 
-        return $this->redirectToRoute('app_admin_stock_list');
+        return $this->redirectToRoute('admin_stock_list');
     }
 
     /**
@@ -204,8 +264,8 @@ class StockController extends AdminBaseController
         $grid->addColumn('name', 's.name', t('Name'));
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
-        $grid->addEditActionColumn('app_admin_stock_edit', ['id' => 's.id']);
-        $grid->addDeleteActionColumn('app_admin_stock_delete', ['id' => 's.id']);
+        $grid->addEditActionColumn('admin_stock_edit', ['id' => 's.id']);
+        $grid->addDeleteActionColumn('admin_stock_delete', ['id' => 's.id']);
 
         $grid->setTheme('Admin/Content/Stock/listGrid.html.twig');
 

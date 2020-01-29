@@ -89,4 +89,18 @@ class StockRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @param string $name
+     * @param int $domainId
+     * @return \App\Model\Stock\Stock|null
+     */
+    public function findStockByNameAndDomainId(string $name, int $domainId): ?Stock
+    {
+        return $this->getStockByDomainQueryBuilder($domainId)
+            ->andWhere('s.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
