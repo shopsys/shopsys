@@ -1027,8 +1027,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: ~
 
-    Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureUpdateChecker: ~
-
     Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter: ~
 
     Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap:

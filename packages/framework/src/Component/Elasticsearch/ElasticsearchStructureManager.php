@@ -5,7 +5,6 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchMoreThanOneCurrentIndexException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoCurrentIndexException;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchStructureException;
 
 class ElasticsearchStructureManager
 {
@@ -41,16 +40,6 @@ class ElasticsearchStructureManager
         $this->definitionDirectory = $definitionDirectory;
         $this->indexPrefix = $indexPrefix;
         $this->client = $client;
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $index
-     * @return string
-     */
-    protected function getVersionedIndexName(int $domainId, string $index): string
-    {
-        return $this->indexPrefix . ($this->buildVersion ?? 'null') . $index . $domainId;
     }
 
     /**
@@ -104,127 +93,5 @@ class ElasticsearchStructureManager
     public function getAliasName(int $domainId, string $index): string
     {
         return $this->indexPrefix . $index . '_' . $domainId;
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $index
-     */
-    public function createIndex(int $domainId, string $index)
-    {
-        $definition = $this->getStructureDefinition($domainId, $index);
-        $indexes = $this->client->indices();
-        $indexName = $this->getVersionedIndexName($domainId, $index);
-        if ($indexes->exists(['index' => $indexName])) {
-            $message = sprintf('Index %s already exists', $indexName);
-            if ($this->buildVersion === '0000000000000000' || $this->buildVersion === null) {
-                $message .= ' Please start using build version or delete current index before creating a new one.';
-            } else {
-                $message .= ' Maybe you forgot to execute "php phing build-version-generate" before creating new index?';
-            }
-            throw new ElasticsearchStructureException($message);
-        }
-
-        $indexes->create([
-            'index' => $indexName,
-            'body' => $definition,
-        ]);
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $index
-     */
-    public function migrateIndex(int $domainId, string $index)
-    {
-        $this->createIndex($domainId, $index);
-        $this->reindexFromCurrentIndexToNewIndex($domainId, $index);
-        $this->deleteCurrentIndex($domainId, $index);
-        $this->createAliasForIndex($domainId, $index);
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $index
-     */
-    protected function reindexFromCurrentIndexToNewIndex(int $domainId, string $index)
-    {
-        $indexes = $this->client->indices();
-        $indexName = $this->getVersionedIndexName($domainId, $index);
-        $currentIndexName = $this->getCurrentIndexName($domainId, $index);
-        if ($indexes->exists(['index' => $currentIndexName]) && $indexes->exists(['index' => $indexName])) {
-            $body = [
-                'source' => [
-                    'index' => $currentIndexName,
-                ],
-                'dest' => [
-                    'index' => $indexName,
-                ],
-            ];
-
-            $this->client->reindex([
-                'body' => $body,
-            ]);
-        }
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $index
-     */
-    public function createAliasForIndex(int $domainId, string $index)
-    {
-        $indexes = $this->client->indices();
-        $aliasName = $this->getAliasName($domainId, $index);
-        $indexName = $this->getVersionedIndexName($domainId, $index);
-
-        if (!$indexes->existsAlias(['name' => $aliasName, 'index' => $indexName]) && $indexes->exists(['index' => $indexName])) {
-            $indexes->putAlias([
-                'index' => $indexName,
-                'name' => $aliasName,
-            ]);
-        }
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $index
-     */
-    public function deleteCurrentIndex(int $domainId, string $index): void
-    {
-        try {
-            $indexName = $this->getCurrentIndexName($domainId, $index);
-        } catch (ElasticsearchNoCurrentIndexException $e) {
-            return;
-        }
-
-        $this->client->indices()->delete(['index' => $indexName]);
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $index
-     * @return array
-     */
-    public function getStructureDefinition(int $domainId, string $index): array
-    {
-        $file = sprintf('%s/%s/%s.json', $this->definitionDirectory, $index, $domainId);
-        if (!is_file($file)) {
-            throw new ElasticsearchStructureException(
-                sprintf(
-                    'Definition file %d.json, for domain ID %1$d, not found in definition folder "%s".' . PHP_EOL . 'Please make sure that for each domain exists a definition json file named by the corresponding domain ID.',
-                    $domainId,
-                    $this->definitionDirectory
-                )
-            );
-        }
-        $json = file_get_contents($file);
-
-        $definition = json_decode($json, JSON_OBJECT_AS_ARRAY);
-        if ($definition === null) {
-            throw new ElasticsearchStructureException(sprintf('Invalid JSON format in file %s', $file));
-        }
-
-        return $definition;
     }
 }
