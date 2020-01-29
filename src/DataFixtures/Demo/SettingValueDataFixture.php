@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 class SettingValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
+     * @var \App\Component\Setting\Setting
      */
     protected $setting;
 
@@ -25,7 +25,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     protected $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(Setting $setting, Domain $domain)

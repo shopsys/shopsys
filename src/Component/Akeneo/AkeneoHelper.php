@@ -1,0 +1,46 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Component\Akeneo;
+
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+
+class AkeneoHelper
+{
+    /**
+     * @param string $akeneoLocale
+     * @return string|null
+     */
+    public static function findEshopLocaleByAkeneoLocale(string $akeneoLocale): ?string
+    {
+        $locales = [
+            'cs_CZ' => 'cs',
+            'sk_SK' => 'sk',
+        ];
+
+        if (array_key_exists($akeneoLocale, $locales)) {
+            return $locales[$akeneoLocale];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $akeneoLocale
+     * @return int|null
+     */
+    public static function findEshopDomainIdByAkeneoLocale(string $akeneoLocale): ?int
+    {
+        $domains = [
+            'cs_CZ' => Domain::FIRST_DOMAIN_ID, // musí se změnit přímo na domeny po mergi ukolu ESHOP-116
+            'sk_SK' => Domain::SECOND_DOMAIN_ID,
+        ];
+
+        if (array_key_exists($akeneoLocale, $domains)) {
+            return $domains[$akeneoLocale];
+        }
+
+        return null;
+    }
+}

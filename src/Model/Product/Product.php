@@ -24,12 +24,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method addVariant(\App\Model\Product\Product $variant)
  * @method addVariants(\App\Model\Product\Product[] $variants)
  * @method setMainVariant(\App\Model\Product\Product $mainVariant)
- * @method setTranslations(\App\Model\Product\ProductData $productData)
- * @method setDomains(\App\Model\Product\ProductData $productData)
- * @method createDomains(\App\Model\Product\ProductData $productData)
  * @method refreshVariants(\App\Model\Product\Product[] $currentVariants)
  * @method addNewVariants(\App\Model\Product\Product[] $currentVariants)
  * @method unsetRemovedVariants(\App\Model\Product\Product[] $currentVariants)
+ * @method translation(?string $locale = null): ProductTranslation
+ * @property \App\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection $translations
+ * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
+ * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
  */
 class Product extends BaseProduct
 {
@@ -51,5 +52,123 @@ class Product extends BaseProduct
         BaseProductData $productData
     ) {
         parent::edit($productCategoryDomains, $productData);
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function setTranslations(BaseProductData $productData)
+    {
+        parent::setTranslations($productData);
+
+        foreach ($productData->namePrefix as $locale => $namePrefix) {
+            $this->translation($locale)->setNamePrefix($namePrefix);
+        }
+        foreach ($productData->nameSufix as $locale => $nameSufix) {
+            $this->translation($locale)->setNameSufix($nameSufix);
+        }
+    }
+
+    /**
+     * @return \App\Model\Product\ProductTranslation
+     */
+    protected function createTranslation()
+    {
+        return new ProductTranslation();
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function setDomains(BaseProductData $productData): void
+    {
+        parent::setDomains($productData);
+
+        foreach ($this->domains as $productDomain) {
+            $domainId = $productDomain->getDomainId();
+            $productDomain->setShortDescriptionUsp1($productData->shortDescriptionUsp1[$domainId]);
+            $productDomain->setShortDescriptionUsp2($productData->shortDescriptionUsp2[$domainId]);
+            $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3[$domainId]);
+            $productDomain->setShortDescriptionUsp4($productData->shortDescriptionUsp4[$domainId]);
+            $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function createDomains(BaseProductData $productData): void
+    {
+        $domainIds = array_keys($productData->seoTitles);
+
+        foreach ($domainIds as $domainId) {
+            $productDomain = new ProductDomain($this, $domainId);
+            $this->domains->add($productDomain);
+        }
+
+        $this->setDomains($productData);
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescriptionUsp1(int $domainId): ?string
+    {
+        return $this->getProductDomain($domainId)->getShortDescriptionUsp1();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescriptionUsp2(int $domainId): ?string
+    {
+        return $this->getProductDomain($domainId)->getShortDescriptionUsp2();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescriptionUsp3(int $domainId): ?string
+    {
+        return $this->getProductDomain($domainId)->getShortDescriptionUsp3();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescriptionUsp4(int $domainId): ?string
+    {
+        return $this->getProductDomain($domainId)->getShortDescriptionUsp4();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescriptionUsp5(int $domainId): ?string
+    {
+        return $this->getProductDomain($domainId)->getShortDescriptionUsp5();
+    }
+
+    /**
+     * @param string|null $locale
+     * @return string|null
+     */
+    public function getNamePrefix($locale = null): ?string
+    {
+        return $this->translation($locale)->getNamePrefix();
+    }
+
+    /**
+     * @param string|null $locale
+     * @return string|null
+     */
+    public function getNameSufix($locale = null): ?string
+    {
+        return $this->translation($locale)->getNameSufix();
     }
 }
