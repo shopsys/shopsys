@@ -74,10 +74,6 @@ front_personal_data_access_export:
     path: /export-osobnich-udaju/{hash}/
     defaults: { _controller: App\Controller\Front\PersonalDataController:accessExportAction }
 
-front_productseries_detail:
-    path: /nabytkove-programy/{id}
-    defaults: { _controller: App\Controller\Front\ProductSeriesController:detailAction }
-
 front_productseries_list:
     path: /nabytkove-programy/
     defaults: { _controller: App\Controller\Front\ProductSeriesController:listAction }

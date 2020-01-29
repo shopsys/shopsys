@@ -9,29 +9,36 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class ProductSeriesRepository
 {
-    public const DEFAULT_LOCALE = 'cs';
-
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
     private $em;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
+     */
+    private $localization;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        Localization $localization
     ) {
         $this->em = $em;
+        $this->localization = $localization;
     }
 
     /**
-     * @return \App\Model\Product\Series\ProductSeriesRepository|\Doctrine\Common\Persistence\ObjectRepository
+     * @return \Doctrine\Common\Persistence\ObjectRepository
      */
-    protected function getRepository()
+    private function getRepository()
     {
         return $this->em->getRepository(ProductSeries::class);
     }
@@ -40,10 +47,11 @@ class ProductSeriesRepository
      * @param int $id
      * @return \App\Model\Product\Series\ProductSeries
      */
-    public function findById(int $id): ProductSeries
+    public function getById(int $id): ProductSeries
     {
+        /** @var \App\Model\Product\Series\ProductSeries $productSeries */
         $productSeries = $this->getRepository()->find($id);
-        if ($productSeries === null) {
+        if ($productSeries == null) {
             $message = 'Product series with ID ' . $id . ' not found';
             throw new ProductSeriesNotFoundException($message);
         }
@@ -53,41 +61,21 @@ class ProductSeriesRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getQueryBuilder(): QueryBuilder
+    private function getQueryBuilder(): QueryBuilder
     {
-        $queryBuilder = $this->em->createQueryBuilder()
+        return $this->em->createQueryBuilder()
             ->select('ps')
             ->from(ProductSeries::class, 'ps');
-        return $queryBuilder;
     }
 
     /**
+     * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getVisibleQueryBuilder(): QueryBuilder
+    private function getVisibleQueryBuilderByDomainId(int $domainId): QueryBuilder
     {
-        $queryBuilder = $this->getQueryBuilder();
-        $queryBuilder->join(ProductSeriesDomain::class, 'psd', Join::WITH, 'psd.productSeries = ps.id');
-        $queryBuilder->where('psd.hidden = FALSE');
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @param int $id
-     * @param int $domainId
-     * @return \App\Model\Product\Series\ProductSeries|null
-     */
-    public function findVisibleProductSeriesById(int $id, int $domainId): ?ProductSeries
-    {
-        $queryBuilder = $this->getVisibleQueryBuilder();
-        $queryBuilder->andWhere('psd.domainId = :domainId');
-        $queryBuilder->andWhere('ps.id = :id');
-
-        $queryBuilder->setParameter('domainId', $domainId);
-        $queryBuilder->setParameter('id', $id);
-
-        return $queryBuilder->getQuery()->getOneOrNullResult();
+        return $this->getQueryBuilderByDomainId($domainId)
+            ->andWhere('psd.hidden = FALSE');
     }
 
     /**
@@ -95,31 +83,49 @@ class ProductSeriesRepository
      */
     public function getAllProductSeriesQueryBuilderByMainDomain(): QueryBuilder
     {
-        $queryBuilder = $this->getQueryBuilder();
-        $queryBuilder->join(ProductSeriesDomain::class, 'psd', Join::WITH, 'psd.productSeries = ps.id');
-        $queryBuilder->join(ProductSeriesTranslation::class, 'pst', Join::WITH, 'pst.translatable = ps.id');
-        $queryBuilder->select('pst', 'ps');
-        $queryBuilder->andWhere('psd.domainId = :domainId');
-        $queryBuilder->andWhere('pst.locale = :locale');
-        $queryBuilder->orderBy('ps.id', 'DESC');
-
-        $queryBuilder->setParameter('domainId', Domain::MAIN_ADMIN_DOMAIN_ID);
-        $queryBuilder->setParameter('locale', self::DEFAULT_LOCALE);
-        return $queryBuilder;
+        return $this->getQueryBuilderByDomainId(Domain::MAIN_ADMIN_DOMAIN_ID)
+            ->join(ProductSeriesTranslation::class, 'pst', Join::WITH, 'pst.translatable = ps')
+            ->addSelect('pst')
+            ->andWhere('pst.locale = :locale')
+            ->orderBy('ps.id', 'DESC')
+            ->setParameter('locale', $this->localization->getAdminLocale());
     }
 
     /**
      * @param int $domainId
      * @return array
      */
-    public function getAllVisibleProductSeriesByDomain(int $domainId): array
+    public function getAllVisibleProductSeriesByDomainId(int $domainId): array
     {
-        $queryBuilder = $this->getVisibleQueryBuilder();
-        $queryBuilder->andWhere('psd.domainId = :domainId');
-        $queryBuilder->setParameter('domainId', $domainId);
+        return $this->getVisibleQueryBuilderByDomainId($domainId)
+            ->orderBy('ps.id', 'DESC')
+            ->getQuery()
+            ->execute();
+    }
 
-        $queryBuilder->orderBy('ps.id', 'DESC');
+    /**
+     * @param int $id
+     * @param int $domainId
+     * @return \App\Model\Product\Series\ProductSeries|null
+     */
+    public function findVisibleProductSeriesByIdAndDomainId(int $id, int $domainId): ?ProductSeries
+    {
+        return $this->getVisibleQueryBuilderByDomainId($domainId)
+            ->andWhere('ps.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
-        return $queryBuilder->getQuery()->execute();
+    /**
+     * @param int $domainId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function getQueryBuilderByDomainId(int $domainId): QueryBuilder
+    {
+        return $this->getQueryBuilder()
+            ->join(ProductSeriesDomain::class, 'psd', Join::WITH, 'psd.productSeries = ps')
+            ->where('psd.domainId = :domainId')
+            ->setParameter('domainId', $domainId);
     }
 }

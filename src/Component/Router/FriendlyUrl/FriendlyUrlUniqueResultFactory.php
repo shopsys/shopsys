@@ -23,7 +23,7 @@ class FriendlyUrlUniqueResultFactory extends BaseFriendlyUrlUniqueResultFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param string $entityName
      * @param array|null $matchedRouteData
-     * @param array $prefixes
+     * @param string[] $prefixes
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult
      */
     public function create(int $attempt, FriendlyUrl $friendlyUrl, string $entityName, ?array $matchedRouteData = null, array $prefixes = [])
@@ -38,9 +38,7 @@ class FriendlyUrlUniqueResultFactory extends BaseFriendlyUrlUniqueResultFactory
             return new FriendlyUrlUniqueResult(true, null);
         }
 
-        /**
-         * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFactory
-         */
+        /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlFactory $friendlyUrlFactory */
         $friendlyUrlFactory = $this->friendlyUrlFactory;
         $newIndexedFriendlyUrl = $friendlyUrlFactory->createFromPartsIfValid(
             $friendlyUrl->getRouteName(),

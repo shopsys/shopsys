@@ -71,17 +71,17 @@ class ProductSeriesDataFactory implements ProductSeriesDataFactoryInterface
         /** @var \App\Model\Product\Series\ProductSeriesTranslation[] $translations */
         $translations = $productSeries->getTranslations();
         foreach ($translations as $translation) {
-            $productSeriesData->names[$translation->getLocale()] = $translation->getName();
-            $productSeriesData->descriptions[$translation->getLocale()] = $translation->getDescription();
+            $productSeriesData->name[$translation->getLocale()] = $translation->getName();
+            $productSeriesData->description[$translation->getLocale()] = $translation->getDescription();
         }
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $productSeriesData->seoH1s[$domainId] = $productSeries->getSeoH1($domainId);
-            $productSeriesData->seoTitles[$domainId] = $productSeries->getSeoTitle($domainId);
-            $productSeriesData->seoMetaDescriptions[$domainId] = $productSeries->getSeoMetaDescription($domainId);
+            $productSeriesData->seoH1[$domainId] = $productSeries->getSeoH1($domainId);
+            $productSeriesData->seoTitle[$domainId] = $productSeries->getSeoTitle($domainId);
+            $productSeriesData->seoMetaDescription[$domainId] = $productSeries->getSeoMetaDescription($domainId);
             $productSeriesData->hidden[$domainId] = $productSeries->isHidden($domainId);
 
-            $productSeriesData->urls->mainFriendlyUrlsByDomainId[$domainId] =
+            $productSeriesData->url->mainFriendlyUrlsByDomainId[$domainId] =
                 $this->friendlyUrlFacade->findMainFriendlyUrl(
                     $domainId,
                     'front_productseries_detail',
@@ -89,9 +89,7 @@ class ProductSeriesDataFactory implements ProductSeriesDataFactoryInterface
                 );
         }
 
-        $productSeriesData->images->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($productSeries, 'images');
-        $productSeriesData->mainImage->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($productSeries, 'mainImage');
-
+        $productSeriesData->images->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($productSeries, null);
         return $productSeriesData;
     }
 }

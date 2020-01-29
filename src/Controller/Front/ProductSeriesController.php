@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Model\Product\Series\ProductSeriesFacadeInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductSeriesController extends FrontBaseController
 {
@@ -33,9 +34,9 @@ class ProductSeriesController extends FrontBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function detailAction(int $id)
+    public function detailAction(int $id): Response
     {
-        $productSeries = $this->productSeriesFacade->getVisibleProductSeriesById($id, $this->domain->getId());
+        $productSeries = $this->productSeriesFacade->getVisibleProductSeriesByIdAndDomainId($id, $this->domain->getId());
 
         return $this->render('Front/Content/ProductSeries/detail.html.twig', [
             'productSeries' => $productSeries,
@@ -45,9 +46,9 @@ class ProductSeriesController extends FrontBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): Response
     {
-        $productSeries = $this->productSeriesFacade->getAllVisibleProductSeriesByDomain();
+        $productSeries = $this->productSeriesFacade->getAllVisibleProductSeriesByDomainId($this->domain->getId());
 
         return $this->render('Front/Content/ProductSeries/list.html.twig', [
             'productSeries' => $productSeries,

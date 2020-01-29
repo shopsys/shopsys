@@ -15,7 +15,7 @@ interface FriendlyUrlFactoryInterface extends BaseFriendlyUrlFactoryInterface
      * @param string $entityName
      * @param int $domainId
      * @param int|null $indexPostfix
-     * @param array $prefixes
+     * @param string[] $prefixes
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
      */
     public function createFromPartsIfValid(
@@ -24,6 +24,6 @@ interface FriendlyUrlFactoryInterface extends BaseFriendlyUrlFactoryInterface
         string $entityName,
         int $domainId,
         ?int $indexPostfix = null,
-        ?array $prefixes = []
+        array $prefixes = []
     ): ?FriendlyUrl;
 }

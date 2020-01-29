@@ -11,9 +11,13 @@ use App\Model\Product\Series\ProductSeriesDataFactoryInterface;
 use App\Model\Product\Series\ProductSeriesFacadeInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductSeriesController extends AdminBaseController
 {
@@ -43,30 +47,39 @@ class ProductSeriesController extends AdminBaseController
     private $breadcrumbOverrider;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
+     */
+    private $localization;
+
+    /**
      * @param \App\Model\Product\Series\ProductSeriesDataFactoryInterface $productSeriesDataFactory
      * @param \App\Model\Product\Series\ProductSeriesFacadeInterface $productSeriesFacade
      * @param \App\Model\Product\Series\Grid\ProductSeriesGridFactory $productSeriesGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         ProductSeriesDataFactoryInterface $productSeriesDataFactory,
         ProductSeriesFacadeInterface $productSeriesFacade,
         ProductSeriesGridFactory $productSeriesGridFactory,
         Domain $domain,
-        BreadcrumbOverrider $breadcrumbOverrider
+        BreadcrumbOverrider $breadcrumbOverrider,
+        Localization $localization
     ) {
         $this->productSeriesDataFactory = $productSeriesDataFactory;
         $this->productSeriesFacade = $productSeriesFacade;
         $this->productSeriesGridFactory = $productSeriesGridFactory;
         $this->domain = $domain;
         $this->breadcrumbOverrider = $breadcrumbOverrider;
+        $this->localization = $localization;
     }
 
     /**
      * @Route("/product-series/list", name="admin_productseries_list")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): Response
     {
         $grid = $this->productSeriesGridFactory->create();
         $domains = $this->domain->getAll();
@@ -82,15 +95,17 @@ class ProductSeriesController extends AdminBaseController
 
     /**
      * @Route("/product-series/delete/{id}", requirements={"id" = "\d+"}, name="admin_productseries_delete")
+     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): RedirectResponse
     {
         try {
-            $fullName = $this->productSeriesFacade->getById($id)->getName();
+            $productSeries = $this->productSeriesFacade->getById($id);
+            $fullName = $productSeries->getName($this->localization->getLocale());
 
-            $this->productSeriesFacade->delete($id);
+            $this->productSeriesFacade->delete($productSeries);
 
             $this->getFlashMessageSender()->addSuccessFlashTwig(
                 t('Produktový program <strong>{{ name }}</strong> je smazán'),
@@ -99,7 +114,7 @@ class ProductSeriesController extends AdminBaseController
                 ]
             );
         } catch (ProductSeriesNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Vybraný produktivý program neexistuje.'));
+            $this->getFlashMessageSender()->addErrorFlash(t('Vybraný produktový program neexistuje.'));
         }
 
         return $this->redirectToRoute('admin_productseries_list');
@@ -110,7 +125,7 @@ class ProductSeriesController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $productSeriesData = $this->productSeriesDataFactory->create();
 
@@ -118,11 +133,7 @@ class ProductSeriesController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var \App\Model\Product\Series\ProductSeriesData
-             */
-            $productSeriesData = $form->getData();
-            $productSeries = $this->productSeriesFacade->create($productSeriesData);
+            $productSeries = $this->productSeriesFacade->create($form->getData());
 
             $this->getFlashMessageSender()
                 ->addSuccessFlashTwig(
@@ -154,7 +165,7 @@ class ProductSeriesController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, int $id)
+    public function editAction(Request $request, int $id): Response
     {
         $productSeries = $this->productSeriesFacade->getById($id);
 
@@ -164,11 +175,7 @@ class ProductSeriesController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var \App\Model\Product\Series\ProductSeriesData
-             */
-            $productSeriesData = $form->getData();
-            $productSeries = $this->productSeriesFacade->edit($id, $productSeriesData);
+            $productSeries = $this->productSeriesFacade->edit($id, $form->getData());
 
             $this->getFlashMessageSender()
                 ->addSuccessFlashTwig(
@@ -185,7 +192,7 @@ class ProductSeriesController extends AdminBaseController
             $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing article - %name%', ['%name%' => $productSeries->getName($this->domain->getLocale())]));
+        $this->breadcrumbOverrider->overrideLastItem(t('Úprava produktového programu - %name%', ['%name%' => $productSeries->getName($this->domain->getLocale())]));
 
         return $this->render(
             'Admin/Content/ProductSeries/edit.html.twig',

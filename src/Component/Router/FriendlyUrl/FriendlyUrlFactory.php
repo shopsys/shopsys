@@ -16,7 +16,7 @@ class FriendlyUrlFactory extends BaseFriendlyUrlFactory implements FriendlyUrlFa
      * @param string $entityName
      * @param int $domainId
      * @param int|null $indexPostfix
-     * @param array $prefixes
+     * @param string[] $prefixes
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
      */
     public function createFromPartsIfValid(
@@ -25,7 +25,7 @@ class FriendlyUrlFactory extends BaseFriendlyUrlFactory implements FriendlyUrlFa
         string $entityName,
         int $domainId,
         ?int $indexPostfix = null,
-        ?array $prefixes = []
+        array $prefixes = []
     ): ?FriendlyUrl {
         if ($entityName === '') {
             return null;
@@ -33,16 +33,17 @@ class FriendlyUrlFactory extends BaseFriendlyUrlFactory implements FriendlyUrlFa
 
         $slug = '';
         foreach ($prefixes as $prefix) {
-            $nameForUrl = $prefix . ($indexPostfix === null ? '' : '-' . $indexPostfix);
-            $slug .= TransformString::stringToFriendlyUrlSlug($nameForUrl) . '/';
+            $slug .= TransformString::stringToFriendlyUrlSlug($prefix) . '/';
         }
 
         $nameForUrl = $entityName . ($indexPostfix === null ? '' : '-' . $indexPostfix);
-        $slug .= TransformString::stringToFriendlyUrlSlug($nameForUrl) . '/';
+        $slug .= TransformString::stringToFriendlyUrlSlug($nameForUrl);
 
         if ($slug === '') {
             return null;
         }
+
+        $slug .= '/';
 
         return $this->create($routeName, $entityId, $domainId, $slug);
     }

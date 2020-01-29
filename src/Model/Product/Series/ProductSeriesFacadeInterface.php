@@ -20,9 +20,9 @@ interface ProductSeriesFacadeInterface
     public function edit(int $id, ProductSeriesData $productSeriesData): ProductSeries;
 
     /**
-     * @param int $id
+     * @param \App\Model\Product\Series\ProductSeries $productSeries
      */
-    public function delete(int $id): void;
+    public function delete(ProductSeries $productSeries): void;
 
     /**
      * @param int $id
@@ -35,10 +35,11 @@ interface ProductSeriesFacadeInterface
      * @param int $domainId
      * @return \App\Model\Product\Series\ProductSeries
      */
-    public function getVisibleProductSeriesById(int $id, int $domainId): ProductSeries;
+    public function getVisibleProductSeriesByIdAndDomainId(int $id, int $domainId): ProductSeries;
 
     /**
+     * @param int $domainId
      * @return \App\Model\Product\Series\ProductSeries[]
      */
-    public function getAllVisibleProductSeriesByDomain(): array;
+    public function getAllVisibleProductSeriesByDomainId(int $domainId): array;
 }

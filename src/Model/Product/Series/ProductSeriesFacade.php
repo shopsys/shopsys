@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Series;
 
+use App\Model\Product\Series\Exception\MissingBaseFriendlyUrlForDomainException;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class ProductSeriesFacade implements ProductSeriesFacadeInterface
 {
+    public const BASE_FRIENDY_URL_BY_DOMAIN_ID = [
+        1 => 'nabytkove-programy',
+        2 => 'nabytkove-programy', //same as in czech language :-)
+    ];
+
     /**
      * @var \App\Model\Product\Series\ProductSeriesFactoryInterface
      */
@@ -75,11 +82,9 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
         $this->em->persist($productSeries);
         $this->em->flush();
 
-        $this->imageFacade->manageImages($productSeries, $productSeriesData->images, 'images');
+        $this->imageFacade->manageImages($productSeries, $productSeriesData->images);
 
-        $this->imageFacade->manageImages($productSeries, $productSeriesData->mainImage, 'mainImage');
-
-        $this->friendlyUrlFacade->saveUrlListFormData('front_productseries_detail', $productSeries->getId(), $productSeriesData->urls);
+        $this->friendlyUrlFacade->saveUrlListFormData('front_productseries_detail', $productSeries->getId(), $productSeriesData->url);
 
         $this->storeUrls($productSeries);
 
@@ -93,15 +98,13 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
      */
     public function edit(int $id, ProductSeriesData $productSeriesData): ProductSeries
     {
-        $productSeries = $this->productSeriesRepository->findById($id);
+        $productSeries = $this->productSeriesRepository->getById($id);
         $productSeries->edit($productSeriesData);
         $this->em->persist($productSeries);
 
-        $this->imageFacade->manageImages($productSeries, $productSeriesData->images, 'images');
+        $this->imageFacade->manageImages($productSeries, $productSeriesData->images);
 
-        $this->imageFacade->manageImages($productSeries, $productSeriesData->mainImage, 'mainImage');
-
-        $this->friendlyUrlFacade->saveUrlListFormData('front_productseries_detail', $productSeries->getId(), $productSeriesData->urls);
+        $this->friendlyUrlFacade->saveUrlListFormData('front_productseries_detail', $productSeries->getId(), $productSeriesData->url);
 
         $this->storeUrls($productSeries);
 
@@ -110,11 +113,10 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
     }
 
     /**
-     * @param int $id
+     * @param \App\Model\Product\Series\ProductSeries $productSeries
      */
-    public function delete(int $id): void
+    public function delete(ProductSeries $productSeries): void
     {
-        $productSeries = $this->productSeriesRepository->findById($id);
         $this->em->remove($productSeries);
         $this->em->flush();
     }
@@ -122,7 +124,7 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
     /**
      * @param \App\Model\Product\Series\ProductSeries $productSeries
      */
-    protected function storeUrls(ProductSeries $productSeries): void
+    private function storeUrls(ProductSeries $productSeries): void
     {
         $domains = $this->domain->getAll();
         foreach ($domains as $domain) {
@@ -134,9 +136,22 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
                 $productSeries->getId(),
                 $productSeries->getName($domain->getLocale()),
                 $domain->getId(),
-                [ProductSeries::BASE_FRIENDY_URL_CZ]
+                [$this->getBaseFriendlyUrlForDomain($domain)]
             );
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
+     * @throws \App\Model\Product\Series\Exception\MissingBaseFriendlyUrlForDomainException
+     * @return string
+     */
+    private function getBaseFriendlyUrlForDomain(DomainConfig $domain)
+    {
+        if (!array_key_exists($domain->getId(), self::BASE_FRIENDY_URL_BY_DOMAIN_ID)) {
+            throw new MissingBaseFriendlyUrlForDomainException($domain->getName());
+        }
+        return self::BASE_FRIENDY_URL_BY_DOMAIN_ID[$domain->getId()];
     }
 
     /**
@@ -145,7 +160,7 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
      */
     public function getById(int $id): ProductSeries
     {
-        return $this->productSeriesRepository->findById($id);
+        return $this->productSeriesRepository->getById($id);
     }
 
     /**
@@ -153,16 +168,17 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
      * @param int $domainId
      * @return \App\Model\Product\Series\ProductSeries
      */
-    public function getVisibleProductSeriesById(int $id, int $domainId): ProductSeries
+    public function getVisibleProductSeriesByIdAndDomainId(int $id, int $domainId): ProductSeries
     {
-        return $this->productSeriesRepository->findVisibleProductSeriesById($id, $domainId);
+        return $this->productSeriesRepository->findVisibleProductSeriesByIdAndDomainId($id, $domainId);
     }
 
     /**
-     * @return array
+     * @param int $domainId
+     * @return \App\Model\Product\Series\ProductSeries[]
      */
-    public function getAllVisibleProductSeriesByDomain(): array
+    public function getAllVisibleProductSeriesByDomainId(int $domainId): array
     {
-        return $this->productSeriesRepository->getAllVisibleProductSeriesByDomain($this->domain->getId());
+        return $this->productSeriesRepository->getAllVisibleProductSeriesByDomainId($domainId);
     }
 }

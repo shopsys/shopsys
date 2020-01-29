@@ -35,7 +35,7 @@ class ProductSeriesBreadcrumbGenerator implements BreadcrumbGeneratorInterface
             return $path;
         }
 
-        $productSeries = $this->productSeriesRepository->findById($routeParameters['id']);
+        $productSeries = $this->productSeriesRepository->getById((int)$routeParameters['id']);
         $path[] = new BreadcrumbItem($productSeries->getName(), $routeName, $routeParameters);
         return $path;
     }

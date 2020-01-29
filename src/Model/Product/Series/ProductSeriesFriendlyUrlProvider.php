@@ -42,20 +42,20 @@ class ProductSeriesFriendlyUrlProvider implements FriendlyUrlDataProviderInterfa
     public function getFriendlyUrlData(DomainConfig $domainConfig): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
-            ->select('ps')
+            ->select('IDENTITY(pst.translatable) as id, pst.name')
             ->distinct()
-            ->from(ProductSeries::class, 'ps')
-            ->join(ProductSeriesDomain::class, 'psd', Join::WITH, 'ps.id = psd.productSeries')
-            ->leftJoin(FriendlyUrl::class, 'f', Join::WITH, 'ps.id = f.entityId AND f.routeName = :routeName AND f.domainId = psd.domainId')
+            ->from(ProductSeriesTranslation::class, 'pst')
+            ->leftJoin(FriendlyUrl::class, 'f', Join::WITH, 'IDENTITY(pst.translatable) = f.entityId AND f.routeName = :routeName')
             ->setParameter('routeName', static::ROUTE_NAME)
-            ->where('f.entityId IS NULL AND psd.domainId = :domainId')
-            ->setParameter('domainId', $domainConfig->getId());
+            ->where('f.entityId IS NULL AND f.domainId = :domainId')
+            ->andWhere('pst.locale = :locale')
+            ->setParameter('domainId', $domainConfig->getId())
+            ->setParameter('locale', $domainConfig->getLocale());
         $scalarData = $queryBuilder->getQuery()->getScalarResult();
 
         $friendlyUrlsData = [];
-
         foreach ($scalarData as $data) {
-            $friendlyUrlsData[] = $this->friendlyUrlDataFactory->createFromIdAndName($data['id'], $data['seoH1']);
+            $friendlyUrlsData[] = $this->friendlyUrlDataFactory->createFromIdAndName($data['id'], $data['name']);
         }
         return $friendlyUrlsData;
     }

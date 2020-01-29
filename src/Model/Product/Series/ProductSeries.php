@@ -18,8 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundExcepti
  */
 class ProductSeries extends AbstractTranslatableEntity
 {
-    public const BASE_FRIENDY_URL_CZ = 'nabytkove-programy';
-
     /**
      * @var int
      *
@@ -66,13 +64,13 @@ class ProductSeries extends AbstractTranslatableEntity
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
-    protected function setTranslations(ProductSeriesData $productSeriesData)
+    private function setTranslations(ProductSeriesData $productSeriesData)
     {
-        foreach ($productSeriesData->names as $locale => $name) {
+        foreach ($productSeriesData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
         }
 
-        foreach ($productSeriesData->descriptions as $locale => $description) {
+        foreach ($productSeriesData->description as $locale => $description) {
             $this->translation($locale)->setDescription($description);
         }
     }
@@ -80,9 +78,9 @@ class ProductSeries extends AbstractTranslatableEntity
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
-    protected function createDomains(ProductSeriesData $productSeriesData)
+    private function createDomains(ProductSeriesData $productSeriesData)
     {
-        $domainIds = array_keys($productSeriesData->seoTitles);
+        $domainIds = array_keys($productSeriesData->seoTitle);
 
         foreach ($domainIds as $domainId) {
             $productDomain = new ProductSeriesDomain($this, $domainId);
@@ -95,13 +93,13 @@ class ProductSeries extends AbstractTranslatableEntity
     /**
      * @param \App\Model\Product\Series\ProductSeriesData $productSeriesData
      */
-    protected function setDomains(ProductSeriesData $productSeriesData)
+    private function setDomains(ProductSeriesData $productSeriesData)
     {
         foreach ($this->domains as $productSeriesDomain) {
             $domainId = $productSeriesDomain->getDomainId();
-            $productSeriesDomain->setSeoTitle($productSeriesData->seoTitles[$domainId]);
-            $productSeriesDomain->setSeoH1($productSeriesData->seoH1s[$domainId]);
-            $productSeriesDomain->setSeoMetaDescription($productSeriesData->seoMetaDescriptions[$domainId]);
+            $productSeriesDomain->setSeoTitle($productSeriesData->seoTitle[$domainId]);
+            $productSeriesDomain->setSeoH1($productSeriesData->seoH1[$domainId]);
+            $productSeriesDomain->setSeoMetaDescription($productSeriesData->seoMetaDescription[$domainId]);
             $productSeriesDomain->setHidden($productSeriesData->hidden[$domainId]);
         }
     }
@@ -110,7 +108,7 @@ class ProductSeries extends AbstractTranslatableEntity
      * @param int $domainId
      * @return \App\Model\Product\Series\ProductSeriesDomain
      */
-    protected function getProductDomain(int $domainId)
+    private function getProductDomain(int $domainId)
     {
         foreach ($this->domains as $domain) {
             if ($domain->getDomainId() === $domainId) {
@@ -124,7 +122,7 @@ class ProductSeries extends AbstractTranslatableEntity
     /**
      * @return \App\Model\Product\Series\ProductSeriesTranslation
      */
-    protected function createTranslation(): ProductSeriesTranslation
+    public function createTranslation(): ProductSeriesTranslation
     {
         return new ProductSeriesTranslation();
     }
@@ -155,40 +153,12 @@ class ProductSeries extends AbstractTranslatableEntity
     }
 
     /**
-     * @return string[]
-     */
-    public function getNames()
-    {
-        $namesByLocale = [];
-
-        foreach ($this->translations as $translation) {
-            $namesByLocale[$translation->getLocale()] = $translation->getName();
-        }
-
-        return $namesByLocale;
-    }
-
-    /**
      * @param string|null $locale
      * @return string|null
      */
     public function getDescription($locale = null)
     {
         return $this->translation($locale)->getDescription();
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getDescriptions()
-    {
-        $descriptionsByLocale = [];
-
-        foreach ($this->translations as $translation) {
-            $descriptionsByLocale[$translation->getLocale()] = $translation->getDescription();
-        }
-
-        return $descriptionsByLocale;
     }
 
     /**

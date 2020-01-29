@@ -12,12 +12,12 @@ class ProductSeriesData
     /**
      * @var string[]|null[]
      */
-    public $names;
+    public $name;
 
     /**
      * @var string[]|null[]
      */
-    public $descriptions;
+    public $description;
 
     /**
      * @var bool[]
@@ -27,47 +27,41 @@ class ProductSeriesData
     /**
      * @var string[]|null[]
      */
-    public $seoTitles;
+    public $seoTitle;
 
     /**
      * @var string[]|null[]
      */
-    public $seoMetaDescriptions;
+    public $seoMetaDescription;
 
     /**
      * @var string[]|null[]
      */
-    public $seoH1s;
+    public $seoH1;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
      */
-    public $urls;
+    public $url;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
      */
     public $images;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
-     */
-    public $mainImage;
-
     public function __construct()
     {
         //by language
-        $this->names = [];
-        $this->descriptions = [];
+        $this->name = [];
+        $this->description = [];
 
         //by domain
         $this->hidden = [];
-        $this->seoTitles = [];
-        $this->seoMetaDescriptions = [];
-        $this->seoH1s = [];
+        $this->seoTitle = [];
+        $this->seoMetaDescription = [];
+        $this->seoH1 = [];
 
-        $this->urls = new UrlListData();
+        $this->url = new UrlListData();
         $this->images = new ImageUploadData();
-        $this->mainImage = new ImageUploadData();
     }
 }

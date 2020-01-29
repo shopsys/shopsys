@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
-use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -27,8 +26,6 @@ use Symfony\Component\Validator\Constraints;
 
 class ProductSeriesFormType extends AbstractType
 {
-    public const CSRF_TOKEN_ID = 'productseries_edit_type';
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
      */
@@ -55,23 +52,21 @@ class ProductSeriesFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var \App\Model\Product\Series\ProductSeries|null $productSeries */
         $productSeries = $options['productSeries'];
-        /* @var $productSeries \App\Model\Product\Series\ProductSeries|null */
-
-        $builder->add($this->createDescriptionsGroup($builder, $productSeries));
-        $builder->add($this->createVisibilityGroup($builder));
-        $builder->add($this->createSeoGroup($builder, $productSeries));
-        $builder->add($this->createMainImageGroup($builder, $options));
+        $builder->add($this->createDescriptionsGroup($builder));
         $builder->add($this->createImagesGroup($builder, $options));
+        $builder->add($this->createSeoGroup($builder, $productSeries));
+        $builder->add($this->createVisibilityGroup($builder));
         $builder->add('save', SubmitType::class);
     }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('productSeries')
@@ -79,36 +74,40 @@ class ProductSeriesFormType extends AbstractType
             ->setDefaults([
                 'data_class' => ProductSeriesData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'csrf_token_id' => self::CSRF_TOKEN_ID,
             ]);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \App\Model\Product\Series\ProductSeries|null $productSeries
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createDescriptionsGroup(FormBuilderInterface $builder, ?ProductSeries $productSeries)
+    private function createDescriptionsGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderDescriptionGroup = $builder->create('descriptionsGroup', GroupType::class, [
             'label' => t('Description'),
         ]);
 
-        $builderDescriptionGroup->add('names', LocalizedType::class, [
+        $builderDescriptionGroup->add('name', LocalizedType::class, [
             'required' => true,
             'entry_type' => TextType::class,
             'entry_options' => [
                 'constraints' => [
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Product name cannot be longer than {{ limit }} characters']),
+                    new Constraints\NotBlank(['message' => 'Jméno nábytkového programu musí být vyplněno']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Jméno nábytkového programu nemůže být delší než {{ limit }} znaků']),
                 ],
             ],
             'label' => t('Název'),
         ])
-        ->add('descriptions', LocalizedType::class, [
+        ->add('description', LocalizedType::class, [
             'label' => t('Popis'),
             'entry_type' => CKEditorType::class,
             'required' => true,
             'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
+            'entry_options' => [
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Popis nábytkového programu musí být vyplněn']),
+                ],
+            ],
         ]);
 
         return $builderDescriptionGroup;
@@ -116,8 +115,9 @@ class ProductSeriesFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createVisibilityGroup(FormBuilderInterface $builder)
+    private function createVisibilityGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderVisibilityGroup = $builder->create('visibilityGroup', GroupType::class, [
             'label' => t('Viditelnost'),
@@ -137,7 +137,7 @@ class ProductSeriesFormType extends AbstractType
      * @param \App\Model\Product\Series\ProductSeries|null $productSeries
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createSeoGroup(FormBuilderInterface $builder, ?ProductSeries $productSeries)
+    private function createSeoGroup(FormBuilderInterface $builder, ?ProductSeries $productSeries): FormBuilderInterface
     {
         $seoTitlesOptionsByDomainId = [];
         $seoMetaDescriptionsOptionsByDomainId = [];
@@ -163,7 +163,7 @@ class ProductSeriesFormType extends AbstractType
             'label' => t('Seo'),
         ]);
         $builderSeoGroup
-            ->add('seoTitles', MultidomainType::class, [
+            ->add('seoTitle', MultidomainType::class, [
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoTitlesOptionsByDomainId,
@@ -173,7 +173,7 @@ class ProductSeriesFormType extends AbstractType
                 ],
                 'label' => t('Page title'),
             ])
-            ->add('seoMetaDescriptions', MultidomainType::class, [
+            ->add('seoMetaDescription', MultidomainType::class, [
                 'entry_type' => TextareaType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoMetaDescriptionsOptionsByDomainId,
@@ -183,53 +183,20 @@ class ProductSeriesFormType extends AbstractType
                 ],
                 'label' => t('Meta description'),
             ])
-            ->add('seoH1s', MultidomainType::class, [
+            ->add('seoH1', MultidomainType::class, [
                 'entry_type' => TextType::class,
                 'required' => false,
                 'options_by_domain_id' => $seoH1OptionsByDomainId,
                 'label' => t('Heading (H1)'),
             ]);
         if ($productSeries) {
-            $builderSeoGroup->add('urls', UrlListType::class, [
+            $builderSeoGroup->add('url', UrlListType::class, [
                 'route_name' => 'front_productseries_detail',
                 'entity_id' => $productSeries->getId(),
                 'label' => t('URL settings'),
             ]);
         }
         return $builderSeoGroup;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    private function createMainImageGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
-    {
-        $builderImageGroup = $builder->create('mainImageGroup', GroupType::class, [
-            'label' => t('Hlavní obrázek'),
-        ]);
-
-        $builderImageGroup
-            ->add('mainImage', ImageUploadType::class, [
-                'required' => false,
-                'image_entity_class' => ProductSeries::class,
-                'image_type' => 'mainImage',
-                'file_constraints' => [
-                    new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '2M',
-                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
-                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                    ]),
-                ],
-                'entity' => $options['productSeries'],
-                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
-                'label' => t('Hlavní obrázek'),
-            ]);
-
-        return $builderImageGroup;
     }
 
     /**
@@ -246,7 +213,6 @@ class ProductSeriesFormType extends AbstractType
             ->add('images', ImageUploadType::class, [
                 'required' => false,
                 'image_entity_class' => ProductSeries::class,
-                'image_type' => 'images',
                 'file_constraints' => [
                     new Constraints\Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
@@ -269,7 +235,7 @@ class ProductSeriesFormType extends AbstractType
      * @param \App\Model\Product\Series\ProductSeries|null $productSeries
      * @return string|null
      */
-    private function getTitlePlaceholder(string $locale, ?ProductSeries $productSeries = null)
+    private function getTitlePlaceholder(string $locale, ?ProductSeries $productSeries = null): ?string
     {
         return $productSeries !== null ? $productSeries->getName($locale) : '';
     }

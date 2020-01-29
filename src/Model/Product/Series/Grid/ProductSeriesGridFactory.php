@@ -48,7 +48,7 @@ class ProductSeriesGridFactory implements GridFactoryInterface
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_productseries_edit', ['id' => 'ps.id']);
         $grid->addDeleteActionColumn('admin_productseries_delete', ['id' => 'ps.id'])
-            ->setConfirmMessage(t('Do you really want to remove this product series? If it is used anywhere it will be unset.'));
+            ->setConfirmMessage(t('Opravdu chcete odebrat tento produktový program? Pokud je někde použitý, bude deaktivován.'));
 
         $grid->setTheme('Admin/Content/ProductSeries/listGrid.html.twig');
 
