@@ -1,0 +1,30 @@
+-   op: add
+    path: /spec/template/spec/initContainers/-
+    value:
+        name: upgrade-application
+        image: "{{TAG}}"
+        command: ["sh", "-c", "cd /tmp/source-codes && ./phing db-migrations-count-with-maintenance build-deploy-part-2-db-dependent"]
+        securityContext:
+            runAsUser: 33
+        volumeMounts:
+            -   name: source-codes
+                mountPath: /tmp/source-codes
+            -   name: domains-urls
+                mountPath: /var/www/html/config/domains_urls.yml
+                subPath: domains_urls.yml
+            -   name: parameters
+                mountPath: /var/www/html/config/parameters.yml
+                subPath: parameters.yml
+        env:
+            -   name: S3_API_HOST
+                value: "{{S3_API_HOST}}"
+            -   name: S3_API_USERNAME
+                value: "{{S3_API_USERNAME}}"
+            -   name: S3_API_PASSWORD
+                value: "{{S3_API_PASSWORD}}"
+            -   name: S3_API_BUCKET_NAME
+                value: "{{S3_API_BUCKET_NAME}}"
+            -   name: REDIS_PREFIX
+                value: "{{REDIS_PREFIX}}"
+            -   name: ELASTIC_SEARCH_INDEX_PREFIX
+                value: "{{ELASTIC_SEARCH_INDEX_PREFIX}}"

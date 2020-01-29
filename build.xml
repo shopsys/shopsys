@@ -11,4 +11,30 @@
     <property name="phpstan.level" value="4"/>
 
     <import file="${path.framework}/build.xml"/>
+    <import file="${path.vendor}/devops/kubernetes-deployment/build.xml"/>
+
+    <!-- Overrided for ignoring kubernetes/endpoints/elasticsearch.yml - It's template for kustomize, not valid a yaml file -->
+    <target name="yaml-standards" depends="yaml-lint" description="Checks YAML standards (needs sspooky13/yaml-standards)" hidden="true">
+        <available file="${path.yaml-standards.executable}" type="file" property="yaml-standards.executable.exists"/>
+        <if>
+            <equals arg1="${yaml-standards.executable.exists}" arg2="true"/>
+            <then>
+                <exec executable="${path.yaml-standards.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="${project.basedir}"/>
+                    <arg value="--exclude-dir=${path.vendor}"/>
+                    <arg value="--exclude-dir=${path.root}/node_modules"/>
+                    <arg value="--exclude-dir=${path.var}"/>
+                    <arg value="--exclude-file=${path.config}/domains_urls.yml"/>
+                    <arg value="--exclude-file=${path.root}/kubernetes/endpoints/elasticsearch.yml"/>
+                    <arg value="--check-indents-count-of-indents=${yaml-standards.indent-count}"/>
+                    <arg line="${yaml-standards.args}"/>
+                </exec>
+            </then>
+            <else>
+                <echo level="warning" message="The executable '${path.yaml-standards.executable}' is not available, your YAML files cannot be checked."/>
+                <echo level="info" message="You can require the package using Composer, run 'composer require --dev sspooky13/yaml-standards'"/>
+            </else>
+        </if>
+    </target>
+
 </project>

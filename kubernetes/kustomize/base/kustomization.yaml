@@ -1,6 +1,7 @@
 resources:
-    - ../../deployments/elasticsearch.yml
-    - ../../deployments/postgres.yml
+    - ../../cron/php-fpm-cron-executor-default.yml
+    - ../../endpoints/postgres.yml
+    - ../../endpoints/elasticsearch.yml
     - ../../deployments/redis.yml
     - ../../deployments/smtp-server.yml
     - ../../deployments/webserver-php-fpm.yml
@@ -10,13 +11,16 @@ resources:
     - ../../services/smtp-server.yml
     - ../../services/webserver-php-fpm.yml
     - ../../ingress.yml
+    - ../../namespace.yml
+    - ../../nginx-configMap.yml
+namespace: "{{PROJECT_NAME}}"
 configMapGenerator:
-    -   name: postgres-configuration
-        files:
-            - ../../../docker/postgres/postgres.conf
     -   name: domains-urls
         files:
             - ../../../config/domains_urls.yml
     -   name: parameters
         files:
             - ../../../config/parameters.yml
+    -   name: nginx-configuration
+        files:
+            - ../../../docker/nginx/s3/nginx.conf
