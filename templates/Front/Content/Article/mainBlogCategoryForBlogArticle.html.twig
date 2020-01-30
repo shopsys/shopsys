@@ -1,0 +1,9 @@
+{% if blogCategory is not null %}
+    {% if spanClass is not null %}
+        <span class="{{ spanClass }}">
+            {{ blogCategory.name }}
+        </span>
+    {% else %}
+        {{ blogCategory.name }}
+    {% endif %}
+{% endif %}

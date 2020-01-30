@@ -1,0 +1,44 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block title %}
+    {{- blogArticle.getSeoTitle(domainId)|default(blogArticle.name) -}}
+{% endblock %}
+
+{% block meta_description %}
+    {{- blogArticle.getSeoMetaDescription(domainId)|default(getSeoMetaDescription()) -}}
+{% endblock %}
+
+{% block main_content %}
+<div class="web__line">
+    <div class="web__container">
+        <div class="box-blog">
+            <div class="box-blog__content box-blog__content--with-mobile-gap">
+                <h1>
+                    {% if blogArticle.getSeoH1(domainId) is not null %}
+                        {{ blogArticle.getSeoH1(domainId) }}
+                    {% else %}
+                        {{ blogArticle.name }}
+                    {% endif %}
+                </h1>
+
+                {% if imageExists(blogArticle) %}
+                    {{ image(blogArticle, { itemprop: 'image', lazy:true }) }}
+                {% else %}
+                    {{ noimage({ alt: blogArticle.name }) }}
+                {% endif %}
+
+                <p>{{ blogArticle.createdAt|date('j.n.Y') }}</p>
+
+                <div class="in-user-text">
+                    {{ blogArticle.description|raw }}
+                </div>
+            </div>
+
+            <div class="box-blog__panel">
+                {{ render(controller('App\\Controller\\Front\\BlogCategoryController:listAction', { currentBlogCategory: blogCategory })) }}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

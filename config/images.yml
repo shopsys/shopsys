@@ -129,3 +129,38 @@
             height: 200
             crop: false
             occurrence: 'Front-end: Brand page'
+
+-   name:  blogCategory
+    class: App\Model\Blog\Category\BlogCategory
+    sizes:
+        -   name: ~
+            width: 400
+            height: 250
+            crop: true
+            occurrence: 'Front-end: Blog category detail'
+
+-   name:  blogArticle
+    class: App\Model\Blog\Article\BlogArticle
+    sizes:
+        -   name: ~
+            width: 750
+            height:
+            crop: false
+            occurrence: 'Front-end: Blog article detail'
+        -   name: list
+            width: 540
+            height: 364
+            crop: true
+            occurrence: 'Front-end: Blog article list'
+            additionalSizes:
+                - {width: 269, height: 209, media: "(max-width: 768px)"}
+        -   name: searchThumbnail
+            width: 116
+            height: 78
+            crop: true
+            occurrence: 'Front-end: Blog article thumbnail'
+        -   name: listBig
+            width: 549
+            height: 390
+            crop: true
+            occurrence: 'Front-end: Blog article list with big images'

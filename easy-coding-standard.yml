@@ -11,6 +11,7 @@ parameters:
 
     skip:
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
+            - '*/src/Migrations/Version20190801103940.php'
             - '*/src/DataFixtures/*/*DataFixture.php'
             - '*/src/DataFixtures/Demo/ProductDataFixtureLoader.php'
             - '*/src/Controller/Front/OrderController.php'
