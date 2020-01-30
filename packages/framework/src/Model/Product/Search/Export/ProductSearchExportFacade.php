@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Search\Export;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ProductSearchExportFacade
 {
@@ -25,21 +24,6 @@ class ProductSearchExportFacade
     {
         $this->domain = $domain;
         $this->exporter = $exporter;
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
-     */
-    public function exportAllWithOutput(SymfonyStyle $symfonyStyleIo): void
-    {
-        foreach ($this->domain->getAll() as $domain) {
-            $domainId = $domain->getId();
-            $locale = $domain->getLocale();
-
-            $symfonyStyleIo->section('Exporting data for domain ' . $domainId);
-
-            $this->exporter->exportWithOutput($domainId, $locale, $symfonyStyleIo);
-        }
     }
 
     /**

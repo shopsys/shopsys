@@ -6,6 +6,8 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 
 class CategoryIndex extends AbstractIndex
 {
+    public const INDEX_NAME = 'category';
+
     /**
      * @param \Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryDataProvider $dataProvider
      */
@@ -19,6 +21,6 @@ class CategoryIndex extends AbstractIndex
      */
     public function getName(): string
     {
-        return 'category';
+        return self::INDEX_NAME;
     }
 }

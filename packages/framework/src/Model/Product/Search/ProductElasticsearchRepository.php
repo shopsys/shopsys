@@ -216,29 +216,6 @@ class ProductElasticsearchRepository
 
     /**
      * @param int $domainId
-     * @param int[] $keepIds
-     */
-    public function deleteNotPresent(int $domainId, array $keepIds): void
-    {
-        $this->client->deleteByQuery([
-            'index' => $this->elasticsearchStructureManager->getCurrentIndexName($domainId, self::ELASTICSEARCH_INDEX),
-            'type' => '_doc',
-            'body' => [
-                'query' => [
-                    'bool' => [
-                        'must_not' => [
-                            'ids' => [
-                                'values' => $keepIds,
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-    }
-
-    /**
-     * @param int $domainId
      * @param int[] $deleteIds
      */
     public function delete(int $domainId, array $deleteIds): void
