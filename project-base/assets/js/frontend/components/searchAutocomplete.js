@@ -71,7 +71,7 @@ export default class SearchAutocomplete {
     searchRequest (searchText) {
         const _this = this;
         Ajax.ajaxPendingCall('Shopsys.search.autocomplete.searchRequest', {
-            loaderElement: null,
+            loaderElement: '.js-search-autocomplete-submit',
             url: _this.$input.data('autocomplete-url'),
             type: 'post',
             dataType: 'html',

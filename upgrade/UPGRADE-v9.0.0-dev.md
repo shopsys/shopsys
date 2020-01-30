@@ -619,6 +619,24 @@ There you can find links to upgrade notes for other versions too.
   - Update your `tests/App/Acceptance/acceptance/PageObject/Front/CartPage.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-22d067f5c4b216b5f2809f6d6340bfee)
   - Update your `tests/App/Acceptance/acceptance/OrderCest.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-d697251fab7d514841306ad608a65fc5)
   - Update your `tests/App/Acceptance/acceptance/PageObject/Front/OrderPage.php` like in the [diff](https://github.com/shopsys/shopsys/pull/1565/files#diff-d2e52049c05d13eea5291229d1a2e6da)
+
+- set loaderElement of searchAutocomplete component to search button (removed from body) [#1626](https://github.com/shopsys/shopsys/pull/1626)
+    - update your `assets/js/frontend/components/searchAutocomplete.js`
+        ```diff
+          Ajax.ajaxPendingCall('Shopsys.search.autocomplete.searchRequest', {
+        -     loaderElement: null,
+        +     loaderElement: '.js-search-autocomplete-submit',
+            // ...
+        });
+        ```
+    - update your `templates/Front/Content/Search/searchBox.html.twig`
+        ```diff
+        -  <button type="submit" class="btn search__form__button">
+        +  <button type="submit" class="btn search__form__button js-search-autocomplete-submit">
+               {{ 'Search [verb]'|trans }}
+           </button>
+        ```
+ 
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))

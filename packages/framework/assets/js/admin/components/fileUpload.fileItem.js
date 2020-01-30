@@ -24,6 +24,7 @@ export default class FileItem {
     }
 
     deleteItem () {
+        FileItem.removeError(this.$deleteButton);
         this.uploader.deleteTemporaryFile(this.$input.val());
         this.$file.remove();
         forceValidateElement(this.uploader.$uploader);
@@ -69,5 +70,12 @@ export default class FileItem {
                 .attr('class', this.$iconType.attr('class').replace(/__icon-type__/g, iconType))
                 .show();
         }
+    }
+
+    static removeError ($button) {
+        $button
+            .closest('.js-file-upload')
+            .siblings('.js-validation-errors-list')
+            .remove();
     }
 }

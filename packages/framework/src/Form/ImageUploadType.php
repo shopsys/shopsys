@@ -117,6 +117,9 @@ class ImageUploadType extends AbstractType
         ->add('file', FileType::class, [
             'multiple' => $this->isMultiple($options),
             'mapped' => false,
+            'attr' => [
+                'accept' => 'image/*',
+            ],
         ]);
     }
 
