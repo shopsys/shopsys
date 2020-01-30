@@ -1,40 +1,28 @@
-const fs = require('fs');
-const path = require('path');
+const glob = require('glob');
 
-function fileWalker (dir, done) {
-    let results = [];
+function fileWalker (dirs, done) {
+    if (!Array.isArray(dirs)) {
+        dirs = [dirs];
+    }
 
-    fs.readdir(dir, function (readErr, list) {
-        if (readErr) return done(readErr);
+    const promises = dirs.map(dir => new Promise((resolve, reject) => {
+        glob(dir, (err, filePaths) => {
+            if (err) {
+                reject(err);
+            }
 
-        let pending = list.length;
-
-        if (!pending) return done(null, results);
-
-        list.forEach(filePath => {
-            filePath = path.resolve(dir, filePath);
-
-            fs.stat(filePath, (statErr, stat) => {
-                if (statErr) {
-                    console.log(statErr);
-                }
-
-                // If directory, execute a recursive call
-                if (stat && stat.isDirectory()) {
-                    fileWalker(filePath, (walkErr, res) => {
-                        if (walkErr) {
-                            console.log(walkErr);
-                        }
-
-                        results = results.concat(res);
-                        if (!--pending) done(null, results);
-                    });
-                } else {
-                    results.push(filePath);
-                    if (!--pending) done(null, results);
-                }
-            });
+            resolve(filePaths);
         });
+    }));
+
+    Promise.all(promises).then(allFilepaths => {
+        let concatedFilePaths = [];
+
+        allFilepaths.forEach(filePaths => {
+            concatedFilePaths = concatedFilePaths.concat(filePaths);
+        });
+
+        done(null, concatedFilePaths);
     });
 }
 
