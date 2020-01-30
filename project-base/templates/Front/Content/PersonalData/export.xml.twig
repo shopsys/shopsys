@@ -11,7 +11,7 @@
                 <email><![CDATA[{{ customerUser.email }}]]></email>
             </customer_name>
 
-            {% if customerUser.customer.billingAdress is defined or customerUser.customer.deliveryAddress is defined %}
+            {% if customerUser.customer.billingAdress is defined or customerUser.customer.deliveryAddresses is defined %}
                 {% include 'Front/Content/PersonalData/adress.xml.twig' with {'customerUser' : customerUser} %}
             {% endif %}
 

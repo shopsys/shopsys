@@ -25,73 +25,74 @@
                     <h2>{{ 'No personal data for this email address'|trans }}</h2>
                 {% else %}
                     {% if customerUser is not null %}
-                    <div class="wrap-box">
-                        <h2 class="wrap-box__title">{{ 'Personal data of registered customer'|trans }}</h2>
-                        <div class="wrap-box__in">
-                            <table class="table-params">
-                                <tr>
-                                    <th>{{ 'First name'|trans }}:</th>
-                                    <td>{{ customerUser.firstName }} </td>
-                                </tr>
-                                <tr>
-                                    <th>{{ 'Last name'|trans }}:</th>
-                                    <td>{{ customerUser.lastName }} </td>
-                                </tr>
-                                {% if customerUser.telephone is not null %}
+                        <div class="wrap-box">
+                            <h2 class="wrap-box__title">{{ 'Personal data of registered customer'|trans }}</h2>
+                            <div class="wrap-box__in">
+                                <table class="table-params">
                                     <tr>
-                                        <th>{{ 'Telephone'|trans }}:</th>
-                                        <td>{{ customerUser.telephone }} </td>
+                                        <th>{{ 'First name'|trans }}:</th>
+                                        <td>{{ customerUser.firstName }} </td>
                                     </tr>
-                                {% endif %}
-                                <tr>
-                                    <th>{{ 'Email'|trans }}:</th>
-                                    <td>{{ customerUser.email }} </td>
-                                </tr>
-                                {% if customerUser.customer.billingAddress is not null %}
-                                    {% set addr = customerUser.customer.billingAddress %}
-                                    {% if addr.street is not null or addr.city is not null or addr.postCode is not null or addr.country.name is defined %}
+                                    <tr>
+                                        <th>{{ 'Last name'|trans }}:</th>
+                                        <td>{{ customerUser.lastName }} </td>
+                                    </tr>
+                                    {% if customerUser.telephone is not null %}
                                         <tr>
-                                            <th>{{ 'Billing address'|trans }}:</th>
-                                            <td>
-
-                                                {{ [addr.street, addr.city, addr.postCode, addr.country.name|default('') ]|joinNoneEmpty }}
-                                            </td>
+                                            <th>{{ 'Telephone'|trans }}:</th>
+                                            <td>{{ customerUser.telephone }} </td>
                                         </tr>
                                     {% endif %}
-                                {% endif %}
-                                {% if customerUser.customer.deliveryAddress is not null %}
-                                    {% if customerUser.customer.deliveryAddress is not null %}
-                                        {% set delivery = customerUser.customer.deliveryAddress %}
-                                        {% if delivery.firstName is not null or delivery.lastName is not null or
-                                            delivery.companyName is not null or delivery.street is not null or
-                                            delivery.city is not null or delivery.postcode is not null or
-                                            delivery.country.name is defined %}
+                                    <tr>
+                                        <th>{{ 'Email'|trans }}:</th>
+                                        <td>{{ customerUser.email }} </td>
+                                    </tr>
+                                    {% if customerUser.customer.billingAddress is not null %}
+                                        {% set addr = customerUser.customer.billingAddress %}
+                                        {% if addr.street is not null or addr.city is not null or addr.postCode is not null or addr.country.name is defined %}
                                             <tr>
-                                                <th>{{ 'Delivery address'|trans }}:</th>
+                                                <th>{{ 'Billing address'|trans }}:</th>
                                                 <td>
 
-                                                    {{ [ delivery.firstName, delivery.lastName, delivery.companyName, delivery.street,
-                                                        delivery.city, delivery.postcode, delivery.country.name|default('') ]|joinNoneEmpty }}
+                                                    {{ [addr.street, addr.city, addr.postCode, addr.country.name|default('') ]|joinNoneEmpty }}
                                                 </td>
                                             </tr>
                                         {% endif %}
                                     {% endif %}
-                                {% endif %}
+                                    {% if customerUser.customer.deliveryAddresses is not null %}
+                                        {% for deliveryAddress in customerUser.customer.deliveryAddresses %}
+                                            {%
+                                                if deliveryAddress.firstName is not null or deliveryAddress.lastName is not null or
+                                                deliveryAddress.companyName is not null or deliveryAddress.telephone is not null or
+                                                deliveryAddress.street is not null or deliveryAddress.city is not null or
+                                                deliveryAddress.postcode is not null or deliveryAddress.country.name is defined
+                                            %}
+                                                <tr>
+                                                    <th>{{ 'Delivery address'|trans }}:</th>
+                                                    <td>
 
-                                {% if customerUser.customer.billingAddress.companyTaxNumber is not null or
-                                    customerUser.customer.billingAddress.companyNumber is not null or
-                                    customerUser.customer.billingAddress.companyName is not null %}
-                                    <tr>
-                                        <th>{{ 'Company'|trans }}:</th>
-                                        <td>
-                                            {% set address = customerUser.customer.billingAddress %}
-                                            {{ [address.companyName, address.companyNumber, address.companyTaxNumber ]|joinNoneEmpty }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            </table>
+                                                        {{ [ deliveryAddress.firstName, deliveryAddress.lastName, deliveryAddress.companyName, deliveryAddress.telephone, deliveryAddress.street,
+                                                            deliveryAddress.city, deliveryAddress.postcode, deliveryAddress.country.name|default('') ]|joinNoneEmpty }}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    {% if customerUser.customer.billingAddress.companyTaxNumber is not null or
+                                        customerUser.customer.billingAddress.companyNumber is not null or
+                                        customerUser.customer.billingAddress.companyName is not null %}
+                                        <tr>
+                                            <th>{{ 'Company'|trans }}:</th>
+                                            <td>
+                                                {% set address = customerUser.customer.billingAddress %}
+                                                {{ [address.companyName, address.companyNumber, address.companyTaxNumber ]|joinNoneEmpty }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                            </div>
                         </div>
-                    </div>
                     {% endif %}
 
                     {% if orders|length != 0 %}
@@ -100,19 +101,19 @@
 
                     {% if newsletterSubscriber %}
                         <div class="wrap-box">
-                        <h2 class="wrap-box__title">{{ 'Subscription to email newsletter'|trans }}</h2>
-                        <div class="wrap-box__in">
-                        <table class="table-params">
-                            <tr>
-                                <th>{{ 'Email'|trans }}</th>
-                                <td>{{ newsletterSubscriber.email }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ 'Date of subscription'|trans }}</th>
-                                <td>{{ newsletterSubscriber.createdAt|formatDateTime }}</td>
-                            </tr>
-                        </table>
-                        </div>
+                            <h2 class="wrap-box__title">{{ 'Subscription to email newsletter'|trans }}</h2>
+                            <div class="wrap-box__in">
+                                <table class="table-params">
+                                    <tr>
+                                        <th>{{ 'Email'|trans }}</th>
+                                        <td>{{ newsletterSubscriber.email }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'Date of subscription'|trans }}</th>
+                                        <td>{{ newsletterSubscriber.createdAt|formatDateTime }}</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     {% endif %}
                 {% endif %}
