@@ -565,7 +565,6 @@ There you can find links to upgrade notes for other versions too.
               </div>
           </div>
         ```
-
 - add cart detail on hover ([#1565](https://github.com/shopsys/shopsys/pull/1565))
   
   - you can skip this task if you have your custom design
@@ -752,6 +751,116 @@ There you can find links to upgrade notes for other versions too.
         /assets/js/translations.json
       + /assets/js/bundles
       ```
+- update your application to support multiple delivery addresses ([#1635](https://github.com/shopsys/shopsys/pull/1635))
+    - some methods has changed so you might want to update their usage in your application:
+        - `Customer::getDeliveryAddress()` and `Customer::setDeliveryAddress()` has been removed you can use `Customer::getDeliveryAddresses()` or `CustomerUser::getDefaultDeliveryAddress()` instead
+        - `CustomerUserFacade::editDeliveryAddress()` has been removed, use `DeliveryAddressFacade::edit()` instead
+        - `CustomerUser::__construct()`
+            ```diff
+            -   public function __construct(CustomerUserData $customerUserData, ?DeliveryAddress $deliveryAddress)
+            +   public function __construct(CustomerUserData $customerUserData)
+            ```
+        - `CustomerUserFacade::__construct()`
+            ```diff
+                public function __construct(
+                    EntityManagerInterface $em,
+                    CustomerUserRepository $customerUserRepository,
+                    CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+                    CustomerMailFacade $customerMailFacade,
+                    BillingAddressFactoryInterface $billingAddressFactory,
+                    DeliveryAddressFactoryInterface $deliveryAddressFactory,
+                    BillingAddressDataFactoryInterface $billingAddressDataFactory,
+                    CustomerUserFactoryInterface $customerUserFactory,
+                    CustomerUserPasswordFacade $customerUserPasswordFacade,
+            -       CustomerFacade $customerFacade
+            +       CustomerFacade $customerFacade,
+            +       DeliveryAddressFacade $deliveryAddressFacade
+                ) {
+            ```
+        - `CustomerUserFacade::createCustomerUser()`
+            ```diff
+                protected function createCustomerUser(
+                    Customer $customer,
+            -       CustomerUserData $customerUserData,
+            -       ?DeliveryAddressData $deliveryAddressData = null
+            +       CustomerUserData $customerUserData
+                ): CustomerUser
+            ```
+        - `CustomerUserFacade::amendCustomerUserDataFromOrder()` 
+            ```diff
+              -   public function amendCustomerUserDataFromOrder(CustomerUser $customerUser, Order $order)
+              +   public function amendCustomerUserDataFromOrder(CustomerUser $customerUser, Order $order, ?DeliveryAddress $deliveryAddress) 
+            ```
+        - `CustomerUserFacade::edit()`
+            ```diff
+              -   protected function edit(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData)
+              +   protected function edit(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData, ?DeliveryAddress $deliveryAddress = null)
+            ```
+        - `CustomerUserFactory::create() and CustomerUserFactoryInterface::create()`
+            ```diff
+            -    public function create(CustomerUserData $customerUserData, ?DeliveryAddress $deliveryAddress): CustomerUser
+            +    public function create(CustomerUserData $customerUserData): CustomerUser
+            ```
+        - `CustomerUserUpdateDataFactory::createAmendedByOrder()` and `CustomerUserUpdateDataFactoryInterface::createAmendedByOrder()`
+            ```diff
+              -   public function createAmendedByOrder(CustomerUser $customerUser, Order $order): CustomerUserUpdateData
+              +   public function createAmendedByOrder(CustomerUser $customerUser, Order $order, ?DeliveryAddress $deliveryAddress): CustomerUserUpdateData
+            ```
+        - `OrderFacade::createOrderFromFront()`
+            ```diff
+              -   public function createOrderFromFront(OrderData $orderData)
+              +   public function createOrderFromFront(OrderData $orderData, ?DeliveryAddress $deliveryAddress)
+            ```
+    - there has been changes in project files, that you should apply in your project:
+        - update your `assets/js/frontend.js` file
+            ```diff
+                // HP entry?
+                import './frontend/homepage/slickInit';
+            +   
+            +   import './frontend/deliveryAddress';
+            ```
+        - add [assets/js/frontend/deliveryAddress/deliveryAddress.js](https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/deliveryAddress.js) and [assets/js/frontend/deliveryAddress/index.js]((https://github.com/shopsys/shopsys/tree/master/project-base/assets/js/frontend/deliveryAddress/deliveryAddress.js)) files
+        - update your `config/packages/twig.yaml`
+            ```diff
+                - '@ShopsysFramework/Admin/Form/productCalculatedPrices.html.twig'
+            +   - '@ShopsysFramework/Front/Form/deliveryAddressChoiceFields.html.twig'
+            +   - '@ShopsysFramework/Admin/Form/deliveryAddressListFields.html.twig'
+            ```
+        - update your `assets/js/frontend/validation/form/order.js`
+            ```diff
+            +   const selectedDeliveryAddressValue = $orderPersonalInfoForm.find('.js-delivery-address-input:checked').val();
+                const groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];
+            -   if ($orderPersonalInfoForm.find('#order_personal_info_form_deliveryAddressFilled').is(':checked')) {
+            +   if ($orderPersonalInfoForm.find('#order_personal_info_form_deliveryAddressFilled').is(':checked') && (selectedDeliveryAddressValue === '' || selectedDeliveryAddressValue === undefined)) {
+                    groups.push(constant('\\App\\Form\\Front\\Customer\\DeliveryAddressFormType::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS'));
+            ```
+        - update your `config/routes/shopsys_front.yml` - add to end of file
+            ```diff
+            +   front_customer_delivery_address_delete:
+            +       path: /customer/delete-delivery-address/{deliveryAddressId}
+            +       defaults:
+            +           _controller: App\Controller\Front\CustomerController:deleteDeliveryAddressAction
+            +           deliveryAddressId: 0
+            +       methods: [GET]
+            +       requirements:
+            +           deliveryAddressId: \d+
+            ```
+        - update these files from [pull request diff](https://github.com/shopsys/shopsys/pull/1635/files)
+            - `src/Controller/Front/CustomerController.php`
+            - `src/Controller/Front/OrderController.php`
+            - `src/Form/Front/Customer/DeliveryAddressFormType.php`
+            - `src/Form/Front/Customer/User/CustomerUserFormType.php`
+            - `src/Form/Front/Order/PersonalInfoFormType.php`
+            - `src/Model/Customer/User/CustomerUser.php`
+            - `templates/Front/Content/Customer/edit.html.twig`
+            - `templates/Front/Content/Order/step3.html.twig`
+            - `templates/Front/Content/PersonalData/adress.xml.twig`
+            - `templates/Front/Content/PersonalData/detail.html.twig`
+            - `templates/Front/Content/PersonalData/export.xml.twig`
+            - `templates/Front/Content/PersonalData/order.html.twig`
+            - `templates/Front/Form/theme.html.twig`
+            - `tests/App/Functional/PersonalData/PersonalDataExportXmlTest.php`
+            - `tests/App/Unit/Form/Front/Order/PersonalInfoFormTypeTest.php`
 
 ### Tools
 
