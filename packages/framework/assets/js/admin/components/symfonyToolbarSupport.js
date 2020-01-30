@@ -35,11 +35,6 @@ export default class SymfonyToolbarSupport {
         $('.sf-toolbar').on('click', '[id^="sfToolbarMainContent-"] > a.hide-button', () => {
             SymfonyToolbarSupport.notifyOnToolbarHide();
         });
-
-        // condition copied from: vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views/Profiler/toolbar_js.html.twig
-        if (typeof Sfjs !== 'undefined' && Sfjs.getPreference('toolbar/displayState') !== 'none') {
-            SymfonyToolbarSupport.notifyOnToolbarShow();
-        }
     }
 }
 

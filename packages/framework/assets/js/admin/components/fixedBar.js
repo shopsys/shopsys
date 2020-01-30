@@ -14,6 +14,11 @@ export default class FixedBar {
     static init () {
         SymfonyToolbarSupport.registerOnToolbarShow(FixedBar.onSymfonyToolbarShow);
         SymfonyToolbarSupport.registerOnToolbarHide(FixedBar.onSymfonyToolbarHide);
+
+        // condition copied from: vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views/Profiler/toolbar_js.html.twig
+        if (typeof Sfjs !== 'undefined' && Sfjs.getPreference('toolbar/displayState') !== 'none') {
+            SymfonyToolbarSupport.notifyOnToolbarShow();
+        }
     }
 }
 
