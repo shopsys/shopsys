@@ -42,3 +42,7 @@ services:
     App\Form\Admin\PaymentFormTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType }
+
+    App\Form\Admin\PromoCodeFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType }
