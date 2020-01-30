@@ -1,6 +1,6 @@
 const parseFile = require('./parseFile');
 const fileWalker = require('./fileWalker');
-const saveTranslations = require('./saveTranslations');
+const findAndSaveTranslations = require('./findAndSaveTranslations');
 
 function process (dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
     fileWalker(dirWithJsFiles, (err, filePaths) => {
@@ -17,12 +17,12 @@ function process (dirWithJsFiles, dirWithTranslations, outputDirForExportedTrans
 
             parseFile(filePath).forEach(translation => {
                 if (!translations.includes(translation)) {
-                    translations.push(translation);
+                    translations.push(translation.id);
                 }
             });
         });
 
-        saveTranslations(translations, dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations);
+        findAndSaveTranslations(translations, dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations);
     });
 }
 

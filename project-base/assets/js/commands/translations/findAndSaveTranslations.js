@@ -3,7 +3,7 @@ const PO = require('pofile');
 const fileWalker = require('./fileWalker');
 const findLang = require('./findLang');
 
-function saveTranslations (translations, dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
+function findAndSaveTranslations (translations, dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
 
     fileWalker(dirWithTranslations, (walkErr, filePaths) => {
         if (walkErr) {
@@ -11,7 +11,6 @@ function saveTranslations (translations, dirWithJsFiles, dirWithTranslations, ou
         }
 
         const promises = filePaths.map(filePath => {
-
             if (filePath.match(/(\w*)\.po$/) === null) {
                 return;
             }
@@ -39,21 +38,25 @@ function saveTranslations (translations, dirWithJsFiles, dirWithTranslations, ou
 
         Promise.all(promises).then(value => {
             const allTranslations = {};
-            value.forEach(translatedObject => {
-                if (!allTranslations[translatedObject.lang]) {
-                    allTranslations[translatedObject.lang] = [];
-                }
+            value
+                .filter(translatedObject => typeof translatedObject !== 'undefined')
+                .forEach(translatedObject => {
+                    if (!allTranslations[translatedObject.lang]) {
+                        allTranslations[translatedObject.lang] = [];
+                    }
 
-                allTranslations[translatedObject.lang] = allTranslations[translatedObject.lang].concat(translatedObject.translated);
-            });
+                    allTranslations[translatedObject.lang] = allTranslations[translatedObject.lang].concat(translatedObject.translated);
+                });
 
             fs.writeFile(outputDirForExportedTranslations + 'translations.json', JSON.stringify(allTranslations), (writeErr) => {
                 if (writeErr) {
                     return console.log(writeErr);
                 }
+
+                return console.log('Translations was save in ' + outputDirForExportedTranslations + 'translations.json');
             });
         });
     });
 }
 
-module.exports = saveTranslations;
+module.exports = findAndSaveTranslations;
