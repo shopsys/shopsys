@@ -1023,8 +1023,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExporter: ~
-
     Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: ~
 
     Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter: ~

@@ -249,7 +249,7 @@ class ProductFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
-        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($product->getId());
+        $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($product->getId());
 
         return $product;
     }
@@ -315,7 +315,7 @@ class ProductFacade
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
-        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productToExport->getId());
+        $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($productToExport->getId());
 
         return $product;
     }
@@ -332,10 +332,10 @@ class ProductFacade
             $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
             $productForRecalculations->markForVisibilityRecalculation();
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
-            $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($productForRecalculations->getId());
+            $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($productForRecalculations->getId());
         }
 
-        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($product->getId());
+        $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($product->getId());
 
         $this->em->remove($product);
         $this->em->flush();

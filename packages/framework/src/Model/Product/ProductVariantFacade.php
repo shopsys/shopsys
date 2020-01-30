@@ -106,9 +106,9 @@ class ProductVariantFacade
             throw $exception;
         }
 
-        $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($mainVariant->getId());
+        $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($mainVariant->getId());
         foreach ($mainVariant->getVariants() as $variant) {
-            $this->productSearchExportScheduler->scheduleProductIdForImmediateExport($variant->getId());
+            $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($variant->getId());
         }
 
         return $mainVariant;

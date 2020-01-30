@@ -196,44 +196,4 @@ class ProductElasticsearchRepository
     {
         return (int)$result['hits']['total'];
     }
-
-    /**
-     * @param int $domainId
-     * @param array $data
-     */
-    public function bulkUpdate(int $domainId, array $data): void
-    {
-        $body = $this->productElasticsearchConverter->convertBulk(
-            $this->elasticsearchStructureManager->getCurrentIndexName($domainId, self::ELASTICSEARCH_INDEX),
-            $data
-        );
-
-        $params = [
-            'body' => $body,
-        ];
-        $this->client->bulk($params);
-    }
-
-    /**
-     * @param int $domainId
-     * @param int[] $deleteIds
-     */
-    public function delete(int $domainId, array $deleteIds): void
-    {
-        $this->client->deleteByQuery([
-            'index' => $this->elasticsearchStructureManager->getCurrentIndexName($domainId, self::ELASTICSEARCH_INDEX),
-            'type' => '_doc',
-            'body' => [
-                'query' => [
-                    'bool' => [
-                        'must' => [
-                            'ids' => [
-                                'values' => array_values($deleteIds),
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
-    }
 }

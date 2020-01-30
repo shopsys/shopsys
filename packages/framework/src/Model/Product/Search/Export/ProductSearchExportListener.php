@@ -5,56 +5,30 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Search\Export;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportListener;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 
-class ProductSearchExportListener
+class ProductSearchExportListener extends AbstractExportListener
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $entityManager;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportFacade
-     */
-    protected $productSearchExportFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler
-     */
-    protected $productSearchExportScheduler;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportFacade $productSearchExportFacade
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager $indexManager
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         ProductSearchExportScheduler $productSearchExportScheduler,
-        ProductSearchExportFacade $productSearchExportFacade,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        IndexManager $indexManager,
+        IndexDefinitionLoader $indexDefinitionLoader,
+        ProductIndex $index,
+        Domain $domain
     ) {
-        $this->productSearchExportScheduler = $productSearchExportScheduler;
-        $this->productSearchExportFacade = $productSearchExportFacade;
-        $this->entityManager = $entityManager;
-    }
-
-    public function exportScheduledProducts(): void
-    {
-        if ($this->productSearchExportScheduler->hasAnyProductIdsForImmediateExport()) {
-            // to be sure the recalculated data are fetched from database properly
-            $this->entityManager->clear();
-
-            $productIds = $this->productSearchExportScheduler->getProductIdsForImmediateExport();
-            $this->productSearchExportFacade->exportIds($productIds);
-        }
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $filterResponseEvent
-     */
-    public function onKernelResponse(FilterResponseEvent $filterResponseEvent): void
-    {
-        $this->exportScheduledProducts();
+        parent::__construct($productSearchExportScheduler, $entityManager, $indexManager, $indexDefinitionLoader, $index, $domain);
     }
 }
