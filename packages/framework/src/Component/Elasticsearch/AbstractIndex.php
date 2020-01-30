@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 abstract class AbstractIndex
 {
     protected const BATCH_SIZE = 100;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Elasticsearch\DataProviderInterface
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\DataProviderInterface
      */
     protected $dataProvider;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\DataProviderInterface $dataProvider
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\DataProviderInterface $dataProvider
      */
     public function __construct(DataProviderInterface $dataProvider)
     {
@@ -22,7 +22,7 @@ abstract class AbstractIndex
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Elasticsearch\DataProviderInterface
+     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\DataProviderInterface
      */
     public function getDataProvider(): DataProviderInterface
     {

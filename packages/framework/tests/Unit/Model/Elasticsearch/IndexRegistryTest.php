@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\Exception\ElasticsearchIndexException;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\IndexRegistry;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductDataProvider;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryDataProvider;
@@ -15,7 +15,7 @@ use Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryIndex;
 class IndexRegistryTest extends TestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexRegistry
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry
      */
     protected $indexRegistry;
 

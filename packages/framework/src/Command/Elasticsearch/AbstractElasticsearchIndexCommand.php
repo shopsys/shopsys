@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinitionLoader;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\IndexFacade;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\IndexRegistry;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,17 +20,17 @@ abstract class AbstractElasticsearchIndexCommand extends Command
     private const ARGUMENT_INDEX_NAME = 'name';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexRegistry
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry
      */
     protected $indexRegistry;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexFacade
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade
      */
     protected $indexFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinitionLoader
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
      */
     protected $indexDefinitionLoader;
 
@@ -40,9 +40,9 @@ abstract class AbstractElasticsearchIndexCommand extends Command
     protected $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexRegistry $indexRegistry
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexFacade $indexFacade
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry $indexRegistry
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -93,7 +93,7 @@ abstract class AbstractElasticsearchIndexCommand extends Command
 
     /**
      * @param string|null $indexName
-     * @return \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex[]
+     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex[]
      */
     private function getAffectedIndexes(?string $indexName): array
     {
@@ -104,7 +104,7 @@ abstract class AbstractElasticsearchIndexCommand extends Command
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     abstract protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void;

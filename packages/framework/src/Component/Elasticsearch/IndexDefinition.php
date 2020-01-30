@@ -1,13 +1,13 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
-use Shopsys\FrameworkBundle\Model\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 
 class IndexDefinition
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
      */
     protected $index;
 
@@ -29,7 +29,7 @@ class IndexDefinition
     /**
      * DocumentDefinition constructor.
      *
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex $index
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param string $definitionsDirectory
      * @param string $indexPrefix
      * @param int $domainId
@@ -107,7 +107,7 @@ class IndexDefinition
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex
+     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
      */
     public function getIndex(): AbstractIndex
     {

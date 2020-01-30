@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 interface DataProviderInterface
 {

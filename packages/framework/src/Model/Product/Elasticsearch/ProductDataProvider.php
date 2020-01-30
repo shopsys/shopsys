@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\DataProviderInterface;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\DataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository;
 
 class ProductDataProvider implements DataProviderInterface

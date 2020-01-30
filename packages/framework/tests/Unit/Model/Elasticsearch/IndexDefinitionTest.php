@@ -3,9 +3,9 @@
 namespace Tests\FrameworkBundle\Unit\Model\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\Exception\ElasticsearchIndexException;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductDataProvider;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryDataProvider;
@@ -30,11 +30,12 @@ class IndexDefinitionTest extends TestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex $index
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param string $definitionsDirectory
      * @param string $indexPrefix
      * @param int $domainId
      * @param string $expectedResult
+     *
      * @dataProvider indexDefinitionParametersForIndexAlias
      */
     public function testGetIndexAlias(

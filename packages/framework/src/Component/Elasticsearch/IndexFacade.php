@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexManager
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager
      */
     protected $indexManager;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexManager $indexManager
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager $indexManager
      */
     public function __construct(IndexManager $indexManager)
     {
@@ -22,7 +22,7 @@ class IndexFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function createByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void
@@ -38,7 +38,7 @@ class IndexFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function deleteByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void
@@ -53,7 +53,7 @@ class IndexFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function exportByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void
@@ -68,7 +68,7 @@ class IndexFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function migrateByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void

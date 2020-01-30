@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
-use Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 
 class ProductIndex extends AbstractIndex
 {

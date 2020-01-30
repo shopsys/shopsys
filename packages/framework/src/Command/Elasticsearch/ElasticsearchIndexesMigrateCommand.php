@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command\Elasticsearch;
 
-use Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexCommand
@@ -15,7 +15,7 @@ class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexComma
     protected static $defaultName = 'shopsys:elasticsearch:indexes-migrate';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void

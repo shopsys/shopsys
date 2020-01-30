@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
-use Shopsys\FrameworkBundle\Model\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 
 class IndexRegistry
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex[]
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex[]
      */
     protected $registeredIndexes;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex[] $indexes
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex[] $indexes
      */
     public function __construct(array $indexes)
     {
@@ -24,7 +24,7 @@ class IndexRegistry
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex $index
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      */
     protected function registerIndex(AbstractIndex $index): void
     {
@@ -42,7 +42,8 @@ class IndexRegistry
 
     /**
      * @param string $indexName
-     * @return \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex
+     *
+     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
      */
     public function getIndexByIndexName(string $indexName)
     {
@@ -62,7 +63,7 @@ class IndexRegistry
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex[]
+     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex[]
      */
     public function getRegisteredIndexes(): array
     {

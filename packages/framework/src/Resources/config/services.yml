@@ -1012,16 +1012,16 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex: ~
 
-    Shopsys\FrameworkBundle\Model\Elasticsearch\IndexRegistry:
+    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry:
         arguments:
             $indexes: ['@Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex']
 
-    Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinitionLoader:
+    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader:
         arguments:
             $indexDefinitionsDirectory: '%shopsys.elasticsearch.structure_dir%'
             $indexPrefix: '%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
 
-    Shopsys\FrameworkBundle\Model\Elasticsearch\IndexManager: ~
+    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager: ~
 
     Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExporter: ~
 

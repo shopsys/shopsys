@@ -1,10 +1,10 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
-use Shopsys\FrameworkBundle\Model\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexManager
@@ -30,7 +30,7 @@ class IndexManager
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      */
     public function createIndex(IndexDefinition $indexDefinition): void
     {
@@ -52,7 +52,7 @@ class IndexManager
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      */
     public function createAlias(IndexDefinition $indexDefinition): void
     {
@@ -70,7 +70,7 @@ class IndexManager
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      */
     public function deleteIndexByIndexDefinition(IndexDefinition $indexDefinition): void
     {
@@ -154,7 +154,7 @@ class IndexManager
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param array $restrictToIds
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */

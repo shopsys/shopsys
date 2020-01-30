@@ -2,7 +2,7 @@
 
 namespace Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures;
 
-use Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 
 class CategoryIndex extends AbstractIndex
 {

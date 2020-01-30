@@ -2,7 +2,7 @@
 
 namespace Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures;
 
-use Shopsys\FrameworkBundle\Model\Elasticsearch\DataProviderInterface;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\DataProviderInterface;
 use Symplify\BetterPhpDocParser\Exception\NotImplementedYetException;
 
 class CategoryDataProvider implements DataProviderInterface

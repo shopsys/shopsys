@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 class IndexDefinitionLoader
 {
@@ -27,10 +27,10 @@ class IndexDefinitionLoader
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Elasticsearch\AbstractIndex $index
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param int $domainId
      *
-     * @return \Shopsys\FrameworkBundle\Model\Elasticsearch\IndexDefinition
+     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition
      */
     public function getIndexDefinition(AbstractIndex $index, int $domainId): IndexDefinition
     {
