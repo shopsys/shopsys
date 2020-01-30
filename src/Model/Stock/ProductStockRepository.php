@@ -6,6 +6,7 @@ namespace App\Model\Stock;
 
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
 class ProductStockRepository
@@ -42,6 +43,17 @@ class ProductStockRepository
     }
 
     /**
+     * @param \App\Model\Product\Product $product
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getProductStockQueryBuilderByProduct(Product $product): QueryBuilder
+    {
+        return $this->getQueryBuilder()
+            ->where('sp.product = :product')
+            ->setParameter('product', $product);
+    }
+
+    /**
      * @param \App\Model\Stock\Stock $stock
      * @param \App\Model\Product\Product $product
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -49,10 +61,8 @@ class ProductStockRepository
      */
     public function getProductStockByStockAndProduct(Stock $stock, Product $product): ?ProductStock
     {
-        return $this->getQueryBuilder()
-            ->where('sp.product = :product')
+        return $this->getProductStockQueryBuilderByProduct($product)
             ->andWhere('sp.stock = :stock')
-            ->setParameter('product', $product)
             ->setParameter('stock', $stock)
             ->getQuery()->getOneOrNullResult();
     }
@@ -63,9 +73,22 @@ class ProductStockRepository
      */
     public function getProductStockByProduct(Product $product): array
     {
-        return $this->getQueryBuilder()
-            ->where('sp.product = :product')
-            ->setParameter('product', $product)
+        return $this->getProductStockQueryBuilderByProduct($product)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return \App\Model\Stock\ProductStock[]
+     */
+    public function getProductStockByProductWithoutCentralStockByDomain(Product $product, int $domainId): array
+    {
+        return $this->getProductStockQueryBuilderByProduct($product)
+            ->join(Stock::class, 's', Join::WITH, 's.id = sp.stock')
+            ->andWhere('s.centralStock = false')
+            ->andWhere('s.domainId = :domainId')
+            ->setParameter("domainId", $domainId)
             ->getQuery()
             ->execute();
     }

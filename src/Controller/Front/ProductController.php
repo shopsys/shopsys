@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\CategoryFacade;
+use App\Model\Stock\ProductStockRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
@@ -76,6 +77,10 @@ class ProductController extends FrontBaseController
      * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
      */
     private $listedProductViewFacade;
+    /**
+     * @var \App\Model\Stock\ProductStockRepository
+     */
+    private $productStockRepository;
 
     /**
      * @var \App\Model\Category\CategoryFacade
@@ -106,7 +111,8 @@ class ProductController extends FrontBaseController
         ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade,
         ModuleFacade $moduleFacade,
         BrandFacade $brandFacade,
-        ListedProductViewFacadeInterface $listedProductViewFacade
+        ListedProductViewFacadeInterface $listedProductViewFacade,
+        ProductStockRepository $productStockRepository
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -119,6 +125,7 @@ class ProductController extends FrontBaseController
         $this->brandFacade = $brandFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->categoryFacade = $categoryFacade;
+        $this->productStockRepository = $productStockRepository;
     }
 
     /**
