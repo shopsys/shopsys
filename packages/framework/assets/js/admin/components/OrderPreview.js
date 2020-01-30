@@ -37,8 +37,8 @@ export default class OrderPreview {
                 interval: 200,
                 over: function () {
                     _this.$previewBox.show();
-                    _this.$previewBox.parents('table').css({'overflow': 'visible'});
-                    _this.$previewBox.parents('table').parent().css({'overflow': 'visible'});
+                    _this.$previewBox.parents('table').css({ 'overflow': 'visible' });
+                    _this.$previewBox.parents('table').parent().css({ 'overflow': 'visible' });
 
                     if (!_this.isLoaded && !_this.isLoading) {
                         _this.isLoading = true;
@@ -50,8 +50,8 @@ export default class OrderPreview {
                     }
                 },
                 out: function () {
-                    _this.$previewBox.parents('table').css({'overflow': 'hidden'});
-                    _this.$previewBox.parents('table').parent().css({'overflow': 'hidden'});
+                    _this.$previewBox.parents('table').css({ 'overflow': 'hidden' });
+                    _this.$previewBox.parents('table').parent().css({ 'overflow': 'hidden' });
                 }
             });
 
@@ -72,13 +72,13 @@ export default class OrderPreview {
         this.isLoading = false;
         this.isLoaded = true;
         this.$previewBoxWindow.html(responseHtml);
-        this.$previewBoxWindow.show(function(){
+        this.$previewBoxWindow.show(function () {
             let tableHeight = $(this).parents('table').height();
-            if(tableHeight > 500){
+            if (tableHeight > 500) {
                 let tablePosition = $(this).parents('table').offset().top;
                 let popupWindowPosition = $(this).offset().top;
 
-                if(((tablePosition + tableHeight) - popupWindowPosition) < 500){
+                if (((tablePosition + tableHeight) - popupWindowPosition) < 500) {
                     $(this).addClass('bottom');
                 }
             }
