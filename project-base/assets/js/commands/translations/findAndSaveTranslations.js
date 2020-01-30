@@ -53,7 +53,7 @@ function findAndSaveTranslations (translations, dirWithJsFiles, dirWithTranslati
                     return console.log(writeErr);
                 }
 
-                return console.log('Translations was save in ' + outputDirForExportedTranslations + 'translations.json');
+                return console.log('Translations were saved in ' + outputDirForExportedTranslations + 'translations.json');
             });
         });
     });

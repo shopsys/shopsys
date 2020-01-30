@@ -6,7 +6,8 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress",
-        "trans": "./assets/js/bin/trans.js"
+        "trans": "./assets/js/bin/trans.js",
+        "trans:dump": "./assets/js/bin/transDump.js"
     },
     "preferGlobal": false,
     "devDependencies": {

@@ -2,19 +2,19 @@ const fs = require('fs');
 const babelParser = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
 
-const createTransObject = (args) => {
-    return {
-        id: args[0].value,
-        domain: args[2] && args[2].value,
-        locale: args[3] && args[3].value
-    };
-};
+const TRANS_DOMAIN_POSITION = 2;
+const TRANS_LOCALE_POSITION = 3;
 
-const createTransChoiceObject = (args) => {
+const TRANSCHOICE_DOMAIN_POSITION = 3;
+const TRANSCHOICE_LOCALE_POSITION = 4;
+
+const createObject = (args, domainPosition, localePosition, filePath, line) => {
     return {
         id: args[0].value,
-        domain: args[3] && args[3].value,
-        locale: args[4] && args[4].value
+        domain: args[domainPosition] && args[domainPosition].value,
+        locale: args[localePosition] && args[localePosition].value,
+        source: filePath,
+        line: line
     };
 };
 
@@ -25,10 +25,14 @@ function parseFile (filePath) {
     traverse(ast, {
         CallExpression (path) {
             if (path.node.callee.object && path.node.callee.object.name === 'Translator') {
-                const transObject = path.node.callee.property.name === 'trans'
-                    ? createTransObject(path.node.arguments)
-                    : createTransChoiceObject(path.node.arguments);
-
+                const isTransMethod = path.node.callee.property.name === 'trans'
+                const transObject = createObject(
+                    path.node.arguments,
+                    isTransMethod ? TRANS_DOMAIN_POSITION : TRANSCHOICE_DOMAIN_POSITION,
+                    isTransMethod ? TRANS_LOCALE_POSITION : TRANSCHOICE_LOCALE_POSITION,
+                    filePath,
+                    path.node.callee.loc.start.line
+                );
                 translations.push(transObject);
             }
         }

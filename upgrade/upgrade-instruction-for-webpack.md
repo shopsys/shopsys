@@ -42,11 +42,15 @@ webpack_encore:
 +        "dev": "encore dev",
 +        "watch": "encore dev --watch",
 +        "build": "encore production --progress",
-+        "trans": "./assets/js/bin/trans.js"
++        "trans": "./assets/js/bin/trans.js",
++        "trans:dump": "./assets/js/bin/transDump.js",
++        "tests": "npm run tests:unit",
++        "tests:unit": "jest"
 +    },
 +    "dependencies": {
 +        "@shopsys/framework": "9.0.0-dev.1",
 +        "codemirror": "^5.49.2",
++        "glob": "^7.1.6",
 +        "jquery-ui": "^1.12.1",
 +        "jquery-ui-touch-punch": "^0.2.3",
 +        "jquery.cookie": "^1.4.1",
@@ -54,15 +58,19 @@ webpack_encore:
 +        "slick-carousel": "1.6.0"
 +    },
      "devDependencies": {
++        "@babel/core": "^7.8.3",
 +        "@babel/parser": "^7.7.7",
 +        "@babel/traverse": "^7.7.4",
++        "@babel/preset-env": "^7.8.3",
 +        "@symfony/webpack-encore": "^0.28.0",
          "autoprefixer": "^9.4.4",
++        "babel-jest": "^25.1.0",
 +        "copy-webpack-plugin": "^5.1.1",
 +        "core-js": "^3.0.0",
          "es6-promise": "^4.2.5",
          "eslint": "^5.12.0",
 +        "event-hooks-webpack-plugin": "^2.1.5",
++        "jest": "^25.1.0",
          "grunt": "^1.0.3",
          "jit-grunt": "^0.10.0",
 +        "regenerator-runtime": "^0.13.2",
@@ -71,6 +79,23 @@ webpack_encore:
 +        "time-grunt": "^1.4.0",
 +        "webpack-notifier": "^1.6.0"
 ```
+
+- Create file `babel.config.js` with this content
+```js
+    module.exports = {
+        presets: [
+            [
+                '@babel/preset-env',
+                {
+                    targets: {
+                        node: 'current',
+                    },
+                },
+            ],
+        ],
+    };
+```
+
 - Run `npm install` or `./phing npm-install-dependencies`
 
 - Replace file `webpack.config.js` from [GitHub](https://github.com/shopsys/shopsys/blob/9.0/project-base/webpack.config.js) into your project root
