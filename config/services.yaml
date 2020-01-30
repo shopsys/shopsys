@@ -176,3 +176,7 @@ services:
     Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory: '@App\Model\ProductFeed\Heureka\FeedItem\HeurekaFeedItemFactory'
 
     Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory: '@App\Model\ProductFeed\Zbozi\FeedItem\ZboziFeedItemFactory'
+
+    App\Component\Form\FormBuilderHelper:
+        arguments:
+            $disableFields: '%disable_form_fields_from_transfer%'

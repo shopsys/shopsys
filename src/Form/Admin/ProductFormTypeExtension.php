@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Component\Form\FormBuilderHelper;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -16,6 +17,34 @@ use Symfony\Component\Validator\Constraints;
 
 class ProductFormTypeExtension extends AbstractTypeExtension
 {
+    public const DISABLED_FIELDS = [
+        'descriptions',
+        'catnum',
+        'ean',
+        'name',
+        'namePrefix',
+        'nameSufix',
+        'descriptions',
+        'shortDescriptionUsp1',
+        'shortDescriptionUsp2',
+        'shortDescriptionUsp3',
+        'shortDescriptionUsp4',
+        'shortDescriptionUsp5',
+    ];
+
+    /**
+     * @var \App\Component\Form\FormBuilderHelper
+     */
+    private $formBuilderHelper;
+
+    /**
+     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     */
+    public function __construct(FormBuilderHelper $formBuilderHelper)
+    {
+        $this->formBuilderHelper = $formBuilderHelper;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -51,6 +80,8 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
         $builder->get('displayAvailabilityGroup')->get('stockGroup')->remove('stockQuantity');
         $this->stocksGroup($builder);
+
+        $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 
     /**

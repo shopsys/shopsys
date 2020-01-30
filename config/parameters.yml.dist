@@ -32,3 +32,5 @@ parameters:
         secret: ''
         user: ''
         password: ''
+    disable_form_fields_from_transfer: true
+
