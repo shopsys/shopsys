@@ -194,6 +194,26 @@
         </exec>
     </target>
 
+    <target name="npm-export-translations" description="Installs node modules dependencies." hidden="true">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="trans"/>
+            <arg value="--"/>
+            <arg value="source-dir=${path.assets}/**/*.js"/>
+            <arg value="source-dir=${path.framework}/assets/**/*.js"/>
+        </exec>
+    </target>
+
+    <target name="npm-translations-dump" description="Dumped translations from javascript's files." hidden="true">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="trans:dump"/>
+            <arg value="--"/>
+            <arg value="source-dir=${path.assets}/**/*.js"/>
+            <arg value="source-dir=${path.framework}/assets/**/*.js"/>
+        </exec>
+    </target>
+
     <target name="phing-config-check" description="Checks the syntax of Phing configuration." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -319,6 +339,7 @@
     </target>
 
     <target name="translations-dump" depends="domains-info-load" description="Extracts translatable messages in the whole monorepo.">
+
         <phingcall target="shopsys_framework.translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
