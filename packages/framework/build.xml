@@ -1115,7 +1115,7 @@
         </if>
     </target>
 
-    <target name="tests-unit" depends="tests-unit-jest,production-protection,clean" description="Runs unit tests.">
+    <target name="tests-unit" depends="production-protection,clean,tests-unit-jest" description="Runs unit tests.">
         <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--testsuite"/>
@@ -1125,7 +1125,7 @@
         </exec>
     </target>
 
-    <target name="tests-unit-jest" description="Runs unit tests.">
+    <target name="tests-unit-jest" description="Runs js's unit tests.">
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>
             <arg value="tests:unit"/>

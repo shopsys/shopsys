@@ -6,19 +6,18 @@ use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Javascript\Parser\JsFunctionCallParser;
-use Shopsys\FrameworkBundle\Component\Javascript\Parser\JsStringParser;
-use Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCallParserFactory;
 use Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor;
 
 class JsFileExtractorTest extends TestCase
 {
     public function testExtract()
     {
-        $fileName = 'test.js';
+        /*
+         * the method that generates this file is tested elsewhere (project-base/assets/js/commands/translations/parseFile.test.js)
+         */
+        $fileName = 'translationsDump.json';
 
         $catalogue = $this->extract(__DIR__ . '/Resources/' . $fileName);
-
         $expected = new MessageCatalogue();
 
         $message = new Message('trans test', 'messages');
@@ -64,12 +63,6 @@ class JsFileExtractorTest extends TestCase
 
     private function getExtractor()
     {
-        $jsFunctionCallParser = new JsFunctionCallParser();
-        $jsStringParser = new JsStringParser();
-        $jsTranslatorCallParserFactory = new JsTranslatorCallParserFactory(
-            $jsFunctionCallParser,
-            $jsStringParser
-        );
-        return new JsFileExtractor($jsTranslatorCallParserFactory->create());
+        return new JsFileExtractor();
     }
 }

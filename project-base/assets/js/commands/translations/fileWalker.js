@@ -1,6 +1,6 @@
 const glob = require('glob');
 
-function fileWalker (dirs, done) {
+function fileWalker (dirs, done, ignoreMocks = true) {
     if (!Array.isArray(dirs)) {
         dirs = [dirs];
     }
@@ -22,6 +22,9 @@ function fileWalker (dirs, done) {
             concatedFilePaths = concatedFilePaths.concat(filePaths);
         });
 
+        if (ignoreMocks) {
+            concatedFilePaths = concatedFilePaths.filter(filePath => filePath.match(/\/mocks\//) === null);
+        }
         done(null, concatedFilePaths);
     });
 }

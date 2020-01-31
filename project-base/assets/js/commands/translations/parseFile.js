@@ -25,7 +25,7 @@ function parseFile (filePath) {
     traverse(ast, {
         CallExpression (path) {
             if (path.node.callee.object && path.node.callee.object.name === 'Translator') {
-                const isTransMethod = path.node.callee.property.name === 'trans'
+                const isTransMethod = path.node.callee.property.name === 'trans';
                 const transObject = createObject(
                     path.node.arguments,
                     isTransMethod ? TRANS_DOMAIN_POSITION : TRANSCHOICE_DOMAIN_POSITION,

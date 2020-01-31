@@ -16,5 +16,3 @@ if (dirsWithJsFiles.length === 0) {
 }
 
 processTrans(dirsWithJsFiles, dirWithTranslations, outputDirForExportedTranslations);
-
-// run from build: npm run trans -- source-dir=assets/js/**/*.js source-dir=../packages/framework/assets/js/**/*.js
