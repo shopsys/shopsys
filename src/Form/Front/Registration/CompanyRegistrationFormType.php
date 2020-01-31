@@ -41,7 +41,9 @@ class CompanyRegistrationFormType extends RegistrationFormType
             'companyNumber',
             TextType::class,
             [
+                'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Prosím vyplňte DIČ']),
                     new Constraints\Length(['max' => 50, 'maxMessage' => 'IČ nemůže být delší než {{ limit }} znaků.']),
                 ],
             ]
@@ -51,18 +53,22 @@ class CompanyRegistrationFormType extends RegistrationFormType
             [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length(['max' => 50, 'maxMessage' => 'DIČ nemůže být delší než {{ limit }} znaků.']),
-                ],
-            ]
-        )->add(
-            'companyNumberWithVat',
-            TextType::class,
-            [
-                'required' => false,
-                'constraints' => [
-                    new Constraints\Length(['max' => 50, 'maxMessage' => 'Ič DPH nemůže být delší než {{ limit }} znaků.']),
+                    new Constraints\Length(['max' => 50, 'maxMessage' => 'DIČ/Ič DPH nemůže být delší než {{ limit }} znaků.']),
                 ],
             ]
         );
+        if ($options['domainId'] == 2) {
+            $builder->add(
+                'companyNumberWithVat',
+                TextType::class,
+                [
+                    'required' => true,
+                    'constraints' => [
+                        new Constraints\NotBlank(['message' => 'Prosím vyplňte DIČ']),
+                        new Constraints\Length(['max' => 50, 'maxMessage' => 'DIČ nemůže být delší než {{ limit }} znaků.']),
+                    ],
+                ]
+            );
+        }
     }
 }

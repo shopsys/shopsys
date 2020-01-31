@@ -6,6 +6,7 @@ namespace App\Form\Front\Registration;
 
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\RegistrationData;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
@@ -26,6 +27,19 @@ use Symfony\Component\Validator\Constraints;
 
 class RegistrationFormType extends AbstractType
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private $domain;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
+    public function __construct(Domain $domain)
+    {
+        $this->domain = $domain;
+    }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -137,6 +151,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'domainId' => $this->domain->getId(),
             'data_class' => RegistrationData::class,
             'attr' => ['novalidate' => 'novalidate'],
             TimedFormTypeExtension::OPTION_ENABLED => true,

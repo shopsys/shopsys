@@ -93,7 +93,7 @@ class RegistrationController extends FrontBaseController
         if ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             return $this->redirectToRoute('front_homepage');
         }
-        $active = ['common' => false, 'company' => true];
+        $active = ['common' => true, 'company' => false];
         $registrationData = $this->registrationDataFactory->createForDomainId($this->domain->getId());
 
         $form = $this->createForm(RegistrationFormType::class, $registrationData);

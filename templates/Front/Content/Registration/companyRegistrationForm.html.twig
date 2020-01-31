@@ -5,9 +5,9 @@
 {{ form_row(companyForm.telephone, { label: 'Telefon'|trans }) }}
 
 {{ form_row(companyForm.companyNumber, { label: 'IČ'|trans }) }}
-{{ form_row(companyForm.companyTaxNumber, { label: 'DIČ'|trans }) }}
+{{ form_row(companyForm.companyTaxNumber, { label: 'DIČ / Ič DPH'|trans }) }}
 {% if domain.id == 2 %}
-    {{ form_row(companyForm.companyNumberWithVat, { label: 'Ič DPH'|trans }) }}
+    {{ form_row(companyForm.companyNumberWithVat, { label: 'DIČ'|trans }) }}
 {% endif %}
 
 {{ form_row(companyForm.street, { label: 'Ulice'|trans }) }}
@@ -53,4 +53,4 @@
     </dd>
 </dl>
 {{ form_widget(companyForm.save, { label: 'Register'|trans }) }}
-{{ form_end(companyForm, {'render_rest': false}) }}
+{{ form_end(companyForm) }}
