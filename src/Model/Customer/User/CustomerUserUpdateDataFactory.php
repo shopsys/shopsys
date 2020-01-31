@@ -15,11 +15,17 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      */
     public function createFromRegistrationData(RegistrationData $registrationData): CustomerUserUpdateData
     {
+
+        /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
         $billingAddressData = $this->billingAddressDataFactory->create();
         $billingAddressData->city = $registrationData->city;
         $billingAddressData->street = $registrationData->street;
         $billingAddressData->postcode = $registrationData->postcode;
         $billingAddressData->companyCustomer = $registrationData->companyCustomer;
+        $billingAddressData->companyName = $registrationData->companyName;
+        $billingAddressData->companyNumber = $registrationData->companyNumber;
+        $billingAddressData->companyTaxNumber = $registrationData->companyTaxNumber;
+        $billingAddressData->companyNumberWithVat = $registrationData->companyNumberWithVat;
 
         /**
          * @var \App\Model\Customer\User\CustomerUserData

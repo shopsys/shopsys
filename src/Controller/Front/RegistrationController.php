@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use App\Form\Front\Registration\CompanyRegistrationFormType;
 use App\Form\Front\Registration\RegistrationFormType;
 use App\Model\Customer\User\RegistrationDataFactoryInterface;
 use App\Model\Customer\User\RegistrationFacadeInterface;
@@ -92,30 +93,52 @@ class RegistrationController extends FrontBaseController
         if ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             return $this->redirectToRoute('front_homepage');
         }
-
+        $active = ['common' => false, 'company' => true];
         $registrationData = $this->registrationDataFactory->createForDomainId($this->domain->getId());
 
         $form = $this->createForm(RegistrationFormType::class, $registrationData);
         $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $registrationData = $form->getData();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $registrationData = $form->getData();
+                $customerUser = $this->registrationFacade->register($registrationData);
 
-            $customerUser = $this->registrationFacade->register($registrationData);
+                $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
 
-            $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
-
-            $this->authenticator->loginUser($customerUser, $request);
-            return $this->redirectToRoute('front_homepage');
+                $this->authenticator->loginUser($customerUser, $request);
+                return $this->redirectToRoute('front_homepage');
+            } else {
+                $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            }
+            $active['common'] = true;
         }
 
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+        $companyRegistrationForm = $this->createForm(CompanyRegistrationFormType::class, $registrationData);
+        $companyRegistrationForm->handleRequest($request);
+        if ($companyRegistrationForm->isSubmitted()) {
+            if ($companyRegistrationForm->isValid()) {
+
+                /** @var \App\Model\Customer\User\RegistrationData $registrationData */
+                $registrationData = $companyRegistrationForm->getData();
+                $customerUser = $this->registrationFacade->registerCompany($registrationData);
+                $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
+
+                $this->authenticator->loginUser($customerUser, $request);
+                return $this->redirectToRoute('front_homepage');
+            } else {
+                $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            }
+            $active['common'] = false;
+            $active['company'] = true;
         }
 
         return $this->render('Front/Content/Registration/register.html.twig', [
             'form' => $form->createView(),
+            'companyForm' => $companyRegistrationForm->createView(),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
+            'activeCards' => $active,
+            'domain' => $this->domain,
         ]);
     }
 }

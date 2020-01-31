@@ -32,6 +32,26 @@ class RegistrationData
     public $companyCustomer = false;
 
     /**
+     * @var string|null
+     */
+    public $companyName;
+
+    /**
+     * @var string|null
+     */
+    public $companyNumber;
+
+    /**
+     * @var string|null
+     */
+    public $companyTaxNumber;
+
+    /**
+     * @var string|null
+     */
+    public $companyNumberWithVat;
+
+    /**
      * @var bool|null
      */
     public $newsletterSubscription = false;

@@ -67,7 +67,7 @@ class RegistrationFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    private function buildContactInformationFormPart(FormBuilderInterface $builder, array $options): void
+    protected function buildContactInformationFormPart(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('gender', ChoiceType::class, [
@@ -109,7 +109,7 @@ class RegistrationFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    private function buildBillingAddressFormPart(FormBuilderInterface $builder, array $options): void
+    protected function buildBillingAddressFormPart(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('street', TextType::class, [
                 'required' => false,
