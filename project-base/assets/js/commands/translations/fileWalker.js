@@ -6,7 +6,7 @@ function fileWalker (dirs, done) {
     }
 
     const promises = dirs.map(dir => new Promise((resolve, reject) => {
-        glob(dir, (err, filePaths) => {
+        glob(dir, { ignore: '**/node_modules/**' }, (err, filePaths) => {
             if (err) {
                 reject(err);
             }
