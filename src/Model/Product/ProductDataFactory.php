@@ -25,7 +25,6 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 
 class ProductDataFactory extends BaseProductDataFactory
 {
-
     /**
      * @var \App\Model\Stock\ProductStockFacadeInterface
      */

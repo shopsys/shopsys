@@ -77,6 +77,7 @@ class ProductController extends FrontBaseController
      * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
      */
     private $listedProductViewFacade;
+
     /**
      * @var \App\Model\Stock\ProductStockRepository
      */
@@ -99,6 +100,7 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \App\Model\Stock\ProductStockRepository $productStockRepository
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -145,6 +147,7 @@ class ProductController extends FrontBaseController
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
+        $productStocks = $this->productStockRepository->getProductStockByProductWithoutCentralStockByDomain($product, $this->domain->getId());
 
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $product,
@@ -153,6 +156,7 @@ class ProductController extends FrontBaseController
             'productMainCategory' => $productMainCategory,
             'categoryList' => $categoryList,
             'domain' => $this->domain,
+            'productStocks' => $productStocks,
         ]);
     }
 

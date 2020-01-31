@@ -82,7 +82,7 @@ services:
     App\Model\Stock\StockFacadeInterface: '@App\Model\Stock\StockFacade'
 
     App\Model\Stock\StockSettingsDataFacade: ~
-    
+
     App\Model\Stock\StockSettingsDataFacadeInterface: '@App\Model\Stock\StockSettingsDataFacade'
 
     App\Model\Stock\StockSettingsDataFactory: ~

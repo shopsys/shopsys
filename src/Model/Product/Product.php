@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Stock\ProductStock;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
+use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
 /**
  * @ORM\Table(name="products")
@@ -31,6 +33,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
  * @property \App\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection $translations
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
+ * @method edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)
  */
 class Product extends BaseProduct
 {
@@ -47,23 +50,10 @@ class Product extends BaseProduct
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */
-    protected function __construct(BaseProductData $productData, ?array $variants = null)
+    protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
         $this->productStocks = new ArrayCollection();
-        $this->setProductStocks($productData);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
-     * @param \App\Model\Product\ProductData $productData
-     */
-    public function edit(
-        array $productCategoryDomains,
-        BaseProductData $productData
-    ) {
-        $this->setProductStocks($productData);
-        parent::edit($productCategoryDomains, $productData);
     }
 
     /**

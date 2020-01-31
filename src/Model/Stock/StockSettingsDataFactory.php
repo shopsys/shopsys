@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 class StockSettingsDataFactory implements StockSettingsDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
+     * @var \App\Component\Setting\Setting
      */
     private $setting;
 
@@ -20,7 +20,7 @@ class StockSettingsDataFactory implements StockSettingsDataFactoryInterface
     private $adminDomainTabsFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(Setting $setting, AdminDomainTabsFacade $adminDomainTabsFacade)

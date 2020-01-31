@@ -42,6 +42,9 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $promoCodeMenu->addChild('promo_codes_edit', ['route' => 'admin_promocode_edit', 'display' => false, 'label' => t('Editace slevového kupónu')]);
     }
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
+     */
     public function configureStockMenu(ConfigureMenuEvent $event): void
     {
         $menu = $event->getMenu();

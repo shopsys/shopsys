@@ -64,7 +64,7 @@ class StockController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \App\Model\Stock\StockFacadeInterface $stockFacade
      * @param \App\Model\Stock\StockDataFactoryInterface $stockDataFactory
-     * @param \App\Model\Stock\StockSettingsDataFacadeInterface $stockSettingsDataFacade
+     * @param \App\Model\Stock\StockSettingsDataFacade $stockSettingsDataFacade
      * @param \App\Model\Stock\StockSettingsDataFactoryInterface $stockSettingsDataFactory
      */
     public function __construct(
@@ -81,7 +81,6 @@ class StockController extends AdminBaseController
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
         $this->breadcrumbOverrider = $breadcrumbOverrider;
         $this->gridFactory = $gridFactory;
-
         $this->stockSettingsDataFacade = $stockSettingsDataFacade;
         $this->stockSettingsDataFactory = $stockSettingsDataFactory;
     }

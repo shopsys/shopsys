@@ -80,6 +80,7 @@ class ProductStockRepository
 
     /**
      * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return \App\Model\Stock\ProductStock[]
      */
     public function getProductStockByProductWithoutCentralStockByDomain(Product $product, int $domainId): array
@@ -88,7 +89,7 @@ class ProductStockRepository
             ->join(Stock::class, 's', Join::WITH, 's.id = sp.stock')
             ->andWhere('s.centralStock = false')
             ->andWhere('s.domainId = :domainId')
-            ->setParameter("domainId", $domainId)
+            ->setParameter('domainId', $domainId)
             ->getQuery()
             ->execute();
     }

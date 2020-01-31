@@ -263,7 +263,7 @@
                     </div>
                 {% endif %}
 
-                {% if product.getProductStocks.count > 0 %}
+                {% if productStocks|length > 0 %}
                     <div class="h3">{{ "Skladové zásoby"|trans }}</div>
                     <table class="table-grid margin-top-20">
                         <thead>
@@ -277,7 +277,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {% for productStock in product.getProductStocks %}
+                        {% for productStock in productStocks %}
                             {% if productStock.stock.domainId == domain.id %}
                             <tr>
                                 <th>
