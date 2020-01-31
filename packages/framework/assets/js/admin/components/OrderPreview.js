@@ -37,8 +37,8 @@ export default class OrderPreview {
                 interval: 200,
                 over: function () {
                     _this.$previewBox.show();
-                    _this.$previewBox.parents('table').css({ 'overflow': 'visible' });
-                    _this.$previewBox.parents('table').parent().css({ 'overflow': 'visible' });
+                    _this.$previewBox.parents('table').removeClass('overflow-hidden').addClass('overflow-visible');
+                    _this.$previewBox.parents('table').parent().removeClass('overflow-hidden').addClass('overflow-visible');
 
                     if (!_this.isLoaded && !_this.isLoading) {
                         _this.isLoading = true;
@@ -50,8 +50,8 @@ export default class OrderPreview {
                     }
                 },
                 out: function () {
-                    _this.$previewBox.parents('table').css({ 'overflow': 'hidden' });
-                    _this.$previewBox.parents('table').parent().css({ 'overflow': 'hidden' });
+                    _this.$previewBox.parents('table').removeClass('overflow-visible').addClass('overflow-hidden');
+                    _this.$previewBox.parents('table').parent().removeClass('overflow-visible').addClass('overflow-hidden');
                 }
             });
 
