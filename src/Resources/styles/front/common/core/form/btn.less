@@ -79,7 +79,7 @@
     }
 
     // Outline button
-    @btn-outline-border: 2px solid @color-add;    
+    @btn-outline-border: 2px solid @color-add;
     @btn-outline-bg: transparent;
     @btn-outline-bg-hover: @color-add;    
 
@@ -89,6 +89,41 @@
 
         &:hover {
             background-color: @btn-outline-bg-hover;            
+        }
+    }
+
+    @btn-tag-padding: 7px 14px;
+    @btn-tag-border: 1px solid #dce3e5;
+    @btn-tag-bg-hover: #dce3e5;
+
+    &--tag {
+        margin-right: 0.25rem;
+        padding: @btn-tag-padding;
+        min-height: 0;
+
+        font-family: @font-quartenary;
+        background-color: transparent;
+        border: @btn-tag-border;
+        border-radius: 2em;
+        text-transform: none;
+
+        &:hover {
+            background-color: #dce3e5;
+        }
+    }
+
+    &--next {
+        font-family: @font-quartenary;
+        font-size: 15px;
+        text-transform: none;
+
+        // TODO: When designer give us the icons, it will be don with font icon.
+        .btn__icon {
+            position: relative;
+            top: 1px;
+            padding-left: 0.25rem;
+
+            font-size: 28px;
         }
     }
 }
@@ -152,10 +187,14 @@
 
 // Button with removed styles
 .btn-no-style {
-    padding: 0;
-    display: inline-block;
+    padding: 0;    
+    min-height: 0;
 
     border: 0;
     background: none;
     outline: 0;
+
+    &:hover {
+        background: none;
+    }
 }
