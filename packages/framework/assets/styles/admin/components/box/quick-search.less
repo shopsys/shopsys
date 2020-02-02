@@ -1,7 +1,12 @@
 @quick-search-btn-height: @input-height - 2px;
+@quick-search-btn-width: 75px;
+@quick-search-icon-size: 14px;
 
 .box-quick-search {
     position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
     padding: 10px 0;
 
     font-size: 0;
@@ -9,10 +14,12 @@
     &__input {
         display: inline;
         position: relative;
+        width: calc(~"100% - @{quick-search-btn-width}");
 
         input {
+            display: flex;
             vertical-align: middle;
-            width: 89%;
+            width: 100%;
             height: @input-height;
             line-height: 30px;
         }
@@ -20,14 +27,11 @@
 
     &__btn {
         vertical-align: middle;
-        margin-left: 1%;
+        margin-left: 5px;
+        margin-top: 1px;
         height: @quick-search-btn-height;
 
         background: @color-blue;
-
-        @media @query-lg {
-            width: 10%;
-        }
 
         &:hover {
             background: darken(@color-blue, 10%);
@@ -37,9 +41,10 @@
     &__icon {
         position: absolute;
         right: 15px;
-        top: -7px;
+        top: calc(~"50% - @{quick-search-icon-size}/2");
         vertical-align: middle;
 
+        font-size: @quick-search-icon-size;
         text-align: center;
     }
 }
