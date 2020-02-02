@@ -2,11 +2,15 @@
     margin-bottom: 20px;
 
     &__heading {
-        padding: 0 15px;
         position: relative;
+        padding: 0;
         z-index: 2;
 
         font-size: 0;
+
+        @media @query-md {
+            padding: 0 15px;
+        }
 
         &__item {
             line-height: 32px;
