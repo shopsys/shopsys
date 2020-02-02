@@ -11,15 +11,21 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        width: 100%;
         height: @in-image-height + 2*@in-domain-padding;
+        margin-bottom: 5px;
         line-height: @in-image-height;
-        padding: 10px;
+        padding: @in-domain-padding;
         margin-right: 10px;
 
         background: @bg-page;
         border: 1px solid @color-border-dark;
         border-radius: @radius;
         text-decoration: none;
+
+        @media @query-md {
+            width: auto;
+        }
 
         &--active {
             background: @color-f;
