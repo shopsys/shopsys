@@ -75,12 +75,12 @@
     class: Shopsys\FrameworkBundle\Model\Slider\SliderItem
     sizes:
         -   name: ~
-            width: 900
+            width: 1000
             height: 230
             crop: true
             occurrence: 'Front-end: Main page slider'
             additionalSizes:
-                - {width: 730, height: 230, media: "(max-width: 1023px)"}
+                - {width: 730, height: 230, media: "(max-width: 1024px)"}
 
 -   name: transport
     class: Shopsys\FrameworkBundle\Model\Transport\Transport

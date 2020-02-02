@@ -91,6 +91,26 @@
             background-color: @btn-outline-bg-hover;            
         }
     }
+
+    &--next {
+        font-family: @font-quartenary;
+        font-size: 15px;
+        text-transform: none;
+
+        // TODO: When designer give us the icons, it will be don with font icon.
+        .btn__icon {
+            position: relative;
+            top: 1px;
+            padding-left: 0.25rem;
+
+            font-size: 28px;
+        }
+    }
+
+    // Block button
+    &--block {
+        display: block;
+    }
 }
 
 //// Modifications - size
@@ -153,9 +173,13 @@
 // Button with removed styles
 .btn-no-style {
     padding: 0;
-    display: inline-block;
+    min-height: 0;    
 
     border: 0;
     background: none;
     outline: 0;
+
+    &:hover {
+        background: none;
+    }   
 }
