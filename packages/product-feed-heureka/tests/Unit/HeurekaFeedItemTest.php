@@ -84,7 +84,7 @@ class HeurekaFeedItemTest extends TestCase
         $this->defaultProduct->method('getCalculatedAvailability')->willReturn($availabilityMock);
 
         $productPrice = new ProductPrice(Price::zero(), false);
-        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForUserAndDomainId')
+        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')
             ->with($this->defaultProduct, Domain::FIRST_DOMAIN_ID, null)->willReturn($productPrice);
 
         $this->heurekaProductDataBatchLoaderMock->method('getProductUrl')
