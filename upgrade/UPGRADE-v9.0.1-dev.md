@@ -30,3 +30,6 @@ There you can find links to upgrade notes for other versions too.
 
 - restrict access to Admin > Pricing > Currencies only to superadmin ([#1338](https://github.com/shopsys/shopsys/pull/1338))
     - see #project-base-diff to upgrade your project 
+
+- order can now be completed when successful flash message exists ([#1644](https://github.com/shopsys/shopsys/pull/1644))
+    - see #project-base-diff to update your project
