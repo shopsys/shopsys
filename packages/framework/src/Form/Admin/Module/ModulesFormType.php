@@ -22,8 +22,8 @@ class ModulesFormType extends AbstractType
             ->add('modules', FormType::class)
             ->add('save', SubmitType::class);
 
+        /** @var \Shopsys\FrameworkBundle\Model\Module\ModuleList $moduleList */
         $moduleList = $options['module_list'];
-        /* @var $moduleList \Shopsys\FrameworkBundle\Model\Module\ModuleList */
         foreach ($moduleList->getNamesIndexedByLabel() as $moduleLabel => $moduleName) {
             $builder->get('modules')
                 ->add($moduleName, YesNoType::class, [

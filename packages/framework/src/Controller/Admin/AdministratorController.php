@@ -179,8 +179,8 @@ class AdministratorController extends AdminBaseController
      */
     public function myAccountAction()
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $loggedUser */
         $loggedUser = $this->getUser();
-        /* @var $loggedUser \Shopsys\FrameworkBundle\Model\Administrator\Administrator */
 
         return $this->redirectToRoute('admin_administrator_edit', [
             'id' => $loggedUser->getId(),

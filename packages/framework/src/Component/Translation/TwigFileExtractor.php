@@ -34,8 +34,8 @@ class TwigFileExtractor implements FileVisitorInterface
         $reflectionObject = new ReflectionObject($this->originalTwigFileExtractor);
         $traverserReflectionProperty = $reflectionObject->getProperty('traverser');
         $traverserReflectionProperty->setAccessible(true);
+        /** @var \Twig_NodeTraverser $traverser */
         $traverser = $traverserReflectionProperty->getValue($this->originalTwigFileExtractor);
-        /** @var $traverser \Twig_NodeTraverser */
         $traverser->addVisitor(new CustomTransFiltersVisitor());
     }
 

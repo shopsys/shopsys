@@ -111,9 +111,9 @@ class CronFacadeTest extends TestCase
      */
     private function createCronFacade(CronConfig $cronConfig, CronModuleFacade $cronModuleFacade)
     {
-        /* @var $loggerMock \Symfony\Bridge\Monolog\Logger */
+        /** @var \Symfony\Bridge\Monolog\Logger $loggerMock */
         $loggerMock = $this->createMock(Logger::class);
-        /* @var $mailerMock \Shopsys\FrameworkBundle\Model\Mail\Mailer */
+        /** @var \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailerMock */
         $mailerMock = $this->createMock(Mailer::class);
 
         $cronModuleExecutor = new CronModuleExecutor(240);

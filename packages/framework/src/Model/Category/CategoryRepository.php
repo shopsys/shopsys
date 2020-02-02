@@ -179,9 +179,8 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function findById($categoryId)
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Category\Category|null $category */
         $category = $this->getCategoryRepository()->find($categoryId);
-        /* @var $category \Shopsys\FrameworkBundle\Model\Category\Category */
-
         if ($category !== null && $category->getParent() === null) {
             // Copies logic from getAllQueryBuilder() - excludes root category
             // Query builder is not used to be able to get the category from identity map if it was loaded previously

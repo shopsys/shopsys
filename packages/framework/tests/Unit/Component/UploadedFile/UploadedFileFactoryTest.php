@@ -30,9 +30,8 @@ class UploadedFileFactoryTest extends TestCase
         $uploadedFileFactory = new UploadedFileFactory($fileUploadMock, new EntityNameResolver([]));
         $uploadedFile = $uploadedFileFactory->create($entityName, $entityId, $type, $temporaryFilename, 0);
         $filesForUpload = $uploadedFile->getTemporaryFilesForUpload();
+        /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
         $fileForUpload = array_pop($filesForUpload);
-        /* @var $fileForUpload \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload */
-
         $this->assertSame($entityId, $uploadedFile->getEntityId());
         $this->assertSame($entityName, $uploadedFile->getEntityName());
         $this->assertSame($temporaryFilename, $fileForUpload->getTemporaryFilename());

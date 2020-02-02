@@ -116,8 +116,8 @@ class BrandController extends AdminBaseController
      */
     public function listAction()
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
-        /* @var $administrator \Shopsys\FrameworkBundle\Model\Administrator\Administrator */
 
         /** @var \Doctrine\Common\Persistence\ManagerRegistry $doctrine */
         $doctrine = $this->getDoctrine();

@@ -135,8 +135,8 @@ class ImageRepository
             ->addOrderBy('i.id', 'desc');
 
         $imagesByEntityId = [];
+        /** @var \Shopsys\FrameworkBundle\Component\Image\Image $image */
         foreach ($queryBuilder->getQuery()->execute() as $image) {
-            /* @var $image \Shopsys\FrameworkBundle\Component\Image\Image */
             $imagesByEntityId[$image->getEntityId()] = $image;
         }
 

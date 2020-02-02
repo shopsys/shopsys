@@ -14,7 +14,7 @@ class AuthenticatorTest extends TestCase
     {
         $authenticator = $this->getAuthenticator();
 
-        /* @var $requestMock \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject */
+        /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $requestMock */
         $requestMock = $this->createMock('\Symfony\Component\HttpFoundation\Request');
 
         $requestMock->expects($this->never())->method('getSession');
@@ -35,8 +35,8 @@ class AuthenticatorTest extends TestCase
         $sessionMock->expects($this->atLeastOnce())->method('get')->willReturn(new stdClass());
         $sessionMock->expects($this->atLeastOnce())->method('remove');
 
+        /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $requestMock */
         $requestMock = $this->createMock('\Symfony\Component\HttpFoundation\Request');
-        /* @var $requestMock \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject */
         $requestMock->expects($this->once())->method('getSession')->willReturn($sessionMock);
 
         $requestMock->attributes = $this->createMock('\Symfony\Component\HttpFoundation\ParameterBag');
@@ -55,8 +55,8 @@ class AuthenticatorTest extends TestCase
         $sessionMock->expects($this->once())->method('get')->willReturn(null);
         $sessionMock->expects($this->once())->method('remove');
 
+        /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $requestMock */
         $requestMock = $this->createMock('\Symfony\Component\HttpFoundation\Request');
-        /* @var $requestMock \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject */
         $requestMock->expects($this->once())->method('getSession')->willReturn($sessionMock);
 
         $requestMock->attributes = $this->createMock('\Symfony\Component\HttpFoundation\ParameterBag');

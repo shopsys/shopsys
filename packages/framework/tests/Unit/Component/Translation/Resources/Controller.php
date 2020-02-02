@@ -10,8 +10,8 @@ class Controller extends BaseController
 {
     public function indexAction()
     {
+        /** @var \Shopsys\FrameworkBundle\Component\Translation\Translator $translator */
         $translator = $this->get(Translator::class);
-        /* @var $translator \Shopsys\FrameworkBundle\Component\Translation\Translator */
 
         $translator->trans('trans test');
         $translator->transChoice('transChoice test', 5);

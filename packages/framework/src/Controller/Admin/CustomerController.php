@@ -177,8 +177,8 @@ class CustomerController extends AdminBaseController
      */
     public function listAction(Request $request)
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
-        /* @var $administrator \Shopsys\FrameworkBundle\Model\Administrator\Administrator */
 
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);

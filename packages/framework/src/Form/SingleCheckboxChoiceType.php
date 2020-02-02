@@ -34,8 +34,8 @@ class SingleCheckboxChoiceType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
+        /** @var \Symfony\Component\Form\FormBuilderInterface $child */
         foreach ($builder->all() as $i => $child) {
-            /* @var $child \Symfony\Component\Form\FormBuilderInterface */
             $options = $child->getOptions();
             $builder->remove($i);
             $options['required'] = false;

@@ -48,10 +48,7 @@ class QueryBuilderDataSource implements DataSourceInterface
 
         $queryPaginator = new QueryPaginator($queryBuilder, GroupedScalarHydrator::HYDRATION_MODE);
 
-        $paginationResult = $queryPaginator->getResult($page, $limit);
-        /* @var $paginationResult \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult */
-
-        return $paginationResult;
+        return $queryPaginator->getResult($page, $limit);
     }
 
     /**

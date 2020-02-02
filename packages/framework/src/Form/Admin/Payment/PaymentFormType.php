@@ -52,9 +52,8 @@ class PaymentFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $payment */
         $payment = $options['payment'];
-        /* @var $payment Payment */
-
         $builderBasicInformationGroup = $builder->create('basicInformation', GroupType::class, [
             'label' => t('Basic information'),
         ]);

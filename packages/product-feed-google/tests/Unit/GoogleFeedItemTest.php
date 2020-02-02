@@ -172,8 +172,8 @@ class GoogleFeedItemTest extends TestCase
 
     public function testGoogleFeedItemWithBrand()
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
         $brand = $this->createMock(Brand::class);
-        /* @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
         $brand->method('getName')->willReturn('brand name');
         $this->defaultProduct->method('getBrand')->willReturn($brand);
 

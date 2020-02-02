@@ -39,8 +39,8 @@ class GoogleProductFormType extends AbstractType
         ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             // Setting default value of multidomain form "show" to true via event because of dynamic form count
             $multidomainShowForm = $event->getForm()->get('show');
+            /** @var \Symfony\Component\Form\FormInterface $showForm */
             foreach ($multidomainShowForm as $showForm) {
-                /* @var $showForm \Symfony\Component\Form\FormInterface */
                 if ($showForm->getData() === null) {
                     $showForm->setData(true);
                 }

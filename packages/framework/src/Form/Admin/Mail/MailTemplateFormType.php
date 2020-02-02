@@ -151,7 +151,7 @@ class MailTemplateFormType extends AbstractType
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
-                    /* @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData */
+                    /** @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData */
                     $mailTemplateData = $form->getData();
 
                     if ($mailTemplateData->sendMail) {
