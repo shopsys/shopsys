@@ -15,12 +15,12 @@ class SettingValueShopInfoDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
      */
-    protected $setting;
+    private $setting;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting

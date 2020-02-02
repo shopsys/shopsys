@@ -22,27 +22,27 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_CASH = 'payment_cash';
 
     /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade */
-    protected $paymentFacade;
+    private $paymentFacade;
 
     /**
      * @var \App\Model\Payment\PaymentDataFactory
      */
-    protected $paymentDataFactory;
+    private $paymentDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
-    protected $priceConverter;
+    private $priceConverter;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
-    protected $currencyFacade;
+    private $currencyFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
@@ -111,7 +111,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Payment\PaymentData $paymentData
      * @param array $transportsReferenceNames
      */
-    protected function createPayment(
+    private function createPayment(
         $referenceName,
         PaymentData $paymentData,
         array $transportsReferenceNames
@@ -144,7 +144,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Payment\PaymentData $paymentData
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      */
-    protected function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
+    private function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency($price, $domain->getId());

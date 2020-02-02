@@ -15,12 +15,12 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade
      */
-    protected $manualBestsellingProductFacade;
+    private $manualBestsellingProductFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade $manualBestsellingProductFacade

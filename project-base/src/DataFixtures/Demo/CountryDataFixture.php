@@ -19,17 +19,17 @@ class CountryDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
      */
-    protected $countryFacade;
+    private $countryFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface
      */
-    protected $countryDataFactory;
+    private $countryDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
@@ -72,7 +72,7 @@ class CountryDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
      * @param string $referenceName
      */
-    protected function createCountry(CountryData $countryData, $referenceName): void
+    private function createCountry(CountryData $countryData, $referenceName): void
     {
         $country = $this->countryFacade->create($countryData);
         $this->addReference($referenceName, $country);

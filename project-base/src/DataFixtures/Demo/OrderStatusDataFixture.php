@@ -20,17 +20,17 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
      */
-    protected $orderStatusFacade;
+    private $orderStatusFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface
      */
-    protected $orderStatusDataFactory;
+    private $orderStatusDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
@@ -65,7 +65,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
      * @param string $referenceName
      * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135341
      */
-    protected function createOrderStatusReference(
+    private function createOrderStatusReference(
         $orderStatusId,
         $referenceName
     ) {

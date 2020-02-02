@@ -16,7 +16,7 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade
      */
-    protected $administratorFacade;
+    private $administratorFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
@@ -42,7 +42,7 @@ class AdministratorDataFixture extends AbstractReferenceFixture
      * @param string $referenceName
      * @see \Shopsys\FrameworkBundle\Migrations\Version20180702111015
      */
-    protected function createAdministratorReference(int $administratorId, string $referenceName)
+    private function createAdministratorReference(int $administratorId, string $referenceName)
     {
         $administrator = $this->administratorFacade->getById($administratorId);
         $this->addReference($referenceName, $administrator);

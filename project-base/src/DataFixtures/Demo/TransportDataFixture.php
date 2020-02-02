@@ -22,27 +22,27 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_PERSONAL = 'transport_personal';
 
     /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade */
-    protected $transportFacade;
+    private $transportFacade;
 
     /**
      * @var \App\Model\Transport\TransportDataFactory
      */
-    protected $transportDataFactory;
+    private $transportDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected $domain;
+    private $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
-    protected $currencyFacade;
+    private $currencyFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
-    protected $priceConverter;
+    private $priceConverter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
@@ -104,7 +104,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param string $referenceName
      * @param \App\Model\Transport\TransportData $transportData
      */
-    protected function createTransport($referenceName, TransportData $transportData)
+    private function createTransport($referenceName, TransportData $transportData)
     {
         $transport = $this->transportFacade->create($transportData);
         $this->addReference($referenceName, $transport);
@@ -114,7 +114,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Transport\TransportData $transportData
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      */
-    protected function setPriceForAllDomains(TransportData $transportData, Money $price): void
+    private function setPriceForAllDomains(TransportData $transportData, Money $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency($price, $domain->getId());
