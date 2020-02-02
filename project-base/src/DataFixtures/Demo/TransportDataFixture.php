@@ -9,7 +9,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
@@ -35,11 +34,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private $currencyFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
     private $priceConverter;
@@ -48,20 +42,17 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         TransportFacade $transportFacade,
         TransportDataFactoryInterface $transportDataFactory,
         Domain $domain,
-        CurrencyFacade $currencyFacade,
         PriceConverter $priceConverter
     ) {
         $this->transportFacade = $transportFacade;
         $this->transportDataFactory = $transportDataFactory;
         $this->domain = $domain;
-        $this->currencyFacade = $currencyFacade;
         $this->priceConverter = $priceConverter;
     }
 

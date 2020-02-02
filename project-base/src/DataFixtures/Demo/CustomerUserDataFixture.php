@@ -11,9 +11,6 @@ use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -83,21 +80,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     private $customerUserDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface
-     */
-    private $billingAddressDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface
-     */
-    private $deliveryAddressDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface
-     */
-    private $customerFactory;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
@@ -105,9 +87,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      */
     public function __construct(
         CustomerUserFacade $customerUserFacade,
@@ -116,10 +95,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         HashGenerator $hashGenerator,
         Domain $domain,
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        CustomerUserDataFactoryInterface $customerUserDataFactory,
-        BillingAddressDataFactoryInterface $billingAddressDataFactory,
-        DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
-        CustomerFactoryInterface $customerFactory
+        CustomerUserDataFactoryInterface $customerUserDataFactory
     ) {
         $this->customerUserFacade = $customerUserFacade;
         $this->faker = $faker;
@@ -128,9 +104,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         $this->domain = $domain;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerUserDataFactory = $customerUserDataFactory;
-        $this->billingAddressDataFactory = $billingAddressDataFactory;
-        $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
-        $this->customerFactory = $customerFactory;
     }
 
     /**

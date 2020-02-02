@@ -93,11 +93,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $priceConverter;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    private $setting;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
