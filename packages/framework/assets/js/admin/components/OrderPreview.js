@@ -73,16 +73,17 @@ export default class OrderPreview {
     }
 
     onLoadPreview (responseHtml) {
+        const windowPreviewThreshold = 500;
         this.isLoading = false;
         this.isLoaded = true;
         this.$previewBoxWindow.html(responseHtml);
         this.$previewBoxWindow.show(function () {
             const tableHeight = $('body').find('.js-table-grid').height();
-            if (tableHeight > 500) {
+            if (tableHeight > windowPreviewThreshold) {
                 let tablePosition = $('body').find('.js-table-grid').offset().top;
                 let popupWindowPosition = $(this).offset().top;
 
-                if (((tablePosition + tableHeight) - popupWindowPosition) < 500) {
+                if (((tablePosition + tableHeight) - popupWindowPosition) < windowPreviewThreshold) {
                     $(this).addClass('bottom');
                 }
             }
