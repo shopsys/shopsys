@@ -257,7 +257,7 @@
 {% block textarea_row -%}
     {% if localized is defined %}
         <div class="form-line__side">
-            <div class="form-line__item--full-width">
+            <div class="form-line__item form-line__item--full-width">
                 <div class="input__wrap">
                     {% set inputAttr = attr|merge({'class': (attr.class|default('') ~ ' input--flag')|trim}) %}
                     {{ form_widget(form, { attr: inputAttr, localized: true, locale: locale }) }}
@@ -287,7 +287,7 @@
             {{- form_errors(form) -}}
             {% if newline is not defined %}
                 <div{% if isMultidomain() %} class="form-line__side"{% endif %}>
-                    <div class="form-line__item--full-width">
+                    <div class="form-line__item form-line__item--full-width">
                         {{- form_widget(form) -}}
                     </div>
                 </div>
@@ -918,22 +918,26 @@
 
 {% block domain_widget %}
     {% set attr = attr|merge({'class': (attr.class|default('') ~ ' input')|trim}) %}
-    {% if isMultidomain() %}
-        <select {{ block('widget_attributes') }}>
-            {% for domainConfig in domainConfigs %}
-                <option value="{{ domainConfig.id }}"{{ domainConfig.id == form.vars.value ? ' selected=""' : '' }}>
-                    {% if displayUrl %}
-                        {{ domainConfig.url }}
-                    {% else %}
-                        {{ domainConfig.name }}
-                    {% endif %}
-                </option>
-            {% endfor %}
-        </select>
-    {% else %}
-        <strong class="form-line__label">{{ getDomain().url }}</strong>
-        <input type="hidden" {{ block('widget_attributes') }} value="{{ getDomain().id }}" />
-    {% endif %}
+    <div class="form-line__side">
+        <div class="form-line__item">
+            {% if isMultidomain() %}
+                    <select {{ block('widget_attributes') }}>
+                        {% for domainConfig in domainConfigs %}
+                            <option value="{{ domainConfig.id }}"{{ domainConfig.id == form.vars.value ? ' selected=""' : '' }}>
+                                {% if displayUrl %}
+                                    {{ domainConfig.url }}
+                                {% else %}
+                                    {{ domainConfig.name }}
+                                {% endif %}
+                            </option>
+                        {% endfor %}
+                    </select>
+            {% else %}
+                <strong class="form-line__label">{{ getDomain().url }}</strong>
+                <input type="hidden" {{ block('widget_attributes') }} value="{{ getDomain().id }}" />
+            {% endif %}
+        </div>
+    </div>
 {% endblock domain_widget %}
 
 {% block domains_widget %}
