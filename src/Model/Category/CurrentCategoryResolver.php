@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CurrentCategoryResolver
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
+     * @var \App\Model\Category\CategoryFacade
      */
     private $categoryFacade;
 
@@ -21,7 +21,7 @@ class CurrentCategoryResolver
     private $productFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(

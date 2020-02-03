@@ -26,7 +26,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     public const CATEGORY_FOOD = 'category_food';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
+     * @var \App\Model\Category\CategoryFacade
      */
     protected $categoryFacade;
 
@@ -41,7 +41,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     protected $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */

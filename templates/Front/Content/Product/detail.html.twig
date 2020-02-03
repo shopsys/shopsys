@@ -219,6 +219,20 @@
                         </div>
                     </div>
                 {% endif %}
+
+                {% if categoryList %}
+                    <div class="box-detail">
+                        <div class="h3">{{ 'Kategorie'|trans }}</div>
+                        <div>
+                            {% for category in categoryList %}
+                                <a href="{{ url('front_product_list', { id: category.id }) }}">
+                                    {{ category.name }}
+                                </a><br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
                 {% if accessories|length > 0 %}
                     <div class="box-detail">
                         <div class="h3">{{ 'Accessories'|trans }}</div>

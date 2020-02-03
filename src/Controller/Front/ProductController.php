@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Form\Front\Product\ProductFilterFormType;
+use App\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
@@ -31,11 +31,6 @@ class ProductController extends FrontBaseController
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
      */
     private $productFilterConfigFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -83,8 +78,13 @@ class ProductController extends FrontBaseController
     private $listedProductViewFacade;
 
     /**
+     * @var \App\Model\Category\CategoryFacade
+     */
+    private $categoryFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
@@ -109,7 +109,6 @@ class ProductController extends FrontBaseController
         ListedProductViewFacadeInterface $listedProductViewFacade
     ) {
         $this->requestExtension = $requestExtension;
-        $this->categoryFacade = $categoryFacade;
         $this->domain = $domain;
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->productFilterConfigFactory = $productFilterConfigFactory;
@@ -119,6 +118,7 @@ class ProductController extends FrontBaseController
         $this->moduleFacade = $moduleFacade;
         $this->brandFacade = $brandFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
+        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -135,12 +135,14 @@ class ProductController extends FrontBaseController
         $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
+        $categoryList = $this->categoryFacade->getProductAllCategoriesByProductAndDomainId($product, $this->domain->getId());
 
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $product,
             'accessories' => $accessories,
             'variants' => $variants,
             'productMainCategory' => $productMainCategory,
+            'categoryList' => $categoryList,
         ]);
     }
 
