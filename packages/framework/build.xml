@@ -1146,11 +1146,11 @@
             <arg value="translation:extract"/>
             <arg value="--dir=${path.src}"/>
             <arg value="--dir=${path.templates}"/>
-            <arg value="--dir=${path.var}/translations/projectBase"/>
+            <arg value="--dir=${path.var}/translations"/>
             <arg value="--exclude-dir=frontend/plugins"/>
             <arg value="--exclude-dir=styleguide/plugins"/>
             <arg value="--output-format=po"/>
-            <arg value="--output-dir=${path.root}/translations"/>
+            <arg value="--output-dir=${path.root}/translations/projectBase"/>
             <arg line="${translations.dump.flags}"/>
             <arg line="${domains-info.locales}"/>
         </exec>

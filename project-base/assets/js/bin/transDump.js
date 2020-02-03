@@ -27,7 +27,7 @@ if (Array.isArray(dirForExport)) {
 }
 
 if (!fs.existsSync(dirForExport)) {
-    fs.mkdirSync(dirForExport);
+    fs.mkdirSync(dirForExport, { recursive: true });
 }
 
 processTransDump(dirsWithJsFiles, dirForExport);
