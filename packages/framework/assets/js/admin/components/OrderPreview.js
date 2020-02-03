@@ -4,7 +4,11 @@ import Register from '../../common/utils/Register';
 
 export default class OrderPreview {
 
+
     constructor ($orderPreview) {
+        const overflowHiddenClass = 'overflow-hidden';
+        const overflowVisibleClass = 'overflow-visible';
+
         this.$previewIcon = $orderPreview.find('.js-order-preview-icon');
         this.$previewBox = $orderPreview.find('.js-order-preview-box');
         this.$previewBoxWindow = this.$previewBox.find('.js-order-preview-box-window');
@@ -37,8 +41,8 @@ export default class OrderPreview {
                 interval: 200,
                 over: function () {
                     _this.$previewBox.show();
-                    _this.$previewBox.parents('table').removeClass('overflow-hidden').addClass('overflow-visible');
-                    _this.$previewBox.parents('table').parent().removeClass('overflow-hidden').addClass('overflow-visible');
+                    $('body').find('.js-table-grid').removeClass(overflowHiddenClass).addClass(overflowVisibleClass);
+                    $('body').find('.js-table-touch').parent().removeClass(overflowHiddenClass).addClass(overflowVisibleClass);
 
                     if (!_this.isLoaded && !_this.isLoading) {
                         _this.isLoading = true;
@@ -50,8 +54,8 @@ export default class OrderPreview {
                     }
                 },
                 out: function () {
-                    _this.$previewBox.parents('table').removeClass('overflow-visible').addClass('overflow-hidden');
-                    _this.$previewBox.parents('table').parent().removeClass('overflow-visible').addClass('overflow-hidden');
+                    $('body').find('.js-table-grid').removeClass(overflowVisibleClass).addClass(overflowHiddenClass);
+                    $('body').find('.js-table-touch').parent().removeClass(overflowVisibleClass).addClass(overflowHiddenClass);
                 }
             });
 
@@ -73,9 +77,9 @@ export default class OrderPreview {
         this.isLoaded = true;
         this.$previewBoxWindow.html(responseHtml);
         this.$previewBoxWindow.show(function () {
-            let tableHeight = $(this).parents('table').height();
+            const tableHeight = $('body').find('.js-table-grid').height();
             if (tableHeight > 500) {
-                let tablePosition = $(this).parents('table').offset().top;
+                let tablePosition = $('body').find('.js-table-grid').offset().top;
                 let popupWindowPosition = $(this).offset().top;
 
                 if (((tablePosition + tableHeight) - popupWindowPosition) < 500) {
