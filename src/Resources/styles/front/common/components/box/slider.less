@@ -1,7 +1,7 @@
 @box-slider-width: @web-width;
 @box-slider-point-size: 8px;
 @box-slider-bottom-gap: 1.5rem;
-@box-slider-bg-color: #fff;
+@box-slider-bg-color: @color-f;
 
 .box-slider {
     display: block;
@@ -11,7 +11,7 @@
     margin: 0 auto @box-slider-bottom-gap auto;
     padding: 1rem;
 
-    border-radius: 4px;
+    border-radius: @radius;
     background-color: @box-slider-bg-color;  
 
     @media @query-lg {
@@ -71,7 +71,7 @@
             margin-top: 0;
         }
 
-        &__box {            
+        &__block {            
             margin-bottom: 0.5rem;
 
             @media @query-xl {
@@ -100,7 +100,7 @@
             &:hover,
             &.slick-active-current {
                 font-family: @font-tertiary;
-                color: #000;
+                color: @color-0;
 
                 .box-slider__thumbnails__item__text {
                     text-decoration: underline;
