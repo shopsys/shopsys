@@ -4,7 +4,6 @@ import Register from '../../common/utils/Register';
 
 export default class OrderPreview {
 
-
     constructor ($orderPreview) {
         const overflowHiddenClass = 'overflow-hidden';
         const overflowVisibleClass = 'overflow-visible';
