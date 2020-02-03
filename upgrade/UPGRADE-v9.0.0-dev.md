@@ -25,10 +25,10 @@ There you can find links to upgrade notes for other versions too.
         ```diff
         +   # Switch to user
         +   USER www-data
-           
+
             RUN mkdir /home/www-data/.npm-global
             ENV NPM_CONFIG_PREFIX /home/www-data/.npm-global
-           
+
         -   # Switch to user
         -   USER www-data
         ```
@@ -958,5 +958,14 @@ There you can find links to upgrade notes for other versions too.
 
 - javascript assets are managed by webpack and npm ([#1545](https://github.com/shopsys/shopsys/pull/1545), [#1645](https://github.com/shopsys/shopsys/pull/1645))
     - please read [upgrade instruction for webpack](./upgrade-instruction-for-webpack.md)
+
+If you have custom frontend you can skip these tasks:
+- hide variant table header when product is denied for sale ([#1634](https://github.com/shopsys/shopsys/pull/1634))
+    - add new condition at product detail file: `templates/Front/Content/Product/detail.html.twig`
+        ```diff
+        -   {% if product.isMainVariant %}
+        +   {% if product.isMainVariant and not product.calculatedSellingDenied %}
+                <table {% getProductSellingPrice(product) is not null %}itemprop="offers"
+        ```
 
 [shopsys/framework]: https://github.com/shopsys/framework
