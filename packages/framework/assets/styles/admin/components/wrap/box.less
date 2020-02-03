@@ -25,6 +25,8 @@
 
         &--in-row {
             @media @query-lg {
+                width: calc(~"100%/2 - @{wrap-box-item-gap}");
+
                 &:first-child {
                     margin-right: @wrap-box-item-gap;
                 }
