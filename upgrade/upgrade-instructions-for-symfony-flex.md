@@ -103,7 +103,7 @@ You can read more about upgrading Symfony application to Flex <https://symfony.c
     - `scripts/install.sh`
     - `kubernetes/kustomize/base/kustomization.yaml`
 
-- change namespaces in `migrations.lock` file from `Shopsys\ShopBundle\...` to `App\...`, eg.
+- change namespaces in `migrations-lock.yml` file from `Shopsys\ShopBundle\...` to `App\...`, eg.
     ```diff
         20191114101504:
     -       class: Shopsys\ShopBundle\Migrations\Version20191114101504
