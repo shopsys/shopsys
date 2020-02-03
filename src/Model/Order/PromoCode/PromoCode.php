@@ -32,12 +32,28 @@ class PromoCode extends BasePromoCode
     protected $code;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    protected $time_valid_from;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    protected $time_valid_to;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
     public function __construct(PromoCodeData $promoCodeData)
     {
         parent::__construct($promoCodeData);
         $this->domainId = $promoCodeData->domainId;
+        $this->time_valid_from = $promoCodeData->time_valid_from;
+        $this->time_valid_to = $promoCodeData->time_valid_to;
     }
 
     /**
@@ -47,6 +63,8 @@ class PromoCode extends BasePromoCode
     {
         parent::edit($promoCodeData);
         $this->domainId = $promoCodeData->domainId;
+        $this->time_valid_from = $promoCodeData->time_valid_from;
+        $this->time_valid_to = $promoCodeData->time_valid_to;
     }
 
     /**
@@ -56,4 +74,22 @@ class PromoCode extends BasePromoCode
     {
         return $this->domainId;
     }
+
+    /**
+     * @return string
+     */
+    public function getTimeValidFrom(): string
+    {
+        return $this->time_valid_from;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimeValidTo(): string
+    {
+        return $this->time_valid_to;
+    }
+
+
 }

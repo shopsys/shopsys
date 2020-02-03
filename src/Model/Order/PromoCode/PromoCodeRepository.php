@@ -19,7 +19,7 @@ class PromoCodeRepository extends BasePromoCodeRepository
      * @param int $domainId
      * @return \App\Model\Order\PromoCode\PromoCode|null
      */
-    public function findByCodeAndDomainId(string $code, int $domainId)
+    public function findByCodeAndDomainId(string $code, int $domainId): ?PromoCode
     {
         return $this->getPromoCodeRepository()->findOneBy(['code' => $code, 'domainId' => $domainId]);
     }

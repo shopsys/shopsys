@@ -38,5 +38,7 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
     {
         parent::fillFromPromoCode($promoCodeData, $promoCode);
         $promoCodeData->domainId = $promoCode->getDomainId();
+        $promoCodeData->time_valid_from = $promoCode->getTimeValidFrom();
+        $promoCodeData->time_valid_to = $promoCode->getTimeValidTo();
     }
 }
