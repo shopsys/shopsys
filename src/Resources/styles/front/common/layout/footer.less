@@ -39,10 +39,6 @@
 
             background-size: auto;
         }
-
-        @media @query-xl {
-            image-rendering: pixelated;
-        }
     }
 
     &__heading {
@@ -92,11 +88,11 @@
             padding: 0.75rem;
             margin-bottom: 5px;            
             
-            border-radius: 4px;
-            background-color: #fff;
+            border-radius: @radius;
+            background-color: @color-f;
 
             @media @query-lg {                
-                text-align: right;                
+                text-align: right;
             }
 
             @media @query-vl {
