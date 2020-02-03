@@ -340,10 +340,10 @@
                                 {% set mainUrlRadioButton = form.mainFriendlyUrlsByDomainId[domainId][slug] %}
                                 {{ form_widget(mainUrlRadioButton, { attr: { class: 'js-entity-url-list-select-main form-choice-list__input' } }) }}
 
-                                <span class="js-entity-url-list-row-label">
+                                <span class="js-entity-url-list-row-label text-break-all">
                                     {% set absoluteUrl = form.vars.absoluteUrlsByDomainIdAndSlug[domainId][friendlyUrlForm.vars.value] %}
                                     {% if mainUrl == absoluteUrl %}
-                                        <strong>{{ absoluteUrl }}</strong>
+                                        <strong class="text-break-all">{{ absoluteUrl }}</strong>
                                     {% else %}
                                         {{ absoluteUrl }}
                                     {% endif %}
