@@ -4,16 +4,16 @@
 @btn-padding-horizontal: 16px;
 @btn-color: @color-primary;
 @btn-color-hover: @color-primary;
-@btn-bg: @color-d;
+@btn-bg: @color-d; 
 @btn-bg-hover: darken(@btn-bg, 5%);
-@btn-border-radius: 4px;
+@btn-border-radius: @radius; 
 
 .btn {
     width: auto;
     min-height: @btn-height;
     padding: @btn-padding-vertical @btn-padding-horizontal;
     line-height: 1;
-    vertical-align: middle;
+    vertical-align: middle; 
     display: inline-block;
     transition: @transition background, @transition color, @transition box-shadow;
     text-align: center;    
@@ -56,8 +56,8 @@
     }
 
     // primary button
-    @btn-primary-color: #fff;
-    @btn-primary-color-hover: #fff;
+    @btn-primary-color: @color-f;
+    @btn-primary-color-hover: @color-f;
     @btn-primary-bg: @color-add;
     @btn-primary-bg-hover: @color-add;
 
