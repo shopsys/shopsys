@@ -40,9 +40,9 @@ class DomainRouter extends ChainRouter
         $this->freeze = true;
         $this->friendlyUrlRouter = $friendlyUrlRouter;
 
-        $this->add($basicRouter, 10);
+        $this->add($basicRouter, 30);
         $this->add($localizedRouter, 20);
-        $this->add($friendlyUrlRouter, 30);
+        $this->add($friendlyUrlRouter, 10);
     }
 
     /**
