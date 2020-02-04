@@ -24,13 +24,15 @@ class StockSettingsFromType extends AbstractType
             ->add('delivery', TextType::class, [
                 'label' => t('Dní do naskladnění'),
                 'constraints' => [
-                    new Constraints\GreaterThan(['value' => -1, 'message' => 'Počet dní musí být kladný nebo 0']),
+                    new Constraints\NotBlank(),
+                    new Constraints\GreaterThanOrEqual(['value' => 0]),
                 ],
             ])
             ->add('transfer', TextType::class, [
                 'label' => t('Dny pro přesun mezi sklady'),
                 'constraints' => [
-                    new Constraints\GreaterThan(['value' => -1, 'message' => 'Počet dní musí být kladný nebo 0']),
+                    new Constraints\NotBlank(),
+                    new Constraints\GreaterThanOrEqual(['value' => 0]),
                 ],
             ])
             ->add('save', SubmitType::class);

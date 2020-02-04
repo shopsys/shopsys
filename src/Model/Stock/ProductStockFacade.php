@@ -43,9 +43,9 @@ class ProductStockFacade implements ProductStockFacadeInterface
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Stock\ProductStock[]
      */
-    public function getProductsStockByProduct(Product $product): array
+    public function getProductStocksByProduct(Product $product): array
     {
-        return $this->productStockRepository->getProductStockByProduct($product);
+        return $this->productStockRepository->getProductStocksByProduct($product);
     }
 
     /**
@@ -55,7 +55,11 @@ class ProductStockFacade implements ProductStockFacadeInterface
      */
     public function setProductStockQuantity(Product $product, Stock $stock, int $productQuantity)
     {
-        $productStock = $this->productStockFactory->findOrCreateProductStock($stock, $product);
+        $productStock = $this->productStockRepository->findProductStockByStockAndProduct($stock, $product);
+        if (!$productStock) {
+            $productStock = $this->productStockFactory->createProductStock($stock, $product);
+            $this->em->persist($productStock);
+        }
         $productStock->setProductQuantity($productQuantity);
         $this->em->flush();
     }

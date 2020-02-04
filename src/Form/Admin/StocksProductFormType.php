@@ -20,9 +20,7 @@ class StocksProductFormType extends AbstractType
         $entryOptions['required'] = $options['required'] && $entryOptions['required'] ?? false;
         $entryOptions['constraints'] = $entryOptions['constraints'] ?? [];
 
-        /**
-         * @var \App\Model\Stock\ProductStockData
-         */
+        /** @var \App\Model\Stock\ProductStockData $stockProductData */
         foreach ($builder->getData() as $stockProductData) {
             if (array_key_exists($stockProductData->stockId, $options['options_by_stock_id'])) {
                 $stockProductOptions = array_merge($entryOptions, $options['options_by_stock_id'][$stockProductData->stockId]);

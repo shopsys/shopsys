@@ -13,13 +13,16 @@ use App\Model\Stock\StockSettingsDataFacade;
 use App\Model\Stock\StockSettingsDataFactoryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class StockController extends AdminBaseController
 {
@@ -88,16 +91,14 @@ class StockController extends AdminBaseController
     /**
      * @Route("/stock/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
         $grid = $this->getGrid();
 
-        $articlesCountOnSelectedDomain = $this->stockFacade->getAllStockCountByDomainId($this->adminDomainTabsFacade->getSelectedDomainId());
-
         return $this->render('Admin/Content/Stock/list.html.twig', [
             'gridView' => $grid->createView(),
-            'stocksCountOnSelectedDomain' => $articlesCountOnSelectedDomain,
             'settingsForm' => $this->getStockSettingsForm()->createView(),
         ]);
     }
@@ -105,7 +106,7 @@ class StockController extends AdminBaseController
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getStockSettingsForm(): FormInterface
+    private function getStockSettingsForm(): FormInterface
     {
         $stockSettingsData = $this->stockSettingsDataFactory->create();
         return $this->createForm(StockSettingsFromType::class, $stockSettingsData, [
@@ -116,8 +117,9 @@ class StockController extends AdminBaseController
     /**
      * @Route("/stock/savesettings/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function saveSettingsAction(Request $request)
+    public function saveSettingsAction(Request $request): RedirectResponse
     {
         $form = $this->getStockSettingsForm();
         $form->handleRequest($request);
@@ -134,7 +136,7 @@ class StockController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
         }
         return $this->redirectToRoute('admin_stock_list');
     }
@@ -142,10 +144,12 @@ class StockController extends AdminBaseController
     /**
      * @Route("/stock/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $stockData = $this->stockDataFactory->create();
+        $stockData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
         $form = $this->createForm(StockFormTypeExtension::class, $stockData, [
             'stock' => null,
@@ -170,7 +174,7 @@ class StockController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
         }
 
         return $this->render('Admin/Content/Stock/new.html.twig', [
@@ -182,8 +186,9 @@ class StockController extends AdminBaseController
      * @Route("/stock/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, int $id)
+    public function editAction(Request $request, int $id): Response
     {
         $stock = $this->stockFacade->getById($id);
         $stockData = $this->stockDataFactory->createFromStock($stock);
@@ -209,10 +214,10 @@ class StockController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->getFlashMessageSender()->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+            $this->getFlashMessageSender()->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing stock - %name%', ['%name%' => $stock->getName()]));
+        $this->breadcrumbOverrider->overrideLastItem(t('Editace skladu - %name%', ['%name%' => $stock->getName()]));
 
         return $this->render('Admin/Content/Stock/edit.html.twig', [
             'form' => $form->createView(),
@@ -224,8 +229,9 @@ class StockController extends AdminBaseController
      * @Route("/stock/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): RedirectResponse
     {
         try {
             $fullName = $this->stockFacade->getById($id)->getName();
@@ -239,7 +245,7 @@ class StockController extends AdminBaseController
                 ]
             );
         } catch (StockNotFoundException $ex) {
-            $this->getFlashMessageSender()->addErrorFlash(t('Selected stock doesn\'t exist.'));
+            $this->getFlashMessageSender()->addErrorFlash(t('Vybraný sklad neexistuje.'));
         }
 
         return $this->redirectToRoute('admin_stock_list');
@@ -248,7 +254,7 @@ class StockController extends AdminBaseController
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    protected function getGrid()
+    private function getGrid(): Grid
     {
         $queryBuilder = $this->stockFacade->getAllStockQueryBuilderByDomain(
             $this->adminDomainTabsFacade->getSelectedDomainId()

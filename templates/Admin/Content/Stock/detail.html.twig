@@ -1,7 +1,7 @@
 {% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
-{% block title %}- {{ 'Stock'|trans }}{% endblock %}
-{% block h1 %}{{ 'Stock'|trans }}{% endblock %}
+{% block title %}- {{ 'Sklad'|trans }}{% endblock %}
+{% block h1 %}{{ 'Sklad'|trans }}{% endblock %}
 
 {% block main_content %}
     {{ form_start(form) }}
@@ -9,7 +9,7 @@
 
         {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
             {% block fixed_bar_content %}
-                <a href="{{ url('admin_stock_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                <a href="{{ url('admin_stock_list') }}" class="btn-link-style">{{ 'Zpět na přehled'|trans }}</a>
                 {{ form_save(stock|default(null), form) }}
             {% endblock %}
         {% endembed %}

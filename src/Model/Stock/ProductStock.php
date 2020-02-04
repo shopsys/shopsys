@@ -53,7 +53,7 @@ class ProductStock
     /**
      * @return \App\Model\Stock\Stock
      */
-    public function getStock(): \App\Model\Stock\Stock
+    public function getStock(): Stock
     {
         return $this->stock;
     }
@@ -61,7 +61,7 @@ class ProductStock
     /**
      * @return \App\Model\Product\Product|null
      */
-    public function getProduct(): ?\App\Model\Product\Product
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
@@ -69,7 +69,7 @@ class ProductStock
     /**
      * @param \App\Model\Product\Product $product
      */
-    public function setProduct(\App\Model\Product\Product $product): void
+    public function setProduct(Product $product): void
     {
         $this->product = $product;
     }

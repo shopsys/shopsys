@@ -8,3 +8,7 @@
     {% set entityName = 'stocks'|trans %}
     {{ parent() }}
 {% endblock %}
+
+{% block grid_no_data %}
+    {{ 'Žáden sklad v této doméně není vytvořen. Musíš nejprve nějaký vytvořit.'|trans }}
+{% endblock %}

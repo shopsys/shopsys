@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Stock;
 
+use App\Model\Stock\Exception\StockNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 class StockRepository
@@ -25,24 +27,28 @@ class StockRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getStockRepository()
+    private function getStockRepository(): EntityRepository
     {
         return $this->em->getRepository(Stock::class);
     }
 
     /**
      * @param int $stockId
-     * @return \App\Model\Stock\Stock|null
+     * @return \App\Model\Stock\Stock
      */
-    public function findById($stockId)
+    public function getById($stockId): ?Stock
     {
-        return $this->getStockRepository()->find($stockId);
+        $stock = $this->getStockRepository()->find($stockId);
+        if ($stock == null) {
+            throw new StockNotFoundException();
+        }
+        return $stock;
     }
 
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getStockQueryBuilder(): QueryBuilder
+    private function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('s')
@@ -61,9 +67,9 @@ class StockRepository
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getStockByDomainQueryBuilder(int $domainId): QueryBuilder
+    public function getQueryBuilderByDomain(int $domainId): QueryBuilder
     {
-        return $this->getStockQueryBuilder()
+        return $this->getQueryBuilder()
             ->where('s.domainId = :domainId')
             ->setParameter('domainId', $domainId);
     }
@@ -74,8 +80,9 @@ class StockRepository
      */
     public function getAllStockByDomain(int $domainId): array
     {
-        return $this->getStockByDomainQueryBuilder($domainId)
-            ->getQuery()->execute();
+        return $this->getQueryBuilderByDomain($domainId)
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -84,7 +91,7 @@ class StockRepository
      */
     public function getAllStockCountByDomainId(int $domainId): int
     {
-        return $this->getStockByDomainQueryBuilder($domainId)
+        return $this->getQueryBuilderByDomain($domainId)
             ->select('COUNT(s)')
             ->getQuery()
             ->getSingleScalarResult();
@@ -97,7 +104,7 @@ class StockRepository
      */
     public function findStockByNameAndDomainId(string $name, int $domainId): ?Stock
     {
-        return $this->getStockByDomainQueryBuilder($domainId)
+        return $this->getQueryBuilderByDomain($domainId)
             ->andWhere('s.name = :name')
             ->setParameter('name', $name)
             ->getQuery()

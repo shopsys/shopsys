@@ -25,4 +25,9 @@ class StockData
      * @var string|null
      */
     public $externalId;
+
+    public function __construct()
+    {
+        $this->centralStock = false;
+    }
 }

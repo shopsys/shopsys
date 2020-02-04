@@ -23,7 +23,7 @@ class StockProductFormType extends AbstractType
             ->add('productQuantity', TextType::class, [
                 'label' => $builder->getData()->name,
                 'constraints' => [
-                    new Constraints\GreaterThan(['value' => -1, 'message' => 'Na skladě nejde mít {{ compared_value }} produktů']),
+                    new Constraints\GreaterThanOrEqual(['value' => 0]),
                 ],
             ]);
     }

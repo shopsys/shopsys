@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Stock;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use App\Component\Setting\Setting;
 
 class StockSettingsDataFactory implements StockSettingsDataFactoryInterface
 {
@@ -35,8 +35,9 @@ class StockSettingsDataFactory implements StockSettingsDataFactoryInterface
     public function create(): StockSettingsData
     {
         $settings = new StockSettingsData();
-        $settings->delivery = $this->setting->getForDomain(StockSettingsData::DELIVERY_DAYS_ON_STOCK, $this->adminDomainTabsFacade->getSelectedDomainId());
-        $settings->transfer = $this->setting->getForDomain(StockSettingsData::TRANSFER_DAYS_BETWEEN_STOCKS, $this->adminDomainTabsFacade->getSelectedDomainId());
+        $settings->delivery = $this->setting->getForDomain(Setting::DELIVERY_DAYS_ON_STOCK, $this->adminDomainTabsFacade->getSelectedDomainId());
+        $settings->transfer = $this->setting->getForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, $this->adminDomainTabsFacade->getSelectedDomainId());
+
         return $settings;
     }
 }

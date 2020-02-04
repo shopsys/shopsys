@@ -12,7 +12,7 @@ interface ProductStockFacadeInterface
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Stock\ProductStock[]
      */
-    public function getProductsStockByProduct(Product $product): array;
+    public function getProductStocksByProduct(Product $product): array;
 
     /**
      * @param \App\Model\Product\Product $product

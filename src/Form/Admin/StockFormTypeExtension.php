@@ -62,7 +62,8 @@ class StockFormTypeExtension extends AbstractType
         $stockDataBuilder->add('name', TextType::class, [
             'required' => true,
             'constraints' => [
-                new Constraints\NotBlank(['message' => 'Please enter stock name']),
+                new Constraints\NotBlank(['message' => 'Prosím vyplňte název skladu']),
+                new Constraints\Length(['max' => 255, 'maxMessage' => 'Název skladu nesmí být delší než {{ limit }} znaků']),
             ],
             'label' => t('Name'),
         ])
@@ -110,7 +111,7 @@ class StockFormTypeExtension extends AbstractType
             $stock = $this->stockFacade->findStockByNameAndDomainId($stockData->name, $stockData->domainId);
 
             if ($stock !== null) {
-                $context->buildViolation('Sklad s tímto názvem na této doméně již existuje.')->atPath('name')->addViolation();
+                $context->buildViolation('Sklad s tímto názvem na této doméně již existuje')->atPath('name')->addViolation();
             }
         }
     }

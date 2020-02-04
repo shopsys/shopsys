@@ -40,6 +40,7 @@ class StockFacade implements StockFacadeInterface
         $stock = new Stock($stockData);
         $this->em->persist($stock);
         $this->em->flush();
+
         return $stock;
     }
 
@@ -53,6 +54,7 @@ class StockFacade implements StockFacadeInterface
         $stock = $this->getById($stockId);
         $stock->edit($stockData);
         $this->em->flush();
+
         return $stock;
     }
 
@@ -72,7 +74,7 @@ class StockFacade implements StockFacadeInterface
      */
     public function getById(int $stockId): Stock
     {
-        return $this->stockRepository->findById($stockId);
+        return $this->stockRepository->getById($stockId);
     }
 
     /**
@@ -81,7 +83,7 @@ class StockFacade implements StockFacadeInterface
      */
     public function getAllStockQueryBuilderByDomain(int $domainId): QueryBuilder
     {
-        return $this->stockRepository->getStockByDomainQueryBuilder($domainId);
+        return $this->stockRepository->getQueryBuilderByDomain($domainId);
     }
 
     /**
@@ -91,15 +93,6 @@ class StockFacade implements StockFacadeInterface
     public function getAllStockCountByDomainId(int $domainId): int
     {
         return $this->stockRepository->getAllStockCountByDomainId($domainId);
-    }
-
-    /**
-     * @param int $domainId
-     * @return \App\Model\Stock\Stock[]
-     */
-    public function getAllStocksByDomainId(int $domainId): array
-    {
-        return $this->stockRepository->getAllStockByDomain($domainId);
     }
 
     /**

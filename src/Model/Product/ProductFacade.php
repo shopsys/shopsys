@@ -128,7 +128,31 @@ class ProductFacade extends BaseProductFacade
         ProductStockFacadeInterface $productStockFacade,
         StockFacadeInterface $stockFacade
     ) {
-        parent::__construct($em, $productRepository, $productVisibilityFacade, $parameterRepository, $domain, $imageFacade, $productPriceRecalculationScheduler, $pricingGroupRepository, $productManualInputPriceFacade, $productAvailabilityRecalculationScheduler, $friendlyUrlFacade, $productHiddenRecalculator, $productSellingDeniedRecalculator, $productAccessoryRepository, $availabilityFacade, $pluginCrudExtensionFacade, $productFactory, $productAccessoryFactory, $productCategoryDomainFactory, $productParameterValueFactory, $productVisibilityFactory, $productPriceCalculation, $productSearchExportScheduler);
+        parent::__construct(
+            $em,
+            $productRepository,
+            $productVisibilityFacade,
+            $parameterRepository,
+            $domain,
+            $imageFacade,
+            $productPriceRecalculationScheduler,
+            $pricingGroupRepository,
+            $productManualInputPriceFacade,
+            $productAvailabilityRecalculationScheduler,
+            $friendlyUrlFacade,
+            $productHiddenRecalculator,
+            $productSellingDeniedRecalculator,
+            $productAccessoryRepository,
+            $availabilityFacade,
+            $pluginCrudExtensionFacade,
+            $productFactory,
+            $productAccessoryFactory,
+            $productCategoryDomainFactory,
+            $productParameterValueFactory,
+            $productVisibilityFactory,
+            $productPriceCalculation,
+            $productSearchExportScheduler
+        );
         $this->stockFacade = $stockFacade;
         $this->productStockFacade = $productStockFacade;
     }
@@ -192,6 +216,7 @@ class ProductFacade extends BaseProductFacade
             $stock = $this->stockFacade->getById($productStockData->stockId);
             $this->productStockFacade->setProductStockQuantity($product, $stock, (int)$productStockData->productQuantity);
         }
+
         return $product;
     }
 }

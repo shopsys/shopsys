@@ -147,7 +147,7 @@ class ProductController extends FrontBaseController
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
-        $productStocks = $this->productStockRepository->getProductStockByProductWithoutCentralStockByDomain($product, $this->domain->getId());
+        $productStocks = $this->productStockRepository->getProductStocksExcludeCentralStockByProductAndDomainId($product, $this->domain->getId());
 
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $product,

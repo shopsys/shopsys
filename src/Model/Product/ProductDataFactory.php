@@ -163,7 +163,7 @@ class ProductDataFactory extends BaseProductDataFactory
     protected function fillStockProductByProduct(BaseProductData $productData, BaseProduct $product)
     {
         $this->fillStockProductByStocks($productData);
-        foreach ($this->stockProductFacade->getProductsStockByProduct($product) as $stockProduct) {
+        foreach ($this->stockProductFacade->getProductStocksByProduct($product) as $stockProduct) {
             $productData->stockProductData[$stockProduct->getStock()->getId()] = $this->stockProductDataFactory->createFromProductStock($stockProduct);
         }
     }

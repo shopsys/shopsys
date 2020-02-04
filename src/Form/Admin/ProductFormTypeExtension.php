@@ -126,7 +126,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $stockGroupBuilder->add('stockProductData', StocksProductFormType::class, [
             'required' => false,
             'data' => $builder->getData()->stockProductData,
-
         ]);
 
         $builder->add($stockGroupBuilder);

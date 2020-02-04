@@ -50,7 +50,7 @@ class StocksDataFixture extends AbstractReferenceFixture
     public function load(ObjectManager $manager)
     {
         foreach ($this->domain->getAllIds() as $domainId) {
-            foreach ($this->getDemoData() as $demoRow) {
+            foreach ($this->getDemoData($domainId) as $demoRow) {
                 $this->stockFacade->create($this->initStockData($domainId, $demoRow));
             }
         }
@@ -68,45 +68,60 @@ class StocksDataFixture extends AbstractReferenceFixture
         $stockData->name = $demoRow[self::ATTR_NAME];
         $stockData->centralStock = $demoRow[self::ATTR_CENTRAL];
         $stockData->externalId = $demoRow[self::ATTR_EXTERNAL];
+
         return $stockData;
     }
 
     /**
+     * @param int $domainId
      * @return array
      */
-    protected function getDemoData(): array
+    protected function getDemoData(int $domainId): array
     {
-        return [
+        if ($domainId > 2) {
+            $domainId = 1;
+        }
+
+        $data[1] = [
+                [
+                    self::ATTR_NAME => 'Sklad Praha',
+                    self::ATTR_CENTRAL => true,
+                    self::ATTR_EXTERNAL => 'asd',
+                ],
+                [
+                    self::ATTR_NAME => 'Sklad Brno',
+                    self::ATTR_CENTRAL => false,
+                    self::ATTR_EXTERNAL => 'ddd',
+                ],
+                [
+                    self::ATTR_NAME => 'Sklad Ostrava',
+                    self::ATTR_CENTRAL => false,
+                    self::ATTR_EXTERNAL => 'fff',
+                ],
+                [
+                    self::ATTR_NAME => 'Sklad Pardubice',
+                    self::ATTR_CENTRAL => false,
+                    self::ATTR_EXTERNAL => 'ggg',
+                ],
+            ];
+        $data[2] = [
             [
-                self::ATTR_NAME => 'Sklad asd',
+                self::ATTR_NAME => 'Sklad Bratislava',
                 self::ATTR_CENTRAL => true,
-                self::ATTR_EXTERNAL => 'asd',
-            ],
-            [
-                self::ATTR_NAME => 'Sklad ddd',
-                self::ATTR_CENTRAL => false,
-                self::ATTR_EXTERNAL => 'ddd',
-            ],
-            [
-                self::ATTR_NAME => 'Sklad fff',
-                self::ATTR_CENTRAL => false,
-                self::ATTR_EXTERNAL => 'fff',
-            ],
-            [
-                self::ATTR_NAME => 'Sklad ggg',
-                self::ATTR_CENTRAL => false,
-                self::ATTR_EXTERNAL => 'ggg',
-            ],
-            [
-                self::ATTR_NAME => 'Sklad hhh',
-                self::ATTR_CENTRAL => false,
                 self::ATTR_EXTERNAL => 'hhh',
             ],
             [
-                self::ATTR_NAME => 'Sklad jjj',
+                self::ATTR_NAME => 'Sklad Košice',
+                self::ATTR_CENTRAL => false,
+                self::ATTR_EXTERNAL => 'jjj',
+            ],
+            [
+                self::ATTR_NAME => 'Sklad Zilina',
                 self::ATTR_CENTRAL => false,
                 self::ATTR_EXTERNAL => 'jjj',
             ],
         ];
+
+        return $data[$domainId];
     }
 }

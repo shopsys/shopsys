@@ -77,29 +77,15 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@App\Model\Order\Item\OrderItemDataFactory'
 
-    App\Model\Stock\StockFacade: ~
-
     App\Model\Stock\StockFacadeInterface: '@App\Model\Stock\StockFacade'
-
-    App\Model\Stock\StockSettingsDataFacade: ~
 
     App\Model\Stock\StockSettingsDataFacadeInterface: '@App\Model\Stock\StockSettingsDataFacade'
 
-    App\Model\Stock\StockSettingsDataFactory: ~
-
     App\Model\Stock\StockSettingsDataFactoryInterface: '@App\Model\Stock\StockSettingsDataFactory'
-
-    App\Model\Stock\ProductStockFacade: ~
 
     App\Model\Stock\ProductStockFacadeInterface: '@App\Model\Stock\ProductStockFacade'
 
-    App\Model\Stock\StockDataFactory: ~
-
     App\Model\Stock\StockDataFactoryInterface: '@App\Model\Stock\StockDataFactory'
-
-    App\Model\Stock\ProductStockFactory: ~
-
-    App\Model\Stock\ProductStockDataFactory: ~
 
     App\Model\Stock\ProductStockDataFactoryInterface: '@App\Model\Stock\ProductStockDataFactory'
 

@@ -9,7 +9,7 @@ class ProductStockDataFactory implements ProductStockDataFactoryInterface
     /**
      * @return \App\Model\Stock\ProductStockData
      */
-    public function create()
+    private function create()
     {
         return new ProductStockData();
     }
@@ -18,11 +18,12 @@ class ProductStockDataFactory implements ProductStockDataFactoryInterface
      * @param \App\Model\Stock\Stock $stock
      * @return \App\Model\Stock\ProductStockData
      */
-    public function createFromStock(Stock $stock)
+    public function createFromStock(Stock $stock): ProductStockData
     {
         $productStockData = $this->create();
         $productStockData->name = $stock->getName();
         $productStockData->stockId = $stock->getId();
+
         return $productStockData;
     }
 
@@ -30,12 +31,13 @@ class ProductStockDataFactory implements ProductStockDataFactoryInterface
      * @param \App\Model\Stock\ProductStock $productStock
      * @return \App\Model\Stock\ProductStockData
      */
-    public function createFromProductStock(ProductStock $productStock)
+    public function createFromProductStock(ProductStock $productStock): ProductStockData
     {
         $productStockData = $this->create();
         $productStockData->name = $productStock->getStock()->getName();
         $productStockData->stockId = $productStock->getStock()->getId();
         $productStockData->productQuantity = $productStock->getProductQuantity();
+
         return $productStockData;
     }
 }

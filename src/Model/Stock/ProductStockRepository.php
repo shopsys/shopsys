@@ -59,19 +59,20 @@ class ProductStockRepository
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @return \App\Model\Stock\ProductStock|null
      */
-    public function getProductStockByStockAndProduct(Stock $stock, Product $product): ?ProductStock
+    public function findProductStockByStockAndProduct(Stock $stock, Product $product): ?ProductStock
     {
         return $this->getProductStockQueryBuilderByProduct($product)
             ->andWhere('sp.stock = :stock')
             ->setParameter('stock', $stock)
-            ->getQuery()->getOneOrNullResult();
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Stock\ProductStock[]
      */
-    public function getProductStockByProduct(Product $product): array
+    public function getProductStocksByProduct(Product $product): array
     {
         return $this->getProductStockQueryBuilderByProduct($product)
             ->getQuery()
@@ -83,7 +84,7 @@ class ProductStockRepository
      * @param int $domainId
      * @return \App\Model\Stock\ProductStock[]
      */
-    public function getProductStockByProductWithoutCentralStockByDomain(Product $product, int $domainId): array
+    public function getProductStocksExcludeCentralStockByProductAndDomainId(Product $product, int $domainId): array
     {
         return $this->getProductStockQueryBuilderByProduct($product)
             ->join(Stock::class, 's', Join::WITH, 's.id = sp.stock')
