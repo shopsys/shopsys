@@ -1146,7 +1146,7 @@
             <arg value="translation:extract"/>
             <arg value="--dir=${path.src}"/>
             <arg value="--dir=${path.templates}"/>
-            <arg value="--dir=${path.var}/translations"/>
+            <arg value="--dir=${path.var}/translations/projectBase"/>
             <arg value="--exclude-dir=frontend/plugins"/>
             <arg value="--exclude-dir=styleguide/plugins"/>
             <arg value="--output-format=po"/>
