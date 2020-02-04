@@ -37,8 +37,8 @@ class CategoryFacade extends BaseCategoryFacade
      * @param int $domainId
      * @return \App\Model\Category\Category[]
      */
-    public function getProductAllCategoriesByProductAndDomainId(Product $product, int $domainId): array
+    public function getAllProductCategoriesByProductAndDomainId(Product $product, int $domainId): array
     {
-        return $this->categoryRepository->getProductAllCategoriesOnDomain($product, $domainId);
+        return $this->categoryRepository->getAllProductCategoriesOnDomain($product, $domainId);
     }
 }

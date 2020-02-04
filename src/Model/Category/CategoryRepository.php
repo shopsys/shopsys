@@ -39,7 +39,7 @@ class CategoryRepository extends BaseCategoryRepository
      * @param int $domainId
      * @return \App\Model\Category\Category[]
      */
-    public function getProductAllCategoriesOnDomain(Product $product, int $domainId): array
+    public function getAllProductCategoriesOnDomain(Product $product, int $domainId): array
     {
         $qb = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
             ->join(
