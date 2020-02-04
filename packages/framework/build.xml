@@ -1150,7 +1150,7 @@
             <arg value="--exclude-dir=frontend/plugins"/>
             <arg value="--exclude-dir=styleguide/plugins"/>
             <arg value="--output-format=po"/>
-            <arg value="--output-dir=${path.root}/translations/projectBase"/>
+            <arg value="--output-dir=${path.root}/translations"/>
             <arg line="${translations.dump.flags}"/>
             <arg line="${domains-info.locales}"/>
         </exec>
