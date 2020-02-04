@@ -15,8 +15,7 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
     protected static $defaultName = 'shopsys:elasticsearch:indexes-delete';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @inheritDoc
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
@@ -24,37 +23,37 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getCommandDescription(): string
     {
-        return 'Creates structure in Elasticsearch';
+        return 'Delete indexes from Elasticsearch';
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getArgumentNameDescription(): string
     {
         return sprintf(
-            'Which index will be created? Available indexes: "%s"',
+            'Which index should be deleted? Available indexes: "%s"',
             implode(', ', $this->indexRegistry->getRegisteredIndexNames())
         );
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getActionStartedMessage(): string
     {
-        return 'Deleting structure';
+        return 'Deleting indexes';
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getActionFinishedMessage(): string
     {
-        return 'Structure deleted successfully!';
+        return 'Indexes deleted successfully!';
     }
 }

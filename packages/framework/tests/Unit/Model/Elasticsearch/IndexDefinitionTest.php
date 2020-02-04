@@ -80,7 +80,7 @@ class IndexDefinitionTest extends TestCase
         $indexDefinition = new IndexDefinition($productIndex, $definitionDirectory, '', 1);
 
         $this->expectException(ElasticsearchIndexException::class);
-        $this->expectExceptionMessage('Invalid JSON in product definition file');
+        $this->expectExceptionMessage('Invalid JSON in "product" definition file');
         $indexDefinition->getDefinition();
     }
 

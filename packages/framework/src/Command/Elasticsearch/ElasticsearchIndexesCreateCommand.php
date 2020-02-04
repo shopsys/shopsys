@@ -15,8 +15,7 @@ class ElasticsearchIndexesCreateCommand extends AbstractElasticsearchIndexComman
     protected static $defaultName = 'shopsys:elasticsearch:indexes-create';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @inheritDoc
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
@@ -24,37 +23,37 @@ class ElasticsearchIndexesCreateCommand extends AbstractElasticsearchIndexComman
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getCommandDescription(): string
     {
-        return 'Creates structure in Elasticsearch';
+        return 'Creates indexes in Elasticsearch';
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getArgumentNameDescription(): string
     {
         return sprintf(
-            'Which index will be created? Available indexes: "%s"',
+            'Which index should be created? Available indexes: "%s"',
             implode(', ', $this->indexRegistry->getRegisteredIndexNames())
         );
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getActionStartedMessage(): string
     {
-        return 'Creating structure';
+        return 'Creating indexes';
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getActionFinishedMessage(): string
     {
-        return 'Structure created successfully!';
+        return 'Indexes created successfully!';
     }
 }

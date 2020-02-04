@@ -15,8 +15,7 @@ class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexComma
     protected static $defaultName = 'shopsys:elasticsearch:indexes-migrate';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @inheritDoc
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
@@ -24,37 +23,37 @@ class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexComma
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getCommandDescription(): string
     {
-        return 'Migrate indexes in Elasticsearch';
+        return 'Creates new structure, reindexes it from old one, deletes old structure and adds alias to new structure';
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getArgumentNameDescription(): string
     {
         return sprintf(
-            'Which index will be migrated? Available indexes: "%s"',
+            'Which index should be migrated? Available indexes: "%s"',
             implode(', ', $this->indexRegistry->getRegisteredIndexNames())
         );
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getActionStartedMessage(): string
     {
-        return 'Migrating index';
+        return 'Migrating indexes';
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getActionFinishedMessage(): string
     {
-        return 'Index migrated successfully!';
+        return 'Indexes migrated successfully!';
     }
 }

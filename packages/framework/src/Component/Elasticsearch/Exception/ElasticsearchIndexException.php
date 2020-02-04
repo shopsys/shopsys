@@ -9,28 +9,28 @@ use Exception;
 class ElasticsearchIndexException extends Exception
 {
     /**
-     * @param string $documentName
-     * @param string $definitionFilename
+     * @param string $indexName
+     * @param string $definitionFilepath
      * @return self
      */
-    public static function invalidJsonInDefinitionFile(string $documentName, string $definitionFilename): self
+    public static function invalidJsonInDefinitionFile(string $indexName, string $definitionFilepath): self
     {
         return new self(sprintf(
-            'Invalid JSON in %s definition file %s',
-            $documentName,
-            $definitionFilename
+            'Invalid JSON in "%s" definition file "%s"',
+            $indexName,
+            $definitionFilepath
         ));
     }
 
     /**
-     * @param string $definitionFilename
+     * @param string $definitionFilepath
      * @return self
      */
-    public static function cantReadDefinitionFile(string $definitionFilename): self
+    public static function cantReadDefinitionFile(string $definitionFilepath): self
     {
         return new self(sprintf(
-            'Can\'t read definition file at path %s. Please check that file exists and has permissions for reading.',
-            $definitionFilename
+            'Can\'t read definition file at path "%s". Please check that file exists and has permissions for reading.',
+            $definitionFilepath
         ));
     }
 
@@ -42,7 +42,7 @@ class ElasticsearchIndexException extends Exception
     public static function createIndexError(string $indexName, array $error): self
     {
         return new self(sprintf(
-            'Error when creating index %s:' . PHP_EOL . '%s',
+            'Error when creating index "%s":' . PHP_EOL . '"%s"',
             $indexName,
             json_encode($error)
         ));
@@ -56,7 +56,7 @@ class ElasticsearchIndexException extends Exception
     public static function createAliasError(string $alias, array $error): self
     {
         return new self(sprintf(
-            'Error when creating alias %s:' . PHP_EOL . '%s',
+            'Error when creating alias "%s":' . PHP_EOL . '"%s"',
             $alias,
             json_encode($error)
         ));
@@ -70,7 +70,7 @@ class ElasticsearchIndexException extends Exception
     public static function deleteIndexError(string $indexName, array $error): self
     {
         return new self(sprintf(
-            'Error when deleting index %s:' . PHP_EOL . '%s',
+            'Error when deleting index "%s":' . PHP_EOL . '"%s"',
             $indexName,
             json_encode($error)
         ));
@@ -83,7 +83,7 @@ class ElasticsearchIndexException extends Exception
     public static function indexAlreadyExists(string $indexName): self
     {
         return new self(sprintf(
-            'Index %s already exists',
+            'Index "%s" already exists',
             $indexName
         ));
     }
@@ -101,15 +101,15 @@ class ElasticsearchIndexException extends Exception
     }
 
     /**
-     * @param string $documentName
+     * @param string $indexName
      * @param array $errors
      * @return static
      */
-    public static function bulkUpdateError(string $documentName, array $errors): self
+    public static function bulkUpdateError(string $indexName, array $errors): self
     {
         return new self(sprintf(
-            'One or more items return error when updating %s:' . PHP_EOL . '%s',
-            $documentName,
+            'One or more items return error when updating "%s":' . PHP_EOL . '"%s"',
+            $indexName,
             json_encode($errors)
         ));
     }
@@ -121,7 +121,7 @@ class ElasticsearchIndexException extends Exception
     public static function aliasDoesntExists(string $alias): self
     {
         return new self(sprintf(
-            'Can\' found any index with alias %s.',
+            'Can\'t found any index with alias "%s".',
             $alias
         ));
     }
@@ -133,7 +133,7 @@ class ElasticsearchIndexException extends Exception
     public static function noIndexFoundForAlias(string $alias): self
     {
         return new self(sprintf(
-            'Can\'t resolve index name, there aren\'t any indexes with alias %s.',
+            'Can\'t resolve index name, there aren\'t any indexes with alias "%s".',
             $alias
         ));
     }
@@ -146,9 +146,9 @@ class ElasticsearchIndexException extends Exception
     public static function moreThanOneIndexFoundForAlias(string $alias, array $indexesFound): self
     {
         return new self(sprintf(
-            'Can\'t resolve index name for alias %s. More than one index found (%s).',
+            'Can\'t resolve index name for alias "%s". More than one index found ("%s").',
             $alias,
-            implode(',', $indexesFound)
+            implode('", "', $indexesFound)
         ));
     }
 }

@@ -15,8 +15,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     protected static $defaultName = 'shopsys:elasticsearch:data-export';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @inheritDoc
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
@@ -24,26 +23,26 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getCommandDescription(): string
     {
-        return 'Export data in Elasticsearch';
+        return 'Export data to Elasticsearch';
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getArgumentNameDescription(): string
     {
         return sprintf(
-            'Which index data will be exported? Available indexes: "%s"',
+            'Which index data should be exported? Available indexes: "%s"',
             implode(', ', $this->indexRegistry->getRegisteredIndexNames())
         );
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getActionStartedMessage(): string
     {
@@ -51,7 +50,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     protected function getActionFinishedMessage(): string
     {

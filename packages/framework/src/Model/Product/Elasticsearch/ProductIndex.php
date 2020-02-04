@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 
 class ProductIndex extends AbstractIndex
 {
-    public const INDEX_NAME = 'product';
+    protected const INDEX_NAME = 'product';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductDataProvider $productDataProvider
@@ -23,6 +23,6 @@ class ProductIndex extends AbstractIndex
      */
     public function getName(): string
     {
-        return self::INDEX_NAME;
+        return static::INDEX_NAME;
     }
 }

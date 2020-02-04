@@ -6,14 +6,14 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 abstract class AbstractExportScheduler
 {
-    protected $rowId = [];
+    protected $rowIds = [];
 
     /**
      * @param int $rowId
      */
     public function scheduleRowIdForImmediateExport(int $rowId): void
     {
-        $this->rowId[] = $rowId;
+        $this->rowIds[] = $rowId;
     }
 
     /**
@@ -21,7 +21,7 @@ abstract class AbstractExportScheduler
      */
     public function hasAnyRowIdsForImmediateExport(): bool
     {
-        return $this->rowId !== [];
+        return $this->rowIds !== [];
     }
 
     /**
@@ -29,6 +29,6 @@ abstract class AbstractExportScheduler
      */
     public function getRowIdsForImmediateExport(): array
     {
-        return array_unique($this->rowId);
+        return array_unique($this->rowIds);
     }
 }

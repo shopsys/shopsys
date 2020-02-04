@@ -16,7 +16,7 @@ class IndexRegistry
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex[] $indexes
      */
-    public function __construct(array $indexes)
+    public function __construct(iterable $indexes)
     {
         foreach ($indexes as $index) {
             $this->registerIndex($index);
@@ -45,7 +45,7 @@ class IndexRegistry
      *
      * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
      */
-    public function getIndexByIndexName(string $indexName)
+    public function getIndexByIndexName(string $indexName): AbstractIndex
     {
         if ($this->isIndexRegistered($indexName)) {
             return $this->registeredIndexes[$indexName];

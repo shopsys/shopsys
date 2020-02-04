@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
@@ -27,8 +29,6 @@ class IndexDefinition
     protected $domainId;
 
     /**
-     * DocumentDefinition constructor.
-     *
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param string $definitionsDirectory
      * @param string $indexPrefix
@@ -51,7 +51,7 @@ class IndexDefinition
         if ($decodedDefinition === null) {
             throw ElasticsearchIndexException::invalidJsonInDefinitionFile(
                 $this->getIndex()->getName(),
-                $this->getDefinitionFilename()
+                $this->getDefinitionFilepath()
             );
         }
 
@@ -61,9 +61,9 @@ class IndexDefinition
     /**
      * @return string
      */
-    protected function getDefinitionFilename(): string
+    protected function getDefinitionFilepath(): string
     {
-        return $this->getDefinitionsDirectory() . $this->getIndex()->getName() . '/' . $this->getDomainId() . '.json';
+        return $this->definitionsDirectory . $this->getIndex()->getName() . '/' . $this->getDomainId() . '.json';
     }
 
     /**
@@ -71,18 +71,18 @@ class IndexDefinition
      */
     protected function getDefinitionFileContent(): string
     {
-        $definitionFilename = $this->getDefinitionFilename();
-        if (!is_readable($definitionFilename)) {
-            throw ElasticsearchIndexException::cantReadDefinitionFile($definitionFilename);
+        $definitionFilepath = $this->getDefinitionFilepath();
+        if (!is_readable($definitionFilepath)) {
+            throw ElasticsearchIndexException::cantReadDefinitionFile($definitionFilepath);
         }
 
-        return file_get_contents($definitionFilename);
+        return file_get_contents($definitionFilepath);
     }
 
     /**
      * @return string
      */
-    public function getDocumentDefinitionVersion(): string
+    protected function getDocumentDefinitionVersion(): string
     {
         return md5(serialize($this->getDefinition()));
     }
@@ -112,14 +112,6 @@ class IndexDefinition
     public function getIndex(): AbstractIndex
     {
         return $this->index;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefinitionsDirectory(): string
-    {
-        return $this->definitionsDirectory;
     }
 
     /**

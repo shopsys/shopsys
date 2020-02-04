@@ -6,8 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 abstract class AbstractIndex
 {
-    protected const BATCH_SIZE = 100;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\DataProviderInterface
      */
