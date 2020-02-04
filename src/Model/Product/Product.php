@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\Stock\ProductStock;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
@@ -38,22 +36,12 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 class Product extends BaseProduct
 {
     /**
-     * @var \App\Model\Stock\ProductStock[]|\Doctrine\Common\Collections\Collection
-     * @ORM\OneToMany(
-     *   targetEntity="App\Model\Stock\ProductStock",
-     *   mappedBy="product"
-     * )
-     */
-    protected $productStocks;
-
-    /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */
     protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
-        $this->productStocks = new ArrayCollection();
     }
 
     /**

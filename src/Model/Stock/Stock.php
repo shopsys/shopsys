@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Stock;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,16 +50,6 @@ class Stock
     protected $externalId;
 
     /**
-     * @var \App\Model\Stock\ProductStock[]|\Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(
-     *   targetEntity="App\Model\Stock\ProductStock",
-     *   mappedBy="stock"
-     * )
-     */
-    protected $productStocks;
-
-    /**
      * @param \App\Model\Stock\StockData $stockData
      */
     public function __construct(StockData $stockData)
@@ -69,7 +58,6 @@ class Stock
         $this->name = $stockData->name;
         $this->centralStock = $stockData->centralStock;
         $this->externalId = $stockData->externalId;
-        $this->productStocks = new ArrayCollection();
     }
 
     /**

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Stock;
 
-use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use App\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 
 class StockSettingsDataFacade implements StockSettingsDataFacadeInterface
 {

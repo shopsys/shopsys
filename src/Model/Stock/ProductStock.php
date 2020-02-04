@@ -47,7 +47,6 @@ class ProductStock
         $this->stock = $stock;
         $this->product = $product;
         $this->productQuantity = 0;
-        $product->addProductStock($this);
     }
 
     /**
