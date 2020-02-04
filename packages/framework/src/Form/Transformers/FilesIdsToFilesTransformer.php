@@ -12,7 +12,7 @@ class FilesIdsToFilesTransformer implements DataTransformerInterface
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
      */
-    private $uploadedFileFacade;
+    protected $uploadedFileFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
