@@ -80,10 +80,10 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             'view_timezone' => 'UTC',
         ];
 
-        $builder->add('date_valid_from', DatePickerType::class, $dateOptions);
-        $builder->add('time_valid_from', TextType::class, $timeOptions);
-        $builder->add('date_valid_to', DatePickerType::class, $dateOptions);
-        $builder->add('time_valid_to', TextType::class, $timeOptions);
+        $builder->add('dateValidFrom', DatePickerType::class, $dateOptions);
+        $builder->add('timeValidFrom', TextType::class, $timeOptions);
+        $builder->add('dateValidTo', DatePickerType::class, $dateOptions);
+        $builder->add('timeValidTo', TextType::class, $timeOptions);
     }
 
     /**

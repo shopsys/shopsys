@@ -22,6 +22,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
 {
     public const DEFAULT_TIME_FROM = '00:00:00';
     public const DEFAULT_TIME_TO = '23:59:59';
+    public const DATABASE_DATE_FORMAT = 'Y-m-d';
+
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -94,7 +96,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
-    private function prepareDatetimeValid(PromoCodeData $promoCodeData): void
+    public function prepareDatetimeValid(PromoCodeData $promoCodeData): void
     {
         if ($promoCodeData->dateValidFrom != null) {
             if ($promoCodeData->timeValidFrom == null) {
@@ -102,7 +104,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
             }
 
             $promoCodeData->datetimeValidFrom = $this->getDateTime(
-                ($promoCodeData->dateValidFrom)->format('Y-m-d'),
+                ($promoCodeData->dateValidFrom)->format(self::DATABASE_DATE_FORMAT),
                 $promoCodeData->timeValidFrom
             );
         }
@@ -113,7 +115,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
             }
 
             $promoCodeData->datetimeValidTo = $this->getDateTime(
-                ($promoCodeData->dateValidTo)->format('Y-m-d'),
+                ($promoCodeData->dateValidTo)->format(self::DATABASE_DATE_FORMAT),
                 $promoCodeData->timeValidTo
             );
         }
