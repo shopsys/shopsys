@@ -1,4 +1,4 @@
-import findLang from './findLang';
+import parseLangFromFileName from './parseLangFromFileName';
 
 test.each([
     ['', undefined],
@@ -8,8 +8,8 @@ test.each([
     ['lang.js', 'lang'],
     ['lang.php', 'lang']
 ])(
-    'findLang test',
+    'parseLangFromFileName test',
     (filePath, expected) => {
-        expect(findLang(filePath)).toStrictEqual(expected);
+        expect(parseLangFromFileName(filePath)).toStrictEqual(expected);
     }
 );

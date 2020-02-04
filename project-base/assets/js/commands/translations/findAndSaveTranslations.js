@@ -1,7 +1,7 @@
 const fs = require('fs');
 const PO = require('pofile');
 const fileWalker = require('./fileWalker');
-const findLang = require('./findLang');
+const parseLangFromFileName = require('./parseLangFromFileName');
 
 function findAndSaveTranslations (translations, dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
 
@@ -15,7 +15,7 @@ function findAndSaveTranslations (translations, dirWithJsFiles, dirWithTranslati
                 return;
             }
 
-            const lang = findLang(filePath);
+            const lang = parseLangFromFileName(filePath);
             return new Promise((resolve, reject) => {
                 PO.load(filePath, (loadErr, po) => {
                     if (loadErr) {
