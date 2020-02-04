@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Order\PromoCode;
 
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade as BaseCurrentPromoCodeFacade;
 
+/**
+ * @property \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
+ * @method __construct(\App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade, \Symfony\Component\HttpFoundation\Session\SessionInterface $session)
+ * @method \App\Model\Order\PromoCode\PromoCode|null getValidEnteredPromoCodeOrNull()
+ */
 class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 {
     /**
@@ -27,33 +31,37 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return bool
      */
-    private function isValidPromoCode(PromoCode $promoCode = null):bool{
+    private function isValidPromoCode(?PromoCode $promoCode = null): bool
+    {
         $currentTimestamp = time();
 
-        if($promoCode){
-            if(
-                $promoCode->getDatetimeValidFrom() != null
+        if ($promoCode) {
+            if ($promoCode->getDatetimeValidFrom() == null
+                && $promoCode->getDatetimeValidTo() == null
+            ) {
+                return true;
+            }
+
+            if ($promoCode->getDatetimeValidFrom() != null
                 && $promoCode->getDatetimeValidTo() != null
-            ){
-                if($promoCode->getDatetimeValidFrom()->getTimestamp() < $currentTimestamp
+            ) {
+                if ($promoCode->getDatetimeValidFrom()->getTimestamp() < $currentTimestamp
                     && $promoCode->getDatetimeValidTo()->getTimestamp() > $currentTimestamp
-                ){
+                ) {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
 
-            if($promoCode->getDatetimeValidFrom() != null && $promoCode->getDatetimeValidFrom()->getTimestamp() < $currentTimestamp){
+            if ($promoCode->getDatetimeValidFrom() != null && $promoCode->getDatetimeValidFrom()->getTimestamp() < $currentTimestamp) {
                 return true;
             }
 
-            if($promoCode->getDatetimeValidTo() != null && $promoCode->getDatetimeValidTo()->getTimestamp() > $currentTimestamp){
+            if ($promoCode->getDatetimeValidTo() != null && $promoCode->getDatetimeValidTo()->getTimestamp() > $currentTimestamp) {
                 return true;
             }
         }
         return false;
     }
-
-
 }

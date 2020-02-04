@@ -24,7 +24,6 @@ class PromoCodeFacade extends BasePromoCodeFacade
     public const DEFAULT_TIME_TO = '23:59:59';
     public const DATABASE_DATE_FORMAT = 'Y-m-d';
 
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -75,22 +74,29 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
+     * @return \App\Model\Order\PromoCode\PromoCode
      */
-    public function create(PromoCodeData $promoCodeData)
+    public function create(PromoCodeData $promoCodeData): PromoCode
     {
         $this->prepareDatetimeValid($promoCodeData);
-        return parent::create($promoCodeData);
+
+        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
+        $promoCode = parent::create($promoCodeData);
+        return $promoCode;
     }
 
     /**
      * @param int $promoCodeId
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     * @return \App\Model\Order\PromoCode\PromoCode|\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+     * @return \App\Model\Order\PromoCode\PromoCode
      */
-    public function edit($promoCodeId, PromoCodeData $promoCodeData)
+    public function edit($promoCodeId, PromoCodeData $promoCodeData): PromoCode
     {
         $this->prepareDatetimeValid($promoCodeData);
-        return parent::edit($promoCodeId, $promoCodeData);
+
+        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
+        $promoCode = parent::edit($promoCodeId, $promoCodeData);
+        return $promoCode;
     }
 
     /**

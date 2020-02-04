@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 class PromoCodeController extends FrontBaseController
 {
     public const PROMO_CODE_PARAMETER = 'code';
+
     /**
-     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade|\Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade
+     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade|\App\Model\Order\PromoCode\CurrentPromoCodeFacade
      */
     private $currentPromoCodeFacade;
 
-
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
+     * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      */
     public function __construct(
         CurrentPromoCodeFacade $currentPromoCodeFacade
