@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportListener;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 
 class ProductSearchExportListener extends AbstractExportListener
@@ -16,7 +16,7 @@ class ProductSearchExportListener extends AbstractExportListener
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager $indexManager
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository $indexRepository
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -24,11 +24,11 @@ class ProductSearchExportListener extends AbstractExportListener
     public function __construct(
         ProductSearchExportScheduler $productSearchExportScheduler,
         EntityManagerInterface $entityManager,
-        IndexManager $indexManager,
+        IndexRepository $indexRepository,
         IndexDefinitionLoader $indexDefinitionLoader,
         ProductIndex $index,
         Domain $domain
     ) {
-        parent::__construct($productSearchExportScheduler, $entityManager, $indexManager, $indexDefinitionLoader, $index, $domain);
+        parent::__construct($productSearchExportScheduler, $entityManager, $indexRepository, $indexDefinitionLoader, $index, $domain);
     }
 }

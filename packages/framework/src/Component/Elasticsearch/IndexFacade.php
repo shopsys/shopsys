@@ -9,16 +9,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 class IndexFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository
      */
-    protected $indexManager;
+    protected $indexRepository;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager $indexManager
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository $indexRepository
      */
-    public function __construct(IndexManager $indexManager)
+    public function __construct(IndexRepository $indexRepository)
     {
-        $this->indexManager = $indexManager;
+        $this->indexRepository = $indexRepository;
     }
 
     /**
@@ -33,8 +33,8 @@ class IndexFacade
             $indexDefinition->getDomainId()
         ));
 
-        $this->indexManager->createIndex($indexDefinition);
-        $this->indexManager->createAlias($indexDefinition);
+        $this->indexRepository->createIndex($indexDefinition);
+        $this->indexRepository->createAlias($indexDefinition);
     }
 
     /**
@@ -49,7 +49,7 @@ class IndexFacade
             $indexDefinition->getDomainId()
         ));
 
-        $this->indexManager->deleteIndexByIndexDefinition($indexDefinition);
+        $this->indexRepository->deleteIndexByIndexDefinition($indexDefinition);
     }
 
     /**
@@ -64,7 +64,7 @@ class IndexFacade
             $indexDefinition->getDomainId()
         ));
 
-        $this->indexManager->export($indexDefinition, [], $output);
+        $this->indexRepository->export($indexDefinition, [], $output);
     }
 
     /**
@@ -75,7 +75,7 @@ class IndexFacade
     {
         $indexName = $indexDefinition->getIndex()->getName();
         $domainId = $indexDefinition->getDomainId();
-        $existingIndexName = $this->indexManager->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+        $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
 
         if ($existingIndexName === $indexDefinition->getVersionedIndexName()) {
             $output->writeln(sprintf('Index "%s" on domain "%s" is up to date', $indexName, $domainId));
@@ -83,9 +83,9 @@ class IndexFacade
         }
 
         $output->writeln(sprintf('Migrating index "%s" on domain "%s"', $indexName, $domainId));
-        $this->indexManager->createIndex($indexDefinition);
-        $this->indexManager->reindex($existingIndexName, $indexDefinition->getVersionedIndexName());
-        $this->indexManager->createAlias($indexDefinition);
-        $this->indexManager->deleteIndex($existingIndexName);
+        $this->indexRepository->createIndex($indexDefinition);
+        $this->indexRepository->reindex($existingIndexName, $indexDefinition->getVersionedIndexName());
+        $this->indexRepository->createAlias($indexDefinition);
+        $this->indexRepository->deleteIndex($existingIndexName);
     }
 }

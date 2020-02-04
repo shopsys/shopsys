@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class IndexManager
+class IndexRepository
 {
     /**
      * @var \Elasticsearch\Client

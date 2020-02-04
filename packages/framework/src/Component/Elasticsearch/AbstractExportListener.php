@@ -23,9 +23,9 @@ abstract class AbstractExportListener
     protected $entityManager;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository
      */
-    protected $indexManager;
+    protected $indexRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
@@ -45,7 +45,7 @@ abstract class AbstractExportListener
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportScheduler $exportScheduler
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager $indexManager
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository $indexRepository
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -53,14 +53,14 @@ abstract class AbstractExportListener
     public function __construct(
         AbstractExportScheduler $exportScheduler,
         EntityManagerInterface $entityManager,
-        IndexManager $indexManager,
+        IndexRepository $indexRepository,
         IndexDefinitionLoader $indexDefinitionLoader,
         ProductIndex $index,
         Domain $domain
     ) {
         $this->exportScheduler = $exportScheduler;
         $this->entityManager = $entityManager;
-        $this->indexManager = $indexManager;
+        $this->indexRepository = $indexRepository;
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->index = $index;
         $this->domain = $domain;
@@ -76,7 +76,7 @@ abstract class AbstractExportListener
 
             foreach ($this->domain->getAllIds() as $domainId) {
                 $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index, $domainId);
-                $this->indexManager->export($indexDefinition, $productIds, new NullOutput());
+                $this->indexRepository->export($indexDefinition, $productIds, new NullOutput());
             }
         }
     }
