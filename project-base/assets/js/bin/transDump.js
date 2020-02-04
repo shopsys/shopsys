@@ -2,25 +2,16 @@
 
 const fs = require('fs');
 const processTransDump = require('../commands/translations/processDump');
+const getCliParameters = require('./helpers/getCliParameters');
 const defaultDirWithJsFiles = './assets/js/';
 
-const dirsWithJsFiles = process.argv.slice(2).map(parameter => {
-    const keyValueParameter = parameter.split('=');
-    if (keyValueParameter[0] === 'source-dir') {
-        return keyValueParameter[1];
-    }
-}).filter(item => item !== undefined);
+const dirsWithJsFiles = getCliParameters(process.argv.slice(2), 'source-dir');
 
 if (dirsWithJsFiles.length === 0) {
     dirsWithJsFiles.push(defaultDirWithJsFiles + '**/*.js');
 }
 
-let dirForExport = process.argv.slice(2).map(parameter => {
-    const keyValueParameter = parameter.split('=');
-    if (keyValueParameter[0] === 'export-dir') {
-        return keyValueParameter[1];
-    }
-}).filter(item => item !== undefined)[0];
+let dirForExport = getCliParameters(process.argv.slice(2), 'export-dir');
 
 if (Array.isArray(dirForExport)) {
     dirForExport = dirForExport[0];

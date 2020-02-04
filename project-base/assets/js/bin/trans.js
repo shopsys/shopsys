@@ -1,15 +1,11 @@
 #!/usr/bin/env node
 
 const processTrans = require('../commands/translations/process');
+const getCliParameters = require('./helpers/getCliParameters');
 const dirWithTranslations = './translations/*.po';
 const outputDirForExportedTranslations = './assets/js/';
 
-const dirsWithJsFiles = process.argv.slice(2).map(parameter => {
-    const keyValueParameter = parameter.split('=');
-    if (keyValueParameter[0] === 'source-dir') {
-        return keyValueParameter[1];
-    }
-});
+const dirsWithJsFiles = getCliParameters(process.argv.slice(2), 'source-dir');
 
 if (dirsWithJsFiles.length === 0) {
     dirsWithJsFiles.push(outputDirForExportedTranslations + '**/*.js');
