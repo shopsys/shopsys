@@ -14,12 +14,32 @@ class PromoCodeData extends BasePromoCodeData
     public $domainId;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      */
-    public $time_valid_from;
+    public $dateValidFrom;
+
+    /**
+     * @var \DateTime|null
+     */
+    public $dateValidTo;
 
     /**
      * @var string|null
      */
-    public $time_valid_to;
+    public $timeValidFrom;
+
+    /**
+     * @var string|null
+     */
+    public $timeValidTo;
+
+    /**
+     * @var \DateTime|null
+     */
+    public $datetimeValidFrom;
+
+    /**
+     * @var \DateTime|null
+     */
+    public $datetimeValidTo;
 }

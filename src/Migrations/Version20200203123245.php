@@ -14,8 +14,8 @@ class Version20200203123245 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE promo_codes ADD time_valid_from TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
-        $this->sql('ALTER TABLE promo_codes ADD time_valid_to TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
+        $this->sql('ALTER TABLE promo_codes ADD datetime_valid_from TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
+        $this->sql('ALTER TABLE promo_codes ADD datetime_valid_to TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
     }
 
     /**

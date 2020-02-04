@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
@@ -32,18 +33,18 @@ class PromoCode extends BasePromoCode
     protected $code;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      *
      * @ORM\Column(type="datetime",nullable=true)
      */
-    protected $time_valid_from;
+    protected $datetimeValidFrom;
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      *
      * @ORM\Column(type="datetime",nullable=true)
      */
-    protected $time_valid_to;
+    protected $datetimeValidTo;
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
@@ -52,8 +53,8 @@ class PromoCode extends BasePromoCode
     {
         parent::__construct($promoCodeData);
         $this->domainId = $promoCodeData->domainId;
-        $this->time_valid_from = $promoCodeData->time_valid_from;
-        $this->time_valid_to = $promoCodeData->time_valid_to;
+        $this->datetimeValidFrom = $promoCodeData->datetimeValidFrom;
+        $this->datetimeValidTo = $promoCodeData->datetimeValidTo;
     }
 
     /**
@@ -63,8 +64,8 @@ class PromoCode extends BasePromoCode
     {
         parent::edit($promoCodeData);
         $this->domainId = $promoCodeData->domainId;
-        $this->time_valid_from = $promoCodeData->time_valid_from;
-        $this->time_valid_to = $promoCodeData->time_valid_to;
+        $this->datetimeValidFrom = $promoCodeData->datetimeValidFrom;
+        $this->datetimeValidTo = $promoCodeData->datetimeValidTo;
     }
 
     /**
@@ -76,20 +77,18 @@ class PromoCode extends BasePromoCode
     }
 
     /**
-     * @return string
+     * @return \DateTime|null
      */
-    public function getTimeValidFrom(): string
+    public function getDatetimeValidFrom(): ?\DateTime
     {
-        return $this->time_valid_from;
+        return $this->datetimeValidFrom;
     }
 
     /**
-     * @return string
+     * @return \DateTime|null
      */
-    public function getTimeValidTo(): string
+    public function getDatetimeValidTo(): ?\DateTime
     {
-        return $this->time_valid_to;
+        return $this->datetimeValidTo;
     }
-
-
 }

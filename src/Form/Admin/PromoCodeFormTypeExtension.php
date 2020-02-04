@@ -8,6 +8,7 @@ use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeData;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
+use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,6 +19,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PromoCodeFormTypeExtension extends AbstractTypeExtension
 {
+    protected const TIME_REGEX = '#^([01]?[0-9]|2[0-3]):[0-5][0-9]$#'; //hh:mm
+
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeFacade
      */
@@ -57,6 +60,30 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         $codeOptions['position'] = 'first';
 
         $builder->add('code', TextType::class, $codeOptions);
+
+        $this->buildTimeValidationForm($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildTimeValidationForm(FormBuilderInterface $builder)
+    {
+        $timeOptions = [
+            'icon_title' => t('Fotmát času: \'hh:mm\', např.: \'07:45\',\'23:05\''),
+            'constraints' => [
+                new Constraints\Callback([$this, 'validateTimeIfIsSet']),
+            ],
+        ];
+
+        $dateOptions = [
+            'view_timezone' => 'UTC',
+        ];
+
+        $builder->add('date_valid_from', DatePickerType::class, $dateOptions);
+        $builder->add('time_valid_from', TextType::class, $timeOptions);
+        $builder->add('date_valid_to', DatePickerType::class, $dateOptions);
+        $builder->add('time_valid_to', TextType::class, $timeOptions);
     }
 
     /**
@@ -69,6 +96,8 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             ->setDefaults([
                 'constraints' => [
                     new Constraints\Callback([$this, 'validateUniquePromoCodeByDomain']),
+                    new Constraints\Callback([$this, 'validateDateTimeFrom']),
+                    new Constraints\Callback([$this, 'validateDateTimeTo']),
                 ],
             ]);
     }
@@ -76,6 +105,49 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     public function getExtendedType()
     {
         return PromoCodeFormType::class;
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateDateTimeFrom(PromoCodeData $promoCodeData, ExecutionContextInterface $context)
+    {
+        if ($promoCodeData->timeValidFrom != null) {
+            if ($promoCodeData->dateValidFrom == null) {
+                $context->buildViolation('Pokud je vyplněn čas OD, vyplň i datum OD.')
+                    ->atPath('date_valid_from')
+                    ->addViolation();
+            }
+        }
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateDateTimeTo(PromoCodeData $promoCodeData, ExecutionContextInterface $context)
+    {
+        if ($promoCodeData->timeValidTo != null) {
+            if ($promoCodeData->dateValidTo == null) {
+                $context->buildViolation('Pokud je vyplněn čas DO, vyplň i datum DO.')
+                    ->atPath('date_valid_to')
+                    ->addViolation();
+            }
+        }
+    }
+
+    /**
+     * @param string|null $time
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateTimeIfIsSet($time, ExecutionContextInterface $context)
+    {
+        if ($time != null || $time != '') {
+            if (!(bool)preg_match(self::TIME_REGEX, $time)) {
+                $context->addViolation('Špatný formát času: ' . $time . ', správně: hh:mm.');
+            }
+        }
     }
 
     /**
