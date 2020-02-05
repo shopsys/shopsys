@@ -9,17 +9,26 @@
     overflow-x: auto;
     overflow-y: hidden;
 
-    @media @query-md {
+    @media @query-md {        
         overflow-x: visible;
-        overflow-y: visible;
+        overflow-y: visible;        
+    }
+
+    @media @query-lg {
+        // IE11 FIX - only partial support of flexbox
+        width: 67%;
     }
 
     &__item {
+        flex-grow: 1;
+        flex-basis: 0;
         padding-right: @list-articles-gutter-width / 2;
         min-width: 80vw;
 
         @media @query-md {
-            min-width: 0;
+            min-width: 50%;
+            // IE11 Fix - only partial support of flexbox
+            max-width: 467px;
         }
 
         @media @query-lg {
