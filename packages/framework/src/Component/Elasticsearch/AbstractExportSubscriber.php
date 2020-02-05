@@ -8,9 +8,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
-abstract class AbstractExportListener
+abstract class AbstractExportSubscriber implements EventSubscriberInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportScheduler
@@ -66,11 +67,25 @@ abstract class AbstractExportListener
         $this->domain = $domain;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            KernelEvents::RESPONSE => [
+                ['exportScheduledRows', -30],
+            ],
+        ];
+    }
+
     public function exportScheduledRows(): void
     {
         if ($this->exportScheduler->hasAnyRowIdsForImmediateExport()) {
             // to be sure the recalculated data are fetched from database properly
             $this->entityManager->clear();
+
+            // return;
 
             $productIds = $this->exportScheduler->getRowIdsForImmediateExport();
 
@@ -79,13 +94,5 @@ abstract class AbstractExportListener
                 $this->indexRepository->export($indexDefinition, $productIds, new NullOutput());
             }
         }
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $filterResponseEvent
-     */
-    public function onKernelResponse(FilterResponseEvent $filterResponseEvent): void
-    {
-        $this->exportScheduledRows();
     }
 }

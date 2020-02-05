@@ -193,10 +193,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade: ~
 
-    # Prevent listening to kernel.response event while running tests
-    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportListener:
-        tags: []
-
     Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory: ~
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade: ~
@@ -223,3 +219,7 @@ services:
             $indexPrefix: '%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportSubscriber:
+        autoconfigure: false
+

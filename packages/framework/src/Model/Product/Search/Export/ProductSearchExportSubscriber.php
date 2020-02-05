@@ -6,12 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search\Export;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportListener;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportSubscriber;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 
-class ProductSearchExportListener extends AbstractExportListener
+class ProductSearchExportSubscriber extends AbstractExportSubscriber
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
