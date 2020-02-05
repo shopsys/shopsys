@@ -28,7 +28,12 @@
             margin-bottom: 10px;
 
             .window-content & {
-                width: 38%;
+                width: 100%;
+                justify-content: center;
+
+                @media @query-lg {
+                    width: 38%;
+                }
             }
         }
 
@@ -44,7 +49,11 @@
             }
 
             .window-content & {
-                width: 42%;
+                width: 100%;
+
+                @media @query-lg {
+                    width: 42%;
+                }
             }
         }
 
@@ -58,8 +67,12 @@
             }
 
             .window-content & {
-                width: 20%;
+                width: 100%;
                 line-height: @in-grid-height/2;
+
+                @media @query-lg {
+                    width: 20%;
+                }
             }
         }
 
