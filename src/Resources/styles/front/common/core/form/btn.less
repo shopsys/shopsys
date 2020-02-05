@@ -15,7 +15,7 @@
     line-height: 1;
     vertical-align: middle;
     display: inline-block;
-    transition: @transition background, @transition color;
+    transition: @transition background, @transition color, @transition box-shadow;
     text-align: center;    
 
     border: 0;
@@ -67,9 +67,9 @@
         background: linear-gradient(to bottom, @btn-primary-bg, #ffb900);
 
         &:hover {
-            color: @btn-primary-color-hover;
-            background: @btn-primary-bg-hover;
+            color: @btn-primary-color-hover;            
             background: linear-gradient(to bottom, @btn-primary-bg, #ffb900);
+            box-shadow: 0 0 10px 0 @btn-primary-bg;
         }
     }
 
