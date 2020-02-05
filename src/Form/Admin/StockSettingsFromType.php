@@ -25,6 +25,7 @@ class StockSettingsFromType extends AbstractType
                 'label' => t('Dní do naskladnění'),
                 'constraints' => [
                     new Constraints\NotBlank(),
+                    new Constraints\Regex(['pattern' => '/^\d+$/']),
                     new Constraints\GreaterThanOrEqual(['value' => 0]),
                 ],
             ])
@@ -32,6 +33,7 @@ class StockSettingsFromType extends AbstractType
                 'label' => t('Dny pro přesun mezi sklady'),
                 'constraints' => [
                     new Constraints\NotBlank(),
+                    new Constraints\Regex(['pattern' => '/^\d+$/']),
                     new Constraints\GreaterThanOrEqual(['value' => 0]),
                 ],
             ])

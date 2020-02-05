@@ -24,6 +24,7 @@ class StockProductFormType extends AbstractType
                 'label' => $builder->getData()->name,
                 'constraints' => [
                     new Constraints\GreaterThanOrEqual(['value' => 0]),
+                    new Constraints\Regex(['pattern' => '/^\d+$/']),
                 ],
             ]);
     }
