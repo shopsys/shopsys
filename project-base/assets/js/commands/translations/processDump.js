@@ -1,8 +1,8 @@
+const fs = require('fs');
 const parseFile = require('./parseFile');
 const fileWalker = require('./fileWalker');
-const findAndSaveTranslations = require('./findAndSaveTranslations');
 
-function process (dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations) {
+function processDump (dirWithJsFiles, outputDirForExportedTranslations) {
     fileWalker(dirWithJsFiles, (err, filePaths) => {
         if (err) {
             console.log(err);
@@ -17,13 +17,18 @@ function process (dirWithJsFiles, dirWithTranslations, outputDirForExportedTrans
 
             parseFile(filePath).forEach(translation => {
                 if (!translations.includes(translation)) {
-                    translations.push(translation.id);
+                    translations.push(translation);
                 }
             });
         });
 
-        findAndSaveTranslations(translations, dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations);
+        fs.writeFile(outputDirForExportedTranslations + 'translationsDump.json', JSON.stringify(translations), (writeErr) => {
+            if (writeErr) {
+                return console.log(writeErr);
+            }
+            return console.log('Translation dump was save in ' + outputDirForExportedTranslations + 'translationsDump.json');
+        });
     });
 }
 
-module.exports = process;
+module.exports = processDump;

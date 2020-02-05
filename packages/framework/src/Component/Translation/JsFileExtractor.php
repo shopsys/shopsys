@@ -6,18 +6,14 @@ use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
-use PLUG\JavaScript\JParser;
-use PLUG\JavaScript\JTokenizer;
-use Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCallParser;
 use SplFileInfo;
 use Twig_Node;
 
 class JsFileExtractor implements FileVisitorInterface
 {
-    /**
-     * @var \SplFileInfo
-     */
-    protected $file;
+    protected const DUMP_FILE = 'translationsDump.json';
+
+    protected const DEFAULT_MESSAGE_DOMAIN = 'messages';
 
     /**
      * @var \JMS\TranslationBundle\Model\MessageCatalogue
@@ -25,45 +21,43 @@ class JsFileExtractor implements FileVisitorInterface
     protected $catalogue;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCallParser
-     */
-    protected $jsTranslatorCallParser;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Javascript\Parser\Translator\JsTranslatorCallParser $jsTranslatorCallParser
-     */
-    public function __construct(JsTranslatorCallParser $jsTranslatorCallParser)
-    {
-        $this->jsTranslatorCallParser = $jsTranslatorCallParser;
-    }
-
-    /**
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      */
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
-        if (substr($file, -3) !== '.js') {
+        if ($this->isFileTranslationDump($file) === false) {
             return;
         }
 
-        $this->file = $file;
-        $this->catalogue = $catalogue;
-
-        $filename = $file->getRealPath();
-        $contents = file_get_contents($filename);
-
-        try {
-            $this->parseFile($contents);
-        } catch (\PLUG\parsing\ParseError $ex) {
-            throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException(
-                $ex->getMessage() . "\n" . 'in file ' . $this->file->getRealPath()
-            );
-        } catch (\Shopsys\FrameworkBundle\Component\Javascript\Parser\Exception\JsParserException $ex) {
-            throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException(
-                $ex->getMessage() . ' in file ' . $this->file->getRealPath()
-            );
+        $translationDumpContent = file_get_contents($file);
+        if ($translationDumpContent === false) {
+            return;
         }
+
+        $translationsDump = json_decode($translationDumpContent, true);
+
+        foreach ($translationsDump as $translation) {
+            $message = new Message(
+                $translation['id'],
+                $translation['domain'] ?? static::DEFAULT_MESSAGE_DOMAIN
+            );
+            $message->addSource(new FileSource(
+                $translation['source'],
+                $translation['line']
+            ));
+
+            $catalogue->add($message);
+        }
+    }
+
+    /**
+     * @param \SplFileInfo $file
+     * @return bool
+     */
+    protected function isFileTranslationDump(SplFileInfo $file): bool
+    {
+        return $file->getFilename() === static::DUMP_FILE;
     }
 
     /**
@@ -82,25 +76,5 @@ class JsFileExtractor implements FileVisitorInterface
      */
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Twig_Node $node)
     {
-    }
-
-    /**
-     * @param string $contents
-     */
-    protected function parseFile($contents)
-    {
-        $node = JParser::parse_string($contents, true, JParser::class, JTokenizer::class);
-
-        $jsTranslatorCalls = $this->jsTranslatorCallParser->parse($node);
-
-        foreach ($jsTranslatorCalls as $jsTranslatorCall) {
-            $message = new Message($jsTranslatorCall->getMessageId(), $jsTranslatorCall->getDomain());
-            $message->addSource(new FileSource(
-                $this->file->getFilename(),
-                $jsTranslatorCall->getCallExprNode()->get_line_num()
-            ));
-
-            $this->catalogue->add($message);
-        }
     }
 }

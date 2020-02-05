@@ -655,11 +655,7 @@
 
     <target name="npm" description="Build node modules.">
         <phingcall target="npm-install-dependencies"/>
-
-        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="run"/>
-            <arg value="trans"/>
-        </exec>
+        <phingcall target="npm-export-translations"/>
 
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>
@@ -667,9 +663,28 @@
         </exec>
     </target>
 
+    <target name="npm-export-translations" description="Exported used translations for javascripts." hidden="true">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="trans"/>
+            <arg value="--"/>
+            <arg value="source-dir=${path.assets}/**/*.js"/>
+        </exec>
+    </target>
+
     <target name="npm-install-dependencies" description="Installs node modules dependencies." hidden="true">
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="install"/>
+        </exec>
+    </target>
+
+    <target name="npm-translations-dump" description="Dumped translations from javascript's files." hidden="true">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="trans:dump"/>
+            <arg value="--"/>
+            <arg value="source-dir=${path.assets}/**/*.js"/>
+            <arg value="export-dir=${path.var}/translations/projectBase/"/>
         </exec>
     </target>
 
@@ -1100,13 +1115,20 @@
         </if>
     </target>
 
-    <target name="tests-unit" depends="production-protection,clean" description="Runs unit tests.">
+    <target name="tests-unit" depends="production-protection,clean,tests-unit-jest" description="Runs unit tests.">
         <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--testsuite"/>
             <arg value="Unit"/>
             <arg value="--configuration"/>
             <arg value="${path.root}/phpunit.xml"/>
+        </exec>
+    </target>
+
+    <target name="tests-unit-jest" description="Runs js's unit tests.">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="tests:unit"/>
         </exec>
     </target>
 
@@ -1118,11 +1140,13 @@
     </target>
 
     <target name="translations-dump" depends="domains-info-load" description="Extracts translatable messages from all source files in your project.">
+        <phingcall target="npm-translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="translation:extract"/>
             <arg value="--dir=${path.src}"/>
             <arg value="--dir=${path.templates}"/>
+            <arg value="--dir=${path.var}/translations/projectBase"/>
             <arg value="--exclude-dir=frontend/plugins"/>
             <arg value="--exclude-dir=styleguide/plugins"/>
             <arg value="--output-format=po"/>

@@ -182,6 +182,16 @@
         <phingcall target="eslint-fix"/>
     </target>
 
+    <target name="npm-export-translations" description="Exported used translations for javascripts." hidden="true">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="trans"/>
+            <arg value="--"/>
+            <arg value="source-dir=${path.assets}/**/*.js"/>
+            <arg value="source-dir=${path.framework}/assets/**/*.js"/>
+        </exec>
+    </target>
+
     <target name="npm-install-dependencies" description="Installs node modules dependencies." hidden="true">
         <phingcall target="shopsys_framework.npm-install-dependencies"/>
         <exec executable="${path.npm.executable}" dir="${path.framework-assets}" logoutput="true" passthru="true" checkreturn="true">
@@ -191,6 +201,24 @@
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="link"/>
             <arg value="${npm.framework}"/>
+        </exec>
+    </target>
+
+    <target name="npm-translations-dump" description="Dumped translations from javascript's files." hidden="true">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="trans:dump"/>
+            <arg value="--"/>
+            <arg value="source-dir=${path.assets}/**/*.js"/>
+            <arg value="export-dir=${path.var}/translations/projectBase/"/>
+        </exec>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="trans:dump"/>
+            <arg value="--"/>
+            <arg value="source-dir=${path.framework}/assets/**/*.js"/>
+            <arg value="export-dir=${path.var}/translations/framework/"/>
         </exec>
     </target>
 
@@ -319,6 +347,7 @@
     </target>
 
     <target name="translations-dump" depends="domains-info-load" description="Extracts translatable messages in the whole monorepo.">
+
         <phingcall target="shopsys_framework.translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -334,6 +363,7 @@
             <arg value="translation:extract"/>
             <arg value="--bundle=ShopsysFrameworkBundle"/>
             <arg value="--dir=${path.framework}/src"/>
+            <arg value="--dir=${path.var}/translations/framework"/>
             <arg value="--exclude-dir=admin/plugins"/>
             <arg value="--exclude-dir=Component/Translation"/>
             <arg value="--exclude-dir=Component/Javascript/Compiler"/>
