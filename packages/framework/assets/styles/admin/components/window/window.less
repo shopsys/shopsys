@@ -1,11 +1,11 @@
 .window {
     display: none;
-    width: @window-width;
+    width: 100%;
     min-height: @window-height;
     position: fixed;
     top: 50%;
-    left: 50%;
-    margin: -@window-height/2 0 0 -@window-width/2;
+    left: 0;
+    margin: -@window-height/2 0 0 0;
     padding: 40px 20px 5px 20px;
     z-index: 10002;
 
@@ -14,12 +14,23 @@
     background: @bg-window;
     box-shadow: 0 0 20px rgba(0,0,0, 0.3);
 
+    @media @query-xl {
+        width: @window-width;
+        top: 50%;
+        left: 50%;
+        margin: -@window-height/2 0 0 -@window-width/2;
+    }
+
     &--wide {
         position: absolute;
         top: 200px;
-        width: @window-wide-width;
+        width: 100%;
         height: @window-wide-height;
-        margin: 0 0 0 -@window-wide-width/2;
+
+        @media @query-xl {
+            width: @window-wide-width;
+            margin: 0 0 0 -@window-wide-width/2;
+        }
     }
 
     &--wide-float {
