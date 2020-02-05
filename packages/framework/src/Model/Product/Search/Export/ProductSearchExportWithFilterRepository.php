@@ -107,6 +107,29 @@ class ProductSearchExportWithFilterRepository
 
     /**
      * @param int $domainId
+     * @param string $locale
+     * @param int[] $productIds
+     * @return array
+     */
+    public function getProductsDataForIds(int $domainId, string $locale, array $productIds): array
+    {
+        $queryBuilder = $this->createQueryBuilder($domainId)
+            ->andWhere('p.id IN (:productIds)')
+            ->setParameter('productIds', $productIds);
+
+        $query = $queryBuilder->getQuery();
+
+        $result = [];
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
+        foreach ($query->getResult() as $product) {
+            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int $domainId
      * @return int
      */
     public function getProductTotalCountForDomain(int $domainId): int

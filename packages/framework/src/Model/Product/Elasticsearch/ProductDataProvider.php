@@ -49,9 +49,18 @@ class ProductDataProvider implements DataProviderInterface
      */
     public function getDataForBatch(int $domainId, int $lastProcessedId, array $restrictToIds = []): array
     {
+        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+        if (!empty($restrictToIds)) {
+            return $this->productSearchExportWithFilterRepository->getProductsDataForIds(
+                $domainId,
+                $locale,
+                $restrictToIds
+            );
+        }
+
         return $this->productSearchExportWithFilterRepository->getProductsData(
             $domainId,
-            $this->domain->getDomainConfigById($domainId)->getLocale(),
+            $locale,
             $lastProcessedId,
             DataProviderInterface::BATCH_SIZE
         );

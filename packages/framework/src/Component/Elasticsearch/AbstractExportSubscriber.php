@@ -85,8 +85,6 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
             // to be sure the recalculated data are fetched from database properly
             $this->entityManager->clear();
 
-            // return;
-
             $productIds = $this->exportScheduler->getRowIdsForImmediateExport();
 
             foreach ($this->domain->getAllIds() as $domainId) {
