@@ -28,7 +28,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PRODUCT_PREFIX = 'product_';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     * @var \App\Model\Product\ProductFacade
      */
     protected $productFacade;
 
@@ -98,7 +98,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     protected $setting;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -149,7 +149,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
+            $productData->namePrefix[$locale] = t('Televize', [], 'dataFixtures', $locale);
             $productData->name[$locale] = t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $locale);
+            $productData->nameSufix[$locale] = t('plazmová', [], 'dataFixtures', $locale);
             $productData->descriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback', [], 'dataFixtures', $domain->getLocale());
 

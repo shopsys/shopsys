@@ -171,4 +171,55 @@ class Product extends BaseProduct
     {
         return $this->translation($locale)->getNameSufix();
     }
+
+    /**
+     * @param string|null $locale
+     * @return string
+     */
+    public function getFullname(?string $locale = null): string
+    {
+        return trim(
+            $this->getNamePrefix($locale)
+            . ' '
+            . $this->getName($locale)
+            . ' '
+            . $this->getNameSufix($locale)
+        );
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFullnames()
+    {
+        $fullnamesByLocale = [];
+
+        foreach ($this->translations as $translation) {
+            $fullnamesByLocale[$translation->getLocale()] = $this->getFullname($translation->getLocale());
+        }
+
+        return $fullnamesByLocale;
+    }
+
+    /**
+     * @param string|null $locale
+     * @return string|null
+     */
+    public function getNameFirstLine(?string $locale = null): ?string
+    {
+        return $this->getNamePrefix($locale);
+    }
+
+    /**
+     * @param string|null $locale
+     * @return string
+     */
+    public function getNameSecondLine(?string $locale = null): string
+    {
+        return trim(
+            $this->getName($locale)
+            . ' '
+            . $this->getNameSufix($locale)
+        );
+    }
 }

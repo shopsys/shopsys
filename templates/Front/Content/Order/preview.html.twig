@@ -8,7 +8,7 @@
             <tr class="table-cart-preview__row">
                 <td class="table-cart-preview__cell">
                     <strong>{{ quantifiedProduct.quantity|formatNumber }} {{ quantifiedProduct.product.unit.name }}</strong>
-                    {{ quantifiedProduct.product.name }}
+                    {{ quantifiedProduct.product.fullname }}
                 </td>
                 <td class="table-cart-preview__cell table-cart-preview__cell--price">
                     {{ quantifiedProductPrice.totalPrice.priceWithVat|price }}

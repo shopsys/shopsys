@@ -74,7 +74,7 @@ class OrderDataFixture
     private $persistentReferenceFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
+     * @var \App\Model\Order\OrderFacade
      */
     private $orderFacade;
 
@@ -84,7 +84,7 @@ class OrderDataFixture
     private $orderPreviewFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     * @var \App\Model\Product\ProductFacade
      */
     private $productFacade;
 
@@ -110,9 +110,9 @@ class OrderDataFixture
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
+     * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory

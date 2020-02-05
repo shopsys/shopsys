@@ -39,6 +39,8 @@ class ProductSearchExportWithFilterRepositoryTest extends TransactionFunctionalT
         return [
             'id',
             'name',
+            'name_prefix',
+            'name_sufix',
             'catnum',
             'partno',
             'ean',

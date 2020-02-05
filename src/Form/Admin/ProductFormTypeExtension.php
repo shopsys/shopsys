@@ -20,6 +20,8 @@ class ProductFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->changeSeoGroup($builder);
+
         $builder->add('namePrefix', LocalizedFullWidthType::class, [
             'required' => false,
             'entry_options' => [
@@ -97,6 +99,16 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         /** @var \Ivory\OrderedForm\Builder\OrderedFormBuilder $shortDescriptionsUspGroups */
         $shortDescriptionsUspGroups = $builder->get('shortDescriptionsUspGroups');
         $shortDescriptionsUspGroups->setPosition(['after' => 'shortDescriptionsGroup']);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function changeSeoGroup(FormBuilderInterface $builder): void
+    {
+        $builderSeoGroup = $builder->get('seoGroup');
+
+        $builderSeoGroup->remove('seoH1s');
     }
 
     /**

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Cart;
 
+use App\Model\Cart\Item\CartItem;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;

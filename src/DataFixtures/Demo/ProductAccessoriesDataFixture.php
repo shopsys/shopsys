@@ -15,12 +15,12 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
     /** @var \App\Model\Product\ProductDataFactory */
     protected $productDataFactory;
 
-    /** @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade */
+    /** @var \App\Model\Product\ProductFacade */
     protected $productFacade;
 
     /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         ProductDataFactoryInterface $productDataFactory,

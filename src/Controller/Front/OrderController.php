@@ -59,7 +59,7 @@ class OrderController extends FrontBaseController
     private $orderDataMapper;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
+     * @var \App\Model\Order\OrderFacade
      */
     private $orderFacade;
 
@@ -114,7 +114,7 @@ class OrderController extends FrontBaseController
     private $newsletterFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
+     * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation

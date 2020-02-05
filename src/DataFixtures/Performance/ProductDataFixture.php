@@ -38,7 +38,7 @@ class ProductDataFixture
     private $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     * @var \App\Model\Product\ProductFacade
      */
     private $productFacade;
 
@@ -110,7 +110,7 @@ class ProductDataFixture
     /**
      * @param int $productTotalCount
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade

@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block title %}
-    {{ product.getSeoTitle(domain.id)|default(product.name) }}
+    {{ product.getSeoTitle(domain.id)|default(product.fullname) }}
 {% endblock %}
 
 {% block main_content %}
@@ -25,7 +25,7 @@
                                     {{ image(product, { itemprop: 'image' }) }}
                                 </a>
                             {% else %}
-                                {{ noimage({ alt: product.name }) }}
+                                {{ noimage({ alt: product.fullname }) }}
                             {% endif %}
                         </div>
                         {{ productFlags.list(product) }}
@@ -52,7 +52,9 @@
                     </div>
                     <div class="box-detail__info">
                         <h1 itemprop="name">
-                            {{ product.getSeoH1(domain.id)|default(product.name) }}
+                            {{ product.nameFirstLine }}
+                            <br>
+                            {{ product.nameSecondLine }}
                         </h1>
 
                         {% if product.calculatedAvailability %}

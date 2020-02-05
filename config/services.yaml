@@ -152,3 +152,27 @@ services:
     App\Component\Setting\Setting: ~
 
     Shopsys\FrameworkBundle\Component\Setting\Setting: '@App\Component\Setting\Setting'
+
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@App\Model\Product\Listed\ListedProductViewFactory'
+
+    Shopsys\FrameworkBundle\Model\Order\OrderFacade: '@App\Model\Order\OrderFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator: '@App\Model\Product\ProductBreadcrumbGenerator'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: '@App\Model\Product\Search\Export\ProductSearchExportWithFilterRepository'
+
+    App\Model\Product\Search\ProductElasticsearchConverter: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: '@App\Model\Product\Search\ProductElasticsearchConverter'
+
+    App\Model\Product\Search\FilterQueryFactory: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory: '@App\Model\Product\Search\FilterQueryFactory'
+
+    Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory: '@App\Model\ProductFeed\Google\FeedItem\GoogleFeedItemFactory'
+
+    Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory: '@App\Model\ProductFeed\Heureka\FeedItem\HeurekaFeedItemFactory'
+
+    Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory: '@App\Model\ProductFeed\Zbozi\FeedItem\ZboziFeedItemFactory'

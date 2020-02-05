@@ -34,6 +34,7 @@ parameters:
         Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode: App\Model\Order\PromoCode\PromoCode
         Shopsys\FrameworkBundle\Model\Product\ProductDomain: App\Model\Product\ProductDomain
         Shopsys\FrameworkBundle\Model\Product\ProductTranslation: App\Model\Product\ProductTranslation
+        Shopsys\FrameworkBundle\Model\Cart\Item\CartItem: App\Model\Cart\Item\CartItem
     build-version: '0000000000000000'
     shopsys.display_timezone: Europe/Prague
     shopsys.image.enable_lazy_load: true

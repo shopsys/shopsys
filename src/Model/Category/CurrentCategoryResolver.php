@@ -16,13 +16,13 @@ class CurrentCategoryResolver
     private $categoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
+     * @var \App\Model\Product\ProductFacade
      */
     private $productFacade;
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,

@@ -6,7 +6,8 @@
                 <div class="list-products__item__in">
                     <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
                         <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
-                            {{ productView.name }}
+                            {{ productView.namePrefix }} <br>
+                            {{ productView.name }} {{ productView.nameSufix }}
                         </{{ productHeadingTagName|default('h2') }}>
 
                         <div class="list-products__item__image dont-print">

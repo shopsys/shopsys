@@ -40,7 +40,7 @@
                                 {% set cartItemDiscount = cartItemDiscounts[index] %}
                                 <tr class="table-cart__row js-cart-item">
                                     <td class="table-cart__cell table-cart__cell--image">
-                                        <a href="{{ url('front_product_detail', {id: cartItem.product.id}) }}" title="{{ cartItem.product.name }}" class="table-cart__cell__image">
+                                        <a href="{{ url('front_product_detail', {id: cartItem.product.id}) }}" title="{{ cartItem.product.fullname }}" class="table-cart__cell__image">
                                             {{ image(cartItem.product, { size: 'thumbnail' }) }}
                                         </a>
                                     </td>

@@ -33,7 +33,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     protected $faker;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
+     * @var \App\Model\Order\OrderFacade
      */
     protected $orderFacade;
 
@@ -60,7 +60,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
+     * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

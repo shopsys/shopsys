@@ -62,8 +62,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: ~
-
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface: '@App\Model\Product\Brand\BrandDataFactory'
 
     Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade: ~
@@ -94,3 +92,17 @@ services:
     App\Component\Setting\Setting: ~
 
     Shopsys\FrameworkBundle\Component\Setting\Setting: '@App\Component\Setting\Setting'
+
+    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@App\Model\Product\Listed\ListedProductViewFactory'
+
+    Shopsys\FrameworkBundle\Model\Order\OrderFacade: '@App\Model\Order\OrderFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator: '@App\Model\Product\ProductBreadcrumbGenerator'
+
+    Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\ProductFacade'
+
+    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: '@App\Model\Product\Search\Export\ProductSearchExportWithFilterRepository'
+
+    App\Model\Product\Search\FilterQueryFactory: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory: '@App\Model\Product\Search\FilterQueryFactory'

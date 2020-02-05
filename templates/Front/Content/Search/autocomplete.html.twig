@@ -14,9 +14,9 @@
         <li class="search__hint__item">
             <a href="{{ url('front_product_detail', { id: product.id }) }}" class="search__hint__item__link">
                 <span class="search__hint__image">
-                    <img src="{{ imageUrl(product, 'thumbnail') }}" title="{{ product.name }}" width="30" />
+                    <img src="{{ imageUrl(product, 'thumbnail') }}" title="{{ product.fullname }}" width="30" />
                 </span>
-                <span class="search__hint__name js-search-autocomplete-item-label">{{ product.name }}</span>
+                <span class="search__hint__name js-search-autocomplete-item-label">{{ product.fullname }}</span>
             </a>
         </li>
     {% endfor %}
