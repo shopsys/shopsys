@@ -21,10 +21,14 @@
 
     &__item {
         display: inline-block !important;
-        width: calc(~"100% / 4");
+        width: 100%;
         vertical-align: top;
         margin: 0;
         padding: 0 @list-files-item-gap/2 @list-files-item-gap @list-files-item-gap/2;
+
+        @media @query-md {
+            width: calc(~"100% / 4");
+        }
 
         &__in {
             position: relative;
