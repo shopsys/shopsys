@@ -7,7 +7,7 @@ namespace App\Model\Stock;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
-class StockFacade implements StockFacadeInterface
+class StockFacade
 {
     /**
      * @var \App\Model\Stock\StockRepository
@@ -87,15 +87,6 @@ class StockFacade implements StockFacadeInterface
     }
 
     /**
-     * @param int $domainId
-     * @return int
-     */
-    public function getAllStockCountByDomainId(int $domainId): int
-    {
-        return $this->stockRepository->getAllStockCountByDomainId($domainId);
-    }
-
-    /**
      * @return \App\Model\Stock\Stock[]
      */
     public function getAllStocks(): array
@@ -111,5 +102,14 @@ class StockFacade implements StockFacadeInterface
     public function findStockByNameAndDomainId(string $name, int $domainId): ?Stock
     {
         return $this->stockRepository->findStockByNameAndDomainId($name, $domainId);
+    }
+
+    /**
+     * @param string $externalId
+     * @return \App\Model\Stock\Stock|null
+     */
+    public function findStockByExternalId(string $externalId): ?Stock
+    {
+        return $this->stockRepository->findStockByExternalId($externalId);
     }
 }

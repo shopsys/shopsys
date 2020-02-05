@@ -2,8 +2,8 @@
 
     <div id="{{ form.vars.id }}">
         {% for quantityForm in form %}
-            {% for childtQuantityForm in quantityForm %}
-                {{ form_row(childtQuantityForm, { 'label': quantityForm.vars.value.name }) }}
+            {% for childQuantityForm in quantityForm %}
+                {{ form_row(childQuantityForm, { 'label': quantityForm.vars.value.name }) }}
             {% endfor %}
         {% endfor %}
     </div>

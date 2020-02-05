@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Stock;
 
-class ProductStockDataFactory implements ProductStockDataFactoryInterface
+class ProductStockDataFactory
 {
     /**
      * @return \App\Model\Stock\ProductStockData

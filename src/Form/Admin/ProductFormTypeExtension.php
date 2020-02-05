@@ -124,14 +124,10 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             'label' => t('Stocks'),
         ]);
 
-//        $stockGroupBuilder->add('stockProductData', StocksProductFormType::class, [
-//            'required' => false,
-//            'data' => $builder->getData()->stockProductData,
-//        ]);
-
         $stockGroupBuilder->add('stockProductData', CollectionType::class, [
             'required' => false,
             'entry_type' => StockProductFormType::class,
+            'render_form_row' => false,
         ]);
 
         $builder->add($stockGroupBuilder);

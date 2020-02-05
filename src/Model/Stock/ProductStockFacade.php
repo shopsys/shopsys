@@ -7,7 +7,7 @@ namespace App\Model\Stock;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 
-class ProductStockFacade implements ProductStockFacadeInterface
+class ProductStockFacade
 {
     /**
      * @var \App\Model\Stock\ProductStockRepository
@@ -20,23 +20,15 @@ class ProductStockFacade implements ProductStockFacadeInterface
     private $em;
 
     /**
-     * @var \App\Model\Stock\ProductStockFactory
-     */
-    private $productStockFactory;
-
-    /**
      * @param \App\Model\Stock\ProductStockRepository $stockProductRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Stock\ProductStockFactory $productStockFactory
      */
     public function __construct(
         ProductStockRepository $stockProductRepository,
-        EntityManagerInterface $em,
-        ProductStockFactory $productStockFactory
+        EntityManagerInterface $em
     ) {
         $this->productStockRepository = $stockProductRepository;
         $this->em = $em;
-        $this->productStockFactory = $productStockFactory;
     }
 
     /**
@@ -53,11 +45,11 @@ class ProductStockFacade implements ProductStockFacadeInterface
      * @param \App\Model\Stock\Stock $stock
      * @param int $productQuantity
      */
-    public function setProductStockQuantity(Product $product, Stock $stock, int $productQuantity)
+    public function setProductStockQuantity(Product $product, Stock $stock, int $productQuantity): void
     {
         $productStock = $this->productStockRepository->findProductStockByStockAndProduct($stock, $product);
         if (!$productStock) {
-            $productStock = $this->productStockFactory->createProductStock($stock, $product);
+            $productStock = new ProductStock($stock, $product);
             $this->em->persist($productStock);
         }
         $productStock->setProductQuantity($productQuantity);

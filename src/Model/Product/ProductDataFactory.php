@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Stock\ProductStockDataFactory;
-use App\Model\Stock\ProductStockFacadeInterface;
-use App\Model\Stock\StockFacadeInterface;
+use App\Model\Stock\ProductStockFacade;
+use App\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
@@ -26,12 +26,12 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 class ProductDataFactory extends BaseProductDataFactory
 {
     /**
-     * @var \App\Model\Stock\ProductStockFacadeInterface
+     * @var \App\Model\Stock\ProductStockFacade
      */
     private $stockProductFacade;
 
     /**
-     * @var \App\Model\Stock\StockFacadeInterface
+     * @var \App\Model\Stock\StockFacade
      */
     private $stockFacade;
 
@@ -53,8 +53,8 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \App\Model\Stock\ProductStockFacadeInterface $stockProductFacade
-     * @param \App\Model\Stock\StockFacadeInterface $stockFacade
+     * @param \App\Model\Stock\ProductStockFacade $stockProductFacade
+     * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Stock\ProductStockDataFactory $stockProductDataFactory
      */
     public function __construct(
@@ -70,8 +70,8 @@ class ProductDataFactory extends BaseProductDataFactory
         PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         PricingGroupFacade $pricingGroupFacade,
-        ProductStockFacadeInterface $stockProductFacade,
-        StockFacadeInterface $stockFacade,
+        ProductStockFacade $stockProductFacade,
+        StockFacade $stockFacade,
         ProductStockDataFactory $stockProductDataFactory
     ) {
         parent::__construct($vatFacade, $productInputPriceFacade, $unitFacade, $domain, $productRepository, $parameterRepository, $friendlyUrlFacade, $productAccessoryRepository, $imageFacade, $pluginDataFormExtensionFacade, $productParameterValueDataFactory, $pricingGroupFacade);

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Stock\StockData;
-use App\Model\Stock\StockDataFactoryInterface;
-use App\Model\Stock\StockFacadeInterface;
+use App\Model\Stock\StockDataFactory;
+use App\Model\Stock\StockFacade;
 use Doctrine\Common\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -23,21 +23,21 @@ class StocksDataFixture extends AbstractReferenceFixture
     private $domain;
 
     /**
-     * @var \App\Model\Stock\StockFacadeInterface
+     * @var \App\Model\Stock\StockFacade
      */
     private $stockFacade;
 
     /**
-     * @var \App\Model\Stock\StockDataFactoryInterface
+     * @var \App\Model\Stock\StockDataFactory
      */
     private $stockDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Stock\StockFacadeInterface $stockFacade
-     * @param \App\Model\Stock\StockDataFactoryInterface $stockDataFactory
+     * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \App\Model\Stock\StockDataFactory $stockDataFactory
      */
-    public function __construct(Domain $domain, StockFacadeInterface $stockFacade, StockDataFactoryInterface $stockDataFactory)
+    public function __construct(Domain $domain, StockFacade $stockFacade, StockDataFactory $stockDataFactory)
     {
         $this->domain = $domain;
         $this->stockFacade = $stockFacade;
@@ -86,7 +86,7 @@ class StocksDataFixture extends AbstractReferenceFixture
                 [
                     self::ATTR_NAME => 'Sklad Praha',
                     self::ATTR_CENTRAL => true,
-                    self::ATTR_EXTERNAL => 'asd',
+                    self::ATTR_EXTERNAL => 'ppp',
                 ],
                 [
                     self::ATTR_NAME => 'Sklad Brno',
@@ -118,7 +118,7 @@ class StocksDataFixture extends AbstractReferenceFixture
             [
                 self::ATTR_NAME => 'Sklad Zilina',
                 self::ATTR_CENTRAL => false,
-                self::ATTR_EXTERNAL => 'jjj',
+                self::ATTR_EXTERNAL => 'zzz',
             ],
         ];
 

@@ -7,7 +7,7 @@ namespace App\Model\Stock;
 use App\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 
-class StockSettingsDataFactory implements StockSettingsDataFactoryInterface
+class StockSettingsDataFactory
 {
     /**
      * @var \App\Component\Setting\Setting

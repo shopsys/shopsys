@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Form\Admin\StockFormTypeExtension;
-use App\Form\Admin\StockSettingsFromType;
+use App\Form\Admin\StockSettingsFormType;
 use App\Model\Stock\Exception\StockNotFoundException;
-use App\Model\Stock\StockDataFactoryInterface;
-use App\Model\Stock\StockFacadeInterface;
+use App\Model\Stock\StockDataFactory;
+use App\Model\Stock\StockFacade;
 use App\Model\Stock\StockSettingsDataFacade;
-use App\Model\Stock\StockSettingsDataFactoryInterface;
+use App\Model\Stock\StockSettingsDataFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -27,16 +27,6 @@ use Symfony\Component\HttpFoundation\Response;
 class StockController extends AdminBaseController
 {
     /**
-     * @var \App\Model\Stock\StockFacadeInterface
-     */
-    private $stockFacade;
-
-    /**
-     * @var \App\Model\Stock\StockDataFactoryInterface
-     */
-    private $stockDataFactory;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
      */
     private $adminDomainTabsFacade;
@@ -52,12 +42,22 @@ class StockController extends AdminBaseController
     private $gridFactory;
 
     /**
-     * @var \App\Model\Stock\StockSettingsDataFacadeInterface
+     * @var \App\Model\Stock\StockFacade|\App\Model\Stock\StockFacade
+     */
+    private $stockFacade;
+
+    /**
+     * @var \App\Model\Stock\StockDataFactory|\App\Model\Stock\StockDataFactory
+     */
+    private $stockDataFactory;
+
+    /**
+     * @var \App\Model\Stock\StockSettingsDataFacade
      */
     private $stockSettingsDataFacade;
 
     /**
-     * @var \App\Model\Stock\StockSettingsDataFactoryInterface
+     * @var \App\Model\Stock\StockSettingsDataFactory|\App\Model\Stock\StockSettingsDataFactory
      */
     private $stockSettingsDataFactory;
 
@@ -65,25 +65,25 @@ class StockController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \App\Model\Stock\StockFacadeInterface $stockFacade
-     * @param \App\Model\Stock\StockDataFactoryInterface $stockDataFactory
+     * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \App\Model\Stock\StockDataFactory $stockDataFactory
      * @param \App\Model\Stock\StockSettingsDataFacade $stockSettingsDataFacade
-     * @param \App\Model\Stock\StockSettingsDataFactoryInterface $stockSettingsDataFactory
+     * @param \App\Model\Stock\StockSettingsDataFactory $stockSettingsDataFactory
      */
     public function __construct(
         GridFactory $gridFactory,
         BreadcrumbOverrider $breadcrumbOverrider,
         AdminDomainTabsFacade $adminDomainTabsFacade,
-        StockFacadeInterface $stockFacade,
-        StockDataFactoryInterface $stockDataFactory,
+        StockFacade $stockFacade,
+        StockDataFactory $stockDataFactory,
         StockSettingsDataFacade $stockSettingsDataFacade,
-        StockSettingsDataFactoryInterface $stockSettingsDataFactory
+        StockSettingsDataFactory $stockSettingsDataFactory
     ) {
-        $this->stockFacade = $stockFacade;
-        $this->stockDataFactory = $stockDataFactory;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
         $this->breadcrumbOverrider = $breadcrumbOverrider;
         $this->gridFactory = $gridFactory;
+        $this->stockFacade = $stockFacade;
+        $this->stockDataFactory = $stockDataFactory;
         $this->stockSettingsDataFacade = $stockSettingsDataFacade;
         $this->stockSettingsDataFactory = $stockSettingsDataFactory;
     }
@@ -109,7 +109,7 @@ class StockController extends AdminBaseController
     private function getStockSettingsForm(): FormInterface
     {
         $stockSettingsData = $this->stockSettingsDataFactory->create();
-        return $this->createForm(StockSettingsFromType::class, $stockSettingsData, [
+        return $this->createForm(StockSettingsFormType::class, $stockSettingsData, [
             'action' => $this->generateUrl('admin_stock_savesettings'),
         ]);
     }

@@ -75,29 +75,6 @@ class StockRepository
     }
 
     /**
-     * @param int $domainId
-     * @return \App\Model\Stock\Stock[]
-     */
-    public function getAllStockByDomain(int $domainId): array
-    {
-        return $this->getQueryBuilderByDomain($domainId)
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
-     * @param int $domainId
-     * @return int
-     */
-    public function getAllStockCountByDomainId(int $domainId): int
-    {
-        return $this->getQueryBuilderByDomain($domainId)
-            ->select('COUNT(s)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    /**
      * @param string $name
      * @param int $domainId
      * @return \App\Model\Stock\Stock|null
@@ -109,5 +86,14 @@ class StockRepository
             ->setParameter('name', $name)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * @param string $externalId
+     * @return \App\Model\Stock\Stock|null
+     */
+    public function findStockByExternalId(string $externalId): ?Stock
+    {
+        return $this->getStockRepository()->findOneBy(['externalId' => $externalId]);
     }
 }

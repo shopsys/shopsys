@@ -43,9 +43,9 @@ class Stock
     protected $centralStock;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     protected $externalId;
 
@@ -103,9 +103,9 @@ class Stock
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getExternalId(): ?string
+    public function getExternalId(): string
     {
         return $this->externalId;
     }

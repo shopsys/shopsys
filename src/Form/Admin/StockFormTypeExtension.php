@@ -6,7 +6,7 @@ namespace App\Form\Admin;
 
 use App\Model\Stock\Stock;
 use App\Model\Stock\StockData;
-use App\Model\Stock\StockFacadeInterface;
+use App\Model\Stock\StockFacade;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -26,14 +26,14 @@ class StockFormTypeExtension extends AbstractType
     private $stock;
 
     /**
-     * @var \App\Model\Stock\StockFacadeInterface
+     * @var \App\Model\Stock\StockFacade
      */
     private $stockFacade;
 
     /**
-     * @param \App\Model\Stock\StockFacadeInterface $stockFacade
+     * @param \App\Model\Stock\StockFacade $stockFacade
      */
-    public function __construct(StockFacadeInterface $stockFacade)
+    public function __construct(StockFacade $stockFacade)
     {
         $this->stockFacade = $stockFacade;
     }
@@ -62,7 +62,7 @@ class StockFormTypeExtension extends AbstractType
         $stockDataBuilder->add('name', TextType::class, [
             'required' => true,
             'constraints' => [
-                new Constraints\NotBlank(['message' => 'Prosím vyplňte název skladu']),
+                new Constraints\NotBlank(['message' => 'Vyplňte prosím název skladu']),
                 new Constraints\Length(['max' => 255, 'maxMessage' => 'Název skladu nesmí být delší než {{ limit }} znaků']),
             ],
             'label' => t('Name'),
@@ -75,8 +75,13 @@ class StockFormTypeExtension extends AbstractType
             'externalId',
             TextType::class,
             [
-                'required' => false,
+                'required' => true,
                 'label' => t('External bridge ID'),
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Vyplňte prosím external bridge ID']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'External bridge ID skladu nesmí být delší než {{ limit }} znaků']),
+                    new Constraints\Callback([$this, 'sameStockExternalIdValidation']),
+                ],
             ]
         );
 
@@ -99,6 +104,21 @@ class StockFormTypeExtension extends AbstractType
                     new Constraints\Callback([$this, 'sameStockNameValidation']),
                 ],
             ]);
+    }
+
+    /**
+     * @param string $externalId
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function sameStockExternalIdValidation(string $externalId, ExecutionContextInterface $context)
+    {
+        if ($this->stock === null || $externalId !== $this->stock->getExternalId()) {
+            $stock = $this->stockFacade->findStockByExternalId($externalId);
+
+            if ($stock !== null) {
+                $context->addViolation('Sklad s tímto externím kódem již existuje');
+            }
+        }
     }
 
     /**

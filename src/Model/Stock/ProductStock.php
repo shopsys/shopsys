@@ -14,19 +14,19 @@ use Doctrine\ORM\Mapping as ORM;
 class ProductStock
 {
     /**
-     * @var \App\Model\Stock\Stock|null
+     * @var \App\Model\Stock\Stock
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="\App\Model\Stock\Stock",inversedBy="productStocks")
+     * @ORM\ManyToOne(targetEntity="\App\Model\Stock\Stock")
      * @ORM\JoinColumn(name="stock_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     protected $stock;
 
     /**
-     * @var \App\Model\Product\Product|null
+     * @var \App\Model\Product\Product
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="App\Model\Product\Product", inversedBy="productStocks")
+     * @ORM\ManyToOne(targetEntity="App\Model\Product\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE", nullable=false )
      */
     protected $product;

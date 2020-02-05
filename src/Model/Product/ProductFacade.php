@@ -8,8 +8,8 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 use App\Model\Stock\ProductStockDataFactoryInterface;
-use App\Model\Stock\ProductStockFacadeInterface;
-use App\Model\Stock\StockFacadeInterface;
+use App\Model\Stock\ProductStockFacade;
+use App\Model\Stock\StockFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -65,12 +65,12 @@ class ProductFacade extends BaseProductFacade
     }
 
     /**
-     * @var \App\Model\Stock\StockFacadeInterface
+     * @var \App\Model\Stock\StockFacade
      */
     private $stockFacade;
 
     /**
-     * @var \App\Model\Stock\ProductStockFacadeInterface
+     * @var \App\Model\Stock\ProductStockFacade
      */
     private $productStockFacade;
 
@@ -98,8 +98,8 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
-     * @param \App\Model\Stock\ProductStockFacadeInterface $productStockFacade
-     * @param \App\Model\Stock\StockFacadeInterface $stockFacade
+     * @param \App\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \App\Model\Stock\StockFacade $stockFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -125,8 +125,8 @@ class ProductFacade extends BaseProductFacade
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
         ProductSearchExportScheduler $productSearchExportScheduler,
-        ProductStockFacadeInterface $productStockFacade,
-        StockFacadeInterface $stockFacade
+        ProductStockFacade $productStockFacade,
+        StockFacade $stockFacade
     ) {
         parent::__construct(
             $em,
