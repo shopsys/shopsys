@@ -73,11 +73,11 @@
                         {{ info_text|default('') }}
                     </div>
                 </div>
-                <div class="box-upload__place__button">
-                    {{ form_widget(form.children.file) }}
-                </div>
                 <div class="js-file-upload-fallback-hide box-upload__place__between">
                     {{ 'or'|trans }}
+                </div>
+                <div class="box-upload__place__button">
+                    {{ form_widget(form.children.file) }}
                 </div>
             </div>
         </div>
