@@ -56,22 +56,23 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         parent::fillFromPromoCode($promoCodeData, $promoCode);
         $promoCodeData->domainId = $promoCode->getDomainId();
 
-        $promoCodeData->dateValidFrom = $this->solveDate($promoCode->getDatetimeValidFrom());
-        $promoCodeData->dateValidTo = $this->solveDate($promoCode->getDatetimeValidTo());
+        $promoCodeData->dateValidFrom = $this->convertDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidFrom());
+        $promoCodeData->dateValidTo = $this->convertDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidTo());
 
-        $promoCodeData->timeValidFrom = $this->solveTime($promoCode->getDatetimeValidFrom());
-        $promoCodeData->timeValidTo = $this->solveTime($promoCode->getDatetimeValidTo());
+        $promoCodeData->timeValidFrom = $this->formatTimeFromValidDateTime($promoCode->getDatetimeValidFrom());
+        $promoCodeData->timeValidTo = $this->formatTimeFromValidDateTime($promoCode->getDatetimeValidTo());
     }
 
     /**
      * @param \DateTime|null $dateTime
      * @return \DateTime|null
      */
-    private function solveDate(?DateTime $dateTime = null): ?DateTime
+    private function convertDateFromDatabaseTimeZoneToViewTimezone(?DateTime $dateTime = null): ?DateTime
     {
-        if ($dateTime) {
+        if ($dateTime !== null) {
             return $this->dateTimeHelper->convertDateTimeFromUtcToDisplayTimeZone($dateTime);
         }
+
         return null;
     }
 
@@ -79,12 +80,13 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
      * @param \DateTime|null $dateTime
      * @return string|null
      */
-    private function solveTime(?DateTime $dateTime = null): ?string
+    private function formatTimeFromValidDateTime(?DateTime $dateTime = null): ?string
     {
-        $dateTime = $this->solveDate($dateTime);
-        if ($dateTime) {
+        $dateTime = $this->convertDateFromDatabaseTimeZoneToViewTimezone($dateTime);
+        if ($dateTime !== null) {
             return $dateTime->format(self::TIME_VALID_FORMAT);
         }
+
         return null;
     }
 }

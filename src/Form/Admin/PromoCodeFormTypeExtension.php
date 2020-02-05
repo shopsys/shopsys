@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Component\DateTimeHelper\DateTimeHelper;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeData;
 use App\Model\Order\PromoCode\PromoCodeFacade;
@@ -19,8 +20,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PromoCodeFormTypeExtension extends AbstractTypeExtension
 {
-    protected const TIME_REGEX = '#^([01]?[0-9]|2[0-3]):[0-5][0-9]$#'; //hh:mm
-
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeFacade
      */
@@ -70,14 +69,14 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     private function buildTimeValidationForm(FormBuilderInterface $builder)
     {
         $timeOptions = [
-            'icon_title' => t('Fotmát času: \'hh:mm\', např.: \'07:45\',\'23:05\''),
+            'icon_title' => t('Formát času: "hh:mm", např.: "07:45", "23:05"'),
             'constraints' => [
                 new Constraints\Callback([$this, 'validateTimeIfIsSet']),
             ],
         ];
 
         $dateOptions = [
-            'view_timezone' => 'UTC',
+            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
         ];
 
         $builder->add('dateValidFrom', DatePickerType::class, $dateOptions);
@@ -113,9 +112,9 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      */
     public function validateDateTimeFrom(PromoCodeData $promoCodeData, ExecutionContextInterface $context)
     {
-        if ($promoCodeData->timeValidFrom != null) {
-            if ($promoCodeData->dateValidFrom == null) {
-                $context->buildViolation('Pokud je vyplněn čas OD, vyplň i datum OD.')
+        if ($promoCodeData->timeValidFrom !== null) {
+            if ($promoCodeData->dateValidFrom === null) {
+                $context->buildViolation(t('Pokud je vyplněn čas OD, vyplňte i datum OD.'))
                     ->atPath('date_valid_from')
                     ->addViolation();
             }
@@ -128,9 +127,9 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      */
     public function validateDateTimeTo(PromoCodeData $promoCodeData, ExecutionContextInterface $context)
     {
-        if ($promoCodeData->timeValidTo != null) {
-            if ($promoCodeData->dateValidTo == null) {
-                $context->buildViolation('Pokud je vyplněn čas DO, vyplň i datum DO.')
+        if ($promoCodeData->timeValidTo !== null) {
+            if ($promoCodeData->dateValidTo === null) {
+                $context->buildViolation(t('Pokud je vyplněn čas DO, vyplňte i datum DO.'))
                     ->atPath('date_valid_to')
                     ->addViolation();
             }
@@ -143,9 +142,9 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      */
     public function validateTimeIfIsSet($time, ExecutionContextInterface $context)
     {
-        if ($time != null || $time != '') {
-            if (!(bool)preg_match(self::TIME_REGEX, $time)) {
-                $context->addViolation('Špatný formát času: ' . $time . ', správně: hh:mm.');
+        if ($time !== null && $time !== '') {
+            if (preg_match(DateTimeHelper::TIME_REGEX, $time) !== 1) {
+                $context->addViolation(t('Prosím vyplňte správný formát času hh:mm'));
             }
         }
     }

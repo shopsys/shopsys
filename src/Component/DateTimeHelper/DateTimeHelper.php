@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterf
 class DateTimeHelper
 {
     public const UTC_TIMEZONE = 'UTC';
+    public const TIME_REGEX = '#^([01]?[0-9]|2[0-3]):[0-5][0-9]$#'; //hh:mm
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface

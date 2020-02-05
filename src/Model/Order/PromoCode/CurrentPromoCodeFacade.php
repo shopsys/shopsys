@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
+use App\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
+use App\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade as BaseCurrentPromoCodeFacade;
 
 /**
@@ -18,50 +20,43 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      */
     public function setEnteredPromoCode($enteredCode)
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
-        if ($this->isValidPromoCode($promoCode)) {
-            $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
-        } else {
+        if ($promoCode === null) {
             throw new \Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException($enteredCode);
         }
+        $this->validatePromoCodeDatetime($promoCode);
+
+        $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
     }
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
-     * @return bool
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      */
-    private function isValidPromoCode(?PromoCode $promoCode = null): bool
+    private function validatePromoCodeDatetime(PromoCode $promoCode)
     {
+        if ($promoCode->getDatetimeValidFrom() === null
+            && $promoCode->getDatetimeValidTo() === null
+        ) {
+            return;
+        }
+
         $currentTimestamp = time();
-
-        if ($promoCode) {
-            if ($promoCode->getDatetimeValidFrom() == null
-                && $promoCode->getDatetimeValidTo() == null
+        if ($promoCode->getDatetimeValidFrom() !== null
+            && $promoCode->getDatetimeValidTo() !== null
+        ) {
+            if ($promoCode->getDatetimeValidFrom()->getTimestamp() < $currentTimestamp
+                && $promoCode->getDatetimeValidTo()->getTimestamp() > $currentTimestamp
             ) {
-                return true;
-            }
-
-            if ($promoCode->getDatetimeValidFrom() != null
-                && $promoCode->getDatetimeValidTo() != null
-            ) {
-                if ($promoCode->getDatetimeValidFrom()->getTimestamp() < $currentTimestamp
-                    && $promoCode->getDatetimeValidTo()->getTimestamp() > $currentTimestamp
-                ) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-            if ($promoCode->getDatetimeValidFrom() != null && $promoCode->getDatetimeValidFrom()->getTimestamp() < $currentTimestamp) {
-                return true;
-            }
-
-            if ($promoCode->getDatetimeValidTo() != null && $promoCode->getDatetimeValidTo()->getTimestamp() > $currentTimestamp) {
-                return true;
+                return;
             }
         }
-        return false;
+
+        if ($promoCode->getDatetimeValidFrom() !== null && $promoCode->getDatetimeValidFrom()->getTimestamp() > $currentTimestamp) {
+            throw new NotYetValidPromoCodeDateTimeException($promoCode->getCode());
+        }
+
+        if ($promoCode->getDatetimeValidTo() !== null && $promoCode->getDatetimeValidTo()->getTimestamp() < $currentTimestamp) {
+            throw new NoLongerValidPromoCodeDateTimeException($promoCode->getCode());
+        }
     }
 }

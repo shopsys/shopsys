@@ -20,8 +20,8 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository;
  */
 class PromoCodeFacade extends BasePromoCodeFacade
 {
-    public const DEFAULT_TIME_FROM = '00:00:00';
-    public const DEFAULT_TIME_TO = '23:59:59';
+    public const PROMOCODE_DEFAULT_TIME_FROM = '00:00:00';
+    public const PROMOCODE_DEFAULT_TIME_TO = '23:59:59';
     public const DATABASE_DATE_FORMAT = 'Y-m-d';
 
     /**
@@ -57,7 +57,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param string $code
      * @return \App\Model\Order\PromoCode\PromoCode|null
      */
-    public function findPromoCodeByCode($code)
+    public function findPromoCodeByCode($code): ?PromoCode
     {
         return $this->promoCodeRepository->findByCodeAndDomainId($code, $this->domain->getId());
     }
@@ -67,7 +67,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param int $domainId
      * @return \App\Model\Order\PromoCode\PromoCode|null
      */
-    public function findPromoCodeByCodeAndDomain(string $code, int $domainId)
+    public function findPromoCodeByCodeAndDomain(string $code, int $domainId): ?PromoCode
     {
         return $this->promoCodeRepository->findByCodeAndDomainId($code, $domainId);
     }
@@ -82,6 +82,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
         /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = parent::create($promoCodeData);
+
         return $promoCode;
     }
 
@@ -96,44 +97,39 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
         /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = parent::edit($promoCodeId, $promoCodeData);
+
         return $promoCode;
     }
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
-    public function prepareDatetimeValid(PromoCodeData $promoCodeData): void
+    private function prepareDatetimeValid(PromoCodeData $promoCodeData): void
     {
-        if ($promoCodeData->dateValidFrom != null) {
-            if ($promoCodeData->timeValidFrom == null) {
-                $promoCodeData->timeValidFrom = self::DEFAULT_TIME_FROM;
-            }
-
-            $promoCodeData->datetimeValidFrom = $this->getDateTime(
-                ($promoCodeData->dateValidFrom)->format(self::DATABASE_DATE_FORMAT),
-                $promoCodeData->timeValidFrom
+        if ($promoCodeData->dateValidFrom !== null) {
+            $promoCodeData->datetimeValidFrom = $this->createDateTimeInUtc(
+                $promoCodeData->dateValidFrom,
+                $promoCodeData->timeValidFrom ?? self::PROMOCODE_DEFAULT_TIME_FROM
             );
         }
 
-        if ($promoCodeData->dateValidTo != null) {
-            if ($promoCodeData->timeValidTo == null) {
-                $promoCodeData->timeValidTo = self::DEFAULT_TIME_TO;
-            }
-
-            $promoCodeData->datetimeValidTo = $this->getDateTime(
-                ($promoCodeData->dateValidTo)->format(self::DATABASE_DATE_FORMAT),
-                $promoCodeData->timeValidTo
+        if ($promoCodeData->dateValidTo !== null) {
+            $promoCodeData->datetimeValidTo = $this->createDateTimeInUtc(
+                $promoCodeData->dateValidTo,
+                $promoCodeData->timeValidTo ?? self::PROMOCODE_DEFAULT_TIME_TO
             );
         }
     }
 
     /**
-     * @param string $date
+     * @param \DateTime $date
      * @param string $time
      * @return \DateTime
      */
-    private function getDateTime(string $date, string $time): DateTime
+    private function createDateTimeInUtc(DateTime $date, string $time): DateTime
     {
-        return $this->dateTimeHelper->convertDateTimeFromDisplayTimeZoneToUtc($date . 'T' . $time);
+        return $this->dateTimeHelper->convertDateTimeFromDisplayTimeZoneToUtc(
+            $date->format(self::DATABASE_DATE_FORMAT) . 'T' . $time
+        );
     }
 }

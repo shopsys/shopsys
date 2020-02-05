@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
