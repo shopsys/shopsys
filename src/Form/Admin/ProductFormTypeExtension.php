@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
@@ -123,9 +124,14 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             'label' => t('Stocks'),
         ]);
 
-        $stockGroupBuilder->add('stockProductData', StocksProductFormType::class, [
+//        $stockGroupBuilder->add('stockProductData', StocksProductFormType::class, [
+//            'required' => false,
+//            'data' => $builder->getData()->stockProductData,
+//        ]);
+
+        $stockGroupBuilder->add('stockProductData', CollectionType::class, [
             'required' => false,
-            'data' => $builder->getData()->stockProductData,
+            'entry_type' => StockProductFormType::class,
         ]);
 
         $builder->add($stockGroupBuilder);
