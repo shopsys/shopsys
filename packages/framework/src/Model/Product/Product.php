@@ -395,16 +395,15 @@ class Product extends AbstractTranslatableEntity
     protected function setAvailabilityAndStock(ProductData $productData): void
     {
         $this->usingStock = $productData->usingStock;
+        $this->availability = $productData->availability;
         if ($this->usingStock) {
             $this->stockQuantity = $productData->stockQuantity;
             $this->outOfStockAction = $productData->outOfStockAction;
             $this->outOfStockAvailability = $productData->outOfStockAvailability;
-            $this->availability = null;
         } else {
             $this->stockQuantity = null;
             $this->outOfStockAction = null;
             $this->outOfStockAvailability = null;
-            $this->availability = $productData->availability;
         }
     }
 
@@ -572,7 +571,7 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
      */
     public function getAvailability()
     {
