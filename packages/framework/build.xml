@@ -747,39 +747,81 @@
         </exec>
     </target>
 
-    <target name="product-search-create-structure" description="Creates structure for searching via elasticsearch." hidden="true">
+    <target name="elasticsearch-index-create" description="Creates indexes into elasticsearch." hidden="true">
+        <property name="elasticsearch.index" value="" />
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:elasticsearch:indexes-create"/>
-            <arg value="product"/>
+            <arg value="${elasticsearch.index}"/>
         </exec>
     </target>
 
-    <target name="product-search-delete-structure" depends="production-protection" description="Deletes structure for searching via elasticsearch." hidden="true">
+    <target name="elasticsearch-index-delete" depends="production-protection" description="Deletes indexes into elasticsearch." hidden="true">
+        <property name="elasticsearch.index" value="" />
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:elasticsearch:indexes-delete"/>
-            <arg value="product"/>
+            <arg value="${elasticsearch.index}"/>
         </exec>
     </target>
 
-    <target name="product-search-export-products" description="Exports all products for searching via elasticsearch.">
+    <target name="elasticsearch-index-export" description="Exports indexes data into elasticsearch.">
+        <property name="elasticsearch.index" value="" />
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:elasticsearch:data-export"/>
-            <arg value="product"/>
+            <arg value="${elasticsearch.index}"/>
         </exec>
     </target>
 
-    <target name="product-search-migrate-structure" description="Creates new structure, reindexes it from old one, deletes old structure and add alias to new structure.">
+    <target name="elasticsearch-index-migrate"  description="Creates new indexes, reindex them from old one, deletes old indexes and add alias to the new one." hidden="true">
+        <property name="elasticsearch.index" value="" />
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:elasticsearch:indexes-migrate"/>
-            <arg value="product"/>
+            <arg value="${elasticsearch.index}"/>
         </exec>
     </target>
 
-    <target name="product-search-recreate-structure" depends="production-protection,product-search-delete-structure,product-search-create-structure" description="Recreates structure for searching via elasticsearch (deletes existing structure and creates new one)"/>
+    <target name="elasticsearch-index-recreate"
+            depends="production-protection, elasticsearch-index-delete, elasticsearch-index-create"
+            description="Recreates indexes into elasticsearch (deletes existing indexes and creates new one)"
+    />
+
+    <target name="product-search-create-structure" description="Creates structure for searching via elasticsearch." hidden="true">
+        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-index-create' instead."/>
+        <phingcall target="elasticsearch-index-create">
+            <property name="elasticsearch.index" value="product" />
+        </phingcall>
+    </target>
+
+    <target name="product-search-delete-structure" depends="production-protection" description="Deletes structure for searching via elasticsearch." hidden="true">
+        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-index-delete' instead."/>
+        <phingcall target="elasticsearch-index-delete">
+            <property name="elasticsearch.index" value="product" />
+        </phingcall>
+    </target>
+
+    <target name="product-search-export-products" description="Exports all products for searching via elasticsearch." hidden="true">
+        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-index-export' instead."/>
+        <phingcall target="elasticsearch-index-export">
+            <property name="elasticsearch.index" value="product" />
+        </phingcall>
+    </target>
+
+    <target name="product-search-migrate-structure" description="Creates new structure, reindexes it from old one, deletes old structure and add alias to new structure." hidden="true">
+        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-index-migrate' instead."/>
+        <phingcall target="elasticsearch-index-migrate">
+            <property name="elasticsearch.index" value="product" />
+        </phingcall>
+    </target>
+
+    <target name="product-search-recreate-structure" depends="production-protection" description="Recreates structure for searching via elasticsearch (deletes existing structure and creates new one)" hidden="true">
+        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-index-recreate' instead."/>
+        <phingcall target="elasticsearch-index-recreate">
+            <property name="elasticsearch.index" value="product" />
+        </phingcall>
+    </target>
 
     <target name="production-protection" depends="environment-load" description="Asks user for confirmation when he or she wants to run a particular action in production environment" hidden="true">
         <if>
