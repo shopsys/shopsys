@@ -6,29 +6,54 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 abstract class AbstractIndex
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\DataProviderInterface
-     */
-    protected $dataProvider;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\DataProviderInterface $dataProvider
-     */
-    public function __construct(DataProviderInterface $dataProvider)
-    {
-        $this->dataProvider = $dataProvider;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\DataProviderInterface
-     */
-    public function getDataProvider(): DataProviderInterface
-    {
-        return $this->dataProvider;
-    }
+    public const BATCH_SIZE = 100;
 
     /**
      * @return string
      */
     abstract public function getName(): string;
+
+    /**
+     * @param int $domainId
+     * @return int
+     */
+    abstract public function getTotalCount(int $domainId): int;
+
+    /**
+     * @param int $domainId
+     * @param array $restrictToIds
+     * @return array
+     */
+    abstract public function getExportDataForIds(int $domainId, array $restrictToIds): array;
+
+    /**
+     * @param int $domainId
+     * @param int $lastProcessedId
+     * @param int $batchSize
+     * @return array
+     */
+    abstract public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array;
+
+    /**
+     * @return int
+     */
+    public function getExportBatchSize(): int
+    {
+        return static::BATCH_SIZE;
+    }
+
+    /**
+     * @param int $domainId
+     * @param int $lastProcessedId
+     * @param array $restrictToIds
+     * @return array
+     */
+    public function getExportData(int $domainId, int $lastProcessedId, array $restrictToIds = []): array
+    {
+        if (!empty($restrictToIds)) {
+            return $this->getExportDataForIds($domainId, $restrictToIds);
+        }
+
+        return $this->getExportDataForBatch($domainId, $lastProcessedId, $this->getExportBatchSize());
+    }
 }

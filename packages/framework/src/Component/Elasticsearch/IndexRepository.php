@@ -163,13 +163,13 @@ class IndexRepository
     public function export(IndexDefinition $indexDefinition, array $restrictToIds, OutputInterface $output): void
     {
         $indexAlias = $indexDefinition->getIndexAlias();
-        $dataProvider = $indexDefinition->getIndex()->getDataProvider();
+        $index = $indexDefinition->getIndex();
         $domainId = $indexDefinition->getDomainId();
 
         if ($restrictToIds !== []) {
             $totalCount = count($restrictToIds);
         } else {
-            $totalCount = $dataProvider->getTotalCount($indexDefinition->getDomainId());
+            $totalCount = $index->getTotalCount($indexDefinition->getDomainId());
         }
 
         $progressBar = $this->progressBarFactory->create($output, $totalCount);
@@ -177,7 +177,7 @@ class IndexRepository
         $lastProcessedId = 0;
         $updatedIds = [];
         do {
-            $currentBatchData = $dataProvider->getDataForBatch($domainId, $lastProcessedId, $restrictToIds);
+            $currentBatchData = $index->getExportData($domainId, $lastProcessedId, $restrictToIds);
             $currentBatchSize = count($currentBatchData);
             if (empty($currentBatchData)) {
                 break;
@@ -188,7 +188,7 @@ class IndexRepository
 
             $updatedIds = array_merge($updatedIds, array_keys($currentBatchData));
             $lastProcessedId = array_key_last($currentBatchData);
-        } while ($currentBatchSize >= DataProviderInterface::BATCH_SIZE);
+        } while ($currentBatchSize >= $index->getExportBatchSize());
 
         $idsToDelete = array_diff($restrictToIds, $updatedIds);
         $this->deleteIds($indexAlias, $domainId, $idsToDelete);

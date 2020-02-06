@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductDataProvider;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
-use Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryDataProvider;
+use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository;
 use Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryIndex;
 
 class IndexRegistryTest extends TestCase
@@ -23,14 +24,14 @@ class IndexRegistryTest extends TestCase
     {
         parent::setUp();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductDataProvider|\PHPUnit\Framework\MockObject\MockObject $productDataProvider */
-        $productDataProvider = $this->createMock(ProductDataProvider::class);
-        /** @var \Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryDataProvider|\PHPUnit\Framework\MockObject\MockObject $categoryDataProvider */
-        $categoryDataProvider = $this->createMock(CategoryDataProvider::class);
+        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domainMock */
+        $domainMock = $this->createMock(Domain::class);
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository $productSearchExportWithFilterRepositoryMock */
+        $productSearchExportWithFilterRepositoryMock = $this->createMock(ProductSearchExportWithFilterRepository::class);
 
         $this->indexRegistry = new IndexRegistry([
-            new ProductIndex($productDataProvider),
-            new CategoryIndex($categoryDataProvider),
+            new ProductIndex($domainMock, $productSearchExportWithFilterRepositoryMock),
+            new CategoryIndex(),
         ]);
     }
 
