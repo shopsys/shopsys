@@ -165,8 +165,6 @@ class ArticleController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $articleData = $form->getData();
-
             $article = $this->articleFacade->create($articleData);
 
             $this
