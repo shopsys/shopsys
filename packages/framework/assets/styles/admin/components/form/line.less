@@ -196,6 +196,14 @@
 
         &--fixed-width-left {
             width: 40px;
+            right: 0;
+            position: absolute;
+
+            @media @query-md {
+                position: relative;
+                right: auto;
+            }
+
         }
 
         &--input-size {
