@@ -17,14 +17,15 @@
         }
 
         &__content {
-            flex: 1;
+            width: 100%;
+            margin-bottom: 5px;
             padding: 0 5px;
 
             &--small {
                 padding: 0 5px 0 0;
                 width: 25px;
 
-                text-align: right;
+                text-align: center;
 
                 i {
                     position: relative;
@@ -43,6 +44,14 @@
         margin: 0 -10px;
 
         text-align: right;
+
+        &--button {
+            margin-top: -32px;
+
+            @media @query-lg {
+                margin-top: 0;
+            }
+        }
 
         &--dark {
             padding: 5px 20px;
