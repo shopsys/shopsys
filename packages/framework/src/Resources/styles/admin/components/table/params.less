@@ -1,0 +1,177 @@
+@query-table-param: ~"only screen and (min-width: 1024px)";
+
+@table-param-row-height: 46px;
+
+
+.table-params {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: @radius;
+
+    thead {
+        background: @color-f;
+        color: @color-base;
+        font-weight: bold;
+    }
+
+    tbody {
+        background: @color-f;
+    }
+
+    &__wrap {
+        padding-top: 4px;
+        position: relative;
+    }
+
+    &__row {
+        display: flex;
+        flex-direction: column;
+        background: @color-f;
+        border-bottom: 1px solid @table-grid-line-color;
+
+        &--group {
+            background: @bg-info;
+        }
+
+        thead & {
+            background: @bg-table;
+        }
+
+        @media @query-table-param {
+            flex-direction: row;
+        }
+    }
+
+    &__cell {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        padding: 6px 17px;
+        max-width: 315px;
+
+        text-align: left;
+        color: @color-base;
+
+        .ui-sortable-helper & {
+            width: 100%;
+            display: table-row;
+        }
+
+        &--header {
+            height: auto;
+        }
+
+        &__label {
+            display: block;
+            padding: 6px 10px;
+            font-weight: bold;
+        }
+
+        &--arrow {
+            align-items: center;
+            color: @color-grey;
+            text-align: center;
+
+            .svg {
+                transform: rotate(90deg);
+            }
+
+            @media @query-table-param {
+                width: 40px;
+
+                .svg {
+                    transform: rotate(0);
+                }
+            }
+        }
+
+        &--actions {
+            align-items: center;
+            text-align: center;
+
+            @media @query-table-param {
+                align-items: flex-end;
+                width: 100%;
+                max-width: 100%; // overrides form__cell
+            }
+
+            .svg {
+                color: @color-grey;
+                margin-top: 5px;
+
+                &:hover {
+                    color: @color-blue;
+                }
+            }
+
+            a {
+                font-size: 14px;
+                color: @color-grey;
+
+                &:hover {
+                    color: @color-blue;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        thead & {
+            padding-top: 14px;
+            padding-bottom: 14px;
+        }
+
+        &__image {
+            float: left;
+            width: 46px;
+            height: 26px;
+            position: relative;
+            margin-right: 5px;
+
+            text-align: center;
+            background: @color-f;
+
+            img {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                width: auto;
+                height: auto;
+                max-width: 100%;
+                max-height: 100%;
+                margin: auto;
+            }
+        }
+
+        &__group-name {
+            line-height: 26px;
+
+            font-weight: bold;
+        }
+
+        &__move {
+            margin-right: 5px;
+            position: relative;
+            top: calc(~"50% - 15px");
+            margin-bottom: -1px;
+        }
+
+        &__error {
+            top: 4px;
+            left: -28px;
+            position: absolute;
+        }
+    }
+
+    &__action {
+        text-decoration: none;
+        color: @color-grey;
+        font-size: 14px;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
