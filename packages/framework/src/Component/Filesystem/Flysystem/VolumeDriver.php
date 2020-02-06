@@ -44,7 +44,7 @@ class VolumeDriver extends Driver
         $stat = $this->_stat($thumbnailPath, $hash);
 
         if (isset($stat['tmb'])) {
-            $res = $stat['tmb'] == '1' ? $this->createTmb($thumbnailPath, $stat) : $stat['tmb'];
+            $res = (string)$stat['tmb'] === '1' ? $this->createTmb($thumbnailPath, $stat) : $stat['tmb'];
 
             if (!$res) {
                 list($type) = explode('/', $stat['mime']);
@@ -134,7 +134,7 @@ class VolumeDriver extends Driver
                         $this->rmTmb($this->stat($p));
                     }
                 }
-            } elseif (!empty($stat['tmb']) && $stat['tmb'] != '1') {
+            } elseif (!empty($stat['tmb']) && (string)$stat['tmb'] !== '1') {
                 $thumbnailPath = $this->createThumbnailPath(rawurldecode($stat['tmb']));
                 $this->_unlink($thumbnailPath);
                 clearstatcache();

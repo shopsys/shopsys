@@ -55,7 +55,7 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
     {
         foreach ($rulesData as $index => $ruleData) {
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
-            if ($dqlOperator === null || $ruleData->value == '' || $ruleData->value === null) {
+            if ($dqlOperator === null || $ruleData->value === '' || $ruleData->value === null) {
                 continue;
             }
             $searchValue = $ruleData->value;
