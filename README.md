@@ -53,7 +53,7 @@ List of typical projects built on previous versions of Shopsys Framework:
 * [B2C Portal Démos](https://www.demos-trade.cz/)
 * [Agátin svět](https://www.agatinsvet.cz/)
 * [Bushman](https://www.bushman.cz/)
-* [Htmodel](https://htmodel.sk/)
+* [HTmodel](https://htmodel.sk/)
 
 ## How to Start a New Project
 The *shopsys/shopsys* package is a monolithic repository, a single development environment, for management of all parts of Shopsys Framework.
