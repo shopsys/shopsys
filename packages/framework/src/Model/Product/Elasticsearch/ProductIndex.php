@@ -22,7 +22,6 @@ class ProductIndex extends AbstractIndex
      */
     protected $productSearchExportWithFilterRepository;
 
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository $productSearchExportWithFilterRepository

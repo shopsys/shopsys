@@ -2,12 +2,10 @@
 
 namespace Tests\FrameworkBundle\Unit\Model\Elasticsearch;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductDataProvider;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryIndex;
 
@@ -40,7 +38,7 @@ class IndexDefinitionTest extends TestCase
     {
         $productIndexMock = $this->getBasicProductIndexMock();
 
-        /** @var \Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryIndex $categoryIndexMock */
+        /** @var \Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryIndex|\PHPUnit\Framework\MockObject\MockObject $categoryIndexMock */
         $categoryIndexMock = $this->createMock(CategoryIndex::class);
         $categoryIndexMock->method('getName')->willReturn('category');
 
@@ -99,7 +97,7 @@ class IndexDefinitionTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex
      */
-    private function getBasicProductIndexMock(): MockObject
+    private function getBasicProductIndexMock(): ProductIndex
     {
         $productIndexMock = $this->createMock(ProductIndex::class);
         $productIndexMock->method('getName')->willReturn('product');
