@@ -9,14 +9,19 @@
 
     &__heading {
         float: left;
-        margin-bottom: 0;
+        margin-bottom: 5px;
 
         color: @color-title;
+
+        @media @query-lg {
+            margin-bottom: 0;
+        }
     }
 
     &__btn {
         float: right;
         margin-left: @wrap-bar-btn-gap;
+        margin-top: 3px;
     }
 
     &__tooltip {
