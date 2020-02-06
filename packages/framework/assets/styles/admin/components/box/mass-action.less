@@ -57,11 +57,18 @@
     }
 
     &__filter {
+        display: flex;
+        flex-direction: column;
         margin-top: 15px;
 
         &__line {
             margin: 5px -5px;
             display: flex;
+            flex-direction: column;
+
+            @media @query-lg {
+                flex-direction: row;
+            }
 
             &--submit {
                 text-align: right;
