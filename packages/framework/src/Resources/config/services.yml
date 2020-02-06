@@ -19,7 +19,7 @@ services:
 
     Shopsys\FrameworkBundle\:
         resource: '../../**/*{Calculation,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer}.php'
-        exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
+        exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig,Component/ClassExtension/ClassExtensionRegistry.php,Model/Newsletter/NewsletterSubscriber.php}'
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\:
         resource: '../../Model/AdvancedSearch/Filter/*Filter.php'

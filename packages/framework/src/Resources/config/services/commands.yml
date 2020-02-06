@@ -5,7 +5,9 @@ services:
         public: false
 
     Shopsys\FrameworkBundle\Command\:
-        resource: '../../Command'
+        resource: '../../Command/*{Command}.php'
+        # the command `ExtendedClassesAnnotationsCommand` is supposed to be used in DEV environment only so it is configured in services_dev.yml
+        exclude: '../../Command/ExtendedClassesAnnotationsCommand.php'
 
     Shopsys\FrameworkBundle\Command\ConfigureDomainsUrlsCommand:
         arguments:
@@ -37,7 +39,3 @@ services:
     Shopsys\MigrationBundle\Command\GenerateMigrationCommand:
         arguments:
             - '%shopsys.vendor_dir%'
-
-    # the command is supposed to be used in DEV environment only so it is configured in services_dev.yml
-    Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
-        autoconfigure: false

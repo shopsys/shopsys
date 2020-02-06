@@ -5,7 +5,8 @@ services:
         public: false
 
     Shopsys\FrameworkBundle\Form\:
-        resource: '../../Form/'
+        resource: '../../Form/**/*{Type,Extension,Validator,Transformer,Translation}.php'
+        exclude: '../../Form/Transformers/{InverseMultipleChoiceTransformer,NumericToMoneyTransformer}.php'
 
     Ivory\OrderedForm\Extension\OrderedFormExtension:
         tags:

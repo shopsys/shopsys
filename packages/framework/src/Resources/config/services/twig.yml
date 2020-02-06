@@ -9,7 +9,7 @@ services:
         resource: '%shopsys.vendor_dir%/commerceguys/intl/src/NumberFormat/*'
 
     Shopsys\FrameworkBundle\Twig\:
-        resource: '../../Twig/'
+        resource: '../../Twig/**/*{Extension}.php'
 
     Shopsys\FrameworkBundle\Twig\DomainExtension:
         arguments:
