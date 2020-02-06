@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -47,6 +48,11 @@ class RegistrationController extends FrontBaseController
      * @var \App\Model\Customer\User\RegistrationFacadeInterface
      */
     private $registrationFacade;
+
+    /**
+     * @var bool
+     */
+    private $firstTabActiveSetting = true;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -93,52 +99,89 @@ class RegistrationController extends FrontBaseController
         if ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             return $this->redirectToRoute('front_homepage');
         }
-        $active = ['common' => true, 'company' => false];
+        $this->activateCommonCustomerRegistrationForm();
         $registrationData = $this->registrationDataFactory->createForDomainId($this->domain->getId());
 
         $form = $this->createForm(RegistrationFormType::class, $registrationData);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $registrationData = $form->getData();
-
-                $customerUser = $this->registrationFacade->register($registrationData);
-
-                $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
-
-                $this->authenticator->loginUser($customerUser, $request);
-                return $this->redirectToRoute('front_homepage');
-            } else {
-                $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
-            }
-            $active['common'] = true;
+        if ($this->handleCommonCustomerRegistrationForm($form, $request)) {
+            return $this->redirectToRoute('front_homepage');
         }
 
         $companyRegistrationForm = $this->createForm(CompanyRegistrationFormType::class, $registrationData);
         $companyRegistrationForm->handleRequest($request);
-        if ($companyRegistrationForm->isSubmitted()) {
-            if ($companyRegistrationForm->isValid()) {
-
-                /** @var \App\Model\Customer\User\RegistrationData $registrationData */
-                $registrationData = $companyRegistrationForm->getData();
-                $customerUser = $this->registrationFacade->registerCompany($registrationData);
-                $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
-
-                $this->authenticator->loginUser($customerUser, $request);
-                return $this->redirectToRoute('front_homepage');
-            } else {
-                $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
-            }
-            $active['common'] = false;
-            $active['company'] = true;
+        if ($this->handleCompanyCustomerRegistrationForm($companyRegistrationForm, $request)) {
+            return $this->redirectToRoute('front_homepage');
         }
 
         return $this->render('Front/Content/Registration/register.html.twig', [
             'form' => $form->createView(),
             'companyForm' => $companyRegistrationForm->createView(),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
-            'activeCards' => $active,
             'domain' => $this->domain,
+            'firstTabActiveSetting' => $this->firstTabActiveSetting,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return bool
+     */
+    private function handleCommonCustomerRegistrationForm(FormInterface $form, Request $request): bool
+    {
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $registrationData = $form->getData();
+                $customerUser = $this->registrationFacade->register($registrationData);
+                $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
+
+                $this->authenticator->loginUser($customerUser, $request);
+
+                return true;
+            } else {
+                $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            }
+            $this->activateCommonCustomerRegistrationForm();
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return bool
+     */
+    private function handleCompanyCustomerRegistrationForm(FormInterface $form, Request $request): bool
+    {
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+
+                /** @var \App\Model\Customer\User\RegistrationData $registrationData */
+                $registrationData = $form->getData();
+                $customerUser = $this->registrationFacade->registerCompany($registrationData);
+                $this->getFlashMessageSender()->addSuccessFlash(t('You have been successfully registered.'));
+
+                $this->authenticator->loginUser($customerUser, $request);
+
+                return true;
+            } else {
+                $this->getFlashMessageSender()->addErrorFlash(t('Please check the correctness of all data filled.'));
+            }
+            $this->activateCompanyCustomerRegistrationForm();
+        }
+
+        return false;
+    }
+
+    private function activateCommonCustomerRegistrationForm()
+    {
+        $this->firstTabActiveSetting = true;
+    }
+
+    private function activateCompanyCustomerRegistrationForm()
+    {
+        $this->firstTabActiveSetting = false;
     }
 }

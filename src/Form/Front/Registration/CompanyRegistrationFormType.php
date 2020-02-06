@@ -34,7 +34,7 @@ class CompanyRegistrationFormType extends RegistrationFormType
             TextType::class,
             [
                 'constraints' => [
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Název společnosti nemůže být delší než {{ limit }} znaků.']),
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Vyplňte prosím název společnosti kratší než {{ limit }} znaků.']),
                 ],
             ]
         )->add(
@@ -43,8 +43,8 @@ class CompanyRegistrationFormType extends RegistrationFormType
             [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Prosím vyplňte DIČ']),
-                    new Constraints\Length(['max' => 50, 'maxMessage' => 'IČ nemůže být delší než {{ limit }} znaků.']),
+                    new Constraints\NotBlank(['message' => 'Prosím vyplňte IČ']),
+                    new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím IČ kratší než {{ limit }} znaků.']),
                 ],
             ]
         )->add(
@@ -53,7 +53,7 @@ class CompanyRegistrationFormType extends RegistrationFormType
             [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length(['max' => 50, 'maxMessage' => 'DIČ/Ič DPH nemůže být delší než {{ limit }} znaků.']),
+                    new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím DIČ/Ič DPH kratší než {{ limit }} znaků.']),
                 ],
             ]
         );
@@ -65,7 +65,7 @@ class CompanyRegistrationFormType extends RegistrationFormType
                     'required' => true,
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Prosím vyplňte DIČ']),
-                        new Constraints\Length(['max' => 50, 'maxMessage' => 'DIČ nemůže být delší než {{ limit }} znaků.']),
+                        new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.']),
                     ],
                 ]
             );

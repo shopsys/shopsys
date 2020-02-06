@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 class BillingAddress extends BaseBillingAddress
 {
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
