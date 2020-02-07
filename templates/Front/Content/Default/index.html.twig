@@ -73,6 +73,77 @@
 
     {{ render(controller('App\\Controller\\Front\\CategoryController:topAction')) }}
 
+    {% set gridImageViewportMobile = "767px" %}
+    <div class="web__line">
+        <div class="web__container">
+            <h2>{{ 'Nakupujte podle místností'|trans }}</h2>
+            <div class="list-grid">
+                <div class="list-grid__row">
+                    <a class="list-grid__item list-grid__item--long list-grid__item--sixth" href="#" title="{{ 'Předsíň'|trans }}">
+                        <span class="list-grid__item__name"><span class="btn btn--next btn-no-style">{{ 'Předsíň'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></span></span>
+                        <picture class="list-grid__item__picture">
+                            <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('assets/frontend/images/rooms/predsin_m.jpg') }}">
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('assets/frontend/images/rooms/predsin.jpg') }}" alt="{{ 'Předsíň'|trans }}">
+                        </picture>
+                    </a>
+                    <a class="list-grid__item list-grid__item--long list-grid__item--third" href="#" title="{{ 'Obývací pokoj'|trans }}">
+                        <span class="list-grid__item__name"><span class="btn btn--next btn-no-style">{{ 'Obývací pokoj'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></span></span>
+                        <picture class="list-grid__item__picture">
+                            <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('assets/frontend/images/rooms/obyvaci_pokoj_m.jpg') }}">
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('assets/frontend/images/rooms/obyvaci_pokoj.jpg') }}" alt="{{ 'Obývací pokoj'|trans }}">
+                        </picture>
+                    </a>
+                    <div class="list-grid__item__in list-grid__item--third">
+                        <a class="list-grid__item list-grid__item--half-long" href="#" title="{{ 'Kuchyně'|trans }}">
+                            <span class="list-grid__item__name"><span class="btn btn--next btn-no-style">{{ 'Kuchyně'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></span></span>
+                            <picture class="list-grid__item__picture">
+                                <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('assets/frontend/images/rooms/kuchyne_m.jpg') }}">
+                                <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('assets/frontend/images/rooms/kuchyne.jpg') }}" alt="{{ 'Kuchyně'|trans }}">
+                            </picture>
+                        </a>
+                        <a class="list-grid__item list-grid__item--half-long" href="#" title="{{ 'Jídelna'|trans }}">
+                            <span class="list-grid__item__name"><span class="btn btn--next btn-no-style">{{ 'Jídelna'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></span></span>
+                            <picture class="list-grid__item__picture">
+                                <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('assets/frontend/images/rooms/jidelna_m.jpg') }}">
+                                <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('assets/frontend/images/rooms/jidelna.jpg') }}" alt="{{ 'Jídelna'|trans }}">
+                            </picture>
+                        </a>
+                    </div>
+                    <a class="list-grid__item list-grid__item--long list-grid__item--sixth" href="#" title="{{ 'Pracovna'|trans }}">
+                        <span class="list-grid__item__name"><span class="btn btn--next btn-no-style">{{ 'Pracovna'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></span></span>
+                        <picture class="list-grid__item__picture">
+                            <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('assets/frontend/images/rooms/pracovna_m.jpg') }}">
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('assets/frontend/images/rooms/pracovna.jpg') }}" alt="{{ 'Pracovna'|trans }}">
+                        </picture>
+                    </a>
+                </div>
+                 <div class="list-grid__row">
+                    <a class="list-grid__item list-grid__item--third" href="#" title="{{ 'Ložnice'|trans }}">
+                        <span class="list-grid__item__name"><span class="btn btn--next btn-no-style">{{ 'Ložnice'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></span></span>
+                        <picture class="list-grid__item__picture">
+                            <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('assets/frontend/images/rooms/loznice_m.jpg') }}">
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('assets/frontend/images/rooms/loznice.jpg') }}" alt="{{ 'Ložnice'|trans }}">
+                        </picture>
+                    </a>
+                    <a class="list-grid__item list-grid__item--third" href="#" title="{{ 'Dětský pokoj'|trans }}">
+                        <span class="list-grid__item__name"><span class="btn btn--next btn-no-style">{{ 'Dětský pokoj'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></span></span>
+                        <picture class="list-grid__item__picture">
+                            <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('assets/frontend/images/rooms/detsky_pokoj_m.jpg') }}">
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('assets/frontend/images/rooms/detsky_pokoj.jpg') }}" alt="{{ 'Dětský pokoj'|trans }}">
+                        </picture>
+                    </a>
+                    <a class="list-grid__item list-grid__item--third" href="#" title="{{ 'Koupelny'|trans }}">
+                        <span class="list-grid__item__name"><span class="btn btn--next btn-no-style">{{ 'Koupelny'|trans }} <i class="btn__icon svg svg-long-arrow-right"></i></span></span>
+                        <picture class="list-grid__item__picture">
+                            <source media="(max-width: {{ gridImageViewportMobile }})" srcset="{{ asset('assets/frontend/images/rooms/koupelny_m.jpg') }}">
+                            <img loading="lazy" class="list-grid__item__img" data-src="{{ asset('assets/frontend/images/rooms/koupelny.jpg') }}" alt="{{ 'Koupelny'|trans }}">
+                        </picture>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% if topProducts is not empty %}
         <div class="web__line">
             <div class="web__container">
