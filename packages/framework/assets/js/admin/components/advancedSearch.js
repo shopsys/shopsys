@@ -1,5 +1,4 @@
-import $ from 'jquery';
-import 'select2';
+import 'select2/dist/js/select2.full';
 import Ajax from '../../common/utils/ajax';
 import Register from '../../common/utils/register';
 import constant from '../utils/constant';

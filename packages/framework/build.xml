@@ -37,7 +37,6 @@
     <property name="path.var" value="${path.root}/var"/>
     <property name="path.vendor" value="${path.root}/vendor"/>
     <property name="path.web" value="${path.root}/web"/>
-    <property name="path.web.scripts" value="${path.web}/assets/scripts"/>
     <property name="path.web.styles.admin" value="${path.web}/assets/admin/styles"/>
     <property name="path.web.styles.front" value="${path.web}/assets/frontend/styles"/>
     <property name="path.web.styles.styleguide" value="${path.web}/assets/styleguide/styles"/>
@@ -96,11 +95,6 @@
     </target>
 
     <target name="assets" description="Installs web assets from external bundles into a public web directory.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true" output="${dev.null}">
-            <arg value="${path.bin-console}"/>
-            <arg value="assetic:dump"/>
-        </exec>
-
         <delete failonerror="false" includeemptydirs="true">
             <fileset dir="${path.root}/web/bundles/">
                 <exclude name="/"/>
@@ -115,23 +109,23 @@
 
     <target name="build" depends="build-deploy-part-1-db-independent,build-deploy-part-2-db-dependent" description="Builds application for production preserving your DB."/>
 
-    <target name="build-demo" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,npm,dirs-create,assets,db-demo,grunt,error-pages-generate,warmup,elasticsearch-index-recreate,elasticsearch-export,clean-redis-old" description="Builds application for production with clean demo DB."/>
+    <target name="build-demo" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,db-demo,grunt,error-pages-generate,warmup,elasticsearch-index-recreate,elasticsearch-export,clean-redis-old" description="Builds application for production with clean demo DB."/>
 
-    <target name="build-demo-ci" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,npm,timezones-check,dirs-create,test-dirs-create,assets,db-demo,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
+    <target name="build-demo-ci" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
 
-    <target name="build-demo-dev" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,npm,timezones-check,dirs-create,test-dirs-create,assets,db-demo,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-diff" description="Builds application for development with clean demo DB and runs checks on changed files."/>
+    <target name="build-demo-dev" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-diff" description="Builds application for development with clean demo DB and runs checks on changed files."/>
 
-    <target name="build-demo-dev-quick" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,npm,dirs-create,test-dirs-create,assets,db-demo,elasticsearch-index-recreate,elasticsearch-export,grunt,clean-redis-old" description="Builds application for development with clean demo DB while skipping nonessential steps."/>
+    <target name="build-demo-dev-quick" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,grunt,clean-redis-old" description="Builds application for development with clean demo DB while skipping nonessential steps."/>
 
-    <target name="build-deploy-part-1-db-independent" depends="build-version-generate,clean,composer-prod,npm,dirs-create,assets" description="First part of application build for production preserving your DB (can be run without maintenance page)."/>
+    <target name="build-deploy-part-1-db-independent" depends="build-version-generate,clean,composer-prod,dirs-create,assets,npm" description="First part of application build for production preserving your DB (can be run without maintenance page)."/>
 
     <target name="build-deploy-part-2-db-dependent" depends="elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,grunt,error-pages-generate,warmup,clean-redis-old" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
 
-    <target name="build-dev" depends="build-version-generate,clean,composer-dev,npm,timezones-check,dirs-create,test-dirs-create,assets,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-diff" description="Builds application for development preserving your DB and runs checks on changed files."/>
+    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export,grunt,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-diff" description="Builds application for development preserving your DB and runs checks on changed files."/>
 
-    <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,npm,dirs-create,test-dirs-create,assets,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,elasticsearch-index-migrate,grunt,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
+    <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,elasticsearch-index-migrate,grunt,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
 
-    <target name="build-new" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,npm,dirs-create,assets,db-rebuild,grunt,error-pages-generate,warmup,elasticsearch-index-recreate,clean-redis-old" description="Builds application for production with clean DB (with base data only)."/>
+    <target name="build-new" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,db-rebuild,grunt,error-pages-generate,warmup,elasticsearch-index-recreate,clean-redis-old" description="Builds application for production with clean DB (with base data only)."/>
 
     <target name="build-version-generate" description="Generates parameters_version.yml config file with a new build version number.">
         <exec executable="${path.php.executable}" checkreturn="true" outputProperty="version">
@@ -155,7 +149,7 @@
 
     <target name="checks-internal" depends="db-check-schema,timezones-check,redis-check,composer-check" description="Runs all internal checks, eg. availability of services or validity of configuration." hidden="true"/>
 
-    <target name="clean" depends="clean-scripts,clean-cache-dir" description="Cleans up directories with cache and scripts which are generated on demand."/>
+    <target name="clean" depends="clean-cache-dir" description="Cleans up directories with cache and scripts which are generated on demand."/>
 
     <target name="clean-cache" depends="clean-cache-dir,clean-redis" description="Cleans up all application cache."/>
 
@@ -179,14 +173,6 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:redis:clean-cache-old"/>
         </exec>
-    </target>
-
-    <target name="clean-scripts" description="Cleans up directory with scripts which are generated on demand." hidden="true">
-        <delete failonerror="false" includeemptydirs="true">
-            <fileset dir="${path.web.scripts}/">
-                <exclude name="/"/>
-            </fileset>
-        </delete>
     </target>
 
     <target name="clean-styles" description="Cleans up directories with CSS generated by Grunt." hidden="true">
@@ -694,6 +680,11 @@
     <target name="npm" description="Build node modules.">
         <phingcall target="npm-install-dependencies"/>
         <phingcall target="npm-export-translations"/>
+
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="copy-assets"/>
+        </exec>
 
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="run"/>

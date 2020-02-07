@@ -10,17 +10,9 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/index' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/styles/print' ~ getDomain().id ~ '_' ~ getCssVersion() ~ '.css') }}" media="print">
 
-        {{ encore_entry_script_tags('jquery') }}
-
-        {{ importJavascripts([
-            'bundles/fpjsformvalidator/js/fp_js_validator.js'
-        ]) }}
-
-        {{ js_validator_config() }}
-        {{ init_js_validation() }}
-
         {{ render(controller('App\\Controller\\Front\\HeurekaController:embedWidgetAction')) }}
 
+        {{ encore_entry_script_tags('frontend') }}
         {% block javascripts %}{% endblock %}
 
         <title>{% block title %}Shopsys Framework{% endblock %} {{ getSeoTitleAddOn() }}</title>
@@ -35,6 +27,7 @@
 
         {% block javascripts_bottom %}{% endblock %}
 
-        {{ encore_entry_script_tags('frontend') }}
+        {{ js_validator_config() }}
+        {{ init_js_validation() }}
     </body>
 </html>

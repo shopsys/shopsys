@@ -735,6 +735,26 @@ There you can find links to upgrade notes for other versions too.
                 }
             ```
 
+- update FpJsFormValidator bundle ([#1664](https://github.com/shopsys/shopsys/pull/1664))
+    - update your `composer.json`
+      ```diff
+      +     "minimum-stability": "dev",
+            "require": {
+      -         "fp/jsformvalidator-bundle": "^1.5.1",
+      +         "fp/jsformvalidator-bundle": "dev-master",
+            }
+      ```
+    - update your `.eslintignore`
+      ```diff
+        /assets/js/commands/translations/mocks
+      + /assets/js/bundles
+      ```
+    - update your `.gitignore`
+      ```diff
+        /assets/js/translations.json
+      + /assets/js/bundles
+      ```
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))

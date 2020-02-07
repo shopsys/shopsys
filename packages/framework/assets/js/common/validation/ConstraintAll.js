@@ -1,4 +1,4 @@
-(function ($, window) {
+(function (window) {
 
     const SymfonyComponentValidatorConstraintsAll = function () {
         this.constraints = null;
@@ -32,4 +32,4 @@
 
     window.SymfonyComponentValidatorConstraintsAll = SymfonyComponentValidatorConstraintsAll;
 
-})(jQuery, window);
+})(window);

@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import '../../common/bootstrap/tooltip';
 import Register from '../../common/utils/register';
 import Translator from 'bazinga-translator';

@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import constant from '../utils/constant';
 import Register from '../../common/utils/register';
 

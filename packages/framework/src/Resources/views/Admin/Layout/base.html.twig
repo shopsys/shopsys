@@ -6,12 +6,6 @@
 
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/styles/index_' ~ getCssVersion() ~ '.css') }}" media="screen, projection">
 
-        {{ encore_entry_script_tags('jquery') }}
-
-        {{ importJavascripts([
-            'bundles/fpjsformvalidator/js/fp_js_validator.js'
-        ]) }}
-
         {{ encore_entry_script_tags('admin') }}
 
         {{ js_validator_config() }}

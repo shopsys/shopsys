@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import '../components/filterAllNodes';
 import 'magnific-popup';
 import 'slick-carousel';

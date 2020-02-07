@@ -4,8 +4,6 @@ import Timeout from '../utils/timeout';
 import Window from '../../admin/utils/window';
 import Translator from 'bazinga-translator';
 
-const $ = window.$;
-
 export default class CustomizeBundle {
 
     static isFormValid (form) {

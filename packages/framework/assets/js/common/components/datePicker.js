@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import 'jquery-ui/datepicker';
 import Register from '../utils/register';
 import constant from '../../admin/utils/constant';

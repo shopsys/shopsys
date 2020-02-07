@@ -193,7 +193,7 @@
         "version": "v5.0.0"
     },
     "fp/jsformvalidator-bundle": {
-        "version": "1.5.1"
+        "version": "1.5-dev"
     },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
@@ -698,9 +698,6 @@
     "symfony/asset": {
         "version": "v3.4.33"
     },
-    "symfony/assetic-bundle": {
-        "version": "v2.8.2"
-    },
     "symfony/browser-kit": {
         "version": "v3.4.33"
     },
@@ -912,6 +909,9 @@
         "files": [
             "config/packages/security.yaml"
         ]
+    },
+    "symfony/service-contracts": {
+        "version": "v1.1.8"
     },
     "symfony/stopwatch": {
         "version": "v3.4.33"

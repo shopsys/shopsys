@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Register from '../../common/utils/register';
 import { addNewItemToCollection, removeItemFromCollection } from '../validation/customization/customizeCollectionBundle';
 

@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 export function createLoaderOverlay (loaderElement, loaderMessage) {
     loaderElement = loaderElement || 'body';
     loaderMessage = loaderMessage || '';

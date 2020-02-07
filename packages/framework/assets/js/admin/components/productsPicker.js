@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import 'magnific-popup';
 import 'jquery-ui/sortable';
 import FormChangeInfo from './formChangeInfo';
