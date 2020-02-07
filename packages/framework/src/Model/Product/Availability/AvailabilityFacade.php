@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AvailabilityFacade
 {
@@ -33,24 +36,32 @@ class AvailabilityFacade
     protected $availabilityFactory;
 
     /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository $availabilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactoryInterface $availabilityFactory
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         EntityManagerInterface $em,
         AvailabilityRepository $availabilityRepository,
         Setting $setting,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        AvailabilityFactoryInterface $availabilityFactory
+        AvailabilityFactoryInterface $availabilityFactory,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->em = $em;
         $this->availabilityRepository = $availabilityRepository;
         $this->setting = $setting;
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
         $this->availabilityFactory = $availabilityFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -72,6 +83,8 @@ class AvailabilityFacade
         $this->em->persist($availability);
         $this->em->flush();
 
+        $this->dispatchAvailabilityEvent($availability, AvailabilityEvent::CREATE);
+
         return $availability;
     }
 
@@ -85,6 +98,8 @@ class AvailabilityFacade
         $availability = $this->availabilityRepository->getById($availabilityId);
         $availability->edit($availabilityData);
         $this->em->flush();
+
+        $this->dispatchAvailabilityEvent($availability, AvailabilityEvent::UPDATE);
 
         return $availability;
     }
@@ -107,6 +122,9 @@ class AvailabilityFacade
         }
 
         $this->em->remove($availability);
+
+        $this->dispatchAvailabilityEvent($availability, AvailabilityEvent::DELETE);
+
         $this->em->flush();
     }
 
@@ -162,5 +180,16 @@ class AvailabilityFacade
     public function isAvailabilityDefault(Availability $availability)
     {
         return $this->getDefaultInStockAvailability() === $availability;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
+     * @param string $eventType
+     *
+     * @see \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityEvent class
+     */
+    protected function dispatchAvailabilityEvent(Availability $availability, string $eventType): void
+    {
+        $this->eventDispatcher->dispatch($eventType, new AvailabilityEvent($availability));
     }
 }
