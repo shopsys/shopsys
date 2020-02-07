@@ -2,37 +2,39 @@
     {% set domain = getDomain() %}
     <div class="web__line">
         <div class="web__container">
-            <div>
-                <h3>{{ rootCategory.getName(domain.locale)|upper }}</h3>
-                <div class="web__content">
-                    {{ rootCategory.getDescription(domain.locale) }}
-                </div>
-                <a class="btn" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ "všechny články"|trans }}</a>
-            </div>
-            {% for blogArticle in homepageArticles %}
-                <div>
-                    <div class="list-articles__item__content">
-                        <div class="list-articles__item__image">
-                            <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}">
-                                {{ image(blogArticle, { size: 'list', alt: blogArticle.name, lazy: true }) }}
-                            </a>
-                        </div>
-                        <h3>
-                            <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
-                                {{ blogArticle.name}}
-                            </a>
-                        </h3>
-                        <div class="list-articles__item__content__text">
-                            {{ blogArticle.perex|slice(0,100) }}{% if blogArticle.perex|length > 100 %}&hellip;{% endif %}
-                        </div>
-                        <div class="list-articles__item__content__text">
-                            <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
-                                {{ "číst dále"|trans }} <span class="right-arrow">&#8594;</span>
-                            </a>
-                        </div>
+             <div class="box-articles">
+                <div class="box-articles__wrap">
+                    <div class="box-articles__text">
+                        <h2 class="box-articles__heading">{{ rootCategory.getName(domain.locale)|upper }}</h2>                
+                        <div class="box-articles__desc">{{ rootCategory.getDescription(domain.locale) }}</div>
+                        <a class="btn btn--outline dont-print" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ "všechny články"|trans }}</a>
+                    </div>
+                    <div class="list-articles">
+                        {% for blogArticle in homepageArticles %}                            
+                            <div class="list-articles__item">                                  
+                                <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__link list-articles__item__link--image" title="{{ blogArticle.name }}">
+                                    {{ image(blogArticle, { size: 'list', class: 'list-articles__item__image', alt: blogArticle.name, lazy: true }) }}
+                                </a>
+                                <div class="list-articles__item__tags js-not-implemented-yet">
+                                    <a class="btn btn--tag" href="#">Zařizujeme</a>
+                                    <a class="btn btn--tag" href="#">Bydlíme</a>
+                                </div>
+                                <h3 class="list-articles__item__name">
+                                    <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__link" title="{{ blogArticle.name }}">
+                                        {{ blogArticle.name}}
+                                    </a>
+                                </h3>
+                                <div class="list-articles__item__desc">
+                                    {{ blogArticle.perex|slice(0,165) }}{% if blogArticle.perex|length > 165 %}&hellip;{% endif %}
+                                </div>
+                                <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="btn btn--next btn-no-style dont-print" title="{{ blogArticle.name }}">
+                                    {{ "Číst dál"|trans }} <span class="btn__icon">&#8594;</span>
+                                </a>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
-            {% endfor %}
+            </div>
         </div>
     </div>
 {% endif %}
