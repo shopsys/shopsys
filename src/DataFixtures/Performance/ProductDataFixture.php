@@ -58,7 +58,7 @@ class ProductDataFixture
     private $persistentReferenceFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
+     * @var \App\Model\Category\CategoryRepository
      */
     private $categoryRepository;
 
@@ -114,7 +114,7 @@ class ProductDataFixture
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
+     * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler

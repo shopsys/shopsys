@@ -67,6 +67,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface: '@App\Model\Category\CategoryDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Category\CategoryFacade: '@App\Model\Category\CategoryFacade'
+
+    Shopsys\FrameworkBundle\Model\Category\CategoryRepository: '@App\Model\Category\CategoryRepository'
+
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface: '@App\Model\Customer\User\CustomerUserDataFactory'
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@App\Model\Order\OrderDataFactory'

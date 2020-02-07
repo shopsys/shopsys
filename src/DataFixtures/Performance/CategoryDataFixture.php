@@ -24,7 +24,7 @@ class CategoryDataFixture
     private $categoryDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
+     * @var \App\Model\Category\CategoryFacade
      */
     private $categoryFacade;
 
@@ -61,7 +61,7 @@ class CategoryDataFixture
     /**
      * @param int[] $categoryCountsByLevel
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Faker\Generator $faker

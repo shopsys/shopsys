@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
+     * @var \App\Model\Category\CategoryFacade
      */
     private $categoryFacade;
 
@@ -40,7 +40,7 @@ class CategoryController extends FrontBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CurrentCategoryResolver $currentCategoryResolver
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
