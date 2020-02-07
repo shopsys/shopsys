@@ -276,6 +276,13 @@ class Product extends AbstractTranslatableEntity
     protected $uuid;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $exportProduct;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
@@ -303,6 +310,7 @@ class Product extends AbstractTranslatableEntity
         $this->recalculateVisibility = true;
         $this->calculatedHidden = true;
         $this->calculatedSellingDenied = true;
+        $this->exportProduct = true;
         $this->brand = $productData->brand;
         $this->orderingPriority = $productData->orderingPriority;
 
@@ -744,6 +752,11 @@ class Product extends AbstractTranslatableEntity
     public function markForAvailabilityRecalculation()
     {
         $this->recalculateAvailability = true;
+    }
+
+    public function markForExport(): void
+    {
+        $this->exportProduct = true;
     }
 
     /**
