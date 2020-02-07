@@ -890,14 +890,16 @@
                 </span>
             </label>
         {% endfor %}
-    </div>
-    {% if isSimple|default(false) == false %}
+        {% if isSimple|default(false) == false %}
+                    <div class="form-choice__info">
+                        {{- block('appendix_block') -}}
+                    </div>
+                </div>
             </div>
+        {% else %}
             {{- block('appendix_block') -}}
-        </div>
-    {% else %}
-        {{- block('appendix_block') -}}
-    {% endif %}
+        {% endif %}
+    </div>
     {% if form.vars.icon_title is not null %}
         <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
            data-toggle="tooltip" data-placement="right"
@@ -1023,7 +1025,7 @@
     {% endif %}
     {% if attr.icon is defined %}
         <i class="svg svg-{{ attr.iconType|default('info') }} in-icon cursor-help form-line__item form-line__item--info js-tooltip"
-            data-toggle="tooltip" data-placement="{{ attr.iconPlacement|default('right') }}"
+            data-toggle="tooltip" data-placement="{{ attr.iconPlacement|default('bottom') }}"
             title="{{ attr.iconTitle|default('') }}"
          ></i>
     {% endif %}
