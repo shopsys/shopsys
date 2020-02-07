@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -48,16 +49,20 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         if ($this->promoCode === null) {
             $builder->add('domainId', DomainType::class, [
                 'required' => true,
-                'label' => t('Domain'),
+                'label' => t('Doména'),
             ]);
         }
 
+        $discountOptions = $builder->get('percent')->getOptions();
+        $discountOptions['label'] = t('Sleva (%)');
+        $builder->add('percent', IntegerType::class, $discountOptions);
+
         $codeOptions = $builder->get('code')->getOptions();
         $codeOptions['constraints'] = [
-            new Constraints\NotBlank(['message' => 'Please enter code']),
+            new Constraints\NotBlank(['message' => 'Prosím vložte kód']),
         ];
         $codeOptions['position'] = 'first';
-
+        $codeOptions['label'] = t('Promo kód');
         $builder->add('code', TextType::class, $codeOptions);
 
         $this->buildTimeValidationForm($builder);
@@ -68,21 +73,29 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      */
     private function buildTimeValidationForm(FormBuilderInterface $builder)
     {
-        $timeOptions = [
+        $builder->add('dateValidFrom', DatePickerType::class, [
+            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
+            'required' => false,
+            'label' => t('Datum platnosti OD'),
+        ])->add('timeValidFrom', TextType::class, [
             'icon_title' => t('Formát času: "hh:mm", např.: "07:45", "23:05"'),
             'constraints' => [
                 new Constraints\Callback([$this, 'validateTimeIfIsSet']),
             ],
-        ];
-
-        $dateOptions = [
+            'required' => false,
+            'label' => t('Čas platnosti OD'),
+        ])->add('dateValidTo', DatePickerType::class, [
             'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
-        ];
-
-        $builder->add('dateValidFrom', DatePickerType::class, $dateOptions);
-        $builder->add('timeValidFrom', TextType::class, $timeOptions);
-        $builder->add('dateValidTo', DatePickerType::class, $dateOptions);
-        $builder->add('timeValidTo', TextType::class, $timeOptions);
+            'required' => false,
+            'label' => t('Datum platnosti DO'),
+        ])->add('timeValidTo', TextType::class, [
+            'icon_title' => t('Formát času: "hh:mm", např.: "07:45", "23:05"'),
+            'constraints' => [
+                new Constraints\Callback([$this, 'validateTimeIfIsSet']),
+            ],
+            'required' => false,
+            'label' => t('Čas platnosti DO'),
+        ]);
     }
 
     /**
@@ -115,7 +128,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         if ($promoCodeData->timeValidFrom !== null) {
             if ($promoCodeData->dateValidFrom === null) {
                 $context->buildViolation(t('Pokud je vyplněn čas OD, vyplňte i datum OD.'))
-                    ->atPath('date_valid_from')
+                    ->atPath('dateValidFrom')
                     ->addViolation();
             }
         }
@@ -130,7 +143,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         if ($promoCodeData->timeValidTo !== null) {
             if ($promoCodeData->dateValidTo === null) {
                 $context->buildViolation(t('Pokud je vyplněn čas DO, vyplňte i datum DO.'))
-                    ->atPath('date_valid_to')
+                    ->atPath('dateValidTo')
                     ->addViolation();
             }
         }
@@ -158,7 +171,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         if ($this->promoCode === null || $promoCodeData->code !== $this->promoCode->getCode()) {
             $promoCode = $this->promoCodeFacade->findPromoCodeByCodeAndDomain($promoCodeData->code, $promoCodeData->domainId);
             if ($promoCode !== null) {
-                $context->buildViolation('Promo code with this code already exists')->atPath('code')->addViolation();
+                $context->buildViolation('Promo kód s tímto kódem již existuje')->atPath('code')->addViolation();
             }
         }
     }

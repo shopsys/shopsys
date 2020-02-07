@@ -56,21 +56,21 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         parent::fillFromPromoCode($promoCodeData, $promoCode);
         $promoCodeData->domainId = $promoCode->getDomainId();
 
-        $promoCodeData->dateValidFrom = $this->convertDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidFrom());
-        $promoCodeData->dateValidTo = $this->convertDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidTo());
-
         $promoCodeData->timeValidFrom = $this->formatTimeFromValidDateTime($promoCode->getDatetimeValidFrom());
         $promoCodeData->timeValidTo = $this->formatTimeFromValidDateTime($promoCode->getDatetimeValidTo());
+
+        $promoCodeData->dateValidFrom = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidFrom());
+        $promoCodeData->dateValidTo = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidTo());
     }
 
     /**
      * @param \DateTime|null $dateTime
      * @return \DateTime|null
      */
-    private function convertDateFromDatabaseTimeZoneToViewTimezone(?DateTime $dateTime = null): ?DateTime
+    private function switchDateFromDatabaseTimeZoneToViewTimezone(?DateTime $dateTime = null): ?DateTime
     {
         if ($dateTime !== null) {
-            return $this->dateTimeHelper->convertDateTimeFromUtcToDisplayTimeZone($dateTime);
+            return new DateTime($dateTime->format('Y-m-d H:i:s'), new \DateTimeZone(DateTimeHelper::UTC_TIMEZONE));
         }
 
         return null;
@@ -82,8 +82,8 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
      */
     private function formatTimeFromValidDateTime(?DateTime $dateTime = null): ?string
     {
-        $dateTime = $this->convertDateFromDatabaseTimeZoneToViewTimezone($dateTime);
         if ($dateTime !== null) {
+            $this->dateTimeHelper->convertDateTimeFromUtcToDisplayTimeZone($dateTime);
             return $dateTime->format(self::TIME_VALID_FORMAT);
         }
 

@@ -113,10 +113,12 @@ class PromoCodeFacade extends BasePromoCodeFacade
             );
         }
 
+        $promoCodeData->timeValidTo = $promoCodeData->timeValidTo ? $promoCodeData->timeValidTo . ':59' : self::PROMOCODE_DEFAULT_TIME_TO;
+
         if ($promoCodeData->dateValidTo !== null) {
             $promoCodeData->datetimeValidTo = $this->createDateTimeInUtc(
                 $promoCodeData->dateValidTo,
-                $promoCodeData->timeValidTo ?? self::PROMOCODE_DEFAULT_TIME_TO
+                $promoCodeData->timeValidTo
             );
         }
     }
@@ -128,7 +130,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
      */
     private function createDateTimeInUtc(DateTime $date, string $time): DateTime
     {
-        return $this->dateTimeHelper->convertDateTimeFromDisplayTimeZoneToUtc(
+        return $this->dateTimeHelper->convertDatetimeStringFromDisplayTimeZoneToUtc(
             $date->format(self::DATABASE_DATE_FORMAT) . 'T' . $time
         );
     }
