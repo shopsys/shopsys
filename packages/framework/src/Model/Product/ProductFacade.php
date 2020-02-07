@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInter
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
@@ -23,7 +24,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice;
-use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler;
 
 class ProductFacade
 {
@@ -138,7 +138,7 @@ class ProductFacade
     protected $productPriceCalculation;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler
      */
     protected $productSearchExportScheduler;
 
@@ -165,7 +165,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler $productSearchExportScheduler
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -190,7 +190,7 @@ class ProductFacade
         ProductParameterValueFactoryInterface $productParameterValueFactory,
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
-        ProductSearchExportScheduler $productSearchExportScheduler
+        ExportScheduler $productSearchExportScheduler
     ) {
         $this->em = $em;
         $this->productRepository = $productRepository;

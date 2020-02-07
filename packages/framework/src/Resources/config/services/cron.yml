@@ -4,7 +4,7 @@ services:
         autoconfigure: true
         public: false
 
-    Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule:
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*' }
 

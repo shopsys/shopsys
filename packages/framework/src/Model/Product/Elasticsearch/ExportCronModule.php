@@ -1,14 +1,13 @@
 <?php
 
-namespace Shopsys\FrameworkBundle\Model\Product\Search\Export;
+namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportCronModule;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 
-class ProductSearchExportCronModule extends AbstractExportCronModule
+class ExportCronModule extends AbstractExportCronModule
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index

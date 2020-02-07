@@ -2,20 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\Product\Search\Export;
+namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportSubscriber;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class ProductSearchExportSubscriber extends AbstractExportSubscriber
+class ExportSubscriber extends AbstractExportSubscriber
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler $productSearchExportScheduler
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository $indexRepository
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
@@ -23,7 +22,7 @@ class ProductSearchExportSubscriber extends AbstractExportSubscriber
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ProductSearchExportScheduler $productSearchExportScheduler,
+        ExportScheduler $productSearchExportScheduler,
         EntityManagerInterface $entityManager,
         IndexRepository $indexRepository,
         IndexDefinitionLoader $indexDefinitionLoader,

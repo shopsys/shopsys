@@ -88,7 +88,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Search\Export;
 
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
-use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository as BaseProductSearchExportWithFilterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportWithFilterRepository as BaseProductSearchExportWithFilterRepository;
 
 class ProductSearchExportWithFilterRepository extends BaseProductSearchExportWithFilterRepository
 {

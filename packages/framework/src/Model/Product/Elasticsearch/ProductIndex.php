@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
-use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository;
 
 class ProductIndex extends AbstractIndex
 {
@@ -18,20 +17,20 @@ class ProductIndex extends AbstractIndex
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportWithFilterRepository
      */
-    protected $productSearchExportWithFilterRepository;
+    protected $exportWithFilterRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository $productSearchExportWithFilterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportWithFilterRepository $exportWithFilterRepository
      */
     public function __construct(
         Domain $domain,
-        ProductSearchExportWithFilterRepository $productSearchExportWithFilterRepository
+        ExportWithFilterRepository $exportWithFilterRepository
     ) {
         $this->domain = $domain;
-        $this->productSearchExportWithFilterRepository = $productSearchExportWithFilterRepository;
+        $this->exportWithFilterRepository = $exportWithFilterRepository;
     }
 
     /**
@@ -39,7 +38,7 @@ class ProductIndex extends AbstractIndex
      */
     public function getTotalCount(int $domainId): int
     {
-        return $this->productSearchExportWithFilterRepository->getProductTotalCountForDomain($domainId);
+        return $this->exportWithFilterRepository->getProductTotalCountForDomain($domainId);
     }
 
     /**
@@ -47,7 +46,7 @@ class ProductIndex extends AbstractIndex
      */
     public function getExportDataForIds(int $domainId, array $restrictToIds): array
     {
-        return $this->productSearchExportWithFilterRepository->getProductsDataForIds(
+        return $this->exportWithFilterRepository->getProductsDataForIds(
             $domainId,
             $this->domain->getDomainConfigById($domainId)->getLocale(),
             $restrictToIds
@@ -59,7 +58,7 @@ class ProductIndex extends AbstractIndex
      */
     public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {
-        return $this->productSearchExportWithFilterRepository->getProductsData(
+        return $this->exportWithFilterRepository->getProductsData(
             $domainId,
             $this->domain->getDomainConfigById($domainId)->getLocale(),
             $lastProcessedId,

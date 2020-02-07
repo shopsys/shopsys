@@ -5,8 +5,8 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler;
 
 class ProductVariantFacade
 {
@@ -46,7 +46,7 @@ class ProductVariantFacade
     protected $productAvailabilityRecalculationScheduler;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler
      */
     protected $productSearchExportScheduler;
 
@@ -58,7 +58,7 @@ class ProductVariantFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler $productSearchExportScheduler
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -68,7 +68,7 @@ class ProductVariantFacade
         ProductFactoryInterface $productFactory,
         ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        ProductSearchExportScheduler $productSearchExportScheduler
+        ExportScheduler $productSearchExportScheduler
     ) {
         $this->em = $em;
         $this->productFacade = $productFacade;
