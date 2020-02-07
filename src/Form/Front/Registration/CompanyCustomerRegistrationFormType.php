@@ -30,7 +30,9 @@ class CompanyCustomerRegistrationFormType extends AbstractType
             'companyName',
             TextType::class,
             [
+                'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Vyplňte prosím název společnosti']),
                     new Constraints\Length(['max' => 100, 'maxMessage' => 'Vyplňte prosím název společnosti kratší než {{ limit }} znaků.']),
                 ],
             ]
@@ -40,7 +42,7 @@ class CompanyCustomerRegistrationFormType extends AbstractType
             [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Prosím vyplňte IČ']),
+                    new Constraints\NotBlank(['message' => 'Vyplňte prosím IČ']),
                     new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím IČ kratší než {{ limit }} znaků.']),
                 ],
             ]
@@ -61,7 +63,7 @@ class CompanyCustomerRegistrationFormType extends AbstractType
                 [
                     'required' => true,
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Prosím vyplňte DIČ']),
+                        new Constraints\NotBlank(['message' => 'Vyplňte prosím DIČ']),
                         new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.']),
                     ],
                 ]
