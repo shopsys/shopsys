@@ -66,3 +66,51 @@ There you can find links to upgrade notes for other versions too.
     +   $me->waitForAjax();
         $orderPage->assertPaymentIsNotSelected('Cash on delivery');
     ```
+- fix npm audit [#1668](https://github.com/shopsys/shopsys/pull/1668)
+    - update your `docker/php-fpm/Dockerfile`
+      ```diff
+        RUN apt-get update && \
+          apt-get install -y \
+          libpng-dev \
+          libjpeg-dev \
+          libfreetype6-dev \
+          libzip-dev \
+          libicu-dev \
+          libpq-dev \
+      +   fontforge \
+          autoconf && \
+          apt-get clean
+      ```
+      !!! note 
+      - If you don't use a docker, you have to install `fontforge` manually: `http://designwithfontforge.com/en-US/Installing_Fontforge.html`
+      
+    - update your `package.json`
+      ```diff
+      - "grunt-spritesmith": "^6.6.2",
+      - "grunt-webfont": "^1.7.2",
+      + "grunt-spritesmith": "^6.8.0",
+      + "grunt-webfont": "https://github.com/shopsys/grunt-webfont.git#fix-npm-audit",
+      ```
+    - update your `src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig` (you have to do this in two places (webfont: admin and webfont: frontend))
+      ```diff
+        types: 'eot,woff,ttf,svg',
+      - engine: 'node',
+        stylesheet: 'less',
+        relativeFontPath: '../fonts',
+      - fontHeight: '512',
+      - descent: '0',
+      + fontHeight: 512,
+      + descent: 0,
+      + normalize: true,
+        destHtml: 'docs/generated',
+      ```
+    !!! note
+    Since new version of grunt webfont - '.svg' will not get `vertical-align: middle;` css definition.
+    On some projects you can see svg icons aligned to top.
+    You can fix by adding vertical-align for .svg class to your CSS definitions.
+    For example: `svg-fix.less` 
+    ```less
+      .svg {
+          vertical-align: middle;
+      }
+    ```
