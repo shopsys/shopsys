@@ -1,4 +1,34 @@
 {% extends '@ShopsysFramework/Admin/Content/Product/detail.html.twig' %}
 
 {% block title %}- {{ 'Editing product'|trans }} - {{ product.name }}{% endblock %}
-{% block h1 %}{{ 'Editing product'|trans }} - {{ product.name }}{% endblock %}
+{% block h1 %}
+    {{ 'Editing product'|trans }} - {{ product.name }}
+    {{ block('product_visibilities') }}
+{% endblock %}
+
+{% block product_visibilities %}
+    {% if isMultidomain() %}
+        <span class="js-product-visibility position-relative" data-visibility-url="{{ url('admin_product_visibility', {productId: product.id}) }}">
+            <span class="js-product-visibility-icon in-icon svg
+                {% if isVisibleForDefaultPricingGroupOnEachDomain(product) %}
+                    svg-visible in-icon--visible
+                {% elseif product.visible and not isVisibleForDefaultPricingGroupOnEachDomain(product) %}
+                    svg-visible in-icon--partially-visible
+                {% else %}
+                    svg-invisible in-icon--invisible
+                {% endif %}"
+            ></span>
+            <span class="js-product-visibility-box">
+                <span class="in-product-visibility in-product-visibility--down js-product-visibility-box-window display-none"></span>
+            </span>
+        </span>
+    {% else %}
+        {% if isVisibleForDefaultPricingGroupOnEachDomain(product) %}
+            <a href="{{ findUrlByDomainId('front_product_detail', { id: product.id }, getDomain().id) }}">
+                <span class="in-icon svg svg-visible in-icon--visible"></span>
+            </a>
+        {% else %}
+            <span class="in-icon svg svg-invisible in-icon--invisible"></span>
+        {% endif %}
+    {% endif %}
+{% endblock %}
