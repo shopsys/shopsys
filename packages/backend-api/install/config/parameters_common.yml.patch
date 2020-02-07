@@ -1,4 +1,4 @@
-@@ -33,3 +33,4 @@ parameters:
+@@ -22,3 +22,4 @@ parameters:
      build-version: '0000000000000000'
      shopsys.display_timezone: Europe/Prague
      shopsys.image.enable_lazy_load: true

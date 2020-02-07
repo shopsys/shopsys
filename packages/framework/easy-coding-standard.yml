@@ -70,6 +70,7 @@ parameters:
             - '*/tests/*'
             # class that is extended from DomainFactory
             - '*/src/Component/Domain/DomainFactoryOverwritingDomainUrl.php'
+            - '*/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php'
             # class that is used by OrderPreviewFactory to create OrderPreview
             - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
 

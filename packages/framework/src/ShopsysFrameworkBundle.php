@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\LazyRedisCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterCronModulesCompilerPass;
+use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterExtendedEntitiesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginCrudExtensionsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixturesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
@@ -32,7 +33,10 @@ class ShopsysFrameworkBundle extends Bundle
         $container->addCompilerPass(new RegisterPluginDataFixturesCompilerPass());
         $container->addCompilerPass(new RegisterProductFeedConfigsCompilerPass());
         $container->addCompilerPass(new LazyRedisCompilerPass());
+        $container->addCompilerPass(new RegisterExtendedEntitiesCompilerPass());
+
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
+
         $environment = $container->getParameter('kernel.environment');
         if ($environment === EnvironmentType::DEVELOPMENT) {
             $container->addCompilerPass(new RegisterProjectFrameworkClassExtensionsCompilerPass());

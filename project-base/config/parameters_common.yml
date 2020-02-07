@@ -19,17 +19,6 @@ parameters:
     shopsys.performance_test.feed.min_duration_seconds: 5
     container.autowiring.strict_mode: true
     container.dumper.inline_class_loader: true
-    shopsys.entity_extension.map:
-        Shopsys\FrameworkBundle\Model\Article\Article: App\Model\Article\Article
-        Shopsys\FrameworkBundle\Model\Administrator\Administrator: App\Model\Administrator\Administrator
-        Shopsys\FrameworkBundle\Model\Category\Category: App\Model\Category\Category
-        Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser: App\Model\Customer\User\CustomerUser
-        Shopsys\FrameworkBundle\Model\Order\Order: App\Model\Order\Order
-        Shopsys\FrameworkBundle\Model\Order\Item\OrderItem: App\Model\Order\Item\OrderItem
-        Shopsys\FrameworkBundle\Model\Transport\Transport: App\Model\Transport\Transport
-        Shopsys\FrameworkBundle\Model\Payment\Payment: App\Model\Payment\Payment
-        Shopsys\FrameworkBundle\Model\Product\Product: App\Model\Product\Product
-        Shopsys\FrameworkBundle\Model\Product\Brand\Brand: App\Model\Product\Brand\Brand
     build-version: '0000000000000000'
     shopsys.display_timezone: Europe/Prague
     shopsys.image.enable_lazy_load: true
