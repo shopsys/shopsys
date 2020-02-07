@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\FrameworkBundle\Unit\Model\Elasticsearch;
+namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
-use Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryIndex;
+use Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures\CategoryIndex;
 
 class IndexDefinitionTest extends TestCase
 {
@@ -38,7 +38,7 @@ class IndexDefinitionTest extends TestCase
     {
         $productIndexMock = $this->getBasicProductIndexMock();
 
-        /** @var \Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryIndex|\PHPUnit\Framework\MockObject\MockObject $categoryIndexMock */
+        /** @var \Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures\CategoryIndex|\PHPUnit\Framework\MockObject\MockObject $categoryIndexMock */
         $categoryIndexMock = $this->createMock(CategoryIndex::class);
         $categoryIndexMock->method('getName')->willReturn('category');
 

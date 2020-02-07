@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures;
+namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Symplify\BetterPhpDocParser\Exception\NotImplementedYetException;

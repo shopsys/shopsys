@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\FrameworkBundle\Unit\Model\Elasticsearch;
+namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndex
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportWithFilterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
-use Tests\FrameworkBundle\Unit\Model\Elasticsearch\__fixtures\CategoryIndex;
+use Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures\CategoryIndex;
 
 class IndexRegistryTest extends TestCase
 {
