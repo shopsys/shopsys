@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BrandFacade
 {
@@ -40,12 +43,18 @@ class BrandFacade
     protected $brandFactory;
 
     /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface $brandFactory
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -53,7 +62,8 @@ class BrandFacade
         ImageFacade $imageFacade,
         FriendlyUrlFacade $friendlyUrlFacade,
         Domain $domain,
-        BrandFactoryInterface $brandFactory
+        BrandFactoryInterface $brandFactory,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->em = $em;
         $this->brandRepository = $brandRepository;
@@ -61,6 +71,7 @@ class BrandFacade
         $this->friendlyUrlFacade = $friendlyUrlFacade;
         $this->domain = $domain;
         $this->brandFactory = $brandFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -94,6 +105,8 @@ class BrandFacade
         }
         $this->em->flush();
 
+        $this->dispatchBrandEvent($brand, BrandEvent::CREATE);
+
         return $brand;
     }
 
@@ -121,6 +134,8 @@ class BrandFacade
         }
         $this->em->flush();
 
+        $this->dispatchBrandEvent($brand, BrandEvent::UPDATE);
+
         return $brand;
     }
 
@@ -131,6 +146,9 @@ class BrandFacade
     {
         $brand = $this->brandRepository->getById($brandId);
         $this->em->remove($brand);
+
+        $this->dispatchBrandEvent($brand, BrandEvent::DELETE);
+
         $this->em->flush();
     }
 
@@ -140,5 +158,16 @@ class BrandFacade
     public function getAll()
     {
         return $this->brandRepository->getAll();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
+     * @param string $eventType
+     *
+     * @see \Shopsys\FrameworkBundle\Model\Product\Brand\BrandEvent class
+     */
+    protected function dispatchBrandEvent(Brand $brand, string $eventType): void
+    {
+        $this->eventDispatcher->dispatch($eventType, new BrandEvent($brand));
     }
 }
