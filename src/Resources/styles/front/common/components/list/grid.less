@@ -1,30 +1,30 @@
-@list-grid-item-gap: 30px;
+@list-grid-item-gap: 20px;
 
 @list-grid-item-height: 140px;
 @list-grid-item-height-lg: 210px;
 @list-grid-item-width: 33%;
 @list-grid-item-long-height: 450px;
 
-@list-grid-item-third-width-md: calc((100% / 3));
-@list-grid-item-sixth-width-md: calc((100% / 6));
+@list-grid-item-third-width-md: calc((100% / 3) - @list-grid-item-gap);
+@list-grid-item-third-max-width-md: 450px;
+@list-grid-item-sixth-max-width-md: 210px;
+@list-grid-item-sixth-width-md: calc((100% / 6) - @list-grid-item-gap);
 
 @list-grid-item-name-pos-top: 1rem;
-@list-grid-item-name-pos-left: @list-grid-item-gap + 20px;
+@list-grid-item-name-pos-left: 1.5rem;
 
 @list-grid-item-hover-transform: scale(1.06);
 
 .list-grid {
-    margin: 1rem 0 @box-component-bottom-spacing 0;
-
-    @media @query-md {
-        margin: 1.5rem 0 @box-component-bottom-spacing * 1.5 -@list-grid-item-gap;
-    }
+    margin-top: 1.5rem;
+    margin-bottom: @box-component-bottom-spacing * 1.5;
 
     &__row {        
+
         @media @query-md {
             display: flex;
-            justify-content: space-between;            
-            margin-bottom: @list-grid-item-gap;
+            justify-content: space-between;
+            margin-bottom: @list-grid-item-gap + 8;
         }
     }
 
@@ -32,13 +32,24 @@
         display: block;
         position: relative;
         height: @list-grid-item-height;
-        width: 100%;                         
-        margin-bottom: @list-grid-item-gap / 2;      
+        width: 100%;
+        overflow: hidden;
+        margin-bottom: @list-grid-item-gap - 5;
+
+        border-radius: @radius;           
+        background-color: @color-light;    
 
         @media @query-md {
-            height: @list-grid-item-height-lg;   
-            margin-bottom: 0;        
-            padding-left: @list-grid-item-gap; 
+            height: @list-grid-item-height-lg;
+            margin-bottom: 0;
+
+            transition: transform @transition, box-shadow @transition;
+            will-change: transform;
+
+            &:hover {
+                transform: @list-grid-item-hover-transform;
+                box-shadow: @hover-shadow;
+            }
         }
 
         &--long {
@@ -49,59 +60,41 @@
 
         &--half-long {
             @media @query-md {
-                height: calc((@list-grid-item-long-height / 2) - (@list-grid-item-gap / 2));                
+                height: calc((@list-grid-item-long-height / 2) - (@list-grid-item-gap - 5px));
             }
         }
 
         &--third {
             @media @query-md {
-                width: @list-grid-item-third-width-md;                
+                width: @list-grid-item-third-width-md;
+                max-width: @list-grid-item-third-max-width-md;
             }
         }
 
         &--sixth {
             @media @query-md {
-                width: @list-grid-item-sixth-width-md;                
-            }
-        }
-
-        &__link {            
-            display: block;
-            position: relative;
-            height: 100%;
-            overflow: hidden;
-            
-            border-radius: @radius;           
-            background-color: @color-light;           
-            will-change: transform;
-            transition: transform @transition, box-shadow @transition;    
-
-            &:hover {
-                transform: @list-grid-item-hover-transform;
-                box-shadow: @hover-shadow;
+                width: @list-grid-item-sixth-width-md;
+                max-width: @list-grid-item-sixth-max-width-md;
             }
         }
 
         &__img {
-            .image-object-fit-cover();   
-
-            will-change: transform;         
-            transition: transform @transition
+            .image-object-fit-cover();            
         }
 
-        // Name element is outside (in HTML) the link element (which received transform hover effect)
-        // because of unwanted blurry effect during transition.
         &__name {
             position: absolute;
-            left: @list-grid-item-name-pos-left / 2;
+            left: @list-grid-item-name-pos-left;
             top: @list-grid-item-name-pos-top;
-            z-index: 1;
-
-            pointer-events: none;
+            z-index: 1; 
 
             @media @query-md {
+                left: @list-grid-item-name-pos-left / 2;
+            }
+
+            @media @query-vl {
                 left: @list-grid-item-name-pos-left;
-            }            
+            }
         }
 
         &__in {

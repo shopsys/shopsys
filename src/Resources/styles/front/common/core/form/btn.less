@@ -6,7 +6,7 @@
 @btn-color-hover: @color-primary;
 @btn-bg: @color-d;
 @btn-bg-hover: darken(@btn-bg, 5%);
-@btn-border-radius: @radius;
+@btn-border-radius: 4px;
 
 .btn {
     width: auto;
@@ -15,14 +15,14 @@
     line-height: 1;
     vertical-align: middle;
     display: inline-block;
-    transition: @transition background, @transition color, @transition box-shadow;
+    transition: @transition background, @transition color;
     text-align: center;
 
     border: 0;
     border-radius: @btn-border-radius;
     color: @btn-color;
     background: @btn-bg;
-    cursor: pointer;
+    cursor: pointer;    
     text-decoration: none;
     font-family: @font-tertiary;
     font-size: 13px;
@@ -56,8 +56,8 @@
     }
 
     // primary button
-    @btn-primary-color: @color-f;
-    @btn-primary-color-hover: @color-f;
+    @btn-primary-color: #fff;
+    @btn-primary-color-hover: #fff;
     @btn-primary-bg: @color-add;
     @btn-primary-bg-hover: @color-add;
 
@@ -68,8 +68,8 @@
 
         &:hover {
             color: @btn-primary-color-hover;
+            background: @btn-primary-bg-hover;
             background: linear-gradient(to bottom, @btn-primary-bg, #ffb900);
-            box-shadow: 0 0 10px 0 @btn-primary-bg;
         }
     }
 
@@ -79,55 +79,16 @@
     }
 
     // Outline button
-    @btn-outline-border: 2px solid @color-add;
+    @btn-outline-border: 2px solid @color-add;    
     @btn-outline-bg: transparent;
-    @btn-outline-bg-hover: @color-add;
+    @btn-outline-bg-hover: @color-add;    
 
     &--outline {
         border: @btn-outline-border;
         background-color: @btn-outline-bg;
 
         &:hover {
-            background-color: @btn-outline-bg-hover;
-        }
-    }
-
-    @btn-tag-padding: 7px 14px;
-    @btn-tag-border: 1px solid #dce3e5;
-    @btn-tag-bg-hover: #dce3e5;
-
-    &--tag {
-        margin-right: 0.25rem;
-        padding: @btn-tag-padding;
-        min-height: 0;
-
-        font-family: @font-quartenary;
-        background-color: transparent;
-        border: @btn-tag-border;
-        border-radius: 2em;
-        text-transform: none;
-
-        &:hover {
-            background-color: #dce3e5;
-        }
-    }
-
-    &--next {
-        font-family: @font-quartenary;
-        font-size: 15px;
-        text-transform: none;
-
-        &:hover {
-            color: darken(@color-primary, 20%);
-        }
-
-        // TODO: When designer give us the icons, it will be don with font icon.
-        .btn__icon {
-            position: relative;
-            top: 3px;
-            padding-left: 0.35rem;
-
-            font-size: 32px;
+            background-color: @btn-outline-bg-hover;            
         }
     }
 }
@@ -154,9 +115,20 @@
         font-size: 11px;
     }
 
-    // Block button
-    &--block {
-        display: block;
+    &--next { 
+        font-family: @font-quartenary;
+        font-size: 15px;
+        text-transform: none;
+        text-align: left;
+                
+        .btn__icon {
+            position: relative;
+            top: 1px;
+            padding-left: 0.25rem;
+            vertical-align: middle;
+
+            font-size: 30px;
+        }
     }
 }
 
@@ -196,7 +168,7 @@
 
 // Button with removed styles
 .btn-no-style {
-    padding: 0;
+    padding: 0;    
     min-height: 0;
 
     border: 0;
@@ -207,3 +179,4 @@
         background: none;
     }
 }
+
