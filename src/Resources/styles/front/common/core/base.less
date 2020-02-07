@@ -1,5 +1,11 @@
 // Settings for default elements
 
+// TODO: Fonts would be fetched with async approach (in first site access) in the future (before production).
+.font-face("GraphikRegular", "GraphikRegular", @font-weight: '400', @font-style: 'normal');
+.font-face("GraphikSemiBold", "GraphikSemiBold", @font-weight: '400', @font-style: 'normal');
+.font-face("GraphikBold", "GraphikBold", @font-weight: '400', @font-style: 'normal');
+.font-face("GraphikMedium", "GraphikMedium", @font-weight: '400', @font-style: 'normal');
+
 * {
     box-sizing: border-box;
 }
@@ -20,9 +26,11 @@ table, tr, td, th, input, textarea {
     color: @color-base;
     font-family: @font-base;
     font-size: @font-size-mobile;
+    line-height: @line-height-mobile;
 
     @media @query-lg {
         font-size: @font-size;
+        line-height: @line-height;
     }
 }
 
@@ -58,12 +66,13 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: @color-base;
-    font-family: @font;
+    color: @color-primary;
+    font-family: @font-secondary;
     font-weight: 400;
     line-height: 1.3em;
     text-rendering: optimizelegibility;
     word-wrap: break-word;
+    text-transform: uppercase;
 }
 
 h1 {
@@ -83,8 +92,6 @@ h1 {
     }
 
     @media @query-vl {
-        margin-bottom: 20px;
-
         font-size: 36px;
     }
 }
@@ -92,23 +99,14 @@ h1 {
 h2 {
     margin: 0 0 10px 0;
 
-    font-size: 28px;
-    font-weight: normal;
+    font-size: 28px;    
 
     @media @query-md {
         font-size: 29px;
     }
 
     @media @query-lg {
-        margin-bottom: 15px;
-
-        font-size: 29px;
-    }
-
-    @media @query-vl {
-        margin-bottom: 20px;
-
-        font-size: 32px;
+        font-size: 30px;
     }
 }
 
@@ -129,8 +127,6 @@ h3 {
     }
 
     @media @query-vl {
-        margin-bottom: 20px;
-
         font-size: 24px;
     }
 }
@@ -146,8 +142,6 @@ h4 {
     }
 
     @media @query-lg {
-        margin-bottom: 15px;
-
         font-size: 21px;
     }
 
@@ -190,14 +184,14 @@ h6 {
 }
 
 a {
-    text-decoration: underline;
+    text-decoration: none;
     color: @color-link;
     cursor: pointer;
     outline: none;
     transition: @transition color;
 
     &:hover {
-        text-decoration: none;
+        text-decoration: underline;
         color: @color-link-hover;
     }
 }
