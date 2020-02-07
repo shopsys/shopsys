@@ -118,7 +118,6 @@ final class ElasticsearchStructureUpdateCheckerTest extends FunctionalTestCase
     private function revertStructureFromBackup(array $oldDefinition, string $indexName, string $aliasName): void
     {
         $backupIndexName = $indexName . '_backup';
-        $this->elasticsearchIndexes->delete(['index' => $indexName]);
         $this->moveStructureByReindexing($backupIndexName, $indexName, $oldDefinition);
         $this->elasticsearchIndexes->putAlias(['index' => $indexName, 'name' => $aliasName]);
     }
@@ -130,6 +129,9 @@ final class ElasticsearchStructureUpdateCheckerTest extends FunctionalTestCase
      */
     private function moveStructureByReindexing(string $oldName, string $newName, array $definition): void
     {
+        if ($this->elasticsearchIndexes->exists(['index' => $newName]) === true) {
+            $this->elasticsearchIndexes->delete(['index' => $newName]);
+        }
         $this->elasticsearchIndexes->create([
             'index' => $newName,
             'body' => $definition,
