@@ -4,31 +4,28 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Registration;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
 
-class CompanyRegistrationFormType extends RegistrationFormType
+class CompanyCustomerRegistrationFormType extends AbstractType
 {
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @return string|null
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function getParent()
     {
-        parent::buildForm($builder, $options);
-        $builder->remove('gender');
-        $builder->remove('firstName');
-        $builder->remove('lastName');
+        return RegistrationFormType::class;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    protected function buildBillingAddressFormPart(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildBillingAddressFormPart($builder, $options);
         $builder->add(
             'companyName',
             TextType::class,
@@ -57,7 +54,7 @@ class CompanyRegistrationFormType extends RegistrationFormType
                 ],
             ]
         );
-        if ($options['domainId'] == 2) {
+        if ($options['domainId'] == Domain::SECOND_DOMAIN_ID) {
             $builder->add(
                 'companyNumberWithVat',
                 TextType::class,

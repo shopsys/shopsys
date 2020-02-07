@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Registration;
 
-use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\RegistrationData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
@@ -15,7 +14,6 @@ use Shopsys\FrameworkBundle\Form\Constraints\UniqueEmail;
 use Shopsys\FrameworkBundle\Form\HoneyPotType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -84,25 +82,25 @@ class RegistrationFormType extends AbstractType
     protected function buildContactInformationFormPart(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('gender', ChoiceType::class, [
-                'choices' => array_flip(CustomerUser::getAllGenders()),
-                'placeholder' => t('-- Vyber oslovení --'),
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Prosím vyberte si oslovení']),
-                ],
-            ])
-            ->add('firstName', TextType::class, [
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter first name']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
-                ],
-            ])
-            ->add('lastName', TextType::class, [
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter last name']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
-                ],
-            ])
+//            ->add('gender', ChoiceType::class, [
+//                'choices' => array_flip(CustomerUser::getAllGenders()),
+//                'placeholder' => t('-- Vyber oslovení --'),
+//                'constraints' => [
+//                    new Constraints\NotBlank(['message' => 'Prosím vyberte si oslovení']),
+//                ],
+//            ])
+//            ->add('firstName', TextType::class, [
+//                'constraints' => [
+//                    new Constraints\NotBlank(['message' => 'Please enter first name']),
+//                    new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
+//                ],
+//            ])
+//            ->add('lastName', TextType::class, [
+//                'constraints' => [
+//                    new Constraints\NotBlank(['message' => 'Please enter last name']),
+//                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
+//                ],
+//            ])
             ->add('telephone', TextType::class, [
                 'required' => false,
                 'constraints' => [

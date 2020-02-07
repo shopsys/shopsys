@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Form\Front\Registration\CompanyRegistrationFormType;
-use App\Form\Front\Registration\RegistrationFormType;
+use App\Form\Front\Registration\CommonCustomerRegistrationFormType;
+use App\Form\Front\Registration\CompanyCustomerRegistrationFormType;
 use App\Model\Customer\User\RegistrationDataFactoryInterface;
 use App\Model\Customer\User\RegistrationFacadeInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -102,13 +102,13 @@ class RegistrationController extends FrontBaseController
         $this->activateCommonCustomerRegistrationForm();
         $registrationData = $this->registrationDataFactory->createForDomainId($this->domain->getId());
 
-        $form = $this->createForm(RegistrationFormType::class, $registrationData);
+        $form = $this->createForm(CommonCustomerRegistrationFormType::class, $registrationData);
         $form->handleRequest($request);
         if ($this->handleCommonCustomerRegistrationForm($form, $request)) {
             return $this->redirectToRoute('front_homepage');
         }
 
-        $companyRegistrationForm = $this->createForm(CompanyRegistrationFormType::class, $registrationData);
+        $companyRegistrationForm = $this->createForm(CompanyCustomerRegistrationFormType::class, $registrationData);
         $companyRegistrationForm->handleRequest($request);
         if ($this->handleCompanyCustomerRegistrationForm($companyRegistrationForm, $request)) {
             return $this->redirectToRoute('front_homepage');
