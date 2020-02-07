@@ -66,3 +66,30 @@ There you can find links to upgrade notes for other versions too.
     +   $me->waitForAjax();
         $orderPage->assertPaymentIsNotSelected('Cash on delivery');
     ```
+- fix npm audit [#1668](https://github.com/shopsys/shopsys/pull/1668)
+    - update your `docker/php-fpm/Dockerfile`
+      ```diff
+        libpq-dev \
+      + fontforge \
+        autoconf && \
+      ```
+    - update your `package.json`
+      ```diff
+      - "grunt-spritesmith": "^6.6.2",
+      - "grunt-webfont": "^1.7.2",
+      + "grunt-spritesmith": "^6.8.0",
+      + "grunt-webfont": "https://github.com/shopsys/grunt-webfont.git#fix-npm-audit",
+      ```
+    - update your `src/Shopsys/ShopBundle/Resources/views/Grunt/gruntfile.js.twig` (you have to do this in two places (webfont: admin and webfont: frontend))
+      ```diff
+        types: 'eot,woff,ttf,svg',
+      - engine: 'node',
+        stylesheet: 'less',
+        relativeFontPath: '../fonts',
+      - fontHeight: '512',
+      - descent: '0',
+      + fontHeight: 512,
+      + descent: 0,
+      + normalize: true,
+        destHtml: 'docs/generated',
+      ```

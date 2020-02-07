@@ -38,6 +38,7 @@ RUN apt-get update && \
     libzip-dev \
     libicu-dev \
     libpq-dev \
+    fontforge \
     autoconf && \
     apt-get clean
 
