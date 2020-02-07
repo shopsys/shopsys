@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportSubscriber;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class ProductSearchExportSubscriber extends AbstractExportSubscriber
 {
@@ -30,5 +31,17 @@ class ProductSearchExportSubscriber extends AbstractExportSubscriber
         Domain $domain
     ) {
         parent::__construct($productSearchExportScheduler, $entityManager, $indexRepository, $indexDefinitionLoader, $index, $domain);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            KernelEvents::RESPONSE => [
+                ['exportScheduledRows', -30],
+            ],
+        ];
     }
 }

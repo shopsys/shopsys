@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 abstract class AbstractExportSubscriber implements EventSubscriberInterface
 {
@@ -70,14 +69,7 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
     /**
      * @inheritDoc
      */
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            KernelEvents::RESPONSE => [
-                ['exportScheduledRows', -30],
-            ],
-        ];
-    }
+    abstract public static function getSubscribedEvents(): array;
 
     public function exportScheduledRows(): void
     {
