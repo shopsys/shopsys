@@ -3,8 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Security;
 
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Security;
@@ -19,20 +19,20 @@ class Authenticator
     protected $tokenStorage;
 
     /**
-     * @var \Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    protected $traceableEventDispatcher;
+    protected $eventDispatcher;
 
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage $tokenStorage
-     * @param \Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher $traceableEventDispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $traceableEventDispatcher
      */
     public function __construct(
         TokenStorage $tokenStorage,
-        TraceableEventDispatcher $traceableEventDispatcher
+        EventDispatcherInterface $traceableEventDispatcher
     ) {
         $this->tokenStorage = $tokenStorage;
-        $this->traceableEventDispatcher = $traceableEventDispatcher;
+        $this->eventDispatcher = $traceableEventDispatcher;
     }
 
     /**
@@ -72,7 +72,7 @@ class Authenticator
 
         // dispatch the login event
         $event = new InteractiveLoginEvent($request, $token);
-        $this->traceableEventDispatcher->dispatch(SecurityEvents::INTERACTIVE_LOGIN, $event);
+        $this->eventDispatcher->dispatch(SecurityEvents::INTERACTIVE_LOGIN, $event);
 
         $request->getSession()->migrate();
     }
