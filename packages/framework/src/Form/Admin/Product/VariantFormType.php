@@ -24,6 +24,7 @@ class VariantFormType extends AbstractType
     {
         $builder
             ->add(self::MAIN_VARIANT, ProductType::class, [
+                'label' => t('Main variant'),
                 'allow_main_variants' => false,
                 'allow_variants' => false,
                 'constraints' => [
@@ -33,6 +34,7 @@ class VariantFormType extends AbstractType
             ->add(
                 $builder
                     ->create(self::VARIANTS, ProductsType::class, [
+                        'label' => t('Variants'),
                         'allow_main_variants' => false,
                         'allow_variants' => false,
                         'constraints' => [
@@ -41,7 +43,9 @@ class VariantFormType extends AbstractType
                     ])
                     ->addModelTransformer(new RemoveDuplicatesFromArrayTransformer())
             )
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class, [
+                'label' => t('Create'),
+            ]);
     }
 
     /**
