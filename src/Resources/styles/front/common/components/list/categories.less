@@ -1,10 +1,9 @@
 @list-categories-item-min-height: 85px;
-@list-categories-item-padding: 18px 13px;
 @list-categories-item-margin: 12px 10px;
 @list-categories-item-margin-md: 10px 15px;
 
 @list-cagegories-item-gap: 20px;
-@list-cagegories-item-gap-md: 31px;
+@list-cagegories-item-gap-md: 31px; 
 
 @list-categories-item-width: calc((100% / 2) - @list-cagegories-item-gap);
 @list-categories-item-width-md: calc((100% / 4) - @list-cagegories-item-gap-md);
@@ -20,6 +19,7 @@
 
 @list-categories-item-name-font-size: 15px;
 @list-categories-item-name-spacing: 10px 0;
+@list-categories-item-name-spacing-lg: 18px 13px;
 
 @list-categories-item-bg-width: 100%;
 @list-categories-item-bg-height: 70px;
@@ -103,14 +103,14 @@
 
         &__title {            
             margin: 0;            
-            padding: @list-categories-item-name-spacing;
-
+            padding: @list-categories-item-name-spacing;            
+            
             font-family: @font-quartenary;
             font-size: @list-categories-item-name-font-size;      
-            text-transform: none;      
+            text-transform: none;                 
 
-            @media @query-md {
-                padding: @list-categories-item-padding;
+            @media @query-lg {
+                padding: @list-categories-item-name-spacing-lg;
             }
         }
     }
