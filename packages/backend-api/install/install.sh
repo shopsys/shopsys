@@ -64,6 +64,7 @@ function apply_patch () {
     echo "Applying patch for ${FILE_PATH}..."
     local PATCH_DRY_RUN=`patch -t --dry-run ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch`
     local PATCH_REVERSED=`grep "Reversed" <<< ${PATCH_DRY_RUN}`
+    local PATCH_WARNING=`grep "Hunk #" <<< ${PATCH_DRY_RUN}`
     local PATCH_FAIL=`grep "FAILED" <<< ${PATCH_DRY_RUN}`
 
     if [ ! -z "${PATCH_REVERSED}" ]
@@ -73,6 +74,11 @@ function apply_patch () {
     then
         echo ${PATCH_FAIL}
         echo "Patch for ${FILE_PATH} cannot be applied!"
+        AT_LEAST_ONE_PATCH_FAILED=1
+    elif [ ! -z "${PATCH_WARNING}" ]
+    then
+        echo "Patch can be applied for ${FILE_PATH} however patching did not have perfect match!"
+        echo "Verify patchfile and apply manually with 'patch -t ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch'"
         AT_LEAST_ONE_PATCH_FAILED=1
     else
         patch -t ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch

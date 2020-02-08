@@ -52,6 +52,7 @@ function apply_patch_reverse () {
 
     echo "Reverting ${FILE_PATH}..."
     local PATCH_DRY_RUN=`patch -Rf --dry-run ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch`
+    local PATCH_WARNING=`grep "Hunk #" <<< ${PATCH_DRY_RUN}`
     local PATCH_FAIL=`grep "FAILED" <<< ${PATCH_DRY_RUN}`
 
     if [ ! -z "${PATCH_FAIL}" ]
@@ -65,6 +66,11 @@ function apply_patch_reverse () {
             echo "${FILE_PATH} cannot be reverted!"
             AT_LEAST_ONE_PATCH_FAILED=1
         fi
+    elif [ ! -z "${PATCH_WARNING}" ]
+    then
+        echo "Patch can be applied for ${FILE_PATH} however patching did not have perfect match!"
+        echo "Verify patchfile and apply manually with 'patch -Rf ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch'"
+        AT_LEAST_ONE_PATCH_FAILED=1
     else
         patch -Rf ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch
         echo "Done"
