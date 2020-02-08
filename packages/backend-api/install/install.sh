@@ -62,7 +62,7 @@ function apply_patch () {
     fi
 
     echo "Applying patch for ${FILE_PATH}..."
-    local PATCH_DRY_RUN=`patch -st --dry-run ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch`
+    local PATCH_DRY_RUN=`patch -t --dry-run ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch`
     local PATCH_REVERSED=`grep "Reversed" <<< ${PATCH_DRY_RUN}`
     local PATCH_FAIL=`grep "FAILED" <<< ${PATCH_DRY_RUN}`
 
@@ -75,7 +75,7 @@ function apply_patch () {
         echo "Patch for ${FILE_PATH} cannot be applied!"
         AT_LEAST_ONE_PATCH_FAILED=1
     else
-        patch -st ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch
+        patch -t ${PROJECT_BASE_PATH}/${FILE_PATH} ${INSTALL_DIR}/${SOURCE_FILE_PATH}.patch
         echo "Done"
     fi
 }
