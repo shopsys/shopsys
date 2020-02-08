@@ -66,24 +66,36 @@ class CreateDomainsDataCommand extends Command
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->em->transactional(function () use ($output) {
-            $this->doExecute($output);
+        $domainsCreatedCount = 0;
+        $this->em->transactional(function () use ($output, &$domainsCreatedCount) {
+            $domainsCreatedCount = $this->doExecute($output);
         });
+
+        if ($domainsCreatedCount > 0) {
+            $application = $this->getApplicationInstance();
+            $recalculationsCommand = $application->get(RecalculationsCommand::getDefaultName());
+
+            return $recalculationsCommand->run($input, $output);
+        }
+
+        return 0;
     }
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
      */
     private function doExecute(OutputInterface $output)
     {
         $output->writeln('Start of creating new domains data.');
 
-        $domainsCreated = $this->domainDataCreator->createNewDomainsData();
+        $domainsCreatedCount = $this->domainDataCreator->createNewDomainsData();
 
-        $output->writeln('<fg=green>New domains created: ' . $domainsCreated . '.</fg=green>');
+        $output->writeln('<fg=green>New domains created: ' . $domainsCreatedCount . '.</fg=green>');
 
         $multidomainEntitiesNames = $this->multidomainEntityClassFinderFacade->getMultidomainEntitiesNames();
         $output->writeln('<fg=green>Multidomain entities found:</fg=green>');
@@ -92,5 +104,21 @@ class CreateDomainsDataCommand extends Command
         }
         $this->dbIndexesFacade->updateLocaleSpecificIndexes();
         $output->writeln('<fg=green>All locale specific db indexes updated.</fg=green>');
+
+        return $domainsCreatedCount;
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Application
+     */
+    protected function getApplicationInstance()
+    {
+        $application = $this->getApplication();
+
+        if ($application !== null) {
+            return $application;
+        }
+
+        throw new \RuntimeException('Application must be loaded.');
     }
 }
