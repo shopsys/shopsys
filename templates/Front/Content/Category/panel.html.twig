@@ -1,36 +1,39 @@
 {% if categoriesWithLazyLoadedVisibleChildren|length > 0 %}
+    <nav class="list-menu-wrap">
+        <ul class="js-category-list list-menu dont-print
+            {% if isFirstLevel %} list-menu--root{% endif %}
+            {% if categoriesWithLazyLoadedVisibleChildren[0].category.level > 2 %} list-menu--dropdown{% endif %}"
+            {% if isFirstLevel %}id="js-categories"{% endif %}>
+            {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
+                {% set isCurrentCategory = (currentCategory is not null and currentCategory == categoryWithLazyLoadedVisibleChildren.category) %}
+                {% if loop.index <= 9 %}
+                    <li class="list-menu__item js-category-item
+                        {% if categoryWithLazyLoadedVisibleChildren.category.level == 1 %}js-hover-intent{% endif %}"
+                        data-hover-intent-class-for-open="active intented"
+                        data-hover-intent-force-click="true"
+                        data-hover-intent-force-click-element=".js-category-collapse-control"
+                        >
+                        <a href="{{ url('front_product_list', { id: categoryWithLazyLoadedVisibleChildren.category.id }) }}" class="list-menu__item__link list-menu__item__link--level-{{ categoryWithLazyLoadedVisibleChildren.category.level }} {% if isCurrentCategory %}current{% endif %}">
+                            {{ categoryWithLazyLoadedVisibleChildren.category.name }}
+                            {% if categoryWithLazyLoadedVisibleChildren.hasChildren %}
+                                <i class="list-menu__item__control svg svg-arrow js-category-collapse-control" data-url="{{ url('front_category_branch', { parentCategoryId: categoryWithLazyLoadedVisibleChildren.category.id }) }}"></i>
+                            {% endif %}
+                        </a>
+                        {% if categoryWithLazyLoadedVisibleChildren.category in openCategories %}
+                            {% set categoriesWithLazyLoadedVisibleChildren = categoryWithLazyLoadedVisibleChildren.children %}
+                            {% set isFirstLevel = false %}
 
-    <ul class="js-category-list list-menu dont-print
-        {% if isFirstLevel %} list-menu--root{% endif %}
-        {% if categoriesWithLazyLoadedVisibleChildren[0].category.level > 2 %} list-menu--dropdown{% endif %}"
-        {% if isFirstLevel %}id="js-categories"{% endif %}>
-        {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
-            {% set isCurrentCategory = (currentCategory is not null and currentCategory == categoryWithLazyLoadedVisibleChildren.category) %}
-            <li class="list-menu__item js-category-item
-                {% if categoryWithLazyLoadedVisibleChildren.category.level == 1 %}js-hover-intent{% endif %}"
-                data-hover-intent-class-for-open="active intented"
-                data-hover-intent-force-click="true"
-                data-hover-intent-force-click-element=".js-category-collapse-control"
-                >
-                <a href="{{ url('front_product_list', { id: categoryWithLazyLoadedVisibleChildren.category.id }) }}" class="list-menu__item__link list-menu__item__link--level-{{ categoryWithLazyLoadedVisibleChildren.category.level }} {% if isCurrentCategory %}current{% endif %}">
-                    {{ categoryWithLazyLoadedVisibleChildren.category.name }}
-                    {% if categoryWithLazyLoadedVisibleChildren.hasChildren %}
-                        <i class="list-menu__item__control svg svg-arrow js-category-collapse-control" data-url="{{ url('front_category_branch', { parentCategoryId: categoryWithLazyLoadedVisibleChildren.category.id }) }}"></i>
-                    {% endif %}
-                </a>
-                {% if categoryWithLazyLoadedVisibleChildren.category in openCategories %}
-                    {% set categoriesWithLazyLoadedVisibleChildren = categoryWithLazyLoadedVisibleChildren.children %}
-                    {% set isFirstLevel = false %}
-
-                    {% include _self %}
-                {% else %}
-                    <div class="display-none js-category-list-placeholder"></div>
+                            {% include _self %}
+                        {% else %}
+                            <div class="display-none js-category-list-placeholder"></div>
+                        {% endif %}
+                    </li>
                 {% endif %}
-            </li>
-        {% endfor %}
+            {% endfor %}
 
-        <li class="list-menu__item">
-            <a class="list-menu__item__link" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ "Magazín"|trans }}</a>
-        </li>
-    </ul>
+            <li class="list-menu__item">
+                <a class="list-menu__item__link" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ "Magazín"|trans }}</a>
+            </li>
+        </ul>
+    </nav>
 {% endif %}

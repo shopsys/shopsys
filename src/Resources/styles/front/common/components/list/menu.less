@@ -2,15 +2,26 @@
 @list-menu-arrow-size: 25px;
 @list-menu-height: 30px;
 
-@list-menu-bg: @color-primary;
+@list-menu-bg: @color-f;
 @list-menu-submenu-bg: darken(@list-menu-bg, 10%);
 @list-menu-border-color: lighten(@list-menu-bg, 5%);
 
-@list-menu-font-color: @color-f;
-@list-menu-font-hover-color: @color-f;
+@list-menu-font-color: @color-primary;
+@list-menu-font-hover-color: @color-primary;
+
+@list-menu-border-color: #e8ecee;
 
 // global settings
-.list-menu {
+.list-menu-wrap {
+    border-top: 1px solid @list-menu-border-color;    
+    border-bottom: 1px solid @list-menu-border-color;    
+}
+
+.list-menu {    
+    max-width: @web-width;
+    margin: 0 auto;
+    padding: 0;
+
     &__item {
         &__link {
             position: relative;
@@ -46,8 +57,7 @@
 @media @query-tablet {
     @list-menu-mobile-position: @web-header-mobile-dropdown-position;
 
-    .list-menu {
-        .reset-ul();
+    .list-menu {        
 
         &--root {
             display: none;
@@ -69,7 +79,7 @@
 
             &__link {
                 display: block;
-                padding: 10px @list-menu-padding-right 10px 20px;
+                padding: 0.75rem 1rem;
 
                 color: @list-menu-font-color;
                 font-size: 11px;
@@ -82,7 +92,8 @@
 
 
                 &--level-1 {
-                    font-size: 12px;
+                    font-family: @font-quartenary;
+                    font-size: 15px;                    
                 }
 
                 &--level-2 {
@@ -118,8 +129,7 @@
 
 // desktop version
 @media @query-lg {
-    .list-menu {
-        .reset-ul();
+    .list-menu {        
         display: none;
         position: absolute;
         width: 100%;
@@ -129,12 +139,13 @@
 
         &--root {
             position: relative;
+            top: 0;            
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            width: 100%;
-            top: 0;
-            margin-bottom: @margin-gap;
+            align-items: center;
+            justify-content: center;
+            width: 100%;            
 
             background-color: @list-menu-bg;
         }
@@ -160,7 +171,7 @@
 
             &__link {
                 width: 100%;
-                padding: 8px @list-menu-padding-right 7px 50px;
+                padding: 0.75rem 1rem;
 
                 color: @list-menu-font-color;
                 font-size: 11px;
@@ -175,10 +186,9 @@
                     }
                 }
 
-                &--level-1 {
-                    padding-left: 10px;
-
-                    font-size: 12px;
+                &--level-1 {                    
+                    font-family: @font-quartenary;
+                    font-size: 15px;
                 }
 
                 &--level-2 {

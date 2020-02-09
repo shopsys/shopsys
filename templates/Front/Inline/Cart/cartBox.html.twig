@@ -17,7 +17,7 @@
             </span>
             <div class="cart__info js-cart-info">
                 {% if cart is null %}
-                    {{ 'Your cart is empty'|trans }}
+                    {{ '0 Kč'|trans }}
                 {% else %}
                     {% transchoice cart.itemsCount with { '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
                         {1} <strong class="cart__state">%itemsCount%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%itemsCount%</strong> items for <strong class="cart__state">%priceWithVat%</strong>

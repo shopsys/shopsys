@@ -14,27 +14,7 @@
         </div>
 
         <div class="header__middle dont-print">
-            {{ render(controller('App\\Controller\\Front\\SearchController:boxAction')) }}
-            {% if shopInfoPhoneNumber is not null or shopInfoPhoneHours is not null or shopInfoEmail is not null %}
-                <div class="contact-us">
-                    {% if shopInfoPhoneNumber is not null %}
-                        <span class="contact-us__phone">
-                            <i class="svg svg-phone"></i>
-                            {{ shopInfoPhoneNumber }}
-                        </span>
-                    {% endif %}
-                    {% if shopInfoPhoneHours is not null %}
-                        <span class="contact-us__days">
-                            {{ shopInfoPhoneHours }}
-                        </span>
-                    {% endif %}
-                    {% if shopInfoEmail is not null %}
-                        <span class="contact-us__email">
-                            {{ shopInfoEmail }}
-                        </span>
-                    {% endif %}
-                </div>
-            {% endif %}
+            {{ render(controller('App\\Controller\\Front\\SearchController:boxAction')) }}            
         </div>
 
         <div class="header__mobile dont-print">
@@ -80,68 +60,58 @@
             </div>
         </div>
 
-        <div class="header__top dont-print">
-            <div class="header__top__left">
-                {{ render(controller('App\\Controller\\Front\\ArticleController:menuAction')) }}
-            </div>
-
-            <div class="header__top__right">
-                <ul class="menu-iconic">
-                    {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
-                        <li class="menu-iconic__item">
-                            <a href="{{ url('front_customer_edit') }}" class="menu-iconic__item__link">
-                                <i class="svg svg-user"></i>
-                                <span>
-                                    {% if app.user.customer.billingAddress.companyCustomer == true %}
-                                        {{ app.user.customer.billingAddress.companyName }}
-                                    {% else %}
-                                        {{ app.user.firstName }} {{ app.user.lastName }}
-                                    {% endif %}
-                                </span>
-                            </a>
-                            <ul class="menu-iconic__sub">
-                                <li class="menu-iconic__sub__item">
-                                    <a href="{{ url('front_customer_edit') }}" class="menu-iconic__sub__item__link">{{ 'Personal data'|trans }}</a>
-                                </li>
-                                <li class="menu-iconic__sub__item">
-                                    <a href="{{ url('front_customer_orders') }}" class="menu-iconic__sub__item__link">{{ 'My orders'|trans }}</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-iconic__item">
-                            <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}" class="js-logout-link-desktop menu-iconic__item__link">
-                                <span>
-                                    {{ 'Log out'|trans }}
-                                </span>
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="menu-iconic__item">
-                            <a
-                                href="{{ url('front_login') }}"
-                                data-url="{{ url('front_login_window_form') }}"
-                                class="js-login-link-desktop js-login-button menu-iconic__item__link"
-                            >
-                                <i class="svg svg-user"></i>
-                                <span>
-                                    {{ 'Log in'|trans }}
-                                </span>
-                            </a>
-                        </li>
-                        <li class="menu-iconic__item">
-                            <a href="{{ url('front_registration_register') }}" class="js-registration-link-desktop menu-iconic__item__link">
-                                <span>
-                                    {{ 'Registration'|trans }}
-                                </span>
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-
         <div class="header__cart dont-print">
             {{ render(controller('App\\Controller\\Front\\CartController:boxAction')) }}
+        </div>
+
+        <div class="header__top dont-print">
+            <ul class="menu-iconic">
+                {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
+                    <li class="menu-iconic__item">
+                        <a href="{{ url('front_customer_edit') }}" class="menu-iconic__item__link">
+                            <i class="svg svg-user"></i>
+                            <span>
+                                {{ app.user.firstName }} {{ app.user.lastName }}
+                            </span>
+                        </a>
+                        <ul class="menu-iconic__sub">
+                            <li class="menu-iconic__sub__item">
+                                <a href="{{ url('front_customer_edit') }}" class="menu-iconic__sub__item__link">{{ 'Personal data'|trans }}</a>
+                            </li>
+                            <li class="menu-iconic__sub__item">
+                                <a href="{{ url('front_customer_orders') }}" class="menu-iconic__sub__item__link">{{ 'My orders'|trans }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-iconic__item">
+                        <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}" class="js-logout-link-desktop menu-iconic__item__link">
+                            <span>
+                                {{ 'Log out'|trans }}
+                            </span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="menu-iconic__item">
+                        <a
+                            href="{{ url('front_login') }}"
+                            data-url="{{ url('front_login_window_form') }}"
+                            class="js-login-link-desktop js-login-button menu-iconic__item__link"
+                        >
+                            <i class="svg svg-user"></i>
+                            <span>
+                                {{ 'Log in'|trans }}
+                            </span>
+                        </a>
+                    </li>
+                    <li class="menu-iconic__item">
+                        <a href="{{ url('front_registration_register') }}" class="js-registration-link-desktop menu-iconic__item__link">
+                            <span>
+                                {{ 'Registration'|trans }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
     </header>
 
