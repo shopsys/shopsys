@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>Icon/Flags/flag_cz_white_SVG</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icon/Flags/flag_cz_white" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon/Flags/flag_cz_grey" fill-rule="nonzero">
+            <g id="czech-republic">
+                <ellipse id="Oval" fill="#FFFFFF" cx="8.98245614" cy="9" rx="8.98245614" ry="9"></ellipse>
+                <path d="M8.20136842,9 C8.20136842,9 2.63614035,15.3652148 2.63087719,15.3639492 C4.25635088,16.9926328 6.502,18 8.98245614,18 C13.9432982,18 17.9649123,13.9705313 17.9649123,9 L8.20136842,9 Z" id="Path" fill="#D80027"></path>
+                <path d="M2.63087719,2.63601563 C-0.876982456,6.15072656 -0.876982456,11.8492383 2.63087719,15.3639844 C4.08045614,13.9115742 5.47459649,12.5147109 8.98245614,9 L2.63087719,2.63601563 Z" id="Path" fill="#0052B4"></path>
+            </g>
+        </g>
+    </g>
+</svg>
