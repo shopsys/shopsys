@@ -1,5 +1,6 @@
 @web-footer-with-cookies-margin-bottom: 36px;
-@web-footer-background: @color-3;
+@web-footer-background: @color-light;
+@web-footer-border: 1px solid darken(@web-footer-background, 5%);
 
 img {
     max-width: 100%;
@@ -32,6 +33,9 @@ img {
         &--grey {
             background: @color-light;
         }
+        &--grey-bottom-border {
+            border-bottom: @web-footer-border;
+        }
     }
 
     &__container {
@@ -54,6 +58,7 @@ img {
             padding: 0;
             width: 100%;
         }
+        
     }
 
     &__main {
@@ -91,9 +96,7 @@ img {
 
     &__footer {
         flex: 0;
-        will-change: padding;
-
-        background: @web-footer-background;
+        will-change: padding;        
         transition: @transition padding;
 
         &--with-cookies {

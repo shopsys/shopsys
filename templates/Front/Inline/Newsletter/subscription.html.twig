@@ -1,17 +1,17 @@
 {{ form_start(form, { attr: { 'data-on-submit': 'ajaxSubmit', 'data-success': success ? 'true' : 'false' }}) }}
     <div class="footer__newsletter">
         <div class="footer__newsletter__text">
-            <p>
-                {{ 'Do you want to receive the newest information about our shop? Subscribe to our email newsletter.'|trans }}
-            </p>
+            <h2 class="footer__newsletter__heading h3">
+                {{ 'Zaregistrujte se k odběru newsletteru a&nbsp;získejte slevu 30% na Váš první nákup!'|trans|raw }}
+            </h2>
         </div>
         <div class="footer__newsletter__form">
             <div class="footer__newsletter__form__wrap">
                 <div class="footer__newsletter__form__in">
-                    {{ form_widget(form.email, { attr: {placeholder: 'Enter email'|trans, class: 'footer__newsletter__input'} }) }}
+                    {{ form_widget(form.email, { attr: {placeholder: 'Enter email'|trans, class: 'footer__newsletter__form__input'} }) }}
                     {{ form_errors(form.email) }}
                 </div>
-                {{ form_widget(form.send, { label: 'Log in'|trans, attr: { class: "footer__newsletter__form__btn" }}) }}
+                {{ form_widget(form.send, { label: 'Odeslat'|trans, attr: { class: "btn btn--primary footer__newsletter__form__btn" }}) }}
             </div>
             {{ form_errors(form, { errors_attr: { class : 'in-message--alert' } }) }}
             <div class="form-choice">
@@ -19,7 +19,7 @@
                 <label class="css-checkbox__image form-choice__label" for="{{ form.privacyPolicyAgreement.vars.id }}">
                     {% if privacyPolicyArticle is not null %}
                         {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
-                        {{ "I agree with <a href=\"%url%\" target=\"_blank\">privacy policy</a>."|trans({'%url%': articleUrl})|raw }}
+                        {{ "Odesláním údajů souhlasím se zpracováním <a class=\"form-choice__label__link\" href=\"%url%\" target=\"_blank\">osobních údajů</a>."|trans({'%url%': articleUrl})|raw }}
                     {% else %}
                         {{ 'I agree with privacy policy.'|trans }}
                     {% endif %}
