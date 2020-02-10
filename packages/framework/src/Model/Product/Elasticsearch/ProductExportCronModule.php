@@ -7,7 +7,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportCronModule;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 
-class ExportCronModule extends AbstractExportCronModule
+class ProductExportCronModule extends AbstractExportCronModule
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index

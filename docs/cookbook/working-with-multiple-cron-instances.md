@@ -55,7 +55,7 @@ default
  php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCronModule" --instance-name=default
  php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\ProductVisibilityImmediateCronModule" --instance-name=default
  php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\ProductVisibilityMidnightCronModule" --instance-name=default
- php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule" --instance-name=default
+ php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule" --instance-name=default
  php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule" --instance-name=default
  php bin/console shopsys:cron --module="Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule" --instance-name=default
 ```

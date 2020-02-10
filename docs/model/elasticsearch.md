@@ -50,7 +50,7 @@ Following product attributes are exported into Elasticsearch (i.e. the search or
 * detail_url (absolute url to page with products detail)
 * visibility (all visibilities for all pricing groups and domains)
 
-Data of all products are exported into Elasticsearch by CRON module (`ProductSearchExportCronModule.php`) every 5 minutes.
+Data of all products are exported into Elasticsearch by CRON module (`ProductExportCronModule.php`) every 5 minutes.
 Alternatively, you can force the export manually using `product-search-export-products` Phing target.
 
 ## Use of Elasticsearch
