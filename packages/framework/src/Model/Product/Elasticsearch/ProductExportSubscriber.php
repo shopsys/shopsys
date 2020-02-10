@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class ExportSubscriber extends AbstractExportSubscriber
+class ProductExportSubscriber extends AbstractExportSubscriber
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler

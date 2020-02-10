@@ -220,6 +220,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportSubscriber:
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportSubscriber:
         autoconfigure: false
 
