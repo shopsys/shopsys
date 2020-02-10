@@ -124,7 +124,7 @@ There you can find links to upgrade notes for other versions too.
     -           ->setExpectedStatusCode(404);
     +           ->setExpectedStatusCode(302);
     ```
-- update your project to use refactored FileUpload functionality with added support for multiple files ([#1531])(https://github.com/shopsys/shopsys/pull/1531/)
+- update your project to use refactored FileUpload functionality with added support for multiple files ([#1531](https://github.com/shopsys/shopsys/pull/1531/))
     - there were changes in framework classes, styles and scripts so update your project appropriately:
         - `UploadedFileEntityConfigNotFoundException::getEntityClassOrName()` has been removed
         - `UploadedFileFacade::findUploadedFileByEntity()` and `UploadedFileFacade::getUploadedFileByEntity()` has been removed, use `UploadedFileFacade::getUploadedFilesByEntity()` instead
@@ -707,9 +707,10 @@ There you can find links to upgrade notes for other versions too.
         ```
     - don't forget to rebuild your grunt file by command `php phing gruntfile` and update your npm dependencies by command `npm install`
     - to fix all your less files in command line by command `php phing stylelint-fix`
-[shopsys/framework]: https://github.com/shopsys/framework
 
 ### Frontend
 
 - javascript assets are managed by webpack and npm ([#1545](https://github.com/shopsys/shopsys/pull/1545), [#1645](https://github.com/shopsys/shopsys/pull/1645))
     - please read [upgrade instruction for webpack](./upgrade-instruction-for-webpack.md)
+
+[shopsys/framework]: https://github.com/shopsys/framework
