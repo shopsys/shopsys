@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
-use Symplify\BetterPhpDocParser\Exception\NotImplementedYetException;
+use Symfony\Component\Intl\Exception\MethodNotImplementedException;
 
 class CategoryIndex extends AbstractIndex
 {
@@ -22,7 +24,7 @@ class CategoryIndex extends AbstractIndex
      */
     public function getTotalCount(int $domainId): int
     {
-        throw new NotImplementedYetException();
+        throw new MethodNotImplementedException(__METHOD__);
     }
 
     /**
@@ -30,7 +32,7 @@ class CategoryIndex extends AbstractIndex
      */
     public function getExportDataForIds(int $domainId, array $restrictToIds): array
     {
-        throw new NotImplementedYetException();
+        throw new MethodNotImplementedException(__METHOD__);
     }
 
     /**
@@ -38,6 +40,6 @@ class CategoryIndex extends AbstractIndex
      */
     public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {
-        throw new NotImplementedYetException();
+        throw new MethodNotImplementedException(__METHOD__);
     }
 }

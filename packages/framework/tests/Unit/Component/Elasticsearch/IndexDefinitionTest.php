@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
@@ -36,11 +38,8 @@ class IndexDefinitionTest extends TestCase
      */
     public function indexDefinitionParametersForIndexAlias(): array
     {
-        $productIndexMock = $this->getBasicProductIndexMock();
-
-        /** @var \Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures\CategoryIndex|\PHPUnit\Framework\MockObject\MockObject $categoryIndexMock */
-        $categoryIndexMock = $this->createMock(CategoryIndex::class);
-        $categoryIndexMock->method('getName')->willReturn('category');
+        $productIndexMock = $this->getProductIndexMock();
+        $categoryIndexMock = $this->getCategoryIndexMock();
 
         return [
             [$productIndexMock, '', '', 1, 'product_1'],
@@ -53,7 +52,7 @@ class IndexDefinitionTest extends TestCase
 
     public function testGetDefinitionReturnsDefinition(): void
     {
-        $productIndexMock = $this->getBasicProductIndexMock();
+        $productIndexMock = $this->getProductIndexMock();
 
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/valid/';
         $indexDefinition = new IndexDefinition($productIndexMock, $definitionDirectory, '', 1);
@@ -62,7 +61,7 @@ class IndexDefinitionTest extends TestCase
 
     public function testGetDefinitionOnInvalidJsonThrowsException(): void
     {
-        $productIndexMock = $this->getBasicProductIndexMock();
+        $productIndexMock = $this->getProductIndexMock();
 
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/invalidJson/';
         $indexDefinition = new IndexDefinition($productIndexMock, $definitionDirectory, '', 1);
@@ -74,7 +73,7 @@ class IndexDefinitionTest extends TestCase
 
     public function testGetDefinitionOnNonExistingDefinitionThrowsException(): void
     {
-        $productIndexMock = $this->getBasicProductIndexMock();
+        $productIndexMock = $this->getProductIndexMock();
 
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/non-existing-folder-id-3e85ba/';
         $indexDefinition = new IndexDefinition($productIndexMock, $definitionDirectory, '', 1);
@@ -86,7 +85,7 @@ class IndexDefinitionTest extends TestCase
 
     public function testGetVersionedIndexName(): void
     {
-        $productIndexMock = $this->getBasicProductIndexMock();
+        $productIndexMock = $this->getProductIndexMock();
 
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/valid/';
         $indexDefinition = new IndexDefinition($productIndexMock, $definitionDirectory, '', 1);
@@ -95,9 +94,20 @@ class IndexDefinitionTest extends TestCase
     }
 
     /**
+     * @return \Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures\CategoryIndex
+     */
+    private function getCategoryIndexMock(): CategoryIndex
+    {
+        $categoryIndexMock = $this->createMock(CategoryIndex::class);
+        $categoryIndexMock->method('getName')->willReturn('category');
+
+        return $categoryIndexMock;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex
      */
-    private function getBasicProductIndexMock(): ProductIndex
+    private function getProductIndexMock(): ProductIndex
     {
         $productIndexMock = $this->createMock(ProductIndex::class);
         $productIndexMock->method('getName')->willReturn('product');
