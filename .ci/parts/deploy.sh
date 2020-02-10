@@ -28,10 +28,8 @@ echo "Create secret for docker registry"
 kubectl create secret docker-registry dockerregistry --docker-server=$CI_REGISTRY --docker-username=$DEPLOY_REGISTER_USER --docker-password=$DEPLOY_REGISTER_PASSWORD -n ${PROJECT_NAME}
 
 if [ ${RUNNING_PRODUCTION} -eq "0" ]; then
-    echo "Delete secret for http auth if exists"
-    kubectl delete secret http-auth -n ${PROJECT_NAME} || echo "Secret for http auth does not exist"
-    echo "Create secret for http auth (sconto/sconto)"
-    kubectl create secret generic http-auth --from-file=auth=${CONFIGURATION_TARGET_PATH}/basicHttpAuth -n ${PROJECT_NAME}
+    echo "Create secret for http auth"
+    kubectl create secret generic http-auth --from-file=auth=${CONFIGURATION_TARGET_PATH}/basicHttpAuth -n ${PROJECT_NAME} || echo "Secret for http auth already exists"
 fi
 
 echo "Apply kubernetes configuration"

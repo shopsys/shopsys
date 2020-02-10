@@ -1,12 +1,8 @@
 resources:
     - ../../cron/php-fpm-cron-executor-default.yml
-    - ../../endpoints/postgres.yml
-    - ../../endpoints/elasticsearch.yml
     - ../../deployments/redis.yml
     - ../../deployments/smtp-server.yml
     - ../../deployments/webserver-php-fpm.yml
-    - ../../services/elasticsearch.yml
-    - ../../services/postgres.yml
     - ../../services/redis.yml
     - ../../services/smtp-server.yml
     - ../../services/webserver-php-fpm.yml
