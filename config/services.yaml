@@ -216,3 +216,13 @@ services:
     App\Component\Form\FormBuilderHelper:
         arguments:
             $disableFields: '%disable_form_fields_from_transfer%'
+
+    App\Component\ScontoBridge\ScontoBridgeConfig:
+        arguments:
+            $scontoBridgeConfig: "%sconto_bridge_config%"
+
+    App\Component\ScontoBridge\ScontoBridgeClient: ~
+
+    App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency:
+        arguments:
+            $logger: '@monolog.logger.cron'
