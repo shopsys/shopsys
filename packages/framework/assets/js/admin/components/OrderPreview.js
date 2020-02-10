@@ -41,7 +41,7 @@ export default class OrderPreview {
                 over: function () {
                     _this.$previewBox.show();
                     $('body').find('.js-table-grid').removeClass(overflowHiddenClass).addClass(overflowVisibleClass);
-                    $('body').find('.js-table-touch').parent().removeClass(overflowHiddenClass).addClass(overflowVisibleClass);
+                    $('body').find('.js-table-touch').removeClass(overflowHiddenClass).addClass(overflowVisibleClass);
 
                     if (!_this.isLoaded && !_this.isLoading) {
                         _this.isLoading = true;
@@ -54,7 +54,7 @@ export default class OrderPreview {
                 },
                 out: function () {
                     $('body').find('.js-table-grid').removeClass(overflowVisibleClass).addClass(overflowHiddenClass);
-                    $('body').find('.js-table-touch').parent().removeClass(overflowVisibleClass).addClass(overflowHiddenClass);
+                    $('body').find('.js-table-touch').removeClass(overflowVisibleClass).addClass(overflowHiddenClass);
                 }
             });
 
