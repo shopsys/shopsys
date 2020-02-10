@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\Akeneo\Product;
 
 use App\Component\Akeneo\AkeneoHelper;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class AkeneoProductHelper
 {
@@ -79,9 +80,9 @@ class AkeneoProductHelper
     /**
      * @param array $productData
      * @param array|null $akeneoData
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money[]
      */
-    public static function mapDomainDataPriceString(array $productData, ?array $akeneoData): array
+    public static function mapDomainDataPrices(array $productData, ?array $akeneoData): array
     {
         foreach ($productData as $key => $value) {
             $productData[$key] = null;
@@ -95,7 +96,7 @@ class AkeneoProductHelper
             foreach ($data['data'] as $currentPrice) {
                 $domainId = AkeneoHelper::findEshopDomainIdByCurrency($currentPrice['currency']);
                 if ($domainId) {
-                    $productData[$domainId] = $currentPrice['amount'];
+                    $productData[$domainId] = $currentPrice['amount'] ? Money::create($currentPrice['amount']) : null;
                 }
             }
         }

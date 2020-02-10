@@ -82,8 +82,8 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3[$domainId]);
             $productDomain->setShortDescriptionUsp4($productData->shortDescriptionUsp4[$domainId]);
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
-            $productDomain->setLowPriceVat($productData->lowPriceVat[$domainId] ? Money::create($productData->lowPriceVat[$domainId]) : null);
-            $productDomain->setHighPriceVat($productData->highPriceVat[$domainId] ? Money::create($productData->highPriceVat[$domainId]) : null);
+            $productDomain->setLowPriceVat($productData->lowPriceVat[$domainId]);
+            $productDomain->setHighPriceVat($productData->highPriceVat[$domainId]);
         }
     }
 

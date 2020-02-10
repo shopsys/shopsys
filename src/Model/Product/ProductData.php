@@ -55,12 +55,12 @@ class ProductData extends BaseProductData
     public $stockProductData;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
      */
     public $lowPriceVat;
 
     /**
-     * @var string[]|null[]
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
      */
     public $highPriceVat;
 

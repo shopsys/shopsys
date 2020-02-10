@@ -140,8 +140,8 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp3[$domainId] = $product->getShortDescriptionUsp3($domainId);
             $productData->shortDescriptionUsp4[$domainId] = $product->getShortDescriptionUsp4($domainId);
             $productData->shortDescriptionUsp5[$domainId] = $product->getShortDescriptionUsp5($domainId);
-            $productData->lowPriceVat[$domainId] = $product->getLowPriceVat($domainId) ? $product->getLowPriceVat($domainId)->getAmount() : null;
-            $productData->highPriceVat[$domainId] = $product->getHighPriceVat($domainId) ? $product->getHighPriceVat($domainId)->getAmount() : null;
+            $productData->lowPriceVat[$domainId] = $product->getLowPriceVat($domainId);
+            $productData->highPriceVat[$domainId] = $product->getHighPriceVat($domainId);
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {

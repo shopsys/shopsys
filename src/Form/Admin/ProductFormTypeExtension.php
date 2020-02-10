@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Component\Form\FormBuilderHelper;
+use App\Model\Product\Product;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
@@ -52,6 +54,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     {
         $this->changeSeoGroup($builder);
 
+        $product = $options['product'];
+        /* @var $product \App\Model\Product\Product|null */
+
         $builder->add('namePrefix', LocalizedFullWidthType::class, [
             'required' => false,
             'entry_options' => [
@@ -82,13 +87,44 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->stocksGroup($builder);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
+        $this->setPricesGroup($builder, $product);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \App\Model\Product\Product|null $product
+     */
+    private function setPricesGroup(FormBuilderInterface $builder, ?Product $product): void
+    {
+        $builderPricesGroup = $builder->get('pricesGroup');
+        $builderPricesGroup->remove('productCalculatedPricesGroup');
+        if ($this->isProductMainVariant($product)) {
+            $builderPricesGroup->remove('disabledPricesOnMainVariant');
+        }
+
+        $builderPricesGroup->add('lowPriceVat', MultidomainType::class, [
+                'label' => t('Nízká cena s DPH'),
+                'entry_type' => MoneyType::class,
+                'entry_options' => [
+                    'scale' => 6,
+                ],
+                'required' => false,
+            ])
+            ->add('highPriceVat', MultidomainType::class, [
+                'label' => t('Vysoká cena s DPH'),
+                'entry_type' => MoneyType::class,
+                'entry_options' => [
+                    'scale' => 6,
+                ],
+                'required' => false,
+            ]);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    protected function setShortDescriptionsUspGroup(FormBuilderInterface $builder, array $options): void
+    private function setShortDescriptionsUspGroup(FormBuilderInterface $builder, array $options): void
     {
         $builderShortDescriptionsUspGroup = $builder->create('shortDescriptionsUspGroups', GroupType::class, [
             'label' => t('Krátký popis USP'),
@@ -170,5 +206,14 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     public function getExtendedType()
     {
         return ProductFormType::class;
+    }
+
+    /**
+     * @param \App\Model\Product\Product|null $product
+     * @return bool
+     */
+    private function isProductMainVariant(?Product $product)
+    {
+        return $product !== null && $product->isMainVariant();
     }
 }
