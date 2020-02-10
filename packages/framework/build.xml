@@ -541,6 +541,15 @@
         </exec>
     </target>
 
+    <target name="elasticsearch-export" description="Exports indexes data into elasticsearch.">
+        <property name="elasticsearch.index" value=""/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:elasticsearch:data-export"/>
+            <arg value="${elasticsearch.index}"/>
+        </exec>
+    </target>
+
     <target name="elasticsearch-index-create" description="Creates indexes into elasticsearch." hidden="true">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -555,15 +564,6 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:elasticsearch:indexes-delete"/>
-            <arg value="${elasticsearch.index}"/>
-        </exec>
-    </target>
-
-    <target name="elasticsearch-export" description="Exports indexes data into elasticsearch.">
-        <property name="elasticsearch.index" value=""/>
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="shopsys:elasticsearch:data-export"/>
             <arg value="${elasticsearch.index}"/>
         </exec>
     </target>
@@ -994,6 +994,16 @@
         </exec>
     </target>
 
+    <target name="test-elasticsearch-export" description="Exports indexes data into elasticsearch for test environment.">
+        <property name="elasticsearch.index" value=""/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="--env=test"/>
+            <arg value="shopsys:elasticsearch:data-export"/>
+            <arg value="${elasticsearch.index}"/>
+        </exec>
+    </target>
+
     <target name="test-elasticsearch-index-create" description="Creates indexes into elasticsearch for test environment." hidden="true">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -1010,16 +1020,6 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:elasticsearch:indexes-delete"/>
-            <arg value="${elasticsearch.index}"/>
-        </exec>
-    </target>
-
-    <target name="test-elasticsearch-export" description="Exports indexes data into elasticsearch for test environment.">
-        <property name="elasticsearch.index" value=""/>
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="--env=test"/>
-            <arg value="shopsys:elasticsearch:data-export"/>
             <arg value="${elasticsearch.index}"/>
         </exec>
     </target>
