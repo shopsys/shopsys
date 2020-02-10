@@ -59,8 +59,8 @@ abstract class AbstractExportCronModule implements SimpleCronModuleInterface
     public function run()
     {
         foreach ($this->domain->getAllIds() as $domainId) {
-            $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index, $domainId);
-            $this->indexFacade->exportByIndexDefinition($indexDefinition, new NullOutput());
+            $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index->getName(), $domainId);
+            $this->indexFacade->exportByIndexDefinition($this->index, $indexDefinition, new NullOutput());
         }
     }
 }

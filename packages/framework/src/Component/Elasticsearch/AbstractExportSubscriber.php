@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -33,7 +32,7 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
     protected $indexDefinitionLoader;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
      */
     protected $index;
 
@@ -47,7 +46,7 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository $indexRepository
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -55,7 +54,7 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
         EntityManagerInterface $entityManager,
         IndexRepository $indexRepository,
         IndexDefinitionLoader $indexDefinitionLoader,
-        ProductIndex $index,
+        AbstractIndex $index,
         Domain $domain
     ) {
         $this->exportScheduler = $exportScheduler;
@@ -80,8 +79,8 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
             $productIds = $this->exportScheduler->getRowIdsForImmediateExport();
 
             foreach ($this->domain->getAllIds() as $domainId) {
-                $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index, $domainId);
-                $this->indexRepository->export($indexDefinition, $productIds, new NullOutput());
+                $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index->getName(), $domainId);
+                $this->indexRepository->export($this->index, $indexDefinition, $productIds, new NullOutput());
             }
         }
     }

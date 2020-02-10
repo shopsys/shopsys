@@ -29,7 +29,7 @@ class IndexFacade
     {
         $output->writeln(sprintf(
             'Creating index "%s" on domain "%s"',
-            $indexDefinition->getIndex()->getName(),
+            $indexDefinition->getIndexName(),
             $indexDefinition->getDomainId()
         ));
 
@@ -45,7 +45,7 @@ class IndexFacade
     {
         $output->writeln(sprintf(
             'Deleting index "%s" on domain "%s"',
-            $indexDefinition->getIndex()->getName(),
+            $indexDefinition->getIndexName(),
             $indexDefinition->getDomainId()
         ));
 
@@ -56,15 +56,15 @@ class IndexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function exportByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void
+    public function exportByIndexDefinition(AbstractIndex $index, IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $output->writeln(sprintf(
             'Exporting data of "%s" on domain "%s"',
-            $indexDefinition->getIndex()->getName(),
+            $indexDefinition->getIndexName(),
             $indexDefinition->getDomainId()
         ));
 
-        $this->indexRepository->export($indexDefinition, [], $output);
+        $this->indexRepository->export($index, $indexDefinition, [], $output);
     }
 
     /**
@@ -73,7 +73,7 @@ class IndexFacade
      */
     public function migrateByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
-        $indexName = $indexDefinition->getIndex()->getName();
+        $indexName = $indexDefinition->getIndexName();
         $domainId = $indexDefinition->getDomainId();
         $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
 

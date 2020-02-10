@@ -20,7 +20,6 @@ class IndexFacadeTest extends TestCase
     {
         /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\MockObject $indexDefinitionMock */
         $indexDefinitionMock = $this->createMock(IndexDefinition::class);
-        $indexDefinitionMock->method('getIndex')->willReturn(new CategoryIndex());
         $indexDefinitionMock->method('getDomainId')->willReturn(1);
         return $indexDefinitionMock;
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
@@ -180,12 +179,11 @@ class IndexRepository
      * @param array $restrictToIds
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function export(IndexDefinition $indexDefinition, array $restrictToIds, OutputInterface $output): void
+    public function export(AbstractIndex $index, IndexDefinition $indexDefinition, array $restrictToIds, OutputInterface $output): void
     {
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
         $indexAlias = $indexDefinition->getIndexAlias();
-        $index = $indexDefinition->getIndex();
         $domainId = $indexDefinition->getDomainId();
 
         if ($restrictToIds !== []) {

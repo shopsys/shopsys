@@ -9,6 +9,11 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndex
 class IndexDefinition
 {
     /**
+     * @var string
+     */
+    protected $indexName;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
      */
     protected $index;
@@ -29,14 +34,14 @@ class IndexDefinition
     protected $domainId;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
+     * @param string $indexName
      * @param string $definitionsDirectory
      * @param string $indexPrefix
      * @param int $domainId
      */
-    public function __construct(AbstractIndex $index, string $definitionsDirectory, string $indexPrefix, int $domainId)
+    public function __construct(string $indexName, string $definitionsDirectory, string $indexPrefix, int $domainId)
     {
-        $this->index = $index;
+        $this->indexName = $indexName;
         $this->definitionsDirectory = $definitionsDirectory;
         $this->indexPrefix = $indexPrefix;
         $this->domainId = $domainId;
@@ -50,7 +55,7 @@ class IndexDefinition
         $decodedDefinition = json_decode($this->getDefinitionFileContent(), true);
         if ($decodedDefinition === null) {
             throw ElasticsearchIndexException::invalidJsonInDefinitionFile(
-                $this->getIndex()->getName(),
+                $this->getIndexName(),
                 $this->getDefinitionFilepath()
             );
         }
@@ -63,7 +68,7 @@ class IndexDefinition
      */
     protected function getDefinitionFilepath(): string
     {
-        return $this->definitionsDirectory . $this->getIndex()->getName() . '/' . $this->getDomainId() . '.json';
+        return $this->definitionsDirectory . $this->getIndexName() . '/' . $this->getDomainId() . '.json';
     }
 
     /**
@@ -101,17 +106,17 @@ class IndexDefinition
     public function getIndexAlias(): string
     {
         if ($this->indexPrefix === '') {
-            return sprintf('%s_%s', $this->getIndex()->getName(), $this->getDomainId());
+            return sprintf('%s_%s', $this->getIndexName(), $this->getDomainId());
         }
-        return sprintf('%s_%s_%s', $this->indexPrefix, $this->getIndex()->getName(), $this->getDomainId());
+        return sprintf('%s_%s_%s', $this->indexPrefix, $this->getIndexName(), $this->getDomainId());
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
+     * @return string
      */
-    public function getIndex(): AbstractIndex
+    public function getIndexName(): string
     {
-        return $this->index;
+        return $this->indexName;
     }
 
     /**

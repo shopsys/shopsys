@@ -83,7 +83,7 @@ abstract class AbstractElasticsearchIndexCommand extends Command
         foreach ($this->getAffectedIndexes($indexName) as $index) {
             foreach ($this->domain->getAll() as $domainConfig) {
                 $this->executeCommand(
-                    $this->indexDefinitionLoader->getIndexDefinition($index, $domainConfig->getId()),
+                    $this->indexDefinitionLoader->getIndexDefinition($index->getName(), $domainConfig->getId()),
                     $output
                 );
             }

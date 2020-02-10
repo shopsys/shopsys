@@ -27,13 +27,13 @@ class IndexDefinitionLoader
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
+     * @param string $indexName
      * @param int $domainId
      *
      * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition
      */
-    public function getIndexDefinition(AbstractIndex $index, int $domainId): IndexDefinition
+    public function getIndexDefinition(string $indexName, int $domainId): IndexDefinition
     {
-        return new IndexDefinition($index, $this->indexDefinitionsDirectory, $this->indexPrefix, $domainId);
+        return new IndexDefinition($indexName, $this->indexDefinitionsDirectory, $this->indexPrefix, $domainId);
     }
 }
