@@ -92,6 +92,6 @@ class ElasticsearchStructureManager
      */
     public function getAliasName(int $domainId, string $index): string
     {
-        return $this->indexPrefix . $index . '_' . $domainId;
+        return $this->indexPrefix . '_' . $index . '_' . $domainId;
     }
 }

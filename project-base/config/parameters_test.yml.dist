@@ -14,3 +14,5 @@ parameters:
     test_mailer_password: ~
 
     shopsys.content_dir_name: 'content-test'
+
+    env(ELASTIC_SEARCH_INDEX_PREFIX): 'test'

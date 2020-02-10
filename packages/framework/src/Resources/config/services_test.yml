@@ -208,10 +208,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository:
-        arguments:
-            $indexPrefix: 'test-%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
-
     Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager:
         arguments:
             $buildVersion: '%build-version%'

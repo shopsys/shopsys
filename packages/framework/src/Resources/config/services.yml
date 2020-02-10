@@ -908,10 +908,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory
 
-    Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository:
-        arguments:
-            $indexPrefix: '%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
-
     Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\ProductDataFactory
 
@@ -1019,8 +1015,6 @@ services:
         arguments:
             $indexDefinitionsDirectory: '%shopsys.elasticsearch.structure_dir%'
             $indexPrefix: '%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
-
-    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexManager: ~
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: ~
 

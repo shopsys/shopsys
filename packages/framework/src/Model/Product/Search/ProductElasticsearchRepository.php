@@ -13,11 +13,6 @@ class ProductElasticsearchRepository
     public const ELASTICSEARCH_INDEX = 'product';
 
     /**
-     * @var string
-     */
-    protected $indexPrefix;
-
-    /**
      * @var \Elasticsearch\Client
      */
     protected $client;
@@ -43,20 +38,17 @@ class ProductElasticsearchRepository
     protected $filterQueryFactory;
 
     /**
-     * @param string $indexPrefix
      * @param \Elasticsearch\Client $client
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager $elasticsearchStructureManager
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      */
     public function __construct(
-        string $indexPrefix,
         Client $client,
         ProductElasticsearchConverter $productElasticsearchConverter,
         ElasticsearchStructureManager $elasticsearchStructureManager,
         FilterQueryFactory $filterQueryFactory
     ) {
-        $this->indexPrefix = $indexPrefix;
         $this->client = $client;
         $this->productElasticsearchConverter = $productElasticsearchConverter;
         $this->elasticsearchStructureManager = $elasticsearchStructureManager;
