@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 
 class ProductIndex extends AbstractIndex
 {
-    protected const INDEX_NAME = 'product';
+    public const INDEX_NAME = 'product';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain

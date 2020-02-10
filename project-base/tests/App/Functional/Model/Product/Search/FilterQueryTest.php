@@ -7,14 +7,13 @@ namespace Tests\App\Functional\Model\Product\Search;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
 
 class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 {
-    private const ELASTICSEARCH_INDEX = 'product';
-
     /**
      * @var \Elasticsearch\Client
      * @inject
@@ -28,16 +27,16 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     private $filterQueryFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager
-     * @inject
-     */
-    private $elasticSearchStructureManager;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
     private $priceConverter;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
+     * @inject
+     */
+    private $indexDefinitionLoader;
 
     public function testBrand(): void
     {
@@ -201,9 +200,8 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
      */
     protected function createFilter(): FilterQuery
     {
-        $elasticSearchIndexName = $this->elasticSearchStructureManager->getAliasName(Domain::FIRST_DOMAIN_ID, self::ELASTICSEARCH_INDEX);
-
-        $filter = $this->filterQueryFactory->create($elasticSearchIndexName);
+        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::INDEX_NAME, Domain::FIRST_DOMAIN_ID);
+        $filter = $this->filterQueryFactory->create($indexDefinition->getIndexAlias());
 
         return $filter->filterOnlySellable();
     }

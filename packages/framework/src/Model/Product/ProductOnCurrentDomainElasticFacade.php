@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -53,11 +54,6 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     protected $productFilterCountDataElasticsearchRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager
-     */
-    protected $elasticsearchStructureManager;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer
      */
     protected $productFilterDataToQueryTransformer;
@@ -68,15 +64,25 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     protected $filterQueryFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
+     */
+    protected $indexDefinitionLoader;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex
+     */
+    protected $productIndex;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager $elasticsearchStructureManager
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      */
     public function __construct(
         ProductRepository $productRepository,
@@ -85,9 +91,9 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         ProductAccessoryRepository $productAccessoryRepository,
         ProductElasticsearchRepository $productElasticsearchRepository,
         ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,
-        ElasticsearchStructureManager $elasticsearchStructureManager,
         ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
-        FilterQueryFactory $filterQueryFactory
+        FilterQueryFactory $filterQueryFactory,
+        IndexDefinitionLoader $indexDefinitionLoader
     ) {
         $this->productRepository = $productRepository;
         $this->domain = $domain;
@@ -95,9 +101,9 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         $this->productAccessoryRepository = $productAccessoryRepository;
         $this->productElasticsearchRepository = $productElasticsearchRepository;
         $this->productFilterCountDataElasticsearchRepository = $productFilterCountDataElasticsearchRepository;
-        $this->elasticsearchStructureManager = $elasticsearchStructureManager;
         $this->productFilterDataToQueryTransformer = $productFilterDataToQueryTransformer;
         $this->filterQueryFactory = $filterQueryFactory;
+        $this->indexDefinitionLoader = $indexDefinitionLoader;
     }
 
     /**
@@ -338,10 +344,10 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      */
     protected function getIndexName(): string
     {
-        return $this->elasticsearchStructureManager->getAliasName(
-            $this->domain->getId(),
-            ProductElasticsearchRepository::ELASTICSEARCH_INDEX
-        );
+        return $this->indexDefinitionLoader->getIndexDefinition(
+            ProductIndex::INDEX_NAME,
+            $this->domain->getId()
+        )->getIndexAlias();
     }
 
     /**

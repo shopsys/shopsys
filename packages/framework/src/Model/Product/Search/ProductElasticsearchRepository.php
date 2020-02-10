@@ -6,10 +6,14 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 use Doctrine\ORM\QueryBuilder;
 use Elasticsearch\Client;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 
 class ProductElasticsearchRepository
 {
+    /**
+     * @deprecated will be removed in the next major release
+     */
     public const ELASTICSEARCH_INDEX = 'product';
 
     /**
@@ -28,31 +32,36 @@ class ProductElasticsearchRepository
     protected $productElasticsearchConverter;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager
-     */
-    protected $elasticsearchStructureManager;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory
      */
     protected $filterQueryFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
+     */
+    protected $indexDefinitionLoader;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex
+     */
+    protected $productIndex;
+
+    /**
      * @param \Elasticsearch\Client $client
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager $elasticsearchStructureManager
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      */
     public function __construct(
         Client $client,
         ProductElasticsearchConverter $productElasticsearchConverter,
-        ElasticsearchStructureManager $elasticsearchStructureManager,
-        FilterQueryFactory $filterQueryFactory
+        FilterQueryFactory $filterQueryFactory,
+        IndexDefinitionLoader $indexDefinitionLoader
     ) {
         $this->client = $client;
         $this->productElasticsearchConverter = $productElasticsearchConverter;
-        $this->elasticsearchStructureManager = $elasticsearchStructureManager;
         $this->filterQueryFactory = $filterQueryFactory;
+        $this->indexDefinitionLoader = $indexDefinitionLoader;
     }
 
     /**
@@ -114,7 +123,8 @@ class ProductElasticsearchRepository
             return [];
         }
 
-        $parameters = $this->createQuery($this->elasticsearchStructureManager->getAliasName($domainId, self::ELASTICSEARCH_INDEX), $searchText);
+        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::INDEX_NAME, $domainId);
+        $parameters = $this->createQuery($indexDefinition->getIndexAlias(), $searchText);
         $result = $this->client->search($parameters);
         return $this->extractIds($result);
     }

@@ -29,7 +29,7 @@ class IndexRepository
     protected $sqlLoggerFacade;
 
     /**
-     * @var EntityManagerInterface
+     * @var \Doctrine\ORM\EntityManagerInterface
      */
     protected $entityManager;
 
@@ -37,6 +37,7 @@ class IndexRepository
      * @param \Elasticsearch\Client $elasticsearchClient
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
         Client $elasticsearchClient,
@@ -175,6 +176,7 @@ class IndexRepository
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param array $restrictToIds
      * @param \Symfony\Component\Console\Output\OutputInterface $output
@@ -202,7 +204,7 @@ class IndexRepository
             $currentBatchData = $index->getExportData($domainId, $lastProcessedId, $restrictToIds);
             $currentBatchSize = count($currentBatchData);
 
-            if ($currentBatchData === 0) {
+            if ($currentBatchSize === 0) {
                 break;
             }
 

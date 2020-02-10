@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
-use Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures\CategoryIndex;
 
 class IndexDefinitionTest extends TestCase
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $indexName
+     * @param string $indexName
      * @param string $definitionsDirectory
      * @param string $indexPrefix
      * @param int $domainId

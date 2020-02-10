@@ -999,12 +999,6 @@ services:
         class: Elasticsearch\Client
         factory: ['@Elasticsearch\ClientBuilder', build]
 
-    Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager:
-        arguments:
-            $buildVersion: '%build-version%'
-            $definitionDirectory: '%shopsys.elasticsearch.structure_dir%'
-            $indexPrefix: '%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
-
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex: ~
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry:

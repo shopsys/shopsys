@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository;
 use Symfony\Component\Console\Output\NullOutput;
-use Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures\CategoryIndex;
 
 class IndexFacadeTest extends TestCase
 {

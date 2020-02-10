@@ -208,12 +208,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory: ~
 
-    Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager:
-        arguments:
-            $buildVersion: '%build-version%'
-            $definitionDirectory: '%shopsys.elasticsearch.structure_dir%'
-            $indexPrefix: '%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
-
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator: ~
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportSubscriber:

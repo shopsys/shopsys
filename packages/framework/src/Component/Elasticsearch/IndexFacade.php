@@ -53,6 +53,7 @@ class IndexFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
