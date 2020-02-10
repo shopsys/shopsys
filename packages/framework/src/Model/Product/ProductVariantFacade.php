@@ -5,7 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 
 class ProductVariantFacade
@@ -46,9 +46,9 @@ class ProductVariantFacade
     protected $productAvailabilityRecalculationScheduler;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler
      */
-    protected $productSearchExportScheduler;
+    protected $productExportScheduler;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -58,7 +58,7 @@ class ProductVariantFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler $productSearchExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -68,7 +68,7 @@ class ProductVariantFacade
         ProductFactoryInterface $productFactory,
         ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        ExportScheduler $productSearchExportScheduler
+        ProductExportScheduler $productExportScheduler
     ) {
         $this->em = $em;
         $this->productFacade = $productFacade;
@@ -77,7 +77,7 @@ class ProductVariantFacade
         $this->productFactory = $productFactory;
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
-        $this->productSearchExportScheduler = $productSearchExportScheduler;
+        $this->productExportScheduler = $productExportScheduler;
     }
 
     /**
@@ -106,9 +106,9 @@ class ProductVariantFacade
             throw $exception;
         }
 
-        $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($mainVariant->getId());
+        $this->productExportScheduler->scheduleRowIdForImmediateExport($mainVariant->getId());
         foreach ($mainVariant->getVariants() as $variant) {
-            $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($variant->getId());
+            $this->productExportScheduler->scheduleRowIdForImmediateExport($variant->getId());
         }
 
         return $mainVariant;

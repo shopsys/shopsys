@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class ExportSubscriber extends AbstractExportSubscriber
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler $productSearchExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository $indexRepository
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
@@ -22,14 +22,14 @@ class ExportSubscriber extends AbstractExportSubscriber
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ExportScheduler $productSearchExportScheduler,
+        ProductExportScheduler $productExportScheduler,
         EntityManagerInterface $entityManager,
         IndexRepository $indexRepository,
         IndexDefinitionLoader $indexDefinitionLoader,
         ProductIndex $index,
         Domain $domain
     ) {
-        parent::__construct($productSearchExportScheduler, $entityManager, $indexRepository, $indexDefinitionLoader, $index, $domain);
+        parent::__construct($productExportScheduler, $entityManager, $indexRepository, $indexDefinitionLoader, $index, $domain);
     }
 
     /**

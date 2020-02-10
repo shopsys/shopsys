@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInter
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
@@ -138,9 +138,9 @@ class ProductFacade
     protected $productPriceCalculation;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler
      */
-    protected $productSearchExportScheduler;
+    protected $productExportScheduler;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -165,7 +165,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportScheduler $productSearchExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -190,7 +190,7 @@ class ProductFacade
         ProductParameterValueFactoryInterface $productParameterValueFactory,
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
-        ExportScheduler $productSearchExportScheduler
+        ProductExportScheduler $productExportScheduler
     ) {
         $this->em = $em;
         $this->productRepository = $productRepository;
@@ -214,7 +214,7 @@ class ProductFacade
         $this->productParameterValueFactory = $productParameterValueFactory;
         $this->productVisibilityFactory = $productVisibilityFactory;
         $this->productPriceCalculation = $productPriceCalculation;
-        $this->productSearchExportScheduler = $productSearchExportScheduler;
+        $this->productExportScheduler = $productExportScheduler;
     }
 
     /**
@@ -249,7 +249,7 @@ class ProductFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
-        $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($product->getId());
+        $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getId());
 
         return $product;
     }
@@ -315,7 +315,7 @@ class ProductFacade
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
-        $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($productToExport->getId());
+        $this->productExportScheduler->scheduleRowIdForImmediateExport($productToExport->getId());
 
         return $product;
     }
@@ -332,10 +332,10 @@ class ProductFacade
             $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
             $productForRecalculations->markForVisibilityRecalculation();
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
-            $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($productForRecalculations->getId());
+            $this->productExportScheduler->scheduleRowIdForImmediateExport($productForRecalculations->getId());
         }
 
-        $this->productSearchExportScheduler->scheduleRowIdForImmediateExport($product->getId());
+        $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getId());
 
         $this->em->remove($product);
         $this->em->flush();

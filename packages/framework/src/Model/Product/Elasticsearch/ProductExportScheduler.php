@@ -6,6 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportScheduler;
 
-class ExportScheduler extends AbstractExportScheduler
+class ProductExportScheduler extends AbstractExportScheduler
 {
 }
