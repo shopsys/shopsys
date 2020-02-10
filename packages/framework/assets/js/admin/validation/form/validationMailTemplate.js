@@ -20,4 +20,4 @@ export default function validationMailTemplate () {
     });
 }
 
-(new Register()).registerCallback(validationMailTemplate);
+(new Register()).registerCallback(validationMailTemplate, 'validationMailTemplate');

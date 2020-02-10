@@ -26,4 +26,4 @@ export default class Grid {
     }
 }
 
-(new Register()).registerCallback(Grid.init);
+(new Register()).registerCallback(Grid.init, 'Grid.init');

@@ -20,4 +20,4 @@ export default class FlashMessage {
     }
 }
 
-(new Register()).registerCallback(FlashMessage.init);
+(new Register()).registerCallback(FlashMessage.init, 'FlashMessage.init');

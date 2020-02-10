@@ -32,4 +32,4 @@ export default class MailTemplate {
     }
 }
 
-(new Register()).registerCallback(MailTemplate.init);
+(new Register()).registerCallback(MailTemplate.init, 'MailTemplate.init');

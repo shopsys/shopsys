@@ -1,7 +1,7 @@
 import constant from '../../utils/constant';
 import Register from '../../../common/utils/Register';
 
-export default function validationFreTransportAndPayment () {
+export default function validationFreeTransportAndPayment () {
     $('.js-free-transport-and-payment-price-limit').each(function () {
         const $priceLimitForm = $(this);
         $priceLimitForm.jsFormValidator({
@@ -18,4 +18,4 @@ export default function validationFreTransportAndPayment () {
     });
 }
 
-(new Register()).registerCallback(validationFreTransportAndPayment);
+(new Register()).registerCallback(validationFreeTransportAndPayment, 'validationFreeTransportAndPayment');

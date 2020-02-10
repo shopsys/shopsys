@@ -54,4 +54,4 @@ export default class Parameters {
     }
 }
 
-(new Register()).registerCallback(Parameters.init);
+(new Register()).registerCallback(Parameters.init, 'Parameters.init');

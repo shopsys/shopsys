@@ -14,4 +14,4 @@ export default class CounterUp {
 
 }
 
-(new Register().registerCallback(CounterUp.init));
+(new Register().registerCallback(CounterUp.init, 'CounterUp.init'));

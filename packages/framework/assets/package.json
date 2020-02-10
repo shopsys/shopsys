@@ -5,6 +5,10 @@
   "repository": "https://github.com/shopsys/shopsys",
   "author": "Shopsys",
   "license": "proprietary",
+  "scripts": {
+    "tests": "npm run tests:unit",
+    "tests:unit": "jest"
+  },
   "dependencies": {
     "@claviska/jquery-minicolors": "^2.3.4",
     "bazinga-translator": "^2.6.6",
@@ -19,6 +23,9 @@
     "waypoints": "^4.0.1"
   },
   "devDependencies": {
-    "core-js": "^3.0.0"
+    "@babel/preset-env": "^7.8.3",
+    "babel-jest": "^25.1.0",
+    "core-js": "^3.0.0",
+    "jest": "^25.1.0"
   }
 }

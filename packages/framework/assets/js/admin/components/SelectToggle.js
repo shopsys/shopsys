@@ -62,4 +62,4 @@ export default class SelectToggle {
     }
 }
 
-(new Register().registerCallback(SelectToggle.init));
+(new Register().registerCallback(SelectToggle.init, 'SelectToggle.init'));

@@ -39,4 +39,4 @@ export default class NewsletterSubscriptionForm {
     }
 }
 
-(new Register()).registerCallback(NewsletterSubscriptionForm.init);
+(new Register()).registerCallback(NewsletterSubscriptionForm.init, 'NewsletterSubscriptionForm.init');

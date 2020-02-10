@@ -77,4 +77,4 @@ export default class ResponsiveToggle {
     }
 }
 
-(new Register()).registerCallback(ResponsiveToggle.init);
+(new Register()).registerCallback(ResponsiveToggle.init, 'ResponsiveToggle.init');

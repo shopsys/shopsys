@@ -185,4 +185,4 @@ export default class GridInlineEdit {
 
 }
 
-(new Register()).registerCallback(GridInlineEdit.init);
+(new Register()).registerCallback(GridInlineEdit.init, 'GridInlineEdit.init');

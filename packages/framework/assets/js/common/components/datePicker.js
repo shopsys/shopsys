@@ -36,4 +36,4 @@ export default function datePicker ($container) {
     });
 }
 
-(new Register()).registerCallback(datePicker);
+(new Register()).registerCallback(datePicker, 'datePicker');

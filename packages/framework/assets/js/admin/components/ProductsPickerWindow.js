@@ -82,4 +82,4 @@ export default class ProductsPickerWindow {
     }
 }
 
-(new Register()).registerCallback(ProductsPickerWindow.init);
+(new Register()).registerCallback(ProductsPickerWindow.init, 'ProductsPickerWindow.init');

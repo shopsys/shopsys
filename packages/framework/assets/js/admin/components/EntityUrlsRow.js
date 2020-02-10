@@ -68,4 +68,4 @@ export default class EntityUrlsRow {
     }
 }
 
-(new Register()).registerCallback(EntityUrlsRow.init);
+(new Register()).registerCallback(EntityUrlsRow.init, 'EntityUrlsRow.init');

@@ -24,4 +24,4 @@ export default class DynamicPlaceholder {
     }
 }
 
-(new Register()).registerCallback(DynamicPlaceholder.init);
+(new Register()).registerCallback(DynamicPlaceholder.init, 'DynamicPlaceholder.init');

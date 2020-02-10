@@ -30,4 +30,4 @@ export default function customerValidator () {
     });
 }
 
-(new Register()).registerCallback(customerValidator);
+(new Register()).registerCallback(customerValidator, 'customerValidator');

@@ -33,4 +33,4 @@ export default class ProductFilterBox {
     }
 }
 
-(new Register()).registerCallback(ProductFilterBox.init);
+(new Register()).registerCallback(ProductFilterBox.init, 'ProductFilterBox.init');

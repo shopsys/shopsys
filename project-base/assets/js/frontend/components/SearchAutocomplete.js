@@ -100,4 +100,4 @@ export default class SearchAutocomplete {
     }
 }
 
-(new Register()).registerCallback(SearchAutocomplete.init);
+(new Register()).registerCallback(SearchAutocomplete.init, 'SearchAutocomplete.init');

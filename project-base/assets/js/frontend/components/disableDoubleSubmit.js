@@ -18,4 +18,4 @@ export default function disableDoubleSubmit ($container) {
     });
 }
 
-(new Register()).registerCallback(disableDoubleSubmit);
+(new Register()).registerCallback(disableDoubleSubmit, 'disableDoubleSubmit');

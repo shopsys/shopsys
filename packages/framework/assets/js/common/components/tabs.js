@@ -33,4 +33,4 @@ export default function tabs ($container) {
     });
 }
 
-(new Register()).registerCallback(tabs);
+(new Register()).registerCallback(tabs, 'tabs');

@@ -64,4 +64,4 @@ export default class Spinbox {
     }
 }
 
-(new Register()).registerCallback(Spinbox.init);
+(new Register()).registerCallback(Spinbox.init, 'Spinbox.init');

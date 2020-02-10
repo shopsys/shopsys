@@ -55,4 +55,4 @@ export default class DomainIcon {
 
 }
 
-(new Register()).registerCallback(DomainIcon.init);
+(new Register()).registerCallback(DomainIcon.init, 'DomainIcon.init');

@@ -38,4 +38,4 @@ export default class ToggleElement {
     }
 }
 
-(new Register()).registerCallback(ToggleElement.init);
+(new Register()).registerCallback(ToggleElement.init, 'ToggleElement.init');

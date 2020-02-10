@@ -22,4 +22,4 @@ export default class FixedBar {
     }
 }
 
-(new Register()).registerCallback(FixedBar.init);
+(new Register()).registerCallback(FixedBar.init, 'FixedBar.init');

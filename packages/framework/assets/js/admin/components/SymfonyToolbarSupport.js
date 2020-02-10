@@ -41,4 +41,4 @@ export default class SymfonyToolbarSupport {
 SymfonyToolbarSupport.onToolbarShowCallbacks = SymfonyToolbarSupport.onToolbarShowCallbacks || [];
 SymfonyToolbarSupport.onToolbarHideCallbacks = SymfonyToolbarSupport.onToolbarHideCallbacks || [];
 
-(new Register()).registerCallback(SymfonyToolbarSupport.init);
+(new Register()).registerCallback(SymfonyToolbarSupport.init, 'SymfonyToolbarSupport.init');

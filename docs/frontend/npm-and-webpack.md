@@ -143,3 +143,48 @@ CustomizeBundle.showFormErrorsWindow = myOverridedShowFormErrorsWindow;
 ```
 
 This principle is called [Monkey Patching](https://www.sitepoint.com/pragmatic-monkey-patching/).
+
+### I want to override class from @shopsys/framework common package
+
+You can use ES6 syntax to override class.
+You certainly know key word `extend`.
+You can use it in javascript's world now.
+
+```js
+import CategoryTreeSorting from 'framework/admin/components/categoryTree.sorting';
+import Register from 'framework/common/utils/register';
+
+class MyCategoryTreeSorting extends CategoryTreeSorting {
+    constructor ($rootTree, $saveButton) {
+        super($rootTree, $saveButton);
+        console.log('override constructor');
+    }
+    onChange () {
+        super.onChange();
+        console.log('on change');
+    }
+    static init ($container) {
+        const $rootTree = $container.filterAllNodes('#js-category-tree-sorting > .js-category-tree-items');
+        const $saveButton = $container.filterAllNodes('#js-category-tree-sorting-save-button');
+        if ($rootTree.length > 0 && $saveButton.length > 0) {
+            // eslint-disable-next-line no-new
+            new MyCategoryTreeSorting($rootTree, $saveButton);
+        }
+    }
+}
+```
+
+If you override framework's javascript class, you will have to change registered callback of the original class init to your implementation.
+This is because js doesn't have global container that known that we overridden the original class.
+
+Register new callback may look like this:
+
+```js
+(new Register()).replaceCallback('CategoryTreeSorting.init', MyCategoryTreeSorting.init);
+```
+
+You can remove registered callback using `removeCallback` method.
+
+```js
+(new Register()).removeCallback('CategoryTreeSorting.init');
+```

@@ -55,4 +55,4 @@ export default class CheckboxToggle {
     }
 }
 
-(new Register()).registerCallback(CheckboxToggle.init);
+(new Register()).registerCallback(CheckboxToggle.init, 'CheckboxToggle.init');

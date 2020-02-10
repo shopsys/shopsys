@@ -49,4 +49,4 @@ export default class Product {
     }
 }
 
-(new Register()).registerCallback(Product.init);
+(new Register()).registerCallback(Product.init, 'Product.init');

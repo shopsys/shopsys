@@ -33,4 +33,4 @@ export default function validationOrder ($container) {
     });
 }
 
-(new Register()).registerCallback(validationOrder);
+(new Register()).registerCallback(validationOrder, 'validationOrder');

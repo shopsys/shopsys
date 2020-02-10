@@ -53,4 +53,4 @@ export default function responsiveTooltip () {
     });
 }
 
-(new Register()).registerCallback(responsiveTooltip);
+(new Register()).registerCallback(responsiveTooltip, 'responsiveTooltip');

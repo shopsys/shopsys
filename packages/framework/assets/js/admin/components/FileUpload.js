@@ -149,4 +149,4 @@ export default class FileUpload {
     }
 }
 
-(new Register()).registerCallback(FileUpload.init);
+(new Register()).registerCallback(FileUpload.init, 'FileUpload.init');

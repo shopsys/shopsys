@@ -92,5 +92,5 @@ export default class HoverIntent {
 }
 
 if (Responsive.isDesktopVersion()) {
-    (new Register()).registerCallback(HoverIntent.init);
+    (new Register()).registerCallback(HoverIntent.init, 'HoverIntent.init');
 }

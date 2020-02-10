@@ -73,4 +73,4 @@ export default class ResponsiveTabsInit {
     }
 }
 
-(new Register()).registerCallback(ResponsiveTabsInit.init);
+(new Register()).registerCallback(ResponsiveTabsInit.init, 'ResponsiveTabsInit.init');

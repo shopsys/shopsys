@@ -62,4 +62,4 @@ export default class CategoryPanel {
     }
 }
 
-(new Register()).registerCallback(CategoryPanel.init);
+(new Register()).registerCallback(CategoryPanel.init, 'CategoryPanel.init');

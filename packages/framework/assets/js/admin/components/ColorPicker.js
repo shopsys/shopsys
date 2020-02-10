@@ -11,4 +11,4 @@ export default class ColorPicker {
 
 }
 
-(new Register()).registerCallback(ColorPicker.init);
+(new Register()).registerCallback(ColorPicker.init, 'ColorPicker.init');

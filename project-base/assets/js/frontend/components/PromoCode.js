@@ -63,4 +63,4 @@ export default class PromoCode {
     }
 }
 
-(new Register()).registerCallback(PromoCode.init);
+(new Register()).registerCallback(PromoCode.init, 'PromoCode.init');

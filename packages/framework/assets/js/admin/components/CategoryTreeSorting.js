@@ -94,4 +94,4 @@ export default class CategoryTreeSorting {
     }
 }
 
-(new Register()).registerCallback(CategoryTreeSorting.init);
+(new Register()).registerCallback(CategoryTreeSorting.init, 'CategoryTreeSorting.init');

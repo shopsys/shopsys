@@ -87,4 +87,4 @@ export default class AdvancedSearch {
 
 }
 
-(new Register()).registerCallback(AdvancedSearch.init);
+(new Register()).registerCallback(AdvancedSearch.init, 'AdvancedSearch.init');

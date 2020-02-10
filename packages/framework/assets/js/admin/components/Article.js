@@ -23,4 +23,4 @@ export default class Article {
     }
 }
 
-(new Register()).registerCallback(Article.init);
+(new Register()).registerCallback(Article.init, 'Article.init');

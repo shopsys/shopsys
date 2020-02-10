@@ -22,4 +22,4 @@ export default class MeasuringScript {
     }
 }
 
-(new Register()).registerCallback(MeasuringScript.init);
+(new Register()).registerCallback(MeasuringScript.init, 'MeasuringScript.init');

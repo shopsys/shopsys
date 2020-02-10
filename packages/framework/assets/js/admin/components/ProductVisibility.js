@@ -82,4 +82,4 @@ export default class ProductVisibility {
     }
 }
 
-(new Register()).registerCallback(ProductVisibility.init);
+(new Register()).registerCallback(ProductVisibility.init, 'ProductVisibility.init');

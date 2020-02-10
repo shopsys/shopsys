@@ -79,4 +79,4 @@ export default class CartRecalculator {
 
 }
 
-(new Register()).registerCallback(CartRecalculator.init);
+(new Register()).registerCallback(CartRecalculator.init, 'CartRecalculator.init');

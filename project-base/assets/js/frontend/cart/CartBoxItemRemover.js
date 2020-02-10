@@ -29,4 +29,4 @@ export default class CartBoxItemRemover {
     }
 }
 
-(new Register()).registerCallback(CartBoxItemRemover.init);
+(new Register()).registerCallback(CartBoxItemRemover.init, 'CartBoxItemRemover.init');

@@ -4,4 +4,4 @@ import Register from 'framework/common/utils/Register';
     $('#js-terms-and-conditions-print').on('click', function () {
         window.frames['js-terms-and-conditions-frame'].print();
     });
-});
+}, 'legalConditions');

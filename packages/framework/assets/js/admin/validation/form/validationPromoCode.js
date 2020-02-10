@@ -12,4 +12,4 @@ export default function validationPromoCode () {
     });
 }
 
-(new Register()).registerCallback(validationPromoCode);
+(new Register()).registerCallback(validationPromoCode, 'validationPromoCode');

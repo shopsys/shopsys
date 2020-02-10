@@ -56,4 +56,4 @@ export default class Login {
     }
 }
 
-(new Register()).registerCallback(Login.init);
+(new Register()).registerCallback(Login.init, 'Login.init');

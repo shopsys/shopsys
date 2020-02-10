@@ -128,4 +128,4 @@ export default class GridDragAndDrop {
     }
 }
 
-(new Register()).registerCallback(GridDragAndDrop.init);
+(new Register()).registerCallback(GridDragAndDrop.init, 'GridDragAndDrop.init');

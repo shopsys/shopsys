@@ -20,4 +20,4 @@ export default class GridMassAction {
     }
 }
 
-(new Register()).registerCallback(GridMassAction.init);
+(new Register()).registerCallback(GridMassAction.init, 'GridMassAction.init');
