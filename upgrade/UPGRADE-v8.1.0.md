@@ -313,7 +313,7 @@ There you can find links to upgrade notes for other versions too.
     ```
     - run `php phing annotations-fix` to fix or add all the relevant annotations for your extended classes
     - thanks to the fixes, your IDE (PHPStorm) will understand your code better
-    - you can read more about the whole topic in the ["Framework extensibility" article](https://docs.shopsys.com/en/8.1/introduction/framework-extensibility.md#making-the-static-analysis-understand-the-extended-code)
+    - you can read more about the whole topic in the ["Framework extensibility" article](https://docs.shopsys.com/en/8.1/extensibility/framework-extensibility#making-the-static-analysis-understand-the-extended-code)
 
 - for the better quality of code in your project we recommend you to increase your PHPStan level to 4 in your `build.xml` and address all the reported violations ([#1381](https://github.com/shopsys/shopsys/pull/1381))
     ```diff
@@ -321,7 +321,7 @@ There you can find links to upgrade notes for other versions too.
   + <property name="phpstan.level" value="4"/>
     ```
     - a lot of the possible issues should be already resolved if you followed the previous instruction and ran the `php phing annotations-fix` phing command
-    - some of the issues related to class extension need to be addressed manually nevertheless (see the ["Framework extensibility" article](https://docs.shopsys.com/en/8.1/introduction/framework-extensibility.md#problem-3)) for more information
+    - some of the issues related to class extension need to be addressed manually nevertheless (see the ["Framework extensibility" article](https://docs.shopsys.com/en/8.1/extensibility/framework-extensibility#problem-3)) for more information
     - you need to resolve all the other reported problems (it is up to you whether you decide to address them directly or add ignores in your `phpstan.neon`). You can find inspiration in [#1381](https://github.com/shopsys/shopsys/pull/1381) and [#1040](https://github.com/shopsys/shopsys/pull/1040)
 
 ### Database migrations
@@ -376,7 +376,7 @@ There you can find links to upgrade notes for other versions too.
     - add [`\Tests\ShopBundle\Unit\NumberFormattingTest`](https://github.com/shopsys/shopsys/blob/v8.1.0/project-base/tests/ShopBundle/Unit/NumberFormattingTest.php)
 
 - add support to display date-time values in different timezone ([#1343](https://github.com/shopsys/shopsys/pull/1343))
-    - you can read more about how to [work with display timezone in documentation](https://docs.shopsys.com/en/8.1/introduction/working-with-date-time-values.md)
+    - you can read more about how to [work with display timezone in documentation](https://docs.shopsys.com/en/8.1/introduction/working-with-date-time-values)
     - in Twig templates have to be used `formatDate`, `formatTime` and `formatDateTime` filters exclusively to format date-time values
         - change the filter in `src/Shopsys/ShopBundle/Resources/views/Front/Content/Article/detail.html.twig` file
             ```diff
