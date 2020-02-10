@@ -448,7 +448,7 @@ There you can find links to upgrade notes for other versions too.
         Be aware that to make this change in production environment you'll need to delete old structure and then create
         a new one because of the change of `type` in `main_variant` field. If you want to know more you can see [this article](../docs/introduction/console-commands-for-application-management-phing-targets.md#product-search-migrate-structure)
 
-    - change and include new fields in ProductSearchExportWithFilterRepositoryTest
+    - change and include new fields in ProductExportRepositoryTest
         ```diff
             'selling_denied',
         -   'main_variant',

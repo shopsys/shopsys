@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportWithFilterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures\CategoryIndex;
 
@@ -25,11 +25,11 @@ class IndexRegistryTest extends TestCase
 
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domainMock */
         $domainMock = $this->createMock(Domain::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportWithFilterRepository $exportWithFilterRepositoryMock */
-        $exportWithFilterRepositoryMock = $this->createMock(ExportWithFilterRepository::class);
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository $productExportRepositoryMock */
+        $productExportRepositoryMock = $this->createMock(ProductExportRepository::class);
 
         $this->indexRegistry = new IndexRegistry([
-            new ProductIndex($domainMock, $exportWithFilterRepositoryMock),
+            new ProductIndex($domainMock, $productExportRepositoryMock),
             new CategoryIndex(),
         ]);
     }

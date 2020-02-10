@@ -66,7 +66,7 @@ When using docker installation, Elasticsearch API is available on the address [h
 If you wish to reconfigure the indexes setting, simply change the JSON configurations in `src/Resources/definition/`.
 Configurations use the `<index>/<domain_id>.json` naming pattern.
 
-If you need to change the data that are exported into Elasticsearch, overwrite appropriate methods in `ProductSearchExportWithFilterRepository` and `ProductElasticsearchConverter` classes.
+If you need to change the data that are exported into Elasticsearch, overwrite appropriate methods in `ProductExportRepository` and `ProductElasticsearchConverter` classes.
 
 ## Known issues
 * When you need to add a new domain, you have to do following steps:

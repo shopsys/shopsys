@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
-class ExportWithFilterRepository
+class ProductExportRepository
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface

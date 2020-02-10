@@ -81,16 +81,16 @@ You can do that by adding it to `mappings` in all `src/Resources/definition/prod
 
 ### 3. Export new attribute to Elasticsearch
 
-The class responsible for exporting products to Elasticsearch is `ProductSearchExportWithFilterRepository` so we need to extend it and add the attribute to method `getProductsData`.
+The class responsible for exporting products to Elasticsearch is `ProductExportRepository` so we need to extend it and add the attribute to method `getProductsData`.
 ```php
 declare(strict_types=1);
 
 namespace App\Model\Product\Search\Export;
 
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportWithFilterRepository as BaseProductSearchExportWithFilterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
 
-class ProductSearchExportWithFilterRepository extends BaseProductSearchExportWithFilterRepository
+class ProductExportRepository extends BaseProductExportRepository
 {
    /**
     * @param \App\Model\Product\Product $product
@@ -112,10 +112,10 @@ class ProductSearchExportWithFilterRepository extends BaseProductSearchExportWit
 You need to register your new class as an alias for the one from the FrameworkBundle in `services.yaml` and `services_test.yml`:
 
 ```yml
-Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: '@App\Model\Product\Search\Export\ProductSearchExportWithFilterRepository'
+Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductExportRepository: '@App\Model\Product\Search\Export\ProductExportRepository'
 ```
 
-Then you need to fix `ProductSearchExportWithFilterRepositoryTest::getExpectedStructureForRepository` (because this test check if your structure is correct) by adding new attribute:
+Then you need to fix `ProductExportRepositoryTest::getExpectedStructureForRepository` (because this test check if your structure is correct) by adding new attribute:
 ```diff
 $structure = \array_merge($structure, [
     'availability',

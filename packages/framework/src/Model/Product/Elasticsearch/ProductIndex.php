@@ -17,20 +17,20 @@ class ProductIndex extends AbstractIndex
     protected $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportWithFilterRepository
+     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository
      */
-    protected $exportWithFilterRepository;
+    protected $productExportRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ExportWithFilterRepository $exportWithFilterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository $productExportRepository
      */
     public function __construct(
         Domain $domain,
-        ExportWithFilterRepository $exportWithFilterRepository
+        ProductExportRepository $productExportRepository
     ) {
         $this->domain = $domain;
-        $this->exportWithFilterRepository = $exportWithFilterRepository;
+        $this->productExportRepository = $productExportRepository;
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductIndex extends AbstractIndex
      */
     public function getTotalCount(int $domainId): int
     {
-        return $this->exportWithFilterRepository->getProductTotalCountForDomain($domainId);
+        return $this->productExportRepository->getProductTotalCountForDomain($domainId);
     }
 
     /**
@@ -46,7 +46,7 @@ class ProductIndex extends AbstractIndex
      */
     public function getExportDataForIds(int $domainId, array $restrictToIds): array
     {
-        return $this->exportWithFilterRepository->getProductsDataForIds(
+        return $this->productExportRepository->getProductsDataForIds(
             $domainId,
             $this->domain->getDomainConfigById($domainId)->getLocale(),
             $restrictToIds
@@ -58,7 +58,7 @@ class ProductIndex extends AbstractIndex
      */
     public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {
-        return $this->exportWithFilterRepository->getProductsData(
+        return $this->productExportRepository->getProductsData(
             $domainId,
             $this->domain->getDomainConfigById($domainId)->getLocale(),
             $lastProcessedId,
