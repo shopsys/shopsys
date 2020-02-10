@@ -10,8 +10,10 @@
 
     <property name="phpstan.level" value="4"/>
 
-    <import file="${path.framework}/build.xml"/>
+    <!-- devops build.xml has to be imported before framework build for overriding targets -->
     <import file="${path.vendor}/devops/kubernetes-deployment/build.xml"/>
+
+    <import file="${path.framework}/build.xml"/>
 
     <!-- Remove dependency `clean-redis-old` because old redis is used by live container during deployment. -->
     <target name="build-deploy-part-2-db-dependent" depends="product-search-migrate-structure,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,grunt,error-pages-generate,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
