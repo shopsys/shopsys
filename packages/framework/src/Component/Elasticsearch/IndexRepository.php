@@ -178,30 +178,21 @@ class IndexRepository
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
-     * @param array $restrictToIds
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function export(AbstractIndex $index, IndexDefinition $indexDefinition, array $restrictToIds, OutputInterface $output): void
+    public function exportAll(AbstractIndex $index, IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
         $indexAlias = $indexDefinition->getIndexAlias();
         $domainId = $indexDefinition->getDomainId();
-
-        if ($restrictToIds !== []) {
-            $totalCount = count($restrictToIds);
-        } else {
-            $totalCount = $index->getTotalCount($indexDefinition->getDomainId());
-        }
-
-        $progressBar = $this->progressBarFactory->create($output, $totalCount);
+        $progressBar = $this->progressBarFactory->create($output, $index->getTotalCount($indexDefinition->getDomainId()));
 
         $lastProcessedId = 0;
-        $updatedIds = [];
         do {
             // detach objects from manager to prevent memory leaks
             $this->entityManager->clear();
-            $currentBatchData = $index->getExportData($domainId, $lastProcessedId, $restrictToIds);
+            $currentBatchData = $index->getExportDataForBatch($domainId, $lastProcessedId, $index->getExportBatchSize());
             $currentBatchSize = count($currentBatchData);
 
             if ($currentBatchSize === 0) {
@@ -211,15 +202,37 @@ class IndexRepository
             $this->bulkUpdate($indexAlias, $currentBatchData);
             $progressBar->advance($currentBatchSize);
 
-            $updatedIds = array_merge($updatedIds, array_keys($currentBatchData));
             $lastProcessedId = array_key_last($currentBatchData);
         } while ($currentBatchSize >= $index->getExportBatchSize());
 
-        $idsToDelete = array_diff($restrictToIds, $updatedIds);
-        $this->deleteIds($indexAlias, $domainId, $idsToDelete);
-
         $progressBar->finish();
         $output->writeln('');
+
+        $this->sqlLoggerFacade->reenableLogging();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
+     * @param int[] $restrictToIds
+     */
+    public function exportIds(AbstractIndex $index, IndexDefinition $indexDefinition, array $restrictToIds): void
+    {
+        $this->sqlLoggerFacade->temporarilyDisableLogging();
+
+        $indexAlias = $indexDefinition->getIndexAlias();
+        $domainId = $indexDefinition->getDomainId();
+
+        // detach objects from manager to prevent memory leaks
+        $this->entityManager->clear();
+        $currentBatchData = $index->getExportDataForIds($domainId, $restrictToIds);
+
+        if (!empty($currentBatchData)) {
+            $idsToDelete = array_diff($restrictToIds, array_keys($currentBatchData));
+
+            $this->bulkUpdate($indexAlias, $currentBatchData);
+            $this->deleteIds($indexAlias, $domainId, $idsToDelete);
+        }
 
         $this->sqlLoggerFacade->reenableLogging();
     }

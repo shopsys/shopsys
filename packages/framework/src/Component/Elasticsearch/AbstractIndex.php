@@ -41,19 +41,4 @@ abstract class AbstractIndex
     {
         return static::BATCH_SIZE;
     }
-
-    /**
-     * @param int $domainId
-     * @param int $lastProcessedId
-     * @param array $restrictToIds
-     * @return array
-     */
-    public function getExportData(int $domainId, int $lastProcessedId, array $restrictToIds = []): array
-    {
-        if (!empty($restrictToIds)) {
-            return $this->getExportDataForIds($domainId, $restrictToIds);
-        }
-
-        return $this->getExportDataForBatch($domainId, $lastProcessedId, $this->getExportBatchSize());
-    }
 }

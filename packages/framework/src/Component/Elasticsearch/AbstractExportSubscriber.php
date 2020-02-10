@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 abstract class AbstractExportSubscriber implements EventSubscriberInterface
@@ -80,7 +79,7 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
 
             foreach ($this->domain->getAllIds() as $domainId) {
                 $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index->getName(), $domainId);
-                $this->indexRepository->export($this->index, $indexDefinition, $productIds, new NullOutput());
+                $this->indexRepository->exportIds($this->index, $indexDefinition, $productIds);
             }
         }
     }

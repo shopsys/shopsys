@@ -65,7 +65,7 @@ class IndexFacade
             $indexDefinition->getDomainId()
         ));
 
-        $this->indexRepository->export($index, $indexDefinition, [], $output);
+        $this->indexRepository->exportAll($index, $indexDefinition, $output);
     }
 
     /**
