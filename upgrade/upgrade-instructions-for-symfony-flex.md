@@ -17,7 +17,7 @@ You can read more about upgrading Symfony application to Flex <https://symfony.c
     - add any project-specific dependencies
 - in `easy-coding-standard.yml` replace
     - `*/tests/ShopBundle/` with `*/tests/App/`
-    - `*/src/Shopsys/ShopBundle/` with `*/src`
+    - `*/src/Shopsys/ShopBundle/` with `*/src/`
 - replace `phpunit.xml` with [`phpunit.xml` version from GitHub](https://github.com/shopsys/project-base/blob/9.0/phpunit.xml)
 - replace `phpstan.neon` with [`phpstan.neon` version from GitHub](https://github.com/shopsys/project-base/blob/9.0/phpstan.neon)
     - add any project-specific configurations
