@@ -31,8 +31,7 @@
                     </div>
                 </div>
                 <div class="footer__block__menu js-not-implemented-yet">
-                    <div class="footer__block__menu__item">
-                        <h2 class="footer__block__heading">{{ 'O Scontu'|trans }}</h2>
+                    <div class="footer__block__menu__item">                        
                         <h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-1">{{ 'O Scontu'|trans }} <i class="svg svg-arrow"></i></h2>
                         <ul class="footer__block__list footer__block__toggle" id="js-footer-menu-1">
                             <li class="footer__block__list__item">
@@ -52,8 +51,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="footer__block__menu__item">
-                        <h2 class="footer__block__heading">{{ 'O nákupu'|trans }}</h2>
+                    <div class="footer__block__menu__item">                        
                         <h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-2">{{ 'O nákupu'|trans }} <i class="svg svg-arrow"></i></h2>
                         <ul class="footer__block__list footer__block__toggle" id="js-footer-menu-2">
                             <li class="footer__block__list__item">
@@ -67,8 +65,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="footer__block__menu__item">
-                        <h2 class="footer__block__heading">{{ 'E-shop'|trans }}</h2>
+                    <div class="footer__block__menu__item">                        
                         <h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-3">{{ 'E-shop'|trans }} <i class="svg svg-arrow"></i></h2>
                         <div class="footer__block__toggle" id="js-footer-menu-3">
                             <ul class="footer__block__list footer__block__list--bottom-spacing">
@@ -90,8 +87,7 @@
                             <img class="footer__block__img footer__block__img--payment" loading="lazy" data-src="{{ asset('assets/frontend/images/payments/visa.svg') }}" alt="{{ 'VISA'|trans }}">
                          </div>
                     </div>
-                    <div class="footer__block__menu__item margin-0">
-                        <h2 class="footer__block__heading">{{ 'Prodejny'|trans }}</h2>
+                    <div class="footer__block__menu__item margin-0">                        
                         <h2 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-4">{{ 'Prodejny'|trans }} <i class="svg svg-arrow"></i></h2>
                         <ul class="footer__block__list footer__block__toggle" id="js-footer-menu-4">
                             <li class="footer__block__list__item">
@@ -112,7 +108,7 @@
     <div class="web__line">
         <footer class="web__container footer__bottom">
             <div class="footer__bottom__copyright dont-print">
-                {{ '© 2020 Copyright Sconto Nábytek, s.r.o.'|trans }}
+                &copy; {{ 'now' | date('Y') }} {{ 'Copyright Sconto Nábytek, s.r.o.'|trans }}
             </div>
             <div class="footer__bottom__articles">
                 {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction')) }}                
