@@ -82,25 +82,6 @@ class RegistrationFormType extends AbstractType
     protected function buildContactInformationFormPart(FormBuilderInterface $builder, array $options): void
     {
         $builder
-//            ->add('gender', ChoiceType::class, [
-//                'choices' => array_flip(CustomerUser::getAllGenders()),
-//                'placeholder' => t('-- Vyber oslovení --'),
-//                'constraints' => [
-//                    new Constraints\NotBlank(['message' => 'Prosím vyberte si oslovení']),
-//                ],
-//            ])
-//            ->add('firstName', TextType::class, [
-//                'constraints' => [
-//                    new Constraints\NotBlank(['message' => 'Please enter first name']),
-//                    new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
-//                ],
-//            ])
-//            ->add('lastName', TextType::class, [
-//                'constraints' => [
-//                    new Constraints\NotBlank(['message' => 'Please enter last name']),
-//                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
-//                ],
-//            ])
             ->add('telephone', TextType::class, [
                 'required' => false,
                 'constraints' => [

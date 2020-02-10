@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Customer;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,7 +42,6 @@ class BillingAddressFormType extends AbstractType
         $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
 
         $builder
-            ->add('companyCustomer', CheckboxType::class, ['required' => false])
             ->add('companyName', TextType::class, [
                 'required' => true,
                 'constraints' => [
@@ -114,6 +113,23 @@ class BillingAddressFormType extends AbstractType
                 'choice_label' => 'name',
                 'choice_value' => 'id',
             ]);
+
+        if ($options['domain_id'] == Domain::SECOND_DOMAIN_ID) {
+            $builder->add('companyNumberWithVat', TextType::class, [
+                    'required' => true,
+                    'constraints' => [
+                        new Constraints\NotBlank([
+                            'message' => 'Vyplňte prosím DIČ',
+                            'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                        new Constraints\Length([
+                            'max' => 50,
+                            'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.',
+                            'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                    ],
+                ]);
+        }
     }
 
     /**

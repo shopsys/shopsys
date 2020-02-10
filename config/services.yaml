@@ -86,6 +86,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade: '@App\Model\Order\PromoCode\CurrentPromoCodeFacade'
 
+    Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory:
+        class: 'App\Model\Customer\BillingAddressDataFactory'
+
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface: '@App\Form\Front\Order\DomainAwareOrderFlowFactory'
 
     Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface: '@App\Model\Article\ArticleDataFactory'

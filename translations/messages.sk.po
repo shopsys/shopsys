@@ -1,0 +1,17 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+
+msgid "(If I buy on the company behalf)"
+msgstr "(Pokud nakupuji na firmu)"
+
+msgid "Company number"
+msgstr "IČ"
+
+msgid "Tax number"
+msgstr "IČ Dph"
+
+msgid "Tax number with vat"
+msgstr "DIČ"

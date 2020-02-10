@@ -4,10 +4,10 @@
 {{ form_row(companyForm.email, { label: 'Email'|trans , attr: {'data-request-url' : url('front_registration_exists_email') } }) }}
 {{ form_row(companyForm.telephone, { label: 'Telefon'|trans }) }}
 
-{{ form_row(companyForm.companyNumber, { label: 'IČ'|trans }) }}
-{{ form_row(companyForm.companyTaxNumber, { label: 'DIČ / Ič DPH'|trans }) }}
+{{ form_row(companyForm.companyNumber, { label: 'Company number'|trans }) }}
+{{ form_row(companyForm.companyTaxNumber, { label: 'Tax number'|trans }) }}
 {% if domain.id == 2 %}
-    {{ form_row(companyForm.companyNumberWithVat, { label: 'DIČ'|trans }) }}
+    {{ form_row(companyForm.companyNumberWithVat, { label: 'Tax number with vat'|trans }) }}
 {% endif %}
 
 {{ form_row(companyForm.street, { label: 'Ulice'|trans }) }}
