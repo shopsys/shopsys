@@ -550,7 +550,7 @@
         </exec>
     </target>
 
-    <target name="elasticsearch-index-delete" depends="production-protection" description="Deletes indexes into elasticsearch." hidden="true">
+    <target name="elasticsearch-index-delete" depends="production-protection" description="Deletes indexes from elasticsearch." hidden="true">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -559,7 +559,7 @@
         </exec>
     </target>
 
-    <target name="elasticsearch-index-export" description="Exports indexes data into elasticsearch.">
+    <target name="elasticsearch-export" description="Exports indexes data into elasticsearch.">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -568,7 +568,7 @@
         </exec>
     </target>
 
-    <target name="elasticsearch-index-migrate" description="Creates new indexes, reindex them from old one, deletes old indexes and add alias to the new one." hidden="true">
+    <target name="elasticsearch-index-migrate" description="Creates new indexes, reindex them from old one, deletes old indexes and add alias to the new one.">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -800,8 +800,8 @@
     </target>
 
     <target name="product-search-export-products" description="Exports all products for searching via elasticsearch." hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-index-export' instead."/>
-        <phingcall target="elasticsearch-index-export">
+        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'elasticsearch-export' instead."/>
+        <phingcall target="elasticsearch-export">
             <property name="elasticsearch.index" value="product"/>
         </phingcall>
     </target>
@@ -994,7 +994,7 @@
         </exec>
     </target>
 
-    <target name="test-elasticsearch-index-create" description="Creates indexes into elasticsearch." hidden="true">
+    <target name="test-elasticsearch-index-create" description="Creates indexes into elasticsearch for test environment." hidden="true">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1004,7 +1004,7 @@
         </exec>
     </target>
 
-    <target name="test-elasticsearch-index-delete" depends="production-protection" description="Deletes indexes into elasticsearch." hidden="true">
+    <target name="test-elasticsearch-index-delete" depends="production-protection" description="Deletes indexes from elasticsearch for test environment." hidden="true">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1014,7 +1014,7 @@
         </exec>
     </target>
 
-    <target name="test-elasticsearch-index-export" description="Exports indexes data into elasticsearch.">
+    <target name="test-elasticsearch-export" description="Exports indexes data into elasticsearch for test environment.">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1042,8 +1042,6 @@
         </exec>
     </target>
 
-    <target name="elasticsearch-index-recreate" depends="production-protection, test-elasticsearch-index-delete, test-elasticsearch-index-create" description="Recreates indexes into elasticsearch (deletes existing indexes and creates new one)"/>
-
     <target name="test-product-search-create-structure" depends="production-protection" description="Creates structure for searching via elasticsearch for test environment." hidden="true">
         <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'test-elasticsearch-index-create' instead."/>
         <phingcall target="test-elasticsearch-index-create">
@@ -1059,8 +1057,8 @@
     </target>
 
     <target name="test-product-search-export-products" depends="production-protection" description="Exports all products for searching via elasticsearch for test environment." hidden="true">
-        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'test-elasticsearch-index-export' instead."/>
-        <phingcall target="test-elasticsearch-index-export">
+        <echo level="warning" message="This phing target is deprecated since Shopsys Framework 9.0.0, use 'test-elasticsearch-export' instead."/>
+        <phingcall target="test-elasticsearch-export">
             <property name="elasticsearch.index" value="product"/>
         </phingcall>
     </target>
