@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
+use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -22,13 +25,30 @@ class IndexRepository
     protected $progressBarFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
+     */
+    protected $sqlLoggerFacade;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    protected $entityManager;
+
+    /**
      * @param \Elasticsearch\Client $elasticsearchClient
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      */
-    public function __construct(Client $elasticsearchClient, ProgressBarFactory $progressBarFactory)
-    {
+    public function __construct(
+        Client $elasticsearchClient,
+        ProgressBarFactory $progressBarFactory,
+        SqlLoggerFacade $sqlLoggerFacade,
+        EntityManagerInterface $entityManager
+    ) {
         $this->elasticsearchClient = $elasticsearchClient;
         $this->progressBarFactory = $progressBarFactory;
+        $this->sqlLoggerFacade = $sqlLoggerFacade;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -162,6 +182,8 @@ class IndexRepository
      */
     public function export(IndexDefinition $indexDefinition, array $restrictToIds, OutputInterface $output): void
     {
+        $this->sqlLoggerFacade->temporarilyDisableLogging();
+
         $indexAlias = $indexDefinition->getIndexAlias();
         $index = $indexDefinition->getIndex();
         $domainId = $indexDefinition->getDomainId();
@@ -177,9 +199,12 @@ class IndexRepository
         $lastProcessedId = 0;
         $updatedIds = [];
         do {
+            // detach objects from manager to prevent memory leaks
+            $this->entityManager->clear();
             $currentBatchData = $index->getExportData($domainId, $lastProcessedId, $restrictToIds);
             $currentBatchSize = count($currentBatchData);
-            if (empty($currentBatchData)) {
+
+            if ($currentBatchData === 0) {
                 break;
             }
 
@@ -195,6 +220,8 @@ class IndexRepository
 
         $progressBar->finish();
         $output->writeln('');
+
+        $this->sqlLoggerFacade->reenableLogging();
     }
 
     /**
