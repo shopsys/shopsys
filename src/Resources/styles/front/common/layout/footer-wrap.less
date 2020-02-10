@@ -78,29 +78,25 @@
         }
     }
 
-    &__heading {
-        display: none;        
-
+    &__heading {        
         font-family: @font-tertiary;
         font-size: @footer-block-heading-font-size;
         letter-spacing: 1px;
-        white-space: nowrap;        
+        white-space: nowrap;                
 
-        @media @query-md {
-            display: block;
-        }
-
-        &--toggle {
-            display: block;
-
+        &--toggle {            
             @media @query-md {
-                display: none
+                pointer-events: none;
             }
 
             .svg {
                 display: inline-block;
                 position: relative;
                 left: 3px;
+
+                @media @query-md {
+                    display: none;
+                }
 
                 &::before {
                     font-size: @footer-toggle-drop-icon-size;
