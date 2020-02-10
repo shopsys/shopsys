@@ -39,7 +39,7 @@
     {%- else -%}
         {%- set classes = ['side-menu__submenu', 'side-menu__submenu--level' ~ item.level] -%}
         {%- if item.level == 1 -%}
-            {%- set classes = classes|merge(['js-side-menu-submenu display-none']) -%}
+            {%- set classes = classes|merge(['js-side-menu-submenu hidden']) -%}
         {%- endif -%}
     {%- endif -%}
     {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
