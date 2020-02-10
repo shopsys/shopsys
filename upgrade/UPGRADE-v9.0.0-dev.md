@@ -636,7 +636,22 @@ There you can find links to upgrade notes for other versions too.
                {{ 'Search [verb]'|trans }}
            </button>
         ```
- 
+- fix domain icon rendering and loading ([#1655](https://github.com/shopsys/shopsys/pull/1655))
+    - remove trailing slash in `config/paths.yml`
+        ```diff
+        -   shopsys.domain_images_url_prefix: '/%shopsys.content_dir_name%/admin/images/domain/'
+        +   shopsys.domain_images_url_prefix: '/%shopsys.content_dir_name%/admin/images/domain'
+        ```
+    - fix icon path in `ImageDataFixture` (`src/DataFixtures/Demo/ImageDataFixture.php`)
+        ```diff
+            public function load(ObjectManager $manager)
+            {
+                $this->truncateImagesFromDb();
+                if (file_exists($this->dataFixturesImagesDirectory)) {
+        -           $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory);
+        +           $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory . '/');
+        ```
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
