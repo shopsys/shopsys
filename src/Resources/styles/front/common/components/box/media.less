@@ -1,5 +1,5 @@
-@box-media-bottom-spacing: 1rem;
-@box-media-bottom-spacing-md: 3rem;
+@box-media-margin: 1rem;
+@box-media-margin-md: 3rem;
 @box-media-wrap-max-width: 900px;
 @box-media-img-max-width: 200px;
 @box-media-img-max-width-md: 300px;
@@ -11,10 +11,10 @@
 
 .box-media {
     position: relative;
-    margin-bottom: @box-media-bottom-spacing;
+    margin: @box-media-margin 0;
 
     @media @query-md {
-        margin-bottom: @box-media-bottom-spacing-md;
+        margin: @box-media-margin-md 0;
     }    
 
     &::before {
