@@ -36,7 +36,7 @@ class StockRepository
      * @param int $stockId
      * @return \App\Model\Stock\Stock
      */
-    public function getById($stockId): ?Stock
+    public function getById($stockId): Stock
     {
         $stock = $this->getStockRepository()->find($stockId);
         if ($stock == null) {

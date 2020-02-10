@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class StockFormTypeExtension extends AbstractType
+class StockFormType extends AbstractType
 {
     /**
      * @var \App\Model\Stock\Stock
@@ -69,17 +69,17 @@ class StockFormTypeExtension extends AbstractType
         ])
         ->add('centralStock', YesNoType::class, [
             'required' => false,
-            'label' => t('Central stock'),
+            'label' => t('Centrální sklad'),
         ])
         ->add(
             'externalId',
             TextType::class,
             [
                 'required' => true,
-                'label' => t('External bridge ID'),
+                'label' => t('Externí ID můstku'),
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Vyplňte prosím external bridge ID']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'External bridge ID skladu nesmí být delší než {{ limit }} znaků']),
+                    new Constraints\NotBlank(['message' => 'Vyplňte prosím externí ID můstku']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Externí ID můstku nesmí být delší než {{ limit }} znaků']),
                     new Constraints\Callback([$this, 'sameStockExternalIdValidation']),
                 ],
             ]

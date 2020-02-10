@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Form\Admin\StockFormTypeExtension;
+use App\Form\Admin\StockFormType;
 use App\Form\Admin\StockSettingsFormType;
 use App\Model\Stock\Exception\StockNotFoundException;
 use App\Model\Stock\StockDataFactory;
@@ -104,6 +104,18 @@ class StockController extends AdminBaseController
     }
 
     /**
+     * @Route("/stock/setting/")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function settingsAction(Request $request): Response
+    {
+        return $this->render('Admin/Content/Stock/settings.html.twig', [
+            'form' => $this->getStockSettingsForm()->createView(),
+        ]);
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormInterface
      */
     private function getStockSettingsForm(): FormInterface
@@ -151,7 +163,7 @@ class StockController extends AdminBaseController
         $stockData = $this->stockDataFactory->create();
         $stockData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
-        $form = $this->createForm(StockFormTypeExtension::class, $stockData, [
+        $form = $this->createForm(StockFormType::class, $stockData, [
             'stock' => null,
             'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
@@ -193,7 +205,7 @@ class StockController extends AdminBaseController
         $stock = $this->stockFacade->getById($id);
         $stockData = $this->stockDataFactory->createFromStock($stock);
 
-        $form = $this->createForm(StockFormTypeExtension::class, $stockData, [
+        $form = $this->createForm(StockFormType::class, $stockData, [
             'stock' => $stock,
             'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);

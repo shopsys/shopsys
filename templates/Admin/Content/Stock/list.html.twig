@@ -14,12 +14,10 @@
     <div class="js-multiple-grids-rows-unified">
         {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
 
-        {% if settingsForm %}
-            <div class="stock-settings">
-                <h2>{{ 'Nastavení skladů'|trans  }}</h2>
-                {{ form(settingsForm) }}
-            </div>
-        {% endif %}
+        <div class="wrap-divider wrap-divider--bottom">
+            {{ render(controller('App\\Controller\\Admin\\StockController::settingsAction')) }}
+        </div>
+
         <div class="wrap-divider wrap-divider--no-border">
             <h2>{{ 'Sklady'|trans }}</h2>
             {{ gridView.render() }}
