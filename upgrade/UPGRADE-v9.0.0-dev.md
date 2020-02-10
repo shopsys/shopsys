@@ -38,6 +38,11 @@ There you can find links to upgrade notes for other versions too.
         -   RUN npm install -g npm@6.13.2
         ```
 
+### Configuration
+- add trailing slash to all your localized paths for `front_product_search` route ([#1067](https://github.com/shopsys/shopsys/pull/1067))
+    - be aware, if you already have such paths (`hledani/`, `search/`) in your application
+    - the change might cause problems with your SEO as well
+
 ### Application
 
 - update your twig files ([#1284](https://github.com/shopsys/shopsys/pull/1284/)):
