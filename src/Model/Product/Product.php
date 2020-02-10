@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
@@ -81,6 +82,8 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3[$domainId]);
             $productDomain->setShortDescriptionUsp4($productData->shortDescriptionUsp4[$domainId]);
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
+            $productDomain->setLowPriceVat($productData->lowPriceVat[$domainId] ? Money::create($productData->lowPriceVat[$domainId]) : null);
+            $productDomain->setHighPriceVat($productData->highPriceVat[$domainId] ? Money::create($productData->highPriceVat[$domainId]) : null);
         }
     }
 
@@ -142,6 +145,24 @@ class Product extends BaseProduct
     public function getShortDescriptionUsp5(int $domainId): ?string
     {
         return $this->getProductDomain($domainId)->getShortDescriptionUsp5();
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getLowPriceVat(int $domainId): ?Money
+    {
+        return $this->getProductDomain($domainId)->getLowPriceVat();
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getHighPriceVat(int $domainId): ?Money
+    {
+        return $this->getProductDomain($domainId)->getHighPriceVat();
     }
 
     /**

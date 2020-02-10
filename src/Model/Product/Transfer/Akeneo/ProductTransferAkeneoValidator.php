@@ -40,6 +40,14 @@ class ProductTransferAkeneoValidator
             ],
         ]));
 
+        $this->validatePriceValue($violations, $akeneoProductData['values'], 'low_price_vat', [
+            new Assert\Type('string'),
+        ]);
+
+        $this->validatePriceValue($violations, $akeneoProductData['values'], 'high_price_vat', [
+            new Assert\Type('string'),
+        ]);
+
         $this->validateValueData($violations, $akeneoProductData['values'] ?? null, 'ean', [
             new Assert\Type(['type' => 'numeric']),
             new Assert\Length(['max' => 100]),
@@ -135,6 +143,56 @@ class ProductTransferAkeneoValidator
                 ]),
             ],
         ])));
+    }
+
+    /**
+     * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
+     * @param array|null $data
+     * @param string $validateKeyName
+     * @param array $asserts
+     */
+    protected function validatePriceValue(
+        ConstraintViolationListInterface $violations,
+        ?array $data,
+        string $validateKeyName,
+        array $asserts
+    ): void {
+        if ($data === null) {
+            return;
+        }
+
+        if (!array_key_exists($validateKeyName, $data)) {
+            return;
+        }
+
+        $violations->addAll($this->validator->validate(
+            $data,
+            new Assert\Collection([
+                'allowExtraFields' => true,
+                'fields' => [
+                    $validateKeyName => new Assert\Optional([
+                        new Assert\All([
+                            new Assert\Collection([
+                                'allowExtraFields' => true,
+                                'fields' => [
+                                    'data' => new Assert\All(
+                                        new Assert\Collection([
+                                            'allowExtraFields' => true,
+                                            'fields' => [
+                                                'currency' => new Assert\Required([
+                                                    new Assert\NotNull(),
+                                                ]),
+                                                'amount' => new Assert\Required($asserts),
+                                            ],
+                                        ])
+                                    ),
+                                ],
+                            ]),
+                        ]),
+                    ]),
+                ],
+        ])
+        ));
     }
 
     /**

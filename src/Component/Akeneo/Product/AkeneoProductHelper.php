@@ -75,4 +75,31 @@ class AkeneoProductHelper
 
         return $productData;
     }
+
+    /**
+     * @param array $productData
+     * @param array|null $akeneoData
+     * @return array
+     */
+    public static function mapDomainDataPriceString(array $productData, ?array $akeneoData): array
+    {
+        foreach ($productData as $key => $value) {
+            $productData[$key] = null;
+        }
+
+        if ($akeneoData === null) {
+            return $productData;
+        }
+
+        foreach ($akeneoData as $data) {
+            foreach ($data['data'] as $currentPrice) {
+                $domainId = AkeneoHelper::findEshopDomainIdByCurrency($currentPrice['currency']);
+                if ($domainId) {
+                    $productData[$domainId] = $currentPrice['amount'];
+                }
+            }
+        }
+
+        return $productData;
+    }
 }

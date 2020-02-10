@@ -43,4 +43,22 @@ class AkeneoHelper
 
         return null;
     }
+
+    /**
+     * @param string $currency
+     * @return int|null
+     */
+    public static function findEshopDomainIdByCurrency(string $currency): ?int
+    {
+        $domains = [
+            'CZK' => Domain::FIRST_DOMAIN_ID, // musí se změnit přímo na domeny po mergi ukolu ESHOP-116
+            'EUR' => Domain::SECOND_DOMAIN_ID,
+        ];
+
+        if (array_key_exists($currency, $domains)) {
+            return $domains[$currency];
+        }
+
+        return null;
+    }
 }

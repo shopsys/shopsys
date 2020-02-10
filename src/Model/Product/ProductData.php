@@ -54,6 +54,16 @@ class ProductData extends BaseProductData
      */
     public $stockProductData;
 
+    /**
+     * @var string[]|null[]
+     */
+    public $lowPriceVat;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $highPriceVat;
+
     public function __construct()
     {
         parent::__construct();
@@ -66,5 +76,7 @@ class ProductData extends BaseProductData
         $this->namePrefix = [];
         $this->nameSufix = [];
         $this->stockProductData = [];
+        $this->lowPriceVat = [];
+        $this->highPriceVat = [];
     }
 }

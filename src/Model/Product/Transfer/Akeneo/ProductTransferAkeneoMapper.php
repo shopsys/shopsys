@@ -54,6 +54,9 @@ class ProductTransferAkeneoMapper
         $productData->shortDescriptionUsp4 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp4, $akeneoProductData['values']['usp4'] ?? null);
         $productData->shortDescriptionUsp5 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp5, $akeneoProductData['values']['usp5'] ?? null);
 
+        $productData->lowPriceVat = AkeneoProductHelper::mapDomainDataPriceString($productData->lowPriceVat, $akeneoProductData['values']['low_price_vat'] ?? null);
+        $productData->highPriceVat = AkeneoProductHelper::mapDomainDataPriceString($productData->highPriceVat, $akeneoProductData['values']['high_price_vat'] ?? null);
+
         return $productData;
     }
 }
