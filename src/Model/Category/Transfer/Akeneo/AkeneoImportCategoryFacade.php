@@ -6,6 +6,7 @@ namespace App\Model\Category\Transfer\Akeneo;
 
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
+use App\Model\Category\Category;
 use App\Model\Category\CategoryDataFactory;
 use App\Model\Category\CategoryFacade;
 use Generator;
@@ -58,14 +59,14 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
     private $categoryDataFactory;
 
     /**
-     * @var string[]
+     * @var int[]
      */
-    private $akeneoCodeList = [];
+    private $notTransferredCategoriesIds = [];
 
     /**
      * @var int
      */
-    private $akeneoListSize = 0;
+    private $categoriesFromAkeneoCountBeforeTransfer = 0;
 
     /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
@@ -109,7 +110,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
     protected function doBeforeTransfer(): void
     {
         $this->logger->addInfo('Transfer categories data from Akeneo ...');
-        $this->loadAkeneoCodeList();
+        $this->loadAkeneoCategoryIds();
     }
 
     /**
@@ -136,16 +137,16 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
         } else {
             $this->logger->addInfo(sprintf('Updating category code: %s', $category->getAkeneoCode()));
             $this->categoryFacade->edit($category->getId(), $categoryData);
+            $this->dropTransferredAkeneoCategory($category);
         }
 
-        $this->removeAkeneoCode($akeneoCategoryData['code']);
         $this->akeneoCategoriesDataForOrdering[] = $akeneoCategoryData;
     }
 
     protected function doAfterTransfer(): void
     {
         $this->logger->addInfo('Save ordering for categories...');
-        $this->deleteRestCategories();
+        $this->deleteRestNotTransferredCategories();
         $this->saveOrderingCategories();
 
         $this->logger->addInfo('Refreshing categories and products visibility...');
@@ -189,33 +190,31 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
         }
     }
 
-    private function loadAkeneoCodeList()
+    private function loadAkeneoCategoryIds(): void
     {
-        foreach ($this->categoryFacade->getAllAkeneoCategoryCodes() as $code) {
-            $this->akeneoCodeList[$code['akeneoCode']] = $code['id'];
-        }
-        $this->akeneoListSize = count($this->akeneoCodeList);
+        $this->notTransferredCategoriesIds = array_flip($this->categoryFacade->getAllAkeneoCategoryIds());
+        $this->categoriesFromAkeneoCountBeforeTransfer = count($this->notTransferredCategoriesIds);
     }
 
     /**
-     * @param string $akeneoCode
+     * @param \App\Model\Category\Category $category
      */
-    private function removeAkeneoCode(string $akeneoCode)
+    private function dropTransferredAkeneoCategory(Category $category): void
     {
-        if (array_key_exists($akeneoCode, $this->akeneoCodeList)) {
-            unset($this->akeneoCodeList[$akeneoCode]);
+        if (array_key_exists($category->getId(), $this->notTransferredCategoriesIds)) {
+            unset($this->notTransferredCategoriesIds[$category->getId()]);
         }
     }
 
-    private function deleteRestCategories()
+    private function deleteRestNotTransferredCategories(): void
     {
-        if ($this->akeneoListSize === count($this->akeneoCodeList)) {
+        if ($this->categoriesFromAkeneoCountBeforeTransfer === count($this->notTransferredCategoriesIds)) {
             $this->logger->addError(sprintf('Import categories from Akeneo probably failed, because all categories with akeneo code should be deleted. Deletion was aborted.'));
             return;
         }
-        foreach ($this->akeneoCodeList as $akeneoCode => $categoryId) {
+        foreach ($this->notTransferredCategoriesIds as $akeneoCode => $categoryId) {
             $this->categoryFacade->deleteById($categoryId);
-            $this->logger->addWarning(sprintf('Deleted category with akeneo code %s', $akeneoCode));
+            $this->logger->addWarning(sprintf('Deleted category with ID: %s', $akeneoCode));
         }
     }
 }

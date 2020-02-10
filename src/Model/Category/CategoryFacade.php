@@ -51,11 +51,11 @@ class CategoryFacade extends BaseCategoryFacade
     }
 
     /**
-     * @return string[][]
+     * @return int[]
      */
-    public function getAllAkeneoCategoryCodes(): array
+    public function getAllAkeneoCategoryIds(): array
     {
-        return $this->categoryRepository->getAllAkeneoCategoryCodes();
+        return $this->categoryRepository->getAllAkeneoCategoryIds();
     }
 
     /*

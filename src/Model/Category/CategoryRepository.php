@@ -69,16 +69,18 @@ class CategoryRepository extends BaseCategoryRepository
     }
 
     /**
-     * @return string[][]
+     * @return int[]
      */
-    public function getAllAkeneoCategoryCodes(): array
+    public function getAllAkeneoCategoryIds(): array
     {
-        return $this->getQueryBuilder()
-            ->select('c.akeneoCode,c.id')
+        $result = $this->getQueryBuilder()
+            ->select('c.id')
             ->from(Category::class, 'c')
             ->where('c.akeneoCode IS NOT NULL')
             ->getQuery()
-            ->getScalarResult();
+            ->execute();
+
+        return array_map('reset', $result);
     }
 
     /**
