@@ -91,7 +91,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->truncateImagesFromDb();
 
         if (file_exists($this->dataFixturesImagesDirectory)) {
-            $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory);
+            $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory . '/');
             $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory, $this->targetImagesDirectory);
             $this->processDbImagesChanges();
         }
