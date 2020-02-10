@@ -28,7 +28,7 @@
                             {% for item in sliderItems %}                            
                                 <div class="box-slider__item">
                                     <a href="{{ item.link }}">{{ image(item, { lazy: false }) }}</a>
-                                    <a class="box-slider__item__link js-not-implemented-yet text-center" href="≠">
+                                    <a href="#" class="box-slider__item__link js-not-implemented-yet text-center">
                                         <span class="box-slider__item__link__text">{{ 'Pravidla akce'|trans }}</span>
                                     </a>
                                 </div>                            
@@ -42,7 +42,7 @@
                                     </button>
                                 {% endfor %}                                                        
                             </div>
-                            <a class="btn btn--outline btn--block js-not-implemented-yet" href="#">{{ 'Všechny akce'|trans }}</a>
+                            <a href="#" class="btn btn--outline btn--block js-not-implemented-yet">{{ 'Všechny akce'|trans }}</a>
                         </div>
                     </div>
                 </div>
