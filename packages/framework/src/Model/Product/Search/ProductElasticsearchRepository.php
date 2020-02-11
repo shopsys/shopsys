@@ -12,11 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 class ProductElasticsearchRepository
 {
     /**
-     * @deprecated will be removed in the next major release
-     */
-    public const ELASTICSEARCH_INDEX = 'product';
-
-    /**
      * @var \Elasticsearch\Client
      */
     protected $client;
@@ -40,11 +35,6 @@ class ProductElasticsearchRepository
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
      */
     protected $indexDefinitionLoader;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex
-     */
-    protected $productIndex;
 
     /**
      * @param \Elasticsearch\Client $client

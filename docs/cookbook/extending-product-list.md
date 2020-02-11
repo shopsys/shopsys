@@ -85,7 +85,7 @@ The class responsible for exporting products to Elasticsearch is `ProductExportR
 ```php
 declare(strict_types=1);
 
-namespace App\Model\Product\Search\Export;
+namespace App\Model\Product\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
@@ -112,7 +112,7 @@ class ProductExportRepository extends BaseProductExportRepository
 You need to register your new class as an alias for the one from the FrameworkBundle in `services.yaml` and `services_test.yml`:
 
 ```yml
-Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductExportRepository: '@App\Model\Product\Search\Export\ProductExportRepository'
+Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: '@App\Model\Product\Search\Export\ProductExportRepository'
 ```
 
 Then you need to fix `ProductExportRepositoryTest::getExpectedStructureForRepository` (because this test check if your structure is correct) by adding new attribute:
