@@ -10,6 +10,7 @@ import './lazyLoadInit';
 import './legalConditions';
 import './login';
 import './newsletterSubscriptionForm';
+import './notImplementedYetTooltip';
 import './promoCode';
 import './rangeSlider';
 import './repeater';
