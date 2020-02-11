@@ -163,24 +163,6 @@ class Product extends BaseProduct
     }
 
     /**
-     * @return \App\Model\Stock\ProductStock[]|\Doctrine\Common\Collections\Collection
-     */
-    public function getProductStocks()
-    {
-        return $this->productStocks;
-    }
-
-    /**
-     * @param \App\Model\Stock\ProductStock $productStock
-     * @return $this
-     */
-    public function addProductStock(ProductStock $productStock)
-    {
-        $this->productStocks->add($productStock);
-        return $this;
-    }
-
-    /**
      * @param string|null $locale
      * @return string
      */

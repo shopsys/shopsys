@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
-use App\Model\Stock\ProductStockDataFactoryInterface;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,12 +16,15 @@ use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInter
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductData;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -36,7 +35,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportSched
 
 /**
  * @method \App\Model\Product\Product getById(int $productId)
- * @method \App\Model\Product\Product create(\App\Model\Product\ProductData $productData)
  * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method saveParameters(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][] getAllProductSellingPricesIndexedByDomainId(\App\Model\Product\Product $product)
@@ -49,21 +47,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportSched
  */
 class ProductFacade extends BaseProductFacade
 {
-    /**
-     * @param string $productCatnum
-     * @return \App\Model\Product\Product|null
-     */
-    public function findOneByCatnumExcludeMainVariants($productCatnum): ?Product
-    {
-        try {
-            /** @var \App\Model\Product\Product $product */
-            $product = $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
-            return $product;
-        } catch (ProductNotFoundException $exception) {
-            return null;
-        }
-    }
-
     /**
      * @var \App\Model\Stock\StockFacade
      */
@@ -175,13 +158,27 @@ class ProductFacade extends BaseProductFacade
     }
 
     /**
+     * @param string $productCatnum
+     * @return \App\Model\Product\Product|null
+     */
+    public function findOneByCatnumExcludeMainVariants($productCatnum): ?Product
+    {
+        try {
+            /** @var \App\Model\Product\Product $product */
+            $product = $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
+            return $product;
+        } catch (ProductNotFoundException $exception) {
+            return null;
+        }
+    }
+
+    /**
      * @param int $productId
      * @param \App\Model\Product\ProductData $productData
      * @return \App\Model\Product\Product
      */
     public function edit($productId, ProductData $productData)
     {
-        $this->initStocksByProductData($productData);
         /** @var \App\Model\Product\Product $product */
         $product = $this->productRepository->getById($productId);
 

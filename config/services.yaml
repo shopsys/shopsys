@@ -77,9 +77,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@App\Model\Order\Item\OrderItemDataFactory'
 
-    Shopsys\FrameworkBundle\Model\Product\ProductFacade:
-        class: App\Model\Product\ProductFacade
-
     App\Model\Order\OrderDataMapper: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataMapper: '@App\Model\Order\OrderDataMapper'
