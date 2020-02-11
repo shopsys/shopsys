@@ -3417,7 +3417,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setPriceForAllPricingGroups($productData, '1110.54896');
 
         $this->setVat($productData, VatDataFixture::VAT_HIGH);
-        $this->setSellingFrom($productData, '11.2.2020');
+        $this->setSellingFrom($productData, '11.2.2320');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
         $productData->stockQuantity = 100;
