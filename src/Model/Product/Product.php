@@ -82,8 +82,8 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3[$domainId]);
             $productDomain->setShortDescriptionUsp4($productData->shortDescriptionUsp4[$domainId]);
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
-            $productDomain->setLowPriceVat($productData->lowPriceVat[$domainId]);
-            $productDomain->setHighPriceVat($productData->highPriceVat[$domainId]);
+            $productDomain->setLowPriceWithVat($productData->lowPriceWithVat[$domainId]);
+            $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
         }
     }
 
@@ -151,18 +151,18 @@ class Product extends BaseProduct
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getLowPriceVat(int $domainId): ?Money
+    public function getLowPriceWithVat(int $domainId): ?Money
     {
-        return $this->getProductDomain($domainId)->getLowPriceVat();
+        return $this->getProductDomain($domainId)->getLowPriceWithVat();
     }
 
     /**
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getHighPriceVat(int $domainId): ?Money
+    public function getHighPriceWithVat(int $domainId): ?Money
     {
-        return $this->getProductDomain($domainId)->getHighPriceVat();
+        return $this->getProductDomain($domainId)->getHighPriceWithVat();
     }
 
     /**

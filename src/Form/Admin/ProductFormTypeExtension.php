@@ -102,7 +102,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             $builderPricesGroup->remove('disabledPricesOnMainVariant');
         }
 
-        $builderPricesGroup->add('lowPriceVat', MultidomainType::class, [
+        $builderPricesGroup->add('lowPriceWithVat', MultidomainType::class, [
                 'label' => t('Nízká cena s DPH'),
                 'entry_type' => MoneyType::class,
                 'entry_options' => [
@@ -110,7 +110,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 ],
                 'required' => false,
             ])
-            ->add('highPriceVat', MultidomainType::class, [
+            ->add('highPriceWithVat', MultidomainType::class, [
                 'label' => t('Vysoká cena s DPH'),
                 'entry_type' => MoneyType::class,
                 'entry_options' => [

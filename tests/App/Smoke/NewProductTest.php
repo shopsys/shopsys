@@ -108,13 +108,13 @@ class NewProductTest extends FunctionalTestCase
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $inputName = sprintf(
-                'product_form[pricesGroup][lowPriceVat][%s]',
+                'product_form[pricesGroup][lowPriceWithVat][%s]',
                 $domainId
             );
             $form[$inputName] = $domainId * 5000;
 
             $inputName = sprintf(
-                'product_form[pricesGroup][highPriceVat][%s]',
+                'product_form[pricesGroup][highPriceWithVat][%s]',
                 $domainId
             );
             $form[$inputName] = $domainId * 10000;

@@ -14,10 +14,10 @@ class Version20200210083442 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE product_domains ADD low_price_vat NUMERIC(20, 6) DEFAULT NULL');
-        $this->sql('ALTER TABLE product_domains ADD high_price_vat NUMERIC(20, 6) DEFAULT NULL');
-        $this->sql('COMMENT ON COLUMN product_domains.low_price_vat IS \'(DC2Type:money)\'');
-        $this->sql('COMMENT ON COLUMN product_domains.high_price_vat IS \'(DC2Type:money)\'');
+        $this->sql('ALTER TABLE product_domains ADD low_price_with_vat NUMERIC(20, 6) DEFAULT NULL');
+        $this->sql('ALTER TABLE product_domains ADD high_price_with_vat NUMERIC(20, 6) DEFAULT NULL');
+        $this->sql('COMMENT ON COLUMN product_domains.low_price_with_vat IS \'(DC2Type:money)\'');
+        $this->sql('COMMENT ON COLUMN product_domains.high_price_with_vat IS \'(DC2Type:money)\'');
     }
 
     /**

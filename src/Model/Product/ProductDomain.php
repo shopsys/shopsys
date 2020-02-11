@@ -62,14 +62,14 @@ class ProductDomain extends BaseProductDomain
      *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
-    protected $lowPriceVat;
+    protected $lowPriceWithVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
-    protected $highPriceVat;
+    protected $highPriceWithVat;
 
     /**
      * @return string|null
@@ -154,32 +154,32 @@ class ProductDomain extends BaseProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getLowPriceVat(): ?Money
+    public function getLowPriceWithVat(): ?Money
     {
-        return $this->lowPriceVat;
+        return $this->lowPriceWithVat;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $lowPriceVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $lowPriceWithVat
      */
-    public function setLowPriceVat(?Money $lowPriceVat): void
+    public function setLowPriceWithVat(?Money $lowPriceWithVat): void
     {
-        $this->lowPriceVat = $lowPriceVat;
+        $this->lowPriceWithVat = $lowPriceWithVat;
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getHighPriceVat(): ?Money
+    public function getHighPriceWithVat(): ?Money
     {
-        return $this->highPriceVat;
+        return $this->highPriceWithVat;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $highPriceVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $highPriceWithVat
      */
-    public function setHighPriceVat(?Money $highPriceVat): void
+    public function setHighPriceWithVat(?Money $highPriceWithVat): void
     {
-        $this->highPriceVat = $highPriceVat;
+        $this->highPriceWithVat = $highPriceWithVat;
     }
 }

@@ -92,11 +92,11 @@ class AkeneoProductHelper
             return $productData;
         }
 
-        foreach ($akeneoData as $data) {
-            foreach ($data['data'] as $currentPrice) {
-                $domainId = AkeneoHelper::findEshopDomainIdByCurrency($currentPrice['currency']);
+        foreach ($akeneoData as $akaneoPricesData) {
+            foreach ($akaneoPricesData['data'] as $akaneoPriceData) {
+                $domainId = AkeneoHelper::findEshopDomainIdByCurrencyCode($akaneoPriceData['currency']);
                 if ($domainId) {
-                    $productData[$domainId] = $currentPrice['amount'] ? Money::create($currentPrice['amount']) : null;
+                    $productData[$domainId] = $akaneoPriceData['amount'] ? Money::create($akaneoPriceData['amount']) : null;
                 }
             }
         }

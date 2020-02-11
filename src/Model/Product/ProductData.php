@@ -57,12 +57,12 @@ class ProductData extends BaseProductData
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
      */
-    public $lowPriceVat;
+    public $lowPriceWithVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
      */
-    public $highPriceVat;
+    public $highPriceWithVat;
 
     public function __construct()
     {
@@ -76,7 +76,7 @@ class ProductData extends BaseProductData
         $this->namePrefix = [];
         $this->nameSufix = [];
         $this->stockProductData = [];
-        $this->lowPriceVat = [];
-        $this->highPriceVat = [];
+        $this->lowPriceWithVat = [];
+        $this->highPriceWithVat = [];
     }
 }
