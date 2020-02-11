@@ -195,7 +195,7 @@ class OrderController extends FrontBaseController
         if ($orderFlow->isBackToCartTransition()) {
             return $this->redirectToRoute('front_cart');
         }
-
+        $orderFlow->setIsCompanyCustomer($isCompanyCustomer);
         $orderFlow->bind($frontOrderFormData);
         $orderFlow->saveSentStepData();
 

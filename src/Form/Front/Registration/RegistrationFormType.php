@@ -130,7 +130,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'domainId' => $this->domain->getId(),
+            'domain_id' => $this->domain->getId(),
             'data_class' => RegistrationData::class,
             'attr' => ['novalidate' => 'novalidate'],
             TimedFormTypeExtension::OPTION_ENABLED => true,
@@ -148,6 +148,7 @@ class RegistrationFormType extends AbstractType
                     'message' => 'Password cannot be same as part of email before at sign',
                 ]),
             ],
-        ]);
+        ])
+        ->addAllowedTypes('domain_id', 'int');
     }
 }

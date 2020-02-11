@@ -6,6 +6,7 @@ namespace Tests\App\Unit\Form\Front\Order;
 
 use App\Form\Front\Order\PersonalInfoFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
@@ -66,6 +67,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     private function getPersonalInfoFormData($legalConditionsAgreement)
     {
         $personalInfoFormData = [];
+        $personalInfoFormData['gender'] = 'female';
         $personalInfoFormData['firstName'] = 'test';
         $personalInfoFormData['lastName'] = 'test';
         $personalInfoFormData['email'] = 'test@test.cz';
@@ -125,8 +127,12 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      */
     private function createPersonalInfoForm(): FormInterface
     {
+        $translatorMock = $this->getMockBuilder(Translator::class)->disableOriginalConstructor()->getMock();
+        $translatorMock->expects($this->any())->method('trans')->willReturn('');
+        Translator::injectSelf($translatorMock);
         $personalInfoForm = $this->factory->create(PersonalInfoFormType::class, null, [
             'domain_id' => 1,
+            'is_company_customer' => false,
         ]);
 
         return $personalInfoForm;

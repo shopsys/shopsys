@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 /**
  * @ORM\Table(name="billing_addresses")
  * @ORM\Entity
- * @method edit(\App\Model\Customer\BillingAddressData $billingAddressData)
  */
 class BillingAddress extends BaseBillingAddress
 {
@@ -31,5 +30,24 @@ class BillingAddress extends BaseBillingAddress
         if ($this->companyCustomer) {
             $this->companyNumberWithVat = $billingAddressData->companyNumberWithVat;
         }
+    }
+
+    /**
+     * @param \App\Model\Customer\BillingAddressData $billingAddressData
+     */
+    public function edit(BillingAddressData $billingAddressData): void
+    {
+        parent::edit($billingAddressData);
+        if ($this->companyCustomer) {
+            $this->companyNumberWithVat = $billingAddressData->companyNumberWithVat;
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCompanyNumberWithVat(): ?string
+    {
+        return $this->companyNumberWithVat;
     }
 }

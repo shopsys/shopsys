@@ -109,6 +109,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface: '@App\Model\Order\OrderDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper: '@App\Model\Order\FrontOrderDataMapper'
+
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface: '@App\Model\Order\Item\OrderItemDataFactory'
 
     App\Model\Order\OrderDataMapper: ~

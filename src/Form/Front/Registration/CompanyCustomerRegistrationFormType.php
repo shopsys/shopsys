@@ -56,7 +56,7 @@ class CompanyCustomerRegistrationFormType extends AbstractType
                 ],
             ]
         );
-        if ($options['domainId'] == Domain::SECOND_DOMAIN_ID) {
+        if ($options['domain_id'] === Domain::SECOND_DOMAIN_ID) {
             $builder->add(
                 'companyNumberWithVat',
                 TextType::class,

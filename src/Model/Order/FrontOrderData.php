@@ -17,4 +17,13 @@ use Shopsys\FrameworkBundle\Model\Order\FrontOrderData as BaseFrontOrderData;
  */
 class FrontOrderData extends BaseFrontOrderData
 {
+    /**
+     * @var string|null
+     */
+    public $companyNumberWithVat;
+
+    /**
+     * @var string|null
+     */
+    public $gender;
 }
