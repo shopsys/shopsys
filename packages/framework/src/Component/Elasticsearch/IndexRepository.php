@@ -145,6 +145,29 @@ class IndexRepository
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
+     * @param int[] $keepIds
+     */
+    public function deleteNotPresent(IndexDefinition $indexDefinition, array $keepIds): void
+    {
+        $this->elasticsearchClient->deleteByQuery([
+            'index' => $indexDefinition->getVersionedIndexName(),
+            'type' => '_doc',
+            'body' => [
+                'query' => [
+                    'bool' => [
+                        'must_not' => [
+                            'ids' => [
+                                'values' => $keepIds,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+    /**
      * @param string $indexAlias
      * @param array $data
      * @param bool $createIfNotExists
@@ -188,6 +211,7 @@ class IndexRepository
         $domainId = $indexDefinition->getDomainId();
         $progressBar = $this->progressBarFactory->create($output, $index->getTotalCount($indexDefinition->getDomainId()));
 
+        $exportedIds = [];
         $lastProcessedId = 0;
         do {
             // detach objects from manager to prevent memory leaks
@@ -202,8 +226,11 @@ class IndexRepository
             $this->bulkUpdate($indexAlias, $currentBatchData);
             $progressBar->advance($currentBatchSize);
 
+            $exportedIds = array_merge($exportedIds, array_keys($currentBatchData));
             $lastProcessedId = array_key_last($currentBatchData);
         } while ($currentBatchSize >= $index->getExportBatchSize());
+
+        $this->deleteNotPresent($indexDefinition, $exportedIds);
 
         $progressBar->finish();
         $output->writeln('');
