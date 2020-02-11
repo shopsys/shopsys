@@ -1,27 +1,37 @@
 # Elasticsearch
-To provide the best possible performance, frontend product searching, filtering and autocomplete
+To provide the best possible performance, frontend searching, filtering and autocomplete
 leverages [Elasticsearch technology](https://www.elastic.co/products/elasticsearch).
 Elasticsearch is a super fast no-SQL database where data are stored in JSON format as so-called [documents](https://www.elastic.co/guide/en/elasticsearch/reference/current/_basic_concepts.html#_document) in one or more [indexes](https://www.elastic.co/guide/en/elasticsearch/reference/current/_basic_concepts.html#_index).
 
 ## How does it work
-All product data are stored in PostgreSQL by default but querying relational database might not be fast enough.
-Therefore, relevant product attributes are also stored in Elasticsearch index under the same ID.
-When products need to be searched or filtered on the frontend, the query is sent to Elasticsearch.
-As a result, found product IDs are returned from Elasticsearch and then the product data are loaded from PostgreSQL database into entities using Doctrine ORM.
+All data are stored in PostgreSQL by default but querying relational database might not be fast enough.
+Therefore, relevant attributes are also stored in Elasticsearch index under the same ID.
+When data need to be searched or filtered on the frontend, the query is sent to Elasticsearch.
+As a result, found row IDs are returned from Elasticsearch and then the row data are loaded from PostgreSQL database into entities using Doctrine ORM.
 
 ### Elasticsearch index setting
 Elasticsearch [index](https://www.elastic.co/blog/what-is-an-elasticsearch-index) is a logical namespace, you can imagine single index as a single database in terms of relational databases.
 
 The Elasticsearch indexes are created during application build.
-You can also create or delete indexes manually using Phing targets `product-search-create-structure`, and `product-search-delete-structure` respectively, or you can use `product-search-recreate-structure` that encapsulates the previous two.
+You can also create or delete indexes manually using Phing targets `elasticsearch-index-create`, and `elasticsearch-index-delete` respectively, or you can use `elasticsearch-index-recreate` that encapsulates the previous two.
 
 !!! hint
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
-Unique index is created for each domain as some product attributes can have distinct values for each domain.
+Unique index is created for each domain as some attributes can have distinct values for each domain.
 To discover the exact mapping setting, you can look at the JSON configuration files
 that are located in `src/Resources/definition/` directory in [`shopsys/project-base`](https://github.com/shopsys/project-base).
 The directory is configured using `%shopsys.elasticsearch.structure_dir%` parameter.
+
+#### Available elasticsearch phing targets
+
+- elasticsearch-index-create
+- elasticsearch-index-delete
+- elasticsearch-index-recreate
+- elasticsearch-index-migrate
+- elasticsearch-export
+
+These commands takes action for all registered indexes. You can also define a single index for given action by defining parameter `elasticsearch.index` (e.g. `elasticsearch-index-recreate -D elasticsearch.index=product` will recreate a structure for index `product`).
 
 ### Product data export
 No data are automatically stored in Elasticsearch by "itself".
@@ -51,7 +61,9 @@ Following product attributes are exported into Elasticsearch (i.e. the search or
 * visibility (all visibilities for all pricing groups and domains)
 
 Data of all products are exported into Elasticsearch by CRON module (`ProductExportCronModule.php`) every 5 minutes.
-Alternatively, you can force the export manually using `product-search-export-products` Phing target.
+Alternatively, you can force the export manually using `elasticsearch-export -D elasticsearch.index=product` Phing target.
+
+If you need to change the data that are exported into Elasticsearch, overwrite appropriate methods in `ProductExportRepository` and `ProductElasticsearchConverter` classes.
 
 ## Use of Elasticsearch
 Elasticsearch is used to search, filter and sort products on the frontend and to display products in listing via [Read Model](./introduction-to-read-model.md).
@@ -59,14 +71,31 @@ You can learn more about [Product searching](../model/front-end-product-searchin
 [Sorting](../introduction/how-to-set-up-domains-and-locales.md#37-sorting-in-different-locales) is done with the help of [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
 which ensures that alphabetical sorting is correct for every language and its set of rules.
 
+### Adding new index
+To add another index to export, you need to configure mapping in JSON file, create an index class which extends `AbstractIndex` and implement all abstract methods and register it into `services.yml`.
+The index will be immediately available for phing commands. For detailed explanation see a [cookbook](../cookbook/adding-a-new-elasticsearch-index.md)
+
+#### AbstractIndex methods
+AbstractIndex contains some abstract methods which needs to be implemented for proper behavior.
+
+##### getName()
+Must return index name (same as a parent directory of JSON mapping).
+
+##### getTotalCount()
+Must return number of total rows you want to have exported for given index.
+
+##### getExportDataForIds()
+Must return all rows for given row ID. It is used for partial exports.
+
+##### getExportDataForBatch()
+Must return all rows which you want to have exported into elasticsearch.
+
 ## Where does Elasticsearch run?
 When using docker installation, Elasticsearch API is available on the address [http://127.0.0.1:9200](http://127.0.0.1:9200).
 
 ## How to change the default index and data export setting?
 If you wish to reconfigure the indexes setting, simply change the JSON configurations in `src/Resources/definition/`.
 Configurations use the `<index>/<domain_id>.json` naming pattern.
-
-If you need to change the data that are exported into Elasticsearch, overwrite appropriate methods in `ProductExportRepository` and `ProductElasticsearchConverter` classes.
 
 ## Known issues
 * When you need to add a new domain, you have to do following steps:
@@ -83,7 +112,7 @@ You can easily check if there is a product exported in the Elasticsearch by putt
   `http://127.0.0.1:9200/{domain ID}/_doc/{product ID}?pretty`
   eg. `http://127.0.0.1:9200/1/_doc/52?pretty`
 
-#### Product export fails
+#### Export fails
 
 If the export fails with a following error (or similar)
 
