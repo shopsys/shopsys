@@ -415,11 +415,11 @@ docker rm -f build-php-fpm-container
 ```
 
 !!! warning
-    During `build-deploy-part-2-db-dependent` phing target `product-search-migrate-structure` is called and can cause error when you change the type of field to another (eg. you change it from `bool` to `integer`).
+    During `build-deploy-part-2-db-dependent` phing target `elasticsearch-index-migrate` is called and can cause error when you change the type of field to another (eg. you change it from `bool` to `integer`).
     If you need to make this change, please add new field with the correct type and delete the old field instead
 
 !!! tip
-    If you need to have freshly exported products in Elasticsearch after deploy, you can call phing target `product-search-export-products` during `build-deploy-part-2-db-dependent`.
+    If you need to have freshly exported data in Elasticsearch after deploy, you can call phing target `elasticsearch-export` during `build-deploy-part-2-db-dependent`.
 
 ## Logging
 

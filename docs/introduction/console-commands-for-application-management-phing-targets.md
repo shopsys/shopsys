@@ -154,14 +154,14 @@ Drops all data in the test database and creates a new one with demo data and exp
 !!! tip
     All database related targets `db-*` have their `test-db-*` variant for the test database.
 
-#### product-search-recreate-structure
+#### elasticsearch-index-recreate
 Recreates Elasticsearch indexes structure.
 Consists of two sub-tasks that can be run independently:
 
-* `product-search-delete-structure` - deletes existing indexes structure
-* `product-search-create-structure` - creates new indexes structure by json definitions stored in the resources directory `src/Resources/definition`
+* `elasticsearch-index-delete` - deletes existing indexes structure
+* `elasticsearch-index-create` - creates new indexes structure by json definitions stored in the resources directory `src/Resources/definition`
 
-#### product-search-migrate-structure
+#### elasticsearch-index-migrate
 Migrates Elasticsearch indexes if there is change between currently used structure and the one in `*.json`.
 Especially useful when you need to change the structure and don't need to have fresh data in Elasticsearch
 
@@ -171,15 +171,15 @@ Especially useful when you need to change the structure and don't need to have f
 * creates alias for the new index
 
 !!! warning
-    If you add field/s to the structure and reindex, they won't be available until `product-search-export-products` is called.  
+    If you add field/s to the structure and reindex, they won't be available until `elasticsearch-export` is called.  
     Your application must handle the properties not being filled correctly until all products are exported.
 
 !!! danger
     Using this phing target after changing the type of field to another in structure _(eg. changing it from `bool` to `integer`)_ will cause an error.  
     If you need to make this change, please add new field with the correct type and delete the old field instead.
 
-#### product-search-export-products
-Exports all visible products to Elasticsearch.
+#### elasticsearch-export
+Exports all data for index to Elasticsearch.
 
 ### Coding standards
 
