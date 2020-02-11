@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\CategoryFacade;
+use App\Model\Stock\ProductStockRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
@@ -78,6 +79,11 @@ class ProductController extends FrontBaseController
     private $listedProductViewFacade;
 
     /**
+     * @var \App\Model\Stock\ProductStockRepository
+     */
+    private $productStockRepository;
+
+    /**
      * @var \App\Model\Category\CategoryFacade
      */
     private $categoryFacade;
@@ -94,6 +100,7 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \App\Model\Stock\ProductStockRepository $productStockRepository
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -106,7 +113,8 @@ class ProductController extends FrontBaseController
         ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade,
         ModuleFacade $moduleFacade,
         BrandFacade $brandFacade,
-        ListedProductViewFacadeInterface $listedProductViewFacade
+        ListedProductViewFacadeInterface $listedProductViewFacade,
+        ProductStockRepository $productStockRepository
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -119,6 +127,7 @@ class ProductController extends FrontBaseController
         $this->brandFacade = $brandFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->categoryFacade = $categoryFacade;
+        $this->productStockRepository = $productStockRepository;
     }
 
     /**
@@ -126,6 +135,8 @@ class ProductController extends FrontBaseController
      */
     public function detailAction($id)
     {
+
+        /** @var \App\Model\Product\Product $product */
         $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
 
         if ($product->isVariant()) {
@@ -136,6 +147,7 @@ class ProductController extends FrontBaseController
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
+        $productStocks = $this->productStockRepository->getProductStocksExcludeCentralStockByProductAndDomainId($product, $this->domain->getId());
 
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $product,
@@ -143,6 +155,8 @@ class ProductController extends FrontBaseController
             'variants' => $variants,
             'productMainCategory' => $productMainCategory,
             'categoryList' => $categoryList,
+            'domain' => $this->domain,
+            'productStocks' => $productStocks,
         ]);
     }
 

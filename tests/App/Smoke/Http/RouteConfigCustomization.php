@@ -246,6 +246,10 @@ class RouteConfigCustomization
                 $config->addExtraRequestDataSet('Editing normal category should be OK.')
                     ->setParameter('id', 2)
                     ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_stock_savesettings', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Route just for save stock setting form, route is always redirected without render own page.')
+                    ->setExpectedStatusCode(302);
             });
     }
 

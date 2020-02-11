@@ -54,7 +54,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
 
     public function testCategory(): void
     {
-        foreach ($this->categoryTestCasesProvider() as $dataProvider) {
+        foreach ($this->categoryTestCasesProvider() as $testCaseName => $dataProvider) {
             /** @var \App\Model\Category\Category $category */
             $category = $dataProvider[0];
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData */
@@ -64,7 +64,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
 
             $filterConfig = $this->productFilterConfigFactory->createForCategory($this->domain->getId(), $this->domain->getLocale(), $category);
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory($category->getId(), $filterConfig, $filterData);
-            $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData));
+            $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData), 'TestCase: ' . $testCaseName);
         }
     }
 
@@ -79,7 +79,6 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             'one-brand' => $this->categoryOneBrandTestCase(),
             'all-flags-all-brands' => $this->categoryAllFlagsAllBrandsTestCase(),
             'price' => $this->categoryPriceTestCase(),
-            'stock' => $this->categoryStockTestCase(),
             'flag-brand-parameters' => $this->categoryFlagBrandAndParametersTestCase(),
             'parameters' => $this->categoryParametersTestCase(),
         ];
@@ -403,64 +402,6 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             ],
             33 => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 6,
-            ],
-        ];
-
-        return [
-            $category,
-            $filterData,
-            $countData,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    private function categoryStockTestCase(): array
-    {
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_PHONES);
-        $filterData = new ProductFilterData();
-        $filterData->inStock = true;
-
-        $countData = new ProductFilterCountData();
-        $countData->countInStock = 2;
-        $countData->countByBrandId = [
-            3 => 1,
-            20 => 1,
-        ];
-        $countData->countByFlagId = [
-            1 => 2,
-        ];
-        $countData->countByParameterIdAndValueId = [
-            17 => [
-                $this->getParameterValueIdForFirstDomain('Yes') => 1,
-            ],
-            11 => [
-                $this->getParameterValueIdForFirstDomain('123.8x58.6 mm') => 1,
-            ],
-            19 => [
-                $this->getParameterValueIdForFirstDomain('No') => 1,
-            ],
-            12 => [
-                $this->getParameterValueIdForFirstDomain('No') => 1,
-            ],
-            18 => [
-                $this->getParameterValueIdForFirstDomain('No') => 1,
-            ],
-            14 => [
-                $this->getParameterValueIdForFirstDomain('16mil.') => 1,
-            ],
-            16 => [
-                $this->getParameterValueIdForFirstDomain('2') => 1,
-            ],
-            15 => [
-                $this->getParameterValueIdForFirstDomain('1.7GHz') => 1,
-            ],
-            13 => [
-                $this->getParameterValueIdForFirstDomain('1024 MB') => 1,
-            ],
-            10 => [
-                $this->getParameterValueIdForFirstDomain('112 g') => 1,
             ],
         ];
 

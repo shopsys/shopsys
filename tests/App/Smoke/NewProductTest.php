@@ -84,9 +84,15 @@ class NewProductTest extends FunctionalTestCase
         $this->fillVats($form);
         $form['product_form[displayAvailabilityGroup][sellingFrom]'] = '1.1.1990';
         $form['product_form[displayAvailabilityGroup][sellingTo]'] = '1.1.2000';
-        $form['product_form[displayAvailabilityGroup][stockGroup][stockQuantity]'] = '10';
         $form['product_form[displayAvailabilityGroup][unit]']->setValue($unit->getId());
         $form['product_form[displayAvailabilityGroup][availability]']->setValue($availability->getId());
+        $form['product_form[stocksGroup][stockProductData][1][productQuantity]'] = 1;
+        $form['product_form[stocksGroup][stockProductData][2][productQuantity]'] = 2;
+        $form['product_form[stocksGroup][stockProductData][3][productQuantity]'] = 3;
+        $form['product_form[stocksGroup][stockProductData][4][productQuantity]'] = 4;
+        $form['product_form[stocksGroup][stockProductData][5][productQuantity]'] = 5;
+        $form['product_form[stocksGroup][stockProductData][6][productQuantity]'] = 6;
+        $form['product_form[stocksGroup][stockProductData][7][productQuantity]'] = 7;
     }
 
     /**

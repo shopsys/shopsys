@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
@@ -47,6 +48,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $this->setShortDescriptionsUspGroup($builder, $options);
+
+        $builder->get('displayAvailabilityGroup')->get('stockGroup')->remove('stockQuantity');
+        $this->stocksGroup($builder);
     }
 
     /**
@@ -109,6 +113,24 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $builderSeoGroup = $builder->get('seoGroup');
 
         $builderSeoGroup->remove('seoH1s');
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function stocksGroup(FormBuilderInterface $builder)
+    {
+        $stockGroupBuilder = $builder->create('stocksGroup', GroupType::class, [
+            'label' => t('Stocks'),
+        ]);
+
+        $stockGroupBuilder->add('stockProductData', CollectionType::class, [
+            'required' => false,
+            'entry_type' => StockProductFormType::class,
+            'render_form_row' => false,
+        ]);
+
+        $builder->add($stockGroupBuilder);
     }
 
     /**

@@ -1,0 +1,12 @@
+{% block _product_form_stocksGroup_stockProductData_widget %}
+
+    <div id="{{ form.vars.id }}">
+        {% for quantityForm in form %}
+            {% for childQuantityForm in quantityForm %}
+                {{ form_row(childQuantityForm, { 'label': quantityForm.vars.value.name }) }}
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    {% do form.setRendered() %} {# When any stock does not exist, form is not rendered #}
+{% endblock %}

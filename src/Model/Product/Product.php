@@ -31,6 +31,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection $translations
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
+ * @method edit(\Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains, \App\Model\Product\ProductData $productData)
  */
 class Product extends BaseProduct
 {
@@ -38,20 +39,9 @@ class Product extends BaseProduct
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */
-    protected function __construct(BaseProductData $productData, ?array $variants = null)
+    protected function __construct(ProductData $productData, ?array $variants = null)
     {
         parent::__construct($productData, $variants);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
-     * @param \App\Model\Product\ProductData $productData
-     */
-    public function edit(
-        array $productCategoryDomains,
-        BaseProductData $productData
-    ) {
-        parent::edit($productCategoryDomains, $productData);
     }
 
     /**

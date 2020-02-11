@@ -63,7 +63,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->inStock = true;
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(2, $paginationResult->getResults());
+        $this->assertCount(4, $paginationResult->getResults());
     }
 
     public function testFilterByFlag()

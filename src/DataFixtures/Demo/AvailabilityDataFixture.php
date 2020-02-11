@@ -68,7 +68,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
             $availabilityData->name[$locale] = t('Preparing', [], 'dataFixtures', $locale);
         }
 
-        $availabilityData->dispatchTime = 14;
+        $availabilityData->dispatchTime = 0;
         $this->createAvailability($availabilityData, self::AVAILABILITY_PREPARING);
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -83,7 +83,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
             $availabilityData->name[$locale] = t('On request', [], 'dataFixtures', $locale);
         }
 
-        $availabilityData->dispatchTime = 7;
+        $availabilityData->dispatchTime = 0;
         $this->createAvailability($availabilityData, self::AVAILABILITY_ON_REQUEST);
 
         foreach ($this->domain->getAllLocales() as $locale) {
