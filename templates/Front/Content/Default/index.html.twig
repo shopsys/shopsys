@@ -18,29 +18,29 @@
     </h1>
 {% endblock %}
 
-{% block main_content %}                     
+{% block main_content %}
     <div class="web__line web__line--grey web__line--spacing">
         <div class="web__container">
             {% if sliderItems is not empty %}
                 <div class="box-slider">
                     <div class="box-slider__wrap">
                         <div id="js-slider-homepage" class="box-slider__in">
-                            {% for item in sliderItems %}                            
+                            {% for item in sliderItems|slice(0, 4) %}
                                 <div class="box-slider__item">
                                     <a href="{{ item.link }}">{{ image(item, { lazy: false }) }}</a>
                                     <a href="#" class="box-slider__item__link js-not-implemented-yet text-center">
-                                        <span class="box-slider__item__link__text">{{ 'Pravidla akce'|trans }}</span>
+                                        <span class="box-slider__item__link__text">{{ 'Pravidla akce zde'|trans }}</span>
                                     </a>
-                                </div>                            
+                                </div>
                             {% endfor %}
                         </div>
                         <div class="box-slider__thumbnails">
                             <div class="box-slider__thumbnails__block" id="js-slider-homepage-thumbnails">
-                                {% for item in sliderItems %}                                                        
+                                {% for item in sliderItems|slice(0, 4) %}
                                     <button class="box-slider__thumbnails__item">
                                         <span class="box-slider__thumbnails__item__text">{{ item.name }}</span>
                                     </button>
-                                {% endfor %}                                                        
+                                {% endfor %}
                             </div>
                             <a href="#" class="btn btn--outline btn--block js-not-implemented-yet">{{ 'Všechny akce'|trans }}</a>
                         </div>
@@ -50,22 +50,22 @@
 
             <div class="box-block">
                 <div class="box-block__wrap">
-                    <div class="box-block__item box-block__item--half box-block__item--left">                            
+                    <div class="box-block__item box-block__item--half box-block__item--left">
                         <h2 class="box-block__item__heading">{{ 'Aktuální leták'|trans }}</h2>
-                        <img class="box-block__item__img box-block__item__img--left" src="{{ asset('assets/frontend/images/sconto_aktualni_letak.jpg') }}" alt="{{ 'Aktuální leták'|trans }}">
+                        <img class="box-block__item__img box-block__item__img--left" src="{{ asset('assets/frontend/images/sconto_letak.png') }}" alt="{{ 'Aktuální leták'|trans }}">
                         <p class="box-block__item__desc">{{ 'Tuny slev, lorem ipsum dolor sit amet,<br> consectur adispic elit.'|trans|raw }}</p>
                         <a class="btn btn--next btn-no-style js-not-implemented-yet" href="#">{{ 'Číst dál'|trans }} <span class="btn__icon">→</span></a>
                     </div>
                     <div class="box-block__item box-block__item--half box-block__item--right">
                         <h2 class="box-block__item__heading">{{ 'Prodejny Sconto'|trans }}</h2>
-                        <img class="box-block__item__img box-block__item__img--right" src="{{ asset('assets/frontend/images/prodejny_sconto.jpg') }}" alt="{{ 'Prodejny Sconto'|trans }}">
-                        <p class="box-block__item__desc">{{ 'Další doplnkový sortiment, zákaznické centrum nebo osobní<br>vyzvednutí zboží z e-shopu zdarma na 8 místech v ČR.'|trans|raw }}</p>
+                        <img class="box-block__item__img box-block__item__img--right" src="{{ asset('assets/frontend/images/sconto_prodejny.png') }}" alt="{{ 'Prodejny Sconto'|trans }}">
+                        <p class="box-block__item__desc">{{ 'Další doplňkový sortiment, zákaznické centrum nebo osobní<br>vyzvednutí zboží z e-shopu zdarma na 8 místech v ČR.'|trans|raw }}</p>
                         <a class="btn btn--next btn-no-style js-not-implemented-yet" href="#">{{ 'Číst dál'|trans }} <span class="btn__icon">→</span></a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 
     {{ render(controller('App\\Controller\\Front\\CategoryController:topAction')) }}
 

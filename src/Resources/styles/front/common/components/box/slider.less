@@ -12,7 +12,7 @@
     padding: 1rem;
 
     border-radius: @radius;
-    background-color: @box-slider-bg-color;  
+    background-color: @box-slider-bg-color;
 
     @media @query-lg {
         padding: 2rem 2rem 1rem;
@@ -23,12 +23,12 @@
         @media @query-lg {
             display: flex;
         }
-    }     
+    }
 
     &__in {
         width: 100%;
         flex-grow: 2;
-        overflow: hidden;     
+        overflow: hidden;
     }
 
     .slick-initialized {
@@ -40,7 +40,7 @@
         width: 0;
         position: relative;
 
-        img {                
+        img {
             display: block;
         }
     }
@@ -52,9 +52,9 @@
             display: block;
             position: relative;
             top: 5px;
-    
-            font-size: 13px; 
-    
+
+            font-size: 13px;
+
             &__text {
                 text-decoration: underline;
             }
@@ -62,7 +62,7 @@
     }
 
     &__thumbnails {
-        margin-top: 1.5rem;        
+        margin-top: 1.5rem;
 
         @media @query-lg {
             padding-left: 4rem;
@@ -71,7 +71,7 @@
             margin-top: 0;
         }
 
-        &__block {            
+        &__block {
             margin-bottom: 0.5rem;
 
             @media @query-xl {
@@ -83,10 +83,10 @@
             padding: 0.5rem 0;
 
             border: 0;
-            border-bottom: 1px solid #f1f4f5;                        
+            border-bottom: 1px solid #f1f4f5;
             outline: 0;
-            background: transparent;            
-            text-align: left;  
+            background: transparent;
+            text-align: left;
             cursor: pointer;
 
             &:first-child {
@@ -97,7 +97,14 @@
                 border-bottom-color: transparent;
             }
 
-            &:hover,
+            &:hover {
+                @media @query-lg {
+                    .box-slider__thumbnails__item__text {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
             &.slick-active-current {
                 font-family: @font-tertiary;
                 color: @color-0;
