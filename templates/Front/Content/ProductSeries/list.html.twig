@@ -21,13 +21,13 @@
                     <h3><a href="{{ url('front_productseries_detail', { id: series.id }) }}">{{ series.getName(domain.locale) }}</a></h3>
                     <div class="box-detail__image">
                         <div class="box-detail__image__main">
-                            {% if imageExists(series) %}
-                                <a href="{{ imageUrl(series, 'original') }}" class="js-popup-image">
+                            <a href="{{ url('front_productseries_detail', { id: series.id }) }}">
+                                {% if imageExists(series) %}
                                     {{ image(series, { itemprop: 'image', size: 'preview' }) }}
-                                </a>
-                            {% else %}
-                                {{ noimage({ alt: series.getName(domain.locale) }) }}
-                            {% endif %}
+                                {% else %}
+                                    {{ noimage({ alt: series.getName(domain.locale) }) }}
+                                {% endif %}
+                            </a>
                         </div>
                     </div>
                 </div>

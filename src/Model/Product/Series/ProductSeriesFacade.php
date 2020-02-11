@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Series;
 
 use App\Model\Product\Series\Exception\MissingBaseFriendlyUrlForDomainException;
+use App\Model\Product\Series\Exception\ProductSeriesNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -170,7 +171,11 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
      */
     public function getVisibleProductSeriesByIdAndDomainId(int $id, int $domainId): ProductSeries
     {
-        return $this->productSeriesRepository->findVisibleProductSeriesByIdAndDomainId($id, $domainId);
+        $productSeries = $this->productSeriesRepository->findVisibleProductSeriesByIdAndDomainId($id, $domainId);
+        if ($productSeries === null) {
+            throw new ProductSeriesNotFoundException();
+        }
+        return $productSeries;
     }
 
     /**
