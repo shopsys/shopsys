@@ -657,6 +657,75 @@ There you can find links to upgrade notes for other versions too.
         +           $this->moveFilesFromLocalFilesystemToFilesystem($this->dataFixturesImagesDirectory . 'domain/', $this->targetDomainImagesDirectory . '/');
         ```
 
+- update your project to use refactored elasticsearch related classes [#1622](https://github.com/shopsys/shopsys/pull/1622)
+    - update `cron.yml` if you have registered products export by yourself
+        	
+        ```diff
+        -   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule:
+        +   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportCronModule:
+                tags:
+        ```
+		 
+    - move `Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository` to `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository` you should affect this change in your `services_test.yml`
+    
+        ```diff
+        -   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository: ~
+        +   Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: ~
+        ```
+	
+    - remove `\Tests\App\Functional\Component\Elasticsearch\ElasticsearchStructureUpdateCheckerTest`
+    - update `ProductSearchExportWithFilterRepositoryTest`
+        - move the class from `\Tests\App\Functional\Model\Product\Search\ProductSearchExportWithFilterRepositoryTest` to `Tests\App\Functional\Model\Product\Elasticsearch\ProductExportRepositoryTest`
+        - update annotation for property `$repository`
+	
+            ```diff
+                /**
+            -    * @var \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository
+            +    * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository
+                 * @inject
+                 */
+                private $repository;
+            ```
+    
+        - remove unused argument of method `getExpectedStructureForRepository()` and all its usages
+		
+            ```diff
+                /**
+            -    * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportWithFilterRepository $productSearchExportRepository
+                 * @return string[]
+                 */
+            -   private function getExpectedStructureForRepository(ProductSearchExportWithFilterRepository $productSearchExportRepository): array
+            +   private function getExpectedStructureForRepository(): array
+            ```
+	
+    - update `FilterQueryTest`
+        - inject `IndexDefinitionLoader` instead removed `ElasticsearchStructureManager`
+
+            ```diff
+                /**
+            -    * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchStructureManager
+            +    * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
+                 * @inject
+                 */
+            -   private $elasticSearchStructureManager;
+            +   private $indexDefinitionLoader;
+            ```
+		
+        - update `createFilter()` method
+
+            ```diff
+                protected function createFilter(): FilterQuery
+                {
+            -       $elasticSearchIndexName = $this->elasticSearchStructureManager->getAliasName(Domain::FIRST_DOMAIN_ID, self::ELASTICSEARCH_INDEX);
+            -	
+            -       $filter = $this->filterQueryFactory->create($elasticSearchIndexName);
+            +       $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::INDEX_NAME, Domain::FIRST_DOMAIN_ID);
+            +       $filter = $this->filterQueryFactory->create($indexDefinition->getIndexAlias());
+            	
+                    return $filter->filterOnlySellable();
+                }
+            ```
+
 ### Tools
 
 - apply coding standards checks on your `app` folder ([#1306](https://github.com/shopsys/shopsys/pull/1306))
