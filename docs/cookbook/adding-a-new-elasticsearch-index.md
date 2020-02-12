@@ -1,6 +1,6 @@
 # Adding a New Elasticsearch Index
 
-In this cookbook, we will add a new elasticsearch index for categories, implement basic function for data export, implement cron module and support for partial export.
+In this cookbook, we will add a new elasticsearch index for categories, implement basic functions for data export, implement cron module, and support for partial export.
 
 ## New elasticsearch mapping
 
@@ -64,13 +64,17 @@ So far it is the most minimalistic implementation.
 Now we are able to create an index in elasticsearch by running `./phing elasticsearch-index-create -D elasticsearc.index=category`.
 Also we can use `./phing elasticsearch-index-recreate` or `./phing elasticsearch-index-delete`.
 
+!!! note
+Command `./phing elasticsearch-index-create -D elasticsearc.index=category` will creates elasticsearch index only for out CategoryIndex.
+Using `./phing elasticsearch-index-create` (without `-D` flag) it will create elasticsearch indexes for all registered ones in your project (product, category, and so on).
+
 ## Export data into elasticsearch
 
 Creating and deleting index is nice but it is not really useful.
 As a next step we will implement method `getTotalCount()` and `getExportDataForBatch()` to be able export data.
 
 We can use already existing method in `\Shopsys\FrameworkBundle\Model\Category\CategoryRepository::getTranslatedVisibleSubcategoriesByDomain()`.
-The method `getTranslatedVisibleSubcategoriesByDomain()` needs as a second argument an instance of `DomainConfig` so we need to inject except instance of `CategortRepository` also an instance of `Domain` class into `CategoryIndex`.  
+The method `getTranslatedVisibleSubcategoriesByDomain()` needs as a second argument an instance of `DomainConfig` so we need to inject an instance of `Domain` class along with instance of `CategortRepository` into `CategoryIndex`.  
 
 ```diff
 +   /**
@@ -138,13 +142,16 @@ and also a `getExportDataForBatch()` with a private converting method `convertTo
 +   }
 ```
 
+!!! note
+The `getExportDataForBatch()` must return serialized array of rows indexed by its ID
+
 Now we can export categories data (name, description, parentId, level, and uuid) into elasticsearch index via `./phing elasticsearch-export -D elaticsearch.index=category` (we need to have created index first, see the step above).
 
 ### Exporting via cron
 
 We may automate the export process via CronModule which is super easy.
-
 All we need to achieve this goal is to create a new class `CategoryExportCronModule` which extends `AbstractExportCronModule`.
+
 The most important task here is to override parent constructor with changing a type hint of the first argument to our created index (`CategoryIndex`).
 
 ```php
@@ -182,7 +189,7 @@ Or you may want to [configure](../cookbook/working-with-multiple-cron-instances.
 ### Implement partial update
 
 Sometimes we want to export data immediately after the original data are changed (hiding category, rename, ...).
-For this purpose we need to implement `CategoryIndex::getExportDataForIds()`, add scheduler for queuing and [subscriber](https://symfony.com/doc/current/event_dispatcher.html#creating-an-event-subscriber) for processing queue.
+For this purpose we need to implement `CategoryIndex::getExportDataForIds()`, scheduler for queuing, and [subscriber](https://symfony.com/doc/current/event_dispatcher.html#creating-an-event-subscriber) for processing queue.
 
 Anywhere you want to add row to immediate export you may call `CategoryExportScheduler::scheduleRowIdForImmediateExport()` for adding a row into the queue.
 
@@ -208,8 +215,10 @@ class CategoryExportScheduler extends AbstractExportScheduler
 
 Create class `CategoryExportSubscriber` which extends `AbstractExportSubsriber`.
 Override its `__construct()`, and `getSubscribedEvents()`.
+
 Here is important to override constructors arguments type hint.
-Instead of abstract classes from `\Shopsys\FrameworkBundle\Component\Elasticsearch` you need to replace it with our new implementation.
+Instead of abstract classes from `\Shopsys\FrameworkBundle\Component\Elasticsearch` you need to replace it with our new implementation (`CategoryExportScheduler`, `CategoryIndex`).
+
 Implementation of `getSubscribedEvents()` is desired to use `exportScheduledRows()` from abstract class but also we can implement in by ourselves.
 
 ```php
@@ -261,7 +270,7 @@ class CategoryExportSubscriber extends AbstractExportSubscriber
 
 #### CategoryIndex::getExportDataForIds()
 
-To finish partial exports we need to implement the last unimplemented method in CategoryIndex.
+To finish partial exports we need to implement the last unimplemented method in `CategoryIndex` to return all categories by their identifiers.
 We may also use already existing method from `CategoryRepository`.
 
 ```diff
@@ -278,3 +287,8 @@ We may also use already existing method from `CategoryRepository`.
 +       return $result;
     }
 ```
+
+## Conclusion
+
+We have created a new index category into elasticsearch. We are able to fill it with data (by a cron or immediately after row is changed).
+From now you are able to use elasticsearch as a data source (data providing functionality is needed to be implemented) instead PostgreSQL which will save your performance.
