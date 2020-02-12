@@ -255,11 +255,11 @@ class IndexRepository
         $currentBatchData = $index->getExportDataForIds($domainId, $restrictToIds);
 
         if (!empty($currentBatchData)) {
-            $idsToDelete = array_diff($restrictToIds, array_keys($currentBatchData));
-
             $this->bulkUpdate($indexAlias, $currentBatchData);
-            $this->deleteIds($indexAlias, $domainId, $idsToDelete);
         }
+
+        $idsToDelete = array_diff($restrictToIds, array_keys($currentBatchData));
+        $this->deleteIds($indexAlias, $domainId, $idsToDelete);
 
         $this->sqlLoggerFacade->reenableLogging();
     }
