@@ -9,6 +9,7 @@ namespace App\Model\Product\Availability;
 use App\Component\Setting\Setting;
 use App\Model\Product\Product;
 use App\Model\Stock\ProductStockFacade;
+use App\Model\Stock\ProductStockRepository;
 
 class ProductAvailabilityFacade
 {
@@ -24,14 +25,20 @@ class ProductAvailabilityFacade
      * @var \App\Component\Setting\Setting
      */
     private $setting;
+    /**
+     * @var \App\Model\Stock\ProductStockRepository
+     */
+    private $productStockRepository;
 
     public function __construct(
+        ProductStockRepository $productStockRepository,
         Setting $setting,
         ProductStockFacade $productStockFacade
     )
     {
         $this->productStockFacade = $productStockFacade;
         $this->setting = $setting;
+        $this->productStockRepository = $productStockRepository;
     }
 
     /**
@@ -53,7 +60,7 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return bool
      */
-    private function isProductAvailableOnDomain(Product $product, int $domainId): bool
+    public function isProductAvailableOnDomain(Product $product, int $domainId): bool
     {
         $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
 
@@ -68,11 +75,11 @@ class ProductAvailabilityFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
-     * @return array
+     * @return ProductStockAvailabilityInformation[]
      */
     public function getProductStocksAvailabilitiesInformationByDomainId(Product $product, int $domainId): array
     {
-        $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
+        $productStocks = $this->productStockRepository->getProductStocksExcludeCentralStockByProductAndDomainId($product, $domainId);
 
         if($this->isProductAvailableOnDomain($product, $domainId)){
             $outOfStockAvailabilityInformation = t(self::AVAILABLE_AFTER_WEEKS,['%weeks%' => $this->getTransferWeeksByDomainId($domainId)]);
@@ -82,17 +89,15 @@ class ProductAvailabilityFacade
 
         $stocksList = [];
         foreach ($productStocks as $productStock){
-            if($productStock->getStock()->getDomainId() === $domainId){
-                $availabilityInformation = self::IN_STOCK;
+            $availabilityInformation = self::IN_STOCK;
 
-                if($productStock->getProductQuantity() <= 0){
-                    $availabilityInformation = $outOfStockAvailabilityInformation;
-                }
-
-                $stocksList[] = new ProductStockAvailabilityInformation(
-                    $productStock->getStock()->getName(), $availabilityInformation
-                );
+            if($productStock->getProductQuantity() <= 0){
+                $availabilityInformation = $outOfStockAvailabilityInformation;
             }
+
+            $stocksList[] = new ProductStockAvailabilityInformation(
+                $productStock->getStock()->getName(), $availabilityInformation
+            );
         }
 
         return $stocksList;

@@ -235,6 +235,8 @@ class Product extends BaseProduct
         );
     }
 
+//TODO-RK - odkomentovat před dokončením, pro testování kde se to všude volá taky možno.
+
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
@@ -249,8 +251,8 @@ class Product extends BaseProduct
      */
     public function getAvailability()
     {
-        throw new Exception('Standart framework availability isn\'t supported. You should use new App\...\ProductAvailabilityFacade');
-        return $this->availability;
+        //throw new Exception('Standart framework availability isn\'t supported. You should use new App\...\ProductAvailabilityFacade');
+        return null;
     }
 
     /**
@@ -258,7 +260,7 @@ class Product extends BaseProduct
      */
     public function getOutOfStockAvailability()
     {
-        throw new Exception('Standart framework availability isn\'t supported. You should use new App\...\ProductAvailabilityFacade');
-        return $this->outOfStockAvailability;
+        //throw new Exception('Standart framework availability isn\'t supported. You should use new App\...\ProductAvailabilityFacade');
+        return null;
     }
 }

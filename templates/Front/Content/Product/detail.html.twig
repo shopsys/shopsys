@@ -269,7 +269,7 @@
                     </div>
                 {% endif %}
 
-                {% if productStocks|length > 0 %}
+                {% if productStocksAvailabilitiesInformation|length > 0 %}
                     <div class="h3" id="stocks-availabilities">{{ "Skladové zásoby"|trans }}</div>
                     <table class="table-grid margin-top-20">
                         <thead>
@@ -278,22 +278,20 @@
                                     {{ "Sklad"|trans }}
                                 </th>
                                 <th>
-                                    {{ "Skladem"|trans }}
+                                    {{ "Dostupnost"|trans }}
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                        {% for productStock in productStocks %}
-                            {% if productStock.stock.domainId == domain.id %}
+                        {% for productStockAvailabilityInformation in productStocksAvailabilitiesInformation %}
                             <tr>
                                 <th>
-                                    {{ productStock.stock.name }}
+                                    {{ productStockAvailabilityInformation.stockName }}
                                 </th>
                                 <td>
-                                    {{ productStock.productQuantity }}
+                                    {{ productStockAvailabilityInformation.availabilityInformation }}
                                 </td>
                             </tr>
-                            {% endif %}
                         {% endfor %}
                         </tbody>
                     </table>
