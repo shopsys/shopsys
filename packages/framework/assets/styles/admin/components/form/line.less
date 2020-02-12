@@ -219,11 +219,15 @@
 
         &__price {
             padding: @form-line-inner-padding;
-            width: 140px;
+            width: 80px;
             display: inline-block;
             vertical-align: middle;
 
             text-align: right;
+
+            @media @query-md {
+                width: 140px;
+            }
         }
 
         &__domain {
