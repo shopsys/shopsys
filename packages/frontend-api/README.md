@@ -8,7 +8,7 @@ The bundle is dedicated for projects based on Shopsys Framework (i.e. created fr
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
 ## Documentation
-[Documentation](https://github.com/shopsys/shopsys/blob/9.0/docs/frontend-api/introduction-to-frontend-api.md) can be found in our monorepo repository.
+[Documentation](https://docs.shopsys.com/en/latest/frontend-api/introduction-to-frontend-api/) can be found in Shopsys Framework Knowledge Base.
 
 ## Installation
 The plugin is a Symfony bundle and is installed in the same way:
@@ -35,7 +35,7 @@ and for easier development register GraphiQLBundle for development environment
 ```
 
 ## Configuration
-Detailed information about [configuring the package](https://github.com/shopsys/shopsys/blob/9.0/docs/frontend-api/) can be found in our monorepo repository.
+Detailed information about [configuring the package](https://docs.shopsys.com/en/latest/frontend-api/) can be found in Shopsys Framework Knowledge Base.
 
 ## Contributing
 Thank you for your contributions to Shopsys Frontend API package.

@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-# For details about this script, see https://docs.shopsys.com/en/9.0/kubernetes/continuous-integration-using-kubernetes/
+# For details about this script, see https://docs.shopsys.com/en/latest/kubernetes/continuous-integration-using-kubernetes/
 
 # Login to Docker Hub for pushing images into register
 echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
