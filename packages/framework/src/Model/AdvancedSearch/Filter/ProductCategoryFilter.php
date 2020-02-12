@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -71,7 +72,10 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
             'expanded' => false,
             'multiple' => false,
             'choices' => $this->categoryFacade->getTranslatedAll($this->domain->getCurrentDomainConfig()),
-            'choice_label' => 'name',
+            'choice_label' => function (Category $category) {
+                $padding = str_repeat("\u{00a0}", ($category->getLevel() - 1) * 2);
+                return $padding . $category->getName();
+            },
             'choice_value' => 'id',
             'attr' => ['class' => 'js-autocomplete-selectbox'],
         ];
