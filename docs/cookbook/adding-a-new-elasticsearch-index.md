@@ -230,7 +230,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportSubscriber;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class CategoryExportSubscriber extends AbstractExportSubscriber
@@ -238,7 +238,7 @@ class CategoryExportSubscriber extends AbstractExportSubscriber
     /**
      * @param \App\Model\Category\Elasticsearch\CategoryExportScheduler $categoryExportScheduler
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository $indexRepository
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \App\Model\Category\Elasticsearch\CategoryIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -246,12 +246,12 @@ class CategoryExportSubscriber extends AbstractExportSubscriber
     public function __construct(
         CategoryExportScheduler $categoryExportScheduler,
         EntityManagerInterface $entityManager,
-        IndexRepository $indexRepository,
+        IndexFacade $indexFacade,
         IndexDefinitionLoader $indexDefinitionLoader,
         CategoryIndex $index,
         Domain $domain
     ) {
-        parent::__construct($categoryExportScheduler, $entityManager, $indexRepository, $indexDefinitionLoader, $index, $domain);
+        parent::__construct($categoryExportScheduler, $entityManager, $indexFacade, $indexDefinitionLoader, $index, $domain);
     }
 
     /**

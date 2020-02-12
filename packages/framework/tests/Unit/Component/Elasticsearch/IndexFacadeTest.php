@@ -18,9 +18,39 @@ use Symfony\Component\Console\Output\NullOutput;
 class IndexFacadeTest extends TestCase
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $indexRepositoryMock;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory
+     */
+    private $progressBarFactoryMock;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
+     */
+    private $sqlLoggerFacadeMock;
+
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $entityManagerMock;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->indexRepositoryMock = $this->createMock(IndexRepository::class);
+        $this->progressBarFactoryMock = $this->createMock(ProgressBarFactory::class);
+        $this->sqlLoggerFacadeMock = $this->createMock(SqlLoggerFacade::class);
+        $this->entityManagerMock = $this->createMock(EntityManager::class);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition
      */
-    private function getIndexDefinitionMock(): IndexDefinition
+    private function getIndexDefinitionMockReturningDomainId(): IndexDefinition
     {
         /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\MockObject $indexDefinitionMock */
         $indexDefinitionMock = $this->createMock(IndexDefinition::class);
@@ -28,22 +58,26 @@ class IndexFacadeTest extends TestCase
         return $indexDefinitionMock;
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade
+     */
+    private function createIndexFacadeInstance(): IndexFacade
+    {
+        return new IndexFacade(
+            $this->indexRepositoryMock,
+            $this->progressBarFactoryMock,
+            $this->sqlLoggerFacadeMock,
+            $this->entityManagerMock
+        );
+    }
+
     public function testCreateByIndexDefinitionCreatesIndexAndAlias(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository|\PHPUnit\Framework\MockObject\MockObject $indexRepositoryMock */
-        $indexRepositoryMock = $this->createMock(IndexRepository::class);
-        $indexRepositoryMock->expects($this->once())->method('createIndex');
-        $indexRepositoryMock->expects($this->once())->method('createAlias');
+        $this->indexRepositoryMock->expects($this->once())->method('createIndex');
+        $this->indexRepositoryMock->expects($this->once())->method('createAlias');
 
-        /** @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactoryMock */
-        $progressBarFactoryMock = $this->createMock(ProgressBarFactory::class);
-        /** @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacadeMock */
-        $sqlLoggerFacadeMock = $this->createMock(SqlLoggerFacade::class);
-        /** @var \Doctrine\ORM\EntityManager $entityManagerMock */
-        $entityManagerMock = $this->createMock(EntityManager::class);
-
-        $indexFacade = new IndexFacade($indexRepositoryMock, $progressBarFactoryMock, $sqlLoggerFacadeMock, $entityManagerMock);
-        $indexFacade->createByIndexDefinition($this->getIndexDefinitionMock(), new NullOutput());
+        $indexFacade = $this->createIndexFacadeInstance();
+        $indexFacade->createByIndexDefinition($this->getIndexDefinitionMockReturningDomainId(), new NullOutput());
     }
 
     public function testMigrateByIndexDefinitionWhenMigrationIsNecessary(): void
@@ -51,26 +85,17 @@ class IndexFacadeTest extends TestCase
         $oldIndexName = 'index_old';
         $newIndexName = 'index_new';
 
-        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository|\PHPUnit\Framework\MockObject\MockObject $indexRepositoryMock */
-        $indexRepositoryMock = $this->createMock(IndexRepository::class);
-        $indexRepositoryMock->method('findCurrentIndexNameForAlias')->willReturn($oldIndexName);
-        $indexRepositoryMock->expects($this->once())->method('createIndex');
-        $indexRepositoryMock->expects($this->once())->method('reindex')->with($oldIndexName, $newIndexName);
-        $indexRepositoryMock->expects($this->once())->method('createAlias');
-        $indexRepositoryMock->expects($this->once())->method('deleteIndex')->with($oldIndexName);
-
-        /** @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactoryMock */
-        $progressBarFactoryMock = $this->createMock(ProgressBarFactory::class);
-        /** @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacadeMock */
-        $sqlLoggerFacadeMock = $this->createMock(SqlLoggerFacade::class);
-        /** @var \Doctrine\ORM\EntityManager $entityManagerMock */
-        $entityManagerMock = $this->createMock(EntityManager::class);
+        $this->indexRepositoryMock->method('findCurrentIndexNameForAlias')->willReturn($oldIndexName);
+        $this->indexRepositoryMock->expects($this->once())->method('createIndex');
+        $this->indexRepositoryMock->expects($this->once())->method('reindex')->with($oldIndexName, $newIndexName);
+        $this->indexRepositoryMock->expects($this->once())->method('createAlias');
+        $this->indexRepositoryMock->expects($this->once())->method('deleteIndex')->with($oldIndexName);
 
         /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\MockObject $indexDefinitionMock */
-        $indexDefinitionMock = $this->getIndexDefinitionMock();
+        $indexDefinitionMock = $this->getIndexDefinitionMockReturningDomainId();
         $indexDefinitionMock->method('getVersionedIndexName')->willReturn($newIndexName);
 
-        $indexFacade = new IndexFacade($indexRepositoryMock, $progressBarFactoryMock, $sqlLoggerFacadeMock, $entityManagerMock);
+        $indexFacade = $this->createIndexFacadeInstance();
         $indexFacade->migrateByIndexDefinition($indexDefinitionMock, new NullOutput());
     }
 
@@ -79,26 +104,17 @@ class IndexFacadeTest extends TestCase
         $oldIndexName = 'index_old';
         $newIndexName = 'index_new';
 
-        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository|\PHPUnit\Framework\MockObject\MockObject $indexRepositoryMock */
-        $indexRepositoryMock = $this->createMock(IndexRepository::class);
-        $indexRepositoryMock->method('findCurrentIndexNameForAlias')->willReturn($oldIndexName);
-        $indexRepositoryMock->expects($this->never())->method('createIndex');
-        $indexRepositoryMock->expects($this->never())->method('reindex')->with($oldIndexName, $newIndexName);
-        $indexRepositoryMock->expects($this->never())->method('createAlias');
-        $indexRepositoryMock->expects($this->never())->method('deleteIndex')->with($oldIndexName);
-
-        /** @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactoryMock */
-        $progressBarFactoryMock = $this->createMock(ProgressBarFactory::class);
-        /** @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacadeMock */
-        $sqlLoggerFacadeMock = $this->createMock(SqlLoggerFacade::class);
-        /** @var \Doctrine\ORM\EntityManager $entityManagerMock */
-        $entityManagerMock = $this->createMock(EntityManager::class);
+        $this->indexRepositoryMock->method('findCurrentIndexNameForAlias')->willReturn($oldIndexName);
+        $this->indexRepositoryMock->expects($this->never())->method('createIndex');
+        $this->indexRepositoryMock->expects($this->never())->method('reindex')->with($oldIndexName, $newIndexName);
+        $this->indexRepositoryMock->expects($this->never())->method('createAlias');
+        $this->indexRepositoryMock->expects($this->never())->method('deleteIndex')->with($oldIndexName);
 
         /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\MockObject $indexDefinitionMock */
-        $indexDefinitionMock = $this->getIndexDefinitionMock();
+        $indexDefinitionMock = $this->getIndexDefinitionMockReturningDomainId();
         $indexDefinitionMock->method('getVersionedIndexName')->willReturn($oldIndexName);
 
-        $indexFacade = new IndexFacade($indexRepositoryMock, $progressBarFactoryMock, $sqlLoggerFacadeMock, $entityManagerMock);
+        $indexFacade = $this->createIndexFacadeInstance();
         $indexFacade->migrateByIndexDefinition($indexDefinitionMock, new NullOutput());
     }
 
@@ -117,36 +133,28 @@ class IndexFacadeTest extends TestCase
         $indexMock->method('getExportDataForIds')->with(Domain::FIRST_DOMAIN_ID, $affectedIds)->willReturn($exportData);
 
         /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition|\PHPUnit\Framework\MockObject\MockObject $indexDefinitionMock */
-        $indexDefinitionMock = $this->createMock(IndexDefinition::class);
+        $indexDefinitionMock = $this->getIndexDefinitionMockReturningDomainId();
         $indexDefinitionMock->method('getIndexAlias')->willReturn($indexAlias);
-        $indexDefinitionMock->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
 
-        /** @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository|\PHPUnit\Framework\MockObject\MockObject $indexRepositoryMock */
-        $indexRepositoryMock = $this->createMock(IndexRepository::class);
         if (empty($exportData)) {
-            $indexRepositoryMock->expects($this->never())->method('bulkUpdate');
+            $this->indexRepositoryMock->expects($this->never())->method('bulkUpdate');
         } else {
-            $indexRepositoryMock->expects($this->once())->method('bulkUpdate')->with($indexAlias, $exportData);
+            $this->indexRepositoryMock->expects($this->once())->method('bulkUpdate')->with($indexAlias, $exportData);
         }
 
         if (empty($expectedIdsToDelete)) {
-            $indexRepositoryMock->expects($this->never())->method('deleteIds');
+            $this->indexRepositoryMock->expects($this->never())->method('deleteIds');
         } else {
-            $indexRepositoryMock->expects($this->once())->method('deleteIds')->with($indexAlias, $expectedIdsToDelete);
+            $this->indexRepositoryMock->expects($this->once())->method('deleteIds')->with($indexAlias, $expectedIdsToDelete);
         }
 
-        /** @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactoryMock */
-        $progressBarFactoryMock = $this->createMock(ProgressBarFactory::class);
-        /** @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacadeMock */
-        $sqlLoggerFacadeMock = $this->createMock(SqlLoggerFacade::class);
-        /** @var \Doctrine\ORM\EntityManager $entityManagerMock */
-        $entityManagerMock = $this->createMock(EntityManager::class);
-
-
-        $indexFacade = new IndexFacade($indexRepositoryMock, $progressBarFactoryMock, $sqlLoggerFacadeMock, $entityManagerMock);
+        $indexFacade = $this->createIndexFacadeInstance();
         $indexFacade->exportIds($indexMock, $indexDefinitionMock, $affectedIds);
     }
 
+    /**
+     * @return array
+     */
     public function exportIdsDataProvider(): array
     {
         return [
@@ -171,7 +179,7 @@ class IndexFacadeTest extends TestCase
                     3 => ['foo' => 'baz'],
                 ],
                 [],
-            ]
+            ],
         ];
     }
 }
