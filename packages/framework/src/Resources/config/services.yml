@@ -17,10 +17,6 @@ services:
         autoconfigure: true
         public: false
 
-    _instanceof:
-        Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex:
-            tags: ['elasticsearch.index']
-
     Shopsys\FrameworkBundle\:
         resource: '../../**/*{Calculation,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer}.php'
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
