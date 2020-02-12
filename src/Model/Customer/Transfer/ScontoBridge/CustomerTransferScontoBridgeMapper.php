@@ -15,12 +15,12 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 
 class CustomerTransferScontoBridgeMapper
 {
-    private const CUSTOMER_TYPE_INDIVIDUAL = 0;
-    private const CUSTOMER_TYPE_COMPANY = 1;
-    private const INDIVIDUAL_TITLE_MALE = 0;
-    private const INDIVIDUAL_TITLE_FEMALE = 1;
-    private const DISTRIBUTION_CHANEL_CODE_CZ = 421;
-    private const DISTRIBUTION_CHANEL_CODE_SK = 422;
+    public const CUSTOMER_TYPE_INDIVIDUAL = 0;
+    public const CUSTOMER_TYPE_COMPANY = 1;
+    public const INDIVIDUAL_TITLE_MALE = 0;
+    public const INDIVIDUAL_TITLE_FEMALE = 1;
+    public const DISTRIBUTION_CHANEL_CODE_CZ = 421;
+    public const DISTRIBUTION_CHANEL_CODE_SK = 422;
 
     /**
      * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory

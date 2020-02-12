@@ -29,8 +29,8 @@ parameters:
             - '*/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoValidator.php'
             - '*/src/Component/Akeneo/Transfer/AbstractAkeneoImportTransfer.php'
             - '*/src/Component/ScontoBridge/Transfer/AbstractScontoBridgeImportTransfer.php'
-            - '*/src/Model/Customer/Transfer/ScontoBridge/CustomerTransferScontoBridgeValidator.php'
             - '*/src/Model/Customer/Transfer/ScontoBridge/CustomerTransferScontoBridgeMapper.php'
+            - '*/src/Model/Customer/Transfer/ScontoBridge/CustomerTransferScontoBridgeValidator.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'
