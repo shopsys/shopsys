@@ -1,10 +1,10 @@
 # Adding a New Elasticsearch Index
 
-In this cookbook, we will add a new elasticsearch index for categories, implement basic functions for data export, implement cron module, and support for partial export.
+In this cookbook, we will add a new Elasticsearch index for categories, implement basic functions for data export, implement cron module, and support for partial export.
 
-## New elasticsearch mapping
+## New Elasticsearch mapping
 
-As a first step we need to define [elasticsearch mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) in `src/Resources/definition/category/` for all domains (e.g. for 2 domains with ID 1 and 2: `1.json`, `2.json`).
+As a first step we need to define [Elasticsearch mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) in `src/Resources/definition/category/` for all domains (e.g. for 2 domains with ID 1 and 2: `1.json`, `2.json`).
 
 ## New CategoryIndex
 
@@ -45,9 +45,9 @@ Register new index into `config/services.yml`
     App\Model\Category\Elasticsearch\CategoryIndex: ~
 ```
 
-## Create new index into elasticsearch
+## Create new index into Elasticsearch
 
-To create an index into elasticsearch we need to implement `getName()` method in `CategoryIndex`.
+To create an index into Elasticsearch we need to implement `getName()` method in `CategoryIndex`.
 The best practice is to define the index name as the constant for later usage for obtaining data.
 
 ```diff
@@ -61,14 +61,14 @@ The best practice is to define the index name as the constant for later usage fo
 ```
 
 So far it is the most minimalistic implementation.
-Now we are able to create an index in elasticsearch by running `./phing elasticsearch-index-create -D elasticsearch.index=category`.
+Now we are able to create an index in Elasticsearch by running `./phing elasticsearch-index-create -D elasticsearch.index=category`.
 Also we can use `./phing elasticsearch-index-recreate` or `./phing elasticsearch-index-delete`.
 
 !!! note
-Command `./phing elasticsearch-index-create -D elasticsearch.index=category` (notice the parameter -D) create elasticsearch index only for our CategoryIndex.
-Using `./phing elasticsearch-index-create` (without `-D` flag) will create elasticsearch indexes for all registered ones in your project (product, category, and so on).
+Command `./phing elasticsearch-index-create -D elasticsearch.index=category` (notice the parameter -D) create Elasticsearch index only for our CategoryIndex.
+Using `./phing elasticsearch-index-create` (without `-D` flag) will create Elasticsearch indexes for all registered ones in your project (product, category, and so on).
 
-## Export data into elasticsearch
+## Export data into Elasticsearch
 
 Creating and deleting the index is nice but alone it is not really useful.
 As the next step we will implement method `getTotalCount()` and `getExportDataForBatch()` to be able to export data.
@@ -145,7 +145,7 @@ and also a `getExportDataForBatch()` with a private converting method `convertTo
 !!! note
 The `getExportDataForBatch()` must return serialized array of rows indexed by its ID
 
-Now we can export categories data (name, description, parentId, level, and uuid) into elasticsearch with `./phing elasticsearch-export -D elasticsearch.index=category` (index have to be created first, see the step above).
+Now we can export categories data (name, description, parentId, level, and uuid) into Elasticsearch with `./phing elasticsearch-export -D elasticsearch.index=category` (index have to be created first, see the step above).
 
 ### Exporting via cron
 
@@ -290,5 +290,5 @@ We may also use already existing method from `CategoryRepository`.
 
 ## Conclusion
 
-We have created a new index category into elasticsearch. We were able to fill it with data (by a cron or immediately after a row is changed).
-From now you are able to use elasticsearch as a data source (data providing functionality is needed to be implemented) instead of PostgreSQL which will improve the performance of your application.
+We have created a new index category into Elasticsearch. We were able to fill it with data (by a cron or immediately after a row is changed).
+From now you are able to use Elasticsearch as a data source (data providing functionality is needed to be implemented) instead of PostgreSQL which will improve the performance of your application.
