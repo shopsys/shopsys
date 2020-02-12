@@ -19,7 +19,7 @@ class ElasticsearchIndexesCreateCommand extends AbstractElasticsearchIndexComman
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
-        $this->indexFacade->createByIndexDefinition($indexDefinition, $output);
+        $this->indexFacade->create($indexDefinition, $output);
     }
 
     /**

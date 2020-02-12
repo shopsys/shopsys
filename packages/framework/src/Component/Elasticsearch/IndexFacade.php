@@ -53,7 +53,7 @@ class IndexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function createByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void
+    public function create(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $output->writeln(sprintf(
             'Creating index "%s" on domain "%s"',
@@ -69,7 +69,7 @@ class IndexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function deleteByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void
+    public function delete(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $output->writeln(sprintf(
             'Deleting index "%s" on domain "%s"',
@@ -85,7 +85,7 @@ class IndexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function exportByIndexDefinition(AbstractIndex $index, IndexDefinition $indexDefinition, OutputInterface $output): void
+    public function export(AbstractIndex $index, IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $output->writeln(sprintf(
             'Exporting data of "%s" on domain "%s"',
@@ -130,7 +130,7 @@ class IndexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function migrateByIndexDefinition(IndexDefinition $indexDefinition, OutputInterface $output): void
+    public function migrate(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $indexName = $indexDefinition->getIndexName();
         $domainId = $indexDefinition->getDomainId();

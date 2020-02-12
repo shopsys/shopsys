@@ -19,7 +19,7 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
-        $this->indexFacade->deleteByIndexDefinition($indexDefinition, $output);
+        $this->indexFacade->delete($indexDefinition, $output);
     }
 
     /**

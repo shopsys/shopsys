@@ -19,7 +19,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
-        $this->indexFacade->exportByIndexDefinition(
+        $this->indexFacade->export(
             $this->indexRegistry->getIndexByIndexName($indexDefinition->getIndexName()),
             $indexDefinition,
             $output

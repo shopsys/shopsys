@@ -19,7 +19,7 @@ class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexComma
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
-        $this->indexFacade->migrateByIndexDefinition($indexDefinition, $output);
+        $this->indexFacade->migrate($indexDefinition, $output);
     }
 
     /**

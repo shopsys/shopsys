@@ -71,16 +71,16 @@ class IndexFacadeTest extends TestCase
         );
     }
 
-    public function testCreateByIndexDefinitionCreatesIndexAndAlias(): void
+    public function testCreateCreatesIndexAndAlias(): void
     {
         $this->indexRepositoryMock->expects($this->once())->method('createIndex');
         $this->indexRepositoryMock->expects($this->once())->method('createAlias');
 
         $indexFacade = $this->createIndexFacadeInstance();
-        $indexFacade->createByIndexDefinition($this->getIndexDefinitionMockReturningDomainId(), new NullOutput());
+        $indexFacade->create($this->getIndexDefinitionMockReturningDomainId(), new NullOutput());
     }
 
-    public function testMigrateByIndexDefinitionWhenMigrationIsNecessary(): void
+    public function testMigrateWhenMigrationIsNecessary(): void
     {
         $oldIndexName = 'index_old';
         $newIndexName = 'index_new';
@@ -96,10 +96,10 @@ class IndexFacadeTest extends TestCase
         $indexDefinitionMock->method('getVersionedIndexName')->willReturn($newIndexName);
 
         $indexFacade = $this->createIndexFacadeInstance();
-        $indexFacade->migrateByIndexDefinition($indexDefinitionMock, new NullOutput());
+        $indexFacade->migrate($indexDefinitionMock, new NullOutput());
     }
 
-    public function testMigrateByIndexDefinitionWhenMigrationIsNotNecessary(): void
+    public function testMigrateWhenMigrationIsNotNecessary(): void
     {
         $oldIndexName = 'index_old';
         $newIndexName = 'index_new';
@@ -115,7 +115,7 @@ class IndexFacadeTest extends TestCase
         $indexDefinitionMock->method('getVersionedIndexName')->willReturn($oldIndexName);
 
         $indexFacade = $this->createIndexFacadeInstance();
-        $indexFacade->migrateByIndexDefinition($indexDefinitionMock, new NullOutput());
+        $indexFacade->migrate($indexDefinitionMock, new NullOutput());
     }
 
     /**
