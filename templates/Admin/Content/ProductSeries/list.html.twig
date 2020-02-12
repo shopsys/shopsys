@@ -1,0 +1,40 @@
+{% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Produktové programy'|trans }}{% endblock %}
+{% block h1 %}{{ 'Produktové programy'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="wrap-divider wrap-divider--bottom">
+        <div class="form-group">
+            <h2 class="form-group__title">
+                {{ 'Odkaz na přehled produktových programů'|trans }}
+            </h2>
+            <div>
+                {% for domain in domains %}
+                    <div class="form-line">
+                        <div class="form-line__line">
+                            <div class="form-line__label">
+                                {{ getDomainName(domain.id) }}
+                                {% if isMultidomain() %}
+                                    {{ domainIcon(domain.id) }}
+                                {% endif %}
+                            </div>
+                            <div class="form-line__item form-line__item--text">
+                                <a href="{{ findUrlByDomainId('front_productseries_list', {}, domain.id) }}" target="_blank">
+                                    {{ findUrlByDomainId('front_productseries_list', {}, domain.id) }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="wrap-bar">
+        <a href="{{ url('admin_productseries_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Vytvořit nový produtový program'|trans }}
+        </a>
+    </div>
+    {{ gridView.render() }}
+{% endblock %}

@@ -71,6 +71,23 @@
             crop: false
             occurrence: 'Front-end: Preview in autocomplete for search, preview in cart during ordering process'
 
+-   name: productSeries
+    class: App\Model\Product\Series\ProductSeries
+    multiple: true
+    sizes:
+        -   name: preview
+            width: 410
+            height: ~
+            crop: false
+            occurrence: 'Front-end: Main image in product series detail and list'
+            additionalSizes:
+                - {width: 710, height: ~, media: "(min-width: 480px) and (max-width: 768px)"}
+        -   name: galleryThumbnail
+            width: 120
+            height: 80
+            crop: false
+            occurrence: 'Front-end: Thumbnail of images under the main image in product series detail'
+
 -   name: sliderItem
     class: Shopsys\FrameworkBundle\Model\Slider\SliderItem
     sizes:
